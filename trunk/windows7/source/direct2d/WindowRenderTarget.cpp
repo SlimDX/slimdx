@@ -80,17 +80,17 @@ namespace Direct2D
 		return gcnew WindowRenderTarget( pointer );
 	}
 
-	WindowRenderTarget::WindowRenderTarget( Factory^ factory, WindowRenderTargetProperties windowRenderTargetProperties )
+	WindowRenderTarget::WindowRenderTarget( SlimDX::Direct2D::Factory^ factory, WindowRenderTargetProperties windowRenderTargetProperties )
 	{
 		Init( factory, RenderTargetProperties(), windowRenderTargetProperties );
 	}
 
-	WindowRenderTarget::WindowRenderTarget( Factory^ factory, RenderTargetProperties renderTargetProperties, WindowRenderTargetProperties windowRenderTargetProperties )
+	WindowRenderTarget::WindowRenderTarget( SlimDX::Direct2D::Factory^ factory, RenderTargetProperties renderTargetProperties, WindowRenderTargetProperties windowRenderTargetProperties )
 	{
 		Init( factory, renderTargetProperties, windowRenderTargetProperties );
 	}
 
-	void WindowRenderTarget::Init( Factory^ factory, RenderTargetProperties renderTargetProperties, WindowRenderTargetProperties windowRenderTargetProperties )
+	void WindowRenderTarget::Init( SlimDX::Direct2D::Factory^ factory, RenderTargetProperties renderTargetProperties, WindowRenderTargetProperties windowRenderTargetProperties )
 	{
 		ID2D1HwndRenderTarget *renderTarget = NULL;
 
@@ -101,6 +101,16 @@ namespace Direct2D
 			throw gcnew Direct2DException( Result::Last );
 
 		Construct( renderTarget );
+	}
+
+	IntPtr WindowRenderTarget::Handle::get()
+	{
+		return IntPtr( InternalPointer->GetHwnd() );
+	}
+
+	bool WindowRenderTarget::IsOccluded::get()
+	{
+		return (InternalPointer->CheckWindowState() & D2D1_WINDOW_STATE_OCCLUDED);
 	}
 }
 }

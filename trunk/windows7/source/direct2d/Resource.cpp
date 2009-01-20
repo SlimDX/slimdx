@@ -19,46 +19,30 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+
+#define DEFINE_ENUM_FLAG_OPERATORS(x)
+
+#include <d2d1.h>
+#include <d2d1helper.h>
+
+#include "Direct2DException.h"
 
 #include "Resource.h"
-#include "Matrix3x2.h"
-#include "StrokeStyle.h"
-#include "Brush.h"
+
+const IID IID_ID2D1Resource = __uuidof(ID2D1Resource);
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct2D
+namespace Direct2D
+{
+	SlimDX::Direct2D::Factory^ Resource::Factory::get()
 	{
-		public ref class RenderTarget abstract : Resource
-		{
-			COMOBJECT_BASE(ID2D1RenderTarget);
+		ID2D1Factory *factory = NULL;
+		InternalPointer->GetFactory( &factory );
 
-		public:
-			void BeginDraw();
-			void EndDraw();
-
-			void Clear();
-			void Clear( Color4 color );
-
-			void DrawLine( Brush^ brush, System::Drawing::PointF point1, System::Drawing::PointF point2 );
-			void DrawLine( Brush^ brush, System::Drawing::PointF point1, System::Drawing::PointF point2, float strokeWidth );
-			void DrawLine( Brush^ brush, System::Drawing::PointF point1, System::Drawing::PointF point2, float strokeWidth, StrokeStyle^ strokeStyle );
-
-			void DrawLine( Brush^ brush, float x1, float y1, float x2, float y2 );
-			void DrawLine( Brush^ brush, float x1, float y1, float x2, float y2, float strokeWidth );
-			void DrawLine( Brush^ brush, float x1, float y1, float x2, float y2, float strokeWidth, StrokeStyle^ style );
-
-			property Matrix3x2 Transform
-			{
-				Matrix3x2 get();
-				void set( Matrix3x2 value );
-			}
-
-			property System::Drawing::SizeF Size
-			{
-				System::Drawing::SizeF get();
-			}
-		};
+		return SlimDX::Direct2D::Factory::FromPointer( factory );
 	}
+}
 }

@@ -29,13 +29,23 @@ namespace SlimDX
 		{
 			COMOBJECT(ID2D1HwndRenderTarget, WindowRenderTarget);
 
-			void Init( Factory^ factory, RenderTargetProperties renderTargetProperties, WindowRenderTargetProperties windowRenderTargetProperties );
+			void Init( SlimDX::Direct2D::Factory^ factory, RenderTargetProperties renderTargetProperties, WindowRenderTargetProperties windowRenderTargetProperties );
 			
 		public:
-			WindowRenderTarget( Factory^ factory, WindowRenderTargetProperties windowRenderTargetProperties );
-			WindowRenderTarget( Factory^ factory, RenderTargetProperties renderTargetProperties, WindowRenderTargetProperties windowRenderTargetProperties );
+			WindowRenderTarget( SlimDX::Direct2D::Factory^ factory, WindowRenderTargetProperties windowRenderTargetProperties );
+			WindowRenderTarget( SlimDX::Direct2D::Factory^ factory, RenderTargetProperties renderTargetProperties, WindowRenderTargetProperties windowRenderTargetProperties );
 
 			static WindowRenderTarget^ FromPointer( System::IntPtr pointer );
+
+			property System::IntPtr Handle
+			{
+				System::IntPtr get();
+			}
+
+			property bool IsOccluded
+			{
+				bool get();
+			}
 		};
 	}
 }

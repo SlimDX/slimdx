@@ -19,46 +19,14 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Resource.h"
 #include "Matrix3x2.h"
-#include "StrokeStyle.h"
-#include "Brush.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct2D
-	{
-		public ref class RenderTarget abstract : Resource
-		{
-			COMOBJECT_BASE(ID2D1RenderTarget);
-
-		public:
-			void BeginDraw();
-			void EndDraw();
-
-			void Clear();
-			void Clear( Color4 color );
-
-			void DrawLine( Brush^ brush, System::Drawing::PointF point1, System::Drawing::PointF point2 );
-			void DrawLine( Brush^ brush, System::Drawing::PointF point1, System::Drawing::PointF point2, float strokeWidth );
-			void DrawLine( Brush^ brush, System::Drawing::PointF point1, System::Drawing::PointF point2, float strokeWidth, StrokeStyle^ strokeStyle );
-
-			void DrawLine( Brush^ brush, float x1, float y1, float x2, float y2 );
-			void DrawLine( Brush^ brush, float x1, float y1, float x2, float y2, float strokeWidth );
-			void DrawLine( Brush^ brush, float x1, float y1, float x2, float y2, float strokeWidth, StrokeStyle^ style );
-
-			property Matrix3x2 Transform
-			{
-				Matrix3x2 get();
-				void set( Matrix3x2 value );
-			}
-
-			property System::Drawing::SizeF Size
-			{
-				System::Drawing::SizeF get();
-			}
-		};
-	}
+namespace Direct2D
+{
+}
 }

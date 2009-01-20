@@ -19,31 +19,14 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Enums.h"
+#include "BrushProperties.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct2D
-	{
-		public ref class Factory : public ComObject
-		{
-			COMOBJECT(ID2D1Factory, Factory);
-
-			void Init( FactoryType factoryType, DebugLevel debugLevel );
-			
-		public:
-			Factory();
-			Factory( FactoryType factoryType );
-			Factory( FactoryType factoryType, DebugLevel debugLevel );
-
-			static Factory^ FromPointer( System::IntPtr pointer );
-
-			property System::Drawing::SizeF DesktopDpi
-			{
-				System::Drawing::SizeF get();
-			}
-		};
-	}
+namespace Direct2D
+{
+}
 }
