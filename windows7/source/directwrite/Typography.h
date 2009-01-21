@@ -22,6 +22,7 @@
 #pragma once
 
 #include "Factory.h"
+#include "FontFeature.h"
 
 extern const IID IID_IDWriteTypography;
 
@@ -37,6 +38,14 @@ namespace SlimDX
 			Typography( Factory^ factory );
 
 			static Typography^ FromPointer( System::IntPtr pointer );
+
+			Result AddFeature( FontFeature feature );
+			FontFeature GetFeature( int featureIndex );
+
+			property int FeatureCount
+			{
+				int get();
+			}
 		};
 	}
 }

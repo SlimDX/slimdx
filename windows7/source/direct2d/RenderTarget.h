@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../directwrite/TextLayout.h"
+
 #include "Resource.h"
 #include "Matrix3x2.h"
 #include "StrokeStyle.h"
@@ -59,6 +61,16 @@ namespace SlimDX
 			void DrawRectangle( Brush^ brush, System::Drawing::RectangleF rectangle );
 			void DrawRectangle( Brush^ brush, System::Drawing::RectangleF rectangle, float strokeWidth );
 			void DrawRectangle( Brush^ brush, System::Drawing::RectangleF rectangle, float strokeWidth, StrokeStyle^ strokeStyle );
+
+			void DrawTextLayout( System::Drawing::Point origin, SlimDX::DirectWrite::TextLayout^ textLayout, Brush^ defaultBrush );
+			void DrawTextLayout( System::Drawing::PointF origin, SlimDX::DirectWrite::TextLayout^ textLayout, Brush^ defaultBrush );
+			void DrawTextLayout( System::Drawing::Point origin, SlimDX::DirectWrite::TextLayout^ textLayout, Brush^ defaultBrush, DrawTextOptions options );
+			void DrawTextLayout( System::Drawing::PointF origin, SlimDX::DirectWrite::TextLayout^ textLayout, Brush^ defaultBrush, DrawTextOptions options );
+
+			void DrawText( System::String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::Rectangle layoutRectangle, Brush^ defaultBrush );
+			void DrawText( System::String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::RectangleF layoutRectangle, Brush^ defaultBrush );
+			void DrawText( System::String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::Rectangle layoutRectangle, Brush^ defaultBrush, DrawTextOptions options, SlimDX::DirectWrite::TextMeasuringMethod measuringMethod );
+			void DrawText( System::String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::RectangleF layoutRectangle, Brush^ defaultBrush, DrawTextOptions options, SlimDX::DirectWrite::TextMeasuringMethod measuringMethod );
 
 			property Matrix3x2 Transform
 			{

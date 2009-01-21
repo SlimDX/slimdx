@@ -47,6 +47,14 @@ namespace SlimDX
 			Information = D2D1_DEBUG_LEVEL_INFORMATION
 		};
 
+		[System::Flags]
+		public enum class DrawTextOptions : System::Int32
+		{
+			None = D2D1_DRAW_TEXT_OPTIONS_NONE,
+			NoSnap = D2D1_DRAW_TEXT_OPTIONS_NO_SNAP,
+			NoClip = D2D1_DRAW_TEXT_OPTIONS_NO_CLIP
+		};
+
 		public enum class FactoryType : System::Int32
 		{
 			SingleThreaded = D2D1_FACTORY_TYPE_SINGLE_THREADED,

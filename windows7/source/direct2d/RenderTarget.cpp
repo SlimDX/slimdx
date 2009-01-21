@@ -24,6 +24,7 @@
 
 #include <d2d1.h>
 #include <d2d1helper.h>
+#include <vcclr.h>
 
 #include "Direct2DException.h"
 
@@ -165,6 +166,63 @@ namespace Direct2D
 	{
 		D2D1_SIZE_F size = InternalPointer->GetSize();
 		return System::Drawing::SizeF( size.width, size.height );
+	}
+
+	void RenderTarget::DrawTextLayout( Point origin, SlimDX::DirectWrite::TextLayout^ textLayout, Brush^ defaultBrush )
+	{
+		DrawTextLayout( origin, textLayout, defaultBrush, DrawTextOptions::None );
+	}
+
+	void RenderTarget::DrawTextLayout( Point origin, SlimDX::DirectWrite::TextLayout^ textLayout, Brush^ defaultBrush, DrawTextOptions options )
+	{
+		D2D1_POINT_2F po = D2D1::Point2F( static_cast<FLOAT>( origin.X ), static_cast<FLOAT>( origin.Y ) );
+
+		InternalPointer->DrawTextLayout( po, textLayout->InternalPointer, defaultBrush->InternalPointer, static_cast<D2D1_DRAW_TEXT_OPTIONS>( options ) );
+	}
+
+	void RenderTarget::DrawTextLayout( PointF origin, SlimDX::DirectWrite::TextLayout^ textLayout, Brush^ defaultBrush )
+	{
+		DrawTextLayout( origin, textLayout, defaultBrush, DrawTextOptions::None );
+	}
+
+	void RenderTarget::DrawTextLayout( PointF origin, SlimDX::DirectWrite::TextLayout^ textLayout, Brush^ defaultBrush, DrawTextOptions options )
+	{
+		D2D1_POINT_2F po = D2D1::Point2F( origin.X, origin.Y );
+
+		InternalPointer->DrawTextLayout( po, textLayout->InternalPointer, defaultBrush->InternalPointer, static_cast<D2D1_DRAW_TEXT_OPTIONS>( options ) );
+	}
+
+	void RenderTarget::DrawText( String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::Rectangle layoutRectangle, Brush^ defaultBrush )
+	{
+		RectangleF rect = RectangleF( static_cast<FLOAT>( layoutRectangle.X ), static_cast<FLOAT>( layoutRectangle.Y ), 
+			static_cast<FLOAT>( layoutRectangle.Width ), static_cast<FLOAT>( layoutRectangle.Height ) );
+
+		DrawText( text, textFormat, rect, defaultBrush );
+	}
+
+	void RenderTarget::DrawText( String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::Rectangle layoutRectangle, Brush^ defaultBrush, DrawTextOptions options, SlimDX::DirectWrite::TextMeasuringMethod measuringMethod )
+	{
+		RectangleF rect = RectangleF( static_cast<FLOAT>( layoutRectangle.X ), static_cast<FLOAT>( layoutRectangle.Y ), 
+			static_cast<FLOAT>( layoutRectangle.Width ), static_cast<FLOAT>( layoutRectangle.Height ) );
+
+		DrawText( text, textFormat, rect, defaultBrush, options, measuringMethod );
+	}
+
+	void RenderTarget::DrawText( String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::RectangleF layoutRectangle, Brush^ defaultBrush )
+	{
+		D2D1_RECT_F rect = D2D1::RectF( layoutRectangle.Left, layoutRectangle.Top, layoutRectangle.Right, layoutRectangle.Bottom );
+		pin_ptr<const wchar_t> pinnedText = PtrToStringChars( text );
+
+		InternalPointer->DrawText( pinnedText, text->Length, textFormat->InternalPointer, rect, defaultBrush->InternalPointer );
+	}
+
+	void RenderTarget::DrawText( String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::RectangleF layoutRectangle, Brush^ defaultBrush, DrawTextOptions options, SlimDX::DirectWrite::TextMeasuringMethod measuringMethod )
+	{
+		D2D1_RECT_F rect = D2D1::RectF( layoutRectangle.Left, layoutRectangle.Top, layoutRectangle.Right, layoutRectangle.Bottom );
+		pin_ptr<const wchar_t> pinnedText = PtrToStringChars( text );
+
+		InternalPointer->DrawText( pinnedText, text->Length, textFormat->InternalPointer, rect, defaultBrush->InternalPointer,
+			static_cast<D2D1_DRAW_TEXT_OPTIONS>( options ), static_cast<DWRITE_TEXT_MEASURING_METHOD>( measuringMethod ) );
 	}
 }
 }

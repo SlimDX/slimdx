@@ -1340,6 +1340,14 @@
 			<Filter
 				Name="Fonts"
 				>
+				<File
+					RelativePath=".\source\directwrite\FontFeature.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\directwrite\FontFeature.h"
+					>
+				</File>
 				<Filter
 					Name="FontCollection"
 					>

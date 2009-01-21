@@ -84,5 +84,30 @@ namespace DirectWrite
 
 		Construct( typo );
 	}
+
+	Result Typography::AddFeature( FontFeature feature )
+	{
+		DWRITE_FONT_FEATURE ff;
+		ff.nameTag = static_cast<DWRITE_FONT_FEATURE_TAG>( feature.NameTag );
+		ff.parameter = feature.Value;
+
+		HRESULT hr = InternalPointer->AddFontFeature( ff );
+		return RECORD_DW( hr );
+	}
+
+	FontFeature Typography::GetFeature( int featureIndex )
+	{
+		FontFeature result;
+
+		HRESULT hr = InternalPointer->GetFontFeature( featureIndex, reinterpret_cast<DWRITE_FONT_FEATURE*>( &result ) );
+		RECORD_DW( hr );
+
+		return result;
+	}
+
+	int Typography::FeatureCount::get()
+	{
+		return InternalPointer->GetFontFeatureCount();
+	}
 }
 }
