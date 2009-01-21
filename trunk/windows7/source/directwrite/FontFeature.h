@@ -21,45 +21,20 @@
 */
 #pragma once
 
-#include "Factory.h"
-#include "TextFormat.h"
-#include "TextRange.h"
-#include "Typography.h"
-
-extern const IID IID_IDWriteTextLayout;
+#include "Enums.h"
 
 namespace SlimDX
 {
 	namespace DirectWrite
 	{
-		public ref class TextLayout : public ComObject
+		public value class FontFeature
 		{
-			COMOBJECT(IDWriteTextLayout, TextLayout);
-
-			void Init( Factory^ factory, System::String^ text, TextFormat^ format, float maxWidth, float maxHeight );
-
 		public:
-			TextLayout( Factory^ factory, System::String^ text, TextFormat^ format );
-			TextLayout( Factory^ factory, System::String^ text, TextFormat^ format, float maxWidth, float maxHeight );
+			property FontFeatureTag NameTag;
+			property int Value;
 
-			static TextLayout^ FromPointer( System::IntPtr pointer );
-
-			Result SetFontSize( float size, TextRange range );
-			Result SetUnderline( bool underline, TextRange range );
-			Result SetFontWeight( FontWeight weight, TextRange range );
-			Result SetTypography( Typography^ typography, TextRange range );
-
-			property float MaxWidth
-			{
-				float get();
-				void set( float value );
-			}
-
-			property float MaxHeight
-			{
-				float get();
-				void set( float value );
-			}
+			static FontFeatureTag BuildTag( System::String^ tag );
+			static FontFeatureTag BuildTag( char a, char b, char c, char d );
 		};
 	}
 }

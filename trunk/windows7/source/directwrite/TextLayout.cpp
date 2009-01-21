@@ -125,5 +125,35 @@ namespace DirectWrite
 		HRESULT hr = InternalPointer->SetFontWeight( static_cast<DWRITE_FONT_WEIGHT>( weight ), tr );
 		return RECORD_DW( hr );
 	}
+
+	Result TextLayout::SetTypography( Typography^ typography, TextRange range )
+	{
+		DWRITE_TEXT_RANGE tr;
+		tr.startPosition = range.StartPosition;
+		tr.length = range.Length;
+
+		HRESULT hr = InternalPointer->SetTypography( typography->InternalPointer, tr );
+		return RECORD_DW( hr );
+	}
+
+	float TextLayout::MaxWidth::get()
+	{
+		return InternalPointer->GetMaxWidth();
+	}
+
+	void TextLayout::MaxWidth::set( float value )
+	{
+		RECORD_DW( InternalPointer->SetMaxWidth( value ) );
+	}
+
+	float TextLayout::MaxHeight::get()
+	{
+		return InternalPointer->GetMaxHeight();
+	}
+
+	void TextLayout::MaxHeight::set( float value )
+	{
+		RECORD_DW( InternalPointer->SetMaxHeight( value ) );
+	}
 }
 }

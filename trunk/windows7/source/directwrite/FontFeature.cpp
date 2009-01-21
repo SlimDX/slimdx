@@ -19,47 +19,28 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Factory.h"
-#include "TextFormat.h"
-#include "TextRange.h"
-#include "Typography.h"
+#include <dwrite.h>
 
-extern const IID IID_IDWriteTextLayout;
+#include "FontFeature.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace DirectWrite
+namespace DirectWrite
+{
+	FontFeatureTag FontFeature::BuildTag( String^ tag )
 	{
-		public ref class TextLayout : public ComObject
-		{
-			COMOBJECT(IDWriteTextLayout, TextLayout);
+		if( tag->Length != 4 )
+			throw gcnew ArgumentException( "Font feature name tag must be four characters long", "tag" );
 
-			void Init( Factory^ factory, System::String^ text, TextFormat^ format, float maxWidth, float maxHeight );
-
-		public:
-			TextLayout( Factory^ factory, System::String^ text, TextFormat^ format );
-			TextLayout( Factory^ factory, System::String^ text, TextFormat^ format, float maxWidth, float maxHeight );
-
-			static TextLayout^ FromPointer( System::IntPtr pointer );
-
-			Result SetFontSize( float size, TextRange range );
-			Result SetUnderline( bool underline, TextRange range );
-			Result SetFontWeight( FontWeight weight, TextRange range );
-			Result SetTypography( Typography^ typography, TextRange range );
-
-			property float MaxWidth
-			{
-				float get();
-				void set( float value );
-			}
-
-			property float MaxHeight
-			{
-				float get();
-				void set( float value );
-			}
-		};
+		return static_cast<FontFeatureTag>( DWRITE_MAKE_OPENTYPE_TAG( tag[0], tag[1], tag[2], tag[3] ) );
 	}
+
+	FontFeatureTag FontFeature::BuildTag( char a, char b, char c, char d )
+	{
+		return static_cast<FontFeatureTag>( DWRITE_MAKE_OPENTYPE_TAG( a, b, c, d ) );
+	}
+}
 }
