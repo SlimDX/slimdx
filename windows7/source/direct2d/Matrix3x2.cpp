@@ -28,5 +28,13 @@ namespace SlimDX
 {
 namespace Direct2D
 {
+	Matrix3x2 Matrix3x2::Identity::get()
+	{
+		Matrix3x2 result;
+		result.M11 = 1.0f;
+		result.M22 = 1.0f;
+
+		return result;
+	}
 }
 }

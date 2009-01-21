@@ -31,8 +31,6 @@ namespace SlimDX
 		public ref class SolidColorBrush : Brush
 		{
 			COMOBJECT(ID2D1SolidColorBrush, SolidColorBrush);
-
-			void Init( RenderTarget^ renderTarget, Color4 color, BrushProperties properties );
 			
 		public:
 			SolidColorBrush( RenderTarget^ renderTarget, Color4 color );

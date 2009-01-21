@@ -79,15 +79,17 @@ namespace Direct2D
 
 	SolidColorBrush::SolidColorBrush( RenderTarget^ renderTarget, Color4 color )
 	{
-		Init( renderTarget, color, BrushProperties() );
+		ID2D1SolidColorBrush *brush = NULL;
+
+		HRESULT hr = renderTarget->InternalPointer->CreateSolidColorBrush( reinterpret_cast<D2D1_COLOR_F*>( &color ),NULL, &brush );
+
+		if( RECORD_D2D( hr ).IsFailure )
+			throw gcnew Direct2DException( Result::Last );
+
+		Construct( brush );
 	}
 
 	SolidColorBrush::SolidColorBrush( RenderTarget^ renderTarget, Color4 color, BrushProperties properties )
-	{
-		Init( renderTarget, color, properties );
-	}
-
-	void SolidColorBrush::Init( RenderTarget^ renderTarget, Color4 color, BrushProperties properties )
 	{
 		ID2D1SolidColorBrush *brush = NULL;
 
