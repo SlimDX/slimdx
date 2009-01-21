@@ -63,10 +63,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib dwrite.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="2"
-				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll"
+				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll;d2d1.dll;dwrite.dll"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				RandomizedBaseAddress="1"
@@ -141,10 +141,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib dwrite.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="2"
-				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll"
+				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll;d2d1.dll;dwrite.dll"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				RandomizedBaseAddress="1"
@@ -218,10 +218,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib dwrite.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="1"
-				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll"
+				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll;d2d1.dll;dwrite.dll"
 				GenerateDebugInformation="true"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -295,10 +295,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib dwrite.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="1"
-				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll"
+				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll;d2d1.dll;dwrite.dll"
 				GenerateDebugInformation="true"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -371,10 +371,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib dwrite.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="1"
-				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll"
+				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll;d2d1.dll;dwrite.dll"
 				GenerateDebugInformation="true"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -448,10 +448,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib dwrite.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="1"
-				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll"
+				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll;d2d1.dll;dwrite.dll"
 				GenerateDebugInformation="true"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -1232,6 +1232,96 @@
 				</File>
 				<File
 					RelativePath=".\source\direct2d\Resource.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="DirectWrite"
+			>
+			<File
+				RelativePath=".\source\directwrite\DirectWriteException.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\directwrite\DirectWriteException.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\directwrite\Enums.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\directwrite\ResultCode.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\directwrite\ResultCode.h"
+				>
+			</File>
+			<Filter
+				Name="Factory"
+				>
+				<File
+					RelativePath=".\source\directwrite\Factory.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug|x64"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|x64"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Public|x64"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							ObjectFile="$(IntDir)\$(InputName)1.obj"
+							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\source\directwrite\Factory.h"
 					>
 				</File>
 			</Filter>
