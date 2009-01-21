@@ -34,6 +34,11 @@ namespace SlimDX
 			property float M22;
 			property float M31;
 			property float M32;
+
+			static property Matrix3x2 Identity
+			{
+				Matrix3x2 get();
+			}
 		};
 	}
 }
