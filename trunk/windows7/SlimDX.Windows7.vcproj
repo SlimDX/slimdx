@@ -1325,6 +1325,70 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Typography"
+				>
+				<File
+					RelativePath=".\source\directwrite\Typography.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\directwrite\Typography.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Fonts"
+				>
+				<Filter
+					Name="FontCollection"
+					>
+					<File
+						RelativePath=".\source\directwrite\FontCollection.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\directwrite\FontCollection.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="Text"
+				>
+				<File
+					RelativePath=".\source\directwrite\TextRange.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\directwrite\TextRange.h"
+					>
+				</File>
+				<Filter
+					Name="TextLayout"
+					>
+					<File
+						RelativePath=".\source\directwrite\TextLayout.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\directwrite\TextLayout.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="TextFormat"
+					>
+					<File
+						RelativePath=".\source\directwrite\TextFormat.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\directwrite\TextFormat.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\source\AssemblyInfo.cpp"
