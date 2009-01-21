@@ -36,5 +36,54 @@ namespace SlimDX
 			Shared = DWRITE_FACTORY_TYPE_SHARED,
 			Isolated = DWRITE_FACTORY_TYPE_ISOLATED
 		};
+
+		public enum class FontStretch : System::Int32
+		{
+			Undefined =  DWRITE_FONT_STRETCH_UNDEFINED,
+			UltraCondensed =  DWRITE_FONT_STRETCH_ULTRA_CONDENSED,
+			ExtraCondensed =  DWRITE_FONT_STRETCH_EXTRA_CONDENSED,
+			Condensed =  DWRITE_FONT_STRETCH_CONDENSED,
+			SemiCondensed =  DWRITE_FONT_STRETCH_SEMI_CONDENSED,
+			Normal =  DWRITE_FONT_STRETCH_NORMAL,
+			SemiExpanded =  DWRITE_FONT_STRETCH_SEMI_EXPANDED,
+			Expanded =  DWRITE_FONT_STRETCH_EXPANDED,
+			ExtraExpanded =  DWRITE_FONT_STRETCH_EXTRA_EXPANDED,
+			UltraExpanded =  DWRITE_FONT_STRETCH_ULTRA_EXPANDED
+		};
+
+		public enum class FontStyle : System::Int32
+		{
+			Normal = DWRITE_FONT_STYLE_NORMAL,
+			Oblique = DWRITE_FONT_STYLE_OBLIQUE,
+			Italic = DWRITE_FONT_STYLE_ITALIC
+		};
+
+		public enum class FontWeight : System::Int32
+		{
+			Thin = DWRITE_FONT_WEIGHT_THIN,
+			ExtraLight = DWRITE_FONT_WEIGHT_EXTRA_LIGHT,
+			Light = DWRITE_FONT_WEIGHT_LIGHT,
+			Normal = DWRITE_FONT_WEIGHT_NORMAL,
+			Medium = DWRITE_FONT_WEIGHT_MEDIUM,
+			SemiBold = DWRITE_FONT_WEIGHT_SEMI_BOLD,
+			Bold = DWRITE_FONT_WEIGHT_BOLD,
+			ExtraBold = DWRITE_FONT_WEIGHT_EXTRA_BOLD,
+			Black = DWRITE_FONT_WEIGHT_BLACK,
+			ExtraBlack = DWRITE_FONT_WEIGHT_EXTRA_BLACK
+		};
+
+		public enum class ParagraphAlignment : System::Int32
+		{
+			Near = DWRITE_PARAGRAPH_ALIGNMENT_NEAR,
+			Far = DWRITE_PARAGRAPH_ALIGNMENT_FAR,
+			Center = DWRITE_PARAGRAPH_ALIGNMENT_CENTER
+		};
+
+		public enum class TextAlignment : System::Int32
+		{
+			Leading = DWRITE_TEXT_ALIGNMENT_LEADING,
+			Trailing = DWRITE_TEXT_ALIGNMENT_TRAILING,
+			Center = DWRITE_TEXT_ALIGNMENT_CENTER
+		};
 	}
 }
