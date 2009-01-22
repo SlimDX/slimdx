@@ -45,6 +45,24 @@ namespace SlimDX
 			Aliased = D2D1_ANTIALIAS_MODE_ALIASED
 		};
 
+		public enum class CapStyle : System::Int32
+		{
+			Flat = D2D1_CAP_STYLE_FLAT,
+			Square = D2D1_CAP_STYLE_SQUARE,
+			Round = D2D1_CAP_STYLE_ROUND,
+			Triangle = D2D1_CAP_STYLE_TRIANGLE
+		};
+
+		public enum class DashStyle : System::Int32
+		{
+			Solid = D2D1_DASH_STYLE_SOLID,
+			Dash = D2D1_DASH_STYLE_DASH,
+			Dot = D2D1_DASH_STYLE_DOT,
+			DashDot = D2D1_DASH_STYLE_DASH_DOT,
+			DashDotDot = D2D1_DASH_STYLE_DASH_DOT_DOT,
+			Custom = D2D1_DASH_STYLE_CUSTOM
+		};
+
 		public enum class DebugLevel : System::Int32
 		{
 			None = D2D1_DEBUG_LEVEL_NONE,
@@ -77,6 +95,21 @@ namespace SlimDX
 		{
 			NearestNeighbor = D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
 			Linear = D2D1_BITMAP_INTERPOLATION_MODE_LINEAR
+		};
+
+		[System::Flags]
+		public enum class LayerOptions : System::Int32
+		{
+			None = D2D1_LAYER_OPTIONS_NONE,
+			InitializeForClearType = D2D1_LAYER_OPTIONS_INITIALIZE_FOR_CLEARTYPE
+		};
+
+		public enum class LineJoin : System::Int32
+		{
+			Miter = D2D1_LINE_JOIN_MITER,
+			Bevel = D2D1_LINE_JOIN_BEVEL,
+			Round = D2D1_LINE_JOIN_ROUND,
+			MiterOrBevel = D2D1_LINE_JOIN_MITER_OR_BEVEL
 		};
 
 		public enum class PresentOptions : System::Int32

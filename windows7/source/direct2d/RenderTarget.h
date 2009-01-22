@@ -31,6 +31,8 @@
 #include "PixelFormat.h"
 #include "Ellipse.h"
 #include "RoundedRectangle.h"
+#include "StateBlock.h"
+#include "LayerParameters.h"
 
 using System::Runtime::InteropServices::OutAttribute;
 
@@ -39,6 +41,7 @@ namespace SlimDX
 	namespace Direct2D
 	{
 		ref class Bitmap;
+		ref class Layer;
 
 		public ref class RenderTarget abstract : Resource
 		{
@@ -114,6 +117,14 @@ namespace SlimDX
 			void PopAxisAlignedClip();
 			void PushAxisAlignedClip( System::Drawing::RectangleF clippingArea, AntialiasMode antialiasMode );
 			void PushAxisAlignedClip( System::Drawing::Rectangle clippingArea, AntialiasMode antialiasMode );
+
+			Bitmap^ CreateSharedBitmap( System::Guid guid, DataStream^ data );
+
+			void PopLayer();
+			void PushLayer( Layer^ layer, LayerParameters^ parameters );
+
+			void SaveDrawingState( StateBlock^ stateBlock );
+			void RestoreDrawingState( StateBlock^ stateBlock );
 
 			property SlimDX::DirectWrite::RenderingParameters^ TextRenderingParameters
 			{

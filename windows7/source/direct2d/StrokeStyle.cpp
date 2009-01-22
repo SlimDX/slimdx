@@ -75,5 +75,89 @@ namespace Direct2D
 
 		return gcnew StrokeStyle( pointer );
 	}
+
+	StrokeStyle::StrokeStyle( SlimDX::Direct2D::Factory^ factory )
+	{
+		ID2D1StrokeStyle *strokeStyle = NULL;
+
+		HRESULT hr = factory->InternalPointer->CreateStrokeStyle( D2D1::StrokeStyleProperties(), NULL, 0, &strokeStyle );
+
+		if( RECORD_D2D( hr ).IsFailure )
+			throw gcnew Direct2DException( Result::Last );
+
+		Construct( strokeStyle );
+	}
+
+	StrokeStyle::StrokeStyle( SlimDX::Direct2D::Factory^ factory, StrokeStyleProperties properties )
+	{
+		ID2D1StrokeStyle *strokeStyle = NULL;
+
+		HRESULT hr = factory->InternalPointer->CreateStrokeStyle( reinterpret_cast<D2D1_STROKE_STYLE_PROPERTIES*>( &properties ), 
+			NULL, 0, &strokeStyle );
+
+		if( RECORD_D2D( hr ).IsFailure )
+			throw gcnew Direct2DException( Result::Last );
+
+		Construct( strokeStyle );
+	}
+
+	StrokeStyle::StrokeStyle( SlimDX::Direct2D::Factory^ factory, StrokeStyleProperties properties, array<float>^ dashes )
+	{
+		ID2D1StrokeStyle *strokeStyle = NULL;
+		pin_ptr<float> pinnedDashes = &dashes[0];
+
+		HRESULT hr = factory->InternalPointer->CreateStrokeStyle( reinterpret_cast<D2D1_STROKE_STYLE_PROPERTIES*>( &properties ), 
+			pinnedDashes, dashes->Length, &strokeStyle );
+
+		if( RECORD_D2D( hr ).IsFailure )
+			throw gcnew Direct2DException( Result::Last );
+
+		Construct( strokeStyle );
+	}
+
+	array<float>^ StrokeStyle::GetDashes()
+	{
+		array<float>^ results = gcnew array<float>( InternalPointer->GetDashesCount() );
+		pin_ptr<float> pinnedResults = &results[0];
+
+		InternalPointer->GetDashes( pinnedResults, InternalPointer->GetDashesCount() );
+
+		return results;
+	}
+
+	CapStyle StrokeStyle::StartCap::get()
+	{
+		return static_cast<CapStyle>( InternalPointer->GetStartCap() );
+	}
+
+	CapStyle StrokeStyle::EndCap::get()
+	{
+		return static_cast<CapStyle>( InternalPointer->GetEndCap() );
+	}
+
+	CapStyle StrokeStyle::DashCap::get()
+	{
+		return static_cast<CapStyle>( InternalPointer->GetDashCap() );
+	}
+
+	SlimDX::Direct2D::LineJoin StrokeStyle::LineJoin::get()
+	{
+		return static_cast<SlimDX::Direct2D::LineJoin>( InternalPointer->GetLineJoin() );
+	}
+
+	float StrokeStyle::MiterLimit::get()
+	{
+		return InternalPointer->GetMiterLimit();
+	}
+
+	SlimDX::Direct2D::DashStyle StrokeStyle::DashStyle::get()
+	{
+		return static_cast<SlimDX::Direct2D::DashStyle>( InternalPointer->GetDashStyle() );
+	}
+
+	float StrokeStyle::DashOffset::get()
+	{
+		return InternalPointer->GetDashOffset();
+	}
 }
 }

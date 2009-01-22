@@ -21,60 +21,40 @@
 */
 #pragma once
 
-#include "Factory.h"
 #include "Resource.h"
-#include "StrokeStyleProperties.h"
+#include "Factory.h"
+#include "DrawingStateDescription.h"
 
 namespace SlimDX
 {
+	namespace DirectWrite
+	{
+		ref class RenderingParameters;
+	}
+
 	namespace Direct2D
 	{
-		public ref class StrokeStyle : Resource
+		public ref class StateBlock : Resource
 		{
-			COMOBJECT(ID2D1StrokeStyle, StrokeStyle);
+			COMOBJECT(ID2D1DrawingStateBlock, StateBlock);
 			
 		public:
-			StrokeStyle( SlimDX::Direct2D::Factory^ factory );
-			StrokeStyle( SlimDX::Direct2D::Factory^ factory, StrokeStyleProperties properties );
-			StrokeStyle( SlimDX::Direct2D::Factory^ factory, StrokeStyleProperties properties, array<float>^ dashes );
+			StateBlock( SlimDX::Direct2D::Factory^ factory );
+			StateBlock( SlimDX::Direct2D::Factory^ factory, DrawingStateDescription description );
+			StateBlock( SlimDX::Direct2D::Factory^ factory, DrawingStateDescription description, SlimDX::DirectWrite::RenderingParameters^ textRenderingParameters );
 
-			static StrokeStyle^ FromPointer( System::IntPtr pointer );
+			static StateBlock^ FromPointer( System::IntPtr pointer );
 
-			array<float>^ GetDashes();
-
-			property CapStyle StartCap
+			property DrawingStateDescription Description
 			{
-				CapStyle get();
+				DrawingStateDescription get();
+				void set( DrawingStateDescription value );
 			}
 
-			property CapStyle EndCap
+			property SlimDX::DirectWrite::RenderingParameters^ TextRenderingParameters
 			{
-				CapStyle get();
-			}
-
-			property CapStyle DashCap
-			{
-				CapStyle get();
-			}
-
-			property LineJoin LineJoin
-			{
-				SlimDX::Direct2D::LineJoin get();
-			}
-
-			property float MiterLimit
-			{
-				float get();
-			}
-
-			property DashStyle DashStyle
-			{
-				SlimDX::Direct2D::DashStyle get();
-			}
-
-			property float DashOffset
-			{
-				float get();
+				SlimDX::DirectWrite::RenderingParameters^ get();
+				void set( SlimDX::DirectWrite::RenderingParameters^ value );
 			}
 		};
 	}
