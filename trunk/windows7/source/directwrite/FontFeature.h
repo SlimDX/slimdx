@@ -30,6 +30,12 @@ namespace SlimDX
 		public value class FontFeature
 		{
 		public:
+			FontFeature( FontFeatureTag nameTag, int value )
+			{
+				NameTag = nameTag;
+				Value = value;
+			}
+
 			property FontFeatureTag NameTag;
 			property int Value;
 

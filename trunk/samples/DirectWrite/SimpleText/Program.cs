@@ -22,10 +22,11 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Drawing;
 using SlimDX.Direct2D;
+using SlimDX.DirectWrite;
+using System.Drawing;
 
-namespace RenderDemo
+namespace SimpleText
 {
     static class Program
     {
@@ -35,15 +36,19 @@ namespace RenderDemo
         [STAThread]
         static void Main()
         {
-            Factory factory = new Factory();
+            SlimDX.Direct2D.Factory d2dfactory = new SlimDX.Direct2D.Factory();
+            SlimDX.DirectWrite.Factory dwriteFactory = new SlimDX.DirectWrite.Factory();
 
             FlickerFreeForm form = new FlickerFreeForm();
-            form.ClientSize = new Size((int)(factory.DesktopDpi.Width * 800.0f / 96.0f), (int)(factory.DesktopDpi.Height * 600.0f / 96.0f));
-            form.Text = "SlimDX - Direct2D Render Demo";
+            form.ClientSize = new Size((int)(d2dfactory.DesktopDpi.Width * 800.0f / 96.0f), (int)(d2dfactory.DesktopDpi.Height * 600.0f / 96.0f));
+            form.Text = "SlimDX - DirectWrite Simple Text";
 
-            WindowRenderTarget renderTarget = new WindowRenderTarget(factory, new WindowRenderTargetProperties() { Handle = form.Handle, PixelSize = form.ClientSize });
-            SolidColorBrush brush1 = new SolidColorBrush(renderTarget, Color.LightSlateGray);
-            SolidColorBrush brush2 = new SolidColorBrush(renderTarget, Color.CornflowerBlue);
+            WindowRenderTarget renderTarget = new WindowRenderTarget(d2dfactory, new WindowRenderTargetProperties() { Handle = form.Handle, PixelSize = form.ClientSize });
+            SolidColorBrush brush = new SolidColorBrush(renderTarget, Color.Black);
+
+            TextFormat textFormat = new TextFormat(dwriteFactory, "Gabriola", FontWeight.Normal, SlimDX.DirectWrite.FontStyle.Normal, FontStretch.Normal, 72.0f, "en-us");
+            textFormat.TextAlignment = TextAlignment.Center;
+            textFormat.ParagraphAlignment = ParagraphAlignment.Center;
 
             form.ClientSizeChanged += (o, e) => { renderTarget.Resize(form.ClientSize); };
             form.Paint += (o, e) =>
@@ -54,32 +59,7 @@ namespace RenderDemo
                     renderTarget.Transform = Matrix3x2.Identity;
                     renderTarget.Clear(Color.White);
 
-                    PointF startPoint = PointF.Empty;
-                    PointF endPoint = new PointF(renderTarget.Size.Width, renderTarget.Size.Height);
-
-                    while (startPoint.X < renderTarget.Size.Width)
-                    {
-                        endPoint.X = startPoint.X;
-                        renderTarget.DrawLine(brush1, startPoint, endPoint, 0.5f);
-                        startPoint.X += 10.0f;
-                    }
-
-                    startPoint = PointF.Empty;
-                    endPoint.X = renderTarget.Size.Width;
-                    endPoint.Y = 0.0f;
-
-                    while (startPoint.Y < renderTarget.Size.Height)
-                    {
-                        endPoint.Y = startPoint.Y;
-                        renderTarget.DrawLine(brush1, startPoint, endPoint, 0.5f);
-                        startPoint.Y += 10.0f;
-                    }
-
-                    RectangleF rect1 = new RectangleF(renderTarget.Size.Width / 2 - 50.0f, renderTarget.Size.Height / 2 - 50.0f, 100.0f, 100.0f);
-                    RectangleF rect2 = new RectangleF(renderTarget.Size.Width / 2 - 100.0f, renderTarget.Size.Height / 2 - 100.0f, 200.0f, 200.0f);
-
-                    renderTarget.FillRectangle(brush1, rect1);
-                    renderTarget.DrawRectangle(brush2, rect2);
+                    renderTarget.DrawText("Hello World using DirectWrite!", textFormat, form.ClientRectangle, brush);
 
                     renderTarget.EndDraw();
                 }
@@ -87,10 +67,11 @@ namespace RenderDemo
 
             Application.Run(form);
 
-            brush1.Dispose();
-            brush2.Dispose();
+            textFormat.Dispose();
+            brush.Dispose();
             renderTarget.Dispose();
-            factory.Dispose();
+            dwriteFactory.Dispose();
+            d2dfactory.Dispose();
             form.Dispose();
         }
     }
