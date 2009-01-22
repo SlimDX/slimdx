@@ -1,4 +1,4 @@
-/*
+﻿/*
 * Copyright (c) 2007-2008 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,23 +19,22 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Windows.Forms;
 
-namespace SlimDX
+namespace SimpleText
 {
-	namespace DirectWrite
-	{
-		public value class TextRange
-		{
-		public:
-			TextRange( int startPosition, int length )
-			{
-				StartPosition = startPosition;
-				Length = length;
-			}
+    class FlickerFreeForm : Form
+    {
+        public FlickerFreeForm()
+        {
+            SetStyle(ControlStyles.ResizeRedraw, true);
+        }
 
-			property int StartPosition;
-			property int Length;
-		};
-	}
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+        }
+    }
 }

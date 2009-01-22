@@ -52,6 +52,8 @@
   <Target Name="$(ProjectDir)/../samples/DirectInput/Joystick/bin/x86/Debug/Joystick.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/DirectInput/Keyboard/bin/x86/Debug/Keyboard.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/DirectInput/Mouse/bin/x86/Debug/Mouse.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/DirectWrite/MultiformattedText/bin/x86/Debug/MultiformattedText.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/../samples/DirectWrite/SimpleText/bin/x86/Debug/SimpleText.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/Games/Asteroids/bin/x86/Debug/Asteroids.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/RawInput/Mouse/bin/x86/Debug/Mouse.exe" Analyze="True" AnalyzeAllChildren="True" />
   <Target Name="$(ProjectDir)/../samples/SampleFramework/bin/x86/Debug/SampleFramework.dll" Analyze="True" AnalyzeAllChildren="True" />
@@ -22573,6 +22575,337 @@
          </Type>
         </Types>
        </Namespace>
+       <Namespace Name="SlimDX.DirectWrite">
+        <Types>
+         <Type Name="Factory">
+          <Members>
+           <Member Name="#.ctor(IDWriteFactory*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-22 01:09:48Z">
+              <Issue>
+               <Item>'Factory.Factory(IDWriteFactory*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(IDWriteFactory*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-22 01:09:48Z">
+              <Issue>
+               <Item>'Factory.FromPointer(IDWriteFactory*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2009-01-22 01:09:48Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'Factory.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FontCollection">
+          <Messages>
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2009-01-22 01:09:48Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>'FontCollection'</Item>
+             <Item>Collection</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#.ctor(IDWriteFontCollection*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-22 01:09:48Z">
+              <Issue>
+               <Item>'FontCollection.FontCollection(IDWriteFontCollection*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(IDWriteFontCollection*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-22 01:09:48Z">
+              <Issue>
+               <Item>'FontCollection.FromPointer(IDWriteFontCollection*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2009-01-22 01:09:48Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'FontCollection.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FontFeature">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-22 01:09:48Z">
+            <Issue Name="Equals">
+             <Item>'FontFeature'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'FontFeature'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#NameTag">
+            <Messages>
+             <Message Id="NameTag" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2009-01-22 01:09:48Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>NameTag</Item>
+               <Item>'FontFeature.NameTag'</Item>
+               <Item>Nametag</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FontFeatureTag">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-01-22 01:09:48Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
+             <Item>'FontFeatureTag'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#HalantForms">
+            <Messages>
+             <Message Id="Halant" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-22 01:09:48Z">
+              <Issue Name="Member">
+               <Item>Halant</Item>
+               <Item>'FontFeatureTag.HalantForms'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#HojoKanjiForms">
+            <Messages>
+             <Message Id="Hojo" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-22 01:09:48Z">
+              <Issue Name="Member">
+               <Item>Hojo</Item>
+               <Item>'FontFeatureTag.HojoKanjiForms'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#JIS04Forms">
+            <Messages>
+             <Message Id="JIS" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-01-22 01:09:48Z">
+              <Issue Name="Member">
+               <Item>JIS</Item>
+               <Item>'FontFeatureTag.JIS04Forms'</Item>
+               <Item>Jis</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#JIS78Forms">
+            <Messages>
+             <Message Id="JIS" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-01-22 01:09:48Z">
+              <Issue Name="Member">
+               <Item>JIS</Item>
+               <Item>'FontFeatureTag.JIS78Forms'</Item>
+               <Item>Jis</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#JIS83Forms">
+            <Messages>
+             <Message Id="JIS" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-01-22 01:09:48Z">
+              <Issue Name="Member">
+               <Item>JIS</Item>
+               <Item>'FontFeatureTag.JIS83Forms'</Item>
+               <Item>Jis</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#JIS90Forms">
+            <Messages>
+             <Message Id="JIS" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2009-01-22 01:09:48Z">
+              <Issue Name="Member">
+               <Item>JIS</Item>
+               <Item>'FontFeatureTag.JIS90Forms'</Item>
+               <Item>Jis</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#NlcKanjiForms">
+            <Messages>
+             <Message Id="Nlc" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-22 01:09:48Z">
+              <Issue Name="Member">
+               <Item>Nlc</Item>
+               <Item>'FontFeatureTag.NlcKanjiForms'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Unicase">
+            <Messages>
+             <Message Id="Unicase" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-22 01:09:48Z">
+              <Issue Name="Member">
+               <Item>Unicase</Item>
+               <Item>'FontFeatureTag.Unicase'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FontWeight">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-01-22 01:09:48Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
+             <Item>'FontWeight'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#ExtraBold">
+            <Messages>
+             <Message Id="ExtraBold" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2009-01-22 01:09:48Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>ExtraBold</Item>
+               <Item>'FontWeight.ExtraBold'</Item>
+               <Item>Extrabold</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TextFormat">
+          <Members>
+           <Member Name="#.ctor(IDWriteTextFormat*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-22 01:09:48Z">
+              <Issue>
+               <Item>'TextFormat.TextFormat(IDWriteTextFormat*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(IDWriteTextFormat*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-22 01:09:48Z">
+              <Issue>
+               <Item>'TextFormat.FromPointer(IDWriteTextFormat*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2009-01-22 01:09:48Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'TextFormat.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TextLayout">
+          <Members>
+           <Member Name="#.ctor(IDWriteTextLayout*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-22 01:09:48Z">
+              <Issue>
+               <Item>'TextLayout.TextLayout(IDWriteTextLayout*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(IDWriteTextLayout*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-22 01:09:48Z">
+              <Issue>
+               <Item>'TextLayout.FromPointer(IDWriteTextLayout*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2009-01-22 01:09:48Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'TextLayout.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TextRange">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-22 01:09:48Z">
+            <Issue Name="Equals">
+             <Item>'TextRange'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'TextRange'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="Typography">
+          <Members>
+           <Member Name="#.ctor(IDWriteTypography*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-22 01:09:48Z">
+              <Issue>
+               <Item>'Typography.Typography(IDWriteTypography*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(IDWriteTypography*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-22 01:09:48Z">
+              <Issue>
+               <Item>'Typography.FromPointer(IDWriteTypography*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2009-01-22 01:09:48Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'Typography.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
       </Namespaces>
      </Module>
     </Modules>
@@ -22680,10 +23013,8 @@
     <Resolution Name="TypeTypeParameter">On type {0}, prefix generic type parameter name {1} with 'T'.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720">
-    <Resolution Name="Default" />
     <Resolution Name="LanguageIndependentMemberParameter">In member {0}, consider replacing the data type identifier '{1}' in parameter name {2} with a more generic term, such as 'value'.</Resolution>
     <Resolution Name="LanguageSpecificMember">Consider replacing the language-specific data type identifier '{0}' in member name {1} with either a language-independent equivalent or a more generic term, such as 'value'.</Resolution>
-    <Resolution Name="LanguageSpecificMemberParameter">In member {0}, consider replacing the language-specific data type identifier '{1}' in parameter name {2} with a more generic term, such as 'value'.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
     <Resolution Name="Member">Remove the underscores from member name {0}.</Resolution>
