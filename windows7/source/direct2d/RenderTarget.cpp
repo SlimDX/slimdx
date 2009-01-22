@@ -29,6 +29,8 @@
 #include "Direct2DException.h"
 
 #include "RenderTarget.h"
+#include "ConversionMethods.h"
+#include "Bitmap.h"
 
 const IID IID_ID2D1RenderTarget = __uuidof(ID2D1RenderTarget);
 
@@ -159,20 +161,17 @@ namespace Direct2D
 
 	void RenderTarget::DrawRectangle( Brush^ brush, System::Drawing::Rectangle rectangle )
 	{
-		DrawRectangle( brush, RectangleF( static_cast<FLOAT>( rectangle.X ), static_cast<FLOAT>( rectangle.Y ), 
-			static_cast<FLOAT>( rectangle.Width ), static_cast<FLOAT>( rectangle.Height ) ) );
+		DrawRectangle( brush, CastRectangle( rectangle ) );
 	}
 
 	void RenderTarget::DrawRectangle( Brush^ brush, System::Drawing::Rectangle rectangle, float strokeWidth )
 	{
-		DrawRectangle( brush, RectangleF( static_cast<FLOAT>( rectangle.X ), static_cast<FLOAT>( rectangle.Y ), 
-			static_cast<FLOAT>( rectangle.Width ), static_cast<FLOAT>( rectangle.Height ) ), strokeWidth );
+		DrawRectangle( brush, CastRectangle( rectangle ), strokeWidth );
 	}
 
 	void RenderTarget::DrawRectangle( Brush^ brush, System::Drawing::Rectangle rectangle, float strokeWidth, StrokeStyle^ strokeStyle )
 	{
-		DrawRectangle( brush, RectangleF( static_cast<FLOAT>( rectangle.X ), static_cast<FLOAT>( rectangle.Y ), 
-			static_cast<FLOAT>( rectangle.Width ), static_cast<FLOAT>( rectangle.Height ) ), strokeWidth, strokeStyle );
+		DrawRectangle( brush, CastRectangle( rectangle ), strokeWidth, strokeStyle );
 	}
 
 	void RenderTarget::DrawRectangle( Brush^ brush, RectangleF rectangle )
@@ -255,16 +254,14 @@ namespace Direct2D
 
 	void RenderTarget::DrawText( String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::Rectangle layoutRectangle, Brush^ defaultBrush )
 	{
-		RectangleF rect = RectangleF( static_cast<FLOAT>( layoutRectangle.X ), static_cast<FLOAT>( layoutRectangle.Y ), 
-			static_cast<FLOAT>( layoutRectangle.Width ), static_cast<FLOAT>( layoutRectangle.Height ) );
+		RectangleF rect = CastRectangle( layoutRectangle );
 
 		DrawText( text, textFormat, rect, defaultBrush );
 	}
 
 	void RenderTarget::DrawText( String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::Rectangle layoutRectangle, Brush^ defaultBrush, DrawTextOptions options, SlimDX::DirectWrite::TextMeasuringMethod measuringMethod )
 	{
-		RectangleF rect = RectangleF( static_cast<FLOAT>( layoutRectangle.X ), static_cast<FLOAT>( layoutRectangle.Y ), 
-			static_cast<FLOAT>( layoutRectangle.Width ), static_cast<FLOAT>( layoutRectangle.Height ) );
+		RectangleF rect = CastRectangle( layoutRectangle );
 
 		DrawText( text, textFormat, rect, defaultBrush, options, measuringMethod );
 	}
@@ -284,6 +281,108 @@ namespace Direct2D
 
 		InternalPointer->DrawText( pinnedText, text->Length, textFormat->InternalPointer, rect, defaultBrush->InternalPointer,
 			static_cast<D2D1_DRAW_TEXT_OPTIONS>( options ), static_cast<DWRITE_TEXT_MEASURING_METHOD>( measuringMethod ) );
+	}
+
+	void RenderTarget::DrawBitmap( Bitmap^ bitmap )
+	{
+		InternalPointer->DrawBitmap( bitmap->InternalPointer );
+	}
+
+	void RenderTarget::DrawBitmap( Bitmap^ bitmap, System::Drawing::RectangleF destinationRectangle )
+	{
+		D2D1_RECT_F destRect = D2D1::RectF( destinationRectangle.Left, destinationRectangle.Top, destinationRectangle.Right, destinationRectangle.Bottom );
+
+		InternalPointer->DrawBitmap( bitmap->InternalPointer, &destRect );
+	}
+
+	void RenderTarget::DrawBitmap( Bitmap^ bitmap, System::Drawing::RectangleF destinationRectangle, float opacity )
+	{
+		D2D1_RECT_F destRect = D2D1::RectF( destinationRectangle.Left, destinationRectangle.Top, destinationRectangle.Right, destinationRectangle.Bottom );
+
+		InternalPointer->DrawBitmap( bitmap->InternalPointer, &destRect, opacity );
+	}
+
+	void RenderTarget::DrawBitmap( Bitmap^ bitmap, System::Drawing::RectangleF destinationRectangle, float opacity, InterpolationMode interpolationMode )
+	{
+		D2D1_RECT_F destRect = D2D1::RectF( destinationRectangle.Left, destinationRectangle.Top, destinationRectangle.Right, destinationRectangle.Bottom );
+
+		InternalPointer->DrawBitmap( bitmap->InternalPointer, &destRect, opacity, static_cast<D2D1_BITMAP_INTERPOLATION_MODE>( interpolationMode ) );
+	}
+
+	void RenderTarget::DrawBitmap( Bitmap^ bitmap, System::Drawing::RectangleF destinationRectangle, float opacity, InterpolationMode interpolationMode, System::Drawing::RectangleF sourceRectangle )
+	{
+		D2D1_RECT_F sourceRect = D2D1::RectF( sourceRectangle.Left, sourceRectangle.Top, sourceRectangle.Right, sourceRectangle.Bottom );
+		D2D1_RECT_F destRect = D2D1::RectF( destinationRectangle.Left, destinationRectangle.Top, destinationRectangle.Right, destinationRectangle.Bottom );
+
+		InternalPointer->DrawBitmap( bitmap->InternalPointer, &destRect, opacity, static_cast<D2D1_BITMAP_INTERPOLATION_MODE>( interpolationMode ), &sourceRect );
+	}
+
+	void RenderTarget::DrawBitmap( Bitmap^ bitmap, System::Drawing::Rectangle destinationRectangle )
+	{
+		DrawBitmap( bitmap, CastRectangle( destinationRectangle ) );
+	}
+
+	void RenderTarget::DrawBitmap( Bitmap^ bitmap, System::Drawing::Rectangle destinationRectangle, float opacity )
+	{
+		DrawBitmap( bitmap, CastRectangle( destinationRectangle ), opacity );
+	}
+
+	void RenderTarget::DrawBitmap( Bitmap^ bitmap, System::Drawing::Rectangle destinationRectangle, float opacity, InterpolationMode interpolationMode )
+	{
+		DrawBitmap( bitmap, CastRectangle( destinationRectangle ), opacity, interpolationMode );
+	}
+
+	void RenderTarget::DrawBitmap( Bitmap^ bitmap, System::Drawing::Rectangle destinationRectangle, float opacity, InterpolationMode interpolationMode, System::Drawing::Rectangle sourceRectangle )
+	{
+		DrawBitmap( bitmap, CastRectangle( destinationRectangle ), opacity, interpolationMode, CastRectangle( sourceRectangle ) );
+	}
+
+	void RenderTarget::FillOpacityMask( Bitmap^ mask, Brush^ brush, Nullable<RectangleF> sourceRectangle, Nullable<RectangleF> destinationRectangle )
+	{
+		D2D1_RECT_F sourceRect;
+		D2D1_RECT_F destRect;
+
+		D2D1_RECT_F *sourceRectPtr = NULL;
+		D2D1_RECT_F *destRectPtr = NULL;
+
+		if( sourceRectangle.HasValue )
+		{
+			sourceRect = D2D1::RectF( sourceRectangle.Value.Left, sourceRectangle.Value.Top, sourceRectangle.Value.Right, sourceRectangle.Value.Bottom );
+			sourceRectPtr = &sourceRect;
+		}
+
+		if( destinationRectangle.HasValue )
+		{
+			destRect = D2D1::RectF( destinationRectangle.Value.Left, destinationRectangle.Value.Top, destinationRectangle.Value.Right, destinationRectangle.Value.Bottom );
+			destRectPtr = &destRect;
+		}
+
+		InternalPointer->FillOpacityMask( mask->InternalPointer, brush->InternalPointer, destRectPtr, sourceRectPtr, NULL );
+	}
+
+	void RenderTarget::FillOpacityMask( Bitmap^ mask, Brush^ brush, Nullable<RectangleF> sourceRectangle, Nullable<RectangleF> destinationRectangle, Gamma gamma )
+	{
+		D2D1_RECT_F sourceRect;
+		D2D1_RECT_F destRect;
+
+		D2D1_RECT_F *sourceRectPtr = NULL;
+		D2D1_RECT_F *destRectPtr = NULL;
+
+		D2D1_GAMMA gs = static_cast<D2D1_GAMMA>( gamma );
+
+		if( sourceRectangle.HasValue )
+		{
+			sourceRect = D2D1::RectF( sourceRectangle.Value.Left, sourceRectangle.Value.Top, sourceRectangle.Value.Right, sourceRectangle.Value.Bottom );
+			sourceRectPtr = &sourceRect;
+		}
+
+		if( destinationRectangle.HasValue )
+		{
+			destRect = D2D1::RectF( destinationRectangle.Value.Left, destinationRectangle.Value.Top, destinationRectangle.Value.Right, destinationRectangle.Value.Bottom );
+			destRectPtr = &destRect;
+		}
+
+		InternalPointer->FillOpacityMask( mask->InternalPointer, brush->InternalPointer, destRectPtr, sourceRectPtr, &gs );
 	}
 
 	void RenderTarget::PopAxisAlignedClip()

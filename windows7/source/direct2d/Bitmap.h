@@ -23,6 +23,9 @@
 
 #include "Enums.h"
 #include "Resource.h"
+#include "PixelFormat.h"
+#include "RenderTarget.h"
+#include "BitmapProperties.h"
 
 namespace SlimDX
 {
@@ -33,7 +36,49 @@ namespace SlimDX
 			COMOBJECT(ID2D1Bitmap, Bitmap);
 			
 		public:
+			Bitmap( RenderTarget^ renderTarget, System::Drawing::Size size, BitmapProperties properties );
+			Bitmap( RenderTarget^ renderTarget, System::Drawing::Size size, DataStream^ data, int pitch, BitmapProperties properties );
+			Bitmap( RenderTarget^ renderTarget, System::Drawing::Size size );
+			Bitmap( RenderTarget^ renderTarget, System::Drawing::Size size, DataStream^ data, int pitch );
+
 			static Bitmap^ FromPointer( System::IntPtr pointer );
+
+			Result FromBitmap( Bitmap^ sourceBitmap );
+			Result FromBitmap( Bitmap^ sourceBitmap, System::Drawing::Point destinationPoint );
+			Result FromBitmap( Bitmap^ sourceBitmap, System::Drawing::Point destinationPoint, System::Drawing::Rectangle sourceArea );
+
+			Result FromRenderTarget( RenderTarget^ renderTarget );
+			Result FromRenderTarget( RenderTarget^ renderTarget, System::Drawing::Point destinationPoint );
+			Result FromRenderTarget( RenderTarget^ renderTarget, System::Drawing::Point destinationPoint, System::Drawing::Rectangle sourceArea );
+
+			Result FromMemory( array<System::Byte>^ memory, int pitch );
+			Result FromMemory( array<System::Byte>^ memory, int pitch, System::Drawing::Rectangle destinationArea );
+
+			Result FromMemory( System::IntPtr pointer, int pitch );
+			Result FromMemory( System::IntPtr pointer, int pitch, System::Drawing::Rectangle destinationArea );
+
+			Result FromStream( System::IO::Stream^ stream, int pitch, int length );
+			Result FromStream( System::IO::Stream^ stream, int pitch, int length, System::Drawing::Rectangle destinationArea );
+
+			property System::Drawing::SizeF DotsPerInch
+			{
+				System::Drawing::SizeF get();
+			}
+
+			property PixelFormat PixelFormat
+			{
+				SlimDX::Direct2D::PixelFormat get();
+			}
+
+			property System::Drawing::SizeF Size
+			{
+				System::Drawing::SizeF get();
+			}
+
+			property System::Drawing::Size PixelSize
+			{
+				System::Drawing::Size get();
+			}
 		};
 	}
 }

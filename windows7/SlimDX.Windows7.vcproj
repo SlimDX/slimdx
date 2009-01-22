@@ -1158,8 +1158,16 @@
 				</Filter>
 			</Filter>
 			<Filter
-				Name="Math"
+				Name="Utilities"
 				>
+				<File
+					RelativePath=".\source\direct2d\ConversionMethods.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\ConversionMethods.h"
+					>
+				</File>
 				<File
 					RelativePath=".\source\direct2d\Matrix3x2.cpp"
 					>
@@ -1264,6 +1272,14 @@
 				</File>
 				<File
 					RelativePath=".\source\direct2d\Bitmap.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\BitmapProperties.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\BitmapProperties.h"
 					>
 				</File>
 			</Filter>

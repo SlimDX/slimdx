@@ -1,0 +1,7 @@
+Notes for our next release (March 2009):
+
+* Samples.sln solution doesn't load in Express editions (solution folders aren't supported)
+* Check for compatibility with the .NET 3.5 Client Profile
+* NGen the SlimDX DLL on installation of the runtime / SDK.
+* Incorporate SlimDX.Windows7.dll into the distribution.
+* Look into ClickOnce support.
