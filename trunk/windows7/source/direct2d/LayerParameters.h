@@ -21,61 +21,30 @@
 */
 #pragma once
 
-#include "Factory.h"
-#include "Resource.h"
-#include "StrokeStyleProperties.h"
+#include "Enums.h"
+#include "Geometry.h"
+#include "Matrix3x2.h"
+#include "Brush.h"
 
 namespace SlimDX
 {
 	namespace Direct2D
 	{
-		public ref class StrokeStyle : Resource
+		public ref class LayerParameters
 		{
-			COMOBJECT(ID2D1StrokeStyle, StrokeStyle);
-			
+		internal:
+			D2D1_LAYER_PARAMETERS ToUnmanaged();
+
 		public:
-			StrokeStyle( SlimDX::Direct2D::Factory^ factory );
-			StrokeStyle( SlimDX::Direct2D::Factory^ factory, StrokeStyleProperties properties );
-			StrokeStyle( SlimDX::Direct2D::Factory^ factory, StrokeStyleProperties properties, array<float>^ dashes );
+			LayerParameters();
 
-			static StrokeStyle^ FromPointer( System::IntPtr pointer );
-
-			array<float>^ GetDashes();
-
-			property CapStyle StartCap
-			{
-				CapStyle get();
-			}
-
-			property CapStyle EndCap
-			{
-				CapStyle get();
-			}
-
-			property CapStyle DashCap
-			{
-				CapStyle get();
-			}
-
-			property LineJoin LineJoin
-			{
-				SlimDX::Direct2D::LineJoin get();
-			}
-
-			property float MiterLimit
-			{
-				float get();
-			}
-
-			property DashStyle DashStyle
-			{
-				SlimDX::Direct2D::DashStyle get();
-			}
-
-			property float DashOffset
-			{
-				float get();
-			}
+			property System::Drawing::RectangleF ContentBounds;
+			property Geometry^ GeometricMask;
+			property AntialiasMode AntialiasMode;
+			property Matrix3x2 MaskTransform;
+			property float Opacity;
+			property Brush^ OpacityBrush;
+			property LayerOptions LayerOptions;
 		};
 	}
 }

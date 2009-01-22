@@ -1144,6 +1144,14 @@
 					RelativePath=".\source\direct2d\StrokeStyle.h"
 					>
 				</File>
+				<File
+					RelativePath=".\source\direct2d\StrokeStyleProperties.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\StrokeStyleProperties.h"
+					>
+				</File>
 				<Filter
 					Name="SolidColorBrush"
 					>
@@ -1255,6 +1263,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\direct2d\Geometry.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\Geometry.h"
+					>
+				</File>
+				<File
 					RelativePath=".\source\direct2d\RoundedRectangle.cpp"
 					>
 				</File>
@@ -1280,6 +1296,46 @@
 				</File>
 				<File
 					RelativePath=".\source\direct2d\BitmapProperties.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="StateBlock"
+				>
+				<File
+					RelativePath=".\source\direct2d\DrawingStateDescription.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\DrawingStateDescription.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\StateBlock.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\StateBlock.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Layer"
+				>
+				<File
+					RelativePath=".\source\direct2d\Layer.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\Layer.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\LayerParameters.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\LayerParameters.h"
 					>
 				</File>
 			</Filter>

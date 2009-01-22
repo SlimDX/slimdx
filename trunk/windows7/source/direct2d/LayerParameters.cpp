@@ -19,63 +19,39 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Factory.h"
-#include "Resource.h"
-#include "StrokeStyleProperties.h"
+#define DEFINE_ENUM_FLAG_OPERATORS(x)
+
+#include <d2d1.h>
+#include <d2d1helper.h>
+
+#include "Direct2DException.h"
+
+#include "LayerParameters.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct2D
+namespace Direct2D
+{
+	LayerParameters::LayerParameters()
 	{
-		public ref class StrokeStyle : Resource
-		{
-			COMOBJECT(ID2D1StrokeStyle, StrokeStyle);
-			
-		public:
-			StrokeStyle( SlimDX::Direct2D::Factory^ factory );
-			StrokeStyle( SlimDX::Direct2D::Factory^ factory, StrokeStyleProperties properties );
-			StrokeStyle( SlimDX::Direct2D::Factory^ factory, StrokeStyleProperties properties, array<float>^ dashes );
-
-			static StrokeStyle^ FromPointer( System::IntPtr pointer );
-
-			array<float>^ GetDashes();
-
-			property CapStyle StartCap
-			{
-				CapStyle get();
-			}
-
-			property CapStyle EndCap
-			{
-				CapStyle get();
-			}
-
-			property CapStyle DashCap
-			{
-				CapStyle get();
-			}
-
-			property LineJoin LineJoin
-			{
-				SlimDX::Direct2D::LineJoin get();
-			}
-
-			property float MiterLimit
-			{
-				float get();
-			}
-
-			property DashStyle DashStyle
-			{
-				SlimDX::Direct2D::DashStyle get();
-			}
-
-			property float DashOffset
-			{
-				float get();
-			}
-		};
 	}
+
+	D2D1_LAYER_PARAMETERS LayerParameters::ToUnmanaged()
+	{
+		D2D1_LAYER_PARAMETERS params;
+		params.contentBounds = D2D1::RectF( ContentBounds.Left, ContentBounds.Top, ContentBounds.Right, ContentBounds.Bottom );
+		params.geometricMask = GeometricMask == nullptr ? NULL : GeometricMask->InternalPointer;
+		params.maskAntialiasMode = static_cast<D2D1_ANTIALIAS_MODE>( AntialiasMode );
+		params.opacity = Opacity;
+		params.opacityBrush = OpacityBrush == nullptr ? NULL : OpacityBrush->InternalPointer;
+		params.layerOptions = static_cast<D2D1_LAYER_OPTIONS>( LayerOptions );
+
+		Matrix3x2 v = MaskTransform;
+		memcpy( &params.maskTransform, &v, sizeof( D2D1_MATRIX_3X2_F ) );
+		return params;
+	}
+}
 }

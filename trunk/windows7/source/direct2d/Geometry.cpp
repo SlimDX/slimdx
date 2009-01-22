@@ -19,63 +19,61 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Factory.h"
-#include "Resource.h"
-#include "StrokeStyleProperties.h"
+#define DEFINE_ENUM_FLAG_OPERATORS(x)
+
+#include <d2d1.h>
+#include <d2d1helper.h>
+
+#include "Direct2DException.h"
+
+#include "Geometry.h"
+
+const IID IID_ID2D1Geometry = __uuidof(ID2D1Geometry);
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct2D
+namespace Direct2D
+{
+	Geometry::Geometry( ID2D1Geometry* pointer )
 	{
-		public ref class StrokeStyle : Resource
-		{
-			COMOBJECT(ID2D1StrokeStyle, StrokeStyle);
-			
-		public:
-			StrokeStyle( SlimDX::Direct2D::Factory^ factory );
-			StrokeStyle( SlimDX::Direct2D::Factory^ factory, StrokeStyleProperties properties );
-			StrokeStyle( SlimDX::Direct2D::Factory^ factory, StrokeStyleProperties properties, array<float>^ dashes );
-
-			static StrokeStyle^ FromPointer( System::IntPtr pointer );
-
-			array<float>^ GetDashes();
-
-			property CapStyle StartCap
-			{
-				CapStyle get();
-			}
-
-			property CapStyle EndCap
-			{
-				CapStyle get();
-			}
-
-			property CapStyle DashCap
-			{
-				CapStyle get();
-			}
-
-			property LineJoin LineJoin
-			{
-				SlimDX::Direct2D::LineJoin get();
-			}
-
-			property float MiterLimit
-			{
-				float get();
-			}
-
-			property DashStyle DashStyle
-			{
-				SlimDX::Direct2D::DashStyle get();
-			}
-
-			property float DashOffset
-			{
-				float get();
-			}
-		};
+		Construct( pointer );
 	}
+	
+	Geometry::Geometry( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+	}
+	
+	Geometry^ Geometry::FromPointer( ID2D1Geometry* pointer )
+	{
+		if( pointer == 0 )
+			return nullptr;
+
+		Geometry^ tableEntry = safe_cast<Geometry^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew Geometry( pointer );
+	}
+
+	Geometry^ Geometry::FromPointer( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		Geometry^ tableEntry = safe_cast<Geometry^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Geometry( pointer );
+	}
+}
 }

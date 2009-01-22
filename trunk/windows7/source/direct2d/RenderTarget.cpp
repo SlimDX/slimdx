@@ -31,6 +31,7 @@
 #include "RenderTarget.h"
 #include "ConversionMethods.h"
 #include "Bitmap.h"
+#include "Layer.h"
 
 const IID IID_ID2D1RenderTarget = __uuidof(ID2D1RenderTarget);
 
@@ -400,6 +401,38 @@ namespace Direct2D
 	{
 		PushAxisAlignedClip( RectangleF( static_cast<float>( clippingArea.X ), static_cast<float>( clippingArea.Y ), 
 			static_cast<float>( clippingArea.Width ), static_cast<float>( clippingArea.Height ) ), antialiasMode );
+	}
+
+	Bitmap^ RenderTarget::CreateSharedBitmap( Guid guid, DataStream^ data )
+	{
+		ID2D1Bitmap *bitmap = NULL;
+
+		HRESULT hr = InternalPointer->CreateSharedBitmap( Utilities::ConvertManagedGuid( guid ), data->RawPointer, NULL, &bitmap );
+		if( RECORD_D2D( hr ).IsFailure )
+			return nullptr;
+
+		return Bitmap::FromPointer( bitmap );
+	}
+
+	void RenderTarget::PopLayer()
+	{
+		InternalPointer->PopLayer();
+	}
+
+	void RenderTarget::PushLayer( Layer^ layer, LayerParameters^ parameters )
+	{
+		D2D1_LAYER_PARAMETERS params = parameters == nullptr ? D2D1::LayerParameters() : parameters->ToUnmanaged();
+		InternalPointer->PushLayer( params, layer->InternalPointer );
+	}
+
+	void RenderTarget::SaveDrawingState( StateBlock^ stateBlock )
+	{
+		InternalPointer->SaveDrawingState( stateBlock->InternalPointer );
+	}
+
+	void RenderTarget::RestoreDrawingState( StateBlock^ stateBlock )
+	{
+		InternalPointer->RestoreDrawingState( stateBlock->InternalPointer );
 	}
 
 	SlimDX::DirectWrite::RenderingParameters^ RenderTarget::TextRenderingParameters::get()

@@ -21,61 +21,18 @@
 */
 #pragma once
 
-#include "Factory.h"
 #include "Resource.h"
-#include "StrokeStyleProperties.h"
 
 namespace SlimDX
 {
 	namespace Direct2D
 	{
-		public ref class StrokeStyle : Resource
+		public ref class Geometry : Resource
 		{
-			COMOBJECT(ID2D1StrokeStyle, StrokeStyle);
+			COMOBJECT(ID2D1Geometry, Geometry);
 			
 		public:
-			StrokeStyle( SlimDX::Direct2D::Factory^ factory );
-			StrokeStyle( SlimDX::Direct2D::Factory^ factory, StrokeStyleProperties properties );
-			StrokeStyle( SlimDX::Direct2D::Factory^ factory, StrokeStyleProperties properties, array<float>^ dashes );
-
-			static StrokeStyle^ FromPointer( System::IntPtr pointer );
-
-			array<float>^ GetDashes();
-
-			property CapStyle StartCap
-			{
-				CapStyle get();
-			}
-
-			property CapStyle EndCap
-			{
-				CapStyle get();
-			}
-
-			property CapStyle DashCap
-			{
-				CapStyle get();
-			}
-
-			property LineJoin LineJoin
-			{
-				SlimDX::Direct2D::LineJoin get();
-			}
-
-			property float MiterLimit
-			{
-				float get();
-			}
-
-			property DashStyle DashStyle
-			{
-				SlimDX::Direct2D::DashStyle get();
-			}
-
-			property float DashOffset
-			{
-				float get();
-			}
+			static Geometry^ FromPointer( System::IntPtr pointer );
 		};
 	}
 }
