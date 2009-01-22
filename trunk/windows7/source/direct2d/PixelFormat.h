@@ -32,6 +32,12 @@ namespace SlimDX
 		public value class PixelFormat
 		{
 		public:
+			PixelFormat( SlimDX::DXGI::Format format, AlphaMode alphaMode )
+			{
+				Format = format;
+				AlphaMode = alphaMode;
+			}
+
 			property SlimDX::DXGI::Format Format;
 			property AlphaMode AlphaMode;
 		};

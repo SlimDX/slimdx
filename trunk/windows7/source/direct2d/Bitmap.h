@@ -21,28 +21,19 @@
 */
 #pragma once
 
-#include "Brush.h"
-#include "BrushProperties.h"
+#include "Enums.h"
+#include "Resource.h"
 
 namespace SlimDX
 {
 	namespace Direct2D
 	{
-		public ref class SolidColorBrush : Brush
+		public ref class Bitmap : Resource
 		{
-			COMOBJECT(ID2D1SolidColorBrush, SolidColorBrush);
+			COMOBJECT(ID2D1Bitmap, Bitmap);
 			
 		public:
-			SolidColorBrush( RenderTarget^ renderTarget, Color4 color );
-			SolidColorBrush( RenderTarget^ renderTarget, Color4 color, BrushProperties properties );
-
-			static SolidColorBrush^ FromPointer( System::IntPtr pointer );
-
-			property Color4 Color
-			{
-				Color4 get();
-				void set( Color4 value );
-			}
+			static Bitmap^ FromPointer( System::IntPtr pointer );
 		};
 	}
 }

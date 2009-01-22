@@ -1235,6 +1235,38 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Geometry"
+				>
+				<File
+					RelativePath=".\source\direct2d\Ellipse.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\Ellipse.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\RoundedRectangle.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\RoundedRectangle.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Bitmap"
+				>
+				<File
+					RelativePath=".\source\direct2d\Bitmap.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\Bitmap.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="DirectWrite"
@@ -1396,6 +1428,18 @@
 						>
 					</File>
 				</Filter>
+			</Filter>
+			<Filter
+				Name="Rendering"
+				>
+				<File
+					RelativePath=".\source\directwrite\RenderingParameters.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\directwrite\RenderingParameters.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<File

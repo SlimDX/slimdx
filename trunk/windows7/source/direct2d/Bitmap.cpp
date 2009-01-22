@@ -19,30 +19,61 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Brush.h"
-#include "BrushProperties.h"
+#define DEFINE_ENUM_FLAG_OPERATORS(x)
+
+#include <d2d1.h>
+#include <d2d1helper.h>
+
+#include "Direct2DException.h"
+
+#include "Bitmap.h"
+
+const IID IID_ID2D1Bitmap = __uuidof(ID2D1Bitmap);
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct2D
+namespace Direct2D
+{
+	Bitmap::Bitmap( ID2D1Bitmap* pointer )
 	{
-		public ref class SolidColorBrush : Brush
-		{
-			COMOBJECT(ID2D1SolidColorBrush, SolidColorBrush);
-			
-		public:
-			SolidColorBrush( RenderTarget^ renderTarget, Color4 color );
-			SolidColorBrush( RenderTarget^ renderTarget, Color4 color, BrushProperties properties );
-
-			static SolidColorBrush^ FromPointer( System::IntPtr pointer );
-
-			property Color4 Color
-			{
-				Color4 get();
-				void set( Color4 value );
-			}
-		};
+		Construct( pointer );
 	}
+
+	Bitmap::Bitmap( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+	}
+
+	Bitmap^ Bitmap::FromPointer( ID2D1Bitmap* pointer )
+	{
+		if( pointer == 0 )
+			return nullptr;
+
+		Bitmap^ tableEntry = safe_cast<Bitmap^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew Bitmap( pointer );
+	}
+
+	Bitmap^ Bitmap::FromPointer( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		Bitmap^ tableEntry = safe_cast<Bitmap^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew Bitmap( pointer );
+	}
+}
 }

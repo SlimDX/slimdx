@@ -19,30 +19,19 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Brush.h"
-#include "BrushProperties.h"
+#define DEFINE_ENUM_FLAG_OPERATORS(x)
+
+#include <d2d1.h>
+#include <d2d1helper.h>
+
+#include "RoundedRectangle.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct2D
-	{
-		public ref class SolidColorBrush : Brush
-		{
-			COMOBJECT(ID2D1SolidColorBrush, SolidColorBrush);
-			
-		public:
-			SolidColorBrush( RenderTarget^ renderTarget, Color4 color );
-			SolidColorBrush( RenderTarget^ renderTarget, Color4 color, BrushProperties properties );
-
-			static SolidColorBrush^ FromPointer( System::IntPtr pointer );
-
-			property Color4 Color
-			{
-				Color4 get();
-				void set( Color4 value );
-			}
-		};
-	}
+namespace Direct2D
+{
+}
 }

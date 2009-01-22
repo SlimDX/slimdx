@@ -101,5 +101,16 @@ namespace Direct2D
 
 		Construct( brush );
 	}
+
+	Color4 SolidColorBrush::Color::get()
+	{
+		D2D1_COLOR_F color = InternalPointer->GetColor();
+		return Color4( color.a, color.r, color.g, color.b );
+	}
+
+	void SolidColorBrush::Color::set( Color4 value )
+	{
+		InternalPointer->SetColor( reinterpret_cast<D2D1_COLOR_F*>( &value ) );
+	}
 }
 }

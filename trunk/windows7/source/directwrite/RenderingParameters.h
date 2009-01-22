@@ -21,28 +21,18 @@
 */
 #pragma once
 
-#include "Brush.h"
-#include "BrushProperties.h"
+extern const IID IID_IDWriteRenderingParams;
 
 namespace SlimDX
 {
-	namespace Direct2D
+	namespace DirectWrite
 	{
-		public ref class SolidColorBrush : Brush
+		public ref class RenderingParameters : public ComObject
 		{
-			COMOBJECT(ID2D1SolidColorBrush, SolidColorBrush);
-			
+			COMOBJECT(IDWriteRenderingParams, RenderingParameters);
+
 		public:
-			SolidColorBrush( RenderTarget^ renderTarget, Color4 color );
-			SolidColorBrush( RenderTarget^ renderTarget, Color4 color, BrushProperties properties );
-
-			static SolidColorBrush^ FromPointer( System::IntPtr pointer );
-
-			property Color4 Color
-			{
-				Color4 get();
-				void set( Color4 value );
-			}
+			static RenderingParameters^ FromPointer( System::IntPtr pointer );
 		};
 	}
 }

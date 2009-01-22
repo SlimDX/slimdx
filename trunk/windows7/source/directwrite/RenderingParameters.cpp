@@ -20,44 +20,58 @@
 * THE SOFTWARE.
 */
 
-#define DEFINE_ENUM_FLAG_OPERATORS(x)
+#include <dwrite.h>
+#include <vcclr.h>
 
-#include <d2d1.h>
-#include <d2d1helper.h>
+#include "DirectWriteException.h"
 
-#include "Direct2DException.h"
+#include "RenderingParameters.h"
 
-#include "Brush.h"
-
-const IID IID_ID2D1Brush = __uuidof(ID2D1Brush);
+const IID IID_IDWriteRenderingParams = __uuidof(IDWriteRenderingParams);
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct2D
+namespace DirectWrite
 {
-	float Brush::Opacity::get()
+	RenderingParameters::RenderingParameters( IDWriteRenderingParams* pointer )
 	{
-		return InternalPointer->GetOpacity();
+		Construct( pointer );
 	}
 
-	void Brush::Opacity::set( float value )
+	RenderingParameters::RenderingParameters( IntPtr pointer )
 	{
-		InternalPointer->SetOpacity( value );
+		Construct( pointer, NativeInterface );
 	}
 
-	Matrix3x2 Brush::Transform::get()
+	RenderingParameters^ RenderingParameters::FromPointer( IDWriteRenderingParams* pointer )
 	{
-		Matrix3x2 result;
-		InternalPointer->GetTransform( reinterpret_cast<D2D1_MATRIX_3X2_F*>( &result ) );
+		if( pointer == 0 )
+			return nullptr;
 
-		return result;
+		RenderingParameters^ tableEntry = safe_cast<RenderingParameters^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew RenderingParameters( pointer );
 	}
 
-	void Brush::Transform::set( Matrix3x2 value )
+	RenderingParameters^ RenderingParameters::FromPointer( IntPtr pointer )
 	{
-		InternalPointer->SetTransform( reinterpret_cast<D2D1_MATRIX_3X2_F*>( &value ) );
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		RenderingParameters^ tableEntry = safe_cast<RenderingParameters^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew RenderingParameters( pointer );
 	}
 }
 }

@@ -49,6 +49,42 @@ namespace Direct2D
 		return RECORD_D2D( InternalPointer->EndDraw() );
 	}
 
+	Result RenderTarget::EndDraw( [Out] Int64% tag1, [Out] Int64% tag2 )
+	{
+		pin_ptr<Int64> pt1 = &tag1;
+		pin_ptr<Int64> pt2 = &tag2;
+
+		HRESULT hr = InternalPointer->EndDraw( reinterpret_cast<D2D1_TAG*>( pt1 ), reinterpret_cast<D2D1_TAG*>( pt2 ) );
+		return RECORD_D2D( hr );
+	}
+
+	Result RenderTarget::Flush()
+	{
+		return RECORD_D2D( InternalPointer->Flush() );
+	}
+
+	Result RenderTarget::Flush( [Out] Int64% tag1, [Out] Int64% tag2 )
+	{
+		pin_ptr<Int64> pt1 = &tag1;
+		pin_ptr<Int64> pt2 = &tag2;
+
+		HRESULT hr = InternalPointer->Flush( reinterpret_cast<D2D1_TAG*>( pt1 ), reinterpret_cast<D2D1_TAG*>( pt2 ) );
+		return RECORD_D2D( hr );
+	}
+
+	void RenderTarget::SetTags( Int64 tag1, Int64 tag2 )
+	{
+		InternalPointer->SetTags( tag1, tag2 );
+	}
+
+	void RenderTarget::GetTags( [Out] Int64% tag1, [Out] Int64% tag2 )
+	{
+		pin_ptr<Int64> pt1 = &tag1;
+		pin_ptr<Int64> pt2 = &tag2;
+
+		InternalPointer->GetTags( reinterpret_cast<D2D1_TAG*>( pt1 ), reinterpret_cast<D2D1_TAG*>( pt2 ) );
+	}
+
 	void RenderTarget::Clear()
 	{
 		InternalPointer->Clear( NULL );
@@ -111,6 +147,16 @@ namespace Direct2D
 		InternalPointer->FillRectangle( rect, brush->InternalPointer );
 	}
 
+	void RenderTarget::FillRoundedRectangle( Brush^ brush, RoundedRectangle rectangle )
+	{
+		InternalPointer->FillRoundedRectangle( reinterpret_cast<D2D1_ROUNDED_RECT*>( &rectangle ), brush->InternalPointer );
+	}
+
+	void RenderTarget::FillEllipse( Brush^ brush, Ellipse ellipse )
+	{
+		InternalPointer->FillEllipse( reinterpret_cast<D2D1_ELLIPSE*>( &ellipse ), brush->InternalPointer );
+	}
+
 	void RenderTarget::DrawRectangle( Brush^ brush, System::Drawing::Rectangle rectangle )
 	{
 		DrawRectangle( brush, RectangleF( static_cast<FLOAT>( rectangle.X ), static_cast<FLOAT>( rectangle.Y ), 
@@ -149,23 +195,38 @@ namespace Direct2D
 		InternalPointer->DrawRectangle( rect, brush->InternalPointer, strokeWidth, style );
 	}
 
-	Matrix3x2 RenderTarget::Transform::get()
+	void RenderTarget::DrawRoundedRectangle( Brush^ brush, RoundedRectangle rectangle )
 	{
-		Matrix3x2 result;
-		InternalPointer->GetTransform( reinterpret_cast<D2D1_MATRIX_3X2_F*>( &result ) );
-
-		return result;
+		InternalPointer->DrawRoundedRectangle( reinterpret_cast<D2D1_ROUNDED_RECT*>( &rectangle ), brush->InternalPointer );
 	}
 
-	void RenderTarget::Transform::set( Matrix3x2 value )
+	void RenderTarget::DrawRoundedRectangle( Brush^ brush, RoundedRectangle rectangle, float strokeWidth )
 	{
-		InternalPointer->SetTransform( reinterpret_cast<D2D1_MATRIX_3X2_F*>( &value ) );
+		InternalPointer->DrawRoundedRectangle( reinterpret_cast<D2D1_ROUNDED_RECT*>( &rectangle ), brush->InternalPointer, strokeWidth );
 	}
 
-	System::Drawing::SizeF RenderTarget::Size::get()
+	void RenderTarget::DrawRoundedRectangle( Brush^ brush, RoundedRectangle rectangle, float strokeWidth, StrokeStyle^ strokeStyle )
 	{
-		D2D1_SIZE_F size = InternalPointer->GetSize();
-		return System::Drawing::SizeF( size.width, size.height );
+		ID2D1StrokeStyle *style = strokeStyle == nullptr ? NULL : strokeStyle->InternalPointer;
+
+		InternalPointer->DrawRoundedRectangle( reinterpret_cast<D2D1_ROUNDED_RECT*>( &rectangle ), brush->InternalPointer, strokeWidth, style );
+	}
+
+	void RenderTarget::DrawEllipse( Brush^ brush, Ellipse ellipse )
+	{
+		InternalPointer->DrawEllipse( reinterpret_cast<D2D1_ELLIPSE*>( &ellipse ), brush->InternalPointer );
+	}
+
+	void RenderTarget::DrawEllipse( Brush^ brush, Ellipse ellipse, float strokeWidth )
+	{
+		InternalPointer->DrawEllipse( reinterpret_cast<D2D1_ELLIPSE*>( &ellipse ), brush->InternalPointer, strokeWidth );
+	}
+
+	void RenderTarget::DrawEllipse( Brush^ brush, Ellipse ellipse, float strokeWidth, StrokeStyle^ strokeStyle )
+	{
+		ID2D1StrokeStyle *style = strokeStyle == nullptr ? NULL : strokeStyle->InternalPointer;
+
+		InternalPointer->DrawEllipse( reinterpret_cast<D2D1_ELLIPSE*>( &ellipse ), brush->InternalPointer, strokeWidth, style );
 	}
 
 	void RenderTarget::DrawTextLayout( Point origin, SlimDX::DirectWrite::TextLayout^ textLayout, Brush^ defaultBrush )
@@ -223,6 +284,100 @@ namespace Direct2D
 
 		InternalPointer->DrawText( pinnedText, text->Length, textFormat->InternalPointer, rect, defaultBrush->InternalPointer,
 			static_cast<D2D1_DRAW_TEXT_OPTIONS>( options ), static_cast<DWRITE_TEXT_MEASURING_METHOD>( measuringMethod ) );
+	}
+
+	void RenderTarget::PopAxisAlignedClip()
+	{
+		InternalPointer->PopAxisAlignedClip();
+	}
+
+	void RenderTarget::PushAxisAlignedClip( System::Drawing::RectangleF clippingArea, SlimDX::Direct2D::AntialiasMode antialiasMode )
+	{
+		D2D1_RECT_F rect = D2D1::RectF( clippingArea.Left, clippingArea.Top, clippingArea.Right, clippingArea.Bottom );
+		InternalPointer->PushAxisAlignedClip( rect, static_cast<D2D1_ANTIALIAS_MODE>( antialiasMode ) );
+	}
+
+	void RenderTarget::PushAxisAlignedClip( System::Drawing::Rectangle clippingArea, SlimDX::Direct2D::AntialiasMode antialiasMode )
+	{
+		PushAxisAlignedClip( RectangleF( static_cast<float>( clippingArea.X ), static_cast<float>( clippingArea.Y ), 
+			static_cast<float>( clippingArea.Width ), static_cast<float>( clippingArea.Height ) ), antialiasMode );
+	}
+
+	SlimDX::DirectWrite::RenderingParameters^ RenderTarget::TextRenderingParameters::get()
+	{
+		IDWriteRenderingParams *pointer = NULL;
+		InternalPointer->GetTextRenderingParams( &pointer );
+
+		return SlimDX::DirectWrite::RenderingParameters::FromPointer( pointer );
+	}
+
+	void RenderTarget::TextRenderingParameters::set( SlimDX::DirectWrite::RenderingParameters^ value )
+	{
+		IDWriteRenderingParams *pointer = value == nullptr ? NULL : value->InternalPointer;
+		InternalPointer->SetTextRenderingParams( pointer );
+	}
+
+	SlimDX::Direct2D::PixelFormat RenderTarget::PixelFormat::get()
+	{
+		D2D1_PIXEL_FORMAT pf = InternalPointer->GetPixelFormat();
+		return SlimDX::Direct2D::PixelFormat( static_cast<SlimDX::DXGI::Format>( pf.format ), static_cast<AlphaMode>( pf.alphaMode ) );
+	}
+
+	Matrix3x2 RenderTarget::Transform::get()
+	{
+		Matrix3x2 result;
+		InternalPointer->GetTransform( reinterpret_cast<D2D1_MATRIX_3X2_F*>( &result ) );
+
+		return result;
+	}
+
+	void RenderTarget::Transform::set( Matrix3x2 value )
+	{
+		InternalPointer->SetTransform( reinterpret_cast<D2D1_MATRIX_3X2_F*>( &value ) );
+	}
+
+	System::Drawing::SizeF RenderTarget::Size::get()
+	{
+		D2D1_SIZE_F size = InternalPointer->GetSize();
+		return System::Drawing::SizeF( size.width, size.height );
+	}
+
+	System::Drawing::Size RenderTarget::PixelSize::get()
+	{
+		D2D1_SIZE_U size = InternalPointer->GetPixelSize();
+		return System::Drawing::Size( size.width, size.height );
+	}
+
+	System::Drawing::SizeF RenderTarget::DotsPerInch::get()
+	{
+		float x, y;
+		InternalPointer->GetDpi( &x, &y );
+		return System::Drawing::SizeF( x, y );
+	}
+
+	void RenderTarget::DotsPerInch::set( SizeF value )
+	{
+		InternalPointer->SetDpi( value.Width, value.Height );
+	}
+
+	SlimDX::Direct2D::AntialiasMode RenderTarget::AntialiasMode::get()
+	{
+		return static_cast<SlimDX::Direct2D::AntialiasMode>( InternalPointer->GetAntialiasMode() );
+	}
+
+	void RenderTarget::AntialiasMode::set( SlimDX::Direct2D::AntialiasMode value )
+	{
+		InternalPointer->SetAntialiasMode( static_cast<D2D1_ANTIALIAS_MODE>( value ) );
+	}
+
+	SlimDX::Direct2D::TextAntialiasMode RenderTarget::TextAntialiasMode::get()
+	{
+		return static_cast<SlimDX::Direct2D::TextAntialiasMode>( InternalPointer->GetTextAntialiasMode() );
+	}
+
+	void RenderTarget::TextAntialiasMode::set( SlimDX::Direct2D::TextAntialiasMode value )
+	{
+		InternalPointer->SetTextAntialiasMode( static_cast<D2D1_TEXT_ANTIALIAS_MODE>( value ) );
 	}
 }
 }
