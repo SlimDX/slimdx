@@ -67,6 +67,18 @@ namespace SlimDX
 			MultiThreaded = D2D1_FACTORY_TYPE_MULTI_THREADED
 		};
 
+		public enum class Gamma : System::Int32
+		{
+			StandardRgb = D2D1_GAMMA_2_2,
+			Linear = D2D1_GAMMA_1_0
+		};
+
+		public enum class InterpolationMode : System::Int32
+		{
+			NearestNeighbor = D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR,
+			Linear = D2D1_BITMAP_INTERPOLATION_MODE_LINEAR
+		};
+
 		public enum class PresentOptions : System::Int32
 		{
 			None = D2D1_PRESENT_OPTIONS_NONE,

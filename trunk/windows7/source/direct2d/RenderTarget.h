@@ -38,6 +38,8 @@ namespace SlimDX
 {
 	namespace Direct2D
 	{
+		ref class Bitmap;
+
 		public ref class RenderTarget abstract : Resource
 		{
 			COMOBJECT_BASE(ID2D1RenderTarget);
@@ -94,6 +96,20 @@ namespace SlimDX
 			void DrawText( System::String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::RectangleF layoutRectangle, Brush^ defaultBrush );
 			void DrawText( System::String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::Rectangle layoutRectangle, Brush^ defaultBrush, DrawTextOptions options, SlimDX::DirectWrite::TextMeasuringMethod measuringMethod );
 			void DrawText( System::String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::RectangleF layoutRectangle, Brush^ defaultBrush, DrawTextOptions options, SlimDX::DirectWrite::TextMeasuringMethod measuringMethod );
+
+			void DrawBitmap( Bitmap^ bitmap );
+			void DrawBitmap( Bitmap^ bitmap, System::Drawing::RectangleF destinationRectangle );
+			void DrawBitmap( Bitmap^ bitmap, System::Drawing::RectangleF destinationRectangle, float opacity );
+			void DrawBitmap( Bitmap^ bitmap, System::Drawing::RectangleF destinationRectangle, float opacity, InterpolationMode interpolationMode );
+			void DrawBitmap( Bitmap^ bitmap, System::Drawing::RectangleF destinationRectangle, float opacity, InterpolationMode interpolationMode, System::Drawing::RectangleF sourceRectangle );
+
+			void DrawBitmap( Bitmap^ bitmap, System::Drawing::Rectangle destinationRectangle );
+			void DrawBitmap( Bitmap^ bitmap, System::Drawing::Rectangle destinationRectangle, float opacity );
+			void DrawBitmap( Bitmap^ bitmap, System::Drawing::Rectangle destinationRectangle, float opacity, InterpolationMode interpolationMode );
+			void DrawBitmap( Bitmap^ bitmap, System::Drawing::Rectangle destinationRectangle, float opacity, InterpolationMode interpolationMode, System::Drawing::Rectangle sourceRectangle );
+
+			void FillOpacityMask( Bitmap^ mask, Brush^ brush, System::Nullable<System::Drawing::RectangleF> sourceRectangle, System::Nullable<System::Drawing::RectangleF> destinationRectangle );
+			void FillOpacityMask( Bitmap^ mask, Brush^ brush, System::Nullable<System::Drawing::RectangleF> sourceRectangle, System::Nullable<System::Drawing::RectangleF> destinationRectangle, Gamma gamma );
 
 			void PopAxisAlignedClip();
 			void PushAxisAlignedClip( System::Drawing::RectangleF clippingArea, AntialiasMode antialiasMode );
