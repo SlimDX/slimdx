@@ -39,6 +39,12 @@ namespace SlimDX
 			Ignore = D2D1_ALPHA_MODE_IGNORE
 		};
 
+		public enum class AntialiasMode : System::Int32
+		{
+			PerPrimitive = D2D1_ANTIALIAS_MODE_PER_PRIMITIVE,
+			Aliased = D2D1_ANTIALIAS_MODE_ALIASED
+		};
+
 		public enum class DebugLevel : System::Int32
 		{
 			None = D2D1_DEBUG_LEVEL_NONE,
@@ -76,6 +82,14 @@ namespace SlimDX
 			ForceHardwareRendering = D2D1_RENDER_TARGET_USAGE_FORCE_HARDWARE_RENDERING,
 			ForceSoftwareRendering = D2D1_RENDER_TARGET_USAGE_FORCE_SOFTWARE_RENDERING,
 			GdiCompatible = D2D1_RENDER_TARGET_USAGE_GDI_COMPATIBLE
+		};
+
+		public enum class TextAntialiasMode : System::Int32
+		{
+			Default = D2D1_TEXT_ANTIALIAS_MODE_DEFAULT,
+			ClearType = D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE,
+			GrayScale = D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE,
+			Aliased = D2D1_TEXT_ANTIALIAS_MODE_ALIASED
 		};
 	}
 }

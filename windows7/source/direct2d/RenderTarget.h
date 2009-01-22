@@ -22,11 +22,17 @@
 #pragma once
 
 #include "../directwrite/TextLayout.h"
+#include "../directwrite/RenderingParameters.h"
 
 #include "Resource.h"
 #include "Matrix3x2.h"
 #include "StrokeStyle.h"
 #include "Brush.h"
+#include "PixelFormat.h"
+#include "Ellipse.h"
+#include "RoundedRectangle.h"
+
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
@@ -39,9 +45,15 @@ namespace SlimDX
 		public:
 			void BeginDraw();
 			Result EndDraw();
+			Result EndDraw( [Out] System::Int64% tag1, [Out] System::Int64% tag2 );
+			Result Flush();
+			Result Flush( [Out] System::Int64% tag1, [Out] System::Int64% tag2 );
 
 			void Clear();
 			void Clear( Color4 color );
+
+			void SetTags( System::Int64 tag1, System::Int64 tag2 );
+			void GetTags( [Out] System::Int64% tag1, [Out] System::Int64% tag2 );
 
 			void DrawLine( Brush^ brush, System::Drawing::PointF point1, System::Drawing::PointF point2 );
 			void DrawLine( Brush^ brush, System::Drawing::PointF point1, System::Drawing::PointF point2, float strokeWidth );
@@ -54,6 +66,9 @@ namespace SlimDX
 			void FillRectangle( Brush^ brush, System::Drawing::Rectangle rectangle );
 			void FillRectangle( Brush^ brush, System::Drawing::RectangleF rectangle );
 
+			void FillRoundedRectangle( Brush^ brush, RoundedRectangle rectangle );
+			void FillEllipse( Brush^ brush, Ellipse ellipse );
+
 			void DrawRectangle( Brush^ brush, System::Drawing::Rectangle rectangle );
 			void DrawRectangle( Brush^ brush, System::Drawing::Rectangle rectangle, float strokeWidth );
 			void DrawRectangle( Brush^ brush, System::Drawing::Rectangle rectangle, float strokeWidth, StrokeStyle^ strokeStyle );
@@ -61,6 +76,14 @@ namespace SlimDX
 			void DrawRectangle( Brush^ brush, System::Drawing::RectangleF rectangle );
 			void DrawRectangle( Brush^ brush, System::Drawing::RectangleF rectangle, float strokeWidth );
 			void DrawRectangle( Brush^ brush, System::Drawing::RectangleF rectangle, float strokeWidth, StrokeStyle^ strokeStyle );
+
+			void DrawRoundedRectangle( Brush^ brush, RoundedRectangle rectangle );
+			void DrawRoundedRectangle( Brush^ brush, RoundedRectangle rectangle, float strokeWidth );
+			void DrawRoundedRectangle( Brush^ brush, RoundedRectangle rectangle, float strokeWidth, StrokeStyle^ strokeStyle );
+
+			void DrawEllipse( Brush^ brush, Ellipse ellipse );
+			void DrawEllipse( Brush^ brush, Ellipse ellipse, float strokeWidth );
+			void DrawEllipse( Brush^ brush, Ellipse ellipse, float strokeWidth, StrokeStyle^ strokeStyle );
 
 			void DrawTextLayout( System::Drawing::Point origin, SlimDX::DirectWrite::TextLayout^ textLayout, Brush^ defaultBrush );
 			void DrawTextLayout( System::Drawing::PointF origin, SlimDX::DirectWrite::TextLayout^ textLayout, Brush^ defaultBrush );
@@ -72,15 +95,53 @@ namespace SlimDX
 			void DrawText( System::String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::Rectangle layoutRectangle, Brush^ defaultBrush, DrawTextOptions options, SlimDX::DirectWrite::TextMeasuringMethod measuringMethod );
 			void DrawText( System::String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::RectangleF layoutRectangle, Brush^ defaultBrush, DrawTextOptions options, SlimDX::DirectWrite::TextMeasuringMethod measuringMethod );
 
+			void PopAxisAlignedClip();
+			void PushAxisAlignedClip( System::Drawing::RectangleF clippingArea, AntialiasMode antialiasMode );
+			void PushAxisAlignedClip( System::Drawing::Rectangle clippingArea, AntialiasMode antialiasMode );
+
+			property SlimDX::DirectWrite::RenderingParameters^ TextRenderingParameters
+			{
+				SlimDX::DirectWrite::RenderingParameters^ get();
+				void set( SlimDX::DirectWrite::RenderingParameters^ value );
+			}
+
+			property PixelFormat PixelFormat
+			{
+				SlimDX::Direct2D::PixelFormat get();
+			}
+
+			property System::Drawing::SizeF Size
+			{
+				System::Drawing::SizeF get();
+			}
+
+			property System::Drawing::Size PixelSize
+			{
+				System::Drawing::Size get();
+			}
+
 			property Matrix3x2 Transform
 			{
 				Matrix3x2 get();
 				void set( Matrix3x2 value );
 			}
 
-			property System::Drawing::SizeF Size
+			property System::Drawing::SizeF DotsPerInch
 			{
 				System::Drawing::SizeF get();
+				void set( System::Drawing::SizeF value );
+			}
+
+			property AntialiasMode AntialiasMode
+			{
+				SlimDX::Direct2D::AntialiasMode get();
+				void set( SlimDX::Direct2D::AntialiasMode value );
+			}
+
+			property TextAntialiasMode TextAntialiasMode
+			{
+				SlimDX::Direct2D::TextAntialiasMode get();
+				void set( SlimDX::Direct2D::TextAntialiasMode value );
 			}
 		};
 	}

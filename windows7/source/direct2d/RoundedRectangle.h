@@ -21,28 +21,19 @@
 */
 #pragma once
 
-#include "Brush.h"
-#include "BrushProperties.h"
-
 namespace SlimDX
 {
 	namespace Direct2D
 	{
-		public ref class SolidColorBrush : Brush
+		public value class RoundedRectangle
 		{
-			COMOBJECT(ID2D1SolidColorBrush, SolidColorBrush);
-			
 		public:
-			SolidColorBrush( RenderTarget^ renderTarget, Color4 color );
-			SolidColorBrush( RenderTarget^ renderTarget, Color4 color, BrushProperties properties );
-
-			static SolidColorBrush^ FromPointer( System::IntPtr pointer );
-
-			property Color4 Color
-			{
-				Color4 get();
-				void set( Color4 value );
-			}
+			property float Left;
+			property float Top;
+			property float Right;
+			property float Bottom;
+			property float RadiusX;
+			property float RadiusY;
 		};
 	}
 }

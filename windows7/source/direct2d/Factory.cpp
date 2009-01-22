@@ -104,6 +104,11 @@ namespace Direct2D
 		Construct( factory );
 	}
 
+	Result Factory::ReloadSystemMetrics()
+	{
+		return RECORD_D2D( InternalPointer->ReloadSystemMetrics() );
+	}
+
 	System::Drawing::SizeF Factory::DesktopDpi::get()
 	{
 		float x, y;

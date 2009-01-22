@@ -40,6 +40,8 @@ namespace SlimDX
 
 			static Factory^ FromPointer( System::IntPtr pointer );
 
+			Result ReloadSystemMetrics();
+
 			property System::Drawing::SizeF DesktopDpi
 			{
 				System::Drawing::SizeF get();
