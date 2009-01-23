@@ -21,9 +21,14 @@
 */
 
 #include <xaudio2.h>
+
 #include "../VersionConfig.h"
+#include "../Utilities.h"
+#include "../DataStream.h"
+
 #include "AudioBuffer.h"
 
+using namespace System;
 using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
@@ -34,9 +39,6 @@ namespace XAudio2
 	{
 		XAUDIO2_BUFFER result;
 
-		Destruct();
-		handle = GCHandle::Alloc( AudioData, GCHandleType::Pinned );
-
 		result.Flags = static_cast<UINT32>( Flags );
 		result.AudioBytes = AudioBytes;
 		result.PlayBegin = PlayBegin;
@@ -45,11 +47,23 @@ namespace XAudio2
 		result.LoopLength = LoopLength;
 		result.LoopCount = LoopCount;
 		result.pContext = Context.ToPointer();
+
+		DataStream^ dataStream;
+		array<Byte>^ bytes = Utilities::ReadStream( AudioData, 0, &dataStream );
+
+		if( bytes == nullptr )
+			result.pAudioData = reinterpret_cast<BYTE*>( dataStream->RawPointer );
+		else
+		{
+			Destruct();
+			handle = GCHandle::Alloc( bytes, GCHandleType::Pinned );
+
 #if SLIMDX_XAUDIO2_VERSION < 23
-		result.pAudioData = reinterpret_cast<const BYTE*>( handle.AddrOfPinnedObject().ToPointer() );
+			result.pAudioData = reinterpret_cast<const BYTE*>( handle.AddrOfPinnedObject().ToPointer() );
 #else
-		result.pAudioData = reinterpret_cast<BYTE*>( handle.AddrOfPinnedObject().ToPointer() );
+			result.pAudioData = reinterpret_cast<BYTE*>( handle.AddrOfPinnedObject().ToPointer() );
 #endif
+		}
 
 		return result;
 	}

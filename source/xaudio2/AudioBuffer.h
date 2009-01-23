@@ -50,7 +50,7 @@ namespace SlimDX
 			property int LoopLength;
 			property int LoopCount;
 			property System::IntPtr Context;
-			property array<System::Byte>^ AudioData;
+			property System::IO::Stream^ AudioData;
 		};
 	}
 }

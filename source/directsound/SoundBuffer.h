@@ -69,7 +69,15 @@ namespace SlimDX
 			/// Writes data to the buffer.
 			/// </summary>
 			/// <returns></returns>
-			Result Write( array<System::Byte>^ data, int offset, LockFlags flags );
+			generic<typename T> where T : value class
+			Result Write( array<T>^ data, int startIndex, int count, int bufferOffset, LockFlags flags );
+
+			/// <summary>
+			/// Writes data to the buffer.
+			/// </summary>
+			/// <returns></returns>
+			generic<typename T> where T : value class
+			Result Write( array<T>^ data, int bufferOffset, LockFlags flags );
 
 			property SlimDX::Multimedia::WaveFormat^ Format
 			{

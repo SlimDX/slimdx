@@ -67,9 +67,9 @@ namespace DirectSound
 		if( RECORD_DSOUND( hr ).IsFailure )
 			return nullptr;
 
-		DataStream^ stream1 = gcnew DataStream( buffer1, size1, true, true, false );
+		DataStream^ stream1 = gcnew DataStream( buffer1, size1, false, true, false );
 		if( buffer2 != NULL )
-			secondPart = gcnew DataStream( buffer2, size2, true, true, false );
+			secondPart = gcnew DataStream( buffer2, size2, false, true, false );
 
 		return stream1;
 	}
@@ -89,21 +89,31 @@ namespace DirectSound
 		return RECORD_DSOUND( hr );
 	}
 
-	Result SoundBuffer::Write( array<Byte>^ data, int offset, SlimDX::DirectSound::LockFlags flags )
+	generic<typename T>
+	Result SoundBuffer::Write( array<T>^ data, int bufferOffset, SlimDX::DirectSound::LockFlags flags )
 	{
+		return Write( data, 0, 0, bufferOffset, flags );
+	}
+
+	generic<typename T>
+	Result SoundBuffer::Write( array<T>^ data, int startIndex, int count, int bufferOffset, SlimDX::DirectSound::LockFlags flags )
+	{
+		Utilities::CheckArrayBounds( data, startIndex, count );
+		int bytes = sizeof(T) * count;
+
 		DataStream^ stream2;
-		DataStream^ stream1 = Lock( offset, data->Length, flags, stream2 );
+		DataStream^ stream1 = Lock( bufferOffset, bytes, flags, stream2 );
 
 		if( stream1 == nullptr )
 			return Result::Last;
 
-		stream1->Write( data, 0, static_cast<int>( stream1->Length ) );
+		stream1->WriteRange( data, startIndex, static_cast<int>( stream1->Length ) );
 
-		if( stream2 != nullptr && data->Length > stream1->Length )				
+		if( stream2 != nullptr && count > stream1->Length )				
 		{
-			int offset2 = static_cast<int>( stream1->Length );
-			int count = static_cast<int>( data->Length ) - offset2;
-			stream2->Write( data, offset2, count );
+			int offset2 = static_cast<int>( stream1->Length ) + startIndex;
+			int count2 = static_cast<int>( data->Length ) - offset2;
+			stream2->WriteRange( data, offset2, count2 );
 		}
 
 		return Unlock( stream1, stream2 );
