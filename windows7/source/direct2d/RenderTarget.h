@@ -42,6 +42,8 @@ namespace SlimDX
 	{
 		ref class Bitmap;
 		ref class Layer;
+		ref class BitmapRenderTarget;
+		ref class Mesh;
 
 		public ref class RenderTarget abstract : Resource
 		{
@@ -53,6 +55,12 @@ namespace SlimDX
 			Result EndDraw( [Out] System::Int64% tag1, [Out] System::Int64% tag2 );
 			Result Flush();
 			Result Flush( [Out] System::Int64% tag1, [Out] System::Int64% tag2 );
+
+			BitmapRenderTarget^ CreateCompatibleRenderTarget();
+			BitmapRenderTarget^ CreateCompatibleRenderTarget( System::Drawing::SizeF desiredSize );
+			BitmapRenderTarget^ CreateCompatibleRenderTarget( System::Drawing::SizeF desiredSize, System::Drawing::Size desiredPixelSize );
+			BitmapRenderTarget^ CreateCompatibleRenderTarget( System::Drawing::SizeF desiredSize, System::Drawing::Size desiredPixelSize, PixelFormat desiredPixelFormat );
+			BitmapRenderTarget^ CreateCompatibleRenderTarget( System::Drawing::SizeF desiredSize, System::Drawing::Size desiredPixelSize, PixelFormat desiredPixelFormat, CompatibleRenderTargetOptions options );
 
 			void Clear();
 			void Clear( Color4 color );
@@ -113,6 +121,8 @@ namespace SlimDX
 
 			void FillOpacityMask( Bitmap^ mask, Brush^ brush, System::Nullable<System::Drawing::RectangleF> sourceRectangle, System::Nullable<System::Drawing::RectangleF> destinationRectangle );
 			void FillOpacityMask( Bitmap^ mask, Brush^ brush, System::Nullable<System::Drawing::RectangleF> sourceRectangle, System::Nullable<System::Drawing::RectangleF> destinationRectangle, Gamma gamma );
+
+			void FillMesh( Mesh^ mesh, Brush^ brush );
 
 			void PopAxisAlignedClip();
 			void PushAxisAlignedClip( System::Drawing::RectangleF clippingArea, AntialiasMode antialiasMode );
