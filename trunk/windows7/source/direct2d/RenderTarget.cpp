@@ -32,6 +32,8 @@
 #include "ConversionMethods.h"
 #include "Bitmap.h"
 #include "Layer.h"
+#include "BitmapRenderTarget.h"
+#include "Mesh.h"
 
 const IID IID_ID2D1RenderTarget = __uuidof(ID2D1RenderTarget);
 
@@ -86,6 +88,69 @@ namespace Direct2D
 		pin_ptr<Int64> pt2 = &tag2;
 
 		InternalPointer->GetTags( reinterpret_cast<D2D1_TAG*>( pt1 ), reinterpret_cast<D2D1_TAG*>( pt2 ) );
+	}
+
+	BitmapRenderTarget^ RenderTarget::CreateCompatibleRenderTarget()
+	{
+		ID2D1BitmapRenderTarget *result = NULL;
+
+		HRESULT hr = InternalPointer->CreateCompatibleRenderTarget( &result );
+
+		if( RECORD_D2D( hr ).IsFailure )
+			return nullptr;
+
+		return BitmapRenderTarget::FromPointer( result );
+	}
+
+	BitmapRenderTarget^ RenderTarget::CreateCompatibleRenderTarget( System::Drawing::SizeF desiredSize )
+	{
+		ID2D1BitmapRenderTarget *result = NULL;
+
+		HRESULT hr = InternalPointer->CreateCompatibleRenderTarget( D2D1::SizeF( desiredSize.Width, desiredSize.Height ), &result );
+
+		if( RECORD_D2D( hr ).IsFailure )
+			return nullptr;
+
+		return BitmapRenderTarget::FromPointer( result );
+	}
+
+	BitmapRenderTarget^ RenderTarget::CreateCompatibleRenderTarget( System::Drawing::SizeF desiredSize, System::Drawing::Size desiredPixelSize )
+	{
+		ID2D1BitmapRenderTarget *result = NULL;
+
+		HRESULT hr = InternalPointer->CreateCompatibleRenderTarget( D2D1::SizeF( desiredSize.Width, desiredSize.Height ), D2D1::SizeU( desiredPixelSize.Width, desiredPixelSize.Height ), &result );
+
+		if( RECORD_D2D( hr ).IsFailure )
+			return nullptr;
+
+		return BitmapRenderTarget::FromPointer( result );
+	}
+
+	BitmapRenderTarget^ RenderTarget::CreateCompatibleRenderTarget( System::Drawing::SizeF desiredSize, System::Drawing::Size desiredPixelSize, SlimDX::Direct2D::PixelFormat desiredPixelFormat )
+	{
+		ID2D1BitmapRenderTarget *result = NULL;
+
+		HRESULT hr = InternalPointer->CreateCompatibleRenderTarget( D2D1::SizeF( desiredSize.Width, desiredSize.Height ), D2D1::SizeU( desiredPixelSize.Width, desiredPixelSize.Height ),
+			D2D1::PixelFormat( static_cast<DXGI_FORMAT>( desiredPixelFormat.Format ), static_cast<D2D1_ALPHA_MODE>( desiredPixelFormat.AlphaMode ) ), &result );
+
+		if( RECORD_D2D( hr ).IsFailure )
+			return nullptr;
+
+		return BitmapRenderTarget::FromPointer( result );
+	}
+
+	BitmapRenderTarget^ RenderTarget::CreateCompatibleRenderTarget( System::Drawing::SizeF desiredSize, System::Drawing::Size desiredPixelSize, SlimDX::Direct2D::PixelFormat desiredPixelFormat, CompatibleRenderTargetOptions options )
+	{
+		ID2D1BitmapRenderTarget *result = NULL;
+
+		HRESULT hr = InternalPointer->CreateCompatibleRenderTarget( D2D1::SizeF( desiredSize.Width, desiredSize.Height ), D2D1::SizeU( desiredPixelSize.Width, desiredPixelSize.Height ),
+			D2D1::PixelFormat( static_cast<DXGI_FORMAT>( desiredPixelFormat.Format ), static_cast<D2D1_ALPHA_MODE>( desiredPixelFormat.AlphaMode ) ), 
+			static_cast<D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS>( options ), &result );
+
+		if( RECORD_D2D( hr ).IsFailure )
+			return nullptr;
+
+		return BitmapRenderTarget::FromPointer( result );
 	}
 
 	void RenderTarget::Clear()
@@ -384,6 +449,11 @@ namespace Direct2D
 		}
 
 		InternalPointer->FillOpacityMask( mask->InternalPointer, brush->InternalPointer, destRectPtr, sourceRectPtr, &gs );
+	}
+
+	void RenderTarget::FillMesh( Mesh^ mesh, Brush^ brush )
+	{
+		InternalPointer->FillMesh( mesh->InternalPointer, brush->InternalPointer );
 	}
 
 	void RenderTarget::PopAxisAlignedClip()

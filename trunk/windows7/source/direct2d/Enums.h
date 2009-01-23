@@ -53,6 +53,12 @@ namespace SlimDX
 			Triangle = D2D1_CAP_STYLE_TRIANGLE
 		};
 
+		public enum class CompatibleRenderTargetOptions : System::Int32
+		{
+			None = D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE,
+			GdiCompatible = D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_GDI_COMPATIBLE
+		};
+
 		public enum class DashStyle : System::Int32
 		{
 			Solid = D2D1_DASH_STYLE_SOLID,
@@ -77,6 +83,13 @@ namespace SlimDX
 			None = D2D1_DRAW_TEXT_OPTIONS_NONE,
 			NoSnap = D2D1_DRAW_TEXT_OPTIONS_NO_SNAP,
 			NoClip = D2D1_DRAW_TEXT_OPTIONS_NO_CLIP
+		};
+
+		public enum class ExtendMode : System::Int32
+		{
+			Clamp = D2D1_EXTEND_MODE_CLAMP,
+			Wrap = D2D1_EXTEND_MODE_WRAP,
+			Mirror = D2D1_EXTEND_MODE_MIRROR
 		};
 
 		public enum class FactoryType : System::Int32

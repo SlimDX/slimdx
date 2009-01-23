@@ -1116,6 +1116,30 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="BitmapRenderTarget"
+					>
+					<File
+						RelativePath=".\source\direct2d\BitmapRenderTarget.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\BitmapRenderTarget.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="DeviceContextRenderTarget"
+					>
+					<File
+						RelativePath=".\source\direct2d\DeviceContextRenderTarget.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\DeviceContextRenderTarget.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Brushes"
@@ -1161,6 +1185,26 @@
 					</File>
 					<File
 						RelativePath=".\source\direct2d\SolidColorBrush.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="BitmapBrush"
+					>
+					<File
+						RelativePath=".\source\direct2d\BitmapBrush.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\BitmapBrush.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\BitmapBrushProperties.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\BitmapBrushProperties.h"
 						>
 					</File>
 				</Filter>
@@ -1278,6 +1322,14 @@
 					RelativePath=".\source\direct2d\RoundedRectangle.h"
 					>
 				</File>
+				<File
+					RelativePath=".\source\direct2d\Triangle.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\Triangle.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Bitmap"
@@ -1336,6 +1388,30 @@
 				</File>
 				<File
 					RelativePath=".\source\direct2d\LayerParameters.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Sinks"
+				>
+				<File
+					RelativePath=".\source\direct2d\TessellationSink.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\TessellationSink.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Mesh"
+				>
+				<File
+					RelativePath=".\source\direct2d\Mesh.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\Mesh.h"
 					>
 				</File>
 			</Filter>
