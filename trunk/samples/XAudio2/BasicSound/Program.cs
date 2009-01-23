@@ -42,7 +42,7 @@ namespace BasicSound
             // play a PCM file
             PlayPCM(device, "MusicMono.wav");
 
-            // play a 5.1 PCM wave extensible file (Can't do this yet)
+            // play a 5.1 PCM wave extensible file
             PlayPCM(device, "MusicSurround.wav");
 
             masteringVoice.Dispose();
@@ -51,26 +51,14 @@ namespace BasicSound
 
         static void PlayPCM(XAudio2 device, string fileName)
         {
-            byte[] data;
-            WaveFormat format;
+            WaveStream stream = new WaveStream(fileName);
 
-            // read in the wav file
-            using(WaveStream stream = new WaveStream(fileName))
-            {
-                format = stream.Format;
-                data = new byte[stream.Length];
-
-                stream.Read(data, 0, (int)stream.Length);
-            }
-
-            SourceVoice sourceVoice = new SourceVoice(device, format);
-
-            // build the wave sample data
             AudioBuffer buffer = new AudioBuffer();
-            buffer.AudioData = data;
-            buffer.AudioBytes = data.Length;
+            buffer.AudioData = stream;
+            buffer.AudioBytes = (int)stream.Length;
             buffer.Flags = BufferFlags.EndOfStream;
 
+            SourceVoice sourceVoice = new SourceVoice(device, stream.Format);
             sourceVoice.SubmitSourceBuffer(buffer);
             sourceVoice.Start();
 
@@ -90,6 +78,7 @@ namespace BasicSound
             // cleanup the voice
             buffer.Dispose();
             sourceVoice.Dispose();
+            stream.Dispose();
         }
     }
 }
