@@ -21,22 +21,37 @@
 */
 #pragma once
 
-#include "RenderTarget.h"
+#include "Enums.h"
+#include "BezierSegment.h"
 
 namespace SlimDX
 {
 	namespace Direct2D
 	{
-		public ref class DeviceContextRenderTarget : public RenderTarget
+		public ref class SimplifiedGeometrySink : ComObject
 		{
-			COMOBJECT(ID2D1DCRenderTarget, DeviceContextRenderTarget);
-
+			COMOBJECT(ID2D1SimplifiedGeometrySink, SimplifiedGeometrySink);
+			
 		public:
-			DeviceContextRenderTarget( SlimDX::Direct2D::Factory^ factory, RenderTargetProperties renderTargetProperties );
+			static SimplifiedGeometrySink^ FromPointer( System::IntPtr pointer );
 
-			static DeviceContextRenderTarget^ FromPointer( System::IntPtr pointer );
+			void BeginFigure( System::Drawing::Point startPoint, FigureBegin style );
+			void BeginFigure( System::Drawing::PointF startPoint, FigureBegin style );
+			void EndFigure( FigureEnd style );
 
-			Result BindDeviceContext( System::IntPtr deviceContext, System::Drawing::Rectangle dimensions );
+			Result Close();
+
+			void SetFillMode( FillMode fillMode );
+			void SetSegmentFlags( PathSegment vertexFlags );
+
+			void AddLine( int x1, int y1, int x2, int y2 );
+			void AddLine( float x1, float y1, float x2, float y2 );
+			void AddLine( System::Drawing::Point point1, System::Drawing::Point point2 );
+			void AddLine( System::Drawing::PointF point1, System::Drawing::PointF point2 );
+			void AddLines( array<System::Drawing::PointF>^ points );
+
+			void AddBezier( BezierSegment bezier );
+			void AddBeziers( array<BezierSegment>^ beziers );
 		};
 	}
 }

@@ -30,9 +30,9 @@
 #include "RenderTargetProperties.h"
 #include "Factory.h"
 #include "RenderTarget.h"
-#include "DeviceContextRenderTarget.h"
+#include "GdiInteropRenderTarget.h"
 
-const IID IID_ID2D1DCRenderTarget = __uuidof(ID2D1DCRenderTarget);
+const IID IID_ID2D1GdiInteropRenderTarget = __uuidof(ID2D1GdiInteropRenderTarget);
 
 using namespace System;
 
@@ -40,66 +40,83 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	DeviceContextRenderTarget::DeviceContextRenderTarget( ID2D1DCRenderTarget* pointer )
+	GdiInteropRenderTarget::GdiInteropRenderTarget( ID2D1GdiInteropRenderTarget* pointer )
 	{
 		Construct( pointer );
 	}
 	
-	DeviceContextRenderTarget::DeviceContextRenderTarget( IntPtr pointer )
+	GdiInteropRenderTarget::GdiInteropRenderTarget( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
 	
-	DeviceContextRenderTarget^ DeviceContextRenderTarget::FromPointer( ID2D1DCRenderTarget* pointer )
+	GdiInteropRenderTarget^ GdiInteropRenderTarget::FromPointer( ID2D1GdiInteropRenderTarget* pointer )
 	{
 		if( pointer == 0 )
 			return nullptr;
 
-		DeviceContextRenderTarget^ tableEntry = safe_cast<DeviceContextRenderTarget^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		GdiInteropRenderTarget^ tableEntry = safe_cast<GdiInteropRenderTarget^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
 			return tableEntry;
 		}
 
-		return gcnew DeviceContextRenderTarget( pointer );
+		return gcnew GdiInteropRenderTarget( pointer );
 	}
 
-	DeviceContextRenderTarget^ DeviceContextRenderTarget::FromPointer( IntPtr pointer )
+	GdiInteropRenderTarget^ GdiInteropRenderTarget::FromPointer( IntPtr pointer )
 	{
 		if( pointer == IntPtr::Zero )
 			throw gcnew ArgumentNullException( "pointer" );
 
-		DeviceContextRenderTarget^ tableEntry = safe_cast<DeviceContextRenderTarget^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		GdiInteropRenderTarget^ tableEntry = safe_cast<GdiInteropRenderTarget^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
 		}
 
-		return gcnew DeviceContextRenderTarget( pointer );
+		return gcnew GdiInteropRenderTarget( pointer );
 	}
 
-	DeviceContextRenderTarget::DeviceContextRenderTarget( SlimDX::Direct2D::Factory^ factory, RenderTargetProperties renderTargetProperties )
+	GdiInteropRenderTarget::GdiInteropRenderTarget( RenderTarget^ renderTarget )
 	{
-		ID2D1DCRenderTarget *renderTarget = NULL;
+		ID2D1GdiInteropRenderTarget *rt = NULL;
 
-		HRESULT hr = factory->InternalPointer->CreateDCRenderTarget( reinterpret_cast<D2D1_RENDER_TARGET_PROPERTIES*>( &renderTargetProperties ), &renderTarget );
+		HRESULT hr = renderTarget->InternalPointer->QueryInterface( IID_ID2D1GdiInteropRenderTarget, reinterpret_cast<void**>( &rt ) );
 
 		if( RECORD_D2D( hr ).IsFailure )
 			throw gcnew Direct2DException( Result::Last );
 
-		Construct( renderTarget );
+		Construct( rt );
 	}
 
-	Result DeviceContextRenderTarget::BindDeviceContext( System::IntPtr deviceContext, System::Drawing::Rectangle dimensions )
+	IntPtr GdiInteropRenderTarget::GetDC( DeviceContextInitializeMode mode )
+	{
+		HDC hdc;
+
+		HRESULT hr = InternalPointer->GetDC( static_cast<D2D1_DC_INITIALIZE_MODE>( mode ), &hdc );
+		if( RECORD_D2D( hr ).IsFailure )
+			return IntPtr::Zero;
+
+		return IntPtr( hdc );
+	}
+
+	Result GdiInteropRenderTarget::ReleaseDC()
+	{
+		HRESULT hr = InternalPointer->ReleaseDC( NULL );
+		return RECORD_D2D( hr );
+	}
+
+	Result GdiInteropRenderTarget::ReleaseDC( System::Drawing::Rectangle updateRegion )
 	{
 		RECT rect;
-		rect.left = dimensions.Left;
-		rect.right = dimensions.Right;
-		rect.top = dimensions.Top;
-		rect.bottom = dimensions.Bottom;
+		rect.left = updateRegion.Left;
+		rect.right = updateRegion.Right;
+		rect.top = updateRegion.Top;
+		rect.bottom = updateRegion.Bottom;
 
-		HRESULT hr = InternalPointer->BindDC( static_cast<HDC>( deviceContext.ToPointer() ), &rect );
+		HRESULT hr = InternalPointer->ReleaseDC( &rect );
 		return RECORD_D2D( hr );
 	}
 }

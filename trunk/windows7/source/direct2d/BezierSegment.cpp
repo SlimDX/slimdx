@@ -19,24 +19,19 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "RenderTarget.h"
+#define DEFINE_ENUM_FLAG_OPERATORS(x)
+
+#include <d2d1.h>
+#include <d2d1helper.h>
+
+#include "BezierSegment.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct2D
-	{
-		public ref class DeviceContextRenderTarget : public RenderTarget
-		{
-			COMOBJECT(ID2D1DCRenderTarget, DeviceContextRenderTarget);
-
-		public:
-			DeviceContextRenderTarget( SlimDX::Direct2D::Factory^ factory, RenderTargetProperties renderTargetProperties );
-
-			static DeviceContextRenderTarget^ FromPointer( System::IntPtr pointer );
-
-			Result BindDeviceContext( System::IntPtr deviceContext, System::Drawing::Rectangle dimensions );
-		};
-	}
+namespace Direct2D
+{
+}
 }

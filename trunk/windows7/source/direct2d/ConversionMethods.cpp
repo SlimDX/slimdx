@@ -56,3 +56,8 @@ System::Drawing::RectangleF CastRectangle( System::Drawing::Rectangle source )
 	return System::Drawing::RectangleF( static_cast<FLOAT>( source.X ), static_cast<FLOAT>( source.Y ),
 		static_cast<FLOAT>( source.Width ), static_cast<FLOAT>( source.Height ) );
 }
+
+System::Drawing::PointF CastPoint( System::Drawing::Point source )
+{
+	return System::Drawing::PointF( static_cast<FLOAT>( source.X ), static_cast<FLOAT>( source.Y ) );
+}
