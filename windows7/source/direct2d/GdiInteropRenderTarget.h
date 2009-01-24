@@ -21,22 +21,25 @@
 */
 #pragma once
 
+#include "Enums.h"
 #include "RenderTarget.h"
 
 namespace SlimDX
 {
 	namespace Direct2D
 	{
-		public ref class DeviceContextRenderTarget : public RenderTarget
+		public ref class GdiInteropRenderTarget : ComObject
 		{
-			COMOBJECT(ID2D1DCRenderTarget, DeviceContextRenderTarget);
+			COMOBJECT(ID2D1GdiInteropRenderTarget, GdiInteropRenderTarget);
 
 		public:
-			DeviceContextRenderTarget( SlimDX::Direct2D::Factory^ factory, RenderTargetProperties renderTargetProperties );
+			GdiInteropRenderTarget( RenderTarget^ renderTarget );
 
-			static DeviceContextRenderTarget^ FromPointer( System::IntPtr pointer );
+			static GdiInteropRenderTarget^ FromPointer( System::IntPtr pointer );
 
-			Result BindDeviceContext( System::IntPtr deviceContext, System::Drawing::Rectangle dimensions );
+			System::IntPtr GetDC( DeviceContextInitializeMode mode );
+			Result ReleaseDC();
+			Result ReleaseDC( System::Drawing::Rectangle updateRegion );
 		};
 	}
 }

@@ -24,3 +24,4 @@
 D2D1_RECT_U ConvertRectangle( System::Drawing::Rectangle source );
 D2D1_RECT_F ConvertRectangle( System::Drawing::RectangleF source );
 System::Drawing::RectangleF CastRectangle( System::Drawing::Rectangle source );
+System::Drawing::PointF CastPoint( System::Drawing::Point source );

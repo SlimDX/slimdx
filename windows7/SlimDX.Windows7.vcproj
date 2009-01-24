@@ -1140,6 +1140,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="GdiInteropRenderTarget"
+					>
+					<File
+						RelativePath=".\source\direct2d\GdiInteropRenderTarget.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\GdiInteropRenderTarget.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Brushes"
@@ -1299,14 +1311,6 @@
 				Name="Geometry"
 				>
 				<File
-					RelativePath=".\source\direct2d\Ellipse.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct2d\Ellipse.h"
-					>
-				</File>
-				<File
 					RelativePath=".\source\direct2d\Geometry.cpp"
 					>
 				</File>
@@ -1314,22 +1318,42 @@
 					RelativePath=".\source\direct2d\Geometry.h"
 					>
 				</File>
-				<File
-					RelativePath=".\source\direct2d\RoundedRectangle.cpp"
+				<Filter
+					Name="Primitives"
 					>
-				</File>
-				<File
-					RelativePath=".\source\direct2d\RoundedRectangle.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct2d\Triangle.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct2d\Triangle.h"
-					>
-				</File>
+					<File
+						RelativePath=".\source\direct2d\BezierSegment.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\BezierSegment.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\Ellipse.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\Ellipse.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\RoundedRectangle.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\RoundedRectangle.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\Triangle.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\Triangle.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Bitmap"
@@ -1394,6 +1418,14 @@
 			<Filter
 				Name="Sinks"
 				>
+				<File
+					RelativePath=".\source\direct2d\SimplifiedGeometrySink.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\SimplifiedGeometrySink.h"
+					>
+				</File>
 				<File
 					RelativePath=".\source\direct2d\TessellationSink.cpp"
 					>

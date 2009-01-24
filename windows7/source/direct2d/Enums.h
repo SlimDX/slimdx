@@ -53,6 +53,14 @@ namespace SlimDX
 			Triangle = D2D1_CAP_STYLE_TRIANGLE
 		};
 
+		public enum class CombineMode : System::Int32
+		{
+			Union = D2D1_COMBINE_MODE_UNION,
+			Intersect = D2D1_COMBINE_MODE_INTERSECT,
+			Xor = D2D1_COMBINE_MODE_XOR,
+			Exclude = D2D1_COMBINE_MODE_EXCLUDE
+		};
+
 		public enum class CompatibleRenderTargetOptions : System::Int32
 		{
 			None = D2D1_COMPATIBLE_RENDER_TARGET_OPTIONS_NONE,
@@ -77,6 +85,12 @@ namespace SlimDX
 			Information = D2D1_DEBUG_LEVEL_INFORMATION
 		};
 
+		public enum class DeviceContextInitializeMode : System::Int32
+		{
+			Copy = D2D1_DC_INITIALIZE_MODE_COPY,
+			Clear = D2D1_DC_INITIALIZE_MODE_CLEAR
+		};
+
 		[System::Flags]
 		public enum class DrawTextOptions : System::Int32
 		{
@@ -98,10 +112,37 @@ namespace SlimDX
 			MultiThreaded = D2D1_FACTORY_TYPE_MULTI_THREADED
 		};
 
+		public enum class FigureBegin : System::Int32
+		{
+			Filled = D2D1_FIGURE_BEGIN_FILLED,
+			Hollow = D2D1_FIGURE_BEGIN_HOLLOW
+		};
+
+		public enum class FigureEnd : System::Int32
+		{
+			Open = D2D1_FIGURE_END_OPEN,
+			Closed = D2D1_FIGURE_END_CLOSED
+		};
+
+		public enum class FillMode : System::Int32
+		{
+			Alternate = D2D1_FILL_MODE_ALTERNATE,
+			Winding = D2D1_FILL_MODE_WINDING 
+		};
+
 		public enum class Gamma : System::Int32
 		{
 			StandardRgb = D2D1_GAMMA_2_2,
 			Linear = D2D1_GAMMA_1_0
+		};
+
+		public enum class GeometryRelation : System::Int32
+		{
+			Unknown = D2D1_GEOMETRY_RELATION_UNKNOWN,
+			Disjoint = D2D1_GEOMETRY_RELATION_DISJOINT,
+			IsContained = D2D1_GEOMETRY_RELATION_IS_CONTAINED,
+			Contains = D2D1_GEOMETRY_RELATION_CONTAINS,
+			Overlap = D2D1_GEOMETRY_RELATION_OVERLAP
 		};
 
 		public enum class InterpolationMode : System::Int32
@@ -125,6 +166,14 @@ namespace SlimDX
 			MiterOrBevel = D2D1_LINE_JOIN_MITER_OR_BEVEL
 		};
 
+		[System::Flags]
+		public enum class PathSegment : System::Int32
+		{
+			None = D2D1_PATH_SEGMENT_NONE,
+			ForceUnstroked = D2D1_PATH_SEGMENT_FORCE_UNSTROKED,
+			ForceRoundLineJoine = D2D1_PATH_SEGMENT_FORCE_ROUND_LINE_JOIN
+		};
+
 		public enum class PresentOptions : System::Int32
 		{
 			None = D2D1_PRESENT_OPTIONS_NONE,
@@ -140,6 +189,12 @@ namespace SlimDX
 			ForceHardwareRendering = D2D1_RENDER_TARGET_USAGE_FORCE_HARDWARE_RENDERING,
 			ForceSoftwareRendering = D2D1_RENDER_TARGET_USAGE_FORCE_SOFTWARE_RENDERING,
 			GdiCompatible = D2D1_RENDER_TARGET_USAGE_GDI_COMPATIBLE
+		};
+
+		public enum class SimplificationType : System::Int32
+		{
+			CubicsAndLines = D2D1_GEOMETRY_SIMPLIFICATION_OPTION_CUBICS_AND_LINES,
+			Lines = D2D1_GEOMETRY_SIMPLIFICATION_OPTION_LINES
 		};
 
 		public enum class TextAntialiasMode : System::Int32

@@ -1896,22 +1896,6 @@
 					RelativePath="..\source\direct3d10\Asynchronous.h"
 					>
 				</File>
-				<File
-					RelativePath="..\source\direct3d10\ThreadPump.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\ThreadPump.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\ThreadPumpStatus.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\ThreadPumpStatus.h"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="Diagnostics"

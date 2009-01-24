@@ -21,22 +21,16 @@
 */
 #pragma once
 
-#include "RenderTarget.h"
-
 namespace SlimDX
 {
 	namespace Direct2D
 	{
-		public ref class DeviceContextRenderTarget : public RenderTarget
+		public value class BezierSegment
 		{
-			COMOBJECT(ID2D1DCRenderTarget, DeviceContextRenderTarget);
-
 		public:
-			DeviceContextRenderTarget( SlimDX::Direct2D::Factory^ factory, RenderTargetProperties renderTargetProperties );
-
-			static DeviceContextRenderTarget^ FromPointer( System::IntPtr pointer );
-
-			Result BindDeviceContext( System::IntPtr deviceContext, System::Drawing::Rectangle dimensions );
+			property System::Drawing::PointF Point1;
+			property System::Drawing::PointF Point2;
+			property System::Drawing::PointF Point3;
 		};
 	}
 }
