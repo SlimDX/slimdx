@@ -32,7 +32,7 @@ namespace SimpleTriangle
     struct Vertex
     {
         public Vector4 PositionRhw;
-        public int Color;
+				public Vector4 Color;
     }
 
     class SimpleTriangleSample : Game
@@ -87,19 +87,19 @@ namespace SimpleTriangle
             pass = technique.GetPassByIndex(0);
 
             InputElement[] inputElements = new InputElement[]
-			{
-				new InputElement("POSITION", 0, SlimDX.DXGI.Format.R32G32B32A32_Float, 0, 0),
-				new InputElement("COLOR", 0, SlimDX.DXGI.Format.R8G8B8A8_UNorm, 16, 0)
-			};
+						{
+							new InputElement("POSITION", 0, SlimDX.DXGI.Format.R32G32B32A32_Float, 0, 0),
+							new InputElement("COLOR", 0, SlimDX.DXGI.Format.R32G32B32A32_Float, 16, 0)
+						};
             layout = new InputLayout(Device, inputElements, pass.Description.Signature);
 
             DataStream stream = new DataStream(3 * Marshal.SizeOf(typeof(Vertex)), true, true);
             stream.Write(new Vector4(0.0f, 0.5f, 0.5f, 1.0f));
-            stream.Write(Color.Red.ToArgb());
+						stream.Write( new Vector4( 1.0f, 0.0f, 0.0f, 1.0f ) );
             stream.Write(new Vector4(0.5f, -0.5f, 0.5f, 1.0f));
-            stream.Write(Color.Blue.ToArgb());
+						stream.Write( new Vector4( 0.0f, 1.0f, 0.0f, 1.0f ) );
             stream.Write(new Vector4(-0.5f, -0.5f, 0.5f, 1.0f));
-            stream.Write(Color.Green.ToArgb());
+						stream.Write( new Vector4( 0.0f, 0.0f, 1.0f, 1.0f ) );
 
             // Important: when specifying initial buffer data like this, the buffer will
             // read from the current DataStream position; we must rewind the stream to 
