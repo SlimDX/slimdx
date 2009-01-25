@@ -22,32 +22,26 @@
 #pragma once
 
 #include "Geometry.h"
-#include "GeometrySink.h"
+#include "Enums.h"
 
 namespace SlimDX
 {
 	namespace Direct2D
 	{
-		public ref class PathGeometry : Geometry
+		public ref class GeometryGroup : Geometry
 		{
-			COMOBJECT(ID2D1PathGeometry, PathGeometry);
+			COMOBJECT(ID2D1GeometryGroup, GeometryGroup);
 			
 		public:
-			PathGeometry( SlimDX::Direct2D::Factory^ factory );
+			GeometryGroup( SlimDX::Direct2D::Factory^ factory, FillMode fillMode, array<Geometry^>^ geometries );
 
-			static PathGeometry^ FromPointer( System::IntPtr pointer );
+			static GeometryGroup^ FromPointer( System::IntPtr pointer );
 
-			GeometrySink^ Open();
-			Result Stream( GeometrySink^ geometrySink );
+			array<Geometry^>^ GetSourceGeometry();
 
-			property int SegmentCount
+			property FillMode FillMode
 			{
-				int get();
-			}
-
-			property int FigureCount
-			{
-				int get();
+				SlimDX::Direct2D::FillMode get();
 			}
 		};
 	}

@@ -33,6 +33,7 @@
 #include "RoundedRectangle.h"
 #include "StateBlock.h"
 #include "LayerParameters.h"
+#include "RenderTargetProperties.h"
 
 using System::Runtime::InteropServices::OutAttribute;
 
@@ -45,11 +46,17 @@ namespace SlimDX
 		ref class BitmapRenderTarget;
 		ref class Mesh;
 
-		public ref class RenderTarget abstract : Resource
+		public ref class RenderTarget : Resource
 		{
-			COMOBJECT_BASE(ID2D1RenderTarget);
+			COMOBJECT(ID2D1RenderTarget, RenderTarget);
+
+		protected:
+			RenderTarget() { }
 
 		public:
+			static RenderTarget^ FromDXGI( SlimDX::Direct2D::Factory^ factory, SlimDX::DXGI::Surface^ surface, RenderTargetProperties properties );
+			static RenderTarget^ FromPointer( System::IntPtr pointer );
+
 			void BeginDraw();
 			Result EndDraw();
 			Result EndDraw( [Out] System::Int64% tag1, [Out] System::Int64% tag2 );

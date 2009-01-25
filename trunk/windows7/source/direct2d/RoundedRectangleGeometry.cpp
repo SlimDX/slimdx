@@ -77,6 +77,17 @@ namespace Direct2D
 		return gcnew RoundedRectangleGeometry( pointer );
 	}
 
+	RoundedRectangleGeometry::RoundedRectangleGeometry( SlimDX::Direct2D::Factory^ factory, SlimDX::Direct2D::RoundedRectangle rectangle )
+	{
+		ID2D1RoundedRectangleGeometry *geometry = NULL;
+
+		HRESULT hr = factory->InternalPointer->CreateRoundedRectangleGeometry( reinterpret_cast<D2D1_ROUNDED_RECT*>( &rectangle ), &geometry );
+		if( RECORD_D2D( hr ).IsFailure )
+			throw gcnew Direct2DException( Result::Last );
+
+		Construct( geometry );
+	}
+
 	SlimDX::Direct2D::RoundedRectangle RoundedRectangleGeometry::RoundedRectangle::get()
 	{
 		SlimDX::Direct2D::RoundedRectangle result;

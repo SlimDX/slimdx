@@ -24,13 +24,14 @@
 
 #include <d2d1.h>
 #include <d2d1helper.h>
+#include <vector>
 
 #include "Direct2DException.h"
 
 #include "RenderTarget.h"
-#include "PathGeometry.h"
+#include "GeometryGroup.h"
 
-const IID IID_ID2D1PathGeometry = __uuidof(ID2D1PathGeometry);
+const IID IID_ID2D1GeometryGroup = __uuidof(ID2D1GeometryGroup);
 
 using namespace System;
 
@@ -38,87 +39,77 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	PathGeometry::PathGeometry( ID2D1PathGeometry* pointer )
+	GeometryGroup::GeometryGroup( ID2D1GeometryGroup* pointer )
 	{
 		Construct( pointer );
 	}
 	
-	PathGeometry::PathGeometry( IntPtr pointer )
+	GeometryGroup::GeometryGroup( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
 	}
 	
-	PathGeometry^ PathGeometry::FromPointer( ID2D1PathGeometry* pointer )
+	GeometryGroup^ GeometryGroup::FromPointer( ID2D1GeometryGroup* pointer )
 	{
 		if( pointer == 0 )
 			return nullptr;
 
-		PathGeometry^ tableEntry = safe_cast<PathGeometry^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		GeometryGroup^ tableEntry = safe_cast<GeometryGroup^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			pointer->Release();
 			return tableEntry;
 		}
 
-		return gcnew PathGeometry( pointer );
+		return gcnew GeometryGroup( pointer );
 	}
 
-	PathGeometry^ PathGeometry::FromPointer( IntPtr pointer )
+	GeometryGroup^ GeometryGroup::FromPointer( IntPtr pointer )
 	{
 		if( pointer == IntPtr::Zero )
 			throw gcnew ArgumentNullException( "pointer" );
 
-		PathGeometry^ tableEntry = safe_cast<PathGeometry^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		GeometryGroup^ tableEntry = safe_cast<GeometryGroup^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
 		}
 
-		return gcnew PathGeometry( pointer );
+		return gcnew GeometryGroup( pointer );
 	}
 
-	PathGeometry::PathGeometry( SlimDX::Direct2D::Factory^ factory )
+	GeometryGroup::GeometryGroup( SlimDX::Direct2D::Factory^ factory, SlimDX::Direct2D::FillMode fillMode, array<Geometry^>^ geometries )
 	{
-		ID2D1PathGeometry *geometry = NULL;
+		ID2D1GeometryGroup *group = NULL;
 
-		HRESULT hr = factory->InternalPointer->CreatePathGeometry( &geometry );
+		std::vector<ID2D1Geometry*> geos( geometries->Length );
+		for( int i = 0; i < geometries->Length; i++ )
+			geos[i] = geometries[i]->InternalPointer;
+
+		HRESULT hr = factory->InternalPointer->CreateGeometryGroup( static_cast<D2D1_FILL_MODE>( fillMode ), &geos[0], geometries->Length, &group );
 		if( RECORD_D2D( hr ).IsFailure )
 			throw gcnew Direct2DException( Result::Last );
 
-		Construct( geometry );
+		Construct( group );
 	}
 
-	int PathGeometry::FigureCount::get()
+	array<Geometry^>^ GeometryGroup::GetSourceGeometry()
 	{
-		UINT32 count;
+		int count = InternalPointer->GetSourceGeometryCount();
+		std::vector<ID2D1Geometry*> geos( count );
 
-		InternalPointer->GetFigureCount( &count );
-		return count;
+		InternalPointer->GetSourceGeometries( &geos[0], count );
+
+		array<Geometry^>^ results = gcnew array<Geometry^>( count );
+		for( int i = 0; i < count; i++ )
+			results[i] = Geometry::FromPointer( geos[i] );
+
+		return results;
 	}
 
-	int PathGeometry::SegmentCount::get()
+	SlimDX::Direct2D::FillMode GeometryGroup::FillMode::get()
 	{
-		UINT32 count;
-
-		InternalPointer->GetSegmentCount( &count );
-		return count;
-	}
-
-	GeometrySink^ PathGeometry::Open()
-	{
-		ID2D1GeometrySink *sink = NULL;
-
-		HRESULT hr = InternalPointer->Open( &sink );
-		if( RECORD_D2D( hr ).IsFailure )
-			return nullptr;
-
-		return GeometrySink::FromPointer( sink );
-	}
-
-	Result PathGeometry::Stream( GeometrySink^ geometrySink )
-	{
-		HRESULT hr = InternalPointer->Stream( geometrySink->InternalPointer );
-		return RECORD_D2D( hr );
+		return static_cast<SlimDX::Direct2D::FillMode>( InternalPointer->GetFillMode() );
 	}
 }
 }

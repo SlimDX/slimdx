@@ -25,6 +25,7 @@
 #include <d2d1.h>
 #include <d2d1helper.h>
 #include <vcclr.h>
+#include <dxgi.h>
 
 #include "Direct2DException.h"
 
@@ -44,6 +45,56 @@ namespace SlimDX
 {
 namespace Direct2D
 {
+	RenderTarget::RenderTarget( ID2D1RenderTarget* pointer )
+	{
+		Construct( pointer );
+	}
+	
+	RenderTarget::RenderTarget( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+	}
+	
+	RenderTarget^ RenderTarget::FromPointer( ID2D1RenderTarget* pointer )
+	{
+		if( pointer == 0 )
+			return nullptr;
+
+		RenderTarget^ tableEntry = safe_cast<RenderTarget^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		return gcnew RenderTarget( pointer );
+	}
+
+	RenderTarget^ RenderTarget::FromPointer( IntPtr pointer )
+	{
+		if( pointer == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		RenderTarget^ tableEntry = safe_cast<RenderTarget^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		return gcnew RenderTarget( pointer );
+	}
+
+	RenderTarget^ RenderTarget::FromDXGI( SlimDX::Direct2D::Factory^ factory, SlimDX::DXGI::Surface^ surface, RenderTargetProperties properties )
+	{
+		ID2D1RenderTarget *target;
+
+		HRESULT hr = factory->InternalPointer->CreateDxgiSurfaceRenderTarget( surface->InternalPointer, reinterpret_cast<D2D1_RENDER_TARGET_PROPERTIES*>( &properties ), &target );
+		if( RECORD_D2D( hr ).IsFailure )
+			return nullptr;
+
+		return RenderTarget::FromPointer( target );
+	}
+
 	void RenderTarget::BeginDraw()
 	{
 		InternalPointer->BeginDraw();
