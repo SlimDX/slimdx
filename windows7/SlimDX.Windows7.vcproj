@@ -1311,6 +1311,14 @@
 				Name="Geometry"
 				>
 				<File
+					RelativePath=".\source\direct2d\EllipseGeometry.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\EllipseGeometry.h"
+					>
+				</File>
+				<File
 					RelativePath=".\source\direct2d\Geometry.cpp"
 					>
 				</File>
@@ -1318,9 +1326,49 @@
 					RelativePath=".\source\direct2d\Geometry.h"
 					>
 				</File>
+				<File
+					RelativePath=".\source\direct2d\PathGeometry.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\PathGeometry.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\RectangleGeometry.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\RectangleGeometry.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\RoundedRectangleGeometry.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\RoundedRectangleGeometry.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\TransformedGeometry.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\TransformedGeometry.h"
+					>
+				</File>
 				<Filter
 					Name="Primitives"
 					>
+					<File
+						RelativePath=".\source\direct2d\ArcSegment.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\ArcSegment.h"
+						>
+					</File>
 					<File
 						RelativePath=".\source\direct2d\BezierSegment.cpp"
 						>
@@ -1335,6 +1383,14 @@
 					</File>
 					<File
 						RelativePath=".\source\direct2d\Ellipse.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\QuadraticBezierSegment.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\QuadraticBezierSegment.h"
 						>
 					</File>
 					<File
@@ -1418,6 +1474,14 @@
 			<Filter
 				Name="Sinks"
 				>
+				<File
+					RelativePath=".\source\direct2d\GeometrySink.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\GeometrySink.h"
+					>
+				</File>
 				<File
 					RelativePath=".\source\direct2d\SimplifiedGeometrySink.cpp"
 					>

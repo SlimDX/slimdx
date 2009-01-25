@@ -111,36 +111,11 @@ namespace Direct2D
 		InternalPointer->SetSegmentFlags( static_cast<D2D1_PATH_SEGMENT>( vertexFlags ) );
 	}
 
-	void SimplifiedGeometrySink::AddLine( int x1, int y1, int x2, int y2 )
-	{
-		AddLine( System::Drawing::Point( x1, y1 ), System::Drawing::Point( x2, y2 ) );
-	}
-
-	void SimplifiedGeometrySink::AddLine( float x1, float y1, float x2, float y2 )
-	{
-		AddLine( System::Drawing::PointF( x1, y1 ), System::Drawing::PointF( x2, y2 ) );
-	}
-
-	void SimplifiedGeometrySink::AddLine( System::Drawing::Point point1, System::Drawing::Point point2 )
-	{
-		AddLines( gcnew array<System::Drawing::PointF>( 2 ) { CastPoint( point1 ), CastPoint( point2 ) } );
-	}
-
-	void SimplifiedGeometrySink::AddLine( System::Drawing::PointF point1, System::Drawing::PointF point2 )
-	{
-		AddLines( gcnew array<System::Drawing::PointF>( 2 ) { point1, point2 } );
-	}
-
 	void SimplifiedGeometrySink::AddLines( array<System::Drawing::PointF>^ points )
 	{
 		pin_ptr<System::Drawing::PointF> pinnedPoints = &points[0];
 
 		InternalPointer->AddLines( reinterpret_cast<D2D1_POINT_2F*>( pinnedPoints ), points->Length );
-	}
-
-	void SimplifiedGeometrySink::AddBezier( BezierSegment bezier )
-	{
-		InternalPointer->AddBeziers( reinterpret_cast<D2D1_BEZIER_SEGMENT*>( &bezier ), 1 );
 	}
 
 	void SimplifiedGeometrySink::AddBeziers( array<BezierSegment>^ beziers )

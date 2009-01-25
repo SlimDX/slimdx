@@ -19,36 +19,19 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Enums.h"
-#include "BezierSegment.h"
+#define DEFINE_ENUM_FLAG_OPERATORS(x)
+
+#include <d2d1.h>
+#include <d2d1helper.h>
+
+#include "ArcSegment.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct2D
-	{
-		public ref class SimplifiedGeometrySink : ComObject
-		{
-			COMOBJECT(ID2D1SimplifiedGeometrySink, SimplifiedGeometrySink);
-
-		protected:
-			SimplifiedGeometrySink() { };
-			
-		public:
-			static SimplifiedGeometrySink^ FromPointer( System::IntPtr pointer );
-
-			void BeginFigure( System::Drawing::Point startPoint, FigureBegin style );
-			void BeginFigure( System::Drawing::PointF startPoint, FigureBegin style );
-			void EndFigure( FigureEnd style );
-
-			Result Close();
-
-			void SetFillMode( FillMode fillMode );
-			void SetSegmentFlags( PathSegment vertexFlags );
-
-			void AddLines( array<System::Drawing::PointF>^ points );
-			void AddBeziers( array<BezierSegment>^ beziers );
-		};
-	}
+namespace Direct2D
+{
+}
 }
