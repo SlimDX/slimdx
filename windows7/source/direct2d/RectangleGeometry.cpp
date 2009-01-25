@@ -77,6 +77,17 @@ namespace Direct2D
 		return gcnew RectangleGeometry( pointer );
 	}
 
+	RectangleGeometry::RectangleGeometry( SlimDX::Direct2D::Factory^ factory, System::Drawing::RectangleF rectangle )
+	{
+		ID2D1RectangleGeometry *geometry = NULL;
+
+		HRESULT hr = factory->InternalPointer->CreateRectangleGeometry( reinterpret_cast<D2D1_RECT_F*>( &rectangle ), &geometry );
+		if( RECORD_D2D( hr ).IsFailure )
+			throw gcnew Direct2DException( Result::Last );
+
+		Construct( geometry );
+	}
+
 	System::Drawing::RectangleF RectangleGeometry::Rectangle::get()
 	{
 		D2D1_RECT_F result;

@@ -77,6 +77,17 @@ namespace Direct2D
 		return gcnew TransformedGeometry( pointer );
 	}
 
+	TransformedGeometry::TransformedGeometry( SlimDX::Direct2D::Factory^ factory, Geometry^ geometry, Matrix3x2 transform )
+	{
+		ID2D1TransformedGeometry *g = NULL;
+
+		HRESULT hr = factory->InternalPointer->CreateTransformedGeometry( geometry->InternalPointer, reinterpret_cast<D2D1_MATRIX_3X2_F*>( &transform ), &g );
+		if( RECORD_D2D( hr ).IsFailure )
+			throw gcnew Direct2DException( Result::Last );
+
+		Construct( g );
+	}
+
 	Matrix3x2 TransformedGeometry::Transform::get()
 	{
 		Matrix3x2 result;

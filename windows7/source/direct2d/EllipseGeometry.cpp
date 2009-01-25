@@ -77,6 +77,17 @@ namespace Direct2D
 		return gcnew EllipseGeometry( pointer );
 	}
 
+	EllipseGeometry::EllipseGeometry( SlimDX::Direct2D::Factory^ factory, SlimDX::Direct2D::Ellipse ellipse )
+	{
+		ID2D1EllipseGeometry *geometry = NULL;
+
+		HRESULT hr = factory->InternalPointer->CreateEllipseGeometry( reinterpret_cast<D2D1_ELLIPSE*>( &ellipse ), &geometry );
+		if( RECORD_D2D( hr ).IsFailure )
+			throw gcnew Direct2DException( Result::Last );
+
+		Construct( geometry );
+	}
+
 	SlimDX::Direct2D::Ellipse EllipseGeometry::Ellipse::get()
 	{
 		SlimDX::Direct2D::Ellipse result;

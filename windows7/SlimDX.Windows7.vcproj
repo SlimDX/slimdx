@@ -63,7 +63,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib dwrite.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxerr.lib ole32.lib winmm.lib d3d11_beta.lib d3dx11.lib dxguid.lib d2d1.lib dwrite.lib dxgi.lib $(NOINHERIT)"
 				Version="2.0.6.40"
 				LinkIncremental="2"
 				DelayLoadDLLs="d3dx11_40.dll;d3d11_beta.dll;d2d1.dll;dwrite.dll"
@@ -1324,6 +1324,14 @@
 				</File>
 				<File
 					RelativePath=".\source\direct2d\Geometry.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\GeometryGroup.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\GeometryGroup.h"
 					>
 				</File>
 				<File

@@ -21,6 +21,7 @@
 */
 #pragma once
 
+#include "Factory.h"
 #include "Geometry.h"
 #include "Ellipse.h"
 
@@ -33,6 +34,8 @@ namespace SlimDX
 			COMOBJECT(ID2D1EllipseGeometry, EllipseGeometry);
 			
 		public:
+			EllipseGeometry( SlimDX::Direct2D::Factory^ factory, Ellipse ellipse );
+
 			static EllipseGeometry^ FromPointer( System::IntPtr pointer );
 
 			property Ellipse Ellipse

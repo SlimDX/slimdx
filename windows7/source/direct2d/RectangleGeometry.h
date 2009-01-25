@@ -32,6 +32,8 @@ namespace SlimDX
 			COMOBJECT(ID2D1RectangleGeometry, RectangleGeometry);
 			
 		public:
+			RectangleGeometry( SlimDX::Direct2D::Factory^ factory, System::Drawing::RectangleF rectangle );
+
 			static RectangleGeometry^ FromPointer( System::IntPtr pointer );
 
 			property System::Drawing::RectangleF Rectangle
