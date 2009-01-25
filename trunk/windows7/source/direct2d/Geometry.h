@@ -37,6 +37,9 @@ namespace SlimDX
 		public ref class Geometry : Resource
 		{
 			COMOBJECT(ID2D1Geometry, Geometry);
+
+		protected:
+			Geometry() { };
 			
 		public:
 			static Geometry^ FromPointer( System::IntPtr pointer );

@@ -45,6 +45,12 @@ namespace SlimDX
 			Aliased = D2D1_ANTIALIAS_MODE_ALIASED
 		};
 
+		public enum class ArcSize : System::Int32
+		{
+			Small = D2D1_ARC_SIZE_SMALL,
+			Large = D2D1_ARC_SIZE_LARGE
+		};
+
 		public enum class CapStyle : System::Int32
 		{
 			Flat = D2D1_CAP_STYLE_FLAT,
@@ -195,6 +201,12 @@ namespace SlimDX
 		{
 			CubicsAndLines = D2D1_GEOMETRY_SIMPLIFICATION_OPTION_CUBICS_AND_LINES,
 			Lines = D2D1_GEOMETRY_SIMPLIFICATION_OPTION_LINES
+		};
+
+		public enum class SweepDirection : System::Int32
+		{
+			CounterClockwise =  D2D1_SWEEP_DIRECTION_COUNTER_CLOCKWISE,
+			Clockwise =  D2D1_SWEEP_DIRECTION_CLOCKWISE
 		};
 
 		public enum class TextAntialiasMode : System::Int32
