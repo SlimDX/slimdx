@@ -75,5 +75,53 @@ namespace Direct2D
 
 		return gcnew GradientStopCollection( pointer );
 	}
+
+	GradientStopCollection::GradientStopCollection( RenderTarget^ renderTarget, array<GradientStop>^ stops )
+	{
+		ID2D1GradientStopCollection *collection = NULL;
+		pin_ptr<GradientStop> pinnedStops = &stops[0];
+
+		HRESULT hr = renderTarget->InternalPointer->CreateGradientStopCollection( reinterpret_cast<D2D1_GRADIENT_STOP*>( pinnedStops ), stops->Length, &collection );
+
+		if( RECORD_D2D( hr ).IsFailure )
+			throw gcnew Direct2DException( Result::Last );
+
+		Construct( collection );
+	}
+
+	GradientStopCollection::GradientStopCollection( RenderTarget^ renderTarget, array<GradientStop>^ stops, Gamma gamma, SlimDX::Direct2D::ExtendMode extendMode )
+	{
+		ID2D1GradientStopCollection *collection = NULL;
+		pin_ptr<GradientStop> pinnedStops = &stops[0];
+
+		HRESULT hr = renderTarget->InternalPointer->CreateGradientStopCollection( reinterpret_cast<D2D1_GRADIENT_STOP*>( pinnedStops ), stops->Length,
+			static_cast<D2D1_GAMMA>( gamma ), static_cast<D2D1_EXTEND_MODE>( extendMode ), &collection );
+
+		if( RECORD_D2D( hr ).IsFailure )
+			throw gcnew Direct2DException( Result::Last );
+
+		Construct( collection );
+	}
+
+	array<GradientStop>^ GradientStopCollection::GetStops()
+	{
+		int count = InternalPointer->GetGradientStopCount();
+		array<GradientStop>^ results = gcnew array<GradientStop>( count );
+		pin_ptr<GradientStop> pinnedResults = &results[0];
+
+		InternalPointer->GetGradientStops( reinterpret_cast<D2D1_GRADIENT_STOP*>( pinnedResults ), count );
+
+		return results;
+	}
+
+	Gamma GradientStopCollection::InterpolationGamma::get()
+	{
+		return static_cast<Gamma>( InternalPointer->GetColorInterpolationGamma() );
+	}
+
+	SlimDX::Direct2D::ExtendMode GradientStopCollection::ExtendMode::get()
+	{
+		return static_cast<SlimDX::Direct2D::ExtendMode>( InternalPointer->GetExtendMode() );
+	}
 }
 }

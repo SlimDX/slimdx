@@ -1173,6 +1173,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\direct2d\GradientStop.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\GradientStop.h"
+					>
+				</File>
+				<File
 					RelativePath=".\source\direct2d\GradientStopCollection.cpp"
 					>
 				</File>
@@ -1225,6 +1233,46 @@
 					</File>
 					<File
 						RelativePath=".\source\direct2d\BitmapBrushProperties.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="LinearGradientBrush"
+					>
+					<File
+						RelativePath=".\source\direct2d\LinearGradientBrush.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\LinearGradientBrush.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\LinearGradientBrushProperties.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\LinearGradientBrushProperties.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="RadialGradientBrush"
+					>
+					<File
+						RelativePath=".\source\direct2d\RadialGradientBrush.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\RadialGradientBrush.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\RadialGradientBrushProperties.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct2d\RadialGradientBrushProperties.h"
 						>
 					</File>
 				</Filter>

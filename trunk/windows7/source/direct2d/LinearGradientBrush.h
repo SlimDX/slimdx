@@ -21,35 +21,40 @@
 */
 #pragma once
 
-#include "Enums.h"
-#include "Resource.h"
-#include "GradientStop.h"
-#include "RenderTarget.h"
+#include "Brush.h"
+#include "BrushProperties.h"
+#include "LinearGradientBrushProperties.h"
+#include "GradientStopCollection.h"
 
 namespace SlimDX
 {
 	namespace Direct2D
 	{
-		public ref class GradientStopCollection : Resource
+		public ref class LinearGradientBrush : Brush
 		{
-			COMOBJECT(ID2D1GradientStopCollection, GradientStopCollection);
+			COMOBJECT(ID2D1LinearGradientBrush, LinearGradientBrush);
 			
 		public:
-			GradientStopCollection( RenderTarget^ renderTarget, array<GradientStop>^ stops );
-			GradientStopCollection( RenderTarget^ renderTarget, array<GradientStop>^ stops, Gamma gamma, ExtendMode extendMode );
+			LinearGradientBrush( RenderTarget^ renderTarget, GradientStopCollection^ gradientStops, LinearGradientBrushProperties linearGradientBrushProperties );
+			LinearGradientBrush( RenderTarget^ renderTarget, GradientStopCollection^ gradientStops, LinearGradientBrushProperties linearGradientBrushProperties, BrushProperties properties );
 
-			static GradientStopCollection^ FromPointer( System::IntPtr pointer );
+			static LinearGradientBrush^ FromPointer( System::IntPtr pointer );
 
-			array<GradientStop>^ GetStops();
-
-			property Gamma InterpolationGamma
+			property System::Drawing::PointF StartPoint
 			{
-				Gamma get();
+				System::Drawing::PointF get();
+				void set( System::Drawing::PointF value );
 			}
 
-			property ExtendMode ExtendMode
+			property System::Drawing::PointF EndPoint
 			{
-				SlimDX::Direct2D::ExtendMode get();
+				System::Drawing::PointF get();
+				void set( System::Drawing::PointF value );
+			}
+
+			property GradientStopCollection^ GradientStops
+			{
+				GradientStopCollection^ get();
 			}
 		};
 	}
