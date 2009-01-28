@@ -238,12 +238,15 @@ namespace SlimDX
 			return nullptr;
 		}
 
-		//if we're reading an entire memory stream from beginning to end, just return the internal buffer
+		//It turns out this can fail because MemoryStream keeps an exposable parameter, and defaults it to
+		//false, so that most of the time, MemoryStream->GetBuffer() can't be used. We might use reflection
+		//to pull the internal array directly. Until then, MemoryStream can literally GO FUCK ITS OWN INTERFACE.
+		/*//if we're reading an entire memory stream from beginning to end, just return the internal buffer
 		MemoryStream^ ms = dynamic_cast<MemoryStream^>( stream );
 		if( ms != nullptr && stream->Position == 0 && readLength == stream->Length )
 		{
 			return ms->GetBuffer();
-		}
+		}*/
 
 		array<Byte>^ buffer = gcnew array<Byte>( readLength ); 
 		int bytesRead = 0;
