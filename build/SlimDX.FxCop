@@ -352,7 +352,7 @@
            </Member>
            <Member Name="#.ctor(System.IntPtr,System.Int64,System.Boolean,System.Boolean)">
             <Messages>
-             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-09-27 00:03:43Z">
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Status="Excluded" Created="2008-09-27 00:03:43Z">
               <Issue Name="OutsideDispose">
                <Item>'DataStream.DataStream(IntPtr, long, bool, bool)'</Item>
                <Item>'GC.SuppressFinalize(object)'</Item>
@@ -362,12 +362,6 @@
            </Member>
            <Member Name="#.ctor(System.Void*,System.Int64,System.Boolean,System.Boolean,System.Boolean)">
             <Messages>
-             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-09-27 00:03:43Z">
-              <Issue Name="OutsideDispose">
-               <Item>'DataStream.DataStream(void*, long, bool, bool, bool)'</Item>
-               <Item>'GC.SuppressFinalize(object)'</Item>
-              </Issue>
-             </Message>
              <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-09-09 18:08:37Z">
               <Issue>
                <Item>'DataStream.DataStream(void*, long, bool, bool, bool)'</Item>
@@ -560,11 +554,17 @@
                <Item>&#xD;&#xA;   -&gt;'DataStream.DataStream(void*, long, bool, bool, bool)'&#xD;&#xA;   -&gt;'DataStream.DataStream(void*, long, bool, bool, bool)'&#xD;&#xA;   -&gt;'XFileData.Lock()'</Item>
               </Issue>
              </Message>
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Status="Excluded" Created="2008-09-27 00:03:43Z">
+              <Issue Name="OutsideDispose">
+               <Item>'DataStream.DataStream(void*, long, bool, bool, bool)'</Item>
+               <Item>'GC.SuppressFinalize(object)'</Item>
+              </Issue>
+             </Message>
             </Messages>
            </Member>
            <Member Name="#~DataStream()">
             <Messages>
-             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-09-27 00:03:43Z">
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Status="Excluded" Created="2008-09-27 00:03:43Z">
               <Issue Name="OutsideDispose">
                <Item>'DataStream.~DataStream()'</Item>
                <Item>'GC.SuppressFinalize(object)'</Item>
@@ -600,7 +600,7 @@
            </Member>
            <Member Name="#Read`1()">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>'DataStream.Read&lt;T&gt;()'</Item>
                <Item>'T'</Item>
@@ -610,7 +610,7 @@
            </Member>
            <Member Name="#ReadRange`1(System.Int32)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2007-10-20 01:01:41Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2007-10-20 01:01:41Z">
               <Issue>
                <Item>'DataStream.ReadRange&lt;T&gt;(int)'</Item>
                <Item>'T'</Item>
@@ -1085,7 +1085,7 @@
             <Accessors>
              <Accessor Name="#raise_ObjectAdded(System.Object,SlimDX.ObjectTableEventArgs)">
               <Messages>
-               <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2008-09-09 18:08:37Z">
+               <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Status="Excluded" Created="2008-09-09 18:08:37Z">
                 <Issue Name="Member">
                  <Item>'ObjectTable.ObjectAdded.raise(object, ObjectTableEventArgs)'</Item>
                 </Issue>
@@ -1098,7 +1098,7 @@
             <Accessors>
              <Accessor Name="#raise_ObjectRemoved(System.Object,SlimDX.ObjectTableEventArgs)">
               <Messages>
-               <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2008-09-09 18:08:37Z">
+               <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Status="Excluded" Created="2008-09-09 18:08:37Z">
                 <Issue Name="Member">
                  <Item>'ObjectTable.ObjectRemoved.raise(object, ObjectTableEventArgs)'</Item>
                 </Issue>
@@ -1203,7 +1203,7 @@
           <Members>
            <Member Name="#Data">
             <Messages>
-             <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Created="2008-06-01 15:35:01Z">
+             <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Status="Excluded" Created="2008-06-01 15:35:01Z">
               <Issue>
                <Item>'Result.Data'</Item>
               </Issue>
@@ -1232,7 +1232,7 @@
           <Members>
            <Member Name="#Coefficients">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2008-09-27 00:03:43Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-09-27 00:03:43Z">
               <Issue>
                <Item>'SHVector.Coefficients'</Item>
               </Issue>
@@ -3982,7 +3982,7 @@
             <Accessors>
              <Accessor Name="#get_NativeInterface()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-27 22:14:29Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-02-27 22:14:29Z">
                 <Issue>
                  <Item>'Texture.NativeInterface.get()'</Item>
                 </Issue>
@@ -4200,39 +4200,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="ThreadPump">
-          <Members>
-           <Member Name="#.ctor(ID3DX10ThreadPump*)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-05-30 21:21:38Z">
-              <Issue>
-               <Item>'ThreadPump.ThreadPump(ID3DX10ThreadPump*)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FromPointer(ID3DX10ThreadPump*)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-05-30 21:21:38Z">
-              <Issue>
-               <Item>'ThreadPump.FromPointer(ID3DX10ThreadPump*)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FromPointer(System.IntPtr)">
-            <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2008-05-30 21:21:38Z">
-              <Issue Name="LanguageIndependentMemberParameter">
-               <Item>'ThreadPump.FromPointer(IntPtr)'</Item>
-               <Item>pointer</Item>
-               <Item>'pointer'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="VertexShader">
           <Members>
            <Member Name="#FromPointer(System.IntPtr)">
@@ -4345,7 +4312,7 @@
             <Accessors>
              <Accessor Name="#get_NativeInterface()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-11-06 23:05:31Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-11-06 23:05:31Z">
                 <Issue>
                  <Item>'AnimationSet.NativeInterface.get()'</Item>
                 </Issue>
@@ -4360,7 +4327,7 @@
           <Members>
            <Member Name="#GetValue`1(SlimDX.Direct3D9.EffectHandle)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2008-09-01 18:12:57Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2008-09-01 18:12:57Z">
               <Issue>
                <Item>'BaseEffect.GetValue&lt;T&gt;(EffectHandle)'</Item>
                <Item>'T'</Item>
@@ -4370,7 +4337,7 @@
            </Member>
            <Member Name="#GetValue`1(SlimDX.Direct3D9.EffectHandle,System.Int32)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2008-09-01 18:12:57Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2008-09-01 18:12:57Z">
               <Issue>
                <Item>'BaseEffect.GetValue&lt;T&gt;(EffectHandle, int)'</Item>
                <Item>'T'</Item>
@@ -4382,7 +4349,7 @@
             <Accessors>
              <Accessor Name="#get_NativeInterface()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-08-20 12:09:23Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-08-20 12:09:23Z">
                 <Issue>
                  <Item>'BaseEffect.NativeInterface.get()'</Item>
                 </Issue>
@@ -4461,7 +4428,7 @@
             <Accessors>
              <Accessor Name="#get_NativeInterface()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-27 22:14:29Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-02-27 22:14:29Z">
                 <Issue>
                  <Item>'BaseMesh.NativeInterface.get()'</Item>
                 </Issue>
@@ -4478,7 +4445,7 @@
             <Accessors>
              <Accessor Name="#get_NativeInterface()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-27 22:14:29Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-02-27 22:14:29Z">
                 <Issue>
                  <Item>'BaseTexture.NativeInterface.get()'</Item>
                 </Issue>
@@ -4516,7 +4483,7 @@
           <Members>
            <Member Name="#BoneIds">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2007-10-31 21:12:23Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2007-10-31 21:12:23Z">
               <Issue>
                <Item>'BoneCombination.BoneIds'</Item>
               </Issue>
@@ -5230,7 +5197,7 @@
            </Member>
            <Member Name="#GetRenderState`1(SlimDX.Direct3D9.RenderState)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>'Device.GetRenderState&lt;T&gt;(RenderState)'</Item>
                <Item>'T'</Item>
@@ -5240,7 +5207,7 @@
            </Member>
            <Member Name="#GetSamplerState`1(System.Int32,SlimDX.Direct3D9.SamplerState)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2008-03-03 21:06:33Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2008-03-03 21:06:33Z">
               <Issue>
                <Item>'Device.GetSamplerState&lt;T&gt;(int, SamplerState)'</Item>
                <Item>'T'</Item>
@@ -5250,7 +5217,7 @@
            </Member>
            <Member Name="#GetTextureStageState`1(System.Int32,SlimDX.Direct3D9.TextureStage)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2008-03-03 21:06:33Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2008-03-03 21:06:33Z">
               <Issue>
                <Item>'Device.GetTextureStageState&lt;T&gt;(int, TextureStage)'</Item>
                <Item>'T'</Item>
@@ -5650,14 +5617,6 @@
           </Messages>
          </Type>
          <Type Name="Direct3D">
-          <Messages>
-           <Message TypeName="IdentifiersShouldDifferByMoreThanCase" Category="Microsoft.Naming" CheckId="CA1708" Created="2009-01-19 04:11:40Z">
-            <Issue Name="Member">
-             <Item>'adapters'</Item>
-             <Item>Adapters</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#.ctor()">
             <Messages>
@@ -5688,11 +5647,11 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#adapters">
+           <Member Name="#Adapters">
             <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2009-01-19 04:11:40Z">
+             <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
-               <Item>'Direct3D.adapters'</Item>
+               <Item>'Direct3D.Adapters'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -6377,7 +6336,7 @@
           <Members>
            <Member Name="#.ctor({modopt(System.Runtime.CompilerServices.IsConst),modopt(System.Runtime.CompilerServices.IsSignUnspecifiedByte)}System.SByte*)">
             <Messages>
-             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2008-08-20 12:09:23Z">
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Status="Excluded" Created="2008-08-20 12:09:23Z">
               <Issue Name="OutsideDispose">
                <Item>'EffectHandle.EffectHandle(sbyte*)'</Item>
                <Item>'GC.SuppressFinalize(object)'</Item>
@@ -6428,7 +6387,7 @@
           <Members>
            <Member Name="#Defaults">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>'EffectInstance.Defaults'</Item>
               </Issue>
@@ -8648,7 +8607,7 @@
            </Member>
            <Member Name="#GetData`1(System.Boolean)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>'Query.GetData&lt;T&gt;(bool)'</Item>
                <Item>'T'</Item>
@@ -8898,7 +8857,7 @@
             <Accessors>
              <Accessor Name="#get_NativeInterface()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-28 11:35:04Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-02-28 11:35:04Z">
                 <Issue>
                  <Item>'Resource.NativeInterface.get()'</Item>
                 </Issue>
@@ -9529,7 +9488,7 @@
            </Member>
            <Member Name="#GetContainer`1()">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2008-05-17 13:20:24Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2008-05-17 13:20:24Z">
               <Issue>
                <Item>'Surface.GetContainer&lt;TContainer&gt;()'</Item>
                <Item>'TContainer'</Item>
@@ -9964,7 +9923,7 @@
           <Members>
            <Member Name="#Elements">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2007-10-01 21:38:08Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2007-10-01 21:38:08Z">
               <Issue>
                <Item>'VertexDeclaration.Elements'</Item>
               </Issue>
@@ -11142,7 +11101,7 @@
            </Member>
            <Member Name="#GetEffect`1(System.Int32)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2008-08-01 13:08:02Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2008-08-01 13:08:02Z">
               <Issue>
                <Item>'CaptureBuffer.GetEffect&lt;T&gt;(int)'</Item>
                <Item>'T'</Item>
@@ -11156,7 +11115,7 @@
           <Members>
            <Member Name="#EffectDescriptions">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2008-08-01 13:08:02Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-08-01 13:08:02Z">
               <Issue>
                <Item>'CaptureBufferDescription.EffectDescriptions'</Item>
               </Issue>
@@ -11712,7 +11671,7 @@
             <Accessors>
              <Accessor Name="#get_InternalPointer()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-08-01 13:08:02Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-08-01 13:08:02Z">
                 <Issue>
                  <Item>'PrimarySoundBuffer.InternalPointer.get()'</Item>
                 </Issue>
@@ -11738,7 +11697,7 @@
            </Member>
            <Member Name="#GetEffect`1(System.Int32)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2008-08-01 13:08:02Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2008-08-01 13:08:02Z">
               <Issue>
                <Item>'SecondarySoundBuffer.GetEffect&lt;T&gt;(int)'</Item>
                <Item>'T'</Item>
@@ -11765,7 +11724,7 @@
             <Accessors>
              <Accessor Name="#get_NativeInterface()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-08-01 13:08:02Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-08-01 13:08:02Z">
                 <Issue>
                  <Item>'SoundBuffer.NativeInterface.get()'</Item>
                 </Issue>
@@ -12021,7 +11980,7 @@
             <Accessors>
              <Accessor Name="#get_NativeInterface()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-02-27 22:14:29Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2008-02-27 22:14:29Z">
                 <Issue>
                  <Item>'DeviceChild.NativeInterface.get()'</Item>
                 </Issue>
@@ -13178,7 +13137,7 @@
            </Member>
            <Member Name="#GetBuffer`1(System.Int32)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2008-01-27 22:23:52Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2008-01-27 22:23:52Z">
               <Issue>
                <Item>'SwapChain.GetBuffer&lt;T&gt;(int)'</Item>
                <Item>'T'</Item>
@@ -13275,7 +13234,7 @@
           <Members>
            <Member Name="#~WaveStream()">
             <Messages>
-             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2009-01-19 04:11:40Z">
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Status="Excluded" Created="2009-01-19 04:11:40Z">
               <Issue Name="OutsideDispose">
                <Item>'WaveStream.~WaveStream()'</Item>
                <Item>'GC.SuppressFinalize(object)'</Item>
@@ -13368,7 +13327,7 @@
             <Accessors>
              <Accessor Name="#raise_KeyboardInput(System.Object,SlimDX.RawInput.KeyboardInputEventArgs)">
               <Messages>
-               <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2008-10-30 16:25:52Z">
+               <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Status="Excluded" Created="2008-10-30 16:25:52Z">
                 <Issue Name="Member">
                  <Item>'Device.KeyboardInput.raise(object, KeyboardInputEventArgs)'</Item>
                 </Issue>
@@ -13381,7 +13340,7 @@
             <Accessors>
              <Accessor Name="#raise_MouseInput(System.Object,SlimDX.RawInput.MouseInputEventArgs)">
               <Messages>
-               <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2008-10-30 16:25:52Z">
+               <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Status="Excluded" Created="2008-10-30 16:25:52Z">
                 <Issue Name="Member">
                  <Item>'Device.MouseInput.raise(object, MouseInputEventArgs)'</Item>
                 </Issue>
@@ -13394,7 +13353,7 @@
             <Accessors>
              <Accessor Name="#raise_RawInput(System.Object,SlimDX.RawInput.RawInputEventArgs)">
               <Messages>
-               <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Created="2008-10-30 16:25:52Z">
+               <Message TypeName="DoNotDeclareProtectedMembersInSealedTypes" Category="Microsoft.Design" CheckId="CA1047" Status="Excluded" Created="2008-10-30 16:25:52Z">
                 <Issue Name="Member">
                  <Item>'Device.RawInput.raise(object, RawInputEventArgs)'</Item>
                 </Issue>
@@ -13509,7 +13468,7 @@
           <Members>
            <Member Name="#RawData">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2008-05-13 21:02:20Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-05-13 21:02:20Z">
               <Issue>
                <Item>'RawInputEventArgs.RawData'</Item>
               </Issue>
@@ -13538,15 +13497,6 @@
        </Namespace>
        <Namespace Name="SlimDX.Windows">
         <Types>
-         <Type Name="MessagePump">
-          <Messages>
-           <Message TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053" Created="2009-01-19 04:11:40Z">
-            <Issue>
-             <Item>'MessagePump'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="RenderWindow">
           <Members>
            <Member Name="#.ctor(System.Windows.Forms.Control)">
@@ -13914,7 +13864,7 @@
           <Members>
            <Member Name="#DelayTimes">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2008-05-11 14:47:03Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-05-11 14:47:03Z">
               <Issue>
                <Item>'DspSettings.DelayTimes'</Item>
               </Issue>
@@ -13943,7 +13893,7 @@
            </Member>
            <Member Name="#MatrixCoefficients">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2008-05-11 14:47:03Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-05-11 14:47:03Z">
               <Issue>
                <Item>'DspSettings.MatrixCoefficients'</Item>
               </Issue>
@@ -13956,7 +13906,7 @@
           <Members>
            <Member Name="#ChannelAzimuths">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2008-05-11 14:47:03Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-05-11 14:47:03Z">
               <Issue>
                <Item>'Emitter.ChannelAzimuths'</Item>
               </Issue>
@@ -13965,14 +13915,14 @@
            </Member>
            <Member Name="#LfeCurve">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2008-05-11 14:47:03Z">
-              <Issue>
-               <Item>'Emitter.LfeCurve'</Item>
-              </Issue>
-             </Message>
              <Message Id="Lfe" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-11 14:47:03Z">
               <Issue Name="Member">
                <Item>Lfe</Item>
+               <Item>'Emitter.LfeCurve'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue>
                <Item>'Emitter.LfeCurve'</Item>
               </Issue>
              </Message>
@@ -13980,14 +13930,14 @@
            </Member>
            <Member Name="#LpfDirectCurve">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2008-05-11 14:47:03Z">
-              <Issue>
-               <Item>'Emitter.LpfDirectCurve'</Item>
-              </Issue>
-             </Message>
              <Message Id="Lpf" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-11 14:47:03Z">
               <Issue Name="Member">
                <Item>Lpf</Item>
+               <Item>'Emitter.LpfDirectCurve'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue>
                <Item>'Emitter.LpfDirectCurve'</Item>
               </Issue>
              </Message>
@@ -13995,14 +13945,14 @@
            </Member>
            <Member Name="#LpfReverbCurve">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2008-05-11 14:47:03Z">
-              <Issue>
-               <Item>'Emitter.LpfReverbCurve'</Item>
-              </Issue>
-             </Message>
              <Message Id="Lpf" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-05-11 14:47:03Z">
               <Issue Name="Member">
                <Item>Lpf</Item>
+               <Item>'Emitter.LpfReverbCurve'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-05-11 14:47:03Z">
+              <Issue>
                <Item>'Emitter.LpfReverbCurve'</Item>
               </Issue>
              </Message>
@@ -14010,7 +13960,7 @@
            </Member>
            <Member Name="#ReverbCurve">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2008-05-11 14:47:03Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-05-11 14:47:03Z">
               <Issue>
                <Item>'Emitter.ReverbCurve'</Item>
               </Issue>
@@ -14019,7 +13969,7 @@
            </Member>
            <Member Name="#VolumeCurve">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2008-05-11 14:47:03Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-05-11 14:47:03Z">
               <Issue>
                <Item>'Emitter.VolumeCurve'</Item>
               </Issue>
@@ -15313,7 +15263,7 @@
           <Members>
            <Member Name="#Premultiplied">
             <Messages>
-             <Message Id="Premultiplied" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-21 03:06:41Z">
+             <Message Id="Premultiplied" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-25 21:00:51Z">
               <Issue Name="Member">
                <Item>Premultiplied</Item>
                <Item>'AlphaMode.Premultiplied'</Item>
@@ -15323,11 +15273,48 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="ArcSegment">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-25 21:00:51Z">
+            <Issue Name="Equals">
+             <Item>'ArcSegment'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'ArcSegment'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#EndPoint">
+            <Messages>
+             <Message Id="EndPoint" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2009-01-25 21:00:51Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>EndPoint</Item>
+               <Item>'ArcSegment.EndPoint'</Item>
+               <Item>Endpoint</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="BezierSegment">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-25 21:00:51Z">
+            <Issue Name="Equals">
+             <Item>'BezierSegment'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'BezierSegment'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
          <Type Name="Bitmap">
           <Members>
            <Member Name="#FromMemory(System.IntPtr,System.Int32)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'Bitmap.FromMemory(IntPtr, int)'</Item>
                <Item>pointer</Item>
@@ -15338,7 +15325,7 @@
            </Member>
            <Member Name="#FromMemory(System.IntPtr,System.Int32,System.Drawing.Rectangle)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'Bitmap.FromMemory(IntPtr, int, Rectangle)'</Item>
                <Item>pointer</Item>
@@ -15349,7 +15336,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'Bitmap.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -15364,7 +15351,7 @@
           <Members>
            <Member Name="#.ctor(ID2D1BitmapBrush*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'BitmapBrush.BitmapBrush(ID2D1BitmapBrush*)'</Item>
               </Issue>
@@ -15373,7 +15360,7 @@
            </Member>
            <Member Name="#FromPointer(ID2D1BitmapBrush*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'BitmapBrush.FromPointer(ID2D1BitmapBrush*)'</Item>
               </Issue>
@@ -15382,7 +15369,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'BitmapBrush.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -15395,7 +15382,7 @@
          </Type>
          <Type Name="BitmapBrushProperties">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-24 16:59:14Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-25 21:00:51Z">
             <Issue Name="Equals">
              <Item>'BitmapBrushProperties'</Item>
             </Issue>
@@ -15407,7 +15394,7 @@
          </Type>
          <Type Name="BitmapProperties">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-24 16:59:14Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-25 21:00:51Z">
             <Issue Name="Equals">
              <Item>'BitmapProperties'</Item>
             </Issue>
@@ -15421,7 +15408,7 @@
           <Members>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'BitmapRenderTarget.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -15433,19 +15420,12 @@
           </Members>
          </Type>
          <Type Name="Brush">
-          <Messages>
-           <Message TypeName="AbstractTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1012" Created="2009-01-21 03:06:41Z">
-            <Issue>
-             <Item>'Brush'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#NativeInterface">
             <Accessors>
              <Accessor Name="#get_NativeInterface()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-21 03:06:41Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-25 21:00:51Z">
                 <Issue>
                  <Item>'Brush.NativeInterface.get()'</Item>
                 </Issue>
@@ -15458,7 +15438,7 @@
          </Type>
          <Type Name="BrushProperties">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-21 03:06:41Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-25 21:00:51Z">
             <Issue Name="Equals">
              <Item>'BrushProperties'</Item>
             </Issue>
@@ -15470,7 +15450,7 @@
          </Type>
          <Type Name="CompatibleRenderTargetOptions">
           <Messages>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Excluded" Created="2009-01-24 16:59:14Z">
+           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Excluded" Created="2009-01-25 21:00:51Z">
             <Issue>
              <Item>'CompatibleRenderTargetOptions'</Item>
             </Issue>
@@ -15479,7 +15459,7 @@
           <Members>
            <Member Name="#GdiCompatible">
             <Messages>
-             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="Member">
                <Item>Gdi</Item>
                <Item>'CompatibleRenderTargetOptions.GdiCompatible'</Item>
@@ -15493,7 +15473,7 @@
           <Members>
            <Member Name="#.ctor(ID2D1DCRenderTarget*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'DeviceContextRenderTarget.DeviceContextRenderTarget(ID2D1DCRenderTarget*)'</Item>
               </Issue>
@@ -15502,7 +15482,7 @@
            </Member>
            <Member Name="#FromPointer(ID2D1DCRenderTarget*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'DeviceContextRenderTarget.FromPointer(ID2D1DCRenderTarget*)'</Item>
               </Issue>
@@ -15511,7 +15491,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'DeviceContextRenderTarget.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -15520,24 +15500,11 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-24 16:59:14Z">
-                <Issue>
-                 <Item>'DeviceContextRenderTarget.InternalPointer.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="DrawingStateDescription">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-24 16:59:14Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-25 21:00:51Z">
             <Issue Name="Equals">
              <Item>'DrawingStateDescription'</Item>
             </Issue>
@@ -15549,7 +15516,7 @@
          </Type>
          <Type Name="Ellipse">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-24 16:59:14Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-25 21:00:51Z">
             <Issue Name="Equals">
              <Item>'Ellipse'</Item>
             </Issue>
@@ -15559,11 +15526,44 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="EllipseGeometry">
+          <Members>
+           <Member Name="#.ctor(ID2D1EllipseGeometry*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue>
+               <Item>'EllipseGeometry.EllipseGeometry(ID2D1EllipseGeometry*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(ID2D1EllipseGeometry*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue>
+               <Item>'EllipseGeometry.FromPointer(ID2D1EllipseGeometry*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'EllipseGeometry.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="Factory">
           <Members>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'Factory.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -15578,14 +15578,14 @@
           <Members>
            <Member Name="#MultiThreaded">
             <Messages>
-             <Message Id="MultiThreaded" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2009-01-21 03:06:41Z">
+             <Message Id="MultiThreaded" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberShouldBeDiscreteTerm">
                <Item>MultiThreaded</Item>
                <Item>'FactoryType.MultiThreaded'</Item>
                <Item>Multithreaded</Item>
               </Issue>
              </Message>
-             <Message Id="Multi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-21 03:06:41Z">
+             <Message Id="Multi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-25 21:00:51Z">
               <Issue Name="Member">
                <Item>Multi</Item>
                <Item>'FactoryType.MultiThreaded'</Item>
@@ -15599,7 +15599,7 @@
           <Members>
            <Member Name="#StandardRgb">
             <Messages>
-             <Message Id="Rgb" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message Id="Rgb" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="Member">
                <Item>Rgb</Item>
                <Item>'Gamma.StandardRgb'</Item>
@@ -15609,29 +15609,52 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Geometry">
+         <Type Name="GdiInteropRenderTarget">
+          <Messages>
+           <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-25 21:00:51Z">
+            <Issue Name="Type">
+             <Item>Gdi</Item>
+             <Item>'GdiInteropRenderTarget'</Item>
+            </Issue>
+           </Message>
+          </Messages>
           <Members>
-           <Member Name="#.ctor(ID2D1Geometry*)">
+           <Member Name="#.ctor(ID2D1GdiInteropRenderTarget*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
-               <Item>'Geometry.Geometry(ID2D1Geometry*)'</Item>
+               <Item>'GdiInteropRenderTarget.GdiInteropRenderTarget(ID2D1GdiInteropRenderTarget*)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#FromPointer(ID2D1Geometry*)">
+           <Member Name="#FromPointer(ID2D1GdiInteropRenderTarget*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
-               <Item>'Geometry.FromPointer(ID2D1Geometry*)'</Item>
+               <Item>'GdiInteropRenderTarget.FromPointer(ID2D1GdiInteropRenderTarget*)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'GdiInteropRenderTarget.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Geometry">
+          <Members>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'Geometry.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -15642,11 +15665,113 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="GeometryGroup">
+          <Members>
+           <Member Name="#.ctor(ID2D1GeometryGroup*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue>
+               <Item>'GeometryGroup.GeometryGroup(ID2D1GeometryGroup*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(ID2D1GeometryGroup*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue>
+               <Item>'GeometryGroup.FromPointer(ID2D1GeometryGroup*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'GeometryGroup.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="GeometrySink">
+          <Members>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'GeometrySink.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="GradientStopCollection">
+          <Messages>
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2009-01-28 02:14:15Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>'GradientStopCollection'</Item>
+             <Item>Collection</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#.ctor(ID2D1GradientStopCollection*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-28 02:14:15Z">
+              <Issue>
+               <Item>'GradientStopCollection.GradientStopCollection(ID2D1GradientStopCollection*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(ID2D1GradientStopCollection*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-28 02:14:15Z">
+              <Issue>
+               <Item>'GradientStopCollection.FromPointer(ID2D1GradientStopCollection*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-28 02:14:15Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'GradientStopCollection.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#InternalPointer">
+            <Accessors>
+             <Accessor Name="#get_InternalPointer()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-28 02:14:15Z">
+                <Issue>
+                 <Item>'GradientStopCollection.InternalPointer.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="Layer">
           <Members>
            <Member Name="#.ctor(ID2D1Layer*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Layer.Layer(ID2D1Layer*)'</Item>
               </Issue>
@@ -15655,7 +15780,7 @@
            </Member>
            <Member Name="#FromPointer(ID2D1Layer*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Layer.FromPointer(ID2D1Layer*)'</Item>
               </Issue>
@@ -15664,7 +15789,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'Layer.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -15677,7 +15802,7 @@
          </Type>
          <Type Name="Matrix3x2">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-21 03:06:41Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-25 21:00:51Z">
             <Issue Name="Equals">
              <Item>'Matrix3x2'</Item>
             </Issue>
@@ -15685,7 +15810,7 @@
              <Item>'Matrix3x2'</Item>
             </Issue>
            </Message>
-           <Message Id="x" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-01-21 03:06:41Z">
+           <Message Id="x" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-01-25 21:00:51Z">
             <Issue Name="Type">
              <Item>x</Item>
              <Item>'Matrix3x2'</Item>
@@ -15698,7 +15823,7 @@
           <Members>
            <Member Name="#.ctor(ID2D1Mesh*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Mesh.Mesh(ID2D1Mesh*)'</Item>
               </Issue>
@@ -15707,7 +15832,7 @@
            </Member>
            <Member Name="#FromPointer(ID2D1Mesh*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Mesh.FromPointer(ID2D1Mesh*)'</Item>
               </Issue>
@@ -15716,7 +15841,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'Mesh.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -15727,9 +15852,73 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="PathGeometry">
+          <Members>
+           <Member Name="#.ctor(ID2D1PathGeometry*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue>
+               <Item>'PathGeometry.PathGeometry(ID2D1PathGeometry*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(ID2D1PathGeometry*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue>
+               <Item>'PathGeometry.FromPointer(ID2D1PathGeometry*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'PathGeometry.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="PathSegment">
+          <Messages>
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-01-25 21:00:51Z">
+            <Issue>
+             <Item>'PathSegment'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#ForceRoundLineJoine">
+            <Messages>
+             <Message Id="Joine" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-25 21:00:51Z">
+              <Issue Name="Member">
+               <Item>Joine</Item>
+               <Item>'PathSegment.ForceRoundLineJoine'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ForceUnstroked">
+            <Messages>
+             <Message Id="Unstroked" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-25 21:00:51Z">
+              <Issue Name="Member">
+               <Item>Unstroked</Item>
+               <Item>'PathSegment.ForceUnstroked'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="PixelFormat">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-21 03:06:41Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-25 21:00:51Z">
             <Issue Name="Equals">
              <Item>'PixelFormat'</Item>
             </Issue>
@@ -15741,25 +15930,63 @@
          </Type>
          <Type Name="PresentOptions">
           <Messages>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Excluded" Created="2009-01-21 03:06:41Z">
+           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Excluded" Created="2009-01-25 21:00:51Z">
             <Issue>
              <Item>'PresentOptions'</Item>
             </Issue>
            </Message>
           </Messages>
          </Type>
-         <Type Name="RenderTarget">
+         <Type Name="QuadraticBezierSegment">
           <Messages>
-           <Message TypeName="AbstractTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1012" Created="2009-01-21 03:06:41Z">
-            <Issue>
-             <Item>'RenderTarget'</Item>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-25 21:00:51Z">
+            <Issue Name="Equals">
+             <Item>'QuadraticBezierSegment'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'QuadraticBezierSegment'</Item>
             </Issue>
            </Message>
           </Messages>
+         </Type>
+         <Type Name="RectangleGeometry">
+          <Members>
+           <Member Name="#.ctor(ID2D1RectangleGeometry*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue>
+               <Item>'RectangleGeometry.RectangleGeometry(ID2D1RectangleGeometry*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(ID2D1RectangleGeometry*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue>
+               <Item>'RectangleGeometry.FromPointer(ID2D1RectangleGeometry*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'RectangleGeometry.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="RenderTarget">
           <Members>
            <Member Name="#CreateSharedBitmap(System.Guid,SlimDX.DataStream)">
             <Messages>
-             <Message Id="guid" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message Id="guid" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'RenderTarget.CreateSharedBitmap(Guid, DataStream)'</Item>
                <Item>guid</Item>
@@ -15768,24 +15995,33 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#NativeInterface">
-            <Accessors>
-             <Accessor Name="#get_NativeInterface()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-21 03:06:41Z">
-                <Issue>
-                 <Item>'RenderTarget.NativeInterface.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
+           <Member Name="#FromDXGI(SlimDX.Direct2D.Factory,SlimDX.DXGI.Surface,SlimDX.Direct2D.RenderTargetProperties)">
+            <Messages>
+             <Message Id="DXGI" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue Name="Member">
+               <Item>DXGI</Item>
+               <Item>'RenderTarget.FromDXGI(Factory, Surface, RenderTargetProperties)'</Item>
+               <Item>Dxgi</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'RenderTarget.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
            </Member>
           </Members>
          </Type>
          <Type Name="RenderTargetProperties">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-21 03:06:41Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-25 21:00:51Z">
             <Issue Name="Equals">
              <Item>'RenderTargetProperties'</Item>
             </Issue>
@@ -15797,7 +16033,7 @@
          </Type>
          <Type Name="RenderTargetUsage">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-01-21 03:06:41Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-01-25 21:00:51Z">
             <Issue>
              <Item>'RenderTargetUsage'</Item>
             </Issue>
@@ -15806,7 +16042,7 @@
           <Members>
            <Member Name="#GdiCompatible">
             <Messages>
-             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="Member">
                <Item>Gdi</Item>
                <Item>'RenderTargetUsage.GdiCompatible'</Item>
@@ -15817,19 +16053,12 @@
           </Members>
          </Type>
          <Type Name="Resource">
-          <Messages>
-           <Message TypeName="AbstractTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1012" Created="2009-01-21 03:06:41Z">
-            <Issue>
-             <Item>'Resource'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#NativeInterface">
             <Accessors>
              <Accessor Name="#get_NativeInterface()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-21 03:06:41Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-25 21:00:51Z">
                 <Issue>
                  <Item>'Resource.NativeInterface.get()'</Item>
                 </Issue>
@@ -15844,7 +16073,7 @@
           <Members>
            <Member Name="#TargetNotGdiCompatible">
             <Messages>
-             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="Member">
                <Item>Gdi</Item>
                <Item>'ResultCode.TargetNotGdiCompatible'</Item>
@@ -15854,7 +16083,7 @@
            </Member>
            <Member Name="#TextRendererNotReleased">
             <Messages>
-             <Message Id="Renderer" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-21 03:06:41Z">
+             <Message Id="Renderer" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-25 21:00:51Z">
               <Issue Name="Member">
                <Item>Renderer</Item>
                <Item>'ResultCode.TextRendererNotReleased'</Item>
@@ -15866,7 +16095,7 @@
          </Type>
          <Type Name="RoundedRectangle">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-24 16:59:14Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-25 21:00:51Z">
             <Issue Name="Equals">
              <Item>'RoundedRectangle'</Item>
             </Issue>
@@ -15876,11 +16105,106 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="RoundedRectangleGeometry">
+          <Members>
+           <Member Name="#.ctor(ID2D1RoundedRectangleGeometry*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue>
+               <Item>'RoundedRectangleGeometry.RoundedRectangleGeometry(ID2D1RoundedRectangleGeometry*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(ID2D1RoundedRectangleGeometry*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue>
+               <Item>'RoundedRectangleGeometry.FromPointer(ID2D1RoundedRectangleGeometry*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'RoundedRectangleGeometry.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SimplificationType">
+          <Members>
+           <Member Name="#CubicsAndLines">
+            <Messages>
+             <Message Id="Cubics" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-25 21:00:51Z">
+              <Issue Name="Member">
+               <Item>Cubics</Item>
+               <Item>'SimplificationType.CubicsAndLines'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SimplifiedGeometrySink">
+          <Members>
+           <Member Name="#.ctor(ID2D1SimplifiedGeometrySink*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue>
+               <Item>'SimplifiedGeometrySink.SimplifiedGeometrySink(ID2D1SimplifiedGeometrySink*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(ID2D1SimplifiedGeometrySink*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue>
+               <Item>'SimplifiedGeometrySink.FromPointer(ID2D1SimplifiedGeometrySink*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'SimplifiedGeometrySink.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SetSegmentFlags(SlimDX.Direct2D.PathSegment)">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'SimplifiedGeometrySink.SetSegmentFlags(PathSegment)'</Item>
+              </Issue>
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'SimplifiedGeometrySink.SetSegmentFlags(PathSegment)'</Item>
+               <Item>Flags</Item>
+               <Item>'vertexFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="SolidColorBrush">
           <Members>
            <Member Name="#.ctor(ID2D1SolidColorBrush*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'SolidColorBrush.SolidColorBrush(ID2D1SolidColorBrush*)'</Item>
               </Issue>
@@ -15889,7 +16213,7 @@
            </Member>
            <Member Name="#FromPointer(ID2D1SolidColorBrush*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'SolidColorBrush.FromPointer(ID2D1SolidColorBrush*)'</Item>
               </Issue>
@@ -15898,7 +16222,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'SolidColorBrush.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -15913,7 +16237,7 @@
           <Members>
            <Member Name="#.ctor(ID2D1DrawingStateBlock*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'StateBlock.StateBlock(ID2D1DrawingStateBlock*)'</Item>
               </Issue>
@@ -15922,7 +16246,7 @@
            </Member>
            <Member Name="#FromPointer(ID2D1DrawingStateBlock*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'StateBlock.FromPointer(ID2D1DrawingStateBlock*)'</Item>
               </Issue>
@@ -15931,7 +16255,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'StateBlock.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -15946,7 +16270,7 @@
           <Members>
            <Member Name="#.ctor(ID2D1StrokeStyle*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'StrokeStyle.StrokeStyle(ID2D1StrokeStyle*)'</Item>
               </Issue>
@@ -15955,7 +16279,7 @@
            </Member>
            <Member Name="#FromPointer(ID2D1StrokeStyle*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'StrokeStyle.FromPointer(ID2D1StrokeStyle*)'</Item>
               </Issue>
@@ -15964,7 +16288,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'StrokeStyle.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -15977,7 +16301,7 @@
          </Type>
          <Type Name="StrokeStyleProperties">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-24 16:59:14Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-25 21:00:51Z">
             <Issue Name="Equals">
              <Item>'StrokeStyleProperties'</Item>
             </Issue>
@@ -15987,11 +16311,26 @@
            </Message>
           </Messages>
          </Type>
+         <Type Name="SweepDirection">
+          <Members>
+           <Member Name="#CounterClockwise">
+            <Messages>
+             <Message Id="CounterClockwise" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2009-01-25 21:00:51Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>CounterClockwise</Item>
+               <Item>'SweepDirection.CounterClockwise'</Item>
+               <Item>Counterclockwise</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="TessellationSink">
           <Members>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'TessellationSink.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16006,7 +16345,7 @@
           <Members>
            <Member Name="#GrayScale">
             <Messages>
-             <Message Id="GrayScale" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2009-01-24 16:59:14Z">
+             <Message Id="GrayScale" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberShouldBeDiscreteTerm">
                <Item>GrayScale</Item>
                <Item>'TextAntialiasMode.GrayScale'</Item>
@@ -16017,9 +16356,42 @@
            </Member>
           </Members>
          </Type>
+         <Type Name="TransformedGeometry">
+          <Members>
+           <Member Name="#.ctor(ID2D1TransformedGeometry*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue>
+               <Item>'TransformedGeometry.TransformedGeometry(ID2D1TransformedGeometry*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(ID2D1TransformedGeometry*)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue>
+               <Item>'TransformedGeometry.FromPointer(ID2D1TransformedGeometry*)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FromPointer(System.IntPtr)">
+            <Messages>
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'TransformedGeometry.FromPointer(IntPtr)'</Item>
+               <Item>pointer</Item>
+               <Item>'pointer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="Triangle">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-24 16:59:14Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-25 21:00:51Z">
             <Issue Name="Equals">
              <Item>'Triangle'</Item>
             </Issue>
@@ -16033,7 +16405,7 @@
           <Members>
            <Member Name="#.ctor(ID2D1HwndRenderTarget*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'WindowRenderTarget.WindowRenderTarget(ID2D1HwndRenderTarget*)'</Item>
               </Issue>
@@ -16042,7 +16414,7 @@
            </Member>
            <Member Name="#FromPointer(ID2D1HwndRenderTarget*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'WindowRenderTarget.FromPointer(ID2D1HwndRenderTarget*)'</Item>
               </Issue>
@@ -16051,7 +16423,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'WindowRenderTarget.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16064,7 +16436,7 @@
          </Type>
          <Type Name="WindowRenderTargetProperties">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-21 03:06:41Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-25 21:00:51Z">
             <Issue Name="Equals">
              <Item>'WindowRenderTargetProperties'</Item>
             </Issue>
@@ -16082,7 +16454,7 @@
           <Members>
            <Member Name="#.ctor(ID3D11Asynchronous*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Asynchronous.Asynchronous(ID3D11Asynchronous*)'</Item>
               </Issue>
@@ -16091,7 +16463,7 @@
            </Member>
            <Member Name="#FromPointer(ID3D11Asynchronous*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Asynchronous.FromPointer(ID3D11Asynchronous*)'</Item>
               </Issue>
@@ -16100,7 +16472,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'Asynchronous.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16113,7 +16485,7 @@
             <Accessors>
              <Accessor Name="#get_InternalPointer()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-21 03:06:41Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-25 21:00:51Z">
                 <Issue>
                  <Item>'Asynchronous.InternalPointer.get()'</Item>
                 </Issue>
@@ -16126,7 +16498,7 @@
          </Type>
          <Type Name="AsynchronousFlags">
           <Messages>
-           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
             <Issue Name="TypeNoAlternate">
              <Item>Flags</Item>
              <Item>'AsynchronousFlags'</Item>
@@ -16136,7 +16508,7 @@
          </Type>
          <Type Name="BindFlags">
           <Messages>
-           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
             <Issue Name="TypeNoAlternate">
              <Item>Flags</Item>
              <Item>'BindFlags'</Item>
@@ -16146,7 +16518,7 @@
          </Type>
          <Type Name="BlendOperation">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-21 03:06:41Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-25 21:00:51Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'BlendOperation'</Item>
             </Issue>
@@ -16155,12 +16527,12 @@
          </Type>
          <Type Name="BlendOption">
           <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2009-01-21 03:06:41Z">
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2009-01-25 21:00:51Z">
             <Issue>
              <Item>'BlendOption'</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-21 03:06:41Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-25 21:00:51Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'BlendOption'</Item>
             </Issue>
@@ -16171,7 +16543,7 @@
           <Members>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'BlendState.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16184,13 +16556,13 @@
          </Type>
          <Type Name="BlendStateRendertargetDescription">
           <Messages>
-           <Message Id="Rendertarget" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-21 03:06:41Z">
+           <Message Id="Rendertarget" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-01-25 21:00:51Z">
             <Issue Name="Type">
              <Item>Rendertarget</Item>
              <Item>'BlendStateRendertargetDescription'</Item>
             </Issue>
            </Message>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-21 03:06:41Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-25 21:00:51Z">
             <Issue Name="Equals">
              <Item>'BlendStateRendertargetDescription'</Item>
             </Issue>
@@ -16204,7 +16576,7 @@
           <Members>
            <Member Name="#.ctor(ID3D11Buffer*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Buffer.Buffer(ID3D11Buffer*)'</Item>
               </Issue>
@@ -16213,7 +16585,7 @@
            </Member>
            <Member Name="#.ctor(SlimDX.Direct3D11.Device,SlimDX.DataStream,System.Int32,SlimDX.Direct3D11.ResourceUsage,SlimDX.Direct3D11.BindFlags,SlimDX.Direct3D11.CpuAccessFlags,SlimDX.Direct3D11.ResourceOptionFlags)">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberParameterNoAlternate">
                <Item>'Buffer.Buffer(Device, DataStream, int, ResourceUsage, BindFlags, CpuAccessFlags, ResourceOptionFlags)'</Item>
                <Item>Flags</Item>
@@ -16234,7 +16606,7 @@
            </Member>
            <Member Name="#.ctor(SlimDX.Direct3D11.Device,System.Int32,SlimDX.Direct3D11.ResourceUsage,SlimDX.Direct3D11.BindFlags,SlimDX.Direct3D11.CpuAccessFlags,SlimDX.Direct3D11.ResourceOptionFlags)">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberParameterNoAlternate">
                <Item>'Buffer.Buffer(Device, int, ResourceUsage, BindFlags, CpuAccessFlags, ResourceOptionFlags)'</Item>
                <Item>Flags</Item>
@@ -16255,7 +16627,7 @@
            </Member>
            <Member Name="#FromPointer(ID3D11Buffer*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Buffer.FromPointer(ID3D11Buffer*)'</Item>
               </Issue>
@@ -16264,7 +16636,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'Buffer.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16279,7 +16651,7 @@
           <Members>
            <Member Name="#.ctor(System.Int32,SlimDX.Direct3D11.ResourceUsage,SlimDX.Direct3D11.BindFlags,SlimDX.Direct3D11.CpuAccessFlags,SlimDX.Direct3D11.ResourceOptionFlags)">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberParameterNoAlternate">
                <Item>'BufferDescription.BufferDescription(int, ResourceUsage, BindFlags, CpuAccessFlags, ResourceOptionFlags)'</Item>
                <Item>Flags</Item>
@@ -16300,7 +16672,7 @@
            </Member>
            <Member Name="#BindFlags">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberNoAlternate">
                <Item>Flags</Item>
                <Item>'BufferDescription.BindFlags'</Item>
@@ -16310,7 +16682,7 @@
            </Member>
            <Member Name="#CpuAccessFlags">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberNoAlternate">
                <Item>Flags</Item>
                <Item>'BufferDescription.CpuAccessFlags'</Item>
@@ -16320,7 +16692,7 @@
            </Member>
            <Member Name="#OptionFlags">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberNoAlternate">
                <Item>Flags</Item>
                <Item>'BufferDescription.OptionFlags'</Item>
@@ -16332,7 +16704,7 @@
          </Type>
          <Type Name="ColorWriteMaskFlags">
           <Messages>
-           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
             <Issue Name="TypeNoAlternate">
              <Item>Flags</Item>
              <Item>'ColorWriteMaskFlags'</Item>
@@ -16344,7 +16716,7 @@
           <Members>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'CommandList.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16357,7 +16729,7 @@
          </Type>
          <Type Name="Comparison">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-21 03:06:41Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-25 21:00:51Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'Comparison'</Item>
             </Issue>
@@ -16368,7 +16740,7 @@
           <Members>
            <Member Name="#.ctor(ID3D11Counter*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Counter.Counter(ID3D11Counter*)'</Item>
               </Issue>
@@ -16377,7 +16749,7 @@
            </Member>
            <Member Name="#FromPointer(ID3D11Counter*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Counter.FromPointer(ID3D11Counter*)'</Item>
               </Issue>
@@ -16386,7 +16758,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'Counter.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16399,7 +16771,7 @@
          </Type>
          <Type Name="CounterKind">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-21 03:06:41Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-25 21:00:51Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'CounterKind'</Item>
             </Issue>
@@ -16410,7 +16782,7 @@
           <Members>
            <Member Name="#Type">
             <Messages>
-             <Message TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721" Status="Excluded" Created="2009-01-21 03:06:41Z" FixCategory="NonBreaking">
+             <Message TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721" Status="Excluded" Created="2009-01-25 21:00:51Z" FixCategory="NonBreaking">
               <Issue Name="BaseType">
                <Item>'CounterMetadata.Type'</Item>
                <Item>'object.GetType()'</Item>
@@ -16422,7 +16794,7 @@
          </Type>
          <Type Name="CpuAccessFlags">
           <Messages>
-           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
             <Issue Name="TypeNoAlternate">
              <Item>Flags</Item>
              <Item>'CpuAccessFlags'</Item>
@@ -16432,7 +16804,7 @@
          </Type>
          <Type Name="CullMode">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-21 03:06:41Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-25 21:00:51Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'CullMode'</Item>
             </Issue>
@@ -16443,7 +16815,7 @@
           <Members>
            <Member Name="#.ctor(ID3D11Debug*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Debug.Debug(ID3D11Debug*)'</Item>
               </Issue>
@@ -16452,7 +16824,7 @@
            </Member>
            <Member Name="#FeatureFlags">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberNoAlternate">
                <Item>Flags</Item>
                <Item>'Debug.FeatureFlags'</Item>
@@ -16462,7 +16834,7 @@
            </Member>
            <Member Name="#FromPointer(ID3D11Debug*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Debug.FromPointer(ID3D11Debug*)'</Item>
               </Issue>
@@ -16471,7 +16843,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'Debug.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16484,7 +16856,7 @@
             <Accessors>
              <Accessor Name="#get_SwapChain()">
               <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2009-01-21 03:06:41Z" FixCategory="Breaking">
+               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2009-01-25 21:00:51Z" FixCategory="Breaking">
                 <Issue Name="PropertyGetter" Level="Warning">
                  <Item>'Debug.SwapChain.get()'</Item>
                  <Item>'Direct3D11Exception'</Item>
@@ -16496,7 +16868,7 @@
            </Member>
            <Member Name="#ValidatePipelineState()">
             <Messages>
-             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2009-01-21 03:06:41Z" FixCategory="DependsOnFix">
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2009-01-25 21:00:51Z" FixCategory="DependsOnFix">
               <Issue>
                <Item>'Debug.ValidatePipelineState()'</Item>
               </Issue>
@@ -16507,7 +16879,7 @@
          </Type>
          <Type Name="DebugFeatureFlags">
           <Messages>
-           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
             <Issue Name="TypeNoAlternate">
              <Item>Flags</Item>
              <Item>'DebugFeatureFlags'</Item>
@@ -16517,7 +16889,7 @@
          </Type>
          <Type Name="DepthStencilClearFlags">
           <Messages>
-           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
             <Issue Name="TypeNoAlternate">
              <Item>Flags</Item>
              <Item>'DepthStencilClearFlags'</Item>
@@ -16529,7 +16901,7 @@
           <Members>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'DepthStencilState.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16544,7 +16916,7 @@
           <Members>
            <Member Name="#.ctor(ID3D11DepthStencilView*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'DepthStencilView.DepthStencilView(ID3D11DepthStencilView*)'</Item>
               </Issue>
@@ -16553,7 +16925,7 @@
            </Member>
            <Member Name="#FromPointer(ID3D11DepthStencilView*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'DepthStencilView.FromPointer(ID3D11DepthStencilView*)'</Item>
               </Issue>
@@ -16562,7 +16934,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'DepthStencilView.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16577,7 +16949,7 @@
           <Members>
            <Member Name="#.ctor(SlimDX.Direct3D11.DeviceCreationFlags)">
             <Messages>
-             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberParameterNoAlternate">
                <Item>'Device.Device(DeviceCreationFlags)'</Item>
                <Item>flags</Item>
@@ -16588,7 +16960,7 @@
            </Member>
            <Member Name="#.ctor(SlimDX.Direct3D11.DriverType,SlimDX.Direct3D11.DeviceCreationFlags)">
             <Messages>
-             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberParameterNoAlternate">
                <Item>'Device.Device(DriverType, DeviceCreationFlags)'</Item>
                <Item>flags</Item>
@@ -16599,7 +16971,7 @@
            </Member>
            <Member Name="#.ctor(SlimDX.DXGI.Adapter,SlimDX.Direct3D11.DriverType,SlimDX.Direct3D11.DeviceCreationFlags)">
             <Messages>
-             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberParameterNoAlternate">
                <Item>'Device.Device(Adapter, DriverType, DeviceCreationFlags)'</Item>
                <Item>flags</Item>
@@ -16610,7 +16982,7 @@
            </Member>
            <Member Name="#CreateWithSwapChain(SlimDX.DXGI.Adapter,SlimDX.Direct3D11.DriverType,SlimDX.Direct3D11.DeviceCreationFlags,SlimDX.DXGI.SwapChainDescription,SlimDX.Direct3D11.Device&amp;,SlimDX.DXGI.SwapChain&amp;)">
             <Messages>
-             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberParameterNoAlternate">
                <Item>'Device.CreateWithSwapChain(Adapter, DriverType, DeviceCreationFlags, SwapChainDescription, out Device, out SwapChain)'</Item>
                <Item>flags</Item>
@@ -16621,7 +16993,7 @@
            </Member>
            <Member Name="#CreationFlags">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberNoAlternate">
                <Item>Flags</Item>
                <Item>'Device.CreationFlags'</Item>
@@ -16631,7 +17003,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'Device.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16642,7 +17014,7 @@
            </Member>
            <Member Name="#GetCounterCapabilities()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-01-25 21:00:51Z">
               <Issue Certainty="50">
                <Item>'Device.GetCounterCapabilities()'</Item>
               </Issue>
@@ -16655,7 +17027,7 @@
           <Members>
            <Member Name="#.ctor(ID3D11DeviceChild*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'DeviceChild.DeviceChild(ID3D11DeviceChild*)'</Item>
               </Issue>
@@ -16664,7 +17036,7 @@
            </Member>
            <Member Name="#FromPointer(ID3D11DeviceChild*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'DeviceChild.FromPointer(ID3D11DeviceChild*)'</Item>
               </Issue>
@@ -16673,7 +17045,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'DeviceChild.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16688,7 +17060,7 @@
           <Members>
            <Member Name="#ClearDepthStencilView(SlimDX.Direct3D11.DepthStencilView,SlimDX.Direct3D11.DepthStencilClearFlags,System.Single,System.Byte)">
             <Messages>
-             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberParameterNoAlternate">
                <Item>'DeviceContext.ClearDepthStencilView(DepthStencilView, DepthStencilClearFlags, float, byte)'</Item>
                <Item>flags</Item>
@@ -16699,7 +17071,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'DeviceContext.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16712,7 +17084,7 @@
          </Type>
          <Type Name="DeviceCreationFlags">
           <Messages>
-           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
             <Issue Name="TypeNoAlternate">
              <Item>Flags</Item>
              <Item>'DeviceCreationFlags'</Item>
@@ -16722,7 +17094,7 @@
          </Type>
          <Type Name="DriverType">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-21 03:06:41Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-25 21:00:51Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'DriverType'</Item>
             </Issue>
@@ -16731,7 +17103,7 @@
          </Type>
          <Type Name="FillMode">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-21 03:06:41Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-25 21:00:51Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'FillMode'</Item>
             </Issue>
@@ -16740,7 +17112,7 @@
          </Type>
          <Type Name="FormatSupport">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-01-21 03:06:41Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-01-25 21:00:51Z">
             <Issue>
              <Item>'FormatSupport'</Item>
             </Issue>
@@ -16749,7 +17121,7 @@
           <Members>
            <Member Name="#Reserved">
             <Messages>
-             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'FormatSupport.Reserved'</Item>
               </Issue>
@@ -16762,7 +17134,7 @@
           <Members>
            <Member Name="#.ctor(ID3D11GeometryShader*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'GeometryShader.GeometryShader(ID3D11GeometryShader*)'</Item>
               </Issue>
@@ -16771,7 +17143,7 @@
            </Member>
            <Member Name="#FromPointer(ID3D11GeometryShader*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'GeometryShader.FromPointer(ID3D11GeometryShader*)'</Item>
               </Issue>
@@ -16780,7 +17152,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'GeometryShader.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16793,7 +17165,7 @@
             <Accessors>
              <Accessor Name="#get_InternalPointer()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-21 03:06:41Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-25 21:00:51Z">
                 <Issue>
                  <Item>'GeometryShader.InternalPointer.get()'</Item>
                 </Issue>
@@ -16808,7 +17180,7 @@
           <Members>
            <Member Name="#Png">
             <Messages>
-             <Message Id="Png" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Png" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="Member">
                <Item>Png</Item>
                <Item>'ImageFileFormat.Png'</Item>
@@ -16818,7 +17190,7 @@
            </Member>
            <Member Name="#Wmp">
             <Messages>
-             <Message Id="Wmp" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Wmp" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="Member">
                <Item>Wmp</Item>
                <Item>'ImageFileFormat.Wmp'</Item>
@@ -16832,7 +17204,7 @@
           <Members>
            <Member Name="#.ctor(ID3D11InputLayout*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'InputLayout.InputLayout(ID3D11InputLayout*)'</Item>
               </Issue>
@@ -16841,7 +17213,7 @@
            </Member>
            <Member Name="#FromPointer(ID3D11InputLayout*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'InputLayout.FromPointer(ID3D11InputLayout*)'</Item>
               </Issue>
@@ -16850,7 +17222,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'InputLayout.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16863,7 +17235,7 @@
          </Type>
          <Type Name="MapFlags">
           <Messages>
-           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
             <Issue Name="TypeNoAlternate">
              <Item>Flags</Item>
              <Item>'MapFlags'</Item>
@@ -16873,7 +17245,7 @@
          </Type>
          <Type Name="MapMode">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-21 03:06:41Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-25 21:00:51Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'MapMode'</Item>
             </Issue>
@@ -16884,7 +17256,7 @@
           <Members>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'PixelShader.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16899,7 +17271,7 @@
           <Members>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'RasterizerState.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16912,7 +17284,7 @@
          </Type>
          <Type Name="RegisterComponentMaskFlags">
           <Messages>
-           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
             <Issue Name="TypeNoAlternate">
              <Item>Flags</Item>
              <Item>'RegisterComponentMaskFlags'</Item>
@@ -16924,7 +17296,7 @@
           <Members>
            <Member Name="#.ctor(ID3D11RenderTargetView*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'RenderTargetView.RenderTargetView(ID3D11RenderTargetView*)'</Item>
               </Issue>
@@ -16933,7 +17305,7 @@
            </Member>
            <Member Name="#FromPointer(ID3D11RenderTargetView*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'RenderTargetView.FromPointer(ID3D11RenderTargetView*)'</Item>
               </Issue>
@@ -16942,7 +17314,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'RenderTargetView.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16957,7 +17329,7 @@
           <Members>
            <Member Name="#.ctor(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'Resource.Resource(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -16970,7 +17342,7 @@
          </Type>
          <Type Name="ResourceOptionFlags">
           <Messages>
-           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
             <Issue Name="TypeNoAlternate">
              <Item>Flags</Item>
              <Item>'ResourceOptionFlags'</Item>
@@ -16982,7 +17354,7 @@
           <Members>
            <Member Name="#.ctor({modopt(System.Runtime.CompilerServices.IsConst)}D3D11_BOX{modopt(System.Runtime.CompilerServices.IsImplicitlyDereferenced)}*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'ResourceRegion.ResourceRegion(D3D11_BOX*)'</Item>
               </Issue>
@@ -16995,7 +17367,7 @@
           <Members>
            <Member Name="#.ctor(ID3D11View*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'ResourceView.ResourceView(ID3D11View*)'</Item>
               </Issue>
@@ -17004,7 +17376,7 @@
            </Member>
            <Member Name="#FromPointer(ID3D11View*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'ResourceView.FromPointer(ID3D11View*)'</Item>
               </Issue>
@@ -17013,7 +17385,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'ResourceView.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -17026,7 +17398,7 @@
             <Accessors>
              <Accessor Name="#get_InternalPointer()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-21 03:06:41Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-25 21:00:51Z">
                 <Issue>
                  <Item>'ResourceView.InternalPointer.get()'</Item>
                 </Issue>
@@ -17041,7 +17413,7 @@
           <Members>
            <Member Name="#.ctor(System.IntPtr)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'ShaderBlob.ShaderBlob(IntPtr)'</Item>
               </Issue>
@@ -17052,7 +17424,7 @@
             <Accessors>
              <Accessor Name="#get_NativeInterface()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-21 03:06:41Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-25 21:00:51Z">
                 <Issue>
                  <Item>'ShaderBlob.NativeInterface.get()'</Item>
                 </Issue>
@@ -17067,7 +17439,7 @@
           <Members>
            <Member Name="#.ctor({modopt(System.Runtime.CompilerServices.IsConst)}System.Void*,System.Int32)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'ShaderBytecode.ShaderBytecode(void*, int)'</Item>
               </Issue>
@@ -17080,7 +17452,7 @@
           <Members>
            <Member Name="#.ctor(ID3D11ShaderResourceView*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'ShaderResourceView.ShaderResourceView(ID3D11ShaderResourceView*)'</Item>
               </Issue>
@@ -17089,7 +17461,7 @@
            </Member>
            <Member Name="#FromPointer(ID3D11ShaderResourceView*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'ShaderResourceView.FromPointer(ID3D11ShaderResourceView*)'</Item>
               </Issue>
@@ -17098,7 +17470,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'ShaderResourceView.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -17113,7 +17485,7 @@
           <Members>
            <Member Name="#.ctor({modopt(System.Runtime.CompilerServices.IsConst)}System.Void*,System.Int64)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'ShaderSignature.ShaderSignature(void*, long)'</Item>
               </Issue>
@@ -17124,7 +17496,7 @@
          </Type>
          <Type Name="StencilOperation">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-21 03:06:41Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-25 21:00:51Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'StencilOperation'</Item>
             </Issue>
@@ -17133,7 +17505,7 @@
          </Type>
          <Type Name="SystemValueType">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-21 03:06:41Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-25 21:00:51Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'SystemValueType'</Item>
             </Issue>
@@ -17144,7 +17516,7 @@
           <Members>
            <Member Name="#GetMipSize(System.Int32,System.Int32)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Texture.GetMipSize(int, int)'</Item>
               </Issue>
@@ -17155,7 +17527,7 @@
             <Accessors>
              <Accessor Name="#get_NativeInterface()">
               <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-21 03:06:41Z">
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-01-25 21:00:51Z">
                 <Issue>
                  <Item>'Texture.NativeInterface.get()'</Item>
                 </Issue>
@@ -17170,7 +17542,7 @@
           <Members>
            <Member Name="#FromPointer(ID3D11Texture1D*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Texture1D.FromPointer(ID3D11Texture1D*)'</Item>
               </Issue>
@@ -17179,7 +17551,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'Texture1D.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -17194,7 +17566,7 @@
           <Members>
            <Member Name="#BindFlags">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberNoAlternate">
                <Item>Flags</Item>
                <Item>'Texture1DDescription.BindFlags'</Item>
@@ -17204,7 +17576,7 @@
            </Member>
            <Member Name="#CpuAccessFlags">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberNoAlternate">
                <Item>Flags</Item>
                <Item>'Texture1DDescription.CpuAccessFlags'</Item>
@@ -17214,7 +17586,7 @@
            </Member>
            <Member Name="#OptionFlags">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberNoAlternate">
                <Item>Flags</Item>
                <Item>'Texture1DDescription.OptionFlags'</Item>
@@ -17228,7 +17600,7 @@
           <Members>
            <Member Name="#FromPointer(ID3D11Texture2D*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Texture2D.FromPointer(ID3D11Texture2D*)'</Item>
               </Issue>
@@ -17237,7 +17609,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'Texture2D.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -17252,7 +17624,7 @@
           <Members>
            <Member Name="#BindFlags">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberNoAlternate">
                <Item>Flags</Item>
                <Item>'Texture2DDescription.BindFlags'</Item>
@@ -17262,7 +17634,7 @@
            </Member>
            <Member Name="#CpuAccessFlags">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberNoAlternate">
                <Item>Flags</Item>
                <Item>'Texture2DDescription.CpuAccessFlags'</Item>
@@ -17272,7 +17644,7 @@
            </Member>
            <Member Name="#OptionFlags">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberNoAlternate">
                <Item>Flags</Item>
                <Item>'Texture2DDescription.OptionFlags'</Item>
@@ -17286,7 +17658,7 @@
           <Members>
            <Member Name="#FromPointer(ID3D11Texture3D*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Texture3D.FromPointer(ID3D11Texture3D*)'</Item>
               </Issue>
@@ -17295,7 +17667,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'Texture3D.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -17310,7 +17682,7 @@
           <Members>
            <Member Name="#BindFlags">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberNoAlternate">
                <Item>Flags</Item>
                <Item>'Texture3DDescription.BindFlags'</Item>
@@ -17320,7 +17692,7 @@
            </Member>
            <Member Name="#CpuAccessFlags">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberNoAlternate">
                <Item>Flags</Item>
                <Item>'Texture3DDescription.CpuAccessFlags'</Item>
@@ -17330,7 +17702,7 @@
            </Member>
            <Member Name="#OptionFlags">
             <Messages>
-             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberNoAlternate">
                <Item>Flags</Item>
                <Item>'Texture3DDescription.OptionFlags'</Item>
@@ -17344,7 +17716,7 @@
           <Members>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-21 03:06:41Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'VertexShader.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -17363,7 +17735,7 @@
           <Members>
            <Member Name="#.ctor(IDWriteFactory*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Factory.Factory(IDWriteFactory*)'</Item>
               </Issue>
@@ -17372,7 +17744,7 @@
            </Member>
            <Member Name="#FromPointer(IDWriteFactory*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Factory.FromPointer(IDWriteFactory*)'</Item>
               </Issue>
@@ -17381,7 +17753,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'Factory.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -17394,7 +17766,7 @@
          </Type>
          <Type Name="FontCollection">
           <Messages>
-           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2009-01-22 01:09:48Z">
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Status="Excluded" Created="2009-01-25 21:00:51Z">
             <Issue Name="TypeNoAlternate">
              <Item>'FontCollection'</Item>
              <Item>Collection</Item>
@@ -17404,7 +17776,7 @@
           <Members>
            <Member Name="#.ctor(IDWriteFontCollection*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'FontCollection.FontCollection(IDWriteFontCollection*)'</Item>
               </Issue>
@@ -17413,7 +17785,7 @@
            </Member>
            <Member Name="#FromPointer(IDWriteFontCollection*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'FontCollection.FromPointer(IDWriteFontCollection*)'</Item>
               </Issue>
@@ -17422,7 +17794,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'FontCollection.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -17435,7 +17807,7 @@
          </Type>
          <Type Name="FontFeature">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-22 01:09:48Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-25 21:00:51Z">
             <Issue Name="Equals">
              <Item>'FontFeature'</Item>
             </Issue>
@@ -17447,7 +17819,7 @@
           <Members>
            <Member Name="#.ctor(SlimDX.DirectWrite.FontFeatureTag,System.Int32)">
             <Messages>
-             <Message Id="nameTag" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2009-01-24 16:59:14Z">
+             <Message Id="nameTag" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberParameterShouldBeDiscreteTerm">
                <Item>'FontFeature.FontFeature(FontFeatureTag, int)'</Item>
                <Item>nameTag</Item>
@@ -17459,7 +17831,7 @@
            </Member>
            <Member Name="#NameTag">
             <Messages>
-             <Message Id="NameTag" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2009-01-22 01:09:48Z">
+             <Message Id="NameTag" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberShouldBeDiscreteTerm">
                <Item>NameTag</Item>
                <Item>'FontFeature.NameTag'</Item>
@@ -17472,7 +17844,7 @@
          </Type>
          <Type Name="FontFeatureTag">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-22 01:09:48Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-25 21:00:51Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'FontFeatureTag'</Item>
             </Issue>
@@ -17481,7 +17853,7 @@
           <Members>
            <Member Name="#HalantForms">
             <Messages>
-             <Message Id="Halant" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message Id="Halant" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="Member">
                <Item>Halant</Item>
                <Item>'FontFeatureTag.HalantForms'</Item>
@@ -17491,7 +17863,7 @@
            </Member>
            <Member Name="#HojoKanjiForms">
             <Messages>
-             <Message Id="Hojo" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message Id="Hojo" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="Member">
                <Item>Hojo</Item>
                <Item>'FontFeatureTag.HojoKanjiForms'</Item>
@@ -17501,7 +17873,7 @@
            </Member>
            <Member Name="#JIS04Forms">
             <Messages>
-             <Message Id="JIS" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message Id="JIS" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="Member">
                <Item>JIS</Item>
                <Item>'FontFeatureTag.JIS04Forms'</Item>
@@ -17512,7 +17884,7 @@
            </Member>
            <Member Name="#JIS78Forms">
             <Messages>
-             <Message Id="JIS" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message Id="JIS" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="Member">
                <Item>JIS</Item>
                <Item>'FontFeatureTag.JIS78Forms'</Item>
@@ -17523,7 +17895,7 @@
            </Member>
            <Member Name="#JIS83Forms">
             <Messages>
-             <Message Id="JIS" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message Id="JIS" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="Member">
                <Item>JIS</Item>
                <Item>'FontFeatureTag.JIS83Forms'</Item>
@@ -17534,7 +17906,7 @@
            </Member>
            <Member Name="#JIS90Forms">
             <Messages>
-             <Message Id="JIS" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message Id="JIS" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="Member">
                <Item>JIS</Item>
                <Item>'FontFeatureTag.JIS90Forms'</Item>
@@ -17545,7 +17917,7 @@
            </Member>
            <Member Name="#NlcKanjiForms">
             <Messages>
-             <Message Id="Nlc" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message Id="Nlc" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="Member">
                <Item>Nlc</Item>
                <Item>'FontFeatureTag.NlcKanjiForms'</Item>
@@ -17555,7 +17927,7 @@
            </Member>
            <Member Name="#Unicase">
             <Messages>
-             <Message Id="Unicase" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message Id="Unicase" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="Member">
                <Item>Unicase</Item>
                <Item>'FontFeatureTag.Unicase'</Item>
@@ -17567,7 +17939,7 @@
          </Type>
          <Type Name="FontWeight">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-22 01:09:48Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-01-25 21:00:51Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'FontWeight'</Item>
             </Issue>
@@ -17576,7 +17948,7 @@
           <Members>
            <Member Name="#ExtraBold">
             <Messages>
-             <Message Id="ExtraBold" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message Id="ExtraBold" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2009-01-25 21:00:51Z">
               <Issue Name="MemberShouldBeDiscreteTerm">
                <Item>ExtraBold</Item>
                <Item>'FontWeight.ExtraBold'</Item>
@@ -17591,7 +17963,7 @@
           <Members>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-24 16:59:14Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'RenderingParameters.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -17606,7 +17978,7 @@
           <Members>
            <Member Name="#.ctor(IDWriteTextFormat*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'TextFormat.TextFormat(IDWriteTextFormat*)'</Item>
               </Issue>
@@ -17615,7 +17987,7 @@
            </Member>
            <Member Name="#FromPointer(IDWriteTextFormat*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'TextFormat.FromPointer(IDWriteTextFormat*)'</Item>
               </Issue>
@@ -17624,7 +17996,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'TextFormat.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -17639,7 +18011,7 @@
           <Members>
            <Member Name="#.ctor(IDWriteTextLayout*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'TextLayout.TextLayout(IDWriteTextLayout*)'</Item>
               </Issue>
@@ -17648,7 +18020,7 @@
            </Member>
            <Member Name="#FromPointer(IDWriteTextLayout*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'TextLayout.FromPointer(IDWriteTextLayout*)'</Item>
               </Issue>
@@ -17657,7 +18029,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'TextLayout.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -17670,7 +18042,7 @@
          </Type>
          <Type Name="TextRange">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-22 01:09:48Z">
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2009-01-25 21:00:51Z">
             <Issue Name="Equals">
              <Item>'TextRange'</Item>
             </Issue>
@@ -17684,7 +18056,7 @@
           <Members>
            <Member Name="#.ctor(IDWriteTypography*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Typography.Typography(IDWriteTypography*)'</Item>
               </Issue>
@@ -17693,7 +18065,7 @@
            </Member>
            <Member Name="#FromPointer(IDWriteTypography*)">
             <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue>
                <Item>'Typography.FromPointer(IDWriteTypography*)'</Item>
               </Issue>
@@ -17702,7 +18074,7 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-22 01:09:48Z">
+             <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-01-25 21:00:51Z">
               <Issue Name="LanguageIndependentMemberParameter">
                <Item>'Typography.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
@@ -17721,9 +18093,6 @@
    </Target>
   </Targets>
   <Rules>
-   <Rule TypeName="AbstractTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1012">
-    <Resolution Name="Default">Change the accessibility of all public constructors in {0} to protected.</Resolution>
-   </Rule>
    <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
     <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
    </Rule>
@@ -17808,9 +18177,6 @@
     <Resolution Name="MemberParameter">In method {0}, correct the spelling of '{1}' in parameter name {2} or remove it entirely if it represents any sort of Hungarian notation.</Resolution>
     <Resolution Name="Type">Correct the spelling of '{0}' in type name {1}.</Resolution>
    </Rule>
-   <Rule TypeName="IdentifiersShouldDifferByMoreThanCase" Category="Microsoft.Naming" CheckId="CA1708">
-    <Resolution Name="Member">Change member names {0} and '{1}' so that they differ by more than case.</Resolution>
-   </Rule>
    <Rule TypeName="IdentifiersShouldHaveCorrectPrefix" Category="Microsoft.Naming" CheckId="CA1715">
     <Resolution Name="Interface">Prefix interface name {0} with 'I'.</Resolution>
     <Resolution Name="MethodTypeParameter">On method {0}, prefix generic type parameter name {1} with 'T'.</Resolution>
@@ -17884,9 +18250,6 @@
    </Rule>
    <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
     <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>
-   </Rule>
-   <Rule TypeName="StaticHolderTypesShouldNotHaveConstructors" Category="Microsoft.Design" CheckId="CA1053">
-    <Resolution Name="Default">Remove the public constructors from {0}.</Resolution>
    </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>

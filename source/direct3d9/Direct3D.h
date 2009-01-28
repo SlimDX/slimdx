@@ -42,10 +42,11 @@ namespace SlimDX
 		{
 			COMOBJECT(IDirect3D9, Direct3D);
 
+		private:
+			AdapterCollection^ adapters;
+
 		protected:
 			Direct3D( bool doNotConstruct );
-
-			AdapterCollection^ adapters;
 
 		public:
 			Direct3D();
@@ -65,6 +66,8 @@ namespace SlimDX
 			property AdapterCollection^ Adapters
 			{
 				AdapterCollection^ get() { return adapters; }
+			protected:
+				void set( AdapterCollection^ value ) { adapters = value; }
 			}
 
 			/// <summary>

@@ -69,7 +69,7 @@ namespace Direct3D9
 		if( direct3D == NULL )
 			throw gcnew Direct3D9Exception( "Could not create Direct3DEx instance." );
 
-		adapters = gcnew AdapterCollection( direct3D, false );
+		Adapters = gcnew AdapterCollection( direct3D, false );
 		adaptersEx = gcnew AdapterExCollection( direct3D, false );
 
         try
