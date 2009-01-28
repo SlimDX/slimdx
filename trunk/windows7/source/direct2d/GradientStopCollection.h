@@ -22,31 +22,17 @@
 #pragma once
 
 #include "Resource.h"
-#include "Matrix3x2.h"
 
 namespace SlimDX
 {
 	namespace Direct2D
 	{
-		public ref class Brush abstract : Resource
+		public ref class GradientStopCollection : Resource
 		{
-			COMOBJECT_BASE(ID2D1Brush);
-
-		protected:
-			Brush() { }
-
+			COMOBJECT(ID2D1GradientStopCollection, GradientStopCollection);
+			
 		public:
-			property float Opacity
-			{
-				float get();
-				void set( float value );
-			}
-
-			property Matrix3x2 Transform
-			{
-				Matrix3x2 get();
-				void set( Matrix3x2 value );
-			}
+			static GradientStopCollection^ FromPointer( System::IntPtr pointer );
 		};
 	}
 }

@@ -30,6 +30,9 @@ namespace SlimDX
 		public ref class Resource abstract : ComObject
 		{
 			COMOBJECT_BASE(ID2D1Resource);
+
+		protected:
+			Resource() { }
 			
 		public:
 			property Factory^ Factory

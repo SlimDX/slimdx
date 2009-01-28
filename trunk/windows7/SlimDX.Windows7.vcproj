@@ -1173,6 +1173,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\direct2d\GradientStopCollection.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct2d\GradientStopCollection.h"
+					>
+				</File>
+				<File
 					RelativePath=".\source\direct2d\StrokeStyle.cpp"
 					>
 				</File>

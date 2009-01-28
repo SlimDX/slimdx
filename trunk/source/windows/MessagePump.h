@@ -27,6 +27,9 @@ namespace SlimDX
 	{
 		public ref class MessagePump sealed
 		{
+		private:
+			MessagePump() { }
+
 		public:
 			static property bool IsAppIdle { bool get(); }
 		};
