@@ -19,38 +19,21 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Enums.h"
-#include "Resource.h"
-#include "GradientStop.h"
-#include "RenderTarget.h"
+#define DEFINE_ENUM_FLAG_OPERATORS(x)
+
+#include <d2d1.h>
+#include <d2d1helper.h>
+
+#include "Direct2DException.h"
+
+#include "RadialGradientBrushProperties.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct2D
-	{
-		public ref class GradientStopCollection : Resource
-		{
-			COMOBJECT(ID2D1GradientStopCollection, GradientStopCollection);
-			
-		public:
-			GradientStopCollection( RenderTarget^ renderTarget, array<GradientStop>^ stops );
-			GradientStopCollection( RenderTarget^ renderTarget, array<GradientStop>^ stops, Gamma gamma, ExtendMode extendMode );
-
-			static GradientStopCollection^ FromPointer( System::IntPtr pointer );
-
-			array<GradientStop>^ GetStops();
-
-			property Gamma InterpolationGamma
-			{
-				Gamma get();
-			}
-
-			property ExtendMode ExtendMode
-			{
-				SlimDX::Direct2D::ExtendMode get();
-			}
-		};
-	}
+namespace Direct2D
+{
+}
 }

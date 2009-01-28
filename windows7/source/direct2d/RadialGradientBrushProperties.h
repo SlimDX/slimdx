@@ -22,35 +22,18 @@
 #pragma once
 
 #include "Enums.h"
-#include "Resource.h"
-#include "GradientStop.h"
-#include "RenderTarget.h"
 
 namespace SlimDX
 {
 	namespace Direct2D
 	{
-		public ref class GradientStopCollection : Resource
+		public value class RadialGradientBrushProperties
 		{
-			COMOBJECT(ID2D1GradientStopCollection, GradientStopCollection);
-			
 		public:
-			GradientStopCollection( RenderTarget^ renderTarget, array<GradientStop>^ stops );
-			GradientStopCollection( RenderTarget^ renderTarget, array<GradientStop>^ stops, Gamma gamma, ExtendMode extendMode );
-
-			static GradientStopCollection^ FromPointer( System::IntPtr pointer );
-
-			array<GradientStop>^ GetStops();
-
-			property Gamma InterpolationGamma
-			{
-				Gamma get();
-			}
-
-			property ExtendMode ExtendMode
-			{
-				SlimDX::Direct2D::ExtendMode get();
-			}
+			property System::Drawing::PointF CenterPoint;
+			property System::Drawing::PointF GradientOriginOffset;
+			property float HorizontalRadius;
+			property float VerticalRadius;
 		};
 	}
 }
