@@ -65,35 +65,6 @@ namespace Direct3D9
 		Construct(linker);
 	}
 
-	FragmentLinker^ FragmentLinker::FromPointer( ID3DXFragmentLinker* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		FragmentLinker^ tableEntry = safe_cast<FragmentLinker^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew FragmentLinker( pointer );
-	}
-
-	FragmentLinker^ FragmentLinker::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		FragmentLinker^ tableEntry = safe_cast<FragmentLinker^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew FragmentLinker( pointer );
-	}
-
 	DataStream^ FragmentLinker::Gather( array<Byte>^ sourceData, array<Macro>^ defines,
 		Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
 	{

@@ -45,35 +45,6 @@ namespace DirectSound
 		Construct( pointer, NativeInterface );
 	}
 
-	ChorusEffect^ ChorusEffect::FromPointer( IDirectSoundFXChorus* pointer )
-	{
-		if( pointer == NULL )
-			return nullptr;
-
-		ChorusEffect^ tableEntry = safe_cast<ChorusEffect^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew ChorusEffect( pointer );
-	}
-
-	ChorusEffect^ ChorusEffect::FromPointer( System::IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		ChorusEffect^ tableEntry = safe_cast<ChorusEffect^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew ChorusEffect( pointer );
-	}
-
 	float ChorusEffect::Delay::get()
 	{
 		DSFXChorus param;

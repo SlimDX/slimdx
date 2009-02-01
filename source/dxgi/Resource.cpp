@@ -42,35 +42,6 @@ namespace DXGI
 		Construct( pointer, NativeInterface );
 	}
 
-	Resource^ Resource::FromPointer( IDXGIResource* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Resource^ tableEntry = safe_cast<Resource^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Resource( pointer );
-	}
-
-	Resource^ Resource::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Resource^ tableEntry = safe_cast<Resource^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Resource( pointer );
-	}
-
 	ResourcePriority Resource::EvictionPriority::get()
 	{
 		UINT priority = 0;

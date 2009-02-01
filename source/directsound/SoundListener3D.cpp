@@ -48,35 +48,6 @@ namespace DirectSound
 		Construct( pointer, NativeInterface );
 	}
 
-	SoundListener3D^ SoundListener3D::FromPointer( IDirectSound3DListener* pointer )
-	{
-		if( pointer == NULL )
-			return nullptr;
-
-		SoundListener3D^ tableEntry = safe_cast<SoundListener3D^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew SoundListener3D( pointer );
-	}
-
-	SoundListener3D^ SoundListener3D::FromPointer( System::IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		SoundListener3D^ tableEntry = safe_cast<SoundListener3D^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew SoundListener3D( pointer );
-	}
-
 	SoundListener3D::SoundListener3D( SoundBuffer^ soundBuffer )
 	{
 		IDirectSound3DListener8* listener;

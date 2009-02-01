@@ -44,35 +44,6 @@ namespace DXGI
 		Construct( pointer, NativeInterface );
 	}
 
-	Adapter^ Adapter::FromPointer( IDXGIAdapter* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Adapter^ tableEntry = safe_cast<Adapter^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Adapter( pointer );
-	}
-
-	Adapter^ Adapter::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Adapter^ tableEntry = safe_cast<Adapter^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Adapter( pointer );
-	}
-
 	AdapterDescription Adapter::Description::get()
 	{
 		DXGI_ADAPTER_DESC nativeDescription;

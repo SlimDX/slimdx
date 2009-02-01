@@ -37,7 +37,6 @@ namespace SlimDX
 		public:
 			RenderToEnvironmentMap( SlimDX::Direct3D9::Device^ device, int size, int mipLevels, Format format );
 			RenderToEnvironmentMap( SlimDX::Direct3D9::Device^ device, int size, int mipLevels, Format format, Format depthStencilFormat );
-			static RenderToEnvironmentMap^ FromPointer( System::IntPtr pointer );
 
 			property SlimDX::Direct3D9::Device^ Device
 			{

@@ -45,35 +45,6 @@ namespace DirectSound
 		Construct( pointer, NativeInterface );
 	}
 
-	FlangerEffect^ FlangerEffect::FromPointer( IDirectSoundFXFlanger* pointer )
-	{
-		if( pointer == NULL )
-			return nullptr;
-
-		FlangerEffect^ tableEntry = safe_cast<FlangerEffect^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew FlangerEffect( pointer );
-	}
-
-	FlangerEffect^ FlangerEffect::FromPointer( System::IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		FlangerEffect^ tableEntry = safe_cast<FlangerEffect^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew FlangerEffect( pointer );
-	}
-
 	float FlangerEffect::Delay::get()
 	{
 		DSFXFlanger param;

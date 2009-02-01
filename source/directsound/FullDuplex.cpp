@@ -49,35 +49,6 @@ namespace DirectSound
 		Construct( pointer, NativeInterface );
 	}
 
-	FullDuplex^ FullDuplex::FromPointer( IDirectSoundFullDuplex* pointer )
-	{
-		if( pointer == NULL )
-			return nullptr;
-
-		FullDuplex^ tableEntry = safe_cast<FullDuplex^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew FullDuplex( pointer );
-	}
-
-	FullDuplex^ FullDuplex::FromPointer( System::IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		FullDuplex^ tableEntry = safe_cast<FullDuplex^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew FullDuplex( pointer );
-	}
-
 	FullDuplex::FullDuplex( System::Guid captureDevice, System::Guid playbackDevice, SlimDX::DirectSound::CaptureBufferDescription captureDesc, SlimDX::DirectSound::SoundBufferDescription bufferDesc, System::IntPtr windowHandle, SlimDX::DirectSound::CooperativeLevel level, [Out] SlimDX::DirectSound::CaptureBuffer ^%captureBuffer, [Out] SlimDX::DirectSound::SecondarySoundBuffer ^%secondaryBuffer )
 	{
 		DSCBUFFERDESC cbDesc = captureDesc.ToUnmanaged();

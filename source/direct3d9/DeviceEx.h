@@ -120,14 +120,6 @@ namespace SlimDX
 			DeviceEx( Direct3DEx^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle,
 				CreateFlags createFlags, array<PresentParameters^>^ presentParameters, array<DisplayModeEx>^ fullScreenDisplayMode );
 
-			/// <summary>
-			/// Constructs a new instance of the <see cref="DeviceEx"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirect3DDevice9Ex pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static DeviceEx^ FromPointer( System::IntPtr pointer );
-
 			property int GpuThreadPriority
 			{
 				int get();

@@ -63,36 +63,6 @@ namespace Direct3D9
 		Construct(line);
 	}
 
-	Line^ Line::FromPointer( ID3DXLine* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Line^ tableEntry = safe_cast<Line^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Line( pointer );
-	}
-
-	Line^ Line::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Line^ tableEntry = safe_cast<Line^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Line( pointer );
-	}
-
-
 	Result Line::Begin()
 	{
 		HRESULT hr = InternalPointer->Begin();

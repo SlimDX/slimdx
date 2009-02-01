@@ -98,35 +98,6 @@ namespace Direct3D9
 		Construct( result );
 	}
 
-	SkinInfo^ SkinInfo::FromPointer( ID3DXSkinInfo* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		SkinInfo^ tableEntry = safe_cast<SkinInfo^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew SkinInfo( pointer );
-	}
-
-	SkinInfo^ SkinInfo::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		SkinInfo^ tableEntry = safe_cast<SkinInfo^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew SkinInfo( pointer );
-	}
-
 	SkinInfo^ SkinInfo::Clone()
 	{
 		ID3DXSkinInfo *result;

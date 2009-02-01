@@ -59,35 +59,6 @@ namespace Direct3D10
 		return FromPointer( state );
 	}
 
-	BlendState^ BlendState::FromPointer( ID3D10BlendState* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		BlendState^ tableEntry = safe_cast<BlendState^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew BlendState( pointer );
-	}
-
-	BlendState^ BlendState::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		BlendState^ tableEntry = safe_cast<BlendState^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew BlendState( pointer );
-	}
-
 	BlendStateDescription BlendState::Description::get()
 	{
 		D3D10_BLEND_DESC description;

@@ -37,7 +37,6 @@ namespace SlimDX
 
 		public:
 			StateBlock( SlimDX::Direct3D9::Device^ device, StateBlockType type );
-			static StateBlock^ FromPointer( System::IntPtr pointer );
 
 			Result Apply();
 			Result Capture();

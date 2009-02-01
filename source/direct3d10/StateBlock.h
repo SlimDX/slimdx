@@ -49,13 +49,6 @@ namespace SlimDX
 			/// <param name="device">The device to associate the state block with.</param>
 			/// <param name="mask">The mask describing which state properties are relevant to the state block.</param>
 			StateBlock( SlimDX::Direct3D10::Device^ device, StateBlockMask mask );
-			
-			/// <summary>
-			/// Constructs a StateBlock object from a marshalled native pointer.
-			/// </summary>
-			/// <param name="pointer">The native object pointer.</param>
-			/// <returns>The StateBlock object for the native object.</returns>
-			static StateBlock^ FromPointer( System::IntPtr pointer );
 
 			/// <summary>
 			/// Applies the relevant state from the state block.

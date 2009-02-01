@@ -64,35 +64,6 @@ namespace Direct3D9
 			throw gcnew Direct3D9Exception( Result::Last );
 	}
 
-	AnimationController^ AnimationController::FromPointer( ID3DXAnimationController* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		AnimationController^ tableEntry = safe_cast<AnimationController^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew AnimationController( pointer );
-	}
-
-	AnimationController^ AnimationController::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		AnimationController^ tableEntry = safe_cast<AnimationController^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew AnimationController( pointer );
-	}
-
 	Result AnimationController::AdvanceTime( double time, AnimationCallback^ handler )
 	{
 		LPD3DXANIMATIONCALLBACKHANDLER callback = NULL;

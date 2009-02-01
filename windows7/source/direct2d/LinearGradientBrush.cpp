@@ -48,35 +48,6 @@ namespace Direct2D
 		Construct( pointer, NativeInterface );
 	}
 	
-	LinearGradientBrush^ LinearGradientBrush::FromPointer( ID2D1LinearGradientBrush* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		LinearGradientBrush^ tableEntry = safe_cast<LinearGradientBrush^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew LinearGradientBrush( pointer );
-	}
-
-	LinearGradientBrush^ LinearGradientBrush::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		LinearGradientBrush^ tableEntry = safe_cast<LinearGradientBrush^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew LinearGradientBrush( pointer );
-	}
-
 	LinearGradientBrush::LinearGradientBrush( RenderTarget^ renderTarget, GradientStopCollection^ gradientStops, LinearGradientBrushProperties linearGradientBrushProperties )
 	{
 		ID2D1LinearGradientBrush *brush = NULL;

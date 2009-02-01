@@ -63,35 +63,6 @@ namespace Direct3D9
 		Construct(sprite);
 	}
 
-	Sprite^ Sprite::FromPointer( ID3DXSprite* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Sprite^ tableEntry = safe_cast<Sprite^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Sprite( pointer );
-	}
-
-	Sprite^ Sprite::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Sprite^ tableEntry = safe_cast<Sprite^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Sprite( pointer );
-	}
-
 	Result Sprite::Begin( SpriteFlags flags )
 	{
 		HRESULT hr = InternalPointer->Begin( static_cast<DWORD>( flags ) );

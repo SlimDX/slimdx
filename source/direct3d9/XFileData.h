@@ -36,8 +36,6 @@ namespace SlimDX
 			COMOBJECT(ID3DXFileData, XFileData);
 
 		public:
-			static XFileData^ FromPointer( System::IntPtr pointer );
-
 			XFileData^ GetChild( int id );
 
 			DataStream^ Lock();

@@ -54,36 +54,7 @@ namespace DXGI
 	{
 		Construct( pointer, NativeInterface );
 	}
-
-	Factory^ Factory::FromPointer( IDXGIFactory* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Factory^ tableEntry = safe_cast<Factory^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Factory( pointer );
-	}
-
-	Factory^ Factory::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Factory^ tableEntry = safe_cast<Factory^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Factory( pointer );
-	}
-
+	
 	int Factory::GetAdapterCount()
 	{
 		int count = 0;

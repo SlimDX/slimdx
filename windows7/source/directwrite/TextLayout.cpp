@@ -45,35 +45,6 @@ namespace DirectWrite
 		Construct( pointer, NativeInterface );
 	}
 
-	TextLayout^ TextLayout::FromPointer( IDWriteTextLayout* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		TextLayout^ tableEntry = safe_cast<TextLayout^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew TextLayout( pointer );
-	}
-
-	TextLayout^ TextLayout::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		TextLayout^ tableEntry = safe_cast<TextLayout^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew TextLayout( pointer );
-	}
-
 	TextLayout::TextLayout( Factory^ factory, System::String^ text, TextFormat^ format )
 	{
 		Init( factory, text, format, 0, 0 );

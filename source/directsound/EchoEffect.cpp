@@ -45,35 +45,6 @@ namespace DirectSound
 		Construct( pointer, NativeInterface );
 	}
 
-	EchoEffect^ EchoEffect::FromPointer( IDirectSoundFXEcho* pointer )
-	{
-		if( pointer == NULL )
-			return nullptr;
-
-		EchoEffect^ tableEntry = safe_cast<EchoEffect^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew EchoEffect( pointer );
-	}
-
-	EchoEffect^ EchoEffect::FromPointer( System::IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		EchoEffect^ tableEntry = safe_cast<EchoEffect^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew EchoEffect( pointer );
-	}
-
 	float EchoEffect::LeftDelay::get()
 	{
 		DSFXEcho param;

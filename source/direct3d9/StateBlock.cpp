@@ -55,37 +55,7 @@ namespace Direct3D9
 
 		Construct(stateBlock);
 	}
-
-	StateBlock^ StateBlock::FromPointer( IDirect3DStateBlock9* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		StateBlock^ tableEntry = safe_cast<StateBlock^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew StateBlock( pointer );
-	}
-
-	StateBlock^ StateBlock::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		StateBlock^ tableEntry = safe_cast<StateBlock^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew StateBlock( pointer );
-	}
-
-
+	
 	Result StateBlock::Apply()
 	{
 		HRESULT hr = InternalPointer->Apply();

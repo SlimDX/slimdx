@@ -47,35 +47,6 @@ namespace Direct2D
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
-	RectangleGeometry^ RectangleGeometry::FromPointer( ID2D1RectangleGeometry* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		RectangleGeometry^ tableEntry = safe_cast<RectangleGeometry^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew RectangleGeometry( pointer );
-	}
-
-	RectangleGeometry^ RectangleGeometry::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		RectangleGeometry^ tableEntry = safe_cast<RectangleGeometry^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew RectangleGeometry( pointer );
-	}
 
 	RectangleGeometry::RectangleGeometry( SlimDX::Direct2D::Factory^ factory, System::Drawing::RectangleF rectangle )
 	{

@@ -37,14 +37,6 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::I3DL2Reverb"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSoundFXI3DL2Reverb pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static I3DL2Reverb^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// Attenuation of the room effect, in millibels (mB).
 			/// </summary>
 			property int Room

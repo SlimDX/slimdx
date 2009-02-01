@@ -62,36 +62,6 @@ namespace Direct3D9
 		Construct(result);
 	}
 
-	TextureShader^ TextureShader::FromPointer( ID3DXTextureShader* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		TextureShader^ tableEntry = safe_cast<TextureShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew TextureShader( pointer );
-	}
-
-	TextureShader^ TextureShader::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		TextureShader^ tableEntry = safe_cast<TextureShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew TextureShader( pointer );
-	}
-
-
 	EffectHandle^ TextureShader::GetConstant(SlimDX::Direct3D9::EffectHandle ^handle, int index)
 	{
 		D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;

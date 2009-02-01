@@ -62,35 +62,6 @@ namespace Direct3D9
 		m_function = function;
 	}
 
-	PixelShader^ PixelShader::FromPointer( IDirect3DPixelShader9* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew PixelShader( pointer );
-	}
-
-	PixelShader^ PixelShader::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew PixelShader( pointer );
-	}
-
 	SlimDX::Direct3D9::Device^ PixelShader::Device::get()
 	{
 		IDirect3DDevice9* device;

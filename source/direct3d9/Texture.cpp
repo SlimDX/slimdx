@@ -68,35 +68,6 @@ namespace Direct3D9
 			this->IsDefaultPool = true;
 	}
 
-	Texture^ Texture::FromPointer( IDirect3DTexture9* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Texture^ tableEntry = safe_cast<Texture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Texture( pointer );
-	}
-
-	Texture^ Texture::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Texture^ tableEntry = safe_cast<Texture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Texture( pointer );
-	}
-
 	TextureRequirements Texture::CheckRequirements(SlimDX::Direct3D9::Device^ device, int width, int height,
 		int numMipLevels, Usage usage, Format format, Pool pool)
 	{

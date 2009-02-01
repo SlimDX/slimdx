@@ -65,36 +65,6 @@ namespace Direct3D9
 		Construct(query);
 	}
 
-	Query^ Query::FromPointer( IDirect3DQuery9* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Query^ tableEntry = safe_cast<Query^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Query( pointer );
-	}
-
-	Query^ Query::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Query^ tableEntry = safe_cast<Query^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Query( pointer );
-	}
-
-
 	int Query::DataSize::get()
 	{
 		return InternalPointer->GetDataSize();

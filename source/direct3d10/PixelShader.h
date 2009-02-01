@@ -32,9 +32,6 @@ namespace SlimDX
 		public ref class PixelShader : public DeviceChild
 		{
 			COMOBJECT(ID3D10PixelShader, PixelShader);
-
-		public:
-			static PixelShader^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };

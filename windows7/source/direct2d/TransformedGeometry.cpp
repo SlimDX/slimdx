@@ -48,35 +48,6 @@ namespace Direct2D
 		Construct( pointer, NativeInterface );
 	}
 	
-	TransformedGeometry^ TransformedGeometry::FromPointer( ID2D1TransformedGeometry* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		TransformedGeometry^ tableEntry = safe_cast<TransformedGeometry^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew TransformedGeometry( pointer );
-	}
-
-	TransformedGeometry^ TransformedGeometry::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		TransformedGeometry^ tableEntry = safe_cast<TransformedGeometry^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew TransformedGeometry( pointer );
-	}
-
 	TransformedGeometry::TransformedGeometry( SlimDX::Direct2D::Factory^ factory, Geometry^ geometry, Matrix3x2 transform )
 	{
 		ID2D1TransformedGeometry *g = NULL;

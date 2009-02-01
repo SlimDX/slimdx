@@ -40,8 +40,6 @@ namespace SlimDX
 			XFileSaveData^ AddDataObject_Internal( System::Guid dataTemplate, System::String^ name, System::Guid id, const void* data, SIZE_T size );
 
 		public:
-			static XFileSaveData^ FromPointer( System::IntPtr pointer );
-
 			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, array<System::Byte>^ data );
 			XFileSaveData^ AddDataObject( System::Guid dataTemplate, System::String^ name, System::Guid id, System::IO::Stream^ data );
 

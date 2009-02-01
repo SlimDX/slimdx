@@ -35,14 +35,6 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::NoiseSuppress"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSoundCaptureFXNoiseSuppress pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static NoiseSuppress^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// Sets the enumerator to its initial position, which is before the first element in the collection.
 			/// </summary>
 			Result Reset();

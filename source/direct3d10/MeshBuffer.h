@@ -40,8 +40,6 @@ namespace SlimDX
 			{
 				int get();
 			}
-
-			static MeshBuffer^ FromPointer( System::IntPtr pointer );
 			
 			DataStream^ Map();
 			Result Unmap();

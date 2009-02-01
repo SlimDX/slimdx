@@ -60,7 +60,6 @@ namespace SlimDX
 			Mesh( SlimDX::Direct3D9::Device^ device, int faceCount, int vertexCount, MeshFlags options, array<VertexElement>^ vertexDeclaration );
 			Mesh( SlimDX::Direct3D9::Device^ device, int faceCount, int vertexCount, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf );
 			virtual ~Mesh() { }
-			static Mesh^ FromPointer( System::IntPtr pointer );
 
 			static Mesh^ FromMemory( SlimDX::Direct3D9::Device^ device, array<System::Byte>^ memory, MeshFlags flags );
 			static Mesh^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, MeshFlags flags );

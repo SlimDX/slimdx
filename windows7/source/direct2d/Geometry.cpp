@@ -48,35 +48,6 @@ namespace Direct2D
 		Construct( pointer, NativeInterface );
 	}
 	
-	Geometry^ Geometry::FromPointer( ID2D1Geometry* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Geometry^ tableEntry = safe_cast<Geometry^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Geometry( pointer );
-	}
-
-	Geometry^ Geometry::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Geometry^ tableEntry = safe_cast<Geometry^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Geometry( pointer );
-	}
-
 	Result Geometry::Combine( Geometry^ geometry1, Geometry^ geometry2, CombineMode combineMode, SimplifiedGeometrySink^ geometrySink )
 	{
 		HRESULT hr = geometry1->InternalPointer->CombineWithGeometry( geometry2->InternalPointer, static_cast<D2D1_COMBINE_MODE>( combineMode ),

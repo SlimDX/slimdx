@@ -50,14 +50,6 @@ namespace SlimDX
 			FullDuplex( System::Guid captureDevice, System::Guid playbackDevice, CaptureBufferDescription captureDescription, 
 								   SoundBufferDescription bufferDescription, System::IntPtr windowHandle, CooperativeLevel level, 
 								   [Out] CaptureBuffer^% captureBuffer, [Out] SecondarySoundBuffer^% secondaryBuffer );
-
-			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::FullDuplex"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSoundFullDuplex pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static FullDuplex^ FromPointer( System::IntPtr pointer );
 		};
 	}
 }

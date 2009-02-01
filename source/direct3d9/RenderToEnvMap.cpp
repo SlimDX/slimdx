@@ -70,35 +70,6 @@ namespace Direct3D9
 		Construct(result);
 	}
 
-	RenderToEnvironmentMap^ RenderToEnvironmentMap::FromPointer( ID3DXRenderToEnvMap* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		RenderToEnvironmentMap^ tableEntry = safe_cast<RenderToEnvironmentMap^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew RenderToEnvironmentMap( pointer );
-	}
-
-	RenderToEnvironmentMap^ RenderToEnvironmentMap::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		RenderToEnvironmentMap^ tableEntry = safe_cast<RenderToEnvironmentMap^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew RenderToEnvironmentMap( pointer );
-	}
-
 	Result RenderToEnvironmentMap::BeginCube( CubeTexture^ texture )
 	{
 		HRESULT hr = InternalPointer->BeginCube( texture->InternalPointer );

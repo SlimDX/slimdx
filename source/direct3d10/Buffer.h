@@ -94,13 +94,6 @@ namespace SlimDX
 			Buffer( SlimDX::Direct3D10::Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D10::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
 			
 			/// <summary>
-			/// Constructs a Buffer object from a marshalled native pointer.
-			/// </summary>
-			/// <param name="pointer">The native object pointer.</param>
-			/// <returns>The Buffer object for the native object.</returns>
-			static Buffer^ FromPointer( System::IntPtr pointer );
-			
-			/// <summary>
 			/// Maps the buffer, providing CPU access to its contents.
 			/// </summary>
 			/// <param name="mode">The IO operations to enable on the CPU.</param>

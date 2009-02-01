@@ -45,35 +45,6 @@ namespace Direct3D9
 		Construct( buffer, NativeInterface );
 	}
 
-	VertexBuffer^ VertexBuffer::FromPointer( IDirect3DVertexBuffer9* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		VertexBuffer^ tableEntry = safe_cast<VertexBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew VertexBuffer( pointer );
-	}
-
-	VertexBuffer^ VertexBuffer::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		VertexBuffer^ tableEntry = safe_cast<VertexBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew VertexBuffer( pointer );
-	}
-
 	VertexBuffer::VertexBuffer( SlimDX::Direct3D9::Device^ device, int sizeInBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool )
 	{
 		IDirect3DVertexBuffer9* vb;

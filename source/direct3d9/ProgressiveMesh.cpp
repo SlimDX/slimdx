@@ -224,36 +224,7 @@ namespace Direct3D9
 	{
 		Construct( pointer, NativeInterface );
 	}
-
-	ProgressiveMesh^ ProgressiveMesh::FromPointer( ID3DXPMesh* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		ProgressiveMesh^ tableEntry = safe_cast<ProgressiveMesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew ProgressiveMesh( pointer );
-	}
-
-	ProgressiveMesh^ ProgressiveMesh::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		ProgressiveMesh^ tableEntry = safe_cast<ProgressiveMesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew ProgressiveMesh( pointer );
-	}
-
+	
 	ProgressiveMesh::ProgressiveMesh( Mesh^ mesh, array<AttributeWeights>^ attributeWeights,
 		array<float>^ vertexWeights, int minimumValue, MeshSimplification options )
 	{

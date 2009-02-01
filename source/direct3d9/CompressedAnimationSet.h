@@ -40,8 +40,6 @@ namespace SlimDX
 			CompressedAnimationSet( System::String^ name, double ticksPerSecond, PlaybackType playbackType, DataStream^ compressedData, array<CallbackKey>^ callbackKeys );
 			virtual ~CompressedAnimationSet() { }
 
-			static CompressedAnimationSet^ FromPointer( System::IntPtr pointer );
-
 			array<CallbackKey>^ GetCallbackKeys();
 			DataStream^ GetCompressedData();
 

@@ -44,36 +44,7 @@ namespace DirectSound
 	{
 		Construct( pointer, NativeInterface );
 	}	
-
-	WavesReverb^ WavesReverb::FromPointer( IDirectSoundFXWavesReverb* pointer )
-	{
-		if( pointer == NULL )
-			return nullptr;
-
-		WavesReverb^ tableEntry = safe_cast<WavesReverb^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew WavesReverb( pointer );
-	}
-
-	WavesReverb^ WavesReverb::FromPointer( System::IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		WavesReverb^ tableEntry = safe_cast<WavesReverb^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew WavesReverb( pointer );
-	}
-
+	
 	float WavesReverb::InGain::get()
 	{
 		DSFXWavesReverb param;

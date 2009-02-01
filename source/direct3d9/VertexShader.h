@@ -49,15 +49,7 @@ namespace SlimDX
 			/// Releases all resources used by the <see cref="VertexShader"/>.
 			/// </summary>
 			virtual ~VertexShader() { delete m_function; }
-
-			/// <summary>
-			/// Constructs a new instance of the <see cref="VertexShader"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirect3DVertexShader9 pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static VertexShader^ FromPointer( System::IntPtr pointer );
-
+			
 			/// <summary>
 			/// The maximum level of nesting of dynamic flow control instructions.
 			/// </summary>

@@ -52,15 +52,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="device"></param>
 			DirectSound( System::Guid device );
-
-			/// <summary>
-			/// Constructs a new instance of the <see cref="DirectSound"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSound8 pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static DirectSound^ FromPointer( System::IntPtr pointer );
-
+			
 			/// <summary>
 			/// Sets the cooperative level of the application for this sound device.
 			/// </summary>

@@ -51,14 +51,6 @@ namespace SlimDX
 			virtual ~PixelShader() { delete m_function; }
 
 			/// <summary>
-			/// Constructs a new instance of the <see cref="PixelShader"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirect3DPixelShader9 pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static PixelShader^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// The maximum level of nesting of dynamic flow control instructions.
 			/// </summary>
 			literal int MaxDynamicFlowControlDepth = D3DPS20_MAX_DYNAMICFLOWCONTROLDEPTH;

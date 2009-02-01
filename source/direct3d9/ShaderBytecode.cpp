@@ -66,35 +66,6 @@ namespace Direct3D9
 		Construct( buffer );
 	}
 
-	ShaderBytecode^ ShaderBytecode::FromPointer( ID3DXBuffer* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		ShaderBytecode^ tableEntry = safe_cast<ShaderBytecode^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew ShaderBytecode( pointer );
-	}
-
-	ShaderBytecode^ ShaderBytecode::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		ShaderBytecode^ tableEntry = safe_cast<ShaderBytecode^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew ShaderBytecode( pointer );
-	}
-
 	ShaderBytecode^ ShaderBytecode::Assemble( array<Byte>^ sourceData, array<Macro>^ defines,
 		Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
 	{

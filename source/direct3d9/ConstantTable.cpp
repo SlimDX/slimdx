@@ -50,35 +50,6 @@ namespace Direct3D9
 	{
 		Construct( pointer, NativeInterface );
 	}
-
-	ConstantTable^ ConstantTable::FromPointer( ID3DXConstantTable* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		ConstantTable^ tableEntry = safe_cast<ConstantTable^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew ConstantTable( pointer );
-	}
-
-	ConstantTable^ ConstantTable::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		ConstantTable^ tableEntry = safe_cast<ConstantTable^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew ConstantTable( pointer );
-	}
 	
 	EffectHandle^ ConstantTable::GetConstant(SlimDX::Direct3D9::EffectHandle ^handle, int index)
 	{

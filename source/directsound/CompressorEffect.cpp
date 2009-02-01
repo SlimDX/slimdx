@@ -45,35 +45,6 @@ namespace DirectSound
 		Construct( pointer, NativeInterface );
 	}
 
-	CompressorEffect^ CompressorEffect::FromPointer( IDirectSoundFXCompressor* pointer )
-	{
-		if( pointer == NULL )
-			return nullptr;
-
-		CompressorEffect^ tableEntry = safe_cast<CompressorEffect^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew CompressorEffect( pointer );
-	}
-
-	CompressorEffect^ CompressorEffect::FromPointer( System::IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		CompressorEffect^ tableEntry = safe_cast<CompressorEffect^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew CompressorEffect( pointer );
-	}
-
 	float CompressorEffect::Attack::get()
 	{
 		DSFXCompressor param;

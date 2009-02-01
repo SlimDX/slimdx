@@ -72,14 +72,6 @@ namespace SlimDX
 			virtual ~Texture() { }
 
 			/// <summary>
-			/// Constructs a new instance of the <see cref="Texture"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirect3DTexture9 pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static Texture^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// Checks texture-creation parameters.
 			/// </summary>
 			/// <param name="device">Device associated with the texture.</param>

@@ -35,9 +35,6 @@ namespace SlimDX
 
 		protected:
 			ResourceView();
-			
-		public:
-			static ResourceView^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };

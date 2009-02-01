@@ -49,15 +49,7 @@ namespace SlimDX
 			/// <param name="pool">The memory class into which the resource will be placed.</param>
 			/// <param name="sixteenBit"><c>true</c> to create a buffer of 16-bit indices; <c>false</c> to create a buffer of 32-bit indices.</param>
 			IndexBuffer( SlimDX::Direct3D9::Device^ device, int sizeInBytes, Usage usage, Pool pool, bool sixteenBit );
-
-			/// <summary>
-			/// Constructs a new instance of the <see cref="IndexBuffer"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirect3DIndexBuffer9 pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static IndexBuffer^ FromPointer( System::IntPtr pointer );
-
+			
 			/// <summary>
 			/// Locks the buffer and obtains a pointer to the memory.
 			/// </summary>

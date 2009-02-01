@@ -45,14 +45,6 @@ namespace SlimDX
 			SecondarySoundBuffer( DirectSound^ device, SoundBufferDescription description );
 
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::SoundBuffer"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSoundBuffer pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static SecondarySoundBuffer^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// 
 			/// </summary>
 			/// <param name="effects"></param>

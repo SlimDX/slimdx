@@ -45,14 +45,6 @@ namespace SlimDX
 			SoundBuffer3D( SoundBuffer^ soundBuffer );
 
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::SoundBuffer3D"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSound3DBuffer pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static SoundBuffer3D^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// Gets or sets all the  parameters of a buffer
 			/// </summary>
 			property Buffer3DSettings AllParameters

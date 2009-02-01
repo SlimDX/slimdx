@@ -117,35 +117,6 @@ namespace Direct3D9
 		Internal_Constructor( direct3D, adapter, deviceType, controlHandle, createFlags, &nativeModes[0], presentParameters );
 	}
 
-	DeviceEx^ DeviceEx::FromPointer( IDirect3DDevice9Ex* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		DeviceEx^ tableEntry = safe_cast<DeviceEx^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew DeviceEx( pointer );
-	}
-
-	DeviceEx^ DeviceEx::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		DeviceEx^ tableEntry = safe_cast<DeviceEx^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew DeviceEx( pointer );
-	}
-
 	int DeviceEx::GpuThreadPriority::get()
 	{
 		int priority;

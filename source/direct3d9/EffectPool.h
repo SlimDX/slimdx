@@ -31,7 +31,6 @@ namespace SlimDX
 
 		public:
 			EffectPool();
-			static EffectPool^ FromPointer( System::IntPtr pointer );
 		};
 	}
 }

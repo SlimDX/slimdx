@@ -50,35 +50,6 @@ namespace DXGI
 		Construct( pointer, NativeInterface );
 	}
 
-	SwapChain^ SwapChain::FromPointer( IDXGISwapChain* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		SwapChain^ tableEntry = safe_cast<SwapChain^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew SwapChain( pointer );
-	}
-
-	SwapChain^ SwapChain::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		SwapChain^ tableEntry = safe_cast<SwapChain^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew SwapChain( pointer );
-	}
-
 	SwapChain::SwapChain( Factory^ factory, ComObject^ device, SwapChainDescription description )
 	{
 		if( factory == nullptr )

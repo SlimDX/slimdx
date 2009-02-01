@@ -32,9 +32,6 @@ namespace SlimDX
 		public ref class VertexShader : public DeviceChild
 		{
 			COMOBJECT(ID3D10VertexShader, VertexShader);
-
-		public:
-			static VertexShader^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };

@@ -43,35 +43,6 @@ namespace Direct3D9
 		Construct( buffer, NativeInterface );
 	}
 
-	IndexBuffer^ IndexBuffer::FromPointer( IDirect3DIndexBuffer9* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		IndexBuffer^ tableEntry = safe_cast<IndexBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew IndexBuffer( pointer );
-	}
-
-	IndexBuffer^ IndexBuffer::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		IndexBuffer^ tableEntry = safe_cast<IndexBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew IndexBuffer( pointer );
-	}
-
 	IndexBuffer::IndexBuffer( SlimDX::Direct3D9::Device^ device, int sizeInBytes, SlimDX::Direct3D9::Usage usage, SlimDX::Direct3D9::Pool pool, bool sixteenBit )
 	{
 		IDirect3DIndexBuffer9* ib;

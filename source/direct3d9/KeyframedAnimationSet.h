@@ -39,8 +39,6 @@ namespace SlimDX
 			KeyframedAnimationSet( System::String^ name, double ticksPerSecond, PlaybackType playbackType, int animationCount, array<CallbackKey>^ callbackKeys );
 			virtual ~KeyframedAnimationSet() { }
 
-			static KeyframedAnimationSet^ FromPointer( System::IntPtr pointer );
-
 			DataStream^ Compress( float lossiness );
 			DataStream^ Compress( float lossiness, Frame^ frameHierarchy );
 

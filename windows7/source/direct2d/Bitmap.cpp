@@ -50,36 +50,7 @@ namespace Direct2D
 	{
 		Construct( pointer, NativeInterface );
 	}
-
-	Bitmap^ Bitmap::FromPointer( ID2D1Bitmap* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Bitmap^ tableEntry = safe_cast<Bitmap^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Bitmap( pointer );
-	}
-
-	Bitmap^ Bitmap::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Bitmap^ tableEntry = safe_cast<Bitmap^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Bitmap( pointer );
-	}
-
+	
 	Bitmap::Bitmap( RenderTarget^ renderTarget, System::Drawing::Size size )
 	{
 		ID2D1Bitmap *bitmap = NULL;

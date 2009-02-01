@@ -50,7 +50,7 @@ namespace SlimDX
 		generic<typename DataFormat>
 		public ref class Device : public ComObject
 		{
-			COMOBJECT(IDirectInputDevice8W, Device);
+			COMOBJECT_CUSTOM_FROMPOINTER(IDirectInputDevice8W, Device);
 
 		private:
 			DeviceProperties^ properties;
@@ -64,14 +64,6 @@ namespace SlimDX
 			/// <param name="subsystem">The subsystem identifier.</param>
 			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			Device( System::Guid subsystem );
-
-			/// <summary>
-			/// Constructs a new instance of the <see cref="Device"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectInputDevice8W pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static Device^ FromPointer( System::IntPtr pointer );
 
 			/// <summary>
 			/// Obtains access to the input device.

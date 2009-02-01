@@ -45,35 +45,6 @@ namespace DirectSound
 		Construct( pointer, NativeInterface );
 	}
 
-	ParametricEqualizer^ ParametricEqualizer::FromPointer( IDirectSoundFXParamEq* pointer )
-	{
-		if( pointer == NULL )
-			return nullptr;
-
-		ParametricEqualizer^ tableEntry = safe_cast<ParametricEqualizer^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew ParametricEqualizer( pointer );
-	}
-
-	ParametricEqualizer^ ParametricEqualizer::FromPointer( System::IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		ParametricEqualizer^ tableEntry = safe_cast<ParametricEqualizer^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew ParametricEqualizer( pointer );
-	}
-
 	float ParametricEqualizer::Center::get()
 	{
 		DSFXParamEq param;

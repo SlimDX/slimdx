@@ -85,35 +85,6 @@ namespace Direct3D9
 		Construct( direct3D );
 	}
 
-	Direct3DEx^ Direct3DEx::FromPointer( IDirect3D9Ex* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Direct3DEx^ tableEntry = safe_cast<Direct3DEx^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Direct3DEx( pointer );
-	}
-
-	Direct3DEx^ Direct3DEx::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Direct3DEx^ tableEntry = safe_cast<Direct3DEx^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Direct3DEx( pointer );
-	}
-
     DisplayModeEx Direct3DEx::GetAdapterDisplayModeEx( int adapter )
 	{
 		D3DDISPLAYMODEEX nativeMode = {0};

@@ -53,35 +53,6 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
-	CompressedAnimationSet^ CompressedAnimationSet::FromPointer( ID3DXCompressedAnimationSet* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		CompressedAnimationSet^ tableEntry = safe_cast<CompressedAnimationSet^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew CompressedAnimationSet( pointer );
-	}
-
-	CompressedAnimationSet^ CompressedAnimationSet::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		CompressedAnimationSet^ tableEntry = safe_cast<CompressedAnimationSet^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew CompressedAnimationSet( pointer );
-	}
-
 	CompressedAnimationSet::CompressedAnimationSet( String^ name, double ticksPerSecond,
 		SlimDX::Direct3D9::PlaybackType playbackType, DataStream^ compressedData,
 		array<CallbackKey>^ callbackKeys )

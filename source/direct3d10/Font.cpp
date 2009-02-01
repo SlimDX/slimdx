@@ -61,35 +61,6 @@ namespace Direct3D10
 		Construct( Build( device, width, height, weight, mipLevels, isItalic, characterSet, precision, quality, pitchAndFamily, faceName ) );
 	}
 
-	Font^ Font::FromPointer( ID3DX10Font* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Font^ tableEntry = safe_cast<Font^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Font( pointer );
-	}
-
-	Font^ Font::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Font^ tableEntry = safe_cast<Font^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Font( pointer );
-	}
-
 	ID3DX10Font* Font::Build( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic, FontCharacterSet characterSet, FontPrecision precision, FontQuality quality, FontPitchAndFamily pitchAndFamily, String^ faceName )
 	{
 		ID3DX10Font* font = 0;

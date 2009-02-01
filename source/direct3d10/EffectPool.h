@@ -42,8 +42,6 @@ namespace SlimDX
 			static EffectPool^ FromMemory_Internal( Device^ device, const void* data, SIZE_T size, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, [Out] System::String^ %compilationErrors );
 
 		public:
-			static EffectPool^ FromPointer( System::IntPtr pointer );
-			
 			Effect^ AsEffect();
 			
 			static EffectPool^ FromFile( Device^ device, System::String^ fileName, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );

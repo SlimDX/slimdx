@@ -51,8 +51,6 @@ namespace SlimDX
 		public:
 			Direct3D();
 
-			static Direct3D^ FromPointer( System::IntPtr pointer );
-
 			/// <summary>
 			/// Gets or sets a value indicating whether Direct3D should check WHQL levels. If this value
 			/// is set to <c>true</c>, Direct3D can connect to the internet in order to download

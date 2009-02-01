@@ -44,35 +44,6 @@ namespace Direct3D11
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
-	RenderTargetView^ RenderTargetView::FromPointer( ID3D11RenderTargetView* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		RenderTargetView^ tableEntry = safe_cast<RenderTargetView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew RenderTargetView( pointer );
-	}
-
-	RenderTargetView^ RenderTargetView::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		RenderTargetView^ tableEntry = safe_cast<RenderTargetView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew RenderTargetView( pointer );
-	}
 
 	RenderTargetView::RenderTargetView( SlimDX::Direct3D11::Device^ device, Resource^ resource )
 	{

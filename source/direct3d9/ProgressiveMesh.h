@@ -69,7 +69,6 @@ namespace SlimDX
 			ProgressiveMesh( Mesh^ mesh, array<AttributeWeights>^ attributeWeights, int minimumValue, MeshSimplification options );
 			ProgressiveMesh( Mesh^ mesh, int minimumValue, MeshSimplification options );
 			virtual ~ProgressiveMesh() { }
-			static ProgressiveMesh^ FromPointer( System::IntPtr pointer );
 
 			static ProgressiveMesh^ FromStream( SlimDX::Direct3D9::Device^ device, System::IO::Stream^ stream, MeshFlags flags );
 			static Result ToStream( ProgressiveMesh^ mesh, System::IO::Stream^ stream );

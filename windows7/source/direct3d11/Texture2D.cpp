@@ -85,35 +85,6 @@ namespace Direct3D11
 		}
 	}
 	
-	Texture2D^ Texture2D::FromPointer( ID3D11Texture2D* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Texture2D^ tableEntry = safe_cast<Texture2D^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Texture2D( pointer );
-	}
-
-	Texture2D^ Texture2D::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Texture2D^ tableEntry = safe_cast<Texture2D^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Texture2D( pointer );
-	}
-	
 	ID3D11Texture2D* Texture2D::Build( SlimDX::Direct3D11::Device^ device, Texture2DDescription description, D3D11_SUBRESOURCE_DATA* data )
 	{
 		ID3D11Texture2D* texture = 0;

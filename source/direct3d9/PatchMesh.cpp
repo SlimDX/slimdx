@@ -77,35 +77,6 @@ namespace Direct3D9
 		Construct(result);
 	}
 
-	PatchMesh^ PatchMesh::FromPointer( ID3DXPatchMesh* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		PatchMesh^ tableEntry = safe_cast<PatchMesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew PatchMesh( pointer );
-	}
-
-	PatchMesh^ PatchMesh::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		PatchMesh^ tableEntry = safe_cast<PatchMesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew PatchMesh( pointer );
-	}
-
 	PatchMesh^ PatchMesh::FromXFile( SlimDX::Direct3D9::Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials,
 		[Out] array<EffectInstance>^% effectInstances )
 	{

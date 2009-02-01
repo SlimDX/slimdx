@@ -42,8 +42,7 @@ namespace SlimDX
 
 		public:
 			XFile();
-			static XFile^ FromPointer( System::IntPtr pointer );
-
+			
 			XFileEnumerationObject^ CreateEnumerationObject( System::String^ fileName, System::Runtime::InteropServices::CharSet charSet );
 			XFileEnumerationObject^ CreateEnumerationObject( array<System::Byte>^ memory );
 			XFileEnumerationObject^ CreateEnumerationObject( System::IO::Stream^ stream );

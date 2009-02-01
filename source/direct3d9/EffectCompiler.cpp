@@ -48,35 +48,6 @@ namespace Direct3D9
 		Construct( compiler, NativeInterface );
 	}
 
-	EffectCompiler^ EffectCompiler::FromPointer( ID3DXEffectCompiler* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		EffectCompiler^ tableEntry = safe_cast<EffectCompiler^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew EffectCompiler( pointer );
-	}
-
-	EffectCompiler^ EffectCompiler::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		EffectCompiler^ tableEntry = safe_cast<EffectCompiler^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew EffectCompiler( pointer );
-	}
-
 	EffectCompiler::EffectCompiler( String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% compilationErrors )
 	{
 		ID3DXEffectCompiler* compiler;

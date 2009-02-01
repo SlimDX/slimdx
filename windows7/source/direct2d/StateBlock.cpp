@@ -48,35 +48,6 @@ namespace Direct2D
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
-	StateBlock^ StateBlock::FromPointer( ID2D1DrawingStateBlock* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		StateBlock^ tableEntry = safe_cast<StateBlock^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew StateBlock( pointer );
-	}
-
-	StateBlock^ StateBlock::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		StateBlock^ tableEntry = safe_cast<StateBlock^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew StateBlock( pointer );
-	}
 
 	StateBlock::StateBlock( SlimDX::Direct2D::Factory^ factory )
 	{

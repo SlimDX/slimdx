@@ -49,35 +49,6 @@ namespace Direct3D11
 		Construct( pointer, NativeInterface );
 	}
 
-	DeviceChild^ DeviceChild::FromPointer( ID3D11DeviceChild* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		DeviceChild^ tableEntry = safe_cast<DeviceChild^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew DeviceChild( pointer );
-	}
-
-	DeviceChild^ DeviceChild::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		DeviceChild^ tableEntry = safe_cast<DeviceChild^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew DeviceChild( pointer );
-	}
-
 	SlimDX::Direct3D11::Device^ DeviceChild::Device::get()
 	{
 		ID3D11Device* device = 0;

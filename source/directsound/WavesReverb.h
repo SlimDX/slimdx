@@ -35,14 +35,6 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::WavesReverb"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSoundFXWavesReverb pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static WavesReverb^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// Input gain of signal, in decibels (dB), the default value is 0 dB.
 			/// </summary>
 			property float InGain

@@ -45,35 +45,6 @@ namespace DirectSound
 		Construct( pointer, NativeInterface );
 	}
 
-	DistortionEffect^ DistortionEffect::FromPointer( IDirectSoundFXDistortion* pointer )
-	{
-		if( pointer == NULL )
-			return nullptr;
-
-		DistortionEffect^ tableEntry = safe_cast<DistortionEffect^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew DistortionEffect( pointer );
-	}
-
-	DistortionEffect^ DistortionEffect::FromPointer( System::IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		DistortionEffect^ tableEntry = safe_cast<DistortionEffect^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew DistortionEffect( pointer );
-	}
-
 	float DistortionEffect::Gain::get()
 	{
 		DSFXDistortion param;

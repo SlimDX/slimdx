@@ -47,35 +47,6 @@ namespace DirectSound
 		Construct( buffer, NativeInterface );
 	}
 
-	SecondarySoundBuffer^ SecondarySoundBuffer::FromPointer( IDirectSoundBuffer8* pointer )
-	{
-		if( pointer == NULL )
-			return nullptr;
-
-		SecondarySoundBuffer^ tableEntry = safe_cast<SecondarySoundBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew SecondarySoundBuffer( pointer );
-	}
-
-	SecondarySoundBuffer^ SecondarySoundBuffer::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		SecondarySoundBuffer^ tableEntry = safe_cast<SecondarySoundBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew SecondarySoundBuffer( pointer );
-	}
-
 	SecondarySoundBuffer::SecondarySoundBuffer( DirectSound^ dsound, SoundBufferDescription description )
 	{
 		IDirectSoundBuffer* buffer;

@@ -55,14 +55,6 @@ namespace SlimDX
 			XAudio2( XAudio2Flags flags, ProcessorSpecifier processor );
 			virtual ~XAudio2() { if( callback != NULL ) delete callback; callback = NULL; }
 
-			/// <summary>
-			/// Constructs a new instance of the <see cref="XAudio2"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IXAudio2 pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static XAudio2^ FromPointer( System::IntPtr pointer );
-
 			static float AmplitudeRatioToDecibels( float volume );
 			static float CutoffFrequencyToRadians( float cutoffFrequency, int sampleRate );
 			static float DecibelsToAmplitudeRatio( float decibels );

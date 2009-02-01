@@ -89,35 +89,6 @@ namespace Direct3D10
 			Construct( Build( device, description, 0 ) );	
 		}
 	}
-
-	Texture3D^ Texture3D::FromPointer( ID3D10Texture3D* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Texture3D^ tableEntry = safe_cast<Texture3D^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Texture3D( pointer );
-	}
-
-	Texture3D^ Texture3D::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Texture3D^ tableEntry = safe_cast<Texture3D^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Texture3D( pointer );
-	}
 	
 	ID3D10Texture3D* Texture3D::Build( SlimDX::Direct3D10::Device^ device, Texture3DDescription description, D3D10_SUBRESOURCE_DATA* data )
 	{

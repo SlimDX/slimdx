@@ -54,35 +54,6 @@ namespace Direct3D9
 			throw gcnew InvalidCastException( "Serious QueryInterface failure in Volume." );
 	}
 
-	Volume^ Volume::FromPointer( IDirect3DVolume9* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Volume^ tableEntry = safe_cast<Volume^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Volume( pointer );
-	}
-
-	Volume^ Volume::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Volume^ tableEntry = safe_cast<Volume^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Volume( pointer );
-	}
-
 	VolumeDescription Volume::Description::get()
 	{
 		VolumeDescription description;

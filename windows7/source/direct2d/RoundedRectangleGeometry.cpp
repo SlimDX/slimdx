@@ -47,35 +47,6 @@ namespace Direct2D
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
-	RoundedRectangleGeometry^ RoundedRectangleGeometry::FromPointer( ID2D1RoundedRectangleGeometry* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		RoundedRectangleGeometry^ tableEntry = safe_cast<RoundedRectangleGeometry^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew RoundedRectangleGeometry( pointer );
-	}
-
-	RoundedRectangleGeometry^ RoundedRectangleGeometry::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		RoundedRectangleGeometry^ tableEntry = safe_cast<RoundedRectangleGeometry^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew RoundedRectangleGeometry( pointer );
-	}
 
 	RoundedRectangleGeometry::RoundedRectangleGeometry( SlimDX::Direct2D::Factory^ factory, SlimDX::Direct2D::RoundedRectangle rectangle )
 	{

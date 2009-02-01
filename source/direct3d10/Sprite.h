@@ -55,7 +55,6 @@ namespace SlimDX
 			}
 
 			Sprite( SlimDX::Direct3D10::Device^ device, int bufferSize );
-			static Sprite^ FromPointer( System::IntPtr pointer );
 
 			Result Begin( SpriteFlags flags );
 			Result End();

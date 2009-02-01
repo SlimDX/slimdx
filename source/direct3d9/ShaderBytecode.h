@@ -51,15 +51,7 @@ namespace SlimDX
 			/// Releases all resources used by the <see cref="ShaderBytecode"/>.
 			/// </summary>
 			virtual ~ShaderBytecode() { delete m_constantTable; }
-
-			/// <summary>
-			/// Constructs a new instance of the <see cref="ShaderBytecode"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged ID3DXBuffer pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static ShaderBytecode^ FromPointer( System::IntPtr pointer );
-
+			
 			/// <summary>
 			/// Assembles a shader from the given source data.
 			/// </summary>

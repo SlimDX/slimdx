@@ -46,35 +46,6 @@ namespace Direct2D
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
-	Layer^ Layer::FromPointer( ID2D1Layer* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Layer^ tableEntry = safe_cast<Layer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Layer( pointer );
-	}
-
-	Layer^ Layer::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Layer^ tableEntry = safe_cast<Layer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Layer( pointer );
-	}
 
 	Layer::Layer( RenderTarget^ renderTarget )
 	{

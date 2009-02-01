@@ -44,14 +44,6 @@ namespace SlimDX
 			SoundListener3D( SoundBuffer^ soundBuffer );
 
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::SoundListener3D"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSound3DListener pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static SoundListener3D^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// Commits any deferred settings made since the last call to this method.
 			/// </summary>
 			Result CommitDeferredSettings();

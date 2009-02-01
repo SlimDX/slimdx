@@ -44,34 +44,5 @@ namespace DirectWrite
 	{
 		Construct( pointer, NativeInterface );
 	}
-
-	RenderingParameters^ RenderingParameters::FromPointer( IDWriteRenderingParams* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		RenderingParameters^ tableEntry = safe_cast<RenderingParameters^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew RenderingParameters( pointer );
-	}
-
-	RenderingParameters^ RenderingParameters::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		RenderingParameters^ tableEntry = safe_cast<RenderingParameters^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew RenderingParameters( pointer );
-	}
 }
 }

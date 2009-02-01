@@ -54,35 +54,6 @@ namespace Direct3D11
 		Construct( counter );
 	}
 
-	Counter^ Counter::FromPointer( ID3D11Counter* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Counter^ tableEntry = safe_cast<Counter^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Counter( pointer );
-	}
-
-	Counter^ Counter::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Counter^ tableEntry = safe_cast<Counter^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Counter( pointer );
-	}
-
 	CounterDescription Counter::Description::get()
 	{
 		D3D11_COUNTER_DESC description;

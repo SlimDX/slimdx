@@ -35,14 +35,6 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::GargleEffect"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSoundFXGargle pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static GargleEffect^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// Rate of modulation, in Hertz. The default value is 20.
 			/// </summary>
 			property int Rate

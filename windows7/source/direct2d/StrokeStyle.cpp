@@ -47,35 +47,6 @@ namespace Direct2D
 		Construct( pointer, NativeInterface );
 	}
 	
-	StrokeStyle^ StrokeStyle::FromPointer( ID2D1StrokeStyle* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		StrokeStyle^ tableEntry = safe_cast<StrokeStyle^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew StrokeStyle( pointer );
-	}
-
-	StrokeStyle^ StrokeStyle::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		StrokeStyle^ tableEntry = safe_cast<StrokeStyle^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew StrokeStyle( pointer );
-	}
-
 	StrokeStyle::StrokeStyle( SlimDX::Direct2D::Factory^ factory )
 	{
 		ID2D1StrokeStyle *strokeStyle = NULL;

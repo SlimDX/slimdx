@@ -153,38 +153,6 @@ namespace Direct3D9
 		Construct(result);
 	}
 
-// We know that Gather is obsolete, we declared it ourselves
-#pragma warning(disable:4947)
-	SimplificationMesh^ SimplificationMesh::FromPointer( ID3DXSPMesh* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		SimplificationMesh^ tableEntry = safe_cast<SimplificationMesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew SimplificationMesh( pointer );
-	}
-
-	SimplificationMesh^ SimplificationMesh::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		SimplificationMesh^ tableEntry = safe_cast<SimplificationMesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew SimplificationMesh( pointer );
-	}
-#pragma warning(default:4947)
-
 	Mesh^ SimplificationMesh::Clone( SlimDX::Direct3D9::Device^ device, MeshFlags options, array<VertexElement>^ vertexDeclaration, [Out] array<int>^% vertexRemap )
 	{
 		ID3DXMesh *result;

@@ -35,14 +35,6 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::EchoEffect"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSoundFXEcho pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static EchoEffect^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// Delay for right channel, in milliseconds. The default value is 500 ms.
 			/// </summary>
 			property float RightDelay

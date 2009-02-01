@@ -62,35 +62,6 @@ namespace Direct3D9
 		m_function = function;
 	}
 
-	VertexShader^ VertexShader::FromPointer( IDirect3DVertexShader9* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew VertexShader( pointer );
-	}
-
-	VertexShader^ VertexShader::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew VertexShader( pointer );
-	}
-
 	SlimDX::Direct3D9::Device^ VertexShader::Device::get()
 	{
 		IDirect3DDevice9* device;

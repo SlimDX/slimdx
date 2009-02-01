@@ -44,36 +44,7 @@ namespace DirectSound
 	{
 		Construct( pointer, NativeInterface );
 	}
-
-	GargleEffect^ GargleEffect::FromPointer( IDirectSoundFXGargle* pointer )
-	{
-		if( pointer == NULL )
-			return nullptr;
-
-		GargleEffect^ tableEntry = safe_cast<GargleEffect^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew GargleEffect( pointer );
-	}
-
-	GargleEffect^ GargleEffect::FromPointer( System::IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		GargleEffect^ tableEntry = safe_cast<GargleEffect^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew GargleEffect( pointer );
-	}
-
+	
 	int GargleEffect::Rate::get()
 	{
 		DSFXGargle param;

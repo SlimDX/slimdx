@@ -51,7 +51,6 @@ namespace SlimDX
 			Font( Device^ device, FontDescription description );
 			Font( Device^ device, int height, System::String^ faceName );
 			Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic, FontCharacterSet characterSet, FontPrecision precision, FontQuality quality, FontPitchAndFamily pitchAndFamily, System::String^ faceName );
-			static Font^ FromPointer( System::IntPtr pointer );
 
 			int Draw( Sprite^ sprite, System::String^ text, System::Drawing::Rectangle rect, FontDrawFlags flags, unsigned int color );
 			

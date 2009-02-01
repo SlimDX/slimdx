@@ -47,35 +47,6 @@ namespace Direct2D
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
-	RadialGradientBrush^ RadialGradientBrush::FromPointer( ID2D1RadialGradientBrush* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		RadialGradientBrush^ tableEntry = safe_cast<RadialGradientBrush^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew RadialGradientBrush( pointer );
-	}
-
-	RadialGradientBrush^ RadialGradientBrush::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		RadialGradientBrush^ tableEntry = safe_cast<RadialGradientBrush^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew RadialGradientBrush( pointer );
-	}
 
 	RadialGradientBrush::RadialGradientBrush( RenderTarget^ renderTarget, GradientStopCollection^ gradientStops, RadialGradientBrushProperties radialGradientBrushProperties )
 	{

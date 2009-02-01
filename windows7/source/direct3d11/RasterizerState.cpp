@@ -56,36 +56,7 @@ namespace Direct3D11
 		
 		return FromPointer( state );
 	}
-
-	RasterizerState^ RasterizerState::FromPointer( ID3D11RasterizerState* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		RasterizerState^ tableEntry = safe_cast<RasterizerState^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew RasterizerState( pointer );
-	}
-
-	RasterizerState^ RasterizerState::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		RasterizerState^ tableEntry = safe_cast<RasterizerState^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew RasterizerState( pointer );
-	}
-
+	
 	RasterizerStateDescription RasterizerState::Description::get()
 	{
 		D3D11_RASTERIZER_DESC description;

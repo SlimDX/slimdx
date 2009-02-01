@@ -50,36 +50,7 @@ namespace DirectSound
 	{
 		Construct( pointer, NativeInterface );
 	}
-
-	DirectSound^ DirectSound::FromPointer( IDirectSound8* pointer )
-	{
-		if( pointer == NULL )
-			return nullptr;
-
-		DirectSound^ tableEntry = safe_cast<DirectSound^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew DirectSound( pointer );
-	}
-
-	DirectSound^ DirectSound::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		DirectSound^ tableEntry = safe_cast<DirectSound^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew DirectSound( pointer );
-	}
-
+	
 	DirectSound::DirectSound()
 	{
 		IDirectSound8* dsound;

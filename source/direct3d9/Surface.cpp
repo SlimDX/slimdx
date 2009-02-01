@@ -50,35 +50,6 @@ namespace Direct3D9
 		Construct( surface, NativeInterface );
 	}
 
-	Surface^ Surface::FromPointer( IDirect3DSurface9* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Surface^ tableEntry = safe_cast<Surface^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Surface( pointer );
-	}
-
-	Surface^ Surface::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Surface^ tableEntry = safe_cast<Surface^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Surface( pointer );
-	}
-
 	Surface^ Surface::CreateRenderTarget( SlimDX::Direct3D9::Device^ device, int width, int height, Format format,
 		MultisampleType multiSampleType, int multiSampleQuality, bool lockable )
 	{

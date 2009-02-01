@@ -44,35 +44,6 @@ namespace DirectSound
 		Construct( pointer, NativeInterface );
 	}
 
-	I3DL2Reverb^ I3DL2Reverb::FromPointer( IDirectSoundFXI3DL2Reverb* pointer )
-	{
-		if( pointer == NULL )
-			return nullptr;
-
-		I3DL2Reverb^ tableEntry = safe_cast<I3DL2Reverb^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew I3DL2Reverb( pointer );
-	}
-
-	I3DL2Reverb^ I3DL2Reverb::FromPointer( System::IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		I3DL2Reverb^ tableEntry = safe_cast<I3DL2Reverb^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew I3DL2Reverb( pointer );
-	}
-
 	int I3DL2Reverb::Room::get()
 	{
 		DSFXI3DL2Reverb param;

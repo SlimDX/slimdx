@@ -46,35 +46,6 @@ namespace DXGI
 		Construct( pointer, NativeInterface );
 	}
 
-	Surface^ Surface::FromPointer( IDXGISurface* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Surface^ tableEntry = safe_cast<Surface^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Surface( pointer );
-	}
-
-	Surface^ Surface::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Surface^ tableEntry = safe_cast<Surface^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Surface( pointer );
-	}
-
 	SurfaceDescription Surface::Description::get()
 	{
 		DXGI_SURFACE_DESC nativeDescription;
