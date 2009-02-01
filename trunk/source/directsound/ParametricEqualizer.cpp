@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	ParametricEqualizer::ParametricEqualizer( IDirectSoundFXParamEq *pointer )
-	{
-		Construct( pointer );
-	}
-
-	ParametricEqualizer::ParametricEqualizer( System::IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	float ParametricEqualizer::Center::get()
 	{
 		DSFXParamEq param;

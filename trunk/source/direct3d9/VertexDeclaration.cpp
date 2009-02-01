@@ -34,16 +34,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	VertexDeclaration::VertexDeclaration( IDirect3DVertexDeclaration9* pointer )
-	{
-		Construct( pointer );
-	}
-
-	VertexDeclaration::VertexDeclaration( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	VertexDeclaration::VertexDeclaration( Device^ device, array<VertexElement>^ elements )
 	{
 		if( elements == nullptr )

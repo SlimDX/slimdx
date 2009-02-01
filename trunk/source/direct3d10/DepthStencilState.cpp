@@ -34,16 +34,6 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	DepthStencilState::DepthStencilState( ID3D10DepthStencilState* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	DepthStencilState::DepthStencilState( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	DepthStencilState^ DepthStencilState::FromDescription( SlimDX::Direct3D10::Device^ device, DepthStencilStateDescription description )
 	{
 		if( device == nullptr )

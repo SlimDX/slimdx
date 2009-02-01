@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	ChorusEffect::ChorusEffect( IDirectSoundFXChorus *pointer )
-	{
-		Construct( pointer );
-	}
-
-	ChorusEffect::ChorusEffect( System::IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	float ChorusEffect::Delay::get()
 	{
 		DSFXChorus param;

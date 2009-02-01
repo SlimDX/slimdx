@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	EchoEffect::EchoEffect( IDirectSoundFXEcho *pointer )
-	{
-		Construct( pointer );
-	}
-
-	EchoEffect::EchoEffect( System::IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	float EchoEffect::LeftDelay::get()
 	{
 		DSFXEcho param;

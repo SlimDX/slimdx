@@ -38,16 +38,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	EffectCompiler::EffectCompiler( ID3DXEffectCompiler* compiler )
-	{
-		Construct( compiler );
-	}
-
-	EffectCompiler::EffectCompiler( IntPtr compiler )
-	{
-		Construct( compiler, NativeInterface );
-	}
-
 	EffectCompiler::EffectCompiler( String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% compilationErrors )
 	{
 		ID3DXEffectCompiler* compiler;

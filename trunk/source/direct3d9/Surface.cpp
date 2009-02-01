@@ -40,16 +40,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	Surface::Surface( IDirect3DSurface9* surface )
-	{
-		Construct(surface);
-	}
-
-	Surface::Surface( IntPtr surface )
-	{
-		Construct( surface, NativeInterface );
-	}
-
 	Surface^ Surface::CreateRenderTarget( SlimDX::Direct3D9::Device^ device, int width, int height, Format format,
 		MultisampleType multiSampleType, int multiSampleQuality, bool lockable )
 	{

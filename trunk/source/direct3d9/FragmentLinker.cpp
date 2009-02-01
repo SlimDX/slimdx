@@ -39,19 +39,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	FragmentLinker::FragmentLinker( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
-	FragmentLinker::FragmentLinker( ID3DXFragmentLinker* linker )
-	{
-		if( linker == NULL )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Construct(linker);
-	}
-
 	FragmentLinker::FragmentLinker( SlimDX::Direct3D9::Device^ device, int cacheSize )
 	{
 		IDirect3DDevice9* devicePointer = device->InternalPointer;

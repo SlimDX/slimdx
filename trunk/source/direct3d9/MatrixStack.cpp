@@ -37,16 +37,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	MatrixStack::MatrixStack( ID3DXMatrixStack* pointer )
-	{
-		Construct( pointer );
-	}
-
-	MatrixStack::MatrixStack( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	MatrixStack::MatrixStack()
 	{
 		ID3DXMatrixStack* matrixStack;

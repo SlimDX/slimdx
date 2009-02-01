@@ -46,16 +46,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	Mesh::Mesh( ID3DXMesh* mesh )
-	{
-		Construct( mesh );
-	}
-
-	Mesh::Mesh( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	Mesh::Mesh( SlimDX::Direct3D9::Device^ device, int numFaces, int numVertices, MeshFlags options, array<VertexElement>^ vertexDeclaration )
 	{
 		ID3DXMesh* mesh;

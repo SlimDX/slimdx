@@ -61,7 +61,7 @@ namespace SlimDX
 		/// <unmanaged>ID3D10Device</unmanaged>
 		public ref class Device : ComObject
 		{
-			COMOBJECT(ID3D10Device, Device);
+			COMOBJECT_CUSTOM(ID3D10Device, Device);
 		
 		private:
 			InputAssemblerWrapper^ m_InputAssembler;

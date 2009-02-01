@@ -34,16 +34,6 @@ namespace SlimDX
 {
 namespace DXGI
 { 	
-	Adapter::Adapter( IDXGIAdapter* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	Adapter::Adapter( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	AdapterDescription Adapter::Description::get()
 	{
 		DXGI_ADAPTER_DESC nativeDescription;

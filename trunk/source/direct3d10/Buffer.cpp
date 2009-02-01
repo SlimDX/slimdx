@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	Buffer::Buffer( ID3D10Buffer* pointer )
-	{
-		Construct( pointer );
-	}
-
-	Buffer::Buffer( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	Buffer::Buffer( SlimDX::Direct3D10::Device^ device, BufferDescription description )
 	{
 		Construct( Build( device, nullptr, description.SizeInBytes, description.Usage, description.BindFlags, description.CpuAccessFlags, description.OptionFlags ) );

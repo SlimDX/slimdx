@@ -214,16 +214,6 @@ namespace Direct3D9
 		if( pcbWritten != IntPtr::Zero )
 			Marshal::WriteInt32( pcbWritten, cb );
 	}
-
-	ProgressiveMesh::ProgressiveMesh( ID3DXPMesh* pointer )
-	{
-		Construct( pointer );
-	}
-
-	ProgressiveMesh::ProgressiveMesh( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
 	
 	ProgressiveMesh::ProgressiveMesh( Mesh^ mesh, array<AttributeWeights>^ attributeWeights,
 		array<float>^ vertexWeights, int minimumValue, MeshSimplification options )

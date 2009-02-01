@@ -43,16 +43,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	KeyframedAnimationSet::KeyframedAnimationSet( ID3DXKeyframedAnimationSet* pointer )
-	{
-		Construct( pointer );
-	}
-
-	KeyframedAnimationSet::KeyframedAnimationSet( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	KeyframedAnimationSet::KeyframedAnimationSet( String^ name, double ticksPerSecond, SlimDX::Direct3D9::PlaybackType playbackType,
 		int animationCount, array<CallbackKey>^ callbackKeys )
 	{

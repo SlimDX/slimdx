@@ -37,16 +37,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	XFileSaveData::XFileSaveData( ID3DXFileSaveData* pointer )
-	{
-		Construct( pointer );
-	}
-
-	XFileSaveData::XFileSaveData( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	XFileSaveData^ XFileSaveData::AddDataObject_Internal( Guid dataTemplate, String^ name, Guid id, const void* data, SIZE_T size )
 	{
 		ID3DXFileSaveData *result;

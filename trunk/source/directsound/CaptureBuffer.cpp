@@ -41,16 +41,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	CaptureBuffer::CaptureBuffer( IDirectSoundCaptureBuffer8* buffer )
-	{
-		Construct( buffer );
-	}
-
-	CaptureBuffer::CaptureBuffer( System::IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	CaptureBuffer::CaptureBuffer( DirectSoundCapture^ capture, CaptureBufferDescription description )
 	{
 		DSCBUFFERDESC value = description.ToUnmanaged();

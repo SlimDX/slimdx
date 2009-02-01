@@ -30,14 +30,5 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	PixelShader::PixelShader( ID3D10PixelShader* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	PixelShader::PixelShader( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
 }
 }

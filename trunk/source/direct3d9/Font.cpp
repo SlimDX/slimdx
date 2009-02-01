@@ -41,16 +41,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	Font::Font( ID3DXFont* font )
-	{
-		Construct( font );
-	}
-
-	Font::Font( IntPtr font )
-	{
-		Construct( font, NativeInterface );
-	}
-
 	Font::Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic,
 		CharacterSet charSet, Precision outputPrecision, FontQuality quality,
 		PitchAndFamily pitchAndFamily, String^ faceName )

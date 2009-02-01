@@ -36,16 +36,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	XFileEnumerationObject::XFileEnumerationObject( ID3DXFileEnumObject* pointer )
-	{
-		Construct( pointer );
-	}
-
-	XFileEnumerationObject::XFileEnumerationObject( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	XFileData^ XFileEnumerationObject::GetChild( int id )
 	{
 		ID3DXFileData *result;

@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	CompressorEffect::CompressorEffect( IDirectSoundFXCompressor *pointer )
-	{
-		Construct( pointer );
-	}
-
-	CompressorEffect::CompressorEffect( System::IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	float CompressorEffect::Attack::get()
 	{
 		DSFXCompressor param;

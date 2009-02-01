@@ -42,16 +42,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	Line::Line( ID3DXLine* line )
-	{
-		Construct( line );
-	}
-
-	Line::Line( IntPtr line )
-	{
-		Construct( line, NativeInterface );
-	}
-
 	Line::Line( SlimDX::Direct3D9::Device^ device )
 	{
 		ID3DXLine* line;

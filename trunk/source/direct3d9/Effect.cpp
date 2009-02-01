@@ -39,14 +39,24 @@ namespace Direct3D9
 {
 	Effect::Effect( ID3DXEffect* pointer )
 	{
-		shim = NULL;
+		shim = 0;
 		Construct( pointer );
 	}
 
 	Effect::Effect( IntPtr pointer )
 	{
-		shim = NULL;
+		shim = 0;
 		Construct( pointer, NativeInterface );
+	}
+	
+	Effect^ Effect::FromPointer( ID3DXEffect* pointer )
+	{
+		return ComObject::ConstructFromPointer<Effect,ID3DXEffect>( pointer );
+	}
+	
+	Effect^ Effect::FromPointer( IntPtr pointer )
+	{
+		return ComObject::ConstructFromUserPointer<Effect>( pointer );
 	}
 	
 	Effect^ Effect::FromMemory_Internal( SlimDX::Direct3D9::Device^ device, const void* memory, UINT size,

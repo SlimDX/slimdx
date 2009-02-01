@@ -38,16 +38,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	DirectSoundCapture::DirectSoundCapture( IDirectSoundCapture *capture )
-	{
-		Construct( capture );
-	}
-
-	DirectSoundCapture::DirectSoundCapture( System::IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	DirectSoundCapture::DirectSoundCapture()
 	{
 		IDirectSoundCapture8* capture;

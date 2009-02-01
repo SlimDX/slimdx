@@ -47,16 +47,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	Direct3D::Direct3D( IDirect3D9* direct3d )
-	{
-		Construct( direct3d );
-	}
-
-	Direct3D::Direct3D( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	Direct3D::Direct3D( bool )
 	{
 		//called by Direct3D9Ex

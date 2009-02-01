@@ -42,7 +42,7 @@ namespace SlimDX
 		/// <unmanaged>ID3DXEffect</unmanaged>
 		public ref class Effect : public BaseEffect, public IResettable
 		{
-			COMOBJECT(ID3DXEffect, Effect);
+			COMOBJECT_CUSTOM(ID3DXEffect, Effect);
 
 		private:
 			IEffectStateManagerShim *shim;

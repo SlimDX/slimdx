@@ -39,16 +39,6 @@ namespace SlimDX
 {
 namespace Direct3D10
 {
-	Mesh::Mesh( ID3DX10Mesh* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	Mesh::Mesh( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	Mesh::Mesh( Device^ device, array<InputElement>^ elements, System::String^ positionElement, int vertexCount, int faceCount, MeshFlags flags )
 	{
 		D3D10_INPUT_ELEMENT_DESC nativeElements[D3D10_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT];

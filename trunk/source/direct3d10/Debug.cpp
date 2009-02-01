@@ -34,16 +34,6 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	Debug::Debug( ID3D10Debug* pointer )
-	{
-		Construct( pointer );
-	}
-
-	Debug::Debug( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	Debug::Debug( Device^ device )
 	{
 		if( device == nullptr )

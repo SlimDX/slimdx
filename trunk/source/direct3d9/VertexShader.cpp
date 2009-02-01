@@ -39,16 +39,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	VertexShader::VertexShader( IDirect3DVertexShader9* pointer )
-	{
-		Construct( pointer );
-	}
-
-	VertexShader::VertexShader( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	VertexShader::VertexShader( SlimDX::Direct3D9::Device^ device, ShaderBytecode^ function )
 	{
 		IDirect3DVertexShader9 *result;

@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace Direct3D10
 {
-	Sprite::Sprite( ID3DX10Sprite* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	Sprite::Sprite( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	Sprite::Sprite( SlimDX::Direct3D10::Device^ device, int bufferSize )
 	{
 		ID3DX10Sprite* sprite = 0;

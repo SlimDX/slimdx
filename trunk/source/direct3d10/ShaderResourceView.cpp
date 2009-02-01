@@ -36,16 +36,6 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	ShaderResourceView::ShaderResourceView( ID3D10ShaderResourceView* pointer )
-	{
-		Construct( pointer );
-	}
-
-	ShaderResourceView::ShaderResourceView( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	ShaderResourceView::ShaderResourceView( SlimDX::Direct3D10::Device^ device, Resource^ resource )
 	{
 		if( device == nullptr )

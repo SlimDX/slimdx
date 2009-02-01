@@ -39,16 +39,6 @@ namespace SlimDX
 {
 namespace XAudio2
 {
-	XAudio2::XAudio2( IXAudio2* pointer )
-	{
-		Construct( pointer );
-	}
-
-	XAudio2::XAudio2( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	XAudio2::XAudio2()
 	{
 		CoInitializeEx( NULL, COINIT_APARTMENTTHREADED );

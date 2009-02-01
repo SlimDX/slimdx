@@ -34,16 +34,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	RenderToEnvironmentMap::RenderToEnvironmentMap( ID3DXRenderToEnvMap *pointer )
-	{
-		Construct(pointer);
-	}
-
-	RenderToEnvironmentMap::RenderToEnvironmentMap( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	RenderToEnvironmentMap::RenderToEnvironmentMap( SlimDX::Direct3D9::Device^ device, int size, int mipLevels, Format format, Format depthStencilFormat )
 	{
 		ID3DXRenderToEnvMap *result;

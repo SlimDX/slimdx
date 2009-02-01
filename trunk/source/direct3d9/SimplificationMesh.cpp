@@ -45,16 +45,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	SimplificationMesh::SimplificationMesh( ID3DXSPMesh* pointer )
-	{
-		Construct( pointer );
-	}
-
-	SimplificationMesh::SimplificationMesh( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	SimplificationMesh::SimplificationMesh( Mesh^ mesh, array<AttributeWeights>^ vertexAttributeWeights, array<float>^ vertexWeights )
 	{
 		ID3DXSPMesh *result;

@@ -39,21 +39,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	Volume::Volume( IDirect3DVolume9* volume )
-	{
-		//D3D BUG WAR: IDirect3DVolume9 does not inherit from IDirect3DResource9 like it's supposed to
-		Construct( volume );
-	}
-
-	Volume::Volume( IntPtr volume )
-	{
-		Construct( volume, NativeInterface );
-		
-		D3DRESOURCETYPE type = Resource::InternalPointer->GetType();
-		if( type != D3DRTYPE_VOLUME )
-			throw gcnew InvalidCastException( "Serious QueryInterface failure in Volume." );
-	}
-
 	VolumeDescription Volume::Description::get()
 	{
 		VolumeDescription description;

@@ -33,7 +33,7 @@ namespace SlimDX
 	{
 		public ref class Direct3DEx : Direct3D
 		{
-			COMOBJECT(IDirect3D9Ex, Direct3DEx);
+			COMOBJECT_CUSTOM(IDirect3D9Ex, Direct3DEx);
 
 		private:
 			AdapterExCollection^ adaptersEx;

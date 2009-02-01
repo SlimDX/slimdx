@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	WavesReverb::WavesReverb( IDirectSoundFXWavesReverb8 *pointer )
-	{
-		Construct( pointer );
-	}
-
-	WavesReverb::WavesReverb( System::IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}	
-	
 	float WavesReverb::InGain::get()
 	{
 		DSFXWavesReverb param;

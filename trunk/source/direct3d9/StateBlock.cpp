@@ -34,16 +34,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	StateBlock::StateBlock( IDirect3DStateBlock9* pointer )
-	{
-		Construct( pointer );
-	}
-
-	StateBlock::StateBlock( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	StateBlock::StateBlock( SlimDX::Direct3D9::Device^ device, StateBlockType type )
 	{
 		IDirect3DStateBlock9* stateBlock;

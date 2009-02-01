@@ -36,16 +36,6 @@ namespace SlimDX
 {
 namespace DXGI
 { 	
-	Surface::Surface( IDXGISurface* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	Surface::Surface( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	SurfaceDescription Surface::Description::get()
 	{
 		DXGI_SURFACE_DESC nativeDescription;

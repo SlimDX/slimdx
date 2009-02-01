@@ -38,16 +38,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	ShaderBytecode::ShaderBytecode( ID3DXBuffer* pointer )
-	{
-		Construct( pointer );
-	}
-
-	ShaderBytecode::ShaderBytecode( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	ShaderBytecode::ShaderBytecode( array<Byte>^ data )
 	{
 		ID3DXBuffer *buffer = NULL;

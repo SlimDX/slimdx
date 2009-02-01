@@ -40,16 +40,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	TextureShader::TextureShader( ID3DXTextureShader* pointer )
-	{
-		Construct( pointer );
-	}
-
-	TextureShader::TextureShader( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	TextureShader::TextureShader( DataStream^ stream )
 	{
 		ID3DXTextureShader *result;

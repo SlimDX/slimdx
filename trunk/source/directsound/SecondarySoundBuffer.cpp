@@ -37,16 +37,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	SecondarySoundBuffer::SecondarySoundBuffer( IDirectSoundBuffer8* buffer )
-	{
-		Construct( buffer );
-	}
-
-	SecondarySoundBuffer::SecondarySoundBuffer( IntPtr buffer )
-	{
-		Construct( buffer, NativeInterface );
-	}
-
 	SecondarySoundBuffer::SecondarySoundBuffer( DirectSound^ dsound, SoundBufferDescription description )
 	{
 		IDirectSoundBuffer* buffer;

@@ -71,6 +71,16 @@ namespace Direct3D10
 		m_Rasterizer = gcnew RasterizerWrapper( InternalPointer );
 	}
 	
+	Device^ Device::FromPointer( ID3D10Device* pointer )
+	{
+		return ComObject::ConstructFromPointer<Device,ID3D10Device>( pointer );
+	}
+	
+	Device^ Device::FromPointer( IntPtr pointer )
+	{
+		return ComObject::ConstructFromUserPointer<Device>( pointer );
+	}
+	
 	Device::Device( DeviceCreationFlags flags )
 	{
 		ID3D10Device* device = 0;

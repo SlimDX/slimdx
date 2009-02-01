@@ -46,16 +46,6 @@ namespace Direct3D9
 	void WINAPI NativeD3DXFill2D(D3DXVECTOR4 *out, CONST D3DXVECTOR2 *pTexCoord, CONST D3DXVECTOR2 *pTexelSize, LPVOID data);
 	void WINAPI NativeD3DXFill3D(D3DXVECTOR4 *out, CONST D3DXVECTOR3 *pTexCoord, CONST D3DXVECTOR3 *pTexelSize, LPVOID data);
 
-	VolumeTexture::VolumeTexture( IDirect3DVolumeTexture9* texture )
-	{
-		Construct(texture);
-	}
-
-	VolumeTexture::VolumeTexture( IntPtr volumeTexture )
-	{
-		Construct( volumeTexture, NativeInterface );
-	}
-
 	VolumeTexture::VolumeTexture( SlimDX::Direct3D9::Device^ device, int width, int height, int depth, int numLevels, Usage usage, Format format, Pool pool )
 	{
 		IDirect3DVolumeTexture9* texture;

@@ -34,16 +34,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	I3DL2Reverb::I3DL2Reverb( IDirectSoundFXI3DL2Reverb8 *pointer )
-	{
-		Construct( pointer );
-	}
-
-	I3DL2Reverb::I3DL2Reverb( System::IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	int I3DL2Reverb::Room::get()
 	{
 		DSFXI3DL2Reverb param;

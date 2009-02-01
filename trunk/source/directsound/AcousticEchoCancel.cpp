@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	AcousticEchoCancel::AcousticEchoCancel( IDirectSoundCaptureFXAec *pointer )
-	{
-		Construct( pointer );
-	}
-
-	AcousticEchoCancel::AcousticEchoCancel( System::IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	Result AcousticEchoCancel::Reset()
 	{
 		HRESULT hr = InternalPointer->Reset();

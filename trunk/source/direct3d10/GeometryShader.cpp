@@ -30,14 +30,5 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	GeometryShader::GeometryShader( ID3D10GeometryShader* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	GeometryShader::GeometryShader( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
 }
 }

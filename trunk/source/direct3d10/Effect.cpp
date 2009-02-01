@@ -46,16 +46,6 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	Effect::Effect( ID3D10Effect* pointer )
-	{
-		Construct( pointer );
-	}
-
-	Effect::Effect( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	EffectDescription Effect::Description::get()
 	{
 		D3D10_EFFECT_DESC nativeDescription;

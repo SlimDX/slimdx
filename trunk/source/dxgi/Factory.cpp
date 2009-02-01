@@ -45,16 +45,6 @@ namespace DXGI
 		Construct( factory );
 	}
 
-	Factory::Factory( IDXGIFactory* pointer )
-	{
-		Construct( pointer );
-	}
-
-	Factory::Factory( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	int Factory::GetAdapterCount()
 	{
 		int count = 0;

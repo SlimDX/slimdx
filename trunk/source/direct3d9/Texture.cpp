@@ -44,16 +44,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	Texture::Texture( IDirect3DTexture9* texture )
-	{
-		Construct(texture);
-	}
-
-	Texture::Texture( IntPtr texture )
-	{
-		Construct( texture, NativeInterface );
-	}
-
 	Texture::Texture( SlimDX::Direct3D9::Device^ device, int width, int height, int numLevels, Usage usage, Format format, Pool pool )
 	{
 		IDirect3DTexture9* texture;

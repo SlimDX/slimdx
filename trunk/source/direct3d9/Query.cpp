@@ -44,16 +44,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	Query::Query( IDirect3DQuery9* pointer )
-	{
-		Construct( pointer );
-	}
-
-	Query::Query( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	Query::Query( SlimDX::Direct3D9::Device^ device, QueryType type )
 	{
 		IDirect3DQuery9* query;
