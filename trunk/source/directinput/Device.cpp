@@ -54,9 +54,9 @@ namespace DirectInput
 	}
 
 	generic<typename DataFormat>
-	Device<DataFormat>::Device( IDirectInputDevice8W* device )
+	Device<DataFormat>::Device( IDirectInputDevice8W* device, ComObject^ owner )
 	{
-		Construct(device);
+		Construct(device, owner);
 
 		properties = gcnew DeviceProperties( InternalPointer );
 	}
@@ -148,7 +148,7 @@ namespace DirectInput
 	}
 
 	generic<typename DataFormat>
-	Device<DataFormat>^ Device<DataFormat>::FromPointer( IDirectInputDevice8W* pointer )
+	Device<DataFormat>^ Device<DataFormat>::FromPointer( IDirectInputDevice8W* pointer, ComObject^ owner )
 	{
 		if( pointer == 0 )
 			return nullptr;
@@ -160,7 +160,7 @@ namespace DirectInput
 			return tableEntry;
 		}
 
-		return gcnew Device( pointer );
+		return gcnew Device( pointer, owner );
 	}
 
 	generic<typename DataFormat>

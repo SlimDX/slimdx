@@ -121,7 +121,7 @@ namespace Direct3D10
 		resource->GetType( &type );
 		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE1D )
 			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
-		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( resource ) );
+		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( resource ), nullptr );
 	}
 	
 	Texture1D^ Texture1D::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory )
@@ -134,7 +134,7 @@ namespace Direct3D10
 		resource->GetType( &type );
 		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE1D )
 			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
-		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( resource ) );
+		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( resource ), nullptr );
 	}
 	
 	Texture1D^ Texture1D::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, int sizeInBytes )
@@ -147,7 +147,7 @@ namespace Direct3D10
 		resource->GetType( &type );
 		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE1D )
 			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
-		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( resource ) );
+		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( resource ), nullptr );
 	}
 	
 	Texture1D^ Texture1D::FromFile( SlimDX::Direct3D10::Device^ device, String^ fileName, ImageLoadInformation loadInfo )
@@ -161,7 +161,7 @@ namespace Direct3D10
 		resource->GetType( &type );
 		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE1D )
 			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
-		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( resource ) );
+		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( resource ), nullptr );
 	}
 
 	Texture1D^ Texture1D::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, ImageLoadInformation loadInfo )
@@ -175,7 +175,7 @@ namespace Direct3D10
 		resource->GetType( &type );
 		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE1D )
 			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
-		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( resource ) );
+		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( resource ), nullptr );
 	}
 
 	Texture1D^ Texture1D::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, int sizeInBytes, ImageLoadInformation loadInfo )
@@ -189,7 +189,7 @@ namespace Direct3D10
 		resource->GetType( &type );
 		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE1D )
 			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
-		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( resource ) );
+		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( resource ), nullptr );
 	}
 }
 }

@@ -73,10 +73,10 @@ namespace Direct3D9
 		Construct( direct3D );
 	}
 	
-	Direct3DEx::Direct3DEx( IDirect3D9Ex* direct3d )
+	Direct3DEx::Direct3DEx( IDirect3D9Ex* direct3d, ComObject^ owner )
 		: Direct3D( true )
 	{
-		Construct( direct3d );
+		Construct( direct3d, owner );
 	}
 
 	Direct3DEx::Direct3DEx( IntPtr pointer )
@@ -85,9 +85,9 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 	
-	Direct3DEx^ Direct3DEx::FromPointer( IDirect3D9Ex* pointer ) 
+	Direct3DEx^ Direct3DEx::FromPointer( IDirect3D9Ex* pointer, ComObject^ owner ) 
 	{
-		return ComObject::ConstructFromPointer<Direct3DEx,IDirect3D9Ex>( pointer );
+		return ComObject::ConstructFromPointer<Direct3DEx,IDirect3D9Ex>( pointer, owner );
 	}
 	
 	Direct3DEx^ Direct3DEx::FromPointer( IntPtr pointer )

@@ -88,7 +88,7 @@ namespace Direct3D10
 		if( RECORD_D3D10( InternalPointer->CloneMesh( static_cast<UINT>( flags ), reinterpret_cast<LPCSTR>( pinnedName ), nativeElements, elements->Length, &mesh ) ).IsFailure )
 			return nullptr;
 		
-		return gcnew Mesh( mesh );
+		return gcnew Mesh( mesh, nullptr );
 	}
 
 	Result Mesh::GenerateAdjacencyAndPointRepresentation( float epsilon )

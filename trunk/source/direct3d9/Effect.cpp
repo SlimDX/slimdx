@@ -37,10 +37,10 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	Effect::Effect( ID3DXEffect* pointer )
+	Effect::Effect( ID3DXEffect* pointer, ComObject^ owner )
 	{
 		shim = 0;
-		Construct( pointer );
+		Construct( pointer, owner );
 	}
 
 	Effect::Effect( IntPtr pointer )
@@ -49,9 +49,9 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 	
-	Effect^ Effect::FromPointer( ID3DXEffect* pointer )
+	Effect^ Effect::FromPointer( ID3DXEffect* pointer, ComObject^ owner )
 	{
-		return ComObject::ConstructFromPointer<Effect,ID3DXEffect>( pointer );
+		return ComObject::ConstructFromPointer<Effect,ID3DXEffect>( pointer, owner );
 	}
 	
 	Effect^ Effect::FromPointer( IntPtr pointer )
@@ -97,7 +97,7 @@ namespace Direct3D9
 		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrorsLocal ).IsFailure )
 			return nullptr;
 
-		return gcnew Effect( effect );
+		return gcnew Effect( effect, nullptr );
 	}
 
 	Effect^ Effect::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, array<Macro>^ preprocessorDefines,
@@ -275,7 +275,7 @@ namespace Direct3D9
 		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
 
-		return gcnew Effect( effect );
+		return gcnew Effect( effect, nullptr );
 	}
 
 	Effect^ Effect::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName, array<Macro>^ preprocessorDefines, Include^ includeFile,
@@ -313,7 +313,7 @@ namespace Direct3D9
 		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
 
-		return gcnew Effect( effect );
+		return gcnew Effect( effect, nullptr );
 	}
 
 	Effect^ Effect::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName, array<Macro>^ preprocessorDefines, Include^ includeFile,
@@ -350,7 +350,7 @@ namespace Direct3D9
 		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
 
-		return gcnew Effect( effect );
+		return gcnew Effect( effect, nullptr );
 	}
 
 	Effect^ Effect::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName, ShaderFlags flags )
@@ -367,7 +367,7 @@ namespace Direct3D9
 		if( RECORD_D3D9_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
 			return nullptr;
 
-		return gcnew Effect( effect );
+		return gcnew Effect( effect, nullptr );
 	}
 
 	Effect^ Effect::Clone( SlimDX::Direct3D9::Device^ device )
@@ -378,7 +378,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew Effect( result );
+		return gcnew Effect( result, nullptr );
 	}
 
 	int Effect::Begin( FX flags )

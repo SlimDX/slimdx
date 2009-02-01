@@ -34,6 +34,9 @@ namespace SlimDX
 
 	ComObject::~ComObject()
 	{
+		if( m_Owner != nullptr )
+			throw gcnew InvalidOperationException("It is not legal to call Dispose() on this object.");
+
 		Destruct();
 	}
 
@@ -47,10 +50,20 @@ namespace SlimDX
 
 		return false;
 	}
-
+	
 	IntPtr ComObject::ComPointer::get()
 	{
 		return IntPtr( m_Unknown );
+	}
+
+	ComObject^ ComObject::Owner::get()
+	{
+		return m_Owner;
+	}
+	
+	void ComObject::Owner::set( ComObject^ value )
+	{
+		m_Owner = value;
 	}
 
 	IUnknown* ComObject::UnknownPointer::get()
@@ -82,14 +95,19 @@ namespace SlimDX
 	{
 		return m_CreationTime;
 	}
-
+	
 	void ComObject::Construct( IUnknown* pointer )
+	{
+		Construct( pointer, nullptr );
+	}
+	
+	void ComObject::Construct( IUnknown* pointer, ComObject^ owner )
 	{
 		if( pointer == 0 )
 			throw gcnew ArgumentNullException( "pointer" );
 
 		m_Unknown = pointer;
-		ObjectTable::Add( this );
+		ObjectTable::Add( this, owner );
 	}
 
 	void ComObject::Construct( IntPtr pointer, Guid guid )

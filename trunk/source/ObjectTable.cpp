@@ -35,7 +35,8 @@ namespace SlimDX
 {
 	static ObjectTable::ObjectTable()
 	{
-		m_Table = gcnew System::Collections::Generic::Dictionary<IntPtr, ComObject^>();
+		m_Table = gcnew Dictionary<IntPtr, ComObject^>();
+		m_Ancillary = gcnew Dictionary<IntPtr, List<ComObject^>^>();
 		m_SyncObject = gcnew Object();
 
 		AppDomain::CurrentDomain->DomainUnload += gcnew System::EventHandler( OnExit );
@@ -86,21 +87,31 @@ namespace SlimDX
 		}
 	}
 
-	void ObjectTable::Add( ComObject^ object )
+	void ObjectTable::Add( ComObject^ object, ComObject^ owner )
 	{
 		if( object == nullptr )
 			throw gcnew ArgumentNullException( "comObject" );
 
-		//Record tracking information
+		// Record tracking information
 		object->SetCreationTime( (int) Configuration::Timer->ElapsedMilliseconds );
 		if( Configuration::EnableObjectTracking )
 			object->SetSource( gcnew StackTrace( 2, true ) );
 
-		//Add to the table
+		// Add to the table
 		Monitor::Enter( m_SyncObject );
 		try
 		{
 			m_Table->Add( object->ComPointer, object );
+			
+			if( owner != nullptr ) 
+			{
+				if( !m_Ancillary->ContainsKey( owner->ComPointer ) )
+				{
+					m_Ancillary->Add( owner->ComPointer, gcnew List<ComObject^>() );
+				}
+				m_Ancillary[owner->ComPointer]->Add( object );
+			}
+			
 			ObjectAdded( nullptr, gcnew ObjectTableEventArgs( object ) );
 		}
 		finally
@@ -121,6 +132,24 @@ namespace SlimDX
 				return false;
 
 			m_Table->Remove( object->ComPointer );
+		
+			// If the object has ancillary objects, destroy them.
+			if( m_Ancillary->ContainsKey( object->ComPointer ) )
+			{
+				for each( ComObject^ ancillary in m_Ancillary[object->ComPointer])
+				{
+					// By setting the owner to nullptr just before we release this object,
+					// we prevent an exception being thrown about the inability to release
+					// ancillary objects (since this delete call causes us to go through
+					// the same machinery that users use to Dispose() objects, and they should
+					// not be allowed to do that to ancillary objects).
+					ancillary->Owner = nullptr;
+					delete ancillary;
+				}
+				
+				m_Ancillary[object->ComPointer]->Clear();
+			}
+						
 			ObjectRemoved( nullptr, gcnew ObjectTableEventArgs( object ) );
 		}
 		finally

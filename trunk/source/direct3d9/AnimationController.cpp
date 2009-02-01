@@ -73,7 +73,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew AnimationController( pointer );
+		return gcnew AnimationController( pointer, nullptr );
 	}
 
 	AnimationSet^ AnimationController::GetAnimationSet( int index )

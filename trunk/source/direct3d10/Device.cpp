@@ -51,9 +51,9 @@ namespace SlimDX
 {
 namespace Direct3D10
 {
-	Device::Device( ID3D10Device* pointer )
+	Device::Device( ID3D10Device* pointer, ComObject^ owner )
 	{
-		Construct( pointer );
+		Construct( pointer, owner );
 		
 		m_InputAssembler = gcnew InputAssemblerWrapper( InternalPointer );
 		m_OutputMerger = gcnew OutputMergerWrapper( InternalPointer );
@@ -71,9 +71,9 @@ namespace Direct3D10
 		m_Rasterizer = gcnew RasterizerWrapper( InternalPointer );
 	}
 	
-	Device^ Device::FromPointer( ID3D10Device* pointer )
+	Device^ Device::FromPointer( ID3D10Device* pointer, ComObject^ owner )
 	{
-		return ComObject::ConstructFromPointer<Device,ID3D10Device>( pointer );
+		return ComObject::ConstructFromPointer<Device,ID3D10Device>( pointer, owner );
 	}
 	
 	Device^ Device::FromPointer( IntPtr pointer )

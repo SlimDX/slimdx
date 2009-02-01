@@ -97,7 +97,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew SkinInfo( result );
+		return gcnew SkinInfo( result, nullptr );
 	}
 
 	Mesh^ SkinInfo::ConvertToBlendedMesh( Mesh^ mesh, array<int>^ adjacency,

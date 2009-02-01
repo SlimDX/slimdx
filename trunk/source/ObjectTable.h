@@ -55,6 +55,7 @@ namespace SlimDX
 		ObjectTable();
 
 		static System::Collections::Generic::Dictionary<System::IntPtr, ComObject^>^ m_Table;
+		static System::Collections::Generic::Dictionary<System::IntPtr, System::Collections::Generic::List<ComObject^>^>^ m_Ancillary;
 		static Object^ m_SyncObject;
 
 		static void OnExit( System::Object^ sender, System::EventArgs^ e );
@@ -105,7 +106,7 @@ namespace SlimDX
 		/// <see cref="SlimDX::Configuration"/><c>::EnableObjectTracking</c>object tracking is on.
 		/// </summary>
 		/// <param name="comObject">The object to add.</param>
-		static void Add( ComObject^ comObject );
+		static void Add( ComObject^ comObject, ComObject^ owner );
 		
 		/// <summary>
 		/// Removes a <see cref="SlimDX::ComObject">COM object</see> from the table.

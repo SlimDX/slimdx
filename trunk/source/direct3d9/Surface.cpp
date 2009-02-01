@@ -51,7 +51,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		Surface^ result = gcnew Surface( surface );
+		Surface^ result = gcnew Surface( surface, nullptr );
 		result->IsDefaultPool = true;
 		return result;
 	}
@@ -66,7 +66,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		Surface^ result = gcnew Surface( surface );
+		Surface^ result = gcnew Surface( surface, nullptr );
 		if( pool == Pool::Default )
 			result->IsDefaultPool = true;
 
@@ -84,7 +84,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		Surface^ result = gcnew Surface( surface );
+		Surface^ result = gcnew Surface( surface, nullptr );
 		result->IsDefaultPool = true;
 		return result;
 	}
@@ -101,7 +101,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		Surface^ result = gcnew Surface( surface );
+		Surface^ result = gcnew Surface( surface, nullptr );
 		result->IsDefaultPool = true;
 		return result;
 	}
@@ -121,7 +121,7 @@ namespace Direct3D9
 			return nullptr;
 
 		sharedHandle = IntPtr( localHandle );
-		Surface^ result = gcnew Surface( surface );
+		Surface^ result = gcnew Surface( surface, nullptr );
 		result->IsDefaultPool = true;
 		return result;
 	}
@@ -138,7 +138,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		Surface^ result = gcnew Surface( surface );
+		Surface^ result = gcnew Surface( surface, nullptr );
 		if( pool == Pool::Default )
 			result->IsDefaultPool = true;
 
@@ -160,7 +160,7 @@ namespace Direct3D9
 			return nullptr;
 
 		sharedHandle = IntPtr( localHandle );
-		Surface^ result = gcnew Surface( surface );
+		Surface^ result = gcnew Surface( surface, nullptr );
 		if( pool == Pool::Default )
 			result->IsDefaultPool = true;
 
@@ -179,7 +179,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		Surface^ result = gcnew Surface( surface );
+		Surface^ result = gcnew Surface( surface, nullptr );
 		result->IsDefaultPool = true;
 		return result;
 	}
@@ -199,7 +199,7 @@ namespace Direct3D9
 			return nullptr;
 
 		sharedHandle = IntPtr( localHandle );
-		Surface^ result = gcnew Surface( surface );
+		Surface^ result = gcnew Surface( surface, nullptr );
 		result->IsDefaultPool = true;
 		return result;
 	}

@@ -77,7 +77,7 @@ namespace Direct3D10
 		RECORD_D3D10( hr );
 		if( effectPool == NULL)
 			return nullptr;
-		return gcnew EffectPool( effectPool );
+		return gcnew EffectPool( effectPool, nullptr );
 	}
 	
 	EffectPool^ EffectPool::FromStream( Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags )
@@ -132,7 +132,7 @@ namespace Direct3D10
 		RECORD_D3D10( hr );
 		if( effectPool == NULL)
 			return nullptr;
-		return gcnew EffectPool( effectPool );
+		return gcnew EffectPool( effectPool, nullptr );
 	}
 	
 	EffectPool^ EffectPool::FromMemory( Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, [Out] String^ %compilationErrors )

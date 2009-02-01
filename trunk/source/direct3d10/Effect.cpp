@@ -205,7 +205,7 @@ namespace Direct3D10
 		RECORD_D3D10( hr );
 		if( effect == NULL)
 			return nullptr;
-		return gcnew Effect( effect );
+		return gcnew Effect( effect, nullptr );
 	}
 	
 	Effect^ Effect::FromMemory_Internal( SlimDX::Direct3D10::Device^ device, const void* memory, SIZE_T size, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, String^* compilationErrors )
@@ -253,7 +253,7 @@ namespace Direct3D10
 		RECORD_D3D10( hr );
 		if( effect == NULL )
 			return nullptr;
-		return gcnew Effect( effect );
+		return gcnew Effect( effect, nullptr );
 	}
 
 	Effect^ Effect::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] String^ %compilationErrors  )
@@ -347,7 +347,7 @@ namespace Direct3D10
 		RECORD_D3D10( hr );
 		if( effect == NULL )
 			return nullptr;
-		return gcnew Effect( effect );
+		return gcnew Effect( effect, nullptr );
 	}
 }
 }
