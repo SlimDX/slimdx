@@ -46,8 +46,9 @@ using System::Diagnostics::StackTrace;
 		managedType( nativeType* pointer, ComObject^ owner ) { Construct( pointer, owner ); } \
 		managedType( System::IntPtr pointer ) { Construct( pointer, NativeInterface ); } \
 	internal: \
-		static managedType^ FromPointer( nativeType* pointer ) { return FromPointer( pointer, nullptr ); } \
-		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner ) { return ConstructFromPointer<managedType,nativeType>( pointer, owner ); } \
+		static managedType^ FromPointer( nativeType* pointer ) { return FromPointer( pointer, nullptr, ComObjectFlags::None ); } \
+		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner ) { return FromPointer( pointer, owner, ComObjectFlags::None ); } \
+		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner, ComObjectFlags flags ) { return ConstructFromPointer<managedType,nativeType>( pointer, owner, flags ); } \
 	public: \
 		static managedType^ FromPointer( System::IntPtr pointer ) { return ConstructFromUserPointer<managedType>( pointer ); } \
 	COMOBJECT_BASE(nativeType)
@@ -58,7 +59,7 @@ using System::Diagnostics::StackTrace;
 // The subclass must provide a body for the following methods:
 //   * managedType( nativeType* pointer, ComObject^ owner )
 //   * managedType( System::IntPtr pointer )
-//   * managedType^ FromPointer( nativeType* pointer, ComObject^ owner )
+//   * managedType^ FromPointer( nativeType* pointer, ComObject^ owner, ComObjectFlags flags )
 //   * managedType^ FromPointer( System::IntPtr pointer )
 //
 // Partial specialization is not supported; if the subclass needs special behavior for only
@@ -69,14 +70,22 @@ using System::Diagnostics::StackTrace;
 		managedType( nativeType* pointer, ComObject^ owner ); \
 		managedType( System::IntPtr pointer ); \
 	internal: \
-		static managedType^ FromPointer( nativeType* pointer ) { return FromPointer( pointer, nullptr ); } \
-		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner ); \
+		static managedType^ FromPointer( nativeType* pointer ) { return FromPointer( pointer, nullptr, ComObjectFlags::None ); } \
+		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner ) { return FromPointer( pointer, owner, ComObjectFlags::None ); } \
+		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner, ComObjectFlags flags ); \
 	public: \
 		static managedType^ FromPointer( System::IntPtr pointer ); \
 	COMOBJECT_BASE(nativeType)
 
 namespace SlimDX
-{
+{	
+	[System::Flags]
+	enum class ComObjectFlags
+	{
+		None = 0,
+		ExternalReferenceCount = 1,
+	};
+	
 	/// <summary>
 	/// The base class for all SlimDX types which represent COM interfaces.
 	/// </summary>
@@ -86,6 +95,7 @@ namespace SlimDX
 	private:
 		IUnknown* m_Unknown;
 		ComObject^ m_Owner;
+		ComObjectFlags m_Flags;
 		System::Diagnostics::StackTrace^ m_Source;
 		int m_CreationTime;
 
@@ -98,25 +108,25 @@ namespace SlimDX
 		void Destruct();
 		
 		template< typename M, typename N >
-		static M^ ConstructFromPointer( N* pointer, ComObject^ owner ) 
+		static M^ ConstructFromPointer( N* pointer, ComObject^ owner, ComObjectFlags flags ) 
 		{
 			// Since this method is called internally by SlimDX to essentially translate the results of native
 			// API calls to their managed counterparts via the object table, we expect that a null pointer
-			// might be passed, and that's okay. This is in constrast to ConstructFromUserPointer.
+			// might be passed, and that's okay. This differs from ConstructFromUserPointer.
 			if( pointer == 0 )
 				return nullptr;
 			
 			M^ tableEntry = safe_cast<M^>( SlimDX::ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
-				// In the case where we found the object in our table already, we want to release the reference
-				// we were passed since we already had one -- we want to maintain a single COM reference count
-				// to all COM objects.
-				pointer->Release();
+				if( static_cast<int>( flags & ComObjectFlags::ExternalReferenceCount ) == 0 ) 
+					pointer->Release();
 				return tableEntry;
 			}
 
-			return gcnew M( pointer, owner );	
+			M^ result = gcnew M( pointer, owner );
+			result->SetFlags( flags );
+			return result;
 		}
 		
 		template< typename M >
@@ -134,7 +144,9 @@ namespace SlimDX
 				return tableEntry;
 			}
 
-			return gcnew M( pointer );
+			M^ result = gcnew M( pointer );
+			result->SetFlags( ComObjectFlags::ExternalReferenceCount );
+			return result;
 		}
 		
 	internal:
@@ -153,7 +165,8 @@ namespace SlimDX
 		{
 			IUnknown* get();
 		}
-
+		
+		void SetFlags( ComObjectFlags flags );
 		void SetSource( System::Diagnostics::StackTrace^ stack );
 		void SetCreationTime( int time );
 		

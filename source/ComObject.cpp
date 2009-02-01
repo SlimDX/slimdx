@@ -27,7 +27,7 @@ using namespace System;
 
 namespace SlimDX
 {
-	ComObject::ComObject() : m_Unknown( NULL )
+	ComObject::ComObject() : m_Unknown( 0 )
 	{
 		IsDefaultPool = false;
 	}
@@ -75,7 +75,12 @@ namespace SlimDX
 	{
 		return m_Unknown;
 	}
-
+	
+	void ComObject::SetFlags( ComObjectFlags flags )
+	{
+		m_Flags = flags;
+	}
+	
 	void ComObject::SetSource( System::Diagnostics::StackTrace^ stack )
 	{
 		m_Source = stack;
@@ -138,8 +143,10 @@ namespace SlimDX
 				return;
 			}
 		}
+		
+		if( static_cast<int>( m_Flags & ComObjectFlags::ExternalReferenceCount ) == 0 )
+			m_Unknown->Release();
 
-		m_Unknown->Release();
-		m_Unknown = NULL;
+		m_Unknown = 0;
 	}
 }
