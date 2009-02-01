@@ -70,35 +70,6 @@ namespace Direct3D9
 			this->IsDefaultPool = true;
 	}
 
-	VolumeTexture^ VolumeTexture::FromPointer( IDirect3DVolumeTexture9* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		VolumeTexture^ tableEntry = safe_cast<VolumeTexture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew VolumeTexture( pointer );
-	}
-
-	VolumeTexture^ VolumeTexture::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		VolumeTexture^ tableEntry = safe_cast<VolumeTexture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew VolumeTexture( pointer );
-	}
-
 	VolumeTextureRequirements VolumeTexture::CheckRequirements(SlimDX::Direct3D9::Device^ device, int width, int height, int depth,
 		int numMipLevels, Usage usage, Format format, Pool pool)
 	{

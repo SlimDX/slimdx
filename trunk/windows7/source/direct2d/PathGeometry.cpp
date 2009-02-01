@@ -48,35 +48,6 @@ namespace Direct2D
 		Construct( pointer, NativeInterface );
 	}
 	
-	PathGeometry^ PathGeometry::FromPointer( ID2D1PathGeometry* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		PathGeometry^ tableEntry = safe_cast<PathGeometry^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew PathGeometry( pointer );
-	}
-
-	PathGeometry^ PathGeometry::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		PathGeometry^ tableEntry = safe_cast<PathGeometry^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew PathGeometry( pointer );
-	}
-
 	PathGeometry::PathGeometry( SlimDX::Direct2D::Factory^ factory )
 	{
 		ID2D1PathGeometry *geometry = NULL;

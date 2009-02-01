@@ -74,36 +74,7 @@ namespace Direct3D11
 			
 		Construct( view );
 	}
-
-	ShaderResourceView^ ShaderResourceView::FromPointer( ID3D11ShaderResourceView* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		ShaderResourceView^ tableEntry = safe_cast<ShaderResourceView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew ShaderResourceView( pointer );
-	}
-
-	ShaderResourceView^ ShaderResourceView::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		ShaderResourceView^ tableEntry = safe_cast<ShaderResourceView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew ShaderResourceView( pointer );
-	}
-
+	
 	ShaderResourceViewDescription ShaderResourceView::Description::get()
 	{
 		D3D11_SHADER_RESOURCE_VIEW_DESC nativeDescription;

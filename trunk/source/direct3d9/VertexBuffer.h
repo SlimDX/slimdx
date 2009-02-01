@@ -50,14 +50,6 @@ namespace SlimDX
 			VertexBuffer( SlimDX::Direct3D9::Device^ device, int sizeInBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool );
 
 			/// <summary>
-			/// Constructs a new instance of the <see cref="VertexBuffer"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirect3DVertexBuffer9 pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static VertexBuffer^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// Locks the buffer and obtains a pointer to the memory.
 			/// </summary>
 			/// <param name="offset">Offset into the vertex data to lock, in bytes.</param>

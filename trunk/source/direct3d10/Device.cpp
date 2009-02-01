@@ -116,35 +116,6 @@ namespace Direct3D10
 		m_StreamOutput = gcnew StreamOutputWrapper( InternalPointer );
 		m_Rasterizer = gcnew RasterizerWrapper( InternalPointer );
 	}
-	
-	Device^ Device::FromPointer( ID3D10Device* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Device( pointer );
-	}
-
-	Device^ Device::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Device( pointer );
-	}
 
 	InputAssemblerWrapper^ Device::InputAssembler::get()
 	{

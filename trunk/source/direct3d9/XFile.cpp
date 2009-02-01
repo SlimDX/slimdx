@@ -57,36 +57,7 @@ namespace Direct3D9
 	{
 		Construct( pointer, NativeInterface );
 	}
-
-	XFile^ XFile::FromPointer( ID3DXFile* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		XFile^ tableEntry = safe_cast<XFile^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew XFile( pointer );
-	}
-
-	XFile^ XFile::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		XFile^ tableEntry = safe_cast<XFile^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew XFile( pointer );
-	}
-
+	
 	XFileEnumerationObject^ XFile::CreateEnumerationObject( String^ fileName, CharSet charSet )
 	{
 		ID3DXFileEnumObject *result;

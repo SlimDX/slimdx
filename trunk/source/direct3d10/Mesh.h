@@ -62,8 +62,7 @@ namespace SlimDX
 			}
 
 			Mesh( Device^ device, array<InputElement>^ elements, System::String^ positionElement, int vertexCount, int faceCount, MeshFlags flags );
-			static Mesh^ FromPointer( System::IntPtr pointer );
-			
+
 			Mesh^ Clone( array<InputElement>^ elements, System::String^ positionElement, MeshFlags flags );
 
 			Result GenerateAdjacencyAndPointRepresentation( float epsilon );

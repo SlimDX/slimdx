@@ -48,36 +48,7 @@ namespace Direct3D9
 		shim = NULL;
 		Construct( pointer, NativeInterface );
 	}
-
-	Effect^ Effect::FromPointer( ID3DXEffect* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Effect^ tableEntry = safe_cast<Effect^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Effect( pointer );
-	}
-
-	Effect^ Effect::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Effect^ tableEntry = safe_cast<Effect^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Effect( pointer );
-	}
-
+	
 	Effect^ Effect::FromMemory_Internal( SlimDX::Direct3D9::Device^ device, const void* memory, UINT size,
 		array<Macro>^ preprocessorDefines, Include ^includeFile, String^ skipConstants, ShaderFlags flags,
 		EffectPool^ pool, String^* compilationErrors )

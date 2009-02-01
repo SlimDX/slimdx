@@ -46,35 +46,6 @@ namespace Direct3D11
 		Construct( pointer, NativeInterface );
 	}	
 
-	Asynchronous^ Asynchronous::FromPointer( ID3D11Asynchronous* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Asynchronous^ tableEntry = safe_cast<Asynchronous^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Asynchronous( pointer );
-	}
-
-	Asynchronous^ Asynchronous::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Asynchronous^ tableEntry = safe_cast<Asynchronous^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Asynchronous( pointer );
-	}
-
 	/*
 	bool Asynchronous::IsDataAvailable::get()
 	{

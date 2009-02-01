@@ -58,35 +58,6 @@ namespace Direct3D10
 		Construct( stateBlock );
 	}
 
-	StateBlock^ StateBlock::FromPointer( ID3D10StateBlock* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		StateBlock^ tableEntry = safe_cast<StateBlock^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew StateBlock( pointer );
-	}
-
-	StateBlock^ StateBlock::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		StateBlock^ tableEntry = safe_cast<StateBlock^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew StateBlock( pointer );
-	}
-
 	Device^ StateBlock::Device::get()
 	{
 		ID3D10Device* device = 0;

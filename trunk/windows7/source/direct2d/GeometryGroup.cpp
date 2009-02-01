@@ -48,35 +48,6 @@ namespace Direct2D
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
-	GeometryGroup^ GeometryGroup::FromPointer( ID2D1GeometryGroup* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		GeometryGroup^ tableEntry = safe_cast<GeometryGroup^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew GeometryGroup( pointer );
-	}
-
-	GeometryGroup^ GeometryGroup::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		GeometryGroup^ tableEntry = safe_cast<GeometryGroup^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew GeometryGroup( pointer );
-	}
 
 	GeometryGroup::GeometryGroup( SlimDX::Direct2D::Factory^ factory, SlimDX::Direct2D::FillMode fillMode, array<Geometry^>^ geometries )
 	{

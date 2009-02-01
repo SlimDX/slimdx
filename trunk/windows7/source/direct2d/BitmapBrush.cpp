@@ -47,35 +47,6 @@ namespace Direct2D
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
-	BitmapBrush^ BitmapBrush::FromPointer( ID2D1BitmapBrush* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		BitmapBrush^ tableEntry = safe_cast<BitmapBrush^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew BitmapBrush( pointer );
-	}
-
-	BitmapBrush^ BitmapBrush::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		BitmapBrush^ tableEntry = safe_cast<BitmapBrush^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew BitmapBrush( pointer );
-	}
 
 	BitmapBrush::BitmapBrush( RenderTarget^ renderTarget, SlimDX::Direct2D::Bitmap^ bitmap )
 	{

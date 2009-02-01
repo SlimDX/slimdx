@@ -39,8 +39,7 @@ namespace SlimDX
 			SimplificationMesh( Mesh^ mesh, array<AttributeWeights>^ vertexAttributeWeights );
 			SimplificationMesh( Mesh^ mesh, array<float>^ vertexWeights );
 			SimplificationMesh( Mesh^ mesh );
-			static SimplificationMesh^ FromPointer( System::IntPtr pointer );
-
+			
 			property SlimDX::Direct3D9::Device^ Device
 			{
 				SlimDX::Direct3D9::Device^ get();

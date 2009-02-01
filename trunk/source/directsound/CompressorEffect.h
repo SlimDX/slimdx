@@ -35,14 +35,6 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::CompressorEffect"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSoundFXCompressor pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static CompressorEffect^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// Time before compression reaches its full value.
 			/// </summary>
 			property float Attack

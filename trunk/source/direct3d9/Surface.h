@@ -49,7 +49,6 @@ namespace SlimDX
 
 		public:
 			virtual ~Surface() { }
-			static Surface^ FromPointer( System::IntPtr pointer );
 
 			static Surface^ CreateRenderTarget( SlimDX::Direct3D9::Device^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool lockable );
 			static Surface^ CreateOffscreenPlain( SlimDX::Direct3D9::Device^ device, int width, int height, Format format, Pool pool );

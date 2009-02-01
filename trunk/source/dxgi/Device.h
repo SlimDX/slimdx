@@ -62,15 +62,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="device">The COM object implementing the IDXGIDevice interface.</param>
 			Device( ComObject^ device );
-			
-			/// <summary>
-			/// Constructs a new instance of the <see cref="Device"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDXGIDevice pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static Device^ FromPointer( System::IntPtr pointer );
-			
+
 			/// <summary>
 			/// Gets the residency status of a list of resources.
 			/// </summary>

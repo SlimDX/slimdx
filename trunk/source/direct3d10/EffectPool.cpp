@@ -48,35 +48,6 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 
-	EffectPool^ EffectPool::FromPointer( ID3D10EffectPool* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		EffectPool^ tableEntry = safe_cast<EffectPool^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew EffectPool( pointer );
-	}
-
-	EffectPool^ EffectPool::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		EffectPool^ tableEntry = safe_cast<EffectPool^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew EffectPool( pointer );
-	}
-
 	Effect^ EffectPool::AsEffect()
 	{
 		ID3D10Effect* effect = InternalPointer->AsEffect();

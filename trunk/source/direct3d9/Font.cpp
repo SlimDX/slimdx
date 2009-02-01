@@ -65,35 +65,6 @@ namespace Direct3D9
 			CharacterSet::Default, Precision::Default, FontQuality::Default, PitchAndFamily::Default, font->Name );
 	}
 
-	Font^ Font::FromPointer( ID3DXFont* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Font^ tableEntry = safe_cast<Font^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Font( pointer );
-	}
-
-	Font^ Font::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Font^ tableEntry = safe_cast<Font^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Font( pointer );
-	}
-
 	void Font::Build( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic,
 		CharacterSet charSet, Precision outputPrecision, FontQuality quality,
 		PitchAndFamily pitchAndFamily, String^ faceName )

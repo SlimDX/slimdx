@@ -52,34 +52,5 @@ namespace Direct3D9
 
 		Construct( pointer );
 	}
-
-	EffectPool^ EffectPool::FromPointer( ID3DXEffectPool* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		EffectPool^ tableEntry = safe_cast<EffectPool^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew EffectPool( pointer );
-	}
-
-	EffectPool^ EffectPool::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		EffectPool^ tableEntry = safe_cast<EffectPool^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew EffectPool( pointer );
-	}
 }
 }

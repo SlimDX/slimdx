@@ -52,13 +52,6 @@ namespace SlimDX
 			}
 			
 			/// <summary>
-			/// Constructs an Asynchronous object from a marshalled native pointer.
-			/// </summary>
-			/// <param name="pointer">The native object pointer.</param>
-			/// <returns>The Asynchronous object for the native object.</returns>
-			static Asynchronous^ FromPointer( System::IntPtr pointer );
-			
-			/// <summary>
 			/// Marks the start of a series of asynchronous commands.
 			/// </summary>
 			void Begin();

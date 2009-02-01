@@ -68,36 +68,7 @@ namespace Direct3D9
 
 		Construct(swapChain);
 	}
-
-	SwapChain^ SwapChain::FromPointer( IDirect3DSwapChain9* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		SwapChain^ tableEntry = safe_cast<SwapChain^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew SwapChain( pointer );
-	}
-
-	SwapChain^ SwapChain::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		SwapChain^ tableEntry = safe_cast<SwapChain^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew SwapChain( pointer );
-	}
-
+	
 	Surface^ SwapChain::GetBackBuffer( int index )
 	{
 		IDirect3DSurface9* surface;

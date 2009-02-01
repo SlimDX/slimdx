@@ -46,35 +46,6 @@ namespace Direct2D
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
-	Mesh^ Mesh::FromPointer( ID2D1Mesh* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Mesh^ tableEntry = safe_cast<Mesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Mesh( pointer );
-	}
-
-	Mesh^ Mesh::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Mesh^ tableEntry = safe_cast<Mesh^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Mesh( pointer );
-	}
 
 	Mesh::Mesh( RenderTarget^ renderTarget )
 	{

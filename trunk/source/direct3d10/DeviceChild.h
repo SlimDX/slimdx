@@ -42,13 +42,6 @@ namespace SlimDX
 			
 		public:
 			/// <summary>
-			/// Constructs a DeviceChild object from a marshalled native pointer.
-			/// </summary>
-			/// <param name="pointer">The native object pointer.</param>
-			/// <returns>The DeviceChild object for the native object.</returns>
-			static DeviceChild^ FromPointer( System::IntPtr pointer );
-			
-			/// <summary>
 			/// Gets the device the object is bound to.
 			/// </summary>
 			property SlimDX::Direct3D10::Device^ Device

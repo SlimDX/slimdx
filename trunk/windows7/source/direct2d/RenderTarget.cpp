@@ -55,35 +55,6 @@ namespace Direct2D
 		Construct( pointer, NativeInterface );
 	}
 	
-	RenderTarget^ RenderTarget::FromPointer( ID2D1RenderTarget* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		RenderTarget^ tableEntry = safe_cast<RenderTarget^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew RenderTarget( pointer );
-	}
-
-	RenderTarget^ RenderTarget::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		RenderTarget^ tableEntry = safe_cast<RenderTarget^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew RenderTarget( pointer );
-	}
-
 	RenderTarget^ RenderTarget::FromDXGI( SlimDX::Direct2D::Factory^ factory, SlimDX::DXGI::Surface^ surface, RenderTargetProperties properties )
 	{
 		ID2D1RenderTarget *target;

@@ -50,35 +50,6 @@ namespace Direct2D
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
-	WindowRenderTarget^ WindowRenderTarget::FromPointer( ID2D1HwndRenderTarget* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		WindowRenderTarget^ tableEntry = safe_cast<WindowRenderTarget^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew WindowRenderTarget( pointer );
-	}
-
-	WindowRenderTarget^ WindowRenderTarget::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		WindowRenderTarget^ tableEntry = safe_cast<WindowRenderTarget^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew WindowRenderTarget( pointer );
-	}
 
 	WindowRenderTarget::WindowRenderTarget( SlimDX::Direct2D::Factory^ factory, WindowRenderTargetProperties windowRenderTargetProperties )
 	{

@@ -43,34 +43,5 @@ namespace DirectWrite
 	{
 		Construct( pointer, NativeInterface );
 	}
-
-	FontCollection^ FontCollection::FromPointer( IDWriteFontCollection* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		FontCollection^ tableEntry = safe_cast<FontCollection^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew FontCollection( pointer );
-	}
-
-	FontCollection^ FontCollection::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		FontCollection^ tableEntry = safe_cast<FontCollection^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew FontCollection( pointer );
-	}
 }
 }

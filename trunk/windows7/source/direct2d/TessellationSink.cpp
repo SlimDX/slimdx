@@ -46,35 +46,6 @@ namespace Direct2D
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
-	TessellationSink^ TessellationSink::FromPointer( ID2D1TessellationSink* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		TessellationSink^ tableEntry = safe_cast<TessellationSink^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew TessellationSink( pointer );
-	}
-
-	TessellationSink^ TessellationSink::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		TessellationSink^ tableEntry = safe_cast<TessellationSink^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew TessellationSink( pointer );
-	}
 
 	Result TessellationSink::Close()
 	{

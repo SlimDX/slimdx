@@ -35,14 +35,6 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::FlangerEffect"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSoundFXFlanger pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static FlangerEffect^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// Number of milliseconds the input is delayed before it is played back. The default value is 2 ms.
 			/// </summary>
 			property float Delay

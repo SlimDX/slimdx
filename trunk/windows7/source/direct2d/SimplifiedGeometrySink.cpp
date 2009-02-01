@@ -47,35 +47,6 @@ namespace Direct2D
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
-	SimplifiedGeometrySink^ SimplifiedGeometrySink::FromPointer( ID2D1SimplifiedGeometrySink* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		SimplifiedGeometrySink^ tableEntry = safe_cast<SimplifiedGeometrySink^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew SimplifiedGeometrySink( pointer );
-	}
-
-	SimplifiedGeometrySink^ SimplifiedGeometrySink::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		SimplifiedGeometrySink^ tableEntry = safe_cast<SimplifiedGeometrySink^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew SimplifiedGeometrySink( pointer );
-	}
 
 	void SimplifiedGeometrySink::BeginFigure( System::Drawing::Point startPoint, FigureBegin style )
 	{

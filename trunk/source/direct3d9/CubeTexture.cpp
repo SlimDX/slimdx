@@ -70,35 +70,6 @@ namespace Direct3D9
 			this->IsDefaultPool = true;
 	}
 
-	CubeTexture^ CubeTexture::FromPointer( IDirect3DCubeTexture9* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		CubeTexture^ tableEntry = safe_cast<CubeTexture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew CubeTexture( pointer );
-	}
-
-	CubeTexture^ CubeTexture::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		CubeTexture^ tableEntry = safe_cast<CubeTexture^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew CubeTexture( pointer );
-	}
-
 	CubeTextureRequirements CubeTexture::CheckRequirements(SlimDX::Direct3D9::Device^ device, int size,
 		int numMipLevels, Usage usage, Format format, Pool pool)
 	{

@@ -45,35 +45,6 @@ namespace DirectSound
 		Construct( pointer, NativeInterface );
 	}
 
-	AcousticEchoCancel^ AcousticEchoCancel::FromPointer( IDirectSoundCaptureFXAec* pointer )
-	{
-		if( pointer == NULL )
-			return nullptr;
-
-		AcousticEchoCancel^ tableEntry = safe_cast<AcousticEchoCancel^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew AcousticEchoCancel( pointer );
-	}
-
-	AcousticEchoCancel^ AcousticEchoCancel::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		AcousticEchoCancel^ tableEntry = safe_cast<AcousticEchoCancel^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew AcousticEchoCancel( pointer );
-	}
-
 	Result AcousticEchoCancel::Reset()
 	{
 		HRESULT hr = InternalPointer->Reset();

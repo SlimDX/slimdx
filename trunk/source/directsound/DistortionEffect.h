@@ -35,14 +35,6 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::DistortionEffect"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSoundFXDistortion pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static DistortionEffect^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// Amount of signal change after distortion. The default value is -18 dB.
 			/// </summary>
 			property float Gain

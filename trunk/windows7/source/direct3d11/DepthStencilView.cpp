@@ -45,35 +45,6 @@ namespace Direct3D11
 		Construct( pointer, NativeInterface );
 	}
 	
-	DepthStencilView^ DepthStencilView::FromPointer( ID3D11DepthStencilView* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		DepthStencilView^ tableEntry = safe_cast<DepthStencilView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew DepthStencilView( pointer );
-	}
-
-	DepthStencilView^ DepthStencilView::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		DepthStencilView^ tableEntry = safe_cast<DepthStencilView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew DepthStencilView( pointer );
-	}
-
 	DepthStencilView::DepthStencilView( SlimDX::Direct3D11::Device^ device, Resource^ resource )
 	{
 		if( device == nullptr )

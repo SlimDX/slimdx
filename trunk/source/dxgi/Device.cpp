@@ -55,35 +55,6 @@ namespace DXGI
 		Construct( pointer, NativeInterface );
 	}
 
-	Device^ Device::FromPointer( IDXGIDevice* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Device( pointer );
-	}
-
-	Device^ Device::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Device( pointer );
-	}
-
 	int Device::GpuThreadPriority::get()
 	{
 		int result = 0;

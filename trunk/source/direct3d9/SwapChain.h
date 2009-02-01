@@ -38,7 +38,6 @@ namespace SlimDX
 
 		public:
 			SwapChain( SlimDX::Direct3D9::Device^ device, PresentParameters^ presentParameters );
-			static SwapChain^ FromPointer( System::IntPtr pointer );
 
 			property SlimDX::Direct3D9::Device^ Device
 			{

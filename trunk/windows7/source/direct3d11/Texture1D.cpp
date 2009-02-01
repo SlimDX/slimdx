@@ -95,32 +95,6 @@ namespace Direct3D11
 
 		return gcnew Texture1D( pointer );
 	}
-
-	Texture1D^ Texture1D::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Texture1D^ tableEntry = safe_cast<Texture1D^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Texture1D( pointer );
-	}
-	
-	ID3D11Texture1D* Texture1D::Build( SlimDX::Direct3D11::Device^ device, Texture1DDescription description, D3D11_SUBRESOURCE_DATA* data )
-	{
-		ID3D11Texture1D* texture = 0;
-		D3D11_TEXTURE1D_DESC nativeDescription = description.CreateNativeVersion();
-		
-		if( RECORD_D3D11( device->InternalPointer->CreateTexture1D( &nativeDescription, data, &texture ) ).IsFailure )
-			throw gcnew Direct3D11Exception( Result::Last );
-		
-		return texture;
-	} 
-		
 	
 	Texture1DDescription Texture1D::Description::get()
 	{

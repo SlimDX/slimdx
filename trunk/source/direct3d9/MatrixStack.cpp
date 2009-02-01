@@ -57,35 +57,6 @@ namespace Direct3D9
 		Construct(matrixStack);
 	}
 
-	MatrixStack^ MatrixStack::FromPointer( ID3DXMatrixStack* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		MatrixStack^ tableEntry = safe_cast<MatrixStack^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew MatrixStack( pointer );
-	}
-
-	MatrixStack^ MatrixStack::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		MatrixStack^ tableEntry = safe_cast<MatrixStack^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew MatrixStack( pointer );
-	}
-
 	Result MatrixStack::Push()
 	{
 		HRESULT hr = InternalPointer->Push();

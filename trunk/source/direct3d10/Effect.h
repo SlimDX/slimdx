@@ -71,8 +71,6 @@ namespace SlimDX
 			{
 				SlimDX::Direct3D10::Device^ get();
 			}
-
-			static Effect^ FromPointer( System::IntPtr pointer );
 			
 			EffectConstantBuffer^ GetConstantBufferByIndex( int index );
 			EffectConstantBuffer^ GetConstantBufferByName( System::String^ name );

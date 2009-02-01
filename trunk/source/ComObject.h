@@ -41,11 +41,23 @@ using System::Diagnostics::StackTrace;
 	private:
 
 #define COMOBJECT(nativeType, managedType) \
-	private: \
+	public protected: \
+	managedType( nativeType* pointer ); \
+	managedType( System::IntPtr pointer ); \
+	internal: \
+	static managedType^ FromPointer( nativeType* pointer ) { return ConstructFromPointer<managedType,nativeType>( pointer ); } \
+	public: \
+	static managedType^ FromPointer( System::IntPtr pointer ) { return ConstructFromUserPointer<managedType>( pointer ); } \
+	COMOBJECT_BASE(nativeType)
+
+#define COMOBJECT_CUSTOM_FROMPOINTER(nativeType, managedType) \
+	public protected: \
 	managedType( nativeType* pointer ); \
 	managedType( System::IntPtr pointer ); \
 	internal: \
 	static managedType^ FromPointer( nativeType* pointer ); \
+	public: \
+	static managedType^ FromPointer( System::IntPtr pointer ); \
 	COMOBJECT_BASE(nativeType)
 
 namespace SlimDX
@@ -67,7 +79,47 @@ namespace SlimDX
 		void Construct( IUnknown* pointer );
 		void Construct( System::IntPtr pointer, System::Guid guid );
 		void Destruct();
-	
+		
+		template< typename M, typename N >
+		static M^ ConstructFromPointer( N* pointer ) 
+		{
+			// Since this method is called internally by SlimDX to essentially translate the results of native
+			// API calls to their managed counterparts via the object table, we expect that a null pointer
+			// might be passed, and that's okay. This is in constrast to ConstructFromUserPointer.
+			if( pointer == 0 )
+				return nullptr;
+
+			M^ tableEntry = safe_cast<M^>( SlimDX::ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+			if( tableEntry != nullptr )
+			{
+				// In the case where we found the object in our table already, we want to release the reference
+				// we were passed since we already had one, and we want to maintain a single COM reference count
+				// to all COM objects.
+				pointer->Release();
+				return tableEntry;
+			}
+
+			return gcnew M( pointer );	
+		}
+		
+		template< typename M >
+		static M^ ConstructFromUserPointer( System::IntPtr pointer ) 
+		{
+			// This method gets called as a result of the user invoking the IntPtr overload of FromPointer
+			// to create a SlimDX object from an externally-tracked native object. In this scenario, a
+			// null pointer is a failure, so we throw.
+			if( pointer == System::IntPtr::Zero )
+				throw gcnew System::ArgumentNullException( "pointer" );
+
+			M^ tableEntry = safe_cast<M^>( SlimDX::ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+			if( tableEntry != nullptr )
+			{
+				return tableEntry;
+			}
+
+			return gcnew M( pointer );
+		}
+		
 	internal:
 		property IUnknown* UnknownPointer
 		{
@@ -100,8 +152,7 @@ namespace SlimDX
 		}
 		
 		/// <summary>
-		/// Gets a <see cref="StackTrace"/> to the location
-		/// that the object was created.
+		/// Gets a <see cref="StackTrace"/> to the location where the object was created.
 		/// </summary>
 		property System::Diagnostics::StackTrace^ CreationSource
 		{
@@ -109,7 +160,7 @@ namespace SlimDX
 		}
 		
 		/// <summary>
-		/// Gets the timestamp, in millseconds, that this object was created.
+		/// Gets the timestamp, in milliseconds, of the object'ss creation.
 		/// </summary>
 		property int CreationTime
 		{

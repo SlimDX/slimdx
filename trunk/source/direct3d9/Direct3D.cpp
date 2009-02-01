@@ -93,35 +93,6 @@ namespace Direct3D9
 		Construct( direct3D );
 	}
 
-	Direct3D^ Direct3D::FromPointer( IDirect3D9* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Direct3D^ tableEntry = safe_cast<Direct3D^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Direct3D( pointer );
-	}
-
-	Direct3D^ Direct3D::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Direct3D^ tableEntry = safe_cast<Direct3D^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Direct3D( pointer );
-	}
-
 	bool Direct3D::CheckDeviceFormatConversion(int adapter, DeviceType deviceType, Format sourceFormat, Format targetFormat, [Out] Result% result)
 	{
 		HRESULT hr;		// Error code.

@@ -43,7 +43,6 @@ namespace SlimDX
 			
 			ShaderResourceView( SlimDX::Direct3D10::Device^ device, Resource^ resource );
 			ShaderResourceView( SlimDX::Direct3D10::Device^ device, Resource^ resource, ShaderResourceViewDescription description );
-			static ShaderResourceView^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };

@@ -70,15 +70,7 @@ namespace SlimDX
 			{
 				DXGI::GammaControlCapabilities get();
 			}
-			
-			/// <summary>
-			/// Constructs a new instance of the <see cref="Output"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDXGIOutput pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static Output^ FromPointer( System::IntPtr pointer );
-			
+
 			/// <summary>
 			/// Gets a list of display modes matching certain specifications.
 			/// </summary>

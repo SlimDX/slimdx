@@ -72,36 +72,7 @@ namespace DirectSound
 
 		Construct( dsCapture );
 	}
-
-	CaptureBuffer^ CaptureBuffer::FromPointer( IDirectSoundCaptureBuffer8* pointer )
-	{
-		if( pointer == NULL )
-			return nullptr;
-
-		CaptureBuffer^ tableEntry = safe_cast<CaptureBuffer^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew CaptureBuffer( pointer );
-	}
-
-	CaptureBuffer^ CaptureBuffer::FromPointer( System::IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		CaptureBuffer^ tableEntry = safe_cast<CaptureBuffer^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew CaptureBuffer( pointer );
-	}
-
+	
 	Result CaptureBuffer::Start( bool looping )
 	{
 		HRESULT hr = InternalPointer->Start( looping ? DSCBSTART_LOOPING : 0 );

@@ -39,34 +39,5 @@ namespace Direct3D10
 	{
 		Construct( pointer, NativeInterface );
 	}
-
-	VertexShader^ VertexShader::FromPointer( ID3D10VertexShader* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew VertexShader( pointer );
-	}
-
-	VertexShader^ VertexShader::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		VertexShader^ tableEntry = safe_cast<VertexShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew VertexShader( pointer );
-	}
 }
 }

@@ -41,14 +41,6 @@ namespace SlimDX
 			TextureShader( DataStream^ stream );
 
 			/// <summary>
-			/// Constructs a new instance of the <see cref="TextureShader"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged ID3DXTextureShader pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static TextureShader^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// Gets a constant by looking up its index.
 			/// </summary>
 			/// <param name="parent">The parent handle.</param>

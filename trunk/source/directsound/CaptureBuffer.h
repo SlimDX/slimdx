@@ -50,15 +50,7 @@ namespace SlimDX
 			/// <param name="capture"></param>
 			/// <param name="description"></param>
 			CaptureBuffer( DirectSoundCapture^ capture, CaptureBufferDescription description );
-
-			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::CaptureBuffer"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSoundCaptureBuffer8 pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static CaptureBuffer^ FromPointer( System::IntPtr pointer );
-
+			
 			generic<typename T> where T : ComObject
 				T GetEffect( int index );
 

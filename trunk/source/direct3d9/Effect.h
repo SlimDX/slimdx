@@ -59,14 +59,6 @@ namespace SlimDX
 			virtual ~Effect() { if( shim != NULL ) delete shim; shim = NULL; }
 
 			/// <summary>
-			/// Constructs a new instance of the <see cref="Effect"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged ID3DXEffect pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static Effect^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// Creates an effect from a block of memory.
 			/// </summary>
 			/// <param name="device">The device used to create the effect.</param>

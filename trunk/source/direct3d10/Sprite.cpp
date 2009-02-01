@@ -54,35 +54,6 @@ namespace Direct3D10
 		Construct( sprite );
 	}
 
-	Sprite^ Sprite::FromPointer( ID3DX10Sprite* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Sprite^ tableEntry = safe_cast<Sprite^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Sprite( pointer );
-	}
-
-	Sprite^ Sprite::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Sprite^ tableEntry = safe_cast<Sprite^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Sprite( pointer );
-	}
-
 	Matrix Sprite::ViewTransform::get()
 	{
 		D3DXMATRIX matrix;

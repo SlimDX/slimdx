@@ -43,34 +43,5 @@ namespace Direct3D10
 	{
 		Construct( pointer, NativeInterface );
 	}
-
-	ResourceView^ ResourceView::FromPointer( ID3D10View* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		ResourceView^ tableEntry = safe_cast<ResourceView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew ResourceView( pointer );
-	}
-
-	ResourceView^ ResourceView::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		ResourceView^ tableEntry = safe_cast<ResourceView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew ResourceView( pointer );
-	}
 }
 }

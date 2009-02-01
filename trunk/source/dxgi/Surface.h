@@ -51,15 +51,7 @@ namespace SlimDX
 			{
 				SurfaceDescription get();
 			}
-			
-			/// <summary>
-			/// Constructs a new instance of the <see cref="Surface"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDXGISurface pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static Surface^ FromPointer( System::IntPtr pointer );
-			
+
 			/// <summary>
 			/// Acquires access to the surface data.
 			/// </summary>

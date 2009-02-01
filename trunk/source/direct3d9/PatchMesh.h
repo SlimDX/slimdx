@@ -40,7 +40,6 @@ namespace SlimDX
 		public:
 			PatchMesh( SlimDX::Direct3D9::Device^ device, PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration );
 			PatchMesh( Mesh^ mesh );
-			static PatchMesh^ FromPointer( System::IntPtr pointer );
 
 			static PatchMesh^ FromXFile( SlimDX::Direct3D9::Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials, [Out] array<EffectInstance>^% effectInstances );
 			static PatchMesh^ FromXFile( SlimDX::Direct3D9::Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials );

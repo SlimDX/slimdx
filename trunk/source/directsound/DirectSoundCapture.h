@@ -51,14 +51,6 @@ namespace SlimDX
 			DirectSoundCapture( System::Guid device );
 
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SlimDX::DirectSound::DirectSoundCapture"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirectSoundCapture pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static DirectSoundCapture^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// Retrieves the capabilities of the capture device.
 			/// </summary>
 			property CaptureCapabilities Capabilities

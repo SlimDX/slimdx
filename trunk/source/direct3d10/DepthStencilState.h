@@ -59,13 +59,6 @@ namespace SlimDX
 			/// <param name="description">The state description.</param>
 			/// <returns>The DepthStencilState object.</returns>
 			static DepthStencilState^ FromDescription( SlimDX::Direct3D10::Device^ device, DepthStencilStateDescription description );
-			
-			/// <summary>
-			/// Constructs a DepthStencilState object from a marshaled native pointer.
-			/// </summary>
-			/// <param name="pointer">The native object pointer.</param>
-			/// <returns>The DepthStencilState object for the native object.</returns>
-			static DepthStencilState^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };

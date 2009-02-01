@@ -41,12 +41,6 @@ namespace SlimDX
 			/// <unmanaged>D3DXCreateSprite</unmanaged>
 			Sprite( Device^ device );
 
-			/// <summary>Creates a new instance of a sprite object from a user pointer.</summary>
-			/// <param name="pointer">The native user pointer to use for the sprite object. This should
-			/// be a pointer to an ID3DXSprite.</param>
-			/// <returns>The newly created sprite object.</returns>
-			static Sprite^ FromPointer( System::IntPtr pointer );
-
 			Result Begin( SpriteFlags flags );
 			Result End();
 			Result Flush();

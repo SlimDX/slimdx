@@ -44,35 +44,6 @@ namespace Direct3D10
 	{
 		Construct( pointer, NativeInterface );
 	}
-
-	MeshBuffer^ MeshBuffer::FromPointer( ID3DX10MeshBuffer* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		MeshBuffer^ tableEntry = safe_cast<MeshBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew MeshBuffer( pointer );
-	}
-
-	MeshBuffer^ MeshBuffer::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		MeshBuffer^ tableEntry = safe_cast<MeshBuffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew MeshBuffer( pointer );
-	}
 	
 	int MeshBuffer::SizeInBytes::get() 
 	{

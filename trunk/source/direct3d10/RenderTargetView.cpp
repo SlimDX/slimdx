@@ -45,35 +45,6 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}
 	
-	RenderTargetView^ RenderTargetView::FromPointer( ID3D10RenderTargetView* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		RenderTargetView^ tableEntry = safe_cast<RenderTargetView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew RenderTargetView( pointer );
-	}
-
-	RenderTargetView^ RenderTargetView::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		RenderTargetView^ tableEntry = safe_cast<RenderTargetView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew RenderTargetView( pointer );
-	}
-
 	RenderTargetView::RenderTargetView( SlimDX::Direct3D10::Device^ device, Resource^ resource )
 	{
 		if( device == nullptr )

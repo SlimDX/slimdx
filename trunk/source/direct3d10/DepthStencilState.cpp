@@ -57,35 +57,6 @@ namespace Direct3D10
 		return FromPointer( state );
 	}
 
-	DepthStencilState^ DepthStencilState::FromPointer( ID3D10DepthStencilState* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		DepthStencilState^ tableEntry = safe_cast<DepthStencilState^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew DepthStencilState( pointer );
-	}
-
-	DepthStencilState^ DepthStencilState::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		DepthStencilState^ tableEntry = safe_cast<DepthStencilState^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew DepthStencilState( pointer );
-	}
-
 	DepthStencilStateDescription DepthStencilState::Description::get()
 	{
 		D3D10_DEPTH_STENCIL_DESC description;

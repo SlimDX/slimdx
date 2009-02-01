@@ -45,35 +45,6 @@ namespace Direct3D11
 		Construct( pointer, NativeInterface );
 	}
 
-	PixelShader^ PixelShader::FromPointer( ID3D11PixelShader* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew PixelShader( pointer );
-	}
-
-	PixelShader^ PixelShader::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		PixelShader^ tableEntry = safe_cast<PixelShader^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew PixelShader( pointer );
-	}
-
 	PixelShader^ PixelShader::CompileFromFile( SlimDX::Direct3D11::Device^ device, System::String^ fileName, System::String^ entryPoint, System::String^ profile, [Out] System::String^ %compilationErrors )
 	{
 		pin_ptr<const wchar_t> pinnedFileName = PtrToStringChars( fileName );

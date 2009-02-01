@@ -47,35 +47,6 @@ namespace Direct2D
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
-	SolidColorBrush^ SolidColorBrush::FromPointer( ID2D1SolidColorBrush* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		SolidColorBrush^ tableEntry = safe_cast<SolidColorBrush^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew SolidColorBrush( pointer );
-	}
-
-	SolidColorBrush^ SolidColorBrush::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		SolidColorBrush^ tableEntry = safe_cast<SolidColorBrush^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew SolidColorBrush( pointer );
-	}
 
 	SolidColorBrush::SolidColorBrush( RenderTarget^ renderTarget, Color4 color )
 	{

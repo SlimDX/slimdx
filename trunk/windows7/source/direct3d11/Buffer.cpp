@@ -65,35 +65,6 @@ namespace Direct3D11
 		Construct( Build( device, data, sizeInBytes, usage, bindFlags, accessFlags, optionFlags ) );
 	}
 
-	Buffer^ Buffer::FromPointer( ID3D11Buffer* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Buffer^ tableEntry = safe_cast<Buffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Buffer( pointer );
-	}
-
-	Buffer^ Buffer::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Buffer^ tableEntry = safe_cast<Buffer^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Buffer( pointer );
-	}
-
 	ID3D11Buffer* Buffer::Build( SlimDX::Direct3D11::Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D11::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
 	{
 		D3D11_BUFFER_DESC description;

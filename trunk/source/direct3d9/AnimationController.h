@@ -43,7 +43,6 @@ namespace SlimDX
 
 		public:
 			AnimationController( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents );
-			static AnimationController^ FromPointer( System::IntPtr pointer );
 
 			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			Result AdvanceTime( double time, AnimationCallback^ handler );

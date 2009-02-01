@@ -47,35 +47,6 @@ namespace Direct2D
 		Construct( pointer, NativeInterface );
 	}
 	
-	GradientStopCollection^ GradientStopCollection::FromPointer( ID2D1GradientStopCollection* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		GradientStopCollection^ tableEntry = safe_cast<GradientStopCollection^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew GradientStopCollection( pointer );
-	}
-
-	GradientStopCollection^ GradientStopCollection::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		GradientStopCollection^ tableEntry = safe_cast<GradientStopCollection^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew GradientStopCollection( pointer );
-	}
-
 	GradientStopCollection::GradientStopCollection( RenderTarget^ renderTarget, array<GradientStop>^ stops )
 	{
 		ID2D1GradientStopCollection *collection = NULL;

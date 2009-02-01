@@ -56,35 +56,6 @@ namespace Direct3D11
 		Construct( reinterpret_cast<ID3D11Debug*>( result ) );
 	}
 	
-	Debug^ Debug::FromPointer( ID3D11Debug* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Debug^ tableEntry = safe_cast<Debug^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Debug( pointer );
-	}
-
-	Debug^ Debug::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Debug^ tableEntry = safe_cast<Debug^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Debug( pointer );
-	}
-	
 	DebugFeatureFlags Debug::FeatureFlags::get()
 	{
 		UINT flags = InternalPointer->GetFeatureMask();

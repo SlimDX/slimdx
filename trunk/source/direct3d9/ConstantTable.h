@@ -46,8 +46,6 @@ namespace SlimDX
 			COMOBJECT(ID3DXConstantTable, ConstantTable);
 
 		public:
-			static ConstantTable^ FromPointer( System::IntPtr pointer );
-
 			EffectHandle^ GetConstant( EffectHandle^ handle, int index );
 			EffectHandle^ GetConstant( EffectHandle^ handle, System::String^ name );
 			EffectHandle^ GetConstantElement( EffectHandle^ handle, int index );

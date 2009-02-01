@@ -49,35 +49,6 @@ namespace XAudio2
 		Construct( pointer, NativeInterface );
 	}
 
-	XAudio2^ XAudio2::FromPointer( IXAudio2* pointer )
-	{
-		if( pointer == NULL )
-			return nullptr;
-
-		XAudio2^ tableEntry = safe_cast<XAudio2^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew XAudio2( pointer );
-	}
-
-	XAudio2^ XAudio2::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		XAudio2^ tableEntry = safe_cast<XAudio2^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew XAudio2( pointer );
-	}
-
 	XAudio2::XAudio2()
 	{
 		CoInitializeEx( NULL, COINIT_APARTMENTTHREADED );

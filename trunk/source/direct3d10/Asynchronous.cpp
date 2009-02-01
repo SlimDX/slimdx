@@ -46,35 +46,6 @@ namespace Direct3D10
 		Construct( pointer, NativeInterface );
 	}	
 
-	Asynchronous^ Asynchronous::FromPointer( ID3D10Asynchronous* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Asynchronous^ tableEntry = safe_cast<Asynchronous^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Asynchronous( pointer );
-	}
-
-	Asynchronous^ Asynchronous::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Asynchronous^ tableEntry = safe_cast<Asynchronous^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Asynchronous( pointer );
-	}
-
 	bool Asynchronous::IsDataAvailable::get()
 	{
 		return InternalPointer->GetData( 0, 0, 0 ) == S_OK;

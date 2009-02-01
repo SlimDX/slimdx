@@ -46,7 +46,6 @@ namespace SlimDX
 
 		public:
 			virtual ~Volume() { }
-			static Volume^ FromPointer( System::IntPtr pointer );
 
 			static Result FromFileInMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation );
 			static Result FromFileInMemory( Volume^ volume, array<System::Byte>^ memory, Filter filter, int colorKey, Box sourceBox, Box destinationBox, [Out] ImageInformation% imageInformation );

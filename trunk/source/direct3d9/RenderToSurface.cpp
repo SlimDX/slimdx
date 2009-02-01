@@ -67,35 +67,6 @@ namespace Direct3D9
 		Construct(rtsPointer);
 	}
 
-	RenderToSurface^ RenderToSurface::FromPointer( ID3DXRenderToSurface* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		RenderToSurface^ tableEntry = safe_cast<RenderToSurface^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew RenderToSurface( pointer );
-	}
-
-	RenderToSurface^ RenderToSurface::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		RenderToSurface^ tableEntry = safe_cast<RenderToSurface^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew RenderToSurface( pointer );
-	}
-
 	Result RenderToSurface::BeginScene( Surface^ renderSurface, SlimDX::Viewport viewport )
 	{
 		IDirect3DSurface9* surface = renderSurface->InternalPointer;

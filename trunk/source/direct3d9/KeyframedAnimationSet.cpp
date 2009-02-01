@@ -53,35 +53,6 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
-	KeyframedAnimationSet^ KeyframedAnimationSet::FromPointer( ID3DXKeyframedAnimationSet* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		KeyframedAnimationSet^ tableEntry = safe_cast<KeyframedAnimationSet^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew KeyframedAnimationSet( pointer );
-	}
-
-	KeyframedAnimationSet^ KeyframedAnimationSet::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		KeyframedAnimationSet^ tableEntry = safe_cast<KeyframedAnimationSet^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew KeyframedAnimationSet( pointer );
-	}
-
 	KeyframedAnimationSet::KeyframedAnimationSet( String^ name, double ticksPerSecond, SlimDX::Direct3D9::PlaybackType playbackType,
 		int animationCount, array<CallbackKey>^ callbackKeys )
 	{

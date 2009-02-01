@@ -39,7 +39,6 @@ namespace SlimDX
 
 		public:
 			VertexDeclaration( Device^ device, array<VertexElement>^ elements );
-			static VertexDeclaration^ FromPointer( System::IntPtr pointer );
 
 			property array<VertexElement>^ Elements
 			{

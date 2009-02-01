@@ -45,35 +45,6 @@ namespace DirectWrite
 		Construct( pointer, NativeInterface );
 	}
 
-	Typography^ Typography::FromPointer( IDWriteTypography* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Typography^ tableEntry = safe_cast<Typography^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Typography( pointer );
-	}
-
-	Typography^ Typography::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Typography^ tableEntry = safe_cast<Typography^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Typography( pointer );
-	}
-
 	Typography::Typography( Factory^ factory )
 	{
 		IDWriteTypography *typo = NULL;

@@ -101,35 +101,6 @@ namespace Direct3D9
 		Construct(device);
 	}
 
-	Device^ Device::FromPointer( IDirect3DDevice9* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Device( pointer );
-	}
-
-	Device^ Device::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew Device( pointer );
-	}
-
 	void Device::VertexFormat::set( SlimDX::Direct3D9::VertexFormat value )
 	{
 		HRESULT hr = InternalPointer->SetFVF( static_cast<DWORD>( value ) );

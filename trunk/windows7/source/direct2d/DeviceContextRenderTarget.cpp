@@ -49,35 +49,6 @@ namespace Direct2D
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
-	DeviceContextRenderTarget^ DeviceContextRenderTarget::FromPointer( ID2D1DCRenderTarget* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		DeviceContextRenderTarget^ tableEntry = safe_cast<DeviceContextRenderTarget^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew DeviceContextRenderTarget( pointer );
-	}
-
-	DeviceContextRenderTarget^ DeviceContextRenderTarget::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		DeviceContextRenderTarget^ tableEntry = safe_cast<DeviceContextRenderTarget^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew DeviceContextRenderTarget( pointer );
-	}
 
 	DeviceContextRenderTarget::DeviceContextRenderTarget( SlimDX::Direct2D::Factory^ factory, RenderTargetProperties renderTargetProperties )
 	{

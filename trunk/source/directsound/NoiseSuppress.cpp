@@ -50,36 +50,7 @@ namespace DirectSound
 		HRESULT hr = InternalPointer->Reset();
 		return RECORD_DSOUND( hr );
 	}
-
-	NoiseSuppress^ NoiseSuppress::FromPointer( IDirectSoundCaptureFXNoiseSuppress* pointer )
-	{
-		if( pointer == NULL )
-			return nullptr;
-
-		NoiseSuppress^ tableEntry = safe_cast<NoiseSuppress^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew NoiseSuppress( pointer );
-	}
-
-	NoiseSuppress^ NoiseSuppress::FromPointer( System::IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		NoiseSuppress^ tableEntry = safe_cast<NoiseSuppress^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew NoiseSuppress( pointer );
-	}
-
+	
 	bool NoiseSuppress::Enabled::get()
 	{
 		DSCFXNoiseSuppress result;

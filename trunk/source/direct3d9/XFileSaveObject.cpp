@@ -46,35 +46,6 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 
-	XFileSaveObject^ XFileSaveObject::FromPointer( ID3DXFileSaveObject* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		XFileSaveObject^ tableEntry = safe_cast<XFileSaveObject^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew XFileSaveObject( pointer );
-	}
-
-	XFileSaveObject^ XFileSaveObject::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		XFileSaveObject^ tableEntry = safe_cast<XFileSaveObject^>( ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew XFileSaveObject( pointer );
-	}
-
 	XFileSaveData^ XFileSaveObject::AddDataObject_Internal( Guid dataTemplate, String^ name, Guid id, const void* data, SIZE_T size )
 	{
 		ID3DXFileSaveData *result;

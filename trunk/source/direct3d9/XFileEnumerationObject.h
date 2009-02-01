@@ -36,8 +36,6 @@ namespace SlimDX
 			COMOBJECT(ID3DXFileEnumObject, XFileEnumerationObject);
 
 		public:
-			static XFileEnumerationObject^ FromPointer( System::IntPtr pointer );
-
 			XFileData^ GetChild( int id );
 			XFileData^ GetDataObject( System::Guid id );
 			XFileData^ GetDataObject( System::String^ name );

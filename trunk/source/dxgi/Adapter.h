@@ -48,15 +48,7 @@ namespace SlimDX
 			{
 				AdapterDescription get();
 			}
-			
-			/// <summary>
-			/// Constructs a new instance of the <see cref="Adapter"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDXGIAdapter pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static Adapter^ FromPointer( System::IntPtr pointer );
-			
+
 			/// <summary>
 			/// Gets the number of outputs on the adapter.
 			/// </summary>

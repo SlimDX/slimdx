@@ -47,35 +47,6 @@ namespace Direct2D
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
-	EllipseGeometry^ EllipseGeometry::FromPointer( ID2D1EllipseGeometry* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		EllipseGeometry^ tableEntry = safe_cast<EllipseGeometry^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew EllipseGeometry( pointer );
-	}
-
-	EllipseGeometry^ EllipseGeometry::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		EllipseGeometry^ tableEntry = safe_cast<EllipseGeometry^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew EllipseGeometry( pointer );
-	}
 
 	EllipseGeometry::EllipseGeometry( SlimDX::Direct2D::Factory^ factory, SlimDX::Direct2D::Ellipse ellipse )
 	{

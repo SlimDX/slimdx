@@ -47,14 +47,6 @@ namespace SlimDX
 			Factory();
 			
 			/// <summary>
-			/// Constructs a new instance of the <see cref="Factory"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDXGIFactory pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static Factory^ FromPointer( System::IntPtr pointer );
-			
-			/// <summary>
 			/// Gets the number of available adapters.
 			/// </summary>
 			/// <returns>The number of available adapters.</returns>

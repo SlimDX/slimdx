@@ -49,35 +49,6 @@ namespace Direct2D
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
-	GdiInteropRenderTarget^ GdiInteropRenderTarget::FromPointer( ID2D1GdiInteropRenderTarget* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		GdiInteropRenderTarget^ tableEntry = safe_cast<GdiInteropRenderTarget^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew GdiInteropRenderTarget( pointer );
-	}
-
-	GdiInteropRenderTarget^ GdiInteropRenderTarget::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		GdiInteropRenderTarget^ tableEntry = safe_cast<GdiInteropRenderTarget^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew GdiInteropRenderTarget( pointer );
-	}
 
 	GdiInteropRenderTarget::GdiInteropRenderTarget( RenderTarget^ renderTarget )
 	{

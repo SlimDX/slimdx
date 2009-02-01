@@ -42,7 +42,6 @@ namespace SlimDX
 		public:
 			RenderToSurface( Device^ device, int width, int height, Format format );
 			RenderToSurface( Device^ device, int width, int height, Format format, Format depthStencilFormat );
-			static RenderToSurface^ FromPointer( System::IntPtr pointer );
 
 			Result BeginScene( Surface^ renderSurface, SlimDX::Viewport viewport );
 			Result EndScene( Filter mipFilter );

@@ -66,15 +66,7 @@ namespace SlimDX
 			/// Releases all resources used by the <see cref="CubeTexture"/>.
 			/// </summary>
 			virtual ~CubeTexture() { }
-
-			/// <summary>
-			/// Constructs a new instance of the <see cref="CubeTexture"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDirect3DCubeTexture9 pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static CubeTexture^ FromPointer( System::IntPtr pointer );
-
+			
 			/// <summary>
 			/// Checks texture-creation parameters.
 			/// </summary>

@@ -36,7 +36,6 @@ namespace SlimDX
 
 		public:
 			MatrixStack();
-			static MatrixStack^ FromPointer( System::IntPtr pointer );
 
 			Result Push();
 			Result Pop();

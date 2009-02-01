@@ -75,35 +75,6 @@ namespace Direct3D10
 		Construct( view );
 	}
 
-	ShaderResourceView^ ShaderResourceView::FromPointer( ID3D10ShaderResourceView* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		ShaderResourceView^ tableEntry = safe_cast<ShaderResourceView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew ShaderResourceView( pointer );
-	}
-
-	ShaderResourceView^ ShaderResourceView::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		ShaderResourceView^ tableEntry = safe_cast<ShaderResourceView^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew ShaderResourceView( pointer );
-	}
-
 	ShaderResourceViewDescription ShaderResourceView::Description::get()
 	{
 		D3D10_SHADER_RESOURCE_VIEW_DESC nativeDescription;

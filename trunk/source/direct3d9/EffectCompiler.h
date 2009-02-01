@@ -41,8 +41,6 @@ namespace SlimDX
 			EffectCompiler( System::String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags );
 			EffectCompiler( System::String^ data, ShaderFlags flags );
 
-			static EffectCompiler^ FromPointer( System::IntPtr pointer );
-
 			static EffectCompiler^ FromMemory( array<System::Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% compilationErrors );
 			static EffectCompiler^ FromMemory( array<System::Byte>^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags );
 			static EffectCompiler^ FromMemory( array<System::Byte>^ data, ShaderFlags flags );

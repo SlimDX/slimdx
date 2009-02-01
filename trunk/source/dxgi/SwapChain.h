@@ -83,14 +83,6 @@ namespace SlimDX
 			}
 			
 			/// <summary>
-			/// Constructs a new instance of the <see cref="SwapChain"/> class using the specified pointer to a
-			/// previously constructed unmanaged object.
-			/// </summary>
-			/// <param name="pointer">The unmanaged IDXGISwapChain pointer.</param>
-			/// <returns>The newly constructed object.</returns>
-			static SwapChain^ FromPointer( System::IntPtr pointer );
-			
-			/// <summary>
 			/// Initializes a new instance of the <see cref="SwapChain"/> class.
 			/// </summary>
 			/// <param name="factory">The factory used to create the swap chain.</param>

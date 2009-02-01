@@ -41,8 +41,6 @@ namespace SlimDX
 		public:
 			Direct3DEx();
 
-			static Direct3DEx^ FromPointer( System::IntPtr pointer );
-
 			/// <summary>
 			/// Gets a collection of installed extended adapters.
 			/// </summary>

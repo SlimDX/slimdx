@@ -75,13 +75,6 @@ namespace SlimDX
 			Texture1D( SlimDX::Direct3D10::Device^ device, Texture1DDescription description, array<DataStream^>^ data );
 			
 			/// <summary>
-			/// Constructs a texture object from a marshalled native pointer.
-			/// </summary>
-			/// <param name="pointer">The native object pointer.</param>
-			/// <returns>The Texture1D object for the native object.</returns>
-			static Texture1D^ FromPointer( System::IntPtr pointer );
-			
-			/// <summary>
 			/// Maps the texture, providing CPU access to its contents.
 			/// </summary>
 			/// <param name="subresource">The subresource to map.</param>

@@ -49,35 +49,6 @@ namespace Direct2D
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
-	BitmapRenderTarget^ BitmapRenderTarget::FromPointer( ID2D1BitmapRenderTarget* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		BitmapRenderTarget^ tableEntry = safe_cast<BitmapRenderTarget^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew BitmapRenderTarget( pointer );
-	}
-
-	BitmapRenderTarget^ BitmapRenderTarget::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		BitmapRenderTarget^ tableEntry = safe_cast<BitmapRenderTarget^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew BitmapRenderTarget( pointer );
-	}
 
 	SlimDX::Direct2D::Bitmap^ BitmapRenderTarget::Bitmap::get()
 	{

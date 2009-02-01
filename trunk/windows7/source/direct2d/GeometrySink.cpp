@@ -47,35 +47,6 @@ namespace Direct2D
 	{
 		Construct( pointer, NativeInterface );
 	}
-	
-	GeometrySink^ GeometrySink::FromPointer( ID2D1GeometrySink* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		GeometrySink^ tableEntry = safe_cast<GeometrySink^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew GeometrySink( pointer );
-	}
-
-	GeometrySink^ GeometrySink::FromPointer( IntPtr pointer )
-	{
-		if( pointer == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "pointer" );
-
-		GeometrySink^ tableEntry = safe_cast<GeometrySink^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			return tableEntry;
-		}
-
-		return gcnew GeometrySink( pointer );
-	}
 
 	void GeometrySink::AddLine( System::Drawing::Point point )
 	{
