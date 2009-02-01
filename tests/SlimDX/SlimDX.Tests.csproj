@@ -76,6 +76,7 @@
     <Compile Include="Base\DataBoxTests.cs" />
     <Compile Include="Base\DataRectangleTests.cs" />
     <Compile Include="Bugs\Bug359.cs" />
+    <Compile Include="Bugs\Bug387.cs" />
     <Compile Include="Bugs\Bug420.cs" />
     <Compile Include="Direct3D 9\DeviceTests.cs" />
     <Compile Include="Math\Color3Tests.cs" />
@@ -92,6 +93,11 @@
       <Project>{8ECCE443-0440-40F4-A94C-F02E027282C3}</Project>
       <Name>SlimDX</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Test Data\Bug387_Effect.fxh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="BeforeBuild">
