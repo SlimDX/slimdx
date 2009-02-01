@@ -86,6 +86,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleText", "..\samples\Di
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiformattedText", "..\samples\DirectWrite\MultiformattedText\MultiformattedText.csproj", "{96ED5F4B-DC0E-49E2-9BCC-6C48944AF3F4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebuggerVisualizers", "..\extensions\DebuggerVisualizers\DebuggerVisualizers.csproj", "{3088A2FE-2573-46DE-AA43-3E47D68AD44B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{9730D7F3-7CF3-4B05-9EE8-92645B5D021F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -370,6 +374,18 @@ Global
 		{96ED5F4B-DC0E-49E2-9BCC-6C48944AF3F4}.Release|x64.Build.0 = Release|x64
 		{96ED5F4B-DC0E-49E2-9BCC-6C48944AF3F4}.Release|x86.ActiveCfg = Release|x86
 		{96ED5F4B-DC0E-49E2-9BCC-6C48944AF3F4}.Release|x86.Build.0 = Release|x86
+		{3088A2FE-2573-46DE-AA43-3E47D68AD44B}.Debug|x64.ActiveCfg = Debug|x64
+		{3088A2FE-2573-46DE-AA43-3E47D68AD44B}.Debug|x64.Build.0 = Debug|x64
+		{3088A2FE-2573-46DE-AA43-3E47D68AD44B}.Debug|x86.ActiveCfg = Debug|x86
+		{3088A2FE-2573-46DE-AA43-3E47D68AD44B}.Debug|x86.Build.0 = Debug|x86
+		{3088A2FE-2573-46DE-AA43-3E47D68AD44B}.Public|x64.ActiveCfg = Release|x64
+		{3088A2FE-2573-46DE-AA43-3E47D68AD44B}.Public|x64.Build.0 = Release|x64
+		{3088A2FE-2573-46DE-AA43-3E47D68AD44B}.Public|x86.ActiveCfg = Release|x86
+		{3088A2FE-2573-46DE-AA43-3E47D68AD44B}.Public|x86.Build.0 = Release|x86
+		{3088A2FE-2573-46DE-AA43-3E47D68AD44B}.Release|x64.ActiveCfg = Release|x64
+		{3088A2FE-2573-46DE-AA43-3E47D68AD44B}.Release|x64.Build.0 = Release|x64
+		{3088A2FE-2573-46DE-AA43-3E47D68AD44B}.Release|x86.ActiveCfg = Release|x86
+		{3088A2FE-2573-46DE-AA43-3E47D68AD44B}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -405,5 +421,6 @@ Global
 		{6083F483-195C-4663-8598-58BE76926154} = {E6A42EBC-8547-49F3-8193-62BCE8019CEC}
 		{6E99B9C8-D0E1-45E0-9AC1-5DB0E16BEEB3} = {4D9F6C6C-4603-421A-8753-ADE9290B236C}
 		{96ED5F4B-DC0E-49E2-9BCC-6C48944AF3F4} = {4D9F6C6C-4603-421A-8753-ADE9290B236C}
+		{3088A2FE-2573-46DE-AA43-3E47D68AD44B} = {9730D7F3-7CF3-4B05-9EE8-92645B5D021F}
 	EndGlobalSection
 EndGlobal
