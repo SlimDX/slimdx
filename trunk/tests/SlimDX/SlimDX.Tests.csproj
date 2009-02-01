@@ -76,6 +76,7 @@
     <Compile Include="Base\DataBoxTests.cs" />
     <Compile Include="Base\DataRectangleTests.cs" />
     <Compile Include="Bugs\Bug359.cs" />
+    <Compile Include="Bugs\Bug420.cs" />
     <Compile Include="Direct3D 9\DeviceTests.cs" />
     <Compile Include="Math\Color3Tests.cs" />
     <Compile Include="Math\Color4Tests.cs" />
