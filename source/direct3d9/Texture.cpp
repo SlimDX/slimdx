@@ -460,7 +460,7 @@ namespace Direct3D9
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
-		return Surface::FromPointer( surface );
+		return Surface::FromPointer( surface, this );
 	}
 }
 }
