@@ -41,16 +41,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	DirectSound::DirectSound( IDirectSound8* dsound )
-	{
-		Construct( dsound );
-	}
-
-	DirectSound::DirectSound( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	DirectSound::DirectSound()
 	{
 		IDirectSound8* dsound;

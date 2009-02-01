@@ -40,18 +40,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	Direct3DEx::Direct3DEx( IDirect3D9Ex* direct3d )
-		: Direct3D( true )
-	{
-		Construct( direct3d );
-	}
-
-	Direct3DEx::Direct3DEx( IntPtr pointer )
-		: Direct3D( true )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	Direct3DEx::Direct3DEx()
 		: Direct3D( true )
 	{
@@ -84,7 +72,29 @@ namespace Direct3D9
 
 		Construct( direct3D );
 	}
+	
+	Direct3DEx::Direct3DEx( IDirect3D9Ex* direct3d )
+		: Direct3D( true )
+	{
+		Construct( direct3d );
+	}
 
+	Direct3DEx::Direct3DEx( IntPtr pointer )
+		: Direct3D( true )
+	{
+		Construct( pointer, NativeInterface );
+	}
+	
+	Direct3DEx^ Direct3DEx::FromPointer( IDirect3D9Ex* pointer ) 
+	{
+		return ComObject::ConstructFromPointer<Direct3DEx,IDirect3D9Ex>( pointer );
+	}
+	
+	Direct3DEx^ Direct3DEx::FromPointer( IntPtr pointer )
+	{
+		return ComObject::ConstructFromUserPointer<Direct3DEx>( pointer );
+	}
+	
     DisplayModeEx Direct3DEx::GetAdapterDisplayModeEx( int adapter )
 	{
 		D3DDISPLAYMODEEX nativeMode = {0};

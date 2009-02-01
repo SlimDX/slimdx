@@ -39,16 +39,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	FullDuplex::FullDuplex( IDirectSoundFullDuplex *pointer )
-	{
-		Construct( pointer );
-	}
-
-	FullDuplex::FullDuplex( System::IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	FullDuplex::FullDuplex( System::Guid captureDevice, System::Guid playbackDevice, SlimDX::DirectSound::CaptureBufferDescription captureDesc, SlimDX::DirectSound::SoundBufferDescription bufferDesc, System::IntPtr windowHandle, SlimDX::DirectSound::CooperativeLevel level, [Out] SlimDX::DirectSound::CaptureBuffer ^%captureBuffer, [Out] SlimDX::DirectSound::SecondarySoundBuffer ^%secondaryBuffer )
 	{
 		DSCBUFFERDESC cbDesc = captureDesc.ToUnmanaged();

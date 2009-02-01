@@ -34,16 +34,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	RenderToSurface::RenderToSurface( ID3DXRenderToSurface* pointer )
-	{
-		Construct( pointer );
-	}
-
-	RenderToSurface::RenderToSurface( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	RenderToSurface::RenderToSurface( SlimDX::Direct3D9::Device^ device, int width, int height, Format format )
 	{
 		ID3DXRenderToSurface* rtsPointer;

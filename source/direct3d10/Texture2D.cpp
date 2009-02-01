@@ -39,16 +39,6 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	Texture2D::Texture2D( ID3D10Texture2D* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	Texture2D::Texture2D( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	Texture2D::Texture2D( SlimDX::Direct3D10::Device^ device, Texture2DDescription description )
 	{
 		Construct( Build( device, description, 0 ) );	

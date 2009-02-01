@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	NoiseSuppress::NoiseSuppress( IDirectSoundCaptureFXNoiseSuppress *pointer )
-	{
-		Construct( pointer );
-	}
-
-	NoiseSuppress::NoiseSuppress( System::IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	Result NoiseSuppress::Reset()
 	{
 		HRESULT hr = InternalPointer->Reset();

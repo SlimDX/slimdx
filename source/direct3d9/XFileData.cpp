@@ -37,16 +37,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	XFileData::XFileData( ID3DXFileData* pointer )
-	{
-		Construct( pointer );
-	}
-
-	XFileData::XFileData( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	XFileData^ XFileData::GetChild( int id )
 	{
 		ID3DXFileData *result;

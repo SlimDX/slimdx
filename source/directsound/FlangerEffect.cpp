@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	FlangerEffect::FlangerEffect( IDirectSoundFXFlanger *pointer )
-	{
-		Construct( pointer );
-	}
-
-	FlangerEffect::FlangerEffect( System::IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	float FlangerEffect::Delay::get()
 	{
 		DSFXFlanger param;

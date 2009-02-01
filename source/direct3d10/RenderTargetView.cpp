@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	RenderTargetView::RenderTargetView( ID3D10RenderTargetView* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	RenderTargetView::RenderTargetView( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	RenderTargetView::RenderTargetView( SlimDX::Direct3D10::Device^ device, Resource^ resource )
 	{
 		if( device == nullptr )

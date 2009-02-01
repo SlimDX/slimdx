@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	BlendState::BlendState( ID3D10BlendState* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	BlendState::BlendState( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	BlendState^ BlendState::FromDescription( SlimDX::Direct3D10::Device^ device, BlendStateDescription description )
 	{
 		if( device == nullptr )

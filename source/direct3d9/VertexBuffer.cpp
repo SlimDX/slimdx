@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	VertexBuffer::VertexBuffer( IDirect3DVertexBuffer9* buffer )
-	{
-		Construct( buffer );
-	}
-
-	VertexBuffer::VertexBuffer( IntPtr buffer )
-	{
-		Construct( buffer, NativeInterface );
-	}
-
 	VertexBuffer::VertexBuffer( SlimDX::Direct3D9::Device^ device, int sizeInBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool )
 	{
 		IDirect3DVertexBuffer9* vb;

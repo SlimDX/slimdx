@@ -44,16 +44,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	AnimationController::AnimationController( ID3DXAnimationController* pointer )
-	{
-		Construct( pointer );
-	}
-
-	AnimationController::AnimationController( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	AnimationController::AnimationController( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents )
 	{
 		HRESULT hr = D3DXCreateAnimationController( maxAnimationOutputs, maxAnimationSets, maxTracks, maxEvents, 

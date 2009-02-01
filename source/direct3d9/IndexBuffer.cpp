@@ -33,16 +33,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	IndexBuffer::IndexBuffer( IDirect3DIndexBuffer9* buffer )
-	{
-		Construct( buffer );
-	}
-
-	IndexBuffer::IndexBuffer( IntPtr buffer )
-	{
-		Construct( buffer, NativeInterface );
-	}
-
 	IndexBuffer::IndexBuffer( SlimDX::Direct3D9::Device^ device, int sizeInBytes, SlimDX::Direct3D9::Usage usage, SlimDX::Direct3D9::Pool pool, bool sixteenBit )
 	{
 		IDirect3DIndexBuffer9* ib;

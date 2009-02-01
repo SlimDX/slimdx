@@ -59,16 +59,6 @@ namespace Direct3D9
 		//this is called by DeviceEx
 	}
 
-	Device::Device( IDirect3DDevice9* pointer )
-	{
-		Construct( pointer );
-	}
-
-	Device::Device( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	Device::Device( Direct3D^ direct3D, int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, ... array<PresentParameters^>^ presentParameters )
 	{
 		IDirect3DDevice9* device;

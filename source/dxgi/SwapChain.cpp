@@ -40,16 +40,6 @@ namespace SlimDX
 {
 namespace DXGI
 { 	
-	SwapChain::SwapChain( IDXGISwapChain* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	SwapChain::SwapChain( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	SwapChain::SwapChain( Factory^ factory, ComObject^ device, SwapChainDescription description )
 	{
 		if( factory == nullptr )

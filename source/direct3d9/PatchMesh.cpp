@@ -41,16 +41,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	PatchMesh::PatchMesh( ID3DXPatchMesh* pointer )
-	{
-		Construct( pointer );
-	}
-
-	PatchMesh::PatchMesh( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	PatchMesh::PatchMesh( SlimDX::Direct3D9::Device^ device, SlimDX::Direct3D9::PatchInfo info, int patchCount, int vertexCount, array<VertexElement>^ vertexDeclaration )
 	{
 		ID3DXPatchMesh *result;

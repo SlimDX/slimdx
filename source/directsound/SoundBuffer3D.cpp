@@ -36,16 +36,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	SoundBuffer3D::SoundBuffer3D( IDirectSound3DBuffer* buffer )
-	{
-		Construct( buffer );
-	}
-
-	SoundBuffer3D::SoundBuffer3D( System::IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	SoundBuffer3D::SoundBuffer3D( SoundBuffer^ soundBuffer )
 	{
 		IDirectSound3DBuffer8* buffer;

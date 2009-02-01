@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	DistortionEffect::DistortionEffect( IDirectSoundFXDistortion *pointer )
-	{
-		Construct( pointer );
-	}
-
-	DistortionEffect::DistortionEffect( System::IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	float DistortionEffect::Gain::get()
 	{
 		DSFXDistortion param;

@@ -43,16 +43,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	CompressedAnimationSet::CompressedAnimationSet( ID3DXCompressedAnimationSet* pointer )
-	{
-		Construct( pointer );
-	}
-
-	CompressedAnimationSet::CompressedAnimationSet( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	CompressedAnimationSet::CompressedAnimationSet( String^ name, double ticksPerSecond,
 		SlimDX::Direct3D9::PlaybackType playbackType, DataStream^ compressedData,
 		array<CallbackKey>^ callbackKeys )

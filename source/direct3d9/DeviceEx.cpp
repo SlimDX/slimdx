@@ -49,7 +49,17 @@ namespace Direct3D9
 	{
 		Construct( pointer, NativeInterface );
 	}
-
+	
+	DeviceEx^ DeviceEx::FromPointer( IDirect3DDevice9Ex* pointer ) 
+	{
+		return ComObject::ConstructFromPointer<DeviceEx,IDirect3DDevice9Ex>( pointer );
+	}
+	
+	DeviceEx^ DeviceEx::FromPointer( IntPtr pointer ) 
+	{
+		return ComObject::ConstructFromUserPointer<DeviceEx>( pointer );
+	}
+	
 	void DeviceEx::Internal_Constructor( Direct3DEx^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle,
 				CreateFlags createFlags, D3DDISPLAYMODEEX* fullscreenDisplayMode, ... array<PresentParameters^>^ presentParameters )
 	{

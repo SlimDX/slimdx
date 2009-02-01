@@ -38,16 +38,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	SoundListener3D::SoundListener3D( IDirectSound3DListener *listener )
-	{
-		Construct( listener );
-	}
-
-	SoundListener3D::SoundListener3D( System::IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	SoundListener3D::SoundListener3D( SoundBuffer^ soundBuffer )
 	{
 		IDirectSound3DListener8* listener;

@@ -38,16 +38,6 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	EffectPool::EffectPool( ID3D10EffectPool* pointer )
-	{
-		Construct( pointer );
-	}
-
-	EffectPool::EffectPool( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	Effect^ EffectPool::AsEffect()
 	{
 		ID3D10Effect* effect = InternalPointer->AsEffect();

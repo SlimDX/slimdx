@@ -39,16 +39,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	PixelShader::PixelShader( IDirect3DPixelShader9* pointer )
-	{
-		Construct( pointer );
-	}
-
-	PixelShader::PixelShader( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	PixelShader::PixelShader( SlimDX::Direct3D9::Device^ device, ShaderBytecode^ function )
 	{
 		IDirect3DPixelShader9 *result;

@@ -39,16 +39,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	SwapChain::SwapChain( IDirect3DSwapChain9* pointer )
-	{
-		Construct( pointer );
-	}
-
-	SwapChain::SwapChain( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	SwapChain::SwapChain( SlimDX::Direct3D9::Device^ device, SlimDX::Direct3D9::PresentParameters^ presentParameters )
 	{
 		if( device == nullptr )

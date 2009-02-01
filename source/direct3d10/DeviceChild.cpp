@@ -39,16 +39,6 @@ namespace Direct3D10
 	{
 	}
 	
-	DeviceChild::DeviceChild( ID3D10DeviceChild* pointer )
-	{
-		Construct( pointer );
-	}
-
-	DeviceChild::DeviceChild( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	SlimDX::Direct3D10::Device^ DeviceChild::Device::get()
 	{
 		ID3D10Device* device = 0;

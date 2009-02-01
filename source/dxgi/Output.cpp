@@ -42,16 +42,6 @@ namespace SlimDX
 {
 namespace DXGI
 { 	
-	Output::Output( IDXGIOutput* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	Output::Output( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	OutputDescription Output::Description::get()
 	{
 		DXGI_OUTPUT_DESC nativeDescription;

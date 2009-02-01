@@ -36,16 +36,6 @@ namespace SlimDX
 {
 namespace Direct3D10
 {
-	Font::Font( ID3DX10Font* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	Font::Font( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	Font::Font( Device^ device, FontDescription description )
 	{
 		Construct( Build( device, description.Width, description.Height, description.Weight, description.MipLevels, description.IsItalic, description.CharacterSet, description.Precision, description.Quality, description.PitchAndFamily, description.FaceName ) );

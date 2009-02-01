@@ -30,14 +30,5 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	VertexShader::VertexShader( ID3D10VertexShader* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	VertexShader::VertexShader( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
 }
 }

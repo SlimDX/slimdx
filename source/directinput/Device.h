@@ -50,7 +50,7 @@ namespace SlimDX
 		generic<typename DataFormat>
 		public ref class Device : public ComObject
 		{
-			COMOBJECT_CUSTOM_FROMPOINTER(IDirectInputDevice8W, Device);
+			COMOBJECT_CUSTOM(IDirectInputDevice8W, Device);
 
 		private:
 			DeviceProperties^ properties;

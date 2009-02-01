@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace Direct3D10
 {
-	MeshBuffer::MeshBuffer( ID3DX10MeshBuffer* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	MeshBuffer::MeshBuffer( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	int MeshBuffer::SizeInBytes::get() 
 	{
 		return static_cast<int>( InternalPointer->GetSize() );

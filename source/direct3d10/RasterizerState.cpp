@@ -34,16 +34,6 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	RasterizerState::RasterizerState( ID3D10RasterizerState* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	RasterizerState::RasterizerState( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	RasterizerState^ RasterizerState::FromDescription( SlimDX::Direct3D10::Device^ device, RasterizerStateDescription description )
 	{
 		if( device == nullptr )

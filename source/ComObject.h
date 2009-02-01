@@ -36,28 +36,28 @@ using System::Diagnostics::StackTrace;
 
 #define COMOBJECT_BASE(nativeType) \
 	internal: \
-	static property System::Guid NativeInterface { System::Guid get() { return Utilities::ConvertNativeGuid( IID_ ## nativeType ); } } \
-	property nativeType* InternalPointer { nativeType* get() new { return static_cast<nativeType*>( UnknownPointer ); } } \
+		static property System::Guid NativeInterface { System::Guid get() { return Utilities::ConvertNativeGuid( IID_ ## nativeType ); } } \
+		property nativeType* InternalPointer { nativeType* get() new { return static_cast<nativeType*>( UnknownPointer ); } } \
 	private:
 
 #define COMOBJECT(nativeType, managedType) \
 	public protected: \
-	managedType( nativeType* pointer ); \
-	managedType( System::IntPtr pointer ); \
+		managedType( nativeType* pointer ) { Construct( pointer ); } \
+		managedType( System::IntPtr pointer ) { Construct( pointer, NativeInterface ); } \
 	internal: \
-	static managedType^ FromPointer( nativeType* pointer ) { return ConstructFromPointer<managedType,nativeType>( pointer ); } \
+		static managedType^ FromPointer( nativeType* pointer ) { return ConstructFromPointer<managedType,nativeType>( pointer ); } \
 	public: \
-	static managedType^ FromPointer( System::IntPtr pointer ) { return ConstructFromUserPointer<managedType>( pointer ); } \
+		static managedType^ FromPointer( System::IntPtr pointer ) { return ConstructFromUserPointer<managedType>( pointer ); } \
 	COMOBJECT_BASE(nativeType)
 
-#define COMOBJECT_CUSTOM_FROMPOINTER(nativeType, managedType) \
+#define COMOBJECT_CUSTOM(nativeType, managedType) \
 	public protected: \
-	managedType( nativeType* pointer ); \
-	managedType( System::IntPtr pointer ); \
+		managedType( nativeType* pointer ); \
+		managedType( System::IntPtr pointer ); \
 	internal: \
-	static managedType^ FromPointer( nativeType* pointer ); \
+		static managedType^ FromPointer( nativeType* pointer ); \
 	public: \
-	static managedType^ FromPointer( System::IntPtr pointer ); \
+		static managedType^ FromPointer( System::IntPtr pointer ); \
 	COMOBJECT_BASE(nativeType)
 
 namespace SlimDX
@@ -88,12 +88,12 @@ namespace SlimDX
 			// might be passed, and that's okay. This is in constrast to ConstructFromUserPointer.
 			if( pointer == 0 )
 				return nullptr;
-
+			
 			M^ tableEntry = safe_cast<M^>( SlimDX::ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
 				// In the case where we found the object in our table already, we want to release the reference
-				// we were passed since we already had one, and we want to maintain a single COM reference count
+				// we were passed since we already had one -- we want to maintain a single COM reference count
 				// to all COM objects.
 				pointer->Release();
 				return tableEntry;

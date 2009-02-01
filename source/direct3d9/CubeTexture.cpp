@@ -46,16 +46,6 @@ namespace Direct3D9
 	void WINAPI NativeD3DXFill2D(D3DXVECTOR4 *out, CONST D3DXVECTOR2 *pTexCoord, CONST D3DXVECTOR2 *pTexelSize, LPVOID data);
 	void WINAPI NativeD3DXFill3D(D3DXVECTOR4 *out, CONST D3DXVECTOR3 *pTexCoord, CONST D3DXVECTOR3 *pTexelSize, LPVOID data);
 
-	CubeTexture::CubeTexture( IDirect3DCubeTexture9* texture )
-	{
-		Construct(texture);
-	}
-
-	CubeTexture::CubeTexture( IntPtr cubeTexture )
-	{
-		Construct( cubeTexture, NativeInterface );
-	}
-
 	CubeTexture::CubeTexture( SlimDX::Direct3D9::Device^ device, int edgeLength, int numLevels, Usage usage, Format format, Pool pool )
 	{
 		IDirect3DCubeTexture9* texture;

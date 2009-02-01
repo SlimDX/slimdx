@@ -39,16 +39,6 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	Texture1D::Texture1D( ID3D10Texture1D* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	Texture1D::Texture1D( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	Texture1D::Texture1D( SlimDX::Direct3D10::Device^ device, Texture1DDescription description )
 	{
 		Construct( Build( device, description, 0 ) );	

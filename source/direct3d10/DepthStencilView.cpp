@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	DepthStencilView::DepthStencilView( ID3D10DepthStencilView* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	DepthStencilView::DepthStencilView( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	DepthStencilView::DepthStencilView( SlimDX::Direct3D10::Device^ device, Resource^ resource )
 	{
 		if( device == nullptr )

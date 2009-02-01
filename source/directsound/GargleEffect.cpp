@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace DirectSound
 {
-	GargleEffect::GargleEffect( IDirectSoundFXGargle *pointer )
-	{
-		Construct( pointer );
-	}
-
-	GargleEffect::GargleEffect( System::IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	int GargleEffect::Rate::get()
 	{
 		DSFXGargle param;

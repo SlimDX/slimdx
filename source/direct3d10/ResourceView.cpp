@@ -33,15 +33,5 @@ namespace Direct3D10
 	ResourceView::ResourceView()
 	{
 	}
-	
-	ResourceView::ResourceView( ID3D10View* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	ResourceView::ResourceView( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
 }
 }

@@ -34,16 +34,6 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	Counter::Counter( ID3D10Counter* pointer )
-	{
-		Construct( pointer );
-	}
-
-	Counter::Counter( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	Counter::Counter( SlimDX::Direct3D10::Device^ device, CounterDescription description )
 	{
 		ID3D10Counter* counter = 0;

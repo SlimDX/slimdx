@@ -35,16 +35,6 @@ namespace Direct3D10
 	Asynchronous::Asynchronous()
 	{
 	}
-	
-	Asynchronous::Asynchronous( ID3D10Asynchronous* pointer )
-	{
-		Construct( pointer );
-	}
-
-	Asynchronous::Asynchronous( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}	
 
 	bool Asynchronous::IsDataAvailable::get()
 	{

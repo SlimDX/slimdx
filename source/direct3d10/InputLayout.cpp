@@ -34,16 +34,6 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	InputLayout::InputLayout( ID3D10InputLayout* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	InputLayout::InputLayout( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	InputLayout::InputLayout( SlimDX::Direct3D10::Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature )
 	{
 		if( device == nullptr )

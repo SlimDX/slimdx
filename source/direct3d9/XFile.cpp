@@ -48,16 +48,6 @@ namespace Direct3D9
 		Construct(result);
 	}
 
-	XFile::XFile( ID3DXFile* pointer )
-	{
-		Construct( pointer );
-	}
-
-	XFile::XFile( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	XFileEnumerationObject^ XFile::CreateEnumerationObject( String^ fileName, CharSet charSet )
 	{
 		ID3DXFileEnumObject *result;

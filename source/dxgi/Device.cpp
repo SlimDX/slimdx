@@ -45,16 +45,6 @@ namespace DXGI
 		Construct( result );
 	}
 
-	Device::Device( IDXGIDevice* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	Device::Device( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	int Device::GpuThreadPriority::get()
 	{
 		int result = 0;

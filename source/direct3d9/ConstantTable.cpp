@@ -41,16 +41,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	ConstantTable::ConstantTable( ID3DXConstantTable* pointer )
-	{
-		Construct( pointer );
-	}
-
-	ConstantTable::ConstantTable( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	EffectHandle^ ConstantTable::GetConstant(SlimDX::Direct3D9::EffectHandle ^handle, int index)
 	{
 		D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;

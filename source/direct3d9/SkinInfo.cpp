@@ -40,16 +40,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	SkinInfo::SkinInfo( ID3DXSkinInfo* skinInfo )
-	{
-		Construct( skinInfo );
-	}
-
-	SkinInfo::SkinInfo( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	SkinInfo::SkinInfo( int vertexCount, array<VertexElement>^ vertexDeclaration, int boneCount )
 	{
 		ID3DXSkinInfo *result;
