@@ -49,9 +49,9 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 	
-	Effect^ Effect::FromPointer( ID3DXEffect* pointer, ComObject^ owner )
+	Effect^ Effect::FromPointer( ID3DXEffect* pointer, ComObject^ owner, ComObjectFlags flags )
 	{
-		return ComObject::ConstructFromPointer<Effect,ID3DXEffect>( pointer, owner );
+		return ComObject::ConstructFromPointer<Effect,ID3DXEffect>( pointer, owner, flags );
 	}
 	
 	Effect^ Effect::FromPointer( IntPtr pointer )

@@ -148,7 +148,7 @@ namespace DirectInput
 	}
 
 	generic<typename DataFormat>
-	Device<DataFormat>^ Device<DataFormat>::FromPointer( IDirectInputDevice8W* pointer, ComObject^ owner )
+	Device<DataFormat>^ Device<DataFormat>::FromPointer( IDirectInputDevice8W* pointer, ComObject^ owner, ComObjectFlags flags )
 	{
 		if( pointer == 0 )
 			return nullptr;
@@ -156,11 +156,14 @@ namespace DirectInput
 		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
-			pointer->Release();
+			if( static_cast<int>( flags & ComObjectFlags::ExternalReferenceCount ) == 0 ) 
+					pointer->Release();
 			return tableEntry;
 		}
 
-		return gcnew Device( pointer, owner );
+		Device^ result = gcnew Device( pointer, owner );
+		result->SetFlags( flags );
+		return result;
 	}
 
 	generic<typename DataFormat>

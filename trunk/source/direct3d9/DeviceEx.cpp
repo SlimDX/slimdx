@@ -50,9 +50,9 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 	
-	DeviceEx^ DeviceEx::FromPointer( IDirect3DDevice9Ex* pointer, ComObject^ owner ) 
+	DeviceEx^ DeviceEx::FromPointer( IDirect3DDevice9Ex* pointer, ComObject^ owner, ComObjectFlags flags ) 
 	{
-		return ComObject::ConstructFromPointer<DeviceEx,IDirect3DDevice9Ex>( pointer, owner );
+		return ComObject::ConstructFromPointer<DeviceEx,IDirect3DDevice9Ex>( pointer, owner, flags );
 	}
 	
 	DeviceEx^ DeviceEx::FromPointer( IntPtr pointer ) 
