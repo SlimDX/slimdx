@@ -54,7 +54,7 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		return gcnew XFileSaveData( result );
+		return gcnew XFileSaveData( result, nullptr );
 	}
 
 	XFileSaveData^ XFileSaveData::AddDataObject( Guid dataTemplate, String^ name, Guid id, array<Byte>^ data )

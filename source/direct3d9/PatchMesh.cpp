@@ -93,7 +93,7 @@ namespace Direct3D9
 		materialBuffer->Release();
 		instanceBuffer->Release();
 
-		return gcnew PatchMesh( mesh );
+		return gcnew PatchMesh( mesh, nullptr );
 	}
 
 	PatchMesh^ PatchMesh::FromXFile( SlimDX::Direct3D9::Device^ device, XFileData^ xfile, MeshFlags flags, [Out] array<ExtendedMaterial>^% materials )
@@ -114,7 +114,7 @@ namespace Direct3D9
 		materials = ExtendedMaterial::FromBuffer( materialBuffer, materialCount );
 		materialBuffer->Release();
 
-		return gcnew PatchMesh( mesh );
+		return gcnew PatchMesh( mesh, nullptr );
 	}
 
 	PatchMesh^ PatchMesh::FromXFile( SlimDX::Direct3D9::Device^ device, XFileData^ xfile, MeshFlags flags )
@@ -127,7 +127,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew PatchMesh( mesh );
+		return gcnew PatchMesh( mesh, nullptr );
 	}
 
 	PatchMesh^ PatchMesh::Clone( MeshFlags flags, array<VertexElement>^ vertexDeclaration )
@@ -140,7 +140,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew PatchMesh( result );
+		return gcnew PatchMesh( result, nullptr );
 	}
 
 	Result PatchMesh::GenerateAdjacency( float tolerance )

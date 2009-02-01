@@ -24,45 +24,42 @@ using SlimDX;
 using SlimDX.Direct3D9;
 using System.Windows.Forms;
 
-namespace SlimDXTests
-{
-    [TestFixture]
-    public class Bug359Tests
-    {
-        // =========================================================================
-        // Tests
+namespace SlimDXTests {
+	[TestFixture]
+	public class Bug359Tests {
+		// =========================================================================
+		// Tests
 
-        [Test]
-        public void SlimDXOnlyCase()
-        {
-            Form form = new Form();
-            Direct3D direct3d = new Direct3D();
-            Device device;
-            PresentParameters presentParameters;
+		[Test]
+		public void Bug359() {
+			Form form = new Form();
+			Direct3D direct3d = new Direct3D();
+			Device device;
+			PresentParameters presentParameters;
 
-            presentParameters = new PresentParameters();
-            presentParameters.DeviceWindowHandle = form.Handle;
+			presentParameters = new PresentParameters();
+			presentParameters.DeviceWindowHandle = form.Handle;
 
-            CreateFlags createFlags = CreateFlags.SoftwareVertexProcessing;
-            device = new Device(direct3d, 0, DeviceType.Reference, form.Handle, createFlags, presentParameters);
+			CreateFlags createFlags = CreateFlags.SoftwareVertexProcessing;
+			device = new Device( direct3d, 0, DeviceType.Reference, form.Handle, createFlags, presentParameters );
 
-            // The device and the "D3D" object should be the only allocated COM objects.
-            Assert.AreEqual(2, ObjectTable.Objects.Count);
+			// The device and the "D3D" object should be the only allocated COM objects.
+			Assert.AreEqual( 2, ObjectTable.Objects.Count );
 
-            // This will create an entry in the SlimDX object table for a COM object that was created
-            // implicitly by the device. Since the user did not explicitly create it, the user should
-            // not have to explicitly Dispose() of it, according to the Dispose() idiom.
-            Surface surface = device.GetBackBuffer(0, 0);
+			// This will create an entry in the SlimDX object table for a COM object that was created
+			// implicitly by the device. Since the user did not explicitly create it, the user should
+			// not have to explicitly Dispose() of it, according to the Dispose() idiom.
+			Surface surface = device.GetBackBuffer( 0, 0 );
 
-            // Verify that we actually ended up with the surface in the table.
-            Assert.AreEqual(3, ObjectTable.Objects.Count);
+			// Verify that we actually ended up with the surface in the table.
+			Assert.AreEqual( 3, ObjectTable.Objects.Count );
 
-            device.Dispose();
-            direct3d.Dispose();
-            form.Dispose();
+			device.Dispose();
+			direct3d.Dispose();
+			form.Dispose();
 
-            // Verify that all objects are now cleaned up, including the entry for the implicit surface.
-            //Assert.AreEqual( 0, ObjectTable.Objects.Count );
-        }
-    }
+			// Verify that all objects are now cleaned up, including the entry for the implicit surface.
+			Assert.AreEqual( 0, ObjectTable.Objects.Count );
+		}
+	}
 }

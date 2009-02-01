@@ -100,7 +100,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		CubeTexture^ result = gcnew CubeTexture( texture );
+		CubeTexture^ result = gcnew CubeTexture( texture, nullptr );
 		if( pool == Pool::Default )
 			result->IsDefaultPool = true;
 		return result;
@@ -255,7 +255,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		CubeTexture^ result = gcnew CubeTexture( texture );
+		CubeTexture^ result = gcnew CubeTexture( texture, nullptr );;
 		if( pool == Pool::Default )
 			result->IsDefaultPool = true;
 		return result;
@@ -276,7 +276,7 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		CubeTexture^ result = gcnew CubeTexture( texture );
+		CubeTexture^ result = gcnew CubeTexture( texture, nullptr );;
 		if( pool == Pool::Default )
 			result->IsDefaultPool = true;
 		return result;
@@ -295,7 +295,7 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		CubeTexture^ result = gcnew CubeTexture( texture );
+		CubeTexture^ result = gcnew CubeTexture( texture, nullptr );;
 		if( pool == Pool::Default )
 			result->IsDefaultPool = true;
 		return result;

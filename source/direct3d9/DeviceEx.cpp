@@ -38,10 +38,10 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	DeviceEx::DeviceEx( IDirect3DDevice9Ex* pointer )
+	DeviceEx::DeviceEx( IDirect3DDevice9Ex* pointer, ComObject^ owner )
 		: Device( true )
 	{
-		Construct( pointer );
+		Construct( pointer, owner );
 	}
 
 	DeviceEx::DeviceEx( IntPtr pointer )
@@ -50,9 +50,9 @@ namespace Direct3D9
 		Construct( pointer, NativeInterface );
 	}
 	
-	DeviceEx^ DeviceEx::FromPointer( IDirect3DDevice9Ex* pointer ) 
+	DeviceEx^ DeviceEx::FromPointer( IDirect3DDevice9Ex* pointer, ComObject^ owner ) 
 	{
-		return ComObject::ConstructFromPointer<DeviceEx,IDirect3DDevice9Ex>( pointer );
+		return ComObject::ConstructFromPointer<DeviceEx,IDirect3DDevice9Ex>( pointer, owner );
 	}
 	
 	DeviceEx^ DeviceEx::FromPointer( IntPtr pointer ) 

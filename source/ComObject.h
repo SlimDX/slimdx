@@ -42,20 +42,22 @@ using System::Diagnostics::StackTrace;
 
 #define COMOBJECT(nativeType, managedType) \
 	public protected: \
-		managedType( nativeType* pointer ) { Construct( pointer ); } \
+		managedType( nativeType* pointer, ComObject^ owner ) { Construct( pointer, owner ); } \
 		managedType( System::IntPtr pointer ) { Construct( pointer, NativeInterface ); } \
 	internal: \
-		static managedType^ FromPointer( nativeType* pointer ) { return ConstructFromPointer<managedType,nativeType>( pointer ); } \
+		static managedType^ FromPointer( nativeType* pointer ) { return FromPointer( pointer, nullptr ); } \
+		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner ) { return ConstructFromPointer<managedType,nativeType>( pointer, owner ); } \
 	public: \
 		static managedType^ FromPointer( System::IntPtr pointer ) { return ConstructFromUserPointer<managedType>( pointer ); } \
 	COMOBJECT_BASE(nativeType)
 
 #define COMOBJECT_CUSTOM(nativeType, managedType) \
 	public protected: \
-		managedType( nativeType* pointer ); \
+		managedType( nativeType* pointer, ComObject^ owner ); \
 		managedType( System::IntPtr pointer ); \
 	internal: \
-		static managedType^ FromPointer( nativeType* pointer ); \
+		static managedType^ FromPointer( nativeType* pointer ) { return FromPointer( pointer, nullptr ); } \
+		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner ); \
 	public: \
 		static managedType^ FromPointer( System::IntPtr pointer ); \
 	COMOBJECT_BASE(nativeType)
@@ -69,7 +71,8 @@ namespace SlimDX
 	public ref class ComObject abstract : System::IDisposable
 	{
 	private:
-		IUnknown* m_Unknown;		
+		IUnknown* m_Unknown;
+		ComObject^ m_Owner;
 		System::Diagnostics::StackTrace^ m_Source;
 		int m_CreationTime;
 
@@ -77,11 +80,12 @@ namespace SlimDX
 		ComObject();
 		
 		void Construct( IUnknown* pointer );
+		void Construct( IUnknown* pointer, ComObject^ owner );
 		void Construct( System::IntPtr pointer, System::Guid guid );
 		void Destruct();
 		
 		template< typename M, typename N >
-		static M^ ConstructFromPointer( N* pointer ) 
+		static M^ ConstructFromPointer( N* pointer, ComObject^ owner ) 
 		{
 			// Since this method is called internally by SlimDX to essentially translate the results of native
 			// API calls to their managed counterparts via the object table, we expect that a null pointer
@@ -99,7 +103,7 @@ namespace SlimDX
 				return tableEntry;
 			}
 
-			return gcnew M( pointer );	
+			return gcnew M( pointer, owner );	
 		}
 		
 		template< typename M >
@@ -121,6 +125,12 @@ namespace SlimDX
 		}
 		
 	internal:
+		property ComObject^ Owner 
+		{
+			ComObject^ get();
+			void set( ComObject^ value );
+		}
+		
 		property IUnknown* UnknownPointer
 		{
 			IUnknown* get();
@@ -133,7 +143,7 @@ namespace SlimDX
 
 		void SetSource( System::Diagnostics::StackTrace^ stack );
 		void SetCreationTime( int time );
-
+		
 	public:
 		/// <summary>
 		/// Gets a value that indicates whether the object has been disposed.

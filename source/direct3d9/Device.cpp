@@ -554,7 +554,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return Surface::FromPointer( buffer );
+		return Surface::FromPointer( buffer, this );
 	}
 
 	bool Device::IsQuerySupported( QueryType type )

@@ -309,7 +309,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 		
-		ProgressiveMesh^ mesh = gcnew ProgressiveMesh( result );
+		ProgressiveMesh^ mesh = gcnew ProgressiveMesh( result, nullptr );
 
 		mesh->SetMaterials( ExtendedMaterial::FromBuffer( om, numMaterials ) );
 		mesh->SetEffects( EffectInstance::FromBuffer( oe, numMaterials ) );
@@ -328,7 +328,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew ProgressiveMesh( mesh );
+		return gcnew ProgressiveMesh( mesh, nullptr );
 	}
 
 	ProgressiveMesh^ ProgressiveMesh::CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags flags, SlimDX::Direct3D9::VertexFormat format )
@@ -341,7 +341,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew ProgressiveMesh( mesh );
+		return gcnew ProgressiveMesh( mesh, nullptr );
 	}
 
 	Result ProgressiveMesh::GenerateVertexHistory( array<int>^ vertexHistory )

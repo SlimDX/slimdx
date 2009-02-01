@@ -108,7 +108,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		VolumeTexture^ result = gcnew VolumeTexture( texture );
+		VolumeTexture^ result = gcnew VolumeTexture( texture, nullptr );
 		if( pool == Pool::Default )
 			result->IsDefaultPool = true;
 		return result;
@@ -266,7 +266,7 @@ namespace Direct3D9
 			return nullptr;
 		}
 
-		VolumeTexture^ result = gcnew VolumeTexture( texture );
+		VolumeTexture^ result = gcnew VolumeTexture( texture, nullptr );
 		if( pool == Pool::Default )
 			result->IsDefaultPool = true;
 		return result;
@@ -288,7 +288,7 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		VolumeTexture^ result = gcnew VolumeTexture( texture );
+		VolumeTexture^ result = gcnew VolumeTexture( texture, nullptr );
 		if( pool == Pool::Default )
 			result->IsDefaultPool = true;
 		return result;
@@ -307,7 +307,7 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		VolumeTexture^ result = gcnew VolumeTexture( texture );
+		VolumeTexture^ result = gcnew VolumeTexture( texture, nullptr );
 		if( pool == Pool::Default )
 			result->IsDefaultPool = true;
 		return result;

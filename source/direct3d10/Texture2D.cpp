@@ -124,7 +124,7 @@ namespace Direct3D10
 		resource->GetType( &type );
 		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE2D )
 			throw gcnew InvalidOperationException( "Could not load file as 2D texture." ); 
-		return gcnew Texture2D( static_cast<ID3D10Texture2D*>( resource ) );
+		return gcnew Texture2D( static_cast<ID3D10Texture2D*>( resource ), nullptr );
 	}
 	
 	Texture2D^ Texture2D::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory )
@@ -137,7 +137,7 @@ namespace Direct3D10
 		resource->GetType( &type );
 		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE2D )
 			throw gcnew InvalidOperationException( "Could not load file as 2D texture." ); 
-		return gcnew Texture2D( static_cast<ID3D10Texture2D*>( resource ) );
+		return gcnew Texture2D( static_cast<ID3D10Texture2D*>( resource ), nullptr );
 	}
 	
 	Texture2D^ Texture2D::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, int sizeInBytes )
@@ -150,7 +150,7 @@ namespace Direct3D10
 		resource->GetType( &type );
 		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE2D )
 			throw gcnew InvalidOperationException( "Could not load file as 2D texture." ); 
-		return gcnew Texture2D( static_cast<ID3D10Texture2D*>( resource ) );
+		return gcnew Texture2D( static_cast<ID3D10Texture2D*>( resource ), nullptr );
 	}
 	
 	Texture2D^ Texture2D::FromFile( SlimDX::Direct3D10::Device^ device, String^ fileName, ImageLoadInformation loadInfo )
@@ -164,7 +164,7 @@ namespace Direct3D10
 		resource->GetType( &type );
 		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE2D )
 			throw gcnew InvalidOperationException( "Could not load file as 2D texture." ); 
-		return gcnew Texture2D( static_cast<ID3D10Texture2D*>( resource ) );
+		return gcnew Texture2D( static_cast<ID3D10Texture2D*>( resource ), nullptr );
 	}
 
 	Texture2D^ Texture2D::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, ImageLoadInformation loadInfo )
@@ -178,7 +178,7 @@ namespace Direct3D10
 		resource->GetType( &type );
 		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE2D )
 			throw gcnew InvalidOperationException( "Could not load file as 2D texture." ); 
-		return gcnew Texture2D( static_cast<ID3D10Texture2D*>( resource ) );
+		return gcnew Texture2D( static_cast<ID3D10Texture2D*>( resource ), nullptr );
 	}
 
 	Texture2D^ Texture2D::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, int sizeInBytes, ImageLoadInformation loadInfo )
@@ -192,7 +192,7 @@ namespace Direct3D10
 		resource->GetType( &type );
 		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE2D )
 			throw gcnew InvalidOperationException( "Could not load file as 2D texture." ); 
-		return gcnew Texture2D( static_cast<ID3D10Texture2D*>( resource ) );
+		return gcnew Texture2D( static_cast<ID3D10Texture2D*>( resource ), nullptr );
 	}
 }
 }
