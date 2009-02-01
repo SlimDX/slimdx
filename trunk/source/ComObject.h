@@ -40,6 +40,7 @@ using System::Diagnostics::StackTrace;
 		property nativeType* InternalPointer { nativeType* get() new { return static_cast<nativeType*>( UnknownPointer ); } } \
 	private:
 
+// This macro provides the basic infrastructure for SlimDX ComObject subclasses. 
 #define COMOBJECT(nativeType, managedType) \
 	public protected: \
 		managedType( nativeType* pointer, ComObject^ owner ) { Construct( pointer, owner ); } \
@@ -51,6 +52,18 @@ using System::Diagnostics::StackTrace;
 		static managedType^ FromPointer( System::IntPtr pointer ) { return ConstructFromUserPointer<managedType>( pointer ); } \
 	COMOBJECT_BASE(nativeType)
 
+// This macro provides the basic infrastructure for SlimDX ComObject subclasses, but allows
+// the subclass to customize the behavior of the creation process for that subclass. This macro
+// should be applied instead of the regular COMOBJECT() macro when such customization is required.
+// The subclass must provide a body for the following methods:
+//   * managedType( nativeType* pointer, ComObject^ owner )
+//   * managedType( System::IntPtr pointer )
+//   * managedType^ FromPointer( nativeType* pointer, ComObject^ owner )
+//   * managedType^ FromPointer( System::IntPtr pointer )
+//
+// Partial specialization is not supported; if the subclass needs special behavior for only
+// a subset of the above methods, it must still implement all of them, copying the standard
+// implementation from the COMOBJECT() macro for the appropriate non-specialized methods.
 #define COMOBJECT_CUSTOM(nativeType, managedType) \
 	public protected: \
 		managedType( nativeType* pointer, ComObject^ owner ); \
