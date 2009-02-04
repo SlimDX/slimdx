@@ -38,8 +38,6 @@ namespace SlimDX
 		public:
 			Factory();
 			Factory( FactoryType factoryType );
-
-			static Factory^ FromPointer( System::IntPtr pointer );
 		};
 	}
 }

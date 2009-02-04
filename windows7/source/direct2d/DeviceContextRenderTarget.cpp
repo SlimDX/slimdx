@@ -40,16 +40,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	DeviceContextRenderTarget::DeviceContextRenderTarget( ID2D1DCRenderTarget* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	DeviceContextRenderTarget::DeviceContextRenderTarget( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	DeviceContextRenderTarget::DeviceContextRenderTarget( SlimDX::Direct2D::Factory^ factory, RenderTargetProperties renderTargetProperties )
 	{
 		ID2D1DCRenderTarget *renderTarget = NULL;

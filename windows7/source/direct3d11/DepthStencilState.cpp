@@ -33,17 +33,7 @@ using namespace System;
 namespace SlimDX
 {
 namespace Direct3D11
-{ 
-	DepthStencilState::DepthStencilState( ID3D11DepthStencilState* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	DepthStencilState::DepthStencilState( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
+{
 	DepthStencilState^ DepthStencilState::FromDescription( SlimDX::Direct3D11::Device^ device, DepthStencilStateDescription description )
 	{
 		if( device == nullptr )

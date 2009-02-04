@@ -32,8 +32,6 @@ namespace SlimDX
 			COMOBJECT(ID2D1TessellationSink, TessellationSink);
 			
 		public:
-			static TessellationSink^ FromPointer( System::IntPtr pointer );
-
 			Result Close();
 
 			void AddTriangle( Triangle triangle );

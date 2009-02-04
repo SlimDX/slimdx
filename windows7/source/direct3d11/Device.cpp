@@ -48,16 +48,6 @@ namespace SlimDX
 {
 namespace Direct3D11
 {
-	Device::Device( ID3D11Device* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	Device::Device( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	Device::Device( DeviceCreationFlags flags )
 	{
 		ID3D11Device* device = 0;

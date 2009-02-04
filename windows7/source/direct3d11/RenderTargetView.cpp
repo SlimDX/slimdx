@@ -34,17 +34,7 @@ using namespace System;
 namespace SlimDX
 {
 namespace Direct3D11
-{ 
-	RenderTargetView::RenderTargetView( ID3D11RenderTargetView* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	RenderTargetView::RenderTargetView( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
+{
 	RenderTargetView::RenderTargetView( SlimDX::Direct3D11::Device^ device, Resource^ resource )
 	{
 		if( device == nullptr )

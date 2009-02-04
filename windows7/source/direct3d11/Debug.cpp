@@ -33,17 +33,7 @@ using namespace System;
 namespace SlimDX
 {
 namespace Direct3D11
-{ 
-	Debug::Debug( ID3D11Debug* pointer )
-	{
-		Construct( pointer );
-	}
-
-	Debug::Debug( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
+{
 	Debug::Debug( Device^ device )
 	{
 		if( device == nullptr )

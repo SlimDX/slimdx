@@ -41,16 +41,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	Bitmap::Bitmap( ID2D1Bitmap* pointer )
-	{
-		Construct( pointer );
-	}
-
-	Bitmap::Bitmap( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	Bitmap::Bitmap( RenderTarget^ renderTarget, System::Drawing::Size size )
 	{
 		ID2D1Bitmap *bitmap = NULL;

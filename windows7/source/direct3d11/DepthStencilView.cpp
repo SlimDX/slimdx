@@ -34,17 +34,7 @@ using namespace System;
 namespace SlimDX
 {
 namespace Direct3D11
-{ 
-	DepthStencilView::DepthStencilView( ID3D11DepthStencilView* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	DepthStencilView::DepthStencilView( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
+{
 	DepthStencilView::DepthStencilView( SlimDX::Direct3D11::Device^ device, Resource^ resource )
 	{
 		if( device == nullptr )

@@ -37,16 +37,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	StrokeStyle::StrokeStyle( ID2D1StrokeStyle* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	StrokeStyle::StrokeStyle( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	StrokeStyle::StrokeStyle( SlimDX::Direct2D::Factory^ factory )
 	{
 		ID2D1StrokeStyle *strokeStyle = NULL;

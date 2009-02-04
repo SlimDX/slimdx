@@ -37,17 +37,7 @@ using namespace System;
 namespace SlimDX
 {
 namespace Direct2D
-{
-	TransformedGeometry::TransformedGeometry( ID2D1TransformedGeometry* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	TransformedGeometry::TransformedGeometry( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
+{	
 	TransformedGeometry::TransformedGeometry( SlimDX::Direct2D::Factory^ factory, Geometry^ geometry, Matrix3x2 transform )
 	{
 		ID2D1TransformedGeometry *g = NULL;

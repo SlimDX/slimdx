@@ -41,16 +41,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	WindowRenderTarget::WindowRenderTarget( ID2D1HwndRenderTarget* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	WindowRenderTarget::WindowRenderTarget( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	WindowRenderTarget::WindowRenderTarget( SlimDX::Direct2D::Factory^ factory, WindowRenderTargetProperties windowRenderTargetProperties )
 	{
 		Init( factory, RenderTargetProperties(), windowRenderTargetProperties );
@@ -86,7 +76,7 @@ namespace Direct2D
 
 	bool WindowRenderTarget::IsOccluded::get()
 	{
-		return (InternalPointer->CheckWindowState() & D2D1_WINDOW_STATE_OCCLUDED);
+		return (InternalPointer->CheckWindowState() & D2D1_WINDOW_STATE_OCCLUDED) != 0;
 	}
 }
 }

@@ -38,16 +38,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	PathGeometry::PathGeometry( ID2D1PathGeometry* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	PathGeometry::PathGeometry( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	PathGeometry::PathGeometry( SlimDX::Direct2D::Factory^ factory )
 	{
 		ID2D1PathGeometry *geometry = NULL;

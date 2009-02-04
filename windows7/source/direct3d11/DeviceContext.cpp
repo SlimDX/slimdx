@@ -50,9 +50,9 @@ namespace SlimDX
 {
 namespace Direct3D11
 {
-	DeviceContext::DeviceContext( ID3D11DeviceContext* pointer )
+	DeviceContext::DeviceContext( ID3D11DeviceContext* pointer, ComObject^ owner )
 	{
-		Construct( pointer );
+		Construct( pointer, owner );
 		
 		m_InputAssembler = gcnew InputAssemblerWrapper( InternalPointer );
 		m_OutputMerger = gcnew OutputMergerWrapper( InternalPointer );
@@ -68,6 +68,16 @@ namespace Direct3D11
 		m_OutputMerger = gcnew OutputMergerWrapper( InternalPointer );
 		m_StreamOutput = gcnew StreamOutputWrapper( InternalPointer );
 		m_Rasterizer = gcnew RasterizerWrapper( InternalPointer );
+	}
+
+	DeviceContext^ DeviceContext::FromPointer( ID3D11DeviceContext* pointer, ComObject^ owner, ComObjectFlags flags )
+	{
+		return ConstructFromPointer<DeviceContext, ID3D11DeviceContext>( pointer, owner, flags );
+	}
+	
+	DeviceContext^ DeviceContext::FromPointer( IntPtr pointer )
+	{
+		return ConstructFromUserPointer<DeviceContext>( pointer );
 	}
 
 	InputAssemblerWrapper^ DeviceContext::InputAssembler::get()

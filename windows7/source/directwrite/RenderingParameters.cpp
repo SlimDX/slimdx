@@ -35,14 +35,5 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
-	RenderingParameters::RenderingParameters( IDWriteRenderingParams* pointer )
-	{
-		Construct( pointer );
-	}
-
-	RenderingParameters::RenderingParameters( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
 }
 }

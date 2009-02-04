@@ -34,17 +34,7 @@ using namespace System;
 namespace SlimDX
 {
 namespace Direct3D11
-{ 
-	PixelShader::PixelShader( ID3D11PixelShader* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	PixelShader::PixelShader( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
+{
 	PixelShader^ PixelShader::CompileFromFile( SlimDX::Direct3D11::Device^ device, System::String^ fileName, System::String^ entryPoint, System::String^ profile, [Out] System::String^ %compilationErrors )
 	{
 		pin_ptr<const wchar_t> pinnedFileName = PtrToStringChars( fileName );

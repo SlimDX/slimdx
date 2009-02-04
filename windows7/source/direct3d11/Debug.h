@@ -71,7 +71,6 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="device">The Device with which the Debug interface is to be associated.</param>
 			Debug( Device^ device );
-			static Debug^ FromPointer( System::IntPtr pointer );
 			
 			/// <summary>
 			/// Validates the current pipeline state.

@@ -37,16 +37,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	Layer::Layer( ID2D1Layer* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	Layer::Layer( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	Layer::Layer( RenderTarget^ renderTarget )
 	{
 		ID2D1Layer *layer = NULL;

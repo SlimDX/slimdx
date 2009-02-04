@@ -35,8 +35,6 @@ namespace SlimDX
 		public:
 			TransformedGeometry( SlimDX::Direct2D::Factory^ factory, Geometry^ geometry, Matrix3x2 transform );
 
-			static TransformedGeometry^ FromPointer( System::IntPtr pointer );
-
 			property Matrix3x2 Transform
 			{
 				Matrix3x2 get();

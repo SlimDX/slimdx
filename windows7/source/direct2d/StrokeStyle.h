@@ -38,8 +38,6 @@ namespace SlimDX
 			StrokeStyle( SlimDX::Direct2D::Factory^ factory, StrokeStyleProperties properties );
 			StrokeStyle( SlimDX::Direct2D::Factory^ factory, StrokeStyleProperties properties, array<float>^ dashes );
 
-			static StrokeStyle^ FromPointer( System::IntPtr pointer );
-
 			array<float>^ GetDashes();
 
 			property CapStyle StartCap

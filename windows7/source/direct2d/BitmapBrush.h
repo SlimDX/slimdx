@@ -39,8 +39,6 @@ namespace SlimDX
 			BitmapBrush( RenderTarget^ renderTarget, Bitmap^ bitmap, BitmapBrushProperties bitmapBrushProperties );
 			BitmapBrush( RenderTarget^ renderTarget, Bitmap^ bitmap, BitmapBrushProperties bitmapBrushProperties, BrushProperties brushProperties );
 
-			static BitmapBrush^ FromPointer( System::IntPtr pointer );
-
 			property Bitmap^ Bitmap
 			{
 				SlimDX::Direct2D::Bitmap^ get();

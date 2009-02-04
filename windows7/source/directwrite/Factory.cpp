@@ -34,16 +34,6 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
-	Factory::Factory( IDWriteFactory* pointer )
-	{
-		Construct( pointer );
-	}
-
-	Factory::Factory( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	Factory::Factory()
 	{
 		Init( FactoryType::Shared );

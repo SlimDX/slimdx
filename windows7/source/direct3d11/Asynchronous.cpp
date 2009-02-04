@@ -34,16 +34,6 @@ namespace Direct3D11
 { 
 	Asynchronous::Asynchronous()
 	{
-	}
-	
-	Asynchronous::Asynchronous( ID3D11Asynchronous* pointer )
-	{
-		Construct( pointer );
-	}
-
-	Asynchronous::Asynchronous( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
 	}	
 
 	/*

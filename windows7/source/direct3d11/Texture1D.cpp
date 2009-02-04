@@ -35,17 +35,7 @@ using namespace System::IO;
 namespace SlimDX
 {
 namespace Direct3D11
-{ 
-	Texture1D::Texture1D( ID3D11Texture1D* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	Texture1D::Texture1D( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
+{
 	Texture1D::Texture1D( SlimDX::Direct3D11::Device^ device, Texture1DDescription description )
 	{
 		Construct( Build( device, description, 0 ) );	
@@ -80,20 +70,16 @@ namespace Direct3D11
 			Construct( Build( device, description, 0 ) );	
 		}
 	}
-	
-	Texture1D^ Texture1D::FromPointer( ID3D11Texture1D* pointer )
+
+	ID3D11Texture1D* Texture1D::Build( SlimDX::Direct3D11::Device^ device, Texture1DDescription description, D3D11_SUBRESOURCE_DATA* data )
 	{
-		if( pointer == 0 )
-			return nullptr;
-
-		Texture1D^ tableEntry = safe_cast<Texture1D^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew Texture1D( pointer );
+		ID3D11Texture1D* texture = 0;
+		D3D11_TEXTURE1D_DESC nativeDescription = description.CreateNativeVersion();
+		
+		if( RECORD_D3D11( device->InternalPointer->CreateTexture1D( &nativeDescription, data, &texture ) ).IsFailure )
+			throw gcnew Direct3D11Exception( Result::Last );
+		
+		return texture;
 	}
 	
 	Texture1DDescription Texture1D::Description::get()
@@ -134,7 +120,7 @@ namespace Direct3D11
 		resource->GetType( &type );
 		if( type != D3D11_RESOURCE_DIMENSION_TEXTURE1D )
 			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
-		return gcnew Texture1D( static_cast<ID3D11Texture1D*>( resource ) );
+		return FromPointer( static_cast<ID3D11Texture1D*>( resource ) );
 	}
 	
 	Texture1D^ Texture1D::FromMemory( SlimDX::Direct3D11::Device^ device, array<Byte>^ memory )
@@ -147,7 +133,7 @@ namespace Direct3D11
 		resource->GetType( &type );
 		if( type != D3D11_RESOURCE_DIMENSION_TEXTURE1D )
 			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
-		return gcnew Texture1D( static_cast<ID3D11Texture1D*>( resource ) );
+		return FromPointer( static_cast<ID3D11Texture1D*>( resource ) );
 	}
 	
 	Texture1D^ Texture1D::FromStream( SlimDX::Direct3D11::Device^ device, Stream^ stream, int sizeInBytes )
@@ -160,7 +146,7 @@ namespace Direct3D11
 		resource->GetType( &type );
 		if( type != D3D11_RESOURCE_DIMENSION_TEXTURE1D )
 			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
-		return gcnew Texture1D( static_cast<ID3D11Texture1D*>( resource ) );
+		return FromPointer( static_cast<ID3D11Texture1D*>( resource ) );
 	}
 }
 }

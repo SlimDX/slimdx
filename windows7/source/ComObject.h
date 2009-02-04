@@ -21,6 +21,9 @@
 */
 #pragma once
 
+// This header epitomizes the abomination that is C++/CLI
+// Modify it at your own peril
+
 #ifdef X64
 #ifdef PUBLIC
 #using "../build/x64/Public/SlimDX.dll" as_friend
@@ -45,17 +48,88 @@
 
 #define COMOBJECT_BASE(nativeType) \
 	internal: \
-	static property System::Guid NativeInterface { System::Guid get() { return Utilities::ConvertNativeGuid( IID_ ## nativeType ); } } \
-	property nativeType* InternalPointer { nativeType* get() new { return static_cast<nativeType*>( UnknownPointer ); } } \
+		static property System::Guid NativeInterface { System::Guid get() { return Utilities::ConvertNativeGuid( IID_ ## nativeType ); } } \
+		property nativeType* InternalPointer { nativeType* get() new { return static_cast<nativeType*>( UnknownPointer ); } } \
 	private:
 
+// This macro provides the basic infrastructure for SlimDX ComObject subclasses. 
 #define COMOBJECT(nativeType, managedType) \
-	private: \
-	managedType( nativeType* pointer ); \
-	managedType( System::IntPtr pointer ); \
+	public protected: \
+		managedType( nativeType* pointer, ComObject^ owner ) { Construct( pointer, owner ); } \
+		managedType( System::IntPtr pointer ) { Construct( pointer, NativeInterface ); } \
 	internal: \
-	static managedType^ FromPointer( nativeType* pointer ); \
+		static managedType^ FromPointer( nativeType* pointer ) { return FromPointer( pointer, nullptr, ComObjectFlags::None ); } \
+		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner ) { return FromPointer( pointer, owner, ComObjectFlags::None ); } \
+		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner, ComObjectFlags flags ) { return ConstructFromPointer<managedType,nativeType>( pointer, owner, flags ); } \
+	public: \
+		static managedType^ FromPointer( System::IntPtr pointer ) { return ConstructFromUserPointer<managedType>( pointer ); } \
 	COMOBJECT_BASE(nativeType)
+
+// This macro provides the basic infrastructure for SlimDX ComObject subclasses, but allows
+// the subclass to customize the behavior of the creation process for that subclass. This macro
+// should be applied instead of the regular COMOBJECT() macro when such customization is required.
+// The subclass must provide a body for the following methods:
+//   * managedType( nativeType* pointer, ComObject^ owner )
+//   * managedType( System::IntPtr pointer )
+//   * managedType^ FromPointer( nativeType* pointer, ComObject^ owner, ComObjectFlags flags )
+//   * managedType^ FromPointer( System::IntPtr pointer )
+//
+// Partial specialization is not supported; if the subclass needs special behavior for only
+// a subset of the above methods, it must still implement all of them, copying the standard
+// implementation from the COMOBJECT() macro for the appropriate non-specialized methods.
+#define COMOBJECT_CUSTOM(nativeType, managedType) \
+	public protected: \
+		managedType( nativeType* pointer, ComObject^ owner ); \
+		managedType( System::IntPtr pointer ); \
+	internal: \
+		static managedType^ FromPointer( nativeType* pointer ) { return FromPointer( pointer, nullptr, ComObjectFlags::None ); } \
+		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner ) { return FromPointer( pointer, owner, ComObjectFlags::None ); } \
+		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner, ComObjectFlags flags ); \
+	public: \
+		static managedType^ FromPointer( System::IntPtr pointer ); \
+	COMOBJECT_BASE(nativeType)
+
+template< typename M, typename N >
+M^ ConstructFromPointer( N* pointer, SlimDX::ComObject^ owner, SlimDX::ComObjectFlags flags ) 
+{
+	// Since this method is called internally by SlimDX to essentially translate the results of native
+	// API calls to their managed counterparts via the object table, we expect that a null pointer
+	// might be passed, and that's okay. This differs from ConstructFromUserPointer.
+	if( pointer == 0 )
+		return nullptr;
+	
+	M^ tableEntry = safe_cast<M^>( SlimDX::ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+	if( tableEntry != nullptr )
+	{
+		if( static_cast<int>( flags & SlimDX::ComObjectFlags::ExternalReferenceCount ) == 0 ) 
+			pointer->Release();
+		return tableEntry;
+	}
+
+	M^ result = gcnew M( pointer, owner );
+	result->SetFlags( flags );
+	return result;
+}
+
+template< typename M >
+M^ ConstructFromUserPointer( System::IntPtr pointer ) 
+{
+	// This method gets called as a result of the user invoking the IntPtr overload of FromPointer
+	// to create a SlimDX object from an externally-tracked native object. In this scenario, a
+	// null pointer is a failure, so we throw.
+	if( pointer == System::IntPtr::Zero )
+		throw gcnew System::ArgumentNullException( "pointer" );
+
+	M^ tableEntry = safe_cast<M^>( SlimDX::ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+	if( tableEntry != nullptr )
+	{
+		return tableEntry;
+	}
+
+	M^ result = gcnew M( pointer );
+	result->SetFlags( SlimDX::ComObjectFlags::ExternalReferenceCount );
+	return result;
+}
 
 #define SLIMDX_UNREFERENCED_PARAMETER(P) (P)
 

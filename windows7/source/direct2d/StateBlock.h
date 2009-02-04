@@ -43,8 +43,6 @@ namespace SlimDX
 			StateBlock( SlimDX::Direct2D::Factory^ factory, DrawingStateDescription description );
 			StateBlock( SlimDX::Direct2D::Factory^ factory, DrawingStateDescription description, SlimDX::DirectWrite::RenderingParameters^ textRenderingParameters );
 
-			static StateBlock^ FromPointer( System::IntPtr pointer );
-
 			property DrawingStateDescription Description
 			{
 				DrawingStateDescription get();

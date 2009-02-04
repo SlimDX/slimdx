@@ -37,16 +37,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	TessellationSink::TessellationSink( ID2D1TessellationSink* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	TessellationSink::TessellationSink( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	Result TessellationSink::Close()
 	{
 		return RECORD_D2D( InternalPointer->Close() );

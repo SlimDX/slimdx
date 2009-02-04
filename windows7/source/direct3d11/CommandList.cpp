@@ -33,14 +33,5 @@ namespace SlimDX
 {
 namespace Direct3D11
 {
-	CommandList::CommandList( ID3D11CommandList* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	CommandList::CommandList( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
 }
 }

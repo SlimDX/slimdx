@@ -98,13 +98,6 @@ namespace SlimDX
 			Device( DXGI::Adapter^ adapter, DriverType driverType, DeviceCreationFlags flags );
 
 			/// <summary>
-			/// Constructs a Device object from a marshalled native pointer.
-			/// </summary>
-			/// <param name="pointer">The native object pointer.</param>
-			/// <returns>The Device object for the native object.</returns>
-			static Device^ FromPointer( System::IntPtr pointer );
-
-			/// <summary>
 			/// Constructs a new DeviceContext that represents a deferred context
 			/// on the Device.
 			/// </summary>

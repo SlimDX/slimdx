@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
-	TextFormat::TextFormat( IDWriteTextFormat* pointer )
-	{
-		Construct( pointer );
-	}
-
-	TextFormat::TextFormat( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	TextFormat::TextFormat( Factory^ factory, String^ familyName, FontWeight weight, FontStyle style, FontStretch stretch, 
 		float fontSize, String^ localeName, FontCollection^ fontCollection )
 	{

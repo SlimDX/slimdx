@@ -34,8 +34,6 @@ namespace SlimDX
 			COMOBJECT(ID2D1BitmapRenderTarget, BitmapRenderTarget);
 
 		public:
-			static BitmapRenderTarget^ FromPointer( System::IntPtr pointer );
-
 			property Bitmap^ Bitmap
 			{
 				SlimDX::Direct2D::Bitmap^ get();

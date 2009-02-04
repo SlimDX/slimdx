@@ -32,7 +32,6 @@ namespace SlimDX
 			COMOBJECT(ID3D11VertexShader, VertexShader);
 
 		public:
-			static VertexShader^ FromPointer( System::IntPtr pointer );
 			static VertexShader^ CompileFromFile( SlimDX::Direct3D11::Device^ device, System::String^ fileName, System::String^ entryPoint, System::String^ profile, [System::Runtime::InteropServices::OutAttribute] ShaderBlob^ %shaderBlob, [System::Runtime::InteropServices::OutAttribute] System::String^ %compilationErrors );
 		};
 	}

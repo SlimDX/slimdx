@@ -38,16 +38,6 @@ namespace Direct3D11
 	DeviceChild::DeviceChild()
 	{
 	}
-	
-	DeviceChild::DeviceChild( ID3D11DeviceChild* pointer )
-	{
-		Construct( pointer );
-	}
-
-	DeviceChild::DeviceChild( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
 
 	SlimDX::Direct3D11::Device^ DeviceChild::Device::get()
 	{

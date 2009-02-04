@@ -36,8 +36,6 @@ namespace SlimDX
 		public:
 			EllipseGeometry( SlimDX::Direct2D::Factory^ factory, Ellipse ellipse );
 
-			static EllipseGeometry^ FromPointer( System::IntPtr pointer );
-
 			property Ellipse Ellipse
 			{
 				SlimDX::Direct2D::Ellipse get();

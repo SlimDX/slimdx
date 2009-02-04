@@ -37,16 +37,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	GradientStopCollection::GradientStopCollection( ID2D1GradientStopCollection* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	GradientStopCollection::GradientStopCollection( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	GradientStopCollection::GradientStopCollection( RenderTarget^ renderTarget, array<GradientStop>^ stops )
 	{
 		ID2D1GradientStopCollection *collection = NULL;

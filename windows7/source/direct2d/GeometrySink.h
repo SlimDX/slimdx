@@ -36,8 +36,6 @@ namespace SlimDX
 			COMOBJECT(ID2D1GeometrySink, GeometrySink);
 			
 		public:
-			static GeometrySink^ FromPointer( System::IntPtr pointer );
-
 			void AddArc( ArcSegment arc );
 
 			void AddLine( System::Drawing::PointF point );

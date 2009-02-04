@@ -38,16 +38,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	GeometrySink::GeometrySink( ID2D1GeometrySink* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	GeometrySink::GeometrySink( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	void GeometrySink::AddLine( System::Drawing::Point point )
 	{
 		AddLine( CastPoint( point ) );

@@ -35,8 +35,6 @@ namespace SlimDX
 		public:
 			GdiInteropRenderTarget( RenderTarget^ renderTarget );
 
-			static GdiInteropRenderTarget^ FromPointer( System::IntPtr pointer );
-
 			System::IntPtr GetDC( DeviceContextInitializeMode mode );
 			Result ReleaseDC();
 			Result ReleaseDC( System::Drawing::Rectangle updateRegion );

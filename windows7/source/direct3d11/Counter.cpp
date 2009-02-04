@@ -33,17 +33,7 @@ using namespace System;
 namespace SlimDX
 {
 namespace Direct3D11
-{ 
-	Counter::Counter( ID3D11Counter* pointer )
-	{
-		Construct( pointer );
-	}
-
-	Counter::Counter( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
+{
 	Counter::Counter( SlimDX::Direct3D11::Device^ device, CounterDescription description )
 	{
 		ID3D11Counter* counter = 0;

@@ -40,16 +40,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	GdiInteropRenderTarget::GdiInteropRenderTarget( ID2D1GdiInteropRenderTarget* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	GdiInteropRenderTarget::GdiInteropRenderTarget( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	GdiInteropRenderTarget::GdiInteropRenderTarget( RenderTarget^ renderTarget )
 	{
 		ID2D1GdiInteropRenderTarget *rt = NULL;

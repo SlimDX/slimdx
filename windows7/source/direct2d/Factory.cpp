@@ -52,16 +52,6 @@ namespace Direct2D
 		Init( factoryType, debugLevel );
 	}
 
-	Factory::Factory( ID2D1Factory* pointer )
-	{
-		Construct( pointer );
-	}
-
-	Factory::Factory( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	void Factory::Init( FactoryType factoryType, DebugLevel debugLevel )
 	{
 		ID2D1Factory *factory = NULL;

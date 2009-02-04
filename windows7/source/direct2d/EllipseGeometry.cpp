@@ -38,16 +38,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	EllipseGeometry::EllipseGeometry( ID2D1EllipseGeometry* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	EllipseGeometry::EllipseGeometry( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	EllipseGeometry::EllipseGeometry( SlimDX::Direct2D::Factory^ factory, SlimDX::Direct2D::Ellipse ellipse )
 	{
 		ID2D1EllipseGeometry *geometry = NULL;

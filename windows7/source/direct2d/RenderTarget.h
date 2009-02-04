@@ -55,7 +55,6 @@ namespace SlimDX
 
 		public:
 			static RenderTarget^ FromDXGI( SlimDX::Direct2D::Factory^ factory, SlimDX::DXGI::Surface^ surface, RenderTargetProperties properties );
-			static RenderTarget^ FromPointer( System::IntPtr pointer );
 
 			void BeginDraw();
 			Result EndDraw();

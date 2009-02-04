@@ -34,8 +34,6 @@ namespace SlimDX
 		public:
 			DeviceContextRenderTarget( SlimDX::Direct2D::Factory^ factory, RenderTargetProperties renderTargetProperties );
 
-			static DeviceContextRenderTarget^ FromPointer( System::IntPtr pointer );
-
 			Result BindDeviceContext( System::IntPtr deviceContext, System::Drawing::Rectangle dimensions );
 		};
 	}

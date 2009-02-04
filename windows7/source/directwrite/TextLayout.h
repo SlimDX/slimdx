@@ -42,8 +42,6 @@ namespace SlimDX
 			TextLayout( Factory^ factory, System::String^ text, TextFormat^ format );
 			TextLayout( Factory^ factory, System::String^ text, TextFormat^ format, float maxWidth, float maxHeight );
 
-			static TextLayout^ FromPointer( System::IntPtr pointer );
-
 			Result SetFontSize( float size, TextRange range );
 			Result SetUnderline( bool underline, TextRange range );
 			Result SetFontWeight( FontWeight weight, TextRange range );

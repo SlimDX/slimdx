@@ -34,14 +34,5 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
-	FontCollection::FontCollection( IDWriteFontCollection* pointer )
-	{
-		Construct( pointer );
-	}
-
-	FontCollection::FontCollection( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
 }
 }

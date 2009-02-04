@@ -38,16 +38,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	SolidColorBrush::SolidColorBrush( ID2D1SolidColorBrush* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	SolidColorBrush::SolidColorBrush( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	SolidColorBrush::SolidColorBrush( RenderTarget^ renderTarget, Color4 color )
 	{
 		ID2D1SolidColorBrush *brush = NULL;

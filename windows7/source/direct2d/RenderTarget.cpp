@@ -45,16 +45,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	RenderTarget::RenderTarget( ID2D1RenderTarget* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	RenderTarget::RenderTarget( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	RenderTarget^ RenderTarget::FromDXGI( SlimDX::Direct2D::Factory^ factory, SlimDX::DXGI::Surface^ surface, RenderTargetProperties properties )
 	{
 		ID2D1RenderTarget *target;

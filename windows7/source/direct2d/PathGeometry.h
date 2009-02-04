@@ -35,8 +35,6 @@ namespace SlimDX
 		public:
 			PathGeometry( SlimDX::Direct2D::Factory^ factory );
 
-			static PathGeometry^ FromPointer( System::IntPtr pointer );
-
 			GeometrySink^ Open();
 			Result Stream( GeometrySink^ geometrySink );
 

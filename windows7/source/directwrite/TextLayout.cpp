@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
-	TextLayout::TextLayout( IDWriteTextLayout* pointer )
-	{
-		Construct( pointer );
-	}
-
-	TextLayout::TextLayout( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	TextLayout::TextLayout( Factory^ factory, System::String^ text, TextFormat^ format )
 	{
 		Init( factory, text, format, 0, 0 );

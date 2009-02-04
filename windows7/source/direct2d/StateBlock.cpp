@@ -39,16 +39,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	StateBlock::StateBlock( ID2D1DrawingStateBlock* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	StateBlock::StateBlock( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	StateBlock::StateBlock( SlimDX::Direct2D::Factory^ factory )
 	{
 		ID2D1DrawingStateBlock *stateBlock = NULL;

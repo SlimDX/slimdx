@@ -38,8 +38,6 @@ namespace SlimDX
 			RadialGradientBrush( RenderTarget^ renderTarget, GradientStopCollection^ gradientStops, RadialGradientBrushProperties radialGradientBrushProperties );
 			RadialGradientBrush( RenderTarget^ renderTarget, GradientStopCollection^ gradientStops, RadialGradientBrushProperties radialGradientBrushProperties, BrushProperties properties );
 
-			static RadialGradientBrush^ FromPointer( System::IntPtr pointer );
-
 			property System::Drawing::PointF CenterPoint
 			{
 				System::Drawing::PointF get();
