@@ -61,23 +61,11 @@ namespace SlimDX
 			/// <returns></returns>
 			array<CaptureEffectResult>^ GetEffectStatus( int effectCount );
 
-			/// <summary>
-			/// Reads data from the capture buffer.
-			/// </summary>
-			/// <param name="offset"></param>
-			/// <param name="sizeBytes"></param>
-			/// <param name="lockEntireBuffer"></param>
-			/// <returns></returns>
-			array<System::Byte>^ Read( int offset, int sizeBytes, bool lockEntireBuffer );
+			generic<typename T> where T : value class
+			Result Read( array<T>^ data, int startIndex, int count, int bufferOffset, bool lockEntireBuffer );
 
-			/// <summary>
-			/// Write data to the capture buffer.
-			/// </summary>
-			/// <param name="data"></param>
-			/// <param name="offset"></param>
-			/// <param name="lockEntireBuffer"></param>
-			/// <returns></returns>
-			Result Write( array<System::Byte>^ data, int offset, bool lockEntireBuffer );
+			generic<typename T> where T : value class
+			Result Read( array<T>^ data, int bufferOffset, bool lockEntireBuffer );
 
 			/// <summary>
 			/// Begins capturing data into the buffer. If the buffer is already capturing, the method has no effect.

@@ -87,9 +87,9 @@ namespace DirectSound
 		if( RECORD_DSOUND( hr ).IsFailure )
 			return nullptr;
 
-		DataStream^ stream1 = gcnew DataStream( buffer1, size1, true, true, false );
+		DataStream^ stream1 = gcnew DataStream( buffer1, size1, true, false, false );
 		if( buffer2 != NULL )
-			secondPart = gcnew DataStream( buffer2, size2, true, true, false );
+			secondPart = gcnew DataStream( buffer2, size2, true, false, false );
 
 		return stream1;
 	}
@@ -109,62 +109,32 @@ namespace DirectSound
 		return RECORD_DSOUND( hr );
 	}
 
-	array<Byte>^ CaptureBuffer::Read( int offset, int sizeBytes, bool lockEntireBuffer )
+	generic<typename T>
+	Result CaptureBuffer::Read( array<T>^ data, int bufferOffset, bool lockEntireBuffer )
 	{
-		DataStream^ data2;
-		DataStream^ data = Lock( offset, sizeBytes, lockEntireBuffer, data2 );
-
-		if( data == nullptr )
-			return nullptr;
-
-		array<Byte>^ readBytes1 = gcnew array<Byte>( static_cast<int>( data->Length ) );
-		array<unsigned char>^ readBytes2 = nullptr;
-
-		int read = data->Read( readBytes1, 0, static_cast<int>( data->Length ) );
-
-		if( data2 != nullptr && read < sizeBytes )
-		{
-			readBytes2 = gcnew array<Byte>( read - sizeBytes );
-			data2->Read( readBytes2, 0, read - sizeBytes );
-		}
-
-		if( Unlock( data, data2 ).IsFailure )
-			return nullptr;
-
-		int length = readBytes1->Length;
-
-		if( readBytes2 != nullptr )
-			length += readBytes2->Length;
-
-		array<Byte>^ totalBytes = gcnew array<Byte>( length );
-
-		for( int i = 0; i < readBytes1->Length; i++ )
-			totalBytes[i] = readBytes1[i];
-
-		if( readBytes2 != nullptr )
-		{
-			for( int i = 0; i < readBytes2->Length; i++ )
-				totalBytes[readBytes1->Length + i] = readBytes2[i];
-		}
-
-		return totalBytes;
+		return Read( data, 0, 0, bufferOffset, lockEntireBuffer );
 	}
 
-	Result CaptureBuffer::Write( array<Byte>^ data, int offset, bool lockEntireBuffer )
+	generic<typename T>
+	Result CaptureBuffer::Read( array<T>^ data, int startIndex, int count, int bufferOffset, bool lockEntireBuffer )
 	{
+		Utilities::CheckArrayBounds( data, startIndex, count );
+		int bytes = sizeof(T) * count;
+
 		DataStream^ stream2;
-		DataStream^ stream1 = Lock( offset, data->Length, lockEntireBuffer, stream2 );
+		DataStream^ stream1 = Lock( bufferOffset, bytes, lockEntireBuffer, stream2 );
 
 		if( stream1 == nullptr )
 			return Result::Last;
 
-		stream1->Write( data, 0, static_cast<int>( stream1->Length ) );
+		int count1 = static_cast<int>( stream1->Length ) / sizeof(T);
+		stream1->ReadRange( data, startIndex, count1 );
 
-		if( stream2 != nullptr && data->Length > stream1->Length )				
+		if( stream2 != nullptr && count > count1 )
 		{
-			int offset2 = static_cast<int>( stream1->Length );
-			int count = static_cast<int>( data->Length ) - offset2;
-			stream2->Write( data, offset2, count );
+			int offset2 = count1 + startIndex;
+			int count2 = static_cast<int>( data->Length ) - offset2;
+			stream2->ReadRange( data, offset2, count2 );
 		}
 
 		return Unlock( stream1, stream2 );

@@ -107,11 +107,12 @@ namespace DirectSound
 		if( stream1 == nullptr )
 			return Result::Last;
 
-		stream1->WriteRange( data, startIndex, static_cast<int>( stream1->Length ) );
+		int count1 = static_cast<int>( stream1->Length ) / sizeof(T);
+		stream1->WriteRange( data, startIndex, count1 );
 
-		if( stream2 != nullptr && count > stream1->Length )				
+		if( stream2 != nullptr && count > count1 )				
 		{
-			int offset2 = static_cast<int>( stream1->Length ) + startIndex;
+			int offset2 = count1 + startIndex;
 			int count2 = static_cast<int>( data->Length ) - offset2;
 			stream2->WriteRange( data, offset2, count2 );
 		}
