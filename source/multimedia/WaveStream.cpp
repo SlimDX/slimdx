@@ -73,12 +73,12 @@ namespace Multimedia
 		if( bytes == nullptr )
 		{
 			Int64 size = ds->RemainingLength;
-			internalMemory = gcnew DataStream( size, true, false );
+			internalMemory = gcnew DataStream( size, true, true );
 			internalMemory->WriteRange( IntPtr( ds->SeekToEnd() ), size );
 		}
 		else
 		{
-			internalMemory = gcnew DataStream( bytes->LongLength, true, false );
+			internalMemory = gcnew DataStream( bytes->LongLength, true, true );
 			internalMemory->Write( bytes, 0, bytes->Length );
 		}
 
