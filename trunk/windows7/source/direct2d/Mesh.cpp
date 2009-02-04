@@ -37,16 +37,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	Mesh::Mesh( ID2D1Mesh* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	Mesh::Mesh( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	Mesh::Mesh( RenderTarget^ renderTarget )
 	{
 		ID2D1Mesh *mesh = NULL;

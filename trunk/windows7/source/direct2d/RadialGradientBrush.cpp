@@ -38,16 +38,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	RadialGradientBrush::RadialGradientBrush( ID2D1RadialGradientBrush* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	RadialGradientBrush::RadialGradientBrush( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	RadialGradientBrush::RadialGradientBrush( RenderTarget^ renderTarget, GradientStopCollection^ gradientStops, RadialGradientBrushProperties radialGradientBrushProperties )
 	{
 		ID2D1RadialGradientBrush *brush = NULL;

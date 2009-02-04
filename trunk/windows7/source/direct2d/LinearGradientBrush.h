@@ -38,8 +38,6 @@ namespace SlimDX
 			LinearGradientBrush( RenderTarget^ renderTarget, GradientStopCollection^ gradientStops, LinearGradientBrushProperties linearGradientBrushProperties );
 			LinearGradientBrush( RenderTarget^ renderTarget, GradientStopCollection^ gradientStops, LinearGradientBrushProperties linearGradientBrushProperties, BrushProperties properties );
 
-			static LinearGradientBrush^ FromPointer( System::IntPtr pointer );
-
 			property System::Drawing::PointF StartPoint
 			{
 				System::Drawing::PointF get();

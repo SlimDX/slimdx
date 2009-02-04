@@ -34,8 +34,6 @@ namespace SlimDX
 		public:
 			RectangleGeometry( SlimDX::Direct2D::Factory^ factory, System::Drawing::RectangleF rectangle );
 
-			static RectangleGeometry^ FromPointer( System::IntPtr pointer );
-
 			property System::Drawing::RectangleF Rectangle
 			{
 				System::Drawing::RectangleF get();

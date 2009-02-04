@@ -74,13 +74,6 @@ namespace SlimDX
 			/// <param name="data">An array of initial texture data for each subresource.</param>
 			Texture1D( SlimDX::Direct3D11::Device^ device, Texture1DDescription description, array<DataStream^>^ data );
 			
-			/// <summary>
-			/// Constructs a texture object from a marshalled native pointer.
-			/// </summary>
-			/// <param name="pointer">The native object pointer.</param>
-			/// <returns>The Texture1D object for the native object.</returns>
-			static Texture1D^ FromPointer( System::IntPtr pointer );
-			
 			// TODO: Fix
 			/*
 			/// <summary>

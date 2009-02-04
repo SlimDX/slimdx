@@ -41,8 +41,6 @@ namespace SlimDX
 			Bitmap( RenderTarget^ renderTarget, System::Drawing::Size size );
 			Bitmap( RenderTarget^ renderTarget, System::Drawing::Size size, DataStream^ data, int pitch );
 
-			static Bitmap^ FromPointer( System::IntPtr pointer );
-
 			Result FromBitmap( Bitmap^ sourceBitmap );
 			Result FromBitmap( Bitmap^ sourceBitmap, System::Drawing::Point destinationPoint );
 			Result FromBitmap( Bitmap^ sourceBitmap, System::Drawing::Point destinationPoint, System::Drawing::Rectangle sourceArea );

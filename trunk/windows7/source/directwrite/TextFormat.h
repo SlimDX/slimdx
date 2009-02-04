@@ -41,8 +41,6 @@ namespace SlimDX
 			TextFormat( Factory^ factory, System::String^ familyName, FontWeight weight, FontStyle style, FontStretch stretch, float fontSize, System::String^ localeName );
 			TextFormat( Factory^ factory, System::String^ familyName, FontWeight weight, FontStyle style, FontStretch stretch, float fontSize, System::String^ localeName, FontCollection^ fontCollection );
 
-			static TextFormat^ FromPointer( System::IntPtr pointer );
-
 			property TextAlignment TextAlignment
 			{
 				SlimDX::DirectWrite::TextAlignment get();

@@ -35,17 +35,7 @@ using namespace System::IO;
 namespace SlimDX
 {
 namespace Direct3D11
-{ 
-	Texture3D::Texture3D( ID3D11Texture3D* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	Texture3D::Texture3D( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
+{	
 	Texture3D::Texture3D( SlimDX::Direct3D11::Device^ device, Texture3DDescription description )
 	{
 		Construct( Build( device, description, 0 ) );
@@ -135,8 +125,8 @@ namespace Direct3D11
 		D3D11_RESOURCE_DIMENSION type;
 		resource->GetType( &type );
 		if( type != D3D11_RESOURCE_DIMENSION_TEXTURE3D )
-			throw gcnew InvalidOperationException( "Could not load file as 3D texture." ); 
-		return gcnew Texture3D( static_cast<ID3D11Texture3D*>( resource ) );
+			throw gcnew InvalidOperationException( "Could not load file as 3D texture." );
+		return Texture3D::FromPointer( static_cast<ID3D11Texture3D*>( resource ) );
 	}
 	
 	Texture3D^ Texture3D::FromMemory( SlimDX::Direct3D11::Device^ device, array<Byte>^ memory )
@@ -149,7 +139,7 @@ namespace Direct3D11
 		resource->GetType( &type );
 		if( type != D3D11_RESOURCE_DIMENSION_TEXTURE3D )
 			throw gcnew InvalidOperationException( "Could not load file as 3D texture." ); 
-		return gcnew Texture3D( static_cast<ID3D11Texture3D*>( resource ) );
+		return Texture3D::FromPointer( static_cast<ID3D11Texture3D*>( resource ) );
 	}
 	
 	Texture3D^ Texture3D::FromStream( SlimDX::Direct3D11::Device^ device, Stream^ stream, int sizeInBytes )
@@ -162,7 +152,7 @@ namespace Direct3D11
 		resource->GetType( &type );
 		if( type != D3D11_RESOURCE_DIMENSION_TEXTURE3D )
 			throw gcnew InvalidOperationException( "Could not load file as 3D texture." ); 
-		return gcnew Texture3D( static_cast<ID3D11Texture3D*>( resource ) );
+		return Texture3D::FromPointer( static_cast<ID3D11Texture3D*>( resource ) );
 	}
 }
 }

@@ -29,15 +29,6 @@ using namespace System;
 namespace SlimDX
 {
 namespace Direct3D11
-{ 
-	GeometryShader::GeometryShader( ID3D11GeometryShader* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	GeometryShader::GeometryShader( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
+{
 }
 }

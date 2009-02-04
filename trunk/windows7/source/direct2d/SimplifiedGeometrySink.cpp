@@ -38,16 +38,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	SimplifiedGeometrySink::SimplifiedGeometrySink( ID2D1SimplifiedGeometrySink* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	SimplifiedGeometrySink::SimplifiedGeometrySink( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	void SimplifiedGeometrySink::BeginFigure( System::Drawing::Point startPoint, FigureBegin style )
 	{
 		D2D1_POINT_2F point = D2D1::Point2F( static_cast<FLOAT>( startPoint.X ), static_cast<FLOAT>( startPoint.Y ) );

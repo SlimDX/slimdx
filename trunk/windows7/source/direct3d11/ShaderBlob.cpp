@@ -31,30 +31,6 @@ using namespace System;
 namespace SlimDX
 {
 namespace Direct3D11
-{ 
-	ShaderBlob::ShaderBlob( ID3D10Blob* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	ShaderBlob::ShaderBlob( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
-	ShaderBlob^ ShaderBlob::FromPointer( ID3D10Blob* pointer )
-	{
-		if( pointer == 0 )
-			return nullptr;
-
-		ShaderBlob^ tableEntry = safe_cast<ShaderBlob^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
-		if( tableEntry != nullptr )
-		{
-			pointer->Release();
-			return tableEntry;
-		}
-
-		return gcnew ShaderBlob( pointer );
-	}
+{
 }
 }

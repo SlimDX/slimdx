@@ -37,8 +37,6 @@ namespace SlimDX
 		public:
 			Typography( Factory^ factory );
 
-			static Typography^ FromPointer( System::IntPtr pointer );
-
 			Result AddFeature( FontFeature feature );
 			FontFeature GetFeature( int featureIndex );
 

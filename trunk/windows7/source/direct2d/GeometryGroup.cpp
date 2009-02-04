@@ -39,16 +39,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	GeometryGroup::GeometryGroup( ID2D1GeometryGroup* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	GeometryGroup::GeometryGroup( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	GeometryGroup::GeometryGroup( SlimDX::Direct2D::Factory^ factory, SlimDX::Direct2D::FillMode fillMode, array<Geometry^>^ geometries )
 	{
 		ID2D1GeometryGroup *group = NULL;

@@ -88,13 +88,6 @@ namespace SlimDX
 			/// <param name="accessFlags">Specifies how the buffer will be accessible from the CPU.</param>
 			/// <param name="optionFlags">Specifies miscellaneous resource options.</param>
 			Buffer( SlimDX::Direct3D11::Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D11::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
-			
-			/// <summary>
-			/// Constructs a Buffer object from a marshalled native pointer.
-			/// </summary>
-			/// <param name="pointer">The native object pointer.</param>
-			/// <returns>The Buffer object for the native object.</returns>
-			static Buffer^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };

@@ -38,16 +38,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	Geometry::Geometry( ID2D1Geometry* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	Geometry::Geometry( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
 	Result Geometry::Combine( Geometry^ geometry1, Geometry^ geometry2, CombineMode combineMode, SimplifiedGeometrySink^ geometrySink )
 	{
 		HRESULT hr = geometry1->InternalPointer->CombineWithGeometry( geometry2->InternalPointer, static_cast<D2D1_COMBINE_MODE>( combineMode ),

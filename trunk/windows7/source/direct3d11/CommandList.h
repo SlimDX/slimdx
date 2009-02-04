@@ -33,14 +33,6 @@ namespace SlimDX
 		public ref class CommandList : ComObject
 		{
 			COMOBJECT(ID3D11CommandList, CommandList);
-		
-		public:
-			/// <summary>
-			/// Constructs a CommandList object from a marshalled native pointer.
-			/// </summary>
-			/// <param name="pointer">The native object pointer.</param>
-			/// <returns>The CommandList object for the native object.</returns>
-			static CommandList^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };

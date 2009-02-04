@@ -33,17 +33,7 @@ using namespace System;
 namespace SlimDX
 {
 namespace Direct3D11
-{ 
-	RasterizerState::RasterizerState( ID3D11RasterizerState* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	RasterizerState::RasterizerState( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
+{
 	RasterizerState^ RasterizerState::FromDescription( SlimDX::Direct3D11::Device^ device, RasterizerStateDescription description )
 	{
 		if( device == nullptr )

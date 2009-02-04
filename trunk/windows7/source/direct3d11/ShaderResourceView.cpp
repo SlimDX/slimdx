@@ -35,17 +35,7 @@ using namespace System;
 namespace SlimDX
 {
 namespace Direct3D11
-{ 
-	ShaderResourceView::ShaderResourceView( ID3D11ShaderResourceView* pointer )
-	{
-		Construct( pointer );
-	}
-
-	ShaderResourceView::ShaderResourceView( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
+{
 	ShaderResourceView::ShaderResourceView( SlimDX::Direct3D11::Device^ device, Resource^ resource )
 	{
 		if( device == nullptr )

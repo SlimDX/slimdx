@@ -33,15 +33,5 @@ namespace Direct3D11
 	ResourceView::ResourceView()
 	{
 	}
-	
-	ResourceView::ResourceView( ID3D11View* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	ResourceView::ResourceView( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
 }
 }

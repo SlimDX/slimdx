@@ -38,8 +38,6 @@ namespace SlimDX
 			Factory( FactoryType factoryType );
 			Factory( FactoryType factoryType, DebugLevel debugLevel );
 
-			static Factory^ FromPointer( System::IntPtr pointer );
-
 			Result ReloadSystemMetrics();
 
 			property System::Drawing::SizeF DesktopDpi

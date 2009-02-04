@@ -58,13 +58,6 @@ namespace SlimDX
 			/// <param name="description">The state description.</param>
 			/// <returns>The BlendState object.</returns>
 			static BlendState^ FromDescription( SlimDX::Direct3D11::Device^ device, BlendStateDescription description );
-			
-			/// <summary>
-			/// Constructs a BlendState object from a marshaled native pointer.
-			/// </summary>
-			/// <param name="pointer">The native object pointer.</param>
-			/// <returns>The BlendState object for the native object.</returns>
-			static BlendState^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };

@@ -35,8 +35,6 @@ namespace SlimDX
 			WindowRenderTarget( SlimDX::Direct2D::Factory^ factory, WindowRenderTargetProperties windowRenderTargetProperties );
 			WindowRenderTarget( SlimDX::Direct2D::Factory^ factory, RenderTargetProperties renderTargetProperties, WindowRenderTargetProperties windowRenderTargetProperties );
 
-			static WindowRenderTarget^ FromPointer( System::IntPtr pointer );
-
 			Result Resize( System::Drawing::Size size );
 
 			property System::IntPtr Handle

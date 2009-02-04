@@ -36,8 +36,6 @@ namespace SlimDX
 			SimplifiedGeometrySink() { };
 			
 		public:
-			static SimplifiedGeometrySink^ FromPointer( System::IntPtr pointer );
-
 			void BeginFigure( System::Drawing::Point startPoint, FigureBegin style );
 			void BeginFigure( System::Drawing::PointF startPoint, FigureBegin style );
 			void EndFigure( FigureEnd style );

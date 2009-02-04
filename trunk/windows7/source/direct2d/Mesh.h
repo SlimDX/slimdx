@@ -36,8 +36,6 @@ namespace SlimDX
 		public:
 			Mesh( RenderTarget^ renderTarget );
 
-			static Mesh^ FromPointer( System::IntPtr pointer );
-
 			TessellationSink^ Open();
 		};
 	}

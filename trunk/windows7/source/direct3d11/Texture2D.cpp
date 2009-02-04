@@ -35,17 +35,7 @@ using namespace System::IO;
 namespace SlimDX
 {
 namespace Direct3D11
-{ 
-	Texture2D::Texture2D( ID3D11Texture2D* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	Texture2D::Texture2D( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
+{
 	Texture2D::Texture2D( SlimDX::Direct3D11::Device^ device, Texture2DDescription description )
 	{
 		Construct( Build( device, description, 0 ) );	
@@ -134,7 +124,7 @@ namespace Direct3D11
 		resource->GetType( &type );
 		if( type != D3D11_RESOURCE_DIMENSION_TEXTURE2D )
 			throw gcnew InvalidOperationException( "Could not load file as 2D texture." ); 
-		return gcnew Texture2D( static_cast<ID3D11Texture2D*>( resource ) );
+		return Texture2D::FromPointer( static_cast<ID3D11Texture2D*>( resource ) );
 	}
 	
 	Texture2D^ Texture2D::FromMemory( SlimDX::Direct3D11::Device^ device, array<Byte>^ memory )
@@ -147,7 +137,7 @@ namespace Direct3D11
 		resource->GetType( &type );
 		if( type != D3D11_RESOURCE_DIMENSION_TEXTURE2D )
 			throw gcnew InvalidOperationException( "Could not load file as 2D texture." ); 
-		return gcnew Texture2D( static_cast<ID3D11Texture2D*>( resource ) );
+		return Texture2D::FromPointer( static_cast<ID3D11Texture2D*>( resource ) );
 	}
 	
 	Texture2D^ Texture2D::FromStream( SlimDX::Direct3D11::Device^ device, Stream^ stream, int sizeInBytes )
@@ -160,7 +150,7 @@ namespace Direct3D11
 		resource->GetType( &type );
 		if( type != D3D11_RESOURCE_DIMENSION_TEXTURE2D )
 			throw gcnew InvalidOperationException( "Could not load file as 2D texture." ); 
-		return gcnew Texture2D( static_cast<ID3D11Texture2D*>( resource ) );
+		return Texture2D::FromPointer( static_cast<ID3D11Texture2D*>( resource ) );
 	}
 }
 }

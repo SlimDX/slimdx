@@ -30,9 +30,6 @@ namespace SlimDX
 		public ref class FontCollection : public ComObject
 		{
 			COMOBJECT(IDWriteFontCollection, FontCollection);
-
-		public:
-			static FontCollection^ FromPointer( System::IntPtr pointer );
 		};
 	}
 }

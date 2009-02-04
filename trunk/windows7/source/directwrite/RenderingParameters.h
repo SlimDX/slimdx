@@ -30,9 +30,6 @@ namespace SlimDX
 		public ref class RenderingParameters : public ComObject
 		{
 			COMOBJECT(IDWriteRenderingParams, RenderingParameters);
-
-		public:
-			static RenderingParameters^ FromPointer( System::IntPtr pointer );
 		};
 	}
 }

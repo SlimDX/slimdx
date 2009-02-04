@@ -35,8 +35,6 @@ namespace SlimDX
 		public:
 			RoundedRectangleGeometry( SlimDX::Direct2D::Factory^ factory, SlimDX::Direct2D::RoundedRectangle rectangle );
 
-			static RoundedRectangleGeometry^ FromPointer( System::IntPtr pointer );
-
 			property RoundedRectangle RoundedRectangle
 			{
 				SlimDX::Direct2D::RoundedRectangle get();

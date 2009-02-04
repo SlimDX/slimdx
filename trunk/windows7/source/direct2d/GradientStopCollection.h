@@ -38,8 +38,6 @@ namespace SlimDX
 			GradientStopCollection( RenderTarget^ renderTarget, array<GradientStop>^ stops );
 			GradientStopCollection( RenderTarget^ renderTarget, array<GradientStop>^ stops, Gamma gamma, ExtendMode extendMode );
 
-			static GradientStopCollection^ FromPointer( System::IntPtr pointer );
-
 			array<GradientStop>^ GetStops();
 
 			property Gamma InterpolationGamma

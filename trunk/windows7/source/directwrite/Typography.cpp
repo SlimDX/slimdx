@@ -35,16 +35,6 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
-	Typography::Typography( IDWriteTypography* pointer )
-	{
-		Construct( pointer );
-	}
-
-	Typography::Typography( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	Typography::Typography( Factory^ factory )
 	{
 		IDWriteTypography *typo = NULL;

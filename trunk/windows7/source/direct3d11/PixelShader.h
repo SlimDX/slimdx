@@ -30,7 +30,6 @@ namespace SlimDX
 			COMOBJECT(ID3D11PixelShader, PixelShader);
 
 		public:
-			static PixelShader^ FromPointer( System::IntPtr pointer );
 			static PixelShader^ CompileFromFile( SlimDX::Direct3D11::Device^ device, System::String^ fileName, System::String^ entryPoint, System::String^ profile, [System::Runtime::InteropServices::Out] System::String^ %compilationErrors );
 		};
 	}

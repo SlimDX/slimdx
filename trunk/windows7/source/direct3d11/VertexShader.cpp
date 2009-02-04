@@ -36,17 +36,7 @@ using namespace System;
 namespace SlimDX
 {
 namespace Direct3D11
-{ 
-	VertexShader::VertexShader( ID3D11VertexShader* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	VertexShader::VertexShader( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
+{
 	VertexShader^ VertexShader::CompileFromFile( SlimDX::Direct3D11::Device^ device, System::String^ fileName, System::String^ entryPoint, System::String^ profile, [Out] ShaderBlob^ %shaderBlob, [Out] String^ %compilationErrors )
 	{
 		pin_ptr<const wchar_t> pinnedFileName = PtrToStringChars( fileName );

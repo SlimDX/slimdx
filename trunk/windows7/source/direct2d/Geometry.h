@@ -42,8 +42,6 @@ namespace SlimDX
 			Geometry() { };
 			
 		public:
-			static Geometry^ FromPointer( System::IntPtr pointer );
-
 			literal float DefaultFlatteningTolerance = D2D1_DEFAULT_FLATTENING_TOLERANCE;
 
 			static Result Combine( Geometry^ geometry1, Geometry^ geometry2, CombineMode combineMode, SimplifiedGeometrySink^ geometrySink );

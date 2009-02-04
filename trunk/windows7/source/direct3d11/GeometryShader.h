@@ -32,9 +32,6 @@ namespace SlimDX
 		public ref class GeometryShader : public DeviceChild
 		{
 			COMOBJECT(ID3D11GeometryShader, GeometryShader);
-
-		public:
-			static GeometryShader^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };

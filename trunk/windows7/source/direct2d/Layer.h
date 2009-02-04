@@ -36,8 +36,6 @@ namespace SlimDX
 			Layer( RenderTarget^ renderTarget );
 			Layer( RenderTarget^ renderTarget, System::Drawing::SizeF size );
 
-			static Layer^ FromPointer( System::IntPtr pointer );
-
 			property System::Drawing::SizeF Size
 			{
 				System::Drawing::SizeF get();

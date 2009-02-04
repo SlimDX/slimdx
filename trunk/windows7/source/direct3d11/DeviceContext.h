@@ -57,7 +57,7 @@ namespace SlimDX
 		/// </summary>
 		public ref class DeviceContext : ComObject
 		{
-			COMOBJECT(ID3D11DeviceContext, DeviceContext);
+			COMOBJECT_CUSTOM(ID3D11DeviceContext, DeviceContext);
 		
 		private:
 			InputAssemblerWrapper^ m_InputAssembler;
@@ -102,13 +102,6 @@ namespace SlimDX
 			{
 				RasterizerWrapper^ get();
 			}
-						
-			/// <summary>
-			/// Constructs a Device Context object from a marshalled native pointer.
-			/// </summary>
-			/// <param name="pointer">The native object pointer.</param>
-			/// <returns>The Device object for the native object.</returns>
-			static DeviceContext^ FromPointer( System::IntPtr pointer );
 			
 			/// <summary>
 			/// Clears the specified depth-stencil resource.

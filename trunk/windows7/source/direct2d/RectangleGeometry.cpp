@@ -38,16 +38,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	RectangleGeometry::RectangleGeometry( ID2D1RectangleGeometry* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	RectangleGeometry::RectangleGeometry( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	RectangleGeometry::RectangleGeometry( SlimDX::Direct2D::Factory^ factory, System::Drawing::RectangleF rectangle )
 	{
 		ID2D1RectangleGeometry *geometry = NULL;

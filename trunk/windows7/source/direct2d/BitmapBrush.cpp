@@ -38,16 +38,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	BitmapBrush::BitmapBrush( ID2D1BitmapBrush* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	BitmapBrush::BitmapBrush( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	BitmapBrush::BitmapBrush( RenderTarget^ renderTarget, SlimDX::Direct2D::Bitmap^ bitmap )
 	{
 		ID2D1BitmapBrush *brush = NULL;

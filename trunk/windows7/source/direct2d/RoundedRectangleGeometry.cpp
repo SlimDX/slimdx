@@ -38,16 +38,6 @@ namespace SlimDX
 {
 namespace Direct2D
 {
-	RoundedRectangleGeometry::RoundedRectangleGeometry( ID2D1RoundedRectangleGeometry* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	RoundedRectangleGeometry::RoundedRectangleGeometry( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
 	RoundedRectangleGeometry::RoundedRectangleGeometry( SlimDX::Direct2D::Factory^ factory, SlimDX::Direct2D::RoundedRectangle rectangle )
 	{
 		ID2D1RoundedRectangleGeometry *geometry = NULL;

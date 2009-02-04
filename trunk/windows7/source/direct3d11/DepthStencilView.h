@@ -44,7 +44,6 @@ namespace SlimDX
 			
 			DepthStencilView( SlimDX::Direct3D11::Device^ device, Resource^ resource );
 			DepthStencilView( SlimDX::Direct3D11::Device^ device, Resource^ resource, DepthStencilViewDescription description );
-			static DepthStencilView^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };

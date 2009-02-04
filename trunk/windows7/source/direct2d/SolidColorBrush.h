@@ -36,8 +36,6 @@ namespace SlimDX
 			SolidColorBrush( RenderTarget^ renderTarget, Color4 color );
 			SolidColorBrush( RenderTarget^ renderTarget, Color4 color, BrushProperties properties );
 
-			static SolidColorBrush^ FromPointer( System::IntPtr pointer );
-
 			property Color4 Color
 			{
 				Color4 get();

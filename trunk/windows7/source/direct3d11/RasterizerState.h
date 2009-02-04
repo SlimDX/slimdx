@@ -58,13 +58,6 @@ namespace SlimDX
 			/// <param name="description">The state description.</param>
 			/// <returns>The RasterizerState object.</returns>
 			static RasterizerState^ FromDescription( SlimDX::Direct3D11::Device^ device, RasterizerStateDescription description );
-			
-			/// <summary>
-			/// Constructs a RasterizerState object from a marshaled native pointer.
-			/// </summary>
-			/// <param name="pointer">The native object pointer.</param>
-			/// <returns>The RasterizerState object for the native object.</returns>
-			static RasterizerState^ FromPointer( System::IntPtr pointer );
 		};
 	}
 };

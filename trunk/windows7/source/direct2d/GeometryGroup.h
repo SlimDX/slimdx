@@ -35,8 +35,6 @@ namespace SlimDX
 		public:
 			GeometryGroup( SlimDX::Direct2D::Factory^ factory, FillMode fillMode, array<Geometry^>^ geometries );
 
-			static GeometryGroup^ FromPointer( System::IntPtr pointer );
-
 			array<Geometry^>^ GetSourceGeometry();
 
 			property FillMode FillMode
