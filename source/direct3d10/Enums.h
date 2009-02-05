@@ -580,13 +580,7 @@ namespace SlimDX
 		public enum class QueryFlags : System::Int32
 		{
 			None = 0,
-			Occlusion = D3D10_QUERY_OCCLUSION,
-			Timestamp = D3D10_QUERY_TIMESTAMP,
-			TimestampDisjoint = D3D10_QUERY_TIMESTAMP_DISJOINT,
-			PipelineStatistics = D3D10_QUERY_PIPELINE_STATISTICS,
-			Predicate = D3D10_QUERY_OCCLUSION_PREDICATE,
-			StreamOutputStatistics = D3D10_QUERY_SO_STATISTICS,
-			StreamOutputOverflowPredicate = D3D10_QUERY_SO_OVERFLOW_PREDICATE,
+			PredicateHint = D3D10_QUERY_MISC_PREDICATEHINT,
 		};
 		
 		/// <summary>
@@ -596,7 +590,13 @@ namespace SlimDX
 		public enum class QueryType : System::Int32
 		{
 			Event = D3D10_QUERY_EVENT,
-			PredicateHint = D3D10_QUERY_MISC_PREDICATEHINT,
+			Occlusion = D3D10_QUERY_OCCLUSION,
+			Timestamp = D3D10_QUERY_TIMESTAMP,
+			TimestampDisjoint = D3D10_QUERY_TIMESTAMP_DISJOINT,
+			PipelineStatistics = D3D10_QUERY_PIPELINE_STATISTICS,
+			Predicate = D3D10_QUERY_OCCLUSION_PREDICATE,
+			StreamOutputStatistics = D3D10_QUERY_SO_STATISTICS,
+			StreamOutputOverflowPredicate = D3D10_QUERY_SO_OVERFLOW_PREDICATE,
 		};
 		
 		/// <summary>
