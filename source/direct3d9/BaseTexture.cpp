@@ -39,6 +39,9 @@ namespace Direct3D9
 {
 	BaseTexture^ BaseTexture::FromUnmanaged( IDirect3DBaseTexture9 *texture )
 	{
+		if( texture == NULL )
+			return nullptr;
+
 		switch( texture->GetType() )
 		{
 		case D3DRTYPE_TEXTURE:
