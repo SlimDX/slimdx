@@ -573,6 +573,33 @@ namespace SlimDX
 		};
 		
 		/// <summary>
+		/// Flags for describing query options and behavior.
+		/// </summary>
+		/// <unmanaged>D3D10_QUERY_MISC_FLAG</unmanaged>
+		[System::Flags]
+		public enum class QueryFlags : System::Int32
+		{
+			None = 0,
+			Occlusion = D3D10_QUERY_OCCLUSION,
+			Timestamp = D3D10_QUERY_TIMESTAMP,
+			TimestampDisjoint = D3D10_QUERY_TIMESTAMP_DISJOINT,
+			PipelineStatistics = D3D10_QUERY_PIPELINE_STATISTICS,
+			Predicate = D3D10_QUERY_OCCLUSION_PREDICATE,
+			StreamOutputStatistics = D3D10_QUERY_SO_STATISTICS,
+			StreamOutputOverflowPredicate = D3D10_QUERY_SO_OVERFLOW_PREDICATE,
+		};
+		
+		/// <summary>
+		/// Values which description query types.
+		/// </summary>
+		/// <unmanaged>D3D10_QUERY</unmanaged>
+		public enum class QueryType : System::Int32
+		{
+			Event = D3D10_QUERY_EVENT,
+			PredicateHint = D3D10_QUERY_MISC_PREDICATEHINT,
+		};
+		
+		/// <summary>
 		/// Flags that indicate which components of a value are valid.
 		/// </summary>
 		[System::Flags]
