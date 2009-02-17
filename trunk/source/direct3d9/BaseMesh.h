@@ -33,6 +33,10 @@ namespace SlimDX
 		ref class IndexBuffer;
 		enum class VertexFormat;
 
+		/// <summary>
+		/// Provides an interface to manipulate mesh and progressive mesh objects.
+		/// </summary>
+		/// <unmanaged>ID3DXBaseMesh</unmanaged>
 		public ref class BaseMesh abstract : public ComObject
 		{
 			COMOBJECT_BASE(ID3DXBaseMesh);

@@ -40,6 +40,10 @@ namespace SlimDX
 	{
 		ref class SkinInfo;
 
+		/// <summary>
+		/// Provides an interface to manipulate mesh objects.
+		/// </summary>
+		/// <unmanaged>ID3DXMesh</unmanaged>
 		public ref class Mesh : public BaseMesh
 		{
 			COMOBJECT(ID3DXMesh, Mesh);

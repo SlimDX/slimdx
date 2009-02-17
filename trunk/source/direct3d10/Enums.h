@@ -146,8 +146,8 @@ namespace SlimDX
 			TextureCacheHitRate = D3D10_COUNTER_TEXTURE_CACHE_HIT_RATE
 		};
 		
-		/// <summary>D3D10_COUNTER_TYPE</summary>
-		/// <unmanaged>Data type of a performance counter.</unmanaged>
+		/// <summary>Data type of a performance counter.</summary>
+		/// <unmanaged>D3D10_COUNTER_TYPE</unmanaged>
 		public enum class CounterType : System::Int32
 		{
 			Float32 = D3D10_COUNTER_TYPE_FLOAT32,
