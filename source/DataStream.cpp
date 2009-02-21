@@ -299,7 +299,7 @@ namespace SlimDX
 		Int64 elementSize = static_cast<Int64>( sizeof(T) );
 		size_t actualCount = min( static_cast<size_t>((Length - m_Position) / elementSize), static_cast<size_t>( count ) );
 
-		pin_ptr<T> pinnedBuffer = &buffer[0];
+		pin_ptr<T> pinnedBuffer = &buffer[offset];
 		memcpy( pinnedBuffer, m_Buffer + m_Position, static_cast<size_t>( actualCount * elementSize ) );
 		m_Position += actualCount * elementSize;
 		return static_cast<int>( actualCount );
