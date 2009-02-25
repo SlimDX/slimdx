@@ -21,6 +21,9 @@
 */
 #pragma once
 
+#include <msclr/marshal.h>
+#include <msclr/marshal_windows.h>
+
 #define SLIMDX_UNREFERENCED_PARAMETER(P) (P)
 
 #ifdef NDEBUG
@@ -28,3 +31,30 @@
 #else
 #	define SLIMDX_DEBUG_UNREFERENCED_PARAMETER(P) (P)
 #endif
+
+namespace msclr
+{
+	namespace interop
+	{
+		template<>
+		inline System::Drawing::Rectangle marshal_as<System::Drawing::Rectangle, RECT>( const RECT &from )
+		{
+			return System::Drawing::Rectangle::FromLTRB( from.left, from.top, from.right, from.bottom );
+		}
+
+		template<class _To_Type>
+		inline _To_Type marshal_as(System::Drawing::Rectangle _from_object);
+
+		template<>
+		inline RECT marshal_as( System::Drawing::Rectangle from )
+		{
+			RECT to;
+			to.left = from.Left;
+			to.right = from.Right;
+			to.top = from.Top;
+			to.bottom = from.Bottom;
+
+			return to;
+		}
+	}
+}
