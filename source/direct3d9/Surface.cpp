@@ -25,6 +25,7 @@
 
 #include "../ComObject.h"
 #include "../DataStream.h"
+#include "../InternalHelpers.h"
 
 #include "Direct3D9Exception.h"
 
@@ -35,6 +36,7 @@
 using namespace System;
 using namespace System::IO;
 using namespace System::Reflection;
+using namespace msclr::interop;
 
 namespace SlimDX
 {
@@ -205,20 +207,17 @@ namespace Direct3D9
 	}
 
 	Result Surface::FromMemory_Internal( Surface^ surface, const void* memory, Filter filter, int colorKey,
-		Format sourceFormat, int sourcePitch, System::Drawing::Rectangle* sourceRectangle,
-		System::Drawing::Rectangle* destinationRectangle, array<PaletteEntry>^ sourcePalette,
-		array<PaletteEntry>^ destinationPalette )
+		Format sourceFormat, int sourcePitch, const RECT* sourceRectangle, const RECT* destinationRectangle, 
+		array<PaletteEntry>^ sourcePalette, array<PaletteEntry>^ destinationPalette )
 	{
 		pin_ptr<PaletteEntry> pinnedSourcePalette = sourcePalette == nullptr ? nullptr : &sourcePalette[0];
 		pin_ptr<PaletteEntry> pinnedDestPalette = destinationPalette == nullptr ? nullptr : &destinationPalette[0];
 
 		HRESULT hr = D3DXLoadSurfaceFromMemory( surface->InternalPointer,
 			reinterpret_cast<const PALETTEENTRY*>( pinnedDestPalette ),
-			reinterpret_cast<const RECT*>( destinationRectangle ), memory,
-			static_cast<D3DFORMAT>( sourceFormat ),	sourcePitch,
-			reinterpret_cast<const PALETTEENTRY*>( pinnedSourcePalette ),
-			reinterpret_cast<const RECT*>( sourceRectangle ),
-			static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ) );
+			destinationRectangle, memory, static_cast<D3DFORMAT>( sourceFormat ),
+			sourcePitch, reinterpret_cast<const PALETTEENTRY*>( pinnedSourcePalette ),
+			sourceRectangle, static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ) );
 
 		return RECORD_D3D9( hr );
 	}
@@ -228,35 +227,45 @@ namespace Direct3D9
 		System::Drawing::Rectangle destinationRectangle, array<PaletteEntry>^ sourcePalette,
 		array<PaletteEntry>^ destinationPalette )
 	{
+		RECT source = marshal_as<RECT>( sourceRectangle );
+		RECT dest = marshal_as<RECT>( destinationRectangle );
+
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 		return FromMemory_Internal( surface, pinnedMemory, filter, colorKey, sourceFormat, sourcePitch,
-			&sourceRectangle, &destinationRectangle, sourcePalette, destinationPalette );
+			&source, &dest, sourcePalette, destinationPalette );
 	}
 
 	Result Surface::FromMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey,
 		Format sourceFormat, int sourcePitch, System::Drawing::Rectangle sourceRectangle,
 		System::Drawing::Rectangle destinationRectangle )
 	{
+		RECT source = marshal_as<RECT>( sourceRectangle );
+		RECT dest = marshal_as<RECT>( destinationRectangle );
+
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 		return FromMemory_Internal( surface, pinnedMemory, filter, colorKey, sourceFormat, sourcePitch,
-			&sourceRectangle, &destinationRectangle, nullptr, nullptr );
+			&source, &dest, nullptr, nullptr );
 	}
 
 	Result Surface::FromMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey,
 		Format sourceFormat, int sourcePitch, System::Drawing::Rectangle sourceRectangle,
 		array<PaletteEntry>^ sourcePalette,	array<PaletteEntry>^ destinationPalette )
 	{
+		RECT source = marshal_as<RECT>( sourceRectangle );
+
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 		return FromMemory_Internal( surface, pinnedMemory, filter, colorKey, sourceFormat, sourcePitch,
-			&sourceRectangle, NULL, sourcePalette, destinationPalette );
+			&source, NULL, sourcePalette, destinationPalette );
 	}
 
 	Result Surface::FromMemory( Surface^ surface, array<System::Byte>^ memory, Filter filter, int colorKey,
 		Format sourceFormat, int sourcePitch, System::Drawing::Rectangle sourceRectangle )
 	{
+		RECT source = marshal_as<RECT>( sourceRectangle );
+
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 		return FromMemory_Internal( surface, pinnedMemory, filter, colorKey, sourceFormat, sourcePitch,
-			&sourceRectangle, NULL, nullptr, nullptr );
+			&source, NULL, nullptr, nullptr );
 	}
 
 	Result Surface::FromStream( Surface^ surface, System::IO::Stream^ stream, Filter filter, int colorKey,
@@ -269,8 +278,11 @@ namespace Direct3D9
 
 		if( data == nullptr )
 		{
+			RECT source = marshal_as<RECT>( sourceRectangle );
+			RECT dest = marshal_as<RECT>( destinationRectangle );
+
 			return FromMemory_Internal( surface, ds->SeekToEnd(), filter, colorKey, sourceFormat, sourcePitch,
-				&sourceRectangle, &destinationRectangle, sourcePalette, destinationPalette );
+				&source, &dest, sourcePalette, destinationPalette );
 		}
 
 		return Surface::FromMemory( surface, data, filter, colorKey, sourceFormat, sourcePitch,
@@ -286,8 +298,10 @@ namespace Direct3D9
 
 		if( data == nullptr )
 		{
+			RECT source = marshal_as<RECT>( sourceRectangle );
+
 			return FromMemory_Internal( surface, ds->SeekToEnd(), filter, colorKey, sourceFormat, sourcePitch,
-				&sourceRectangle, NULL, sourcePalette, destinationPalette );
+				&source, NULL, sourcePalette, destinationPalette );
 		}
 
 		return Surface::FromMemory( surface, data, filter, colorKey, sourceFormat, sourcePitch,
@@ -303,8 +317,11 @@ namespace Direct3D9
 
 		if( data == nullptr )
 		{
+			RECT source = marshal_as<RECT>( sourceRectangle );
+			RECT dest = marshal_as<RECT>( destinationRectangle );
+
 			return FromMemory_Internal( surface, ds->SeekToEnd(), filter, colorKey, sourceFormat, sourcePitch,
-				&sourceRectangle, &destinationRectangle, nullptr, nullptr );
+				&source, &dest, nullptr, nullptr );
 		}
 
 		return Surface::FromMemory( surface, data, filter, colorKey, sourceFormat, sourcePitch,
@@ -319,24 +336,24 @@ namespace Direct3D9
 
 		if( data == nullptr )
 		{
+			RECT source = marshal_as<RECT>( sourceRectangle );
+
 			return FromMemory_Internal( surface, ds->SeekToEnd(), filter, colorKey, sourceFormat, sourcePitch,
-				&sourceRectangle, NULL, nullptr, nullptr );
+				&source, NULL, nullptr, nullptr );
 		}
 
 		return Surface::FromMemory( surface, data, filter, colorKey, sourceFormat, sourcePitch, sourceRectangle );
 	}
 
 	Result Surface::FromFileInMemory_Internal( Surface^ surface, const void* memory, UINT size, Filter filter,
-		int colorKey, System::Drawing::Rectangle* sourceRectangle, System::Drawing::Rectangle* destinationRectangle,
+		int colorKey, const RECT* sourceRectangle, const RECT* destinationRectangle,
 		array<PaletteEntry>^ palette, ImageInformation* imageInformation )
 	{
 		pin_ptr<PaletteEntry> pinnedPalette = palette == nullptr ? nullptr : &palette[0];
 
 		HRESULT hr = D3DXLoadSurfaceFromFileInMemory( surface->InternalPointer, 
-			reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
-			reinterpret_cast<const RECT*>( destinationRectangle ), memory, size,
-			reinterpret_cast<const RECT*>( sourceRectangle ), static_cast<DWORD>( filter ),
-			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( imageInformation ) );
+			reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ), destinationRectangle, memory, size, sourceRectangle, 
+			static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( imageInformation ) );
 		
 		return RECORD_D3D9( hr );
 	}
@@ -345,28 +362,37 @@ namespace Direct3D9
 		System::Drawing::Rectangle sourceRectangle,	System::Drawing::Rectangle destinationRectangle,
 		array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation )
 	{
+		RECT source = marshal_as<RECT>( sourceRectangle );
+		RECT dest = marshal_as<RECT>( destinationRectangle );
+
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
 		return FromFileInMemory_Internal( surface, pinnedMemory, static_cast<UINT>( memory->Length ), filter, colorKey,
-			&sourceRectangle, &destinationRectangle, palette, pinnedImageInfo );
+			&source, &dest, palette, pinnedImageInfo );
 	}
 
 	Result Surface::FromFileInMemory( Surface^ surface, array<Byte>^ memory, Filter filter, int colorKey,
 		System::Drawing::Rectangle sourceRectangle,	System::Drawing::Rectangle destinationRectangle,
 		[Out] ImageInformation% imageInformation )
 	{
+		RECT source = marshal_as<RECT>( sourceRectangle );
+		RECT dest = marshal_as<RECT>( destinationRectangle );
+
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
 		return FromFileInMemory_Internal( surface, pinnedMemory, static_cast<UINT>( memory->Length ), filter, colorKey,
-			&sourceRectangle, &destinationRectangle, nullptr, pinnedImageInfo );
+			&source, &dest, nullptr, pinnedImageInfo );
 	}
 
 	Result Surface::FromFileInMemory( Surface^ surface, array<Byte>^ memory, Filter filter, int colorKey,
 		System::Drawing::Rectangle sourceRectangle,	System::Drawing::Rectangle destinationRectangle )
 	{
+		RECT source = marshal_as<RECT>( sourceRectangle );
+		RECT dest = marshal_as<RECT>( destinationRectangle );
+
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 		return FromFileInMemory_Internal( surface, pinnedMemory, static_cast<UINT>( memory->Length ), filter, colorKey,
-			&sourceRectangle, &destinationRectangle, nullptr, NULL );
+			&source, &dest, nullptr, NULL );
 	}
 
 	Result Surface::FromFileInMemory( Surface^ surface, array<Byte>^ memory, Filter filter, int colorKey )
@@ -385,10 +411,13 @@ namespace Direct3D9
 
 		if( data == nullptr )
 		{
+			RECT source = marshal_as<RECT>( sourceRectangle );
+			RECT dest = marshal_as<RECT>( destinationRectangle );
+
 			pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
 			UINT size = static_cast<UINT>( ds->RemainingLength );
 			return FromFileInMemory_Internal( surface, ds->SeekToEnd(), size, filter, colorKey,
-				&sourceRectangle, &destinationRectangle, palette, pinnedImageInfo );
+				&source, &dest, palette, pinnedImageInfo );
 		}
 
 		return Surface::FromFileInMemory( surface, data, filter, colorKey, sourceRectangle, destinationRectangle,
@@ -404,10 +433,13 @@ namespace Direct3D9
 
 		if( data == nullptr )
 		{
+			RECT source = marshal_as<RECT>( sourceRectangle );
+			RECT dest = marshal_as<RECT>( destinationRectangle );
+
 			pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
 			UINT size = static_cast<UINT>( ds->RemainingLength );
 			return FromFileInMemory_Internal( surface, ds->SeekToEnd(), size, filter, colorKey,
-				&sourceRectangle, &destinationRectangle, nullptr, pinnedImageInfo );
+				&source, &dest, nullptr, pinnedImageInfo );
 		}
 
 		return Surface::FromFileInMemory( surface, data, filter, colorKey, sourceRectangle, destinationRectangle,
@@ -422,9 +454,12 @@ namespace Direct3D9
 
 		if( data == nullptr )
 		{
+			RECT source = marshal_as<RECT>( sourceRectangle );
+			RECT dest = marshal_as<RECT>( destinationRectangle );
+
 			UINT size = static_cast<UINT>( ds->RemainingLength );
 			return FromFileInMemory_Internal( surface, ds->SeekToEnd(), size, filter, colorKey,
-				&sourceRectangle, &destinationRectangle, nullptr, NULL );
+				&source, &dest, nullptr, NULL );
 		}
 
 		return Surface::FromFileInMemory( surface, data, filter, colorKey, sourceRectangle, destinationRectangle );
@@ -453,11 +488,12 @@ namespace Direct3D9
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
+		RECT source = marshal_as<RECT>( sourceRectangle );
+		RECT dest = marshal_as<RECT>( destinationRectangle );
+
 		HRESULT hr = D3DXLoadSurfaceFromFile( surface->InternalPointer, 
-			reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
-			reinterpret_cast<const RECT*>( &destinationRectangle ), pinnedName,
-			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ),
-			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
+			reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ), &dest, pinnedName,
+			&source, static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
 		return RECORD_D3D9( hr );
 	}
 
@@ -468,10 +504,11 @@ namespace Direct3D9
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
-		HRESULT hr = D3DXLoadSurfaceFromFile( surface->InternalPointer, NULL,
-			reinterpret_cast<const RECT*>( &destinationRectangle ), pinnedName,
-			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ),
-			static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
+		RECT source = marshal_as<RECT>( sourceRectangle );
+		RECT dest = marshal_as<RECT>( destinationRectangle );
+
+		HRESULT hr = D3DXLoadSurfaceFromFile( surface->InternalPointer, NULL, &dest, pinnedName,
+			&source, static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ), reinterpret_cast<D3DXIMAGE_INFO*>( pinnedImageInfo ) );
 		return RECORD_D3D9( hr );
 	}
 
@@ -480,10 +517,11 @@ namespace Direct3D9
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
-		HRESULT hr = D3DXLoadSurfaceFromFile( surface->InternalPointer, NULL,
-			reinterpret_cast<const RECT*>( &destinationRectangle ), pinnedName,
-			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ),
-			static_cast<D3DCOLOR>( colorKey ), NULL );
+		RECT source = marshal_as<RECT>( sourceRectangle );
+		RECT dest = marshal_as<RECT>( destinationRectangle );
+
+		HRESULT hr = D3DXLoadSurfaceFromFile( surface->InternalPointer, NULL, &dest, pinnedName,
+			&source, static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ), NULL );
 		return RECORD_D3D9( hr );
 	}
 
@@ -503,19 +541,25 @@ namespace Direct3D9
 		pin_ptr<PaletteEntry> pinnedSource = sourcePalette == nullptr ? nullptr : &sourcePalette[0];
 		pin_ptr<PaletteEntry> pinnedDest = destinationPalette == nullptr ? nullptr : &destinationPalette[0];
 
+		RECT source = marshal_as<RECT>( sourceRectangle );
+		RECT dest = marshal_as<RECT>( destinationRectangle );
+
 		HRESULT hr = D3DXLoadSurfaceFromSurface( destinationSurface->InternalPointer, 
-			reinterpret_cast<const PALETTEENTRY*>( pinnedDest ), reinterpret_cast<const RECT*>( &destinationRectangle ),
+			reinterpret_cast<const PALETTEENTRY*>( pinnedDest ), &dest,
 			sourceSurface->InternalPointer, reinterpret_cast<const PALETTEENTRY*>( pinnedSource ), 
-			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ) );
+			&source, static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ) );
 		return RECORD_D3D9( hr );
 	}
 
 	Result Surface::FromSurface( Surface^ destinationSurface, Surface^ sourceSurface, Filter filter, int colorKey,
 		System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle )
 	{
+		RECT source = marshal_as<RECT>( sourceRectangle );
+		RECT dest = marshal_as<RECT>( destinationRectangle );
+
 		HRESULT hr = D3DXLoadSurfaceFromSurface( destinationSurface->InternalPointer, 
-			NULL, reinterpret_cast<const RECT*>( &destinationRectangle ), sourceSurface->InternalPointer, NULL, 
-			reinterpret_cast<const RECT*>( &sourceRectangle ), static_cast<DWORD>( filter ), static_cast<D3DCOLOR>( colorKey ) );
+			NULL, &dest, sourceSurface->InternalPointer, NULL, &source, static_cast<DWORD>( filter ), 
+			static_cast<D3DCOLOR>( colorKey ) );
 		return RECORD_D3D9( hr );
 	}
 
@@ -532,8 +576,10 @@ namespace Direct3D9
 		ID3DXBuffer *result = NULL;
 		pin_ptr<PaletteEntry> pinnedPalette = palette == nullptr ? nullptr : &palette[0];
 
+		RECT rect = marshal_as<RECT>( rectangle );
+
 		HRESULT hr = D3DXSaveSurfaceToFileInMemory( &result, static_cast<D3DXIMAGE_FILEFORMAT>( format ),
-			surface->InternalPointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ), reinterpret_cast<const RECT*>( &rectangle ) );
+			surface->InternalPointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ), &rect );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
@@ -544,9 +590,10 @@ namespace Direct3D9
 	DataStream^ Surface::ToStream( Surface^ surface, ImageFileFormat format, System::Drawing::Rectangle rectangle )
 	{
 		ID3DXBuffer *result = NULL;
+		RECT rect = marshal_as<RECT>( rectangle );
 
 		HRESULT hr = D3DXSaveSurfaceToFileInMemory( &result, static_cast<D3DXIMAGE_FILEFORMAT>( format ),
-			surface->InternalPointer, NULL, reinterpret_cast<const RECT*>( &rectangle ) );
+			surface->InternalPointer, NULL, &rect );
 	
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
@@ -572,10 +619,11 @@ namespace Direct3D9
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(fileName);
 		pin_ptr<PaletteEntry> pinnedPalette = palette == nullptr ? nullptr : &palette[0];
+
+		RECT rect = marshal_as<RECT>( rectangle );
 		
 		HRESULT hr = D3DXSaveSurfaceToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
-			surface->InternalPointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ),
-			reinterpret_cast<const RECT*>( &rectangle ) );
+			surface->InternalPointer, reinterpret_cast<const PALETTEENTRY*>( pinnedPalette ), &rect );
 		return RECORD_D3D9( hr );
 	}
 
@@ -583,9 +631,10 @@ namespace Direct3D9
 		System::Drawing::Rectangle rectangle )
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(fileName);
+		RECT rect = marshal_as<RECT>( rectangle );
 		
 		HRESULT hr = D3DXSaveSurfaceToFile( pinnedName, static_cast<D3DXIMAGE_FILEFORMAT>( format ), 
-			surface->InternalPointer, NULL, reinterpret_cast<const RECT*>( &rectangle ) );
+			surface->InternalPointer, NULL, &rect );
 		return RECORD_D3D9( hr );
 	}
 
