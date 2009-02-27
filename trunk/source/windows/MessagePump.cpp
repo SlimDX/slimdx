@@ -32,7 +32,7 @@ namespace SlimDX
 {
 namespace Windows
 {
-	bool MessagePump::IsAppIdle::get()
+	bool MessagePump::IsApplicationIdle::get()
 	{
 		MSG msg;
 		return !PeekMessage( &msg, NULL, 0, 0, 0 );

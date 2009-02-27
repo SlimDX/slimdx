@@ -108,13 +108,11 @@ namespace DXGI
 		args[ 0 ] = IntPtr( unknown );
 		
 		// Calling FromPointer to create the object will increment the reference count on the IUnknown. 
-		T result =  safe_cast<T>( T::typeid->InvokeMember( "FromPointer", flags, nullptr, nullptr, args, CultureInfo::InvariantCulture ) );
+		T result = safe_cast<T>( T::typeid->InvokeMember( "FromPointer", flags, nullptr, nullptr, args, CultureInfo::InvariantCulture ) );
 		unknown->Release();
 		return result;
 	}
 
-	
-	
 	Result SwapChain::GetFullScreenState( bool% isFullScreen, Output^% target )
 	{
 		BOOL result = false;
