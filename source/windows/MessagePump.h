@@ -31,7 +31,7 @@ namespace SlimDX
 			MessagePump() { }
 
 		public:
-			static property bool IsAppIdle { bool get(); }
+			static property bool IsApplicationIdle { bool get(); }
 		};
 	}
 }
