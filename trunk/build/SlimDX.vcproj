@@ -6067,14 +6067,6 @@
 				RelativePath="..\source\windows\MessagePump.h"
 				>
 			</File>
-			<File
-				RelativePath="..\source\windows\RenderWindow.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\windows\RenderWindow.h"
-				>
-			</File>
 		</Filter>
 		<File
 			RelativePath="..\source\AssemblyInfo.cpp"

@@ -4,20 +4,10 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using SlimDX;
 using SlimDX.Direct3D9;
+using SlimDX.Windows;
 
 namespace MiniTri
 {
-    [StructLayout(LayoutKind.Sequential)]
-    struct Message
-    {
-        public IntPtr hWnd;
-        public uint msg;
-        public IntPtr wParam;
-        public IntPtr lParam;
-        public uint time;
-        public Point p;
-    }
-
     [StructLayout(LayoutKind.Sequential)]
     struct Vertex
     {
@@ -30,19 +20,6 @@ namespace MiniTri
         static Form RenderForm;
         static Device Device;
         static VertexBuffer Vertices;
-
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool PeekMessage(out Message msg, IntPtr hWnd, uint messageFilterMin, uint messageFilterMax, uint flags);
-
-        static bool AppStillIdle
-        {
-            get
-            {
-                Message msg;
-                return !PeekMessage(out msg, IntPtr.Zero, 0, 0, 0);
-            }
-        }
 
         [STAThread]
         static void Main()
@@ -72,7 +49,7 @@ namespace MiniTri
             stream.WriteRange(vertexData);
             Vertices.Unlock();
 
-            Application.Idle += new EventHandler(Application_Idle);
+            Application.Idle += Application_Idle;
             Application.Run(RenderForm);
 
             Vertices.Dispose();
@@ -84,7 +61,7 @@ namespace MiniTri
 
         static void Application_Idle(object sender, EventArgs e)
         {
-            while (AppStillIdle)
+            while (MessagePump.IsApplicationIdle)
             {
                 Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
                 Device.BeginScene();
