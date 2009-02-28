@@ -125,6 +125,13 @@ namespace SlimDX
 			void DrawBitmap( Bitmap^ bitmap, System::Drawing::Rectangle destinationRectangle, float opacity, InterpolationMode interpolationMode );
 			void DrawBitmap( Bitmap^ bitmap, System::Drawing::Rectangle destinationRectangle, float opacity, InterpolationMode interpolationMode, System::Drawing::Rectangle sourceRectangle );
 
+			void DrawGeometry( Geometry^ geometry, Brush^ brush );
+			void DrawGeometry( Geometry^ geometry, Brush^ brush, float strokeWidth );
+			void DrawGeometry( Geometry^ geometry, Brush^ brush, float strokeWidth, StrokeStyle^ strokeStyle );
+
+			void FillGeometry( Geometry^ geometry, Brush^ brush );
+			void FillGeometry( Geometry^ geometry, Brush^ brush, Brush^ opacityBrush );
+
 			void FillOpacityMask( Bitmap^ mask, Brush^ brush, System::Nullable<System::Drawing::RectangleF> sourceRectangle, System::Nullable<System::Drawing::RectangleF> destinationRectangle );
 			void FillOpacityMask( Bitmap^ mask, Brush^ brush, System::Nullable<System::Drawing::RectangleF> sourceRectangle, System::Nullable<System::Drawing::RectangleF> destinationRectangle, Gamma gamma );
 
