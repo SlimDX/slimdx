@@ -5607,6 +5607,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\directsound\NotificationPosition.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directsound\NotificationPosition.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directsound\SoundBuffer.cpp"
 					>
 				</File>

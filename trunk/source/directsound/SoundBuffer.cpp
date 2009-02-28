@@ -21,6 +21,7 @@
 */
 #include <windows.h>
 #include <dsound.h>
+#include <vector>
 
 #include "../ComObject.h"
 #include "../DataStream.h"
@@ -118,6 +119,27 @@ namespace DirectSound
 		}
 
 		return Unlock( stream1, stream2 );
+	}
+
+	Result SoundBuffer::SetNotificationPositions( array<NotificationPosition>^ positions )
+	{
+		IDirectSoundNotify *pointer;
+		HRESULT hr = InternalPointer->QueryInterface( IID_IDirectSoundNotify, reinterpret_cast<void**>( &pointer ) );
+
+		if( FAILED( hr ) )
+			return RECORD_DSOUND( hr );
+
+		std::vector<DSBPOSITIONNOTIFY> notifies( positions->Length );
+		for( int i = 0; i < positions->Length; i++ )
+		{
+			notifies[i].dwOffset = positions[i].Offset;
+			notifies[i].hEventNotify = positions[i].Event->SafeWaitHandle->DangerousGetHandle().ToPointer();
+		}
+
+		hr = pointer->SetNotificationPositions( positions->Length, &notifies[0] );
+		pointer->Release();
+
+		return RECORD_DSOUND( hr );
 	}
 
 	void SoundBuffer::Format::set( WaveFormat^ sourceFormat )
