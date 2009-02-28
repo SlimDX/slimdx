@@ -85,25 +85,25 @@ namespace DirectSound
 		return RECORD_DSOUND( hr );
 	}
 
-	Result DirectSound::SetSpeakerConfiguration( Speakers speakerSet, SpeakerGeometry geometry )
+	Result DirectSound::SetSpeakerConfiguration( SpeakerConfiguration speakerSet, SpeakerGeometry geometry )
 	{
 		HRESULT hr = InternalPointer->SetSpeakerConfig( DSSPEAKER_COMBINED( static_cast<DWORD>( speakerSet ), static_cast<DWORD>( geometry ) ) );
 		return RECORD_DSOUND( hr );
 	}
 
-	Result DirectSound::GetSpeakerConfiguration( [Out] Speakers% speakerSet, [Out] SpeakerGeometry% geometry )
+	Result DirectSound::GetSpeakerConfiguration( [Out] SpeakerConfiguration% speakerSet, [Out] SpeakerGeometry% geometry )
 	{
 		DWORD config = 0;
 		HRESULT hr = InternalPointer->GetSpeakerConfig( &config );
 		
 		if( RECORD_DSOUND( hr ).IsFailure )
 		{
-			speakerSet = Speakers::None;
+			speakerSet = SpeakerConfiguration::DirectOut;
 			geometry = SpeakerGeometry::None;
 			return Result::Last;
 		}
 
-		speakerSet = static_cast<Speakers>( DSSPEAKER_CONFIG( config ) );
+		speakerSet = static_cast<SpeakerConfiguration>( DSSPEAKER_CONFIG( config ) );
 		geometry = static_cast<SpeakerGeometry>( DSSPEAKER_GEOMETRY( config ) );
 
 		return Result::Last;
