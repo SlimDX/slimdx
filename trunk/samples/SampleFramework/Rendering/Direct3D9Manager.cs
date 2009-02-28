@@ -161,44 +161,38 @@ namespace SampleFramework
             // disable exceptions for this method
             bool storedThrow = Configuration.ThrowOnError;
             Configuration.ThrowOnError = false;
+            Surface destination = null;
 
-            // grab the current back buffer
-            Surface backBuffer = Device.GetBackBuffer(0, backBufferIndex);
-            if (backBuffer == null || Result.Last.IsFailure)
+            try
             {
-                Configuration.ThrowOnError = storedThrow;
-                throw new InvalidOperationException("Could not obtain back buffer surface.");
-            }
+                // grab the current back buffer
+                Surface backBuffer = Device.GetBackBuffer(0, backBufferIndex);
+                if (backBuffer == null || Result.Last.IsFailure)
+                    throw new InvalidOperationException("Could not obtain back buffer surface.");
 
-            // grab the destination surface
-            Surface destination = target.GetSurfaceLevel(0);
-            if (destination == null || Result.Last.IsFailure)
-            {
-                backBuffer.Dispose();
-                Configuration.ThrowOnError = storedThrow;
-                throw new InvalidOperationException("Could not obtain resolve target surface.");
-            }
+                // grab the destination surface
+                destination = target.GetSurfaceLevel(0);
+                if (destination == null || Result.Last.IsFailure)
+                    throw new InvalidOperationException("Could not obtain resolve target surface.");
 
-            // first try to copy using linear filtering
-            if (Device.StretchRectangle(backBuffer, destination, TextureFilter.Linear).IsFailure)
-            {
-                // that failed, so try with no filtering
-                if (Device.StretchRectangle(backBuffer, destination, TextureFilter.None).IsFailure)
+                // first try to copy using linear filtering
+                if (Device.StretchRectangle(backBuffer, destination, TextureFilter.Linear).IsFailure)
                 {
-                    // that failed as well, so the last thing we can try is a load surface call
-                    if (Surface.FromSurface(destination, backBuffer, Filter.Default, 0).IsFailure)
+                    // that failed, so try with no filtering
+                    if (Device.StretchRectangle(backBuffer, destination, TextureFilter.None).IsFailure)
                     {
-                        backBuffer.Dispose();
-                        destination.Dispose();
-                        Configuration.ThrowOnError = storedThrow;
-                        throw new InvalidOperationException("Could not copy surfaces.");
+                        // that failed as well, so the last thing we can try is a load surface call
+                        if (Surface.FromSurface(destination, backBuffer, Filter.Default, 0).IsFailure)
+                            throw new InvalidOperationException("Could not copy surfaces.");
                     }
                 }
             }
-
-            backBuffer.Dispose();
-            destination.Dispose();
-            Configuration.ThrowOnError = storedThrow;
+            finally
+            {
+                if (destination != null)
+                    destination.Dispose();
+                Configuration.ThrowOnError = storedThrow;
+            }
         }
 
         /// <summary>
