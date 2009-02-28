@@ -56,7 +56,7 @@ namespace SlimDX
 			/// <summary>
 			/// Releases all resources used by the <see cref="Effect"/>.
 			/// </summary>
-			virtual ~Effect() { if( shim != NULL ) delete shim; shim = NULL; }
+			virtual ~Effect() { if( shim != NULL ) shim->Release(); shim = NULL; }
 
 			/// <summary>
 			/// Creates an effect from a block of memory.

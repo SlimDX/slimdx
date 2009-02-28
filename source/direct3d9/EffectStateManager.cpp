@@ -37,6 +37,7 @@
 #include "EffectStateManager.h"
 
 using namespace System;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
@@ -227,7 +228,7 @@ namespace Direct3D9
 		{
 			array<bool>^ data = gcnew array<bool>( RegisterCount );
 			for( UINT i = 0; i < RegisterCount; i++ )
-				data[i] = (pConstantData[i] > 0);
+				data[i] = ( pConstantData[i] > 0 );
 
 			m_WrappedInterface->SetPixelShaderConstant( StartRegister, data );
 		}
@@ -247,9 +248,8 @@ namespace Direct3D9
 	{
 		try
 		{
-			array<float>^ data = gcnew array<float>( RegisterCount );
-			for( UINT i = 0; i < RegisterCount; i++ )
-				data[i] = (pConstantData[i] > 0);
+			array<float>^ data = gcnew array<float>( RegisterCount * 4 );
+			Marshal::Copy( IntPtr( const_cast<FLOAT*>( pConstantData ) ), data, 0, RegisterCount * 4 );
 
 			m_WrappedInterface->SetPixelShaderConstant( StartRegister, data );
 		}
@@ -269,9 +269,8 @@ namespace Direct3D9
 	{
 		try
 		{
-			array<int>^ data = gcnew array<int>( RegisterCount );
-			for( UINT i = 0; i < RegisterCount; i++ )
-				data[i] = (pConstantData[i] > 0);
+			array<int>^ data = gcnew array<int>( RegisterCount * 4 );
+			Marshal::Copy( IntPtr( const_cast<INT*>( pConstantData ) ), data, 0, RegisterCount * 4 );
 
 			m_WrappedInterface->SetPixelShaderConstant( StartRegister, data );
 		}
@@ -312,7 +311,7 @@ namespace Direct3D9
 		{
 			array<bool>^ data = gcnew array<bool>( RegisterCount );
 			for( UINT i = 0; i < RegisterCount; i++ )
-				data[i] = (pConstantData[i] > 0);
+				data[i] = ( pConstantData[i] > 0 );
 
 			m_WrappedInterface->SetVertexShaderConstant( StartRegister, data );
 		}
@@ -332,9 +331,8 @@ namespace Direct3D9
 	{
 		try
 		{
-			array<float>^ data = gcnew array<float>( RegisterCount );
-			for( UINT i = 0; i < RegisterCount; i++ )
-				data[i] = (pConstantData[i] > 0);
+			array<float>^ data = gcnew array<float>( RegisterCount * 4 );
+			Marshal::Copy( IntPtr( const_cast<FLOAT*>( pConstantData ) ), data, 0, RegisterCount * 4 );
 
 			m_WrappedInterface->SetVertexShaderConstant( StartRegister, data );
 		}
@@ -354,9 +352,8 @@ namespace Direct3D9
 	{
 		try
 		{
-			array<int>^ data = gcnew array<int>( RegisterCount );
-			for( UINT i = 0; i < RegisterCount; i++ )
-				data[i] = (pConstantData[i] > 0);
+			array<int>^ data = gcnew array<int>( RegisterCount * 4 );
+			Marshal::Copy( IntPtr( const_cast<INT*>( pConstantData ) ), data, 0, RegisterCount * 4 );
 
 			m_WrappedInterface->SetVertexShaderConstant( StartRegister, data );
 		}
