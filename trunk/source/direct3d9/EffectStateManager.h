@@ -39,7 +39,7 @@ namespace SlimDX
 			virtual void SetPixelShaderConstant( int startRegister, array<float>^ data ) = 0;
 			virtual void SetPixelShaderConstant( int startRegister, array<int>^ data ) = 0;
 
-			virtual void SetVertexShader( VertexShader^ pixelShader ) = 0;
+			virtual void SetVertexShader( VertexShader^ vertexShader ) = 0;
 			virtual void SetVertexShaderConstant( int startRegister, array<bool>^ data ) = 0;
 			virtual void SetVertexShaderConstant( int startRegister, array<float>^ data ) = 0;
 			virtual void SetVertexShaderConstant( int startRegister, array<int>^ data ) = 0;
