@@ -172,6 +172,9 @@ namespace Direct3D9
 		return DrawIndexedUserPrimitives<S,T>( primitiveType, startIndex, 0, minVertexIndex, numVertices, primitiveCount, indexData, indexDataFormat, vertexData, vertexStride );
 	}
 	
+// disables bogus warning: 'SlimDX::Direct3D9::Device::DrawIndexedUserPrimitives<S,T>' : recursive on all control paths,
+// function will cause runtime stack overflow
+#pragma warning(disable:4717)
 	generic<typename S, typename T>
 	Result Device::DrawIndexedUserPrimitives( PrimitiveType primitiveType, int startIndex, int startVertex, int minVertexIndex, int numVertices, int primitiveCount,
 		array<S>^ indexData, Format indexDataFormat, array<T>^ vertexData, int vertexStride )
@@ -183,6 +186,7 @@ namespace Direct3D9
 			primitiveCount, pinnedIndices, static_cast<D3DFORMAT>( indexDataFormat ), pinnedVertices, vertexStride );
 		return RECORD_D3D9( hr );
 	}
+#pragma warning(default:4717)
 
 	Result Device::Clear( ClearFlags clearFlags, Color4 color, float zdepth, int stencil, array<System::Drawing::Rectangle>^ rectangles )
 	{

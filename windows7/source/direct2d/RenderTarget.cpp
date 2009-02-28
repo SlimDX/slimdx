@@ -415,6 +415,34 @@ namespace Direct2D
 		DrawBitmap( bitmap, CastRectangle( destinationRectangle ), opacity, interpolationMode, CastRectangle( sourceRectangle ) );
 	}
 
+	void RenderTarget::DrawGeometry( Geometry^ geometry, Brush^ brush )
+	{
+		InternalPointer->DrawGeometry( geometry->InternalPointer, brush->InternalPointer );
+	}
+
+	void RenderTarget::DrawGeometry( Geometry^ geometry, Brush^ brush, float strokeWidth )
+	{
+		InternalPointer->DrawGeometry( geometry->InternalPointer, brush->InternalPointer, strokeWidth );
+	}
+
+	void RenderTarget::DrawGeometry( Geometry^ geometry, Brush^ brush, float strokeWidth, StrokeStyle^ strokeStyle )
+	{
+		ID2D1StrokeStyle *style = strokeStyle == nullptr ? NULL : strokeStyle->InternalPointer;
+
+		InternalPointer->DrawGeometry( geometry->InternalPointer, brush->InternalPointer, strokeWidth, style );
+	}
+
+	void RenderTarget::FillGeometry( Geometry^ geometry, Brush^ brush )
+	{
+		FillGeometry( geometry, brush, nullptr );
+	}
+
+	void RenderTarget::FillGeometry( Geometry^ geometry, Brush^ brush, Brush^ opacityBrush )
+	{
+		ID2D1Brush *ob = opacityBrush == nullptr ? NULL : opacityBrush->InternalPointer;
+		InternalPointer->FillGeometry( geometry->InternalPointer, brush->InternalPointer, ob );
+	}
+
 	void RenderTarget::FillOpacityMask( Bitmap^ mask, Brush^ brush, Nullable<RectangleF> sourceRectangle, Nullable<RectangleF> destinationRectangle )
 	{
 		D2D1_RECT_F sourceRect;
