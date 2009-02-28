@@ -25,6 +25,7 @@
 #include "DirectSound.h"
 #include "SoundBufferDescription.h"
 #include "BufferCapabilities.h"
+#include "NotificationPosition.h"
 
 namespace SlimDX
 {
@@ -78,6 +79,8 @@ namespace SlimDX
 			/// <returns></returns>
 			generic<typename T> where T : value class
 			Result Write( array<T>^ data, int bufferOffset, LockFlags flags );
+
+			Result SetNotificationPositions( array<NotificationPosition>^ positions );
 
 			property SlimDX::Multimedia::WaveFormat^ Format
 			{
