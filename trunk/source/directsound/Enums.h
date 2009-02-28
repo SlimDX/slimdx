@@ -305,6 +305,68 @@ namespace SlimDX
 			Unknown = DSFXR_UNKNOWN,
 		};
 
+		public enum class SpeakerConfiguration : System::Int32
+		{
+			/// <summary>
+			/// The audio is passed through directly, without being configured for 
+			/// speakers. This specifies a speakerless configuration in which the 
+			/// channels in the playback stream from the application are output 
+			/// directly to the audio adapter without being interpreted as speaker 
+			/// positions. However, the input stream can still be modified by 
+			/// sample-rate conversion, attenuation, filtering, and other types of 
+			/// processing that require no assumptions about the assignment of speakers 
+			/// to channels.
+			/// </summary>
+			DirectOut = DSSPEAKER_DIRECTOUT,
+
+			/// <summary>
+			/// The audio is played through (stereo) headphones.
+			/// </summary>
+			Headphone = DSSPEAKER_HEADPHONE,
+
+			/// <summary>
+			/// The audio is played through a single speaker.
+			/// </summary>
+			Mono = DSSPEAKER_MONO,
+
+			/// <summary>
+			/// The audio is played through quadraphonic speakers.
+			/// </summary>
+			Quadrophonic = DSSPEAKER_QUAD,
+
+			/// <summary>
+			/// The audio is played through stereo speakers (default value).
+			/// </summary>
+			Stereo = DSSPEAKER_STEREO,
+
+			/// <summary>
+			/// The audio is played through surround speakers.
+			/// This specifies a four-channel PCM format in which the channels are 
+			/// mapped to left, right, center, and back speakers.
+			/// </summary>
+			Surround = DSSPEAKER_SURROUND,
+
+			/// <summary>
+			/// obsolete 5.1 setting
+			/// </summary>
+			FivePointOne = DSSPEAKER_5POINT1,
+
+			/// <summary>
+			/// obsolete 7.1 setting
+			/// </summary>
+			SevenPointOne = DSSPEAKER_7POINT1,
+
+			/// <summary>
+			/// correct 7.1 Home Theater setting
+			/// </summary>
+			SevenPointOneSurround = DSSPEAKER_7POINT1_SURROUND,
+
+			/// <summary>
+			/// same as SevenPointOne
+			/// </summary>
+			SevenPointOneWide = DSSPEAKER_7POINT1_WIDE
+		};
+
 		/// <summary>
 		/// Various speaker configurations.
 		/// </summary>

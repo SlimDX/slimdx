@@ -65,14 +65,14 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="speakerSet"></param>
 			/// <param name="geometry"></param>
-			Result SetSpeakerConfiguration( Speakers speakerSet, SpeakerGeometry geometry );
+			Result SetSpeakerConfiguration( SpeakerConfiguration speakerSet, SpeakerGeometry geometry );
 
 			/// <summary>
 			/// Retrieves the speaker configuration of the device.
 			/// </summary>
 			/// <param name="speakerSet"></param>
 			/// <param name="geometry"></param>
-			Result GetSpeakerConfiguration( [Out] Speakers% speakerSet, [Out] SpeakerGeometry% geometry );
+			Result GetSpeakerConfiguration( [Out] SpeakerConfiguration% speakerSet, [Out] SpeakerGeometry% geometry );
 
 			/// <summary>
 			/// Ascertains whether the device driver is certified for DirectX.
