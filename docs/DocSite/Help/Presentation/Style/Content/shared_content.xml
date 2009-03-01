@@ -62,7 +62,7 @@
 
 	<!-- footer -->
 	<item id="footer"><div id="footer"><include item="copyright" /> </div></item>
-	<item id="copyright">Copyright © 2008 SlimDX Group. All rights reserved.</item>
+	<item id="copyright">Copyright © 2007-2009 SlimDX Group. All rights reserved.</item>
 
     <!-- Bibliography -->
     <item id="bibliographyTitle">Bibliography</item>
