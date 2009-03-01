@@ -23,6 +23,14 @@
 
 namespace SlimDX
 {
+	public ref class ResultInfo
+	{
+	public:
+		System::String^ Name;
+		System::String^ Description;
+		System::Collections::SortedList^ Data;
+	};
+
 	/// <summary>
 	/// Represents the result of a method or operation.
 	/// </summary>
@@ -30,9 +38,7 @@ namespace SlimDX
 	public value class Result : System::IEquatable<Result>
 	{
 		int m_Code;
-		System::String^ m_Name;
-		System::String^ m_Description;
-		System::Collections::SortedList^ m_Data;
+		ResultInfo^ m_Info;
 	
 		[System::ThreadStatic]
 		static Result m_Last;
