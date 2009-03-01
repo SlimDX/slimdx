@@ -997,6 +997,27 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
+	Result Device::SetVertexShaderConstant( int startRegister, Matrix data )
+	{
+		HRESULT hr = InternalPointer->SetVertexShaderConstantF( startRegister, (float*) &data, 4 );
+		return RECORD_D3D9( hr );
+	}
+
+	Result Device::SetVertexShaderConstant( int startRegister, Matrix* data )
+	{
+		HRESULT hr = InternalPointer->SetVertexShaderConstantF( startRegister, (float*) data, 4 );
+		return RECORD_D3D9( hr );
+	}
+
+	Result Device::SetVertexShaderConstant( int startRegister, array<Matrix>^ data, int offset, int count )
+	{
+		pin_ptr<Matrix> pinnedData = &data[0];
+
+		Utilities::CheckBounds( 0, data->Length, offset, count );
+		HRESULT hr = InternalPointer->SetVertexShaderConstantF( startRegister, reinterpret_cast<float*>( pinnedData + offset ), count * 4 );
+		return RECORD_D3D9( hr );
+	}
+
 	Result Device::SetPixelShaderConstant( int startRegister, array<bool>^ data, int offset, int count )
 	{
 		array<BOOL>^ boolData = gcnew array<BOOL>( data->Length );
@@ -1033,6 +1054,27 @@ namespace Direct3D9
 
 		Utilities::CheckBounds( 0, data->Length / 4, offset, count );
 		HRESULT hr = InternalPointer->SetPixelShaderConstantI( startRegister, pinnedData + offset, count );
+		return RECORD_D3D9( hr );
+	}
+
+	Result Device::SetPixelShaderConstant( int startRegister, Matrix data )
+	{
+		HRESULT hr = InternalPointer->SetPixelShaderConstantF( startRegister, (float*) &data, 4 );
+		return RECORD_D3D9( hr );
+	}
+
+	Result Device::SetPixelShaderConstant( int startRegister, Matrix* data )
+	{
+		HRESULT hr = InternalPointer->SetPixelShaderConstantF( startRegister, (float*) data, 4 );
+		return RECORD_D3D9( hr );
+	}
+
+	Result Device::SetPixelShaderConstant( int startRegister, array<Matrix>^ data, int offset, int count )
+	{
+		pin_ptr<Matrix> pinnedData = &data[0];
+
+		Utilities::CheckBounds( 0, data->Length, offset, count );
+		HRESULT hr = InternalPointer->SetPixelShaderConstantF( startRegister, reinterpret_cast<float*>( pinnedData + offset ), count * 4 );
 		return RECORD_D3D9( hr );
 	}
 
