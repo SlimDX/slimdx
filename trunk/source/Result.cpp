@@ -45,32 +45,52 @@ namespace SlimDX
 	
 	String^ Result::Name::get()
 	{
-		if( m_Name == nullptr )
+		if( m_Info == nullptr )
 		{
-			m_Name = gcnew String( DXGetErrorString( m_Code ) );
+			m_Info = gcnew ResultInfo();
 		}
 
-		return m_Name;
+		if( m_Info->Name == nullptr )
+		{
+			m_Info->Name = gcnew String( DXGetErrorString( m_Code ) );
+		}
+
+		return m_Info->Name;
 	}
 
 	String^ Result::Description::get()
 	{
-		if( m_Description == nullptr )
+		if( m_Info == nullptr )
 		{
-			m_Description = gcnew String( DXGetErrorDescription( m_Code ) );
+			m_Info = gcnew ResultInfo();
+		}
+
+		if( m_Info->Description == nullptr )
+		{
+			m_Info->Description = gcnew String( DXGetErrorDescription( m_Code ) );
 		}
 		
-		return m_Description;
+		return m_Info->Description;
 	}
 	
 	SortedList^ Result::Data::get()
 	{
-		return m_Data;
+		if( m_Info == nullptr )
+		{
+			m_Info = gcnew ResultInfo();
+		}
+
+		return m_Info->Data;
 	}
 
 	void Result::Data::set( SortedList^ value )
 	{
-		m_Data = value;
+		if( m_Info == nullptr )
+		{
+			m_Info = gcnew ResultInfo();
+		}
+
+		m_Info->Data = value;
 	}
 
 	bool Result::IsSuccess::get()
@@ -102,6 +122,9 @@ namespace SlimDX
 	Result Result::Record( int hr, bool failed, Object^ dataKey, Object^ dataValue )
 	{
 		m_Last = Result( hr );
+		if(!failed)
+			return Result( hr );
+
 		if( dataKey != nullptr )
 		{
 			m_Last.Data = gcnew SortedList();
@@ -121,7 +144,7 @@ namespace SlimDX
 				Throw<T>(dataKey, dataValue);
 		}
 
-		if( failed && Configuration::ThrowOnError )
+		if( Configuration::ThrowOnError )
 			Throw<T>(dataKey, dataValue);
 
 		return m_Last;
