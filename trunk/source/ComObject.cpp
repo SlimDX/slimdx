@@ -133,20 +133,20 @@ namespace SlimDX
 	{
 		if( m_Unknown == 0 || !ObjectTable::Remove( this ) )
 		{
-			if( Configuration::DetectDoubleDispose )
+			// test for CreationTime is to avoid throwing ObjectDisposedException when
+			// a constructor for an object fails
+			if( Configuration::DetectDoubleDispose && CreationTime != 0 )
 			{
 				Type^ myType = GetType();
 				throw gcnew ObjectDisposedException( myType->FullName );
 			}
-			else
-			{
-				return;
-			}
 		}
-		
-		if( static_cast<int>( m_Flags & ComObjectFlags::ExternalReferenceCount ) == 0 )
-			m_Unknown->Release();
+		else
+		{
+			if( static_cast<int>( m_Flags & ComObjectFlags::ExternalReferenceCount ) == 0 )
+				m_Unknown->Release();
 
-		m_Unknown = 0;
+			m_Unknown = 0;
+		}
 	}
 }
