@@ -355,7 +355,7 @@ namespace SlimDX
 		if( T::typeid->IsEnum )
 			return safe_cast<T>( static_cast<int>( value ) );
 		else if( T::typeid == float::typeid )
-			return safe_cast<T>( *(float*) &value );
+			return safe_cast<T>( *reinterpret_cast<float*>( &value ) );
 		else
 			return safe_cast<T>( Convert::ChangeType( static_cast<int>( value ), T::typeid, CultureInfo::InvariantCulture ) );
 	}

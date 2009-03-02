@@ -93,7 +93,7 @@ namespace SlimDX
 			throw gcnew ArgumentNullException( "comObject" );
 
 		// Record tracking information
-		object->SetCreationTime( (int) Configuration::Timer->ElapsedMilliseconds );
+		object->SetCreationTime( static_cast<int>( Configuration::Timer->ElapsedMilliseconds ) );
 		if( Configuration::EnableObjectTracking )
 			object->SetSource( gcnew StackTrace( 2, true ) );
 

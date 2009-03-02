@@ -103,7 +103,7 @@ namespace SlimDX
 
 	Color Color4::ToColor()
 	{
-		return Color::FromArgb( (int)(Alpha * 255), (int)(Red * 255), (int)(Green * 255), (int)(Blue * 255) );
+		return Color::FromArgb( static_cast<int>(Alpha * 255), static_cast<int>(Red * 255), static_cast<int>(Green * 255), static_cast<int>(Blue * 255) );
 	}
 
 	Color3 Color4::ToColor3()
@@ -115,17 +115,17 @@ namespace SlimDX
 	{
 		unsigned int a, r, g, b;
 
-		a = (unsigned int) (Alpha * 255.0f);
-		r = (unsigned int) (Red * 255.0f);
-		g = (unsigned int) (Green * 255.0f);
-		b = (unsigned int) (Blue * 255.0f);
+		a = static_cast<unsigned int>(Alpha * 255.0f);
+		r = static_cast<unsigned int>(Red * 255.0f);
+		g = static_cast<unsigned int>(Green * 255.0f);
+		b = static_cast<unsigned int>(Blue * 255.0f);
 
 		unsigned int value = b;
 		value += g << 8;
 		value += r << 16;
 		value += a << 24;
 
-		return (int) value;
+		return static_cast<int>( value );
 	}
 
 	Vector3 Color4::ToVector3()

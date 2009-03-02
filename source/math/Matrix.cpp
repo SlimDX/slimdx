@@ -553,7 +553,7 @@ namespace SlimDX
 		if (lengthSq < 0.0001f)
 			difference = -cameraForwardVector;
 		else
-			difference *= (float)( 1.0f / Math::Sqrt( lengthSq ) );
+			difference *= static_cast<float>( 1.0f / Math::Sqrt( lengthSq ) );
 
 		Vector3::Cross( cameraUpVector, difference, crossed );
 		crossed.Normalize();

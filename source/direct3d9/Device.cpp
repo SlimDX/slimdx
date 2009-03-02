@@ -146,7 +146,7 @@ namespace Direct3D9
 		pin_ptr<T> pinned_data = &data[startIndex];
 
 		HRESULT hr = InternalPointer->DrawPrimitiveUP( static_cast<D3DPRIMITIVETYPE>( primitiveType ), primitiveCount,
-			pinned_data, (DWORD) sizeof(T) );
+			pinned_data, static_cast<DWORD>( sizeof(T) ) );
 		return RECORD_D3D9( hr );
 	}
 
@@ -999,13 +999,13 @@ namespace Direct3D9
 
 	Result Device::SetVertexShaderConstant( int startRegister, Matrix data )
 	{
-		HRESULT hr = InternalPointer->SetVertexShaderConstantF( startRegister, (float*) &data, 4 );
+		HRESULT hr = InternalPointer->SetVertexShaderConstantF( startRegister, reinterpret_cast<float*>( &data ), 4 );
 		return RECORD_D3D9( hr );
 	}
 
 	Result Device::SetVertexShaderConstant( int startRegister, Matrix* data )
 	{
-		HRESULT hr = InternalPointer->SetVertexShaderConstantF( startRegister, (float*) data, 4 );
+		HRESULT hr = InternalPointer->SetVertexShaderConstantF( startRegister, reinterpret_cast<float*>( data ), 4 );
 		return RECORD_D3D9( hr );
 	}
 
@@ -1059,13 +1059,13 @@ namespace Direct3D9
 
 	Result Device::SetPixelShaderConstant( int startRegister, Matrix data )
 	{
-		HRESULT hr = InternalPointer->SetPixelShaderConstantF( startRegister, (float*) &data, 4 );
+		HRESULT hr = InternalPointer->SetPixelShaderConstantF( startRegister, reinterpret_cast<float*>( &data ), 4 );
 		return RECORD_D3D9( hr );
 	}
 
 	Result Device::SetPixelShaderConstant( int startRegister, Matrix* data )
 	{
-		HRESULT hr = InternalPointer->SetPixelShaderConstantF( startRegister, (float*) data, 4 );
+		HRESULT hr = InternalPointer->SetPixelShaderConstantF( startRegister, reinterpret_cast<float*>( data ), 4 );
 		return RECORD_D3D9( hr );
 	}
 
@@ -1484,7 +1484,7 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->GetCurrentTexturePalette( &palette );
 		RECORD_D3D9( hr );
 
-		return (int) palette;
+		return static_cast<int>( palette );
 	}
 
 	VertexShader^ Device::VertexShader::get()

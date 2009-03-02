@@ -88,7 +88,7 @@ namespace Direct3D9
 			{
 				int count = 4096;
 				if( written + 4096 > cb )
-					count = (int)( cb - written );
+					count = static_cast<int>( cb - written );
 
 				read = m_WrappedStream->Read( buffer, 0, count );
 				if( read == 0 )
