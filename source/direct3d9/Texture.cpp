@@ -355,8 +355,14 @@ namespace Direct3D9
 		Vector2 size = Vector2::Vector2(pTexelSize->x, pTexelSize->y);
 		Color4 result;
 
-		callback = safe_cast<Fill2DCallback^>(Marshal::GetDelegateForFunctionPointer(IntPtr::IntPtr(data), Fill2DCallback::typeid));			
-		result = callback(coordinate, size);
+		try
+		{
+			callback = safe_cast<Fill2DCallback^>(Marshal::GetDelegateForFunctionPointer(IntPtr::IntPtr(data), Fill2DCallback::typeid));			
+			result = callback(coordinate, size);
+		}
+		catch( Exception^ )
+		{
+		}
 
 		out->x = result.Red;
 		out->y = result.Green;
@@ -371,8 +377,14 @@ namespace Direct3D9
 		Vector3 size = Vector3(pTexelSize->x, pTexelSize->y, pTexelSize->z);
 		Color4 result;
 
-		callback = safe_cast<Fill3DCallback^>(Marshal::GetDelegateForFunctionPointer(IntPtr::IntPtr(data), Fill3DCallback::typeid));			
-		result = callback(coordinate, size);
+		try
+		{
+			callback = safe_cast<Fill3DCallback^>(Marshal::GetDelegateForFunctionPointer(IntPtr::IntPtr(data), Fill3DCallback::typeid));			
+			result = callback(coordinate, size);
+		}
+		catch( Exception^ )
+		{
+		}
 
 		out->x = result.Red;
 		out->y = result.Green;

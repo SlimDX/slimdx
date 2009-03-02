@@ -1197,6 +1197,13 @@ namespace SlimDX
 			EaseInEaseOut = D3DXTRANSITION_EASEINEASEOUT
 		};
 
+		public enum class UVAtlasQuality : System::Int32
+		{
+			Default = D3DXUVATLAS_DEFAULT,
+			GeodesicFast = D3DXUVATLAS_GEODESIC_FAST,
+			GeodesicQuality = D3DXUVATLAS_GEODESIC_QUALITY
+		};
+
 		/// <summary>
 		/// Specifies options for welding together vertices.
 		/// </summary>
