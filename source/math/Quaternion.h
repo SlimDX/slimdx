@@ -88,6 +88,7 @@ namespace SlimDX
 		/// <summary>
 		/// Gets a value indicating whether this instance is an identity <see cref="Quaternion"/>.
 		/// </summary>
+		[System::ComponentModel::Browsable(false)]
 		property bool IsIdentity { bool get(); }
 
 		/// <summary>

@@ -26,6 +26,7 @@
 #include "../math/Half4.h"
 
 #include "Half4Converter.h"
+#include "FieldPropertyDescriptor.h"
 
 using namespace System;
 using namespace System::Collections;
@@ -39,6 +40,20 @@ namespace SlimDX
 {
 namespace Design
 {
+	Half4Converter::Half4Converter()
+	{
+		Type^ type = Half4::typeid;
+		array<PropertyDescriptor^>^ propArray =
+		{
+			gcnew FieldPropertyDescriptor(type->GetField("X")),
+			gcnew FieldPropertyDescriptor(type->GetField("Y")),
+			gcnew FieldPropertyDescriptor(type->GetField("Z")),
+			gcnew FieldPropertyDescriptor(type->GetField("W")),
+		};
+
+		m_Properties = gcnew PropertyDescriptorCollection(propArray);
+	}
+
 	bool Half4Converter::CanConvertTo(ITypeDescriptorContext^ context, Type^ destinationType)
 	{
 		if( destinationType == String::typeid || destinationType == InstanceDescriptor::typeid )
@@ -131,6 +146,16 @@ namespace Design
 
 		return gcnew Half4( safe_cast<Half>( propertyValues["X"] ), safe_cast<Half>( propertyValues["Y"] ),
 			safe_cast<Half>( propertyValues["Z"] ), safe_cast<Half>( propertyValues["W"] ) );
+	}
+
+	bool Half4Converter::GetPropertiesSupported(ITypeDescriptorContext^)
+	{
+		return true;
+	}
+
+	PropertyDescriptorCollection^ Half4Converter::GetProperties(ITypeDescriptorContext^, Object^, array<Attribute^>^)
+	{
+		return m_Properties;
 	}
 }
 }

@@ -24,6 +24,7 @@
 #include "../math/Vector4.h"
 
 #include "Vector4Converter.h"
+#include "FieldPropertyDescriptor.h"
 
 using namespace System;
 using namespace System::Collections;
@@ -36,6 +37,20 @@ namespace SlimDX
 {
 namespace Design
 {
+	Vector4Converter::Vector4Converter()
+	{
+		Type^ type = Vector4::typeid;
+		array<PropertyDescriptor^>^ propArray =
+		{
+			gcnew FieldPropertyDescriptor(type->GetField("X")),
+			gcnew FieldPropertyDescriptor(type->GetField("Y")),
+			gcnew FieldPropertyDescriptor(type->GetField("Z")),
+			gcnew FieldPropertyDescriptor(type->GetField("W")),
+		};
+
+		m_Properties = gcnew PropertyDescriptorCollection(propArray);
+	}
+
 	bool Vector4Converter::CanConvertTo(ITypeDescriptorContext^ context, Type^ destinationType)
 	{
 		if( destinationType == String::typeid || destinationType == InstanceDescriptor::typeid )
@@ -128,6 +143,16 @@ namespace Design
 
 		return gcnew Vector4( safe_cast<float>( propertyValues["X"] ), safe_cast<float>( propertyValues["Y"] ),
 			safe_cast<float>( propertyValues["Z"] ), safe_cast<float>( propertyValues["W"] ) );
+	}
+
+	bool Vector4Converter::GetPropertiesSupported(ITypeDescriptorContext^)
+	{
+		return true;
+	}
+
+	PropertyDescriptorCollection^ Vector4Converter::GetProperties(ITypeDescriptorContext^, Object^, array<Attribute^>^)
+	{
+		return m_Properties;
 	}
 }
 }

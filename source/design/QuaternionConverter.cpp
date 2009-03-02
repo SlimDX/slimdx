@@ -24,6 +24,7 @@
 #include "../math/Quaternion.h"
 
 #include "QuaternionConverter.h"
+#include "FieldPropertyDescriptor.h"
 
 using namespace System;
 using namespace System::Collections;
@@ -37,6 +38,20 @@ namespace SlimDX
 {
 namespace Design
 {
+	QuaternionConverter::QuaternionConverter()
+	{
+		Type^ type = Quaternion::typeid;
+		array<PropertyDescriptor^>^ propArray =
+		{
+			gcnew FieldPropertyDescriptor(type->GetField("X")),
+			gcnew FieldPropertyDescriptor(type->GetField("Y")),
+			gcnew FieldPropertyDescriptor(type->GetField("Z")),
+			gcnew FieldPropertyDescriptor(type->GetField("W")),
+		};
+
+		m_Properties = gcnew PropertyDescriptorCollection(propArray);
+	}
+
 	bool QuaternionConverter::CanConvertTo(ITypeDescriptorContext^ context, Type^ destinationType)
 	{
 		if( destinationType == String::typeid || destinationType == InstanceDescriptor::typeid )
@@ -129,6 +144,16 @@ namespace Design
 
 		return gcnew Quaternion( safe_cast<float>( propertyValues["X"] ), safe_cast<float>( propertyValues["Y"] ),
 			safe_cast<float>( propertyValues["Z"] ), safe_cast<float>( propertyValues["W"] ) );
+	}
+
+	bool QuaternionConverter::GetPropertiesSupported(ITypeDescriptorContext^)
+	{
+		return true;
+	}
+
+	PropertyDescriptorCollection^ QuaternionConverter::GetProperties(ITypeDescriptorContext^, Object^, array<Attribute^>^)
+	{
+		return m_Properties;
 	}
 }
 }

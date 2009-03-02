@@ -24,6 +24,7 @@
 #include "../math/Plane.h"
 
 #include "PlaneConverter.h"
+#include "FieldPropertyDescriptor.h"
 
 using namespace System;
 using namespace System::Collections;
@@ -37,6 +38,18 @@ namespace SlimDX
 {
 namespace Design
 {
+	PlaneConverter::PlaneConverter()
+	{
+		Type^ type = Plane::typeid;
+		array<PropertyDescriptor^>^ propArray =
+		{
+			gcnew FieldPropertyDescriptor(type->GetField("Normal")),
+			gcnew FieldPropertyDescriptor(type->GetField("D")),
+		};
+
+		m_Properties = gcnew PropertyDescriptorCollection(propArray);
+	}
+
 	bool PlaneConverter::CanConvertTo(ITypeDescriptorContext^ context, Type^ destinationType)
 	{
 		if( destinationType == String::typeid || destinationType == InstanceDescriptor::typeid )
@@ -126,6 +139,16 @@ namespace Design
 			throw gcnew ArgumentNullException( "propertyValues" );
 
 		return gcnew Plane( safe_cast<Vector3>( propertyValues["Normal"] ), safe_cast<float>( propertyValues["D"] ) );
+	}
+
+	bool PlaneConverter::GetPropertiesSupported(ITypeDescriptorContext^)
+	{
+		return true;
+	}
+
+	PropertyDescriptorCollection^ PlaneConverter::GetProperties(ITypeDescriptorContext^, Object^, array<Attribute^>^)
+	{
+		return m_Properties;
 	}
 }
 }

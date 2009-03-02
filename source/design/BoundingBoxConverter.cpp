@@ -24,6 +24,7 @@
 #include "../math/BoundingBox.h"
 
 #include "BoundingBoxConverter.h"
+#include "FieldPropertyDescriptor.h"
 
 using namespace System;
 using namespace System::Collections;
@@ -37,6 +38,18 @@ namespace SlimDX
 {
 namespace Design
 {
+	BoundingBoxConverter::BoundingBoxConverter()
+	{
+		Type^ type = BoundingBox::typeid;
+		array<PropertyDescriptor^>^ propArray =
+		{
+			gcnew FieldPropertyDescriptor(type->GetField("Minimum")),
+			gcnew FieldPropertyDescriptor(type->GetField("Maximum")),
+		};
+
+		m_Properties = gcnew PropertyDescriptorCollection(propArray);
+	}
+
 	bool BoundingBoxConverter::CanConvertTo(ITypeDescriptorContext^ context, Type^ destinationType)
 	{
 		if( destinationType == String::typeid || destinationType == InstanceDescriptor::typeid )
@@ -112,7 +125,6 @@ namespace Design
 	bool BoundingBoxConverter::GetCreateInstanceSupported(ITypeDescriptorContext^ context)
 	{
 		SLIMDX_UNREFERENCED_PARAMETER(context);
-
 		return true;
 	}
 
@@ -124,6 +136,16 @@ namespace Design
 			throw gcnew ArgumentNullException( "propertyValues" );
 
 		return gcnew BoundingBox( safe_cast<Vector3>( propertyValues["Maximum"] ), safe_cast<Vector3>( propertyValues["Minimum"] ) );
+	}
+
+	bool BoundingBoxConverter::GetPropertiesSupported(ITypeDescriptorContext^)
+	{
+		return true;
+	}
+
+	PropertyDescriptorCollection^ BoundingBoxConverter::GetProperties(ITypeDescriptorContext^, Object^, array<Attribute^>^)
+	{
+		return m_Properties;
 	}
 }
 }

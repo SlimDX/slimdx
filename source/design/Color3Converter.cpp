@@ -25,6 +25,7 @@
 #include "../math/Color4.h"
 
 #include "Color3Converter.h"
+#include "FieldPropertyDescriptor.h"
 
 using namespace System;
 using namespace System::Collections;
@@ -38,6 +39,19 @@ namespace SlimDX
 {
 namespace Design
 {
+	Color3Converter::Color3Converter()
+	{
+		Type^ type = Color3::typeid;
+		array<PropertyDescriptor^>^ propArray =
+		{
+			gcnew FieldPropertyDescriptor(type->GetField("Red")),
+			gcnew FieldPropertyDescriptor(type->GetField("Green")),
+			gcnew FieldPropertyDescriptor(type->GetField("Blue")),
+		};
+
+		m_Properties = gcnew PropertyDescriptorCollection(propArray);
+	}
+
 	bool Color3Converter::CanConvertTo(ITypeDescriptorContext^ context, Type^ destinationType)
 	{
 		if( destinationType == String::typeid || destinationType == InstanceDescriptor::typeid )
@@ -152,6 +166,16 @@ namespace Design
 
 		return gcnew Color3( safe_cast<float>( propertyValues["Red"] ),
 			safe_cast<float>( propertyValues["Green"] ), safe_cast<float>( propertyValues["Blue"] ) );
+	}
+
+	bool Color3Converter::GetPropertiesSupported(ITypeDescriptorContext^)
+	{
+		return true;
+	}
+
+	PropertyDescriptorCollection^ Color3Converter::GetProperties(ITypeDescriptorContext^, Object^, array<Attribute^>^)
+	{
+		return m_Properties;
 	}
 }
 }
