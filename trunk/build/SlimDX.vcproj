@@ -3773,6 +3773,26 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="UVAtlas"
+				>
+				<File
+					RelativePath="..\source\direct3d9\UVAtlas.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\UVAtlas.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\UVAtlasOutput.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\UVAtlastOutput.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="DirectInput"
