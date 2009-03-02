@@ -35,11 +35,14 @@ namespace SlimDX
 		/// </summary>
 		public ref class RayConverter : System::ComponentModel::ExpandableObjectConverter
 		{
+		private:
+			System::ComponentModel::PropertyDescriptorCollection^ m_Properties;
+
 		public:
 			/// <summary>
 			/// Initializes a new instance of the <see cref="RayConverter"/> class.
 			/// </summary>
-			RayConverter() { }
+			RayConverter();
 
 			/// <summary>
 			/// Returns whether this converter can convert the object to the specified type, using the specified context.
@@ -96,6 +99,23 @@ namespace SlimDX
 			/// <returns>An <see cref="System::Object"/> representing the given <see cref="System::Collections::IDictionary"/>, or <c>null</c> if the object cannot be created.</returns>
 			virtual System::Object^ CreateInstance(System::ComponentModel::ITypeDescriptorContext^ context, 
 				System::Collections::IDictionary^ propertyValues) override;
+
+			/// <summary>
+			/// Returns whether this object supports properties, using the specified context.
+			/// </summary>
+			/// <param name="context">A <see cref="System::ComponentModel::ITypeDescriptorContext"/> that provides a format context.</param>
+			/// <returns><c>true</c> if GetProperties should be called to find the properties of this object; otherwise, <c>false</c>.</returns>
+			virtual bool GetPropertiesSupported(System::ComponentModel::ITypeDescriptorContext^ context) override;
+
+			/// <summary>
+			/// Creates an instance of the type that this <see cref="System::ComponentModel::TypeConverter"/> is associated with, using the specified context, given a set of property values for the object.
+			/// </summary>
+			/// <param name="context">A <see cref="System::ComponentModel::ITypeDescriptorContext"/> that provides a format context.</param>
+			/// <param name="value">An <see cref="System::Object"/> that specifies the type of array for which to get properties. </param>
+			/// <param name="attributes">An array of type <see cref="System::Attribute"/> that is used as a filter.</param>
+			/// <returns>A <see cref="System::ComponentModel::PropertyDescriptorCollection"/> with the properties that are exposed for this data type, or a null reference (<c>Nothing</c> in Visual Basic) if there are no properties.</returns>
+			virtual System::ComponentModel::PropertyDescriptorCollection^ GetProperties(System::ComponentModel::ITypeDescriptorContext^ context,
+				System::Object^ value, array<System::Attribute^>^ attributes ) override;
 		};
 	}
 }

@@ -24,6 +24,7 @@
 #include "../math/Rational.h"
 
 #include "RationalConverter.h"
+#include "FieldPropertyDescriptor.h"
 
 using namespace System;
 using namespace System::Collections;
@@ -37,6 +38,18 @@ namespace SlimDX
 {
 namespace Design
 {
+	RationalConverter::RationalConverter()
+	{
+		Type^ type = Rational::typeid;
+		array<PropertyDescriptor^>^ propArray =
+		{
+			gcnew FieldPropertyDescriptor(type->GetField("Numerator")),
+			gcnew FieldPropertyDescriptor(type->GetField("Denominator")),
+		};
+
+		m_Properties = gcnew PropertyDescriptorCollection(propArray);
+	}
+
 	bool RationalConverter::CanConvertTo(ITypeDescriptorContext^ context, Type^ destinationType)
 	{
 		if( destinationType == String::typeid || destinationType == InstanceDescriptor::typeid )
@@ -124,6 +137,16 @@ namespace Design
 			throw gcnew ArgumentNullException( "propertyValues" );
 
 		return gcnew Rational( safe_cast<int>( propertyValues["Numerator"] ), safe_cast<int>( propertyValues["Denominator"] ) );
+	}
+
+	bool RationalConverter::GetPropertiesSupported(ITypeDescriptorContext^)
+	{
+		return true;
+	}
+
+	PropertyDescriptorCollection^ RationalConverter::GetProperties(ITypeDescriptorContext^, Object^, array<Attribute^>^)
+	{
+		return m_Properties;
 	}
 }
 }

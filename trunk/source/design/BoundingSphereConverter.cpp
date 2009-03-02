@@ -24,6 +24,7 @@
 #include "../math/BoundingSphere.h"
 
 #include "BoundingSphereConverter.h"
+#include "FieldPropertyDescriptor.h"
 
 using namespace System;
 using namespace System::Collections;
@@ -37,6 +38,18 @@ namespace SlimDX
 {
 namespace Design
 {
+	BoundingSphereConverter::BoundingSphereConverter()
+	{
+		Type^ type = BoundingSphere::typeid;
+		array<PropertyDescriptor^>^ propArray =
+		{
+			gcnew FieldPropertyDescriptor(type->GetField("Center")),
+			gcnew FieldPropertyDescriptor(type->GetField("Radius")),
+		};
+
+		m_Properties = gcnew PropertyDescriptorCollection(propArray);
+	}
+
 	bool BoundingSphereConverter::CanConvertTo(ITypeDescriptorContext^ context, Type^ destinationType)
 	{
 		if( destinationType == String::typeid || destinationType == InstanceDescriptor::typeid )
@@ -126,6 +139,16 @@ namespace Design
 			throw gcnew ArgumentNullException( "propertyValues" );
 
 		return gcnew BoundingSphere( safe_cast<Vector3>( propertyValues["Center"] ), safe_cast<float>( propertyValues["Radius"] ) );
+	}
+
+	bool BoundingSphereConverter::GetPropertiesSupported(ITypeDescriptorContext^)
+	{
+		return true;
+	}
+
+	PropertyDescriptorCollection^ BoundingSphereConverter::GetProperties(ITypeDescriptorContext^, Object^, array<Attribute^>^)
+	{
+		return m_Properties;
 	}
 }
 }

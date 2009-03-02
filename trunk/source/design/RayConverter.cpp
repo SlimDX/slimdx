@@ -24,6 +24,7 @@
 #include "../math/Ray.h"
 
 #include "RayConverter.h"
+#include "FieldPropertyDescriptor.h"
 
 using namespace System;
 using namespace System::Collections;
@@ -37,6 +38,18 @@ namespace SlimDX
 {
 namespace Design
 {
+	RayConverter::RayConverter()
+	{
+		Type^ type = Ray::typeid;
+		array<PropertyDescriptor^>^ propArray =
+		{
+			gcnew FieldPropertyDescriptor(type->GetField("Position")),
+			gcnew FieldPropertyDescriptor(type->GetField("Direction")),
+		};
+
+		m_Properties = gcnew PropertyDescriptorCollection(propArray);
+	}
+
 	bool RayConverter::CanConvertTo(ITypeDescriptorContext^ context, Type^ destinationType)
 	{
 		if( destinationType == String::typeid || destinationType == InstanceDescriptor::typeid )
@@ -124,6 +137,16 @@ namespace Design
 			throw gcnew ArgumentNullException( "propertyValues" );
 
 		return gcnew Ray( safe_cast<Vector3>( propertyValues["Position"] ), safe_cast<Vector3>( propertyValues["Direction"] ) );
+	}
+
+	bool RayConverter::GetPropertiesSupported(ITypeDescriptorContext^)
+	{
+		return true;
+	}
+
+	PropertyDescriptorCollection^ RayConverter::GetProperties(ITypeDescriptorContext^, Object^, array<Attribute^>^)
+	{
+		return m_Properties;
 	}
 }
 }

@@ -26,6 +26,7 @@
 #include "../math/Half2.h"
 
 #include "Half2Converter.h"
+#include "FieldPropertyDescriptor.h"
 
 using namespace System;
 using namespace System::Collections;
@@ -39,6 +40,18 @@ namespace SlimDX
 {
 namespace Design
 {
+	Half2Converter::Half2Converter()
+	{
+		Type^ type = Half2::typeid;
+		array<PropertyDescriptor^>^ propArray =
+		{
+			gcnew FieldPropertyDescriptor(type->GetField("X")),
+			gcnew FieldPropertyDescriptor(type->GetField("Y")),
+		};
+
+		m_Properties = gcnew PropertyDescriptorCollection(propArray);
+	}
+
 	bool Half2Converter::CanConvertTo(ITypeDescriptorContext^ context, Type^ destinationType)
 	{
 		if( destinationType == String::typeid || destinationType == InstanceDescriptor::typeid )
@@ -126,6 +139,16 @@ namespace Design
 			throw gcnew ArgumentNullException( "propertyValues" );
 
 		return gcnew Half2( safe_cast<Half>( propertyValues["X"] ), safe_cast<Half>( propertyValues["Y"] ) );
+	}
+
+	bool Half2Converter::GetPropertiesSupported(ITypeDescriptorContext^)
+	{
+		return true;
+	}
+
+	PropertyDescriptorCollection^ Half2Converter::GetProperties(ITypeDescriptorContext^, Object^, array<Attribute^>^)
+	{
+		return m_Properties;
 	}
 }
 }

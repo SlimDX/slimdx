@@ -26,6 +26,7 @@
 #include "../math/Half3.h"
 
 #include "Half3Converter.h"
+#include "FieldPropertyDescriptor.h"
 
 using namespace System;
 using namespace System::Collections;
@@ -39,6 +40,19 @@ namespace SlimDX
 {
 namespace Design
 {
+	Half3Converter::Half3Converter()
+	{
+		Type^ type = Half3::typeid;
+		array<PropertyDescriptor^>^ propArray =
+		{
+			gcnew FieldPropertyDescriptor(type->GetField("X")),
+			gcnew FieldPropertyDescriptor(type->GetField("Y")),
+			gcnew FieldPropertyDescriptor(type->GetField("Z")),
+		};
+
+		m_Properties = gcnew PropertyDescriptorCollection(propArray);
+	}
+
 	bool Half3Converter::CanConvertTo(ITypeDescriptorContext^ context, Type^ destinationType)
 	{
 		if( destinationType == String::typeid || destinationType == InstanceDescriptor::typeid )
@@ -129,6 +143,16 @@ namespace Design
 
 		return gcnew Half3( safe_cast<Half>( propertyValues["X"] ), safe_cast<Half>( propertyValues["Y"] ),
 			safe_cast<Half>( propertyValues["Z"] ) );
+	}
+
+	bool Half3Converter::GetPropertiesSupported(ITypeDescriptorContext^)
+	{
+		return true;
+	}
+
+	PropertyDescriptorCollection^ Half3Converter::GetProperties(ITypeDescriptorContext^, Object^, array<Attribute^>^)
+	{
+		return m_Properties;
 	}
 }
 }

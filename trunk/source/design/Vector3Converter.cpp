@@ -24,6 +24,7 @@
 #include "../math/Vector3.h"
 
 #include "Vector3Converter.h"
+#include "FieldPropertyDescriptor.h"
 
 using namespace System;
 using namespace System::Collections;
@@ -36,6 +37,19 @@ namespace SlimDX
 {
 namespace Design
 {
+	Vector3Converter::Vector3Converter()
+	{
+		Type^ type = Vector3::typeid;
+		array<PropertyDescriptor^>^ propArray =
+		{
+			gcnew FieldPropertyDescriptor(type->GetField("X")),
+			gcnew FieldPropertyDescriptor(type->GetField("Y")),
+			gcnew FieldPropertyDescriptor(type->GetField("Z")),
+		};
+
+		m_Properties = gcnew PropertyDescriptorCollection(propArray);
+	}
+
 	bool Vector3Converter::CanConvertTo(ITypeDescriptorContext^ context, Type^ destinationType)
 	{
 		if( destinationType == String::typeid || destinationType == InstanceDescriptor::typeid )
@@ -126,6 +140,16 @@ namespace Design
 
 		return gcnew Vector3( safe_cast<float>( propertyValues["X"] ), safe_cast<float>( propertyValues["Y"] ),
 			safe_cast<float>( propertyValues["Z"] ) );
+	}
+
+	bool Vector3Converter::GetPropertiesSupported(ITypeDescriptorContext^)
+	{
+		return true;
+	}
+
+	PropertyDescriptorCollection^ Vector3Converter::GetProperties(ITypeDescriptorContext^, Object^, array<Attribute^>^)
+	{
+		return m_Properties;
 	}
 }
 }

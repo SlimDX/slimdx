@@ -129,18 +129,21 @@ namespace SlimDX
 		/// </summary>
 		float M44;
 		
+		[System::ComponentModel::Browsable(false)]
 		property float default[int, int]
 		{
 			float get( int row, int column );
 			void set( int row, int column, float value );
 		}
 
+		[System::ComponentModel::Browsable(false)]
 		property Vector4 Rows[int]
 		{
 			Vector4 get( int row );
 			void set( int row, Vector4 value );
 		}
 
+		[System::ComponentModel::Browsable(false)]
 		property Vector4 Columns[int]
 		{
 			Vector4 get( int column );
@@ -155,6 +158,7 @@ namespace SlimDX
 		/// <summary>
 		/// Gets a value indicating whether this instance is an identity matrix.
 		/// </summary>
+		[System::ComponentModel::Browsable(false)]
 		property bool IsIdentity { bool get(); }
 
 		/// <summary>

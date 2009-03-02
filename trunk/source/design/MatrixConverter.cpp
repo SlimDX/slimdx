@@ -24,6 +24,7 @@
 #include "../math/Matrix.h"
 
 #include "MatrixConverter.h"
+#include "FieldPropertyDescriptor.h"
 
 using namespace System;
 using namespace System::Collections;
@@ -37,6 +38,35 @@ namespace SlimDX
 {
 namespace Design
 {
+	MatrixConverter::MatrixConverter()
+	{
+		Type^ type = Matrix::typeid;
+		array<PropertyDescriptor^>^ propArray =
+		{
+			gcnew FieldPropertyDescriptor(type->GetField("M11")),
+			gcnew FieldPropertyDescriptor(type->GetField("M12")),
+			gcnew FieldPropertyDescriptor(type->GetField("M13")),
+			gcnew FieldPropertyDescriptor(type->GetField("M14")),
+
+			gcnew FieldPropertyDescriptor(type->GetField("M21")),
+			gcnew FieldPropertyDescriptor(type->GetField("M22")),
+			gcnew FieldPropertyDescriptor(type->GetField("M23")),
+			gcnew FieldPropertyDescriptor(type->GetField("M24")),
+
+			gcnew FieldPropertyDescriptor(type->GetField("M31")),
+			gcnew FieldPropertyDescriptor(type->GetField("M32")),
+			gcnew FieldPropertyDescriptor(type->GetField("M33")),
+			gcnew FieldPropertyDescriptor(type->GetField("M34")),
+
+			gcnew FieldPropertyDescriptor(type->GetField("M41")),
+			gcnew FieldPropertyDescriptor(type->GetField("M42")),
+			gcnew FieldPropertyDescriptor(type->GetField("M43")),
+			gcnew FieldPropertyDescriptor(type->GetField("M44")),
+		};
+
+		m_Properties = gcnew PropertyDescriptorCollection(propArray);
+	}
+
 	bool MatrixConverter::CanConvertTo(ITypeDescriptorContext^ context, Type^ destinationType)
 	{
 		if( destinationType == String::typeid )
@@ -148,6 +178,16 @@ namespace Design
 		matrix.M44 = safe_cast<float>( propertyValues["M44"] );
 
 		return matrix;
+	}
+
+	bool MatrixConverter::GetPropertiesSupported(ITypeDescriptorContext^)
+	{
+		return true;
+	}
+
+	PropertyDescriptorCollection^ MatrixConverter::GetProperties(ITypeDescriptorContext^, Object^, array<Attribute^>^)
+	{
+		return m_Properties;
 	}
 }
 }
