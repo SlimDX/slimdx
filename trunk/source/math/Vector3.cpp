@@ -22,6 +22,7 @@
 
 #include <d3dx9.h>
 
+#include "../Utilities.h"
 #include "../Viewport.h"
 
 #include "Quaternion.h"
@@ -410,15 +411,32 @@ namespace SlimDX
 		result.W = (((vector.X * transform.M14) + (vector.Y * transform.M24)) + (vector.Z * transform.M34)) + transform.M44;
 	}
 	
+	void Vector3::Transform( Vector3* vectorsIn, int inputStride, Matrix* transformation, Vector4* vectorsOut, int outputStride, int count )
+	{
+		D3DXVec3TransformArray( reinterpret_cast<D3DXVECTOR4*>( vectorsOut ), outputStride,
+			reinterpret_cast<const D3DXVECTOR3*>( vectorsIn ), inputStride,
+			reinterpret_cast<const D3DXMATRIX*>( transformation ), count );
+	}
+
+	void Vector3::Transform( array<Vector3>^ vectorsIn, Matrix% transformation, array<Vector4>^ vectorsOut, int offset, int count )
+	{
+		if(vectorsIn->Length != vectorsOut->Length)
+			throw gcnew ArgumentException( "Input and output arrays must be the same size.", "vectorsOut" );
+		Utilities::CheckArrayBounds( vectorsIn, offset, count );
+
+		pin_ptr<Vector3> pinnedIn = &vectorsIn[offset];
+		pin_ptr<Matrix> pinnedMatrix = &transformation;
+		pin_ptr<Vector4> pinnedOut = &vectorsOut[offset];
+
+		Transform( pinnedIn, pinnedMatrix, pinnedOut, count );
+	}
+
 	array<Vector4>^ Vector3::Transform( array<Vector3>^ vectors, Matrix% transform )
 	{
-		if( vectors == nullptr )
-			throw gcnew ArgumentNullException( "vectors" );
-
 		int count = vectors->Length;
 		array<Vector4>^ results = gcnew array<Vector4>( count );
 
-		for( int i = 0; i < count; i++ )
+		/*for( int i = 0; i < count; i++ )
 		{
 			Vector4 r;
 			r.X = (((vectors[i].X * transform.M11) + (vectors[i].Y * transform.M21)) + (vectors[i].Z * transform.M31)) + transform.M41;
@@ -427,8 +445,8 @@ namespace SlimDX
 			r.W = (((vectors[i].X * transform.M14) + (vectors[i].Y * transform.M24)) + (vectors[i].Z * transform.M34)) + transform.M44;
 		
 			results[i] = r;
-		}
-
+		}*/
+		Transform( vectors, transform, results );
 		return results;
 	}
 	
@@ -537,6 +555,26 @@ namespace SlimDX
 		result = Vector3( vector.X * vector.W, vector.Y * vector.W, vector.Z * vector.W );
 	}
 	
+	void Vector3::TransformCoordinate( Vector3* coordsIn, int inputStride, Matrix* transformation, Vector3* coordsOut, int outputStride, int count )
+	{
+		D3DXVec3TransformCoordArray( reinterpret_cast<D3DXVECTOR3*>( coordsOut ), outputStride,
+			reinterpret_cast<const D3DXVECTOR3*>( coordsIn ), inputStride,
+			reinterpret_cast<const D3DXMATRIX*>( transformation ), count );
+	}
+
+	void Vector3::TransformCoordinate( array<Vector3>^ coordsIn, Matrix% transformation, array<Vector3>^ coordsOut, int offset, int count )
+	{
+		if(coordsIn->Length != coordsOut->Length)
+			throw gcnew ArgumentException( "Input and output arrays must be the same size.", "vectorsOut" );
+		Utilities::CheckArrayBounds( coordsIn, offset, count );
+
+		pin_ptr<Vector3> pinnedIn = &coordsIn[offset];
+		pin_ptr<Matrix> pinnedMatrix = &transformation;
+		pin_ptr<Vector3> pinnedOut = &coordsOut[offset];
+
+		TransformCoordinate( pinnedIn, pinnedMatrix, pinnedOut, count );
+	}
+	
 	array<Vector3>^ Vector3::TransformCoordinate( array<Vector3>^ coords, Matrix% transform )
 	{
 		if( coords == nullptr )
@@ -546,15 +584,15 @@ namespace SlimDX
 		int count = coords->Length;
 		array<Vector3>^ results = gcnew array<Vector3>( count );
 
-		for( int i = 0; i < count; i++ )
+		/*for( int i = 0; i < count; i++ )
 		{
 			vector.X = (((coords[i].X * transform.M11) + (coords[i].Y * transform.M21)) + (coords[i].Z * transform.M31)) + transform.M41;
 			vector.Y = (((coords[i].X * transform.M12) + (coords[i].Y * transform.M22)) + (coords[i].Z * transform.M32)) + transform.M42;
 			vector.Z = (((coords[i].X * transform.M13) + (coords[i].Y * transform.M23)) + (coords[i].Z * transform.M33)) + transform.M43;
 			vector.W = 1 / ((((coords[i].X * transform.M14) + (coords[i].Y * transform.M24)) + (coords[i].Z * transform.M34)) + transform.M44);
 			results[i] = Vector3( vector.X * vector.W, vector.Y * vector.W, vector.Z * vector.W );
-		}
-
+		}*/
+		TransformCoordinate( coords, transform, results );
 		return results;
 	}
 	
@@ -576,6 +614,26 @@ namespace SlimDX
 		result.Z = ((normal.X * transform.M13) + (normal.Y * transform.M23)) + (normal.Z * transform.M33);
 	}
 	
+	void Vector3::TransformNormal( Vector3* normalsIn, int inputStride, Matrix* transformation, Vector3* normalsOut, int outputStride, int count )
+	{
+		D3DXVec3TransformNormalArray( reinterpret_cast<D3DXVECTOR3*>( normalsOut ), outputStride,
+			reinterpret_cast<const D3DXVECTOR3*>( normalsIn ), inputStride,
+			reinterpret_cast<const D3DXMATRIX*>( transformation ), count );
+	}
+
+	void Vector3::TransformNormal( array<Vector3>^ normalsIn, Matrix% transformation, array<Vector3>^ normalsOut, int offset, int count )
+	{
+		if(normalsIn->Length != normalsOut->Length)
+			throw gcnew ArgumentException( "Input and output arrays must be the same size.", "vectorsOut" );
+		Utilities::CheckArrayBounds( normalsOut, offset, count );
+
+		pin_ptr<Vector3> pinnedIn = &normalsIn[offset];
+		pin_ptr<Matrix> pinnedMatrix = &transformation;
+		pin_ptr<Vector3> pinnedOut = &normalsOut[offset];
+
+		TransformNormal( pinnedIn, pinnedMatrix, pinnedOut, count );
+	}
+	
 	array<Vector3>^ Vector3::TransformNormal( array<Vector3>^ normals, Matrix% transform )
 	{
 		if( normals == nullptr )
@@ -584,7 +642,7 @@ namespace SlimDX
 		int count = normals->Length;
 		array<Vector3>^ results = gcnew array<Vector3>( count );
 
-		for( int i = 0; i < count; i++ )
+		/*for( int i = 0; i < count; i++ )
 		{
 			Vector3 r;
 			r.X = ((normals[i].X * transform.M11) + (normals[i].Y * transform.M21)) + (normals[i].Z * transform.M31);
@@ -592,8 +650,8 @@ namespace SlimDX
 			r.Z = ((normals[i].X * transform.M13) + (normals[i].Y * transform.M23)) + (normals[i].Z * transform.M33);
 		
 			results[i] = r;
-		}
-
+		}*/
+		TransformNormal( normals, transform, results );
 		return results;
 	}
 	

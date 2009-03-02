@@ -561,6 +561,14 @@ namespace SlimDX
 			/// <param name="state">The transformation state which is to be set.</param>
 			/// <param name="value">The new value for the transformation state.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result SetTransform( TransformState state, Matrix* value );
+
+			/// <summary>
+			/// Sets a single device transformation state.
+			/// </summary>
+			/// <param name="state">The transformation state which is to be set.</param>
+			/// <param name="value">The new value for the transformation state.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result SetTransform( TransformState state, Matrix value );
 
 			/// <summary>
@@ -569,6 +577,14 @@ namespace SlimDX
 			/// <param name="state">The device state variable that is being retrieved.</param>
 			/// <returns>The transformation matrix for the specified state.</returns>
 			Matrix GetTransform( TransformState state );
+
+			/// <summary>
+			/// Sets a single device transformation state.
+			/// </summary>
+			/// <param name="index">The transformation state which is to be set.</param>
+			/// <param name="value">The new value for the transformation state.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result SetTransform( int index, Matrix* value );
 
 			/// <summary>
 			/// Sets a single device transformation state.
@@ -776,8 +792,17 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="startRegister">Register number that will contain the first constant value.</param>
 			/// <param name="data">A pointer to the constant data.</param>
+			/// <param name="count">The number of matrices to set.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result SetVertexShaderConstant( int startRegister, Matrix* data );
+			Result SetVertexShaderConstant( int startRegister, Matrix* data, int count );
+
+			/// <summary>
+			/// Sets a vertex shader constant.
+			/// </summary>
+			/// <param name="startRegister">Register number that will contain the first constant value.</param>
+			/// <param name="data">A pointer to the constant data.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result SetVertexShaderConstant( int startRegister, Matrix* data ) { return SetVertexShaderConstant( startRegister, data, 1 ); }
 			
 			/// <summary>
 			/// Sets a vertex shader constant.
@@ -882,8 +907,17 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="startRegister">Register number that will contain the first constant value.</param>
 			/// <param name="data">The constant data.</param>
+			/// <param name="count">The number of matrices to set.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result SetPixelShaderConstant( int startRegister, Matrix* data );
+			Result SetPixelShaderConstant( int startRegister, Matrix* data, int count );
+			
+			/// <summary>
+			/// Sets a pixel shader constant.
+			/// </summary>
+			/// <param name="startRegister">Register number that will contain the first constant value.</param>
+			/// <param name="data">The constant data.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result SetPixelShaderConstant( int startRegister, Matrix* data ) { return SetPixelShaderConstant( startRegister, data, 1 ); }
 
 			/// <summary>
 			/// Sets a pixel shader constant.

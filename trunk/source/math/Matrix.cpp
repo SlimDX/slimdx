@@ -21,6 +21,7 @@
 */
 
 #include <d3dx9.h>
+#include "../Utilities.h"
 
 #include "Matrix.h"
 #include "Plane.h"
@@ -356,6 +357,31 @@ namespace SlimDX
 		r.M44 = (left.M41 * right.M14) + (left.M42 * right.M24) + (left.M43 * right.M34) + (left.M44 * right.M44);
 	
 		result = r;
+	}
+
+	void Matrix::Multiply( Matrix* left, Matrix* right, Matrix* result, int count )
+	{
+		for( int i = 0; i < count; ++i )
+		{
+			D3DXMatrixMultiply( reinterpret_cast<D3DXMATRIX*>( &left[i] ),
+				reinterpret_cast<const D3DXMATRIX*>( &right[i] ),
+				reinterpret_cast<const D3DXMATRIX*>( &result[i] ) );
+		}
+	}
+
+	void Matrix::Multiply( array<Matrix>^ left, array<Matrix>^ right, array<Matrix>^ result, int offset, int count )
+	{
+		if( left->Length != right->Length )
+			throw gcnew ArgumentException( "Left and right arrays must be the same size.", "right" );
+		if( right->Length != result->Length )
+			throw gcnew ArgumentException( "Result array must be the same size as input arrays.", "result" );
+		Utilities::CheckArrayBounds( left, offset, count );
+
+		pin_ptr<Matrix> pinnedLeft = &left[0];
+		pin_ptr<Matrix> pinnedRight = &right[0];
+		pin_ptr<Matrix> pinnedResult = &result[0];
+
+		Multiply( pinnedLeft, pinnedRight, pinnedResult, count );
 	}
 
 	Matrix Matrix::Multiply( Matrix left, float right )

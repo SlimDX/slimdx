@@ -230,6 +230,40 @@ namespace SlimDX
 		static void Multiply( Matrix% left, Matrix% right, [Out] Matrix% result );
 
 		/// <summary>
+		/// Determines the products of two arrays of matrices.
+		/// </summary>
+		/// <param name="left">The first matrix array to multiply.</param>
+		/// <param name="right">The second matrix array to multiply.</param>
+		/// <param name="result">The array of products of the two matrices.</param>
+		static void Multiply( Matrix* left, Matrix* right, Matrix* result, int count );
+
+		/// <summary>
+		/// Determines the product of two matrices.
+		/// </summary>
+		/// <param name="left">The first matrix to multiply.</param>
+		/// <param name="right">The second matrix to multiply.</param>
+		/// <param name="result">The product of the two matrices.</param>
+		static void Multiply( Matrix* left, Matrix* right, Matrix* result ) { Multiply( left, right, result, 1 ); }
+
+		/// <summary>
+		/// Determines the products of two arrays of matrices.
+		/// </summary>
+		/// <param name="left">The first matrix array to multiply.</param>
+		/// <param name="right">The second matrix array to multiply.</param>
+		/// <param name="result">The array of products of the two matrices.</param>
+		/// <param name="offset">The offset at which to begin the multiplication.</param>
+		/// <param name="count">The number of matrices to multiply, or 0 to process the entire array.</param>
+		static void Multiply( array<Matrix>^ left, array<Matrix>^ right, array<Matrix>^ result, int offset, int count );
+
+		/// <summary>
+		/// Determines the products of two arrays of matrices.
+		/// </summary>
+		/// <param name="left">The first matrix array to multiply.</param>
+		/// <param name="right">The second matrix array to multiply.</param>
+		/// <param name="result">The array of products of the two matrices.</param>
+		static void Multiply( array<Matrix>^ left, array<Matrix>^ right, array<Matrix>^ result ) { Multiply( left, right, result, 0, 0 ); }
+
+		/// <summary>
 		/// Scales a matrix by the given value.
 		/// </summary>
 		/// <param name="left">The matrix to scale.</param>
