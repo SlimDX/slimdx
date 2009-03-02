@@ -115,7 +115,7 @@ namespace DirectInput
 			format.dwSize = sizeof( DIDATAFORMAT );
 			format.dwObjSize = sizeof( DIOBJECTDATAFORMAT );
 			format.dwFlags = static_cast<DWORD>( formatAttribute->Flags );
-			format.dwDataSize = (DWORD) sizeof( type );
+			format.dwDataSize = static_cast<DWORD>( sizeof( type ) );
 			format.dwNumObjs = objectAttributes->Count;
 
 			std::vector<DIOBJECTDATAFORMAT> objectFormats( objectAttributes->Count );

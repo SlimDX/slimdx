@@ -97,7 +97,7 @@ namespace Direct3D10
 
 		array<BOOL>^ values = gcnew array<BOOL>( count );
 		pin_ptr<BOOL> pinned_values = &values[0];
-		HRESULT hr = m_Pointer->GetIntArray( pinned_values, 0, (UINT) count );
+		HRESULT hr = m_Pointer->GetIntArray( pinned_values, 0, static_cast<UINT>( count ) );
 		if( RECORD_D3D10( hr ).IsFailure )
 			return nullptr;
 
@@ -121,7 +121,7 @@ namespace Direct3D10
 
 		array<int>^ values = gcnew array<int>( count );
 		pin_ptr<int> pinned_values = &values[0];
-		HRESULT hr = m_Pointer->GetIntArray( pinned_values, 0, (UINT) count );
+		HRESULT hr = m_Pointer->GetIntArray( pinned_values, 0, static_cast<UINT>( count ) );
 		if( RECORD_D3D10( hr ).IsFailure )
 			return nullptr;
 
@@ -142,7 +142,7 @@ namespace Direct3D10
 
 		array<float>^ values = gcnew array<float>( count );
 		pin_ptr<float> pinned_values = &values[0];
-		HRESULT hr = m_Pointer->GetFloatArray( pinned_values, 0, (UINT) count );
+		HRESULT hr = m_Pointer->GetFloatArray( pinned_values, 0, static_cast<UINT>( count ) );
 		if( RECORD_D3D10( hr ).IsFailure )
 			return nullptr;
 

@@ -3365,7 +3365,7 @@ namespace SlimDX
 			/// <summary>
 			/// The device will present immediately without waiting for the refresh.
 			/// </summary>
-			Immediate = (int) D3DPRESENT_INTERVAL_IMMEDIATE,
+			Immediate = static_cast<int>( D3DPRESENT_INTERVAL_IMMEDIATE ),
 
 			/// <summary>
 			/// The device will wait for the vertical retrace period.

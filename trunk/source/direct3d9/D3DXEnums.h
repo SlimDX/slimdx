@@ -220,7 +220,7 @@ namespace SlimDX
 			/// <summary>
 			/// Uses the default behavior.
 			/// </summary>
-			Default = (int) D3DX_DEFAULT,
+			Default = static_cast<int>( D3DX_DEFAULT ),
 
 			/// <summary>
 			/// No scaling or filtering will take place. Pixels outside the bounds of the source image are assumed to be transparent black.
