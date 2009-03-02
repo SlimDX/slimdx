@@ -413,6 +413,12 @@ namespace Direct3D9
 		return SetSamplerState( sampler, type, static_cast<int>( texFilter ) );
 	}
 
+	Result Device::SetTransform( TransformState state, Matrix* value )
+	{
+		HRESULT hr = InternalPointer->SetTransform( static_cast<D3DTRANSFORMSTATETYPE>( state ), reinterpret_cast<const D3DMATRIX*>( value ) );
+		return RECORD_D3D9( hr );
+	}
+
 	Result Device::SetTransform( TransformState state, Matrix value )
 	{
 		HRESULT hr = InternalPointer->SetTransform( static_cast<D3DTRANSFORMSTATETYPE>( state ), reinterpret_cast<const D3DMATRIX*>( &value ) );
@@ -425,6 +431,11 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->GetTransform( static_cast<D3DTRANSFORMSTATETYPE>( state ), reinterpret_cast<D3DMATRIX*>( &result ) );
 		RECORD_D3D9( hr );
 		return result;
+	}
+
+	Result Device::SetTransform( int index, Matrix* value )
+	{
+		return SetTransform( static_cast<TransformState>( index + 256 ), value );
 	}
 
 	Result Device::SetTransform( int index, Matrix value )
@@ -1003,9 +1014,9 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	Result Device::SetVertexShaderConstant( int startRegister, Matrix* data )
+	Result Device::SetVertexShaderConstant( int startRegister, Matrix* data, int count )
 	{
-		HRESULT hr = InternalPointer->SetVertexShaderConstantF( startRegister, reinterpret_cast<float*>( data ), 4 );
+		HRESULT hr = InternalPointer->SetVertexShaderConstantF( startRegister, reinterpret_cast<float*>( data ), count * 4 );
 		return RECORD_D3D9( hr );
 	}
 
@@ -1063,9 +1074,9 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	Result Device::SetPixelShaderConstant( int startRegister, Matrix* data )
+	Result Device::SetPixelShaderConstant( int startRegister, Matrix* data, int count )
 	{
-		HRESULT hr = InternalPointer->SetPixelShaderConstantF( startRegister, reinterpret_cast<float*>( data ), 4 );
+		HRESULT hr = InternalPointer->SetPixelShaderConstantF( startRegister, reinterpret_cast<float*>( data ), count * 4 );
 		return RECORD_D3D9( hr );
 	}
 

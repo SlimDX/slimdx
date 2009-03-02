@@ -458,6 +458,44 @@ namespace SlimDX
 		/// <summary>
 		/// Transforms an array of 3D vectors by the given <see cref="SlimDX::Matrix"/>.
 		/// </summary>
+		/// <param name="vectorsIn">The source vectors.</param>
+		/// <param name="inputStride">The stride in bytes between vectors in the input.</param>
+		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
+		/// <param name="vectorsOut">The transformed <see cref="SlimDX::Vector4"/>s.</param>
+		/// <param name="outputStride">The stride in bytes between vectors in the output.</param>
+		/// <param name="count">The number of vectors to transform.</param>
+		static void Transform( Vector3* vectorsIn, int inputStride, Matrix* transformation, Vector4* vectorsOut, int outputStride, int count );
+
+		/// <summary>
+		/// Transforms an array of 3D vectors by the given <see cref="SlimDX::Matrix"/>.
+		/// </summary>
+		/// <param name="vectorsIn">The source vectors.</param>
+		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
+		/// <param name="vectorsOut">The transformed <see cref="SlimDX::Vector4"/>s.</param>
+		/// <param name="count">The number of vectors to transform.</param>
+		static void Transform( Vector3* vectorsIn, Matrix* transformation, Vector4* vectorsOut, int count ) { Transform( vectorsIn, sizeof(Vector3), transformation, vectorsOut, sizeof(Vector4), count ); }
+
+		/// <summary>
+		/// Transforms an array of 3D vectors by the given <see cref="SlimDX::Matrix"/>.
+		/// </summary>
+		/// <param name="vectorsIn">The source vectors.</param>
+		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
+		/// <param name="vectorsOut">The transformed <see cref="SlimDX::Vector4"/>s.</param>
+		/// <param name="offset">The offset at which to begin transforming.</param>
+		/// <param name="count">The number of vectors to transform, or 0 to process the whole array.</param>
+		static void Transform( array<Vector3>^ vectorsIn, Matrix% transformation, array<Vector4>^ vectorsOut, int offset, int count );
+
+		/// <summary>
+		/// Transforms an array of 3D vectors by the given <see cref="SlimDX::Matrix"/>.
+		/// </summary>
+		/// <param name="vectorsIn">The source vectors.</param>
+		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
+		/// <param name="vectorsOut">The transformed <see cref="SlimDX::Vector4"/>s.</param>
+		static void Transform( array<Vector3>^ vectorsIn, Matrix% transformation, array<Vector4>^ vectorsOut ) { Transform( vectorsIn, transformation, vectorsOut, 0, 0 ); }
+
+		/// <summary>
+		/// Transforms an array of 3D vectors by the given <see cref="SlimDX::Matrix"/>.
+		/// </summary>
 		/// <param name="vectors">The source vectors.</param>
 		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
 		/// <returns>The transformed <see cref="SlimDX::Vector4"/>s.</returns>
@@ -506,6 +544,44 @@ namespace SlimDX
 		/// <summary>
 		/// Performs a coordinate transformation using the given <see cref="SlimDX::Matrix"/>.
 		/// </summary>
+		/// <param name="coordsIn">The source coordinate vectors.</param>
+		/// <param name="inputStride">The stride in bytes between vectors in the input.</param>
+		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
+		/// <param name="coordsOut">The transformed coordinate <see cref="SlimDX::Vector3"/>s.</param>
+		/// <param name="outputStride">The stride in bytes between vectors in the output.</param>
+		/// <param name="count">The number of coordinate vectors to transform.</param>
+		static void TransformCoordinate( Vector3* coordsIn, int inputStride, Matrix* transformation, Vector3* coordsOut, int outputStride, int count );
+
+		/// <summary>
+		/// Performs a coordinate transformation using the given <see cref="SlimDX::Matrix"/>.
+		/// </summary>
+		/// <param name="coordsIn">The source coordinate vectors.</param>
+		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
+		/// <param name="coordsOut">The transformed coordinate <see cref="SlimDX::Vector3"/>s.</param>
+		/// <param name="count">The number of coordinate vectors to transform.</param>
+		static void TransformCoordinate( Vector3* coordsIn, Matrix* transformation, Vector3* coordsOut, int count ) { TransformCoordinate( coordsIn, sizeof(Vector3), transformation, coordsOut, sizeof(Vector3), count ); }
+
+		/// <summary>
+		/// Performs a coordinate transformation using the given <see cref="SlimDX::Matrix"/>.
+		/// </summary>
+		/// <param name="coordsIn">The source coordinate vectors.</param>
+		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
+		/// <param name="coordsOut">The transformed coordinate <see cref="SlimDX::Vector3"/>s.</param>
+		/// <param name="offset">The offset at which to begin transforming.</param>
+		/// <param name="count">The number of coordinate vectors to transform, or 0 to process the whole array.</param>
+		static void TransformCoordinate( array<Vector3>^ coordsIn, Matrix% transformation, array<Vector3>^ coordsOut, int offset, int count );
+
+		/// <summary>
+		/// Performs a coordinate transformation using the given <see cref="SlimDX::Matrix"/>.
+		/// </summary>
+		/// <param name="coordsIn">The source coordinate vectors.</param>
+		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
+		/// <param name="coordsOut">The transformed coordinate <see cref="SlimDX::Vector3"/>s.</param>
+		static void TransformCoordinate( array<Vector3>^ coordsIn, Matrix% transformation, array<Vector3>^ coordsOut ) { TransformCoordinate( coordsIn, transformation, coordsOut, 0, 0 ); }
+
+		/// <summary>
+		/// Performs a coordinate transformation using the given <see cref="SlimDX::Matrix"/>.
+		/// </summary>
 		/// <param name="coordinates">The coordinate vectors to transform.</param>
 		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
 		/// <returns>The transformed coordinates.</returns>
@@ -526,6 +602,44 @@ namespace SlimDX
 		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
 		/// <param name="result">When the method completes, contains the transformed normal.</param>
 		static void TransformNormal( Vector3% normal, Matrix% transformation, [Out] Vector3% result );
+
+		/// <summary>
+		/// Performs a normal transformation using the given <see cref="SlimDX::Matrix"/>.
+		/// </summary>
+		/// <param name="normalsIn">The source normals to transform.</param>
+		/// <param name="inputStride">The stride in bytes between normals in the input.</param>
+		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
+		/// <param name="normalsOut">The transformed <see cref="SlimDX::Vector3"/>s.</param>
+		/// <param name="outputStride">The stride in bytes between vectors in the output.</param>
+		/// <param name="count">The number of vectors to transform.</param>
+		static void TransformNormal( Vector3* normalsIn, int inputStride, Matrix* transformation, Vector3* normalsOut, int outputStride, int count );
+
+		/// <summary>
+		/// Performs a normal transformation using the given <see cref="SlimDX::Matrix"/>.
+		/// </summary>
+		/// <param name="normalsIn">The source normals to transform.</param>
+		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
+		/// <param name="normalsOut">The transformed <see cref="SlimDX::Vector3"/>s.</param>
+		/// <param name="count">The number of vectors to transform.</param>
+		static void TransformNormal( Vector3* normalsIn, Matrix* transformation, Vector3* normalsOut, int count ) { TransformNormal( normalsIn, sizeof(Vector3), transformation, normalsOut, sizeof(Vector3), count ); }
+
+		/// <summary>
+		/// Performs a normal transformation using the given <see cref="SlimDX::Matrix"/>.
+		/// </summary>
+		/// <param name="normalsIn">The source vectors.</param>
+		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
+		/// <param name="normalsOut">The transformed <see cref="SlimDX::Vector3"/>s.</param>
+		/// <param name="offset">The offset at which to begin transforming.</param>
+		/// <param name="count">The number of vectors to transform, or 0 to process the whole array.</param>
+		static void TransformNormal( array<Vector3>^ normalsIn, Matrix% transformation, array<Vector3>^ normalsOut, int offset, int count );
+
+		/// <summary>
+		/// Performs a normal transformation using the given <see cref="SlimDX::Matrix"/>.
+		/// </summary>
+		/// <param name="normalsIn">The source vectors.</param>
+		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
+		/// <param name="normalsOut">The transformed <see cref="SlimDX::Vector3"/>s.</param>
+		static void TransformNormal( array<Vector3>^ normalsIn, Matrix% transformation, array<Vector3>^ normalsOut ) { TransformNormal( normalsIn, transformation, normalsOut, 0, 0 ); }
 
 		/// <summary>
 		/// Performs a normal transformation using the given <see cref="SlimDX::Matrix"/>.
