@@ -44,25 +44,25 @@ namespace SlimDX
 		/// Gets or sets the X component of the quaternion.
 		/// </summary>
 		/// <value>The X component of the quaternion.</value>
-		property float X;
+		float X;
 
 		/// <summary>
 		/// Gets or sets the Y component of the quaternion.
 		/// </summary>
 		/// <value>The Y component of the quaternion.</value>
-		property float Y;
+		float Y;
 
 		/// <summary>
 		/// Gets or sets the Z component of the quaternion.
 		/// </summary>
 		/// <value>The Z component of the quaternion.</value>
-		property float Z;
+		float Z;
 
 		/// <summary>
 		/// Gets or sets the W component of the quaternion.
 		/// </summary>
 		/// <value>The W component of the quaternion.</value>
-		property float W;
+		float W;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Quaternion"/> structure.

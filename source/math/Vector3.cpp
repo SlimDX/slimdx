@@ -55,45 +55,15 @@ namespace SlimDX
 		Z = z;
 	}
 	
-	float Vector3::X::get()
-	{
-		return m_X;
-	}
-	
-	void Vector3::X::set( float value )
-	{
-		m_X = value;
-	}
-	
-	float Vector3::Y::get()
-	{
-		return m_Y;
-	}
-	
-	void Vector3::Y::set( float value )
-	{
-		m_Y = value;
-	}
-	
-	float Vector3::Z::get()
-	{
-		return m_Z;
-	}
-	
-	void Vector3::Z::set( float value )
-	{
-		m_Z = value;
-	}
-	
 	float Vector3::default::get( int index )
 	{
-		pin_ptr<float> first = &m_X;
+		pin_ptr<float> first = &X;
 		return *( first + index );
 	}
 	
 	void Vector3::default::set( int index, float value )
 	{
-		pin_ptr<float> first = &m_X;
+		pin_ptr<float> first = &X;
 		*( first + index ) = value;
 	}
 	

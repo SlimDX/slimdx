@@ -49,22 +49,22 @@ namespace SlimDX
 		/// <summary>
 		/// Gets or sets the color's red component.
 		/// </summary>
-		property float Red;
+		float Red;
 
 		/// <summary>
 		/// Gets or sets the color's green component.
 		/// </summary>
-		property float Green;
+		float Green;
 
 		/// <summary>
 		/// Gets or sets the color's blue component.
 		/// </summary>
-		property float Blue;
+		float Blue;
 
 		/// <summary>
 		/// Gets or sets the color's alpha component.
 		/// </summary>
-		property float Alpha;
+		float Alpha;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Color4"/> structure.
