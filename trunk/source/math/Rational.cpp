@@ -26,33 +26,8 @@ using namespace System;
 
 namespace SlimDX
 {
-	/// 
-	Rational::Rational( int numerator, int denominator ) : numerator( numerator), denominator( denominator )
+	Rational::Rational( int numerator, int denominator ) : Numerator( numerator ), Denominator( denominator )
 	{
-	}
-	
-	///
-	int Rational::Numerator::get()
-	{
-		return numerator;
-	}
-	
-	///
-	void Rational::Numerator::set( int value )
-	{
-		numerator = value;
-	}
-	
-	///
-	int Rational::Denominator::get()
-	{
-		return denominator;
-	}
-	
-	///
-	void Rational::Denominator::set( int value )
-	{
-		denominator = value;
 	}
 
 	bool Rational::operator == ( Rational left, Rational right )
@@ -67,7 +42,7 @@ namespace SlimDX
 
 	int Rational::GetHashCode()
 	{
-		return numerator.GetHashCode() + denominator.GetHashCode();
+		return Numerator.GetHashCode() + Denominator.GetHashCode();
 	}
 
 	bool Rational::Equals( Object^ value )
@@ -83,11 +58,11 @@ namespace SlimDX
 
 	bool Rational::Equals( Rational value )
 	{
-		return ( numerator == value.numerator && denominator == value.denominator );
+		return ( Numerator == value.Numerator && Denominator == value.Denominator );
 	}
 
 	bool Rational::Equals( Rational% value1, Rational% value2 )
 	{
-		return ( value1.numerator == value2.numerator && value1.denominator == value2.denominator );
+		return ( value1.Numerator == value2.Numerator && value1.Denominator == value2.Denominator );
 	}
 }

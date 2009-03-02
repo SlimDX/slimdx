@@ -33,38 +33,21 @@ namespace SlimDX
 	[System::ComponentModel::TypeConverter( SlimDX::Design::Color3Converter::typeid )]
 	public value class Color3 : System::IEquatable<Color3>
 	{
-	private:
-		float m_Red;
-		float m_Green;
-		float m_Blue;
-
 	public:
 		/// <summary>
 		/// Gets or sets the color's red component.
 		/// </summary>
-		property float Red
-		{
-			float get();
-			void set( float value );
-		}
+		float Red;
 		
 		/// <summary>
 		/// Gets or sets the color's green component.
 		/// </summary>
-		property float Green
-		{
-			float get();
-			void set( float value );
-		}
+		float Green;
 		
 		/// <summary>
 		/// Gets or sets the color's blue component.
 		/// </summary>
-		property float Blue
-		{
-			float get();
-			void set( float value );
-		}
+		float Blue;
 		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Color3"/> structure.

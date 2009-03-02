@@ -41,25 +41,25 @@ namespace SlimDX
 		/// Gets or sets the X component of the vector.
 		/// </summary>
 		/// <value>The X component of the vector.</value>
-		property Half X;
+		Half X;
 
 		/// <summary>
 		/// Gets or sets the Y component of the vector.
 		/// </summary>
 		/// <value>The Y component of the vector.</value>
-		property Half Y;
+		Half Y;
 
 		/// <summary>
 		/// Gets or sets the Z component of the vector.
 		/// </summary>
 		/// <value>The Z component of the vector.</value>
-		property Half Z;
+		Half Z;
 
 		/// <summary>
 		/// Gets or sets the W component of the vector.
 		/// </summary>
 		/// <value>The W component of the vector.</value>
-		property Half W;
+		Half W;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Half4"/> structure.

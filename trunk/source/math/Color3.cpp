@@ -27,41 +27,11 @@ using namespace System;
 namespace SlimDX
 {
 	Color3::Color3( float red, float green, float blue )
-	: m_Red( red ), m_Green( green ), m_Blue( blue )
+	: Red( red ), Green( green ), Blue( blue )
 	{
-	}
-	
-	float Color3::Red::get()
-	{
-		return m_Red;
-	}
-	
-	void Color3::Red::set( float value )
-	{
-		m_Red = value;
-	}
-	
-	float Color3::Green::get()
-	{
-		return m_Green;
-	}
-	
-	void Color3::Green::set( float value )
-	{
-		m_Green = value;
-	}
-	
-	float Color3::Blue::get()
-	{
-		return m_Blue;
-	}
-	
-	void Color3::Blue::set( float value )
-	{
-		m_Blue = value;
 	}
 
-		bool Color3::operator == ( Color3 left, Color3 right )
+	bool Color3::operator == ( Color3 left, Color3 right )
 	{
 		return Color3::Equals( left, right );
 	}
@@ -73,7 +43,7 @@ namespace SlimDX
 
 	int Color3::GetHashCode()
 	{
-		return m_Red.GetHashCode() + m_Green.GetHashCode() + m_Blue.GetHashCode();
+		return Red.GetHashCode() + Green.GetHashCode() + Blue.GetHashCode();
 	}
 
 	bool Color3::Equals( Object^ value )
@@ -89,11 +59,11 @@ namespace SlimDX
 
 	bool Color3::Equals( Color3 value )
 	{
-		return ( m_Red == value.m_Red && m_Green == value.m_Green && m_Blue == value.m_Blue );
+		return ( Red == value.Red && Green == value.Green && Blue == value.Blue );
 	}
 
 	bool Color3::Equals( Color3% value1, Color3% value2 )
 	{
-		return ( value1.m_Red == value2.m_Red && value1.m_Green == value2.m_Green && value1.m_Blue == value2.m_Blue );
+		return ( value1.Red == value2.Red && value1.Green == value2.Green && value1.Blue == value2.Blue );
 	}
 }

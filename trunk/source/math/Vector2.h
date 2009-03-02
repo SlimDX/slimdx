@@ -43,29 +43,18 @@ namespace SlimDX
 	[System::ComponentModel::TypeConverter( SlimDX::Design::Vector2Converter::typeid )]
 	public value class Vector2 : System::IEquatable<Vector2>
 	{
-		float m_X;
-		float m_Y;
-		
 	public:
 		/// <summary>
 		/// Gets or sets the X component of the vector.
 		/// </summary>
 		/// <value>The X component of the vector.</value>
-		property float X
-		{
-			float get();
-			void set( float value );
-		}
+		float X;
 
 		/// <summary>
 		/// Gets or sets the Y component of the vector.
 		/// </summary>
 		/// <value>The Y component of the vector.</value>
-		property float Y
-		{
-			float get();
-			void set( float value );
-		}
+		float Y;
 		
 		property float default[int]
 		{

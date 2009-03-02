@@ -33,28 +33,16 @@ namespace SlimDX
 	[System::ComponentModel::TypeConverter( SlimDX::Design::RationalConverter::typeid )]
 	public value class Rational : System::IEquatable<Rational>
 	{
-	private:
-		int numerator;
-		int denominator;
-
 	public:
 		/// <summary>
 		/// Gets or sets the numerator of the rational pair.
 		/// </summary>
-		property int Numerator
-		{
-			int get();
-			void set( int value );
-		}
+		int Numerator;
 
 		/// <summary>
 		/// Gets or sets the denominator of the rational pair.
 		/// </summary>
-		property int Denominator
-		{
-			int get();
-			void set( int value );
-		}
+		int Denominator;
 		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Rational"/> structure.
