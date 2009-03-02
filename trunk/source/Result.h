@@ -42,7 +42,10 @@ namespace SlimDX
 	
 		[System::ThreadStatic]
 		static Result m_Last;
-		
+	
+		[System::ThreadStatic]
+		static int m_LastCode;
+
 		generic< typename T >
 		static void Throw( Object^ dataKey, Object^ dataValue );
 

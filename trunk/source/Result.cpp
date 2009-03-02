@@ -121,10 +121,11 @@ namespace SlimDX
 	generic< typename T >
 	Result Result::Record( int hr, bool failed, Object^ dataKey, Object^ dataValue )
 	{
-		m_Last = Result( hr );
+		m_LastCode = hr;
 		if(!failed)
 			return Result( hr );
 
+		m_Last = Result( hr );
 		if( dataKey != nullptr )
 		{
 			m_Last.Data = gcnew SortedList();
@@ -164,7 +165,10 @@ namespace SlimDX
 	
 	Result Result::Last::get()
 	{
-		return m_Last;
+		if( SUCCEEDED(m_LastCode) )
+			return Result( m_LastCode );
+		else
+			return m_Last;
 	}
 	
 	bool Result::operator == ( Result left, Result right )
