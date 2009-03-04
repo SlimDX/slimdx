@@ -210,9 +210,12 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/MP"
+				Optimization="3"
+				InlineFunctionExpansion="2"
 				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="WIN32;NDEBUG;D3D_DEBUG_INFO;WINVER=0x501;_WIN32_WINNT=0x501;DIRECTINPUT_VERSION=0x0800;XMLDOCS"
 				RuntimeLibrary="2"
+				FloatingPointModel="2"
 				UsePrecompiledHeader="0"
 				GenerateXMLDocumentationFiles="true"
 				XMLDocumentationFileName="$(IntDir)\"
@@ -240,7 +243,6 @@
 				DataExecutionPrevention="0"
 				TargetMachine="1"
 				KeyFile=""
-				CLRUnmanagedCodeCheck="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -5209,6 +5211,14 @@
 			</File>
 			<File
 				RelativePath="..\source\design\Color4Converter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\FieldPropertyDescriptor.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\design\FieldPropertyDescriptor.h"
 				>
 			</File>
 			<File
