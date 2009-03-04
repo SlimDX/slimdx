@@ -41,12 +41,18 @@
           <listItem><para>XInput</para></listItem>
         </list>
         <para>
-          In addition, SlimDX plans to fully support these additional APIs.
+          As of March 2009, SlimDX also has beta support for the following, in the form of a separate DLL.
+        </para>
+        <list class="bullet">
+          <listItem><para>Direct3D11</para></listItem>
+          <listItem><para>Direct2D</para></listItem>
+          <listItem><para>DirectWrite</para></listItem>
+        </list>
+        <para>
+          In addition, SlimDX plans to fully support these additional APIs in the future.
         </para>
         <list class="bullet">
           <listItem><para>Direct3D10.1</para></listItem>
-          <listItem><para>Direct3D11</para></listItem>
-          <listItem><para>Direct2D</para></listItem>
           <listItem><para>XACT3</para></listItem>
           <listItem><para>XAPOFX</para></listItem>
           <listItem><para>Windows Vista Game Explorer</para></listItem>
