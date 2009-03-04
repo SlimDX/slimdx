@@ -25,6 +25,12 @@
           </listItem>
           <listItem>
             <para>
+              <link xlink:href="531e076b-ade0-47f3-b11b-b75a426f94e8">Debugging Tips</link>
+              - Contains useful tips and pointers on how to debug problems in your SlimDX application.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
               <link xlink:href="598b267f-52e6-4adb-906b-879c0bc8c736">Object Lifetimes</link>
               - This section discusses the mechanics behind construction, disposal, and destruction of objects in SlimDX.
             </para>

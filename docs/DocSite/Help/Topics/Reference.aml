@@ -74,6 +74,12 @@
           </listItem>
           <listItem>
             <para>
+              <codeEntityReference>N:SlimDX.Windows</codeEntityReference>
+              - Contains classes and types for various bits of Win32 functionality.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
               <codeEntityReference>N:SlimDX.X3DAudio</codeEntityReference>
               - Contains classes and types for X3D Audio support.
             </para>

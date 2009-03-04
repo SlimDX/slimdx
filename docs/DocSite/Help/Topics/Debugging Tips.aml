@@ -20,15 +20,15 @@
           to release a resource.
         </para>
         <para>
-          There are several options for handling errors in SlimDX, controlled from the SlimDX.Configuration class. 
+          There are several options for handling errors in SlimDX, controlled from the <codeEntityReference>T:SlimDX.Configuration</codeEntityReference> class. 
           The normal operation mode for SlimDX is to throw an exception on any failed result code. 
-          You can control this behavior with the global boolean flag Configuration::ThrowOnError. 
+          You can control this behavior with the global boolean flag <codeEntityReference>P:SlimDX.Configuration.ThrowOnError</codeEntityReference>. 
           Its default value is true; if set to false, exceptions will not be thrown unless explicitly requested. 
           Note that SlimDX constructors will always throw an exception if a failure occurs. 
-          The Configuration class allows you to place "watches" on specific result codes. 
+          The <codeInline>Configuration</codeInline> class allows you to place "watches" on specific result codes. 
           These watches will allow you to control how SlimDX behaves when certain result codes are returned from DirectX. 
           Keep in mind that many result code values are shared across subsystems in the unmanaged DirectX libraries, 
-          so if you set a watch for SlimDX.Direct3D10.ResultCode.InvalidCall, and you happen to be using both D3D9 and D3D10 in the same project, 
+          so if you set a watch for <codeInline>SlimDX.Direct3D10.ResultCode.InvalidCall</codeInline>, and you happen to be using both D3D9 and D3D10 in the same project, 
           the watch will trigger if you make an invalid call to a D3D9 interface as well (in both subsystems, 
           the D3DERR_INVALIDCALL value is returned for invalid calls).
         </para>
@@ -39,7 +39,7 @@
           <list class="bullet">
             <listItem><codeInline>AlwaysIgnore</codeInline> -- Do nothing. If an exception would normally be thrown, it will be supressed.</listItem>
             <listItem><codeInline>Break</codeInline> -- Break into the debugger. Requires a debug build of your application (but not of SlimDX), but does not necessarily require the debugger to be attached at the time.</listItem>
-            <listItem><codeInline>Throw</codeInline> -- Throw an exception. If ThrowOnError has been set to false, this is the only way to get exceptions out of functions other than constructors.</listItem>
+            <listItem><codeInline>Throw</codeInline> -- Throw an exception. If <codeEntityReference>P:SlimDX.Configuration.ThrowOnError</codeEntityReference> has been set to false, this is the only way to get exceptions out of functions other than constructors.</listItem>
           </list>
         </para>
       </content>
