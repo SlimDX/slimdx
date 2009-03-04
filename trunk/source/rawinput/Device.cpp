@@ -167,6 +167,7 @@ namespace RawInput
 
 					info->DeviceType = static_cast<DeviceType>( nativeInfo->dwType );
 					info->DeviceName = name;
+					info->Handle = IntPtr( deviceList[i].hDevice );
 					info->KeyboardType = nativeInfo->keyboard.dwType;
 					info->Subtype = nativeInfo->keyboard.dwSubType;
 					info->KeyboardMode = nativeInfo->keyboard.dwKeyboardMode;
@@ -182,6 +183,7 @@ namespace RawInput
 
 					info->DeviceType = static_cast<DeviceType>( nativeInfo->dwType );
 					info->DeviceName = name;
+					info->Handle = IntPtr( deviceList[i].hDevice );
 					info->Id = nativeInfo->mouse.dwId;
 					info->ButtonCount = nativeInfo->mouse.dwNumberOfButtons;
 					info->SampleRate = nativeInfo->mouse.dwSampleRate;
@@ -194,6 +196,7 @@ namespace RawInput
 
 					info->DeviceType = static_cast<DeviceType>( nativeInfo->dwType );
 					info->DeviceName = name;
+					info->Handle = IntPtr( deviceList[i].hDevice );
 					info->VendorId = nativeInfo->hid.dwVendorId;
 					info->ProductId = nativeInfo->hid.dwProductId;
 					info->VersionNumber = nativeInfo->hid.dwVersionNumber;

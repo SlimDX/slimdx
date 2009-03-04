@@ -32,6 +32,7 @@ namespace SlimDX
 		public:
 			property DeviceType DeviceType;
 			property System::String^ DeviceName;
+			property System::IntPtr Handle;
 		};
 	}
 }
