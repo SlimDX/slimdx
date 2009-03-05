@@ -22,7 +22,6 @@
 #pragma once
 
 #include "Enums.h"
-#include "KeyCollection.h"
 
 namespace SlimDX
 {
@@ -34,9 +33,9 @@ namespace SlimDX
 		public ref class KeyboardState
 		{
 		private:
-			KeyCollection^ keys;
-			KeyCollection^ pressed;
-			KeyCollection^ released;
+			System::Collections::Generic::List<Key>^ keys;
+			System::Collections::Generic::List<Key>^ pressed;
+			System::Collections::Generic::List<Key>^ released;
 
 		internal:
 			void UpdateKeys( array<bool>^ states );
@@ -49,19 +48,19 @@ namespace SlimDX
 			bool IsPressed( Key key );
 			bool IsReleased( Key key );
 
-			property KeyCollection^ AllKeys
+			property System::Collections::Generic::IEnumerable<Key>^ AllKeys
 			{
-				KeyCollection^ get() { return keys; }
+				System::Collections::Generic::IEnumerable<Key>^ get() { return keys; }
 			}
 
-			property KeyCollection^ PressedKeys
+			property System::Collections::Generic::IEnumerable<Key>^ PressedKeys
 			{
-				KeyCollection^ get() { return pressed; }
+				System::Collections::Generic::IEnumerable<Key>^ get() { return pressed; }
 			}
 
-			property KeyCollection^ ReleasedKeys
+			property System::Collections::Generic::IEnumerable<Key>^ ReleasedKeys
 			{
-				KeyCollection^ get() { return released; }
+				System::Collections::Generic::IEnumerable<Key>^ get() { return released; }
 			}
 		};
 	}

@@ -24,6 +24,7 @@ using System.Globalization;
 using System.Windows.Forms;
 using SlimDX;
 using SlimDX.DirectInput;
+using System.Collections.Generic;
 
 namespace Joystick
 {
@@ -38,25 +39,26 @@ namespace Joystick
         void CreateDevice()
         {
             // make sure that DirectInput has been initialized
-            DirectInput.Initialize();
+            DirectInput dinput = new DirectInput();
 
             // search for devices
-            InputDeviceCollection devices = DirectInput.GetDevices(DeviceClass.GameController, DeviceEnumerationFlags.AttachedOnly);
-            if (devices.Count == 0)
+            foreach (DeviceInstance device in dinput.GetDevices(DeviceClass.GameController, DeviceEnumerationFlags.AttachedOnly))
             {
-                MessageBox.Show("There are no joysticks attached to the system.");
-                return;
+                // create the device
+                try
+                {
+                    joystick = new Device<JoystickState>(dinput, device.InstanceGuid);
+                    joystick.SetCooperativeLevel(this, CooperativeLevel.Exclusive | CooperativeLevel.Foreground);
+                    break;
+                }
+                catch (DirectInputException)
+                {
+                }
             }
 
-            // create the device
-            try
+            if (joystick == null)
             {
-                joystick = new Device<JoystickState>(devices[0].InstanceGuid);
-                joystick.SetCooperativeLevel(this, CooperativeLevel.Exclusive | CooperativeLevel.Foreground);
-            }
-            catch (DirectInputException e)
-            {
-                MessageBox.Show(e.Message);
+                MessageBox.Show("There are no joysticks attached to the system.");
                 return;
             }
 

@@ -23,6 +23,11 @@
 #include <dinput.h>
 #include <vcclr.h>
 
+#include "../ComObject.h"
+#include "../SlimDXException.h"
+#include "../InternalHelpers.h"
+#include "../CollectionShim.h"
+
 #include "DirectInput.h"
 #include "DirectInputException.h"
 #include "DirectInputNotFoundException.h"
@@ -31,17 +36,15 @@
 #include "Device.h"
 
 using namespace System;
+using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
 namespace DirectInput
 {
-    void DirectInput::Initialize()
+    DirectInput::DirectInput()
 	{
-        if( m_DirectInput != NULL )
-            return;
-
 		IDirectInput8W* dinput;
 		IntPtr hInstance = Marshal::GetHINSTANCE( DirectInput::typeid->Module );
 
@@ -60,39 +63,24 @@ namespace DirectInput
 		if( dinput == NULL )
 			throw gcnew DirectInputException( "Could not create DirectInput instance." );
 
-		m_DirectInput = dinput;
-		
-		System::AppDomain::CurrentDomain->DomainUnload += gcnew System::EventHandler( OnExit );
-		System::AppDomain::CurrentDomain->ProcessExit += gcnew System::EventHandler( OnExit );
-	}
-
-	void DirectInput::Terminate()
-	{
-		if( m_DirectInput == NULL )
-            return;
-
-		m_DirectInput->Release();
-		m_DirectInput = NULL;
-
-		System::AppDomain::CurrentDomain->DomainUnload -= gcnew System::EventHandler( OnExit );
-		System::AppDomain::CurrentDomain->ProcessExit -= gcnew System::EventHandler( OnExit );
+		Construct( dinput );
 	}
 
 	Result DirectInput::RunControlPanel()
 	{
-		HRESULT hr = m_DirectInput->RunControlPanel( NULL, 0 );
+		HRESULT hr = InternalPointer->RunControlPanel( NULL, 0 );
 		return RECORD_DINPUT( hr );
 	}
 
 	Result DirectInput::RunControlPanel( IntPtr parent )
 	{
-		HRESULT hr = m_DirectInput->RunControlPanel( static_cast<HWND>( parent.ToPointer() ), 0 );
+		HRESULT hr = InternalPointer->RunControlPanel( static_cast<HWND>( parent.ToPointer() ), 0 );
 		return RECORD_DINPUT( hr );
 	}
 
 	bool DirectInput::IsDeviceAttached( Guid device )
 	{
-		HRESULT hr = m_DirectInput->GetDeviceStatus( Utilities::ConvertManagedGuid( device ) );
+		HRESULT hr = InternalPointer->GetDeviceStatus( Utilities::ConvertManagedGuid( device ) );
 		RECORD_DINPUT( hr );
 
 		return hr == DI_OK;
@@ -103,7 +91,7 @@ namespace DirectInput
 		GUID result;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( name );
 
-		HRESULT hr = m_DirectInput->FindDevice( Utilities::ConvertManagedGuid( deviceClass ),
+		HRESULT hr = InternalPointer->FindDevice( Utilities::ConvertManagedGuid( deviceClass ),
 			reinterpret_cast<LPCTSTR>( pinnedName ), &result );
 		RECORD_DINPUT( hr );
 
@@ -113,29 +101,29 @@ namespace DirectInput
 		return Utilities::ConvertNativeGuid( result );
 	}
 
-	InputDeviceCollection^ DirectInput::GetDevices()
+	IEnumerable<DeviceInstance^>^ DirectInput::GetDevices()
 	{
 		return GetDevices( DeviceClass::All, DeviceEnumerationFlags::AllDevices );
 	}
 
-	InputDeviceCollection^ DirectInput::GetDevices( DeviceClass deviceClass, DeviceEnumerationFlags enumerationFlags )
+	IEnumerable<DeviceInstance^>^ DirectInput::GetDevices( DeviceClass deviceClass, DeviceEnumerationFlags enumerationFlags )
 	{
-		InputDeviceCollection^ results = gcnew InputDeviceCollection();
-		InputDeviceCollectionShim shim( results );
+		List<DeviceInstance^>^ results = gcnew List<DeviceInstance^>();
+		CollectionShim<DeviceInstance^> shim( results );
 
-		HRESULT hr = m_DirectInput->EnumDevices( static_cast<DWORD>( deviceClass ), static_cast<LPDIENUMDEVICESCALLBACK>( EnumerateDevices ), &shim, static_cast<DWORD>( enumerationFlags ) );
+		HRESULT hr = InternalPointer->EnumDevices( static_cast<DWORD>( deviceClass ), static_cast<LPDIENUMDEVICESCALLBACK>( EnumerateDevices ), &shim, static_cast<DWORD>( enumerationFlags ) );
 		if( RECORD_DINPUT( hr ).IsFailure )
 			return nullptr;
 
 		return results;
 	}
 
-	InputDeviceCollection^ DirectInput::GetDevices( DeviceType deviceType, DeviceEnumerationFlags enumerationFlags )
+	IEnumerable<DeviceInstance^>^ DirectInput::GetDevices( DeviceType deviceType, DeviceEnumerationFlags enumerationFlags )
 	{
-		InputDeviceCollection^ results = gcnew InputDeviceCollection();
-		InputDeviceCollectionShim shim( results );
+		List<DeviceInstance^>^ results = gcnew List<DeviceInstance^>();
+		CollectionShim<DeviceInstance^> shim( results );
 
-		HRESULT hr = m_DirectInput->EnumDevices( static_cast<DWORD>( deviceType ), static_cast<LPDIENUMDEVICESCALLBACK>( EnumerateDevices ), &shim, static_cast<DWORD>( enumerationFlags ) );
+		HRESULT hr = InternalPointer->EnumDevices( static_cast<DWORD>( deviceType ), static_cast<LPDIENUMDEVICESCALLBACK>( EnumerateDevices ), &shim, static_cast<DWORD>( enumerationFlags ) );
 		if( RECORD_DINPUT( hr ).IsFailure )
 			return nullptr;
 

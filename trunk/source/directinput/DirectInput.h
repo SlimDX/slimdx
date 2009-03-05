@@ -21,10 +21,7 @@
 */
 #pragma once
 
-#include "../SlimDXException.h"
-#include "../InternalHelpers.h"
-
-#include "InputDeviceCollection.h"
+#include "DeviceInstance.h"
 
 namespace SlimDX
 {
@@ -34,66 +31,41 @@ namespace SlimDX
 		/// Provides an interface to DirectInput.
 		/// </summary>
 		/// <unmanaged>IDirectInput8W</unmanaged>
-		public ref class DirectInput sealed
+		public ref class DirectInput : ComObject
 		{
-		private:
-			DirectInput() { }
-			static IDirectInput8W* m_DirectInput;
-
-			static void OnExit( System::Object^ sender, System::EventArgs^ e )
-			{
-				SLIMDX_UNREFERENCED_PARAMETER(sender);
-				SLIMDX_UNREFERENCED_PARAMETER(e);
-
-				Terminate();
-			}
-
-		internal:
-			static property IDirectInput8W* InternalPointer
-			{
-				IDirectInput8W* get() { return m_DirectInput; }
-			}
+			COMOBJECT(IDirectInput8W, DirectInput);
 
 		public:
-			/// <summary>
-			/// Called by the application to initialize DirectInput. This method must be called before
-			/// any other DirectInput methods.
-			/// </summary>
-			static void Initialize();
-
-			/// <summary>
-			/// Called by the application to release DirectInput and free resources.
-			/// </summary>
-			static void Terminate();
+			DirectInput();
 
 			/// <summary>
 			/// Runs Control Panel to enable the user to install a new
 			/// input device or modify configurations.
 			/// </summary>
-			static Result RunControlPanel();
+			Result RunControlPanel();
 
 			/// <summary>
 			/// Runs Control Panel to enable the user to install a new
 			/// input device or modify configurations.
 			/// </summary>
 			/// <param name="parent">The parent control.</param>
-			static Result RunControlPanel( System::IntPtr parent );
+			Result RunControlPanel( System::IntPtr parent );
 
 			/// <summary>
 			/// Gets a value indicating whether the specified device is
 			/// attached to the user's system.
 			/// </summary>
-			static bool IsDeviceAttached( System::Guid device );
+			bool IsDeviceAttached( System::Guid device );
 
 			/// <summary>
 			/// Retrieves the instance identifier of a device that
 			/// has been newly attached to the system.
 			/// </summary>
-			static System::Guid FindDevice( System::Guid deviceClass, System::String^ name );
+			System::Guid FindDevice( System::Guid deviceClass, System::String^ name );
 
-			static InputDeviceCollection^ GetDevices();
-			static InputDeviceCollection^ GetDevices( DeviceClass deviceClass, DeviceEnumerationFlags enumerationFlags );
-			static InputDeviceCollection^ GetDevices( DeviceType deviceType, DeviceEnumerationFlags enumerationFlags );
+			System::Collections::Generic::IEnumerable<DeviceInstance^>^ GetDevices();
+			System::Collections::Generic::IEnumerable<DeviceInstance^>^ GetDevices( DeviceClass deviceClass, DeviceEnumerationFlags enumerationFlags );
+			System::Collections::Generic::IEnumerable<DeviceInstance^>^ GetDevices( DeviceType deviceType, DeviceEnumerationFlags enumerationFlags );
 		};
 	}
 }

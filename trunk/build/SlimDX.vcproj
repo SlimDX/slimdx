@@ -2020,6 +2020,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\CollectionShim.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\ComObject.cpp"
 				>
 			</File>
@@ -3787,11 +3791,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d9\UVAtlasOutput.h"
+					RelativePath="..\source\direct3d9\UVAtlasOutput.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d9\UVAtlastOutput.cpp"
+					RelativePath="..\source\direct3d9\UVAtlasOutput.h"
 					>
 				</File>
 			</Filter>
@@ -3950,14 +3954,6 @@
 					RelativePath="..\source\directinput\Device.h"
 					>
 				</File>
-				<File
-					RelativePath="..\source\directinput\DeviceObjectCollection.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directinput\InputDeviceCollection.h"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="Exceptions"
@@ -4011,10 +4007,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\directinput\BufferedDataCollection.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\directinput\DataFormatAttribute.h"
 					>
 				</File>
@@ -4040,10 +4032,6 @@
 				</File>
 				<File
 					RelativePath="..\source\directinput\KeyboardState.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directinput\KeyCollection.h"
 					>
 				</File>
 				<File

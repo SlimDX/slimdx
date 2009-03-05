@@ -25,6 +25,7 @@ using System.Text;
 using System.Windows.Forms;
 using SlimDX;
 using SlimDX.DirectInput;
+using System.Collections.Generic;
 
 namespace Mouse
 {
@@ -35,7 +36,7 @@ namespace Mouse
         void CreateDevice()
         {
             // make sure that DirectInput has been initialized
-            DirectInput.Initialize();
+            DirectInput dinput = new DirectInput();
 
             // build up cooperative flags
             CooperativeLevel cooperativeLevel;
@@ -53,7 +54,7 @@ namespace Mouse
             // create the device
             try
             {
-                mouse = new Device<MouseState>(SystemGuid.Mouse);
+                mouse = new Device<MouseState>(dinput, SystemGuid.Mouse);
                 mouse.SetCooperativeLevel(this, cooperativeLevel);
             }
             catch (DirectInputException e)
@@ -115,8 +116,8 @@ namespace Mouse
             if (mouse.Poll().IsFailure)
                 return;
 
-            BufferedDataCollection<MouseState> bufferedData = mouse.GetBufferedData();
-            if (Result.Last.IsFailure || bufferedData.Count == 0)
+            IEnumerable<BufferedData<MouseState>> bufferedData = mouse.GetBufferedData();
+            if (Result.Last.IsFailure || bufferedData == null)
                 return;
 
             StringBuilder data = new StringBuilder();
@@ -135,7 +136,7 @@ namespace Mouse
                 data.Append(" B");
                 data.Append(i);
                 data.Append("=");
-                if (bufferedData[bufferedData.Count - 1].Data.IsPressed(i))
+                if(bufferedData.GetEnumerator().Current.Data.IsPressed(i))
                     data.Append("1");
                 else
                     data.Append("0");

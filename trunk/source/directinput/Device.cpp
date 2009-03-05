@@ -25,6 +25,7 @@
 
 #include "../ComObject.h"
 #include "../Utilities.h"
+#include "../CollectionShim.h"
 
 #include "DirectInput.h"
 #include "DirectInputException.h"
@@ -69,10 +70,10 @@ namespace DirectInput
 	}
 
 	generic<typename DataFormat>
-	Device<DataFormat>::Device( Guid subsystem )
+	Device<DataFormat>::Device( DirectInput^ directInput, Guid subsystem )
 	{
 		IDirectInputDevice8W* device;
-		HRESULT hr = DirectInput::InternalPointer->CreateDevice( Utilities::ConvertManagedGuid( subsystem ), &device, NULL );
+		HRESULT hr = directInput->InternalPointer->CreateDevice( Utilities::ConvertManagedGuid( subsystem ), &device, NULL );
 
 		if( RECORD_DINPUT( hr ).IsFailure )
 			throw gcnew DirectInputException( Result::Last );
@@ -230,14 +231,14 @@ namespace DirectInput
 	}
 
 	generic<typename DataFormat>
-	BufferedDataCollection<DataFormat>^ Device<DataFormat>::GetBufferedData()
+	IEnumerable<BufferedData<DataFormat>^>^ Device<DataFormat>::GetBufferedData()
 	{
 		DWORD size = INFINITE;
 		HRESULT hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), NULL, &size, DIGDD_PEEK );
 		if( RecordError( hr ).IsFailure )
 			return nullptr;
 
-		BufferedDataCollection<DataFormat>^ list = gcnew BufferedDataCollection<DataFormat>( size );
+		List<BufferedData<DataFormat>^>^ list = gcnew List<BufferedData<DataFormat>^>( size );
 
 		if( size == 0 )
 			return list;
@@ -380,16 +381,16 @@ namespace DirectInput
 	}
 
 	generic<typename DataFormat>
-	DeviceObjectCollection^ Device<DataFormat>::GetDeviceObjects()
+	IEnumerable<DeviceObjectInstance^>^ Device<DataFormat>::GetDeviceObjects()
 	{
 		return GetDeviceObjects( ObjectDeviceType::All );
 	}
 
 	generic<typename DataFormat>
-	DeviceObjectCollection^ Device<DataFormat>::GetDeviceObjects( ObjectDeviceType objectType )
+	IEnumerable<DeviceObjectInstance^>^ Device<DataFormat>::GetDeviceObjects( ObjectDeviceType objectType )
 	{
-		DeviceObjectCollection^ results = gcnew DeviceObjectCollection();
-		DeviceObjectCollectionShim shim( results );
+		List<DeviceObjectInstance^>^ results = gcnew List<DeviceObjectInstance^>();
+		CollectionShim<DeviceObjectInstance^> shim( results );
 
 		HRESULT hr = InternalPointer->EnumObjects( static_cast<LPDIENUMDEVICEOBJECTSCALLBACK>( EnumerateObjects ), &shim, static_cast<DWORD>( objectType ) );
 		if( RECORD_DINPUT( hr ).IsFailure )
