@@ -52,6 +52,21 @@ namespace SlimDX
 			Result RegisterTemplates( array<System::Byte>^ memory );
 			Result RegisterTemplates( System::IO::Stream^ memory );
 			Result RegisterTemplates( System::String^ name );
+
+			static property System::String^ DefaultTemplates
+			{
+				System::String^ get();
+			}
+
+			static property System::String^ SkinTemplates
+			{
+				System::String^ get();
+			}
+
+			static property System::String^ ExtensionTemplates
+			{
+				System::String^ get();
+			}
 		};
 	}
 }

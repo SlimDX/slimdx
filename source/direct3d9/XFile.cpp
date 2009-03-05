@@ -21,6 +21,7 @@
 */
 #include <d3d9.h>
 #include <d3dx9.h>
+#include <rmxftmpl.h>
 
 #include "../ComObject.h"
 #include "../DataStream.h"
@@ -158,6 +159,21 @@ namespace Direct3D9
 	{
 		array<Byte>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		return RegisterTemplates( nameBytes );
+	}
+
+	String^ XFile::DefaultTemplates::get()
+	{
+		return gcnew String( reinterpret_cast<char*>( D3DRM_XTEMPLATES ) );
+	}
+
+	String^ XFile::SkinTemplates::get()
+	{
+		return XSKINEXP_TEMPLATES;
+	}
+
+	String^ XFile::ExtensionTemplates::get()
+	{
+		return XEXTENSIONS_TEMPLATES;
 	}
 }
 }
