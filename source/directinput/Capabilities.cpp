@@ -19,10 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
 #include <dinput.h>
-
-#include "DirectInput.h"
 
 #include "Capabilities.h"
 #include "Guids.h"

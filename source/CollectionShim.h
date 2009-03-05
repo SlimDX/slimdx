@@ -19,33 +19,17 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <dinput.h>
+#pragma once
 
-#include "DeviceInstance.h"
-#include "Guids.h"
+#include <vcclr.h>
 
-using namespace System;
-
-namespace SlimDX
+template<class T>
+class CollectionShim
 {
-namespace DirectInput
-{
-	DeviceInstance::DeviceInstance( const DIDEVICEINSTANCE &deviceInstance )
-	{
-		instanceGuid = Utilities::ConvertNativeGuid( deviceInstance.guidInstance );
-		productGuid = Utilities::ConvertNativeGuid( deviceInstance.guidProduct );
-		ffDriverGuid = Utilities::ConvertNativeGuid( deviceInstance.guidFFDriver );
-		type = static_cast<DeviceType>( deviceInstance.dwDevType );
-		subType = deviceInstance.dwDevType >> 8;
-		usage = static_cast<SlimDX::UsageId>( deviceInstance.wUsage );
-		usagePage = static_cast<SlimDX::UsagePage>( deviceInstance.wUsagePage );
-		instanceName = gcnew String( deviceInstance.tszInstanceName );
-		productName = gcnew String( deviceInstance.tszProductName );
+private:
+	gcroot<System::Collections::Generic::List<T>^> items;
 
-		if( ( deviceInstance.dwDevType & DIDEVTYPE_HID ) != 0 )
-			hid = true;
-		else
-			hid = false;
-	}
-}
-}
+public:
+	CollectionShim( System::Collections::Generic::List<T>^ collection ) : items( collection ) { }
+	System::Collections::Generic::List<T>^ GetItems() { return items; }
+};

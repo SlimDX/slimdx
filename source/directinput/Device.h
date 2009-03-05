@@ -21,19 +21,16 @@
 */
 #pragma once
 
-#include "../ComObject.h"
-
 #include "Enums.h"
 #include "DataFormatAttribute.h"
 #include "DataObjectAttribute.h"
 #include "DeviceInstance.h"
 #include "Capabilities.h"
 #include "BufferedData.h"
-#include "BufferedDataCollection.h"
-#include "DeviceObjectCollection.h"
 #include "Guids.h"
 #include "DeviceProperties.h"
 #include "ObjectProperties.h"
+#include "DeviceObjectInstance.h"
 
 namespace SlimDX
 {
@@ -41,6 +38,8 @@ namespace SlimDX
 
 	namespace DirectInput
 	{
+		ref class DirectInput;
+
 		/// <summary>
 		/// Used to gain and release access to Microsoft DirectInput devices, manage device
 		/// properties and information, set behavior, perform initialization, create and
@@ -63,7 +62,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="subsystem">The subsystem identifier.</param>
 			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
-			Device( System::Guid subsystem );
+			Device( DirectInput^ directInput, System::Guid subsystem );
 
 			/// <summary>
 			/// Obtains access to the input device.
@@ -127,7 +126,7 @@ namespace SlimDX
 			/// Retrieves buffered data from the device.
 			/// </summary>
 			/// <returns>A collection of buffered input events.</returns>
-			BufferedDataCollection<DataFormat>^ GetBufferedData();
+			System::Collections::Generic::IEnumerable<BufferedData<DataFormat>^>^ GetBufferedData();
 
 			/// <summary>
 			/// Retrieves data from polled objects on a DirectInput device.
@@ -161,13 +160,13 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="objectType">A filter for the returned device objects collection.</param>
 			/// <returns>A collection of device objects matching the specified filter.</returns>
-			DeviceObjectCollection^ GetDeviceObjects( ObjectDeviceType objectType );
+			System::Collections::Generic::IEnumerable<DeviceObjectInstance^>^ GetDeviceObjects( ObjectDeviceType objectType );
 
 			/// <summary>
 			/// Retrieves a collection of objects on the device.
 			/// </summary>
 			/// <returns>A collection of all device objects on the device.</returns>
-			DeviceObjectCollection^ GetDeviceObjects();
+			System::Collections::Generic::IEnumerable<DeviceObjectInstance^>^ GetDeviceObjects();
 
 			/// <summary>
 			/// Sends a hardware-specific command to the force-feedback driver.

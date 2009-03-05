@@ -32,6 +32,7 @@
 #include "DeviceConstantConverter.h"
 
 using namespace System;
+using namespace System::Collections::Generic;
 
 namespace SlimDX
 {
@@ -39,13 +40,13 @@ namespace DirectInput
 {
 	KeyboardState::KeyboardState()
 	{
-		keys = gcnew KeyCollection();
-		pressed = gcnew KeyCollection();
-		released = gcnew KeyCollection();
+		keys = gcnew List<Key>();
+		pressed = gcnew List<Key>();
+		released = gcnew List<Key>();
 
 		Array^ values = Enum::GetValues( Key::typeid );
 		for each( Key key in values )
-			keys->AddItem( key );
+			keys->Add( key );
 	}
 
 	bool KeyboardState::IsPressed( Key key )
@@ -60,8 +61,8 @@ namespace DirectInput
 
 	void KeyboardState::UpdateKeys( array<bool>^ states )
 	{
-		pressed->ClearItems();
-		released->ClearItems();
+		pressed->Clear();
+		released->Clear();
 
 		for( int i = 0; i < states->Length; i++ )
 		{
@@ -70,16 +71,16 @@ namespace DirectInput
 				continue;
 
 			if( states[i] )
-				pressed->AddItem( key );
+				pressed->Add( key );
 			else
-				released->AddItem( key );
+				released->Add( key );
 		}
 	}
 
 	void KeyboardState::UpdateKeys( BYTE *keys, int length )
 	{
-		pressed->ClearItems();
-		released->ClearItems();
+		pressed->Clear();
+		released->Clear();
 
 		for( int i = 0; i < length; i++ )
 		{
@@ -88,9 +89,9 @@ namespace DirectInput
 				continue;
 
 			if( keys[i] )
-				pressed->AddItem( key );
+				pressed->Add( key );
 			else
-				released->AddItem( key );
+				released->Add( key );
 		}
 	}
 
@@ -100,13 +101,13 @@ namespace DirectInput
 		if( key == Key::Unknown )
 			return;
 
-		pressed->RemoveItem( key );
-		released->RemoveItem( key );
+		pressed->Remove( key );
+		released->Remove( key );
 
 		if( down )
-			pressed->AddItem( key );
+			pressed->Add( key );
 		else
-			released->AddItem( key );
+			released->Add( key );
 	}
 }
 }

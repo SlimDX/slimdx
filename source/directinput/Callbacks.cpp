@@ -22,9 +22,11 @@
 #include <windows.h>
 #include <dinput.h>
 
+#include "../ComObject.h"
+#include "../CollectionShim.h"
+
 #include "Device.h"
 #include "DeviceInstance.h"
-#include "InputDeviceCollection.h"
 #include "Callbacks.h"
 
 namespace SlimDX
@@ -33,16 +35,16 @@ namespace DirectInput
 {
 	BOOL CALLBACK EnumerateDevices( LPCDIDEVICEINSTANCE lpddi, LPVOID pvRef )
 	{
-		InputDeviceCollectionShim* shim = static_cast<InputDeviceCollectionShim*>( pvRef );
-		shim->GetDevices()->Add( gcnew DeviceInstance( *lpddi ) );
+		CollectionShim<DeviceInstance^>* shim = static_cast<CollectionShim<DeviceInstance^>*>( pvRef );
+		shim->GetItems()->Add( gcnew DeviceInstance( *lpddi ) );
 
 		return DIENUM_CONTINUE;
 	}
 
 	BOOL CALLBACK EnumerateObjects( LPCDIDEVICEOBJECTINSTANCE lpddoi, LPVOID pvRef )
 	{
-		DeviceObjectCollectionShim* shim = static_cast<DeviceObjectCollectionShim*>( pvRef );
-		shim->GetObjects()->Add( gcnew DeviceObjectInstance( *lpddoi ) );
+		CollectionShim<DeviceObjectInstance^>* shim = static_cast<CollectionShim<DeviceObjectInstance^>*>( pvRef );
+		shim->GetItems()->Add( gcnew DeviceObjectInstance( *lpddoi ) );
 
 		return DIENUM_CONTINUE;
 	}

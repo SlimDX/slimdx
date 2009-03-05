@@ -24,6 +24,7 @@ using System.Text;
 using System.Windows.Forms;
 using SlimDX;
 using SlimDX.DirectInput;
+using System.Collections.Generic;
 
 namespace Keyboard
 {
@@ -34,7 +35,7 @@ namespace Keyboard
         void CreateDevice()
         {
             // make sure that DirectInput has been initialized
-            DirectInput.Initialize();
+            DirectInput dinput = new DirectInput();
 
             // build up cooperative flags
             CooperativeLevel cooperativeLevel;
@@ -55,7 +56,7 @@ namespace Keyboard
             // create the device
             try
             {
-                keyboard = new Device<KeyboardState>(SystemGuid.Keyboard);
+                keyboard = new Device<KeyboardState>(dinput, SystemGuid.Keyboard);
                 keyboard.SetCooperativeLevel(this, cooperativeLevel);
             }
             catch (DirectInputException e)
@@ -108,7 +109,7 @@ namespace Keyboard
             if (keyboard.Poll().IsFailure)
                 return;
 
-            BufferedDataCollection<KeyboardState> bufferedData = keyboard.GetBufferedData();
+            IEnumerable<BufferedData<KeyboardState>> bufferedData = keyboard.GetBufferedData();
             if (Result.Last.IsFailure)
                 return;
 
