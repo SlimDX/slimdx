@@ -67,14 +67,48 @@ namespace SlimDX
 
 	float Vector4::default::get( int index )
 	{
-		pin_ptr<float> first = &X;
-		return *( first + index );
+		switch( index )
+		{
+		case 0:
+			return X;
+
+		case 1:
+			return Y;
+
+		case 2:
+			return Z;
+
+		case 3:
+			return W;
+
+		default:
+			throw gcnew IndexOutOfRangeException( "Indices for Vector4 run from 0 to 3, inclusive." );
+		}
 	}
 	
 	void Vector4::default::set( int index, float value )
 	{
-		pin_ptr<float> first = &X;
-		*( first + index ) = value;
+		switch( index )
+		{
+		case 0:
+			X = value;
+			break;
+
+		case 1:
+			Y = value;
+			break;
+
+		case 2:
+			Z = value;
+			break;
+
+		case 3:
+			W = value;
+			break;
+
+		default:
+			throw gcnew IndexOutOfRangeException( "Indices for Vector4 run from 0 to 3, inclusive." );
+		}
 	}
 	
 	float Vector4::Length()
