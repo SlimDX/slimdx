@@ -103,13 +103,14 @@ namespace DXGI
 		if( Result::Last.IsFailure )
 			return T();
 		
-		BindingFlags flags = BindingFlags::Public | BindingFlags::Static | BindingFlags::InvokeMethod;
+		BindingFlags flags = BindingFlags::Static | BindingFlags::InvokeMethod | BindingFlags::NonPublic;
 		array<Object^>^ args = gcnew array<Object^>( 1 );
 		args[ 0 ] = IntPtr( unknown );
 		
-		// Calling FromPointer to create the object will increment the reference count on the IUnknown. 
-		T result = safe_cast<T>( T::typeid->InvokeMember( "FromPointer", flags, nullptr, nullptr, args, CultureInfo::InvariantCulture ) );
-		unknown->Release();
+		// Trying to invoke "FromPointer" directly will choose the IntPtr overload since it's more
+		// cumbersome to pass a native pointer as an argument here. The IntPtr overload is intended
+		// to be the user-pointer overload, however, which isn't what we want; thus the thunk.
+		T result = safe_cast<T>( T::typeid->InvokeMember( "FromPointerReflectionThunk", flags, nullptr, nullptr, args, CultureInfo::InvariantCulture ) );
 		return result;
 	}
 
