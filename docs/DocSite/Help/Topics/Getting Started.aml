@@ -22,7 +22,7 @@
           It's also recommended that you download the latest DirectX SDK from the
           <externalLink>
             <linkText>Microsoft DirectX Developer Center</linkText>
-            <linkUri>http://www.microsoft.com/express/vcsharp/Default.aspx</linkUri>
+            <linkUri>http://msdn.microsoft.com/en-us/directx/default.aspx</linkUri>
           </externalLink>.
           This SDK contains a lot of Microsoft written documentation, as well as sample projects in C++ (which are easily converted to SlimDX code) showcasing many useful tricks and techniques.
           However, this is a very large package, typically in excess of 450 MB, and not required to build SlimDX applications.
