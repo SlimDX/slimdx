@@ -95,6 +95,9 @@
           </Directory>
           <Directory Id="Samples" Name="Samples">
             <Component Id="SamplesSln" DiskId="1" Guid="832CA7E1-FBFF-4348-85F5-58AB854B3DFD">
+              <CreateFolder Directory="Samples">
+                <Permission User="Everyone" GenericAll="yes" />
+              </CreateFolder>
               <File Id="Samples.sln" Name="Samples.sln" Source="..\..\publish\Samples\Samples.sln" />
             </Component>
             <Directory Id="Direct3D10" Name="Direct3D10">
