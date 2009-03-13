@@ -421,11 +421,27 @@ namespace SlimDX
 			throw gcnew ArgumentException( "Result array must be the same size as input arrays.", "result" );
 		Utilities::CheckArrayBounds( left, offset, count );
 
-		pin_ptr<Matrix> pinnedLeft = &left[0];
-		pin_ptr<Matrix> pinnedRight = &right[0];
-		pin_ptr<Matrix> pinnedResult = &result[0];
+		pin_ptr<Matrix> pinnedLeft = &left[offset];
+		pin_ptr<Matrix> pinnedRight = &right[offset];
+		pin_ptr<Matrix> pinnedResult = &result[offset];
 
 		Multiply( pinnedLeft, pinnedRight, pinnedResult, count );
+	}
+
+	void Matrix::Multiply( array<Matrix>^ left, Matrix right, array<Matrix>^ result, int offset, int count )
+	{
+		if( left->Length != result->Length )
+			throw gcnew ArgumentException( "Result array must be the same size as the input array.", "result" );
+		Utilities::CheckArrayBounds( left, offset, count );
+
+		pin_ptr<Matrix> pinnedLeft = &left[offset];
+		pin_ptr<Matrix> pinnedResult = &result[offset];
+		for( int i = 0; i < count; ++i )
+		{
+			D3DXMatrixMultiply( reinterpret_cast<D3DXMATRIX*>( &pinnedLeft[i] ),
+				reinterpret_cast<const D3DXMATRIX*>( &right ),
+				reinterpret_cast<const D3DXMATRIX*>( &pinnedResult[i] ) );
+		}
 	}
 
 	Matrix Matrix::Multiply( Matrix left, float right )
