@@ -105,8 +105,26 @@
 			<b>
 				<xsl:text>Unmanaged counterpart: </xsl:text>
 			</b>
-			<xsl:apply-templates />
-		</div>
+      <xsl:choose>
+        <xsl:when test="@href">
+          <a>
+            <xsl:attribute name="href">
+              <xsl:text>http://msdn.microsoft.com/en-us/library/</xsl:text>
+              <xsl:value-of select="@href" />
+              <xsl:text>(VS.85).aspx</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="target">
+              <xsl:text>_blank</xsl:text>
+            </xsl:attribute>
+
+            <xsl:apply-templates />
+          </a>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates />
+        </xsl:otherwise>
+      </xsl:choose>
+    </div>
 		<div>
 			<br />
 		</div>
