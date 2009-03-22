@@ -473,6 +473,12 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
+	Result Device::ResetStreamSourceFrequency( int stream )
+	{
+		HRESULT hr = InternalPointer->SetStreamSourceFreq( stream, 1 );
+		return RECORD_D3D9( hr );
+	}
+
 	SlimDX::Direct3D9::Material Device::Material::get()
 	{
 		SlimDX::Direct3D9::Material material;

@@ -629,6 +629,13 @@ namespace SlimDX
 			Result SetStreamSourceFrequency( int stream, int frequency, StreamSource source );
 			
 			/// <summary>
+			/// Resets the stream source frequency divider to its initial state.
+			/// </summary>
+			/// <param name="stream">The stream index.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result ResetStreamSourceFrequency( int stream );
+			
+			/// <summary>
 			/// Assigns a texture to a stage.
 			/// </summary>
 			/// <param name="sampler">Zero-based sampler index.</param>
