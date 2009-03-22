@@ -357,8 +357,13 @@ namespace SlimDX
 			/// <param name="handle">Handle to the value to set.</param>
 			/// <param name="data">The data used to set the handle.</param>
 			/// <param name="offset">The starting offset into the data, in bytes.</param>
+			/// <param name="count">The number of bytes of data to set.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result SetRawValue( EffectHandle^ handle, DataStream^ data, int offset );
+			Result SetRawValue( EffectHandle^ handle, DataStream^ data, int offset, int count );
+
+			Result SetRawValue( EffectHandle^ handle, DataStream^ data );
+			Result SetRawValue( EffectHandle^ handle, array<float>^ data );
+			Result SetRawValue( EffectHandle^ handle, array<float>^ data, int startIndex, int count );
 
 			/// <summary>
 			/// Disassembles the effect.

@@ -161,6 +161,8 @@ namespace SlimDX
 		[System::ComponentModel::Browsable(false)]
 		property bool IsIdentity { bool get(); }
 
+		array<float>^ ToArray();
+
 		/// <summary>
 		/// Inverts the matrix.
 		/// </summary>

@@ -187,6 +187,29 @@ namespace SlimDX
 		return true;
 	}
 
+	array<float>^ Matrix::ToArray()
+	{
+		array<float>^ result = gcnew array<float>( 16 );
+		result[0] = M11;
+		result[1] = M12;
+		result[2] = M13;
+		result[3] = M14;
+		result[4] = M21;
+		result[5] = M22;
+		result[6] = M23;
+		result[7] = M24;
+		result[8] = M31;
+		result[9] = M32;
+		result[10] = M33;
+		result[11] = M34;
+		result[12] = M41;
+		result[13] = M42;
+		result[14] = M43;
+		result[15] = M44;
+
+		return result;
+	}
+
 	void Matrix::Invert()
 	{
 		pin_ptr<Matrix> pinnedThis = this;

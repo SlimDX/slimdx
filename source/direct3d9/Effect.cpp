@@ -507,10 +507,32 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	Result Effect::SetRawValue( EffectHandle^ handle, DataStream^ data, int offset )
+	Result Effect::SetRawValue( EffectHandle^ handle, DataStream^ data )
+	{
+		return SetRawValue( handle, data, 0, static_cast<int>( data->Length ) );
+	}
+
+	Result Effect::SetRawValue( EffectHandle^ handle, DataStream^ data, int offset, int count )
 	{
 		D3DXHANDLE value = handle != nullptr ? handle->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->SetRawValue( value, data->RawPointer, offset, static_cast<UINT>( data->Length ) );
+		HRESULT hr = InternalPointer->SetRawValue( value, data->RawPointer, offset, count );
+		return RECORD_D3D9( hr );
+	}
+
+	Result Effect::SetRawValue( EffectHandle^ handle, array<float>^ data )
+	{
+		return SetRawValue( handle, data, 0, data->Length );
+	}
+
+	// only float[] and not T[] due to SDK docs:
+	// "All values are expected to be either matrix4x4s or float4s and all matrices are expected to be 
+	// in column-major order. Int or float values are cast into a float4; therefore, it is highly recommended 
+	// that you use SetRawValue with only float4 or matrix4x4 data."
+	Result Effect::SetRawValue( EffectHandle^ handle, array<float>^ data, int startIndex, int count )
+	{
+		D3DXHANDLE value = handle != nullptr ? handle->InternalHandle : NULL;
+		pin_ptr<float> pinnedData = &data[startIndex];
+		HRESULT hr = InternalPointer->SetRawValue( value, pinnedData, 0, count * sizeof(float) );
 		return RECORD_D3D9( hr );
 	}
 
