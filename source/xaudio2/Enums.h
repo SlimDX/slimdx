@@ -123,6 +123,13 @@ namespace SlimDX
 			Music = XAUDIO2_VOICE_MUSIC
 		};
 
+		[System::Flags]
+		public enum class VoiceSendFlags : System::Int32
+		{
+			None = 0,
+			UseFilter = XAUDIO2_SEND_USEFILTER,
+		};
+
 		public enum class XAudio2Flags : System::Int32
 		{
 			None = 0,
