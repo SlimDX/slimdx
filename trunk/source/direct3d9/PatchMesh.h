@@ -32,7 +32,10 @@ namespace SlimDX
 		ref class Mesh;
 		ref class VertexBuffer;
 		ref class IndexBuffer;
-
+		
+#pragma warning(push)
+#pragma warning(disable:4947)
+		[System::Obsolete("PatchMesh is deprecated and may be removed in future releases.")]
 		public ref class PatchMesh : ComObject
 		{
 			COMOBJECT(ID3DXPatchMesh, PatchMesh);
@@ -95,5 +98,6 @@ namespace SlimDX
 				void set( SlimDX::Direct3D9::DisplacementParameters value );
 			}
 		};
+#pragma warning(pop)
 	}
 }
