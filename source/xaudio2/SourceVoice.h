@@ -21,6 +21,7 @@
 */
 #pragma once
 
+#include "../VersionConfig.h"
 #include "Voice.h"
 #include "VoiceCallback.h"
 #include "../multimedia/WaveFormat.h"
@@ -87,6 +88,10 @@ namespace SlimDX
 
 			Result SubmitSourceBuffer( AudioBuffer^ buffer );
 			Result SubmitSourceBuffer( AudioBuffer^ buffer, array<int>^ decodedPacketCumulativeBytes );
+			
+#if SLIMDX_XAUDIO2_VERSION >= 24
+			Result SetSourceSampleRate( int sampleRate );
+#endif
 
 			property VoiceState State
 			{
