@@ -51,7 +51,7 @@ namespace Direct3D9
 
 		Construct(linker);
 	}
-
+	
 	DataStream^ FragmentLinker::Gather( array<Byte>^ sourceData, array<Macro>^ defines,
 		Include^ includeFile, ShaderFlags flags, [Out] String^% errors )
 	{
@@ -68,9 +68,12 @@ namespace Direct3D9
 		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
+#pragma warning(push)
+#pragma warning(disable:4996)
 		HRESULT hr = D3DXGatherFragments( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macrosPtr, includePtr,
 			static_cast<DWORD>( flags ), &fragmentBuffer, &errorBuffer );
-		
+#pragma warning(pop)
+
 		//clean up after marshaling macros
 		Macro::Unmarshal( macros, handles );
 		//marshal errors if necessary
@@ -108,9 +111,12 @@ namespace Direct3D9
 		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
+#pragma warning(push)
+#pragma warning(disable:4996)
 		HRESULT hr = D3DXGatherFragmentsFromFile( reinterpret_cast<LPCTSTR>( pinnedFile ), macrosPtr, includePtr,
 			static_cast<DWORD>( flags ), &fragmentBuffer, &errorBuffer );
-		
+#pragma warning(pop)
+
 		//clean up after marshaling macros
 		Macro::Unmarshal( macros, handles );
 		//marshal errors if necessary
