@@ -183,7 +183,7 @@ namespace Direct3D9
 			D3DSHADER_VERSION_MINOR( caps.PixelShaderVersion ) );
 		PixelShader1xMaxValue = caps.PixelShader1xMaxValue;
 
-		DeviceCaps2 = static_cast<DevCaps2>( caps.DevCaps2 );
+		DeviceCaps2 = static_cast<SlimDX::Direct3D9::DeviceCaps2>( caps.DevCaps2 );
 
 		MaxNPatchTessellationLevel = caps.MaxNpatchTessellationLevel;
 

@@ -458,7 +458,7 @@ namespace SlimDX
 			/// <summary>
 			/// Device driver capabilities for adaptive tessellation.
 			/// </summary>
-            property DevCaps2 DeviceCaps2;
+			property SlimDX::Direct3D9::DeviceCaps2 DeviceCaps2;
 
 			/// <summary>
 			/// Maximum tessellation level for N-patches.
