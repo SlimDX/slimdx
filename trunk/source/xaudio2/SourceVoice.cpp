@@ -224,6 +224,14 @@ namespace XAudio2
 		return RECORD_XAUDIO2( hr );
 	}
 
+#if SLIMDX_XAUDIO2_VERSION >= 24
+	Result SourceVoice::SetSourceSampleRate( int sampleRate ) 
+	{
+		HRESULT hr = SourcePointer->SetSourceSampleRate( sampleRate );
+		return RECORD_XAUDIO2( hr );
+	}
+#endif
+
 	VoiceState SourceVoice::State::get()
 	{
 		XAUDIO2_VOICE_STATE state;
