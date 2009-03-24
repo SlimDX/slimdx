@@ -1967,7 +1967,7 @@ namespace SlimDX
 		/// <summary>Driver capability flags.</summary>
 		/// <unmanaged>D3DDEVCAPS2</unmanaged>
 		[System::Flags]
-		public enum class DevCaps2
+		public enum class DeviceCaps2
 		{
 			/// <summary>
 			/// Device supports stream offsets.
