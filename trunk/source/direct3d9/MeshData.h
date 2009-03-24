@@ -28,8 +28,6 @@ namespace SlimDX
 		ref class ProgressiveMesh;
 		ref class PatchMesh;
 
-#pragma warning(push)
-#pragma warning(disable:4947)
 		public ref class MeshData
 		{
 		private:
@@ -63,6 +61,5 @@ namespace SlimDX
 				SlimDX::Direct3D9::PatchMesh^ get() { return patchMesh; }
 			}
 		};
-#pragma warning(pop)
 	}
 }

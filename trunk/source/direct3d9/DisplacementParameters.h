@@ -25,7 +25,6 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		[System::Obsolete("PatchMesh is deprecated and may be removed in future releases.")]
 		public value class DisplacementParameters : System::IEquatable<DisplacementParameters>
 		{
 		public:
