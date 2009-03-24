@@ -29,6 +29,7 @@ namespace SlimDX
 	{
 		/// <summary>Structure that contains the attributes of a patch mesh.</summary>
 		/// <unmanaged>D3DXPATCHINFO</unmanaged>
+		[System::Obsolete("PatchMesh is deprecated and may be removed in future releases.")]
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class PatchInfo : System::IEquatable<PatchInfo>
 		{
