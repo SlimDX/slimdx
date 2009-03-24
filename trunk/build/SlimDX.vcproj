@@ -4536,6 +4536,14 @@
 					RelativePath="..\source\xaudio2\VoiceDetails.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\xaudio2\VoiceSendDescriptor.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\VoiceSendDescriptor.h"
+					>
+				</File>
 				<Filter
 					Name="MasteringVoice"
 					>

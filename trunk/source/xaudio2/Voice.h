@@ -25,6 +25,7 @@
 
 #include "FilterParameters.h"
 #include "VoiceDetails.h"
+#include "VoiceSendDescriptor.h"
 
 namespace SlimDX
 {
@@ -77,9 +78,12 @@ namespace SlimDX
 			// almost all of XAPO, which will be a complete pain in the neck. Let's wait until
 			// someone complains :)
 			//Result SetEffectChain( EffectChain^ effectChain );
-
+			
+#if SLIMDX_XAUDIO2_VERSION < 24
 			Result SetOutputVoices( array<Voice^>^ outputVoices );
-
+#else
+			Result SetOutputVoices( array<VoiceSendDescriptor>^ outputVoices );
+#endif
 			property FilterParameters FilterParameters
 			{
 				SlimDX::XAudio2::FilterParameters get();

@@ -167,7 +167,11 @@ namespace XAudio2
 		return RECORD_XAUDIO2( hr );
 	}
 
+#if SLIMDX_XAUDIO2_VERSION < 24
 	Result Voice::SetOutputVoices( array<Voice^>^ outputVoices )
+#else
+	Result Voice::SetOutputVoices( array<VoiceSendDescriptor>^ outputVoices )
+#endif
 	{
 		HRESULT hr;
 
@@ -175,6 +179,7 @@ namespace XAudio2
 			hr = InternalPointer->SetOutputVoices( NULL );
 		else
 		{
+#if SLIMDX_XAUDIO2_VERSION < 24
 			std::vector<IXAudio2Voice*> voices( outputVoices->Length );
 			for( int i = 0; i < outputVoices->Length; i++ )
 				voices[i] = outputVoices[i]->InternalPointer;
@@ -182,6 +187,15 @@ namespace XAudio2
 			XAUDIO2_VOICE_SENDS sendList;
 			sendList.OutputCount = outputVoices->Length;
 			sendList.pOutputVoices = &voices[0];
+#else
+			std::vector<XAUDIO2_SEND_DESCRIPTOR> voices( outputVoices->Length );
+			for( int i = 0; i < outputVoices->Length; i++ )
+				voices[i] = outputVoices[i].CreateNativeVersion();
+
+			XAUDIO2_VOICE_SENDS sendList;
+			sendList.SendCount = outputVoices->Length;
+			sendList.pSends = &voices[0];
+#endif
 
 			hr = InternalPointer->SetOutputVoices( &sendList );
 		}
