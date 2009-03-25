@@ -230,6 +230,19 @@ namespace SampleFramework
                     return SlimDX.DXGI.Format.R32G32_Float;
                 case Format.A32B32G32R32F:
                     return SlimDX.DXGI.Format.R32G32B32A32_Float;
+                case Format.D15S1:
+                case Format.D16:
+                case Format.D16Lockable:
+                    return SlimDX.DXGI.Format.D16_UNorm;
+                case Format.D24S8:
+                case Format.D24SingleS8:
+                case Format.D24X4S4:
+                case Format.D24X8:
+                    return SlimDX.DXGI.Format.D24_UNorm_S8_UInt;
+                case Format.D32:
+                case Format.D32Lockable:
+                case Format.D32SingleLockable:
+                    return SlimDX.DXGI.Format.D32_Float;
             }
 
             return SlimDX.DXGI.Format.Unknown;
