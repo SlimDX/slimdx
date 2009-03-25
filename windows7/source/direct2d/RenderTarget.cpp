@@ -443,7 +443,7 @@ namespace Direct2D
 		InternalPointer->FillGeometry( geometry->InternalPointer, brush->InternalPointer, ob );
 	}
 
-	void RenderTarget::FillOpacityMask( Bitmap^ mask, Brush^ brush, Nullable<RectangleF> sourceRectangle, Nullable<RectangleF> destinationRectangle )
+	void RenderTarget::FillOpacityMask( Bitmap^ mask, Brush^ brush, OpacityMaskContent content, Nullable<RectangleF> sourceRectangle, Nullable<RectangleF> destinationRectangle )
 	{
 		D2D1_RECT_F sourceRect;
 		D2D1_RECT_F destRect;
@@ -463,32 +463,8 @@ namespace Direct2D
 			destRectPtr = &destRect;
 		}
 
-		InternalPointer->FillOpacityMask( mask->InternalPointer, brush->InternalPointer, destRectPtr, sourceRectPtr, NULL );
-	}
-
-	void RenderTarget::FillOpacityMask( Bitmap^ mask, Brush^ brush, Nullable<RectangleF> sourceRectangle, Nullable<RectangleF> destinationRectangle, Gamma gamma )
-	{
-		D2D1_RECT_F sourceRect;
-		D2D1_RECT_F destRect;
-
-		D2D1_RECT_F *sourceRectPtr = NULL;
-		D2D1_RECT_F *destRectPtr = NULL;
-
-		D2D1_GAMMA gs = static_cast<D2D1_GAMMA>( gamma );
-
-		if( sourceRectangle.HasValue )
-		{
-			sourceRect = D2D1::RectF( sourceRectangle.Value.Left, sourceRectangle.Value.Top, sourceRectangle.Value.Right, sourceRectangle.Value.Bottom );
-			sourceRectPtr = &sourceRect;
-		}
-
-		if( destinationRectangle.HasValue )
-		{
-			destRect = D2D1::RectF( destinationRectangle.Value.Left, destinationRectangle.Value.Top, destinationRectangle.Value.Right, destinationRectangle.Value.Bottom );
-			destRectPtr = &destRect;
-		}
-
-		InternalPointer->FillOpacityMask( mask->InternalPointer, brush->InternalPointer, destRectPtr, sourceRectPtr, &gs );
+		InternalPointer->FillOpacityMask( mask->InternalPointer, brush->InternalPointer, static_cast<D2D1_OPACITY_MASK_CONTENT>( content ), 
+			destRectPtr, sourceRectPtr );
 	}
 
 	void RenderTarget::FillMesh( Mesh^ mesh, Brush^ brush )

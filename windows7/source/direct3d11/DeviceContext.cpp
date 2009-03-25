@@ -116,10 +116,10 @@ namespace Direct3D11
 		InternalPointer->ClearState();
 	}
 	
-	Result DeviceContext::ClearAllObjects()
-	{
-		return RECORD_D3D11( D3DX11UnsetAllDeviceObjects( InternalPointer ) );
-	}
+	//Result DeviceContext::ClearAllObjects()
+	//{
+	//	return RECORD_D3D11( D3DX11UnsetAllDeviceObjects( InternalPointer ) );
+	//}
 	
 	void DeviceContext::CopyResource( Resource^ source, Resource^ destination )
 	{

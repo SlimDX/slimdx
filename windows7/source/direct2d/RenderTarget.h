@@ -132,8 +132,7 @@ namespace SlimDX
 			void FillGeometry( Geometry^ geometry, Brush^ brush );
 			void FillGeometry( Geometry^ geometry, Brush^ brush, Brush^ opacityBrush );
 
-			void FillOpacityMask( Bitmap^ mask, Brush^ brush, System::Nullable<System::Drawing::RectangleF> sourceRectangle, System::Nullable<System::Drawing::RectangleF> destinationRectangle );
-			void FillOpacityMask( Bitmap^ mask, Brush^ brush, System::Nullable<System::Drawing::RectangleF> sourceRectangle, System::Nullable<System::Drawing::RectangleF> destinationRectangle, Gamma gamma );
+			void FillOpacityMask( Bitmap^ mask, Brush^ brush, OpacityMaskContent content, System::Nullable<System::Drawing::RectangleF> sourceRectangle, System::Nullable<System::Drawing::RectangleF> destinationRectangle );
 
 			void FillMesh( Mesh^ mesh, Brush^ brush );
 
