@@ -8,12 +8,12 @@ using System;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SlimDX Documentation (September 2008)")]
-[assembly: AssemblyDescription("SlimDX Documentation September 2008")]
+[assembly: AssemblyTitle("SlimDX Documentation (March 2009)")]
+[assembly: AssemblyDescription("SlimDX Documentation March 2009")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SlimDX Group")]
 [assembly: AssemblyProduct("SlimDX Documentation")]
-[assembly: AssemblyCopyright("Copyright © 2008 SlimDX Group")]
+[assembly: AssemblyCopyright("Copyright © 2009 SlimDX Group")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: CLSCompliant(false)]
