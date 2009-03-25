@@ -173,6 +173,14 @@ namespace SlimDX
 		};
 
 		[System::Flags]
+		public enum class OpacityMaskContent : System::Int32
+		{
+			Graphics = D2D1_OPACITY_MASK_CONTENT_GRAPHICS,
+			NaturalText = D2D1_OPACITY_MASK_CONTENT_TEXT_NATURAL,
+			GdiCompatibleText = D2D1_OPACITY_MASK_CONTENT_TEXT_GDI_COMPATIBLE
+		};
+
+		[System::Flags]
 		public enum class PathSegment : System::Int32
 		{
 			None = D2D1_PATH_SEGMENT_NONE,
@@ -192,8 +200,6 @@ namespace SlimDX
 		{
 			None = D2D1_RENDER_TARGET_USAGE_NONE,
 			ForceBitmapRemoting = D2D1_RENDER_TARGET_USAGE_FORCE_BITMAP_REMOTING,
-			ForceHardwareRendering = D2D1_RENDER_TARGET_USAGE_FORCE_HARDWARE_RENDERING,
-			ForceSoftwareRendering = D2D1_RENDER_TARGET_USAGE_FORCE_SOFTWARE_RENDERING,
 			GdiCompatible = D2D1_RENDER_TARGET_USAGE_GDI_COMPATIBLE
 		};
 
