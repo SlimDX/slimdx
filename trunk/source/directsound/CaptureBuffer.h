@@ -24,6 +24,7 @@
 #include "Enums.h"
 #include "DirectSoundCapture.h"
 #include "CaptureBufferDescription.h"
+#include "NotificationPosition.h"
 
 namespace SlimDX
 {
@@ -66,6 +67,8 @@ namespace SlimDX
 
 			generic<typename T> where T : value class
 			Result Read( array<T>^ data, int bufferOffset, bool lockEntireBuffer );
+
+			Result SetNotificationPositions( array<NotificationPosition>^ positions );
 
 			/// <summary>
 			/// Begins capturing data into the buffer. If the buffer is already capturing, the method has no effect.
