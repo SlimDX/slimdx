@@ -1,16 +1,3 @@
 <?php
-	$g_pageTitle = "SlimDX Download Page";
-	$g_pageName = "Download";
-	
-	require_once("header.php");
+	require_once("download_nov08.php");
 ?>
-
-<div id="content">
-	<div class="wrapper">    
-    </div>
-</div>
-
-<?php	
-	require_once("footer.php");
-?>
-
