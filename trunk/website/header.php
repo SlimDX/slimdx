@@ -20,12 +20,12 @@
 <div id="top1">
 	<div class="wrapper">
     	<div id="logo">
-        <img src="images/logoblackbg.jpg" alt="SlimDX" />
+        <a href="http://slimdx.org/new"><img src="images/logoblackbg.jpg" alt="SlimDX" /></a>
         </div>
         
         <ul class="menu">
 <?php
-	function WriteListItem($itemName, $url)
+	function WriteMenuItem($itemName, $url)
 	{
 		global $g_pageName;
 		
@@ -37,12 +37,12 @@
 		echo "<a href=\"$url\">$itemName</a></li>\n";
 	}
 	
-	WriteListItem("Home", "index.php");
-	WriteListItem("Features", "features.php");
-	WriteListItem("Download", "download.php");
-	WriteListItem("Licensing", "license.php");
-	WriteListItem("News", "news.php");
-	WriteListItem("Support", "support.php");
+	WriteMenuItem("Home", "index.php");
+	WriteMenuItem("Features", "features.php");
+	WriteMenuItem("Download", "download.php");
+	WriteMenuItem("Licensing", "license.php");
+	WriteMenuItem("News", "news.php");
+	WriteMenuItem("Support", "support.php");
 ?>            
         </ul>
     </div>
