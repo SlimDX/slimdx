@@ -143,6 +143,14 @@ namespace SlimDX
 			{
 				bool get() { return WhqlLevel != 0; }
 			}
+			
+			/// <summary>
+			/// Gets a value indicating when the adapter was WHQL certified.
+			/// </summary>
+			property System::DateTime^ CertificationDate 
+			{
+				System::DateTime^ get();
+			}
 		};
 	}
 }

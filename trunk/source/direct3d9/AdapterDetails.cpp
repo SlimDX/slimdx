@@ -48,14 +48,26 @@ namespace Direct3D9
 		driverName = gcnew String( ident.Driver );
 		description = gcnew String( ident.Description );
 		deviceName = gcnew String( ident.DeviceName );
-		driverVersion = gcnew Version( HIWORD( ident.DriverVersion.HighPart ), LOWORD( ident.DriverVersion.HighPart ),
-			HIWORD( ident.DriverVersion.LowPart ), LOWORD( ident.DriverVersion.LowPart ) );
+		driverVersion = gcnew Version(
+			HIWORD( ident.DriverVersion.HighPart ),
+			LOWORD( ident.DriverVersion.HighPart ),
+			HIWORD( ident.DriverVersion.LowPart ),
+			LOWORD( ident.DriverVersion.LowPart )
+		);
 		vendorId = ident.VendorId;
 		deviceId = ident.DeviceId;
 		subsystemId = ident.SubSysId;
 		revision = ident.Revision;
 		deviceIdentifier = Utilities::ConvertNativeGuid( ident.DeviceIdentifier );
 		whqlLevel = ident.WHQLLevel;
+	}
+	
+	DateTime^ AdapterDetails::CertificationDate::get()
+	{
+		if( whqlLevel == 1 )
+			return DateTime::MinValue;
+		
+		return gcnew DateTime( 1999 + (whqlLevel >> 16), (whqlLevel & 0xFF00) >> 8, whqlLevel & 0xFF );
 	}
 }
 }
