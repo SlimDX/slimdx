@@ -101,7 +101,7 @@ M^ ConstructFromPointer( N* pointer, SlimDX::ComObject^ owner, SlimDX::ComObject
 	M^ tableEntry = safe_cast<M^>( SlimDX::ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 	if( tableEntry != nullptr )
 	{
-		if( static_cast<int>( flags & SlimDX::ComObjectFlags::ExternalReferenceCount ) == 0 ) 
+		if( static_cast<int>( flags & SlimDX::ComObjectFlags::IsAncillary ) == 0 ) 
 			pointer->Release();
 		return tableEntry;
 	}
@@ -127,7 +127,7 @@ M^ ConstructFromUserPointer( System::IntPtr pointer )
 	}
 
 	M^ result = gcnew M( pointer );
-	result->SetFlags( SlimDX::ComObjectFlags::ExternalReferenceCount );
+	result->SetFlags( SlimDX::ComObjectFlags::IsExternal );
 	return result;
 }
 
