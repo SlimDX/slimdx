@@ -33,7 +33,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Keyboard", "..\samples\Dire
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mouse", "..\samples\DirectInput\Mouse\Mouse.csproj", "{D192F71B-2768-4035-98CD-D7B82C99EB84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTri", "..\samples\Direct3D10\MiniTri\MiniTri.csproj", "{C4B8FFDB-8A4F-42D3-9A05-A47DCF2E5647}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTri10", "..\samples\Direct3D10\MiniTri10\MiniTri10.csproj", "{C4B8FFDB-8A4F-42D3-9A05-A47DCF2E5647}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Joystick", "..\samples\DirectInput\Joystick\Joystick.csproj", "{BEFCAF70-0230-4929-9317-432CA8428269}"
 EndProject
@@ -41,7 +41,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Water", "..\samples\Direct3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RawInput", "RawInput", "{3A922375-C225-4CC5-ABD2-C89EF61B3949}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mouse", "..\samples\RawInput\Mouse\Mouse.csproj", "{43347176-9ED3-4F80-9C12-357014B19F6A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MouseRI", "..\samples\RawInput\MouseRI\MouseRI.csproj", "{43347176-9ED3-4F80-9C12-357014B19F6A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XAudio2", "XAudio2", "{F18740A3-A0AE-4201-9A42-F014F6694978}"
 EndProject
@@ -68,9 +68,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{0FBE
 		scripts\run-tests.bat = scripts\run-tests.bat
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmptyProject", "..\samples\Direct3D10\EmptyProject\EmptyProject.csproj", "{390743A3-182D-4C2D-A3A4-B85C19BEE4BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmptyProject10", "..\samples\Direct3D10\EmptyProject10\EmptyProject10.csproj", "{390743A3-182D-4C2D-A3A4-B85C19BEE4BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTriangle", "..\samples\Direct3D10\SimpleTriangle\SimpleTriangle.csproj", "{CE285FC4-E022-4B95-AE60-979E3B200788}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTriangle10", "..\samples\Direct3D10\SimpleTriangle10\SimpleTriangle10.csproj", "{CE285FC4-E022-4B95-AE60-979E3B200788}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkinnedMesh", "..\samples\Direct3D9\SkinnedMesh\SkinnedMesh.csproj", "{A24A7232-9003-42A5-B9CE-D309FA2D2E98}"
 EndProject

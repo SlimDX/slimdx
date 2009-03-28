@@ -25,9 +25,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Keyboard", "DirectInput\Key
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mouse", "DirectInput\Mouse\Mouse.csproj", "{D192F71B-2768-4035-98CD-D7B82C99EB84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mouse", "RawInput\Mouse\Mouse.csproj", "{43347176-9ED3-4F80-9C12-357014B19F6A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MouseRI", "RawInput\MouseRI\MouseRI.csproj", "{43347176-9ED3-4F80-9C12-357014B19F6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTri", "Direct3D10\MiniTri\MiniTri.csproj", "{C4B8FFDB-8A4F-42D3-9A05-A47DCF2E5647}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTri10", "Direct3D10\MiniTri10\MiniTri10.csproj", "{C4B8FFDB-8A4F-42D3-9A05-A47DCF2E5647}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicSound", "XAudio2\BasicSound\BasicSound.csproj", "{EAFA9427-D9FC-45AC-908C-30CE59DCB957}"
 EndProject
@@ -41,9 +41,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asteroids", "Games\Asteroid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmptyProject", "Direct3D9\EmptyProject\EmptyProject.csproj", "{F1C6583A-8DAC-453B-AC68-FD2BDD0F4C6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmptyProject", "Direct3D10\EmptyProject\EmptyProject.csproj", "{390743A3-182D-4C2D-A3A4-B85C19BEE4BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmptyProject10", "Direct3D10\EmptyProject10\EmptyProject10.csproj", "{390743A3-182D-4C2D-A3A4-B85C19BEE4BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTriangle", "Direct3D10\SimpleTriangle\SimpleTriangle.csproj", "{CE285FC4-E022-4B95-AE60-979E3B200788}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTriangle10", "Direct3D10\SimpleTriangle10\SimpleTriangle10.csproj", "{CE285FC4-E022-4B95-AE60-979E3B200788}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Direct2D", "Direct2D", "{DDED774B-98CA-4CCF-8494-D2EADE07B417}"
 EndProject

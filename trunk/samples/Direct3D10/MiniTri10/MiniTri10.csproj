@@ -32,7 +32,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MiniTri</RootNamespace>
-    <AssemblyName>MiniTri</AssemblyName>
+    <AssemblyName>MiniTri10</AssemblyName>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>2.0</OldToolsVersion>
