@@ -51,8 +51,8 @@ namespace MsdnLinkGenerator
 				{
 					m_currentEngine = 0;
 					//take some time to let the various engines cool off
-					Console.WriteLine("Pausing queries for ten minutes...");
-					System.Threading.Thread.Sleep(10 * 60 * 1000);
+					Console.WriteLine("Pausing queries for twenty minutes...");
+					System.Threading.Thread.Sleep(20 * 60 * 1000);
 				}
 
 				return GetMsdnLink(searchString);
@@ -66,6 +66,9 @@ namespace MsdnLinkGenerator
 
 			int startPos = uri.LastIndexOf('/');
 			int endPos = uri.LastIndexOf('(');
+			//Sometimes the links don't have (VS.85), but it's ok to add them in
+			if(endPos < 0)
+				endPos = uri.LastIndexOf('.');
 			if(startPos < 0 || endPos < 0)
 				return null;
 
@@ -82,24 +85,36 @@ namespace MsdnLinkGenerator
 			XmlNodeList nodes = doc.SelectNodes("//unmanaged");
 			foreach(XmlElement element in nodes)
 			{
+				++i;
 				if(element.HasAttribute("href"))
+				{
+					Console.WriteLine("({2}/{3}) Item {0} is already linked to document: {1}.",
+						element.InnerText, element.Attributes["href"].InnerText, i, nodes.Count);
 					continue;
+				}
 
 				string text = element.InnerText;
+				if(text == "None")
+				{
+					Console.Write("({0}/{1}) Not linked.", i, nodes.Count);
+					continue;
+				}
+
 				string link = GetMsdnLink(text);
 				string core = ExtractLinkCore(link);
 
 				if(string.IsNullOrEmpty(core))
+				{
+					Console.WriteLine("({0}/{1}) Unable to link {2}.", i, nodes.Count, element.InnerText);
 					continue;
+				}
 
 				XmlAttribute attrib = doc.CreateAttribute("href");
 				attrib.InnerText = core;
 				element.Attributes.Append(attrib);
-
-				++i;
 				Console.WriteLine("({2}/{3}) Linked \"{0}\" to document: {1}.", text, core, i, nodes.Count);
 
-				System.Threading.Thread.Sleep(5 * 60 * 1000);
+				System.Threading.Thread.Sleep(2 * 60 * 1000);
 			}
 
 			doc.Save(file);
@@ -114,7 +129,7 @@ namespace MsdnLinkGenerator
 				"http://search.yahoo.com/search?p={0}+site%3Amsdn.microsoft.com%2Fen-us&fr=yfp-t-120&toggle=1&cop=mss&ei=UTF-8"
 			};
 
-			ProcessXml(@"D:\Promit\Documents\SlimDX-all\trunk\build\x86\Release\SlimDX.xml");
+			ProcessXml(@"D:\Promit\Documents\SlimDX\Main\trunk\docs\SlimDX.xml");
 		}
 	}
 }

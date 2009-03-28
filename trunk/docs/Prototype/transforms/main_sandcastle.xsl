@@ -111,7 +111,7 @@
             <xsl:attribute name="href">
               <xsl:text>http://msdn.microsoft.com/en-us/library/</xsl:text>
               <xsl:value-of select="@href" />
-              <xsl:text>(VS.85).aspx</xsl:text>
+              <xsl:text>.aspx</xsl:text>
             </xsl:attribute>
             
             <xsl:apply-templates />

@@ -28,7 +28,7 @@ namespace SlimDX
 	namespace Direct3D9
 	{
 		/// <summary>Defines result codes that are returned by Direct3D 9 functions.</summary>
-		/// <unmanaged>None</unmanaged>
+		/// <unmanaged href="ms679692">HRESULT</unmanaged>
 		public ref class ResultCode sealed
 		{
 		private:
@@ -101,7 +101,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when a device is lost.
 			/// </summary>
-			/// <unmanaged>D3DERR_DEVICELOST</unmanaged>
+			/// <unmanaged href="bb172554">D3DERR_DEVICELOST</unmanaged>
 			property static Result DeviceLost
 			{
 				Result get();
@@ -110,7 +110,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when a lost yet resettable device has not yet been reset.
 			/// </summary>
-			/// <unmanaged>D3DERR_DEVICENOTRESET</unmanaged>
+			/// <unmanaged href="bb172554">D3DERR_DEVICENOTRESET</unmanaged>
 			property static Result DeviceNotReset
 			{
 				Result get();
@@ -155,7 +155,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when an invalid method call is made. This is usually do to an invalid parameter.
 			/// </summary>
-			/// <unmanaged>D3DERR_INVALIDCALL</unmanaged>
+			/// <unmanaged href="bb172554">D3DERR_INVALIDCALL</unmanaged>
 			property static Result InvalidCall
 			{
 				Result get();
@@ -218,7 +218,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the device does not support the queried technique.
 			/// </summary>
-			/// <unmanaged>D3DERR_NOTAVAILABLE</unmanaged>
+			/// <unmanaged href="bb172554">D3DERR_NOTAVAILABLE</unmanaged>
 			property static Result NotAvailable
 			{
 				Result get();
@@ -236,7 +236,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the resource is not resident in memory.
 			/// </summary>
-			/// <unmanaged>S_NOT_RESIDENT</unmanaged>
+			/// <unmanaged href="bb174339">S_NOT_RESIDENT</unmanaged>
 			property static Result NotResident
 			{
 				Result get();
@@ -263,7 +263,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the presentation area is occluded.
 			/// </summary>
-			/// <unmanaged>S_PRESENT_OCCLUDED</unmanaged>
+			/// <unmanaged href="bb219624">S_PRESENT_OCCLUDED</unmanaged>
 			property static Result PresentOccluded
 			{
 				Result get();
@@ -272,7 +272,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the resource is resident in shared memory.
 			/// </summary>
-			/// <unmanaged>S_RESIDENT_IN_SHARED_MEMORY</unmanaged>
+			/// <unmanaged href="bb174339">S_RESIDENT_IN_SHARED_MEMORY</unmanaged>
 			property static Result ResidentInSharedMemory
 			{
 				Result get();
@@ -290,7 +290,7 @@ namespace SlimDX
 			/// <summary>
 			/// Represents a generic success result.
 			/// </summary>
-			/// <unmanaged>D3D_OK</unmanaged>
+			/// <unmanaged href="bb172554">D3D_OK</unmanaged>
 			property static Result Success
 			{
 				Result get();
