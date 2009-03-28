@@ -143,9 +143,7 @@ namespace SlimDX
 		}
 		else
 		{
-			if( static_cast<int>( m_Flags & ComObjectFlags::IsAncillary ) == 0 )
-				m_Unknown->Release();
-
+			m_Unknown->Release();
 			m_Unknown = 0;
 		}
 	}
