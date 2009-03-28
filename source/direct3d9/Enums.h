@@ -332,7 +332,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies wrapping options for texture coordinates.
 		/// </summary>
-		/// <unmanaged>D3DWRAPCOORD</unmanaged>
+		/// <unmanaged href="bb206256">D3DWRAPCOORD</unmanaged>
 		[System::Flags]
 		public enum class TextureWrapping : System::Int32
 		{
@@ -686,7 +686,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the flexible vertex format capabilities of the device.
 		/// </summary>
-		/// <unmanaged>D3DFVFCAPS</unmanaged>
+		/// <unmanaged HREF="bb172513">D3DFVFCAPS</unmanaged>
 		[System::Flags]
 		public enum class VertexFormatCaps : System::Int32
 		{
@@ -715,7 +715,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies vertex processing capabilities supported by the device.
 		/// </summary>
-		/// <unmanaged>D3DVTXCAPS</unmanaged>
+		/// <unmanaged href="bb172513">D3DVTXCAPS</unmanaged>
 		[System::Flags]
 		public enum class VertexProcessingCaps
 		{
@@ -932,7 +932,7 @@ namespace SlimDX
 		/// <summary>
 		/// Defines possible source blending capabilities.
 		/// </summary>
-		/// <unmanaged>D3DBLENDCAPS</unmanaged>
+		/// <unmanaged href="bb172513">D3DPBLENDCAPS</unmanaged>
 		[System::Flags]
 		public enum class BlendCaps : System::Int32
 		{
@@ -1346,7 +1346,7 @@ namespace SlimDX
 		/// <summary>
 		/// Flags that enable a per-channel write for the render target color buffer.
 		/// </summary>
-		/// <unmanaged>D3DCOLORWRITEENABLE</unmanaged>
+		/// <unmanaged href="bb172599">D3DCOLORWRITEENABLE</unmanaged>
 		[System::Flags]
 		public enum class ColorWriteEnable : System::Int32
 		{
@@ -2008,7 +2008,7 @@ namespace SlimDX
 		/// <summary>
 		/// Flags identifying the capabilities of the device.
 		/// </summary>
-		/// <unmanaged>D3DDEVCAPS</unmanaged>
+		/// <unmanaged href="bb172513">D3DDEVCAPS</unmanaged>
 		[System::Flags]
 		public enum class DeviceCaps : System::Int32
 		{
@@ -2141,7 +2141,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies formatting options for text rendering.
 		/// </summary>
-		/// <unmanaged>DT</unmanaged>
+		/// <unmanaged href="bb773199">DT</unmanaged>
 		[System::Flags]
 		public enum class DrawTextFormat : System::Int32
 		{
@@ -2370,7 +2370,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies quality options for font rendering.
 		/// </summary>
-		/// <unmanaged>QUALITY</unmanaged>
+		/// <unmanaged href="ms901140">QUALITY</unmanaged>
 		public enum class FontQuality : System::Int32
 		{
 			/// <summary>
@@ -2412,7 +2412,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies weights for font rendering.
 		/// </summary>
-		/// <unmanaged>FW</unmanaged>
+		/// <unmanaged href="ms901140">FW</unmanaged>
 		public enum class FontWeight : System::Int32
 		{
 			/// <summary>
@@ -3081,7 +3081,7 @@ namespace SlimDX
 		/// <summary>
 		/// Defines pitch and family settings for fonts.
 		/// </summary>
-		/// <unmanaged>(various constants)</unmanaged>
+		/// <unmanaged href="ms901140">(various font constants)</unmanaged>
 		[System::Flags]
 		public enum class PitchAndFamily : System::Int32
 		{
@@ -3207,7 +3207,7 @@ namespace SlimDX
 		/// <summary>
 		/// Defines precision levels for font rendering.
 		/// </summary>
-		/// <unmanaged>OUT</unmanaged>
+		/// <unmanaged href="cc215248">OutPrecision</unmanaged>
 		public enum class Precision : System::Int32
 		{
 			/// <summary>

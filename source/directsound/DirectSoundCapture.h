@@ -32,7 +32,7 @@ namespace SlimDX
 		/// <summary>
 		/// The DirectSoundCapture object is used to create sound capture buffers.
 		/// </summary>
-		/// <unmanaged>IDirectSoundCapture</unmanaged>
+		/// <unmanaged>IDirectSoundCapture8</unmanaged>
 		public ref class DirectSoundCapture : public ComObject
 		{
 			COMOBJECT(IDirectSoundCapture, DirectSoundCapture);

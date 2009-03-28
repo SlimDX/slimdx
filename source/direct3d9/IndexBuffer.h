@@ -34,7 +34,7 @@ namespace SlimDX
 	namespace Direct3D9
 	{
 		/// <summary>Represents a buffer of index data.</summary>
-		/// <unmanaged>IDirect3DIndexBuffer9</unmanaged>
+		/// <unmanaged href="bb205865">IDirect3DIndexBuffer9</unmanaged>
 		public ref class IndexBuffer : public Resource
 		{
 			COMOBJECT(IDirect3DIndexBuffer9, IndexBuffer);

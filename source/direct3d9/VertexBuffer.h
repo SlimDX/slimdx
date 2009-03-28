@@ -33,7 +33,7 @@ namespace SlimDX
 	namespace Direct3D9
 	{
 		/// <summary>Represents a buffer of vertex data.</summary>
-		/// <unmanaged>IDirect3DVertexBuffer9</unmanaged>
+		/// <unmanaged href="bb205915">IDirect3DVertexBuffer9</unmanaged>
 		public ref class VertexBuffer : public Resource
 		{
 			COMOBJECT( IDirect3DVertexBuffer9, VertexBuffer );

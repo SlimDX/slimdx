@@ -176,7 +176,7 @@ namespace SlimDX
 		};
 		
 		/// <summary></summary>
-		/// <unmanaged>D3D10_DEBUG_FEATURE</unmanaged>
+		/// <unmanaged href="bb173520">D3D10_DEBUG_FEATURE</unmanaged>
 		[System::Flags]
 		public enum class DebugFeatureFlags : System::Int32
 		{
@@ -316,7 +316,7 @@ namespace SlimDX
 		};
 
 		/// <summary></summary>
-		/// <unmanaged>DT</unmanaged>
+		/// <unmanaged href="bb773199">DT</unmanaged>
 		[System::Flags]
 		public enum class FontDrawFlags : System::Int32
 		{
@@ -352,7 +352,7 @@ namespace SlimDX
 		};
 
 		/// <summary></summary>
-		/// <unmanaged>OUT</unmanaged>
+		/// <unmanaged href="cc215248">OutPrecision</unmanaged>
 		public enum class FontPrecision : System::Int32
 		{
 			Default = OUT_DEFAULT_PRECIS,
