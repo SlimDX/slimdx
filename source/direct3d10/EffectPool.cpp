@@ -43,7 +43,7 @@ namespace Direct3D10
 		ID3D10Effect* effect = InternalPointer->AsEffect();
 		if( effect == 0 )
 			return nullptr;
-	  return Effect::FromPointer( effect, this, ComObjectFlags::ExternalReferenceCount );
+	  return Effect::FromPointer( effect, this, ComObjectFlags::IsAncillary );
 	}
 
 	EffectPool^ EffectPool::FromFile( Device^ device, String^ fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags )

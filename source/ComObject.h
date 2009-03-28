@@ -84,7 +84,8 @@ namespace SlimDX
 	enum class ComObjectFlags
 	{
 		None = 0,
-		ExternalReferenceCount = 1,
+		IsAncillary = 1,
+		IsExternal = 2
 	};
 	
 	/// <summary>
@@ -120,7 +121,7 @@ namespace SlimDX
 			M^ tableEntry = safe_cast<M^>( SlimDX::ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
 			{
-				if( static_cast<int>( flags & ComObjectFlags::ExternalReferenceCount ) == 0 ) 
+				if( static_cast<int>( flags & ComObjectFlags::IsAncillary ) == 0 ) 
 					pointer->Release();
 				return tableEntry;
 			}
@@ -146,7 +147,7 @@ namespace SlimDX
 			}
 
 			M^ result = gcnew M( pointer );
-			result->SetFlags( ComObjectFlags::ExternalReferenceCount );
+			result->SetFlags( ComObjectFlags::IsAncillary );
 			return result;
 		}
 		

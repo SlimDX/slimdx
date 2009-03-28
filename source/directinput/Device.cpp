@@ -157,7 +157,7 @@ namespace DirectInput
 		Device^ tableEntry = safe_cast<Device^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
-			if( static_cast<int>( flags & ComObjectFlags::ExternalReferenceCount ) == 0 ) 
+			if( static_cast<int>( flags & ComObjectFlags::IsAncillary ) == 0 ) 
 					pointer->Release();
 			return tableEntry;
 		}
