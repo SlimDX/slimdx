@@ -29,12 +29,65 @@
 #include "Device.h"
 #include "Resource.h"
 
+#include "Surface.h"
+#include "Volume.h"
+#include "Texture.h"
+#include "VolumeTexture.h"
+#include "CubeTexture.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
+
 using namespace System;
 
 namespace SlimDX
 {
 namespace Direct3D9
 {
+	Resource^ Resource::FromPointer( System::IntPtr pointer )
+	{
+		if( pointer == System::IntPtr::Zero )
+			throw gcnew System::ArgumentNullException( "pointer" );
+
+		Resource^ tableEntry = safe_cast<Resource^>( SlimDX::ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			return tableEntry;
+		}
+
+		void* result = 0;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface(IID_IDirect3DResource9, &result);
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		//find out what this thing actually is
+		IDirect3DResource9* resource = static_cast<IDirect3DResource9*>( unknown );
+		D3DRESOURCETYPE type = resource->GetType();
+		resource->Release();
+
+		//chain to the correct ctor (not the fastest way to do this, but good enough for now)
+		switch(type)
+		{
+		case D3DRTYPE_SURFACE:
+			return Surface::FromPointer( pointer );
+		case D3DRTYPE_VOLUME:
+			return Volume::FromPointer( pointer );
+		case D3DRTYPE_TEXTURE:
+			return Texture::FromPointer( pointer );
+		case D3DRTYPE_VOLUMETEXTURE:
+			return VolumeTexture::FromPointer( pointer );
+		case D3DRTYPE_CUBETEXTURE:
+			return CubeTexture::FromPointer( pointer );
+		case D3DRTYPE_VERTEXBUFFER:
+			return VertexBuffer::FromPointer( pointer );
+		case D3DRTYPE_INDEXBUFFER:
+			return IndexBuffer::FromPointer( pointer );
+
+		default:
+			throw gcnew InvalidCastException( "Unrecognized resource type." );
+		}
+	}
+
 	SlimDX::Direct3D9::Device^ Resource::Device::get()
 	{
 		IDirect3DDevice9* device;
