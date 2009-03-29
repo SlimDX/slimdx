@@ -572,9 +572,9 @@
     <None Include="Help\Topics\Visual Studio Versions.cmp">
       <DependentUpon>Visual Studio Versions.aml</DependentUpon>
     </None>
-    <None Include="Help\Topics\What_s New in the November 2008 SDK.aml" />
-    <None Include="Help\Topics\What_s New in the November 2008 SDK.cmp">
-      <DependentUpon>What_s New in the November 2008 SDK.aml</DependentUpon>
+    <None Include="Help\Topics\What_s New.aml" />
+    <None Include="Help\Topics\What_s New.cmp">
+      <DependentUpon>What_s New.aml</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
