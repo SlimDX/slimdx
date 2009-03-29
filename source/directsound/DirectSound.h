@@ -33,6 +33,8 @@ namespace SlimDX
 {
 	namespace DirectSound
 	{
+		ref class SoundBuffer;
+
 		/// <summary>
 		/// The DirectSound object is used to create buffer objects, manage devices, and set up the environment.
 		/// </summary>
@@ -73,6 +75,13 @@ namespace SlimDX
 			/// <param name="speakerSet"></param>
 			/// <param name="geometry"></param>
 			Result GetSpeakerConfiguration( [Out] SpeakerConfiguration% speakerSet, [Out] SpeakerGeometry% geometry );
+			
+			/// <summary>
+			/// Creates a duplicate of the original sound buffer that shares the originals memory.
+			/// </summary>
+			/// <param name="original"></param>
+			/// <param name="result"></param>
+			Result DuplicateSoundBuffer( SoundBuffer^ original, [Out] SoundBuffer^% result ); 
 
 			/// <summary>
 			/// Ascertains whether the device driver is certified for DirectX.
