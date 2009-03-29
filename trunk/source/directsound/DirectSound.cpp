@@ -33,6 +33,9 @@
 #include "Enums.h"
 #include "Callbacks.h"
 #include "DirectSound.h"
+#include "SoundBuffer.h"
+#include "PrimarySoundBuffer.h"
+#include "SecondarySoundBuffer.h"
 
 using namespace System;
 using namespace System::Runtime::InteropServices;
@@ -105,6 +108,31 @@ namespace DirectSound
 
 		speakerSet = static_cast<SpeakerConfiguration>( DSSPEAKER_CONFIG( config ) );
 		geometry = static_cast<SpeakerGeometry>( DSSPEAKER_GEOMETRY( config ) );
+
+		return Result::Last;
+	}
+
+	Result DirectSound::DuplicateSoundBuffer( SoundBuffer^ original, [Out] SoundBuffer^% result ) 
+	{
+		IDirectSoundBuffer* duplicate = 0;
+		HRESULT hr = InternalPointer->DuplicateSoundBuffer( original->InternalPointer, &duplicate );
+		if( RECORD_DSOUND( hr ).IsFailure ) 
+			result = nullptr;
+		else 
+		{
+			IDirectSoundBuffer* primaryInterface = 0;
+			IDirectSoundBuffer8* secondaryInterface = 0;
+			if( SUCCEEDED( duplicate->QueryInterface( IID_IDirectSoundBuffer, reinterpret_cast<void**>( &primaryInterface ) ) ) ) 
+			{
+				result = PrimarySoundBuffer::FromPointer( primaryInterface );
+				primaryInterface->Release();
+			}
+			else if( SUCCEEDED( duplicate->QueryInterface( IID_IDirectSoundBuffer8, reinterpret_cast<void**>( &secondaryInterface ) ) ) ) 
+			{
+				result = SecondarySoundBuffer::FromPointer( secondaryInterface );
+				secondaryInterface->Release();
+			}
+		}
 
 		return Result::Last;
 	}
