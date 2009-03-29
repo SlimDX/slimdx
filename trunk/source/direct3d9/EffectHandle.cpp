@@ -65,8 +65,11 @@ namespace Direct3D9
 
 	bool EffectHandle::operator == ( EffectHandle^ left, EffectHandle^ right )
 	{
-		if( ReferenceEquals( left, nullptr ) )
-			return ReferenceEquals( right, nullptr );
+		//preferred to ReferenceEquals
+		Object^ leftObj = left;
+		Object^ rightObj = right;
+		if(leftObj == nullptr)
+			return rightObj == nullptr;
 
 		return EffectHandle::Equals( left, right );
 	}
@@ -84,7 +87,7 @@ namespace Direct3D9
 
 	bool EffectHandle::Equals( Object^ value )
 	{
-		if( value == nullptr )
+		if( ((Object^) value) == nullptr )
 			return false;
 
 		if( value->GetType() != GetType() )
@@ -95,7 +98,7 @@ namespace Direct3D9
 
 	bool EffectHandle::Equals( EffectHandle^ value )
 	{
-		if( value == nullptr )
+		if( ((Object^) value) == nullptr )
 			return false;
 
 		if( ReferenceEquals( this, value ) )
