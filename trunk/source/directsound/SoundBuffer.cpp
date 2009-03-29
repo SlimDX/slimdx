@@ -100,7 +100,7 @@ namespace DirectSound
 	Result SoundBuffer::Write( array<T>^ data, int startIndex, int count, int bufferOffset, SlimDX::DirectSound::LockFlags flags )
 	{
 		Utilities::CheckArrayBounds( data, startIndex, count );
-		int bytes = sizeof(T) * count;
+		int bytes = static_cast<int>(sizeof(T) * count);
 
 		DataStream^ stream2;
 		DataStream^ stream1 = Lock( bufferOffset, bytes, flags, stream2 );

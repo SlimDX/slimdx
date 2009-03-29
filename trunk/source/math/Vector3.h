@@ -473,7 +473,7 @@ namespace SlimDX
 		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
 		/// <param name="vectorsOut">The transformed <see cref="SlimDX::Vector4"/>s.</param>
 		/// <param name="count">The number of vectors to transform.</param>
-		static void Transform( Vector3* vectorsIn, Matrix* transformation, Vector4* vectorsOut, int count ) { Transform( vectorsIn, sizeof(Vector3), transformation, vectorsOut, sizeof(Vector4), count ); }
+		static void Transform( Vector3* vectorsIn, Matrix* transformation, Vector4* vectorsOut, int count ) { Transform( vectorsIn, (int) sizeof(Vector3), transformation, vectorsOut, (int) sizeof(Vector4), count ); }
 
 		/// <summary>
 		/// Transforms an array of 3D vectors by the given <see cref="SlimDX::Matrix"/>.
@@ -559,7 +559,7 @@ namespace SlimDX
 		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
 		/// <param name="coordsOut">The transformed coordinate <see cref="SlimDX::Vector3"/>s.</param>
 		/// <param name="count">The number of coordinate vectors to transform.</param>
-		static void TransformCoordinate( Vector3* coordsIn, Matrix* transformation, Vector3* coordsOut, int count ) { TransformCoordinate( coordsIn, sizeof(Vector3), transformation, coordsOut, sizeof(Vector3), count ); }
+		static void TransformCoordinate( Vector3* coordsIn, Matrix* transformation, Vector3* coordsOut, int count ) { TransformCoordinate( coordsIn, (int) sizeof(Vector3), transformation, coordsOut, (int) sizeof(Vector3), count ); }
 
 		/// <summary>
 		/// Performs a coordinate transformation using the given <see cref="SlimDX::Matrix"/>.
@@ -621,7 +621,7 @@ namespace SlimDX
 		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
 		/// <param name="normalsOut">The transformed <see cref="SlimDX::Vector3"/>s.</param>
 		/// <param name="count">The number of vectors to transform.</param>
-		static void TransformNormal( Vector3* normalsIn, Matrix* transformation, Vector3* normalsOut, int count ) { TransformNormal( normalsIn, sizeof(Vector3), transformation, normalsOut, sizeof(Vector3), count ); }
+		static void TransformNormal( Vector3* normalsIn, Matrix* transformation, Vector3* normalsOut, int count ) { TransformNormal( normalsIn, (int) sizeof(Vector3), transformation, normalsOut, (int) sizeof(Vector3), count ); }
 
 		/// <summary>
 		/// Performs a normal transformation using the given <see cref="SlimDX::Matrix"/>.
