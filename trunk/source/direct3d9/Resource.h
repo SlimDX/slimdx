@@ -44,6 +44,8 @@ namespace SlimDX
 			Resource() { }
 
 		public:
+			static Resource^ FromPointer( System::IntPtr pointer );
+
 			/// <summary>
 			/// Preloads a managed resource.
 			/// </summary>

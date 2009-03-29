@@ -147,7 +147,7 @@ namespace SlimDX
 			}
 
 			M^ result = gcnew M( pointer );
-			result->SetFlags( ComObjectFlags::IsAncillary );
+			result->SetFlags( ComObjectFlags::IsExternal );
 			return result;
 		}
 		
