@@ -119,7 +119,7 @@ namespace DirectSound
 	Result CaptureBuffer::Read( array<T>^ data, int startIndex, int count, int bufferOffset, bool lockEntireBuffer )
 	{
 		Utilities::CheckArrayBounds( data, startIndex, count );
-		int bytes = sizeof(T) * count;
+		int bytes = static_cast<int>(sizeof(T) * count);
 
 		DataStream^ stream2;
 		DataStream^ stream1 = Lock( bufferOffset, bytes, lockEntireBuffer, stream2 );
