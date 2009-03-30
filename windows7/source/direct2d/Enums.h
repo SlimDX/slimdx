@@ -118,6 +118,13 @@ namespace SlimDX
 			MultiThreaded = D2D1_FACTORY_TYPE_MULTI_THREADED
 		};
 
+		public enum class FeatureLevel : System::Int32
+		{
+			Default = D2D1_FEATURE_LEVEL_DEFAULT,
+			Direct3D9 = D2D1_FEATURE_LEVEL_9,
+			Direct3D10 = D2D1_FEATURE_LEVEL_10
+		};
+
 		public enum class FigureBegin : System::Int32
 		{
 			Filled = D2D1_FIGURE_BEGIN_FILLED,
@@ -193,6 +200,13 @@ namespace SlimDX
 			None = D2D1_PRESENT_OPTIONS_NONE,
 			RetainContents = D2D1_PRESENT_OPTIONS_RETAIN_CONTENTS,
 			Immediately = D2D1_PRESENT_OPTIONS_IMMEDIATELY
+		};
+
+		public enum class RenderTargetType : System::Int32
+		{
+			Default = D2D1_RENDER_TARGET_TYPE_DEFAULT,
+			Software = D2D1_RENDER_TARGET_TYPE_SOFTWARE,
+			Hardware = D2D1_RENDER_TARGET_TYPE_HARDWARE
 		};
 
 		[System::Flags]
