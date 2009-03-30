@@ -1,0 +1,890 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<?define Version="2.0.7.41" ?>
+<?define ReleaseName="March 2009" ?>
+<?define ShortName="Mar2009" ?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+  <Product Id="*" Language="1033" Manufacturer="SlimDX Group" Name="SlimDX SDK ($(var.ReleaseName))" Version="$(var.Version)">
+    <Package Id="*" InstallerVersion="200" Compressed="yes" />
+
+    <PropertyRef Id="NETFRAMEWORK20" />
+    <PropertyRef Id="NETFRAMEWORK35" />
+
+    <WixVariable Id="WixUILicenseRtf" Value="..\ExtraFiles\License.rtf" />
+    <WixVariable Id="WixUIDialogBmp" Value="..\ExtraFiles\SdxSideLogo.jpg" />
+    <WixVariable Id="WixUIBannerBmp" Value="..\ExtraFiles\SdxLogo.jpg" />
+
+    <Media Id="1" Cabinet="SlimDX_$(var.ShortName).cab" EmbedCab="yes" />
+
+    <Icon Id="SdxIconBlack.exe" SourceFile="..\..\media\sdx_icon_black.ico" />
+    <Property Id="ARPPRODUCTICON" Value="SdxIconBlack.exe" />
+    <Property Id="ALLUSERS" Value="1" />
+
+    <Property Id="WixAppFolder" Value="WixPerMachineFolder" />
+    <Property Id="ApplicationFolderName" Value="SlimDX SDK ($(var.ReleaseName))" />
+    <Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONFOLDER" />
+
+    <UI>
+      <ProgressText Action="InstallDirectX">Installing DirectX runtime components ($(var.ReleaseName))</ProgressText>
+    </UI>
+
+    <UI Id="FeatureTreePlus">
+      <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+      <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
+      <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+
+      <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+      <Property Id="WixUI_Mode" Value="FeatureTreePlus" />
+
+      <DialogRef Id="ErrorDlg" />
+      <DialogRef Id="FatalError" />
+      <DialogRef Id="FilesInUse" />
+      <DialogRef Id="MsiRMFilesInUse" />
+      <DialogRef Id="PrepareDlg" />
+      <DialogRef Id="ProgressDlg" />
+      <DialogRef Id="ResumeDlg" />
+      <DialogRef Id="UserExit" />
+
+      <Publish Dialog="BrowseDlg" Control="OK" Event="DoAction" Value="WixUIValidatePath" Order="3">1</Publish>
+      <Publish Dialog="BrowseDlg" Control="OK" Event="SpawnDialog" Value="InvalidDirDlg" Order="4"><![CDATA[WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
+
+      <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999">1</Publish>
+
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
+
+      <Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>
+      <Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg">LicenseAccepted = "1"</Publish>
+
+      <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="DoAction" Value="WixUIValidatePath" Order="2">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="SpawnDialog" Value="InvalidDirDlg" Order="3"><![CDATA[WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="NewDialog" Value="CustomizeDlg" Order="4"><![CDATA[WIXUI_INSTALLDIR_VALID="1"]]></Publish>
+      <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Property="_BrowseProperty" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Event="SpawnDialog" Value="BrowseDlg" Order="2">1</Publish>
+
+      <Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="1">Installed</Publish>
+      <Publish Dialog="CustomizeDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg" Order="2">NOT Installed</Publish>
+      <Publish Dialog="CustomizeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="CustomizeDlg" Order="1">NOT Installed OR WixUI_InstallMode = "Change"</Publish>
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="MaintenanceTypeDlg" Order="2">Installed</Publish>
+
+      <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="MaintenanceTypeDlg">1</Publish>
+
+      <Publish Dialog="MaintenanceTypeDlg" Control="ChangeButton" Event="NewDialog" Value="CustomizeDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="RepairButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="RemoveButton" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="MaintenanceTypeDlg" Control="Back" Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
+    </UI>
+
+    <UIRef Id="WixUI_Common" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="APPLICATIONFOLDER" Name="SlimDX SDK ($(var.ReleaseName))">
+          <Component Id="Licenses" DiskId="1" Guid="01CB4F3C-E3BE-48B9-84B1-3A9CCCBF7A63">
+            <File Id="CodeLicense.txt" Name="CodeLicense.txt" Source="..\..\publish\CodeLicense.txt" />
+            <File Id="MediaLicense.txt" Name="MediaLicense.txt" Source="..\..\publish\MediaLicense.txt" />
+          </Component>
+          <Directory Id="Bin" Name="Bin">
+            <Directory Id="bin_x64" Name="x64">
+              <Component Id="x64" DiskId="1" Guid="C93946B6-13DF-4F13-B125-DAC9F278FAC5">
+                <File Id="SlimDX.dll_x64" Name="SlimDX.dll" Source="..\..\publish\Bin\x64\SlimDX.dll" />
+                <File Id="SlimDX.pdb_x64" Name="SlimDX.pdb" Source="..\..\publish\Bin\x64\SlimDX.pdb" />
+                <File Id="SlimDX.xml_x64" Name="SlimDX.xml" Source="..\..\publish\Bin\x64\SlimDX.xml" />
+
+                <File Id="SlimDX.Windows7.dll_x64" Name="SlimDX.Windows7.dll" Source="..\..\publish\Bin\x64\SlimDX.Windows7.dll" />
+                <File Id="SlimDX.Windows7.pdb_x64" Name="SlimDX.Windows7.pdb" Source="..\..\publish\Bin\x64\SlimDX.Windows7.pdb" />
+              </Component>
+              <Directory Id="x64_GAC" Name="GAC">
+                <Component Id="x64_GAC" DiskId="1" Guid="49CD009B-2541-484D-BEEB-83D79E7DD9D7">
+                  <Condition>
+                    <![CDATA[Installed OR VersionNT64]]>
+                  </Condition>
+                  <File Id="SlimDX.dll_x64_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\x64\SlimDX.dll"
+                        KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x64_GAC">
+                    <netfx:NativeImage Id="SlimDX_NGEN_x64" Priority="1" Platform="64bit" />
+                    <netfx:NativeImage Id="SlimDX_NGEN_x64_debug" Priority="2" Platform="64bit" Debug="yes" />
+                    <netfx:NativeImage Id="SlimDX_NGEN_x64_profile" Priority="2" Platform="64bit" Profile="yes" />
+                  </File>
+                </Component>
+              </Directory>
+            </Directory>
+            <Directory Id="x86" Name="x86">
+              <Component Id="x86" DiskId="1" Guid="65A2E192-3D00-4A00-805E-642F90BAF7B2">
+                <File Id="SlimDX.dll_x86" Name="SlimDX.dll" Source="..\..\publish\Bin\x86\SlimDX.dll" />
+                <File Id="SlimDX.pdb_x86" Name="SlimDX.pdb" Source="..\..\publish\Bin\x86\SlimDX.pdb" />
+                <File Id="SlimDX.xml_x86" Name="SlimDX.xml" Source="..\..\publish\Bin\x86\SlimDX.xml" />
+
+                <File Id="SlimDX.Windows7.dll_x86" Name="SlimDX.Windows7.dll" Source="..\..\publish\Bin\x86\SlimDX.Windows7.dll" />
+                <File Id="SlimDX.Windows7.pdb_x86" Name="SlimDX.Windows7.pdb" Source="..\..\publish\Bin\x86\SlimDX.Windows7.pdb" />
+              </Component>
+              <Directory Id="x86_GAC" Name="GAC">
+                <Component Id="x86_GAC" DiskId="1" Guid="862BB85B-0A7A-4FB4-9942-644387DF7B8D">
+                  <File Id="SlimDX.dll_x86_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\x86\SlimDX.dll"
+                        KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x86_GAC">
+                    <netfx:NativeImage Id="SlimDX_NGEN_x86" Priority="1" Platform="32bit" />
+                    <netfx:NativeImage Id="SlimDX_NGEN_x86_debug" Priority="2" Platform="32bit" Debug="yes" />
+                    <netfx:NativeImage Id="SlimDX_NGEN_x86_profile" Priority="2" Platform="32bit" Profile="yes" />
+                  </File>
+                </Component>
+              </Directory>
+            </Directory>
+          </Directory>
+          <Directory Id="DXRedist" Name="DirectX Redist">
+            <Component Id="DXRedist" DiskId="1" Guid="DE294C24-BB98-4479-86AD-FA2F3736DC73">
+              <File Id="DSETUP.dll" Name="DSETUP.dll" Source="..\ExtraFiles\DXRedist\DSETUP.dll" />
+              <File Id="dsetup32.dll" Name="dsetup32.dll" Source="..\ExtraFiles\DXRedist\dsetup32.dll" />
+              <File Id="dxdllreg_x86.cab" Name="dxdllreg_x86.cab" Source="..\ExtraFiles\DXRedist\dxdllreg_x86.cab" />
+              <File Id="DXSETUP.exe" Name="DXSETUP.exe" Source="..\ExtraFiles\DXRedist\DXSETUP.exe" />
+              <File Id="dxupdate.cab" Name="dxupdate.cab" Source="..\ExtraFiles\DXRedist\dxupdate.cab" />
+              <File Id="$(var.ShortName)_d3dx10_41_x64.cab" Name="$(var.ShortName)_d3dx10_41_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dx10_41_x64.cab" />
+              <File Id="$(var.ShortName)_d3dx9_41_x64.cab" Name="$(var.ShortName)_d3dx9_41_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dx9_41_x64.cab" />
+              <File Id="$(var.ShortName)_X3DAudio_x64.cab" Name="$(var.ShortName)_X3DAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_X3DAudio_x64.cab" />
+              <File Id="$(var.ShortName)_XAudio_x64.cab" Name="$(var.ShortName)_XAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_XAudio_x64.cab" />
+              <File Id="APR2007_xinput_x64.cab" Name="APR2007_xinput_x64.cab" Source="..\ExtraFiles\DXRedist\x64\APR2007_xinput_x64.cab" />
+              <File Id="$(var.ShortName)_d3dx10_41_x86.cab" Name="$(var.ShortName)_d3dx10_41_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dx10_41_x86.cab" />
+              <File Id="$(var.ShortName)_d3dx9_41_x86.cab" Name="$(var.ShortName)_d3dx9_41_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dx9_41_x86.cab" />
+              <File Id="$(var.ShortName)_X3DAudio_x86.cab" Name="$(var.ShortName)_X3DAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_X3DAudio_x86.cab" />
+              <File Id="$(var.ShortName)_XAudio_x86.cab" Name="$(var.ShortName)_XAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_XAudio_x86.cab" />
+              <File Id="APR2007_xinput_x86.cab" Name="APR2007_xinput_x86.cab" Source="..\ExtraFiles\DXRedist\x86\APR2007_xinput_x86.cab" />
+            </Component>
+          </Directory>
+          <Directory Id="Documentation" Name="Documentation">
+            <Component Id="Documentation" DiskId="1" Guid="7E3EBF58-8F53-4101-814F-A4B6A18DC05F">
+              <File Id="SlimDX.chm" Name="SlimDX.chm" Source="..\..\publish\Documentation\SlimDX.chm" />
+            </Component>
+          </Directory>
+          <Directory Id="Samples" Name="Samples">
+            <Component Id="SamplesSln" DiskId="1" Guid="8d5eb917-5fe3-41d5-be2e-c42dc6c2e82b">
+              <CreateFolder Directory="Samples">
+                <Permission User="Everyone" GenericRead="yes" GenericWrite="yes" GenericExecute="yes" />
+              </CreateFolder>
+              <File Id="Samples_Samples.2005.sln" Name="Samples.2005.sln" Source="..\..\publish\Samples\Samples.2005.sln" />
+              <File Id="Samples_Samples.sln" Name="Samples.sln" Source="..\..\publish\Samples\Samples.sln" />
+              <File Id="Samples_Samples_Express.2005.sln" Name="Samples_Express.2005.sln" Source="..\..\publish\Samples\Samples_Express.2005.sln" />
+              <File Id="Samples_Samples_Express.sln" Name="Samples_Express.sln" Source="..\..\publish\Samples\Samples_Express.sln" />
+            </Component>
+            <Directory Id="Samples_Direct2D" Name="Direct2D">
+              <Directory Id="Samples_Direct2D_RenderDemo" Name="RenderDemo">
+                <Component Id="Samples_Direct2D_RenderDemo" DiskId="1" Guid="620952b9-d063-46b8-89dd-9fa44f4e8346">
+                  <File Id="Samples_Direct2D_RenderDemoFlickerFreeForm.cs" Name="FlickerFreeForm.cs" Source="..\..\publish\Samples\Direct2D\RenderDemo\FlickerFreeForm.cs" />
+                  <File Id="Samples_Direct2D_RenderDemoProgram.cs" Name="Program.cs" Source="..\..\publish\Samples\Direct2D\RenderDemo\Program.cs" />
+                  <File Id="Samples_Direct2D_RenderDemoRenderDemo.2005.csproj" Name="RenderDemo.2005.csproj" Source="..\..\publish\Samples\Direct2D\RenderDemo\RenderDemo.2005.csproj" />
+                  <File Id="Samples_Direct2D_RenderDemoRenderDemo.csproj" Name="RenderDemo.csproj" Source="..\..\publish\Samples\Direct2D\RenderDemo\RenderDemo.csproj" />
+                  <File Id="Samples_Direct2D_RenderDemoRenderDemo.exe" Name="RenderDemo.exe" Source="..\..\publish\Samples\Direct2D\RenderDemo\RenderDemo.exe" />
+                  <File Id="Samples_Direct2D_RenderDemoSlimDX.Windows7.dll" Name="SlimDX.Windows7.dll" Source="..\..\publish\Samples\Direct2D\RenderDemo\SlimDX.Windows7.dll" />
+                </Component>
+                <Directory Id="Samples_Direct2D_RenderDemo_Properties" Name="Properties">
+                  <Component Id="Samples_Direct2D_RenderDemo_Properties" DiskId="1" Guid="cf25c6a2-588c-40cc-986d-8446c370db49">
+                    <File Id="Samples_Direct2D_RenderDemo_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\Direct2D\RenderDemo\Properties\AssemblyInfo.cs" />
+                    <File Id="Samples_Direct2D_RenderDemo_PropertiesResources.Designer.cs" Name="Resources.Designer.cs" Source="..\..\publish\Samples\Direct2D\RenderDemo\Properties\Resources.Designer.cs" />
+                    <File Id="Samples_Direct2D_RenderDemo_PropertiesResources.resx" Name="Resources.resx" Source="..\..\publish\Samples\Direct2D\RenderDemo\Properties\Resources.resx" />
+                    <File Id="Samples_Direct2D_RenderDemo_PropertiesSettings.Designer.cs" Name="Settings.Designer.cs" Source="..\..\publish\Samples\Direct2D\RenderDemo\Properties\Settings.Designer.cs" />
+                    <File Id="Samples_Direct2D_RenderDemo_PropertiesSettings.settings" Name="Settings.settings" Source="..\..\publish\Samples\Direct2D\RenderDemo\Properties\Settings.settings" />
+                  </Component>
+                </Directory>
+              </Directory>
+            </Directory>
+            <Directory Id="Samples_Direct3D10" Name="Direct3D10">
+              <Directory Id="Samples_Direct3D10_EmptyProject10" Name="EmptyProject10">
+                <Component Id="Samples_Direct3D10_EmptyProject10" DiskId="1" Guid="cd6a2093-fe13-4c57-9f6f-80c74fa33786">
+                  <File Id="Samples_Direct3D10_EmptyProject10EmptyProject.cs" Name="EmptyProject.cs" Source="..\..\publish\Samples\Direct3D10\EmptyProject10\EmptyProject.cs" />
+                  <File Id="Samples_Direct3D10_EmptyProject10EmptyProject10.2005.csproj" Name="EmptyProject10.2005.csproj" Source="..\..\publish\Samples\Direct3D10\EmptyProject10\EmptyProject10.2005.csproj" />
+                  <File Id="Samples_Direct3D10_EmptyProject10EmptyProject10.csproj" Name="EmptyProject10.csproj" Source="..\..\publish\Samples\Direct3D10\EmptyProject10\EmptyProject10.csproj" />
+                  <File Id="Samples_Direct3D10_EmptyProject10Program.cs" Name="Program.cs" Source="..\..\publish\Samples\Direct3D10\EmptyProject10\Program.cs" />
+                  <File Id="Samples_Direct3D10_EmptyProject10EmptyProject10.exe" Name="EmptyProject10.exe" Source="..\..\publish\Samples\Direct3D10\EmptyProject10\EmptyProject10.exe" />
+                  <File Id="Samples_Direct3D10_EmptyProject10SampleFramework.dll" Name="SampleFramework.dll" Source="..\..\publish\Samples\Direct3D10\EmptyProject10\SampleFramework.dll" />
+                </Component>
+                <Directory Id="Samples_Direct3D10_EmptyProject10_Properties" Name="Properties">
+                  <Component Id="Samples_Direct3D10_EmptyProject10_Properties" DiskId="1" Guid="b3d7e7bf-2ae0-445e-befe-fb12450f2f84">
+                    <File Id="Samples_Direct3D10_EmptyProject10_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\Direct3D10\EmptyProject10\Properties\AssemblyInfo.cs" />
+                    <File Id="Samples_Direct3D10_EmptyProject10_PropertiesResources.Designer.cs" Name="Resources.Designer.cs" Source="..\..\publish\Samples\Direct3D10\EmptyProject10\Properties\Resources.Designer.cs" />
+                    <File Id="Samples_Direct3D10_EmptyProject10_PropertiesResources.resx" Name="Resources.resx" Source="..\..\publish\Samples\Direct3D10\EmptyProject10\Properties\Resources.resx" />
+                    <File Id="Samples_Direct3D10_EmptyProject10_PropertiesSettings.Designer.cs" Name="Settings.Designer.cs" Source="..\..\publish\Samples\Direct3D10\EmptyProject10\Properties\Settings.Designer.cs" />
+                    <File Id="Samples_Direct3D10_EmptyProject10_PropertiesSettings.settings" Name="Settings.settings" Source="..\..\publish\Samples\Direct3D10\EmptyProject10\Properties\Settings.settings" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="Samples_Direct3D10_MiniTri10" Name="MiniTri10">
+                <Component Id="Samples_Direct3D10_MiniTri10" DiskId="1" Guid="20d04c86-d99a-485e-9f43-a1b04a3d698b">
+                  <File Id="Samples_Direct3D10_MiniTri10MiniTri.fx" Name="MiniTri.fx" Source="..\..\publish\Samples\Direct3D10\MiniTri10\MiniTri.fx" />
+                  <File Id="Samples_Direct3D10_MiniTri10MiniTri10.2005.csproj" Name="MiniTri10.2005.csproj" Source="..\..\publish\Samples\Direct3D10\MiniTri10\MiniTri10.2005.csproj" />
+                  <File Id="Samples_Direct3D10_MiniTri10MiniTri10.csproj" Name="MiniTri10.csproj" Source="..\..\publish\Samples\Direct3D10\MiniTri10\MiniTri10.csproj" />
+                  <File Id="Samples_Direct3D10_MiniTri10Program.cs" Name="Program.cs" Source="..\..\publish\Samples\Direct3D10\MiniTri10\Program.cs" />
+                  <File Id="Samples_Direct3D10_MiniTri10MiniTri10.exe" Name="MiniTri10.exe" Source="..\..\publish\Samples\Direct3D10\MiniTri10\MiniTri10.exe" />
+                </Component>
+                <Directory Id="Samples_Direct3D10_MiniTri10_Properties" Name="Properties">
+                  <Component Id="Samples_Direct3D10_MiniTri10_Properties" DiskId="1" Guid="9465ac5a-aa91-42ae-8ae2-ac54f6376585">
+                    <File Id="Samples_Direct3D10_MiniTri10_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\Direct3D10\MiniTri10\Properties\AssemblyInfo.cs" />
+                    <File Id="Samples_Direct3D10_MiniTri10_PropertiesResources.Designer.cs" Name="Resources.Designer.cs" Source="..\..\publish\Samples\Direct3D10\MiniTri10\Properties\Resources.Designer.cs" />
+                    <File Id="Samples_Direct3D10_MiniTri10_PropertiesResources.resx" Name="Resources.resx" Source="..\..\publish\Samples\Direct3D10\MiniTri10\Properties\Resources.resx" />
+                    <File Id="Samples_Direct3D10_MiniTri10_PropertiesSettings.Designer.cs" Name="Settings.Designer.cs" Source="..\..\publish\Samples\Direct3D10\MiniTri10\Properties\Settings.Designer.cs" />
+                    <File Id="Samples_Direct3D10_MiniTri10_PropertiesSettings.settings" Name="Settings.settings" Source="..\..\publish\Samples\Direct3D10\MiniTri10\Properties\Settings.settings" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="Samples_Direct3D10_SimpleTriangle10" Name="SimpleTriangle10">
+                <Component Id="Samples_Direct3D10_SimpleTriangle10" DiskId="1" Guid="b1b35eaa-f838-4d17-9936-53fa23a8e199">
+                  <File Id="Samples_Direct3D10_SimpleTriangle10Program.cs" Name="Program.cs" Source="..\..\publish\Samples\Direct3D10\SimpleTriangle10\Program.cs" />
+                  <File Id="Samples_Direct3D10_SimpleTriangle10SimpleTriangle.fx" Name="SimpleTriangle.fx" Source="..\..\publish\Samples\Direct3D10\SimpleTriangle10\SimpleTriangle.fx" />
+                  <File Id="Samples_Direct3D10_SimpleTriangle10SimpleTriangle10.2005.csproj" Name="SimpleTriangle10.2005.csproj" Source="..\..\publish\Samples\Direct3D10\SimpleTriangle10\SimpleTriangle10.2005.csproj" />
+                  <File Id="Samples_Direct3D10_SimpleTriangle10SimpleTriangle10.csproj" Name="SimpleTriangle10.csproj" Source="..\..\publish\Samples\Direct3D10\SimpleTriangle10\SimpleTriangle10.csproj" />
+                  <File Id="Samples_Direct3D10_SimpleTriangle10SimpleTriangleSample.cs" Name="SimpleTriangleSample.cs" Source="..\..\publish\Samples\Direct3D10\SimpleTriangle10\SimpleTriangleSample.cs" />
+                  <File Id="Samples_Direct3D10_SimpleTriangle10SimpleTriangle10.exe" Name="SimpleTriangle10.exe" Source="..\..\publish\Samples\Direct3D10\SimpleTriangle10\SimpleTriangle10.exe" />
+                  <File Id="Samples_Direct3D10_SimpleTriangle10SampleFramework.dll" Name="SampleFramework.dll" Source="..\..\publish\Samples\Direct3D10\SimpleTriangle10\SampleFramework.dll" />
+                </Component>
+                <Directory Id="Samples_Direct3D10_SimpleTriangle10_Properties" Name="Properties">
+                  <Component Id="Samples_Direct3D10_SimpleTriangle10_Properties" DiskId="1" Guid="6d4d23b7-0bba-4571-a725-b622ff429b27">
+                    <File Id="Samples_Direct3D10_SimpleTriangle10_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\Direct3D10\SimpleTriangle10\Properties\AssemblyInfo.cs" />
+                    <File Id="Samples_Direct3D10_SimpleTriangle10_PropertiesResources.Designer.cs" Name="Resources.Designer.cs" Source="..\..\publish\Samples\Direct3D10\SimpleTriangle10\Properties\Resources.Designer.cs" />
+                    <File Id="Samples_Direct3D10_SimpleTriangle10_PropertiesResources.resx" Name="Resources.resx" Source="..\..\publish\Samples\Direct3D10\SimpleTriangle10\Properties\Resources.resx" />
+                    <File Id="Samples_Direct3D10_SimpleTriangle10_PropertiesSettings.Designer.cs" Name="Settings.Designer.cs" Source="..\..\publish\Samples\Direct3D10\SimpleTriangle10\Properties\Settings.Designer.cs" />
+                    <File Id="Samples_Direct3D10_SimpleTriangle10_PropertiesSettings.settings" Name="Settings.settings" Source="..\..\publish\Samples\Direct3D10\SimpleTriangle10\Properties\Settings.settings" />
+                  </Component>
+                </Directory>
+              </Directory>
+            </Directory>
+            <Directory Id="Samples_Direct3D9" Name="Direct3D9">
+              <Directory Id="Samples_Direct3D9_EmptyProject" Name="EmptyProject">
+                <Component Id="Samples_Direct3D9_EmptyProject" DiskId="1" Guid="bfe3986a-da4a-4629-8b82-abe3507e67ee">
+                  <File Id="Samples_Direct3D9_EmptyProjectEmptyProject.2005.csproj" Name="EmptyProject.2005.csproj" Source="..\..\publish\Samples\Direct3D9\EmptyProject\EmptyProject.2005.csproj" />
+                  <File Id="Samples_Direct3D9_EmptyProjectEmptyProject.cs" Name="EmptyProject.cs" Source="..\..\publish\Samples\Direct3D9\EmptyProject\EmptyProject.cs" />
+                  <File Id="Samples_Direct3D9_EmptyProjectEmptyProject.csproj" Name="EmptyProject.csproj" Source="..\..\publish\Samples\Direct3D9\EmptyProject\EmptyProject.csproj" />
+                  <File Id="Samples_Direct3D9_EmptyProjectEmptyProject.exe" Name="EmptyProject.exe" Source="..\..\publish\Samples\Direct3D9\EmptyProject\EmptyProject.exe" />
+                  <File Id="Samples_Direct3D9_EmptyProjectProgram.cs" Name="Program.cs" Source="..\..\publish\Samples\Direct3D9\EmptyProject\Program.cs" />
+                  <File Id="Samples_Direct3D9_EmptyProjectSampleFramework.dll" Name="SampleFramework.dll" Source="..\..\publish\Samples\Direct3D9\EmptyProject\SampleFramework.dll" />
+                </Component>
+                <Directory Id="Samples_Direct3D9_EmptyProject_Properties" Name="Properties">
+                  <Component Id="Samples_Direct3D9_EmptyProject_Properties" DiskId="1" Guid="a7d5997b-cca8-477d-b96b-84f5e3d9789f">
+                    <File Id="Samples_Direct3D9_EmptyProject_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\Direct3D9\EmptyProject\Properties\AssemblyInfo.cs" />
+                    <File Id="Samples_Direct3D9_EmptyProject_PropertiesResources.Designer.cs" Name="Resources.Designer.cs" Source="..\..\publish\Samples\Direct3D9\EmptyProject\Properties\Resources.Designer.cs" />
+                    <File Id="Samples_Direct3D9_EmptyProject_PropertiesResources.resx" Name="Resources.resx" Source="..\..\publish\Samples\Direct3D9\EmptyProject\Properties\Resources.resx" />
+                    <File Id="Samples_Direct3D9_EmptyProject_PropertiesSettings.Designer.cs" Name="Settings.Designer.cs" Source="..\..\publish\Samples\Direct3D9\EmptyProject\Properties\Settings.Designer.cs" />
+                    <File Id="Samples_Direct3D9_EmptyProject_PropertiesSettings.settings" Name="Settings.settings" Source="..\..\publish\Samples\Direct3D9\EmptyProject\Properties\Settings.settings" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="Samples_Direct3D9_MiniTri" Name="MiniTri">
+                <Component Id="Samples_Direct3D9_MiniTri" DiskId="1" Guid="c9a3539c-58ae-40a1-803e-6cf933515a3a">
+                  <File Id="Samples_Direct3D9_MiniTriMiniTri.2005.csproj" Name="MiniTri.2005.csproj" Source="..\..\publish\Samples\Direct3D9\MiniTri\MiniTri.2005.csproj" />
+                  <File Id="Samples_Direct3D9_MiniTriMiniTri.csproj" Name="MiniTri.csproj" Source="..\..\publish\Samples\Direct3D9\MiniTri\MiniTri.csproj" />
+                  <File Id="Samples_Direct3D9_MiniTriProgram.cs" Name="Program.cs" Source="..\..\publish\Samples\Direct3D9\MiniTri\Program.cs" />
+                  <File Id="Samples_Direct3D9_MiniTriMiniTri.exe" Name="MiniTri.exe" Source="..\..\publish\Samples\Direct3D9\MiniTri\MiniTri.exe" />
+                </Component>
+                <Directory Id="Samples_Direct3D9_MiniTri_Properties" Name="Properties">
+                  <Component Id="Samples_Direct3D9_MiniTri_Properties" DiskId="1" Guid="a98f4222-f161-44cf-ba6e-3a04ae86e058">
+                    <File Id="Samples_Direct3D9_MiniTri_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\Direct3D9\MiniTri\Properties\AssemblyInfo.cs" />
+                    <File Id="Samples_Direct3D9_MiniTri_PropertiesResources.Designer.cs" Name="Resources.Designer.cs" Source="..\..\publish\Samples\Direct3D9\MiniTri\Properties\Resources.Designer.cs" />
+                    <File Id="Samples_Direct3D9_MiniTri_PropertiesResources.resx" Name="Resources.resx" Source="..\..\publish\Samples\Direct3D9\MiniTri\Properties\Resources.resx" />
+                    <File Id="Samples_Direct3D9_MiniTri_PropertiesSettings.Designer.cs" Name="Settings.Designer.cs" Source="..\..\publish\Samples\Direct3D9\MiniTri\Properties\Settings.Designer.cs" />
+                    <File Id="Samples_Direct3D9_MiniTri_PropertiesSettings.settings" Name="Settings.settings" Source="..\..\publish\Samples\Direct3D9\MiniTri\Properties\Settings.settings" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="Samples_Direct3D9_Particles" Name="Particles">
+                <Component Id="Samples_Direct3D9_Particles" DiskId="1" Guid="30fcd2e9-8439-4784-9fe2-a46bfe0e6a7e">
+                  <File Id="Samples_Direct3D9_Particlesparticle.dds" Name="particle.dds" Source="..\..\publish\Samples\Direct3D9\Particles\particle.dds" />
+                  <File Id="Samples_Direct3D9_Particlesparticle.fx" Name="particle.fx" Source="..\..\publish\Samples\Direct3D9\Particles\particle.fx" />
+                  <File Id="Samples_Direct3D9_ParticlesParticles.2005.csproj" Name="Particles.2005.csproj" Source="..\..\publish\Samples\Direct3D9\Particles\Particles.2005.csproj" />
+                  <File Id="Samples_Direct3D9_ParticlesParticles.csproj" Name="Particles.csproj" Source="..\..\publish\Samples\Direct3D9\Particles\Particles.csproj" />
+                  <File Id="Samples_Direct3D9_ParticlesParticles.exe" Name="Particles.exe" Source="..\..\publish\Samples\Direct3D9\Particles\Particles.exe" />
+                  <File Id="Samples_Direct3D9_ParticlesParticleSample.cs" Name="ParticleSample.cs" Source="..\..\publish\Samples\Direct3D9\Particles\ParticleSample.cs" />
+                  <File Id="Samples_Direct3D9_ParticlesProgram.cs" Name="Program.cs" Source="..\..\publish\Samples\Direct3D9\Particles\Program.cs" />
+                  <File Id="Samples_Direct3D9_ParticlesSampleFramework.dll" Name="SampleFramework.dll" Source="..\..\publish\Samples\Direct3D9\Particles\SampleFramework.dll" />
+                </Component>
+                <Directory Id="Samples_Direct3D9_Particles_Properties" Name="Properties">
+                  <Component Id="Samples_Direct3D9_Particles_Properties" DiskId="1" Guid="155c2e00-fd42-4d40-a2df-95b685d1d895">
+                    <File Id="Samples_Direct3D9_Particles_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\Direct3D9\Particles\Properties\AssemblyInfo.cs" />
+                    <File Id="Samples_Direct3D9_Particles_PropertiesResources.Designer.cs" Name="Resources.Designer.cs" Source="..\..\publish\Samples\Direct3D9\Particles\Properties\Resources.Designer.cs" />
+                    <File Id="Samples_Direct3D9_Particles_PropertiesResources.resx" Name="Resources.resx" Source="..\..\publish\Samples\Direct3D9\Particles\Properties\Resources.resx" />
+                    <File Id="Samples_Direct3D9_Particles_PropertiesSettings.Designer.cs" Name="Settings.Designer.cs" Source="..\..\publish\Samples\Direct3D9\Particles\Properties\Settings.Designer.cs" />
+                    <File Id="Samples_Direct3D9_Particles_PropertiesSettings.settings" Name="Settings.settings" Source="..\..\publish\Samples\Direct3D9\Particles\Properties\Settings.settings" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="Samples_Direct3D9_SimpleLighting" Name="SimpleLighting">
+                <Component Id="Samples_Direct3D9_SimpleLighting" DiskId="1" Guid="b82b2b64-5293-407f-ae4b-61665dc81b2b">
+                  <File Id="Samples_Direct3D9_SimpleLightingProgram.cs" Name="Program.cs" Source="..\..\publish\Samples\Direct3D9\SimpleLighting\Program.cs" />
+                  <File Id="Samples_Direct3D9_SimpleLightingSampleFramework.dll" Name="SampleFramework.dll" Source="..\..\publish\Samples\Direct3D9\SimpleLighting\SampleFramework.dll" />
+                  <File Id="Samples_Direct3D9_SimpleLightingSimpleLighting.2005.csproj" Name="SimpleLighting.2005.csproj" Source="..\..\publish\Samples\Direct3D9\SimpleLighting\SimpleLighting.2005.csproj" />
+                  <File Id="Samples_Direct3D9_SimpleLightingSimpleLighting.cs" Name="SimpleLighting.cs" Source="..\..\publish\Samples\Direct3D9\SimpleLighting\SimpleLighting.cs" />
+                  <File Id="Samples_Direct3D9_SimpleLightingSimpleLighting.csproj" Name="SimpleLighting.csproj" Source="..\..\publish\Samples\Direct3D9\SimpleLighting\SimpleLighting.csproj" />
+                  <File Id="Samples_Direct3D9_SimpleLightingSimpleLighting.exe" Name="SimpleLighting.exe" Source="..\..\publish\Samples\Direct3D9\SimpleLighting\SimpleLighting.exe" />
+                </Component>
+                <Directory Id="Samples_Direct3D9_SimpleLighting_Properties" Name="Properties">
+                  <Component Id="Samples_Direct3D9_SimpleLighting_Properties" DiskId="1" Guid="959248b9-9538-4ed6-b6b6-3842ebb8f22f">
+                    <File Id="Samples_Direct3D9_SimpleLighting_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\Direct3D9\SimpleLighting\Properties\AssemblyInfo.cs" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="Samples_Direct3D9_SimpleTriangle" Name="SimpleTriangle">
+                <Component Id="Samples_Direct3D9_SimpleTriangle" DiskId="1" Guid="66bd8bec-8e15-48cb-b82f-07fed764203e">
+                  <File Id="Samples_Direct3D9_SimpleTriangleProgram.cs" Name="Program.cs" Source="..\..\publish\Samples\Direct3D9\SimpleTriangle\Program.cs" />
+                  <File Id="Samples_Direct3D9_SimpleTriangleSampleFramework.dll" Name="SampleFramework.dll" Source="..\..\publish\Samples\Direct3D9\SimpleTriangle\SampleFramework.dll" />
+                  <File Id="Samples_Direct3D9_SimpleTriangleSimpleTriangle.2005.csproj" Name="SimpleTriangle.2005.csproj" Source="..\..\publish\Samples\Direct3D9\SimpleTriangle\SimpleTriangle.2005.csproj" />
+                  <File Id="Samples_Direct3D9_SimpleTriangleSimpleTriangle.csproj" Name="SimpleTriangle.csproj" Source="..\..\publish\Samples\Direct3D9\SimpleTriangle\SimpleTriangle.csproj" />
+                  <File Id="Samples_Direct3D9_SimpleTriangleSimpleTriangle.exe" Name="SimpleTriangle.exe" Source="..\..\publish\Samples\Direct3D9\SimpleTriangle\SimpleTriangle.exe" />
+                  <File Id="Samples_Direct3D9_SimpleTriangleSimpleTriangleSample.cs" Name="SimpleTriangleSample.cs" Source="..\..\publish\Samples\Direct3D9\SimpleTriangle\SimpleTriangleSample.cs" />
+                </Component>
+                <Directory Id="Samples_Direct3D9_SimpleTriangle_Properties" Name="Properties">
+                  <Component Id="Samples_Direct3D9_SimpleTriangle_Properties" DiskId="1" Guid="b57aa8a9-3abb-4978-ac11-a3685df57116">
+                    <File Id="Samples_Direct3D9_SimpleTriangle_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\Direct3D9\SimpleTriangle\Properties\AssemblyInfo.cs" />
+                    <File Id="Samples_Direct3D9_SimpleTriangle_PropertiesResources.Designer.cs" Name="Resources.Designer.cs" Source="..\..\publish\Samples\Direct3D9\SimpleTriangle\Properties\Resources.Designer.cs" />
+                    <File Id="Samples_Direct3D9_SimpleTriangle_PropertiesResources.resx" Name="Resources.resx" Source="..\..\publish\Samples\Direct3D9\SimpleTriangle\Properties\Resources.resx" />
+                    <File Id="Samples_Direct3D9_SimpleTriangle_PropertiesSettings.Designer.cs" Name="Settings.Designer.cs" Source="..\..\publish\Samples\Direct3D9\SimpleTriangle\Properties\Settings.Designer.cs" />
+                    <File Id="Samples_Direct3D9_SimpleTriangle_PropertiesSettings.settings" Name="Settings.settings" Source="..\..\publish\Samples\Direct3D9\SimpleTriangle\Properties\Settings.settings" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="Samples_Direct3D9_SkinnedMesh" Name="SkinnedMesh">
+                <Component Id="Samples_Direct3D9_SkinnedMesh" DiskId="1" Guid="248fea57-d49d-4674-96ef-82261bad6e4d">
+                  <File Id="Samples_Direct3D9_SkinnedMeshCustomAllocateHierarchy.cs" Name="CustomAllocateHierarchy.cs" Source="..\..\publish\Samples\Direct3D9\SkinnedMesh\CustomAllocateHierarchy.cs" />
+                  <File Id="Samples_Direct3D9_SkinnedMeshProgram.cs" Name="Program.cs" Source="..\..\publish\Samples\Direct3D9\SkinnedMesh\Program.cs" />
+                  <File Id="Samples_Direct3D9_SkinnedMeshSampleFramework.dll" Name="SampleFramework.dll" Source="..\..\publish\Samples\Direct3D9\SkinnedMesh\SampleFramework.dll" />
+                  <File Id="Samples_Direct3D9_SkinnedMeshSkinnedMesh.2005.csproj" Name="SkinnedMesh.2005.csproj" Source="..\..\publish\Samples\Direct3D9\SkinnedMesh\SkinnedMesh.2005.csproj" />
+                  <File Id="Samples_Direct3D9_SkinnedMeshSkinnedMesh.cs" Name="SkinnedMesh.cs" Source="..\..\publish\Samples\Direct3D9\SkinnedMesh\SkinnedMesh.cs" />
+                  <File Id="Samples_Direct3D9_SkinnedMeshSkinnedMesh.csproj" Name="SkinnedMesh.csproj" Source="..\..\publish\Samples\Direct3D9\SkinnedMesh\SkinnedMesh.csproj" />
+                  <File Id="Samples_Direct3D9_SkinnedMeshSkinnedMesh.exe" Name="SkinnedMesh.exe" Source="..\..\publish\Samples\Direct3D9\SkinnedMesh\SkinnedMesh.exe" />
+                  <File Id="Samples_Direct3D9_SkinnedMeshSkinnedMesh.fx" Name="SkinnedMesh.fx" Source="..\..\publish\Samples\Direct3D9\SkinnedMesh\SkinnedMesh.fx" />
+                  <File Id="Samples_Direct3D9_SkinnedMeshtiny.x" Name="tiny.x" Source="..\..\publish\Samples\Direct3D9\SkinnedMesh\tiny.x" />
+                  <File Id="Samples_Direct3D9_SkinnedMeshTiny_skin.dds" Name="Tiny_skin.dds" Source="..\..\publish\Samples\Direct3D9\SkinnedMesh\Tiny_skin.dds" />
+                </Component>
+                <Directory Id="Samples_Direct3D9_SkinnedMesh_Properties" Name="Properties">
+                  <Component Id="Samples_Direct3D9_SkinnedMesh_Properties" DiskId="1" Guid="67acbfd0-a1df-4143-8d0b-9d48f1564bd7">
+                    <File Id="Samples_Direct3D9_SkinnedMesh_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\Direct3D9\SkinnedMesh\Properties\AssemblyInfo.cs" />
+                    <File Id="Samples_Direct3D9_SkinnedMesh_PropertiesResources.Designer.cs" Name="Resources.Designer.cs" Source="..\..\publish\Samples\Direct3D9\SkinnedMesh\Properties\Resources.Designer.cs" />
+                    <File Id="Samples_Direct3D9_SkinnedMesh_PropertiesResources.resx" Name="Resources.resx" Source="..\..\publish\Samples\Direct3D9\SkinnedMesh\Properties\Resources.resx" />
+                    <File Id="Samples_Direct3D9_SkinnedMesh_PropertiesSettings.Designer.cs" Name="Settings.Designer.cs" Source="..\..\publish\Samples\Direct3D9\SkinnedMesh\Properties\Settings.Designer.cs" />
+                    <File Id="Samples_Direct3D9_SkinnedMesh_PropertiesSettings.settings" Name="Settings.settings" Source="..\..\publish\Samples\Direct3D9\SkinnedMesh\Properties\Settings.settings" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="Samples_Direct3D9_Water" Name="Water">
+                <Component Id="Samples_Direct3D9_Water" DiskId="1" Guid="08cea69b-9c66-4193-aa26-d225b300107b">
+                  <File Id="Samples_Direct3D9_WaterEntity.cs" Name="Entity.cs" Source="..\..\publish\Samples\Direct3D9\Water\Entity.cs" />
+                  <File Id="Samples_Direct3D9_WaterProgram.cs" Name="Program.cs" Source="..\..\publish\Samples\Direct3D9\Water\Program.cs" />
+                  <File Id="Samples_Direct3D9_WaterRoomEntity.cs" Name="RoomEntity.cs" Source="..\..\publish\Samples\Direct3D9\Water\RoomEntity.cs" />
+                  <File Id="Samples_Direct3D9_WaterSampleFramework.dll" Name="SampleFramework.dll" Source="..\..\publish\Samples\Direct3D9\Water\SampleFramework.dll" />
+                  <File Id="Samples_Direct3D9_WaterWater.2005.csproj" Name="Water.2005.csproj" Source="..\..\publish\Samples\Direct3D9\Water\Water.2005.csproj" />
+                  <File Id="Samples_Direct3D9_WaterWater.csproj" Name="Water.csproj" Source="..\..\publish\Samples\Direct3D9\Water\Water.csproj" />
+                  <File Id="Samples_Direct3D9_WaterWater.exe" Name="Water.exe" Source="..\..\publish\Samples\Direct3D9\Water\Water.exe" />
+                  <File Id="Samples_Direct3D9_WaterWaterEntity.cs" Name="WaterEntity.cs" Source="..\..\publish\Samples\Direct3D9\Water\WaterEntity.cs" />
+                  <File Id="Samples_Direct3D9_WaterWaterSample.cs" Name="WaterSample.cs" Source="..\..\publish\Samples\Direct3D9\Water\WaterSample.cs" />
+                </Component>
+                <Directory Id="Samples_Direct3D9_Water_Properties" Name="Properties">
+                  <Component Id="Samples_Direct3D9_Water_Properties" DiskId="1" Guid="823e1660-b2d9-4323-9a28-ff779c2ed686">
+                    <File Id="Samples_Direct3D9_Water_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\Direct3D9\Water\Properties\AssemblyInfo.cs" />
+                    <File Id="Samples_Direct3D9_Water_PropertiesResources.Designer.cs" Name="Resources.Designer.cs" Source="..\..\publish\Samples\Direct3D9\Water\Properties\Resources.Designer.cs" />
+                    <File Id="Samples_Direct3D9_Water_PropertiesResources.resx" Name="Resources.resx" Source="..\..\publish\Samples\Direct3D9\Water\Properties\Resources.resx" />
+                    <File Id="Samples_Direct3D9_Water_PropertiesSettings.Designer.cs" Name="Settings.Designer.cs" Source="..\..\publish\Samples\Direct3D9\Water\Properties\Settings.Designer.cs" />
+                    <File Id="Samples_Direct3D9_Water_PropertiesSettings.settings" Name="Settings.settings" Source="..\..\publish\Samples\Direct3D9\Water\Properties\Settings.settings" />
+                  </Component>
+                </Directory>
+                <Directory Id="Samples_Direct3D9_Water_Resources" Name="Resources">
+                  <Directory Id="Samples_Direct3D9_Water_Resources_Models" Name="Models">
+                    <Component Id="Samples_Direct3D9_Water_Resources_Models" DiskId="1" Guid="7d4e8e9a-c7da-4067-878e-49b7b83223f4">
+                      <File Id="Samples_Direct3D9_Water_Resources_Modelsfountain.x" Name="fountain.x" Source="..\..\publish\Samples\Direct3D9\Water\Resources\Models\fountain.x" />
+                      <File Id="Samples_Direct3D9_Water_Resources_Modelsroom.x" Name="room.x" Source="..\..\publish\Samples\Direct3D9\Water\Resources\Models\room.x" />
+                      <File Id="Samples_Direct3D9_Water_Resources_Modelswater.x" Name="water.x" Source="..\..\publish\Samples\Direct3D9\Water\Resources\Models\water.x" />
+                    </Component>
+                  </Directory>
+                  <Directory Id="Samples_Direct3D9_Water_Resources_Shaders" Name="Shaders">
+                    <Component Id="Samples_Direct3D9_Water_Resources_Shaders" DiskId="1" Guid="e16b0ac4-1a48-4641-9382-3973c33a54ab">
+                      <File Id="Samples_Direct3D9_Water_Resources_Shadersbump.fx" Name="bump.fx" Source="..\..\publish\Samples\Direct3D9\Water\Resources\Shaders\bump.fx" />
+                      <File Id="Samples_Direct3D9_Water_Resources_Shaderswater.fx" Name="water.fx" Source="..\..\publish\Samples\Direct3D9\Water\Resources\Shaders\water.fx" />
+                    </Component>
+                  </Directory>
+                  <Directory Id="Samples_Direct3D9_Water_Resources_Textures" Name="Textures">
+                    <Component Id="Samples_Direct3D9_Water_Resources_Textures" DiskId="1" Guid="e1f01b06-e1c3-477e-ab26-73755599a95a">
+                      <File Id="Samples_Direct3D9_Water_Resources_Texturesbricks.dds" Name="bricks.dds" Source="..\..\publish\Samples\Direct3D9\Water\Resources\Textures\bricks.dds" />
+                      <File Id="Samples_Direct3D9_Water_Resources_Texturesrockwall.dds" Name="rockwall.dds" Source="..\..\publish\Samples\Direct3D9\Water\Resources\Textures\rockwall.dds" />
+                      <File Id="Samples_Direct3D9_Water_Resources_Texturesrockwall_normal.dds" Name="rockwall_normal.dds" Source="..\..\publish\Samples\Direct3D9\Water\Resources\Textures\rockwall_normal.dds" />
+                      <File Id="Samples_Direct3D9_Water_Resources_Textureswater.dds" Name="water.dds" Source="..\..\publish\Samples\Direct3D9\Water\Resources\Textures\water.dds" />
+                    </Component>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+            <Directory Id="Samples_DirectInput" Name="DirectInput">
+              <Directory Id="Samples_DirectInput_Joystick" Name="Joystick">
+                <Component Id="Samples_DirectInput_Joystick" DiskId="1" Guid="08d47c28-6172-4487-827a-0cc7f65d8a40">
+                  <File Id="Samples_DirectInput_JoystickJoystick.2005.csproj" Name="Joystick.2005.csproj" Source="..\..\publish\Samples\DirectInput\Joystick\Joystick.2005.csproj" />
+                  <File Id="Samples_DirectInput_JoystickJoystick.csproj" Name="Joystick.csproj" Source="..\..\publish\Samples\DirectInput\Joystick\Joystick.csproj" />
+                  <File Id="Samples_DirectInput_JoystickJoystick.exe" Name="Joystick.exe" Source="..\..\publish\Samples\DirectInput\Joystick\Joystick.exe" />
+                  <File Id="Samples_DirectInput_JoystickMainForm.cs" Name="MainForm.cs" Source="..\..\publish\Samples\DirectInput\Joystick\MainForm.cs" />
+                  <File Id="Samples_DirectInput_JoystickMainForm.Designer.cs" Name="MainForm.Designer.cs" Source="..\..\publish\Samples\DirectInput\Joystick\MainForm.Designer.cs" />
+                  <File Id="Samples_DirectInput_JoystickMainForm.resx" Name="MainForm.resx" Source="..\..\publish\Samples\DirectInput\Joystick\MainForm.resx" />
+                  <File Id="Samples_DirectInput_JoystickProgram.cs" Name="Program.cs" Source="..\..\publish\Samples\DirectInput\Joystick\Program.cs" />
+                </Component>
+                <Directory Id="Samples_DirectInput_Joystick_Properties" Name="Properties">
+                  <Component Id="Samples_DirectInput_Joystick_Properties" DiskId="1" Guid="4477163c-329f-42d4-b899-4e12fe7594ca">
+                    <File Id="Samples_DirectInput_Joystick_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\DirectInput\Joystick\Properties\AssemblyInfo.cs" />
+                    <File Id="Samples_DirectInput_Joystick_PropertiesResources.Designer.cs" Name="Resources.Designer.cs" Source="..\..\publish\Samples\DirectInput\Joystick\Properties\Resources.Designer.cs" />
+                    <File Id="Samples_DirectInput_Joystick_PropertiesResources.resx" Name="Resources.resx" Source="..\..\publish\Samples\DirectInput\Joystick\Properties\Resources.resx" />
+                    <File Id="Samples_DirectInput_Joystick_PropertiesSettings.Designer.cs" Name="Settings.Designer.cs" Source="..\..\publish\Samples\DirectInput\Joystick\Properties\Settings.Designer.cs" />
+                    <File Id="Samples_DirectInput_Joystick_PropertiesSettings.settings" Name="Settings.settings" Source="..\..\publish\Samples\DirectInput\Joystick\Properties\Settings.settings" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="Samples_DirectInput_Keyboard" Name="Keyboard">
+                <Component Id="Samples_DirectInput_Keyboard" DiskId="1" Guid="f28a43f6-e29f-4fa6-b874-b18822caab2b">
+                  <File Id="Samples_DirectInput_KeyboardKeyboard.2005.csproj" Name="Keyboard.2005.csproj" Source="..\..\publish\Samples\DirectInput\Keyboard\Keyboard.2005.csproj" />
+                  <File Id="Samples_DirectInput_KeyboardKeyboard.csproj" Name="Keyboard.csproj" Source="..\..\publish\Samples\DirectInput\Keyboard\Keyboard.csproj" />
+                  <File Id="Samples_DirectInput_KeyboardKeyboard.exe" Name="Keyboard.exe" Source="..\..\publish\Samples\DirectInput\Keyboard\Keyboard.exe" />
+                  <File Id="Samples_DirectInput_KeyboardMainForm.cs" Name="MainForm.cs" Source="..\..\publish\Samples\DirectInput\Keyboard\MainForm.cs" />
+                  <File Id="Samples_DirectInput_KeyboardMainForm.Designer.cs" Name="MainForm.Designer.cs" Source="..\..\publish\Samples\DirectInput\Keyboard\MainForm.Designer.cs" />
+                  <File Id="Samples_DirectInput_KeyboardMainForm.resx" Name="MainForm.resx" Source="..\..\publish\Samples\DirectInput\Keyboard\MainForm.resx" />
+                  <File Id="Samples_DirectInput_KeyboardProgram.cs" Name="Program.cs" Source="..\..\publish\Samples\DirectInput\Keyboard\Program.cs" />
+                </Component>
+                <Directory Id="Samples_DirectInput_Keyboard_Properties" Name="Properties">
+                  <Component Id="Samples_DirectInput_Keyboard_Properties" DiskId="1" Guid="d7102821-e6e8-4142-b866-7c52ad87589c">
+                    <File Id="Samples_DirectInput_Keyboard_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\DirectInput\Keyboard\Properties\AssemblyInfo.cs" />
+                    <File Id="Samples_DirectInput_Keyboard_PropertiesResources.Designer.cs" Name="Resources.Designer.cs" Source="..\..\publish\Samples\DirectInput\Keyboard\Properties\Resources.Designer.cs" />
+                    <File Id="Samples_DirectInput_Keyboard_PropertiesResources.resx" Name="Resources.resx" Source="..\..\publish\Samples\DirectInput\Keyboard\Properties\Resources.resx" />
+                    <File Id="Samples_DirectInput_Keyboard_PropertiesSettings.Designer.cs" Name="Settings.Designer.cs" Source="..\..\publish\Samples\DirectInput\Keyboard\Properties\Settings.Designer.cs" />
+                    <File Id="Samples_DirectInput_Keyboard_PropertiesSettings.settings" Name="Settings.settings" Source="..\..\publish\Samples\DirectInput\Keyboard\Properties\Settings.settings" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="Samples_DirectInput_Mouse" Name="Mouse">
+                <Component Id="Samples_DirectInput_Mouse" DiskId="1" Guid="547d93ef-d4c3-4c44-97cb-9e6755318eea">
+                  <File Id="Samples_DirectInput_MouseMainForm.cs" Name="MainForm.cs" Source="..\..\publish\Samples\DirectInput\Mouse\MainForm.cs" />
+                  <File Id="Samples_DirectInput_MouseMainForm.Designer.cs" Name="MainForm.Designer.cs" Source="..\..\publish\Samples\DirectInput\Mouse\MainForm.Designer.cs" />
+                  <File Id="Samples_DirectInput_MouseMainForm.resx" Name="MainForm.resx" Source="..\..\publish\Samples\DirectInput\Mouse\MainForm.resx" />
+                  <File Id="Samples_DirectInput_MouseMouse.2005.csproj" Name="Mouse.2005.csproj" Source="..\..\publish\Samples\DirectInput\Mouse\Mouse.2005.csproj" />
+                  <File Id="Samples_DirectInput_MouseMouse.csproj" Name="Mouse.csproj" Source="..\..\publish\Samples\DirectInput\Mouse\Mouse.csproj" />
+                  <File Id="Samples_DirectInput_MouseMouse.exe" Name="Mouse.exe" Source="..\..\publish\Samples\DirectInput\Mouse\Mouse.exe" />
+                  <File Id="Samples_DirectInput_MouseProgram.cs" Name="Program.cs" Source="..\..\publish\Samples\DirectInput\Mouse\Program.cs" />
+                </Component>
+                <Directory Id="Samples_DirectInput_Mouse_Properties" Name="Properties">
+                  <Component Id="Samples_DirectInput_Mouse_Properties" DiskId="1" Guid="624e048b-bc99-4047-aac8-3bb77ad039d8">
+                    <File Id="Samples_DirectInput_Mouse_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\DirectInput\Mouse\Properties\AssemblyInfo.cs" />
+                    <File Id="Samples_DirectInput_Mouse_PropertiesResources.Designer.cs" Name="Resources.Designer.cs" Source="..\..\publish\Samples\DirectInput\Mouse\Properties\Resources.Designer.cs" />
+                    <File Id="Samples_DirectInput_Mouse_PropertiesResources.resx" Name="Resources.resx" Source="..\..\publish\Samples\DirectInput\Mouse\Properties\Resources.resx" />
+                    <File Id="Samples_DirectInput_Mouse_PropertiesSettings.Designer.cs" Name="Settings.Designer.cs" Source="..\..\publish\Samples\DirectInput\Mouse\Properties\Settings.Designer.cs" />
+                    <File Id="Samples_DirectInput_Mouse_PropertiesSettings.settings" Name="Settings.settings" Source="..\..\publish\Samples\DirectInput\Mouse\Properties\Settings.settings" />
+                  </Component>
+                </Directory>
+              </Directory>
+            </Directory>
+            <Directory Id="Samples_DirectWrite" Name="DirectWrite">
+              <Directory Id="Samples_DirectWrite_MultiformattedText" Name="MultiformattedText">
+                <Component Id="Samples_DirectWrite_MultiformattedText" DiskId="1" Guid="28f343c1-93da-4667-8b6a-29551ae6b796">
+                  <File Id="Samples_DirectWrite_MultiformattedTextFlickerFreeForm.cs" Name="FlickerFreeForm.cs" Source="..\..\publish\Samples\DirectWrite\MultiformattedText\FlickerFreeForm.cs" />
+                  <File Id="Samples_DirectWrite_MultiformattedTextMultiformattedText.2005.csproj" Name="MultiformattedText.2005.csproj" Source="..\..\publish\Samples\DirectWrite\MultiformattedText\MultiformattedText.2005.csproj" />
+                  <File Id="Samples_DirectWrite_MultiformattedTextMultiformattedText.csproj" Name="MultiformattedText.csproj" Source="..\..\publish\Samples\DirectWrite\MultiformattedText\MultiformattedText.csproj" />
+                  <File Id="Samples_DirectWrite_MultiformattedTextMultiformattedText.exe" Name="MultiformattedText.exe" Source="..\..\publish\Samples\DirectWrite\MultiformattedText\MultiformattedText.exe" />
+                  <File Id="Samples_DirectWrite_MultiformattedTextProgram.cs" Name="Program.cs" Source="..\..\publish\Samples\DirectWrite\MultiformattedText\Program.cs" />
+                  <File Id="Samples_DirectWrite_MultiformattedTextSlimDX.Windows7.dll" Name="SlimDX.Windows7.dll" Source="..\..\publish\Samples\DirectWrite\MultiformattedText\SlimDX.Windows7.dll" />
+                </Component>
+                <Directory Id="Samples_DirectWrite_MultiformattedText_Properties" Name="Properties">
+                  <Component Id="Samples_DirectWrite_MultiformattedText_Properties" DiskId="1" Guid="22a2c0ea-127c-426d-bfeb-8d246f996dd0">
+                    <File Id="Samples_DirectWrite_MultiformattedText_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\DirectWrite\MultiformattedText\Properties\AssemblyInfo.cs" />
+                    <File Id="Samples_DirectWrite_MultiformattedText_PropertiesResources.Designer.cs" Name="Resources.Designer.cs" Source="..\..\publish\Samples\DirectWrite\MultiformattedText\Properties\Resources.Designer.cs" />
+                    <File Id="Samples_DirectWrite_MultiformattedText_PropertiesResources.resx" Name="Resources.resx" Source="..\..\publish\Samples\DirectWrite\MultiformattedText\Properties\Resources.resx" />
+                    <File Id="Samples_DirectWrite_MultiformattedText_PropertiesSettings.Designer.cs" Name="Settings.Designer.cs" Source="..\..\publish\Samples\DirectWrite\MultiformattedText\Properties\Settings.Designer.cs" />
+                    <File Id="Samples_DirectWrite_MultiformattedText_PropertiesSettings.settings" Name="Settings.settings" Source="..\..\publish\Samples\DirectWrite\MultiformattedText\Properties\Settings.settings" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="Samples_DirectWrite_SimpleText" Name="SimpleText">
+                <Component Id="Samples_DirectWrite_SimpleText" DiskId="1" Guid="2f58ebd4-0a84-4d41-851a-d4d75123bab8">
+                  <File Id="Samples_DirectWrite_SimpleTextFlickerFreeForm.cs" Name="FlickerFreeForm.cs" Source="..\..\publish\Samples\DirectWrite\SimpleText\FlickerFreeForm.cs" />
+                  <File Id="Samples_DirectWrite_SimpleTextProgram.cs" Name="Program.cs" Source="..\..\publish\Samples\DirectWrite\SimpleText\Program.cs" />
+                  <File Id="Samples_DirectWrite_SimpleTextSimpleText.2005.csproj" Name="SimpleText.2005.csproj" Source="..\..\publish\Samples\DirectWrite\SimpleText\SimpleText.2005.csproj" />
+                  <File Id="Samples_DirectWrite_SimpleTextSimpleText.csproj" Name="SimpleText.csproj" Source="..\..\publish\Samples\DirectWrite\SimpleText\SimpleText.csproj" />
+                  <File Id="Samples_DirectWrite_SimpleTextSimpleText.exe" Name="SimpleText.exe" Source="..\..\publish\Samples\DirectWrite\SimpleText\SimpleText.exe" />
+                  <File Id="Samples_DirectWrite_SimpleTextSlimDX.Windows7.dll" Name="SlimDX.Windows7.dll" Source="..\..\publish\Samples\DirectWrite\SimpleText\SlimDX.Windows7.dll" />
+                </Component>
+                <Directory Id="Samples_DirectWrite_SimpleText_Properties" Name="Properties">
+                  <Component Id="Samples_DirectWrite_SimpleText_Properties" DiskId="1" Guid="3191cf79-55b7-4372-8ece-62cfccb08096">
+                    <File Id="Samples_DirectWrite_SimpleText_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\DirectWrite\SimpleText\Properties\AssemblyInfo.cs" />
+                    <File Id="Samples_DirectWrite_SimpleText_PropertiesResources.Designer.cs" Name="Resources.Designer.cs" Source="..\..\publish\Samples\DirectWrite\SimpleText\Properties\Resources.Designer.cs" />
+                    <File Id="Samples_DirectWrite_SimpleText_PropertiesResources.resx" Name="Resources.resx" Source="..\..\publish\Samples\DirectWrite\SimpleText\Properties\Resources.resx" />
+                    <File Id="Samples_DirectWrite_SimpleText_PropertiesSettings.Designer.cs" Name="Settings.Designer.cs" Source="..\..\publish\Samples\DirectWrite\SimpleText\Properties\Settings.Designer.cs" />
+                    <File Id="Samples_DirectWrite_SimpleText_PropertiesSettings.settings" Name="Settings.settings" Source="..\..\publish\Samples\DirectWrite\SimpleText\Properties\Settings.settings" />
+                  </Component>
+                </Directory>
+              </Directory>
+            </Directory>
+            <Directory Id="Samples_Games" Name="Games">
+              <Directory Id="Samples_Games_Asteroids" Name="Asteroids">
+                <Component Id="Samples_Games_Asteroids" DiskId="1" Guid="330b9000-bb59-471c-a636-ce5fe09515f0">
+                  <File Id="Samples_Games_AsteroidsAsteroids.2005.csproj" Name="Asteroids.2005.csproj" Source="..\..\publish\Samples\Games\Asteroids\Asteroids.2005.csproj" />
+                  <File Id="Samples_Games_AsteroidsAsteroids.cs" Name="Asteroids.cs" Source="..\..\publish\Samples\Games\Asteroids\Asteroids.cs" />
+                  <File Id="Samples_Games_AsteroidsAsteroids.csproj" Name="Asteroids.csproj" Source="..\..\publish\Samples\Games\Asteroids\Asteroids.csproj" />
+                  <File Id="Samples_Games_AsteroidsAsteroids.exe" Name="Asteroids.exe" Source="..\..\publish\Samples\Games\Asteroids\Asteroids.exe" />
+                  <File Id="Samples_Games_AsteroidsHelpers.cs" Name="Helpers.cs" Source="..\..\publish\Samples\Games\Asteroids\Helpers.cs" />
+                  <File Id="Samples_Games_AsteroidsProgram.cs" Name="Program.cs" Source="..\..\publish\Samples\Games\Asteroids\Program.cs" />
+                  <File Id="Samples_Games_AsteroidsSampleFramework.dll" Name="SampleFramework.dll" Source="..\..\publish\Samples\Games\Asteroids\SampleFramework.dll" />
+                  <File Id="Samples_Games_AsteroidsToDo.txt" Name="ToDo.txt" Source="..\..\publish\Samples\Games\Asteroids\ToDo.txt" />
+                </Component>
+                <Directory Id="Samples_Games_Asteroids_Content" Name="Content">
+                  <Directory Id="Samples_Games_Asteroids_Content_Models" Name="Models">
+                    <Component Id="Samples_Games_Asteroids_Content_Models" DiskId="1" Guid="f675bab8-5b76-449c-ad53-6d7096d37510">
+                      <File Id="Samples_Games_Asteroids_Content_ModelsAlien.xml" Name="Alien.xml" Source="..\..\publish\Samples\Games\Asteroids\Content\Models\Alien.xml" />
+                      <File Id="Samples_Games_Asteroids_Content_ModelsAlienBullet.xml" Name="AlienBullet.xml" Source="..\..\publish\Samples\Games\Asteroids\Content\Models\AlienBullet.xml" />
+                      <File Id="Samples_Games_Asteroids_Content_ModelsHugeAsteroid.xml" Name="HugeAsteroid.xml" Source="..\..\publish\Samples\Games\Asteroids\Content\Models\HugeAsteroid.xml" />
+                      <File Id="Samples_Games_Asteroids_Content_ModelsLargeAsteroid1.xml" Name="LargeAsteroid1.xml" Source="..\..\publish\Samples\Games\Asteroids\Content\Models\LargeAsteroid1.xml" />
+                      <File Id="Samples_Games_Asteroids_Content_ModelsLargeAsteroid2.xml" Name="LargeAsteroid2.xml" Source="..\..\publish\Samples\Games\Asteroids\Content\Models\LargeAsteroid2.xml" />
+                      <File Id="Samples_Games_Asteroids_Content_ModelsMediumAsteroid1.xml" Name="MediumAsteroid1.xml" Source="..\..\publish\Samples\Games\Asteroids\Content\Models\MediumAsteroid1.xml" />
+                      <File Id="Samples_Games_Asteroids_Content_ModelsMediumAsteroid2.xml" Name="MediumAsteroid2.xml" Source="..\..\publish\Samples\Games\Asteroids\Content\Models\MediumAsteroid2.xml" />
+                      <File Id="Samples_Games_Asteroids_Content_ModelsPlayerBullet.xml" Name="PlayerBullet.xml" Source="..\..\publish\Samples\Games\Asteroids\Content\Models\PlayerBullet.xml" />
+                      <File Id="Samples_Games_Asteroids_Content_ModelsPlayerModel.xml" Name="PlayerModel.xml" Source="..\..\publish\Samples\Games\Asteroids\Content\Models\PlayerModel.xml" />
+                      <File Id="Samples_Games_Asteroids_Content_ModelsSmallAsteroid1.xml" Name="SmallAsteroid1.xml" Source="..\..\publish\Samples\Games\Asteroids\Content\Models\SmallAsteroid1.xml" />
+                      <File Id="Samples_Games_Asteroids_Content_ModelsSmallAsteroid2.xml" Name="SmallAsteroid2.xml" Source="..\..\publish\Samples\Games\Asteroids\Content\Models\SmallAsteroid2.xml" />
+                    </Component>
+                  </Directory>
+                  <Directory Id="Samples_Games_Asteroids_Content_Music" Name="Music">
+                    <Component Id="Samples_Games_Asteroids_Content_Music" DiskId="1" Guid="37935d34-c825-44be-9d83-88782da7dabf">
+                      <File Id="Samples_Games_Asteroids_Content_Musictrack1.mp3" Name="track1.mp3" Source="..\..\publish\Samples\Games\Asteroids\Content\Music\track1.mp3" />
+                      <File Id="Samples_Games_Asteroids_Content_Musictrack2.mp3" Name="track2.mp3" Source="..\..\publish\Samples\Games\Asteroids\Content\Music\track2.mp3" />
+                      <File Id="Samples_Games_Asteroids_Content_Musictrack3.mp3" Name="track3.mp3" Source="..\..\publish\Samples\Games\Asteroids\Content\Music\track3.mp3" />
+                    </Component>
+                  </Directory>
+                  <Directory Id="Samples_Games_Asteroids_Content_Shaders" Name="Shaders">
+                    <Component Id="Samples_Games_Asteroids_Content_Shaders" DiskId="1" Guid="0279bb1a-b4a6-4a74-bd73-3a4f9fc1bfcc">
+                      <File Id="Samples_Games_Asteroids_Content_ShadersParticleEffect.fx" Name="ParticleEffect.fx" Source="..\..\publish\Samples\Games\Asteroids\Content\Shaders\ParticleEffect.fx" />
+                      <File Id="Samples_Games_Asteroids_Content_ShadersVectorModel.fx" Name="VectorModel.fx" Source="..\..\publish\Samples\Games\Asteroids\Content\Shaders\VectorModel.fx" />
+                    </Component>
+                  </Directory>
+                </Directory>
+                <Directory Id="Samples_Games_Asteroids_Entities" Name="Entities">
+                  <Component Id="Samples_Games_Asteroids_Entities" DiskId="1" Guid="8d6a532f-425b-4d07-b541-b775e10519c3">
+                    <File Id="Samples_Games_Asteroids_EntitiesAlien.cs" Name="Alien.cs" Source="..\..\publish\Samples\Games\Asteroids\Entities\Alien.cs" />
+                    <File Id="Samples_Games_Asteroids_EntitiesAsteroid.cs" Name="Asteroid.cs" Source="..\..\publish\Samples\Games\Asteroids\Entities\Asteroid.cs" />
+                    <File Id="Samples_Games_Asteroids_EntitiesBullet.cs" Name="Bullet.cs" Source="..\..\publish\Samples\Games\Asteroids\Entities\Bullet.cs" />
+                    <File Id="Samples_Games_Asteroids_EntitiesEntity.cs" Name="Entity.cs" Source="..\..\publish\Samples\Games\Asteroids\Entities\Entity.cs" />
+                    <File Id="Samples_Games_Asteroids_EntitiesExplosion.cs" Name="Explosion.cs" Source="..\..\publish\Samples\Games\Asteroids\Entities\Explosion.cs" />
+                    <File Id="Samples_Games_Asteroids_EntitiesPlayer.cs" Name="Player.cs" Source="..\..\publish\Samples\Games\Asteroids\Entities\Player.cs" />
+                  </Component>
+                </Directory>
+                <Directory Id="Samples_Games_Asteroids_Items" Name="Items">
+                  <Component Id="Samples_Games_Asteroids_Items" DiskId="1" Guid="9f3172ca-24aa-4914-8466-442d2f082b4c">
+                    <File Id="Samples_Games_Asteroids_ItemsAlienWeapon.cs" Name="AlienWeapon.cs" Source="..\..\publish\Samples\Games\Asteroids\Items\AlienWeapon.cs" />
+                    <File Id="Samples_Games_Asteroids_ItemsPrimaryWeapon.cs" Name="PrimaryWeapon.cs" Source="..\..\publish\Samples\Games\Asteroids\Items\PrimaryWeapon.cs" />
+                    <File Id="Samples_Games_Asteroids_ItemsWeapon.cs" Name="Weapon.cs" Source="..\..\publish\Samples\Games\Asteroids\Items\Weapon.cs" />
+                  </Component>
+                </Directory>
+                <Directory Id="Samples_Games_Asteroids_Particles" Name="Particles">
+                  <Component Id="Samples_Games_Asteroids_Particles" DiskId="1" Guid="39362357-c59c-452f-81b8-69fba0c872d6">
+                    <File Id="Samples_Games_Asteroids_ParticlesParticleEmitter.cs" Name="ParticleEmitter.cs" Source="..\..\publish\Samples\Games\Asteroids\Particles\ParticleEmitter.cs" />
+                    <File Id="Samples_Games_Asteroids_ParticlesParticleSystem.cs" Name="ParticleSystem.cs" Source="..\..\publish\Samples\Games\Asteroids\Particles\ParticleSystem.cs" />
+                    <File Id="Samples_Games_Asteroids_ParticlesParticleVertex.cs" Name="ParticleVertex.cs" Source="..\..\publish\Samples\Games\Asteroids\Particles\ParticleVertex.cs" />
+                  </Component>
+                </Directory>
+                <Directory Id="Samples_Games_Asteroids_Properties" Name="Properties">
+                  <Component Id="Samples_Games_Asteroids_Properties" DiskId="1" Guid="30e478de-51d7-43dc-ba1e-71f92af4f98c">
+                    <File Id="Samples_Games_Asteroids_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\Games\Asteroids\Properties\AssemblyInfo.cs" />
+                    <File Id="Samples_Games_Asteroids_PropertiesResources.Designer.cs" Name="Resources.Designer.cs" Source="..\..\publish\Samples\Games\Asteroids\Properties\Resources.Designer.cs" />
+                    <File Id="Samples_Games_Asteroids_PropertiesResources.resx" Name="Resources.resx" Source="..\..\publish\Samples\Games\Asteroids\Properties\Resources.resx" />
+                    <File Id="Samples_Games_Asteroids_PropertiesSettings.Designer.cs" Name="Settings.Designer.cs" Source="..\..\publish\Samples\Games\Asteroids\Properties\Settings.Designer.cs" />
+                    <File Id="Samples_Games_Asteroids_PropertiesSettings.settings" Name="Settings.settings" Source="..\..\publish\Samples\Games\Asteroids\Properties\Settings.settings" />
+                  </Component>
+                </Directory>
+                <Directory Id="Samples_Games_Asteroids_VectorModel" Name="VectorModel">
+                  <Component Id="Samples_Games_Asteroids_VectorModel" DiskId="1" Guid="dd230885-00a4-4b2a-9ef9-9a2423e3699e">
+                    <File Id="Samples_Games_Asteroids_VectorModelVectorModel.cs" Name="VectorModel.cs" Source="..\..\publish\Samples\Games\Asteroids\VectorModel\VectorModel.cs" />
+                    <File Id="Samples_Games_Asteroids_VectorModelVectorModelVertex.cs" Name="VectorModelVertex.cs" Source="..\..\publish\Samples\Games\Asteroids\VectorModel\VectorModelVertex.cs" />
+                    <File Id="Samples_Games_Asteroids_VectorModelVertexRemapper.cs" Name="VertexRemapper.cs" Source="..\..\publish\Samples\Games\Asteroids\VectorModel\VertexRemapper.cs" />
+                  </Component>
+                </Directory>
+              </Directory>
+            </Directory>
+            <Directory Id="Samples_RawInput" Name="RawInput">
+              <Directory Id="Samples_RawInput_MouseRI" Name="MouseRI">
+                <Component Id="Samples_RawInput_MouseRI" DiskId="1" Guid="54438714-1f37-4e7a-834c-9f0edda8459a">
+                  <File Id="Samples_RawInput_MouseRIMainForm.cs" Name="MainForm.cs" Source="..\..\publish\Samples\RawInput\MouseRI\MainForm.cs" />
+                  <File Id="Samples_RawInput_MouseRIMainForm.Designer.cs" Name="MainForm.Designer.cs" Source="..\..\publish\Samples\RawInput\MouseRI\MainForm.Designer.cs" />
+                  <File Id="Samples_RawInput_MouseRIMainForm.resx" Name="MainForm.resx" Source="..\..\publish\Samples\RawInput\MouseRI\MainForm.resx" />
+                  <File Id="Samples_RawInput_MouseRIMouseRI.2005.csproj" Name="MouseRI.2005.csproj" Source="..\..\publish\Samples\RawInput\MouseRI\MouseRI.2005.csproj" />
+                  <File Id="Samples_RawInput_MouseRIMouseRI.csproj" Name="MouseRI.csproj" Source="..\..\publish\Samples\RawInput\MouseRI\MouseRI.csproj" />
+                  <File Id="Samples_RawInput_MouseRIMouseRI.exe" Name="MouseRI.exe" Source="..\..\publish\Samples\RawInput\MouseRI\MouseRI.exe" />
+                  <File Id="Samples_RawInput_MouseRIProgram.cs" Name="Program.cs" Source="..\..\publish\Samples\RawInput\MouseRI\Program.cs" />
+                </Component>
+                <Directory Id="Samples_RawInput_MouseRI_Properties" Name="Properties">
+                  <Component Id="Samples_RawInput_MouseRI_Properties" DiskId="1" Guid="eb2b19f4-9393-4cd4-b715-58d3b0937670">
+                    <File Id="Samples_RawInput_MouseRI_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\RawInput\MouseRI\Properties\AssemblyInfo.cs" />
+                    <File Id="Samples_RawInput_MouseRI_PropertiesResources.Designer.cs" Name="Resources.Designer.cs" Source="..\..\publish\Samples\RawInput\MouseRI\Properties\Resources.Designer.cs" />
+                    <File Id="Samples_RawInput_MouseRI_PropertiesResources.resx" Name="Resources.resx" Source="..\..\publish\Samples\RawInput\MouseRI\Properties\Resources.resx" />
+                    <File Id="Samples_RawInput_MouseRI_PropertiesSettings.Designer.cs" Name="Settings.Designer.cs" Source="..\..\publish\Samples\RawInput\MouseRI\Properties\Settings.Designer.cs" />
+                    <File Id="Samples_RawInput_MouseRI_PropertiesSettings.settings" Name="Settings.settings" Source="..\..\publish\Samples\RawInput\MouseRI\Properties\Settings.settings" />
+                  </Component>
+                </Directory>
+              </Directory>
+            </Directory>
+            <Directory Id="Samples_SampleFramework" Name="SampleFramework">
+              <Component Id="Samples_SampleFramework" DiskId="1" Guid="89a87a03-1019-461c-a7d4-ea70c42f534e">
+                <File Id="Samples_SampleFrameworkSampleFramework.2005.csproj" Name="SampleFramework.2005.csproj" Source="..\..\publish\Samples\SampleFramework\SampleFramework.2005.csproj" />
+                <File Id="Samples_SampleFrameworkSampleFramework.csproj" Name="SampleFramework.csproj" Source="..\..\publish\Samples\SampleFramework\SampleFramework.csproj" />
+                <File Id="Samples_SampleFrameworkSampleFramework.dll" Name="SampleFramework.dll" Source="..\..\publish\Samples\SampleFramework\SampleFramework.dll" />
+              </Component>
+              <Directory Id="Samples_SampleFramework_Bin" Name="Bin">
+                <Directory Id="Samples_SampleFramework_Bin_Release" Name="Release">
+                  <Component Id="Samples_SampleFramework_Bin_Release" DiskId="1" Guid="83d46ce5-6ce0-4ff7-9867-8583cfffe5ea">
+                    <File Id="Samples_SampleFramework_Bin_Release_SampleFramework.dll" Name="SampleFramework.dll" Source="..\..\publish\Samples\SampleFramework\bin\Release\SampleFramework.dll" />
+                  </Component>
+                </Directory>
+              </Directory>
+              <Directory Id="Samples_SampleFramework_Components" Name="Components">
+                <Component Id="Samples_SampleFramework_Components" DiskId="1" Guid="518ec13e-67f0-4c74-9a78-8a42a86918a2">
+                  <File Id="Samples_SampleFramework_ComponentsGameComponentCollection.cs" Name="GameComponentCollection.cs" Source="..\..\publish\Samples\SampleFramework\Components\GameComponentCollection.cs" />
+                  <File Id="Samples_SampleFramework_ComponentsIGameComponent.cs" Name="IGameComponent.cs" Source="..\..\publish\Samples\SampleFramework\Components\IGameComponent.cs" />
+                  <File Id="Samples_SampleFramework_ComponentsInterpolator.cs" Name="Interpolator.cs" Source="..\..\publish\Samples\SampleFramework\Components\Interpolator.cs" />
+                  <File Id="Samples_SampleFramework_ComponentsIResource.cs" Name="IResource.cs" Source="..\..\publish\Samples\SampleFramework\Components\IResource.cs" />
+                  <File Id="Samples_SampleFramework_ComponentsResourceCollection.cs" Name="ResourceCollection.cs" Source="..\..\publish\Samples\SampleFramework\Components\ResourceCollection.cs" />
+                  <File Id="Samples_SampleFramework_ComponentsTrigger.cs" Name="Trigger.cs" Source="..\..\publish\Samples\SampleFramework\Components\Trigger.cs" />
+                </Component>
+              </Directory>
+              <Directory Id="Samples_SampleFramework_Core" Name="Core">
+                <Component Id="Samples_SampleFramework_Core" DiskId="1" Guid="45bdc820-85c3-48e7-8c8f-56f8586efd1f">
+                  <File Id="Samples_SampleFramework_CoreGame.cs" Name="Game.cs" Source="..\..\publish\Samples\SampleFramework\Core\Game.cs" />
+                  <File Id="Samples_SampleFramework_CoreGameClock.cs" Name="GameClock.cs" Source="..\..\publish\Samples\SampleFramework\Core\GameClock.cs" />
+                  <File Id="Samples_SampleFramework_CoreGameTime.cs" Name="GameTime.cs" Source="..\..\publish\Samples\SampleFramework\Core\GameTime.cs" />
+                  <File Id="Samples_SampleFramework_CoreGameWindow.cs" Name="GameWindow.cs" Source="..\..\publish\Samples\SampleFramework\Core\GameWindow.cs" />
+                </Component>
+              </Directory>
+              <Directory Id="Samples_SampleFramework_DeviceSettings" Name="DeviceSettings">
+                <Component Id="Samples_SampleFramework_DeviceSettings" DiskId="1" Guid="167882c5-2419-4747-a8e5-228f1105ec35">
+                  <File Id="Samples_SampleFramework_DeviceSettingsConversionMethods.cs" Name="ConversionMethods.cs" Source="..\..\publish\Samples\SampleFramework\DeviceSettings\ConversionMethods.cs" />
+                  <File Id="Samples_SampleFramework_DeviceSettingsDeviceSettings.cs" Name="DeviceSettings.cs" Source="..\..\publish\Samples\SampleFramework\DeviceSettings\DeviceSettings.cs" />
+                  <File Id="Samples_SampleFramework_DeviceSettingsDirect3D10Settings.cs" Name="Direct3D10Settings.cs" Source="..\..\publish\Samples\SampleFramework\DeviceSettings\Direct3D10Settings.cs" />
+                  <File Id="Samples_SampleFramework_DeviceSettingsDirect3D9Settings.cs" Name="Direct3D9Settings.cs" Source="..\..\publish\Samples\SampleFramework\DeviceSettings\Direct3D9Settings.cs" />
+                </Component>
+              </Directory>
+              <Directory Id="Samples_SampleFramework_Enumeration" Name="Enumeration">
+                <Component Id="Samples_SampleFramework_Enumeration" DiskId="1" Guid="449f93cf-0584-495a-b645-28de31ce8fd4">
+                  <File Id="Samples_SampleFramework_EnumerationEnumeration10.cs" Name="Enumeration10.cs" Source="..\..\publish\Samples\SampleFramework\Enumeration\Enumeration10.cs" />
+                  <File Id="Samples_SampleFramework_EnumerationEnumeration9.cs" Name="Enumeration9.cs" Source="..\..\publish\Samples\SampleFramework\Enumeration\Enumeration9.cs" />
+                </Component>
+              </Directory>
+              <Directory Id="Samples_SampleFramework_Properties" Name="Properties">
+                <Component Id="Samples_SampleFramework_Properties" DiskId="1" Guid="77b16702-2e50-4920-a781-6248c8950b63">
+                  <File Id="Samples_SampleFramework_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\SampleFramework\Properties\AssemblyInfo.cs" />
+                  <File Id="Samples_SampleFramework_PropertiesResources.Designer.cs" Name="Resources.Designer.cs" Source="..\..\publish\Samples\SampleFramework\Properties\Resources.Designer.cs" />
+                  <File Id="Samples_SampleFramework_PropertiesResources.resx" Name="Resources.resx" Source="..\..\publish\Samples\SampleFramework\Properties\Resources.resx" />
+                </Component>
+              </Directory>
+              <Directory Id="Samples_SampleFramework_Rendering" Name="Rendering">
+                <Component Id="Samples_SampleFramework_Rendering" DiskId="1" Guid="5891e9bd-bac1-4898-8a75-1e1b698358b7">
+                  <File Id="Samples_SampleFramework_RenderingDeviceCreationException.cs" Name="DeviceCreationException.cs" Source="..\..\publish\Samples\SampleFramework\Rendering\DeviceCreationException.cs" />
+                  <File Id="Samples_SampleFramework_RenderingDirect3D10Manager.cs" Name="Direct3D10Manager.cs" Source="..\..\publish\Samples\SampleFramework\Rendering\Direct3D10Manager.cs" />
+                  <File Id="Samples_SampleFramework_RenderingDirect3D9Manager.cs" Name="Direct3D9Manager.cs" Source="..\..\publish\Samples\SampleFramework\Rendering\Direct3D9Manager.cs" />
+                  <File Id="Samples_SampleFramework_RenderingEnums.cs" Name="Enums.cs" Source="..\..\publish\Samples\SampleFramework\Rendering\Enums.cs" />
+                  <File Id="Samples_SampleFramework_RenderingGraphicsDeviceManager.cs" Name="GraphicsDeviceManager.cs" Source="..\..\publish\Samples\SampleFramework\Rendering\GraphicsDeviceManager.cs" />
+                  <File Id="Samples_SampleFramework_RenderingNoCompatibleDevicesException.cs" Name="NoCompatibleDevicesException.cs" Source="..\..\publish\Samples\SampleFramework\Rendering\NoCompatibleDevicesException.cs" />
+                  <File Id="Samples_SampleFramework_RenderingVertexElementAttribute.cs" Name="VertexElementAttribute.cs" Source="..\..\publish\Samples\SampleFramework\Rendering\VertexElementAttribute.cs" />
+                </Component>
+              </Directory>
+              <Directory Id="Samples_SampleFramework_Resources" Name="Resources">
+                <Component Id="Samples_SampleFramework_Resources" DiskId="1" Guid="3df6d426-b086-48ba-aab3-d947c4b976e8">
+                  <File Id="Samples_SampleFramework_Resourcessdx_icon_black.ico" Name="sdx_icon_black.ico" Source="..\..\publish\Samples\SampleFramework\Resources\sdx_icon_black.ico" />
+                </Component>
+              </Directory>
+              <Directory Id="Samples_SampleFramework_Utilities" Name="Utilities">
+                <Component Id="Samples_SampleFramework_Utilities" DiskId="1" Guid="6d60194b-ca7e-4f75-84b2-49583f67b9f3">
+                  <File Id="Samples_SampleFramework_UtilitiesCamera.cs" Name="Camera.cs" Source="..\..\publish\Samples\SampleFramework\Utilities\Camera.cs" />
+                  <File Id="Samples_SampleFramework_UtilitiesTextConsole.cs" Name="TextConsole.cs" Source="..\..\publish\Samples\SampleFramework\Utilities\TextConsole.cs" />
+                  <File Id="Samples_SampleFramework_UtilitiesTransformedColoredTexturedVertex.cs" Name="TransformedColoredTexturedVertex.cs" Source="..\..\publish\Samples\SampleFramework\Utilities\TransformedColoredTexturedVertex.cs" />
+                  <File Id="Samples_SampleFramework_UtilitiesTransformedColoredVertex.cs" Name="TransformedColoredVertex.cs" Source="..\..\publish\Samples\SampleFramework\Utilities\TransformedColoredVertex.cs" />
+                </Component>
+              </Directory>
+              <Directory Id="Samples_SampleFramework_Win32" Name="Win32">
+                <Component Id="Samples_SampleFramework_Win32" DiskId="1" Guid="6a3da47b-178f-4eb3-9205-12d348976ada">
+                  <File Id="Samples_SampleFramework_Win32NativeMethods.cs" Name="NativeMethods.cs" Source="..\..\publish\Samples\SampleFramework\Win32\NativeMethods.cs" />
+                  <File Id="Samples_SampleFramework_Win32NativeStructures.cs" Name="NativeStructures.cs" Source="..\..\publish\Samples\SampleFramework\Win32\NativeStructures.cs" />
+                  <File Id="Samples_SampleFramework_Win32WindowConstants.cs" Name="WindowConstants.cs" Source="..\..\publish\Samples\SampleFramework\Win32\WindowConstants.cs" />
+                </Component>
+              </Directory>
+            </Directory>
+            <Directory Id="Samples_XAudio2" Name="XAudio2">
+              <Directory Id="Samples_XAudio2_BasicSound" Name="BasicSound">
+                <Component Id="Samples_XAudio2_BasicSound" DiskId="1" Guid="bd005372-6da4-415a-8890-b0728bc6fd03">
+                  <File Id="Samples_XAudio2_BasicSoundBasicSound.2005.csproj" Name="BasicSound.2005.csproj" Source="..\..\publish\Samples\XAudio2\BasicSound\BasicSound.2005.csproj" />
+                  <File Id="Samples_XAudio2_BasicSoundBasicSound.csproj" Name="BasicSound.csproj" Source="..\..\publish\Samples\XAudio2\BasicSound\BasicSound.csproj" />
+                  <File Id="Samples_XAudio2_BasicSoundBasicSound.exe" Name="BasicSound.exe" Source="..\..\publish\Samples\XAudio2\BasicSound\BasicSound.exe" />
+                  <File Id="Samples_XAudio2_BasicSoundMusicMono.wav" Name="MusicMono.wav" Source="..\..\publish\Samples\XAudio2\BasicSound\MusicMono.wav" />
+                  <File Id="Samples_XAudio2_BasicSoundMusicSurround.wav" Name="MusicSurround.wav" Source="..\..\publish\Samples\XAudio2\BasicSound\MusicSurround.wav" />
+                  <File Id="Samples_XAudio2_BasicSoundProgram.cs" Name="Program.cs" Source="..\..\publish\Samples\XAudio2\BasicSound\Program.cs" />
+                </Component>
+                <Directory Id="Samples_XAudio2_BasicSound_Properties" Name="Properties">
+                  <Component Id="Samples_XAudio2_BasicSound_Properties" DiskId="1" Guid="91ebc608-1975-4edb-8a23-b37bfa48fe57">
+                    <File Id="Samples_XAudio2_BasicSound_PropertiesAssemblyInfo.cs" Name="AssemblyInfo.cs" Source="..\..\publish\Samples\XAudio2\BasicSound\Properties\AssemblyInfo.cs" />
+                  </Component>
+                </Directory>
+              </Directory>
+            </Directory>
+          </Directory>
+          <Directory Id="Redist" Name="Redist">
+            <Component Id="Redist" DiskId="1" Guid="DD6BFE46-05D3-4C5B-9E50-B1B3DDC066FF">
+              <File Id="SlimDXRedist.wixproj" Name="SlimDXRedist.wixproj" Source="..\..\publish\Redist\SlimDXRedist.wixproj" />
+              <File Id="Redist.wxs" Name="Redist.wxs" Source="..\..\publish\Redist\Redist.wxs" />
+              <File Id="License.rtf" Name="License.rtf" Source="..\..\publish\Redist\License.rtf" />
+              <File Id="SdxLogo.jpg" Name="SdxLogo.jpg" Source="..\..\publish\Redist\SdxLogo.jpg" />
+              <File Id="SdxSideLogo.jpg" Name="SdxSideLogo.jpg" Source="..\..\publish\Redist\SdxSideLogo.jpg" />
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="SlimDX ($(var.ReleaseName))">
+          <Component Id="SlimDXShortcuts" Guid="13E685A4-2224-46B5-BC75-00235923583D">
+            <Shortcut Id="SlimDXShortcut" Name="SlimDX Folder" Description="SlimDX Installation Folder"
+                      Target="[APPLICATIONFOLDER]" />
+            <Shortcut Id="SlimDXDocsShortcut" Name="SlimDX Documentation" Description="SlimDX Documentation for $(var.ReleaseName)"
+                      Target="[APPLICATIONFOLDER]Documentation\SlimDX.chm" />
+
+            <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+            <RegistryValue Root="HKCU" Key="Software\SlimDX\SlimDX_$(var.ShortName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+          </Component>
+
+          <Directory Id="SamplesShortcuts" Name="Samples">
+            <Component Id="SamplesShortcuts" Guid="AF3E6616-1C1C-11DE-BD3F-4DC756D89593">
+              <Shortcut Id="SamplesShortcut" Name="Samples (VS 08)" Description="Samples Solution for Visual Studio 2008"
+                        Target="[APPLICATIONFOLDER]Samples\Samples.sln" />
+              <Shortcut Id="SamplesShortcutExpress" Name="Samples (VC# Express 08)" Description="Samples Solution for Visual C# Express 2008"
+                        Target="[APPLICATIONFOLDER]Samples\Samples_Express.sln" />
+              <Shortcut Id="SamplesShortcut05" Name="Samples (VS 05)" Description="Samples Solution for Visual Studio 2008"
+                        Target="[APPLICATIONFOLDER]Samples\Samples.2005.sln" />
+              <Shortcut Id="SamplesShortcutExpress05" Name="Samples (VC# Express 05)" Description="Samples Solution for Visual C# Express 2005"
+                        Target="[APPLICATIONFOLDER]Samples\Samples_Express.2005.sln" />
+
+              <RemoveFolder Id="SamplesShortcuts" On="uninstall"/>
+              <RegistryValue Root="HKCU" Key="Software\SlimDX\SlimDX_$(var.ShortName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <DirectoryRef Id="TARGETDIR">
+      <Component Id="VSRegKey32" Guid="E323B70A-6A34-4090-86F6-2139878165F1">
+        <RegistryKey Root="HKLM" Key="Software\Microsoft\.NETFramework\AssemblyFolders\SlimDX_$(var.Version)">
+          <RegistryValue Type="string" Value="[APPLICATIONFOLDER]Bin\x86" />
+        </RegistryKey>
+      </Component>
+      <Component Id="VSRegKey64" Guid="4B5A6FA8-C214-4160-B4F1-9AE8FBC162D3">
+        <Condition>
+          <![CDATA[Installed OR VersionNT64]]>
+        </Condition>
+        <RegistryKey Root="HKLM" Key="Software\Microsoft\.NETFramework\AssemblyFolders\SlimDX_$(var.Version)_x64">
+          <RegistryValue Type="string" Value="[APPLICATIONFOLDER]Bin\x64" />
+        </RegistryKey>
+      </Component>
+    </DirectoryRef>
+
+    <Feature Id="Binaries" Title="SlimDX Binaries" Absent="disallow" AllowAdvertise="no" Level="1" Description="SlimDX binary assemblies.">
+      <ComponentRef Id="VSRegKey32" />
+      <ComponentRef Id="VSRegKey64" />
+      <ComponentRef Id="SlimDXShortcuts"/>
+      <Feature Id="x86" Level="1" Absent="disallow" AllowAdvertise="no"
+               Title="x86" Description="SlimDX assembly for x86 targets.">
+        <ComponentRef Id="x86" />
+      </Feature>
+      <Feature Id="x64" Level="1" AllowAdvertise="no"
+               Title="x64" Description="SlimDX assembly for x64 targets.">
+        <ComponentRef Id="x64" />
+      </Feature>
+      <Feature Id="GacRegister" Level="1" AllowAdvertise="no"
+               Title="GAC Registration" Description="Register SlimDX in the Global Assembly Cache. Strongly recommended.">
+        <ComponentRef Id="x86_GAC" />
+        <ComponentRef Id="x64_GAC" />
+      </Feature>
+      <Feature Id="DirectX" Level="1" AllowAdvertise="no" Absent="disallow"
+               Title="DirectX runtime" Description="DirectX runtime components for $(var.ReleaseName). Does not include XACT or older releases. Strongly recommended.">
+        <ComponentRef Id="DXRedist" />
+      </Feature>
+    </Feature>
+    <Feature Id="Documentation" Level="1" AllowAdvertise="no"
+             Title="Documentation" Description="SlimDX documentation in CHM format.">
+      <ComponentRef Id="Documentation" />
+    </Feature>
+    <Feature Id="Samples" Level="1" AllowAdvertise="no"
+             Title="Samples" Description="SlimDX samples and sample framework.">
+      <ComponentRef Id="SamplesShortcuts" />
+      <ComponentRef Id="SamplesSln" />
+      <ComponentRef Id="Samples_Direct3D10_EmptyProject10" />
+      <ComponentRef Id="Samples_Direct3D10_EmptyProject10_Properties" />
+      <ComponentRef Id="Samples_Direct3D10_MiniTri10" />
+      <ComponentRef Id="Samples_Direct3D10_MiniTri10_Properties" />
+      <ComponentRef Id="Samples_Direct3D10_SimpleTriangle10" />
+      <ComponentRef Id="Samples_Direct3D10_SimpleTriangle10_Properties" />
+      <ComponentRef Id="Samples_Direct3D9_EmptyProject" />
+      <ComponentRef Id="Samples_Direct3D9_EmptyProject_Properties" />
+      <ComponentRef Id="Samples_Direct3D9_MiniTri" />
+      <ComponentRef Id="Samples_Direct3D9_MiniTri_Properties" />
+      <ComponentRef Id="Samples_Direct3D9_Particles" />
+      <ComponentRef Id="Samples_Direct3D9_Particles_Properties" />
+      <ComponentRef Id="Samples_Direct3D9_SimpleLighting" />
+      <ComponentRef Id="Samples_Direct3D9_SimpleLighting_Properties" />
+      <ComponentRef Id="Samples_Direct3D9_SimpleTriangle" />
+      <ComponentRef Id="Samples_Direct3D9_SimpleTriangle_Properties" />
+      <ComponentRef Id="Samples_Direct3D9_SkinnedMesh" />
+      <ComponentRef Id="Samples_Direct3D9_SkinnedMesh_Properties" />
+      <ComponentRef Id="Samples_Direct3D9_Water" />
+      <ComponentRef Id="Samples_Direct3D9_Water_Properties" />
+      <ComponentRef Id="Samples_Direct3D9_Water_Resources_Models" />
+      <ComponentRef Id="Samples_Direct3D9_Water_Resources_Shaders" />
+      <ComponentRef Id="Samples_Direct3D9_Water_Resources_Textures" />
+      <ComponentRef Id="Samples_DirectInput_Joystick" />
+      <ComponentRef Id="Samples_DirectInput_Joystick_Properties" />
+      <ComponentRef Id="Samples_DirectInput_Keyboard" />
+      <ComponentRef Id="Samples_DirectInput_Keyboard_Properties" />
+      <ComponentRef Id="Samples_DirectInput_Mouse" />
+      <ComponentRef Id="Samples_DirectInput_Mouse_Properties" />
+      <ComponentRef Id="Samples_Games_Asteroids" />
+      <ComponentRef Id="Samples_Games_Asteroids_Content_Models" />
+      <ComponentRef Id="Samples_Games_Asteroids_Content_Music" />
+      <ComponentRef Id="Samples_Games_Asteroids_Content_Shaders" />
+      <ComponentRef Id="Samples_Games_Asteroids_Entities" />
+      <ComponentRef Id="Samples_Games_Asteroids_Items" />
+      <ComponentRef Id="Samples_Games_Asteroids_Particles" />
+      <ComponentRef Id="Samples_Games_Asteroids_Properties" />
+      <ComponentRef Id="Samples_Games_Asteroids_VectorModel" />
+      <ComponentRef Id="Samples_RawInput_MouseRI" />
+      <ComponentRef Id="Samples_RawInput_MouseRI_Properties" />
+      <ComponentRef Id="Samples_SampleFramework" />
+      <ComponentRef Id="Samples_SampleFramework_Bin_Release" />
+      <ComponentRef Id="Samples_SampleFramework_Core" />
+      <ComponentRef Id="Samples_SampleFramework_Components" />
+      <ComponentRef Id="Samples_SampleFramework_DeviceSettings" />
+      <ComponentRef Id="Samples_SampleFramework_Enumeration" />
+      <ComponentRef Id="Samples_SampleFramework_Properties" />
+      <ComponentRef Id="Samples_SampleFramework_Rendering" />
+      <ComponentRef Id="Samples_SampleFramework_Resources" />
+      <ComponentRef Id="Samples_SampleFramework_Utilities" />
+      <ComponentRef Id="Samples_SampleFramework_Win32" />
+      <ComponentRef Id="Samples_XAudio2_BasicSound" />
+      <ComponentRef Id="Samples_XAudio2_BasicSound_Properties" />
+      <ComponentRef Id="Samples_DirectWrite_SimpleText" />
+      <ComponentRef Id="Samples_DirectWrite_SimpleText_Properties" />
+      <ComponentRef Id="Samples_DirectWrite_MultiformattedText" />
+      <ComponentRef Id="Samples_DirectWrite_MultiformattedText_Properties" />
+      <ComponentRef Id="Samples_Direct2D_RenderDemo" />
+      <ComponentRef Id="Samples_Direct2D_RenderDemo_Properties" />
+    </Feature>
+    <Feature Id="Redist" Level="1" AllowAdvertise="no"
+             Title="Redistributable Package Source" Description="The source code to produce the public WiX based redistributable installation package for SlimDX.">
+      <ComponentRef Id="Redist" />
+    </Feature>
+    <Feature Id="Shortcuts" Level="1" AllowAdvertise="no" Display="hidden"
+             Title="Start menu shortcuts" Description="Start menu shortcuts to SlimDX.">
+    </Feature>
+    <Feature Id="Licenses" Level="1" Absent="disallow" AllowAdvertise="no" Display="hidden">
+      <ComponentRef Id="Licenses" />
+    </Feature>
+
+    <Condition Message="This application requires .NET Framework 2.0 or later. Please install the .NET Framework then run this installer again.">
+      <![CDATA[Installed OR NETFRAMEWORK20 OR NETFRAMEWORK35]]>
+    </Condition>
+
+    <CustomAction Id="InstallDirectX" FileKey="DXSETUP.exe" ExeCommand="/silent" Execute="deferred" Impersonate="no" Return="check" />
+    <InstallExecuteSequence>
+      <Custom Action="InstallDirectX" Before="InstallFinalize"><![CDATA[NOT REMOVE]]></Custom>
+    </InstallExecuteSequence>
+  </Product>
+</Wix>
