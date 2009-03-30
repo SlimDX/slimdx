@@ -1,56 +1,24 @@
 #summary SlimDX -- November 2008 Release
 = Introduction =
+It's recommended that you visit our official [http://slimdx.org/download.php Download page] instead of using this page.
 
-The November 2008 release of SlimDX is now out! For this version of SlimDX, there has been a heavy focus on making it easier for developers as well as users to work with SlimDX. There are plenty of bug fixes, but the big news is updated and revised documentation, along with a completely rebuilt installation system.
+The March 2009 release of SlimDX is now out! This is a major release in terms of new functionality and improvements behind the scenes. Many missing corners were filled in, and several usability enhancements were made across the library on top of the standard array of bug fixes. A new DLL containing beta-level technologies, such as Direct2D and Direct3D 11, was added to showcase developing APIs. These APIs will be moved into the core SlimDX DLL once they are given a full release by Microsoft. Until then, they should be viewed as previews, and should not be used for products that expect stable behavior.
 
-As always, SlimDX's development is driven by requests from developers and users, so we encourage people to contact us if they have any questions, suggestions, or general comments. There are several ways of getting in contact with the SlimDX team listed at the bottom of this page.
+Performance is another issue focused on in the March release. After extensive testing, several improvements were made to the error handling infrastructure, which showed significant performance increases across the entire library. On top of this, performance issues in the math library were discovered and subsequently eliminated. This involved modifying the types to use fields instead of properties, as value type getters are inlined in .NET prior to version 3.5. These small changes could have a substantial impact on your application simply by recompiling with the new DLL.  
 
 = End User Runtime =
-This is the package for end users. It works on both 32 and 64 bit systems, for all versions of Windows supported by the .NET Framework. If you're just trying to run a SlimDX program that someone else gave you, this is the installer you want to download. Developers should point users to this link, or include it with their own installers. See the documentation for more information.
+This is the package for end users. It works on both 32 and 64 bit systems, for all versions of Windows supported by the .NET Framework 2.0. If you're just trying to run a SlimDX program that someone else gave you, this is the installer you want to download. Developers should point users to this link, or include it with their own installers. However, developers should install the SDK below, not this package. See the documentation for more information.
 
-[http://slimdx.googlecode.com/files/SlimDX%20Runtime%20%28November%202008%29.msi Download the SlimDX Runtime for November 2008]
-
-= Information For Developers =
-If you're new to this whole thing, read the [http://slimdx.mdxinfo.com/latestdocs/Default.aspx?topic=Programming+Guide/Getting+Started Getting Started] documentation page. It should help get you moving. Other pages of interest include:
-
-[http://slimdx.mdxinfo.com/latestdocs/Default.aspx?topic=SlimDX+Software+Development+Kit/What's+Changed+in+the+November+2008+SDK What's Changed in the November 2008 SDK] -- Information on the work we did for the November 2008 SDK release.
-
-[http://slimdx.mdxinfo.com/wiki/index.php?title=Main_Page SlimDX Main Page] -- The front page of our wiki. This page makes it fairly straightforward to get to all of the other pages related to this project, both in the wiki and outside of it.
-
-[http://slimdx.mdxinfo.com/wiki/index.php?title=Conventions Conventions] -- Describes the basic conventions used in SlimDX. Invaluable for understanding many of the basic decisions driving development.
-
-[http://slimdx.mdxinfo.com/wiki/index.php?title=Debugging_Tips Debugging Tips] -- Tips on how to work on and debug applications using SlimDX. It's a really good idea to be familiar with the contents of this page, and check on it every so often, because it is updated periodically.
-
-[http://slimdx.mdxinfo.com/wiki/index.php?title=Release_Notes Release Notes] -- In case you're curious about the details of what exactly has changed.
+[http://slimdx.googlecode.com/files/slimdx_mar09.msi Download the SlimDX End User Runtime for March 2009]
 
 = Developer SDK =
-In the past, SlimDX was split into several different pieces for the core runtime, documentation, samples, and individual binaries. This is no longer the case; we have decided to follow the same model as the DirectX team and produce a redistributable runtime and a Developer SDK. The SDK includes all of the binaries, documentation, and samples. It also includes all of the files necessary to build custom installation packages if desired. The SDK supports both 32 bit and 64 bit systems.
+In the past, SlimDX was split into several different pieces for the core runtime, documentation, samples, and individual binaries. This is no longer the case; we have decided to follow the same model as the DirectX team and produce a redistributable runtime and a Developer SDK. The SDK includes all of the binaries, documentation, and samples. It also includes all of the files necessary to build custom installation packages if desired. The SDK supports both 32 bit and 64 bit systems. 
 
-[http://slimdx.googlecode.com/files/SlimDX%20SDK%20%28November%202008%29.exe Download the SlimDX SDK for November 2008]
+[http://slimdx.googlecode.com/files/SlimDX%20SDK%20%28March%202009%29.exe Download the SlimDX SDK for March 2009]
 
 [http://code.google.com/p/slimdx/downloads/list?can=1 Older files] are still available, in case you have some need for them.
 
 = Remarks =
-The November SDK does not add much to the SlimDX core library in terms of new features. There are some bug fixes, all of which are listed in the 
-[http://slimdx.mdxinfo.com/wiki/index.php?title=Release_Notes Release Notes], as well as in the SDK documentation. The focus of this release was on making development and deployment of SlimDX applications much smoother, since this is an area where we've been getting a lot of feedback for improvements.
+We have updated our documentation so that it now links to the DirectX documentation for many classes, taking you straight to the original unmanaged type that a SlimDX type represents. However, this linking is machine generated, and we haven't filled it in for everything yet. If you see something that is incorrectly linked, please report it to [http://code.google.com/p/slimdx/issues/detail?id=464 issue 464]. 
 
-Amongst those features is a proper end user runtime, which quickly and quietly installs everything needed on a system to run SlimDX programs. This installer supports silent installation and does not create a Program Files entry. It is unified for 32 bit and 64 bit systems, and the SDK includes the full WiX script used to create it so that developers may customize it or use it as a model.
-
-We have also evolved our documentation beyond a simple class reference, and it now includes a number of topics discussing development. There are relatively few of these articles right now, but in the future this part of the documentation will continue to expand.
-
-= Known Issues =
-== 64 Bit Support and Visual Studio ==
-In the September 2008 release, there was a bug that prevented SlimDX from showing up in the Add Reference dialog of Visual Studio. This bug now appears to be fixed, but it has not been tested heavily yet. If you do not see SlimDX in the dialog, simply browse to it under Program Files (x86). If you see _two_ entries, this is normal; one is 32 bit and one is 64 bit. To tell which is which, you can check the file location and choose the desired one.
-
-No matter what system you are developing on, it's recommended that you open the project file in a text editor and remove the processorArchitecture attribute from the reference. Doing this will allow a .NET program built for Any CPU to run correctly on both 32 bit and 64 bit systems. If you use a specific version of the SlimDX assembly, crashes are possible if the bit configuration of your application differs from SlimDX's, for whatever reason.
-
-== Ancillary objects not tracked in ObjectTable property ==
-SlimDX employs an object table to track COM objects and ensure that only a single .NET reference exists for each object. In several rare cases the COM object isn't created by the user but by DirectX internally, and the object table doesn't know about them. An example of this is a device's back buffer. This isn't a major bug, since after the first call to GetBackBuffer the object will get cached in the object table, but it does require that the user Dispose() of the object manually, which can be non-intuitive given the .NET practice of only disposing what you create. We are working on a solution to this problem. 
-
-= Communication =
-There are several different ways to get in touch with the SlimDX team:
-  * We suggest that questions be posted to the [http://www.gamedev.net/community/forums/forum.asp?forum_id=10 DirectX forum] on GameDev.Net, as all of the SlimDX developers are regulars there. You may at your discretion prefix your thread title with [SlimDX].
-  * If you believe you have found a bug, or you have a feature request, please enter it on this site under the [http://code.google.com/p/slimdx/issues/list Issues tab].
-  * The developers are also typically available in the #gamedev and #graphicsdev IRC channels on AfterNET (irc.afternet.org).
-  * You can email the developer list, slimdx-devel@googlegroups.com. This is *not* a recommended method of communicating with us, but may be used as a last ditch effort.
-If you're interested in working on SlimDX itself, we would be glad to have the help. Send a private message to [http://www.gamedev.net/community/forums/viewprofile.asp?ID=19810 Promit] on the GameDev.Net forums or email slimdx-devel@googlegroups.com if you want to contribute.
+This release of SlimDX includes technology previews of Microsoft's beta Windows 7 technologies. They are strictly experimental and not guaranteed to work well or at all. The previews are contained in a new temporary library file called SlimDX.Windows7.dll. The new library is not digitally signed, and will not be installed to the Global Assembly Cache. Both the core library and the new library seem to work fine, but we make no promises as long as everything is still beta. You will need the full DirectX March 2009 SDK installed to run any Windows7 code, including the samples. 
