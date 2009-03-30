@@ -12,7 +12,7 @@
 				<h2>Introduction</h2>
 				<p>
 				The November 2008 release of SlimDX is now out! For this version of SlimDX, there has been a heavy focus on making it easier for developers as well as users to work with SlimDX. There are plenty of bug fixes, but the big news is updated and revised documentation, along with a completely rebuilt installation system. 
-				As always, SlimDX's development is driven by requests from developers and users, so we encourage people to contact us if they have any questions, suggestions, or general comments. There are several ways of getting in contact with the SlimDX team listed at the bottom of this page. 
+				As always, SlimDX's development is driven by requests from developers and users, so we encourage people to contact us if they have any questions, suggestions, or general comments. There are several ways of getting in contact with the SlimDX team listed on the <a href="support.php">Support page</a>. 
 				</p>
 			</div>
 			
