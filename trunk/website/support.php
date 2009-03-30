@@ -45,6 +45,17 @@
 			Note that our ability to provide consulting services is limited by time and we may not be able to accept all jobs.
 			</p>
 		</div>
+		
+		<div class="paragraph">
+			<h2>Contact Us</h2>
+			<p>
+				We recommend that questions be posted to the <a href="http://www.gamedev.net/community/forums/forum.asp?forum_id=10">DirectX forum</a> on GameDev.Net, as all of the SlimDX developers are regulars there.
+				You may at your discretion prefix your thread title with [SlimDX].
+				If you believe you have found a bug, or you have a feature request, please enter it in our <a href="http://code.google.com/p/slimdx/issues/list">Issue Tracker</a>.
+				The developers are also typically available in the #gamedev and #graphicsdev IRC channels on <a href="http://www.afternet.org">AfterNET</a> (irc.afternet.org).
+				Lastly, you can email the developer list, slimdx-devel@googlegroups.com. This is *not* a recommended method of communicating with us, but may be used if necessary.
+				E-mail is a good idea if you're interested in contributing to SlimDX.
+			</p>
     </div>
 </div>
 
