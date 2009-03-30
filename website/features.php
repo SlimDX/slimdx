@@ -6,7 +6,13 @@
 ?>
 
 <div id="content">
-	<div class="wrapper">    
+	<div class="wrapper">
+		<div class="paragraph">
+			<h2>Under Construction</h2>
+			<p>	
+			Sorry, this page is still under construction.
+			</p>
+		</div>
     </div>
 </div>
 
