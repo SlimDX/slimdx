@@ -43,6 +43,7 @@
 			this.ExtensionsBox.Name = "ExtensionsBox";
 			this.ExtensionsBox.Size = new System.Drawing.Size(668, 20);
 			this.ExtensionsBox.TabIndex = 1;
+			this.ExtensionsBox.Text = "suo cachefile user";
 			// 
 			// OutputBox
 			// 
