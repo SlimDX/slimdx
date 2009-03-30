@@ -1,4 +1,4 @@
-#summary SlimDX -- November 2008 Release
+#summary SlimDX -- March 2009 Release
 = Introduction =
 It's recommended that you visit our official [http://slimdx.org/download.php Download page] instead of using this page.
 
