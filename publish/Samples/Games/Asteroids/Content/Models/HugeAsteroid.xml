@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VectorModel>
+  <Polygon LineWidth="4.0" Color="1.0, 0.7, 0.7, 0.7">
+    <Vertex>10, 100</Vertex>
+    <Vertex>-50, 75</Vertex>
+    <Vertex>-90, 40</Vertex>
+    <Vertex>-100, 20</Vertex>
+    <Vertex>-80, 0</Vertex>
+    <Vertex>-90, -20</Vertex>
+    <Vertex>-70, -75</Vertex>
+    <Vertex>-30, -100</Vertex>
+    <Vertex>20, -60</Vertex>
+    <Vertex>80, -60</Vertex>
+    <Vertex>100, 10</Vertex>
+    <Vertex>70, 30</Vertex>
+    <Vertex>80, 60</Vertex>
+  </Polygon>
+</VectorModel>
