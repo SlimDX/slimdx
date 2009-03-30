@@ -23,13 +23,10 @@ namespace WixFolderScanner
 
 		string GetId(string baseName)
 		{
-			int slashPos = m_startFolder.LastIndexOf('\\');
-			string shortName = slashPos > 0 ? m_startFolder.Substring(slashPos + 1) : m_startFolder;
-
-			return shortName + "_" + baseName.Replace('\\', '_');
+			return baseName.Replace('\\', '_');
 		}
 
-		string ScanFolder(string folder, string[] patterns)
+		string ScanFolder(string folder, string[] ignoreExtensions)
 		{
 			string dirName = folder;
 			if(dirName != m_startFolder)
@@ -41,7 +38,7 @@ namespace WixFolderScanner
 			if(shortName == "bin" || shortName == "obj")
 				return string.Empty;
 
-			string id = GetId(dirName);
+			string id = "Samples_" + GetId(dirName);
 			string attribs = string.Format("Id=\"{0}\" Name=\"{1}\"", id, shortName);
 			string xml = XmlTools.OpenTag("Directory", attribs);
 			
@@ -49,18 +46,29 @@ namespace WixFolderScanner
 			Guid guid = Guid.NewGuid();
 			attribs = string.Format("Id=\"{0}\" DiskId=\"{1}\" Guid=\"{2}\"", id, 1, guid.ToString());
 			xml += XmlTools.OpenTag("Component", attribs);
-			foreach(string pattern in patterns)
-			{
-				string[] files = Directory.GetFiles(folder, pattern, SearchOption.TopDirectoryOnly);
-				foreach(string file in files)
-				{
-					string fileName = file.Substring(folder.Length + 1);
-					string fileId = GetId(fileName);
-					attribs = string.Format("Id=\"{0}\" Name=\"{1}\" Source=\"{2}\"", fileId, fileName, file);
 
-					xml += XmlTools.SelfClosingTag("File", attribs);
+			string[] files = Directory.GetFiles(folder, "*", SearchOption.TopDirectoryOnly);
+			foreach(string file in files)
+			{
+				bool ignore = false;
+				foreach(string ext in ignoreExtensions)
+				{
+					if(file.EndsWith(ext))
+					{
+						ignore = true;
+						break;
+					}
 				}
+				if(ignore)
+					continue;
+
+				string fileName = file.Substring(folder.Length + 1);
+				string fileId = GetId(id + fileName);
+				attribs = string.Format("Id=\"{0}\" Name=\"{1}\" Source=\"{2}\"", fileId, fileName, file);
+
+				xml += XmlTools.SelfClosingTag("File", attribs);
 			}
+
 			xml += XmlTools.CloseTag();
 
 			//Process subdirectories
@@ -71,7 +79,7 @@ namespace WixFolderScanner
 				if((fileAttribs & FileAttributes.Hidden) == FileAttributes.Hidden)
 					continue;
 
-				xml += ScanFolder(dir, patterns);
+				xml += ScanFolder(dir, ignoreExtensions);
 			}
 
 			xml += XmlTools.CloseTag();
@@ -82,8 +90,6 @@ namespace WixFolderScanner
 		{
 			if(!Directory.Exists(FolderBox.Text))
 				return;
-			if(ExtensionsBox.Text.Length == 0)
-				ExtensionsBox.Text = "*";
 
 			string[] extensions = ExtensionsBox.Text.Split(' ', ',');
 			m_startFolder = FolderBox.Text;
