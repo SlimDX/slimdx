@@ -31,10 +31,12 @@ namespace SlimDX
 		public value class RenderTargetProperties
 		{
 		public:
-			property RenderTargetUsage Usage;
+			property RenderTargetType Type;
 			property PixelFormat PixelFormat;
 			property float HorizontalDpi;
 			property float VerticalDpi;
+			property RenderTargetUsage Usage;
+			property FeatureLevel MinimumFeatureLevel;
 		};
 	}
 }
