@@ -146,10 +146,13 @@ namespace SlimDX
 			
 			/// <summary>
 			/// Gets a value indicating when the adapter was WHQL certified.
+			/// A value of DateTime.MinValue indicates that the adapter is certified, but no specific date
+			/// information is available. A value of DateTime.MaxValue indicates that the driver is not
+			/// WHQL certified.
 			/// </summary>
-			property System::DateTime^ CertificationDate 
+			property System::DateTime CertificationDate 
 			{
-				System::DateTime^ get();
+				System::DateTime get();
 			}
 		};
 	}

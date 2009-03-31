@@ -62,12 +62,13 @@ namespace Direct3D9
 		whqlLevel = ident.WHQLLevel;
 	}
 	
-	DateTime^ AdapterDetails::CertificationDate::get()
+	DateTime AdapterDetails::CertificationDate::get()
 	{
+		if( whqlLevel == 0 )
+			return DateTime::MaxValue;
 		if( whqlLevel == 1 )
 			return DateTime::MinValue;
-		
-		return gcnew DateTime( 1999 + (whqlLevel >> 16), (whqlLevel & 0xFF00) >> 8, whqlLevel & 0xFF );
+		return DateTime( 1999 + (whqlLevel >> 16), (whqlLevel & 0xFF00) >> 8, whqlLevel & 0xFF );
 	}
 }
 }
