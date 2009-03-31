@@ -8,6 +8,7 @@
 <div id="content">
 	<div class="wrapper">    
 		<div id="left">
+			<h1>November 2008</h1>
 			<div class="paragraph">
 				<h2>Introduction</h2>
 				<p>
@@ -40,11 +41,11 @@
 				It should help get you moving.
 				Other pages of interest include:</p>
 				<ul>
-				<li><a href="http://slimdx.mdxinfo.com/latestdocs/Default.aspx?topic=SlimDX+Software+Development+Kit/What&#x27;s+Changed+in+the+November+2008+SDK" rel="nofollow">What&#x27;s Changed in the November 2008 SDK</a> -- Information on the work we did for the November 2008 SDK release.</li>
-				<li><a href="http://slimdx.mdxinfo.com/wiki/index.php?title=Main_Page" rel="nofollow">SlimDX Main Page</a> -- The front page of our wiki. This page makes it fairly straightforward to get to all of the other pages related to this project, both in the wiki and outside of it.</li>
-				<li><a href="http://slimdx.mdxinfo.com/wiki/index.php?title=Conventions" rel="nofollow">Conventions</a> -- Describes the basic conventions used in SlimDX. Invaluable for understanding many of the basic decisions driving development.</li>
-				<li><a href="http://slimdx.mdxinfo.com/wiki/index.php?title=Debugging_Tips" rel="nofollow">Debugging Tips</a> -- Tips on how to work on and debug applications using SlimDX. It&#x27;s a really good idea to be familiar with the contents of this page, and check on it every so often, because it is updated periodically.</li>
-				<li><a href="http://slimdx.mdxinfo.com/wiki/index.php?title=Release_Notes" rel="nofollow">Release Notes</a> -- In case you&#x27;re curious about the details of what exactly has changed.</li>
+				<li><a href="http://slimdx.org/latestdocs/Default.aspx?topic=SlimDX+Software+Development+Kit/Previous+Releases/November+2008" rel="nofollow">What&#x27;s Changed in the November 2008 SDK</a> -- Information on the work we did for the November 2008 SDK release.</li>
+				<li><a href="http://slimdx.org/wiki/index.php?title=Main_Page" rel="nofollow">SlimDX Main Page</a> -- The front page of our wiki. This page makes it fairly straightforward to get to all of the other pages related to this project, both in the wiki and outside of it.</li>
+				<li><a href="http://slimdx.org/wiki/index.php?title=Conventions" rel="nofollow">Conventions</a> -- Describes the basic conventions used in SlimDX. Invaluable for understanding many of the basic decisions driving development.</li>
+				<li><a href="http://slimdx.org/wiki/index.php?title=Debugging_Tips" rel="nofollow">Debugging Tips</a> -- Tips on how to work on and debug applications using SlimDX. It&#x27;s a really good idea to be familiar with the contents of this page, and check on it every so often, because it is updated periodically.</li>
+				<li><a href="http://slimdx.org/wiki/index.php?title=Release_Notes" rel="nofollow">Release Notes</a> -- In case you&#x27;re curious about the details of what exactly has changed.</li>
 				</ul>
 			</div>
 			
@@ -58,7 +59,7 @@
 	
 		<div id="right">
 			<ul class="sidemenu">
-				<li><a href="http://slimdx.mdxinfo.com/latestdocs/Default.aspx?topic=SlimDX+Software+Development+Kit/What's+Changed+in+the+November+2008+SDK">Release Notes</a></li>
+				<li><a href="http://slimdx.org/latestdocs/Default.aspx?topic=SlimDX+Software+Development+Kit/Previous+Releases/November+2008">Release Notes</a></li>
 				<li><a href="releases.php">Previous Releases</a></li>
 				<li><a href="license.php">Licensing Information</a></li>
 				<li><a href="http://slimdx.org/latestdocs/default.aspx">Documentation</a></li>
