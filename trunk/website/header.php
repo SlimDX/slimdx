@@ -20,7 +20,7 @@
 <div id="top1">
 	<div class="wrapper">
     	<div id="logo">
-        <a href="http://slimdx.org/new"><img src="images/logoblackbg.jpg" alt="SlimDX" /></a>
+        <a href="http://slimdx.org/"><img src="images/logoblackbg.jpg" alt="SlimDX" /></a>
         </div>
         
         <ul class="menu">
