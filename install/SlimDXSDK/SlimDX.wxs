@@ -106,8 +106,8 @@
                   <File Id="SlimDX.dll_x64_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\x64\SlimDX.dll"
                         KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x64_GAC">
                     <netfx:NativeImage Id="SlimDX_NGEN_x64" Priority="1" Platform="64bit" />
-                    <netfx:NativeImage Id="SlimDX_NGEN_x64_debug" Priority="2" Platform="64bit" Debug="yes" />
-                    <netfx:NativeImage Id="SlimDX_NGEN_x64_profile" Priority="2" Platform="64bit" Profile="yes" />
+                    <!--<netfx:NativeImage Id="SlimDX_NGEN_x64_debug" Priority="2" Platform="64bit" Debug="yes" />
+                    <netfx:NativeImage Id="SlimDX_NGEN_x64_profile" Priority="2" Platform="64bit" Profile="yes" />-->
                   </File>
                 </Component>
               </Directory>
@@ -126,8 +126,8 @@
                   <File Id="SlimDX.dll_x86_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\x86\SlimDX.dll"
                         KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x86_GAC">
                     <netfx:NativeImage Id="SlimDX_NGEN_x86" Priority="1" Platform="32bit" />
-                    <netfx:NativeImage Id="SlimDX_NGEN_x86_debug" Priority="2" Platform="32bit" Debug="yes" />
-                    <netfx:NativeImage Id="SlimDX_NGEN_x86_profile" Priority="2" Platform="32bit" Profile="yes" />
+                    <!--<netfx:NativeImage Id="SlimDX_NGEN_x86_debug" Priority="2" Platform="32bit" Debug="yes" />
+                    <netfx:NativeImage Id="SlimDX_NGEN_x86_profile" Priority="2" Platform="32bit" Profile="yes" />-->
                   </File>
                 </Component>
               </Directory>
@@ -622,13 +622,6 @@
                 <File Id="Samples_SampleFrameworkSampleFramework.csproj" Name="SampleFramework.csproj" Source="..\..\publish\Samples\SampleFramework\SampleFramework.csproj" />
                 <File Id="Samples_SampleFrameworkSampleFramework.dll" Name="SampleFramework.dll" Source="..\..\publish\Samples\SampleFramework\SampleFramework.dll" />
               </Component>
-              <Directory Id="Samples_SampleFramework_Bin" Name="Bin">
-                <Directory Id="Samples_SampleFramework_Bin_Release" Name="Release">
-                  <Component Id="Samples_SampleFramework_Bin_Release" DiskId="1" Guid="83d46ce5-6ce0-4ff7-9867-8583cfffe5ea">
-                    <File Id="Samples_SampleFramework_Bin_Release_SampleFramework.dll" Name="SampleFramework.dll" Source="..\..\publish\Samples\SampleFramework\bin\Release\SampleFramework.dll" />
-                  </Component>
-                </Directory>
-              </Directory>
               <Directory Id="Samples_SampleFramework_Components" Name="Components">
                 <Component Id="Samples_SampleFramework_Components" DiskId="1" Guid="518ec13e-67f0-4c74-9a78-8a42a86918a2">
                   <File Id="Samples_SampleFramework_ComponentsGameComponentCollection.cs" Name="GameComponentCollection.cs" Source="..\..\publish\Samples\SampleFramework\Components\GameComponentCollection.cs" />
@@ -848,7 +841,6 @@
       <ComponentRef Id="Samples_RawInput_MouseRI" />
       <ComponentRef Id="Samples_RawInput_MouseRI_Properties" />
       <ComponentRef Id="Samples_SampleFramework" />
-      <ComponentRef Id="Samples_SampleFramework_Bin_Release" />
       <ComponentRef Id="Samples_SampleFramework_Core" />
       <ComponentRef Id="Samples_SampleFramework_Components" />
       <ComponentRef Id="Samples_SampleFramework_DeviceSettings" />
