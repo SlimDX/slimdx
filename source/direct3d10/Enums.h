@@ -42,7 +42,19 @@ namespace SlimDX
 		[System::Flags]
 		public enum class AsynchronousFlags : System::Int32
 		{
+			/// <summary>
+			/// Indicates no specific behavior.
+			/// </summary>
 			None = 0,
+
+			/// <summary>
+			/// Indicates the command buffer should not be flushed.
+			/// Note that this can cause an infinite loop if GetData() is called repeatedly until 
+			/// returning successfully: there may still be commands in the buffer than need
+			/// to be processed in order for GetData() to return successfully. Since the buffer 
+			/// will not be flushed, those commands will not be processed and GetData() will never
+			/// return successfully.
+			/// </summary>
 			DoNotFlush = D3D10_ASYNC_GETDATA_DONOTFLUSH
 		};
 		
@@ -51,13 +63,46 @@ namespace SlimDX
 		[System::Flags]
 		public enum class BindFlags : System::Int32
 		{
+			/// <summary>
+			/// Indicates no specific behavior.
+			/// </summary>
 			None = 0,
+
+			/// <summary>
+			/// Indicates the resource can be bound to the input-assembler stage as a vertex buffer. 
+			/// </summary>
 			VertexBuffer = D3D10_BIND_VERTEX_BUFFER,
+			
+			/// <summary>
+			/// Indicates the resource can be bound to the input-assembler stage as an index buffer 
+			/// </summary>
 			IndexBuffer = D3D10_BIND_INDEX_BUFFER,
+
+			/// <summary>
+			/// Indicates the resource can be bound to the shader stage as a constant buffer 
+			/// </summary>
 			ConstantBuffer = D3D10_BIND_CONSTANT_BUFFER,
+
+			/// <summary>
+			/// Indicates the resource can be bound to the shader stage as a buffer or texture. 
+			/// Note that it is invalid to specify this flag and subsequently map the resource
+			/// using MapMode.WriteNoOverwrite.
+			/// </summary>
 			ShaderResource = D3D10_BIND_SHADER_RESOURCE, 
+
+			/// <summary>
+			/// Indicates the resource can be bound to the stream-output stage as an output buffer. 
+			/// </summary>
 			StreamOutput = D3D10_BIND_STREAM_OUTPUT,
+
+			/// <summary>
+			/// Indicates the resource can be bound to the output-merger stage as a render target. 
+			/// </summary>
 			RenderTarget = D3D10_BIND_RENDER_TARGET,
+
+			/// <summary>
+			/// Indicates the resource can be bound to the output-merger stage as a depth-stencil target. 
+			/// </summary>
 			DepthStencil = D3D10_BIND_DEPTH_STENCIL
 		};
 		
