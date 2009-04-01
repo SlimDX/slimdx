@@ -1,6 +1,6 @@
 #summary SlimDX -- March 2009 Release
 = Introduction =
-It's recommended that you visit our official [http://slimdx.org/download.php Download page] instead of using this page.
+It's recommended that you visit our official [http://slimdx.org/download.php Download page] instead of using this page. *Due to corrupted 64 bit binaries in the initial release, we are releasing a patched version of the March release to fix these problems. If you are on a 64 bit system, please uninstall SlimDX March and then install this version instead.*
 
 The March 2009 release of SlimDX is now out! This is a major release in terms of new functionality and improvements behind the scenes. Many missing corners were filled in, and several usability enhancements were made across the library on top of the standard array of bug fixes. A new DLL containing beta-level technologies, such as Direct2D and Direct3D 11, was added to showcase developing APIs. These APIs will be moved into the core SlimDX DLL once they are given a full release by Microsoft. Until then, they should be viewed as previews, and should not be used for products that expect stable behavior.
 
