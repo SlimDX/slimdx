@@ -24,7 +24,7 @@
 			You can also try and get a hold of us on IRC, in the #graphicsdev channel on <a href="http://www.afternet.org/">AfterNET</a>.			
 			Lastly, be sure to check us out on <a href="http://twitter.com/SlimDX">Twitter</a>!
 			<br /><br />
-			Last but not least, the SlimDX team is now accepting donations, and offering support contracts as well.
+			Last but not least, the <b>SlimDX team is now accepting donations</b>, and offering support contracts as well.
 			Developing SlimDX takes a lot of time and work, alongside our normal lives.
 			By donating or purchasing contracts, you will ensure that the project continues to thrive and serve all its users as much as possible.
 			For more information, please visit the <a href="support.php">Support page</a>.

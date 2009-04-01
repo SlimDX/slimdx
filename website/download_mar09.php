@@ -8,11 +8,15 @@
 <div id="content">
 	<div class="wrapper">
 		<div id="left">
-			<h1>March 2009</h1>
+			<h1>March 2009 SP1</h1>
 			<div class="paragraph">
 				<h2>Introduction</h2>
 				<p>
-				The March 2009 release of SlimDX is now out!
+				The March 2009 SP1 release of SlimDX is now out!
+				<b>Due to corrupted 64 bit binaries in the initial release, we are releasing a patched version of the March release to fix these problems.
+				If you are on a 64 bit system, please <i>uninstall</i> SlimDX March and then install this version instead.</b>
+				</p><br />
+				<p>
 				This is a major release in terms of new functionality and improvements behind the scenes.
 				Many missing corners were filled in, and several usability enhancements were made across the library on top of the standard array of bug fixes.
 				A new DLL containing beta-level technologies, such as Direct2D and Direct3D11, was added to showcase developing APIs.
@@ -38,7 +42,7 @@
 				However, developers should install the SDK below, not this package.
 				See the documentation for more information.
 				</p><br />
-				<a href="http://slimdx.googlecode.com/files/slimdx_mar09.msi"><img src="images/latest.jpg" alt="Latest User Runtime" /></a>
+				<a href="http://slimdx.googlecode.com/files/SlimDX%20Runtime%20%28March%202009%20SP1%29.msi"><img src="images/latest.jpg" alt="Latest User Runtime" /></a>
 			</div>
 			
 			<div class="paragraph">
@@ -50,7 +54,7 @@
 				It also includes all of the files necessary to build custom installation packages if desired.
 				The SDK supports both 32 bit and 64 bit systems.
 				</p><br />
-				<a href="http://slimdx.googlecode.com/files/SlimDX%20SDK%20%28March%202009%29.exe"><img src="images/latest.jpg" alt="Latest Developer SDK" /></a>
+				<a href="http://slimdx.googlecode.com/files/SlimDX%20SDK%20%28March%202009%20SP1%29.exe"><img src="images/latest.jpg" alt="Latest Developer SDK" /></a>
 			</div>
 			
 			<div class="paragraph">
