@@ -6161,6 +6161,10 @@
 			>
 		</File>
 		<File
+			RelativePath=".\ReleaseNotes.txt"
+			>
+		</File>
+		<File
 			RelativePath="..\source\stdafx.h"
 			>
 		</File>
