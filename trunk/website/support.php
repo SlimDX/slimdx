@@ -20,7 +20,16 @@
 			SlimDX is over 150,000 lines of code, and that takes real time and effort to build outside of our normal lives.
 			By donating, you help to support us, support the project, and ensure that the library continues to thrive.
 			We don't request any specific minimum or maximum values for donations; all contributions are appreciated!
-			If you would prefer to mail a check, please e-mail <tt>promit ~dot~ roy ~at~ gmail.com</tt> directly to get an address.
+			If you would prefer to mail a check, please e-mail <tt>promit /dot\ roy \at/ gmail.com</tt> directly to get an address.
+			</p><br />
+			<p>
+			Alternately, we are very interested in computer hardware donations.
+			Implementing the latest and greatest in DirectX technology requires us to have the latest in computer hardware, and we simply can't afford it.
+			For example, nobody on the SlimDX team currently has a 64 bit system OR DirectX 10.1 hardware.
+			SlimDX releases mainly are done on a dual core Athlon64 with 2 GB of RAM; it can just barely run a virtual machine while compiling.
+			Point is, if you have access to high end hardware that you can donate, used or new, we'd be very glad to have it because frankly it's getting very difficult to continue with our machines.
+			Again, if you think you can help, send an e-mail and we'll figure out the details.
+			Thank you!
 			</p>
 		</div>
 		
@@ -31,7 +40,7 @@
 			Purchasing a support contract will help support the SlimDX project, but also provides you a range of benefits.
 			Contract customers are entitled to direct e-mail and phone support with guaranteed response times.
 			You may also be eligible for special services such as customized builds, custom documentation, and more.
-			Please contact us directly for pricing details by e-mailing <tt>promit ~dot~ roy ~at~ gmail.com</tt>.
+			Please contact us directly for pricing details by e-mailing <tt>promit /dot\ roy \at/ gmail.com</tt>.
 			Don't forget to identify your company for us!
 			</p>
 		</div>
@@ -41,7 +50,7 @@
 			<p>
 			As a result of working on SlimDX, the SlimDX team posesses unparalleled expertise in interoperability between native and managed environments.
 			We are willing to offer our skills on a contract basis for any client, whether or not the work is SlimDX related.
-			Please contact us directly for pricing details by e-mailing <tt>promit ~dot~ roy ~at~ gmail.com</tt>.
+			Please contact us directly for pricing details by e-mailing <tt>promit /dot\ roy \at/ gmail.com</tt>.
 			Note that our ability to provide consulting services is limited by time and we may not be able to accept all jobs.
 			</p>
 		</div>
