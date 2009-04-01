@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -20,51 +19,25 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+
+#define XAUDIO2_HELPER_FUNCTIONS
+
+#include <windows.h>
+#include <vcclr.h>
+
 #include <d3d9.h>
 #include <d3dx9.h>
+#include <dxgi.h>
+#include <d3d10.h>
+#include <d3dx10.h>
+#include <dsound.h>
+#include <dinput.h>
+#include <xinput.h>
+#include <xaudio2.h>
+#include <x3daudio.h>
+#include <audiodefs.h>
+#include <xapo.h>
 
-#include "ClipStatus.h"
-
-using namespace System;
-
-namespace SlimDX
-{
-namespace Direct3D9
-{
-	bool ClipStatus::operator == ( ClipStatus left, ClipStatus right )
-	{
-		return ClipStatus::Equals( left, right );
-	}
-
-	bool ClipStatus::operator != ( ClipStatus left, ClipStatus right )
-	{
-		return !ClipStatus::Equals( left, right );
-	}
-
-	int ClipStatus::GetHashCode()
-	{
-		return ClipUnion.GetHashCode() + ClipIntersection.GetHashCode();
-	}
-
-	bool ClipStatus::Equals( Object^ value )
-	{
-		if( value == nullptr )
-			return false;
-
-		if( value->GetType() != GetType() )
-			return false;
-
-		return Equals( safe_cast<ClipStatus>( value ) );
-	}
-
-	bool ClipStatus::Equals( ClipStatus value )
-	{
-		return ( ClipUnion == value.ClipUnion && ClipIntersection == value.ClipIntersection );
-	}
-
-	bool ClipStatus::Equals( ClipStatus% value1, ClipStatus% value2 )
-	{
-		return ( value1.ClipUnion == value2.ClipUnion && value1.ClipIntersection == value2.ClipIntersection );
-	}
-}
-}
+#include <string>
+#include <memory>
+#include <vector>

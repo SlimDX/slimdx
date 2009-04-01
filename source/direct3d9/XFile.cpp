@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -21,6 +22,9 @@
 */
 #include <d3d9.h>
 #include <d3dx9.h>
+
+// rmxftmpl.h defines a global unsigned char array and can only be included once
+// per project, or multiple-definition errors will occur at link time.
 #include <rmxftmpl.h>
 
 #include "../ComObject.h"
