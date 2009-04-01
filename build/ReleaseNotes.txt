@@ -1,0 +1,2 @@
+Direct3D 9
+	* Fixed a bug that caused AdapterDetails.GetCertification to throw when the adapter wasn't certified.
