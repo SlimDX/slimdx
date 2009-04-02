@@ -44,6 +44,9 @@ namespace SlimDX
 			DataStream^ Lock( int offset, int sizeBytes, bool lockEntireBuffer, [Out] DataStream^% secondPart );
 			Result Unlock( DataStream^ firstPart, DataStream^ secondPart );
 
+			generic<typename T> where T : value class
+			Result InternalRead( array<T>^ data, int startIndex, int count, int bufferOffset, bool lockEntireBuffer );
+
 		public:
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::DirectSound::CaptureBuffer"/> class.
@@ -63,7 +66,7 @@ namespace SlimDX
 			array<CaptureEffectResult>^ GetEffectStatus( int effectCount );
 
 			generic<typename T> where T : value class
-			Result Read( array<T>^ data, int startIndex, int count, int bufferOffset, bool lockEntireBuffer );
+			Result Read( array<T>^ data, int startIndex, int count, int bufferOffset );
 
 			generic<typename T> where T : value class
 			Result Read( array<T>^ data, int bufferOffset, bool lockEntireBuffer );

@@ -113,11 +113,17 @@ namespace DirectSound
 	generic<typename T>
 	Result CaptureBuffer::Read( array<T>^ data, int bufferOffset, bool lockEntireBuffer )
 	{
-		return Read( data, 0, 0, bufferOffset, lockEntireBuffer );
+		return InternalRead( data, 0, 0, bufferOffset, lockEntireBuffer );
 	}
 
 	generic<typename T>
-	Result CaptureBuffer::Read( array<T>^ data, int startIndex, int count, int bufferOffset, bool lockEntireBuffer )
+	Result CaptureBuffer::Read( array<T>^ data, int startIndex, int count, int bufferOffset )
+	{
+		return InternalRead( data, startIndex, count, bufferOffset, false );
+	}
+
+	generic<typename T>
+	Result CaptureBuffer::InternalRead( array<T>^ data, int startIndex, int count, int bufferOffset, bool lockEntireBuffer )
 	{
 		Utilities::CheckArrayBounds( data, startIndex, count );
 		int bytes = static_cast<int>(sizeof(T) * count);
