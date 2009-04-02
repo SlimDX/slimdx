@@ -1,4 +1,4 @@
-﻿/*
+/*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,15 +19,40 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SlimMath;
 
-namespace TestConsole {
-	class Program {
-		static unsafe void Main(string[] args) {
-		}
-	}
+namespace SlimMath {
+	[System::Serializable]
+	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential, Pack = 4)]
+	public value class Matrix {
+	public:
+		float M11;
+		float M12;
+		float M13;
+		float M14;
+
+		float M21;
+		float M22;
+		float M23;
+		float M24;
+
+		float M31;
+		float M32;
+		float M33;
+		float M34;
+
+		float M41;
+		float M42;
+		float M43;
+		float M44;
+	};
+
+	[System::Serializable]
+	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential, Pack = 4)]
+	public value class Vector {
+	public:
+		float X;
+		float Y;
+		float Z;
+		float W;
+	};
 }
