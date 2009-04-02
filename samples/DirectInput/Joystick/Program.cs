@@ -22,7 +22,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Joystick
+namespace JoystickTest
 {
     static class Program
     {

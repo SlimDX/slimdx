@@ -116,8 +116,8 @@ namespace MouseTest
             if (mouse.Poll().IsFailure)
                 return;
 
-            IEnumerable<MouseState> bufferedData = mouse.GetBufferedData();
-            if (Result.Last.IsFailure || bufferedData == null)
+            IList<MouseState> bufferedData = mouse.GetBufferedData();
+            if (Result.Last.IsFailure || bufferedData.Count == 0)
                 return;
 
             StringBuilder data = new StringBuilder();
@@ -136,7 +136,7 @@ namespace MouseTest
                 data.Append(" B");
                 data.Append(i);
                 data.Append("=");
-                if(bufferedData.GetEnumerator().Current.IsPressed(i))
+                if (bufferedData[bufferedData.Count - 1].IsPressed(i))
                     data.Append("1");
                 else
                     data.Append("0");

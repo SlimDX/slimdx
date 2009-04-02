@@ -1,4 +1,4 @@
-namespace Joystick
+namespace JoystickTest
 {
     partial class MainForm
     {

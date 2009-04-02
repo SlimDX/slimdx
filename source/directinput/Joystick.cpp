@@ -30,7 +30,7 @@
 #include "DirectInput.h"
 #include "DirectInputException.h"
 
-#include "Mouse.h"
+#include "Joystick.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -40,99 +40,90 @@ namespace SlimDX
 {
 namespace DirectInput
 {
-	MouseState^ CreateMouseState( const DIDEVICEOBJECTDATA &objectData )
+	JoystickState^ CreateJoystickState( const DIDEVICEOBJECTDATA &objectData )
 	{
-		MouseState^ result = gcnew MouseState( 0, 0, 0 );
+		JoystickState^ result = gcnew JoystickState();
 
 		switch( objectData.dwOfs )
 		{
-		case DIMOFS_BUTTON0:
-			if( objectData.dwData )
-				result->pressedButtons[0] = true;
-			else
-				result->releasedButtons[0] = true;
+		case DIJOFS_RX:
+			result->rx = objectData.dwData;
 			break;
 
-		case DIMOFS_BUTTON1:
-			if( objectData.dwData )
-				result->pressedButtons[1] = true;
-			else
-				result->releasedButtons[1] = true;
+		case DIJOFS_RY:
+			result->ry = objectData.dwData;
 			break;
 
-		case DIMOFS_BUTTON2:
-			if( objectData.dwData )
-				result->pressedButtons[2] = true;
-			else
-				result->releasedButtons[2] = true;
+		case DIJOFS_RZ:
+			result->rz = objectData.dwData;
 			break;
 
-		case DIMOFS_BUTTON3:
-			if( objectData.dwData )
-				result->pressedButtons[3] = true;
-			else
-				result->releasedButtons[3] = true;
+		case DIJOFS_X:
+			result->x = objectData.dwData;
 			break;
 
-		case DIMOFS_BUTTON4:
-			if( objectData.dwData )
-				result->pressedButtons[4] = true;
-			else
-				result->releasedButtons[4] = true;
+		case DIJOFS_Y:
+			result->y = objectData.dwData;
 			break;
 
-		case DIMOFS_BUTTON5:
-			if( objectData.dwData )
-				result->pressedButtons[5] = true;
-			else
-				result->releasedButtons[5] = true;
+		case DIJOFS_Z:
+			result->z = objectData.dwData;
 			break;
 
-		case DIMOFS_BUTTON6:
-			if( objectData.dwData )
-				result->pressedButtons[6] = true;
-			else
-				result->releasedButtons[6] = true;
+		case DIJOFS_SLIDER( 0 ):
+			result->sliders[0] = objectData.dwData;
 			break;
 
-		case DIMOFS_BUTTON7:
-			if( objectData.dwData )
-				result->pressedButtons[7] = true;
-			else
-				result->releasedButtons[7] = true;
+		case DIJOFS_SLIDER( 1 ):
+			result->sliders[1] = objectData.dwData;
 			break;
 
-		case DIMOFS_X:
-			result->X = objectData.dwData;
-			break;
+		default:
+			bool found = false;
+			for( unsigned int i = 0; i < 4; i++ )
+			{
+				if( objectData.dwOfs == DIJOFS_POV( i ) )
+				{
+					result->povs[i] = objectData.dwData;
+					found = true;
+					break;
+				}
+			}
 
-		case DIMOFS_Y:
-			result->Y = objectData.dwData;
-			break;
-
-		case DIMOFS_Z:
-			result->Z = objectData.dwData;
-			break;
+			if( !found )
+			{
+				for( unsigned int i = 0; i < 128; i++ )
+				{
+					if( objectData.dwOfs == DIJOFS_BUTTON( i ) )
+					{
+						if( objectData.dwData )
+							result->pressedButtons[i] = true;
+						else
+							result->releasedButtons[i] = true;
+						break;
+					}
+				}
+			}
 		}
 
 		return result;
 	}
 
-	Mouse::Mouse( DirectInput^ directInput ) : Device( directInput, Utilities::ConvertNativeGuid( GUID_SysMouse ) )
+	Joystick::Joystick( DirectInput^ directInput, Guid subsystem ) : Device( directInput, subsystem )
 	{
-		HRESULT hr = InternalPointer->SetDataFormat( &c_dfDIMouse2 );
+		HRESULT hr = InternalPointer->SetDataFormat( &c_dfDIJoystick2 );
 		if( RECORD_DINPUT( hr ).IsFailure )
 			throw gcnew DirectInputException( Result::Last );
 	}
 
-	IList<MouseState^>^ Mouse::GetBufferedData()
+	IList<JoystickState^>^ Joystick::GetBufferedData()
 	{
 		DWORD size = INFINITE;
 		HRESULT hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), NULL, &size, DIGDD_PEEK );
 		if( RecordError( hr ).IsFailure )
 			return nullptr;
 
-		List<MouseState^>^ list = gcnew List<MouseState^>( size );
+		List<JoystickState^>^ list = gcnew List<JoystickState^>( size );
 		if( size == 0 )
 			return list;
 
@@ -145,34 +136,34 @@ namespace DirectInput
 			return list;
 
 		for( unsigned int i = 0; i < size; i++ )
-			list->Add( CreateMouseState( data[i] ) );
+			list->Add( CreateJoystickState( data[i] ) );
 
 		return list;
 	}
 
-	Result Mouse::GetCurrentState( MouseState^% data )
+	Result Joystick::GetCurrentState( JoystickState^% data )
 	{
-		DIMOUSESTATE2 state;
-		HRESULT hr = InternalPointer->GetDeviceState( sizeof( DIMOUSESTATE2 ), &state );
+		DIJOYSTATE2 joystate;
+		HRESULT hr = InternalPointer->GetDeviceState( sizeof( DIJOYSTATE2 ), &joystate );
 		if( RecordError( hr ).IsFailure )
 			return Result::Last;
 
-		MouseState^ result = safe_cast<MouseState^>( data );
-		result->AssignState(state);
+		JoystickState^ state = safe_cast<JoystickState^>( data );
+		state->AssignState(joystate);
 
 		return Result::Last;
 	}
 
-	MouseState^ Mouse::GetCurrentState()
+	JoystickState^ Joystick::GetCurrentState()
 	{
-		MouseState^ result = gcnew MouseState();
+		JoystickState^ result = gcnew JoystickState();
 		GetCurrentState( result );
 		return result;
 	}
 
-	ObjectProperties^ Mouse::GetObjectPropertiesByName( String^ name )
+	ObjectProperties^ Joystick::GetObjectPropertiesByName( String^ name )
 	{
-		return gcnew ObjectProperties( InternalPointer, name, MouseState::typeid );
+		return gcnew ObjectProperties( InternalPointer, name, JoystickState::typeid );
 	}
 }
 }
