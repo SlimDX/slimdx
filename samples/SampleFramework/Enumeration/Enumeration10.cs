@@ -231,7 +231,7 @@ namespace SampleFramework
 
             for (int i = 0; i < GraphicsDeviceManager.Factory.GetAdapterCount(); i++)
             {
-                Adapter adapter = GraphicsDeviceManager.Factory.GetAdapter(i);
+                Adapter adapter = (Adapter)GraphicsDeviceManager.Factory.GetAdapter(i);
 
                 AdapterInfo10 adapterInfo = new AdapterInfo10();
                 adapterInfo.AdapterOrdinal = i;
@@ -283,7 +283,7 @@ namespace SampleFramework
         {
             for (int i = 0; i < adapterInfo.Adapter.GetOutputCount(); i++)
             {
-                Output output = adapterInfo.Adapter.GetOutput(i);
+                Output output = (Output)adapterInfo.Adapter.GetOutput(i);
 
                 OutputInfo10 outputInfo = new OutputInfo10();
                 outputInfo.OutputDescription = output.Description;
@@ -355,7 +355,7 @@ namespace SampleFramework
                     SlimDX.DXGI.Device dxgiDevice = new SlimDX.DXGI.Device(device);
                     if (adapterInfo.Adapter != null)
                         adapterInfo.Adapter.Dispose();
-                    adapterInfo.Adapter = dxgiDevice.Adapter;
+                    adapterInfo.Adapter = (Adapter)dxgiDevice.Adapter;
                     dxgiDevice.Dispose();
                 }
 
@@ -420,7 +420,7 @@ namespace SampleFramework
         {
             Adapter adapter = null;
             if (combo.DriverType == DriverType.Hardware)
-                adapter = GraphicsDeviceManager.Factory.GetAdapter(combo.AdapterOrdinal);
+                adapter = (Adapter)GraphicsDeviceManager.Factory.GetAdapter(combo.AdapterOrdinal);
             SlimDX.Direct3D10.Device device;
 
             try

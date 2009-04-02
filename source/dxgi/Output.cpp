@@ -111,14 +111,14 @@ namespace DXGI
 		return RECORD_DXGI( InternalPointer->SetGammaControl( &nativeControl ) );
 	}
 	
-	Result Output::SetDisplaySurface( Surface^ surface )
+	Result Output::SetDisplaySurface( ISurface^ surface )
 	{
 		if( surface == nullptr )
 			throw gcnew System::ArgumentNullException( "surface" );
 		return RECORD_DXGI( InternalPointer->SetDisplaySurface( surface->InternalPointer ) );
 	}
 	
-	Result Output::CopyDisplaySurfaceTo( Surface^ surface )
+	Result Output::CopyDisplaySurfaceTo( ISurface^ surface )
 	{
 		if( surface == nullptr )
 			throw gcnew System::ArgumentNullException( "surface" );

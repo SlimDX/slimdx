@@ -20,10 +20,6 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <d3d10.h>
-#include <d3dx10.h>
-
 #include "DXGIException.h"
 
 #include "Factory.h"
@@ -41,7 +37,7 @@ namespace SlimDX
 {
 namespace DXGI
 { 	
-	SwapChain::SwapChain( Factory^ factory, ComObject^ device, SwapChainDescription description )
+	SwapChain::SwapChain( IFactory^ factory, ComObject^ device, SwapChainDescription description )
 	{
 		if( factory == nullptr )
 			throw gcnew ArgumentNullException( "factory" );
@@ -86,7 +82,7 @@ namespace DXGI
 		return result;
 	}
 	
-	Output^ SwapChain::ContainingOutput::get()
+	IOutput^ SwapChain::ContainingOutput::get()
 	{
 		IDXGIOutput* output = 0;
 		if( RECORD_DXGI( InternalPointer->GetContainingOutput( &output ) ).IsFailure )
@@ -115,7 +111,7 @@ namespace DXGI
 		return result;
 	}
 
-	Result SwapChain::GetFullScreenState( bool% isFullScreen, Output^% target )
+	Result SwapChain::GetFullScreenState( bool% isFullScreen, IOutput^% target )
 	{
 		BOOL result = false;
 		IDXGIOutput* output = 0;
@@ -131,7 +127,7 @@ namespace DXGI
 		return Result::Last;
 	}
 	
-	Result SwapChain::SetFullScreenState( bool isFullScreen, Output^ target )
+	Result SwapChain::SetFullScreenState( bool isFullScreen, IOutput^ target )
 	{
 		IDXGIOutput* output = target == nullptr ? 0 : target->InternalPointer;
 		return RECORD_DXGI( InternalPointer->SetFullscreenState( isFullScreen, output ) );

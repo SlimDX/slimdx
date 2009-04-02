@@ -19,12 +19,21 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#if !BOOST_PP_IS_ITERATING
+#ifndef SLIMDX_DXGI_SURFACE_
+#define SLIMDX_DXGI_SURFACE_
 
 #include "../ComObject.h"
 
 #include "DeviceChild.h"
 #include "Enums.h"
+
+#define BOOST_PP_FILENAME_1 "Surface.h"
+#include "../InterfaceSetup.h"
+#endif
+#else
+#include "../InterfaceBegin.h"
+#include "../ComObjectMacros.h"
 
 namespace SlimDX
 {
@@ -39,9 +48,9 @@ namespace SlimDX
 		/// A <see cref="Surface"/> implements methods for image-data objects.
 		/// </summary>
 		/// <unmanaged>IDXGISurface</unmanaged>
-		public ref class Surface : public DeviceChild
+		SDX_COM_SUBCLASS(Surface, DeviceChild)
 		{
-			COMOBJECT(IDXGISurface, Surface);
+			COMOBJECT_INTERFACE(IDXGISurface, Surface);
 
 		public:
 			/// <summary>
@@ -49,7 +58,7 @@ namespace SlimDX
 			/// </summary>
 			property SurfaceDescription Description
 			{
-				SurfaceDescription get();
+				SDX_METHOD(SurfaceDescription get());
 			}
 
 			/// <summary>
@@ -57,13 +66,16 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="flags">Flags specifying CPU access permissions.</param>
 			/// <returns>A <see cref="SlimDX::DataRectangle"/> for accessing the mapped data, or <c>null</c> on failure.</returns>.
-			DataRectangle^ Map( MapFlags flags );
+			SDX_METHOD(DataRectangle^ Map( MapFlags flags ));
 			
 			/// <summary>
 			/// Relinquishes access to the surface data.
 			/// </summary>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result Unmap();
+			SDX_METHOD(Result Unmap());
 		};
 	}
 };
+
+#include "../InterfaceEnd.h"
+#endif

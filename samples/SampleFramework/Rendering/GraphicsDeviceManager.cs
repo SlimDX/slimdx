@@ -521,7 +521,7 @@ namespace SampleFramework
             else
             {
                 bool fullscreen;
-                Output output;
+                IOutput output;
                 Direct3D10.SwapChain.GetFullScreenState(out fullscreen, out output);
                 ResizeDXGIBuffers(0, 0, fullscreen);
                 game.Window.Show();
@@ -668,7 +668,7 @@ namespace SampleFramework
 
                     Adapter adapter = null;
                     if (CurrentSettings.Direct3D10.DriverType == DriverType.Hardware)
-                        adapter = Factory.GetAdapter(CurrentSettings.Direct3D10.AdapterOrdinal);
+                        adapter = (Adapter)Factory.GetAdapter(CurrentSettings.Direct3D10.AdapterOrdinal);
                     Direct3D10.Device = new SlimDX.Direct3D10.Device(adapter, CurrentSettings.Direct3D10.DriverType, CurrentSettings.Direct3D10.CreationFlags);
 
                     if (adapter != null)

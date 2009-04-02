@@ -21,8 +21,6 @@
 * THE SOFTWARE.
 */
 
-#include <dxgi.h>
-
 #include "DXGIException.h"
 
 #include "Adapter.h"
@@ -59,7 +57,7 @@ namespace DXGI
 		return count;
 	}
 
-	Adapter^ Factory::GetAdapter( int index )
+	IAdapter^ Factory::GetAdapter( int index )
 	{
 		IDXGIAdapter* adapter = 0;
 		RECORD_DXGI( InternalPointer->EnumAdapters( index, &adapter) );
@@ -68,7 +66,7 @@ namespace DXGI
 		return Adapter::FromPointer( adapter );
 	}
 	
-	Adapter^ Factory::CreateSoftwareAdapter( IntPtr module )
+	IAdapter^ Factory::CreateSoftwareAdapter( IntPtr module )
 	{
 		if( module == IntPtr::Zero )
 			throw gcnew ArgumentNullException( "module" );
@@ -82,7 +80,7 @@ namespace DXGI
 		return Adapter::FromPointer( adapter );
 	}
 	
-	Adapter^ Factory::CreateSoftwareAdapter( Module^ module )
+	IAdapter^ Factory::CreateSoftwareAdapter( Module^ module )
 	{
 		return CreateSoftwareAdapter( Marshal::GetHINSTANCE( module ) );
 	}

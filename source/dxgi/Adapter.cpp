@@ -20,9 +20,6 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <dxgi.h>
-
 #include "DXGIException.h"
 
 #include "Adapter.h"
@@ -58,7 +55,7 @@ namespace DXGI
 		return count;
 	}
 	
-	Output^ Adapter::GetOutput( int index )
+	IOutput^ Adapter::GetOutput( int index )
 	{
 		IDXGIOutput* output = 0;
 		RECORD_DXGI( InternalPointer->EnumOutputs( index, &output) );

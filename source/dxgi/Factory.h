@@ -19,45 +19,49 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#if !BOOST_PP_IS_ITERATING
+#ifndef SLIMDX_DXGI_FACTORY_
+#define SLIMDX_DXGI_FACTORY_
 
 #include "../ComObject.h"
 
 #include "Enums.h"
 
+#define BOOST_PP_FILENAME_1 "Factory.h"
+#include "../InterfaceSetup.h"
+#endif
+#else
+#include "../InterfaceBegin.h"
+#include "../ComObjectMacros.h"
+
 namespace SlimDX
 {
 	namespace DXGI
 	{
-		ref class Adapter;
-		
-		/// <summary>
-		/// Provides access to connected adapters and window associations. A <see cref="Factory"/>
-		/// is also required to create most DXGI objects.
-		/// </summary>
-		/// <unmanaged>IDXGIFactory</unmanaged>
-		public ref class Factory : public ComObject
+		interface struct IAdapter;
+
+		SDX_COM_CLASS(Factory)
 		{
-			COMOBJECT(IDXGIFactory, Factory);
+			COMOBJECT_INTERFACE(IDXGIFactory, Factory);
 			
 		public:
 			/// <summary>
 			/// Initializes a new instance of the <see cref="Factory"/> class.
 			/// </summary>
-			Factory();
+			SDX_METHOD_CONCRETE(Factory());
 			
 			/// <summary>
 			/// Gets the number of available adapters.
 			/// </summary>
 			/// <returns>The number of available adapters.</returns>
-			int GetAdapterCount();
+			SDX_METHOD(int GetAdapterCount());
 			
 			/// <summary>
 			/// Gets the specified adapter.
 			/// </summary>
 			/// <param name="index">The index of the desired adapter.</param>
 			/// <returns>The specified adapter, or <c>null</c> on failure.</returns>
-			Adapter^ GetAdapter( int index );
+			SDX_METHOD(IAdapter^ GetAdapter( int index ));
 		
 			/// <summary>
 			/// Creates a software adapater interface.
@@ -65,7 +69,7 @@ namespace SlimDX
 			/// <param name="module">The unmanaged HMODULE for the software adapter DLL.</param>
 			/// <returns>The specified adapter, or <c>null</c> on failure.</returns>
 			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
-			Adapter^ CreateSoftwareAdapter( System::IntPtr module );
+			SDX_METHOD(IAdapter^ CreateSoftwareAdapter( System::IntPtr module ));
 			
 			/// <summary>
 			/// Creates a software adapater interface.
@@ -73,14 +77,14 @@ namespace SlimDX
 			/// <param name="module">The module for the software adapter DLL.</param>
 			/// <returns>The specified adapter, or <c>null</c> on failure.</returns>
 			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
-			Adapter^ CreateSoftwareAdapter( System::Reflection::Module^ module );
+			SDX_METHOD(IAdapter^ CreateSoftwareAdapter( System::Reflection::Module^ module ));
 			
 			/// <summary>
 			/// Gets the window handle associated with the factory (the window through which the user signals fullscreen
 			/// transitions).
 			/// </summary>
 			/// <returns>The window handle.</returns>
-			System::IntPtr GetWindowAssociation();
+			SDX_METHOD(System::IntPtr GetWindowAssociation());
 			
 			/// <summary>
 			/// Sets the window handle associated with the factory (the window through which the user signals fullscreen
@@ -89,7 +93,10 @@ namespace SlimDX
 			/// <param name="handle">The window handle.</param>
 			/// <param name="flags">Flags controlling window association behavior.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result SetWindowAssociation( System::IntPtr handle, WindowAssociationFlags flags );
+			SDX_METHOD(Result SetWindowAssociation( System::IntPtr handle, WindowAssociationFlags flags ));
 		};
 	}
 };
+
+#include "../InterfaceEnd.h"
+#endif
