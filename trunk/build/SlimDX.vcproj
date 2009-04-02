@@ -3967,6 +3967,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\directinput\Joystick.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\Joystick.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directinput\Keyboard.cpp"
 					>
 				</File>

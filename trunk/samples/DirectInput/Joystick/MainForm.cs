@@ -26,11 +26,11 @@ using SlimDX;
 using SlimDX.DirectInput;
 using System.Collections.Generic;
 
-namespace Joystick
+namespace JoystickTest
 {
     public partial class MainForm : Form
     {
-        CustomDevice<JoystickState> joystick;
+        Joystick joystick;
 
         JoystickState state = new JoystickState();
         int numPOVs;
@@ -47,7 +47,7 @@ namespace Joystick
                 // create the device
                 try
                 {
-                    joystick = new CustomDevice<JoystickState>(dinput, device.InstanceGuid);
+                    joystick = new Joystick(dinput, device.InstanceGuid);
                     joystick.SetCooperativeLevel(this, CooperativeLevel.Exclusive | CooperativeLevel.Foreground);
                     break;
                 }

@@ -7,7 +7,7 @@
     <ProjectGuid>{BEFCAF70-0230-4929-9317-432CA8428269}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Joystick</RootNamespace>
+    <RootNamespace>JoystickTest</RootNamespace>
     <AssemblyName>Joystick</AssemblyName>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
