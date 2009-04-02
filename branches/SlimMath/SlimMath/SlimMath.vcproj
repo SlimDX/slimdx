@@ -47,6 +47,7 @@
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				DisableSpecificWarnings="4793"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -245,13 +246,21 @@
 				Name="Headers"
 				>
 				<File
-					RelativePath=".\Converters.h"
+					RelativePath=".\BatchProcessor.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Operations.h"
 					>
 				</File>
 			</Filter>
 			<Filter
 				Name="Source"
 				>
+				<File
+					RelativePath=".\BatchProcessor.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 	</Files>
