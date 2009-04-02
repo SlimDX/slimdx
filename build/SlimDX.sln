@@ -75,6 +75,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkinnedMesh", "..\samples\Direct3D9\SkinnedMesh\SkinnedMesh.csproj", "{A24A7232-9003-42A5-B9CE-D309FA2D2E98}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SlimDX.Windows7", "..\windows7\SlimDX.Windows7.vcproj", "{01D1D752-A763-4D67-A7BD-0F13BDA0E866}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8ECCE443-0440-40F4-A94C-F02E027282C3} = {8ECCE443-0440-40F4-A94C-F02E027282C3}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Direct2D", "Direct2D", "{E6A42EBC-8547-49F3-8193-62BCE8019CEC}"
 EndProject

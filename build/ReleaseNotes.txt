@@ -1,2 +1,12 @@
 Direct3D 9
 	* Fixed a bug that caused AdapterDetails.GetCertification to throw when the adapter wasn't certified.
+
+DirectInput
+	* Refactored the Device class into an abstract base class.
+	* Added a CustomDevice<T> class for devices with custom data formats.
+	* Added the Keyboard class for keyboard devices.
+	* Added the Mouse class for mouse devices.
+	* Added the Joystick class for joystick devices.
+	* Changed a few collection results to return IList<T> instead of IEnumerable<T>.
+	* Removed the BufferedData indirection. Buffered data reads now return direct lists of data.
+	* Did some general code clean-up in DirectInput to better match recent changes in the library.

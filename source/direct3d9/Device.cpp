@@ -141,6 +141,10 @@ namespace Direct3D9
 		return DrawUserPrimitives<T>( primitiveType, 0, primitiveCount, data );
 	}
 	
+// disables bogus warning: 
+//SlimDX::Direct3D9::Device::DrawIndexedUserPrimitives<T>' : recursive on
+// all control paths, function will cause runtime stack overflow
+#pragma warning(disable:4717)
 	generic<typename T>
 	Result Device::DrawUserPrimitives( PrimitiveType primitiveType, int startIndex, int primitiveCount, array<T>^ data )
 	{
@@ -150,6 +154,7 @@ namespace Direct3D9
 			pinned_data, static_cast<DWORD>( sizeof(T) ) );
 		return RECORD_D3D9( hr );
 	}
+#pragma warning(default:4717)
 
 	Result Device::DrawIndexedPrimitives( PrimitiveType primitiveType, int baseVertexIndex, int minVertexIndex, 
 		int numVertices, int startIndex, int primCount )
