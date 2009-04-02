@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "Enums.h"
+
 namespace SlimDX
 {
 	namespace XInput

@@ -20,13 +20,10 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <windows.h>
-#include <xinput.h>
-#include <dinput.h>
+#include "Controller.h"
 
 #include "../DirectInput/Guids.h"
 
-#include "XInput.h"
 #include "XInputException.h"
 
 #include "ResultCode.h"
