@@ -20,10 +20,8 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <windows.h>
-#include <xinput.h>
+#include "Keystroke.h"
 
-#include "XInput.h"
 #include "XInputException.h"
 
 namespace SlimDX

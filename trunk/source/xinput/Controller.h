@@ -23,6 +23,13 @@
 
 #include "../Result.h"
 
+#include "Capabilities.h"
+#include "BatteryInformation.h"
+#include "Enums.h"
+#include "Keystroke.h"
+#include "State.h"
+#include "Vibration.h"
+
 using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX

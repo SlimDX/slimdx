@@ -4674,10 +4674,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\xinput\XInput.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\xinput\XInputException.cpp"
 				>
 			</File>
