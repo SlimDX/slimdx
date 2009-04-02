@@ -19,23 +19,29 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#if !BOOST_PP_IS_ITERATING
+#ifndef SLIMDX_DXGI_RESOURCE_
+#define SLIMDX_DXGI_RESOURCE_
 
 #include "../ComObject.h"
 
 #include "DeviceChild.h"
 #include "Enums.h"
 
+#define BOOST_PP_FILENAME_1 "Resource.h"
+#include "../InterfaceSetup.h"
+#endif
+#else
+#include "../InterfaceBegin.h"
+#include "../ComObjectMacros.h"
+
 namespace SlimDX
 {
 	namespace DXGI
 	{
-		/// <summary>
-		/// A sharable resource.
-		/// </summary>
-		public ref class Resource : public DeviceChild
+		SDX_COM_SUBCLASS(Resource,DeviceChild)
 		{
-			COMOBJECT(IDXGIResource, Resource);
+			COMOBJECT_INTERFACE(IDXGIResource, Resource);
 
 		public:
 			/// <summary>
@@ -43,8 +49,8 @@ namespace SlimDX
 			/// </summary>
 			property ResourcePriority EvictionPriority
 			{
-				ResourcePriority get();
-				void set( ResourcePriority value );
+				SDX_METHOD(ResourcePriority get());
+				SDX_METHOD(void set( ResourcePriority value ));
 			}
 			
 			/// <summary>
@@ -52,8 +58,11 @@ namespace SlimDX
 			/// </summary>
 			property DXGI::Usage Usage
 			{
-				DXGI::Usage get();
+				SDX_METHOD(DXGI::Usage get());
 			}
 		};
 	}
 };
+
+#include "../InterfaceEnd.h"
+#endif

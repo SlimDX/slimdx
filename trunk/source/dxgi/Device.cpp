@@ -62,7 +62,7 @@ namespace DXGI
 			throw gcnew DXGIException( Result::Last );
 	}
 
-	DXGI::Adapter^ Device::Adapter::get()
+	IAdapter^ Device::Adapter::get()
 	{
 		IDXGIAdapter* adapter = 0;
 		RECORD_DXGI( InternalPointer->GetAdapter( &adapter ) );

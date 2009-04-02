@@ -2048,6 +2048,18 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\InterfaceBegin.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\InterfaceEnd.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\InterfaceSetup.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\InternalHelpers.h"
 				>
 			</File>

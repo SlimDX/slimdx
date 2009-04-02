@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -20,30 +19,16 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "../ComObject.h"
 
-#include "DXGIException.h"
+// The purpose of this file is to prepare for header file iteration using
+// the Boost Preprocessor library -- this removes some boilerplate code
+// from every iterated header file, since those headers need only define
+// the filename to iterate.
 
-#include "Device.h"
-#include "DeviceChild.h"
+#include <boost/preprocessor/iteration/iterate.hpp>
 
-using namespace System;
+#define FORWARD_DECL_REF(c)  interface class I##c; ref class c
+#define FORWARD_DECL_VALUE(c) value class c
 
-namespace SlimDX
-{
-namespace DXGI
-{ 
-	DeviceChild::DeviceChild()
-	{
-	}
-
-	IDevice^ DeviceChild::Device::get()
-	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
-	}
-}
-}
+#define BOOST_PP_ITERATION_LIMITS (1, 2)
+#include BOOST_PP_ITERATE()

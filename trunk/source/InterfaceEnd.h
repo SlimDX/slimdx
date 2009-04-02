@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -20,30 +19,8 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "../ComObject.h"
 
-#include "DXGIException.h"
+// Note that this file intentionally lacks inclusion guards, because it is
+// intended to be included during a preprocessor iteration phase.
 
-#include "Device.h"
-#include "DeviceChild.h"
-
-using namespace System;
-
-namespace SlimDX
-{
-namespace DXGI
-{ 
-	DeviceChild::DeviceChild()
-	{
-	}
-
-	IDevice^ DeviceChild::Device::get()
-	{
-		IDXGIDevice* device = 0;
-		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
-		if( Result::Last.IsFailure )
-			return nullptr;
-		return DXGI::Device::FromPointer( device );
-	}
-}
-}
+#pragma pop_macro("interface")

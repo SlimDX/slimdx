@@ -19,25 +19,34 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#if !BOOST_PP_IS_ITERATING
+#ifndef SLIMDX_DXGI_DEVICE_
+#define SLIMDX_DXGI_DEVICE_
 
 #include "../ComObject.h"
 
 #include "Enums.h"
 
+#define BOOST_PP_FILENAME_1 "Device.h"
+#include "../InterfaceSetup.h"
+#endif
+#else
+#include "../InterfaceBegin.h"
+#include "../ComObjectMacros.h"
+
 namespace SlimDX
 {
 	namespace DXGI
 	{
-		ref class Adapter;
+		interface struct IAdapter;
 		
 		/// <summary>
 		/// An object that produces image data.
 		/// </summary>
 		/// <unmanaged>IDXGIDevice</unmanaged>
-		public ref class Device : public ComObject
+		SDX_COM_CLASS(Device)
 		{
-			COMOBJECT(IDXGIDevice, Device);
+			COMOBJECT_INTERFACE(IDXGIDevice, Device);
 
 		public:
 			/// <summary>
@@ -45,23 +54,23 @@ namespace SlimDX
 			/// </summary>
 			property int GpuThreadPriority
 			{
-				int get();
-				void set( int value );
+				SDX_METHOD(int get());
+				SDX_METHOD(void set( int value ));
 			}
 			
 			/// <summary>
 			/// Gets the adapter associated with the device.
 			/// </summary>
-			property DXGI::Adapter^ Adapter
+			property IAdapter^ Adapter
 			{
-				DXGI::Adapter^ get();
+				SDX_METHOD(IAdapter^ get());
 			}
 			
 			/// <summary>
 			/// Initializes a new instance of the <see cref="Device"/> class.
 			/// </summary>
 			/// <param name="device">The COM object implementing the IDXGIDevice interface.</param>
-			Device( ComObject^ device );
+			SDX_METHOD_CONCRETE(Device( ComObject^ device ));
 
 			/// <summary>
 			/// Gets the residency status of a list of resources.
@@ -69,7 +78,10 @@ namespace SlimDX
 			/// <param name="resources">The resources to query.</param>
 			/// <returns>A list of residency status values, one for each entry in the input resources list. The result will be
 			/// <c>null</c> on failure.</returns>
-			System::Collections::ObjectModel::ReadOnlyCollection<Residency>^ QueryResourceResidency( System::Collections::Generic::IList<ComObject^>^ resources ); 
+			SDX_METHOD(System::Collections::ObjectModel::ReadOnlyCollection<Residency>^ QueryResourceResidency( System::Collections::Generic::IList<ComObject^>^ resources ));
 		};
 	}
 };
+
+#include "../InterfaceEnd.h"
+#endif
