@@ -4,4 +4,5 @@
 
 #pragma once
 
-
+#include <windows.h>
+#include <XNAMath.h>
