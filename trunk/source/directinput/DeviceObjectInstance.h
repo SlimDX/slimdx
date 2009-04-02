@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace DirectInput
 	{
-		public ref class DeviceObjectInstance
+		public value class DeviceObjectInstance
 		{
 		internal:
 			DeviceObjectInstance( const DIDEVICEOBJECTINSTANCE &deviceObjectInstance );

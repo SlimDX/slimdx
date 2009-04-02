@@ -22,7 +22,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Keyboard
+namespace KeyboardTest
 {
     static class Program
     {

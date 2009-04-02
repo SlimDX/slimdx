@@ -1,4 +1,4 @@
-namespace Mouse
+namespace MouseTest
 {
     partial class MainForm
     {

@@ -102,12 +102,12 @@ namespace DirectInput
 		return Utilities::ConvertNativeGuid( result );
 	}
 
-	IEnumerable<DeviceInstance^>^ DirectInput::GetDevices()
+	IList<DeviceInstance^>^ DirectInput::GetDevices()
 	{
 		return GetDevices( DeviceClass::All, DeviceEnumerationFlags::AllDevices );
 	}
 
-	IEnumerable<DeviceInstance^>^ DirectInput::GetDevices( DeviceClass deviceClass, DeviceEnumerationFlags enumerationFlags )
+	IList<DeviceInstance^>^ DirectInput::GetDevices( DeviceClass deviceClass, DeviceEnumerationFlags enumerationFlags )
 	{
 		List<DeviceInstance^>^ results = gcnew List<DeviceInstance^>();
 		CollectionShim<DeviceInstance^> shim( results );
@@ -119,7 +119,7 @@ namespace DirectInput
 		return results;
 	}
 
-	IEnumerable<DeviceInstance^>^ DirectInput::GetDevices( DeviceType deviceType, DeviceEnumerationFlags enumerationFlags )
+	IList<DeviceInstance^>^ DirectInput::GetDevices( DeviceType deviceType, DeviceEnumerationFlags enumerationFlags )
 	{
 		List<DeviceInstance^>^ results = gcnew List<DeviceInstance^>();
 		CollectionShim<DeviceInstance^> shim( results );

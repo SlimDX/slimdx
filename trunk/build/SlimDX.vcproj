@@ -3893,6 +3893,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\directinput\CustomDevice.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\CustomDevice.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directinput\Device.cpp"
 					>
 					<FileConfiguration
@@ -3954,6 +3962,22 @@
 					RelativePath="..\source\directinput\Device.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\directinput\Keyboard.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\Keyboard.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\Mouse.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\Mouse.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Exceptions"
@@ -3996,16 +4020,8 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="BufferedData"
+				Name="Attributes"
 				>
-				<File
-					RelativePath="..\source\directinput\BufferedData.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\directinput\BufferedData.h"
-					>
-				</File>
 				<File
 					RelativePath="..\source\directinput\DataFormatAttribute.h"
 					>

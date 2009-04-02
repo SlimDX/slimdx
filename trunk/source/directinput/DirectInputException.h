@@ -45,5 +45,7 @@ namespace SlimDX
 			DirectInputException( System::String^ message, System::Exception^ innerException );
 			DirectInputException( Result result );
 		};
+
+		Result RecordError( HRESULT hr );
 	}
 }

@@ -28,32 +28,6 @@ namespace SlimDX
 	namespace DirectInput
 	{
 		/// <summary>
-		/// Contains system-defined identifiers for DirectInput devices.
-		/// </summary>
-		public ref class SystemGuid sealed
-		{
-		private:
-			SystemGuid() { }
-
-		public:
-			/// <summary>
-			/// Gets the system keyboard identifier.
-			/// </summary>
-			static property System::Guid Keyboard
-			{
-				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_SysKeyboard ); }
-			}
-
-			/// <summary>
-			/// Gets the system mouse identifier.
-			/// </summary>
-			static property System::Guid Mouse
-			{
-				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_SysMouse ); }
-			}
-		};
-
-		/// <summary>
 		/// Contains system-defined identifiers for device objects.
 		/// </summary>
 		public ref class ObjectGuid sealed

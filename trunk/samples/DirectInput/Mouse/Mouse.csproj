@@ -7,7 +7,7 @@
     <ProjectGuid>{D192F71B-2768-4035-98CD-D7B82C99EB84}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mouse</RootNamespace>
+    <RootNamespace>MouseTest</RootNamespace>
     <AssemblyName>Mouse</AssemblyName>
     <FileUpgradeFlags>
     </FileUpgradeFlags>

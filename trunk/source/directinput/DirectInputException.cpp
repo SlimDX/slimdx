@@ -53,5 +53,13 @@ namespace DirectInput
 	: SlimDXException( result )
 	{
 	}
+
+	Result RecordError( HRESULT hr )
+	{
+		if( hr == DIERR_OTHERAPPHASPRIO || hr == DIERR_INPUTLOST )
+			return Result::Record<DirectInputException^>( hr, false, nullptr, nullptr );
+		else
+			return RECORD_DINPUT( hr );
+	}
 }
 }

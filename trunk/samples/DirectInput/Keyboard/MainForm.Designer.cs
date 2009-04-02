@@ -1,4 +1,4 @@
-namespace Keyboard
+namespace KeyboardTest
 {
     partial class MainForm
     {

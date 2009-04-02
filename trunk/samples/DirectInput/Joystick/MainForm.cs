@@ -30,7 +30,7 @@ namespace Joystick
 {
     public partial class MainForm : Form
     {
-        Device<JoystickState> joystick;
+        CustomDevice<JoystickState> joystick;
 
         JoystickState state = new JoystickState();
         int numPOVs;
@@ -47,7 +47,7 @@ namespace Joystick
                 // create the device
                 try
                 {
-                    joystick = new Device<JoystickState>(dinput, device.InstanceGuid);
+                    joystick = new CustomDevice<JoystickState>(dinput, device.InstanceGuid);
                     joystick.SetCooperativeLevel(this, CooperativeLevel.Exclusive | CooperativeLevel.Foreground);
                     break;
                 }
@@ -62,7 +62,7 @@ namespace Joystick
                 return;
             }
 
-            foreach (DeviceObjectInstance deviceObject in joystick.GetDeviceObjects())
+            foreach (DeviceObjectInstance deviceObject in joystick.GetObjects())
             {
                 if ((deviceObject.ObjectType & ObjectDeviceType.Axis) != 0)
                     joystick.GetObjectPropertiesById((int)deviceObject.ObjectType).SetRange(-1000, 1000);
