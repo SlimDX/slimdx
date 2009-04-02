@@ -14,9 +14,9 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyTitleAttribute("SlimMath")];
 [assembly:AssemblyDescriptionAttribute("")];
 [assembly:AssemblyConfigurationAttribute("")];
-[assembly:AssemblyCompanyAttribute("Microsoft")];
-[assembly:AssemblyProductAttribute("SlimMath")];
-[assembly:AssemblyCopyrightAttribute("Copyright (c) Microsoft 2009")];
+[assembly:AssemblyCompanyAttribute("SlimDX Group")];
+[assembly:AssemblyProductAttribute("SlimDX")];
+[assembly:AssemblyCopyrightAttribute("Copyright © 2007-2009 SlimDX Group")];
 [assembly:AssemblyTrademarkAttribute("")];
 [assembly:AssemblyCultureAttribute("")];
 
