@@ -2028,6 +2028,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\ComObjectMacros.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\Configuration.cpp"
 				>
 			</File>
