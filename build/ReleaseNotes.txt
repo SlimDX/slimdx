@@ -1,6 +1,9 @@
 Direct3D 9
 	* Fixed a bug that caused AdapterDetails.GetCertification to throw when the adapter wasn't certified.
 
+DirectSound
+	* Removed the confusing lockEntireBuffer parameter from CaptureBuffer.Read.
+
 DirectInput
 	* Refactored the Device class into an abstract base class.
 	* Added a CustomDevice<T> class for devices with custom data formats.
