@@ -22,48 +22,31 @@
 #pragma once
 
 #include "Enums.h"
-#include "DataFormatAttribute.h"
-#include "DataObjectAttribute.h"
 #include "DeviceInstance.h"
-#include "Capabilities.h"
-#include "BufferedData.h"
-#include "Guids.h"
+#include "DeviceObjectInstance.h"
 #include "DeviceProperties.h"
 #include "ObjectProperties.h"
-#include "DeviceObjectInstance.h"
+#include "Capabilities.h"
+#include "DirectInput.h"
 
 namespace SlimDX
 {
-	value class Result;
-
 	namespace DirectInput
 	{
-		ref class DirectInput;
-
-		/// <summary>
-		/// Used to gain and release access to Microsoft DirectInput devices, manage device
-		/// properties and information, set behavior, perform initialization, create and
-		/// play force-feedback effects, and open a device's control panel.
-		/// </summary>
-		/// <typeparam name="DataFormat">The desired data format of the device.</typeparam>
-		generic<typename DataFormat>
-		public ref class Device : public ComObject
+		public ref class Device abstract : public ComObject
 		{
-			COMOBJECT_CUSTOM(IDirectInputDevice8W, Device);
+			COMOBJECT_BASE(IDirectInputDevice8);
 
 		private:
-			DeviceProperties^ properties;
 			Capabilities^ caps;
 			DeviceInstance^ information;
+			DeviceProperties^ properties;
 
-		public:
-			/// <summary>
-			/// Initializes a new instance of the <see cref="Device"/> class.
-			/// </summary>
-			/// <param name="subsystem">The subsystem identifier.</param>
-			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
+		protected:
+			Device() { }
 			Device( DirectInput^ directInput, System::Guid subsystem );
 
+		public:
 			/// <summary>
 			/// Obtains access to the input device.
 			/// </summary>
@@ -110,36 +93,23 @@ namespace SlimDX
 			Result RunControlPanel( System::Windows::Forms::Control^ parent );
 
 			/// <summary>
-			/// Retrieves the current device state.
-			/// </summary>
-			/// <returns>The current device state.</returns>
-			DataFormat GetCurrentState();
-
-			/// <summary>
-			/// Retrieves the current device state.
-			/// </summary>
-			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
-			Result GetCurrentState( DataFormat% data );
-
-			/// <summary>
-			/// Retrieves buffered data from the device.
-			/// </summary>
-			/// <returns>A collection of buffered input events.</returns>
-			System::Collections::Generic::IEnumerable<BufferedData<DataFormat>^>^ GetBufferedData();
-
-			/// <summary>
 			/// Retrieves data from polled objects on a DirectInput device.
 			/// </summary>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Poll();
 
 			/// <summary>
-			/// Gets properties about a single object on an input device.
+			/// Retrieves a collection of objects on the device.
 			/// </summary>
-			/// <param name="name">The name of the object whose properties are to be retrieved.</param>
-			/// <returns>The properties of the desired object.</returns>
-			ObjectProperties^ GetObjectPropertiesByName( System::String^ name );
+			/// <param name="objectType">A filter for the returned device objects collection.</param>
+			/// <returns>A collection of device objects matching the specified filter.</returns>
+			System::Collections::Generic::IList<DeviceObjectInstance>^ GetObjects( ObjectDeviceType objectType );
+
+			/// <summary>
+			/// Retrieves a collection of objects on the device.
+			/// </summary>
+			/// <returns>A collection of all device objects on the device.</returns>
+			System::Collections::Generic::IList<DeviceObjectInstance>^ GetObjects();
 
 			/// <summary>
 			/// Gets properties about a single object on an input device.
@@ -154,19 +124,6 @@ namespace SlimDX
 			/// <param name="objectId">The identifier of the object whose properties are to be retrieved.</param>
 			/// <returns>The properties of the desired object.</returns>
 			ObjectProperties^ GetObjectPropertiesById( int objectId );
-
-			/// <summary>
-			/// Retrieves a collection of objects on the device.
-			/// </summary>
-			/// <param name="objectType">A filter for the returned device objects collection.</param>
-			/// <returns>A collection of device objects matching the specified filter.</returns>
-			System::Collections::Generic::IEnumerable<DeviceObjectInstance^>^ GetDeviceObjects( ObjectDeviceType objectType );
-
-			/// <summary>
-			/// Retrieves a collection of objects on the device.
-			/// </summary>
-			/// <returns>A collection of all device objects on the device.</returns>
-			System::Collections::Generic::IEnumerable<DeviceObjectInstance^>^ GetDeviceObjects();
 
 			/// <summary>
 			/// Sends a hardware-specific command to the force-feedback driver.
@@ -185,12 +142,12 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the capabilities of the device.
 			/// </summary>
-			property Capabilities^ Caps { Capabilities^ get(); }
+			property Capabilities^ Capabilities { SlimDX::DirectInput::Capabilities^ get(); }
 
 			/// <summary>
 			/// Gets information about the device's identity.
 			/// </summary>
-			property DeviceInstance^ DeviceInformation { DeviceInstance^ get(); }
+			property DeviceInstance^ Information { DeviceInstance^ get(); }
 		};
 	}
 }

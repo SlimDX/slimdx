@@ -44,8 +44,8 @@ namespace DirectInput
 
 	BOOL CALLBACK EnumerateObjects( LPCDIDEVICEOBJECTINSTANCE lpddoi, LPVOID pvRef )
 	{
-		CollectionShim<DeviceObjectInstance^>* shim = static_cast<CollectionShim<DeviceObjectInstance^>*>( pvRef );
-		shim->GetItems()->Add( gcnew DeviceObjectInstance( *lpddoi ) );
+		CollectionShim<DeviceObjectInstance>* shim = static_cast<CollectionShim<DeviceObjectInstance>*>( pvRef );
+		shim->GetItems()->Add( DeviceObjectInstance( *lpddoi ) );
 
 		return DIENUM_CONTINUE;
 	}

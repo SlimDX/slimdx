@@ -27,11 +27,11 @@ using SlimDX;
 using SlimDX.DirectInput;
 using System.Collections.Generic;
 
-namespace Mouse
+namespace MouseTest
 {
     public partial class MainForm : Form
     {
-        Device<MouseState> mouse;
+        Mouse mouse;
 
         void CreateDevice()
         {
@@ -54,7 +54,7 @@ namespace Mouse
             // create the device
             try
             {
-                mouse = new Device<MouseState>(dinput, SystemGuid.Mouse);
+                mouse = new Mouse(dinput);
                 mouse.SetCooperativeLevel(this, cooperativeLevel);
             }
             catch (DirectInputException e)
@@ -116,18 +116,18 @@ namespace Mouse
             if (mouse.Poll().IsFailure)
                 return;
 
-            IEnumerable<BufferedData<MouseState>> bufferedData = mouse.GetBufferedData();
+            IEnumerable<MouseState> bufferedData = mouse.GetBufferedData();
             if (Result.Last.IsFailure || bufferedData == null)
                 return;
 
             StringBuilder data = new StringBuilder();
 
             MouseState result = new MouseState();
-            foreach (BufferedData<MouseState> packet in bufferedData)
+            foreach (MouseState packet in bufferedData)
             {
-                result.X += packet.Data.X;
-                result.Y += packet.Data.Y;
-                result.Z += packet.Data.Z;
+                result.X += packet.X;
+                result.Y += packet.Y;
+                result.Z += packet.Z;
             }
 
             data.AppendFormat(CultureInfo.CurrentCulture, "(X={0} Y={1} Z={2})", result.X, result.Y, result.Z);
@@ -136,7 +136,7 @@ namespace Mouse
                 data.Append(" B");
                 data.Append(i);
                 data.Append("=");
-                if(bufferedData.GetEnumerator().Current.Data.IsPressed(i))
+                if(bufferedData.GetEnumerator().Current.IsPressed(i))
                     data.Append("1");
                 else
                     data.Append("0");

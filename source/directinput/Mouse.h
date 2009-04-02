@@ -21,51 +21,45 @@
 */
 #pragma once
 
-#include "DeviceInstance.h"
+#include "Device.h"
+#include "MouseState.h"
 
 namespace SlimDX
 {
 	namespace DirectInput
 	{
-		/// <summary>
-		/// Provides an interface to DirectInput.
-		/// </summary>
-		/// <unmanaged>IDirectInput8W</unmanaged>
-		public ref class DirectInput : ComObject
+		public ref class Mouse : Device
 		{
-			COMOBJECT(IDirectInput8W, DirectInput);
+			COMOBJECT(IDirectInputDevice8, Mouse);
 
 		public:
-			DirectInput();
+			Mouse( DirectInput^ directInput );
 
 			/// <summary>
-			/// Runs Control Panel to enable the user to install a new
-			/// input device or modify configurations.
+			/// Retrieves the current device state.
 			/// </summary>
-			Result RunControlPanel();
+			/// <returns>The current device state.</returns>
+			MouseState^ GetCurrentState();
 
 			/// <summary>
-			/// Runs Control Panel to enable the user to install a new
-			/// input device or modify configurations.
+			/// Retrieves the current device state.
 			/// </summary>
-			/// <param name="parent">The parent control.</param>
-			Result RunControlPanel( System::IntPtr parent );
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
+			Result GetCurrentState( MouseState^% data );
 
 			/// <summary>
-			/// Gets a value indicating whether the specified device is
-			/// attached to the user's system.
+			/// Retrieves buffered data from the device.
 			/// </summary>
-			bool IsDeviceAttached( System::Guid device );
+			/// <returns>A collection of buffered input events.</returns>
+			System::Collections::Generic::IList<MouseState^>^ GetBufferedData();
 
 			/// <summary>
-			/// Retrieves the instance identifier of a device that
-			/// has been newly attached to the system.
+			/// Gets properties about a single object on an input device.
 			/// </summary>
-			System::Guid FindDevice( System::Guid deviceClass, System::String^ name );
-
-			System::Collections::Generic::IList<DeviceInstance^>^ GetDevices();
-			System::Collections::Generic::IList<DeviceInstance^>^ GetDevices( DeviceClass deviceClass, DeviceEnumerationFlags enumerationFlags );
-			System::Collections::Generic::IList<DeviceInstance^>^ GetDevices( DeviceType deviceType, DeviceEnumerationFlags enumerationFlags );
+			/// <param name="name">The name of the object whose properties are to be retrieved.</param>
+			/// <returns>The properties of the desired object.</returns>
+			ObjectProperties^ GetObjectPropertiesByName( System::String^ name );
 		};
 	}
 }

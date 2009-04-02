@@ -26,11 +26,11 @@ using SlimDX;
 using SlimDX.DirectInput;
 using System.Collections.Generic;
 
-namespace Keyboard
+namespace KeyboardTest
 {
     public partial class MainForm : Form
     {
-        Device<KeyboardState> keyboard;
+        Keyboard keyboard;
 
         void CreateDevice()
         {
@@ -56,7 +56,7 @@ namespace Keyboard
             // create the device
             try
             {
-                keyboard = new Device<KeyboardState>(dinput, SystemGuid.Keyboard);
+                keyboard = new Keyboard(dinput);
                 keyboard.SetCooperativeLevel(this, cooperativeLevel);
             }
             catch (DirectInputException e)
@@ -109,14 +109,14 @@ namespace Keyboard
             if (keyboard.Poll().IsFailure)
                 return;
 
-            IEnumerable<BufferedData<KeyboardState>> bufferedData = keyboard.GetBufferedData();
+            IEnumerable<KeyboardState> bufferedData = keyboard.GetBufferedData();
             if (Result.Last.IsFailure)
                 return;
 
             StringBuilder data = new StringBuilder();
-            foreach (BufferedData<KeyboardState> packet in bufferedData)
+            foreach (KeyboardState packet in bufferedData)
             {
-                foreach (Key key in packet.Data.PressedKeys)
+                foreach (Key key in packet.PressedKeys)
                     data.Append(Enum.GetName(typeof(Key), key) + " ");
             }
 

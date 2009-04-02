@@ -22,7 +22,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Mouse
+namespace MouseTest
 {
     static class Program
     {

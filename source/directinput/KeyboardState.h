@@ -48,19 +48,19 @@ namespace SlimDX
 			bool IsPressed( Key key );
 			bool IsReleased( Key key );
 
-			property System::Collections::Generic::IEnumerable<Key>^ AllKeys
+			property System::Collections::Generic::IList<Key>^ AllKeys
 			{
-				System::Collections::Generic::IEnumerable<Key>^ get() { return keys; }
+				System::Collections::Generic::IList<Key>^ get() { return keys; }
 			}
 
-			property System::Collections::Generic::IEnumerable<Key>^ PressedKeys
+			property System::Collections::Generic::IList<Key>^ PressedKeys
 			{
-				System::Collections::Generic::IEnumerable<Key>^ get() { return pressed; }
+				System::Collections::Generic::IList<Key>^ get() { return pressed; }
 			}
 
-			property System::Collections::Generic::IEnumerable<Key>^ ReleasedKeys
+			property System::Collections::Generic::IList<Key>^ ReleasedKeys
 			{
-				System::Collections::Generic::IEnumerable<Key>^ get() { return released; }
+				System::Collections::Generic::IList<Key>^ get() { return released; }
 			}
 		};
 	}

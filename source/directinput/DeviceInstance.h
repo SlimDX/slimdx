@@ -22,7 +22,6 @@
 #pragma once
 
 #include "../InputEnums.h"
-
 #include "Enums.h"
 
 namespace SlimDX
