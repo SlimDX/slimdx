@@ -1,4 +1,4 @@
-namespace SlimMath {
+namespace SlimMath { namespace Unmanaged {
 	struct Operation {
 		enum Ops {
 			MatrixAffineTransformation,
@@ -15,7 +15,9 @@ namespace SlimMath {
 			MatrixLookToLH,
 			MatrixLookToRH,
 			MatrixMultiply,
-			MatrixMultiplyTranspose
+			MatrixMultiplyTranspose,
+			MatrixTranslationFromVector,
+			Vector4Transform
 		};
 	};
 

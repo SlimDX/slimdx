@@ -27,7 +27,7 @@ using SlimMath;
 
 namespace TestConsole {
     class Program {
-        static unsafe void Main(string[] args) {
+        static void Main(string[] args) {
         }
     }
 }
