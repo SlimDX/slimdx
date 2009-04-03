@@ -64,20 +64,20 @@ namespace SlimMath
 
 	XMVECTOR BatchProcessor::GetVectorParameter(ParameterDescriptor const& param)
 	{
-		return XMLoadFloat4((XMFLOAT4*)param.HandleStorage);
+		return XMLoadFloat4(reinterpret_cast<XMFLOAT4*>(param.HandleStorage));
 	}
 	XMMATRIX BatchProcessor::GetMatrixParameter(ParameterDescriptor const& param)
 	{
-		return XMLoadFloat4x4((XMFLOAT4X4*)param.HandleStorage);
+		return XMLoadFloat4x4(reinterpret_cast<XMFLOAT4X4*>(param.HandleStorage));
 	}
 
 	void BatchProcessor::StoreVectorResult(ResultDescriptor const& result, CXMVECTOR vector)
 	{
-		XMStoreFloat4((XMFLOAT4*)result.HandleStorage, vector);
+		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(result.HandleStorage), vector);
 	}
 
 	void BatchProcessor::StoreMatrixResult(ResultDescriptor const& result, CXMMATRIX matrix)
 	{
-		XMStoreFloat4x4((XMFLOAT4X4*)result.HandleStorage, matrix);
+		XMStoreFloat4x4(reinterpret_cast<XMFLOAT4X4*>(result.HandleStorage), matrix);
 	}
 }

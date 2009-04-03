@@ -194,10 +194,6 @@
 				RelativePath="..\source\managed\MatrixOperations.h"
 				>
 			</File>
-			<File
-				RelativePath="..\source\managed\Primitives.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Native"
@@ -205,6 +201,22 @@
 			<File
 				RelativePath="..\source\native\BatchProcessor.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAsManaged="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAsManaged="0"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\source\native\BatchProcessor.h"
