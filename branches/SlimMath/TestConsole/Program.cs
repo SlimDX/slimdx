@@ -25,12 +25,9 @@ using System.Linq;
 using System.Text;
 using SlimMath;
 
-namespace TestConsole
-{
-    class Program
-    {
-        static unsafe void Main(string[] args)
-        {
+namespace TestConsole {
+    class Program {
+        static unsafe void Main(string[] args) {
         }
     }
 }

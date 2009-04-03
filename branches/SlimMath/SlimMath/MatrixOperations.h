@@ -1,13 +1,10 @@
 #include "Primitives.h"
 
-namespace SlimMath
-{
-	public ref class MatrixOps
-	{
+namespace SlimMath {
+	public ref class MatrixOps {
 	public:
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential, Pack = 4)]
-		value class AffineTransformation
-		{
+		value class AffineTransformation {
 		public:
 			Vector^ Scaling;
 			Vector^ RotationOrigin;
@@ -16,8 +13,7 @@ namespace SlimMath
 		};
 
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential, Pack = 4)]
-		value class AffineTransformation2D
-		{
+		value class AffineTransformation2D {
 		public:
 			Vector Scaling;
 			Vector RotationOrigin;
