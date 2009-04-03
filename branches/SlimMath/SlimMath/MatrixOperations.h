@@ -6,10 +6,10 @@ namespace SlimMath {
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential, Pack = 4)]
 		value class AffineTransformation {
 		public:
-			Vector Scaling;
-			Vector RotationOrigin;
-			Vector RotationQuaterion;
-			Vector Translation;
+			Vector^ Scaling;
+			Vector^ RotationOrigin;
+			Vector^ RotationQuaterion;
+			Vector^ Translation;
 		};
 
 		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential, Pack = 4)]

@@ -20,18 +20,12 @@ namespace SlimMath { namespace Unmanaged {
 	};
 
 	struct ParameterDescriptor {
-		enum ParameterType {
-			Handle,
-			Value
-		};
-
-		ParameterType Type;
-		int HandleName;
+		void* HandleStorage;
 	};
 
 	struct ResultDescriptor {
-		bool IsOutputResult;
-		int HandleName;
+		bool IsFutureParameter;
+		float* HandleStorage;
 	};
 
 	struct OpDescriptor {
