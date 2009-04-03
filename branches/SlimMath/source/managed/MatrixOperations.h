@@ -41,5 +41,25 @@ namespace SlimMath
 			Multiply( Matrix value1, Matrix value2 );
 			virtual Handle^ GetHandle() { return handle; }
 		};
+		
+		ref class Identity : IOperation
+		{
+		private:
+			Handle^ handle;
+
+		public:
+			Identity();
+			virtual Handle^ GetHandle() { return handle; }
+		};
+
+		ref class Inverse : IOperation
+		{
+		private:
+			Handle^ handle;
+
+		public:
+			Inverse(Matrix matrix);
+			virtual Handle^ GetHandle() { return handle; }
+		};
 	};
 }

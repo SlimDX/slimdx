@@ -214,6 +214,10 @@
 				RelativePath="..\source\managed\Primitives.h"
 				>
 			</File>
+			<File
+				RelativePath="..\source\managed\Vector.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Native"

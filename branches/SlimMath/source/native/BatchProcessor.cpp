@@ -34,7 +34,7 @@ namespace SlimMath
 		{
 			switch(ops->Op)
 			{
-				case Operation::MatrixIsIdentity:
+				case Operation::MatrixIdentity:
 					StoreMatrixResult(ops->Results[0], XMMatrixIdentity());
 					break;
 				case Operation::MatrixMultiply:

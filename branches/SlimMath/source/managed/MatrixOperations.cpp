@@ -30,10 +30,25 @@ namespace SlimMath
 	MatrixOps::Multiply::Multiply( Matrix value1, Matrix value2 )
 	{
 		int size = sizeof(float) * 16;
-		float *data = new float[32];
+		float *data = new float[48];
 
 		memcpy(data, &value1, size);
 		memcpy(data + size, &value2, size);
+
+		handle = gcnew Handle(data);
+	}
+
+	MatrixOps::Identity::Identity()
+	{
+		float* data = new float[16];
+		handle = gcnew Handle(data);
+	}
+
+	MatrixOps::Inverse::Inverse(Matrix matrix)
+	{
+		float* data = new float[36];
+
+		memcpy(data, &matrix, 16 * sizeof(float));
 
 		handle = gcnew Handle(data);
 	}

@@ -21,5 +21,10 @@
 */
 #pragma once
 
-#include "Matrix.h"
-#include "Vector.h"
+namespace SlimMath
+{
+	public value class Vector
+	{
+	public:
+	};
+}
