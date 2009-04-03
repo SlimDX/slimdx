@@ -21,19 +21,4 @@
 */
 #pragma once
 
-#include "IOperation.h"
-#include "Handle.h"
-
-namespace SlimMath
-{
-	public ref class Batch
-	{
-	private:
-		System::Collections::Generic::List<Handle^>^ handles;
-
-	public:
-		Batch();
-
-		Handle^ Add(IOperation^ operation);
-	};
-}
+#include "Matrix.h"

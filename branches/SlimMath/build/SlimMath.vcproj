@@ -191,7 +191,27 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\managed\Handle.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\managed\IOperation.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\managed\Matrix.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\managed\MatrixOperations.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\source\managed\MatrixOperations.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\managed\Primitives.h"
 				>
 			</File>
 		</Filter>

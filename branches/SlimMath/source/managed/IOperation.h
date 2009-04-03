@@ -21,19 +21,12 @@
 */
 #pragma once
 
-#include "IOperation.h"
 #include "Handle.h"
 
 namespace SlimMath
 {
-	public ref class Batch
+	public interface struct IOperation
 	{
-	private:
-		System::Collections::Generic::List<Handle^>^ handles;
-
-	public:
-		Batch();
-
-		Handle^ Add(IOperation^ operation);
+		virtual Handle^ GetHandle() = 0;
 	};
 }

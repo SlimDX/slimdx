@@ -21,19 +21,18 @@
 */
 #pragma once
 
-#include "IOperation.h"
-#include "Handle.h"
-
 namespace SlimMath
 {
-	public ref class Batch
+	public ref class Handle
 	{
-	private:
-		System::Collections::Generic::List<Handle^>^ handles;
+	internal:
+		float *Data;
+		Handle(float *data) : Data(data) { }
 
 	public:
-		Batch();
-
-		Handle^ Add(IOperation^ operation);
+		property bool IsValid
+		{
+			bool get() { return Data != 0; }
+		}
 	};
 }

@@ -19,21 +19,22 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "IOperation.h"
-#include "Handle.h"
+#include <memory>
+#include "MatrixOperations.h"
+
+using namespace System;
 
 namespace SlimMath
 {
-	public ref class Batch
+	MatrixOps::Multiply::Multiply( Matrix value1, Matrix value2 )
 	{
-	private:
-		System::Collections::Generic::List<Handle^>^ handles;
+		int size = sizeof(float) * 16;
+		float *data = new float[32];
 
-	public:
-		Batch();
+		memcpy(data, &value1, size);
+		memcpy(data + size, &value2, size);
 
-		Handle^ Add(IOperation^ operation);
-	};
+		handle = gcnew Handle(data);
+	}
 }
