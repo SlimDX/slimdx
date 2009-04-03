@@ -26,14 +26,19 @@
 
 namespace SlimMath
 {
+	class BatchProcessor;
+
 	public ref class Batch
 	{
 	private:
+		BatchProcessor* processor;
 		System::Collections::Generic::List<Handle^>^ handles;
 
 	public:
 		Batch();
 
 		Handle^ Add(IOperation^ operation);
+
+		void Process();
 	};
 }

@@ -21,6 +21,9 @@
 */
 
 #include "Batch.h"
+#include <windows.h>
+#include <xnamath.h>
+#include "..\native\BatchProcessor.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -30,6 +33,7 @@ namespace SlimMath
 	Batch::Batch()
 	{
 		handles = gcnew List<Handle^>();
+		processor = new BatchProcessor();
 	}
 
 	Handle^ Batch::Add(IOperation^ operation)
@@ -38,5 +42,18 @@ namespace SlimMath
 		handles->Add(handle);
 
 		return handle;
+	}
+
+	void Batch::Process() {
+		OpDescriptor* descriptors = new OpDescriptor[handles->Count];
+
+		for(int i = 0; i < handles->Count; ++i)
+		{
+			descriptors[i].Op = static_cast<Operation::Ops>(handles[i]->Operation);
+			descriptors[i].Parameters = handles[i]->Data;
+			descriptors[i].Results = handles[i]->Data + handles[i]->ResultOffset;
+		}
+
+		processor->Process(descriptors, handles->Count);
 	}
 }

@@ -45,23 +45,12 @@ namespace SlimMath
 		};
 	};
 
-	struct ParameterDescriptor
-	{
-		float* HandleStorage;
-	};
-
-	struct ResultDescriptor
-	{
-		bool IsFutureParameter;
-		float* HandleStorage;
-	};
-
 	struct OpDescriptor
 	{
 		Operation::Ops Op;
 
-		ParameterDescriptor Parameters[16];
+		float* Parameters;
 
-		ResultDescriptor Results[3];
+		float* Results;
 	};
 }

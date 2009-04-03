@@ -30,54 +30,63 @@ namespace SlimMath
 
 	void BatchProcessor::Process(OpDescriptor *ops, int opCount)
 	{
+		float* results = ops->Results;
+		float* parameters = ops->Parameters;
+
 		for(int i = 0; i < opCount; ++i)
 		{
 			switch(ops->Op)
 			{
 				case Operation::MatrixIdentity:
-					StoreMatrixResult(ops->Results[0], XMMatrixIdentity());
+					StoreMatrixResult(results, XMMatrixIdentity());
 					break;
 				case Operation::MatrixMultiply:
 				{
-					XMMATRIX p1 = GetMatrixParameter(ops->Parameters[0]);
-					XMMATRIX p2 = GetMatrixParameter(ops->Parameters[1]);
-					StoreMatrixResult(ops->Results[0], XMMatrixMultiply(p1, p2));
+					XMMATRIX p1 = GetMatrixParameter(parameters);
+					XMMATRIX p2 = GetMatrixParameter(parameters);
+					StoreMatrixResult(results, XMMatrixMultiply(p1, p2));
 					break;
 				}
 				case Operation::MatrixInverse:
 				{
-					XMMATRIX p1 = GetMatrixParameter(ops->Parameters[0]);
+					XMMATRIX p1 = GetMatrixParameter(parameters);
 					XMVECTOR det;
-					StoreMatrixResult(ops->Results[0], XMMatrixInverse(&det, p1));
-					StoreVectorResult(ops->Results[1], det);
+					StoreMatrixResult(results, XMMatrixInverse(&det, p1));
+					StoreVectorResult(results, det);
 					break;
 				}
 				case Operation::MatrixTranslationFromVector:
-					StoreMatrixResult(ops->Results[0], XMMatrixTranslationFromVector(GetVectorParameter(ops->Parameters[0])));
+					StoreMatrixResult(results, XMMatrixTranslationFromVector(GetVectorParameter(parameters)));
 					break;
 				case Operation::Vector4Transform:
-					StoreVectorResult(ops->Results[0], XMVector4Transform(GetVectorParameter(ops->Parameters[0]), GetMatrixParameter(ops->Parameters[1])));
+					StoreVectorResult(results, XMVector4Transform(GetVectorParameter(parameters), GetMatrixParameter(parameters)));
 					break;
 			}
 		}
 	}
 
-	XMVECTOR BatchProcessor::GetVectorParameter(ParameterDescriptor const& param)
+	XMVECTOR BatchProcessor::GetVectorParameter(float*& data)
 	{
-		return XMLoadFloat4(reinterpret_cast<XMFLOAT4*>(param.HandleStorage));
+		XMVECTOR result = XMLoadFloat4(reinterpret_cast<XMFLOAT4*>(data));
+		data += 4;
+		return result;
 	}
-	XMMATRIX BatchProcessor::GetMatrixParameter(ParameterDescriptor const& param)
+	XMMATRIX BatchProcessor::GetMatrixParameter(float*& data)
 	{
-		return XMLoadFloat4x4(reinterpret_cast<XMFLOAT4X4*>(param.HandleStorage));
+		XMMATRIX result = XMLoadFloat4x4(reinterpret_cast<XMFLOAT4X4*>(data));
+		data += 16;
+		return result;
 	}
 
-	void BatchProcessor::StoreVectorResult(ResultDescriptor const& result, CXMVECTOR vector)
+	void BatchProcessor::StoreVectorResult(float*& data, CXMVECTOR vector)
 	{
-		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(result.HandleStorage), vector);
+		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(data), vector);
+		data += 4;
 	}
 
-	void BatchProcessor::StoreMatrixResult(ResultDescriptor const& result, CXMMATRIX matrix)
+	void BatchProcessor::StoreMatrixResult(float*& data, CXMMATRIX matrix)
 	{
-		XMStoreFloat4x4(reinterpret_cast<XMFLOAT4X4*>(result.HandleStorage), matrix);
+		XMStoreFloat4x4(reinterpret_cast<XMFLOAT4X4*>(data), matrix);
+		data += 16;
 	}
 }

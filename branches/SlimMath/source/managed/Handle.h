@@ -26,8 +26,10 @@ namespace SlimMath
 	public ref class Handle
 	{
 	internal:
+		int Operation;
 		float *Data;
-		Handle(float *data) : Data(data) { }
+		int ResultOffset;
+		Handle(float *data, int operation, int resultOffset) : Data(data), Operation(operation), ResultOffset(resultOffset) { }
 
 	public:
 		property bool IsValid
