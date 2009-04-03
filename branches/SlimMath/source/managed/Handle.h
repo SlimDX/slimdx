@@ -36,5 +36,14 @@ namespace SlimMath
 		{
 			bool get() { return Data != 0; }
 		}
+
+		!Handle() {
+			delete this;
+		}
+
+		~Handle() {
+			delete [] Data;
+			Data = 0;
+		}
 	};
 }

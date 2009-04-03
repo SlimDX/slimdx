@@ -40,5 +40,12 @@ namespace SlimMath
 		Handle^ Add(IOperation^ operation);
 
 		void Process();
+
+		!Batch()
+		{
+			delete this;
+		}
+
+		~Batch();
 	};
 }

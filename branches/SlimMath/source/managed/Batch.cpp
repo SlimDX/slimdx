@@ -36,6 +36,12 @@ namespace SlimMath
 		processor = new BatchProcessor();
 	}
 
+	Batch::~Batch()
+	{
+		delete processor;
+		processor = 0;
+	}
+
 	Handle^ Batch::Add(IOperation^ operation)
 	{
 		Handle^ handle = operation->GetHandle();
@@ -55,5 +61,6 @@ namespace SlimMath
 		}
 
 		processor->Process(descriptors, handles->Count);
+		delete descriptors;
 	}
 }
