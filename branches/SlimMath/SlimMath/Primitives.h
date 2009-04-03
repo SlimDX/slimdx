@@ -20,10 +20,12 @@
 * THE SOFTWARE.
 */
 
-namespace SlimMath {
+namespace SlimMath
+{
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential, Pack = 4)]
-	public value class Matrix {
+	public value class Matrix
+	{
 	public:
 		float M11;
 		float M12;
@@ -48,7 +50,8 @@ namespace SlimMath {
 
 	[System::Serializable]
 	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential, Pack = 4)]
-	public value class Vector {
+	public value class Vector
+	{
 	public:
 		float X;
 		float Y;

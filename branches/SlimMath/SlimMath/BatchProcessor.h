@@ -1,7 +1,9 @@
 #include "Operations.h"
 
-namespace SlimMath { namespace Unmanaged {
-	class BatchProcessor {
+namespace SlimMath
+{
+	class BatchProcessor
+	{
 	public:
 		BatchProcessor();
 		void Process(OpDescriptor* ops, int opCount);

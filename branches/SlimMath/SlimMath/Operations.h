@@ -1,6 +1,9 @@
-namespace SlimMath { namespace Unmanaged {
-	struct Operation {
-		enum Ops {
+namespace SlimMath
+{
+	struct Operation
+	{
+		enum Ops
+		{
 			MatrixAffineTransformation,
 			MatrixAffineTransformation2D,
 			MatrixDecompose,
@@ -19,16 +22,19 @@ namespace SlimMath { namespace Unmanaged {
 		};
 	};
 
-	struct ParameterDescriptor {
+	struct ParameterDescriptor
+	{
 		void* HandleStorage;
 	};
 
-	struct ResultDescriptor {
+	struct ResultDescriptor
+	{
 		bool IsFutureParameter;
 		float* HandleStorage;
 	};
 
-	struct OpDescriptor {
+	struct OpDescriptor
+	{
 		Operation::Ops Op;
 
 		ParameterDescriptor Parameters[16];

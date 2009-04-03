@@ -1,10 +1,13 @@
 #include "stdafx.h"
 #include "batch.h"
 
-namespace SlimMath {
-	Batch::Batch() {
+namespace SlimMath
+{
+	Batch::Batch()
+	{
 	}
 
-	Batch::Batch(int batchLengthHint) {
+	Batch::Batch(int batchLengthHint)
+	{
 	}
 }
