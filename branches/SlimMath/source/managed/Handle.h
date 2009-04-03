@@ -38,7 +38,8 @@ namespace SlimMath
 		}
 
 		!Handle() {
-			delete this;
+			delete [] Data;
+			Data = 0;
 		}
 
 		~Handle() {

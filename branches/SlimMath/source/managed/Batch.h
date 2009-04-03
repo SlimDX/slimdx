@@ -36,16 +36,12 @@ namespace SlimMath
 
 	public:
 		Batch();
+		!Batch();
+		~Batch();
+
 
 		Handle^ Add(IOperation^ operation);
 
 		void Process();
-
-		!Batch()
-		{
-			delete this;
-		}
-
-		~Batch();
 	};
 }
