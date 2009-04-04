@@ -89,10 +89,9 @@ namespace SlimMath
 	{
 		data = new float[16];
 
-		array<Handle::ParameterData>^ parameters = gcnew array<Handle::ParameterData>(1);
+		array<Handle::ParameterData>^ parameters = gcnew array<Handle::ParameterData>(0);
 		array<Handle::ResultsData>^ results = gcnew array<Handle::ResultsData>(1);
 		results[0].Data = data;
-		parameters[0].Data = data;
 		handle = gcnew Handle(parameters, results, Operation::MatrixIdentity);
 	}
 
@@ -116,6 +115,7 @@ namespace SlimMath
 		array<Handle::ParameterData>^ parameters = gcnew array<Handle::ParameterData>(1);
 		array<Handle::ResultsData>^ results = gcnew array<Handle::ResultsData>(2);
 		results[0].Data = data;
+		results[1].Data = data+16;
 		parameters[0].Data = matrix->Results[resultIndex].Data;
 		handle = gcnew Handle(parameters, results, Operation::MatrixInverse);
 	}

@@ -11,9 +11,11 @@ namespace ConsoleTest {
 			var m = new Matrix();
 			m.M11 = m.M22 = m.M33 = m.M44 = 2.0f;
 			var ident = batch.Add(new MatrixOps.Identity());
-			var mult = batch.Add(new MatrixOps.Multiply(ident, new Matrix(), 0));
+			var mult = batch.Add(new MatrixOps.Multiply(ident, m, 0));
 			var inverse = batch.Add(new MatrixOps.Inverse(mult, 0));
 			batch.Process();
+			m = inverse.GetResult<Matrix>(0);
+			Console.WriteLine(m);
 		}
 	}
 }

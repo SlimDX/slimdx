@@ -19,34 +19,15 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
-
+#include "handle.h"
+#include <memory>
 namespace SlimMath
 {
-	public ref class Handle
+	generic<typename T>
+	T Handle::GetResult(int resultIndex)
 	{
-	internal:
-		value class ParameterData {
-		public:
-			float* Data;
-		};
-		value class ResultsData {
-		public:
-			float* Data;
-		};
-
-		int Operation;
-		array<ParameterData>^ Data;
-		array<ResultsData>^ Results;
-		Handle(array<ParameterData>^ data, array<ResultsData>^ results, int operation) : Data(data), Operation(operation), Results(results) { }
-
-	public:
-		property bool IsValid
-		{
-			bool get() { return Data->Length != 0; }
-		}
-
-		generic<typename T> where T : value class
-		T GetResult(int resultIndex);
-	};
+		T t;
+		memcpy(&t, Results[resultIndex].Data, sizeof(T));
+		return t;
+	}
 }

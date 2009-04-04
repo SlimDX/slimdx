@@ -191,6 +191,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\managed\Handle.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\source\managed\Handle.h"
 				>
 			</File>

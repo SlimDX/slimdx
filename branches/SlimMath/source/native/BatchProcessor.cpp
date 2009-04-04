@@ -32,31 +32,31 @@ namespace SlimMath
 	{
 		for(int i = 0; i < opCount; ++i)
 		{
-			switch(ops->Op)
+			switch(ops[i].Op)
 			{
 				case Operation::MatrixIdentity:
-					StoreMatrixResult(ops->Results[0].Data, XMMatrixIdentity());
+					StoreMatrixResult(ops[i].Results[0].Data, XMMatrixIdentity());
 					break;
 				case Operation::MatrixMultiply:
 				{
-					XMMATRIX p1 = GetMatrixParameter(ops->Parameters[0].Data);
-					XMMATRIX p2 = GetMatrixParameter(ops->Parameters[1].Data);
-					StoreMatrixResult(ops->Results[0].Data, XMMatrixMultiply(p1, p2));
+					XMMATRIX p1 = GetMatrixParameter(ops[i].Parameters[0].Data);
+					XMMATRIX p2 = GetMatrixParameter(ops[i].Parameters[1].Data);
+					StoreMatrixResult(ops[i].Results[0].Data, XMMatrixMultiply(p1, p2));
 					break;
 				}
 				case Operation::MatrixInverse:
 				{
-					XMMATRIX p1 = GetMatrixParameter(ops->Parameters[0].Data);
+					XMMATRIX p1 = GetMatrixParameter(ops[i].Parameters[0].Data);
 					XMVECTOR det;
-					StoreMatrixResult(ops->Results[0].Data, XMMatrixInverse(&det, p1));
-					StoreVectorResult(ops->Results[1].Data, det);
+					StoreMatrixResult(ops[i].Results[0].Data, XMMatrixInverse(&det, p1));
+					StoreVectorResult(ops[i].Results[1].Data, det);
 					break;
 				}
 				case Operation::MatrixTranslationFromVector:
-					StoreMatrixResult(ops->Results[0].Data, XMMatrixTranslationFromVector(GetVectorParameter(ops->Parameters[0].Data)));
+					StoreMatrixResult(ops[i].Results[0].Data, XMMatrixTranslationFromVector(GetVectorParameter(ops[i].Parameters[0].Data)));
 					break;
 				case Operation::Vector4Transform:
-					StoreVectorResult(ops->Results[0].Data, XMVector4Transform(GetVectorParameter(ops->Parameters[0].Data), GetMatrixParameter(ops->Parameters[0].Data)));
+					StoreVectorResult(ops[i].Results[0].Data, XMVector4Transform(GetVectorParameter(ops[i].Parameters[0].Data), GetMatrixParameter(ops[i].Parameters[1].Data)));
 					break;
 			}
 		}
