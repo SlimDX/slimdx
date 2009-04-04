@@ -36,19 +36,27 @@ namespace SlimMath
 		{
 		private:
 			Handle^ handle;
-
+			float* data;
 		public:
 			Multiply( Matrix value1, Matrix value2 );
+			Multiply( Handle^ value1, Matrix value2, int resultIndex );
+			Multiply( Matrix value1, Handle^ value2, int resultIndex );
+			Multiply( Handle^ value1, Handle^ value2, int firstHandleResultIndex, int secondHandleResultIndex );
+			!Multiply() { delete [] data; data = 0; }
+			~Multiply() { delete [] data; data = 0; }
 			virtual Handle^ GetHandle() { return handle; }
+			
 		};
 		
 		ref class Identity : IOperation
 		{
 		private:
 			Handle^ handle;
-
+			float* data;
 		public:
 			Identity();
+			!Identity() { delete [] data; data = 0; }
+			~Identity() { delete [] data; data = 0; }
 			virtual Handle^ GetHandle() { return handle; }
 		};
 
@@ -56,9 +64,12 @@ namespace SlimMath
 		{
 		private:
 			Handle^ handle;
-
+			float* data;
 		public:
 			Inverse(Matrix matrix);
+			Inverse(Handle^ handle, int resultIndex);
+			~Inverse() { delete [] data; data = 0; }
+			!Inverse() { delete [] data; data = 0; }
 			virtual Handle^ GetHandle() { return handle; }
 		};
 	};

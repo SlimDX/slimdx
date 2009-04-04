@@ -26,25 +26,24 @@ namespace SlimMath
 	public ref class Handle
 	{
 	internal:
+		value class ParameterData {
+		public:
+			float* Data;
+		};
+		value class ResultsData {
+		public:
+			float* Data;
+		};
+
 		int Operation;
-		float *Data;
-		int ResultSize;
-		Handle(float *data, int resultSize, int operation) : Data(data), Operation(operation), ResultSize(resultSize) { }
+		array<ParameterData>^ Data;
+		array<ResultsData>^ Results;
+		Handle(array<ParameterData>^ data, array<ResultsData>^ results, int operation) : Data(data), Operation(operation), Results(results) { }
 
 	public:
 		property bool IsValid
 		{
-			bool get() { return Data != 0; }
-		}
-
-		!Handle() {
-			delete [] Data;
-			Data = 0;
-		}
-
-		~Handle() {
-			delete [] Data;
-			Data = 0;
+			bool get() { return Data->Length != 0; }
 		}
 	};
 }

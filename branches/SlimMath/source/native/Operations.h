@@ -45,12 +45,20 @@ namespace SlimMath
 		};
 	};
 
+	struct ParameterDescriptor {
+		float* Data;
+	};
+
+	struct ResultDescriptor {
+		float* Data;
+	};
+
 	struct OpDescriptor
 	{
 		Operation::Ops Op;
 
-		float* Parameters;
+		ParameterDescriptor Parameters[16];
 
-		float* Results;
+		ResultDescriptor Results[3];
 	};
 }
