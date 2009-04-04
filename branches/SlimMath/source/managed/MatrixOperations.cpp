@@ -32,26 +32,25 @@ namespace SlimMath
 	MatrixOps::Multiply::Multiply( Matrix value1, Matrix value2 )
 	{
 		int size = sizeof(float) * 16;
-		float *data = new float[48];
+		float *data = new float[32];
 
 		memcpy(data, &value1.M11, size);
 		memcpy(data + 16, &value2.M11, size);
 
-		handle = gcnew Handle(data, data + 32, Operation::MatrixMultiply);
+		handle = gcnew Handle(data, 16, Operation::MatrixMultiply);
 	}
 
 	MatrixOps::Identity::Identity()
 	{
-		float* data = new float[16];
-		handle = gcnew Handle(data, data, Operation::MatrixIdentity);
+		handle = gcnew Handle(0, 16, Operation::MatrixIdentity);
 	}
 
 	MatrixOps::Inverse::Inverse(Matrix matrix)
 	{
-		float* data = new float[36];
+		float* data = new float[16];
 
 		memcpy(data, &matrix.M11, 16 * sizeof(float));
 
-		handle = gcnew Handle(data, data+16, Operation::MatrixInverse);
+		handle = gcnew Handle(data, 20, Operation::MatrixInverse);
 	}
 }

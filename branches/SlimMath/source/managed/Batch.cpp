@@ -56,17 +56,28 @@ namespace SlimMath
 		return handle;
 	}
 
-	void Batch::Process() {
+	array<float>^ Batch::Process() {
 		OpDescriptor* descriptors = new OpDescriptor[handles->Count];
-
+		int resultSize = 0;
 		for(int i = 0; i < handles->Count; ++i)
 		{
 			descriptors[i].Op = static_cast<Operation::Ops>(handles[i]->Operation);
 			descriptors[i].Parameters = handles[i]->Data;
-			descriptors[i].Results = handles[i]->Results;
+			resultSize += handles[i]->ResultSize;
+		}
+
+		array<float>^ results = gcnew array<float>(resultSize);
+		pin_ptr<float> pinptr = &results[0];
+		float* ptr = pinptr;
+
+		for(int i = 0; i < handles->Count; ++i) {
+			descriptors[i].Results = ptr;
+			ptr += handles[i]->ResultSize;
 		}
 
 		processor->Process(descriptors, handles->Count);
 		delete [] descriptors;
+
+		return results;
 	}
 }

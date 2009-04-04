@@ -11,7 +11,7 @@ namespace ConsoleTest {
 			batch.Add(new MatrixOps.Identity());
 			batch.Add(new MatrixOps.Multiply(new Matrix(), new Matrix()));
 			batch.Add(new MatrixOps.Inverse(new Matrix()));
-			batch.Process();
+			float[] results = batch.Process();
 		}
 	}
 }

@@ -42,6 +42,6 @@ namespace SlimMath
 
 		Handle^ Add(IOperation^ operation);
 
-		void Process();
+		array<float>^ Process();
 	};
 }
