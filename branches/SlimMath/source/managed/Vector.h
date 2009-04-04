@@ -23,8 +23,13 @@
 
 namespace SlimMath
 {
+	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 	public value class Vector
 	{
 	public:
+		float X;
+		float Y;
+		float Z;
+		float W;
 	};
 }

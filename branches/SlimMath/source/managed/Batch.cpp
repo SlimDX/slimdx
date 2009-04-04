@@ -63,7 +63,7 @@ namespace SlimMath
 		{
 			descriptors[i].Op = static_cast<Operation::Ops>(handles[i]->Operation);
 			descriptors[i].Parameters = handles[i]->Data;
-			descriptors[i].Results = handles[i]->Data + handles[i]->ResultOffset;
+			descriptors[i].Results = handles[i]->Results;
 		}
 
 		processor->Process(descriptors, handles->Count);

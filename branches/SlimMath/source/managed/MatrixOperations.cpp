@@ -23,6 +23,8 @@
 #include <memory>
 #include "MatrixOperations.h"
 #include "..\native\operations.h"
+#include <windows.h>
+#include <xnamath.h>
 using namespace System;
 
 namespace SlimMath
@@ -32,24 +34,24 @@ namespace SlimMath
 		int size = sizeof(float) * 16;
 		float *data = new float[48];
 
-		memcpy(data, &value1, size);
-		memcpy(data + size, &value2, size);
+		memcpy(data, &value1.M11, size);
+		memcpy(data + 16, &value2.M11, size);
 
-		handle = gcnew Handle(data, Operation::MatrixMultiply, 32);
+		handle = gcnew Handle(data, data + 32, Operation::MatrixMultiply);
 	}
 
 	MatrixOps::Identity::Identity()
 	{
 		float* data = new float[16];
-		handle = gcnew Handle(data, Operation::MatrixIdentity, 0);
+		handle = gcnew Handle(data, data, Operation::MatrixIdentity);
 	}
 
 	MatrixOps::Inverse::Inverse(Matrix matrix)
 	{
 		float* data = new float[36];
 
-		memcpy(data, &matrix, 16 * sizeof(float));
+		memcpy(data, &matrix.M11, 16 * sizeof(float));
 
-		handle = gcnew Handle(data, Operation::MatrixInverse, 16);
+		handle = gcnew Handle(data, data+16, Operation::MatrixInverse);
 	}
 }

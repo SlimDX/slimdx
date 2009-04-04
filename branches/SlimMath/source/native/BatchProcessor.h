@@ -29,9 +29,9 @@ namespace SlimMath
 		BatchProcessor();
 		void Process(OpDescriptor* ops, int opCount);
 	private:
-		XMVECTOR GetVectorParameter(float*& data);
-		XMMATRIX GetMatrixParameter(float*& data);
-		void StoreVectorResult(float*& data, CXMVECTOR vector);
-		void StoreMatrixResult(float*& data, CXMMATRIX matrix);
+		XMVECTOR GetVectorParameter(float* data);
+		XMMATRIX GetMatrixParameter(float* data);
+		void StoreVectorResult(float* data, CXMVECTOR vector);
+		void StoreMatrixResult(float* data, CXMMATRIX matrix);
 	};
 }

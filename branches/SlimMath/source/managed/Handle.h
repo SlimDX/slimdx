@@ -28,8 +28,8 @@ namespace SlimMath
 	internal:
 		int Operation;
 		float *Data;
-		int ResultOffset;
-		Handle(float *data, int operation, int resultOffset) : Data(data), Operation(operation), ResultOffset(resultOffset) { }
+		float *Results;
+		Handle(float *data, float* results, int operation) : Data(data), Operation(operation), Results(results) { }
 
 	public:
 		property bool IsValid
