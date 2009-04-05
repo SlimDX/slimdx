@@ -45,9 +45,6 @@ namespace SlimMath {
 		generic<typename T, typename U, typename V> where T : value class where U : value class where V : value class
 		CompoundHandle<T, U, V>^ Add(CompoundOperation<T, U, V>^ operation);
 
-		generic<typename T, typename U> where T : value class where U : value class
-		void Batch::Add(TransformVector4ArrayOperation<T, U>^ operation);
-
 		void Process();
 	};
 }

@@ -62,13 +62,8 @@ namespace SlimMath {
 		return operation->Result;
 	}
 
-	generic<typename T, typename U>
-	void Batch::Add(TransformVector4ArrayOperation<T, U>^ operation) {
-		operations->Add(operation);
-	}
-
 	void Batch::Process() {
-		std::vector<OpDescriptor> descriptors(operations->Count);
+		OpDescriptor* descriptors = new OpDescriptor[operations->Count];
 
 		for(int i = 0; i < operations->Count; ++i) {
 			descriptors[i].Op = static_cast<NativeOperation::Ops>(operations[i]->Op);
@@ -79,7 +74,8 @@ namespace SlimMath {
 			for(int j = 0; j < operations[i]->Results->Length; ++j)
 				descriptors[i].Results[j].Data = static_cast<float*>(operations[i]->Results[j].ToPointer());
 		}
-
-		processor->Process(&descriptors[0], operations->Count);
+		
+		processor->Process(descriptors, operations->Count);
+		delete [] descriptors;
 	}
 }

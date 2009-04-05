@@ -52,12 +52,4 @@ namespace SlimMath {
 		if(result->ThirdResult != nullptr)
 			results[2] = result->ThirdResult->RawData;
 	}
-
-	generic<typename T, typename U>
-	TransformVector4ArrayOperation<T, U>::TransformVector4ArrayOperation(array<T>^ result, array<T>^ source, Handle<U>^ transform, int op) {
-		this->results = result;
-		this->source = source;
-		this->op = op;
-		this->transform = transform;
-	}
 }

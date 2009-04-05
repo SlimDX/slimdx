@@ -38,7 +38,4 @@ namespace SlimMath {
 		return gcnew Operation<Vector>(result, gcnew array<IntPtr>(2) {value1->RawData, value2->RawData}, NativeOperation::Vector4Transform);
 	}
 
-	TransformVector4ArrayOperation<Vector, Matrix>^ VectorOps::TransformStream(array<Vector>^ resultStream, array<Vector>^ sourceStream, Handle<Matrix>^ transform) {
-		return gcnew TransformVector4ArrayOperation<Vector, Matrix>(resultStream, sourceStream, transform, NativeOperation::Vector4TransformStream);
-	}
 }
