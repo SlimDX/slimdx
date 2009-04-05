@@ -10,18 +10,21 @@ namespace ConsoleTest {
 			var m2 = batch.Add(MatrixOps.Identity());
 			var mult = batch.Add(MatrixOps.Multiply(m1, m2));
 			var inv = batch.Add(MatrixOps.Inverse(mult));
+
+			var v1 = new Vector() { X = 1, Y = 1, Z = 1, W = 0};
+			var result3 = batch.Add(VectorOps.Transform4(v1, inv.FirstResult));
+
+			var trans = batch.Add(MatrixOps.TranslationFromVector(new Vector() {X = 2, Y = 2, Z = 2, W = 0}));
+			var doubled = batch.Add(VectorOps.Transform4(new Vector() {X = 1, Y = 1, Z = 1, W = 1}, trans));
 			batch.Process();
 
 			var result1 = inv.FirstResult.GetData();
 			var result2 = inv.SecondResult.GetData();
 
-			var v1 = new Vector() { X = 1, Y = 1, Z = 1, W = 0};
-			var result3 = batch.Add(VectorOps.Transform4(v1, result1));
-			batch.Process();
-
 			Console.WriteLine(result1);
 			Console.WriteLine(result2);
 			Console.WriteLine(result3.GetData());
+			Console.WriteLine(doubled.GetData());
 		}
 	}
 }
