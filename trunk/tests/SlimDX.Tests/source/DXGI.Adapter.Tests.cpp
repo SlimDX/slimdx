@@ -140,6 +140,41 @@ TEST( DXGI_AdapterTests, GetOutput )
 	delete adapter;
 }
 
+TEST( DXGI_AdapterTests, GetOutputCanThrow )
+{
+	IDXGIAdapterMock mockAdapter;
+	Adapter^ adapter = Adapter::FromPointer( System::IntPtr( &mockAdapter ) );
+	
+	const int outputIndex = 32;
+	EXPECT_CALL( mockAdapter, EnumOutputs( outputIndex, _ ) )
+		.WillOnce( Return( DXGI_ERROR_NOT_FOUND ) );
+	
+	ASSERT_MANAGED_THROW( adapter->GetOutput( outputIndex ), DXGIException );
+	
+	delete adapter;
+}
+
+TEST( DXGI_AdapterTests, GetOutputCanFail )
+{
+	IDXGIAdapterMock mockAdapter;
+	Adapter^ adapter = Adapter::FromPointer( System::IntPtr( &mockAdapter ) );
+	
+	const int outputIndex = 32;
+	EXPECT_CALL( mockAdapter, EnumOutputs( outputIndex, _ ) )
+		.WillOnce( Return( DXGI_ERROR_NOT_FOUND ) );
+	
+	{
+		SCOPED_THROW_ON_ERROR( false );
+		
+		IOutput^ output = nullptr;
+		ASSERT_NO_THROW( output = adapter->GetOutput( outputIndex ) );
+		
+		ASSERT_TRUE( output == nullptr );
+	}
+
+	delete adapter;
+}
+
 TEST( DXGI_AdapterTests, IsInterfaceSupported )
 {
 	IDXGIAdapterMock mockAdapter;
