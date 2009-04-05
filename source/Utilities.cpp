@@ -53,12 +53,23 @@ namespace SlimDX
 		return result;
 	}
 	
+	//TODO: This needs review upon interface refactor.
 	GUID Utilities::GetNativeGuidForType( Type^ type )
 	{
 		if( type == nullptr )
 			throw gcnew ArgumentNullException( "type" );
 		
+		// This will only work for ComObjects.
+		if( !type->IsSubclassOf( ComObject::typeid ) )
+			return GUID_NULL;
+		
+		// This should never fail (i.e., should never return null) since we now know the type is a ComObject subclass.
+		//TODO: Old comobjects have this private, new ones public. blah blah. this needs to be moved to an attribute anyway
+		//      or it won't work with interfaces.
 		PropertyInfo^ nativeInterfaceProperty = type->GetProperty( "NativeInterface", BindingFlags::NonPublic | BindingFlags::Static );
+		if( nativeInterfaceProperty == nullptr ) 
+			nativeInterfaceProperty = type->GetProperty( "NativeInterface" );
+
 		Guid nativeInterface = static_cast<Guid>( nativeInterfaceProperty->GetValue( nullptr, nullptr ) );
 		
 		return ConvertManagedGuid( nativeInterface );
@@ -69,8 +80,19 @@ namespace SlimDX
 		if( guid == GUID_NULL )
 			return Guid::Empty;
 
-		Guid result( guid.Data1, guid.Data2, guid.Data3, guid.Data4[0], guid.Data4[1], guid.Data4[2], 
-			guid.Data4[3], guid.Data4[4], guid.Data4[5], guid.Data4[6], guid.Data4[7] );
+		Guid result(
+			guid.Data1,
+			guid.Data2,
+			guid.Data3,
+			guid.Data4[0],
+			guid.Data4[1],
+			guid.Data4[2], 
+			guid.Data4[3],
+			guid.Data4[4],
+			guid.Data4[5],
+			guid.Data4[6],
+			guid.Data4[7]
+		);
 
 		return result;
 	}
