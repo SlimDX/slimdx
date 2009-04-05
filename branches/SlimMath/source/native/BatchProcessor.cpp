@@ -25,16 +25,12 @@
 
 #include "BatchProcessor.h"
 
-namespace SlimMath
-{
+namespace SlimMath {
 	BatchProcessor::BatchProcessor() {}
 
-	void BatchProcessor::Process(OpDescriptor *ops, int opCount)
-	{
-		for(int i = 0; i < opCount; ++i)
-		{
-			switch(ops[i].Op)
-			{
+	void BatchProcessor::Process(OpDescriptor *ops, int opCount) {
+		for(int i = 0; i < opCount; ++i) {
+			switch(ops[i].Op) {
 				case NativeOperation::MatrixIdentity:
 					StoreMatrixResult(ops[i].Results[0].Data, XMMatrixIdentity());
 					break;
@@ -63,24 +59,20 @@ namespace SlimMath
 		}
 	}
 
-	XMVECTOR BatchProcessor::GetVectorParameter(float* data)
-	{
+	__forceinline XMVECTOR BatchProcessor::GetVectorParameter(float* data) {
 		XMVECTOR result = XMLoadFloat4(reinterpret_cast<XMFLOAT4*>(data));
 		return result;
 	}
-	XMMATRIX BatchProcessor::GetMatrixParameter(float* data)
-	{
+	__forceinline XMMATRIX BatchProcessor::GetMatrixParameter(float* data) {
 		XMMATRIX result = XMLoadFloat4x4(reinterpret_cast<XMFLOAT4X4*>(data));
 		return result;
 	}
 
-	void BatchProcessor::StoreVectorResult(float* data, CXMVECTOR vector)
-	{
+	__forceinline void BatchProcessor::StoreVectorResult(float* data, CXMVECTOR vector) {
 		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(data), vector);
 	}
 
-	void BatchProcessor::StoreMatrixResult(float* data, CXMMATRIX matrix)
-	{
+	__forceinline void BatchProcessor::StoreMatrixResult(float* data, CXMMATRIX matrix) {
 		XMStoreFloat4x4(reinterpret_cast<XMFLOAT4X4*>(data), matrix);
 	}
 }

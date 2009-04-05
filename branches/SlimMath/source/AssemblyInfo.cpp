@@ -36,7 +36,7 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyConfigurationAttribute("")];
 [assembly:AssemblyCompanyAttribute("SlimDX Group")];
 [assembly:AssemblyProductAttribute("SlimDX")];
-[assembly:AssemblyCopyrightAttribute("Copyright © 2007-2009 SlimDX Group")];
+[assembly:AssemblyCopyrightAttribute("Copyright ï¿½ 2007-2009 SlimDX Group")];
 [assembly:AssemblyTrademarkAttribute("")];
 [assembly:AssemblyCultureAttribute("")];
 

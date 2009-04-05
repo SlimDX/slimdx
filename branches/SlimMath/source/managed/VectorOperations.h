@@ -22,29 +22,14 @@
 #pragma once
 
 #include "Operation.h"
-#include "Handle.h"
+#include "Primitives.h"
 
 namespace SlimMath {
-	class BatchProcessor;
-
-	public ref class Batch {
+	public ref class VectorOps sealed {
 	private:
-		BatchProcessor* processor;
-		System::Collections::Generic::List<IOperation^>^ operations;
-
-		void Destruct();
+		VectorOps() { }
 
 	public:
-		Batch();
-		!Batch();
-		~Batch();
-
-		generic<typename T> where T : value class
-		Handle<T>^ Add(Operation<T>^ operation);
-
-		generic<typename T, typename U, typename V> where T : value class where U : value class where V : value class
-		CompoundHandle<T, U, V>^ Add(CompoundOperation<T, U, V>^ operation);
-
-		void Process();
+		static Operation<Vector>^ Transform4(Handle<Vector>^ value1, Handle<Matrix>^ value2);
 	};
 }

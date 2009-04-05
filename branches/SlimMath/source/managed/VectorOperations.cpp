@@ -19,32 +19,22 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Operation.h"
+#include <windows.h>
+#include <xnamath.h>
+#include <memory>
+
+#include "..\native\NativeOperations.h"
+
 #include "Handle.h"
+#include "VectorOperations.h"
+
+using namespace System;
 
 namespace SlimMath {
-	class BatchProcessor;
+	Operation<Vector>^ VectorOps::Transform4(Handle<Vector>^ value1, Handle<Matrix>^ value2) {
+		Handle<Vector>^ result = gcnew Handle<Vector>();
 
-	public ref class Batch {
-	private:
-		BatchProcessor* processor;
-		System::Collections::Generic::List<IOperation^>^ operations;
-
-		void Destruct();
-
-	public:
-		Batch();
-		!Batch();
-		~Batch();
-
-		generic<typename T> where T : value class
-		Handle<T>^ Add(Operation<T>^ operation);
-
-		generic<typename T, typename U, typename V> where T : value class where U : value class where V : value class
-		CompoundHandle<T, U, V>^ Add(CompoundOperation<T, U, V>^ operation);
-
-		void Process();
-	};
+		return gcnew Operation<Vector>(result, gcnew array<IntPtr>(2) {value1->RawData, value2->RawData}, NativeOperation::Vector4Transform);
+	}
 }

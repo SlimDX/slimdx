@@ -21,19 +21,15 @@
 */
 #pragma once
 
-namespace SlimMath
-{
-	public interface struct IHandle
-	{
-		property System::IntPtr RawData
-		{
+namespace SlimMath {
+	public interface struct IHandle {
+		property System::IntPtr RawData {
 			virtual System::IntPtr get() = 0;
 		}
 	};
 
 	generic<typename T> where T : value class
-	public ref class Handle sealed : IHandle
-	{
+	public ref class Handle sealed : IHandle {
 	private:
 		float *data;
 
@@ -42,8 +38,7 @@ namespace SlimMath
 		Handle(T value);
 
 	public:
-		property System::IntPtr RawData
-		{
+		property System::IntPtr RawData {
 			virtual System::IntPtr get();
 		}
 
@@ -53,8 +48,7 @@ namespace SlimMath
 	};
 
 	generic<typename T, typename U, typename V> where T : value class where U : value class where V : value class
-	public ref class CompoundHandle sealed
-	{
+	public ref class CompoundHandle sealed {
 	private:
 		Handle<T>^ firstResult;
 		Handle<U>^ secondResult;
@@ -64,18 +58,15 @@ namespace SlimMath
 		CompoundHandle(Handle<T>^ handle1, Handle<U>^ handle2, Handle<V>^ handle3);
 
 	public:
-		property Handle<T>^ FirstResult
-		{
+		property Handle<T>^ FirstResult {
 			Handle<T>^ get() { return firstResult; }
 		}
 
-		property Handle<U>^ SecondResult
-		{
+		property Handle<U>^ SecondResult {
 			Handle<U>^ get() { return secondResult; }
 		}
 
-		property Handle<V>^ ThirdResult
-		{
+		property Handle<V>^ ThirdResult {
 			Handle<V>^ get() { return thirdResult; }
 		}
 	};

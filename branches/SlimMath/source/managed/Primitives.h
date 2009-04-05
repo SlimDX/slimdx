@@ -24,9 +24,7 @@
 #include "Matrix.h"
 #include "Vector.h"
 
-namespace SlimMath
-{
-	public value class NoValue
-	{
+namespace SlimMath {
+	public value class NoValue {
 	};
 }

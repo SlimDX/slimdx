@@ -24,11 +24,9 @@
 
 using namespace System;
 
-namespace SlimMath
-{
+namespace SlimMath {
 	generic<typename T>
-	Operation<T>::Operation(Handle<T>^ result, array<IntPtr>^ parameters, int op)
-	{
+	Operation<T>::Operation(Handle<T>^ result, array<IntPtr>^ parameters, int op) {
 		this->result = result;
 		this->parameters = parameters;
 		this->op = op;
@@ -38,8 +36,7 @@ namespace SlimMath
 	}
 
 	generic<typename T, typename U, typename V>
-	CompoundOperation<T, U, V>::CompoundOperation(CompoundHandle<T, U, V>^ result, array<IntPtr>^ parameters, int op)
-	{
+	CompoundOperation<T, U, V>::CompoundOperation(CompoundHandle<T, U, V>^ result, array<IntPtr>^ parameters, int op) {
 		this->result = result;
 		this->parameters = parameters;
 		this->op = op;

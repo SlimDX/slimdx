@@ -31,50 +31,41 @@
 using namespace System;
 using namespace System::Collections::Generic;
 
-namespace SlimMath
-{
-	Batch::Batch()
-	{
+namespace SlimMath {
+	Batch::Batch() {
 		operations = gcnew List<IOperation^>();
 		processor = new BatchProcessor();
 	}
 
-	Batch::~Batch()
-	{
+	Batch::~Batch() {
 		Destruct();
 	}
 
-	Batch::!Batch()
-	{
+	Batch::!Batch() {
 		Destruct();
 	}
 
-	void Batch::Destruct()
-	{
+	void Batch::Destruct() {
 		delete processor;
 		processor = 0;
 	}
 
 	generic<typename T>
-	Handle<T>^ Batch::Add(Operation<T>^ operation)
-	{
+	Handle<T>^ Batch::Add(Operation<T>^ operation) {
 		operations->Add(operation);
 		return safe_cast<Handle<T>^>(operation->Result);
 	}
 
 	generic<typename T, typename U, typename V>
-	CompoundHandle<T, U, V>^ Batch::Add(CompoundOperation<T, U, V>^ operation)
-	{
+	CompoundHandle<T, U, V>^ Batch::Add(CompoundOperation<T, U, V>^ operation) {
 		operations->Add(operation);
 		return operation->Result;
 	}
 
-	void Batch::Process()
-	{
+	void Batch::Process() {
 		std::vector<OpDescriptor> descriptors(operations->Count);
 
-		for(int i = 0; i < operations->Count; ++i)
-		{
+		for(int i = 0; i < operations->Count; ++i) {
 			descriptors[i].Op = static_cast<NativeOperation::Ops>(operations[i]->Op);
 
 			for(int j = 0; j < operations[i]->Parameters->Length; ++j)

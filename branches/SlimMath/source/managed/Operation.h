@@ -23,29 +23,23 @@
 
 #include "Handle.h"
 
-namespace SlimMath
-{
-	public interface struct IOperation
-	{
-		property array<System::IntPtr>^ Parameters
-		{
+namespace SlimMath {
+	public interface struct IOperation {
+		property array<System::IntPtr>^ Parameters {
 			virtual array<System::IntPtr>^ get() = 0;
 		}
 
-		property array<System::IntPtr>^ Results
-		{
+		property array<System::IntPtr>^ Results {
 			virtual array<System::IntPtr>^ get() = 0;
 		}
 
-		property int Op
-		{
+		property int Op {
 			virtual int get() = 0;
 		}
 	};
 
 	generic<typename T> where T : value class
-	public ref class Operation sealed : IOperation
-	{
+	public ref class Operation sealed : IOperation {
 	private:
 		array<System::IntPtr>^ parameters;
 		array<System::IntPtr>^ results;
@@ -56,30 +50,25 @@ namespace SlimMath
 		Operation(Handle<T>^ result, array<System::IntPtr>^ parameters, int op);
 
 	public:
-		property array<System::IntPtr>^ Parameters
-		{
+		property array<System::IntPtr>^ Parameters {
 			virtual array<System::IntPtr>^ get() { return parameters; }
 		}
 
-		property array<System::IntPtr>^ Results
-		{
+		property array<System::IntPtr>^ Results {
 			virtual array<System::IntPtr>^ get() { return results; }
 		}
 
-		property int Op
-		{
+		property int Op {
 			virtual int get() { return op; }
 		}
 
-		property IHandle^ Result
-		{
+		property IHandle^ Result {
 			virtual IHandle^ get() { return result; }
 		}
 	};
 
 	generic<typename T, typename U, typename V> where T : value class where U : value class where V : value class
-	public ref class CompoundOperation sealed : IOperation
-	{
+	public ref class CompoundOperation sealed : IOperation {
 	private:
 		array<System::IntPtr>^ parameters;
 		array<System::IntPtr>^ results;
@@ -90,23 +79,19 @@ namespace SlimMath
 		CompoundOperation(CompoundHandle<T, U, V>^ result, array<System::IntPtr>^ parameters, int op);
 
 	public:
-		property array<System::IntPtr>^ Parameters
-		{
+		property array<System::IntPtr>^ Parameters {
 			virtual array<System::IntPtr>^ get() { return parameters; }
 		}
 
-		property array<System::IntPtr>^ Results
-		{
+		property array<System::IntPtr>^ Results {
 			virtual array<System::IntPtr>^ get() { return results; }
 		}
 
-		property int Op
-		{
+		property int Op {
 			virtual int get() { return op; }
 		}
 
-		property CompoundHandle<T, U, V>^ Result
-		{
+		property CompoundHandle<T, U, V>^ Result {
 			CompoundHandle<T, U, V>^ get() { return result; }
 		}
 	};

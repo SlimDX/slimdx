@@ -226,6 +226,14 @@
 				RelativePath="..\source\managed\Vector.h"
 				>
 			</File>
+			<File
+				RelativePath="..\source\managed\VectorOperations.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\managed\VectorOperations.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Native"
@@ -246,6 +254,10 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+						InlineFunctionExpansion="2"
+						EnableIntrinsicFunctions="true"
+						FavorSizeOrSpeed="1"
+						WholeProgramOptimization="false"
 						CompileAsManaged="0"
 					/>
 				</FileConfiguration>

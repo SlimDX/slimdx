@@ -24,10 +24,8 @@
 #include "Operation.h"
 #include "Primitives.h"
 
-namespace SlimMath
-{
-	public ref class MatrixOps sealed
-	{
+namespace SlimMath {
+	public ref class MatrixOps sealed {
 	private:
 		MatrixOps() { }
 
@@ -35,5 +33,6 @@ namespace SlimMath
 		static Operation<Matrix>^ Multiply(Handle<Matrix>^ value1, Handle<Matrix>^ value2);
 		static Operation<Matrix>^ Identity();
 		static CompoundOperation<Matrix, float, NoValue>^ Inverse(Handle<Matrix>^ matrix);
+		static Operation<Matrix>^ TranslationFromVector(Handle<Vector>^ value);
 	};
 }
