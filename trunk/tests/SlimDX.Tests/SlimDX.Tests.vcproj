@@ -346,11 +346,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\IDXGIDeviceMock.h"
+				>
+			</File>
+			<File
 				RelativePath=".\source\IDXGIFactoryMock.h"
 				>
 			</File>
 			<File
 				RelativePath=".\source\IDXGIOutputMock.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\IDXGISurfaceMock.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\IDXGISwapChainMock.h"
 				>
 			</File>
 		</Filter>
