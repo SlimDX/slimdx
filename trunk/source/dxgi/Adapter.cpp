@@ -73,9 +73,13 @@ namespace DXGI
 	bool Adapter::IsInterfaceSupported( Type^ type, [Out] Int64% userModeVersion )
 	{
 		GUID guid = Utilities::GetNativeGuidForType( type );
-		LARGE_INTEGER version;
-		RECORD_DXGI( InternalPointer->CheckInterfaceSupport( guid, &version ) );
-		if( Result::Last == Result( DXGI_ERROR_UNSUPPORTED ) )
+		LARGE_INTEGER version = { };
+
+		// We intentionally do not record this HRESULT right away; if we did,
+		// we might throw out of this method, which make it rather pointless.
+		HRESULT hr = InternalPointer->CheckInterfaceSupport( guid, &version );
+		RECORD_DXGI( S_OK );
+		if( FAILED( hr ) )
 		{
 			userModeVersion = 0;
 			return false;

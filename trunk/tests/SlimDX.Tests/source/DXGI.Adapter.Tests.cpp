@@ -33,7 +33,7 @@ using namespace System;
 using namespace SlimDX;
 using namespace SlimDX::DXGI;
 
-TEST( IDXGIAdapterTests, GetDescription )
+TEST( DXGI_AdapterTests, GetDescription )
 {
 	IDXGIAdapterMock mockAdapter;
 	Adapter^ adapter = Adapter::FromPointer( System::IntPtr( &mockAdapter ) );
@@ -72,7 +72,7 @@ TEST( IDXGIAdapterTests, GetDescription )
 	delete adapter;
 }
 
-TEST( IDXGIAdapterTests, GetDescriptionThrows )
+TEST( DXGI_AdapterTests, GetDescriptionThrows )
 {
 	IDXGIAdapterMock mockAdapter;
 	Adapter^ adapter = Adapter::FromPointer( System::IntPtr( &mockAdapter ) );
@@ -86,28 +86,7 @@ TEST( IDXGIAdapterTests, GetDescriptionThrows )
 	delete adapter;
 }
 
-TEST( IDXGIAdapterTests, GetDescriptionFails )
-{
-	IDXGIAdapterMock mockAdapter;
-	Adapter^ adapter = Adapter::FromPointer( System::IntPtr( &mockAdapter ) );
-	
-	EXPECT_CALL( mockAdapter, GetDesc( _ ) )
-		.WillRepeatedly( Return( E_FAIL ) );
-	
-	{
-		SCOPED_THROW_ON_ERROR( false );
-
-		ASSERT_NO_THROW( adapter->Description );
-		ASSERT_TRUE( Result::Last.IsFailure );
-	
-		AdapterDescription description = adapter->Description;
-		ASSERT_TRUE( AdapterDescription() == description );
-	}
-
-	delete adapter;
-}
-
-TEST( IDXGIAdapterTests, GetOutputCountCanReturnZero )
+TEST( DXGI_AdapterTests, GetOutputCountCanReturnZero )
 {
 	IDXGIAdapterMock mockAdapter;
 	Adapter^ adapter = Adapter::FromPointer( System::IntPtr( &mockAdapter ) );
@@ -121,8 +100,7 @@ TEST( IDXGIAdapterTests, GetOutputCountCanReturnZero )
 	delete adapter;
 }
 
-
-TEST( IDXGIAdapterTests, GetOutputCountCanReturnNonZero )
+TEST( DXGI_AdapterTests, GetOutputCountCanReturnNonZero )
 {
 	IDXGIAdapterMock mockAdapter;
 	IDXGIOutputMock mockOutput0;
@@ -145,7 +123,7 @@ TEST( IDXGIAdapterTests, GetOutputCountCanReturnNonZero )
 	delete adapter;
 }
 
-TEST( IDXGIAdapterTests, GetOutput )
+TEST( DXGI_AdapterTests, GetOutput )
 {
 	IDXGIAdapterMock mockAdapter;
 	IDXGIOutputMock mockOutput;
@@ -162,7 +140,7 @@ TEST( IDXGIAdapterTests, GetOutput )
 	delete adapter;
 }
 
-TEST( IDXGIAdapterTests, IsInterfaceSupported )
+TEST( DXGI_AdapterTests, IsInterfaceSupported )
 {
 	IDXGIAdapterMock mockAdapter;
 	IDXGIOutputMock mockOutput;
@@ -172,29 +150,29 @@ TEST( IDXGIAdapterTests, IsInterfaceSupported )
 		.WillOnce( Return( S_OK ) );
 	
 	bool result = false;
-	ASSERT_NO_THROW( result = adapter->IsInterfaceSupported( System::Type::typeid ) );
+	ASSERT_NO_THROW( result = adapter->IsInterfaceSupported( Device::typeid ) );
 	ASSERT_TRUE( result );
 
 	delete adapter;
 }
 
-TEST( IDXGIAdapterTests, IsInterfaceSupportedCanFail )
+TEST( DXGI_AdapterTests, IsInterfaceSupportedCanFail )
 {
 	IDXGIAdapterMock mockAdapter;
 	IDXGIOutputMock mockOutput;
 	Adapter^ adapter = Adapter::FromPointer( System::IntPtr( &mockAdapter ) );
 	
 	EXPECT_CALL( mockAdapter, CheckInterfaceSupport( _, _ ) )
-		.WillOnce( Return( E_FAIL ) );
+		.WillOnce( Return( DXGI_ERROR_UNSUPPORTED ) );
 	
 	bool result = true;
-	ASSERT_NO_THROW( result = adapter->IsInterfaceSupported( System::Type::typeid ) );
+	ASSERT_NO_THROW( result = adapter->IsInterfaceSupported( Device::typeid ) );
 	ASSERT_FALSE( result );
 
 	delete adapter;
 }
 
-TEST( IDXGIAdapterTests, ToString )
+TEST( DXGI_AdapterTests, ToString )
 {
 	IDXGIAdapterMock mockAdapter;
 	Adapter^ adapter = Adapter::FromPointer( System::IntPtr( &mockAdapter ) );
