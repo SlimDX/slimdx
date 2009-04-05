@@ -32,7 +32,7 @@ namespace SlimMath
 {
 	Batch::Batch()
 	{
-		handles = gcnew List<Handle^>();
+		operations = gcnew List<IOperation^>();
 		processor = new BatchProcessor();
 	}
 
@@ -48,30 +48,39 @@ namespace SlimMath
 		processor = 0;
 	}
 
-	Handle^ Batch::Add(IOperation^ operation)
+	generic<typename T> where T : value class
+	Handle<T>^ Batch::Add(Operation<T>^ operation)
 	{
-		Handle^ handle = operation->GetHandle();
-		handles->Add(handle);
-
-		return handle;
+		operations->Add(operation);
+		return safe_cast<Handle<T>^>(operation->Result);
 	}
 
-	void Batch::Process() {
-		OpDescriptor* descriptors = new OpDescriptor[handles->Count];
+	CompoundHandle^ Batch::Add(CompoundOperation^ operation)
+	{
+		operations->Add(operation);
+		return operation->Result;
+	}
 
-		for(int i = 0; i < handles->Count; ++i)
+	void Batch::Process()
+	{
+		OpDescriptor* descriptors = new OpDescriptor[operations->Count];
+
+		for(int i = 0; i < operations->Count; ++i)
 		{
-			descriptors[i].Op = static_cast<Operation::Ops>(handles[i]->Operation);
-			for(int j = 0; j < handles[i]->Data->Length; ++j)
+			descriptors[i].Op = static_cast<NativeOperation::Ops>(operations[i]->Op);
+
+			for(int j = 0; j < operations[i]->Parameters->Length; ++j)
 			{
-				descriptors[i].Parameters[j].Data = handles[i]->Data[j].Data;
+				descriptors[i].Parameters[j].Data = static_cast<float*>(operations[i]->Parameters[j].ToPointer());
 			}
-			for(int j = 0; j < handles[i]->Results->Length; ++j) {
-				descriptors[i].Results[j].Data = handles[i]->Results[j].Data;
+
+			for(int j = 0; j < operations[i]->Results->Length; ++j)
+			{
+				descriptors[i].Results[j].Data = static_cast<float*>(operations[i]->Results[j].ToPointer());
 			}
 		}
 
-		processor->Process(descriptors, handles->Count);
+		processor->Process(descriptors, operations->Count);
 		delete [] descriptors;
 	}
 }

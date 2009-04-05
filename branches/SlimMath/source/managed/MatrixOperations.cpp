@@ -30,7 +30,31 @@ using namespace System;
 
 namespace SlimMath
 {
-	MatrixOps::Multiply::Multiply( Matrix value1, Matrix value2 )
+	Operation<Matrix>^ MatrixOps::Multiply(Handle<Matrix>^ value1, Handle<Matrix>^ value2)
+	{
+		Handle<Matrix>^ result = gcnew Handle<Matrix>();
+
+		return gcnew Operation<Matrix>(result, gcnew array<IntPtr>(2) { value1->RawData, value2->RawData }, NativeOperation::MatrixMultiply);
+	}
+
+	Operation<Matrix>^ MatrixOps::Identity()
+	{
+		Handle<Matrix>^ result = gcnew Handle<Matrix>();
+
+		return gcnew Operation<Matrix>(result, gcnew array<IntPtr>(0), NativeOperation::MatrixIdentity);
+	}
+
+	CompoundOperation^ MatrixOps::Inverse(Handle<Matrix>^ matrix)
+	{
+		Handle<Matrix>^ firstResult = gcnew Handle<Matrix>();
+		Handle<Vector>^ secondResult = gcnew Handle<Vector>();
+
+		CompoundHandle^ result = gcnew CompoundHandle(gcnew array<IHandle^>(2) { firstResult, secondResult });
+
+		return gcnew CompoundOperation(result, gcnew array<IntPtr>(1) { matrix->RawData }, NativeOperation::MatrixInverse);
+	}
+
+	/*MatrixOps::Multiply::Multiply( Matrix value1, Matrix value2 )
 	{
 		int size = sizeof(float) * 16;
 		data = new float[48];
@@ -118,5 +142,5 @@ namespace SlimMath
 		results[1].Data = data+16;
 		parameters[0].Data = matrix->Results[resultIndex].Data;
 		handle = gcnew Handle(parameters, results, Operation::MatrixInverse);
-	}
+	}*/
 }

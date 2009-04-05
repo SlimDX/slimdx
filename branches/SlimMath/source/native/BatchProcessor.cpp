@@ -34,17 +34,17 @@ namespace SlimMath
 		{
 			switch(ops[i].Op)
 			{
-				case Operation::MatrixIdentity:
+				case NativeOperation::MatrixIdentity:
 					StoreMatrixResult(ops[i].Results[0].Data, XMMatrixIdentity());
 					break;
-				case Operation::MatrixMultiply:
+				case NativeOperation::MatrixMultiply:
 				{
 					XMMATRIX p1 = GetMatrixParameter(ops[i].Parameters[0].Data);
 					XMMATRIX p2 = GetMatrixParameter(ops[i].Parameters[1].Data);
 					StoreMatrixResult(ops[i].Results[0].Data, XMMatrixMultiply(p1, p2));
 					break;
 				}
-				case Operation::MatrixInverse:
+				case NativeOperation::MatrixInverse:
 				{
 					XMMATRIX p1 = GetMatrixParameter(ops[i].Parameters[0].Data);
 					XMVECTOR det;
@@ -52,10 +52,10 @@ namespace SlimMath
 					StoreVectorResult(ops[i].Results[1].Data, det);
 					break;
 				}
-				case Operation::MatrixTranslationFromVector:
+				case NativeOperation::MatrixTranslationFromVector:
 					StoreMatrixResult(ops[i].Results[0].Data, XMMatrixTranslationFromVector(GetVectorParameter(ops[i].Parameters[0].Data)));
 					break;
-				case Operation::Vector4Transform:
+				case NativeOperation::Vector4Transform:
 					StoreVectorResult(ops[i].Results[0].Data, XMVector4Transform(GetVectorParameter(ops[i].Parameters[0].Data), GetMatrixParameter(ops[i].Parameters[1].Data)));
 					break;
 			}

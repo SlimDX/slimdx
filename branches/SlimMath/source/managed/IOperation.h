@@ -27,6 +27,86 @@ namespace SlimMath
 {
 	public interface struct IOperation
 	{
-		virtual Handle^ GetHandle() = 0;
+		property array<System::IntPtr>^ Parameters
+		{
+			virtual array<System::IntPtr>^ get() = 0;
+		}
+
+		property array<System::IntPtr>^ Results
+		{
+			virtual array<System::IntPtr>^ get() = 0;
+		}
+
+		property int Op
+		{
+			virtual int get() = 0;
+		}
+	};
+
+	generic<typename T> where T : value class
+	public ref class Operation sealed : IOperation
+	{
+	private:
+		array<System::IntPtr>^ parameters;
+		array<System::IntPtr>^ results;
+		IHandle^ result;
+		int op;
+
+	internal:
+		Operation(Handle<T>^ result, array<System::IntPtr>^ parameters, int op);
+
+	public:
+		property array<System::IntPtr>^ Parameters
+		{
+			virtual array<System::IntPtr>^ get() { return parameters; }
+		}
+
+		property array<System::IntPtr>^ Results
+		{
+			virtual array<System::IntPtr>^ get() { return results; }
+		}
+
+		property int Op
+		{
+			virtual int get() { return op; }
+		}
+
+		property IHandle^ Result
+		{
+			virtual IHandle^ get() { return result; }
+		}
+	};
+
+	public ref class CompoundOperation sealed : IOperation
+	{
+	private:
+		array<System::IntPtr>^ parameters;
+		array<System::IntPtr>^ results;
+		CompoundHandle^ result;
+		int op;
+
+	internal:
+		CompoundOperation(CompoundHandle^ result, array<System::IntPtr>^ parameters, int op);
+
+	public:
+		property array<System::IntPtr>^ Parameters
+		{
+			virtual array<System::IntPtr>^ get() { return parameters; }
+		}
+
+		property array<System::IntPtr>^ Results
+		{
+			virtual array<System::IntPtr>^ get() { return results; }
+		}
+
+		property int Op
+		{
+			virtual int get() { return op; }
+		}
+
+		property CompoundHandle^ Result
+		{
+			CompoundHandle^ get() { return result; }
+		}
 	};
 }

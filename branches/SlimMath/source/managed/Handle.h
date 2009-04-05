@@ -23,7 +23,47 @@
 
 namespace SlimMath
 {
-	public ref class Handle
+	public interface struct IHandle
+	{
+		property System::IntPtr RawData
+		{
+			virtual System::IntPtr get() = 0;
+		}
+	};
+
+	generic<typename T> where T : value class
+	public ref class Handle sealed : IHandle
+	{
+	private:
+		float *data;
+
+	internal:
+		Handle();
+		Handle(T value);
+
+	public:
+		property System::IntPtr RawData
+		{
+			virtual System::IntPtr get();
+		}
+
+		T GetData();
+
+		static operator Handle<T>^ (T value);
+	};
+
+	public ref class CompoundHandle sealed
+	{
+	internal:
+		array<IHandle^>^ Handles;
+		CompoundHandle(array<IHandle^>^ handles);
+
+	public:
+		generic<typename T> where T : value class
+		T GetResult(int resultIndex);
+	};
+
+	/*public ref class Handle
 	{
 	internal:
 		value class ParameterData {
@@ -48,5 +88,5 @@ namespace SlimMath
 
 		generic<typename T> where T : value class
 		T GetResult(int resultIndex);
-	};
+	};*/
 }

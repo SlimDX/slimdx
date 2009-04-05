@@ -32,15 +32,17 @@ namespace SlimMath
 	{
 	private:
 		BatchProcessor* processor;
-		System::Collections::Generic::List<Handle^>^ handles;
+		System::Collections::Generic::List<IOperation^>^ operations;
 
 	public:
 		Batch();
 		!Batch();
 		~Batch();
 
+		generic<typename T> where T : value class
+		Handle<T>^ Add(Operation<T>^ operation);
 
-		Handle^ Add(IOperation^ operation);
+		CompoundHandle^ Add(CompoundOperation^ operation);
 
 		void Process();
 	};

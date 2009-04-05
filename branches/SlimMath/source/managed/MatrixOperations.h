@@ -32,7 +32,11 @@ namespace SlimMath
 		MatrixOps() { }
 
 	public:
-		ref class Multiply : IOperation
+		static Operation<Matrix>^ Multiply(Handle<Matrix>^ value1, Handle<Matrix>^ value2);
+		static Operation<Matrix>^ Identity();
+		static CompoundOperation^ Inverse(Handle<Matrix>^ matrix);
+
+		/*ref class Multiply : IOperation
 		{
 		private:
 			Handle^ handle;
@@ -71,6 +75,6 @@ namespace SlimMath
 			~Inverse() { delete [] data; data = 0; }
 			!Inverse() { delete [] data; data = 0; }
 			virtual Handle^ GetHandle() { return handle; }
-		};
+		};*/
 	};
 }

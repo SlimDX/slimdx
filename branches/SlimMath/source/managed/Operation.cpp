@@ -19,62 +19,32 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "Handle.h"
-#include <memory>
+
+#include "IOperation.h"
 
 using namespace System;
 
 namespace SlimMath
 {
 	generic<typename T>
-	Handle<T>::Handle()
+	Operation<T>::Operation(Handle<T>^ result, array<IntPtr>^ parameters, int op)
 	{
-		data = new float[sizeof(T)];
+		this->result = result;
+		this->parameters = parameters;
+		this->op = op;
+
+		results = gcnew array<IntPtr>(1);
+		results[0] = result->RawData;
 	}
 
-	generic<typename T>
-	Handle<T>::Handle(T value)
+	CompoundOperation::CompoundOperation(CompoundHandle^ result, array<IntPtr>^ parameters, int op)
 	{
-		data = new float[sizeof(T)];
-		memcpy(data, &value, sizeof(T));
-	}
+		this->result = result;
+		this->parameters = parameters;
+		this->op = op;
 
-	generic<typename T>
-	IntPtr Handle<T>::RawData::get()
-	{
-		return IntPtr(data);
+		results = gcnew array<IntPtr>(result->Handles->Length);
+		for(int i = 0; i < result->Handles->Length; i++)
+			results[i] = result->Handles[i]->RawData;
 	}
-
-	generic<typename T>
-	Handle<T>::operator SlimMath::Handle<T>^ (T value)
-	{
-		return gcnew Handle<T>(value);
-	}
-
-	generic<typename T>
-	T Handle<T>::GetData()
-	{
-		T t;
-		memcpy(&t, data, sizeof(T));
-		return t;
-	}
-
-	CompoundHandle::CompoundHandle(array<IHandle^>^ handles)
-	{
-		Handles = handles;
-	}
-
-	generic<typename T>
-	T CompoundHandle::GetResult(int resultIndex)
-	{
-		return safe_cast<Handle<T>^>(Handles[resultIndex])->GetData();
-	}
-
-	/*generic<typename T>
-	T Handle::GetResult(int resultIndex)
-	{
-		T t;
-		memcpy(&t, Results[resultIndex].Data, sizeof(T));
-		return t;
-	}*/
 }

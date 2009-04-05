@@ -21,7 +21,7 @@
 */
 namespace SlimMath
 {
-	struct Operation
+	struct NativeOperation
 	{
 		enum Ops
 		{
@@ -55,7 +55,7 @@ namespace SlimMath
 
 	struct OpDescriptor
 	{
-		Operation::Ops Op;
+		NativeOperation::Ops Op;
 
 		ParameterDescriptor Parameters[16];
 

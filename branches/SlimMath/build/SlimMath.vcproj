@@ -215,6 +215,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\managed\Operation.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\source\managed\Primitives.h"
 				>
 			</File>
