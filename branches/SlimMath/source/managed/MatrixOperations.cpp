@@ -47,13 +47,13 @@ namespace SlimMath
 		return gcnew Operation<Matrix>(result, gcnew array<IntPtr>(0), NativeOperation::MatrixIdentity);
 	}
 
-	CompoundOperation^ MatrixOps::Inverse(Handle<Matrix>^ matrix)
+	CompoundOperation<Matrix, float, NoValue>^ MatrixOps::Inverse(Handle<Matrix>^ matrix)
 	{
 		Handle<Matrix>^ firstResult = gcnew Handle<Matrix>();
 		Handle<float>^ secondResult = gcnew Handle<float>();
 
-		CompoundHandle^ result = gcnew CompoundHandle(gcnew array<IHandle^>(2) { firstResult, secondResult });
+		CompoundHandle<Matrix, float, NoValue>^ result = gcnew CompoundHandle<Matrix, float, NoValue>(firstResult, secondResult, nullptr);
 
-		return gcnew CompoundOperation(result, gcnew array<IntPtr>(1) { matrix->RawData }, NativeOperation::MatrixInverse);
+		return gcnew CompoundOperation<Matrix, float, NoValue>(result, gcnew array<IntPtr>(1) { matrix->RawData }, NativeOperation::MatrixInverse);
 	}
 }

@@ -61,14 +61,11 @@ namespace SlimMath
 		return t;
 	}
 
-	CompoundHandle::CompoundHandle(array<IHandle^>^ handles)
+	generic<typename T, typename U, typename V>
+	CompoundHandle<T, U, V>::CompoundHandle(Handle<T>^ handle1, Handle<U>^ handle2, Handle<V>^ handle3)
 	{
-		Handles = handles;
-	}
-
-	generic<typename T>
-	T CompoundHandle::GetResult(int resultIndex)
-	{
-		return safe_cast<Handle<T>^>(Handles[resultIndex])->GetData();
+		firstResult = handle1;
+		secondResult = handle2;
+		thirdResult = handle3;
 	}
 }

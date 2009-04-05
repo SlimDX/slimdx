@@ -52,14 +52,31 @@ namespace SlimMath
 		static operator Handle<T>^ (T value);
 	};
 
+	generic<typename T, typename U, typename V> where T : value class where U : value class where V : value class
 	public ref class CompoundHandle sealed
 	{
+	private:
+		Handle<T>^ firstResult;
+		Handle<U>^ secondResult;
+		Handle<V>^ thirdResult;
+
 	internal:
-		array<IHandle^>^ Handles;
-		CompoundHandle(array<IHandle^>^ handles);
+		CompoundHandle(Handle<T>^ handle1, Handle<U>^ handle2, Handle<V>^ handle3);
 
 	public:
-		generic<typename T> where T : value class
-		T GetResult(int resultIndex);
+		property Handle<T>^ FirstResult
+		{
+			Handle<T>^ get() { return firstResult; }
+		}
+
+		property Handle<U>^ SecondResult
+		{
+			Handle<U>^ get() { return secondResult; }
+		}
+
+		property Handle<V>^ ThirdResult
+		{
+			Handle<V>^ get() { return thirdResult; }
+		}
 	};
 }

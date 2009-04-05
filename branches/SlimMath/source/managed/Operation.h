@@ -77,16 +77,17 @@ namespace SlimMath
 		}
 	};
 
+	generic<typename T, typename U, typename V> where T : value class where U : value class where V : value class
 	public ref class CompoundOperation sealed : IOperation
 	{
 	private:
 		array<System::IntPtr>^ parameters;
 		array<System::IntPtr>^ results;
-		CompoundHandle^ result;
+		CompoundHandle<T, U, V>^ result;
 		int op;
 
 	internal:
-		CompoundOperation(CompoundHandle^ result, array<System::IntPtr>^ parameters, int op);
+		CompoundOperation(CompoundHandle<T, U, V>^ result, array<System::IntPtr>^ parameters, int op);
 
 	public:
 		property array<System::IntPtr>^ Parameters
@@ -104,9 +105,9 @@ namespace SlimMath
 			virtual int get() { return op; }
 		}
 
-		property CompoundHandle^ Result
+		property CompoundHandle<T, U, V>^ Result
 		{
-			CompoundHandle^ get() { return result; }
+			CompoundHandle<T, U, V>^ get() { return result; }
 		}
 	};
 }

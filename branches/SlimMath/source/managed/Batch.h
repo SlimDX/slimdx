@@ -44,7 +44,8 @@ namespace SlimMath
 		generic<typename T> where T : value class
 		Handle<T>^ Add(Operation<T>^ operation);
 
-		CompoundHandle^ Add(CompoundOperation^ operation);
+		generic<typename T, typename U, typename V> where T : value class where U : value class where V : value class
+		CompoundHandle<T, U, V>^ Add(CompoundOperation<T, U, V>^ operation);
 
 		void Process();
 	};

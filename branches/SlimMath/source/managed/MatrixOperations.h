@@ -34,6 +34,6 @@ namespace SlimMath
 	public:
 		static Operation<Matrix>^ Multiply(Handle<Matrix>^ value1, Handle<Matrix>^ value2);
 		static Operation<Matrix>^ Identity();
-		static CompoundOperation^ Inverse(Handle<Matrix>^ matrix);
+		static CompoundOperation<Matrix, float, NoValue>^ Inverse(Handle<Matrix>^ matrix);
 	};
 }

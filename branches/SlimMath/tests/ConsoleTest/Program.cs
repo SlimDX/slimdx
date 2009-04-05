@@ -18,8 +18,8 @@ namespace ConsoleTest
             var inv = batch.Add(MatrixOps.Inverse(mult));
             batch.Process();
 
-            Matrix result1 = inv.GetResult<Matrix>(0);
-            float result2 = inv.GetResult<float>(1);
+            Matrix result1 = inv.FirstResult.GetData();
+            float result2 = inv.SecondResult.GetData();
         }
     }
 }

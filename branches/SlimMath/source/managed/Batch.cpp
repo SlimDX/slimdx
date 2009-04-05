@@ -55,14 +55,15 @@ namespace SlimMath
 		processor = 0;
 	}
 
-	generic<typename T> where T : value class
+	generic<typename T>
 	Handle<T>^ Batch::Add(Operation<T>^ operation)
 	{
 		operations->Add(operation);
 		return safe_cast<Handle<T>^>(operation->Result);
 	}
 
-	CompoundHandle^ Batch::Add(CompoundOperation^ operation)
+	generic<typename T, typename U, typename V>
+	CompoundHandle<T, U, V>^ Batch::Add(CompoundOperation<T, U, V>^ operation)
 	{
 		operations->Add(operation);
 		return operation->Result;

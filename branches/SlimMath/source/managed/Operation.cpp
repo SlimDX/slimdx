@@ -37,14 +37,22 @@ namespace SlimMath
 		results[0] = result->RawData;
 	}
 
-	CompoundOperation::CompoundOperation(CompoundHandle^ result, array<IntPtr>^ parameters, int op)
+	generic<typename T, typename U, typename V>
+	CompoundOperation<T, U, V>::CompoundOperation(CompoundHandle<T, U, V>^ result, array<IntPtr>^ parameters, int op)
 	{
 		this->result = result;
 		this->parameters = parameters;
 		this->op = op;
 
-		results = gcnew array<IntPtr>(result->Handles->Length);
-		for(int i = 0; i < result->Handles->Length; i++)
-			results[i] = result->Handles[i]->RawData;
+		int length = 2;
+		if(result->ThirdResult != nullptr)
+			length = 3;
+
+		results = gcnew array<IntPtr>(length);
+		results[0] = result->FirstResult->RawData;
+		results[1] = result->SecondResult->RawData;
+		
+		if(result->ThirdResult != nullptr)
+			results[2] = result->ThirdResult->RawData;
 	}
 }
