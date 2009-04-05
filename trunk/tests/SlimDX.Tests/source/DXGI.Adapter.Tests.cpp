@@ -207,12 +207,49 @@ TEST( DXGI_AdapterTests, IsInterfaceSupportedCanFail )
 	delete adapter;
 }
 
+TEST( DXGI_AdapterTests, IsInterfaceSupportedWithVersion )
+{
+	IDXGIAdapterMock mockAdapter;
+	IDXGIOutputMock mockOutput;
+	Adapter^ adapter = Adapter::FromPointer( System::IntPtr( &mockAdapter ) );
+	
+	LARGE_INTEGER expectedVersion = {0};
+	expectedVersion.QuadPart = 0x0000001100000022;
+	EXPECT_CALL( mockAdapter, CheckInterfaceSupport( _, _ ) )
+		.WillOnce( DoAll( SetArgumentPointee<1>( expectedVersion ), Return( S_OK ) ) );
+	
+	bool result = false;
+	Int64 version = 0;
+	ASSERT_NO_THROW( result = adapter->IsInterfaceSupported( Device::typeid, version ) );
+	ASSERT_TRUE( result );
+	ASSERT_EQ( 0x0000001100000022, version );
+
+	delete adapter;
+}
+
+TEST( DXGI_AdapterTests, IsInterfaceSupportedWithVersionCanFail )
+{
+	IDXGIAdapterMock mockAdapter;
+	IDXGIOutputMock mockOutput;
+	Adapter^ adapter = Adapter::FromPointer( System::IntPtr( &mockAdapter ) );
+	
+	EXPECT_CALL( mockAdapter, CheckInterfaceSupport( _, _ ) )
+		.WillOnce( Return( DXGI_ERROR_UNSUPPORTED ) );
+	
+	bool result = true;
+	Int64 version = 0;
+	ASSERT_NO_THROW( result = adapter->IsInterfaceSupported( Device::typeid, version ) );
+	ASSERT_FALSE( result );
+
+	delete adapter;
+}
+
 TEST( DXGI_AdapterTests, ToString )
 {
 	IDXGIAdapterMock mockAdapter;
 	Adapter^ adapter = Adapter::FromPointer( System::IntPtr( &mockAdapter ) );
 	
-	DXGI_ADAPTER_DESC expectedDescription = { };
+	DXGI_ADAPTER_DESC expectedDescription = {0};
 	StringCchPrintf( expectedDescription.Description, 128, L"Fake Adapter" );
 
 	EXPECT_CALL( mockAdapter, GetDesc( _ ) )
