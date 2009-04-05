@@ -30,6 +30,7 @@ namespace SlimMath {
 		VectorOps() { }
 
 	public:
-		static Operation<Vector>^ Transform4(Handle<Vector>^ value1, Handle<Matrix>^ value2);
+		static Operation<Vector>^ Transform(Handle<Vector>^ value1, Handle<Matrix>^ value2);
+		static TransformVector4ArrayOperation<Vector, Matrix>^ TransformStream(array<Vector>^ resultStream, array<Vector>^ sourceStream, Handle<Matrix>^ transform);
 	};
 }

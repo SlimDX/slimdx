@@ -62,6 +62,11 @@ namespace SlimMath {
 		return operation->Result;
 	}
 
+	generic<typename T, typename U>
+	void Batch::Add(TransformVector4ArrayOperation<T, U>^ operation) {
+		operations->Add(operation);
+	}
+
 	void Batch::Process() {
 		std::vector<OpDescriptor> descriptors(operations->Count);
 

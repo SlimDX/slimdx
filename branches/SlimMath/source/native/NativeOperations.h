@@ -38,7 +38,8 @@ namespace SlimMath {
 			MatrixMultiply,
 			MatrixMultiplyTranspose,
 			MatrixTranslationFromVector,
-			Vector4Transform
+			Vector4Transform,
+			Vector4TransformStream
 		};
 	};
 

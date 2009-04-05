@@ -95,4 +95,60 @@ namespace SlimMath {
 			CompoundHandle<T, U, V>^ get() { return result; }
 		}
 	};
+
+	generic<typename T, typename U> where U : value class
+	public ref class TransformVector4ArrayOperation sealed : IOperation {
+	private:
+		System::Collections::Generic::List<System::Runtime::InteropServices::GCHandle>^ handles;
+		array<T>^ source;
+		array<System::IntPtr>^ fixedParameters;
+		array<T>^ results;
+		array<System::IntPtr>^ fixedResults;
+		Handle<U>^ transform;
+		int op;
+
+	internal:
+		TransformVector4ArrayOperation(array<T>^ result, array<T>^ parameters, Handle<U>^ transform, int op);
+
+	public:
+		property array<System::IntPtr>^ Parameters {
+			virtual array<System::IntPtr>^ get() {
+				if(fixedParameters == nullptr) {
+					fixedParameters = gcnew array<System::IntPtr>(3);
+					System::Runtime::InteropServices::GCHandle handle = System::Runtime::InteropServices::GCHandle::Alloc(source, System::Runtime::InteropServices::GCHandleType::Pinned);
+					if(handles == nullptr)
+						handles = gcnew System::Collections::Generic::List<System::Runtime::InteropServices::GCHandle>();
+					handles->Add(handle);
+					fixedParameters[0] = handle.AddrOfPinnedObject();
+					fixedParameters[1] = transform->RawData;
+					fixedParameters[2] = System::IntPtr(source->Length);
+				}
+
+				return fixedParameters;
+			}
+		}
+
+		property array<System::IntPtr>^ Results {
+			virtual array<System::IntPtr>^ get() {
+				if(fixedResults == nullptr) {
+					fixedResults = gcnew array<System::IntPtr>(1);
+					System::Runtime::InteropServices::GCHandle handle = System::Runtime::InteropServices::GCHandle::Alloc(results, System::Runtime::InteropServices::GCHandleType::Pinned);
+					if(handles == nullptr)
+						handles = gcnew System::Collections::Generic::List<System::Runtime::InteropServices::GCHandle>();
+					handles->Add(handle);
+					fixedResults[0] = handle.AddrOfPinnedObject();
+				}
+
+				return fixedResults;
+			}
+		}
+
+		property int Op {
+			virtual int get() { return op; }
+		}
+
+		property array<T>^ Result {
+			array<T>^ get() { return results; }
+		}
+	};
 }

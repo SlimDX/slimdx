@@ -55,6 +55,8 @@ namespace SlimMath {
 				case NativeOperation::Vector4Transform:
 					StoreVectorResult(ops[i].Results[0].Data, XMVector4Transform(GetVectorParameter(ops[i].Parameters[0].Data), GetMatrixParameter(ops[i].Parameters[1].Data)));
 					break;
+				case NativeOperation::Vector4TransformStream:
+					XMVector4TransformStream(reinterpret_cast<XMFLOAT4*>(ops[i].Results[0].Data), 16, reinterpret_cast<XMFLOAT4*>(ops[i].Parameters[0].Data), 16, reinterpret_cast<int>(ops[i].Parameters[2].Data), GetMatrixParameter(ops[i].Parameters[1].Data));
 			}
 		}
 	}
