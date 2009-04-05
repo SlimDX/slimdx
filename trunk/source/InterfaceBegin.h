@@ -49,6 +49,13 @@
 #if BOOST_PP_ITERATION() == 1
 // Iteration one is the interface declaration iteration.
 #define IS_INTERFACE
+
+// The interface declaration iteration omits concrete methods.
+// However, documentation comments for those methods still appear
+// in the preprocessed output, causing warnings we want to suppress.
+#pragma warning(push)
+#pragma warning(disable:4633 4634 4638)
+
 #define SDX_CLASS(n) public interface struct I##n
 #define SDX_COM_CLASS(n) public interface struct I##n : System::IDisposable
 #define SDX_COM_SUBCLASS(n,b) public interface struct I##n : System::IDisposable
@@ -58,6 +65,10 @@
 #elif BOOST_PP_ITERATION() == 2
 // Iteration two is the implementation declaration iteration.
 #define IS_CONCRETE
+
+// Re-enable the warnings we disabled during the first phase.
+#pragma warning(pop)
+
 #define SDX_CLASS(n) public ref class n : public I##n
 #define SDX_COM_CLASS(n) public ref class n : public ComObject, public I##n
 #define SDX_COM_SUBCLASS(n,b) public ref class n : public b, public I##n
