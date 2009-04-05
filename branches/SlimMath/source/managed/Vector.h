@@ -31,5 +31,10 @@ namespace SlimMath
 		float Y;
 		float Z;
 		float W;
+
+		virtual System::String^ ToString() override
+		{
+			return System::String::Format("[[{0} {1} {2} {3}]", X, Y, Z, W);
+		}
 	};
 }

@@ -62,31 +62,4 @@ namespace SlimMath
 		generic<typename T> where T : value class
 		T GetResult(int resultIndex);
 	};
-
-	/*public ref class Handle
-	{
-	internal:
-		value class ParameterData {
-		public:
-			float* Data;
-		};
-		value class ResultsData {
-		public:
-			float* Data;
-		};
-
-		int Operation;
-		array<ParameterData>^ Data;
-		array<ResultsData>^ Results;
-		Handle(array<ParameterData>^ data, array<ResultsData>^ results, int operation) : Data(data), Operation(operation), Results(results) { }
-
-	public:
-		property bool IsValid
-		{
-			bool get() { return Data->Length != 0; }
-		}
-
-		generic<typename T> where T : value class
-		T GetResult(int resultIndex);
-	};*/
 }

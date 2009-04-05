@@ -20,7 +20,7 @@
 * THE SOFTWARE.
 */
 
-#include "IOperation.h"
+#include "Operation.h"
 
 using namespace System;
 

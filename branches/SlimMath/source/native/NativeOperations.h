@@ -45,11 +45,13 @@ namespace SlimMath
 		};
 	};
 
-	struct ParameterDescriptor {
+	struct ParameterDescriptor
+	{
 		float* Data;
 	};
 
-	struct ResultDescriptor {
+	struct ResultDescriptor
+	{
 		float* Data;
 	};
 

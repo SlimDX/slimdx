@@ -20,10 +20,13 @@
 * THE SOFTWARE.
 */
 
-#include "Batch.h"
 #include <windows.h>
 #include <xnamath.h>
+#include <vector>
+
 #include "..\native\BatchProcessor.h"
+
+#include "Batch.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -38,11 +41,15 @@ namespace SlimMath
 
 	Batch::~Batch()
 	{
-		delete processor;
-		processor = 0;
+		Destruct();
 	}
 
 	Batch::!Batch()
+	{
+		Destruct();
+	}
+
+	void Batch::Destruct()
 	{
 		delete processor;
 		processor = 0;
@@ -63,24 +70,19 @@ namespace SlimMath
 
 	void Batch::Process()
 	{
-		OpDescriptor* descriptors = new OpDescriptor[operations->Count];
+		std::vector<OpDescriptor> descriptors(operations->Count);
 
 		for(int i = 0; i < operations->Count; ++i)
 		{
 			descriptors[i].Op = static_cast<NativeOperation::Ops>(operations[i]->Op);
 
 			for(int j = 0; j < operations[i]->Parameters->Length; ++j)
-			{
 				descriptors[i].Parameters[j].Data = static_cast<float*>(operations[i]->Parameters[j].ToPointer());
-			}
 
 			for(int j = 0; j < operations[i]->Results->Length; ++j)
-			{
 				descriptors[i].Results[j].Data = static_cast<float*>(operations[i]->Results[j].ToPointer());
-			}
 		}
 
-		processor->Process(descriptors, operations->Count);
-		delete [] descriptors;
+		processor->Process(&descriptors[0], operations->Count);
 	}
 }

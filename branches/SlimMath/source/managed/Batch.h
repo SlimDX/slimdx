@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "IOperation.h"
+#include "Operation.h"
 #include "Handle.h"
 
 namespace SlimMath
@@ -33,6 +33,8 @@ namespace SlimMath
 	private:
 		BatchProcessor* processor;
 		System::Collections::Generic::List<IOperation^>^ operations;
+
+		void Destruct();
 
 	public:
 		Batch();

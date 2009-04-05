@@ -19,19 +19,22 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "Operations.h"
+#pragma once
+
+#include "NativeOperations.h"
 
 namespace SlimMath
 {
 	class BatchProcessor
 	{
-	public:
-		BatchProcessor();
-		void Process(OpDescriptor* ops, int opCount);
 	private:
 		XMVECTOR GetVectorParameter(float* data);
 		XMMATRIX GetMatrixParameter(float* data);
 		void StoreVectorResult(float* data, CXMVECTOR vector);
 		void StoreMatrixResult(float* data, CXMMATRIX matrix);
+
+	public:
+		BatchProcessor();
+		void Process(OpDescriptor* ops, int opCount);	
 	};
 }

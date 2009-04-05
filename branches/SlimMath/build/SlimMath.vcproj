@@ -199,10 +199,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\managed\IOperation.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\managed\Matrix.h"
 				>
 			</File>
@@ -216,6 +212,10 @@
 			</File>
 			<File
 				RelativePath="..\source\managed\Operation.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\managed\Operation.h"
 				>
 			</File>
 			<File
@@ -255,7 +255,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\native\Operations.h"
+				RelativePath="..\source\native\NativeOperations.h"
 				>
 			</File>
 		</Filter>

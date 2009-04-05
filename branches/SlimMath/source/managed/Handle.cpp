@@ -19,8 +19,10 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "Handle.h"
+
 #include <memory>
+
+#include "Handle.h"
 
 using namespace System;
 
@@ -69,12 +71,4 @@ namespace SlimMath
 	{
 		return safe_cast<Handle<T>^>(Handles[resultIndex])->GetData();
 	}
-
-	/*generic<typename T>
-	T Handle::GetResult(int resultIndex)
-	{
-		T t;
-		memcpy(&t, Results[resultIndex].Data, sizeof(T));
-		return t;
-	}*/
 }
