@@ -77,4 +77,11 @@ namespace SlimMath {
 	__forceinline void BatchProcessor::StoreMatrixResult(float* data, CXMMATRIX matrix) {
 		XMStoreFloat4x4(reinterpret_cast<XMFLOAT4X4*>(data), matrix);
 	}
+
+	extern "C" {
+		__declspec(dllexport) void Process(OpDescriptor* ops, int opCount) {
+			BatchProcessor bp;
+			bp.Process(ops, opCount);
+		}
+	}
 }
