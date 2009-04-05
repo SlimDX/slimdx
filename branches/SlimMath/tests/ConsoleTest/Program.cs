@@ -19,7 +19,7 @@ namespace ConsoleTest
             batch.Process();
 
             Matrix result1 = inv.GetResult<Matrix>(0);
-            Vector result2 = inv.GetResult<Vector>(1);
+            float result2 = inv.GetResult<float>(1);
 
             /*var batch = new Batch();
             var m = new Matrix();

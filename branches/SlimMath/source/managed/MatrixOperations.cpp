@@ -47,7 +47,7 @@ namespace SlimMath
 	CompoundOperation^ MatrixOps::Inverse(Handle<Matrix>^ matrix)
 	{
 		Handle<Matrix>^ firstResult = gcnew Handle<Matrix>();
-		Handle<Vector>^ secondResult = gcnew Handle<Vector>();
+		Handle<float>^ secondResult = gcnew Handle<float>();
 
 		CompoundHandle^ result = gcnew CompoundHandle(gcnew array<IHandle^>(2) { firstResult, secondResult });
 

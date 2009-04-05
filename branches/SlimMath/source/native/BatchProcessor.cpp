@@ -49,7 +49,7 @@ namespace SlimMath
 					XMMATRIX p1 = GetMatrixParameter(ops[i].Parameters[0].Data);
 					XMVECTOR det;
 					StoreMatrixResult(ops[i].Results[0].Data, XMMatrixInverse(&det, p1));
-					StoreVectorResult(ops[i].Results[1].Data, det);
+					XMStoreFloat(ops[i].Results[1].Data, det);
 					break;
 				}
 				case NativeOperation::MatrixTranslationFromVector:
