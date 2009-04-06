@@ -26,6 +26,15 @@ using namespace System;
 
 namespace SlimMath
 {
+	BaseOperation::~BaseOperation()
+	{
+		for (int i = 0; i < Parameters->Length; i++)
+			delete Parameters[i];
+
+		for (int i = 0; i < Results->Length; i++)
+			delete Results[i];
+	}
+
 	generic<typename T>
 	Operation<T>::Operation(array<BaseHandle^>^ parameters, int op)
 	{

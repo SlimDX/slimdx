@@ -21,7 +21,7 @@
 */
 
 #include <memory.h>
-#include <malloc.h>
+
 #include "Handle.h"
 
 using namespace System;
@@ -30,7 +30,7 @@ namespace SlimMath
 {
 	void BaseHandle::Destruct()
 	{
-		free(Data);
+		delete[] Data;
 		Data = 0;
 	}
 
@@ -47,13 +47,13 @@ namespace SlimMath
 	generic<typename T>
 	Handle<T>::Handle()
 	{
-		Data = reinterpret_cast<float*>(malloc(sizeof(T)*sizeof(float)));
+		Data = new float[sizeof(T)];
 	}
 
 	generic<typename T>
 	Handle<T>::Handle(T value)
 	{
-		Data = reinterpret_cast<float*>(malloc(sizeof(T)*sizeof(float)));
+		Data = new float[sizeof(T)];
 		memcpy(Data, &value, sizeof(T));
 	}
 

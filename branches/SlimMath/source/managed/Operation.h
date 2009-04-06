@@ -31,6 +31,9 @@ namespace SlimMath
 		array<BaseHandle^>^ Parameters;
 		array<BaseHandle^>^ Results;
 		int Op;
+
+	public:
+		~BaseOperation();
 	};
 
 	generic<typename T> where T : value class
