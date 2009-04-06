@@ -35,16 +35,16 @@ namespace SlimMath
 {
 	Operation<Matrix>^ MatrixOps::Multiply(Handle<Matrix>^ value1, Handle<Matrix>^ value2)
 	{
-		return gcnew Operation<Matrix>(gcnew array<float*>(2) { value1->Data, value2->Data }, NativeOperation::MatrixMultiply);
+		return gcnew Operation<Matrix>(gcnew array<BaseHandle^>(2) { value1, value2 }, NativeOperation::MatrixMultiply);
 	}
 
 	Operation<Matrix>^ MatrixOps::Identity()
 	{
-		return gcnew Operation<Matrix>(gcnew array<float*>(0), NativeOperation::MatrixIdentity);
+		return gcnew Operation<Matrix>(gcnew array<BaseHandle^>(0), NativeOperation::MatrixIdentity);
 	}
 
 	Operation<Matrix>^ MatrixOps::Translation(Handle<Vector>^ value)
 	{
-		return gcnew Operation<Matrix>(gcnew array<float*>(1) { value->Data }, NativeOperation::MatrixTranslationFromVector);
+		return gcnew Operation<Matrix>(gcnew array<BaseHandle^>(1) { value }, NativeOperation::MatrixTranslationFromVector);
 	}
 }

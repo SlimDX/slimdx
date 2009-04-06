@@ -28,8 +28,8 @@ namespace SlimMath
 	public ref class BaseOperation abstract
 	{
 	internal:
-		array<float*>^ Parameters;
-		array<float*>^ Results;
+		array<BaseHandle^>^ Parameters;
+		array<BaseHandle^>^ Results;
 		int Op;
 	};
 
@@ -40,7 +40,7 @@ namespace SlimMath
 		Handle<T>^ result;
 
 	internal:
-		Operation(array<float*>^ parameters, int op);
+		Operation(array<BaseHandle^>^ parameters, int op);
 
 	public:
 		property Handle<T>^ Result

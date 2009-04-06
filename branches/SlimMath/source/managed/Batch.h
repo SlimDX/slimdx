@@ -42,5 +42,6 @@ namespace SlimMath
 		Handle<T>^ Add(Operation<T>^ operation);
 
 		void Process();
+		void Clear();
 	};
 }

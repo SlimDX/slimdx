@@ -35,7 +35,7 @@ namespace SlimMath
 {
 	Operation<Vector>^ VectorOps::Transform(Handle<Vector>^ value1, Handle<Matrix>^ value2)
 	{
-		return gcnew Operation<Vector>(gcnew array<float*>(2) { value1->Data, value2->Data }, NativeOperation::Vector4Transform);
+		return gcnew Operation<Vector>(gcnew array<BaseHandle^>(2) { value1, value2 }, NativeOperation::Vector4Transform);
 	}
 
 }

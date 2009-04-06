@@ -64,15 +64,23 @@ namespace SlimMath
 			descriptors[i].Op = static_cast<NativeOperation::Ops>(operations[i]->Op);
 
 			for (int j = 0; j < operations[i]->Parameters->Length; ++j)
-				descriptors[i].Parameters[j].Data = operations[i]->Parameters[j];
+				descriptors[i].Parameters[j].Data = operations[i]->Parameters[j]->Data;
 
 			for (int j = 0; j < operations[i]->Results->Length; ++j)
-				descriptors[i].Results[j].Data = operations[i]->Results[j];
+				descriptors[i].Results[j].Data = operations[i]->Results[j]->Data;
 		}
 		
 		BatchProcessor processor;
 		processor.Process(descriptors, operations->Count);
 
 		delete[] descriptors;
+	}
+
+	void Batch::Clear()
+	{
+		for (int i = 0; i < operations->Count; i++)
+			delete operations[i];
+
+		operations->Clear();
 	}
 }

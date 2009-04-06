@@ -28,6 +28,22 @@ using namespace System;
 
 namespace SlimMath
 {
+	void BaseHandle::Destruct()
+	{
+		delete[] Data;
+		Data = NULL;
+	}
+
+	BaseHandle::~BaseHandle()
+	{
+		Destruct();
+	}
+
+	BaseHandle::!BaseHandle()
+	{
+		Destruct();
+	}
+
 	generic<typename T>
 	Handle<T>::Handle()
 	{
@@ -50,6 +66,9 @@ namespace SlimMath
 	generic<typename T>
 	T Handle<T>::GetData()
 	{
+		if (Data == NULL)
+			throw gcnew InvalidOperationException("Handle has been disposed.");
+
 		T t;
 		memcpy(&t, Data, sizeof(T));
 		return t;

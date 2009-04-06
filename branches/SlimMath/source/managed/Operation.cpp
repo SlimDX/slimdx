@@ -27,13 +27,13 @@ using namespace System;
 namespace SlimMath
 {
 	generic<typename T>
-	Operation<T>::Operation(array<float*>^ parameters, int op)
+	Operation<T>::Operation(array<BaseHandle^>^ parameters, int op)
 	{
 		result = gcnew Handle<T>();
 		Parameters = parameters;
 		Op = op;
 
-		Results = gcnew array<float*>(1);
-		Results[0] = result->Data;
+		Results = gcnew array<BaseHandle^>(1);
+		Results[0] = result;
 	}
 }

@@ -25,8 +25,20 @@ namespace SlimMath
 {
 	public ref class BaseHandle abstract
 	{
+	private:
+		void Destruct();
+
 	internal:
 		float* Data;
+
+	public:
+		~BaseHandle();
+		!BaseHandle();
+
+		property bool IsValid
+		{
+			bool get() { return Data != 0; }
+		}
 	};
 
 	generic<typename T> where T : value class
