@@ -23,8 +23,10 @@
 
 #include "NativeOperations.h"
 
-namespace SlimMath {
-	class BatchProcessor {
+namespace SlimMath
+{
+	class BatchProcessor
+	{
 	private:
 		XMVECTOR GetVectorParameter(float* data);
 		XMMATRIX GetMatrixParameter(float* data);

@@ -24,26 +24,22 @@
 #include "Operation.h"
 #include "Handle.h"
 
-namespace SlimMath {
+namespace SlimMath
+{
 	class BatchProcessor;
 
-	public ref class Batch {
+	public ref class Batch
+	{
 	private:
-		BatchProcessor* processor;
-		System::Collections::Generic::List<IOperation^>^ operations;
-
-		void Destruct();
+		System::Collections::Generic::List<BaseOperation^>^ operations;
 
 	public:
 		Batch();
-		!Batch();
-		~Batch();
+		Batch(int capacity);
+		Batch(System::Collections::Generic::IEnumerable<BaseOperation^>^ collection);
 
 		generic<typename T> where T : value class
 		Handle<T>^ Add(Operation<T>^ operation);
-
-		generic<typename T, typename U, typename V> where T : value class where U : value class where V : value class
-		CompoundHandle<T, U, V>^ Add(CompoundOperation<T, U, V>^ operation);
 
 		void Process();
 	};

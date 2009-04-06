@@ -23,52 +23,29 @@
 
 #include "Handle.h"
 
-namespace SlimMath {
-	public ref class IOperation abstract {
-	public:
-		property array<System::IntPtr>^ Parameters {
-			array<System::IntPtr>^ get() { return parameters; };
-		}
-
-		property array<System::IntPtr>^ Results {
-			array<System::IntPtr>^ get() { return results; };
-		}
-
-		property int Op {
-			int get() { return op; };
-		}
-
+namespace SlimMath
+{
+	public ref class BaseOperation abstract
+	{
 	internal:
-		array<System::IntPtr>^ parameters;
-		array<System::IntPtr>^ results;
-		int op;
+		array<float*>^ Parameters;
+		array<float*>^ Results;
+		int Op;
 	};
 
 	generic<typename T> where T : value class
-	public ref class Operation sealed : IOperation {
+	public ref class Operation sealed : BaseOperation
+	{
 	private:
 		Handle<T>^ result;
 
 	internal:
-		Operation(Handle<T>^ result, array<System::IntPtr>^ parameters, int op);
+		Operation(array<float*>^ parameters, int op);
 
 	public:
-		property Handle<T>^ Result {
+		property Handle<T>^ Result
+		{
 			Handle<T>^ get() { return result; }
-		}
-	};
-
-	generic<typename T, typename U, typename V> where T : value class where U : value class where V : value class
-	public ref class CompoundOperation sealed : IOperation {
-	private:
-		CompoundHandle<T, U, V>^ result;
-
-	internal:
-		CompoundOperation(CompoundHandle<T, U, V>^ result, array<System::IntPtr>^ parameters, int op);
-
-	public:
-		property CompoundHandle<T, U, V>^ Result {
-			CompoundHandle<T, U, V>^ get() { return result; }
 		}
 	};
 }

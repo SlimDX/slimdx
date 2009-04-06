@@ -93,77 +93,6 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)x86\$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)x86\$(ConfigurationName)"
-			ConfigurationType="2"
-			CharacterSet="1"
-			ManagedExtensions="1"
-			WholeProgramOptimization="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions="/MP"
-				PreprocessorDefinitions="WIN32;NDEBUG"
-				RuntimeLibrary="2"
-				UsePrecompiledHeader="0"
-				WarningLevel="4"
-				DebugInformationFormat="3"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit)"
-				LinkIncremental="1"
-				GenerateDebugInformation="true"
-				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
 			Name="Debug|x64"
 			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
@@ -214,6 +143,77 @@
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
 				TargetMachine="17"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="$(SolutionDir)x86\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)x86\$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
+			ManagedExtensions="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/MP"
+				PreprocessorDefinitions="WIN32;NDEBUG"
+				RuntimeLibrary="2"
+				UsePrecompiledHeader="0"
+				WarningLevel="4"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="$(NoInherit)"
+				LinkIncremental="1"
+				GenerateDebugInformation="true"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -339,50 +339,66 @@
 				RelativePath="..\source\managed\Batch.h"
 				>
 			</File>
-			<File
-				RelativePath="..\source\managed\Handle.cpp"
+			<Filter
+				Name="Handles"
 				>
-			</File>
-			<File
-				RelativePath="..\source\managed\Handle.h"
+				<File
+					RelativePath="..\source\managed\Handle.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\Handle.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Operations"
 				>
-			</File>
-			<File
-				RelativePath="..\source\managed\Matrix.h"
+				<File
+					RelativePath="..\source\managed\Operation.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\Operation.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Primitives"
 				>
-			</File>
-			<File
-				RelativePath="..\source\managed\MatrixOperations.cpp"
+				<File
+					RelativePath="..\source\managed\Matrix.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\Primitives.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\Vector.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Op Builders"
 				>
-			</File>
-			<File
-				RelativePath="..\source\managed\MatrixOperations.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\managed\Operation.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\managed\Operation.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\managed\Primitives.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\managed\Vector.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\managed\VectorOperations.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\managed\VectorOperations.h"
-				>
-			</File>
+				<File
+					RelativePath="..\source\managed\MatrixOperations.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\MatrixOperations.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\VectorOperations.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\VectorOperations.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Native"
@@ -399,6 +415,14 @@
 					/>
 				</FileConfiguration>
 				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						CompileAsManaged="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Release|Win32"
 					>
 					<Tool
@@ -407,14 +431,6 @@
 						EnableIntrinsicFunctions="true"
 						FavorSizeOrSpeed="1"
 						WholeProgramOptimization="false"
-						CompileAsManaged="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
 						CompileAsManaged="0"
 					/>
 				</FileConfiguration>

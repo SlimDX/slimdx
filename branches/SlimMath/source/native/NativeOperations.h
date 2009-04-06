@@ -19,9 +19,12 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-namespace SlimMath {
-	struct NativeOperation {
-		enum Ops {
+namespace SlimMath
+{
+	struct NativeOperation
+	{
+		enum Ops
+		{
 			MatrixAffineTransformation,
 			MatrixAffineTransformation2D,
 			MatrixDecompose,
@@ -43,15 +46,18 @@ namespace SlimMath {
 		};
 	};
 
-	struct ParameterDescriptor {
+	struct ParameterDescriptor
+	{
 		float* Data;
 	};
 
-	struct ResultDescriptor {
+	struct ResultDescriptor
+	{
 		float* Data;
 	};
 
-	struct OpDescriptor {
+	struct OpDescriptor
+	{
 		NativeOperation::Ops Op;
 
 		ParameterDescriptor Parameters[16];

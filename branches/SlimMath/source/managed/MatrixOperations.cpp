@@ -31,31 +31,20 @@
 
 using namespace System;
 
-namespace SlimMath {
-	Operation<Matrix>^ MatrixOps::Multiply(Handle<Matrix>^ value1, Handle<Matrix>^ value2) {
-		Handle<Matrix>^ result = gcnew Handle<Matrix>();
-
-		return gcnew Operation<Matrix>(result, gcnew array<IntPtr>(2) { value1->RawData, value2->RawData }, NativeOperation::MatrixMultiply);
+namespace SlimMath
+{
+	Operation<Matrix>^ MatrixOps::Multiply(Handle<Matrix>^ value1, Handle<Matrix>^ value2)
+	{
+		return gcnew Operation<Matrix>(gcnew array<float*>(2) { value1->Data, value2->Data }, NativeOperation::MatrixMultiply);
 	}
 
-	Operation<Matrix>^ MatrixOps::Identity() {
-		Handle<Matrix>^ result = gcnew Handle<Matrix>();
-
-		return gcnew Operation<Matrix>(result, gcnew array<IntPtr>(0), NativeOperation::MatrixIdentity);
+	Operation<Matrix>^ MatrixOps::Identity()
+	{
+		return gcnew Operation<Matrix>(gcnew array<float*>(0), NativeOperation::MatrixIdentity);
 	}
 
-	CompoundOperation<Matrix, float, NoValue>^ MatrixOps::Inverse(Handle<Matrix>^ matrix) {
-		Handle<Matrix>^ firstResult = gcnew Handle<Matrix>();
-		Handle<float>^ secondResult = gcnew Handle<float>();
-
-		CompoundHandle<Matrix, float, NoValue>^ result = gcnew CompoundHandle<Matrix, float, NoValue>(firstResult, secondResult, nullptr);
-
-		return gcnew CompoundOperation<Matrix, float, NoValue>(result, gcnew array<IntPtr>(1) { matrix->RawData }, NativeOperation::MatrixInverse);
-	}
-
-	Operation<Matrix>^ MatrixOps::TranslationFromVector(Handle<Vector>^ value) {
-		Handle<Matrix>^ result = gcnew Handle<Matrix>();
-
-		return gcnew Operation<Matrix>(result, gcnew array<IntPtr>(1) { value->RawData }, NativeOperation::MatrixTranslationFromVector);
+	Operation<Matrix>^ MatrixOps::Translation(Handle<Vector>^ value)
+	{
+		return gcnew Operation<Matrix>(gcnew array<float*>(1) { value->Data }, NativeOperation::MatrixTranslationFromVector);
 	}
 }

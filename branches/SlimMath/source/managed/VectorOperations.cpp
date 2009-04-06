@@ -31,11 +31,11 @@
 
 using namespace System;
 
-namespace SlimMath {
-	Operation<Vector>^ VectorOps::Transform(Handle<Vector>^ value1, Handle<Matrix>^ value2) {
-		Handle<Vector>^ result = gcnew Handle<Vector>();
-
-		return gcnew Operation<Vector>(result, gcnew array<IntPtr>(2) {value1->RawData, value2->RawData}, NativeOperation::Vector4Transform);
+namespace SlimMath
+{
+	Operation<Vector>^ VectorOps::Transform(Handle<Vector>^ value1, Handle<Matrix>^ value2)
+	{
+		return gcnew Operation<Vector>(gcnew array<float*>(2) { value1->Data, value2->Data }, NativeOperation::Vector4Transform);
 	}
 
 }

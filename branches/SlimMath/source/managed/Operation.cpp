@@ -24,32 +24,16 @@
 
 using namespace System;
 
-namespace SlimMath {
+namespace SlimMath
+{
 	generic<typename T>
-	Operation<T>::Operation(Handle<T>^ result, array<IntPtr>^ parameters, int op) {
-		this->result = result;
-		this->parameters = parameters;
-		this->op = op;
+	Operation<T>::Operation(array<float*>^ parameters, int op)
+	{
+		result = gcnew Handle<T>();
+		Parameters = parameters;
+		Op = op;
 
-		results = gcnew array<IntPtr>(1);
-		results[0] = result->RawData;
-	}
-
-	generic<typename T, typename U, typename V>
-	CompoundOperation<T, U, V>::CompoundOperation(CompoundHandle<T, U, V>^ result, array<IntPtr>^ parameters, int op) {
-		this->result = result;
-		this->parameters = parameters;
-		this->op = op;
-
-		int length = 2;
-		if(result->ThirdResult != nullptr)
-			length = 3;
-
-		results = gcnew array<IntPtr>(length);
-		results[0] = result->FirstResult->RawData;
-		results[1] = result->SecondResult->RawData;
-		
-		if(result->ThirdResult != nullptr)
-			results[2] = result->ThirdResult->RawData;
+		Results = gcnew array<float*>(1);
+		Results[0] = result->Data;
 	}
 }

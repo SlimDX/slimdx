@@ -21,16 +21,19 @@
 */
 #pragma once
 
-namespace SlimMath {
+namespace SlimMath
+{
 	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
-	public value class Vector {
+	public value class Vector
+	{
 	public:
 		float X;
 		float Y;
 		float Z;
 		float W;
 
-		virtual System::String^ ToString() override  {
+		virtual System::String^ ToString() override
+		{
 			return System::String::Format("[{0} {1} {2} {3}]", X, Y, Z, W);
 		}
 	};

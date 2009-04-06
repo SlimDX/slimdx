@@ -24,8 +24,10 @@
 #include "Operation.h"
 #include "Primitives.h"
 
-namespace SlimMath {
-	public ref class VectorOps sealed {
+namespace SlimMath
+{
+	public ref class VectorOps sealed
+	{
 	private:
 		VectorOps() { }
 

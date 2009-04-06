@@ -26,34 +26,32 @@
 
 using namespace System;
 
-namespace SlimMath {
+namespace SlimMath
+{
 	generic<typename T>
-	Handle<T>::Handle() {
-		data = new float[sizeof(T)];
+	Handle<T>::Handle()
+	{
+		Data = new float[sizeof(T)];
 	}
 
 	generic<typename T>
-	Handle<T>::Handle(T value) {
-		data = new float[sizeof(T)];
-		memcpy(data, &value, sizeof(T));
+	Handle<T>::Handle(T value)
+	{
+		Data = new float[sizeof(T)];
+		memcpy(Data, &value, sizeof(T));
 	}
 
 	generic<typename T>
-	Handle<T>::operator SlimMath::Handle<T>^ (T value) {
+	Handle<T>::operator SlimMath::Handle<T>^ (T value)
+	{
 		return gcnew Handle<T>(value);
 	}
 
 	generic<typename T>
-	T Handle<T>::GetData() {
+	T Handle<T>::GetData()
+	{
 		T t;
-		memcpy(&t, data, sizeof(T));
+		memcpy(&t, Data, sizeof(T));
 		return t;
-	}
-
-	generic<typename T, typename U, typename V>
-	CompoundHandle<T, U, V>::CompoundHandle(Handle<T>^ handle1, Handle<U>^ handle2, Handle<V>^ handle3) {
-		firstResult = handle1;
-		secondResult = handle2;
-		thirdResult = handle3;
 	}
 }

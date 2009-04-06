@@ -31,51 +31,48 @@
 using namespace System;
 using namespace System::Collections::Generic;
 
-namespace SlimMath {
-	Batch::Batch() {
-		operations = gcnew List<IOperation^>();
-		processor = new BatchProcessor();
+namespace SlimMath
+{
+	Batch::Batch()
+	{
+		operations = gcnew List<BaseOperation^>();
 	}
 
-	Batch::~Batch() {
-		Destruct();
+	Batch::Batch(int capacity)
+	{
+		operations = gcnew List<BaseOperation^>(capacity);
 	}
 
-	Batch::!Batch() {
-		Destruct();
-	}
-
-	void Batch::Destruct() {
-		delete processor;
-		processor = 0;
+	Batch::Batch(IEnumerable<BaseOperation^>^ collection)
+	{
+		operations = gcnew List<BaseOperation^>(collection);
 	}
 
 	generic<typename T>
-	Handle<T>^ Batch::Add(Operation<T>^ operation) {
+	Handle<T>^ Batch::Add(Operation<T>^ operation)
+	{
 		operations->Add(operation);
 		return operation->Result;
 	}
 
-	generic<typename T, typename U, typename V>
-	CompoundHandle<T, U, V>^ Batch::Add(CompoundOperation<T, U, V>^ operation) {
-		operations->Add(operation);
-		return operation->Result;
-	}
-
-	void Batch::Process() {
+	void Batch::Process()
+	{
 		OpDescriptor* descriptors = new OpDescriptor[operations->Count];
 
-		for(int i = 0; i < operations->Count; ++i) {
+		for (int i = 0; i < operations->Count; ++i)
+		{
 			descriptors[i].Op = static_cast<NativeOperation::Ops>(operations[i]->Op);
 
-			for(int j = 0; j < operations[i]->Parameters->Length; ++j)
-				descriptors[i].Parameters[j].Data = static_cast<float*>(operations[i]->Parameters[j].ToPointer());
+			for (int j = 0; j < operations[i]->Parameters->Length; ++j)
+				descriptors[i].Parameters[j].Data = operations[i]->Parameters[j];
 
-			for(int j = 0; j < operations[i]->Results->Length; ++j)
-				descriptors[i].Results[j].Data = static_cast<float*>(operations[i]->Results[j].ToPointer());
+			for (int j = 0; j < operations[i]->Results->Length; ++j)
+				descriptors[i].Results[j].Data = operations[i]->Results[j];
 		}
 		
-		processor->Process(descriptors, operations->Count);
-		delete [] descriptors;
+		BatchProcessor processor;
+		processor.Process(descriptors, operations->Count);
+
+		delete[] descriptors;
 	}
 }
