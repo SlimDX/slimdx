@@ -22,7 +22,6 @@
 
 #include <windows.h>
 #include <xnamath.h>
-#include <memory>
 
 #include "..\native\NativeOperations.h"
 

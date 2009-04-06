@@ -22,7 +22,6 @@
 
 #include <windows.h>
 #include <xnamath.h>
-#include <vector>
 
 #include "..\native\BatchProcessor.h"
 

@@ -20,8 +20,8 @@
 * THE SOFTWARE.
 */
 
-#include <memory>
-
+#include <memory.h>
+#include <malloc.h>
 #include "Handle.h"
 
 using namespace System;
@@ -30,8 +30,8 @@ namespace SlimMath
 {
 	void BaseHandle::Destruct()
 	{
-		delete[] Data;
-		Data = NULL;
+		free(Data);
+		Data = 0;
 	}
 
 	BaseHandle::~BaseHandle()
@@ -47,13 +47,13 @@ namespace SlimMath
 	generic<typename T>
 	Handle<T>::Handle()
 	{
-		Data = new float[sizeof(T)];
+		Data = reinterpret_cast<float*>(malloc(sizeof(T)*sizeof(float)));
 	}
 
 	generic<typename T>
 	Handle<T>::Handle(T value)
 	{
-		Data = new float[sizeof(T)];
+		Data = reinterpret_cast<float*>(malloc(sizeof(T)*sizeof(float)));
 		memcpy(Data, &value, sizeof(T));
 	}
 
@@ -66,7 +66,7 @@ namespace SlimMath
 	generic<typename T>
 	T Handle<T>::GetData()
 	{
-		if (Data == NULL)
+		if (Data == 0)
 			throw gcnew InvalidOperationException("Handle has been disposed.");
 
 		T t;
