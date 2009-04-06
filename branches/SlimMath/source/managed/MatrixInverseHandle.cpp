@@ -19,19 +19,21 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Operation.h"
-#include "Primitives.h"
+#include <memory.h>
+#include <malloc.h>
+
+#include "MatrixInverseHandle.h"
+
+using namespace System;
 
 namespace SlimMath
 {
-	public ref class VectorOps sealed
+	MatrixInverseHandle::MatrixInverseHandle()
 	{
-	private:
-		VectorOps() { }
+		Data = reinterpret_cast<float*>(malloc(sizeof(float) + sizeof(Matrix)));
 
-	public:
-		static Operation<Handle<Vector>^>^ Transform(Handle<Vector>^ value1, Handle<Matrix>^ value2);
-	};
+		inverse = gcnew Handle<Matrix>(Data);
+		determinant = gcnew Handle<float>(reinterpret_cast<float*>(reinterpret_cast<char*>(Data) + sizeof(Matrix)));
+	}
 }

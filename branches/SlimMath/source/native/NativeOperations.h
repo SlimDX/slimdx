@@ -160,6 +160,6 @@ namespace SlimMath
 
 		ParameterDescriptor Parameters[16];
 
-		ResultDescriptor Results[3];
+		ResultDescriptor Result;
 	};
 }

@@ -48,7 +48,7 @@ namespace SlimMath
 	}
 
 	generic<typename T>
-	Handle<T>^ Batch::Add(Operation<T>^ operation)
+	T Batch::Add(Operation<T>^ operation)
 	{
 		operations->Add(operation);
 		return operation->Result;
@@ -65,8 +65,7 @@ namespace SlimMath
 			for (int j = 0; j < operations[i]->Parameters->Length; ++j)
 				descriptors[i].Parameters[j].Data = operations[i]->Parameters[j]->Data;
 
-			for (int j = 0; j < operations[i]->Results->Length; ++j)
-				descriptors[i].Results[j].Data = operations[i]->Results[j]->Data;
+			descriptors[i].Result.Data = operations[i]->InternalResult->Data;
 		}
 		
 		BatchProcessor processor;

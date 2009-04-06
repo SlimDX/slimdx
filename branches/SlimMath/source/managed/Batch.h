@@ -38,8 +38,8 @@ namespace SlimMath
 		Batch(int capacity);
 		Batch(System::Collections::Generic::IEnumerable<BaseOperation^>^ collection);
 
-		generic<typename T> where T : value class
-		Handle<T>^ Add(Operation<T>^ operation);
+		generic<typename T> where T : BaseHandle
+		T Add(Operation<T>^ operation);
 
 		void Process();
 		void Clear();

@@ -32,9 +32,10 @@ using namespace System;
 
 namespace SlimMath
 {
-	Operation<Vector>^ VectorOps::Transform(Handle<Vector>^ value1, Handle<Matrix>^ value2)
+	Operation<Handle<Vector>^>^ VectorOps::Transform(Handle<Vector>^ value1, Handle<Matrix>^ value2)
 	{
-		return gcnew Operation<Vector>(gcnew array<BaseHandle^>(2) { value1, value2 }, NativeOperation::Vector4Transform);
+		return gcnew Operation<Handle<Vector>^>(gcnew Handle<Vector>(), gcnew array<BaseHandle^>(2) { value1, value2 }, 
+			NativeOperation::Vector4Transform);
 	}
 
 }

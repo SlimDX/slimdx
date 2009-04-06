@@ -29,26 +29,26 @@ namespace SlimMath
 	{
 	internal:
 		array<BaseHandle^>^ Parameters;
-		array<BaseHandle^>^ Results;
+		BaseHandle^ InternalResult;
 		int Op;
 
 	public:
 		~BaseOperation();
 	};
 
-	generic<typename T> where T : value class
+	generic<typename T> where T : BaseHandle
 	public ref class Operation sealed : BaseOperation
 	{
 	private:
-		Handle<T>^ result;
+		T result;
 
 	internal:
-		Operation(array<BaseHandle^>^ parameters, int op);
+		Operation(T result, array<BaseHandle^>^ parameters, int op);
 
 	public:
-		property Handle<T>^ Result
+		property T Result
 		{
-			Handle<T>^ get() { return result; }
+			T get() { return result; }
 		}
 	};
 }

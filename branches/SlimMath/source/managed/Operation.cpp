@@ -31,18 +31,15 @@ namespace SlimMath
 		for (int i = 0; i < Parameters->Length; i++)
 			delete Parameters[i];
 
-		for (int i = 0; i < Results->Length; i++)
-			delete Results[i];
+		delete InternalResult;
 	}
 
 	generic<typename T>
-	Operation<T>::Operation(array<BaseHandle^>^ parameters, int op)
+	Operation<T>::Operation(T result, array<BaseHandle^>^ parameters, int op)
 	{
-		result = gcnew Handle<T>();
+		this->result = result;
 		Parameters = parameters;
 		Op = op;
-
-		Results = gcnew array<BaseHandle^>(1);
-		Results[0] = result;
+		InternalResult = result;
 	}
 }

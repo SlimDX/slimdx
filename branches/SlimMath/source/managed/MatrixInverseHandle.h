@@ -21,17 +21,29 @@
 */
 #pragma once
 
-#include "Operation.h"
 #include "Primitives.h"
+#include "Handle.h"
 
 namespace SlimMath
 {
-	public ref class VectorOps sealed
+	public ref class MatrixInverseHandle sealed : BaseHandle
 	{
 	private:
-		VectorOps() { }
+		Handle<float>^ determinant;
+		Handle<Matrix>^ inverse;
+
+	internal:
+		MatrixInverseHandle();
 
 	public:
-		static Operation<Handle<Vector>^>^ Transform(Handle<Vector>^ value1, Handle<Matrix>^ value2);
+		property Handle<float>^ Determinant
+		{
+			Handle<float>^ get() { return determinant; }
+		}
+
+		property Handle<Matrix>^ Inverse
+		{
+			Handle<Matrix>^ get() { return inverse; }
+		}
 	};
 }

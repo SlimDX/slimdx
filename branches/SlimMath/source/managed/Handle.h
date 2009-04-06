@@ -30,6 +30,7 @@ namespace SlimMath
 
 	internal:
 		float* Data;
+		bool isExternal;
 
 	public:
 		~BaseHandle();
@@ -47,6 +48,7 @@ namespace SlimMath
 	internal:
 		Handle();
 		Handle(T value);
+		Handle(float *data);
 
 	public:
 		T GetData();

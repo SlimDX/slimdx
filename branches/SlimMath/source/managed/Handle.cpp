@@ -21,8 +21,10 @@
 */
 
 #include <memory.h>
+#include <malloc.h>
 
 #include "Handle.h"
+#include "MatrixInverseHandle.h"
 
 using namespace System;
 
@@ -30,8 +32,11 @@ namespace SlimMath
 {
 	void BaseHandle::Destruct()
 	{
-		delete[] Data;
-		Data = 0;
+		if(!isExternal)
+		{
+			free(Data);
+			Data = 0;
+		}
 	}
 
 	BaseHandle::~BaseHandle()
@@ -47,14 +52,23 @@ namespace SlimMath
 	generic<typename T>
 	Handle<T>::Handle()
 	{
-		Data = new float[sizeof(T)];
+		Data = reinterpret_cast<float*>(malloc(sizeof(T)));
+		isExternal = false;
 	}
 
 	generic<typename T>
 	Handle<T>::Handle(T value)
 	{
-		Data = new float[sizeof(T)];
+		Data = reinterpret_cast<float*>(malloc(sizeof(T)));
 		memcpy(Data, &value, sizeof(T));
+		isExternal = false;
+	}
+
+	generic<typename T>
+	Handle<T>::Handle(float *data)
+	{
+		Data = data;
+		isExternal = true;
 	}
 
 	generic<typename T>

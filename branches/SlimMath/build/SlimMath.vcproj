@@ -351,16 +351,40 @@
 					RelativePath="..\source\managed\Handle.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\managed\MatrixInverseHandle.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\MatrixInverseHandle.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Operations"
 				>
+				<File
+					RelativePath="..\source\managed\MatrixOperations.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\MatrixOperations.h"
+					>
+				</File>
 				<File
 					RelativePath="..\source\managed\Operation.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\source\managed\Operation.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\VectorOperations.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\VectorOperations.h"
 					>
 				</File>
 			</Filter>
@@ -377,26 +401,6 @@
 				</File>
 				<File
 					RelativePath="..\source\managed\Vector.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Op Builders"
-				>
-				<File
-					RelativePath="..\source\managed\MatrixOperations.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\managed\MatrixOperations.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\managed\VectorOperations.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\managed\VectorOperations.h"
 					>
 				</File>
 			</Filter>

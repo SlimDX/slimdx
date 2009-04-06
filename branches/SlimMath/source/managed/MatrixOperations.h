@@ -32,8 +32,8 @@ namespace SlimMath
 		MatrixOps() { }
 
 	public:
-		static Operation<Matrix>^ Multiply(Handle<Matrix>^ value1, Handle<Matrix>^ value2);
-		static Operation<Matrix>^ Identity();
-		static Operation<Matrix>^ Translation(Handle<Vector>^ value);
+		static Operation<Handle<Matrix>^>^ Multiply(Handle<Matrix>^ value1, Handle<Matrix>^ value2);
+		static Operation<Handle<Matrix>^>^ Identity();
+		static Operation<Handle<Matrix>^>^ Translation(Handle<Vector>^ value);
 	};
 }
