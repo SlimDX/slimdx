@@ -53,7 +53,7 @@ namespace SlimMath {
 	generic<typename T>
 	Handle<T>^ Batch::Add(Operation<T>^ operation) {
 		operations->Add(operation);
-		return safe_cast<Handle<T>^>(operation->Result);
+		return operation->Result;
 	}
 
 	generic<typename T, typename U, typename V>

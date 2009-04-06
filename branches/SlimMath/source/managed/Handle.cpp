@@ -39,11 +39,6 @@ namespace SlimMath {
 	}
 
 	generic<typename T>
-	IntPtr Handle<T>::RawData::get() {
-		return IntPtr(data);
-	}
-
-	generic<typename T>
 	Handle<T>::operator SlimMath::Handle<T>^ (T value) {
 		return gcnew Handle<T>(value);
 	}

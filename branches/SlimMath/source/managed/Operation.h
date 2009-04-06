@@ -47,14 +47,14 @@ namespace SlimMath {
 	generic<typename T> where T : value class
 	public ref class Operation sealed : IOperation {
 	private:
-		IHandle^ result;
+		Handle<T>^ result;
 
 	internal:
 		Operation(Handle<T>^ result, array<System::IntPtr>^ parameters, int op);
 
 	public:
-		property IHandle^ Result {
-			virtual IHandle^ get() { return result; }
+		property Handle<T>^ Result {
+			Handle<T>^ get() { return result; }
 		}
 	};
 

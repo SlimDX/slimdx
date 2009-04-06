@@ -22,26 +22,22 @@
 #pragma once
 
 namespace SlimMath {
-	public interface struct IHandle {
+	public ref struct IHandle abstract {
 		property System::IntPtr RawData {
-			virtual System::IntPtr get() = 0;
+			System::IntPtr get() { return System::IntPtr(data); };
 		}
+
+	internal:
+		float* data;
 	};
 
 	generic<typename T> where T : value class
 	public ref class Handle sealed : IHandle {
-	private:
-		float *data;
-
 	internal:
 		Handle();
 		Handle(T value);
 
 	public:
-		property System::IntPtr RawData {
-			virtual System::IntPtr get();
-		}
-
 		T GetData();
 
 		static operator Handle<T>^ (T value);
