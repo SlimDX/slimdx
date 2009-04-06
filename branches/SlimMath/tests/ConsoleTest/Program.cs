@@ -25,7 +25,9 @@ namespace ConsoleTest
 			var v1 = new Vector() { X = 1, Y = 1, Z = 1, W = 0};
 
 			var trans = batch.Add(MatrixOps.Translation(new Vector() {X = 2, Y = 2, Z = 2, W = 0}));
-			var doubled = batch.Add(VectorOps.Transform(new Vector() {X = 1, Y = 1, Z = 1, W = 1}, trans));
+
+			var trans2 = batch.Add(MatrixOps.Multiply(trans, mult));
+			var doubled = batch.Add(VectorOps.Transform(new Vector() {X = 1, Y = 1, Z = 1, W = 1}, trans2));
 			
 			
 			batch.Process();
