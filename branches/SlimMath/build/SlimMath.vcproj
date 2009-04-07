@@ -359,10 +359,26 @@
 					RelativePath="..\source\managed\MatrixInverseHandle.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\managed\StreamHandle.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\StreamHandle.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Operations"
 				>
+				<File
+					RelativePath="..\source\managed\ColorOperations.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\ColorOperations.h"
+					>
+				</File>
 				<File
 					RelativePath="..\source\managed\MatrixOperations.cpp"
 					>
@@ -391,6 +407,10 @@
 			<Filter
 				Name="Primitives"
 				>
+				<File
+					RelativePath="..\source\managed\Color.h"
+					>
+				</File>
 				<File
 					RelativePath="..\source\managed\Matrix.h"
 					>

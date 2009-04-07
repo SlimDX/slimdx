@@ -21,6 +21,27 @@
 */
 #pragma once
 
-#include "Matrix.h"
-#include "Vector.h"
-#include "Color.h"
+#include "Handle.h"
+
+namespace SlimMath
+{
+	generic<typename T> where T : value class
+	public ref class StreamHandle sealed : BaseHandle
+	{
+	private:
+		System::Runtime::InteropServices::GCHandle handle;
+		array<T>^ arrayData;
+
+		void Destruct();
+
+	internal:
+		StreamHandle(int count);
+		StreamHandle(array<T>^ inputData);
+
+	public:
+		~StreamHandle();
+		!StreamHandle();
+
+		array<T>^ GetData() { return arrayData; }
+	};
+}

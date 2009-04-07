@@ -23,17 +23,26 @@
 
 #include "Operation.h"
 #include "Primitives.h"
-#include "StreamHandle.h"
 
 namespace SlimMath
 {
-	public ref class VectorOps sealed
+	public ref class ColorOps sealed
 	{
 	private:
-		VectorOps() { }
+		ColorOps() { }
 
 	public:
-		static Operation<Handle<Vector>^>^ Transform(Handle<Vector>^ value1, Handle<Matrix>^ value2);
-		static Operation<StreamHandle<Vector>^>^ TransformStream(array<Vector>^ input, Handle<Matrix>^ transform);
+		static Operation<Handle<Color>^>^ AdjustContrast(Handle<Color>^ color, Handle<float>^ contrast);
+		static Operation<Handle<Color>^>^ AdjustSaturation(Handle<Color>^ color, Handle<float>^ saturation);
+		static Operation<Handle<bool>^>^ IsEqual(Handle<Color>^ color1, Handle<Color>^ color2);
+		static Operation<Handle<bool>^>^ IsGreater(Handle<Color>^ color1, Handle<Color>^ color2);
+		static Operation<Handle<bool>^>^ IsGreaterOrEqual(Handle<Color>^ color1, Handle<Color>^ color2);
+		static Operation<Handle<bool>^>^ IsInfinite(Handle<Color>^ color);
+		static Operation<Handle<bool>^>^ IsNaN(Handle<Color>^ color);
+		static Operation<Handle<bool>^>^ IsLess(Handle<Color>^ color1, Handle<Color>^ color2);
+		static Operation<Handle<bool>^>^ IsLessOrEqual(Handle<Color>^ color1, Handle<Color>^ color2);
+		static Operation<Handle<Color>^>^ Modulate(Handle<Color>^ color1, Handle<Color>^ color2);
+		static Operation<Handle<Color>^>^ Negate(Handle<Color>^ color);
+		static Operation<Handle<bool>^>^ IsNotEqual(Handle<Color>^ color1, Handle<Color>^ color2);
 	};
 }

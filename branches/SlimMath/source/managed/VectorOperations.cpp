@@ -38,4 +38,13 @@ namespace SlimMath
 			NativeOperation::Vector4Transform);
 	}
 
+	Operation<StreamHandle<Vector>^>^ VectorOps::TransformStream(array<Vector>^ input, Handle<Matrix>^ transform)
+	{
+		StreamHandle<Vector>^ inputHandle = gcnew StreamHandle<Vector>(input);
+		Handle<int>^ lengthHandle = gcnew Handle<int>(input->Length);
+
+		return gcnew Operation<StreamHandle<Vector>^>(gcnew StreamHandle<Vector>(input->Length), 
+			gcnew array<BaseHandle^>(3) { inputHandle, transform, lengthHandle },
+			NativeOperation::Vector4TransformStream);
+	}
 }

@@ -19,8 +19,53 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Matrix.h"
-#include "Vector.h"
-#include "Color.h"
+#include <memory.h>
+#include <malloc.h>
+
+#include "StreamHandle.h"
+
+using namespace System;
+using namespace System::Runtime::InteropServices;
+
+namespace SlimMath
+{
+	generic<typename T>
+	StreamHandle<T>::StreamHandle(int count)
+	{
+		arrayData = gcnew array<T>(count);
+		handle = GCHandle::Alloc(arrayData, GCHandleType::Pinned);
+		isExternal = true;
+
+		Data = reinterpret_cast<float*>(handle.AddrOfPinnedObject().ToPointer());
+	}
+
+	generic<typename T>
+	StreamHandle<T>::StreamHandle(array<T>^ inputData)
+	{
+		arrayData = inputData;
+		handle = GCHandle::Alloc(arrayData, GCHandleType::Pinned);
+		isExternal = true;
+
+		Data = reinterpret_cast<float*>(handle.AddrOfPinnedObject().ToPointer());
+	}
+
+	generic<typename T>
+	StreamHandle<T>::~StreamHandle()
+	{
+		Destruct();
+	}
+
+	generic<typename T>
+	StreamHandle<T>::!StreamHandle()
+	{
+		Destruct();
+	}
+
+	generic<typename T>
+	void StreamHandle<T>::Destruct()
+	{
+		if(handle.IsAllocated)
+			handle.Free();
+	}
+}

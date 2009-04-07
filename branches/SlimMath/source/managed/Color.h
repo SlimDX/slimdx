@@ -21,6 +21,15 @@
 */
 #pragma once
 
-#include "Matrix.h"
-#include "Vector.h"
-#include "Color.h"
+namespace SlimMath
+{
+	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
+	public value class Color
+	{
+	public:
+		float R;
+		float G;
+		float B;
+		float A;
+	};
+}
