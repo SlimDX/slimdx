@@ -36,31 +36,31 @@ namespace SlimMath
 			switch(ops[i].Op)
 			{
 				case NativeOperation::MatrixIdentity:
-					StoreMatrixResult(ops[i].Results[0].Data, XMMatrixIdentity());
+					StoreMatrixResult(ops[i].Result.Data, XMMatrixIdentity());
 					break;
 				case NativeOperation::MatrixMultiply:
 				{
 					XMMATRIX p1 = GetMatrixParameter(ops[i].Parameters[0].Data);
 					XMMATRIX p2 = GetMatrixParameter(ops[i].Parameters[1].Data);
-					StoreMatrixResult(ops[i].Results[0].Data, XMMatrixMultiply(p1, p2));
+					StoreMatrixResult(ops[i].Result.Data, XMMatrixMultiply(p1, p2));
 					break;
 				}
 				case NativeOperation::MatrixInverse:
 				{
 					XMMATRIX p1 = GetMatrixParameter(ops[i].Parameters[0].Data);
 					XMVECTOR det;
-					StoreMatrixResult(ops[i].Results[0].Data, XMMatrixInverse(&det, p1));
-					XMStoreFloat(ops[i].Results[1].Data, det);
+					StoreMatrixResult(ops[i].Result.Data, XMMatrixInverse(&det, p1));
+					XMStoreFloat(ops[i].Result.Data + 16, det);
 					break;
 				}
 				case NativeOperation::MatrixTranslationFromVector:
-					StoreMatrixResult(ops[i].Results[0].Data, XMMatrixTranslationFromVector(GetVectorParameter(ops[i].Parameters[0].Data)));
+					StoreMatrixResult(ops[i].Result.Data, XMMatrixTranslationFromVector(GetVectorParameter(ops[i].Parameters[0].Data)));
 					break;
 				case NativeOperation::Vector4Transform:
-					StoreVectorResult(ops[i].Results[0].Data, XMVector4Transform(GetVectorParameter(ops[i].Parameters[0].Data), GetMatrixParameter(ops[i].Parameters[1].Data)));
+					StoreVectorResult(ops[i].Result.Data, XMVector4Transform(GetVectorParameter(ops[i].Parameters[0].Data), GetMatrixParameter(ops[i].Parameters[1].Data)));
 					break;
 				case NativeOperation::Vector4TransformStream:
-					XMVector4TransformStream(reinterpret_cast<XMFLOAT4*>(ops[i].Results[0].Data), 16, reinterpret_cast<XMFLOAT4*>(ops[i].Parameters[0].Data), 16, reinterpret_cast<int>(ops[i].Parameters[2].Data), GetMatrixParameter(ops[i].Parameters[1].Data));
+					XMVector4TransformStream(reinterpret_cast<XMFLOAT4*>(ops[i].Result.Data), 16, reinterpret_cast<XMFLOAT4*>(ops[i].Parameters[0].Data), 16, reinterpret_cast<int>(ops[i].Parameters[2].Data), GetMatrixParameter(ops[i].Parameters[1].Data));
 			}
 		}
 	}
