@@ -35,72 +35,72 @@ namespace SlimMath
 	Operation<Handle<Color>^>^ ColorOps::AdjustContrast(Handle<Color>^ color, Handle<float>^ contrast)
 	{
 		return gcnew Operation<Handle<Color>^>(gcnew Handle<Color>(), gcnew array<BaseHandle^>(2) { color, contrast },
-			NativeOperation::ColorAdjustContrast);
+			NativeOperation::Color::AdjustContrast);
 	}
 
 	Operation<Handle<Color>^>^ ColorOps::AdjustSaturation(Handle<Color>^ color, Handle<float>^ saturation)
 	{
 		return gcnew Operation<Handle<Color>^>(gcnew Handle<Color>(), gcnew array<BaseHandle^>(2) { color, saturation },
-			NativeOperation::ColorAdjustSaturation);
+			NativeOperation::Color::AdjustSaturation);
 	}
 
 	Operation<Handle<bool>^>^ ColorOps::IsEqual(Handle<Color>^ color1, Handle<Color>^ color2)
 	{
 		return gcnew Operation<Handle<bool>^>(gcnew Handle<bool>(), gcnew array<BaseHandle^>(2) { color1, color2 },
-			NativeOperation::ColorEqual);
+			NativeOperation::Color::Equal);
 	}
 
 	Operation<Handle<bool>^>^ ColorOps::IsGreater(Handle<Color>^ color1, Handle<Color>^ color2)
 	{
 		return gcnew Operation<Handle<bool>^>(gcnew Handle<bool>(), gcnew array<BaseHandle^>(2) { color1, color2 },
-			NativeOperation::ColorGreater);
+			NativeOperation::Color::Greater);
 	}
 
 	Operation<Handle<bool>^>^ ColorOps::IsGreaterOrEqual(Handle<Color>^ color1, Handle<Color>^ color2)
 	{
 		return gcnew Operation<Handle<bool>^>(gcnew Handle<bool>(), gcnew array<BaseHandle^>(2) { color1, color2 },
-			NativeOperation::ColorGreaterOrEqual);
+			NativeOperation::Color::GreaterOrEqual);
 	}
 
 	Operation<Handle<bool>^>^ ColorOps::IsInfinite(Handle<Color>^ color)
 	{
 		return gcnew Operation<Handle<bool>^>(gcnew Handle<bool>(), gcnew array<BaseHandle^>(1) { color },
-			NativeOperation::ColorIsInfinite);
+			NativeOperation::Color::IsInfinite);
 	}
 
 	Operation<Handle<bool>^>^ ColorOps::IsNaN(Handle<Color>^ color)
 	{
 		return gcnew Operation<Handle<bool>^>(gcnew Handle<bool>(), gcnew array<BaseHandle^>(1) { color },
-			NativeOperation::ColorIsNaN);
+			NativeOperation::Color::IsNaN);
 	}
 
 	Operation<Handle<bool>^>^ ColorOps::IsLess(Handle<Color>^ color1, Handle<Color>^ color2)
 	{
 		return gcnew Operation<Handle<bool>^>(gcnew Handle<bool>(), gcnew array<BaseHandle^>(2) { color1, color2 },
-			NativeOperation::ColorLess);
+			NativeOperation::Color::Less);
 	}
 
 	Operation<Handle<bool>^>^ ColorOps::IsLessOrEqual(Handle<Color>^ color1, Handle<Color>^ color2)
 	{
 		return gcnew Operation<Handle<bool>^>(gcnew Handle<bool>(), gcnew array<BaseHandle^>(2) { color1, color2 },
-			NativeOperation::ColorLessOrEqual);
+			NativeOperation::Color::LessOrEqual);
 	}
 
 	Operation<Handle<Color>^>^ ColorOps::Modulate(Handle<Color>^ color1, Handle<Color>^ color2)
 	{
 		return gcnew Operation<Handle<Color>^>(gcnew Handle<Color>(), gcnew array<BaseHandle^>(2) { color1, color2 },
-			NativeOperation::ColorModulate);
+			NativeOperation::Color::Modulate);
 	}
 
 	Operation<Handle<Color>^>^ ColorOps::Negate(Handle<Color>^ color)
 	{
 		return gcnew Operation<Handle<Color>^>(gcnew Handle<Color>(), gcnew array<BaseHandle^>(1) { color },
-			NativeOperation::ColorNegative);
+			NativeOperation::Color::Negative);
 	}
 
 	Operation<Handle<bool>^>^ ColorOps::IsNotEqual(Handle<Color>^ color1, Handle<Color>^ color2)
 	{
 		return gcnew Operation<Handle<bool>^>(gcnew Handle<bool>(), gcnew array<BaseHandle^>(2) { color1, color2 },
-			NativeOperation::ColorNotEqual);
+			NativeOperation::Color::NotEqual);
 	}
 }

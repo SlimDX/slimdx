@@ -38,60 +38,60 @@ namespace SlimMath
 				/*
 				* Begin Color Ops
 				*/
-			case NativeOperation::ColorAdjustContrast:
+			case NativeOperation::Color::AdjustContrast:
 				StoreVectorResult(ops[i].Result.Data, XMColorAdjustContrast(GetVectorParameter(ops[i].Parameters[0].Data), *ops[i].Parameters[1].Data));
 				break;
-			case NativeOperation::ColorAdjustSaturation:
+			case NativeOperation::Color::AdjustSaturation:
 				StoreVectorResult(ops[i].Result.Data, XMColorAdjustSaturation(GetVectorParameter(ops[i].Parameters[0].Data), *ops[i].Parameters[1].Data));
 				break;
-			case NativeOperation::ColorEqual:
+			case NativeOperation::Color::Equal:
 				*reinterpret_cast<int*>(ops[i].Result.Data) = XMColorEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data));
 				break;
-			case NativeOperation::ColorGreater:
+			case NativeOperation::Color::Greater:
 				*reinterpret_cast<int*>(ops[i].Result.Data) = XMColorGreater(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data));
 				break;
-			case NativeOperation::ColorGreaterOrEqual:
+			case NativeOperation::Color::GreaterOrEqual:
 				*reinterpret_cast<int*>(ops[i].Result.Data) = XMColorGreaterOrEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data));
 				break;
-			case NativeOperation::ColorIsInfinite:
+			case NativeOperation::Color::IsInfinite:
 				*reinterpret_cast<int*>(ops[i].Result.Data) = XMColorIsInfinite(GetVectorParameter(ops[i].Parameters[0].Data));
 				break;
-			case NativeOperation::ColorIsNaN:
+			case NativeOperation::Color::IsNaN:
 				*reinterpret_cast<int*>(ops[i].Result.Data) = XMColorIsNaN(GetVectorParameter(ops[i].Parameters[0].Data));
 				break;
-			case NativeOperation::ColorLess:
+			case NativeOperation::Color::Less:
 				*reinterpret_cast<int*>(ops[i].Result.Data) = XMColorLess(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data));
 				break;
-			case NativeOperation::ColorLessOrEqual:
+			case NativeOperation::Color::LessOrEqual:
 				*reinterpret_cast<int*>(ops[i].Result.Data) = XMColorLessOrEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data));
 				break;
-			case NativeOperation::ColorModulate:
+			case NativeOperation::Color::Modulate:
 				StoreVectorResult(ops[i].Result.Data, XMColorModulate(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data)));
 				break;
-			/*case NativeOperation::ColorNearEqual:
+			/*case NativeOperation::Color::NearEqual:
 				*((int*)ops[i].Result.Data) = XMColorNearEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data), GetVectorParameter(ops[i].Parameters[2].Data));
 				break;*/
-			case NativeOperation::ColorNegative:
+			case NativeOperation::Color::Negative:
 				StoreVectorResult(ops[i].Result.Data, XMColorNegative(GetVectorParameter(ops[i].Parameters[0].Data)));
 				break;
-			case NativeOperation::ColorNotEqual:
+			case NativeOperation::Color::NotEqual:
 				*reinterpret_cast<int*>(ops[i].Result.Data) = XMColorNotEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data));
 				break;
 				/*
 				* End Color Ops
 				* Begin Matrix Ops
 				*/
-			case NativeOperation::MatrixIdentity:
+			case NativeOperation::Matrix::Identity:
 				StoreMatrixResult(ops[i].Result.Data, XMMatrixIdentity());
 				break;
-			case NativeOperation::MatrixMultiply:
+			case NativeOperation::Matrix::Multiply:
 				{
 					XMMATRIX p1 = GetMatrixParameter(ops[i].Parameters[0].Data);
 					XMMATRIX p2 = GetMatrixParameter(ops[i].Parameters[1].Data);
 					StoreMatrixResult(ops[i].Result.Data, XMMatrixMultiply(p1, p2));
 					break;
 				}
-			case NativeOperation::MatrixInverse:
+			case NativeOperation::Matrix::Inverse:
 				{
 					XMMATRIX p1 = GetMatrixParameter(ops[i].Parameters[0].Data);
 					XMVECTOR det;
@@ -99,35 +99,35 @@ namespace SlimMath
 					XMStoreFloat(ops[i].Result.Data + 16, det);
 					break;
 				}
-			case NativeOperation::MatrixTranslationFromVector:
+			case NativeOperation::Matrix::TranslationFromVector:
 				StoreMatrixResult(ops[i].Result.Data, XMMatrixTranslationFromVector(GetVectorParameter(ops[i].Parameters[0].Data)));
 				break;
 				/*
 				* End Matrix Ops
 				* Begin Plane Ops
 				*/
-			case NativeOperation::PlaneDot:
+			case NativeOperation::Plane::Dot:
 				StoreVectorResult(ops[i].Result.Data, XMPlaneDot(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data)));
 				break;
-			case NativeOperation::PlaneDotCoord:
+			case NativeOperation::Plane::DotCoord:
 				StoreVectorResult(ops[i].Result.Data, XMPlaneDotCoord(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data)));
 				break;
-			case NativeOperation::PlaneDotNormal:
+			case NativeOperation::Plane::DotNormal:
 				StoreVectorResult(ops[i].Result.Data, XMPlaneDotNormal(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data)));
 				break;
-			case NativeOperation::PlaneEqual:
+			case NativeOperation::Plane::Equal:
 				*reinterpret_cast<int*>(ops[i].Result.Data) = XMPlaneEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data));
 				break;
-			case NativeOperation::PlaneFromPointNormal:
+			case NativeOperation::Plane::FromPointNormal:
 				StoreVectorResult(ops[i].Result.Data, XMPlaneFromPointNormal(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data)));
 				break;
-			case NativeOperation::PlaneFromPoints:
+			case NativeOperation::Plane::FromPoints:
 				StoreVectorResult(ops[i].Result.Data, XMPlaneFromPoints(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[0].Data)));
 				break;
-			case NativeOperation::PlaneIntersectLine:
+			case NativeOperation::Plane::IntersectLine:
 				StoreVectorResult(ops[i].Result.Data, XMPlaneIntersectLine(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data), GetVectorParameter(ops[i].Parameters[2].Data)));
 				break;
-			case NativeOperation::PlaneIntersectPlane:
+			case NativeOperation::Plane::IntersectPlane:
 				{
 					XMVECTOR linePoint1;
 					XMVECTOR linePoint2;
@@ -136,37 +136,37 @@ namespace SlimMath
 					StoreVectorResult(ops[i].Result.Data + 4, linePoint2);
 					break;
 				}
-			case NativeOperation::PlaneIsInfinite:
+			case NativeOperation::Plane::IsInfinite:
 				*reinterpret_cast<int*>(ops[i].Result.Data) = XMPlaneIsInfinite(GetVectorParameter(ops[i].Parameters[0].Data));
 				break;
-			case NativeOperation::PlaneIsNaN:
+			case NativeOperation::Plane::IsNaN:
 				*reinterpret_cast<int*>(ops[i].Result.Data) = XMPlaneIsNaN(GetVectorParameter(ops[i].Parameters[0].Data));
 				break;
-			case NativeOperation::PlaneNearEqual:
+			case NativeOperation::Plane::NearEqual:
 				*reinterpret_cast<int*>(ops[i].Result.Data) = XMPlaneNearEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data), GetVectorParameter(ops[i].Parameters[2].Data));
 				break;
-			case NativeOperation::PlaneNormalize:
+			case NativeOperation::Plane::Normalize:
 				StoreVectorResult(ops[i].Result.Data, XMPlaneNormalize(GetVectorParameter(ops[i].Parameters[0].Data)));
 				break;
-			case NativeOperation::PlaneNormalizeEst:
+			case NativeOperation::Plane::NormalizeEst:
 				StoreVectorResult(ops[i].Result.Data, XMPlaneNormalizeEst(GetVectorParameter(ops[i].Parameters[0].Data)));
 				break;
-			case NativeOperation::PlaneNotEqual:
+			case NativeOperation::Plane::NotEqual:
 				*reinterpret_cast<int*>(ops[i].Result.Data) = XMPlaneNotEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data));
 				break;
-			case NativeOperation::PlaneTransform:
+			case NativeOperation::Plane::Transform:
 				StoreVectorResult(ops[i].Result.Data, XMPlaneTransform(GetVectorParameter(ops[i].Parameters[0].Data), GetMatrixParameter(ops[i].Parameters[1].Data)));
 				break;
-			case NativeOperation::PlaneTransformStream:
+			case NativeOperation::Plane::TransformStream:
 				XMPlaneTransformStream(reinterpret_cast<XMFLOAT4*>(ops[i].Result.Data), 16, reinterpret_cast<XMFLOAT4*>(ops[i].Parameters[0].Data), 16, reinterpret_cast<int>(ops[i].Parameters[2].Data), GetMatrixParameter(ops[i].Parameters[1].Data));
 				break;
 				/*
 				* End Plane Ops
 				*/
-			case NativeOperation::Vector4Transform:
+			case NativeOperation::Vector4::Transform:
 				StoreVectorResult(ops[i].Result.Data, XMVector4Transform(GetVectorParameter(ops[i].Parameters[0].Data), GetMatrixParameter(ops[i].Parameters[1].Data)));
 				break;
-			case NativeOperation::Vector4TransformStream:
+			case NativeOperation::Vector4::TransformStream:
 				XMVector4TransformStream(reinterpret_cast<XMFLOAT4*>(ops[i].Result.Data), 16, reinterpret_cast<XMFLOAT4*>(ops[i].Parameters[0].Data), 16, reinterpret_cast<int>(ops[i].Parameters[2].Data), GetMatrixParameter(ops[i].Parameters[1].Data));
 			}
 		}

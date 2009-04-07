@@ -60,7 +60,7 @@ namespace SlimMath
 
 		for (int i = 0; i < operations->Count; ++i)
 		{
-			descriptors[i].Op = static_cast<NativeOperation::Ops>(operations[i]->Op);
+			descriptors[i].Op = operations[i]->Op;
 
 			for (int j = 0; j < operations[i]->Parameters->Length; ++j)
 				descriptors[i].Parameters[j].Data = operations[i]->Parameters[j]->Data;
