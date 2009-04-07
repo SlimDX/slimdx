@@ -68,8 +68,7 @@ namespace SlimMath
 			descriptors[i].Result.Data = operations[i]->InternalResult->Data;
 		}
 		
-		BatchProcessor processor;
-		processor.Process(descriptors, operations->Count);
+		BatchProcess(descriptors, operations->Count);
 
 		delete[] descriptors;
 	}

@@ -35,9 +35,28 @@ namespace SlimMath
 		XMStoreColor(reinterpret_cast<XMCOLOR*>(data), vector);
 	}
 
-	BatchProcessor::BatchProcessor() {}
+	__forceinline XMVECTOR GetVectorParameter(float* data)
+	{
+		XMVECTOR result = XMLoadFloat4(reinterpret_cast<XMFLOAT4*>(data));
+		return result;
+	}
+	__forceinline XMMATRIX GetMatrixParameter(float* data)
+	{
+		XMMATRIX result = XMLoadFloat4x4(reinterpret_cast<XMFLOAT4X4*>(data));
+		return result;
+	}
 
-	void BatchProcessor::Process(OpDescriptor *ops, int opCount)
+	__forceinline void StoreVectorResult(float* data, CXMVECTOR vector)
+	{
+		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(data), vector);
+	}
+
+	__forceinline void StoreMatrixResult(float* data, CXMMATRIX matrix)
+	{
+		XMStoreFloat4x4(reinterpret_cast<XMFLOAT4X4*>(data), matrix);
+	}
+
+	void BatchProcess(OpDescriptor *ops, int opCount)
 	{
 		for(int i = 0; i < opCount; ++i)
 		{
@@ -76,7 +95,7 @@ namespace SlimMath
 			case NativeOperation::Color::Modulate:
 				StoreColorResult(ops[i].Result.Data, XMColorModulate(GetColorParameter(ops[i].Parameters[0].Data), GetColorParameter(ops[i].Parameters[1].Data)));
 				break;
-			/*case NativeOperation::Color::NearEqual:
+				/*case NativeOperation::Color::NearEqual:
 				*((int*)ops[i].Result.Data) = XMColorNearEqual(GetColorParameter(ops[i].Parameters[0].Data), GetColorParameter(ops[i].Parameters[1].Data), GetColorParameter(ops[i].Parameters[2].Data));
 				break;*/
 			case NativeOperation::Color::Negative:
@@ -178,26 +197,5 @@ namespace SlimMath
 				XMVector4TransformStream(reinterpret_cast<XMFLOAT4*>(ops[i].Result.Data), 16, reinterpret_cast<XMFLOAT4*>(ops[i].Parameters[0].Data), 16, reinterpret_cast<int>(ops[i].Parameters[2].Data), GetMatrixParameter(ops[i].Parameters[1].Data));
 			}
 		}
-	}
-
-	__forceinline XMVECTOR BatchProcessor::GetVectorParameter(float* data)
-	{
-		XMVECTOR result = XMLoadFloat4(reinterpret_cast<XMFLOAT4*>(data));
-		return result;
-	}
-	__forceinline XMMATRIX BatchProcessor::GetMatrixParameter(float* data)
-	{
-		XMMATRIX result = XMLoadFloat4x4(reinterpret_cast<XMFLOAT4X4*>(data));
-		return result;
-	}
-
-	__forceinline void BatchProcessor::StoreVectorResult(float* data, CXMVECTOR vector)
-	{
-		XMStoreFloat4(reinterpret_cast<XMFLOAT4*>(data), vector);
-	}
-
-	__forceinline void BatchProcessor::StoreMatrixResult(float* data, CXMMATRIX matrix)
-	{
-		XMStoreFloat4x4(reinterpret_cast<XMFLOAT4X4*>(data), matrix);
 	}
 }
