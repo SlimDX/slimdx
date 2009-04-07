@@ -368,6 +368,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\managed\SinCosHandle.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\SinCosHandle.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\managed\StreamHandle.cpp"
 					>
 				</File>
@@ -409,6 +417,14 @@
 				</File>
 				<File
 					RelativePath="..\source\managed\PlaneOperations.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\ScalarOperations.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\ScalarOperations.h"
 					>
 				</File>
 				<File
