@@ -27,9 +27,9 @@ namespace SlimMath
 	public value class Color
 	{
 	public:
+		float A;
 		float R;
 		float G;
 		float B;
-		float A;
 	};
 }

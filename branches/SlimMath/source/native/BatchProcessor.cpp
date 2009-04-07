@@ -27,6 +27,14 @@
 
 namespace SlimMath
 {
+	__forceinline XMVECTOR GetColorParameter(float* data) {
+		return XMLoadColor(reinterpret_cast<XMCOLOR*>(data));
+	}
+
+	__forceinline void StoreColorResult(float* data, CXMVECTOR vector) {
+		XMStoreColor(reinterpret_cast<XMCOLOR*>(data), vector);
+	}
+
 	BatchProcessor::BatchProcessor() {}
 
 	void BatchProcessor::Process(OpDescriptor *ops, int opCount)
@@ -39,43 +47,43 @@ namespace SlimMath
 				* Begin Color Ops
 				*/
 			case NativeOperation::Color::AdjustContrast:
-				StoreVectorResult(ops[i].Result.Data, XMColorAdjustContrast(GetVectorParameter(ops[i].Parameters[0].Data), *ops[i].Parameters[1].Data));
+				StoreColorResult(ops[i].Result.Data, XMColorAdjustContrast(GetColorParameter(ops[i].Parameters[0].Data), *ops[i].Parameters[1].Data));
 				break;
 			case NativeOperation::Color::AdjustSaturation:
-				StoreVectorResult(ops[i].Result.Data, XMColorAdjustSaturation(GetVectorParameter(ops[i].Parameters[0].Data), *ops[i].Parameters[1].Data));
+				StoreColorResult(ops[i].Result.Data, XMColorAdjustSaturation(GetColorParameter(ops[i].Parameters[0].Data), *ops[i].Parameters[1].Data));
 				break;
 			case NativeOperation::Color::Equal:
-				*reinterpret_cast<int*>(ops[i].Result.Data) = XMColorEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data));
+				*reinterpret_cast<bool*>(ops[i].Result.Data) = XMColorEqual(GetColorParameter(ops[i].Parameters[0].Data), GetColorParameter(ops[i].Parameters[1].Data)) == TRUE;
 				break;
 			case NativeOperation::Color::Greater:
-				*reinterpret_cast<int*>(ops[i].Result.Data) = XMColorGreater(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data));
+				*reinterpret_cast<bool*>(ops[i].Result.Data) = XMColorGreater(GetColorParameter(ops[i].Parameters[0].Data), GetColorParameter(ops[i].Parameters[1].Data)) == TRUE;
 				break;
 			case NativeOperation::Color::GreaterOrEqual:
-				*reinterpret_cast<int*>(ops[i].Result.Data) = XMColorGreaterOrEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data));
+				*reinterpret_cast<bool*>(ops[i].Result.Data) = XMColorGreaterOrEqual(GetColorParameter(ops[i].Parameters[0].Data), GetColorParameter(ops[i].Parameters[1].Data)) == TRUE;
 				break;
 			case NativeOperation::Color::IsInfinite:
-				*reinterpret_cast<int*>(ops[i].Result.Data) = XMColorIsInfinite(GetVectorParameter(ops[i].Parameters[0].Data));
+				*reinterpret_cast<bool*>(ops[i].Result.Data) = XMColorIsInfinite(GetColorParameter(ops[i].Parameters[0].Data)) == TRUE;
 				break;
 			case NativeOperation::Color::IsNaN:
-				*reinterpret_cast<int*>(ops[i].Result.Data) = XMColorIsNaN(GetVectorParameter(ops[i].Parameters[0].Data));
+				*reinterpret_cast<bool*>(ops[i].Result.Data) = XMColorIsNaN(GetColorParameter(ops[i].Parameters[0].Data)) == TRUE;
 				break;
 			case NativeOperation::Color::Less:
-				*reinterpret_cast<int*>(ops[i].Result.Data) = XMColorLess(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data));
+				*reinterpret_cast<bool*>(ops[i].Result.Data) = XMColorLess(GetColorParameter(ops[i].Parameters[0].Data), GetColorParameter(ops[i].Parameters[1].Data)) == TRUE;
 				break;
 			case NativeOperation::Color::LessOrEqual:
-				*reinterpret_cast<int*>(ops[i].Result.Data) = XMColorLessOrEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data));
+				*reinterpret_cast<bool*>(ops[i].Result.Data) = XMColorLessOrEqual(GetColorParameter(ops[i].Parameters[0].Data), GetColorParameter(ops[i].Parameters[1].Data)) == TRUE;
 				break;
 			case NativeOperation::Color::Modulate:
-				StoreVectorResult(ops[i].Result.Data, XMColorModulate(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data)));
+				StoreColorResult(ops[i].Result.Data, XMColorModulate(GetColorParameter(ops[i].Parameters[0].Data), GetColorParameter(ops[i].Parameters[1].Data)));
 				break;
 			/*case NativeOperation::Color::NearEqual:
-				*((int*)ops[i].Result.Data) = XMColorNearEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data), GetVectorParameter(ops[i].Parameters[2].Data));
+				*((int*)ops[i].Result.Data) = XMColorNearEqual(GetColorParameter(ops[i].Parameters[0].Data), GetColorParameter(ops[i].Parameters[1].Data), GetColorParameter(ops[i].Parameters[2].Data));
 				break;*/
 			case NativeOperation::Color::Negative:
-				StoreVectorResult(ops[i].Result.Data, XMColorNegative(GetVectorParameter(ops[i].Parameters[0].Data)));
+				StoreColorResult(ops[i].Result.Data, XMColorNegative(GetColorParameter(ops[i].Parameters[0].Data)));
 				break;
 			case NativeOperation::Color::NotEqual:
-				*reinterpret_cast<int*>(ops[i].Result.Data) = XMColorNotEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data));
+				*reinterpret_cast<bool*>(ops[i].Result.Data) = XMColorNotEqual(GetColorParameter(ops[i].Parameters[0].Data), GetColorParameter(ops[i].Parameters[1].Data)) == TRUE;
 				break;
 				/*
 				* End Color Ops
@@ -116,7 +124,7 @@ namespace SlimMath
 				StoreVectorResult(ops[i].Result.Data, XMPlaneDotNormal(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data)));
 				break;
 			case NativeOperation::Plane::Equal:
-				*reinterpret_cast<int*>(ops[i].Result.Data) = XMPlaneEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data));
+				*reinterpret_cast<bool*>(ops[i].Result.Data) = XMPlaneEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data)) == TRUE;
 				break;
 			case NativeOperation::Plane::FromPointNormal:
 				StoreVectorResult(ops[i].Result.Data, XMPlaneFromPointNormal(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data)));
@@ -137,13 +145,13 @@ namespace SlimMath
 					break;
 				}
 			case NativeOperation::Plane::IsInfinite:
-				*reinterpret_cast<int*>(ops[i].Result.Data) = XMPlaneIsInfinite(GetVectorParameter(ops[i].Parameters[0].Data));
+				*reinterpret_cast<bool*>(ops[i].Result.Data) = XMPlaneIsInfinite(GetVectorParameter(ops[i].Parameters[0].Data)) == TRUE;
 				break;
 			case NativeOperation::Plane::IsNaN:
-				*reinterpret_cast<int*>(ops[i].Result.Data) = XMPlaneIsNaN(GetVectorParameter(ops[i].Parameters[0].Data));
+				*reinterpret_cast<bool*>(ops[i].Result.Data) = XMPlaneIsNaN(GetVectorParameter(ops[i].Parameters[0].Data)) == TRUE;
 				break;
 			case NativeOperation::Plane::NearEqual:
-				*reinterpret_cast<int*>(ops[i].Result.Data) = XMPlaneNearEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data), GetVectorParameter(ops[i].Parameters[2].Data));
+				*reinterpret_cast<bool*>(ops[i].Result.Data) = XMPlaneNearEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data), GetVectorParameter(ops[i].Parameters[2].Data)) == TRUE;
 				break;
 			case NativeOperation::Plane::Normalize:
 				StoreVectorResult(ops[i].Result.Data, XMPlaneNormalize(GetVectorParameter(ops[i].Parameters[0].Data)));
@@ -152,7 +160,7 @@ namespace SlimMath
 				StoreVectorResult(ops[i].Result.Data, XMPlaneNormalizeEst(GetVectorParameter(ops[i].Parameters[0].Data)));
 				break;
 			case NativeOperation::Plane::NotEqual:
-				*reinterpret_cast<int*>(ops[i].Result.Data) = XMPlaneNotEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data));
+				*reinterpret_cast<bool*>(ops[i].Result.Data) = XMPlaneNotEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data)) == TRUE;
 				break;
 			case NativeOperation::Plane::Transform:
 				StoreVectorResult(ops[i].Result.Data, XMPlaneTransform(GetVectorParameter(ops[i].Parameters[0].Data), GetMatrixParameter(ops[i].Parameters[1].Data)));
