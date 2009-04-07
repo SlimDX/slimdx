@@ -19,9 +19,21 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "Matrix.h"
-#include "Vector.h"
-#include "Color.h"
-#include "Plane.h"
+#include <memory.h>
+#include <malloc.h>
+
+#include "PlaneIntersectionHandle.h"
+
+using namespace System;
+
+namespace SlimMath
+{
+	PlaneIntersectionHandle::PlaneIntersectionHandle()
+	{
+		Data = reinterpret_cast<float*>(malloc(sizeof(Vector) * 2));
+
+		linePoint1 = gcnew Handle<Vector>(Data);
+		linePoint2 = gcnew Handle<Vector>(Data + 4);
+	}
+}

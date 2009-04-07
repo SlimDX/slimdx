@@ -21,7 +21,15 @@
 */
 #pragma once
 
-#include "Matrix.h"
-#include "Vector.h"
-#include "Color.h"
-#include "Plane.h"
+namespace SlimMath
+{
+	[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
+	public value class Plane
+	{
+	public:
+		float X;
+		float Y;
+		float Z;
+		float D;
+	};
+}

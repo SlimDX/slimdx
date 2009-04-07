@@ -360,6 +360,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\managed\PlaneIntersectionHandle.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\PlaneIntersectionHandle.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\managed\StreamHandle.cpp"
 					>
 				</File>
@@ -396,6 +404,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\managed\PlaneOperations.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\PlaneOperations.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\managed\VectorOperations.cpp"
 					>
 				</File>
@@ -413,6 +429,10 @@
 				</File>
 				<File
 					RelativePath="..\source\managed\Matrix.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\managed\Plane.h"
 					>
 				</File>
 				<File

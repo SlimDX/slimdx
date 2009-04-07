@@ -21,7 +21,29 @@
 */
 #pragma once
 
-#include "Matrix.h"
-#include "Vector.h"
-#include "Color.h"
-#include "Plane.h"
+#include "Primitives.h"
+#include "Handle.h"
+
+namespace SlimMath
+{
+	public ref class PlaneIntersectionHandle sealed : BaseHandle
+	{
+	private:
+		Handle<Vector>^ linePoint1;
+		Handle<Vector>^ linePoint2;
+
+	internal:
+		PlaneIntersectionHandle();
+
+	public:
+		property Handle<Vector>^ LinePoint1
+		{
+			Handle<Vector>^ get() { return linePoint1; }
+		}
+
+		property Handle<Vector>^ LinePoint2
+		{
+			Handle<Vector>^ get() { return linePoint2; }
+		}
+	};
+}
