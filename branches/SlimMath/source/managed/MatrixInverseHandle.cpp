@@ -34,6 +34,6 @@ namespace SlimMath
 		Data = reinterpret_cast<float*>(malloc(sizeof(float) + sizeof(Matrix)));
 
 		inverse = gcnew Handle<Matrix>(Data);
-		determinant = gcnew Handle<float>(reinterpret_cast<float*>(reinterpret_cast<char*>(Data) + sizeof(Matrix)));
+		determinant = gcnew Handle<float>(Data + 16);
 	}
 }

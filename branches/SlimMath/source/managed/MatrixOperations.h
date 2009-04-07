@@ -23,6 +23,7 @@
 
 #include "Operation.h"
 #include "Primitives.h"
+#include "MatrixInverseHandle.h"
 
 namespace SlimMath
 {
@@ -35,5 +36,6 @@ namespace SlimMath
 		static Operation<Handle<Matrix>^>^ Multiply(Handle<Matrix>^ value1, Handle<Matrix>^ value2);
 		static Operation<Handle<Matrix>^>^ Identity();
 		static Operation<Handle<Matrix>^>^ Translation(Handle<Vector>^ value);
+		static Operation<MatrixInverseHandle^>^ Inverse(Handle<Matrix>^ matrix);
 	};
 }

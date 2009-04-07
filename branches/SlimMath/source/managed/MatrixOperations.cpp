@@ -49,4 +49,10 @@ namespace SlimMath
 		return gcnew Operation<Handle<Matrix>^>(gcnew Handle<Matrix>(), gcnew array<BaseHandle^>(1) { value }, 
 			NativeOperation::MatrixTranslationFromVector);
 	}
+
+	Operation<MatrixInverseHandle^>^ MatrixOps::Inverse(Handle<Matrix>^ matrix)
+	{
+		return gcnew Operation<MatrixInverseHandle^>(gcnew MatrixInverseHandle(), gcnew array<BaseHandle^>(1) { matrix },
+			NativeOperation::MatrixInverse);
+	}
 }
