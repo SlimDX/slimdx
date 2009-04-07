@@ -52,7 +52,7 @@ namespace SlimDX
 			array<int>^ adjacency;
 			array<ExtendedMaterial>^ materials;
 			array<EffectInstance>^ effects;
-			SkinInfo^ skinInfo;			
+			SkinInfo^ skinInfo;
 
 			static Mesh^ FromMemory_Internal( SlimDX::Direct3D9::Device^ device, const void* memory, DWORD size, MeshFlags flags );
 
