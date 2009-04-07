@@ -34,6 +34,8 @@ namespace SlimDX
 	value class Plane;
 	value class Ray;
 
+	ref class DataStream;
+
 	/// <summary>
 	/// An axis aligned bounding box, specified by minimum and maximum vectors.
 	/// </summary>
@@ -97,6 +99,15 @@ namespace SlimDX
 		/// <param name="points">The points that will be contained by the box.</param>
 		/// <returns>The newly constructed bounding box.</returns>
 		static BoundingBox FromPoints( array<Vector3>^ points );
+
+		/// <summary>
+		/// Constructs a <see cref="BoundingBox"/> that fully contains the given points.
+		/// </summary>
+		/// <param name="points">The points that will be contained by the box.</param>
+		/// <param name="count">The number of vertices in the stream.</param>
+		/// <param name="stride">The number of bytes between vertices.</param>
+		/// <returns>The newly constructed bounding box.</returns>
+		static BoundingBox FromPoints( DataStream^ points, int count, int stride );
 
 		/// <summary>
 		/// Constructs a <see cref="BoundingBox"/> from a given sphere.
