@@ -45,6 +45,6 @@ namespace SlimMath
 
 		return gcnew Operation<StreamHandle<Vector>^>(gcnew StreamHandle<Vector>(input->Length), 
 			gcnew array<BaseHandle^>(3) { inputHandle, transform, lengthHandle },
-			NativeOperation::Vector4TransformStream);
+			NativeOperation::Vector4::TransformStream);
 	}
 }
