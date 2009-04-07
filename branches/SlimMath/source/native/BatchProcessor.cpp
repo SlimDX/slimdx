@@ -134,13 +134,13 @@ namespace SlimMath
 				* Begin Plane Ops
 				*/
 			case NativeOperation::Plane::Dot:
-				StoreVectorResult(ops[i].Result.Data, XMPlaneDot(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data)));
+				*ops[i].Result.Data = XMPlaneDot(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data)));
 				break;
 			case NativeOperation::Plane::DotCoord:
-				StoreVectorResult(ops[i].Result.Data, XMPlaneDotCoord(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data)));
+				*ops[i].Result.Data = XMPlaneDotCoord(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data)));
 				break;
 			case NativeOperation::Plane::DotNormal:
-				StoreVectorResult(ops[i].Result.Data, XMPlaneDotNormal(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data)));
+				*ops[i].Result.Data = XMPlaneDotNormal(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data)));
 				break;
 			case NativeOperation::Plane::Equal:
 				*reinterpret_cast<bool*>(ops[i].Result.Data) = XMPlaneEqual(GetVectorParameter(ops[i].Parameters[0].Data), GetVectorParameter(ops[i].Parameters[1].Data)) == TRUE;
