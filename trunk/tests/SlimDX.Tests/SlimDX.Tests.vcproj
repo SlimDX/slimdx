@@ -328,10 +328,6 @@
 			AssemblyName="System.Xml, Version=2.0.0.0, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
 			MinFrameworkVersion="131072"
 		/>
-		<ProjectReference
-			ReferencedProjectIdentifier="{8ECCE443-0440-40F4-A94C-F02E027282C3}"
-			RelativePathToProject=".\SlimDX.vcproj"
-		/>
 	</References>
 	<Files>
 		<Filter
