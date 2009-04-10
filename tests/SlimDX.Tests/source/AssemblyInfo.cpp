@@ -31,8 +31,8 @@ using namespace System::Security::Permissions;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly:AssemblyTitleAttribute("SlimDX.Tests.Mixed")];
-[assembly:AssemblyDescriptionAttribute("Contains mixed-mode unit tests for SlimDX.")];
+[assembly:AssemblyTitleAttribute("SlimDX.Tests")];
+[assembly:AssemblyDescriptionAttribute("Contains unit tests for SlimDX.")];
 [assembly:AssemblyConfigurationAttribute("")];
 [assembly:AssemblyCompanyAttribute("SlimDX Group")];
 [assembly:AssemblyProductAttribute("SlimDX")];

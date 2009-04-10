@@ -134,9 +134,8 @@ TEST( DXGI_AdapterTests, GetOutput )
 	
 	IOutput^ output = adapter->GetOutput( 0 );
 	ASSERT_TRUE( output != nullptr );
+	ASSERT_TRUE( output->InternalPointer == &mockOutput );
 	
-	//TODO: To enable this assert, SlimDX must #pragma make_public(N) where N is the native interface.
-	//ASSERT_TRUE( output->InternalPointer == &mockOutput );
 	delete adapter;
 }
 

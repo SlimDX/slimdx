@@ -81,9 +81,8 @@ TEST( DXGI_FactoryTests, GetAdapter )
 	
 	IAdapter^ adapter = factory->GetAdapter( 0 );
 	ASSERT_TRUE( adapter != nullptr );
-	
-	//TODO: To enable this assert, SlimDX must #pragma make_public(N) where N is the native interface.
-	//ASSERT_TRUE( adapter->InternalPointer == &mockAdapter );
+	ASSERT_TRUE( adapter->InternalPointer == &mockAdapter );
+
 	delete factory;
 }
 
