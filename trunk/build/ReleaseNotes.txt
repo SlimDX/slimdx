@@ -1,6 +1,9 @@
 Direct3D 9
 	* Fixed a bug that caused AdapterDetails.GetCertification to throw when the adapter wasn't certified.
 
+Direct3D 10
+	* Added an overload to Direct3D10.Device.UpdateSubresource() that allows the update to occur without a destination offset.
+
 DirectSound
 	* Removed the confusing lockEntireBuffer parameter from CaptureBuffer.Read.
 
