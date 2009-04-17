@@ -228,6 +228,14 @@ namespace SlimDX
 			/// <param name="source">The source data.</param>
 			/// <param name="resource">The destination resource.</param>
 			/// <param name="subresource">The destination subresource.</param>
+			void UpdateSubresource( DataBox^ source, Resource^ resource, int subresource );
+
+			/// <summary>
+			/// Copies data from the CPU to to a non-mappable subresource region.
+			/// </summary>
+			/// <param name="source">The source data.</param>
+			/// <param name="resource">The destination resource.</param>
+			/// <param name="subresource">The destination subresource.</param>
 			/// <param name="region">The destination region within the resource.</param>
 			void UpdateSubresource( DataBox^ source, Resource^ resource, int subresource, ResourceRegion region );
 
