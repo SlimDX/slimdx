@@ -1947,6 +1947,14 @@
 				Name="Statistics"
 				>
 				<File
+					RelativePath="..\source\direct3d10\Predicate.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Predicate.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d10\Query.cpp"
 					>
 					<FileConfiguration

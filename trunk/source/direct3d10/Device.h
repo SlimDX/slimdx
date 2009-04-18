@@ -44,6 +44,7 @@ namespace SlimDX
 		ref class InputAssemblerWrapper;
 		ref class InputLayout;
 		ref class OutputMergerWrapper;
+		ref class Predicate;
 		ref class RasterizerWrapper;
 		ref class RenderTargetView;
 		ref class Resource;
@@ -288,6 +289,14 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="view">A view of the resource to generate mipmaps for.</param>
 			void GenerateMips( ShaderResourceView^ view );
+			
+			/// <summary>
+			/// Sets a rendering predicate.
+			/// </summary>
+			/// <param name="predicate">The predicate to set.</param>
+			/// <param name="predicateValue">If true, rendering will be affected when the predicate's conditions are met. Otherwise,
+			/// rendering will be affected when the predicate's conditions are not met.</param>
+			void SetPredication( Predicate^ predicate, bool predicateValue );
 			
 			/// <summary>
 			/// Creates a new device and swap chain.

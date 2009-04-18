@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -19,43 +20,27 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "../ComObject.h"
+#include "Direct3D10Exception.h"
 
-#include "Enums.h"
+#include "Predicate.h"
 
-#include "Asynchronous.h"
-#include "QueryDescription.h"
+#include "Device.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct3D10
+namespace Direct3D10
+{ 
+	Predicate::Predicate( SlimDX::Direct3D10::Device^ device, QueryDescription description )
 	{
-		ref class Device;
-
-		public ref class Query : public Asynchronous
-		{
-			COMOBJECT(ID3D10Query, Query);
+		D3D10_QUERY_DESC nativeDescription = description.CreateNativeVersion();
+		ID3D10Predicate* predicate = 0;
+		if( RECORD_D3D10( device->InternalPointer->CreatePredicate( &nativeDescription, &predicate ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
 		
-		protected:
-			Query();
-
-		public:
-			/// <summary>
-			/// Gets the query's description.
-			/// </summary>
-			property QueryDescription Description 
-			{
-				QueryDescription get();
-			}
-			
-			/// <summary>
-			/// Constructs a new Query object.
-			/// </summary>
-			/// <param name="device">The device to associate the query with.</param>
-			/// <param name="description">The query description.</param>
-			Query( SlimDX::Direct3D10::Device^ device, QueryDescription description );
-		};
+		Construct( predicate );
 	}
+}
 }
