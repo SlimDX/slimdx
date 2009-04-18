@@ -25,8 +25,7 @@
 
 #include "Enums.h"
 
-#include "Asynchronous.h"
-#include "QueryDescription.h"
+#include "Query.h"
 
 namespace SlimDX
 {
@@ -34,28 +33,17 @@ namespace SlimDX
 	{
 		ref class Device;
 
-		public ref class Query : public Asynchronous
+		public ref class Predicate : public Query
 		{
-			COMOBJECT(ID3D10Query, Query);
-		
-		protected:
-			Query();
-
+			COMOBJECT(ID3D10Predicate, Predicate);
+	
 		public:
 			/// <summary>
-			/// Gets the query's description.
+			/// Constructs a new Predicate object.
 			/// </summary>
-			property QueryDescription Description 
-			{
-				QueryDescription get();
-			}
-			
-			/// <summary>
-			/// Constructs a new Query object.
-			/// </summary>
-			/// <param name="device">The device to associate the query with.</param>
+			/// <param name="device">The device to associate the predicate with.</param>
 			/// <param name="description">The query description.</param>
-			Query( SlimDX::Direct3D10::Device^ device, QueryDescription description );
+			Predicate( SlimDX::Direct3D10::Device^ device, QueryDescription description );
 		};
 	}
 }

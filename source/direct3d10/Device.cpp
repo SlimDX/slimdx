@@ -21,9 +21,6 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
-#include <vector>
-
 #include "../DataBox.h"
 
 #include "../dxgi/Adapter.h"
@@ -39,6 +36,7 @@
 #include "InputAssemblerWrapper.h"
 #include "InputLayout.h"
 #include "OutputMergerWrapper.h"
+#include "Predicate.h"
 #include "RasterizerWrapper.h"
 #include "RenderTargetView.h"
 #include "Resource.h"
@@ -275,6 +273,11 @@ namespace Direct3D10
 	void Device::GenerateMips( ShaderResourceView^ view )
 	{
 		InternalPointer->GenerateMips( view->InternalPointer );
+	}
+
+	void Device::SetPredication( Predicate^ predicate, bool predicateValue )
+	{
+		InternalPointer->SetPredication( predicate->InternalPointer, predicateValue );
 	}
 	
 	Result Device::CreateWithSwapChain( DXGI::Adapter^ adapter, DriverType driverType, DeviceCreationFlags flags, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain )

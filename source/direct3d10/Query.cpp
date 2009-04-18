@@ -35,6 +35,10 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
+	Query::Query() 
+	{
+	}
+
 	Query::Query( SlimDX::Direct3D10::Device^ device, QueryDescription description )
 	{
 		D3D10_QUERY_DESC nativeDescription = description.CreateNativeVersion();
