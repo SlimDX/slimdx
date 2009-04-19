@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#include <unknwn.h>
-
 #include "ObjectTable.h"
 #include "Configuration.h"
 #include "Result.h"
@@ -46,11 +44,20 @@ namespace SlimDX
 		IsExternal = 2
 	};
 	
+	public interface struct IComObject : System::IDisposable
+	{
+	public:
+		property IUnknown* UnknownPointer
+		{
+			virtual IUnknown* get() = 0;
+		}
+	};
+
 	/// <summary>
 	/// The base class for all SlimDX types which represent COM interfaces.
 	/// </summary>
 	/// <unmanaged>IUnknown</unmanaged>
-	public ref class ComObject abstract : System::IDisposable
+	public ref class ComObject abstract : IComObject
 	{
 	private:
 		IUnknown* m_Unknown;
@@ -116,16 +123,6 @@ namespace SlimDX
 			void set( ComObject^ value );
 		}
 		
-		property IUnknown* UnknownPointer
-		{
-			IUnknown* get();
-		}
-
-		property IUnknown* InternalPointer
-		{
-			IUnknown* get();
-		}
-		
 		void SetFlags( ComObjectFlags flags );
 		void SetSource( System::Diagnostics::StackTrace^ stack );
 		void SetCreationTime( int time );
@@ -145,6 +142,16 @@ namespace SlimDX
 		property System::IntPtr ComPointer
 		{
 			System::IntPtr get();
+		}
+
+		property IUnknown* UnknownPointer
+		{
+			virtual IUnknown* get();
+		}
+
+		property IUnknown* InternalPointer
+		{
+			IUnknown* get();
 		}
 		
 		/// <summary>

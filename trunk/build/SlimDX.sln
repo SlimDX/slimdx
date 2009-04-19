@@ -88,6 +88,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiformattedText", "..\samples\DirectWrite\MultiformattedText\MultiformattedText.csproj", "{96ED5F4B-DC0E-49E2-9BCC-6C48944AF3F4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SlimDX.Tests", "..\tests\SlimDX.Tests\SlimDX.Tests.vcproj", "{999E1A52-DED7-4B72-8670-2F56E762696A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8ECCE443-0440-40F4-A94C-F02E027282C3} = {8ECCE443-0440-40F4-A94C-F02E027282C3}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

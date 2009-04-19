@@ -70,7 +70,7 @@ namespace SlimDX
 			/// Initializes a new instance of the <see cref="Device"/> class.
 			/// </summary>
 			/// <param name="device">The COM object implementing the IDXGIDevice interface.</param>
-			SDX_METHOD_CONCRETE(Device( ComObject^ device ));
+			SDX_METHOD_CONCRETE(Device( IComObject^ device ));
 
 			/// <summary>
 			/// Gets the residency status of a list of resources.
