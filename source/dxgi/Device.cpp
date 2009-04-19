@@ -38,10 +38,10 @@ namespace SlimDX
 {
 namespace DXGI
 { 
-	Device::Device( ComObject^ device ) 
+	Device::Device( IComObject^ device ) 
 	{
 		IDXGIDevice* result = 0;
-		if( RECORD_DXGI( device->InternalPointer->QueryInterface( IID_IDXGIDevice, reinterpret_cast<void**>( &result ) ) ).IsFailure )
+		if( RECORD_DXGI( device->UnknownPointer->QueryInterface( IID_IDXGIDevice, reinterpret_cast<void**>( &result ) ) ).IsFailure )
 			throw gcnew DXGIException( Result::Last );
 		Construct( result );
 	}

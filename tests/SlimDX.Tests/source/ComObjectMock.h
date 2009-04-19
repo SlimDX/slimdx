@@ -19,26 +19,16 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#define XAUDIO2_HELPER_FUNCTIONS
+ref class ComObjectMock : SlimDX::IComObject {
+	IUnknown* m_unknown;
 
-#include <windows.h>
-#include <vcclr.h>
-#include <unknwn.h>
+public:
+	ComObjectMock( IUnknown* unknown );
+	~ComObjectMock();
 
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <dxgi.h>
-#include <d3d10.h>
-#include <d3dx10.h>
-#include <dsound.h>
-#include <dinput.h>
-#include <xinput.h>
-#include <xaudio2.h>
-#include <x3daudio.h>
-#include <audiodefs.h>
-#include <xapo.h>
-
-#include <string>
-#include <memory>
-#include <vector>
+	property IUnknown* UnknownPointer {
+		virtual IUnknown* get();
+	}
+};

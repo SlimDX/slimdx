@@ -21,8 +21,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)x86\$(ConfigurationName)"
+			IntermediateDirectory="$(ProjectDir)x86\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
 			ManagedExtensions="1"
@@ -64,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(SolutionDir)..\external\GMock\gmockd.lib $(NOINHERIT)"
+				AdditionalDependencies="dxguid.lib $(SolutionDir)..\external\GMock\gmockd.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
@@ -90,12 +90,14 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Copying SlimDX.dll..."
+				CommandLine="xcopy /Y $(SolutionDir)x86\$(ConfigurationName)\SlimDX.dll $(OutDir)\"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)x64\$(ConfigurationName)"
+			IntermediateDirectory="$(ProjectDir)x64\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
 			ManagedExtensions="1"
@@ -138,7 +140,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(SolutionDir)..\external\GMock\gmockd.lib $(NOINHERIT)"
+				AdditionalDependencies="dxguid.lib $(SolutionDir)..\external\GMock\gmockd.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
@@ -164,12 +166,14 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Copying SlimDX.dll"
+				CommandLine="xcopy /Y $(SolutionDir)x64\$(ConfigurationName)\SlimDX.dll $(OutDir)\"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)x86\$(ConfigurationName)"
+			IntermediateDirectory="$(ProjectDir)x86\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
 			ManagedExtensions="1"
@@ -211,7 +215,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(SolutionDir)..\external\GMock\gmock.lib $(NOINHERIT)"
+				AdditionalDependencies="dxguid.lib $(SolutionDir)..\external\GMock\gmock.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
@@ -236,12 +240,14 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Copying SlimDX.dll..."
+				CommandLine="xcopy /Y $(SolutionDir)x86\$(ConfigurationName)\SlimDX.dll $(OutDir)\"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)x64\$(ConfigurationName)"
+			IntermediateDirectory="$(ProjectDir)x64\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
 			ManagedExtensions="1"
@@ -284,7 +290,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(SolutionDir)..\external\GMock\gmock.lib $(NOINHERIT)"
+				AdditionalDependencies="dxguid.lib $(SolutionDir)..\external\GMock\gmock.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				TargetMachine="17"
@@ -309,6 +315,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Copying SlimDX.dll"
+				CommandLine="xcopy /Y $(SolutionDir)x64\$(ConfigurationName)\SlimDX.dll $(OutDir)\"
 			/>
 		</Configuration>
 	</Configurations>
@@ -335,6 +343,14 @@
 			>
 			<File
 				RelativePath=".\source\CommonMocks.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ComObjectMock.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ComObjectMock.h"
 				>
 			</File>
 			<File
@@ -367,6 +383,10 @@
 			>
 			<File
 				RelativePath=".\source\DXGI.Adapter.Tests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\DXGI.Device.Tests.cpp"
 				>
 			</File>
 			<File

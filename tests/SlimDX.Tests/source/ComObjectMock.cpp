@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -20,25 +21,15 @@
 * THE SOFTWARE.
 */
 
-#define XAUDIO2_HELPER_FUNCTIONS
+#include "ComObjectMock.h"
 
-#include <windows.h>
-#include <vcclr.h>
-#include <unknwn.h>
+ComObjectMock::ComObjectMock( IUnknown* unknown )
+: m_unknown( unknown ) {
+}
 
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <dxgi.h>
-#include <d3d10.h>
-#include <d3dx10.h>
-#include <dsound.h>
-#include <dinput.h>
-#include <xinput.h>
-#include <xaudio2.h>
-#include <x3daudio.h>
-#include <audiodefs.h>
-#include <xapo.h>
+ComObjectMock::~ComObjectMock() {
+}
 
-#include <string>
-#include <memory>
-#include <vector>
+IUnknown* ComObjectMock::UnknownPointer::get() {
+	return m_unknown;
+}
