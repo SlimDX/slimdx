@@ -394,6 +394,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\Math.BoundingSphere.Tests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\source\Math.Vector2.Tests.cpp"
 				>
 			</File>
