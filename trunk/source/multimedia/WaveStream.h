@@ -41,6 +41,12 @@ namespace SlimDX
 			void Init();
 			void InitStream( System::IO::Stream^ stream, int length );
 
+		internal:
+			property DataStream^ InternalMemory
+			{
+				DataStream^ get() { return internalMemory; }
+			}
+
 		public:
 			WaveStream( System::String^ path );
 			WaveStream( System::IO::Stream^ stream );
