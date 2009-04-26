@@ -76,7 +76,7 @@ namespace Direct3D10
 		{
 			D3D10_SUBRESOURCE_DATA initialData;
 			ZeroMemory( &initialData, sizeof( initialData ) );
-			initialData.pSysMem = data->RawPointer + data->Position;
+			initialData.pSysMem = data->PositionPointer;
 			data->Position += sizeInBytes;
 			
 			if( RECORD_D3D10( device->InternalPointer->CreateBuffer( &description, &initialData, &buffer ) ).IsFailure )

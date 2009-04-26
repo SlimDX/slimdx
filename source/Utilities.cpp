@@ -23,6 +23,7 @@
 
 #include "DataStream.h"
 #include "Utilities.h"
+#include "multimedia/WaveStream.h"
 
 #include "SlimDXException.h"
 
@@ -31,6 +32,7 @@ using namespace System::Collections::Generic;
 using namespace System::IO;
 using namespace System::Reflection;
 using namespace System::Globalization;
+using namespace SlimDX::Multimedia;
 
 namespace SlimDX
 {
@@ -270,6 +272,13 @@ namespace SlimDX
 		{
 			return ms->GetBuffer();
 		}*/
+
+		WaveStream^ ws = dynamic_cast<WaveStream^>( stream );
+		if( ws != nullptr && dataStream != NULL )
+		{
+			*dataStream = ws->InternalMemory;
+			return nullptr;
+		}
 
 		array<Byte>^ buffer = gcnew array<Byte>( readLength ); 
 		int bytesRead = 0;
