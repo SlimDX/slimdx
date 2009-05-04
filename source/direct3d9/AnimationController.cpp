@@ -86,7 +86,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		AnimationShim *shim = static_cast<AnimationShim*>( set );
+		AnimationShim *shim = reinterpret_cast<AnimationShim*>( set );
 		return shim->GetAnimationSet();
 	}
 
@@ -101,7 +101,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		AnimationShim *shim = static_cast<AnimationShim*>( set );
+		AnimationShim *shim = reinterpret_cast<AnimationShim*>( set );
 		return shim->GetAnimationSet();
 	}
 
