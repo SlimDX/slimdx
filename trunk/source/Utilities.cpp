@@ -274,7 +274,7 @@ namespace SlimDX
 		}*/
 
 		WaveStream^ ws = dynamic_cast<WaveStream^>( stream );
-		if( ws != nullptr && dataStream != NULL )
+		if( ws != nullptr && dataStream != NULL && ws->InternalMemory != nullptr )
 		{
 			*dataStream = ws->InternalMemory;
 			return nullptr;
