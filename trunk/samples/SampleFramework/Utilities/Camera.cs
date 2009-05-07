@@ -30,10 +30,12 @@ namespace SampleFramework
     {
         Vector3 location;
         Vector3 target;
+        Vector3 up;
         float fieldOfView;
         float aspectRatio;
         float nearPlane;
         float farPlane;
+
         Matrix viewMatrix;
         Matrix projectionMatrix;
         bool viewDirty = true;
@@ -69,6 +71,19 @@ namespace SampleFramework
                     return;
 
                 target = value;
+                viewDirty = true;
+            }
+        }
+
+        public Vector3 Up
+        {
+            get { return up; }
+            set
+            {
+                if (up == value)
+                    return;
+
+                up = value;
                 viewDirty = true;
             }
         }
@@ -153,6 +168,7 @@ namespace SampleFramework
                     RebuildViewMatrix();
                 return viewMatrix;
             }
+            protected set { viewMatrix = value; }
         }
 
         /// <summary>
@@ -167,6 +183,7 @@ namespace SampleFramework
                     RebuildProjectionMatrix();
                 return projectionMatrix;
             }
+            protected set { projectionMatrix = value; }
         }
 
         /// <summary>
@@ -181,7 +198,7 @@ namespace SampleFramework
         /// </summary>
         protected virtual void RebuildViewMatrix()
         {
-            viewMatrix = Matrix.LookAtLH(Location, Target, Vector3.UnitY);
+            viewMatrix = Matrix.LookAtLH(Location, Target, Up);
             viewDirty = false;
         }
 
