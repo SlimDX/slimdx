@@ -10,12 +10,13 @@
 		<div class="paragraph">
 			<h2>Donations</h2>
 			<p>
-			<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+			<!-- <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="hosted_button_id" value="4353527">
 <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
 <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>
+</form> -->
+			<b>Paypal link temporarily removed. Please e-mail instead.</b>
 			We are now accepting PayPal donations!
 			SlimDX is over 150,000 lines of code, and that takes real time and effort to build outside of our normal lives.
 			By donating, you help to support us, support the project, and ensure that the library continues to thrive.
@@ -25,8 +26,8 @@
 			<p>
 			Alternately, we are very interested in computer hardware donations.
 			Implementing the latest and greatest in DirectX technology requires us to have the latest in computer hardware, and we simply can't afford it.
-			For example, nobody on the SlimDX team currently has a 64 bit system OR DirectX 10.1 hardware.
 			SlimDX releases mainly are done on a dual core Athlon64 with 2 GB of RAM; it can just barely run a virtual machine while compiling.
+			Generous donations have already allowed us to obtain Direct3D 10.1 and 64 bit hardware to work with.
 			Point is, if you have access to high end hardware that you can donate, used or new, we'd be very glad to have it because frankly it's getting very difficult to continue with our machines.
 			Again, if you think you can help, send an e-mail and we'll figure out the details.
 			Thank you!
