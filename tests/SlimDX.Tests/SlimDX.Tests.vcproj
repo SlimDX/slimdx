@@ -64,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="dxguid.lib $(SolutionDir)..\external\GMock\gmockd.lib"
+				AdditionalDependencies="dxguid.lib &quot;$(SolutionDir)..\external\GMock\gmockd.lib&quot;"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
@@ -140,7 +140,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="dxguid.lib $(SolutionDir)..\external\GMock\gmockd.lib"
+				AdditionalDependencies="dxguid.lib &quot;$(SolutionDir)..\external\GMock\gmockd.lib&quot;"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
@@ -167,7 +167,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copying SlimDX.dll..."
-				CommandLine="xcopy /Y $(SolutionDir)x64\$(ConfigurationName)\SlimDX.dll $(OutDir)\&#x0D;&#x0A;xcopy /Y $(SolutionDir)x64\$(ConfigurationName)\SlimDX.pdb $(OutDir)\"
+				CommandLine="xcopy /Y $(SolutionDir)x64\$(ConfigurationName)\SlimDX.dll $(OutDir)\&#x0D;&#x0A;xcopy /Y $(SolutionDir)x64\$(ConfigurationName)\SlimDX.pdb $(OutDir)\&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -215,7 +215,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="dxguid.lib $(SolutionDir)..\external\GMock\gmock.lib"
+				AdditionalDependencies="dxguid.lib &quot;$(SolutionDir)..\external\GMock\gmock.lib&quot;"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
@@ -290,7 +290,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="dxguid.lib $(SolutionDir)..\external\GMock\gmock.lib"
+				AdditionalDependencies="dxguid.lib &quot;$(SolutionDir)..\external\GMock\gmock.lib&quot;"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				TargetMachine="17"
@@ -316,7 +316,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copying SlimDX.dll..."
-				CommandLine="xcopy /Y $(SolutionDir)x64\$(ConfigurationName)\SlimDX.dll $(OutDir)\&#x0D;&#x0A;xcopy /Y $(SolutionDir)x64\$(ConfigurationName)\SlimDX.pdb $(OutDir)\"
+				CommandLine="xcopy /Y $(SolutionDir)x64\$(ConfigurationName)\SlimDX.dll $(OutDir)\&#x0D;&#x0A;xcopy /Y $(SolutionDir)x64\$(ConfigurationName)\SlimDX.pdb $(OutDir)\&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
