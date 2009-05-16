@@ -39,6 +39,7 @@
 #define GMOCK_INCLUDE_GMOCK_GMOCK_MATCHERS_H_
 
 #include <algorithm>
+#include <limits>
 #include <ostream>  // NOLINT
 #include <sstream>
 #include <string>
@@ -171,7 +172,7 @@ class Matcher : public internal::MatcherBase<T> {
   explicit Matcher(const MatcherInterface<T>* impl)
       : internal::MatcherBase<T>(impl) {}
 
-  // Implicit constructor here allows ipeople to write
+  // Implicit constructor here allows people to write
   // EXPECT_CALL(foo, Bar(5)) instead of EXPECT_CALL(foo, Bar(Eq(5))) sometimes
   Matcher(T value);  // NOLINT
 };
@@ -309,6 +310,49 @@ inline PolymorphicMatcher<Impl> MakePolymorphicMatcher(const Impl& impl) {
 // statically converted to the argument type of m.
 template <typename T, typename M>
 Matcher<T> MatcherCast(M m);
+
+// TODO(vladl@google.com): Modify the implementation to reject casting
+// Matcher<int> to Matcher<double>.
+// Implements SafeMatcherCast().
+//
+// This overload handles polymorphic matchers only since monomorphic
+// matchers are handled by the next one.
+template <typename T, typename M>
+inline Matcher<T> SafeMatcherCast(M polymorphic_matcher) {
+  return Matcher<T>(polymorphic_matcher);
+}
+
+// This overload handles monomorphic matchers.
+//
+// In general, if type T can be implicitly converted to type U, we can
+// safely convert a Matcher<U> to a Matcher<T> (i.e. Matcher is
+// contravariant): just keep a copy of the original Matcher<U>, convert the
+// argument from type T to U, and then pass it to the underlying Matcher<U>.
+// The only exception is when U is a reference and T is not, as the
+// underlying Matcher<U> may be interested in the argument's address, which
+// is not preserved in the conversion from T to U.
+template <typename T, typename U>
+Matcher<T> SafeMatcherCast(const Matcher<U>& matcher) {
+  // Enforce that T can be implicitly converted to U.
+  GMOCK_COMPILE_ASSERT_((internal::ImplicitlyConvertible<T, U>::value),
+                        T_must_be_implicitly_convertible_to_U);
+  // Enforce that we are not converting a non-reference type T to a reference
+  // type U.
+  GMOCK_COMPILE_ASSERT_(
+      internal::is_reference<T>::value || !internal::is_reference<U>::value,
+      cannot_convert_non_referentce_arg_to_reference);
+  // In case both T and U are arithmetic types, enforce that the
+  // conversion is not lossy.
+  typedef GMOCK_REMOVE_CONST_(GMOCK_REMOVE_REFERENCE_(T)) RawT;
+  typedef GMOCK_REMOVE_CONST_(GMOCK_REMOVE_REFERENCE_(U)) RawU;
+  const bool kTIsOther = GMOCK_KIND_OF_(RawT) == internal::kOther;
+  const bool kUIsOther = GMOCK_KIND_OF_(RawU) == internal::kOther;
+  GMOCK_COMPILE_ASSERT_(
+      kTIsOther || kUIsOther ||
+      (internal::LosslessArithmeticConvertible<RawT, RawU>::value),
+      conversion_of_arithmetic_types_must_be_lossless);
+  return MatcherCast<T>(matcher);
+}
 
 // A<T>() returns a matcher that matches any value of type T.
 template <typename T>
@@ -927,6 +971,35 @@ GMOCK_IMPLEMENT_COMPARISON2_MATCHER_(Ne, !=, "not equal to");
 
 #undef GMOCK_IMPLEMENT_COMPARISON2_MATCHER_
 
+// Implements the Not(...) matcher for a particular argument type T.
+// We do not nest it inside the NotMatcher class template, as that
+// will prevent different instantiations of NotMatcher from sharing
+// the same NotMatcherImpl<T> class.
+template <typename T>
+class NotMatcherImpl : public MatcherInterface<T> {
+ public:
+  explicit NotMatcherImpl(const Matcher<T>& matcher)
+      : matcher_(matcher) {}
+
+  virtual bool Matches(T x) const {
+    return !matcher_.Matches(x);
+  }
+
+  virtual void DescribeTo(::std::ostream* os) const {
+    matcher_.DescribeNegationTo(os);
+  }
+
+  virtual void DescribeNegationTo(::std::ostream* os) const {
+    matcher_.DescribeTo(os);
+  }
+
+  virtual void ExplainMatchResultTo(T x, ::std::ostream* os) const {
+    matcher_.ExplainMatchResultTo(x, os);
+  }
+ private:
+  const Matcher<T> matcher_;
+};
+
 // Implements the Not(m) matcher, which matches a value that doesn't
 // match matcher m.
 template <typename InnerMatcher>
@@ -938,35 +1011,72 @@ class NotMatcher {
   // to match any type m can match.
   template <typename T>
   operator Matcher<T>() const {
-    return Matcher<T>(new Impl<T>(matcher_));
+    return Matcher<T>(new NotMatcherImpl<T>(SafeMatcherCast<T>(matcher_)));
   }
  private:
-  // Implements the Not(...) matcher for a particular argument type T.
-  template <typename T>
-  class Impl : public MatcherInterface<T> {
-   public:
-    explicit Impl(const Matcher<T>& matcher) : matcher_(matcher) {}
-
-    virtual bool Matches(T x) const {
-      return !matcher_.Matches(x);
-    }
-
-    virtual void DescribeTo(::std::ostream* os) const {
-      matcher_.DescribeNegationTo(os);
-    }
-
-    virtual void DescribeNegationTo(::std::ostream* os) const {
-      matcher_.DescribeTo(os);
-    }
-
-    virtual void ExplainMatchResultTo(T x, ::std::ostream* os) const {
-      matcher_.ExplainMatchResultTo(x, os);
-    }
-   private:
-    const Matcher<T> matcher_;
-  };
-
   InnerMatcher matcher_;
+};
+
+// Implements the AllOf(m1, m2) matcher for a particular argument type
+// T. We do not nest it inside the BothOfMatcher class template, as
+// that will prevent different instantiations of BothOfMatcher from
+// sharing the same BothOfMatcherImpl<T> class.
+template <typename T>
+class BothOfMatcherImpl : public MatcherInterface<T> {
+ public:
+  BothOfMatcherImpl(const Matcher<T>& matcher1, const Matcher<T>& matcher2)
+      : matcher1_(matcher1), matcher2_(matcher2) {}
+
+  virtual bool Matches(T x) const {
+    return matcher1_.Matches(x) && matcher2_.Matches(x);
+  }
+
+  virtual void DescribeTo(::std::ostream* os) const {
+    *os << "(";
+    matcher1_.DescribeTo(os);
+    *os << ") and (";
+    matcher2_.DescribeTo(os);
+    *os << ")";
+  }
+
+  virtual void DescribeNegationTo(::std::ostream* os) const {
+    *os << "not ";
+    DescribeTo(os);
+  }
+
+  virtual void ExplainMatchResultTo(T x, ::std::ostream* os) const {
+    if (Matches(x)) {
+      // When both matcher1_ and matcher2_ match x, we need to
+      // explain why *both* of them match.
+      ::std::stringstream ss1;
+      matcher1_.ExplainMatchResultTo(x, &ss1);
+      const internal::string s1 = ss1.str();
+
+      ::std::stringstream ss2;
+      matcher2_.ExplainMatchResultTo(x, &ss2);
+      const internal::string s2 = ss2.str();
+
+      if (s1 == "") {
+        *os << s2;
+      } else {
+        *os << s1;
+        if (s2 != "") {
+          *os << "; " << s2;
+        }
+      }
+    } else {
+      // Otherwise we only need to explain why *one* of them fails
+      // to match.
+      if (!matcher1_.Matches(x)) {
+        matcher1_.ExplainMatchResultTo(x, os);
+      } else {
+        matcher2_.ExplainMatchResultTo(x, os);
+      }
+    }
+  }
+ private:
+  const Matcher<T> matcher1_;
+  const Matcher<T> matcher2_;
 };
 
 // Used for implementing the AllOf(m_1, ..., m_n) matcher, which
@@ -982,71 +1092,73 @@ class BothOfMatcher {
   // both Matcher1 and Matcher2 can match.
   template <typename T>
   operator Matcher<T>() const {
-    return Matcher<T>(new Impl<T>(matcher1_, matcher2_));
+    return Matcher<T>(new BothOfMatcherImpl<T>(SafeMatcherCast<T>(matcher1_),
+                                               SafeMatcherCast<T>(matcher2_)));
   }
  private:
-  // Implements the AllOf(m1, m2) matcher for a particular argument
-  // type T.
-  template <typename T>
-  class Impl : public MatcherInterface<T> {
-   public:
-    Impl(const Matcher<T>& matcher1, const Matcher<T>& matcher2)
-        : matcher1_(matcher1), matcher2_(matcher2) {}
+  Matcher1 matcher1_;
+  Matcher2 matcher2_;
+};
 
-    virtual bool Matches(T x) const {
-      return matcher1_.Matches(x) && matcher2_.Matches(x);
-    }
+// Implements the AnyOf(m1, m2) matcher for a particular argument type
+// T.  We do not nest it inside the AnyOfMatcher class template, as
+// that will prevent different instantiations of AnyOfMatcher from
+// sharing the same EitherOfMatcherImpl<T> class.
+template <typename T>
+class EitherOfMatcherImpl : public MatcherInterface<T> {
+ public:
+  EitherOfMatcherImpl(const Matcher<T>& matcher1, const Matcher<T>& matcher2)
+      : matcher1_(matcher1), matcher2_(matcher2) {}
 
-    virtual void DescribeTo(::std::ostream* os) const {
-      *os << "(";
-      matcher1_.DescribeTo(os);
-      *os << ") and (";
-      matcher2_.DescribeTo(os);
-      *os << ")";
-    }
+  virtual bool Matches(T x) const {
+    return matcher1_.Matches(x) || matcher2_.Matches(x);
+  }
 
-    virtual void DescribeNegationTo(::std::ostream* os) const {
-      *os << "not ";
-      DescribeTo(os);
-    }
+  virtual void DescribeTo(::std::ostream* os) const {
+    *os << "(";
+    matcher1_.DescribeTo(os);
+    *os << ") or (";
+    matcher2_.DescribeTo(os);
+    *os << ")";
+  }
 
-    virtual void ExplainMatchResultTo(T x, ::std::ostream* os) const {
-      if (Matches(x)) {
-        // When both matcher1_ and matcher2_ match x, we need to
-        // explain why *both* of them match.
-        ::std::stringstream ss1;
-        matcher1_.ExplainMatchResultTo(x, &ss1);
-        const internal::string s1 = ss1.str();
+  virtual void DescribeNegationTo(::std::ostream* os) const {
+    *os << "not ";
+    DescribeTo(os);
+  }
 
-        ::std::stringstream ss2;
-        matcher2_.ExplainMatchResultTo(x, &ss2);
-        const internal::string s2 = ss2.str();
-
-        if (s1 == "") {
-          *os << s2;
-        } else {
-          *os << s1;
-          if (s2 != "") {
-            *os << "; " << s2;
-          }
-        }
+  virtual void ExplainMatchResultTo(T x, ::std::ostream* os) const {
+    if (Matches(x)) {
+      // If either matcher1_ or matcher2_ matches x, we just need
+      // to explain why *one* of them matches.
+      if (matcher1_.Matches(x)) {
+        matcher1_.ExplainMatchResultTo(x, os);
       } else {
-        // Otherwise we only need to explain why *one* of them fails
-        // to match.
-        if (!matcher1_.Matches(x)) {
-          matcher1_.ExplainMatchResultTo(x, os);
-        } else {
-          matcher2_.ExplainMatchResultTo(x, os);
+        matcher2_.ExplainMatchResultTo(x, os);
+      }
+    } else {
+      // Otherwise we need to explain why *neither* matches.
+      ::std::stringstream ss1;
+      matcher1_.ExplainMatchResultTo(x, &ss1);
+      const internal::string s1 = ss1.str();
+
+      ::std::stringstream ss2;
+      matcher2_.ExplainMatchResultTo(x, &ss2);
+      const internal::string s2 = ss2.str();
+
+      if (s1 == "") {
+        *os << s2;
+      } else {
+        *os << s1;
+        if (s2 != "") {
+          *os << "; " << s2;
         }
       }
     }
-   private:
-    const Matcher<T> matcher1_;
-    const Matcher<T> matcher2_;
-  };
-
-  Matcher1 matcher1_;
-  Matcher2 matcher2_;
+  }
+ private:
+  const Matcher<T> matcher1_;
+  const Matcher<T> matcher2_;
 };
 
 // Used for implementing the AnyOf(m_1, ..., m_n) matcher, which
@@ -1063,68 +1175,10 @@ class EitherOfMatcher {
   // both Matcher1 and Matcher2 can match.
   template <typename T>
   operator Matcher<T>() const {
-    return Matcher<T>(new Impl<T>(matcher1_, matcher2_));
+    return Matcher<T>(new EitherOfMatcherImpl<T>(
+        SafeMatcherCast<T>(matcher1_), SafeMatcherCast<T>(matcher2_)));
   }
  private:
-  // Implements the AnyOf(m1, m2) matcher for a particular argument
-  // type T.
-  template <typename T>
-  class Impl : public MatcherInterface<T> {
-   public:
-    Impl(const Matcher<T>& matcher1, const Matcher<T>& matcher2)
-        : matcher1_(matcher1), matcher2_(matcher2) {}
-
-    virtual bool Matches(T x) const {
-      return matcher1_.Matches(x) || matcher2_.Matches(x);
-    }
-
-    virtual void DescribeTo(::std::ostream* os) const {
-      *os << "(";
-      matcher1_.DescribeTo(os);
-      *os << ") or (";
-      matcher2_.DescribeTo(os);
-      *os << ")";
-    }
-
-    virtual void DescribeNegationTo(::std::ostream* os) const {
-      *os << "not ";
-      DescribeTo(os);
-    }
-
-    virtual void ExplainMatchResultTo(T x, ::std::ostream* os) const {
-      if (Matches(x)) {
-        // If either matcher1_ or matcher2_ matches x, we just need
-        // to explain why *one* of them matches.
-        if (matcher1_.Matches(x)) {
-          matcher1_.ExplainMatchResultTo(x, os);
-        } else {
-          matcher2_.ExplainMatchResultTo(x, os);
-        }
-      } else {
-        // Otherwise we need to explain why *neither* matches.
-        ::std::stringstream ss1;
-        matcher1_.ExplainMatchResultTo(x, &ss1);
-        const internal::string s1 = ss1.str();
-
-        ::std::stringstream ss2;
-        matcher2_.ExplainMatchResultTo(x, &ss2);
-        const internal::string s2 = ss2.str();
-
-        if (s1 == "") {
-          *os << s2;
-        } else {
-          *os << s1;
-          if (s2 != "") {
-            *os << "; " << s2;
-          }
-        }
-      }
-    }
-   private:
-    const Matcher<T> matcher1_;
-    const Matcher<T> matcher2_;
-  };
-
   Matcher1 matcher1_;
   Matcher2 matcher2_;
 };
@@ -1141,7 +1195,7 @@ class TrulyMatcher {
   // argument is passed by reference as the predicate may be
   // interested in the address of the argument.
   template <typename T>
-  bool Matches(T& x) const {
+  bool Matches(T& x) const {  // NOLINT
 #if GTEST_OS_WINDOWS
     // MSVC warns about converting a value into bool (warning 4800).
 #pragma warning(push)          // Saves the current warning state.
@@ -1433,7 +1487,11 @@ class FieldMatcher {
     matcher_.DescribeNegationTo(os);
   }
 
-  void ExplainMatchResultTo(const Class& obj, ::std::ostream* os) const {
+  // The first argument of ExplainMatchResultTo() is needed to help
+  // Symbian's C++ compiler choose which overload to use.  Its type is
+  // true_type iff the Field() matcher is used to match a pointer.
+  void ExplainMatchResultTo(false_type /* is_not_pointer */, const Class& obj,
+                            ::std::ostream* os) const {
     ::std::stringstream ss;
     matcher_.ExplainMatchResultTo(obj.*field_, &ss);
     const internal::string s = ss.str();
@@ -1442,9 +1500,13 @@ class FieldMatcher {
     }
   }
 
-  void ExplainMatchResultTo(const Class* p, ::std::ostream* os) const {
+  void ExplainMatchResultTo(true_type /* is_pointer */, const Class* p,
+                            ::std::ostream* os) const {
     if (p != NULL) {
-      ExplainMatchResultTo(*p, os);
+      // Since *p has a field, it must be a class/struct/union type
+      // and thus cannot be a pointer.  Therefore we pass false_type()
+      // as the first argument.
+      ExplainMatchResultTo(false_type(), *p, os);
     }
   }
  private:
@@ -1452,18 +1514,12 @@ class FieldMatcher {
   const Matcher<const FieldType&> matcher_;
 };
 
-// Explains the result of matching an object against a field matcher.
-template <typename Class, typename FieldType>
+// Explains the result of matching an object or pointer against a field matcher.
+template <typename Class, typename FieldType, typename T>
 void ExplainMatchResultTo(const FieldMatcher<Class, FieldType>& matcher,
-                          const Class& obj, ::std::ostream* os) {
-  matcher.ExplainMatchResultTo(obj, os);
-}
-
-// Explains the result of matching a pointer against a field matcher.
-template <typename Class, typename FieldType>
-void ExplainMatchResultTo(const FieldMatcher<Class, FieldType>& matcher,
-                          const Class* p, ::std::ostream* os) {
-  matcher.ExplainMatchResultTo(p, os);
+                          const T& value, ::std::ostream* os) {
+  matcher.ExplainMatchResultTo(
+      typename ::testing::internal::is_pointer<T>::type(), value, os);
 }
 
 // Implements the Property() matcher for matching a property
@@ -1501,7 +1557,11 @@ class PropertyMatcher {
     matcher_.DescribeNegationTo(os);
   }
 
-  void ExplainMatchResultTo(const Class& obj, ::std::ostream* os) const {
+  // The first argument of ExplainMatchResultTo() is needed to help
+  // Symbian's C++ compiler choose which overload to use.  Its type is
+  // true_type iff the Property() matcher is used to match a pointer.
+  void ExplainMatchResultTo(false_type /* is_not_pointer */, const Class& obj,
+                            ::std::ostream* os) const {
     ::std::stringstream ss;
     matcher_.ExplainMatchResultTo((obj.*property_)(), &ss);
     const internal::string s = ss.str();
@@ -1510,9 +1570,13 @@ class PropertyMatcher {
     }
   }
 
-  void ExplainMatchResultTo(const Class* p, ::std::ostream* os) const {
+  void ExplainMatchResultTo(true_type /* is_pointer */, const Class* p,
+                            ::std::ostream* os) const {
     if (p != NULL) {
-      ExplainMatchResultTo(*p, os);
+      // Since *p has a property method, it must be a
+      // class/struct/union type and thus cannot be a pointer.
+      // Therefore we pass false_type() as the first argument.
+      ExplainMatchResultTo(false_type(), *p, os);
     }
   }
  private:
@@ -1520,18 +1584,13 @@ class PropertyMatcher {
   const Matcher<RefToConstProperty> matcher_;
 };
 
-// Explains the result of matching an object against a property matcher.
-template <typename Class, typename PropertyType>
+// Explains the result of matching an object or pointer against a
+// property matcher.
+template <typename Class, typename PropertyType, typename T>
 void ExplainMatchResultTo(const PropertyMatcher<Class, PropertyType>& matcher,
-                          const Class& obj, ::std::ostream* os) {
-  matcher.ExplainMatchResultTo(obj, os);
-}
-
-// Explains the result of matching a pointer against a property matcher.
-template <typename Class, typename PropertyType>
-void ExplainMatchResultTo(const PropertyMatcher<Class, PropertyType>& matcher,
-                          const Class* p, ::std::ostream* os) {
-  matcher.ExplainMatchResultTo(p, os);
+                          const T& value, ::std::ostream* os) {
+  matcher.ExplainMatchResultTo(
+      typename ::testing::internal::is_pointer<T>::type(), value, os);
 }
 
 // Type traits specifying various features of different functors for ResultOf.

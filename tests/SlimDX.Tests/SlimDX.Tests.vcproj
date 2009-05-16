@@ -64,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="dxguid.lib &quot;$(SolutionDir)..\external\GMock\gmockd.lib&quot;"
+				AdditionalDependencies="dxguid.lib &quot;$(SolutionDir)..\external\GMock\x86\gmockd.lib&quot;"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
@@ -122,7 +122,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;$(SolutionDir)..\external\Boost\boost\tr1\tr1&quot;;&quot;$(SolutionDir)..\external\Boost&quot;;&quot;$(SolutionDir)..\external\GTest&quot;;&quot;$(SolutionDir)..\external\GMock&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG"
+				PreprocessorDefinitions="WIN32;_DEBUG;X64"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"
@@ -140,7 +140,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="dxguid.lib &quot;$(SolutionDir)..\external\GMock\gmockd.lib&quot;"
+				AdditionalDependencies="dxguid.lib &quot;$(SolutionDir)..\external\GMock\x64\gmockd.lib&quot;"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
@@ -215,7 +215,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="dxguid.lib &quot;$(SolutionDir)..\external\GMock\gmock.lib&quot;"
+				AdditionalDependencies="dxguid.lib &quot;$(SolutionDir)..\external\GMock\x86\gmock.lib&quot;"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
@@ -272,7 +272,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="&quot;$(SolutionDir)..\external\Boost\boost\tr1\tr1&quot;;&quot;$(SolutionDir)..\external\Boost&quot;;&quot;$(SolutionDir)..\external\GTest&quot;;&quot;$(SolutionDir)..\external\GMock&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG"
+				PreprocessorDefinitions="WIN32;NDEBUG;X64"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"
@@ -290,7 +290,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="dxguid.lib &quot;$(SolutionDir)..\external\GMock\gmock.lib&quot;"
+				AdditionalDependencies="dxguid.lib &quot;$(SolutionDir)..\external\GMock\x64\gmock.lib&quot;"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				TargetMachine="17"

@@ -48,12 +48,14 @@
 // To avoid conditional compilation everywhere, we make it
 // gmock-port.h's responsibility to #include the header implementing
 // tr1/tuple.
-#if defined(__GNUC__)
-// GCC implements tr1/tuple in the <tr1/tuple> header.  This does not
-// conform to the TR1 spec, which requires the header to be <tuple>.
+#if defined(__GNUC__) && GTEST_GCC_VER_ >= 40000
+// GTEST_GCC_VER_ is defined in gtest-port.h and 40000 corresponds to
+// version 4.0.0.
+// GCC 4.0+ implements tr1/tuple in the <tr1/tuple> header.  This does
+// not conform to the TR1 spec, which requires the header to be <tuple>.
 #include <tr1/tuple>
 #else
-// If the compiler is not GCC, we assume the user is using a
+// If the compiler is not GCC 4.0+, we assume the user is using a
 // spec-conforming TR1 implementation.
 #include <tuple>
 #endif  // __GNUC__
@@ -160,20 +162,22 @@ inline To down_cast(From* f) {  // so we only accept pointers
     implicit_cast<From*, To>(0);
   }
 
+#if GTEST_HAS_RTTI
   assert(f == NULL || dynamic_cast<To>(f) != NULL);  // RTTI: debug mode only!
+#endif
   return static_cast<To>(f);
 }
 
-// The GMOCK_COMPILE_ASSERT macro can be used to verify that a compile time
+// The GMOCK_COMPILE_ASSERT_ macro can be used to verify that a compile time
 // expression is true. For example, you could use it to verify the
 // size of a static array:
 //
-//   GMOCK_COMPILE_ASSERT(ARRAYSIZE(content_type_names) == CONTENT_NUM_TYPES,
-//                        content_type_names_incorrect_size);
+//   GMOCK_COMPILE_ASSERT_(ARRAYSIZE(content_type_names) == CONTENT_NUM_TYPES,
+//                         content_type_names_incorrect_size);
 //
 // or to make sure a struct is smaller than a certain size:
 //
-//   GMOCK_COMPILE_ASSERT(sizeof(foo) < 128, foo_too_large);
+//   GMOCK_COMPILE_ASSERT_(sizeof(foo) < 128, foo_too_large);
 //
 // The second argument to the macro is the name of the variable. If
 // the expression is false, most compilers will issue a warning/error
@@ -242,6 +246,21 @@ typedef ::wstring wstring;
 typedef ::std::wstring wstring;
 #endif  // GTEST_HAS_GLOBAL_WSTRING
 
+// Prints the file location in the format native to the compiler.
+inline void FormatFileLocation(const char* file, int line, ::std::ostream* os) {
+  if (file == NULL)
+    file = "unknown file";
+  if (line < 0) {
+    *os << file << ":";
+  } else {
+#if _MSC_VER
+    *os << file << "(" << line << "):";
+#else
+    *os << file << ":" << line << ":";
+#endif
+  }
+}
+
 // INTERNAL IMPLEMENTATION - DO NOT USE.
 //
 // GMOCK_CHECK_ is an all mode assert. It aborts the program if the condition
@@ -260,25 +279,12 @@ typedef ::std::wstring wstring;
 class GMockCheckProvider {
  public:
   GMockCheckProvider(const char* condition, const char* file, int line) {
-    FormatFileLocation(file, line);
+    FormatFileLocation(file, line, &::std::cerr);
     ::std::cerr << " ERROR: Condition " << condition << " failed. ";
   }
   ~GMockCheckProvider() {
     ::std::cerr << ::std::endl;
     abort();
-  }
-  void FormatFileLocation(const char* file, int line) {
-    if (file == NULL)
-      file = "unknown file";
-    if (line < 0) {
-      ::std::cerr << file << ":";
-    } else {
-#if _MSC_VER
-      ::std::cerr << file << "(" << line << "):";
-#else
-      ::std::cerr << file << ":" << line << ":";
-#endif
-    }
   }
   ::std::ostream& GetStream() { return ::std::cerr; }
 };
