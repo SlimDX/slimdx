@@ -41,6 +41,7 @@ namespace SlimDX
 	{
 		ref class Buffer;
 		ref class DepthStencilView;
+		ref class GeometryShaderWrapper;
 		ref class InputAssemblerWrapper;
 		ref class InputLayout;
 		ref class OutputMergerWrapper;
@@ -48,8 +49,10 @@ namespace SlimDX
 		ref class RasterizerWrapper;
 		ref class RenderTargetView;
 		ref class Resource;
+		ref class PixelShaderWrapper;
 		ref class ShaderResourceView;
 		ref class StreamOutputWrapper;
+		ref class VertexShaderWrapper;
 		value class CounterCapabilities;
 		value class CounterDescription;
 		value class CounterMetadata;
@@ -69,6 +72,9 @@ namespace SlimDX
 			OutputMergerWrapper^ m_OutputMerger;
 			StreamOutputWrapper^ m_StreamOutput;
 			RasterizerWrapper^ m_Rasterizer;
+			VertexShaderWrapper^ m_VertexShader;
+			PixelShaderWrapper^ m_PixelShader;
+			GeometryShaderWrapper^ m_GeometryShader;
 
 		protected:
 			//no-op ctor for use by Device1
@@ -112,6 +118,30 @@ namespace SlimDX
 			property RasterizerWrapper^ Rasterizer
 			{
 				RasterizerWrapper^ get();
+			}
+
+			/// <summary>
+			/// Gets the device's vertex shader interface.
+			/// </summary>
+			property VertexShaderWrapper^ VertexShader
+			{
+				VertexShaderWrapper^ get();
+			}
+
+			/// <summary>
+			/// Gets the device's pixel shader interface.
+			/// </summary>
+			property PixelShaderWrapper^ PixelShader
+			{
+				PixelShaderWrapper^ get();
+			}
+
+			/// <summary>
+			/// Gets the device's geometry shader interface.
+			/// </summary>
+			property GeometryShaderWrapper^ GeometryShader
+			{
+				GeometryShaderWrapper^ get();
 			}
 			
 			/// <summary>

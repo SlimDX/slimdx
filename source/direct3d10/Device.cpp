@@ -43,6 +43,7 @@
 #include "ResourceRegion.h"
 #include "ShaderResourceView.h"
 #include "StreamOutputWrapper.h"
+#include "VertexShaderWrapper.h"
 
 using namespace System;
 
@@ -56,6 +57,7 @@ namespace Direct3D10
 		m_OutputMerger = gcnew OutputMergerWrapper( InternalPointer );
 		m_StreamOutput = gcnew StreamOutputWrapper( InternalPointer );
 		m_Rasterizer = gcnew RasterizerWrapper( InternalPointer );
+		m_VertexShader = gcnew VertexShaderWrapper( InternalPointer );
 	}
 
 	Device::Device( ID3D10Device* pointer, ComObject^ owner )
@@ -68,6 +70,7 @@ namespace Direct3D10
 	{
 		Construct( pointer, NativeInterface );
 		InitializeSubclasses();
+		m_VertexShader = gcnew VertexShaderWrapper( InternalPointer );
 	}
 	
 	Device^ Device::FromPointer( ID3D10Device* pointer, ComObject^ owner, ComObjectFlags flags )
@@ -132,6 +135,21 @@ namespace Direct3D10
 	RasterizerWrapper^ Device::Rasterizer::get()
 	{
 		return m_Rasterizer;
+	}
+
+	VertexShaderWrapper^ Device::VertexShader::get()
+	{
+		return m_VertexShader;
+	}
+
+	PixelShaderWrapper^ Device::PixelShader::get()
+	{
+		return m_PixelShader;
+	}
+
+	GeometryShaderWrapper^ Device::GeometryShader::get()
+	{
+		return m_GeometryShader;
 	}
 	
 	DeviceCreationFlags Device::CreationFlags::get()
