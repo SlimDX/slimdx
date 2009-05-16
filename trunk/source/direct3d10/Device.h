@@ -70,6 +70,12 @@ namespace SlimDX
 			StreamOutputWrapper^ m_StreamOutput;
 			RasterizerWrapper^ m_Rasterizer;
 
+		protected:
+			//no-op ctor for use by Device1
+			Device() { }
+
+			void InitializeSubclasses();
+
 		public:
 			/// <summary>
 			/// The maximum number of multisample quality levels supported.
