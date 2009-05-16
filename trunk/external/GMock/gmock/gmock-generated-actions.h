@@ -443,264 +443,6 @@ class CallableHelper {
 
 };  // class CallableHelper
 
-// Invokes a nullary callable argument.
-template <size_t N>
-class InvokeArgumentAction0 {
- public:
-  template <typename Result, typename ArgumentTuple>
-  static Result Perform(const ArgumentTuple& args) {
-    return CallableHelper<Result>::Call(::std::tr1::get<N>(args));
-  }
-};
-
-// Invokes a unary callable argument with the given argument.
-template <size_t N, typename A1>
-class InvokeArgumentAction1 {
- public:
-  // We deliberately pass a1 by value instead of const reference here
-  // in case it is a C-string literal.
-  //
-  // Since this function is defined inline, the compiler can get rid
-  // of the copying of the arguments.  Therefore the performance won't
-  // be hurt.
-  explicit InvokeArgumentAction1(A1 a1) : arg1_(a1) {}
-
-  template <typename Result, typename ArgumentTuple>
-  Result Perform(const ArgumentTuple& args) {
-    return CallableHelper<Result>::Call(::std::tr1::get<N>(args), arg1_);
-  }
- private:
-  const A1 arg1_;
-};
-
-// Invokes a binary callable argument with the given arguments.
-template <size_t N, typename A1, typename A2>
-class InvokeArgumentAction2 {
- public:
-  InvokeArgumentAction2(A1 a1, A2 a2) :
-      arg1_(a1), arg2_(a2) {}
-
-  template <typename Result, typename ArgumentTuple>
-  Result Perform(const ArgumentTuple& args) {
-    return CallableHelper<Result>::Call(::std::tr1::get<N>(args), arg1_, arg2_);
-  }
- private:
-  const A1 arg1_;
-  const A2 arg2_;
-};
-
-// Invokes a ternary callable argument with the given arguments.
-template <size_t N, typename A1, typename A2, typename A3>
-class InvokeArgumentAction3 {
- public:
-  InvokeArgumentAction3(A1 a1, A2 a2, A3 a3) :
-      arg1_(a1), arg2_(a2), arg3_(a3) {}
-
-  template <typename Result, typename ArgumentTuple>
-  Result Perform(const ArgumentTuple& args) {
-    return CallableHelper<Result>::Call(::std::tr1::get<N>(args), arg1_, arg2_,
-        arg3_);
-  }
- private:
-  const A1 arg1_;
-  const A2 arg2_;
-  const A3 arg3_;
-};
-
-// Invokes a 4-ary callable argument with the given arguments.
-template <size_t N, typename A1, typename A2, typename A3, typename A4>
-class InvokeArgumentAction4 {
- public:
-  InvokeArgumentAction4(A1 a1, A2 a2, A3 a3, A4 a4) :
-      arg1_(a1), arg2_(a2), arg3_(a3), arg4_(a4) {}
-
-  template <typename Result, typename ArgumentTuple>
-  Result Perform(const ArgumentTuple& args) {
-    return CallableHelper<Result>::Call(::std::tr1::get<N>(args), arg1_, arg2_,
-        arg3_, arg4_);
-  }
- private:
-  const A1 arg1_;
-  const A2 arg2_;
-  const A3 arg3_;
-  const A4 arg4_;
-};
-
-// Invokes a 5-ary callable argument with the given arguments.
-template <size_t N, typename A1, typename A2, typename A3, typename A4,
-    typename A5>
-class InvokeArgumentAction5 {
- public:
-  InvokeArgumentAction5(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) :
-      arg1_(a1), arg2_(a2), arg3_(a3), arg4_(a4), arg5_(a5) {}
-
-  template <typename Result, typename ArgumentTuple>
-  Result Perform(const ArgumentTuple& args) {
-    // We extract the callable to a variable before invoking it, in
-    // case it is a functor passed by value and its operator() is not
-    // const.
-    typename ::std::tr1::tuple_element<N, ArgumentTuple>::type function =
-        ::std::tr1::get<N>(args);
-    return function(arg1_, arg2_, arg3_, arg4_, arg5_);
-  }
- private:
-  const A1 arg1_;
-  const A2 arg2_;
-  const A3 arg3_;
-  const A4 arg4_;
-  const A5 arg5_;
-};
-
-// Invokes a 6-ary callable argument with the given arguments.
-template <size_t N, typename A1, typename A2, typename A3, typename A4,
-    typename A5, typename A6>
-class InvokeArgumentAction6 {
- public:
-  InvokeArgumentAction6(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) :
-      arg1_(a1), arg2_(a2), arg3_(a3), arg4_(a4), arg5_(a5), arg6_(a6) {}
-
-  template <typename Result, typename ArgumentTuple>
-  Result Perform(const ArgumentTuple& args) {
-    // We extract the callable to a variable before invoking it, in
-    // case it is a functor passed by value and its operator() is not
-    // const.
-    typename ::std::tr1::tuple_element<N, ArgumentTuple>::type function =
-        ::std::tr1::get<N>(args);
-    return function(arg1_, arg2_, arg3_, arg4_, arg5_, arg6_);
-  }
- private:
-  const A1 arg1_;
-  const A2 arg2_;
-  const A3 arg3_;
-  const A4 arg4_;
-  const A5 arg5_;
-  const A6 arg6_;
-};
-
-// Invokes a 7-ary callable argument with the given arguments.
-template <size_t N, typename A1, typename A2, typename A3, typename A4,
-    typename A5, typename A6, typename A7>
-class InvokeArgumentAction7 {
- public:
-  InvokeArgumentAction7(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) :
-      arg1_(a1), arg2_(a2), arg3_(a3), arg4_(a4), arg5_(a5), arg6_(a6),
-          arg7_(a7) {}
-
-  template <typename Result, typename ArgumentTuple>
-  Result Perform(const ArgumentTuple& args) {
-    // We extract the callable to a variable before invoking it, in
-    // case it is a functor passed by value and its operator() is not
-    // const.
-    typename ::std::tr1::tuple_element<N, ArgumentTuple>::type function =
-        ::std::tr1::get<N>(args);
-    return function(arg1_, arg2_, arg3_, arg4_, arg5_, arg6_, arg7_);
-  }
- private:
-  const A1 arg1_;
-  const A2 arg2_;
-  const A3 arg3_;
-  const A4 arg4_;
-  const A5 arg5_;
-  const A6 arg6_;
-  const A7 arg7_;
-};
-
-// Invokes a 8-ary callable argument with the given arguments.
-template <size_t N, typename A1, typename A2, typename A3, typename A4,
-    typename A5, typename A6, typename A7, typename A8>
-class InvokeArgumentAction8 {
- public:
-  InvokeArgumentAction8(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7,
-      A8 a8) :
-      arg1_(a1), arg2_(a2), arg3_(a3), arg4_(a4), arg5_(a5), arg6_(a6),
-          arg7_(a7), arg8_(a8) {}
-
-  template <typename Result, typename ArgumentTuple>
-  Result Perform(const ArgumentTuple& args) {
-    // We extract the callable to a variable before invoking it, in
-    // case it is a functor passed by value and its operator() is not
-    // const.
-    typename ::std::tr1::tuple_element<N, ArgumentTuple>::type function =
-        ::std::tr1::get<N>(args);
-    return function(arg1_, arg2_, arg3_, arg4_, arg5_, arg6_, arg7_, arg8_);
-  }
- private:
-  const A1 arg1_;
-  const A2 arg2_;
-  const A3 arg3_;
-  const A4 arg4_;
-  const A5 arg5_;
-  const A6 arg6_;
-  const A7 arg7_;
-  const A8 arg8_;
-};
-
-// Invokes a 9-ary callable argument with the given arguments.
-template <size_t N, typename A1, typename A2, typename A3, typename A4,
-    typename A5, typename A6, typename A7, typename A8, typename A9>
-class InvokeArgumentAction9 {
- public:
-  InvokeArgumentAction9(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8,
-      A9 a9) :
-      arg1_(a1), arg2_(a2), arg3_(a3), arg4_(a4), arg5_(a5), arg6_(a6),
-          arg7_(a7), arg8_(a8), arg9_(a9) {}
-
-  template <typename Result, typename ArgumentTuple>
-  Result Perform(const ArgumentTuple& args) {
-    // We extract the callable to a variable before invoking it, in
-    // case it is a functor passed by value and its operator() is not
-    // const.
-    typename ::std::tr1::tuple_element<N, ArgumentTuple>::type function =
-        ::std::tr1::get<N>(args);
-    return function(arg1_, arg2_, arg3_, arg4_, arg5_, arg6_, arg7_, arg8_,
-        arg9_);
-  }
- private:
-  const A1 arg1_;
-  const A2 arg2_;
-  const A3 arg3_;
-  const A4 arg4_;
-  const A5 arg5_;
-  const A6 arg6_;
-  const A7 arg7_;
-  const A8 arg8_;
-  const A9 arg9_;
-};
-
-// Invokes a 10-ary callable argument with the given arguments.
-template <size_t N, typename A1, typename A2, typename A3, typename A4,
-    typename A5, typename A6, typename A7, typename A8, typename A9,
-    typename A10>
-class InvokeArgumentAction10 {
- public:
-  InvokeArgumentAction10(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7,
-      A8 a8, A9 a9, A10 a10) :
-      arg1_(a1), arg2_(a2), arg3_(a3), arg4_(a4), arg5_(a5), arg6_(a6),
-          arg7_(a7), arg8_(a8), arg9_(a9), arg10_(a10) {}
-
-  template <typename Result, typename ArgumentTuple>
-  Result Perform(const ArgumentTuple& args) {
-    // We extract the callable to a variable before invoking it, in
-    // case it is a functor passed by value and its operator() is not
-    // const.
-    typename ::std::tr1::tuple_element<N, ArgumentTuple>::type function =
-        ::std::tr1::get<N>(args);
-    return function(arg1_, arg2_, arg3_, arg4_, arg5_, arg6_, arg7_, arg8_,
-        arg9_, arg10_);
-  }
- private:
-  const A1 arg1_;
-  const A2 arg2_;
-  const A3 arg3_;
-  const A4 arg4_;
-  const A5 arg5_;
-  const A6 arg6_;
-  const A7 arg7_;
-  const A8 arg8_;
-  const A9 arg9_;
-  const A10 arg10_;
-};
-
 // An INTERNAL macro for extracting the type of a tuple field.  It's
 // subject to change without notice - DO NOT USE IN USER CODE!
 #define GMOCK_FIELD_(Tuple, N) \
@@ -1140,140 +882,6 @@ inline internal::ReferenceWrapper<T> ByRef(T& l_value) {  // NOLINT
   return internal::ReferenceWrapper<T>(l_value);
 }
 
-// Various overloads for InvokeArgument<N>().
-//
-// The InvokeArgument<N>(a1, a2, ..., a_k) action invokes the N-th
-// (0-based) argument, which must be a k-ary callable, of the mock
-// function, with arguments a1, a2, ..., a_k.
-//
-// Notes:
-//
-//   1. The arguments are passed by value by default.  If you need to
-//   pass an argument by reference, wrap it inside ByRef().  For
-//   example,
-//
-//     InvokeArgument<1>(5, string("Hello"), ByRef(foo))
-//
-//   passes 5 and string("Hello") by value, and passes foo by
-//   reference.
-//
-//   2. If the callable takes an argument by reference but ByRef() is
-//   not used, it will receive the reference to a copy of the value,
-//   instead of the original value.  For example, when the 0-th
-//   argument of the mock function takes a const string&, the action
-//
-//     InvokeArgument<0>(string("Hello"))
-//
-//   makes a copy of the temporary string("Hello") object and passes a
-//   reference of the copy, instead of the original temporary object,
-//   to the callable.  This makes it easy for a user to define an
-//   InvokeArgument action from temporary values and have it performed
-//   later.
-template <size_t N>
-inline PolymorphicAction<internal::InvokeArgumentAction0<N> > InvokeArgument() {
-  return MakePolymorphicAction(internal::InvokeArgumentAction0<N>());
-}
-
-// We deliberately pass a1 by value instead of const reference here in
-// case it is a C-string literal.  If we had declared the parameter as
-// 'const A1& a1' and write InvokeArgument<0>("Hi"), the compiler
-// would've thought A1 is 'char[3]', which causes trouble as the
-// implementation needs to copy a value of type A1.  By declaring the
-// parameter as 'A1 a1', the compiler will correctly infer that A1 is
-// 'const char*' when it sees InvokeArgument<0>("Hi").
-//
-// Since this function is defined inline, the compiler can get rid of
-// the copying of the arguments.  Therefore the performance won't be
-// hurt.
-template <size_t N, typename A1>
-inline PolymorphicAction<internal::InvokeArgumentAction1<N, A1> >
-InvokeArgument(A1 a1) {
-  return MakePolymorphicAction(internal::InvokeArgumentAction1<N, A1>(a1));
-}
-
-template <size_t N, typename A1, typename A2>
-inline PolymorphicAction<internal::InvokeArgumentAction2<N, A1, A2> >
-InvokeArgument(A1 a1, A2 a2) {
-  return MakePolymorphicAction(
-      internal::InvokeArgumentAction2<N, A1, A2>(a1, a2));
-}
-
-template <size_t N, typename A1, typename A2, typename A3>
-inline PolymorphicAction<internal::InvokeArgumentAction3<N, A1, A2, A3> >
-InvokeArgument(A1 a1, A2 a2, A3 a3) {
-  return MakePolymorphicAction(
-      internal::InvokeArgumentAction3<N, A1, A2, A3>(a1, a2, a3));
-}
-
-template <size_t N, typename A1, typename A2, typename A3, typename A4>
-inline PolymorphicAction<internal::InvokeArgumentAction4<N, A1, A2, A3, A4> >
-InvokeArgument(A1 a1, A2 a2, A3 a3, A4 a4) {
-  return MakePolymorphicAction(
-      internal::InvokeArgumentAction4<N, A1, A2, A3, A4>(a1, a2, a3, a4));
-}
-
-template <size_t N, typename A1, typename A2, typename A3, typename A4,
-    typename A5>
-inline PolymorphicAction<internal::InvokeArgumentAction5<N, A1, A2, A3, A4,
-    A5> >
-InvokeArgument(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) {
-  return MakePolymorphicAction(
-      internal::InvokeArgumentAction5<N, A1, A2, A3, A4, A5>(a1, a2, a3, a4,
-          a5));
-}
-
-template <size_t N, typename A1, typename A2, typename A3, typename A4,
-    typename A5, typename A6>
-inline PolymorphicAction<internal::InvokeArgumentAction6<N, A1, A2, A3, A4, A5,
-    A6> >
-InvokeArgument(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) {
-  return MakePolymorphicAction(
-      internal::InvokeArgumentAction6<N, A1, A2, A3, A4, A5, A6>(a1, a2, a3,
-          a4, a5, a6));
-}
-
-template <size_t N, typename A1, typename A2, typename A3, typename A4,
-    typename A5, typename A6, typename A7>
-inline PolymorphicAction<internal::InvokeArgumentAction7<N, A1, A2, A3, A4, A5,
-    A6, A7> >
-InvokeArgument(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) {
-  return MakePolymorphicAction(
-      internal::InvokeArgumentAction7<N, A1, A2, A3, A4, A5, A6, A7>(a1, a2,
-          a3, a4, a5, a6, a7));
-}
-
-template <size_t N, typename A1, typename A2, typename A3, typename A4,
-    typename A5, typename A6, typename A7, typename A8>
-inline PolymorphicAction<internal::InvokeArgumentAction8<N, A1, A2, A3, A4, A5,
-    A6, A7, A8> >
-InvokeArgument(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) {
-  return MakePolymorphicAction(
-      internal::InvokeArgumentAction8<N, A1, A2, A3, A4, A5, A6, A7, A8>(a1,
-          a2, a3, a4, a5, a6, a7, a8));
-}
-
-template <size_t N, typename A1, typename A2, typename A3, typename A4,
-    typename A5, typename A6, typename A7, typename A8, typename A9>
-inline PolymorphicAction<internal::InvokeArgumentAction9<N, A1, A2, A3, A4, A5,
-    A6, A7, A8, A9> >
-InvokeArgument(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) {
-  return MakePolymorphicAction(
-      internal::InvokeArgumentAction9<N, A1, A2, A3, A4, A5, A6, A7, A8,
-          A9>(a1, a2, a3, a4, a5, a6, a7, a8, a9));
-}
-
-template <size_t N, typename A1, typename A2, typename A3, typename A4,
-    typename A5, typename A6, typename A7, typename A8, typename A9,
-    typename A10>
-inline PolymorphicAction<internal::InvokeArgumentAction10<N, A1, A2, A3, A4,
-    A5, A6, A7, A8, A9, A10> >
-InvokeArgument(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9,
-    A10 a10) {
-  return MakePolymorphicAction(
-      internal::InvokeArgumentAction10<N, A1, A2, A3, A4, A5, A6, A7, A8, A9,
-          A10>(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10));
-}
-
 // WithoutArgs(inner_action) can be used in a mock function with a
 // non-empty argument list to perform inner_action, which takes no
 // argument.  In other words, it adapts an action accepting no
@@ -1570,6 +1178,416 @@ DoAll(Action1 a1, Action2 a2, Action3 a3, Action4 a4, Action5 a5, Action6 a6,
     arg7_type arg7 GTEST_ATTRIBUTE_UNUSED_,\
     arg8_type arg8 GTEST_ATTRIBUTE_UNUSED_,\
     arg9_type arg9 GTEST_ATTRIBUTE_UNUSED_
+
+// Sometimes you want to give an action explicit template parameters
+// that cannot be inferred from its value parameters.  ACTION() and
+// ACTION_P*() don't support that.  ACTION_TEMPLATE() remedies that
+// and can be viewed as an extension to ACTION() and ACTION_P*().
+//
+// The syntax:
+//
+//   ACTION_TEMPLATE(ActionName,
+//                   HAS_m_TEMPLATE_PARAMS(kind1, name1, ..., kind_m, name_m),
+//                   AND_n_VALUE_PARAMS(p1, ..., p_n)) { statements; }
+//
+// defines an action template that takes m explicit template
+// parameters and n value parameters.  name_i is the name of the i-th
+// template parameter, and kind_i specifies whether it's a typename,
+// an integral constant, or a template.  p_i is the name of the i-th
+// value parameter.
+//
+// Example:
+//
+//   // DuplicateArg<k, T>(output) converts the k-th argument of the mock
+//   // function to type T and copies it to *output.
+//   ACTION_TEMPLATE(DuplicateArg,
+//                   HAS_2_TEMPLATE_PARAMS(int, k, typename, T),
+//                   AND_1_VALUE_PARAMS(output)) {
+//     *output = T(std::tr1::get<k>(args));
+//   }
+//   ...
+//     int n;
+//     EXPECT_CALL(mock, Foo(_, _))
+//         .WillOnce(DuplicateArg<1, unsigned char>(&n));
+//
+// To create an instance of an action template, write:
+//
+//   ActionName<t1, ..., t_m>(v1, ..., v_n)
+//
+// where the ts are the template arguments and the vs are the value
+// arguments.  The value argument types are inferred by the compiler.
+// If you want to explicitly specify the value argument types, you can
+// provide additional template arguments:
+//
+//   ActionName<t1, ..., t_m, u1, ..., u_k>(v1, ..., v_n)
+//
+// where u_i is the desired type of v_i.
+//
+// ACTION_TEMPLATE and ACTION/ACTION_P* can be overloaded on the
+// number of value parameters, but not on the number of template
+// parameters.  Without the restriction, the meaning of the following
+// is unclear:
+//
+//   OverloadedAction<int, bool>(x);
+//
+// Are we using a single-template-parameter action where 'bool' refers
+// to the type of x, or are we using a two-template-parameter action
+// where the compiler is asked to infer the type of x?
+//
+// Implementation notes:
+//
+// GMOCK_INTERNAL_*_HAS_m_TEMPLATE_PARAMS and
+// GMOCK_INTERNAL_*_AND_n_VALUE_PARAMS are internal macros for
+// implementing ACTION_TEMPLATE.  The main trick we use is to create
+// new macro invocations when expanding a macro.  For example, we have
+//
+//   #define ACTION_TEMPLATE(name, template_params, value_params)
+//       ... GMOCK_INTERNAL_DECL_##template_params ...
+//
+// which causes ACTION_TEMPLATE(..., HAS_1_TEMPLATE_PARAMS(typename, T), ...)
+// to expand to
+//
+//       ... GMOCK_INTERNAL_DECL_HAS_1_TEMPLATE_PARAMS(typename, T) ...
+//
+// Since GMOCK_INTERNAL_DECL_HAS_1_TEMPLATE_PARAMS is a macro, the
+// preprocessor will continue to expand it to
+//
+//       ... typename T ...
+//
+// This technique conforms to the C++ standard and is portable.  It
+// allows us to implement action templates using O(N) code, where N is
+// the maximum number of template/value parameters supported.  Without
+// using it, we'd have to devote O(N^2) amount of code to implement all
+// combinations of m and n.
+
+// Declares the template parameters.
+#define GMOCK_INTERNAL_DECL_HAS_1_TEMPLATE_PARAMS(kind0, name0) kind0 name0
+#define GMOCK_INTERNAL_DECL_HAS_2_TEMPLATE_PARAMS(kind0, name0, kind1, \
+    name1) kind0 name0, kind1 name1
+#define GMOCK_INTERNAL_DECL_HAS_3_TEMPLATE_PARAMS(kind0, name0, kind1, name1, \
+    kind2, name2) kind0 name0, kind1 name1, kind2 name2
+#define GMOCK_INTERNAL_DECL_HAS_4_TEMPLATE_PARAMS(kind0, name0, kind1, name1, \
+    kind2, name2, kind3, name3) kind0 name0, kind1 name1, kind2 name2, \
+    kind3 name3
+#define GMOCK_INTERNAL_DECL_HAS_5_TEMPLATE_PARAMS(kind0, name0, kind1, name1, \
+    kind2, name2, kind3, name3, kind4, name4) kind0 name0, kind1 name1, \
+    kind2 name2, kind3 name3, kind4 name4
+#define GMOCK_INTERNAL_DECL_HAS_6_TEMPLATE_PARAMS(kind0, name0, kind1, name1, \
+    kind2, name2, kind3, name3, kind4, name4, kind5, name5) kind0 name0, \
+    kind1 name1, kind2 name2, kind3 name3, kind4 name4, kind5 name5
+#define GMOCK_INTERNAL_DECL_HAS_7_TEMPLATE_PARAMS(kind0, name0, kind1, name1, \
+    kind2, name2, kind3, name3, kind4, name4, kind5, name5, kind6, \
+    name6) kind0 name0, kind1 name1, kind2 name2, kind3 name3, kind4 name4, \
+    kind5 name5, kind6 name6
+#define GMOCK_INTERNAL_DECL_HAS_8_TEMPLATE_PARAMS(kind0, name0, kind1, name1, \
+    kind2, name2, kind3, name3, kind4, name4, kind5, name5, kind6, name6, \
+    kind7, name7) kind0 name0, kind1 name1, kind2 name2, kind3 name3, \
+    kind4 name4, kind5 name5, kind6 name6, kind7 name7
+#define GMOCK_INTERNAL_DECL_HAS_9_TEMPLATE_PARAMS(kind0, name0, kind1, name1, \
+    kind2, name2, kind3, name3, kind4, name4, kind5, name5, kind6, name6, \
+    kind7, name7, kind8, name8) kind0 name0, kind1 name1, kind2 name2, \
+    kind3 name3, kind4 name4, kind5 name5, kind6 name6, kind7 name7, \
+    kind8 name8
+#define GMOCK_INTERNAL_DECL_HAS_10_TEMPLATE_PARAMS(kind0, name0, kind1, \
+    name1, kind2, name2, kind3, name3, kind4, name4, kind5, name5, kind6, \
+    name6, kind7, name7, kind8, name8, kind9, name9) kind0 name0, \
+    kind1 name1, kind2 name2, kind3 name3, kind4 name4, kind5 name5, \
+    kind6 name6, kind7 name7, kind8 name8, kind9 name9
+
+// Lists the template parameters.
+#define GMOCK_INTERNAL_LIST_HAS_1_TEMPLATE_PARAMS(kind0, name0) name0
+#define GMOCK_INTERNAL_LIST_HAS_2_TEMPLATE_PARAMS(kind0, name0, kind1, \
+    name1) name0, name1
+#define GMOCK_INTERNAL_LIST_HAS_3_TEMPLATE_PARAMS(kind0, name0, kind1, name1, \
+    kind2, name2) name0, name1, name2
+#define GMOCK_INTERNAL_LIST_HAS_4_TEMPLATE_PARAMS(kind0, name0, kind1, name1, \
+    kind2, name2, kind3, name3) name0, name1, name2, name3
+#define GMOCK_INTERNAL_LIST_HAS_5_TEMPLATE_PARAMS(kind0, name0, kind1, name1, \
+    kind2, name2, kind3, name3, kind4, name4) name0, name1, name2, name3, \
+    name4
+#define GMOCK_INTERNAL_LIST_HAS_6_TEMPLATE_PARAMS(kind0, name0, kind1, name1, \
+    kind2, name2, kind3, name3, kind4, name4, kind5, name5) name0, name1, \
+    name2, name3, name4, name5
+#define GMOCK_INTERNAL_LIST_HAS_7_TEMPLATE_PARAMS(kind0, name0, kind1, name1, \
+    kind2, name2, kind3, name3, kind4, name4, kind5, name5, kind6, \
+    name6) name0, name1, name2, name3, name4, name5, name6
+#define GMOCK_INTERNAL_LIST_HAS_8_TEMPLATE_PARAMS(kind0, name0, kind1, name1, \
+    kind2, name2, kind3, name3, kind4, name4, kind5, name5, kind6, name6, \
+    kind7, name7) name0, name1, name2, name3, name4, name5, name6, name7
+#define GMOCK_INTERNAL_LIST_HAS_9_TEMPLATE_PARAMS(kind0, name0, kind1, name1, \
+    kind2, name2, kind3, name3, kind4, name4, kind5, name5, kind6, name6, \
+    kind7, name7, kind8, name8) name0, name1, name2, name3, name4, name5, \
+    name6, name7, name8
+#define GMOCK_INTERNAL_LIST_HAS_10_TEMPLATE_PARAMS(kind0, name0, kind1, \
+    name1, kind2, name2, kind3, name3, kind4, name4, kind5, name5, kind6, \
+    name6, kind7, name7, kind8, name8, kind9, name9) name0, name1, name2, \
+    name3, name4, name5, name6, name7, name8, name9
+
+// Declares the types of value parameters.
+#define GMOCK_INTERNAL_DECL_TYPE_AND_0_VALUE_PARAMS()
+#define GMOCK_INTERNAL_DECL_TYPE_AND_1_VALUE_PARAMS(p0) , typename p0##_type
+#define GMOCK_INTERNAL_DECL_TYPE_AND_2_VALUE_PARAMS(p0, p1) , \
+    typename p0##_type, typename p1##_type
+#define GMOCK_INTERNAL_DECL_TYPE_AND_3_VALUE_PARAMS(p0, p1, p2) , \
+    typename p0##_type, typename p1##_type, typename p2##_type
+#define GMOCK_INTERNAL_DECL_TYPE_AND_4_VALUE_PARAMS(p0, p1, p2, p3) , \
+    typename p0##_type, typename p1##_type, typename p2##_type, \
+    typename p3##_type
+#define GMOCK_INTERNAL_DECL_TYPE_AND_5_VALUE_PARAMS(p0, p1, p2, p3, p4) , \
+    typename p0##_type, typename p1##_type, typename p2##_type, \
+    typename p3##_type, typename p4##_type
+#define GMOCK_INTERNAL_DECL_TYPE_AND_6_VALUE_PARAMS(p0, p1, p2, p3, p4, p5) , \
+    typename p0##_type, typename p1##_type, typename p2##_type, \
+    typename p3##_type, typename p4##_type, typename p5##_type
+#define GMOCK_INTERNAL_DECL_TYPE_AND_7_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, \
+    p6) , typename p0##_type, typename p1##_type, typename p2##_type, \
+    typename p3##_type, typename p4##_type, typename p5##_type, \
+    typename p6##_type
+#define GMOCK_INTERNAL_DECL_TYPE_AND_8_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, \
+    p6, p7) , typename p0##_type, typename p1##_type, typename p2##_type, \
+    typename p3##_type, typename p4##_type, typename p5##_type, \
+    typename p6##_type, typename p7##_type
+#define GMOCK_INTERNAL_DECL_TYPE_AND_9_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, \
+    p6, p7, p8) , typename p0##_type, typename p1##_type, typename p2##_type, \
+    typename p3##_type, typename p4##_type, typename p5##_type, \
+    typename p6##_type, typename p7##_type, typename p8##_type
+#define GMOCK_INTERNAL_DECL_TYPE_AND_10_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, \
+    p6, p7, p8, p9) , typename p0##_type, typename p1##_type, \
+    typename p2##_type, typename p3##_type, typename p4##_type, \
+    typename p5##_type, typename p6##_type, typename p7##_type, \
+    typename p8##_type, typename p9##_type
+
+// Initializes the value parameters.
+#define GMOCK_INTERNAL_INIT_AND_0_VALUE_PARAMS()\
+    ()
+#define GMOCK_INTERNAL_INIT_AND_1_VALUE_PARAMS(p0)\
+    (p0##_type gmock_p0) : p0(gmock_p0)
+#define GMOCK_INTERNAL_INIT_AND_2_VALUE_PARAMS(p0, p1)\
+    (p0##_type gmock_p0, p1##_type gmock_p1) : p0(gmock_p0), p1(gmock_p1)
+#define GMOCK_INTERNAL_INIT_AND_3_VALUE_PARAMS(p0, p1, p2)\
+    (p0##_type gmock_p0, p1##_type gmock_p1, \
+        p2##_type gmock_p2) : p0(gmock_p0), p1(gmock_p1), p2(gmock_p2)
+#define GMOCK_INTERNAL_INIT_AND_4_VALUE_PARAMS(p0, p1, p2, p3)\
+    (p0##_type gmock_p0, p1##_type gmock_p1, p2##_type gmock_p2, \
+        p3##_type gmock_p3) : p0(gmock_p0), p1(gmock_p1), p2(gmock_p2), \
+        p3(gmock_p3)
+#define GMOCK_INTERNAL_INIT_AND_5_VALUE_PARAMS(p0, p1, p2, p3, p4)\
+    (p0##_type gmock_p0, p1##_type gmock_p1, p2##_type gmock_p2, \
+        p3##_type gmock_p3, p4##_type gmock_p4) : p0(gmock_p0), p1(gmock_p1), \
+        p2(gmock_p2), p3(gmock_p3), p4(gmock_p4)
+#define GMOCK_INTERNAL_INIT_AND_6_VALUE_PARAMS(p0, p1, p2, p3, p4, p5)\
+    (p0##_type gmock_p0, p1##_type gmock_p1, p2##_type gmock_p2, \
+        p3##_type gmock_p3, p4##_type gmock_p4, \
+        p5##_type gmock_p5) : p0(gmock_p0), p1(gmock_p1), p2(gmock_p2), \
+        p3(gmock_p3), p4(gmock_p4), p5(gmock_p5)
+#define GMOCK_INTERNAL_INIT_AND_7_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6)\
+    (p0##_type gmock_p0, p1##_type gmock_p1, p2##_type gmock_p2, \
+        p3##_type gmock_p3, p4##_type gmock_p4, p5##_type gmock_p5, \
+        p6##_type gmock_p6) : p0(gmock_p0), p1(gmock_p1), p2(gmock_p2), \
+        p3(gmock_p3), p4(gmock_p4), p5(gmock_p5), p6(gmock_p6)
+#define GMOCK_INTERNAL_INIT_AND_8_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, p7)\
+    (p0##_type gmock_p0, p1##_type gmock_p1, p2##_type gmock_p2, \
+        p3##_type gmock_p3, p4##_type gmock_p4, p5##_type gmock_p5, \
+        p6##_type gmock_p6, p7##_type gmock_p7) : p0(gmock_p0), p1(gmock_p1), \
+        p2(gmock_p2), p3(gmock_p3), p4(gmock_p4), p5(gmock_p5), p6(gmock_p6), \
+        p7(gmock_p7)
+#define GMOCK_INTERNAL_INIT_AND_9_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, \
+    p7, p8)\
+    (p0##_type gmock_p0, p1##_type gmock_p1, p2##_type gmock_p2, \
+        p3##_type gmock_p3, p4##_type gmock_p4, p5##_type gmock_p5, \
+        p6##_type gmock_p6, p7##_type gmock_p7, \
+        p8##_type gmock_p8) : p0(gmock_p0), p1(gmock_p1), p2(gmock_p2), \
+        p3(gmock_p3), p4(gmock_p4), p5(gmock_p5), p6(gmock_p6), p7(gmock_p7), \
+        p8(gmock_p8)
+#define GMOCK_INTERNAL_INIT_AND_10_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, \
+    p7, p8, p9)\
+    (p0##_type gmock_p0, p1##_type gmock_p1, p2##_type gmock_p2, \
+        p3##_type gmock_p3, p4##_type gmock_p4, p5##_type gmock_p5, \
+        p6##_type gmock_p6, p7##_type gmock_p7, p8##_type gmock_p8, \
+        p9##_type gmock_p9) : p0(gmock_p0), p1(gmock_p1), p2(gmock_p2), \
+        p3(gmock_p3), p4(gmock_p4), p5(gmock_p5), p6(gmock_p6), p7(gmock_p7), \
+        p8(gmock_p8), p9(gmock_p9)
+
+// Declares the fields for storing the value parameters.
+#define GMOCK_INTERNAL_DEFN_AND_0_VALUE_PARAMS()
+#define GMOCK_INTERNAL_DEFN_AND_1_VALUE_PARAMS(p0) p0##_type p0;
+#define GMOCK_INTERNAL_DEFN_AND_2_VALUE_PARAMS(p0, p1) p0##_type p0; \
+    p1##_type p1;
+#define GMOCK_INTERNAL_DEFN_AND_3_VALUE_PARAMS(p0, p1, p2) p0##_type p0; \
+    p1##_type p1; p2##_type p2;
+#define GMOCK_INTERNAL_DEFN_AND_4_VALUE_PARAMS(p0, p1, p2, p3) p0##_type p0; \
+    p1##_type p1; p2##_type p2; p3##_type p3;
+#define GMOCK_INTERNAL_DEFN_AND_5_VALUE_PARAMS(p0, p1, p2, p3, \
+    p4) p0##_type p0; p1##_type p1; p2##_type p2; p3##_type p3; p4##_type p4;
+#define GMOCK_INTERNAL_DEFN_AND_6_VALUE_PARAMS(p0, p1, p2, p3, p4, \
+    p5) p0##_type p0; p1##_type p1; p2##_type p2; p3##_type p3; p4##_type p4; \
+    p5##_type p5;
+#define GMOCK_INTERNAL_DEFN_AND_7_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, \
+    p6) p0##_type p0; p1##_type p1; p2##_type p2; p3##_type p3; p4##_type p4; \
+    p5##_type p5; p6##_type p6;
+#define GMOCK_INTERNAL_DEFN_AND_8_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, \
+    p7) p0##_type p0; p1##_type p1; p2##_type p2; p3##_type p3; p4##_type p4; \
+    p5##_type p5; p6##_type p6; p7##_type p7;
+#define GMOCK_INTERNAL_DEFN_AND_9_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, \
+    p7, p8) p0##_type p0; p1##_type p1; p2##_type p2; p3##_type p3; \
+    p4##_type p4; p5##_type p5; p6##_type p6; p7##_type p7; p8##_type p8;
+#define GMOCK_INTERNAL_DEFN_AND_10_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, \
+    p7, p8, p9) p0##_type p0; p1##_type p1; p2##_type p2; p3##_type p3; \
+    p4##_type p4; p5##_type p5; p6##_type p6; p7##_type p7; p8##_type p8; \
+    p9##_type p9;
+
+// Lists the value parameters.
+#define GMOCK_INTERNAL_LIST_AND_0_VALUE_PARAMS()
+#define GMOCK_INTERNAL_LIST_AND_1_VALUE_PARAMS(p0) p0
+#define GMOCK_INTERNAL_LIST_AND_2_VALUE_PARAMS(p0, p1) p0, p1
+#define GMOCK_INTERNAL_LIST_AND_3_VALUE_PARAMS(p0, p1, p2) p0, p1, p2
+#define GMOCK_INTERNAL_LIST_AND_4_VALUE_PARAMS(p0, p1, p2, p3) p0, p1, p2, p3
+#define GMOCK_INTERNAL_LIST_AND_5_VALUE_PARAMS(p0, p1, p2, p3, p4) p0, p1, \
+    p2, p3, p4
+#define GMOCK_INTERNAL_LIST_AND_6_VALUE_PARAMS(p0, p1, p2, p3, p4, p5) p0, \
+    p1, p2, p3, p4, p5
+#define GMOCK_INTERNAL_LIST_AND_7_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, \
+    p6) p0, p1, p2, p3, p4, p5, p6
+#define GMOCK_INTERNAL_LIST_AND_8_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, \
+    p7) p0, p1, p2, p3, p4, p5, p6, p7
+#define GMOCK_INTERNAL_LIST_AND_9_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, \
+    p7, p8) p0, p1, p2, p3, p4, p5, p6, p7, p8
+#define GMOCK_INTERNAL_LIST_AND_10_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, \
+    p7, p8, p9) p0, p1, p2, p3, p4, p5, p6, p7, p8, p9
+
+// Lists the value parameter types.
+#define GMOCK_INTERNAL_LIST_TYPE_AND_0_VALUE_PARAMS()
+#define GMOCK_INTERNAL_LIST_TYPE_AND_1_VALUE_PARAMS(p0) , p0##_type
+#define GMOCK_INTERNAL_LIST_TYPE_AND_2_VALUE_PARAMS(p0, p1) , p0##_type, \
+    p1##_type
+#define GMOCK_INTERNAL_LIST_TYPE_AND_3_VALUE_PARAMS(p0, p1, p2) , p0##_type, \
+    p1##_type, p2##_type
+#define GMOCK_INTERNAL_LIST_TYPE_AND_4_VALUE_PARAMS(p0, p1, p2, p3) , \
+    p0##_type, p1##_type, p2##_type, p3##_type
+#define GMOCK_INTERNAL_LIST_TYPE_AND_5_VALUE_PARAMS(p0, p1, p2, p3, p4) , \
+    p0##_type, p1##_type, p2##_type, p3##_type, p4##_type
+#define GMOCK_INTERNAL_LIST_TYPE_AND_6_VALUE_PARAMS(p0, p1, p2, p3, p4, p5) , \
+    p0##_type, p1##_type, p2##_type, p3##_type, p4##_type, p5##_type
+#define GMOCK_INTERNAL_LIST_TYPE_AND_7_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, \
+    p6) , p0##_type, p1##_type, p2##_type, p3##_type, p4##_type, p5##_type, \
+    p6##_type
+#define GMOCK_INTERNAL_LIST_TYPE_AND_8_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, \
+    p6, p7) , p0##_type, p1##_type, p2##_type, p3##_type, p4##_type, \
+    p5##_type, p6##_type, p7##_type
+#define GMOCK_INTERNAL_LIST_TYPE_AND_9_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, \
+    p6, p7, p8) , p0##_type, p1##_type, p2##_type, p3##_type, p4##_type, \
+    p5##_type, p6##_type, p7##_type, p8##_type
+#define GMOCK_INTERNAL_LIST_TYPE_AND_10_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, \
+    p6, p7, p8, p9) , p0##_type, p1##_type, p2##_type, p3##_type, p4##_type, \
+    p5##_type, p6##_type, p7##_type, p8##_type, p9##_type
+
+// Declares the value parameters.
+#define GMOCK_INTERNAL_DECL_AND_0_VALUE_PARAMS()
+#define GMOCK_INTERNAL_DECL_AND_1_VALUE_PARAMS(p0) p0##_type p0
+#define GMOCK_INTERNAL_DECL_AND_2_VALUE_PARAMS(p0, p1) p0##_type p0, \
+    p1##_type p1
+#define GMOCK_INTERNAL_DECL_AND_3_VALUE_PARAMS(p0, p1, p2) p0##_type p0, \
+    p1##_type p1, p2##_type p2
+#define GMOCK_INTERNAL_DECL_AND_4_VALUE_PARAMS(p0, p1, p2, p3) p0##_type p0, \
+    p1##_type p1, p2##_type p2, p3##_type p3
+#define GMOCK_INTERNAL_DECL_AND_5_VALUE_PARAMS(p0, p1, p2, p3, \
+    p4) p0##_type p0, p1##_type p1, p2##_type p2, p3##_type p3, p4##_type p4
+#define GMOCK_INTERNAL_DECL_AND_6_VALUE_PARAMS(p0, p1, p2, p3, p4, \
+    p5) p0##_type p0, p1##_type p1, p2##_type p2, p3##_type p3, p4##_type p4, \
+    p5##_type p5
+#define GMOCK_INTERNAL_DECL_AND_7_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, \
+    p6) p0##_type p0, p1##_type p1, p2##_type p2, p3##_type p3, p4##_type p4, \
+    p5##_type p5, p6##_type p6
+#define GMOCK_INTERNAL_DECL_AND_8_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, \
+    p7) p0##_type p0, p1##_type p1, p2##_type p2, p3##_type p3, p4##_type p4, \
+    p5##_type p5, p6##_type p6, p7##_type p7
+#define GMOCK_INTERNAL_DECL_AND_9_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, \
+    p7, p8) p0##_type p0, p1##_type p1, p2##_type p2, p3##_type p3, \
+    p4##_type p4, p5##_type p5, p6##_type p6, p7##_type p7, p8##_type p8
+#define GMOCK_INTERNAL_DECL_AND_10_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, \
+    p7, p8, p9) p0##_type p0, p1##_type p1, p2##_type p2, p3##_type p3, \
+    p4##_type p4, p5##_type p5, p6##_type p6, p7##_type p7, p8##_type p8, \
+    p9##_type p9
+
+// The suffix of the class template implementing the action template.
+#define GMOCK_INTERNAL_COUNT_AND_0_VALUE_PARAMS()
+#define GMOCK_INTERNAL_COUNT_AND_1_VALUE_PARAMS(p0) P
+#define GMOCK_INTERNAL_COUNT_AND_2_VALUE_PARAMS(p0, p1) P2
+#define GMOCK_INTERNAL_COUNT_AND_3_VALUE_PARAMS(p0, p1, p2) P3
+#define GMOCK_INTERNAL_COUNT_AND_4_VALUE_PARAMS(p0, p1, p2, p3) P4
+#define GMOCK_INTERNAL_COUNT_AND_5_VALUE_PARAMS(p0, p1, p2, p3, p4) P5
+#define GMOCK_INTERNAL_COUNT_AND_6_VALUE_PARAMS(p0, p1, p2, p3, p4, p5) P6
+#define GMOCK_INTERNAL_COUNT_AND_7_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6) P7
+#define GMOCK_INTERNAL_COUNT_AND_8_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, \
+    p7) P8
+#define GMOCK_INTERNAL_COUNT_AND_9_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, \
+    p7, p8) P9
+#define GMOCK_INTERNAL_COUNT_AND_10_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, \
+    p7, p8, p9) P10
+
+// The name of the class template implementing the action template.
+#define GMOCK_ACTION_CLASS_(name, value_params)\
+    GMOCK_CONCAT_TOKEN_(name##Action, GMOCK_INTERNAL_COUNT_##value_params)
+
+#define ACTION_TEMPLATE(name, template_params, value_params)\
+  template <GMOCK_INTERNAL_DECL_##template_params\
+            GMOCK_INTERNAL_DECL_TYPE_##value_params>\
+  class GMOCK_ACTION_CLASS_(name, value_params) {\
+   public:\
+    GMOCK_ACTION_CLASS_(name, value_params)\
+        GMOCK_INTERNAL_INIT_##value_params {}\
+    template <typename F>\
+    class gmock_Impl : public ::testing::ActionInterface<F> {\
+     public:\
+      typedef F function_type;\
+      typedef typename ::testing::internal::Function<F>::Result return_type;\
+      typedef typename ::testing::internal::Function<F>::ArgumentTuple\
+          args_type;\
+      explicit gmock_Impl GMOCK_INTERNAL_INIT_##value_params {}\
+      virtual return_type Perform(const args_type& args) {\
+        return ::testing::internal::ActionHelper<return_type, gmock_Impl>::\
+            Perform(this, args);\
+      }\
+      template <typename arg0_type, typename arg1_type, typename arg2_type, \
+          typename arg3_type, typename arg4_type, typename arg5_type, \
+          typename arg6_type, typename arg7_type, typename arg8_type, \
+          typename arg9_type>\
+      return_type gmock_PerformImpl(const args_type& args, arg0_type arg0, \
+          arg1_type arg1, arg2_type arg2, arg3_type arg3, arg4_type arg4, \
+          arg5_type arg5, arg6_type arg6, arg7_type arg7, arg8_type arg8, \
+          arg9_type arg9) const;\
+      GMOCK_INTERNAL_DEFN_##value_params\
+    };\
+    template <typename F> operator ::testing::Action<F>() const {\
+      return ::testing::Action<F>(\
+          new gmock_Impl<F>(GMOCK_INTERNAL_LIST_##value_params));\
+    }\
+    GMOCK_INTERNAL_DEFN_##value_params\
+  };\
+  template <GMOCK_INTERNAL_DECL_##template_params\
+            GMOCK_INTERNAL_DECL_TYPE_##value_params>\
+  inline GMOCK_ACTION_CLASS_(name, value_params)<\
+      GMOCK_INTERNAL_LIST_##template_params\
+      GMOCK_INTERNAL_LIST_TYPE_##value_params> name(\
+          GMOCK_INTERNAL_DECL_##value_params) {\
+    return GMOCK_ACTION_CLASS_(name, value_params)<\
+        GMOCK_INTERNAL_LIST_##template_params\
+        GMOCK_INTERNAL_LIST_TYPE_##value_params>(\
+            GMOCK_INTERNAL_LIST_##value_params);\
+  }\
+  template <GMOCK_INTERNAL_DECL_##template_params\
+            GMOCK_INTERNAL_DECL_TYPE_##value_params>\
+  template <typename F>\
+  template <typename arg0_type, typename arg1_type, typename arg2_type,\
+      typename arg3_type, typename arg4_type, typename arg5_type,\
+      typename arg6_type, typename arg7_type, typename arg8_type,\
+      typename arg9_type>\
+  typename ::testing::internal::Function<F>::Result\
+      GMOCK_ACTION_CLASS_(name, value_params)<\
+          GMOCK_INTERNAL_LIST_##template_params\
+          GMOCK_INTERNAL_LIST_TYPE_##value_params>::gmock_Impl<F>::\
+              gmock_PerformImpl(\
+          GMOCK_ACTION_ARG_TYPES_AND_NAMES_UNUSED_) const
 
 #define ACTION(name)\
   class name##Action {\
@@ -2305,37 +2323,232 @@ DoAll(Action1 a1, Action2 a2, Action3 a3, Action4 a4, Action5 a5, Action6 a6,
 // updated.
 namespace testing {
 
-namespace internal {
+// Various overloads for InvokeArgument<N>().
+//
+// The InvokeArgument<N>(a1, a2, ..., a_k) action invokes the N-th
+// (0-based) argument, which must be a k-ary callable, of the mock
+// function, with arguments a1, a2, ..., a_k.
+//
+// Notes:
+//
+//   1. The arguments are passed by value by default.  If you need to
+//   pass an argument by reference, wrap it inside ByRef().  For
+//   example,
+//
+//     InvokeArgument<1>(5, string("Hello"), ByRef(foo))
+//
+//   passes 5 and string("Hello") by value, and passes foo by
+//   reference.
+//
+//   2. If the callable takes an argument by reference but ByRef() is
+//   not used, it will receive the reference to a copy of the value,
+//   instead of the original value.  For example, when the 0-th
+//   argument of the mock function takes a const string&, the action
+//
+//     InvokeArgument<0>(string("Hello"))
+//
+//   makes a copy of the temporary string("Hello") object and passes a
+//   reference of the copy, instead of the original temporary object,
+//   to the callable.  This makes it easy for a user to define an
+//   InvokeArgument action from temporary values and have it performed
+//   later.
 
-// Saves argument #0 to where the pointer points.
-ACTION_P(SaveArg0, pointer) { *pointer = arg0; }
-
-// Assigns 'value' to the variable referenced by argument #0.
-ACTION_P(SetArg0Referee, value) {
-  // Ensures that argument #0 is a reference.  If you get a compiler
-  // error on the next line, you are using SetArgReferee<k>(value) in
-  // a mock function whose k-th (0-based) argument is not a reference.
-  GMOCK_COMPILE_ASSERT_(internal::is_reference<arg0_type>::value,
-                        SetArgReferee_must_be_used_with_a_reference_argument);
-  arg0 = value;
+ACTION_TEMPLATE(InvokeArgument,
+                HAS_1_TEMPLATE_PARAMS(int, k),
+                AND_0_VALUE_PARAMS()) {
+  return internal::CallableHelper<return_type>::Call(
+      ::std::tr1::get<k>(args));
 }
 
-}  // namespace internal
+ACTION_TEMPLATE(InvokeArgument,
+                HAS_1_TEMPLATE_PARAMS(int, k),
+                AND_1_VALUE_PARAMS(p0)) {
+  return internal::CallableHelper<return_type>::Call(
+      ::std::tr1::get<k>(args), p0);
+}
+
+ACTION_TEMPLATE(InvokeArgument,
+                HAS_1_TEMPLATE_PARAMS(int, k),
+                AND_2_VALUE_PARAMS(p0, p1)) {
+  return internal::CallableHelper<return_type>::Call(
+      ::std::tr1::get<k>(args), p0, p1);
+}
+
+ACTION_TEMPLATE(InvokeArgument,
+                HAS_1_TEMPLATE_PARAMS(int, k),
+                AND_3_VALUE_PARAMS(p0, p1, p2)) {
+  return internal::CallableHelper<return_type>::Call(
+      ::std::tr1::get<k>(args), p0, p1, p2);
+}
+
+ACTION_TEMPLATE(InvokeArgument,
+                HAS_1_TEMPLATE_PARAMS(int, k),
+                AND_4_VALUE_PARAMS(p0, p1, p2, p3)) {
+  return internal::CallableHelper<return_type>::Call(
+      ::std::tr1::get<k>(args), p0, p1, p2, p3);
+}
+
+ACTION_TEMPLATE(InvokeArgument,
+                HAS_1_TEMPLATE_PARAMS(int, k),
+                AND_5_VALUE_PARAMS(p0, p1, p2, p3, p4)) {
+  return internal::CallableHelper<return_type>::Call(
+      ::std::tr1::get<k>(args), p0, p1, p2, p3, p4);
+}
+
+ACTION_TEMPLATE(InvokeArgument,
+                HAS_1_TEMPLATE_PARAMS(int, k),
+                AND_6_VALUE_PARAMS(p0, p1, p2, p3, p4, p5)) {
+  return internal::CallableHelper<return_type>::Call(
+      ::std::tr1::get<k>(args), p0, p1, p2, p3, p4, p5);
+}
+
+ACTION_TEMPLATE(InvokeArgument,
+                HAS_1_TEMPLATE_PARAMS(int, k),
+                AND_7_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6)) {
+  return internal::CallableHelper<return_type>::Call(
+      ::std::tr1::get<k>(args), p0, p1, p2, p3, p4, p5, p6);
+}
+
+ACTION_TEMPLATE(InvokeArgument,
+                HAS_1_TEMPLATE_PARAMS(int, k),
+                AND_8_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, p7)) {
+  return internal::CallableHelper<return_type>::Call(
+      ::std::tr1::get<k>(args), p0, p1, p2, p3, p4, p5, p6, p7);
+}
+
+ACTION_TEMPLATE(InvokeArgument,
+                HAS_1_TEMPLATE_PARAMS(int, k),
+                AND_9_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, p7, p8)) {
+  return internal::CallableHelper<return_type>::Call(
+      ::std::tr1::get<k>(args), p0, p1, p2, p3, p4, p5, p6, p7, p8);
+}
+
+ACTION_TEMPLATE(InvokeArgument,
+                HAS_1_TEMPLATE_PARAMS(int, k),
+                AND_10_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, p7, p8, p9)) {
+  return internal::CallableHelper<return_type>::Call(
+      ::std::tr1::get<k>(args), p0, p1, p2, p3, p4, p5, p6, p7, p8, p9);
+}
 
 // Action SaveArg<k>(pointer) saves the k-th (0-based) argument of the
 // mock function to *pointer.
-template <int k, typename Pointer>
-inline internal::WithArgsAction<internal::SaveArg0ActionP<Pointer>, k>
-SaveArg(const Pointer& pointer) {
-  return WithArg<k>(internal::SaveArg0(pointer));
+ACTION_TEMPLATE(SaveArg,
+                HAS_1_TEMPLATE_PARAMS(int, k),
+                AND_1_VALUE_PARAMS(pointer)) {
+  *pointer = ::std::tr1::get<k>(args);
 }
 
 // Action SetArgReferee<k>(value) assigns 'value' to the variable
 // referenced by the k-th (0-based) argument of the mock function.
-template <int k, typename Value>
-inline internal::WithArgsAction<internal::SetArg0RefereeActionP<Value>, k>
-SetArgReferee(const Value& value) {
-  return WithArg<k>(internal::SetArg0Referee(value));
+ACTION_TEMPLATE(SetArgReferee,
+                HAS_1_TEMPLATE_PARAMS(int, k),
+                AND_1_VALUE_PARAMS(value)) {
+  typedef typename ::std::tr1::tuple_element<k, args_type>::type argk_type;
+  // Ensures that argument #k is a reference.  If you get a compiler
+  // error on the next line, you are using SetArgReferee<k>(value) in
+  // a mock function whose k-th (0-based) argument is not a reference.
+  GMOCK_COMPILE_ASSERT_(internal::is_reference<argk_type>::value,
+                        SetArgReferee_must_be_used_with_a_reference_argument);
+  ::std::tr1::get<k>(args) = value;
+}
+
+// Action SetArrayArgument<k>(first, last) copies the elements in
+// source range [first, last) to the array pointed to by the k-th
+// (0-based) argument, which can be either a pointer or an
+// iterator. The action does not take ownership of the elements in the
+// source range.
+ACTION_TEMPLATE(SetArrayArgument,
+                HAS_1_TEMPLATE_PARAMS(int, k),
+                AND_2_VALUE_PARAMS(first, last)) {
+  // Microsoft compiler deprecates ::std::copy, so we want to suppress warning
+  // 4996 (Function call with parameters that may be unsafe) there.
+#ifdef _MSC_VER
+#pragma warning(push)          // Saves the current warning state.
+#pragma warning(disable:4996)  // Temporarily disables warning 4996.
+#endif
+  ::std::copy(first, last, ::std::tr1::get<k>(args));
+#ifdef _MSC_VER
+#pragma warning(pop)           // Restores the warning state.
+#endif
+}
+
+// Various overloads for ReturnNew<T>().
+//
+// The ReturnNew<T>(a1, a2, ..., a_k) action returns a pointer to a new
+// instance of type T, constructed on the heap with constructor arguments
+// a1, a2, ..., and a_k. The caller assumes ownership of the returned value.
+ACTION_TEMPLATE(ReturnNew,
+                HAS_1_TEMPLATE_PARAMS(typename, T),
+                AND_0_VALUE_PARAMS()) {
+  return new T();
+}
+
+ACTION_TEMPLATE(ReturnNew,
+                HAS_1_TEMPLATE_PARAMS(typename, T),
+                AND_1_VALUE_PARAMS(p0)) {
+  return new T(p0);
+}
+
+ACTION_TEMPLATE(ReturnNew,
+                HAS_1_TEMPLATE_PARAMS(typename, T),
+                AND_2_VALUE_PARAMS(p0, p1)) {
+  return new T(p0, p1);
+}
+
+ACTION_TEMPLATE(ReturnNew,
+                HAS_1_TEMPLATE_PARAMS(typename, T),
+                AND_3_VALUE_PARAMS(p0, p1, p2)) {
+  return new T(p0, p1, p2);
+}
+
+ACTION_TEMPLATE(ReturnNew,
+                HAS_1_TEMPLATE_PARAMS(typename, T),
+                AND_4_VALUE_PARAMS(p0, p1, p2, p3)) {
+  return new T(p0, p1, p2, p3);
+}
+
+ACTION_TEMPLATE(ReturnNew,
+                HAS_1_TEMPLATE_PARAMS(typename, T),
+                AND_5_VALUE_PARAMS(p0, p1, p2, p3, p4)) {
+  return new T(p0, p1, p2, p3, p4);
+}
+
+ACTION_TEMPLATE(ReturnNew,
+                HAS_1_TEMPLATE_PARAMS(typename, T),
+                AND_6_VALUE_PARAMS(p0, p1, p2, p3, p4, p5)) {
+  return new T(p0, p1, p2, p3, p4, p5);
+}
+
+ACTION_TEMPLATE(ReturnNew,
+                HAS_1_TEMPLATE_PARAMS(typename, T),
+                AND_7_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6)) {
+  return new T(p0, p1, p2, p3, p4, p5, p6);
+}
+
+ACTION_TEMPLATE(ReturnNew,
+                HAS_1_TEMPLATE_PARAMS(typename, T),
+                AND_8_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, p7)) {
+  return new T(p0, p1, p2, p3, p4, p5, p6, p7);
+}
+
+ACTION_TEMPLATE(ReturnNew,
+                HAS_1_TEMPLATE_PARAMS(typename, T),
+                AND_9_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, p7, p8)) {
+  return new T(p0, p1, p2, p3, p4, p5, p6, p7, p8);
+}
+
+ACTION_TEMPLATE(ReturnNew,
+                HAS_1_TEMPLATE_PARAMS(typename, T),
+                AND_10_VALUE_PARAMS(p0, p1, p2, p3, p4, p5, p6, p7, p8, p9)) {
+  return new T(p0, p1, p2, p3, p4, p5, p6, p7, p8, p9);
+}
+
+// Action DeleteArg<k>() deletes the k-th (0-based) argument of the mock
+// function.
+ACTION_TEMPLATE(DeleteArg,
+                HAS_1_TEMPLATE_PARAMS(int, k),
+                AND_0_VALUE_PARAMS()) {
+  delete ::std::tr1::get<k>(args);
 }
 
 // Action Throw(exception) can be used in a mock function of any type

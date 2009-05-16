@@ -39,10 +39,6 @@
 
 #include <gtest/internal/gtest-internal.h>
 
-#if GTEST_HAS_DEATH_TEST && GTEST_OS_WINDOWS
-#include <io.h>
-#endif  // GTEST_HAS_DEATH_TEST && GTEST_OS_WINDOWS
-
 namespace testing {
 namespace internal {
 
@@ -196,32 +192,24 @@ class InternalRunDeathTestFlag {
   InternalRunDeathTestFlag(const String& file,
                            int line,
                            int index,
-                           int status_fd)
-      : file_(file), line_(line), index_(index), status_fd_(status_fd) {}
+                           int write_fd)
+      : file_(file), line_(line), index_(index), write_fd_(write_fd) {}
 
   ~InternalRunDeathTestFlag() {
-    if (status_fd_ >= 0)
-// Suppress MSVC complaints about POSIX functions.
-#ifdef _MSC_VER
-#pragma warning(push)
-#pragma warning(disable: 4996)
-#endif  // _MSC_VER
-      close(status_fd_);
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif  // _MSC_VER
+    if (write_fd_ >= 0)
+      posix::close(write_fd_);
   }
 
   String file() const { return file_; }
   int line() const { return line_; }
   int index() const { return index_; }
-  int status_fd() const { return status_fd_; }
+  int write_fd() const { return write_fd_; }
 
  private:
   String file_;
   int line_;
   int index_;
-  int status_fd_;
+  int write_fd_;
 
   GTEST_DISALLOW_COPY_AND_ASSIGN_(InternalRunDeathTestFlag);
 };

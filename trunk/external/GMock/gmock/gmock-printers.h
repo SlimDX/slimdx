@@ -211,7 +211,9 @@ class UniversalPrinter;
 // Used to print an STL-style container when the user doesn't define
 // a PrintTo() for it.
 template <typename C>
-void DefaultPrintTo(IsContainer, const C& container, ::std::ostream* os) {
+void DefaultPrintTo(IsContainer /* dummy */,
+                    false_type /* is not a pointer */,
+                    const C& container, ::std::ostream* os) {
   const size_t kMaxCount = 32;  // The maximum number of elements to print.
   *os << '{';
   size_t count = 0;
@@ -234,9 +236,31 @@ void DefaultPrintTo(IsContainer, const C& container, ::std::ostream* os) {
   *os << '}';
 }
 
-// Used to print a value when the user doesn't define PrintTo() for it.
+// Used to print a pointer that is neither a char pointer nor a member
+// pointer, when the user doesn't define PrintTo() for it.  (A member
+// variable pointer or member function pointer doesn't really point to
+// a location in the address space.  Their representation is
+// implementation-defined.  Therefore they will be printed as raw
+// bytes.)
 template <typename T>
-void DefaultPrintTo(IsNotContainer, const T& value, ::std::ostream* os) {
+void DefaultPrintTo(IsNotContainer /* dummy */,
+                    true_type /* is a pointer */,
+                    T* p, ::std::ostream* os) {
+  if (p == NULL) {
+    *os << "NULL";
+  } else {
+    // We cannot use implicit_cast or static_cast here, as they don't
+    // work when p is a function pointer.
+    *os << reinterpret_cast<const void*>(p);
+  }
+}
+
+// Used to print a non-container, non-pointer value when the user
+// doesn't define PrintTo() for it.
+template <typename T>
+void DefaultPrintTo(IsNotContainer /* dummy */,
+                    false_type /* is not a pointer */,
+                    const T& value, ::std::ostream* os) {
   ::testing_internal::DefaultPrintNonContainerTo(value, os);
 }
 
@@ -253,22 +277,29 @@ void DefaultPrintTo(IsNotContainer, const T& value, ::std::ostream* os) {
 // wants).
 template <typename T>
 void PrintTo(const T& value, ::std::ostream* os) {
-  // DefaultPrintTo() is overloaded.  The type of its first argument
-  // determines which version will be picked.  If T is an STL-style
-  // container, the version for container will be called.  Otherwise
-  // the generic version will be called.
+  // DefaultPrintTo() is overloaded.  The type of its first two
+  // arguments determine which version will be picked.  If T is an
+  // STL-style container, the version for container will be called; if
+  // T is a pointer, the pointer version will be called; otherwise the
+  // generic version will be called.
   //
   // Note that we check for container types here, prior to we check
   // for protocol message types in our operator<<.  The rationale is:
   //
   // For protocol messages, we want to give people a chance to
   // override Google Mock's format by defining a PrintTo() or
-  // operator<<.  For STL containers, we believe the Google Mock's
-  // format is superior to what util/gtl/stl-logging.h offers.
-  // Therefore we don't want it to be accidentally overridden by the
-  // latter (even if the user includes stl-logging.h through other
-  // headers indirectly, Google Mock's format will still be used).
-  DefaultPrintTo(IsContainerTest<T>(0), value, os);
+  // operator<<.  For STL containers, other formats can be
+  // incompatible with Google Mock's format for the container
+  // elements; therefore we check for container types here to ensure
+  // that our format is used.
+  //
+  // The second argument of DefaultPrintTo() is needed to bypass a bug
+  // in Symbian's C++ compiler that prevents it from picking the right
+  // overload between:
+  //
+  //   PrintTo(const T& x, ...);
+  //   PrintTo(T* x, ...);
+  DefaultPrintTo(IsContainerTest<T>(0), is_pointer<T>(), value, os);
 }
 
 // The following list of PrintTo() overloads tells
@@ -310,12 +341,11 @@ inline void PrintTo(char* s, ::std::ostream* os) {
   PrintTo(implicit_cast<const char*>(s), os);
 }
 
-// MSVC compiler can be configured to define whar_t as a typedef
-// of unsigned short. Defining an overload for const wchar_t* in that case
-// would cause pointers to unsigned shorts be printed as wide strings,
-// possibly accessing more memory than intended and causing invalid
-// memory accesses. MSVC defines _NATIVE_WCHAR_T_DEFINED symbol when
-// wchar_t is implemented as a native type.
+// MSVC can be configured to define wchar_t as a typedef of unsigned
+// short.  It defines _NATIVE_WCHAR_T_DEFINED when wchar_t is a native
+// type.  When wchar_t is a typedef, defining an overload for const
+// wchar_t* would cause unsigned short* be printed as a wide string,
+// possibly causing invalid memory accesses.
 #if !defined(_MSC_VER) || defined(_NATIVE_WCHAR_T_DEFINED)
 // Overloads for wide C strings
 void PrintTo(const wchar_t* s, ::std::ostream* os);
@@ -323,22 +353,6 @@ inline void PrintTo(wchar_t* s, ::std::ostream* os) {
   PrintTo(implicit_cast<const wchar_t*>(s), os);
 }
 #endif
-
-// Overload for pointers that are neither char pointers nor member
-// pointers.  (A member variable pointer or member function pointer
-// doesn't really points to a location in the address space.  Their
-// representation is implementation-defined.  Therefore they will be
-// printed as raw bytes.)
-template <typename T>
-void PrintTo(T* p, ::std::ostream* os) {
-  if (p == NULL) {
-    *os << "NULL";
-  } else {
-    // We cannot use implicit_cast or static_cast here, as they don't
-    // work when p is a function pointer.
-    *os << reinterpret_cast<const void*>(p);
-  }
-}
 
 // Overload for C arrays.  Multi-dimensional arrays are printed
 // properly.

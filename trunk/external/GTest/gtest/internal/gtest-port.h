@@ -96,8 +96,8 @@
 //
 // Macros for basic C++ coding:
 //   GTEST_AMBIGUOUS_ELSE_BLOCKER_ - for disabling a gcc warning.
-//   GTEST_ATTRIBUTE_UNUSED_  - declares that a class' instances don't have to
-//                              be used.
+//   GTEST_ATTRIBUTE_UNUSED_  - declares that a class' instances or a
+//                              variable don't have to be used.
 //   GTEST_DISALLOW_COPY_AND_ASSIGN_ - disables copy ctor and operator=.
 //   GTEST_MUST_USE_RESULT_   - declares that a function's result must be used.
 //
@@ -149,7 +149,10 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <iostream>  // Used for GTEST_CHECK_
+#include <string.h>
+#include <sys/stat.h>
+
+#include <iostream>  // NOLINT
 
 #define GTEST_DEV_EMAIL_ "googletestframework@@googlegroups.com"
 #define GTEST_FLAG_PREFIX_ "gtest_"
@@ -169,11 +172,7 @@
 #define GTEST_OS_CYGWIN 1
 #elif __SYMBIAN32__
 #define GTEST_OS_SYMBIAN 1
-#elif defined _MSC_VER
-// TODO(kenton@google.com): GTEST_OS_WINDOWS is currently used to mean
-//   both "The OS is Windows" and "The compiler is MSVC".  These
-//   meanings really should be separated in order to better support
-//   Windows compilers other than MSVC.
+#elif defined _WIN32
 #define GTEST_OS_WINDOWS 1
 #elif defined __APPLE__
 #define GTEST_OS_MAC 1
@@ -183,7 +182,7 @@
 #define GTEST_OS_ZOS 1
 #elif defined(__sun) && defined(__SVR4)
 #define GTEST_OS_SOLARIS 1
-#endif  // _MSC_VER
+#endif  // __CYGWIN__
 
 #if GTEST_OS_CYGWIN || GTEST_OS_LINUX || GTEST_OS_MAC
 
@@ -192,7 +191,20 @@
 // included <stdlib.h>, which is guaranteed to define size_t through
 // <stddef.h>.
 #include <regex.h>  // NOLINT
+#include <strings.h>  // NOLINT
+#include <sys/types.h>  // NOLINT
+#include <unistd.h>  // NOLINT
+
 #define GTEST_USES_POSIX_RE 1
+
+#elif GTEST_OS_WINDOWS
+
+#include <direct.h>  // NOLINT
+#include <io.h>  // NOLINT
+
+// <regex.h> is not available on Windows.  Use our own simple regex
+// implementation instead.
+#define GTEST_USES_SIMPLE_RE 1
 
 #else
 
@@ -381,7 +393,7 @@
                              GTEST_OS_CYGWIN || \
                              (GTEST_OS_WINDOWS && _MSC_VER >= 1400))
 #define GTEST_HAS_DEATH_TEST 1
-#include <vector>
+#include <vector>  // NOLINT
 #endif
 
 // Determines whether to support value-parameterized tests.
@@ -427,7 +439,7 @@
 #define GTEST_AMBIGUOUS_ELSE_BLOCKER_ switch (0) case 0:  // NOLINT
 #endif
 
-// Use this annotation at the end of a struct / class definition to
+// Use this annotation at the end of a struct/class definition to
 // prevent the compiler from optimizing away instances that are never
 // used.  This is useful when all interesting logic happens inside the
 // c'tor and / or d'tor.  Example:
@@ -435,6 +447,9 @@
 //   struct Foo {
 //     Foo() { ... }
 //   } GTEST_ATTRIBUTE_UNUSED_;
+//
+// Also use it after a variable or parameter declaration to tell the
+// compiler the variable/parameter does not have to be used.
 #if defined(__GNUC__) && !defined(COMPILER_ICC)
 #define GTEST_ATTRIBUTE_UNUSED_ __attribute__ ((unused))
 #else
@@ -658,9 +673,9 @@ class ThreadLocal {
   T value_;
 };
 
-// There's no portable way to detect the number of threads, so we just
-// return 0 to indicate that we cannot detect it.
-inline size_t GetThreadCount() { return 0; }
+// Returns the number of threads running in the process, or 0 to indicate that
+// we cannot detect it.
+size_t GetThreadCount();
 
 // The above synchronization primitives have dummy implementations.
 // Therefore Google Test is not thread-safe.
@@ -701,17 +716,112 @@ struct is_pointer<T*> : public true_type {};
 
 #if GTEST_OS_WINDOWS
 #define GTEST_PATH_SEP_ "\\"
-#else
-#define GTEST_PATH_SEP_ "/"
-#endif  // GTEST_OS_WINDOWS
-
-// Defines BiggestInt as the biggest signed integer type the compiler
-// supports.
-#if GTEST_OS_WINDOWS
+// The biggest signed integer type the compiler supports.
 typedef __int64 BiggestInt;
 #else
+#define GTEST_PATH_SEP_ "/"
 typedef long long BiggestInt;  // NOLINT
 #endif  // GTEST_OS_WINDOWS
+
+// The testing::internal::posix namespace holds wrappers for common
+// POSIX functions.  These wrappers hide the differences between
+// Windows/MSVC and POSIX systems.
+namespace posix {
+
+// Functions with a different name on Windows.
+
+#if GTEST_OS_WINDOWS
+
+typedef struct _stat stat_struct;
+
+// We cannot write ::_fileno() as MSVC defines it as a macro.
+inline int fileno(FILE* file) { return _fileno(file); }
+inline int isatty(int fd) { return ::_isatty(fd); }
+inline int stat(const char* path, stat_struct* buf) {
+  return ::_stat(path, buf);
+}
+inline int strcasecmp(const char* s1, const char* s2) {
+  return ::_stricmp(s1, s2);
+}
+// We cannot define the function as strdup(const char* src), since
+// MSVC defines strdup as a macro.
+inline char* StrDup(const char* src) { return ::_strdup(src); }
+inline int rmdir(const char* dir) { return ::_rmdir(dir); }
+inline bool IsDir(const stat_struct& st) {
+  return (_S_IFDIR & st.st_mode) != 0;
+}
+
+#else
+
+typedef struct stat stat_struct;
+
+using ::fileno;
+using ::isatty;
+using ::stat;
+using ::strcasecmp;
+inline char* StrDup(const char* src) { return ::strdup(src); }
+using ::rmdir;
+inline bool IsDir(const stat_struct& st) { return S_ISDIR(st.st_mode); }
+
+#endif  // GTEST_OS_WINDOWS
+
+// Functions deprecated by MSVC 8.0.
+
+#ifdef _MSC_VER
+// Temporarily disable warning 4996 (deprecated function).
+#pragma warning(push)
+#pragma warning(disable:4996)
+#endif
+
+inline const char* strncpy(char* dest, const char* src, size_t n) {
+  return ::strncpy(dest, src, n);
+}
+
+inline int chdir(const char* dir) { return ::chdir(dir); }
+
+inline FILE* fopen(const char* path, const char* mode) {
+  return ::fopen(path, mode);
+}
+inline FILE *freopen(const char *path, const char *mode, FILE *stream) {
+  return ::freopen(path, mode, stream);
+}
+inline FILE* fdopen(int fd, const char* mode) {
+  return ::fdopen(fd, mode);
+}
+inline int fclose(FILE *fp) { return ::fclose(fp); }
+
+inline int read(int fd, void* buf, unsigned int count) {
+  return static_cast<int>(::read(fd, buf, count));
+}
+inline int write(int fd, const void* buf, unsigned int count) {
+  return static_cast<int>(::write(fd, buf, count));
+}
+inline int close(int fd) { return ::close(fd); }
+
+inline const char* strerror(int errnum) { return ::strerror(errnum); }
+
+inline const char* getenv(const char* name) {
+#ifdef _WIN32_WCE  // We are on Windows CE, which has no environment variables.
+  return NULL;
+#else
+  return ::getenv(name);
+#endif
+}
+
+#ifdef _MSC_VER
+#pragma warning(pop)  // Restores the warning state.
+#endif
+
+#ifdef _WIN32_WCE
+// Windows CE has no C library. The abort() function is used in
+// several places in Google Test. This implementation provides a reasonable
+// imitation of standard behaviour.
+void abort();
+#else
+using ::abort;
+#endif  // _WIN32_WCE
+
+}  // namespace posix
 
 // The maximum number a BiggestInt can represent.  This definition
 // works no matter BiggestInt is represented in one's complement or
@@ -782,32 +892,6 @@ typedef TypeWithSize<8>::UInt UInt64;
 typedef TypeWithSize<8>::Int TimeInMillis;  // Represents time in milliseconds.
 
 // Utilities for command line flags and environment variables.
-
-// A wrapper for getenv() that works on Linux, Windows, and Mac OS.
-inline const char* GetEnv(const char* name) {
-#ifdef _WIN32_WCE  // We are on Windows CE.
-  // CE has no environment variables.
-  return NULL;
-#elif GTEST_OS_WINDOWS  // We are on Windows proper.
-  // MSVC 8 deprecates getenv(), so we want to suppress warning 4996
-  // (deprecated function) there.
-#pragma warning(push)          // Saves the current warning state.
-#pragma warning(disable:4996)  // Temporarily disables warning 4996.
-  return getenv(name);
-#pragma warning(pop)           // Restores the warning state.
-#else  // We are on Linux or Mac OS.
-  return getenv(name);
-#endif
-}
-
-#ifdef _WIN32_WCE
-// Windows CE has no C library. The abort() function is used in
-// several places in Google Test. This implementation provides a reasonable
-// imitation of standard behaviour.
-void abort();
-#else
-inline void abort() { ::abort(); }
-#endif  // _WIN32_WCE
 
 // INTERNAL IMPLEMENTATION - DO NOT USE.
 //
