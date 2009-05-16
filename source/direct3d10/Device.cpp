@@ -50,24 +50,24 @@ namespace SlimDX
 {
 namespace Direct3D10
 {
-	Device::Device( ID3D10Device* pointer, ComObject^ owner )
+	void Device::InitializeSubclasses()
 	{
-		Construct( pointer, owner );
-		
 		m_InputAssembler = gcnew InputAssemblerWrapper( InternalPointer );
 		m_OutputMerger = gcnew OutputMergerWrapper( InternalPointer );
 		m_StreamOutput = gcnew StreamOutputWrapper( InternalPointer );
 		m_Rasterizer = gcnew RasterizerWrapper( InternalPointer );
 	}
+
+	Device::Device( ID3D10Device* pointer, ComObject^ owner )
+	{
+		Construct( pointer, owner );
+		InitializeSubclasses();
+	}
 	
 	Device::Device( IntPtr pointer )
 	{
 		Construct( pointer, NativeInterface );
-		
-		m_InputAssembler = gcnew InputAssemblerWrapper( InternalPointer );
-		m_OutputMerger = gcnew OutputMergerWrapper( InternalPointer );
-		m_StreamOutput = gcnew StreamOutputWrapper( InternalPointer );
-		m_Rasterizer = gcnew RasterizerWrapper( InternalPointer );
+		InitializeSubclasses();
 	}
 	
 	Device^ Device::FromPointer( ID3D10Device* pointer, ComObject^ owner, ComObjectFlags flags )
@@ -88,11 +88,7 @@ namespace Direct3D10
 			throw gcnew Direct3D10Exception( Result::Last );
 		
 		Construct( device );
-		
-		m_InputAssembler = gcnew InputAssemblerWrapper( InternalPointer );
-		m_OutputMerger = gcnew OutputMergerWrapper( InternalPointer );
-		m_StreamOutput = gcnew StreamOutputWrapper( InternalPointer );
-		m_Rasterizer = gcnew RasterizerWrapper( InternalPointer );
+		InitializeSubclasses();
 	}
 	
 	Device::Device( DriverType driverType, DeviceCreationFlags flags )
@@ -103,11 +99,7 @@ namespace Direct3D10
 			throw gcnew Direct3D10Exception( Result::Last );
 		
 		Construct( device );
-		
-		m_InputAssembler = gcnew InputAssemblerWrapper( InternalPointer );
-		m_OutputMerger = gcnew OutputMergerWrapper( InternalPointer );
-		m_StreamOutput = gcnew StreamOutputWrapper( InternalPointer );
-		m_Rasterizer = gcnew RasterizerWrapper( InternalPointer );
+		InitializeSubclasses();
 	}
 	
 	Device::Device( DXGI::Adapter^ adapter, DriverType driverType, DeviceCreationFlags flags )
@@ -119,11 +111,7 @@ namespace Direct3D10
 			throw gcnew Direct3D10Exception( Result::Last );
 		
 		Construct( device );
-		
-		m_InputAssembler = gcnew InputAssemblerWrapper( InternalPointer );
-		m_OutputMerger = gcnew OutputMergerWrapper( InternalPointer );
-		m_StreamOutput = gcnew StreamOutputWrapper( InternalPointer );
-		m_Rasterizer = gcnew RasterizerWrapper( InternalPointer );
+		InitializeSubclasses();
 	}
 
 	InputAssemblerWrapper^ Device::InputAssembler::get()
