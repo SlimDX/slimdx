@@ -21,25 +21,41 @@
 */
 #pragma once
 
-#include "ShaderResourceView.h"
-#include "ShaderResourceViewDescription1.h"
+#include "BlendState.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10_1
 	{
-		public ref class ShaderResourceView1 : SlimDX::Direct3D10::ShaderResourceView
-		{
-			COMOBJECT_CUSTOM(ID3D10ShaderResourceView1, ShaderResourceView1);
+		ref class Device1;
+		value class BlendStateDescription1;
 
+		/// <summary>
+		/// A state object defining the behavior of the pixel-blending stage of the output merger. 
+		/// </summary>
+		/// <unmanaged>ID3D10BlendState1</unmanaged>
+		public ref class BlendState1 : public SlimDX::Direct3D10::BlendState
+		{
+			COMOBJECT_CUSTOM(ID3D10BlendState1, BlendState1);
+		
 		public:
-			property ShaderResourceViewDescription1 Description
+			/// <summary>
+			/// Gets the state's description.
+			/// </summary>
+			property BlendStateDescription1 Description
 			{
-				ShaderResourceViewDescription1 get() new;
+				BlendStateDescription1 get() new;
 			}
 			
-			ShaderResourceView1( SlimDX::Direct3D10_1::Device1^ device, SlimDX::Direct3D10::Resource^ resource );
-			ShaderResourceView1( SlimDX::Direct3D10_1::Device1^ device, SlimDX::Direct3D10::Resource^ resource, ShaderResourceViewDescription1 description );
+			/// <summary>
+			/// Constructs a new BlendState1 based on the specified description. If the description
+			/// is identical to that of an existing BlendState object, the existing BlendState object
+			/// is returned instead of a new instance.
+			/// </summary>
+			/// <param name="device">The device to associate the state object with</param>
+			/// <param name="description">The state description.</param>
+			/// <returns>The BlendState object.</returns>
+			static BlendState1^ FromDescription( Device1^ device, BlendStateDescription1 description );
 		};
 	}
 }

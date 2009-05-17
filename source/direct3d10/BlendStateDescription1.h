@@ -32,13 +32,20 @@ namespace SlimDX
 		private:
 			array<RenderTargetBlendDescription1>^ m_RenderTargets;
 
+			void ConstructLazyProperties();
+
+		internal:
+			BlendStateDescription1( const D3D10_BLEND_DESC1& native );
+			
+			D3D10_BLEND_DESC1 CreateNativeVersion();
+			
 		public:
 			property bool AlphaToCoverageEnable;
 			property bool IndependentBlendEnable;
 
 			property array<RenderTargetBlendDescription1>^ RenderTargets
 			{
-				array<RenderTargetBlendDescription1>^ get() { return m_RenderTargets; }
+				array<RenderTargetBlendDescription1>^ get();
 			}
 		};
 	}

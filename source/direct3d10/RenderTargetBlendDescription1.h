@@ -29,6 +29,8 @@ namespace SlimDX
 		{
 		internal:
 			RenderTargetBlendDescription1( const D3D10_RENDER_TARGET_BLEND_DESC1& native );
+			
+			D3D10_RENDER_TARGET_BLEND_DESC1 CreateNativeVersion();
 
 		public:
 			/// <summary>

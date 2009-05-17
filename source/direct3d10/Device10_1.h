@@ -22,24 +22,12 @@
 #pragma once
 
 #include "Device.h"
+#include "Enums10_1.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10_1
 	{
-		/// <summary>
-		/// Specifies possible levels of hardware acceleration features.
-		/// </summary>
-		/// <ummanaged>D3D10_FEATURE_LEVEL1</unmanaged>
-		public enum class FeatureLevel
-		{
-			Level_10_0 = D3D10_FEATURE_LEVEL_10_0,
-			Level_10_1 = D3D10_FEATURE_LEVEL_10_1,
-			Level_9_1 = D3D10_FEATURE_LEVEL_9_1,
-			Level_9_2 = D3D10_FEATURE_LEVEL_9_2,
-			Level_9_3 = D3D10_FEATURE_LEVEL_9_3,
-		};
-
 		/// <summary>
 		/// A virtual adapter for performing rendering operations, using Direct3D 10.1.
 		///</summary>

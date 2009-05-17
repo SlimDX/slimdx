@@ -779,7 +779,7 @@ namespace SlimDX
 			OptimizationLevel3 = D3D10_SHADER_OPTIMIZATION_LEVEL3
 		};
 		
-		/// <summary></summary>
+		/// <summary>Identifies the type of the resource that will be viewed.</summary>
 		/// <unmanaged>D3D10_SRV_DIMENSION</unmanaged>
 		public enum class ShaderResourceViewDimension : System::Int32
 		{

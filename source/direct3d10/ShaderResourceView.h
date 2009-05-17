@@ -35,6 +35,10 @@ namespace SlimDX
 		{
 			COMOBJECT(ID3D10ShaderResourceView, ShaderResourceView);
 			
+		protected:
+			//no-op ctor for use by ShaderResourceView1
+			ShaderResourceView() { }
+
 		public:
 			property ShaderResourceViewDescription Description
 			{

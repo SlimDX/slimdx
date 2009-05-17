@@ -40,6 +40,22 @@ namespace Direct3D10_1
 		RenderTargetWriteMask = native.RenderTargetWriteMask;
 	}
 
+	D3D10_RENDER_TARGET_BLEND_DESC1 RenderTargetBlendDescription1::CreateNativeVersion()
+	{
+		D3D10_RENDER_TARGET_BLEND_DESC1 native;
+
+		native.BlendEnable = BlendEnable;
+		native.SrcBlend = static_cast<D3D10_BLEND>( SourceBlend );
+		native.DestBlend = static_cast<D3D10_BLEND>( DestinationBlend );
+		native.BlendOp = static_cast<D3D10_BLEND_OP>( BlendOperation );
+		native.SrcBlendAlpha = static_cast<D3D10_BLEND>( SourceBlendAlpha );
+		native.DestBlendAlpha = static_cast<D3D10_BLEND>( DestinationBlendAlpha );
+		native.BlendOpAlpha = static_cast<D3D10_BLEND_OP>( BlendOperationAlpha );
+		native.RenderTargetWriteMask = RenderTargetWriteMask;
+
+		return native;
+	}
+
 	bool RenderTargetBlendDescription1::operator == ( RenderTargetBlendDescription1 left, RenderTargetBlendDescription1 right )
 	{
 		return RenderTargetBlendDescription1::Equals( left, right );
