@@ -41,6 +41,10 @@ namespace SlimDX
 		{
 			COMOBJECT(ID3D10BlendState, BlendState);
 		
+		protected:
+			//no-op constructor for use by BlendState1
+			BlendState() { }
+
 		public:
 			/// <summary>
 			/// Gets the state's description.

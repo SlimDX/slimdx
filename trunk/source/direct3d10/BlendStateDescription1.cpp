@@ -28,5 +28,45 @@ namespace SlimDX
 {
 namespace Direct3D10_1
 {
+	BlendStateDescription1::BlendStateDescription1( const D3D10_BLEND_DESC1& native )
+	{
+		AlphaToCoverageEnable = native.AlphaToCoverageEnable ? true : false;
+		IndependentBlendEnable = native.IndependentBlendEnable ? true : false;
+		
+		ConstructLazyProperties();
+		for(int index = 0; index < 8; ++index)
+		{
+			m_RenderTargets[index] = RenderTargetBlendDescription1(native.RenderTarget[index]);
+		}
+	}
+	
+	D3D10_BLEND_DESC1 BlendStateDescription1::CreateNativeVersion()
+	{
+		D3D10_BLEND_DESC1 native;
+		native.AlphaToCoverageEnable = AlphaToCoverageEnable;
+		native.IndependentBlendEnable = IndependentBlendEnable;
+		
+		ConstructLazyProperties();
+		for(int index = 0; index < 8; ++index)
+		{
+			native.RenderTarget[index] = m_RenderTargets[index].CreateNativeVersion();
+		}
+		
+		return native;
+	}
+	
+	void BlendStateDescription1::ConstructLazyProperties()
+	{
+		if(m_RenderTargets == nullptr)
+		{
+			m_RenderTargets = gcnew array<RenderTargetBlendDescription1>(8);
+		}
+	}
+
+	array<RenderTargetBlendDescription1>^ BlendStateDescription1::RenderTargets::get()
+	{
+		ConstructLazyProperties();
+		return m_RenderTargets;
+	}
 }
 }

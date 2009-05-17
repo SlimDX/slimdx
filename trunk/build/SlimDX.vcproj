@@ -961,9 +961,21 @@
 						RelativePath="..\source\direct3d10\Device10_1.h"
 						>
 					</File>
-					<Filter
-						Name="Blend States"
+					<File
+						RelativePath="..\source\direct3d10\Enums10_1.h"
 						>
+					</File>
+					<Filter
+						Name="States"
+						>
+						<File
+							RelativePath="..\source\direct3d10\BlendState1.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d10\BlendState1.h"
+							>
+						</File>
 						<File
 							RelativePath="..\source\direct3d10\BlendStateDescription1.cpp"
 							>
@@ -990,6 +1002,14 @@
 						</File>
 						<File
 							RelativePath="..\source\direct3d10\ShaderResourceView1.h"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d10\ShaderResourceViewDescription1.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d10\ShaderResourceViewDescription1.h"
 							>
 						</File>
 					</Filter>

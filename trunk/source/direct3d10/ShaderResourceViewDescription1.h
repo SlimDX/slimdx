@@ -21,25 +21,31 @@
 */
 #pragma once
 
-#include "ShaderResourceView.h"
-#include "ShaderResourceViewDescription1.h"
+#include "../dxgi/Enums.h"
+#include "Enums10_1.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10_1
 	{
-		public ref class ShaderResourceView1 : SlimDX::Direct3D10::ShaderResourceView
+		public value class ShaderResourceViewDescription1
 		{
-			COMOBJECT_CUSTOM(ID3D10ShaderResourceView1, ShaderResourceView1);
-
-		public:
-			property ShaderResourceViewDescription1 Description
-			{
-				ShaderResourceViewDescription1 get() new;
-			}
+		internal:
+			ShaderResourceViewDescription1( const D3D10_SHADER_RESOURCE_VIEW_DESC1& native );
 			
-			ShaderResourceView1( SlimDX::Direct3D10_1::Device1^ device, SlimDX::Direct3D10::Resource^ resource );
-			ShaderResourceView1( SlimDX::Direct3D10_1::Device1^ device, SlimDX::Direct3D10::Resource^ resource, ShaderResourceViewDescription1 description );
+			D3D10_SHADER_RESOURCE_VIEW_DESC1 CreateNativeVersion();
+		
+		public:
+			property DXGI::Format Format;
+			property ShaderResourceViewDimension1 Dimension;
+			property int ElementOffset;
+			property int ElementWidth;
+			property int MostDetailedMip;
+			property int MipLevels;
+			property int FirstArraySlice;
+			property int ArraySize;
+			property int First2DArrayFace;
+			property int NumCubes;
 		};
 	}
 }

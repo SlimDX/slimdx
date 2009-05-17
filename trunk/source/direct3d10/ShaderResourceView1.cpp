@@ -21,12 +21,76 @@
 * THE SOFTWARE.
 */
 #include <d3d10.h>
+#include <d3dx10.h>
+
+#include "Direct3D10Exception.h"
+
 #include "Enums.h"
+#include "Device10_1.h"
+#include "Resource.h"
 #include "ShaderResourceView1.h"
+
+using namespace System;
+using namespace SlimDX::Direct3D10;
 
 namespace SlimDX
 {
 namespace Direct3D10_1
 {
+	ShaderResourceView1::ShaderResourceView1( ID3D10ShaderResourceView1* pointer, ComObject^ owner )
+		: ShaderResourceView( pointer, owner )
+	{
+	}
+	
+	ShaderResourceView1::ShaderResourceView1( IntPtr pointer )
+		: ShaderResourceView( pointer )
+	{
+	}
+	
+	ShaderResourceView1^ ShaderResourceView1::FromPointer( ID3D10ShaderResourceView1* pointer, ComObject^ owner, ComObjectFlags flags )
+	{
+		return ComObject::ConstructFromPointer<ShaderResourceView1, ID3D10ShaderResourceView1>( pointer, owner, flags );
+	}
+	
+	ShaderResourceView1^ ShaderResourceView1::FromPointer( IntPtr pointer )
+	{
+		return ComObject::ConstructFromUserPointer<ShaderResourceView1>( pointer );
+	}
+
+	ShaderResourceView1::ShaderResourceView1( Device1^ device, Resource^ resource )
+	{
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+		if( resource == nullptr )
+			throw gcnew ArgumentNullException( "resource" );
+		
+		ID3D10ShaderResourceView1 *view = 0;
+		if( RECORD_D3D10( device->InternalPointer->CreateShaderResourceView1( resource->InternalPointer, 0, &view ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+			
+		Construct( view );
+	}
+	
+	ShaderResourceView1::ShaderResourceView1( Device1^ device, Resource^ resource, ShaderResourceViewDescription1 description )
+	{
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+		if( resource == nullptr )
+			throw gcnew ArgumentNullException( "resource" );
+		
+		ID3D10ShaderResourceView1 *view = 0;
+		D3D10_SHADER_RESOURCE_VIEW_DESC1 nativeDescription = description.CreateNativeVersion();
+		if( RECORD_D3D10( device->InternalPointer->CreateShaderResourceView1( resource->InternalPointer, &nativeDescription, &view ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+			
+		Construct( view );
+	}
+
+	ShaderResourceViewDescription1 ShaderResourceView1::Description::get()
+	{
+		D3D10_SHADER_RESOURCE_VIEW_DESC1 nativeDescription;
+		InternalPointer->GetDesc1( &nativeDescription );
+		return ShaderResourceViewDescription1( nativeDescription );
+	}
 }
 }
