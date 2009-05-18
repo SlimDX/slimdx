@@ -26,7 +26,7 @@
 #include "../DataStream.h"
 #include "../SlimDXException.h"
 
-#include "Include.h"
+#include "Include10.h"
 
 using namespace System;
 using namespace System::IO;

@@ -39,7 +39,7 @@
 #include "Predicate.h"
 #include "RasterizerWrapper.h"
 #include "RenderTargetView.h"
-#include "Resource.h"
+#include "Resource10.h"
 #include "ResourceRegion.h"
 #include "ShaderResourceView.h"
 #include "StreamOutputWrapper.h"

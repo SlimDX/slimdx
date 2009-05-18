@@ -20,37 +20,16 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include <dsound.h>
+#include <d3d10.h>
 
-#include "../Utilities.h"
-
-#include "DeviceCollection.h"
-#include "Callbacks.h"
+#include "PixelShader10.h"
 
 using namespace System;
-using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-namespace DirectSound
-{
-	BOOL CALLBACK EnumerateDevices( LPGUID lpGuid, LPCWSTR description, LPCWSTR module, LPVOID lpContext )
-	{
-		DeviceInformation^ info = gcnew DeviceInformation();
-		info->Description = gcnew String( description );
-		info->ModuleName = gcnew String( module );
-
-		if( lpGuid == NULL )
-			info->DriverGuid = System::Guid::Empty;
-		else
-			info->DriverGuid = Utilities::ConvertNativeGuid( *lpGuid );
-
-		DeviceCollection^ collection = reinterpret_cast<DeviceCollectionShim*>( lpContext )->GetCollection();
-		collection->Add( info );
-
-		return TRUE;
-	}
+namespace Direct3D10
+{ 
 }
 }

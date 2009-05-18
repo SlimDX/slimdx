@@ -28,7 +28,7 @@
 #include "Direct3D9Exception.h"
 
 #include "Device.h"
-#include "Effect.h"
+#include "Effect9.h"
 
 using namespace System;
 using namespace System::IO;

@@ -20,48 +20,36 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include <dinput.h>
 
-#include <dxgi.h>
-
-#include "../DataStream.h"
-#include "../DataRectangle.h"
-
-#include "DXGIException.h"
-
-#include "Surface.h"
-#include "SurfaceDescription.h"
+#include "CapabilitiesDI.h"
+#include "Guids.h"
+#include "DeviceSubType.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace DXGI
-{ 	
-	SurfaceDescription Surface::Description::get()
+namespace DirectInput
+{
+	Capabilities::Capabilities( const DIDEVCAPS &caps )
 	{
-		DXGI_SURFACE_DESC nativeDescription;
-		RECORD_DXGI( InternalPointer->GetDesc( &nativeDescription ) );
-		if( Result::Last.IsSuccess )
-			return SurfaceDescription( nativeDescription );
-		
-		throw gcnew DXGIException( Result::Last );
-	}
-	
-	DataRectangle^ Surface::Map( MapFlags flags )
-	{
-		DXGI_MAPPED_RECT mappedRect;
-		if( RECORD_DXGI( InternalPointer->Map( &mappedRect, static_cast<UINT>( flags ) ) ).IsFailure )
-			return nullptr;
-		
-		int size = Description.Width * Description.Height * Utilities::SizeOfFormatElement( static_cast<DXGI_FORMAT>( Description.Format ) );
-		bool canRead = ( static_cast<UINT>( flags ) & DXGI_MAP_READ ) != 0;
-		bool canWrite = ( static_cast<UINT>( flags ) & DXGI_MAP_WRITE ) != 0;
-		return gcnew DataRectangle( mappedRect.Pitch, gcnew DataStream( mappedRect.pBits, size, canRead, canWrite, false ) );
-	}
-	
-	Result Surface::Unmap()
-	{
-		return RECORD_DXGI( InternalPointer->Unmap() );
+		axesCount = caps.dwAxes;
+		buttonCount = caps.dwButtons;
+		povCount = caps.dwPOVs;
+		ffSamplePeriod = caps.dwFFSamplePeriod;
+		ffMinTimeResolution = caps.dwFFMinTimeResolution;
+		ffDriverVersion = caps.dwFFDriverVersion;
+		firmwareRevision = caps.dwFirmwareRevision;
+		hardwareRevision = caps.dwHardwareRevision;
+		flags = static_cast<DeviceFlags>( caps.dwFlags );
+		type = static_cast<DeviceType>( caps.dwDevType );
+		subType = caps.dwDevType >> 8;
+
+		if( ( caps.dwDevType & DIDEVTYPE_HID ) != 0 )
+			hid = true;
+		else
+			hid = false;
 	}
 }
 }

@@ -37,8 +37,8 @@
 #include "Device.h"
 #include "Texture.h"
 #include "BaseEffect.h"
-#include "PixelShader.h"
-#include "VertexShader.h"
+#include "PixelShader9.h"
+#include "VertexShader9.h"
 
 using namespace System;
 using namespace System::Reflection;

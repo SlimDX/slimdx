@@ -31,7 +31,7 @@
 
 #include "Device.h"
 #include "D3DX.h"
-#include "Effect.h"
+#include "Effect9.h"
 #include "ConstantTable.h"
 #include "TextureShader.h"
 

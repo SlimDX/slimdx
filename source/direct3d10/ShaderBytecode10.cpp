@@ -21,15 +21,15 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
-
-#include "VertexShader.h"
-
-using namespace System;
+#include "ShaderBytecode10.h"
 
 namespace SlimDX
 {
 namespace Direct3D10
 { 
+	ShaderBytecode::ShaderBytecode( const void* buffer, int length )
+	: ShaderSignature( buffer, length )
+	{
+	}
 }
 }

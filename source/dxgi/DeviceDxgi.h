@@ -20,12 +20,14 @@
 * THE SOFTWARE.
 */
 #if !BOOST_PP_IS_ITERATING
-#ifndef SLIMDX_DXGI_DEVICECHILD_
-#define SLIMDX_DXGI_DEVICECHILD_
+#ifndef SLIMDX_DXGI_DEVICE_
+#define SLIMDX_DXGI_DEVICE_
 
 #include "../ComObject.h"
 
-#define BOOST_PP_FILENAME_1 "DeviceChild.h"
+#include "Enums.h"
+
+#define BOOST_PP_FILENAME_1 "DeviceDxgi.h"
 #include "../InterfaceSetup.h"
 #endif
 #else
@@ -36,28 +38,47 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
-		interface struct IDevice;
+		interface struct IAdapter;
 		
 		/// <summary>
-		/// An object that is bound to a Device.
+		/// An object that produces image data.
 		/// </summary>
-		/// <unmanaged>IDXGIDeviceSubObject</unmanaged>
-		SDX_COM_CLASS(DeviceChild) 
+		/// <unmanaged>IDXGIDevice</unmanaged>
+		SDX_COM_CLASS(Device)
 		{
-			COMOBJECT_INTERFACE_BASE(IDXGIDeviceSubObject);
-		
-#ifdef IS_CONCRETE
-		protected:
-			DeviceChild();
-#endif
+			COMOBJECT_INTERFACE(IDXGIDevice, Device);
+
 		public:
 			/// <summary>
-			/// Gets the device the object is bound to.
+			/// Gets or sets the device's GPU thread priority.
 			/// </summary>
-			property DXGI::IDevice^ Device
+			property int GpuThreadPriority
 			{
-				SDX_METHOD(DXGI::IDevice^ get());
+				SDX_METHOD(int get());
+				SDX_METHOD(void set( int value ));
 			}
+			
+			/// <summary>
+			/// Gets the adapter associated with the device.
+			/// </summary>
+			property IAdapter^ Adapter
+			{
+				SDX_METHOD(IAdapter^ get());
+			}
+			
+			/// <summary>
+			/// Initializes a new instance of the <see cref="Device"/> class.
+			/// </summary>
+			/// <param name="device">The COM object implementing the IDXGIDevice interface.</param>
+			SDX_METHOD_CONCRETE(Device( IComObject^ device ));
+
+			/// <summary>
+			/// Gets the residency status of a list of resources.
+			/// </summary>
+			/// <param name="resources">The resources to query.</param>
+			/// <returns>A list of residency status values, one for each entry in the input resources list. The result will be
+			/// <c>null</c> on failure.</returns>
+			SDX_METHOD(System::Collections::ObjectModel::ReadOnlyCollection<Residency>^ QueryResourceResidency( System::Collections::Generic::IList<ComObject^>^ resources ));
 		};
 	}
 };

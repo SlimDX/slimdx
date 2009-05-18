@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -20,36 +19,48 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <dinput.h>
+#if !BOOST_PP_IS_ITERATING
+#ifndef SLIMDX_DXGI_DEVICECHILD_
+#define SLIMDX_DXGI_DEVICECHILD_
 
-#include "Capabilities.h"
-#include "Guids.h"
-#include "DeviceSubType.h"
+#include "../ComObject.h"
 
-using namespace System;
+#define BOOST_PP_FILENAME_1 "DeviceChildDxgi.h"
+#include "../InterfaceSetup.h"
+#endif
+#else
+#include "../InterfaceBegin.h"
+#include "../ComObjectMacros.h"
 
 namespace SlimDX
 {
-namespace DirectInput
-{
-	Capabilities::Capabilities( const DIDEVCAPS &caps )
+	namespace DXGI
 	{
-		axesCount = caps.dwAxes;
-		buttonCount = caps.dwButtons;
-		povCount = caps.dwPOVs;
-		ffSamplePeriod = caps.dwFFSamplePeriod;
-		ffMinTimeResolution = caps.dwFFMinTimeResolution;
-		ffDriverVersion = caps.dwFFDriverVersion;
-		firmwareRevision = caps.dwFirmwareRevision;
-		hardwareRevision = caps.dwHardwareRevision;
-		flags = static_cast<DeviceFlags>( caps.dwFlags );
-		type = static_cast<DeviceType>( caps.dwDevType );
-		subType = caps.dwDevType >> 8;
-
-		if( ( caps.dwDevType & DIDEVTYPE_HID ) != 0 )
-			hid = true;
-		else
-			hid = false;
+		interface struct IDevice;
+		
+		/// <summary>
+		/// An object that is bound to a Device.
+		/// </summary>
+		/// <unmanaged>IDXGIDeviceSubObject</unmanaged>
+		SDX_COM_CLASS(DeviceChild) 
+		{
+			COMOBJECT_INTERFACE_BASE(IDXGIDeviceSubObject);
+		
+#ifdef IS_CONCRETE
+		protected:
+			DeviceChild();
+#endif
+		public:
+			/// <summary>
+			/// Gets the device the object is bound to.
+			/// </summary>
+			property DXGI::IDevice^ Device
+			{
+				SDX_METHOD(DXGI::IDevice^ get());
+			}
+		};
 	}
-}
-}
+};
+
+#include "../InterfaceEnd.h"
+#endif

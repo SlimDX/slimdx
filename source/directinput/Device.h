@@ -26,7 +26,7 @@
 #include "DeviceObjectInstance.h"
 #include "DeviceProperties.h"
 #include "ObjectProperties.h"
-#include "Capabilities.h"
+#include "CapabilitiesDI.h"
 #include "DirectInput.h"
 
 namespace SlimDX

@@ -23,7 +23,7 @@
 
 #include "PixelShaderWrapper.h"
 
-#include "PixelShader.h"
+#include "PixelShader10.h"
 
 using namespace System;
 

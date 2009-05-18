@@ -21,46 +21,47 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
-#include <d3dx10.h>
+#include <dxgi.h>
 
-#include "Resource.h"
+#include "../DataStream.h"
+#include "../DataRectangle.h"
+
+#include "DXGIException.h"
+
+#include "SurfaceDxgi.h"
+#include "SurfaceDescription.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
-{ 
-	Resource::Resource()
+namespace DXGI
+{ 	
+	SurfaceDescription Surface::Description::get()
 	{
+		DXGI_SURFACE_DESC nativeDescription;
+		RECORD_DXGI( InternalPointer->GetDesc( &nativeDescription ) );
+		if( Result::Last.IsSuccess )
+			return SurfaceDescription( nativeDescription );
+		
+		throw gcnew DXGIException( Result::Last );
 	}
 	
-	Resource::Resource( ID3D10Resource* pointer )
+	DataRectangle^ Surface::Map( MapFlags flags )
 	{
-		Construct( pointer );
-	}
-
-	Resource::Resource( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
-	DXGI::ResourcePriority Resource::EvictionPriority::get()
-	{
-		return static_cast<DXGI::ResourcePriority>( InternalPointer->GetEvictionPriority() );
+		DXGI_MAPPED_RECT mappedRect;
+		if( RECORD_DXGI( InternalPointer->Map( &mappedRect, static_cast<UINT>( flags ) ) ).IsFailure )
+			return nullptr;
+		
+		int size = Description.Width * Description.Height * Utilities::SizeOfFormatElement( static_cast<DXGI_FORMAT>( Description.Format ) );
+		bool canRead = ( static_cast<UINT>( flags ) & DXGI_MAP_READ ) != 0;
+		bool canWrite = ( static_cast<UINT>( flags ) & DXGI_MAP_WRITE ) != 0;
+		return gcnew DataRectangle( mappedRect.Pitch, gcnew DataStream( mappedRect.pBits, size, canRead, canWrite, false ) );
 	}
 	
-	void Resource::EvictionPriority::set( DXGI::ResourcePriority value )
+	Result Surface::Unmap()
 	{
-		InternalPointer->SetEvictionPriority( static_cast<UINT>( value ) );
-	}
-	
-	ResourceDimension Resource::Dimension::get()
-	{
-		D3D10_RESOURCE_DIMENSION type;
-		InternalPointer->GetType(&type);
-		return static_cast<ResourceDimension>( type );
+		return RECORD_DXGI( InternalPointer->Unmap() );
 	}
 }
 }

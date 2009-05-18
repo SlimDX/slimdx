@@ -32,7 +32,7 @@
 
 #include "Guids.h"
 #include "Enums.h"
-#include "Callbacks.h"
+#include "CallbacksDS.h"
 #include "DirectSound.h"
 #include "SoundBuffer.h"
 #include "PrimarySoundBuffer.h"

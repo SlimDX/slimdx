@@ -28,7 +28,7 @@
 
 #include "Device10.h"
 #include "Font10.h"
-#include "FontDescription.h"
+#include "FontDescription10.h"
 #include "Sprite10.h"
 
 using namespace System;

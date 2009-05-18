@@ -28,7 +28,7 @@
 #include "DXGIException.h"
 
 #include "Adapter.h"
-#include "Device.h"
+#include "DeviceDxgi.h"
 
 using namespace System;
 using namespace System::Collections::Generic;

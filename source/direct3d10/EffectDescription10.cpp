@@ -23,7 +23,7 @@
 
 #include <d3d10.h>
 
-#include "EffectDescription.h"
+#include "EffectDescription10.h"
 
 namespace SlimDX
 {

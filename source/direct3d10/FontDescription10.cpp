@@ -23,7 +23,7 @@
 
 #include <d3dx10.h>
 
-#include "FontDescription.h"
+#include "FontDescription10.h"
 
 using namespace System;
 

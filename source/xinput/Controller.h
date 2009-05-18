@@ -23,7 +23,7 @@
 
 #include "../Result.h"
 
-#include "Capabilities.h"
+#include "CapabilitiesXI.h"
 #include "BatteryInformation.h"
 #include "Enums.h"
 #include "Keystroke.h"

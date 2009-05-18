@@ -32,7 +32,7 @@
 #include "DirectInputException.h"
 
 #include "Device.h"
-#include "Callbacks.h"
+#include "CallbacksDI.h"
 
 using namespace System;
 using namespace System::Collections::Generic;

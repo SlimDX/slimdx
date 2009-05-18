@@ -29,8 +29,8 @@
 #include "../Utilities.h"
 
 #include "Device.h"
-#include "Sprite.h"
-#include "Font.h"
+#include "Sprite9.h"
+#include "Font9.h"
 #include "Direct3D9Exception.h"
 
 #include <vcclr.h>

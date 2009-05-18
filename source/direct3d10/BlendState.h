@@ -23,7 +23,7 @@
 
 #include "../ComObject.h"
 
-#include "DeviceChild.h"
+#include "DeviceChild10.h"
 #include "Enums.h"
 
 namespace SlimDX

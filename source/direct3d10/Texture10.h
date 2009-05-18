@@ -24,7 +24,7 @@
 #include <d3d10.h>
 
 #include "ImageLoadInformation.h"
-#include "Resource.h"
+#include "Resource10.h"
 
 namespace SlimDX
 {

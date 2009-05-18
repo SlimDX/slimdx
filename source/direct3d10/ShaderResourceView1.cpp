@@ -27,7 +27,7 @@
 
 #include "Enums.h"
 #include "Device10_1.h"
-#include "Resource.h"
+#include "Resource10.h"
 #include "ShaderResourceView1.h"
 
 using namespace System;

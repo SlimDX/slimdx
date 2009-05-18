@@ -25,7 +25,7 @@
 
 #include "../ComObject.h"
 
-#include "DeviceChild.h"
+#include "DeviceChildDxgi.h"
 #include "Enums.h"
 #include "Factory.h"
 

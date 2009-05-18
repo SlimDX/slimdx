@@ -30,7 +30,7 @@
 #include "../math/Vector3.h"
 
 #include "Device.h"
-#include "Sprite.h"
+#include "Sprite9.h"
 #include "Texture.h"
 
 #include "Direct3D9Exception.h"
