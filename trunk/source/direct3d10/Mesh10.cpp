@@ -28,8 +28,8 @@
 #include "Direct3D10Exception.h"
 
 #include "Buffer.h"
-#include "Device.h"
-#include "Mesh.h"
+#include "Device10.h"
+#include "Mesh10.h"
 #include "MeshBuffer.h"
 
 using namespace System;

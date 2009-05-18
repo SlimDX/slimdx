@@ -32,7 +32,7 @@
 #include "CounterDescription.h"
 #include "CounterMetadata.h"
 #include "DepthStencilView.h"
-#include "Device.h"
+#include "Device10.h"
 #include "InputAssemblerWrapper.h"
 #include "InputLayout.h"
 #include "OutputMergerWrapper.h"

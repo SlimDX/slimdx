@@ -25,7 +25,7 @@
 
 #include "Enums.h"
 
-#include "Query.h"
+#include "Query10.h"
 
 namespace SlimDX
 {

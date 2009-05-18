@@ -21,67 +21,31 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
-#include <d3dx10.h>
+#include <xaudio2.h>
 
-#include "ResultCode.h"
+#include "ResultCodeXA2.h"
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace XAudio2
 {
 	ResultCode::ResultCode()
 	{
 	}
 
-	Result ResultCode::InvalidCall::get()
+	Result ResultCode::XmaDecoderError::get()
 	{
-		return Result( D3DERR_INVALIDCALL );
+		return Result( XAUDIO2_E_XMA_DECODER_ERROR );
 	}
-	
-	Result ResultCode::CannotModifyIndexBuffer::get()
+
+	Result ResultCode::EffectCreationFailed::get()
 	{
-		return Result( D3DX10_ERR_CANNOT_MODIFY_INDEX_BUFFER );
+		return Result( XAUDIO2_E_XAPO_CREATION_FAILED );
 	}
-	
-	Result ResultCode::InvalidMesh::get()
+
+	Result ResultCode::DeviceInvalidated::get()
 	{
-		return Result( D3DX10_ERR_INVALID_MESH );
-	}
-	
-	Result ResultCode::CannotSortByAttribute::get()
-	{
-		return Result( D3DX10_ERR_CANNOT_ATTR_SORT );
-	}
-	
-	Result ResultCode::SkinningNotSupported::get()
-	{
-		return Result( D3DX10_ERR_SKINNING_NOT_SUPPORTED );
-	}
-	
-	Result ResultCode::TooManyInfluences::get()
-	{
-		return Result( D3DX10_ERR_TOO_MANY_INFLUENCES );
-	}
-	
-	Result ResultCode::InvalidData::get()
-	{
-		return Result( D3DX10_ERR_INVALID_DATA );
-	}
-	
-	Result ResultCode::LoadedMeshHasNoData::get()
-	{
-		return Result( D3DX10_ERR_LOADED_MESH_HAS_NO_DATA );
-	}
-	
-	Result ResultCode::DuplicateNamedFragment::get()
-	{
-		return Result( D3DX10_ERR_DUPLICATE_NAMED_FRAGMENT );
-	}
-	
-	Result ResultCode::CannotRemoveLastItem::get()
-	{
-		return Result( D3DX10_ERR_CANNOT_REMOVE_LAST_ITEM );
+		return Result( XAUDIO2_E_DEVICE_INVALIDATED );
 	}
 
 	Result ResultCode::Success::get()

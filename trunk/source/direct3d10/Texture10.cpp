@@ -31,8 +31,8 @@
 
 #include "../DataStream.h"
 
-#include "Device.h"
-#include "Texture.h"
+#include "Device10.h"
+#include "Texture10.h"
 
 using namespace System;
 using namespace System::IO;

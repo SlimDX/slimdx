@@ -26,11 +26,11 @@
 #include <vcclr.h>
 
 #include "../DataStream.h"
-#include "Effect.h"
+#include "Effect10.h"
 
 #include "Direct3D10Exception.h"
 
-#include "Device.h"
+#include "Device10.h"
 #include "EffectConstantBuffer.h"
 #include "EffectDescription.h"
 #include "EffectTechnique.h"

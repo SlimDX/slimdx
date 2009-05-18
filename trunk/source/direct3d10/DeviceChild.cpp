@@ -27,7 +27,7 @@
 
 #include "Direct3D10Exception.h"
 
-#include "Device.h"
+#include "Device10.h"
 #include "DeviceChild.h"
 
 using namespace System;

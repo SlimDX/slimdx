@@ -26,7 +26,7 @@
 
 #include "XInputException.h"
 
-#include "ResultCode.h"
+#include "ResultCodeXI.h"
 
 using namespace System;
 

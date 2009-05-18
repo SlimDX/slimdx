@@ -28,7 +28,7 @@
 
 #include "Buffer.h"
 #include "BufferDescription.h"
-#include "Device.h"
+#include "Device10.h"
 
 using namespace System;
 

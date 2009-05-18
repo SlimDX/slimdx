@@ -27,8 +27,8 @@
 
 #include "Direct3D10Exception.h"
 
-#include "Device.h"
-#include "Sprite.h"
+#include "Device10.h"
+#include "Sprite10.h"
 
 using namespace System;
 

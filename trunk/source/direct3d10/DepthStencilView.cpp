@@ -27,7 +27,7 @@
 
 #include "DepthStencilView.h"
 #include "DepthStencilViewDescription.h"
-#include "Device.h"
+#include "Device10.h"
 #include "Resource.h"
 
 using namespace System;

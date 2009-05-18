@@ -23,7 +23,7 @@
 
 #include <dxgi.h>
 
-#include "ResultCode.h"
+#include "ResultCodeDxgi.h"
 
 namespace SlimDX
 {

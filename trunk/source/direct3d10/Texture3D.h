@@ -25,7 +25,7 @@
 #include "../DataBox.h"
 
 #include "Enums.h"
-#include "Texture.h"
+#include "Texture10.h"
 
 namespace SlimDX
 {
