@@ -24,7 +24,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "ResultCode.h"
+#include "ResultCode9.h"
 
 namespace SlimDX
 {

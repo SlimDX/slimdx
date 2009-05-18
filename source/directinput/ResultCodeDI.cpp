@@ -23,7 +23,7 @@
 
 #include <dinput.h>
 
-#include "ResultCode.h"
+#include "ResultCodeDI.h"
 
 namespace SlimDX
 {

@@ -27,7 +27,7 @@
 
 #include "Debug.h"
 
-#include "Device.h"
+#include "Device10.h"
 
 using namespace System;
 

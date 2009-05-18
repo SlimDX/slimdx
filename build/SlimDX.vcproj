@@ -566,26 +566,24 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\direct3d10\ResultCode.cpp"
+				RelativePath="..\source\direct3d10\ResultCode10.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\source\direct3d10\ResultCode.h"
+				RelativePath="..\source\direct3d10\ResultCode10.h"
 				>
 			</File>
 			<Filter
 				Name="Effect"
 				>
 				<File
-					RelativePath="..\source\direct3d10\Effect.cpp"
+					RelativePath="..\source\direct3d10\Effect10.cpp"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -635,7 +633,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\Effect.h"
+					RelativePath="..\source\direct3d10\Effect10.h"
 					>
 				</File>
 				<File
@@ -771,15 +769,13 @@
 				Name="Device"
 				>
 				<File
-					RelativePath="..\source\direct3d10\Device.cpp"
+					RelativePath="..\source\direct3d10\Device10.cpp"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)2.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -829,7 +825,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\Device.h"
+					RelativePath="..\source\direct3d10\Device10.h"
 					>
 				</File>
 				<File
@@ -1019,15 +1015,13 @@
 				Name="Mesh"
 				>
 				<File
-					RelativePath="..\source\direct3d10\Mesh.cpp"
+					RelativePath="..\source\direct3d10\Mesh10.cpp"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -1077,7 +1071,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\Mesh.h"
+					RelativePath="..\source\direct3d10\Mesh10.h"
 					>
 				</File>
 				<File
@@ -1395,15 +1389,17 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\StateBlock.cpp"
+					RelativePath="..\source\direct3d10\StateBlock.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\StateBlock10.cpp"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)2.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -1451,10 +1447,6 @@
 							XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
 						/>
 					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\StateBlock.h"
-					>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\StateBlockMask.cpp"
@@ -1497,15 +1489,13 @@
 				Name="Sprite"
 				>
 				<File
-					RelativePath="..\source\direct3d10\Sprite.cpp"
+					RelativePath="..\source\direct3d10\Sprite10.cpp"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -1555,7 +1545,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\Sprite.h"
+					RelativePath="..\source\direct3d10\Sprite10.h"
 					>
 				</File>
 				<File
@@ -1571,15 +1561,13 @@
 				Name="Font"
 				>
 				<File
-					RelativePath="..\source\direct3d10\Font.cpp"
+					RelativePath="..\source\direct3d10\Font10.cpp"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -1629,7 +1617,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\Font.h"
+					RelativePath="..\source\direct3d10\Font10.h"
 					>
 				</File>
 				<File
@@ -1709,15 +1697,13 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\Texture.cpp"
+					RelativePath="..\source\direct3d10\Texture10.cpp"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -1767,7 +1753,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\Texture.h"
+					RelativePath="..\source\direct3d10\Texture10.h"
 					>
 				</File>
 				<File
@@ -2053,14 +2039,13 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\Query.cpp"
+					RelativePath="..\source\direct3d10\Query10.cpp"
 					>
 					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\Query2.obj"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -2105,7 +2090,7 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\Query.h"
+					RelativePath="..\source\direct3d10\Query10.h"
 					>
 				</File>
 				<File
@@ -2340,15 +2325,13 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\direct3d9\ResultCode.cpp"
+				RelativePath="..\source\direct3d9\ResultCode9.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -2398,7 +2381,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\source\direct3d9\ResultCode.h"
+				RelativePath="..\source\direct3d9\ResultCode9.h"
 				>
 			</File>
 			<Filter
@@ -3942,15 +3925,13 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\directinput\ResultCode.cpp"
+				RelativePath="..\source\directinput\ResultCodeDI.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)2.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)2.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -4000,7 +3981,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\source\directinput\ResultCode.h"
+				RelativePath="..\source\directinput\ResultCodeDI.h"
 				>
 			</File>
 			<Filter
@@ -4528,15 +4509,13 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\xaudio2\ResultCode.cpp"
+				RelativePath="..\source\xaudio2\ResultCodeXA2.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)5.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)5.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -4586,7 +4565,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\source\xaudio2\ResultCode.h"
+				RelativePath="..\source\xaudio2\ResultCodeXA2.h"
 				>
 			</File>
 			<File
@@ -4762,15 +4741,13 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\xinput\ResultCode.cpp"
+				RelativePath="..\source\xinput\ResultCodeXI.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)4.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)4.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -4820,7 +4797,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\source\xinput\ResultCode.h"
+				RelativePath="..\source\xinput\ResultCodeXI.h"
 				>
 			</File>
 			<File
@@ -4916,15 +4893,13 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\dxgi\ResultCode.cpp"
+				RelativePath="..\source\dxgi\ResultCodeDxgi.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)3.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)3.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -4974,7 +4949,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\source\dxgi\ResultCode.h"
+				RelativePath="..\source\dxgi\ResultCodeDxgi.h"
 				>
 			</File>
 			<Filter
@@ -5702,15 +5677,13 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\directsound\ResultCode.cpp"
+				RelativePath="..\source\directsound\ResultCodeDS.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)6.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)6.xdc"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -5760,7 +5733,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\source\directsound\ResultCode.h"
+				RelativePath="..\source\directsound\ResultCodeDS.h"
 				>
 			</File>
 			<Filter

@@ -24,7 +24,7 @@
 
 #include "../Result.h"
 
-#include "ResultCode.h"
+#include "ResultCodeDS.h"
 
 namespace SlimDX
 {

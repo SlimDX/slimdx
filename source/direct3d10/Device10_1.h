@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "Device.h"
+#include "Device10.h"
 #include "Enums10_1.h"
 
 namespace SlimDX

@@ -29,8 +29,8 @@
 
 #include "../DataStream.h"
 #include "EffectPool.h"
-#include "Device.h"
-#include "Effect.h"
+#include "Device10.h"
+#include "Effect10.h"
 
 using namespace System;
 using namespace System::IO;

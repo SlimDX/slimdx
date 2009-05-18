@@ -25,7 +25,7 @@
 
 #include "Direct3D10Exception.h"
 
-#include "Device.h"
+#include "Device10.h"
 #include "RasterizerState.h"
 #include "RasterizerStateDescription.h"
 

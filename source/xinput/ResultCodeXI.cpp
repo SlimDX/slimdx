@@ -21,51 +21,36 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
+#include <windows.h>
 
-#include "Direct3D10Exception.h"
-
-#include "StateBlock.h"
-#include "Device.h"
-#include "StateBlockMask.h"
-
-using namespace System;
+#include "ResultCodeXI.h"
 
 namespace SlimDX
 {
-namespace Direct3D10
-{ 
-	StateBlock::StateBlock( SlimDX::Direct3D10::Device^ device, StateBlockMask mask )
+namespace XInput
+{
+	ResultCode::ResultCode()
 	{
-		if( device == nullptr )
-			throw gcnew ArgumentNullException( "device" );
+	}
 	
-		ID3D10StateBlock* stateBlock = 0;
-		D3D10_STATE_BLOCK_MASK nativeMask = mask.CreateNativeVersion();
-		
-		if( RECORD_D3D10( D3D10CreateStateBlock( device->InternalPointer, &nativeMask, &stateBlock ) ).IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last );
-		
-		Construct( stateBlock );
+	Result ResultCode::NotConnected::get()
+	{
+		return Result( HRESULT_FROM_WIN32( ERROR_NOT_CONNECTED ) );
+	}
+	
+	Result ResultCode::Empty::get()
+	{
+		return Result( HRESULT_FROM_WIN32( ERROR_EMPTY ) );
 	}
 
-	Device^ StateBlock::Device::get()
+	Result ResultCode::Success::get()
 	{
-		ID3D10Device* device = 0;
-		InternalPointer->GetDevice( &device );
-		return SlimDX::Direct3D10::Device::FromPointer( device );
+		return Result( HRESULT_FROM_WIN32( ERROR_SUCCESS ) );
 	}
-	
-	Result StateBlock::Apply() {
-		return RECORD_D3D10( InternalPointer->Apply() );
-	}
-	
-	Result StateBlock::Capture() {
-		return RECORD_D3D10( InternalPointer->Capture() );
-	}
-	
-	Result StateBlock::ReleaseAllDeviceObjects() {
-		return RECORD_D3D10( InternalPointer->ReleaseAllDeviceObjects() );
+
+	Result ResultCode::Failure::get()
+	{
+		return Result( E_FAIL );
 	}
 }
 }

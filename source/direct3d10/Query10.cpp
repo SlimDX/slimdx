@@ -26,8 +26,8 @@
 
 #include "Direct3D10Exception.h"
 
-#include "Device.h"
-#include "Query.h"
+#include "Device10.h"
+#include "Query10.h"
 
 using namespace System;
 

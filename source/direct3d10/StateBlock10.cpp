@@ -21,41 +21,51 @@
 * THE SOFTWARE.
 */
 
-#include <xaudio2.h>
+#include <d3d10.h>
 
-#include "ResultCode.h"
+#include "Direct3D10Exception.h"
+
+#include "StateBlock10.h"
+#include "Device10.h"
+#include "StateBlockMask.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-namespace XAudio2
-{
-	ResultCode::ResultCode()
+namespace Direct3D10
+{ 
+	StateBlock::StateBlock( SlimDX::Direct3D10::Device^ device, StateBlockMask mask )
 	{
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+	
+		ID3D10StateBlock* stateBlock = 0;
+		D3D10_STATE_BLOCK_MASK nativeMask = mask.CreateNativeVersion();
+		
+		if( RECORD_D3D10( D3D10CreateStateBlock( device->InternalPointer, &nativeMask, &stateBlock ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+		
+		Construct( stateBlock );
 	}
 
-	Result ResultCode::XmaDecoderError::get()
+	Device^ StateBlock::Device::get()
 	{
-		return Result( XAUDIO2_E_XMA_DECODER_ERROR );
+		ID3D10Device* device = 0;
+		InternalPointer->GetDevice( &device );
+		return SlimDX::Direct3D10::Device::FromPointer( device );
 	}
-
-	Result ResultCode::EffectCreationFailed::get()
-	{
-		return Result( XAUDIO2_E_XAPO_CREATION_FAILED );
+	
+	Result StateBlock::Apply() {
+		return RECORD_D3D10( InternalPointer->Apply() );
 	}
-
-	Result ResultCode::DeviceInvalidated::get()
-	{
-		return Result( XAUDIO2_E_DEVICE_INVALIDATED );
+	
+	Result StateBlock::Capture() {
+		return RECORD_D3D10( InternalPointer->Capture() );
 	}
-
-	Result ResultCode::Success::get()
-	{
-		return Result( S_OK );
-	}
-
-	Result ResultCode::Failure::get()
-	{
-		return Result( E_FAIL );
+	
+	Result StateBlock::ReleaseAllDeviceObjects() {
+		return RECORD_D3D10( InternalPointer->ReleaseAllDeviceObjects() );
 	}
 }
 }

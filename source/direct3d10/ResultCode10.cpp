@@ -21,31 +21,72 @@
 * THE SOFTWARE.
 */
 
-#include <windows.h>
+#include <d3d10.h>
+#include <d3dx10.h>
 
-#include "ResultCode.h"
+#include "ResultCode10.h"
 
 namespace SlimDX
 {
-namespace XInput
+namespace Direct3D10
 {
 	ResultCode::ResultCode()
 	{
 	}
-	
-	Result ResultCode::NotConnected::get()
+
+	Result ResultCode::InvalidCall::get()
 	{
-		return Result( HRESULT_FROM_WIN32( ERROR_NOT_CONNECTED ) );
+		return Result( D3DERR_INVALIDCALL );
 	}
 	
-	Result ResultCode::Empty::get()
+	Result ResultCode::CannotModifyIndexBuffer::get()
 	{
-		return Result( HRESULT_FROM_WIN32( ERROR_EMPTY ) );
+		return Result( D3DX10_ERR_CANNOT_MODIFY_INDEX_BUFFER );
+	}
+	
+	Result ResultCode::InvalidMesh::get()
+	{
+		return Result( D3DX10_ERR_INVALID_MESH );
+	}
+	
+	Result ResultCode::CannotSortByAttribute::get()
+	{
+		return Result( D3DX10_ERR_CANNOT_ATTR_SORT );
+	}
+	
+	Result ResultCode::SkinningNotSupported::get()
+	{
+		return Result( D3DX10_ERR_SKINNING_NOT_SUPPORTED );
+	}
+	
+	Result ResultCode::TooManyInfluences::get()
+	{
+		return Result( D3DX10_ERR_TOO_MANY_INFLUENCES );
+	}
+	
+	Result ResultCode::InvalidData::get()
+	{
+		return Result( D3DX10_ERR_INVALID_DATA );
+	}
+	
+	Result ResultCode::LoadedMeshHasNoData::get()
+	{
+		return Result( D3DX10_ERR_LOADED_MESH_HAS_NO_DATA );
+	}
+	
+	Result ResultCode::DuplicateNamedFragment::get()
+	{
+		return Result( D3DX10_ERR_DUPLICATE_NAMED_FRAGMENT );
+	}
+	
+	Result ResultCode::CannotRemoveLastItem::get()
+	{
+		return Result( D3DX10_ERR_CANNOT_REMOVE_LAST_ITEM );
 	}
 
 	Result ResultCode::Success::get()
 	{
-		return Result( HRESULT_FROM_WIN32( ERROR_SUCCESS ) );
+		return Result( S_OK );
 	}
 
 	Result ResultCode::Failure::get()

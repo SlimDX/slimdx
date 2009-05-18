@@ -29,7 +29,7 @@
 
 #include "Direct3D10Exception.h"
 
-#include "Device.h"
+#include "Device10.h"
 #include "Texture1D.h"
 #include "Texture1DDescription.h"
 

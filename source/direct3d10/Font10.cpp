@@ -26,10 +26,10 @@
 
 #include "Direct3D10Exception.h"
 
-#include "Device.h"
-#include "Font.h"
+#include "Device10.h"
+#include "Font10.h"
 #include "FontDescription.h"
-#include "Sprite.h"
+#include "Sprite10.h"
 
 using namespace System;
 
