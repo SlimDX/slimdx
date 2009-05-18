@@ -21,15 +21,30 @@
 * THE SOFTWARE.
 */
 
-#include "ShaderBytecode.h"
+#include <d3d10.h>
+
+#include "../ComObject.h"
+
+#include "Direct3D10Exception.h"
+
+#include "Device10.h"
+#include "DeviceChild10.h"
+
+using namespace System;
 
 namespace SlimDX
 {
 namespace Direct3D10
 { 
-	ShaderBytecode::ShaderBytecode( const void* buffer, int length )
-	: ShaderSignature( buffer, length )
+	DeviceChild::DeviceChild()
 	{
+	}
+	
+	SlimDX::Direct3D10::Device^ DeviceChild::Device::get()
+	{
+		ID3D10Device* device = 0;
+		InternalPointer->GetDevice( &device );
+		return SlimDX::Direct3D10::Device::FromPointer( device );
 	}
 }
 }

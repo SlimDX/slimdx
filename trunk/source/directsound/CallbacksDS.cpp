@@ -19,35 +19,38 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
-*/ 
-#include <windows.h>
-#include <dinput.h>
+*/
+#pragma once
 
-#include "../ComObject.h"
-#include "../CollectionShim.h"
+#include <dsound.h>
 
-#include "Device.h"
-#include "DeviceInstance.h"
-#include "Callbacks.h"
+#include "../Utilities.h"
+
+#include "DeviceCollection.h"
+#include "CallbacksDS.h"
+
+using namespace System;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-namespace DirectInput
+namespace DirectSound
 {
-	BOOL CALLBACK EnumerateDevices( LPCDIDEVICEINSTANCE lpddi, LPVOID pvRef )
+	BOOL CALLBACK EnumerateDevices( LPGUID lpGuid, LPCWSTR description, LPCWSTR module, LPVOID lpContext )
 	{
-		CollectionShim<DeviceInstance^>* shim = static_cast<CollectionShim<DeviceInstance^>*>( pvRef );
-		shim->GetItems()->Add( gcnew DeviceInstance( *lpddi ) );
+		DeviceInformation^ info = gcnew DeviceInformation();
+		info->Description = gcnew String( description );
+		info->ModuleName = gcnew String( module );
 
-		return DIENUM_CONTINUE;
-	}
+		if( lpGuid == NULL )
+			info->DriverGuid = System::Guid::Empty;
+		else
+			info->DriverGuid = Utilities::ConvertNativeGuid( *lpGuid );
 
-	BOOL CALLBACK EnumerateObjects( LPCDIDEVICEOBJECTINSTANCE lpddoi, LPVOID pvRef )
-	{
-		CollectionShim<DeviceObjectInstance>* shim = static_cast<CollectionShim<DeviceObjectInstance>*>( pvRef );
-		shim->GetItems()->Add( DeviceObjectInstance( *lpddoi ) );
+		DeviceCollection^ collection = reinterpret_cast<DeviceCollectionShim*>( lpContext )->GetCollection();
+		collection->Add( info );
 
-		return DIENUM_CONTINUE;
+		return TRUE;
 	}
 }
 }

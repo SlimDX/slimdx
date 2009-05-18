@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -19,19 +20,28 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include <d3d9.h>
+#include <d3dx9.h>
 
 #include "../ComObject.h"
 
-#include "DeviceChild.h"
+#include "EffectPool9.h"
+#include "Direct3D9Exception.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct3D10
+namespace Direct3D9
+{
+	EffectPool::EffectPool()
 	{
-		public ref class VertexShader : public DeviceChild
-		{
-			COMOBJECT(ID3D10VertexShader, VertexShader);
-		};
+		ID3DXEffectPool* pointer;
+		HRESULT hr = D3DXCreateEffectPool( &pointer );
+		if( FAILED( hr ) )
+			throw gcnew Direct3D9Exception( Result::Last );
+
+		Construct( pointer );
 	}
-};
+}
+}

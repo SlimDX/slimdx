@@ -33,7 +33,7 @@
 #include "DirectInputException.h"
 #include "DirectInputNotFoundException.h"
 
-#include "Callbacks.h"
+#include "CallbacksDI.h"
 #include "Device.h"
 
 using namespace System;

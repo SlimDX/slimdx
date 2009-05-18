@@ -29,8 +29,8 @@
 #include "Direct3D9Exception.h"
 
 #include "Device.h"
-#include "VertexShader.h"
-#include "PixelShader.h"
+#include "VertexShader9.h"
+#include "PixelShader9.h"
 #include "FragmentLinker.h"
 
 using namespace System;

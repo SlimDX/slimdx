@@ -32,11 +32,11 @@
 
 #include "Device10.h"
 #include "EffectConstantBuffer.h"
-#include "EffectDescription.h"
+#include "EffectDescription10.h"
 #include "EffectTechnique.h"
 #include "EffectVariable.h"
 #include "EffectPool.h"
-#include "Include.h"
+#include "Include10.h"
 
 using namespace System;
 using namespace System::IO;

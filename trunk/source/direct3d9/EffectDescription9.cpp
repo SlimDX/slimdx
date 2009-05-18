@@ -23,7 +23,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "EffectDescription.h"
+#include "EffectDescription9.h"
 
 using namespace System;
 

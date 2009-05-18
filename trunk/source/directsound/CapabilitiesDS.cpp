@@ -24,7 +24,7 @@
 
 #include <dsound.h>
 
-#include "Capabilities.h"
+#include "CapabilitiesDS.h"
 
 namespace SlimDX
 {

@@ -29,7 +29,7 @@
 
 #include "DirectSoundException.h"
 
-#include "Callbacks.h"
+#include "CallbacksDS.h"
 #include "DirectSoundCapture.h"
 
 using namespace System;

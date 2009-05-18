@@ -24,7 +24,7 @@
 #include "../multimedia/Enums.h"
 
 #include "Enums.h"
-#include "Capabilities.h"
+#include "CapabilitiesDS.h"
 #include "DeviceCollection.h"
 
 using System::Runtime::InteropServices::OutAttribute;

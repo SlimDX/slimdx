@@ -27,10 +27,10 @@
 
 #include "EffectShaderVariable.h"
 #include "GeometryShader.h"
-#include "PixelShader.h"
+#include "PixelShader10.h"
 #include "ShaderDescription.h"
 #include "ShaderParameterDescription.h"
-#include "VertexShader.h"
+#include "VertexShader10.h"
 
 using namespace System;
 

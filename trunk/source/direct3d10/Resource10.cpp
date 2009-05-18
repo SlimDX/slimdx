@@ -20,28 +20,47 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <d3d9.h>
-#include <d3dx9.h>
 
-#include "../ComObject.h"
+#include <d3d10.h>
+#include <d3dx10.h>
 
-#include "EffectPool.h"
-#include "Direct3D9Exception.h"
+#include "Resource10.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D9
-{
-	EffectPool::EffectPool()
+namespace Direct3D10
+{ 
+	Resource::Resource()
 	{
-		ID3DXEffectPool* pointer;
-		HRESULT hr = D3DXCreateEffectPool( &pointer );
-		if( FAILED( hr ) )
-			throw gcnew Direct3D9Exception( Result::Last );
-
+	}
+	
+	Resource::Resource( ID3D10Resource* pointer )
+	{
 		Construct( pointer );
+	}
+
+	Resource::Resource( IntPtr pointer )
+	{
+		Construct( pointer, NativeInterface );
+	}
+	
+	DXGI::ResourcePriority Resource::EvictionPriority::get()
+	{
+		return static_cast<DXGI::ResourcePriority>( InternalPointer->GetEvictionPriority() );
+	}
+	
+	void Resource::EvictionPriority::set( DXGI::ResourcePriority value )
+	{
+		InternalPointer->SetEvictionPriority( static_cast<UINT>( value ) );
+	}
+	
+	ResourceDimension Resource::Dimension::get()
+	{
+		D3D10_RESOURCE_DIMENSION type;
+		InternalPointer->GetType(&type);
+		return static_cast<ResourceDimension>( type );
 	}
 }
 }

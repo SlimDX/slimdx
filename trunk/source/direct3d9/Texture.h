@@ -27,7 +27,7 @@
 #include "BaseTexture.h"
 #include "Surface.h"
 #include "Volume.h"
-#include "Effect.h"
+#include "Effect9.h"
 #include "ConstantTable.h"
 #include "TextureShader.h"
 #include "Delegates.h"

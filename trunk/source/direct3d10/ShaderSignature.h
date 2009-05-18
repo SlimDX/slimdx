@@ -24,7 +24,7 @@
 #include "../ComObject.h"
 
 #include "Enums.h"
-#include "Resource.h"
+#include "Resource10.h"
 
 namespace SlimDX
 {

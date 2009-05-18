@@ -19,32 +19,35 @@
 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
-*/
-
-#include <d3d10.h>
+*/ 
+#include <windows.h>
+#include <dinput.h>
 
 #include "../ComObject.h"
+#include "../CollectionShim.h"
 
-#include "Direct3D10Exception.h"
-
-#include "Device10.h"
-#include "DeviceChild.h"
-
-using namespace System;
+#include "Device.h"
+#include "DeviceInstance.h"
+#include "CallbacksDI.h"
 
 namespace SlimDX
 {
-namespace Direct3D10
-{ 
-	DeviceChild::DeviceChild()
+namespace DirectInput
+{
+	BOOL CALLBACK EnumerateDevices( LPCDIDEVICEINSTANCE lpddi, LPVOID pvRef )
 	{
+		CollectionShim<DeviceInstance^>* shim = static_cast<CollectionShim<DeviceInstance^>*>( pvRef );
+		shim->GetItems()->Add( gcnew DeviceInstance( *lpddi ) );
+
+		return DIENUM_CONTINUE;
 	}
-	
-	SlimDX::Direct3D10::Device^ DeviceChild::Device::get()
+
+	BOOL CALLBACK EnumerateObjects( LPCDIDEVICEOBJECTINSTANCE lpddoi, LPVOID pvRef )
 	{
-		ID3D10Device* device = 0;
-		InternalPointer->GetDevice( &device );
-		return SlimDX::Direct3D10::Device::FromPointer( device );
+		CollectionShim<DeviceObjectInstance>* shim = static_cast<CollectionShim<DeviceObjectInstance>*>( pvRef );
+		shim->GetItems()->Add( DeviceObjectInstance( *lpddoi ) );
+
+		return DIENUM_CONTINUE;
 	}
 }
 }

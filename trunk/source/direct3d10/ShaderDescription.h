@@ -22,7 +22,7 @@
 #pragma once
 
 #include "Enums.h"
-#include "ShaderBytecode.h"
+#include "ShaderBytecode10.h"
 #include "ShaderSignature.h"
 
 namespace SlimDX

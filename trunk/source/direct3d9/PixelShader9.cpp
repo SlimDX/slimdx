@@ -32,7 +32,7 @@
 #include "Direct3D9Exception.h"
 
 #include "Device.h"
-#include "PixelShader.h"
+#include "PixelShader9.h"
 
 using namespace System;
 

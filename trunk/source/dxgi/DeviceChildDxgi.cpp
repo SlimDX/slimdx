@@ -20,16 +20,30 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "../ComObject.h"
 
-#include <d3d10.h>
+#include "DXGIException.h"
 
-#include "PixelShader.h"
+#include "DeviceDxgi.h"
+#include "DeviceChildDxgi.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace DXGI
 { 
+	DeviceChild::DeviceChild()
+	{
+	}
+
+	IDevice^ DeviceChild::Device::get()
+	{
+		IDXGIDevice* device = 0;
+		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
+		if( Result::Last.IsFailure )
+			return nullptr;
+		return DXGI::Device::FromPointer( device );
+	}
 }
 }

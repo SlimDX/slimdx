@@ -23,7 +23,7 @@
 
 #include "VertexShaderWrapper.h"
 
-#include "VertexShader.h"
+#include "VertexShader10.h"
 
 using namespace System;
 

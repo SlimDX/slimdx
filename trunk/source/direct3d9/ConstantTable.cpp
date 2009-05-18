@@ -32,7 +32,7 @@
 
 #include "Direct3D9Exception.h"
 
-#include "Effect.h"
+#include "Effect9.h"
 #include "ConstantTable.h"
 #include "Device.h"
 

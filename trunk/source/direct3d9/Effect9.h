@@ -28,7 +28,7 @@
 #include "IResettable.h"
 #include "Macro.h"
 #include "Include.h"
-#include "EffectPool.h"
+#include "EffectPool9.h"
 
 namespace SlimDX
 {

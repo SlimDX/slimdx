@@ -33,7 +33,7 @@
 #include "ModeDescription.h"
 #include "Output.h"
 #include "OutputDescription.h"
-#include "Surface.h"
+#include "SurfaceDxgi.h"
 
 using namespace System;
 using namespace System::Collections::Generic;

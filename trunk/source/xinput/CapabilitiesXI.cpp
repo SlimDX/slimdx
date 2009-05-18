@@ -24,7 +24,7 @@
 #include <windows.h>
 #include <xinput.h>
 
-#include "Capabilities.h"
+#include "CapabilitiesXI.h"
 
 namespace SlimDX
 {

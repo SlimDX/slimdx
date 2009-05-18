@@ -19,57 +19,63 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#if !BOOST_PP_IS_ITERATING
+#ifndef SLIMDX_DXGI_SURFACE_
+#define SLIMDX_DXGI_SURFACE_
 
 #include "../ComObject.h"
 
-#include "../dxgi/Enums.h"
-
-#include "DeviceChild.h"
+#include "DeviceChildDxgi.h"
 #include "Enums.h"
+
+#define BOOST_PP_FILENAME_1 "SurfaceDxgi.h"
+#include "../InterfaceSetup.h"
+#endif
+#else
+#include "../InterfaceBegin.h"
+#include "../ComObjectMacros.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	ref class DataRectangle;
+	value class Result;
+
+	namespace DXGI
 	{
+		value class SurfaceDescription;
+		
 		/// <summary>
-		/// A resource object.
+		/// A <see cref="Surface"/> implements methods for image-data objects.
 		/// </summary>
-		/// <unmanaged>ID3D10Resource</unmanaged>
-		public ref class Resource : public DeviceChild
+		/// <unmanaged>IDXGISurface</unmanaged>
+		SDX_COM_SUBCLASS(Surface, DeviceChild)
 		{
-			COMOBJECT_BASE(ID3D10Resource);
-		
-		protected:
-			Resource();
-			
-		internal:
-			Resource( ID3D10Resource* pointer );
-		
+			COMOBJECT_INTERFACE(IDXGISurface, Surface);
+
 		public:
 			/// <summary>
-			/// Constructs a Resource object from a marshalled native pointer.
+			/// Gets the surface's description.
 			/// </summary>
-			/// <param name="pointer">The native object pointer.</param>
-			/// <returns>The Resource object for the native object.</returns>
-			Resource( System::IntPtr pointer );
+			property SurfaceDescription Description
+			{
+				SDX_METHOD(SurfaceDescription get());
+			}
+
+			/// <summary>
+			/// Acquires access to the surface data.
+			/// </summary>
+			/// <param name="flags">Flags specifying CPU access permissions.</param>
+			/// <returns>A <see cref="SlimDX::DataRectangle"/> for accessing the mapped data, or <c>null</c> on failure.</returns>.
+			SDX_METHOD(DataRectangle^ Map( MapFlags flags ));
 			
 			/// <summary>
-			/// Gets or sets the resource's eviction priority.
+			/// Relinquishes access to the surface data.
 			/// </summary>
-			property DXGI::ResourcePriority EvictionPriority
-			{
-				DXGI::ResourcePriority get();
-				void set(DXGI::ResourcePriority value);
-			}
-			
-			/// <summary>
-			/// Gets the resource's dimension (type).
-			/// </summary>
-			property ResourceDimension Dimension
-			{
-				ResourceDimension get();
-			}
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			SDX_METHOD(Result Unmap());
 		};
 	}
 };
+
+#include "../InterfaceEnd.h"
+#endif

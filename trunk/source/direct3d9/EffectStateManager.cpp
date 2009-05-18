@@ -32,8 +32,8 @@
 
 #include "Enums.h"
 #include "Device.h"
-#include "PixelShader.h"
-#include "VertexShader.h"
+#include "PixelShader9.h"
+#include "VertexShader9.h"
 #include "Texture.h"
 #include "EffectStateManager.h"
 

@@ -27,7 +27,7 @@
 #include "Direct3D10Exception.h"
 
 #include "Device10.h"
-#include "Resource.h"
+#include "Resource10.h"
 #include "ShaderResourceView.h"
 #include "ShaderResourceViewDescription.h"
 

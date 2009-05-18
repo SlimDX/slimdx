@@ -30,7 +30,7 @@
 #include "Device.h"
 #include "EffectHandle.h"
 
-#include "EffectDescription.h"
+#include "EffectDescription9.h"
 #include "FunctionDescription.h"
 #include "TechniqueDescription.h"
 #include "PassDescription.h"

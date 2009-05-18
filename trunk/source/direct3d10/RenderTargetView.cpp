@@ -28,7 +28,7 @@
 #include "Device10.h"
 #include "RenderTargetView.h"
 #include "RenderTargetViewDescription.h"
-#include "Resource.h"
+#include "Resource10.h"
 
 using namespace System;
 
