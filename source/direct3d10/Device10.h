@@ -151,6 +151,11 @@ namespace SlimDX
 			{
 				DeviceCreationFlags get();
 			}
+
+			property Result DeviceRemovedReason
+			{
+				Result get();
+			}
 			
 			/// <summary>
 			/// Constructs a new Device object.
@@ -325,6 +330,8 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="view">A view of the resource to generate mipmaps for.</param>
 			void GenerateMips( ShaderResourceView^ view );
+
+			void GetPredication( [Out] Predicate^ %predicate, [Out] bool %predicateValue ); 
 			
 			/// <summary>
 			/// Sets a rendering predicate.

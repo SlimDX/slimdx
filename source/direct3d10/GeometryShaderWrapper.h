@@ -26,6 +26,9 @@ namespace SlimDX
 	namespace Direct3D10
 	{
 		ref class GeometryShader;
+		ref class Buffer;
+		ref class ShaderResourceView;
+		ref class SamplerState;
 
 		public ref class GeometryShaderWrapper
 		{
@@ -47,6 +50,14 @@ namespace SlimDX
 			/// </summary>
 			/// <returns>The geometry shader (null if no shader is assigned).</returns>
 			GeometryShader^ Get();
+
+			array<Buffer^>^ GetConstantBuffers( int startSlot, int count );
+			array<SamplerState^>^ GetSamplers( int startSlot, int count );
+			array<ShaderResourceView^>^ GetShaderResources( int startSlot, int count );
+
+			void SetConstantBuffers( array<Buffer^>^ constantBuffers, int startSlot, int count );
+			void SetSamplers( array<SamplerState^>^ samplers, int startSlot, int count );
+			void SetShaderResources( array<ShaderResourceView^>^ resourceViews, int startSlot, int count );
 		};
 	}
 };

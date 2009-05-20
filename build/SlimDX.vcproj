@@ -579,13 +579,6 @@
 				<File
 					RelativePath="..\source\direct3d10\Effect10.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Effect10.h"
@@ -726,13 +719,6 @@
 				<File
 					RelativePath="..\source\direct3d10\Device10.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Device10.h"
@@ -741,13 +727,6 @@
 				<File
 					RelativePath="..\source\direct3d10\DeviceChild10.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\DeviceChild10.h"
@@ -880,13 +859,6 @@
 				<File
 					RelativePath="..\source\direct3d10\Mesh10.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Mesh10.h"
@@ -923,13 +895,6 @@
 				<File
 					RelativePath="..\source\direct3d10\Include10.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Include10.h"
@@ -938,13 +903,6 @@
 				<File
 					RelativePath="..\source\direct3d10\PixelShader10.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\PixelShader10.h"
@@ -993,13 +951,6 @@
 				<File
 					RelativePath="..\source\direct3d10\VertexShader10.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\VertexShader10.h"
@@ -1072,13 +1023,6 @@
 				<File
 					RelativePath="..\source\direct3d10\StateBlock10.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\StateBlockMask.cpp"
@@ -1123,13 +1067,6 @@
 				<File
 					RelativePath="..\source\direct3d10\Sprite10.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Sprite10.h"
@@ -1150,13 +1087,6 @@
 				<File
 					RelativePath="..\source\direct3d10\Font10.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Font10.h"
@@ -1241,66 +1171,91 @@
 				<File
 					RelativePath="..\source\direct3d10\Texture10.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Texture10.h"
 					>
 				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture1D.cpp"
+				<Filter
+					Name="1D"
 					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture1D.h"
+					<File
+						RelativePath="..\source\direct3d10\Texture1D.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\Texture1D.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\Texture1DDescription.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\Texture1DDescription.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="2D"
 					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture1DDescription.cpp"
+					<File
+						RelativePath="..\source\direct3d10\Texture2D.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\Texture2D.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\Texture2DDescription.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\Texture2DDescription.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="3D"
 					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture1DDescription.h"
+					<File
+						RelativePath="..\source\direct3d10\Texture3D.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\Texture3D.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\Texture3DDescription.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\Texture3DDescription.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="SamplerState"
 					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture2D.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture2D.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture2DDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture2DDescription.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture3D.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture3D.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture3DDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Texture3DDescription.h"
-					>
-				</File>
+					<File
+						RelativePath="..\source\direct3d10\SamplerDescription.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\SamplerDescription.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\SamplerState.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\SamplerState.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Resource Views"
@@ -1400,13 +1355,6 @@
 				<File
 					RelativePath="..\source\direct3d10\Resource10.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Resource10.h"
@@ -1491,13 +1439,6 @@
 				<File
 					RelativePath="..\source\direct3d10\Query10.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Query10.h"
@@ -1567,13 +1508,6 @@
 			<File
 				RelativePath="..\source\ObjectTable.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\source\ObjectTable.h"
@@ -1690,13 +1624,6 @@
 			<File
 				RelativePath="..\source\direct3d9\ResultCode9.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\source\direct3d9\ResultCode9.h"
@@ -1760,13 +1687,6 @@
 				<File
 					RelativePath="..\source\direct3d9\EffectDescription9.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\EffectDescription9.h"
@@ -1783,13 +1703,6 @@
 				<File
 					RelativePath="..\source\direct3d9\EffectPool9.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\EffectPool9.h"
@@ -2210,13 +2123,6 @@
 				<File
 					RelativePath="..\source\direct3d9\FontDescription.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\FontDescription.h"
@@ -2261,13 +2167,6 @@
 				<File
 					RelativePath="..\source\direct3d9\ShaderBytecode.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\ShaderBytecode.h"
@@ -2854,13 +2753,6 @@
 				<File
 					RelativePath="..\source\direct3d9\Capabilities.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\Capabilities.h"
@@ -3010,13 +2902,6 @@
 			<File
 				RelativePath="..\source\directinput\ResultCodeDI.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\source\directinput\ResultCodeDI.h"
@@ -3234,13 +3119,6 @@
 				<File
 					RelativePath="..\source\directinput\CapabilitiesDI.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\directinput\CapabilitiesDI.h"
@@ -3502,13 +3380,6 @@
 			<File
 				RelativePath="..\source\xaudio2\ResultCodeXA2.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\source\xaudio2\ResultCodeXA2.h"
@@ -3689,13 +3560,6 @@
 			<File
 				RelativePath="..\source\xinput\ResultCodeXI.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\source\xinput\ResultCodeXI.h"
@@ -3796,13 +3660,6 @@
 			<File
 				RelativePath="..\source\dxgi\ResultCodeDxgi.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\source\dxgi\ResultCodeDxgi.h"
@@ -3936,13 +3793,6 @@
 				<File
 					RelativePath="..\source\dxgi\DeviceDxgi.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\dxgi\DeviceDxgi.h"
@@ -4039,13 +3889,6 @@
 				<File
 					RelativePath="..\source\dxgi\SurfaceDxgi.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\dxgi\SurfaceDxgi.h"
@@ -4441,13 +4284,6 @@
 			<File
 				RelativePath="..\source\directsound\ResultCodeDS.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\source\directsound\ResultCodeDS.h"
@@ -4735,13 +4571,6 @@
 				<File
 					RelativePath="..\source\directsound\CapabilitiesDS.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\directsound\CapabilitiesDS.h"
@@ -4762,13 +4591,6 @@
 				<File
 					RelativePath="..\source\directsound\CallbacksDS.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\source\directsound\CallbacksDS.h"

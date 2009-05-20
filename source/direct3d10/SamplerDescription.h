@@ -21,43 +21,40 @@
 */
 #pragma once
 
+#include "../math/color4.h"
+
+#include "Enums.h"
+
 namespace SlimDX
 {
 	namespace Direct3D10
-	{
-		ref class PixelShader;
-		ref class Buffer;
-		ref class ShaderResourceView;
-		ref class SamplerState;
-
-		public ref class PixelShaderWrapper
+	{	
+		public value class SamplerDescription : System::IEquatable<SamplerDescription>
 		{
-		private:
-			ID3D10Device* m_Device;
-			
 		internal:
-			PixelShaderWrapper( ID3D10Device* device );
-
+			SamplerDescription( const D3D10_SAMPLER_DESC& native );
+			
+			D3D10_SAMPLER_DESC CreateNativeVersion();
+			
 		public:
-			/// <summary>
-			/// Assigns a pixel shader to the device.
-			/// </summary>
-			/// <param name="shader">The shader to assign to the device. Assign null to disable the pixel shader.</param>
-			void Set( PixelShader^ shader );
+			property Filter Filter;
+			property TextureAddressMode AddressU;
+			property TextureAddressMode AddressV;
+			property TextureAddressMode AddressW;
+			property float MipLodBias;
+			property int MaximumAnisotropy;
+			property Comparison ComparisonFunction;
+			property Color4 BorderColor;
+			property float MinimumLod;
+			property float MaximumLod;
 
-			/// <summary>
-			/// Gets the pixel shader assigned to the device.
-			/// </summary>
-			/// <returns>The pixel shader (null if no shader is assigned).</returns>
-			PixelShader^ Get();
+			static bool operator == ( SamplerDescription left, SamplerDescription right );
+			static bool operator != ( SamplerDescription left, SamplerDescription right );
 
-			array<Buffer^>^ GetConstantBuffers( int startSlot, int count );
-			array<SamplerState^>^ GetSamplers( int startSlot, int count );
-			array<ShaderResourceView^>^ GetShaderResources( int startSlot, int count );
-
-			void SetConstantBuffers( array<Buffer^>^ constantBuffers, int startSlot, int count );
-			void SetSamplers( array<SamplerState^>^ samplers, int startSlot, int count );
-			void SetShaderResources( array<ShaderResourceView^>^ resourceViews, int startSlot, int count );
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( SamplerDescription other );
+			static bool Equals( SamplerDescription% value1, SamplerDescription% value2 );
 		};
 	}
 };

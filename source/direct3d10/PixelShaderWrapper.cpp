@@ -21,8 +21,12 @@
 * THE SOFTWARE.
 */
 
-#include "PixelShaderWrapper.h"
+#include <vector>
 
+#include "Buffer.h"
+#include "SamplerState.h"
+#include "ShaderResourceView.h"
+#include "PixelShaderWrapper.h"
 #include "PixelShader10.h"
 
 using namespace System;
@@ -49,6 +53,81 @@ namespace Direct3D10
 		m_Device->PSGetShader( &shader );
 
 		return shader == 0 ? nullptr : PixelShader::FromPointer( shader );
+	}
+
+	array<Buffer^>^ PixelShaderWrapper::GetConstantBuffers( int startSlot, int count )
+	{
+		array<Buffer^>^ buffers = gcnew array<Buffer^>( count );
+		std::vector<ID3D10Buffer*> results( count );
+
+		m_Device->PSGetConstantBuffers( startSlot, count, &results[0] );
+
+		for( int i = 0; i < count; i++ )
+			buffers[i] = Buffer::FromPointer( results[i] );
+
+		return buffers;
+	}
+
+	array<SamplerState^>^ PixelShaderWrapper::GetSamplers( int startSlot, int count )
+	{
+		array<SamplerState^>^ samplers = gcnew array<SamplerState^>( count );
+		std::vector<ID3D10SamplerState*> results( count );
+
+		m_Device->PSGetSamplers( startSlot, count, &results[0] );
+
+		for( int i = 0; i < count; i++ )
+			samplers[i] = SamplerState::FromPointer( results[i] );
+
+		return samplers;
+	}
+
+	array<ShaderResourceView^>^ PixelShaderWrapper::GetShaderResources( int startSlot, int count )
+	{
+		array<ShaderResourceView^>^ resources = gcnew array<ShaderResourceView^>( count );
+		std::vector<ID3D10ShaderResourceView*> results( count );
+
+		m_Device->PSGetShaderResources( startSlot, count, &results[0] );
+
+		for( int i = 0; i < count; i++ )
+			resources[i] = ShaderResourceView::FromPointer( results[i] );
+
+		return resources;
+	}
+
+	void PixelShaderWrapper::SetConstantBuffers( array<Buffer^>^ constantBuffers, int startSlot, int count )
+	{
+		if( count > constantBuffers->Length )
+			throw gcnew ArgumentOutOfRangeException( "count" );
+
+		std::vector<ID3D10Buffer*> input( count );
+		for( int i = 0; i < count; i++ )
+			input[i] = constantBuffers[i]->InternalPointer;
+
+		m_Device->PSSetConstantBuffers( startSlot, count, &input[0] );
+	}
+
+	void PixelShaderWrapper::SetSamplers( array<SamplerState^>^ samplers, int startSlot, int count )
+	{
+		if( count > samplers->Length )
+			throw gcnew ArgumentOutOfRangeException( "count" );
+
+		std::vector<ID3D10SamplerState*> input( count );
+		for( int i = 0; i < count; i++ )
+			input[i] = samplers[i]->InternalPointer;
+
+		m_Device->PSSetSamplers( startSlot, count, &input[0] );
+	}
+
+	void PixelShaderWrapper::SetShaderResources( array<ShaderResourceView^>^ resourceViews, int startSlot, int count )
+	{
+		if( count > resourceViews->Length )
+			throw gcnew ArgumentOutOfRangeException( "count" );
+
+		std::vector<ID3D10ShaderResourceView*> input( count );
+		for( int i = 0; i < count; i++ )
+			input[i] = resourceViews[i]->InternalPointer;
+
+		m_Device->PSSetShaderResources( startSlot, count, &input[0] );
 	}
 }
 }

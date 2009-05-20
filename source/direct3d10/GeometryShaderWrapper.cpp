@@ -21,8 +21,12 @@
 * THE SOFTWARE.
 */
 
-#include "GeometryShaderWrapper.h"
+#include <vector>
 
+#include "Buffer.h"
+#include "SamplerState.h"
+#include "ShaderResourceView.h"
+#include "GeometryShaderWrapper.h"
 #include "GeometryShader.h"
 
 using namespace System;
@@ -49,6 +53,81 @@ namespace Direct3D10
 		m_Device->GSGetShader( &shader );
 
 		return shader == 0 ? nullptr : GeometryShader::FromPointer( shader );
+	}
+
+	array<Buffer^>^ GeometryShaderWrapper::GetConstantBuffers( int startSlot, int count )
+	{
+		array<Buffer^>^ buffers = gcnew array<Buffer^>( count );
+		std::vector<ID3D10Buffer*> results( count );
+
+		m_Device->GSGetConstantBuffers( startSlot, count, &results[0] );
+
+		for( int i = 0; i < count; i++ )
+			buffers[i] = Buffer::FromPointer( results[i] );
+
+		return buffers;
+	}
+
+	array<SamplerState^>^ GeometryShaderWrapper::GetSamplers( int startSlot, int count )
+	{
+		array<SamplerState^>^ samplers = gcnew array<SamplerState^>( count );
+		std::vector<ID3D10SamplerState*> results( count );
+
+		m_Device->GSGetSamplers( startSlot, count, &results[0] );
+
+		for( int i = 0; i < count; i++ )
+			samplers[i] = SamplerState::FromPointer( results[i] );
+
+		return samplers;
+	}
+
+	array<ShaderResourceView^>^ GeometryShaderWrapper::GetShaderResources( int startSlot, int count )
+	{
+		array<ShaderResourceView^>^ resources = gcnew array<ShaderResourceView^>( count );
+		std::vector<ID3D10ShaderResourceView*> results( count );
+
+		m_Device->GSGetShaderResources( startSlot, count, &results[0] );
+
+		for( int i = 0; i < count; i++ )
+			resources[i] = ShaderResourceView::FromPointer( results[i] );
+
+		return resources;
+	}
+
+	void GeometryShaderWrapper::SetConstantBuffers( array<Buffer^>^ constantBuffers, int startSlot, int count )
+	{
+		if( count > constantBuffers->Length )
+			throw gcnew ArgumentOutOfRangeException( "count" );
+
+		std::vector<ID3D10Buffer*> input( count );
+		for( int i = 0; i < count; i++ )
+			input[i] = constantBuffers[i]->InternalPointer;
+
+		m_Device->GSSetConstantBuffers( startSlot, count, &input[0] );
+	}
+
+	void GeometryShaderWrapper::SetSamplers( array<SamplerState^>^ samplers, int startSlot, int count )
+	{
+		if( count > samplers->Length )
+			throw gcnew ArgumentOutOfRangeException( "count" );
+
+		std::vector<ID3D10SamplerState*> input( count );
+		for( int i = 0; i < count; i++ )
+			input[i] = samplers[i]->InternalPointer;
+
+		m_Device->GSSetSamplers( startSlot, count, &input[0] );
+	}
+
+	void GeometryShaderWrapper::SetShaderResources( array<ShaderResourceView^>^ resourceViews, int startSlot, int count )
+	{
+		if( count > resourceViews->Length )
+			throw gcnew ArgumentOutOfRangeException( "count" );
+
+		std::vector<ID3D10ShaderResourceView*> input( count );
+		for( int i = 0; i < count; i++ )
+			input[i] = resourceViews[i]->InternalPointer;
+
+		m_Device->GSSetShaderResources( startSlot, count, &input[0] );
 	}
 }
 }

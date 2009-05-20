@@ -207,7 +207,8 @@ namespace SlimDX
 			Hardware = D3D_DRIVER_TYPE_HARDWARE,
 			Reference = D3D_DRIVER_TYPE_REFERENCE,
 			Null = D3D_DRIVER_TYPE_NULL,
-			Software = D3D_DRIVER_TYPE_SOFTWARE
+			Software = D3D_DRIVER_TYPE_SOFTWARE,
+			Warp = D3D_DRIVER_TYPE_WARP
 		};
 
 		// TODO: Remove

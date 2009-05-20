@@ -21,43 +21,26 @@
 */
 #pragma once
 
+#include "DeviceChild10.h"
+#include "SamplerDescription.h"
+
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		ref class PixelShader;
-		ref class Buffer;
-		ref class ShaderResourceView;
-		ref class SamplerState;
-
-		public ref class PixelShaderWrapper
+		ref class Device;
+		
+		public ref class SamplerState : public DeviceChild
 		{
-		private:
-			ID3D10Device* m_Device;
-			
-		internal:
-			PixelShaderWrapper( ID3D10Device* device );
+			COMOBJECT(ID3D10SamplerState, SamplerState);
 
 		public:
-			/// <summary>
-			/// Assigns a pixel shader to the device.
-			/// </summary>
-			/// <param name="shader">The shader to assign to the device. Assign null to disable the pixel shader.</param>
-			void Set( PixelShader^ shader );
+			SamplerState( Direct3D10::Device^ device, SamplerDescription description );
 
-			/// <summary>
-			/// Gets the pixel shader assigned to the device.
-			/// </summary>
-			/// <returns>The pixel shader (null if no shader is assigned).</returns>
-			PixelShader^ Get();
-
-			array<Buffer^>^ GetConstantBuffers( int startSlot, int count );
-			array<SamplerState^>^ GetSamplers( int startSlot, int count );
-			array<ShaderResourceView^>^ GetShaderResources( int startSlot, int count );
-
-			void SetConstantBuffers( array<Buffer^>^ constantBuffers, int startSlot, int count );
-			void SetSamplers( array<SamplerState^>^ samplers, int startSlot, int count );
-			void SetShaderResources( array<ShaderResourceView^>^ resourceViews, int startSlot, int count );
+			property SamplerDescription Description
+			{
+				SamplerDescription get();
+			}
 		};
 	}
-};
+}

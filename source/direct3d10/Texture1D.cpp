@@ -84,8 +84,7 @@ namespace Direct3D10
 			throw gcnew Direct3D10Exception( Result::Last );
 		
 		return texture;
-	} 
-		
+	}
 	
 	Texture1DDescription Texture1D::Description::get()
 	{
