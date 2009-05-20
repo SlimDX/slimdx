@@ -3,8 +3,10 @@ Direct3D 9
 
 Direct3D 10
 	* Added the Predicate interface.
-	* Added the Device.SetPredication() method.
+	* Added the Device.SetPredication() and Device.GetPredication() methods.
 	* Added an overload to Device.UpdateSubresource() that allows the update to occur without a destination offset.
+	* Added the SamplerState interface.
+	* Filled in missing shader methods.
 
 DirectSound
 	* Removed the confusing lockEntireBuffer parameter from CaptureBuffer.Read.

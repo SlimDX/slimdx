@@ -311,6 +311,30 @@ namespace SlimDX
 			Wireframe = D3D10_FILL_WIREFRAME,
 			Solid = D3D10_FILL_SOLID
 		};
+
+		[System::Flags]
+		public enum class Filter : System::Int32
+		{
+			MinMagMipPoint = D3D10_FILTER_MIN_MAG_MIP_POINT,
+			MinMagPointMipLinear = D3D10_FILTER_MIN_MAG_POINT_MIP_LINEAR,
+			MinPointMagLinearMipPoint = D3D10_FILTER_MIN_POINT_MAG_LINEAR_MIP_POINT,
+			MinPointMagMipLinear = D3D10_FILTER_MIN_POINT_MAG_MIP_LINEAR,
+			MinLinearMagMipPoint = D3D10_FILTER_MIN_LINEAR_MAG_MIP_POINT,
+			MinLinearMagPointMipLinear = D3D10_FILTER_MIN_LINEAR_MAG_POINT_MIP_LINEAR,
+			MinMagLinearMipPoint = D3D10_FILTER_MIN_MAG_LINEAR_MIP_POINT,
+			MinMagMipLinear = D3D10_FILTER_MIN_MAG_MIP_LINEAR,
+			Anisotropic = D3D10_FILTER_ANISOTROPIC,
+			ComparisonMinMagMipPoint = D3D10_FILTER_COMPARISON_MIN_MAG_MIP_POINT,
+			ComparisonMinMagPointMipLinear = D3D10_FILTER_COMPARISON_MIN_MAG_POINT_MIP_LINEAR,
+			ComparisonMinPointMagLinearMipPoint = D3D10_FILTER_COMPARISON_MIN_POINT_MAG_LINEAR_MIP_POINT,
+			ComparisonMinPointMagMipLinear = D3D10_FILTER_COMPARISON_MIN_POINT_MAG_MIP_LINEAR,
+			ComparisonMinLinaerMagMipPoint = D3D10_FILTER_COMPARISON_MIN_LINEAR_MAG_MIP_POINT,
+			ComparisonMinLinearMagPointMipLinear = D3D10_FILTER_COMPARISON_MIN_LINEAR_MAG_POINT_MIP_LINEAR,
+			ComparisonMinMagLinearMipPoint = D3D10_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT,
+			ComparisonMinMagMipLinear = D3D10_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR,
+			ComparisonAnisotropic = D3D10_FILTER_COMPARISON_ANISOTROPIC,
+			Texture1Bit = D3D10_FILTER_TEXT_1BIT
+		};
 		
 		/// <summary></summary>
 		/// <unmanaged>D3DX10_FILTER_FLAG</unmanaged>
@@ -868,6 +892,15 @@ namespace SlimDX
 			SampleIndex =D3D10_NAME_SAMPLE_INDEX,
 			Target = D3D10_NAME_TARGET,
 			Depth = D3D10_NAME_DEPTH
+		};
+
+		public enum class TextureAddressMode : System::Int32
+		{
+			Wrap = D3D10_TEXTURE_ADDRESS_WRAP,
+			Mirror = D3D10_TEXTURE_ADDRESS_MIRROR,
+			Clamp = D3D10_TEXTURE_ADDRESS_CLAMP,
+			Border = D3D10_TEXTURE_ADDRESS_BORDER,
+			MirrorOnce = D3D10_TEXTURE_ADDRESS_MIRROR_ONCE
 		};
 	}
 }

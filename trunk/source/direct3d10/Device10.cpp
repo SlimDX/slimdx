@@ -156,6 +156,11 @@ namespace Direct3D10
 	{
 		return static_cast<DeviceCreationFlags>( InternalPointer->GetCreationFlags() );
 	}
+
+	Result Device::DeviceRemovedReason::get()
+	{
+		return Result( InternalPointer->GetDeviceRemovedReason() );
+	}
 	
 	CounterCapabilities Device::GetCounterCapabilities()
 	{
@@ -279,6 +284,17 @@ namespace Direct3D10
 	void Device::GenerateMips( ShaderResourceView^ view )
 	{
 		InternalPointer->GenerateMips( view->InternalPointer );
+	}
+
+	void Device::GetPredication( [Out] Predicate^ %predicate, bool %predicateValue )
+	{
+		ID3D10Predicate* pointer;
+		BOOL value;
+
+		InternalPointer->GetPredication( &pointer, &value );
+
+		predicate = Predicate::FromPointer( pointer );
+		predicateValue = value > 0;
 	}
 
 	void Device::SetPredication( Predicate^ predicate, bool predicateValue )

@@ -21,8 +21,12 @@
 * THE SOFTWARE.
 */
 
-#include "VertexShaderWrapper.h"
+#include <vector>
 
+#include "Buffer.h"
+#include "SamplerState.h"
+#include "ShaderResourceView.h"
+#include "VertexShaderWrapper.h"
 #include "VertexShader10.h"
 
 using namespace System;
@@ -49,6 +53,81 @@ namespace Direct3D10
 		m_Device->VSGetShader( &shader );
 
 		return shader == 0 ? nullptr : VertexShader::FromPointer( shader );
+	}
+
+	array<Buffer^>^ VertexShaderWrapper::GetConstantBuffers( int startSlot, int count )
+	{
+		array<Buffer^>^ buffers = gcnew array<Buffer^>( count );
+		std::vector<ID3D10Buffer*> results( count );
+
+		m_Device->VSGetConstantBuffers( startSlot, count, &results[0] );
+
+		for( int i = 0; i < count; i++ )
+			buffers[i] = Buffer::FromPointer( results[i] );
+
+		return buffers;
+	}
+
+	array<SamplerState^>^ VertexShaderWrapper::GetSamplers( int startSlot, int count )
+	{
+		array<SamplerState^>^ samplers = gcnew array<SamplerState^>( count );
+		std::vector<ID3D10SamplerState*> results( count );
+
+		m_Device->VSGetSamplers( startSlot, count, &results[0] );
+
+		for( int i = 0; i < count; i++ )
+			samplers[i] = SamplerState::FromPointer( results[i] );
+
+		return samplers;
+	}
+
+	array<ShaderResourceView^>^ VertexShaderWrapper::GetShaderResources( int startSlot, int count )
+	{
+		array<ShaderResourceView^>^ resources = gcnew array<ShaderResourceView^>( count );
+		std::vector<ID3D10ShaderResourceView*> results( count );
+
+		m_Device->VSGetShaderResources( startSlot, count, &results[0] );
+
+		for( int i = 0; i < count; i++ )
+			resources[i] = ShaderResourceView::FromPointer( results[i] );
+
+		return resources;
+	}
+
+	void VertexShaderWrapper::SetConstantBuffers( array<Buffer^>^ constantBuffers, int startSlot, int count )
+	{
+		if( count > constantBuffers->Length )
+			throw gcnew ArgumentOutOfRangeException( "count" );
+
+		std::vector<ID3D10Buffer*> input( count );
+		for( int i = 0; i < count; i++ )
+			input[i] = constantBuffers[i]->InternalPointer;
+
+		m_Device->VSSetConstantBuffers( startSlot, count, &input[0] );
+	}
+
+	void VertexShaderWrapper::SetSamplers( array<SamplerState^>^ samplers, int startSlot, int count )
+	{
+		if( count > samplers->Length )
+			throw gcnew ArgumentOutOfRangeException( "count" );
+
+		std::vector<ID3D10SamplerState*> input( count );
+		for( int i = 0; i < count; i++ )
+			input[i] = samplers[i]->InternalPointer;
+
+		m_Device->VSSetSamplers( startSlot, count, &input[0] );
+	}
+
+	void VertexShaderWrapper::SetShaderResources( array<ShaderResourceView^>^ resourceViews, int startSlot, int count )
+	{
+		if( count > resourceViews->Length )
+			throw gcnew ArgumentOutOfRangeException( "count" );
+
+		std::vector<ID3D10ShaderResourceView*> input( count );
+		for( int i = 0; i < count; i++ )
+			input[i] = resourceViews[i]->InternalPointer;
+
+		m_Device->VSSetShaderResources( startSlot, count, &input[0] );
 	}
 }
 }
