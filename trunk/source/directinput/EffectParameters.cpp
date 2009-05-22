@@ -67,8 +67,7 @@ namespace DirectInput
 		}
 
 		if( effect.cbTypeSpecificParams > 0 && effect.lpvTypeSpecificParams != NULL )
-		{
-		}
+			Parameters = gcnew TypeSpecificParameters( effect.lpvTypeSpecificParams, effect.cbTypeSpecificParams );
 	}
 
 	DIEFFECT EffectParameters::ToUnmanaged()
@@ -118,10 +117,10 @@ namespace DirectInput
 			result.lpEnvelope = env;
 		}
 
-		if( TypeSpecificParameters != nullptr )
+		if( Parameters != nullptr )
 		{
-			result.cbTypeSpecificParams = TypeSpecificParameters->Size;
-			result.lpvTypeSpecificParams = TypeSpecificParameters->Lock().ToPointer();
+			result.cbTypeSpecificParams = Parameters->Size;
+			result.lpvTypeSpecificParams = Parameters->ToUnmanaged();
 		}
 
 		return result;
@@ -138,8 +137,8 @@ namespace DirectInput
 		if( effect.lpEnvelope != NULL )
 			delete effect.lpEnvelope;
 
-		if( effect.lpvTypeSpecificParams != NULL )
-			TypeSpecificParameters->Unlock();
+		if( effect.lpvTypeSpecificParams != NULL && Parameters != nullptr )
+			Parameters->Release( effect.lpvTypeSpecificParams );
 	}
 
 	void EffectParameters::GetAxes( [Out] array<int>^ %axes, [Out] array<int>^ %directions )

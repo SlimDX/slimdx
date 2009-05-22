@@ -19,43 +19,64 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include "stdafx.h"
+#include <dinput.h>
 
-#include "Enums.h"
-#include "Envelope.h"
+#include "../InternalHelpers.h"
+
 #include "TypeSpecificParameters.h"
+#include "ConstantForce.h"
+#include "CustomForce.h"
+#include "PeriodicForce.h"
+#include "RampForce.h"
+#include "ConditionSet.h"
 
-using System::Runtime::InteropServices::OutAttribute;
+using namespace System;
 
 namespace SlimDX
 {
-	namespace DirectInput
+namespace DirectInput
+{
+	TypeSpecificParameters::TypeSpecificParameters()
 	{
-		public value class EffectParameters
-		{
-		private:
-			array<int>^ axes;
-			array<int>^ directions;
-
-		internal:
-			DIEFFECT ToUnmanaged();
-			void Cleanup( const DIEFFECT &effect );
-
-			EffectParameters( const DIEFFECT &effect );
-
-		public:
-			property EffectFlags Flags;
-			property int Duration;
-			property int SamplePeriod;
-			property int Gain;
-			property int TriggerButton;
-			property int TriggerRepeatInterval;
-			property int StartDelay;
-			property System::Nullable<Envelope> Envelope;
-			property TypeSpecificParameters^ Parameters;
-
-			void SetAxes( array<int>^ axes, array<int>^ directions );
-			void GetAxes( [Out] array<int>^ %axes, [Out] array<int>^ %directions );
-		};
+		size = 0;
+		bytes = NULL;
 	}
+
+	TypeSpecificParameters::TypeSpecificParameters( void *bytes, int size )
+	{
+		this->bytes = bytes;
+		this->size = size;
+	}
+
+	void TypeSpecificParameters::Release( void *data )
+	{
+		SLIMDX_UNREFERENCED_PARAMETER( data );
+	}
+
+	ConstantForce^ TypeSpecificParameters::AsConstantForce()
+	{
+		return ConstantForce::FromData( bytes, size );
+	}
+
+	CustomForce^ TypeSpecificParameters::AsCustomForce()
+	{
+		return CustomForce::FromData( bytes, size );
+	}
+
+	PeriodicForce^ TypeSpecificParameters::AsPeriodicForce()
+	{
+		return PeriodicForce::FromData( bytes, size );
+	}
+
+	RampForce^ TypeSpecificParameters::AsRampForce()
+	{
+		return RampForce::FromData( bytes, size );
+	}
+
+	ConditionSet^ TypeSpecificParameters::AsConditionSet()
+	{
+		return ConditionSet::FromData( bytes, size );
+	}
+}
 }

@@ -21,19 +21,38 @@
 */
 #pragma once
 
+#include "TypeSpecificParameters.h"
+
 namespace SlimDX
 {
 	namespace DirectInput
 	{
-		public interface struct ITypeSpecificParameters
+		public ref class CustomForce : TypeSpecificParameters
 		{
-			virtual System::IntPtr Lock();
-			virtual void Unlock();
+		internal:
+			virtual void* ToUnmanaged() override;
+			virtual void Release( void* data ) override;
+
+			static CustomForce^ FromData( void *data, int size );
+
+		public:
+			CustomForce();
+
+			property int Channels;
+			property int SamplePeriod;
+			property int Samples;
+			property array<int>^ ForceData;
 
 			virtual property int Size
 			{
-				virtual int get() = 0;
+				virtual int get() override;
 			}
+
+			virtual ConstantForce^ AsConstantForce() override;
+			virtual CustomForce^ AsCustomForce() override;
+			virtual PeriodicForce^ AsPeriodicForce() override;
+			virtual RampForce^ AsRampForce() override;
+			virtual ConditionSet^ AsConditionSet() override;
 		};
 	}
 }
