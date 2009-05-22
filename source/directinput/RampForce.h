@@ -21,41 +21,36 @@
 */
 #pragma once
 
-#include "Enums.h"
-#include "Envelope.h"
 #include "TypeSpecificParameters.h"
-
-using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
 	namespace DirectInput
 	{
-		public value class EffectParameters
+		public ref class RampForce : TypeSpecificParameters
 		{
-		private:
-			array<int>^ axes;
-			array<int>^ directions;
-
 		internal:
-			DIEFFECT ToUnmanaged();
-			void Cleanup( const DIEFFECT &effect );
+			virtual void* ToUnmanaged() override;
+			virtual void Release( void* data ) override;
 
-			EffectParameters( const DIEFFECT &effect );
+			static RampForce^ FromData( void *data, int size );
 
 		public:
-			property EffectFlags Flags;
-			property int Duration;
-			property int SamplePeriod;
-			property int Gain;
-			property int TriggerButton;
-			property int TriggerRepeatInterval;
-			property int StartDelay;
-			property System::Nullable<Envelope> Envelope;
-			property TypeSpecificParameters^ Parameters;
+			RampForce();
 
-			void SetAxes( array<int>^ axes, array<int>^ directions );
-			void GetAxes( [Out] array<int>^ %axes, [Out] array<int>^ %directions );
+			property int Start;
+			property int End;
+
+			virtual property int Size
+			{
+				virtual int get() override;
+			}
+
+			virtual ConstantForce^ AsConstantForce() override;
+			virtual CustomForce^ AsCustomForce() override;
+			virtual PeriodicForce^ AsPeriodicForce() override;
+			virtual RampForce^ AsRampForce() override;
+			virtual ConditionSet^ AsConditionSet() override;
 		};
 	}
 }

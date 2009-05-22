@@ -3076,7 +3076,67 @@
 					Name="TypeSpecificParameters"
 					>
 					<File
-						RelativePath="..\source\directinput\ITypeSpecificParameters.h"
+						RelativePath="..\source\directinput\TypeSpecificParameters.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directinput\TypeSpecificParameters.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Forces"
+					>
+					<File
+						RelativePath="..\source\directinput\ConstantForce.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directinput\ConstantForce.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directinput\CustomForce.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directinput\CustomForce.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directinput\PeriodicForce.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directinput\PeriodicForce.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directinput\RampForce.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directinput\RampForce.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Conditions"
+					>
+					<File
+						RelativePath="..\source\directinput\Condition.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directinput\Condition.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directinput\ConditionSet.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directinput\ConditionSet.h"
 						>
 					</File>
 				</Filter>
