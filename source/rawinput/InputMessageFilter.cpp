@@ -23,7 +23,7 @@
 
 #include <windows.h>
 
-#include "Device.h"
+#include "DeviceRI.h"
 #include "InputMessageFilter.h"
 
 using namespace System;

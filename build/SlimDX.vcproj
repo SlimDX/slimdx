@@ -788,70 +788,6 @@
 					RelativePath="..\source\direct3d10\VertexShaderWrapper.h"
 					>
 				</File>
-				<Filter
-					Name="10.1"
-					>
-					<File
-						RelativePath="..\source\direct3d10\Device10_1.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d10\Device10_1.h"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d10\Enums10_1.h"
-						>
-					</File>
-					<Filter
-						Name="States"
-						>
-						<File
-							RelativePath="..\source\direct3d10\BlendState1.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\source\direct3d10\BlendState1.h"
-							>
-						</File>
-						<File
-							RelativePath="..\source\direct3d10\BlendStateDescription1.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\source\direct3d10\BlendStateDescription1.h"
-							>
-						</File>
-						<File
-							RelativePath="..\source\direct3d10\RenderTargetBlendDescription1.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\source\direct3d10\RenderTargetBlendDescription1.h"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="Resource Views"
-						>
-						<File
-							RelativePath="..\source\direct3d10\ShaderResourceView1.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\source\direct3d10\ShaderResourceView1.h"
-							>
-						</File>
-						<File
-							RelativePath="..\source\direct3d10\ShaderResourceViewDescription1.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\source\direct3d10\ShaderResourceViewDescription1.h"
-							>
-						</File>
-					</Filter>
-				</Filter>
 			</Filter>
 			<Filter
 				Name="Mesh"
@@ -1105,59 +1041,11 @@
 				Name="Texture"
 				>
 				<File
-					RelativePath="..\source\direct3d10\ImageInformation.cpp"
+					RelativePath="..\source\direct3d10\ImageInformation10.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\ImageInformation2.obj"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\ImageInformation2.obj"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\ImageInformation2.obj"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\ImageInformation2.obj"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Public|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\ImageInformation2.obj"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Public|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\ImageInformation2.obj"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\ImageInformation.h"
+					RelativePath="..\source\direct3d10\ImageInformation10.h"
 					>
 				</File>
 				<File
@@ -1452,6 +1340,70 @@
 					RelativePath="..\source\direct3d10\QueryDescription.h"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="10.1"
+				>
+				<File
+					RelativePath="..\source\direct3d10\Device10_1.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Device10_1.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Enums10_1.h"
+					>
+				</File>
+				<Filter
+					Name="States"
+					>
+					<File
+						RelativePath="..\source\direct3d10\BlendState1.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\BlendState1.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\BlendStateDescription1.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\BlendStateDescription1.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\RenderTargetBlendDescription1.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\RenderTargetBlendDescription1.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Resource Views"
+					>
+					<File
+						RelativePath="..\source\direct3d10\ShaderResourceView1.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\ShaderResourceView1.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\ShaderResourceViewDescription1.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\ShaderResourceViewDescription1.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
@@ -2397,65 +2349,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d9\SurfaceDescription.cpp"
+					RelativePath="..\source\direct3d9\SurfaceDescription9.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Public|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Public|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\source\direct3d9\SurfaceDescription.h"
+					RelativePath="..\source\direct3d9\SurfaceDescription9.h"
 					>
 				</File>
 			</Filter>
@@ -2927,65 +2825,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\directinput\Device.cpp"
+					RelativePath="..\source\directinput\DeviceDI.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Public|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Public|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\source\directinput\Device.h"
+					RelativePath="..\source\directinput\DeviceDI.h"
 					>
 				</File>
 				<File
@@ -3669,73 +3513,19 @@
 				Name="Swap Chain"
 				>
 				<File
-					RelativePath="..\source\dxgi\SwapChain.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Public|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Public|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\source\dxgi\SwapChain.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\dxgi\SwapChainDescription.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\source\dxgi\SwapChainDescription.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\SwapChainDxgi.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\SwapChainDxgi.h"
 					>
 				</File>
 			</Filter>
@@ -4107,24 +3897,15 @@
 				Name="Device"
 				>
 				<File
-					RelativePath="..\source\rawinput\Device.cpp"
+					RelativePath="..\source\rawinput\DeviceRI.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)4.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)4.xdc"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|x64"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)4.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)4.xdc"
+							ObjectFile="$(IntDir)\"
+							XMLDocumentationFileName="$(IntDir)\"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -4132,8 +3913,8 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)4.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)4.xdc"
+							ObjectFile="$(IntDir)\"
+							XMLDocumentationFileName="$(IntDir)\"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -4141,8 +3922,8 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)4.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)4.xdc"
+							ObjectFile="$(IntDir)\"
+							XMLDocumentationFileName="$(IntDir)\"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -4150,8 +3931,8 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)4.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)4.xdc"
+							ObjectFile="$(IntDir)\"
+							XMLDocumentationFileName="$(IntDir)\"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -4159,13 +3940,13 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)4.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)4.xdc"
+							ObjectFile="$(IntDir)\"
+							XMLDocumentationFileName="$(IntDir)\"
 						/>
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\source\rawinput\Device.h"
+					RelativePath="..\source\rawinput\DeviceRI.h"
 					>
 				</File>
 				<File

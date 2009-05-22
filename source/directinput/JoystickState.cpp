@@ -28,7 +28,7 @@
 
 #include "DirectInput.h"
 
-#include "Device.h"
+#include "DeviceDI.h"
 #include "JoystickState.h"
 
 using namespace System;

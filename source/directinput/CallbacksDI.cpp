@@ -26,7 +26,7 @@
 #include "../ComObject.h"
 #include "../CollectionShim.h"
 
-#include "Device.h"
+#include "DeviceDI.h"
 #include "DeviceInstance.h"
 #include "CallbacksDI.h"
 

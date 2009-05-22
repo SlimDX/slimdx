@@ -25,7 +25,7 @@
 
 #include "../dxgi/Adapter.h"
 #include "../dxgi/Enums.h"
-#include "../dxgi/SwapChain.h"
+#include "../dxgi/SwapChainDxgi.h"
 #include "../dxgi/SwapChainDescription.h"
 #include "../math/Color4.h"
 

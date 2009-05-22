@@ -34,7 +34,7 @@
 #include "DirectInputNotFoundException.h"
 
 #include "CallbacksDI.h"
-#include "Device.h"
+#include "DeviceDI.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
