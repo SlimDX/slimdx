@@ -42,8 +42,10 @@ namespace SlimDX
 			DeviceInstance^ information;
 			DeviceProperties^ properties;
 
-		protected:
+		internal:
 			Device() { }
+
+		protected:
 			Device( DirectInput^ directInput, System::Guid subsystem );
 
 		public:

@@ -896,78 +896,114 @@
 			<Filter
 				Name="State"
 				>
-				<File
-					RelativePath="..\source\direct3d10\BlendState.cpp"
+				<Filter
+					Name="SamplerState"
 					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\BlendState.h"
+					<File
+						RelativePath="..\source\direct3d10\SamplerDescription.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\SamplerDescription.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\SamplerState.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\SamplerState.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="BlendState"
 					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\BlendStateDescription.cpp"
+					<File
+						RelativePath="..\source\direct3d10\BlendState.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\BlendState.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\BlendStateDescription.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\BlendStateDescription.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="DepthStencilState"
 					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\BlendStateDescription.h"
+					<File
+						RelativePath="..\source\direct3d10\DepthStencilOperationDescription.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\DepthStencilOperationDescription.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\DepthStencilState.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\DepthStencilState.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\DepthStencilStateDescription.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\DepthStencilStateDescription.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="RasterizerState"
 					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\DepthStencilOperationDescription.cpp"
+					<File
+						RelativePath="..\source\direct3d10\RasterizerState.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\RasterizerState.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\RasterizerStateDescription.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\RasterizerStateDescription.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="StateBlock"
 					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\DepthStencilOperationDescription.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\DepthStencilState.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\DepthStencilState.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\DepthStencilStateDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\DepthStencilStateDescription.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\RasterizerState.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\RasterizerState.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\RasterizerStateDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\RasterizerStateDescription.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\StateBlock.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\StateBlock10.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\StateBlockMask.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\StateBlockMask.h"
-					>
-				</File>
+					<File
+						RelativePath="..\source\direct3d10\StateBlock.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\StateBlock10.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\StateBlockMask.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\StateBlockMask.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Buffer"
@@ -1121,26 +1157,6 @@
 					</File>
 					<File
 						RelativePath="..\source\direct3d10\Texture3DDescription.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="SamplerState"
-					>
-					<File
-						RelativePath="..\source\direct3d10\SamplerDescription.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d10\SamplerDescription.h"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d10\SamplerState.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d10\SamplerState.h"
 						>
 					</File>
 				</Filter>
@@ -3028,6 +3044,42 @@
 					RelativePath="..\source\directinput\StrategyGenres.h"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="Effect"
+				>
+				<File
+					RelativePath="..\source\directinput\EffectDI.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\EffectDI.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\EffectParameters.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\EffectParameters.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\Envelope.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\Envelope.h"
+					>
+				</File>
+				<Filter
+					Name="TypeSpecificParameters"
+					>
+					<File
+						RelativePath="..\source\directinput\ITypeSpecificParameters.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter

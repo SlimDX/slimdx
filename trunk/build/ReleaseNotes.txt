@@ -20,3 +20,4 @@ DirectInput
 	* Changed a few collection results to return IList<T> instead of IEnumerable<T>.
 	* Removed the BufferedData indirection. Buffered data reads now return direct lists of data.
 	* Did some general code clean-up in DirectInput to better match recent changes in the library.
+	* Added support for effects.

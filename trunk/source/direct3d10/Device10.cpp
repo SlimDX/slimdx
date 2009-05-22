@@ -44,6 +44,8 @@
 #include "ShaderResourceView.h"
 #include "StreamOutputWrapper.h"
 #include "VertexShaderWrapper.h"
+#include "PixelShaderWrapper.h"
+#include "GeometryShaderWrapper.h"
 
 using namespace System;
 
@@ -58,6 +60,8 @@ namespace Direct3D10
 		m_StreamOutput = gcnew StreamOutputWrapper( InternalPointer );
 		m_Rasterizer = gcnew RasterizerWrapper( InternalPointer );
 		m_VertexShader = gcnew VertexShaderWrapper( InternalPointer );
+		m_PixelShader = gcnew PixelShaderWrapper( InternalPointer );
+		m_GeometryShader = gcnew GeometryShaderWrapper( InternalPointer );
 	}
 
 	Device::Device( ID3D10Device* pointer, ComObject^ owner )

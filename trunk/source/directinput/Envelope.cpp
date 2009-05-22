@@ -20,46 +20,53 @@
 * THE SOFTWARE.
 */
 #include "stdafx.h"
+#include <dinput.h>
 
-#include <d3d10.h>
-#include <d3dx10.h>
-#include <d3dx9.h>
-#include <vcclr.h>
-#include <cmath>
-
-#include "Direct3D10Exception.h"
-
-#include "../DataStream.h"
-
-#include "Device10.h"
-#include "SamplerState.h"
+#include "Envelope.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace DirectInput
 {
-	SamplerState^ SamplerState::FromDescription( Direct3D10::Device^ device, SamplerDescription description )
+	bool Envelope::operator == ( Envelope left, Envelope right )
 	{
-		if( device == nullptr )
-			throw gcnew ArgumentNullException( "device" );
-
-		ID3D10SamplerState *sampler;
-		D3D10_SAMPLER_DESC nativeDescription = description.CreateNativeVersion();
-
-		if( RECORD_D3D10( device->InternalPointer->CreateSamplerState( &nativeDescription, &sampler ) ).IsFailure )
-			return nullptr;
-
-		return FromPointer( sampler );
+		return Envelope::Equals( left, right );
 	}
 
-	SamplerDescription SamplerState::Description::get()
+	bool Envelope::operator != ( Envelope left, Envelope right )
 	{
-		D3D10_SAMPLER_DESC desc;
-		InternalPointer->GetDesc( &desc );
+		return !Envelope::Equals( left, right );
+	}
 
-		return SamplerDescription( desc );
+	int Envelope::GetHashCode()
+	{
+		return AttackLevel.GetHashCode() + AttackTime.GetHashCode() + FadeLevel.GetHashCode()
+			 + FadeTime.GetHashCode();
+	}
+
+	bool Envelope::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( safe_cast<Envelope>( value ) );
+	}
+
+	bool Envelope::Equals( Envelope value )
+	{
+		return ( AttackLevel == value.AttackLevel && AttackTime == value.AttackTime && FadeLevel == value.FadeLevel
+			 && FadeTime == value.FadeTime );
+	}
+
+	bool Envelope::Equals( Envelope% value1, Envelope% value2 )
+	{
+		return ( value1.AttackLevel == value2.AttackLevel && value1.AttackTime == value2.AttackTime && value1.FadeLevel == value2.FadeLevel
+			 && value1.FadeTime == value2.FadeTime );
 	}
 }
 }
