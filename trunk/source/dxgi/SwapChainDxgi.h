@@ -31,7 +31,7 @@
 
 using System::Runtime::InteropServices::OutAttribute;
 
-#define BOOST_PP_FILENAME_1 "SwapChain.h"
+#define BOOST_PP_FILENAME_1 "SwapChainDxgi.h"
 #include "../InterfaceSetup.h"
 #endif
 #else

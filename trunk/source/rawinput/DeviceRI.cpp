@@ -27,7 +27,7 @@
 #include "../Utilities.h"
 #include "../SlimDXException.h"
 
-#include "Device.h"
+#include "DeviceRI.h"
 #include "KeyboardInfo.h"
 #include "MouseInfo.h"
 #include "HidInfo.h"

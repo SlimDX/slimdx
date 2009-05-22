@@ -26,7 +26,7 @@
 
 #include "Direct3D10Exception.h"
 
-#include "ImageInformation.h"
+#include "ImageInformation10.h"
 
 using namespace System;
 

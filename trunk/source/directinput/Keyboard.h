@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "Device.h"
+#include "DeviceDI.h"
 #include "KeyboardState.h"
 
 namespace SlimDX

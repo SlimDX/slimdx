@@ -26,7 +26,7 @@
 #include "FrameStatistics.h"
 #include "ModeDescription.h"
 #include "Output.h"
-#include "SwapChain.h"
+#include "SwapChainDxgi.h"
 #include "SwapChainDescription.h"
 
 using namespace System;

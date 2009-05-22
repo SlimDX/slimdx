@@ -23,7 +23,7 @@
 
 #include "../ComObject.h"
 
-#include "../dxgi/SwapChain.h"
+#include "../dxgi/SwapChainDxgi.h"
 
 #include "Enums.h"
 

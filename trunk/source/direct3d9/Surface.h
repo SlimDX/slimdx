@@ -24,7 +24,7 @@
 #include "Resource.h"
 #include "../DataRectangle.h"
 
-#include "SurfaceDescription.h"
+#include "SurfaceDescription9.h"
 
 using System::Runtime::InteropServices::OutAttribute;
 

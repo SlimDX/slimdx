@@ -28,7 +28,7 @@
 
 #include "DirectInput.h"
 
-#include "Device.h"
+#include "DeviceDI.h"
 #include "KeyboardState.h"
 #include "DeviceConstantConverter.h"
 
