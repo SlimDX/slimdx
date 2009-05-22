@@ -294,6 +294,53 @@ namespace SlimDX
 			Supplemental = DI8DEVTYPE_SUPPLEMENTAL
 		};
 
+		[System::Flags]
+		public enum class EffectFlags : System::Int32
+		{
+			None = 0,
+			Cartesian = DIEFF_CARTESIAN,
+			ObjectIds = DIEFF_OBJECTIDS,
+			ObjectOffsets = DIEFF_OBJECTOFFSETS,
+			Polar = DIEFF_POLAR,
+			Spherical = DIEFF_SPHERICAL
+		};
+
+		[System::Flags]
+		public enum class EffectParameterFlags : System::Int32
+		{
+			None = 0,
+			All = DIEP_ALLPARAMS,
+			AllExceptStartDelay = DIEP_ALLPARAMS_DX5,
+			Axes = DIEP_AXES,
+			Direction = DIEP_DIRECTION,
+			Duration = DIEP_DURATION,
+			Envelope = DIEP_ENVELOPE,
+			Gain = DIEP_GAIN,
+			SamplePeriod = DIEP_SAMPLEPERIOD,
+			StartDelay = DIEP_STARTDELAY,
+			TriggerButton = DIEP_TRIGGERBUTTON,
+			TriggerRepeatInterval = DIEP_TRIGGERREPEATINTERVAL,
+			TypeSpecificParameters = DIEP_TYPESPECIFICPARAMS
+		};
+
+#pragma warning(disable: 4369)
+		[System::Flags]
+		public enum class EffectPlayFlags : System::Int32
+		{
+			None = 0,
+			Solo = DIES_SOLO,
+			NoDownload = DIES_NODOWNLOAD
+		};
+#pragma warning(default: 4369)
+
+		[System::Flags]
+		public enum class EffectStatus : System::Int32
+		{
+			None = 0,
+			Playing = DIEGES_PLAYING,
+			Emulated = DIEGES_EMULATED
+		};
+
 		/// <summary>
 		/// Defines possible keyboard key codes.
 		/// </summary>

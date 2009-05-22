@@ -21,26 +21,19 @@
 */
 #pragma once
 
-#include "DeviceChild10.h"
-#include "SamplerDescription.h"
-
 namespace SlimDX
 {
-	namespace Direct3D10
+	namespace DirectInput
 	{
-		ref class Device;
-		
-		public ref class SamplerState : public DeviceChild
+		public interface struct ITypeSpecificParameters
 		{
-			COMOBJECT(ID3D10SamplerState, SamplerState);
+			virtual System::IntPtr Lock();
+			virtual void Unlock();
 
-		public:
-			property SamplerDescription Description
+			virtual property int Size
 			{
-				SamplerDescription get();
+				virtual int get() = 0;
 			}
-
-			static SamplerState^ FromDescription( Direct3D10::Device^ device, SamplerDescription description );
 		};
 	}
 }

@@ -21,26 +21,49 @@
 */
 #pragma once
 
-#include "DeviceChild10.h"
-#include "SamplerDescription.h"
+#include "Enums.h"
+#include "EffectParameters.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	namespace DirectInput
 	{
 		ref class Device;
-		
-		public ref class SamplerState : public DeviceChild
+
+		public ref class Effect : ComObject
 		{
-			COMOBJECT(ID3D10SamplerState, SamplerState);
+			COMOBJECT(IDirectInputEffect, Effect);
 
 		public:
-			property SamplerDescription Description
+			Effect( Device^ device, System::Guid guid );
+			Effect( Device^ device, System::Guid guid, EffectParameters parameters );
+
+			EffectParameters GetParameters();
+			EffectParameters GetParameters( EffectParameterFlags flags );
+
+			Result SetParameters( EffectParameters parameters );
+			Result SetParameters( EffectParameters parameters, EffectParameterFlags flags );
+
+			Result Start();
+			Result Start( int iterations );
+			Result Start( int iterations, EffectPlayFlags flags );
+			Result Start( EffectPlayFlags flags );
+
+			Result Stop();
+			Result Unload();
+			Result Download();
+
+			array<System::Byte>^ Escape( int command, array<System::Byte>^ data, int outputSize );
+
+			property EffectStatus Status
 			{
-				SamplerDescription get();
+				EffectStatus get();
 			}
 
-			static SamplerState^ FromDescription( Direct3D10::Device^ device, SamplerDescription description );
+			property System::Guid Guid
+			{
+				System::Guid get();
+			}
 		};
 	}
 }

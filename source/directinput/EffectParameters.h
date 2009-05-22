@@ -21,26 +21,41 @@
 */
 #pragma once
 
-#include "DeviceChild10.h"
-#include "SamplerDescription.h"
+#include "Enums.h"
+#include "Envelope.h"
+#include "ITypeSpecificParameters.h"
+
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	namespace DirectInput
 	{
-		ref class Device;
-		
-		public ref class SamplerState : public DeviceChild
+		public value class EffectParameters
 		{
-			COMOBJECT(ID3D10SamplerState, SamplerState);
+		private:
+			array<int>^ axes;
+			array<int>^ directions;
+
+		internal:
+			DIEFFECT ToUnmanaged();
+			void Cleanup( const DIEFFECT &effect );
+
+			EffectParameters( const DIEFFECT &effect );
 
 		public:
-			property SamplerDescription Description
-			{
-				SamplerDescription get();
-			}
+			property EffectFlags Flags;
+			property int Duration;
+			property int SamplePeriod;
+			property int Gain;
+			property int TriggerButton;
+			property int TriggerRepeatInterval;
+			property int StartDelay;
+			property System::Nullable<Envelope> Envelope;
+			property ITypeSpecificParameters^ TypeSpecificParameters;
 
-			static SamplerState^ FromDescription( Direct3D10::Device^ device, SamplerDescription description );
+			void SetAxes( array<int>^ axes, array<int>^ directions );
+			void GetAxes( [Out] array<int>^ %axes, [Out] array<int>^ %directions );
 		};
 	}
 }
