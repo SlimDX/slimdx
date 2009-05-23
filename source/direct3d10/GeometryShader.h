@@ -21,9 +21,8 @@
 */
 #pragma once
 
-#include "../ComObject.h"
-
 #include "DeviceChild10.h"
+#include "ShaderBytecode10.h"
 
 namespace SlimDX
 {
@@ -32,6 +31,9 @@ namespace SlimDX
 		public ref class GeometryShader : public DeviceChild
 		{
 			COMOBJECT(ID3D10GeometryShader, GeometryShader);
+
+		public:
+			GeometryShader( Direct3D10::Device^ device, ShaderBytecode^ shaderBytecode );
 		};
 	}
 };

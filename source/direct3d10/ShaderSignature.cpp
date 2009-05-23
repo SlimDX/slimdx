@@ -1,4 +1,4 @@
-#include "stdafx.h"
+
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -20,8 +20,14 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
+#include "../../external/d3dcompiler.h"
+
+#include "Direct3D10Exception.h"
 #include "ShaderSignature.h"
+
+using namespace System;
 
 namespace SlimDX
 {
@@ -78,6 +84,57 @@ namespace Direct3D10
 			return blob->GetBufferSize();
 		else
 			return m_Length;
+	}
+
+	ShaderSignature^ ShaderSignature::GetInputSignature( System::String^ shaderSource )
+	{
+		return GetInputSignature( System::Text::ASCIIEncoding::ASCII->GetBytes( shaderSource ) );
+	}
+
+	ShaderSignature^ ShaderSignature::GetInputSignature( array<System::Byte>^ shaderSource )
+	{
+		ID3D10Blob *blob;
+		pin_ptr<Byte> pinnedSource = &shaderSource[0];
+
+		HRESULT hr = D3DGetInputSignatureBlob( pinnedSource, shaderSource->Length, &blob );
+		if( RECORD_D3D10( hr ).IsFailure )
+			return nullptr;
+
+		return gcnew ShaderSignature( blob );
+	}
+
+	ShaderSignature^ ShaderSignature::GetOutputSignature( System::String^ shaderSource )
+	{
+		return GetOutputSignature( System::Text::ASCIIEncoding::ASCII->GetBytes( shaderSource ) );
+	}
+
+	ShaderSignature^ ShaderSignature::GetOutputSignature( array<System::Byte>^ shaderSource )
+	{
+		ID3D10Blob *blob;
+		pin_ptr<Byte> pinnedSource = &shaderSource[0];
+
+		HRESULT hr = D3DGetOutputSignatureBlob( pinnedSource, shaderSource->Length, &blob );
+		if( RECORD_D3D10( hr ).IsFailure )
+			return nullptr;
+
+		return gcnew ShaderSignature( blob );
+	}
+
+	ShaderSignature^ ShaderSignature::GetInputOutputSignature( System::String^ shaderSource )
+	{
+		return GetInputOutputSignature( System::Text::ASCIIEncoding::ASCII->GetBytes( shaderSource ) );
+	}
+
+	ShaderSignature^ ShaderSignature::GetInputOutputSignature( array<System::Byte>^ shaderSource )
+	{
+		ID3D10Blob *blob;
+		pin_ptr<Byte> pinnedSource = &shaderSource[0];
+
+		HRESULT hr = D3DGetInputAndOutputSignatureBlob( pinnedSource, shaderSource->Length, &blob );
+		if( RECORD_D3D10( hr ).IsFailure )
+			return nullptr;
+
+		return gcnew ShaderSignature( blob );
 	}
 }
 }

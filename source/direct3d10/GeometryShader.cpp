@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -20,9 +19,12 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
+#include "stdafx.h"
 #include <d3d10.h>
 
+#include "Direct3D10Exception.h"
+
+#include "Device10.h"
 #include "GeometryShader.h"
 
 using namespace System;
@@ -30,6 +32,16 @@ using namespace System;
 namespace SlimDX
 {
 namespace Direct3D10
-{ 
+{
+	GeometryShader::GeometryShader( Direct3D10::Device^ device, ShaderBytecode^ shaderBytecode )
+	{
+		ID3D10GeometryShader *shader;
+
+		HRESULT hr = device->InternalPointer->CreateGeometryShader( shaderBytecode->Buffer, shaderBytecode->Length, &shader );
+		if( RECORD_D3D10( hr ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+
+		Construct( shader );
+	}
 }
 }

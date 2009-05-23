@@ -9,6 +9,8 @@ Direct3D 10
 	* Filled in missing shader methods.
 	* Refactored ShaderSignature and ShaderBytecode to be independent of one another.
 	* Added functions to compile to shader bytecode.
+	* Added functions to extract shader signatures.
+	* Added constructors for geometry, vertex, and pixel shaders.
 
 DirectSound
 	* Removed the confusing lockEntireBuffer parameter from CaptureBuffer.Read.
