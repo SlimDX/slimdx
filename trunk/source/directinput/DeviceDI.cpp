@@ -107,6 +107,30 @@ namespace DirectInput
 		return EffectInfo( info );
 	}
 
+	DeviceObjectInstance Device::GetObjectInfoByUsage( int usageCode )
+	{
+		DIDEVICEOBJECTINSTANCE di;
+		di.dwSize = sizeof( DIDEVICEOBJECTINSTANCE );
+
+		HRESULT hr = InternalPointer->GetObjectInfo( &di, usageCode, DIPH_BYUSAGE );
+		if( RECORD_DINPUT( hr ).IsFailure )
+			return DeviceObjectInstance();
+
+		return DeviceObjectInstance( di );
+	}
+
+	DeviceObjectInstance Device::GetObjectInfoById( int objectId )
+	{
+		DIDEVICEOBJECTINSTANCE di;
+		di.dwSize = sizeof( DIDEVICEOBJECTINSTANCE );
+
+		HRESULT hr = InternalPointer->GetObjectInfo( &di, objectId, DIPH_BYUSAGE );
+		if( RECORD_DINPUT( hr ).IsFailure )
+			return DeviceObjectInstance();
+
+		return DeviceObjectInstance( di );
+	}
+
 	SlimDX::DirectInput::Capabilities^ Device::Capabilities::get()
 	{
 		if( caps != nullptr )

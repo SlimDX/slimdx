@@ -35,6 +35,7 @@
 using namespace System;
 using namespace System::Collections::Generic;
 using namespace System::Windows::Forms;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
@@ -99,6 +100,18 @@ namespace DirectInput
 	ObjectProperties^ Keyboard::GetObjectPropertiesByName( String^ name )
 	{
 		return gcnew ObjectProperties( InternalPointer, name, KeyboardState::typeid );
+	}
+
+	DeviceObjectInstance Keyboard::GetObjectInfoByName( String^ name )
+	{
+		DIDEVICEOBJECTINSTANCE di;
+		di.dwSize = sizeof( DIDEVICEOBJECTINSTANCE );
+
+		HRESULT hr = InternalPointer->GetObjectInfo( &di, Marshal::OffsetOf( KeyboardState::typeid, name ).ToInt32(), DIPH_BYUSAGE );
+		if( RECORD_DINPUT( hr ).IsFailure )
+			return DeviceObjectInstance();
+
+		return DeviceObjectInstance( di );
 	}
 }
 }

@@ -223,5 +223,18 @@ namespace DirectInput
 	{
 		return gcnew ObjectProperties( InternalPointer, name, DataFormat::typeid );
 	}
+
+	generic<typename DataFormat>
+	DeviceObjectInstance CustomDevice<DataFormat>::GetObjectInfoByName( String^ name )
+	{
+		DIDEVICEOBJECTINSTANCE di;
+		di.dwSize = sizeof( DIDEVICEOBJECTINSTANCE );
+
+		HRESULT hr = InternalPointer->GetObjectInfo( &di, Marshal::OffsetOf( DataFormat::typeid, name ).ToInt32(), DIPH_BYUSAGE );
+		if( RECORD_DINPUT( hr ).IsFailure )
+			return DeviceObjectInstance();
+
+		return DeviceObjectInstance( di );
+	}
 }
 }

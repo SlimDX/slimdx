@@ -63,5 +63,11 @@ namespace msclr
 
 			return to;
 		}
+
+		template<>
+		inline System::Drawing::Point marshal_as<System::Drawing::Point, POINT>( const POINT &from )
+		{
+			return System::Drawing::Point( from.x, from.y );
+		}
 	}
 }

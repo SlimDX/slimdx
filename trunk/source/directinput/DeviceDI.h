@@ -103,6 +103,9 @@ namespace SlimDX
 
 			EffectInfo GetEffectInfo( System::Guid guid );
 
+			DeviceObjectInstance GetObjectInfoByUsage( int usageCode );
+			DeviceObjectInstance GetObjectInfoById( int objectId );
+
 			/// <summary>
 			/// Retrieves a collection of objects on the device.
 			/// </summary>
