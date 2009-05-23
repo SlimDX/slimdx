@@ -3057,6 +3057,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\directinput\EffectInfo.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\EffectInfo.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directinput\EffectParameters.cpp"
 					>
 				</File>

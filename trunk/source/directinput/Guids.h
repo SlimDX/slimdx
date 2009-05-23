@@ -27,6 +27,72 @@ namespace SlimDX
 {
 	namespace DirectInput
 	{
+		public ref class EffectGuid sealed
+		{
+		private:
+			EffectGuid() { }
+
+			static property System::Guid ConstantForce
+			{
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_ConstantForce ); }
+			}
+
+			static property System::Guid RampForce
+			{
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_RampForce ); }
+			}
+
+			static property System::Guid Square
+			{
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_Square ); }
+			}
+
+			static property System::Guid Sine
+			{
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_Sine ); }
+			}
+
+			static property System::Guid Triangle
+			{
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_Triangle ); }
+			}
+
+			static property System::Guid SawtoothUp
+			{
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_SawtoothUp ); }
+			}
+
+			static property System::Guid SawtoothDown
+			{
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_SawtoothDown ); }
+			}
+
+			static property System::Guid Spring
+			{
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_Spring ); }
+			}
+
+			static property System::Guid Damper
+			{
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_Damper ); }
+			}
+
+			static property System::Guid Inertia
+			{
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_Inertia ); }
+			}
+
+			static property System::Guid Friction
+			{
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_Friction ); }
+			}
+
+			static property System::Guid CustomForce
+			{
+				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_CustomForce ); }
+			}
+		};
+
 		/// <summary>
 		/// Contains system-defined identifiers for device objects.
 		/// </summary>

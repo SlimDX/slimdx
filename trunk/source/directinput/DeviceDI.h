@@ -28,6 +28,7 @@
 #include "ObjectProperties.h"
 #include "CapabilitiesDI.h"
 #include "DirectInput.h"
+#include "EffectInfo.h"
 
 namespace SlimDX
 {
@@ -99,6 +100,8 @@ namespace SlimDX
 			/// </summary>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Poll();
+
+			EffectInfo GetEffectInfo( System::Guid guid );
 
 			/// <summary>
 			/// Retrieves a collection of objects on the device.
