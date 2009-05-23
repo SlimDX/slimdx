@@ -94,6 +94,19 @@ namespace DirectInput
 		return RECORD_DINPUT( hr );
 	}
 
+	EffectInfo Device::GetEffectInfo( Guid guid )
+	{
+		GUID nativeGuid = Utilities::ConvertManagedGuid( guid );
+		DIEFFECTINFO info;
+		info.dwSize = sizeof( DIEFFECTINFO );
+
+		HRESULT hr = InternalPointer->GetEffectInfo( &info, nativeGuid );
+		if( RECORD_DINPUT( hr ).IsFailure )
+			return EffectInfo();
+
+		return EffectInfo( info );
+	}
+
 	SlimDX::DirectInput::Capabilities^ Device::Capabilities::get()
 	{
 		if( caps != nullptr )

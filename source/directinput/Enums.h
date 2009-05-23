@@ -341,6 +341,26 @@ namespace SlimDX
 			Emulated = DIEGES_EMULATED
 		};
 
+		[System::Flags]
+		public enum class EffectType : System::Int32
+		{
+			None = 0,
+			All = DIEFT_ALL,
+			Condition = DIEFT_CONDITION,
+			ConstantForce = DIEFT_CONSTANTFORCE,
+			CustomForce = DIEFT_CUSTOMFORCE,
+			DeadBand = DIEFT_DEADBAND,
+			Attack = DIEFT_FFATTACK,
+			Fade = DIEFT_FFFADE,
+			Hardware = DIEFT_HARDWARE,
+			Periodic = DIEFT_PERIODIC,
+			TwoCoefficients = DIEFT_POSNEGCOEFFICIENTS,
+			TwoSaturations = DIEFT_POSNEGSATURATION,
+			RampForce = DIEFT_RAMPFORCE,
+			Saturation = DIEFT_SATURATION,
+			StartDelay = DIEFT_STARTDELAY
+		};
+
 		/// <summary>
 		/// Defines possible keyboard key codes.
 		/// </summary>
