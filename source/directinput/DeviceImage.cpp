@@ -19,50 +19,35 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include "stdafx.h"
+#include <dinput.h>
 
-#include "ShaderBytecode10.h"
+#include "../InternalHelpers.h"
+
+#include "DeviceImage.h"
+
+using namespace System;
+using namespace System::Drawing;
+using namespace msclr::interop;
 
 namespace SlimDX
 {
-	namespace Direct3D10
+namespace DirectInput
+{
+	DeviceImage::DeviceImage( const DIDEVICEIMAGEINFO &image )
 	{
-		public ref class ShaderSignature : System::IDisposable
-		{
-		private:
-			const void* m_Buffer;
-			int m_Length;
-			ID3D10Blob *blob;
-		
-		internal:
-			property const void* Buffer
-			{
-				const void* get();
-			}
-			
-			property int Length
-			{
-				int get();
-			}
+		path = gcnew String( image.tszImagePath );
+		usage = static_cast<ImageUsage>( image.dwFlags );
+		viewId = image.dwViewID;
+		overlay = marshal_as<System::Drawing::Rectangle>( image.rcOverlay );
+		instance = DIDFT_GETINSTANCE( image.dwObjID );
+		type = static_cast<ObjectDeviceType>( DIDFT_GETTYPE( image.dwObjID ) );
+		calloutRectangle = marshal_as<System::Drawing::Rectangle>( image.rcCalloutRect );
+		alignment = static_cast<TextAlignment>( image.dwTextAlign );
 
-			ShaderSignature( ID3D10Blob *blob );
-			ShaderSignature( const void* buffer, int length );
-
-			void Destruct();
-
-		public:
-			~ShaderSignature();
-			!ShaderSignature();
-
-			static ShaderSignature^ GetInputSignature( ShaderBytecode^ shaderBytecode );
-			static ShaderSignature^ GetOutputSignature( ShaderBytecode^ shaderBytecode );
-			static ShaderSignature^ GetInputOutputSignature( ShaderBytecode^ shaderBytecode );
-
-			/// <summary>
-			/// Returns the hash code for this instance.
-			/// </summary>
-			/// <returns>A 32-bit signed integer hash code.</returns>
-			virtual int GetHashCode() override;
-		};
+		calloutLine = gcnew array<Point>( image.dwcValidPts );
+		for( UINT i = 0; i < image.dwcValidPts; i++ )
+			calloutLine[0] = marshal_as<Point>( image.rgptCalloutLine[i] );
 	}
-};
+}
+}

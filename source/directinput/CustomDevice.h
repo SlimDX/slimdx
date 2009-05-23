@@ -66,6 +66,7 @@ namespace SlimDX
 			/// <returns>The properties of the desired object.</returns>
 			ObjectProperties^ GetObjectPropertiesByName( System::String^ name );
 
+			DeviceObjectInstance GetObjectInfoByName( System::String^ name );
 		};
 	}
 }

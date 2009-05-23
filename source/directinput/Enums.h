@@ -361,6 +361,12 @@ namespace SlimDX
 			StartDelay = DIEFT_STARTDELAY
 		};
 
+		public enum class ImageUsage : System::Int32
+		{
+			Configuration = DIDIFT_CONFIGURATION,
+			Overlay = DIDIFT_OVERLAY
+		};
+
 		/// <summary>
 		/// Defines possible keyboard key codes.
 		/// </summary>
@@ -1264,6 +1270,16 @@ namespace SlimDX
 		    /// The object must be a type defined by the manufacturer.
 		    /// </summary>
 			VendorDefined = DIDFT_VENDORDEFINED
+		};
+
+		public enum class TextAlignment : System::Int32
+		{
+			Left = DIDAL_LEFTALIGNED,
+			Centered = DIDAL_CENTERED,
+			Right = DIDAL_RIGHTALIGNED,
+			Middle = DIDAL_MIDDLE,
+			Top = DIDAL_TOPALIGNED,
+			Bottom = DIDAL_BOTTOMALIGNED
 		};
 	}
 }

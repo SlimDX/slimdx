@@ -86,51 +86,33 @@ namespace Direct3D10
 			return m_Length;
 	}
 
-	ShaderSignature^ ShaderSignature::GetInputSignature( System::String^ shaderSource )
-	{
-		return GetInputSignature( System::Text::ASCIIEncoding::ASCII->GetBytes( shaderSource ) );
-	}
-
-	ShaderSignature^ ShaderSignature::GetInputSignature( array<System::Byte>^ shaderSource )
+	ShaderSignature^ ShaderSignature::GetInputSignature( ShaderBytecode^ shaderBytecode )
 	{
 		ID3D10Blob *blob;
-		pin_ptr<Byte> pinnedSource = &shaderSource[0];
 
-		HRESULT hr = D3DGetInputSignatureBlob( pinnedSource, shaderSource->Length, &blob );
+		HRESULT hr = D3DGetInputSignatureBlob( shaderBytecode->Buffer, shaderBytecode->Length, &blob );
 		if( RECORD_D3D10( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew ShaderSignature( blob );
 	}
 
-	ShaderSignature^ ShaderSignature::GetOutputSignature( System::String^ shaderSource )
-	{
-		return GetOutputSignature( System::Text::ASCIIEncoding::ASCII->GetBytes( shaderSource ) );
-	}
-
-	ShaderSignature^ ShaderSignature::GetOutputSignature( array<System::Byte>^ shaderSource )
+	ShaderSignature^ ShaderSignature::GetOutputSignature( ShaderBytecode^ shaderBytecode )
 	{
 		ID3D10Blob *blob;
-		pin_ptr<Byte> pinnedSource = &shaderSource[0];
 
-		HRESULT hr = D3DGetOutputSignatureBlob( pinnedSource, shaderSource->Length, &blob );
+		HRESULT hr = D3DGetOutputSignatureBlob( shaderBytecode->Buffer, shaderBytecode->Length, &blob );
 		if( RECORD_D3D10( hr ).IsFailure )
 			return nullptr;
 
 		return gcnew ShaderSignature( blob );
 	}
 
-	ShaderSignature^ ShaderSignature::GetInputOutputSignature( System::String^ shaderSource )
-	{
-		return GetInputOutputSignature( System::Text::ASCIIEncoding::ASCII->GetBytes( shaderSource ) );
-	}
-
-	ShaderSignature^ ShaderSignature::GetInputOutputSignature( array<System::Byte>^ shaderSource )
+	ShaderSignature^ ShaderSignature::GetInputOutputSignature( ShaderBytecode^ shaderBytecode )
 	{
 		ID3D10Blob *blob;
-		pin_ptr<Byte> pinnedSource = &shaderSource[0];
 
-		HRESULT hr = D3DGetInputAndOutputSignatureBlob( pinnedSource, shaderSource->Length, &blob );
+		HRESULT hr = D3DGetInputAndOutputSignatureBlob( shaderBytecode->Buffer, shaderBytecode->Length, &blob );
 		if( RECORD_D3D10( hr ).IsFailure )
 			return nullptr;
 

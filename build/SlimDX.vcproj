@@ -2997,6 +2997,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\directinput\DeviceImage.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\DeviceImage.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directinput\DeviceInstance.cpp"
 					>
 				</File>
