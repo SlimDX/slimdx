@@ -30,10 +30,12 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class ShaderSignature
+		public ref class ShaderSignature : System::IDisposable
 		{
+		private:
 			const void* m_Buffer;
-			System::Int64 m_Length;
+			int m_Length;
+			ID3D10Blob *blob;
 		
 		internal:
 			property const void* Buffer
@@ -41,14 +43,20 @@ namespace SlimDX
 				const void* get();
 			}
 			
-			property System::Int64 Length
+			property int Length
 			{
-				System::Int64 get();
+				int get();
 			}
-			
-			ShaderSignature( const void* buffer, System::Int64 length );
-		
+
+			ShaderSignature( ID3D10Blob *blob );
+			ShaderSignature( const void* buffer, int length );
+
+			void Destruct();
+
 		public:
+			~ShaderSignature();
+			!ShaderSignature();
+
 			/// <summary>
 			/// Returns the hash code for this instance.
 			/// </summary>

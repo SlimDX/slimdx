@@ -24,19 +24,53 @@
 #include "ShaderMacro.h"
 
 using namespace System;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
 namespace Direct3D10
-{ 
-	String^ ShaderMacro::Name::get()
+{
+	std::vector<D3D10_SHADER_MACRO> ShaderMacro::Marshal( array<ShaderMacro>^ macros, [Out] array<GCHandle>^% handles )
 	{
-		return m_Name;
+		if( macros == nullptr )
+		{
+			handles = nullptr;
+			return std::vector<D3D10_SHADER_MACRO>();
+		}
+
+		//this array is null terminated, so we need to patch in an extra value
+		std::vector<D3D10_SHADER_MACRO> result;
+		result.resize(macros->Length + 1);
+		handles = gcnew array<GCHandle>( macros->Length * 2 );
+
+		for( int i = 0; i < macros->Length; ++i )
+		{
+			array<Byte>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( macros[i].Name );
+			array<Byte>^ defBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( macros[i].Value );
+
+			handles[2 * i] = GCHandle::Alloc( nameBytes, GCHandleType::Pinned );
+			handles[2 * i + 1] = GCHandle::Alloc( defBytes, GCHandleType::Pinned );
+
+			result[i].Name = reinterpret_cast<LPCSTR>( handles[2 * i].AddrOfPinnedObject().ToPointer() );
+			result[i].Definition = reinterpret_cast<LPCSTR>( handles[2 * i + 1].AddrOfPinnedObject().ToPointer() );
+		}
+
+		result[macros->Length].Name = NULL;
+		result[macros->Length].Definition = NULL;
+
+		return result;
 	}
-	
-	String^ ShaderMacro::Value::get()
+
+	void ShaderMacro::Unmarshal( std::vector<D3D10_SHADER_MACRO>& macros, array<GCHandle>^ handles )
 	{
-		return m_Value;
+		macros.clear();
+		if( handles != nullptr )
+		{
+			for( int i = 0; i < handles->Length; ++i )
+			{
+				handles[i].Free();
+			}
+		}
 	}
 
 	bool ShaderMacro::operator == ( ShaderMacro left, ShaderMacro right )
@@ -51,7 +85,7 @@ namespace Direct3D10
 
 	int ShaderMacro::GetHashCode()
 	{
-		return m_Name->GetHashCode() + m_Value->GetHashCode();
+		return Name->GetHashCode() + Value->GetHashCode();
 	}
 
 	bool ShaderMacro::Equals( Object^ value )
@@ -67,12 +101,12 @@ namespace Direct3D10
 
 	bool ShaderMacro::Equals( ShaderMacro value )
 	{
-		return ( m_Name == value.m_Name && m_Value == value.m_Value );
+		return ( Name == value.Name && Value == value.Value );
 	}
 
 	bool ShaderMacro::Equals( ShaderMacro% value1, ShaderMacro% value2 )
 	{
-		return ( value1.m_Name == value2.m_Name && value1.m_Value == value2.m_Value );
+		return ( value1.Name == value2.Name && value1.Value == value2.Value );
 	}
 }
 }

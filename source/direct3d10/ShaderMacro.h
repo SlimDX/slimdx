@@ -21,26 +21,21 @@
 */
 #pragma once
 
+using System::Runtime::InteropServices::OutAttribute;
+
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
 		public value class ShaderMacro : System::IEquatable<ShaderMacro>
 		{
-		private:
-			System::String^ m_Name;
-			System::String^ m_Value;
+		internal:
+			static std::vector<D3D10_SHADER_MACRO> Marshal( array<ShaderMacro>^ macros, [Out] array<System::Runtime::InteropServices::GCHandle>^% handles );
+			static void Unmarshal( std::vector<D3D10_SHADER_MACRO>& macros, array<System::Runtime::InteropServices::GCHandle>^ handles );
 			
 		public:
-			property System::String^ Name
-			{
-				System::String^ get();
-			}
-			
-			property System::String^ Value
-			{
-				System::String^ get();
-			}
+			property System::String^ Name;
+			property System::String^ Value;
 
 			static bool operator == ( ShaderMacro left, ShaderMacro right );
 			static bool operator != ( ShaderMacro left, ShaderMacro right );

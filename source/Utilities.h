@@ -56,6 +56,7 @@ namespace SlimDX
 		
 		static System::Drawing::Rectangle ConvertRect(RECT rect);
 
+		static System::String^ BlobToString( ID3D10Blob *blob );
 		static System::String^ BufferToString( ID3DXBuffer *buffer );
 
 		static array<System::Byte>^ ReadStream( System::IO::Stream^ stream, int readLength, DataStream^* dataStream );

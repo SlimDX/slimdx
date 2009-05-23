@@ -28,6 +28,7 @@
 #include "Device10.h"
 #include "InputLayout.h"
 #include "ShaderBytecode10.h"
+#include "ShaderSignature.h"
 
 using namespace System;
 
