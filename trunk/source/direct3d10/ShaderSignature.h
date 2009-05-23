@@ -57,6 +57,15 @@ namespace SlimDX
 			~ShaderSignature();
 			!ShaderSignature();
 
+			static ShaderSignature^ GetInputSignature( System::String^ shaderSource );
+			static ShaderSignature^ GetInputSignature( array<System::Byte>^ shaderSource );
+
+			static ShaderSignature^ GetOutputSignature( System::String^ shaderSource );
+			static ShaderSignature^ GetOutputSignature( array<System::Byte>^ shaderSource );
+
+			static ShaderSignature^ GetInputOutputSignature( System::String^ shaderSource );
+			static ShaderSignature^ GetInputOutputSignature( array<System::Byte>^ shaderSource );
+
 			/// <summary>
 			/// Returns the hash code for this instance.
 			/// </summary>

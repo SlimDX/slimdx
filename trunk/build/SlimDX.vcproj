@@ -821,27 +821,11 @@
 				Name="Shader"
 				>
 				<File
-					RelativePath="..\source\direct3d10\GeometryShader.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\GeometryShader.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\direct3d10\Include10.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\Include10.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\PixelShader10.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\PixelShader10.h"
 					>
 				</File>
 				<File
@@ -884,14 +868,42 @@
 					RelativePath="..\source\direct3d10\ShaderSignature.h"
 					>
 				</File>
-				<File
-					RelativePath="..\source\direct3d10\VertexShader10.cpp"
+				<Filter
+					Name="GeometryShader"
 					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\VertexShader10.h"
+					<File
+						RelativePath="..\source\direct3d10\GeometryShader.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\GeometryShader.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="VertexShader"
 					>
-				</File>
+					<File
+						RelativePath="..\source\direct3d10\VertexShader10.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\VertexShader10.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="PixelShader"
+					>
+					<File
+						RelativePath="..\source\direct3d10\PixelShader10.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d10\PixelShader10.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="State"
