@@ -26,25 +26,58 @@
 namespace SlimDX
 {
 namespace Direct3D10
-{ 
-	ShaderSignature::ShaderSignature( const void* buffer, System::Int64 length )
-	: m_Buffer( buffer ), m_Length( length )
+{
+	ShaderSignature::ShaderSignature( ID3D10Blob *blob )
 	{
+		m_Buffer = NULL;
+		m_Length = 0;
+
+		this->blob = blob;
 	}
-	
-	const void* ShaderSignature::Buffer::get()
+
+	ShaderSignature::ShaderSignature( const void* buffer, int length )
 	{
-		return m_Buffer;
+		m_Buffer = buffer;
+		m_Length = length;
 	}
-	
-	System::Int64 ShaderSignature::Length::get()
+
+	ShaderSignature::~ShaderSignature()
 	{
-		return m_Length;
+		Destruct();
 	}
-	
+
+	ShaderSignature::!ShaderSignature()
+	{
+		Destruct();
+	}
+
+	void ShaderSignature::Destruct()
+	{
+		if( blob != NULL )
+			blob->Release();
+
+		blob = NULL;
+	}
+
 	int ShaderSignature::GetHashCode()
 	{
-		return reinterpret_cast<int>( m_Buffer );
+		return reinterpret_cast<int>( Buffer );
+	}
+
+	const void *ShaderSignature::Buffer::get()
+	{
+		if( m_Buffer == NULL )
+			return blob->GetBufferPointer();
+		else
+			return m_Buffer;
+	}
+
+	int ShaderSignature::Length::get()
+	{
+		if( m_Buffer == NULL )
+			return blob->GetBufferSize();
+		else
+			return m_Length;
 	}
 }
 }

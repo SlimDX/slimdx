@@ -357,6 +357,18 @@ namespace SlimDX
 		}
 	}
 
+	String^ Utilities::BlobToString( ID3D10Blob *blob )
+	{
+		if( blob != NULL )
+		{
+			String^ string = gcnew String( reinterpret_cast<const char*>( blob->GetBufferPointer() ) );
+			blob->Release();
+			return string; 
+		}
+		else
+			return String::Empty;
+	}
+
 	void Utilities::FreeNativeString( LPCSTR string )
 	{
 		if( string == NULL )

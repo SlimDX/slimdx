@@ -7,6 +7,8 @@ Direct3D 10
 	* Added an overload to Device.UpdateSubresource() that allows the update to occur without a destination offset.
 	* Added the SamplerState interface.
 	* Filled in missing shader methods.
+	* Refactored ShaderSignature and ShaderBytecode to be independent of one another.
+	* Added functions to compile to shader bytecode.
 
 DirectSound
 	* Removed the confusing lockEntireBuffer parameter from CaptureBuffer.Read.

@@ -21,18 +21,59 @@
 */
 #pragma once
 
-#include "../ComObject.h"
-
-#include "ShaderSignature.h"
+#include "Include10.h"
+#include "ShaderMacro.h"
 
 namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class ShaderBytecode : public ShaderSignature
+		public ref class ShaderBytecode : System::IDisposable
 		{
+		private:
+			const void* m_Buffer;
+			int m_Length;
+			ID3D10Blob *blob;
+		
 		internal:
+			static System::String^ ExceptionDataKey = "CompilationErrors";
+
+			property const void* Buffer
+			{
+				const void* get();
+			}
+			
+			property int Length
+			{
+				int get();
+			}
+
+			ShaderBytecode( ID3D10Blob *blob );
 			ShaderBytecode( const void* buffer, int length );
+
+			void Destruct();
+
+		public:
+			~ShaderBytecode();
+			!ShaderBytecode();
+
+			static ShaderBytecode^ Compile( System::String^ shaderSource, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
+			static ShaderBytecode^ Compile( System::String^ shaderSource, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include );
+			static ShaderBytecode^ Compile( System::String^ shaderSource, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
+
+			static ShaderBytecode^ Compile( array<System::Byte>^ shaderSource, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
+			static ShaderBytecode^ Compile( array<System::Byte>^ shaderSource, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include );
+			static ShaderBytecode^ Compile( array<System::Byte>^ shaderSource, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
+
+			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
+			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include );
+			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
+
+			/// <summary>
+			/// Returns the hash code for this instance.
+			/// </summary>
+			/// <returns>A 32-bit signed integer hash code.</returns>
+			virtual int GetHashCode() override;
 		};
 	}
 };
