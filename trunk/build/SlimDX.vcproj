@@ -3005,6 +3005,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\directinput\DeviceImageHeader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\DeviceImageHeader.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directinput\DeviceInstance.cpp"
 					>
 				</File>
@@ -3022,6 +3030,14 @@
 				</File>
 				<File
 					RelativePath="..\source\directinput\DeviceSubType.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\ObjectData.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\ObjectData.h"
 					>
 				</File>
 			</Filter>

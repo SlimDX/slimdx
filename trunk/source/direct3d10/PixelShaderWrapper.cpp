@@ -101,7 +101,7 @@ namespace Direct3D10
 
 		std::vector<ID3D10Buffer*> input( count );
 		for( int i = 0; i < count; i++ )
-			input[i] = constantBuffers[i]->InternalPointer;
+			input[i] = constantBuffers[i] == nullptr ? NULL : constantBuffers[i]->InternalPointer;
 
 		m_Device->PSSetConstantBuffers( startSlot, count, &input[0] );
 	}
@@ -113,7 +113,7 @@ namespace Direct3D10
 
 		std::vector<ID3D10SamplerState*> input( count );
 		for( int i = 0; i < count; i++ )
-			input[i] = samplers[i]->InternalPointer;
+			input[i] = samplers[i] == nullptr ? NULL : samplers[i]->InternalPointer;
 
 		m_Device->PSSetSamplers( startSlot, count, &input[0] );
 	}
@@ -125,7 +125,7 @@ namespace Direct3D10
 
 		std::vector<ID3D10ShaderResourceView*> input( count );
 		for( int i = 0; i < count; i++ )
-			input[i] = resourceViews[i]->InternalPointer;
+			input[i] = resourceViews[i] == nullptr ? NULL : resourceViews[i]->InternalPointer;
 
 		m_Device->PSSetShaderResources( startSlot, count, &input[0] );
 	}
