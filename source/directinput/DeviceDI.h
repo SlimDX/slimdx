@@ -30,12 +30,15 @@
 #include "DirectInput.h"
 #include "EffectInfo.h"
 #include "DeviceImageHeader.h"
+#include "EffectFile.h"
 #include "ObjectData.h"
 
 namespace SlimDX
 {
 	namespace DirectInput
 	{
+		ref class Effect;
+
 		public ref class Device abstract : public ComObject
 		{
 			COMOBJECT_BASE(IDirectInputDevice8);
@@ -110,6 +113,8 @@ namespace SlimDX
 			DeviceObjectInstance GetObjectInfoByUsage( int usageCode );
 			DeviceObjectInstance GetObjectInfoById( int objectId );
 
+			Result SetNotification( System::Threading::WaitHandle^ eventHandle );
+
 			/// <summary>
 			/// Retrieves a collection of objects on the device.
 			/// </summary>
@@ -122,6 +127,15 @@ namespace SlimDX
 			/// </summary>
 			/// <returns>A collection of all device objects on the device.</returns>
 			System::Collections::Generic::IList<DeviceObjectInstance>^ GetObjects();
+
+			System::Collections::Generic::IList<EffectInfo>^ GetEffects();
+			System::Collections::Generic::IList<EffectInfo>^ GetEffects( EffectType type );
+
+			System::Collections::Generic::IList<EffectFile>^ GetEffectsInFile( System::String^ fileName );
+			System::Collections::Generic::IList<EffectFile>^ GetEffectsInFile( System::String^ fileName, EffectFileFlags flags );
+
+			Result WriteEffectsToFile( System::String^ fileName, array<EffectFile>^ effects );
+			Result WriteEffectsToFile( System::String^ fileName, array<EffectFile>^ effects, bool includeNonstandardEffects );
 
 			/// <summary>
 			/// Gets properties about a single object on an input device.
@@ -145,6 +159,11 @@ namespace SlimDX
 			/// <param name="outputSize">The expected size of the output buffer.</param>
 			/// <returns>The output data of the command.</returns>
 			array<System::Byte>^ Escape( int command, array<System::Byte>^ data, int outputSize );
+
+			property System::Collections::Generic::IList<Effect^>^ CreatedEffects
+			{
+				System::Collections::Generic::IList<Effect^>^ get();
+			}
 
 			/// <summary>
 			/// Gets a set of properties that control the behavior of the device.

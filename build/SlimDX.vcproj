@@ -3093,6 +3093,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\directinput\EffectFile.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\EffectFile.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directinput\EffectInfo.cpp"
 					>
 				</File>

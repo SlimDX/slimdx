@@ -19,20 +19,42 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include "stdafx.h"
+#include <dinput.h>
+
+#include "../Utilities.h"
+
+#include "EffectFile.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace DirectInput
+namespace DirectInput
+{
+	EffectFile::EffectFile( const DIFILEEFFECT &effect )
 	{
-		BOOL CALLBACK EnumerateDevices( LPCDIDEVICEINSTANCE lpddi, LPVOID pvRef );
-
-		BOOL CALLBACK EnumerateObjects( LPCDIDEVICEOBJECTINSTANCE lpddoi, LPVOID pvRef );
-
-		BOOL CALLBACK EnumerateCreatedEffectObjects( LPDIRECTINPUTEFFECT peff, LPVOID pvRef );
-
-		BOOL CALLBACK EnumerateEffects( LPCDIEFFECTINFO pdei, LPVOID pvRef );
-
-		BOOL CALLBACK EnumerateEffectsInFile( LPCDIFILEEFFECT lpDiFileEf, LPVOID pvRef );
+		Guid = Utilities::ConvertNativeGuid( effect.GuidEffect );
+		Parameters = EffectParameters( *effect.lpDiEffect );
+		Name = gcnew String( effect.szFriendlyName );
 	}
+
+	DIFILEEFFECT EffectFile::ToUnmanaged()
+	{
+		DIFILEEFFECT result;
+
+		result.dwSize = sizeof( DIFILEEFFECT );
+		result.GuidEffect = Utilities::ConvertManagedGuid( Guid );
+
+		// Managed Allocation: must be cleaned up by caller
+		result.lpDiEffect = new DIEFFECT( Parameters.ToUnmanaged() );
+
+		array<Byte>^ chars = System::Text::ASCIIEncoding::ASCII->GetBytes( Name );
+		pin_ptr<Byte> pinnedChars = &chars[0];
+
+		strncpy_s( result.szFriendlyName, reinterpret_cast<const char *>( pinnedChars ), Name->Length );
+
+		return result;
+	}
+}
 }
