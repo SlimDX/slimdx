@@ -32,7 +32,7 @@ namespace Direct3D10
 { 
 	ShaderDescription::ShaderDescription( const D3D10_EFFECT_SHADER_DESC& native )
 	{
-		m_InputSignature = gcnew ShaderSignature( static_cast<const void*>( native.pInputSignature ), native.BytecodeLength - (native.pInputSignature - native.pBytecode) );
+		m_InputSignature = gcnew ShaderSignature( static_cast<const void*>( native.pInputSignature ), static_cast<long>( native.BytecodeLength - (native.pInputSignature - native.pBytecode) ) );
 		m_IsInline = native.IsInline ? true : false;
 		m_Bytecode = gcnew ShaderBytecode( static_cast<const void*>( native.pBytecode ), native.BytecodeLength );
 		m_SODecl = gcnew System::String( native.SODecl );

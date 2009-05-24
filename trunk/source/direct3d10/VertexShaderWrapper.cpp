@@ -94,6 +94,12 @@ namespace Direct3D10
 		return resources;
 	}
 
+	void VertexShaderWrapper::SetConstantBuffer( Buffer^ constantBuffer, int slot )
+	{
+		ID3D10Buffer *buffer = constantBuffer == nullptr ? NULL : constantBuffer->InternalPointer;
+		m_Device->VSSetConstantBuffers( slot, 1, &buffer );
+	}
+
 	void VertexShaderWrapper::SetConstantBuffers( array<Buffer^>^ constantBuffers, int startSlot, int count )
 	{
 		if( count > constantBuffers->Length )
@@ -106,6 +112,12 @@ namespace Direct3D10
 		m_Device->VSSetConstantBuffers( startSlot, count, &input[0] );
 	}
 
+	void VertexShaderWrapper::SetSampler( SamplerState^ sampler, int slot )
+	{
+		ID3D10SamplerState *pointer = sampler == nullptr ? NULL : sampler->InternalPointer;
+		m_Device->VSSetSamplers( slot, 1, &pointer );
+	}
+
 	void VertexShaderWrapper::SetSamplers( array<SamplerState^>^ samplers, int startSlot, int count )
 	{
 		if( count > samplers->Length )
@@ -116,6 +128,12 @@ namespace Direct3D10
 			input[i] = samplers[i] == nullptr ? NULL : samplers[i]->InternalPointer;
 
 		m_Device->VSSetSamplers( startSlot, count, &input[0] );
+	}
+
+	void VertexShaderWrapper::SetShaderResource( ShaderResourceView^ resourceView, int slot )
+	{
+		ID3D10ShaderResourceView *resource = resourceView == nullptr ? NULL : resourceView->InternalPointer;
+		m_Device->VSSetShaderResources( slot, 1, &resource );
 	}
 
 	void VertexShaderWrapper::SetShaderResources( array<ShaderResourceView^>^ resourceViews, int startSlot, int count )

@@ -32,7 +32,7 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies possible levels of hardware acceleration features.
 		/// </summary>
-		/// <ummanaged>D3D10_FEATURE_LEVEL1</unmanaged>
+		/// <unmanaged>D3D10_FEATURE_LEVEL1</unmanaged>
 		public enum class FeatureLevel
 		{
 			Level_10_0 = D3D10_FEATURE_LEVEL_10_0,

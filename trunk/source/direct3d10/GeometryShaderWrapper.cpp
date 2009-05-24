@@ -94,6 +94,12 @@ namespace Direct3D10
 		return resources;
 	}
 
+	void GeometryShaderWrapper::SetConstantBuffer( Buffer^ constantBuffer, int slot )
+	{
+		ID3D10Buffer *buffer = constantBuffer == nullptr ? NULL : constantBuffer->InternalPointer;
+		m_Device->GSSetConstantBuffers( slot, 1, &buffer );
+	}
+
 	void GeometryShaderWrapper::SetConstantBuffers( array<Buffer^>^ constantBuffers, int startSlot, int count )
 	{
 		if( count > constantBuffers->Length )
@@ -106,6 +112,12 @@ namespace Direct3D10
 		m_Device->GSSetConstantBuffers( startSlot, count, &input[0] );
 	}
 
+	void GeometryShaderWrapper::SetSampler( SamplerState^ sampler, int slot )
+	{
+		ID3D10SamplerState *pointer = sampler == nullptr ? NULL : sampler->InternalPointer;
+		m_Device->GSSetSamplers( slot, 1, &pointer );
+	}
+
 	void GeometryShaderWrapper::SetSamplers( array<SamplerState^>^ samplers, int startSlot, int count )
 	{
 		if( count > samplers->Length )
@@ -116,6 +128,12 @@ namespace Direct3D10
 			input[i] = samplers[i] == nullptr ? NULL : samplers[i]->InternalPointer;
 
 		m_Device->GSSetSamplers( startSlot, count, &input[0] );
+	}
+
+	void GeometryShaderWrapper::SetShaderResource( ShaderResourceView^ resourceView, int slot )
+	{
+		ID3D10ShaderResourceView *resource = resourceView == nullptr ? NULL : resourceView->InternalPointer;
+		m_Device->GSSetShaderResources( slot, 1, &resource );
 	}
 
 	void GeometryShaderWrapper::SetShaderResources( array<ShaderResourceView^>^ resourceViews, int startSlot, int count )
