@@ -23,6 +23,7 @@
 #include <windows.h>
 #include <dinput.h>
 #include <vector>
+#include <vcclr.h>
 
 #include "../ComObject.h"
 #include "../Utilities.h"
@@ -31,10 +32,12 @@
 #include "DirectInput.h"
 #include "DirectInputException.h"
 
+#include "EffectDI.h"
 #include "DeviceDI.h"
 #include "CallbacksDI.h"
 
 using namespace System;
+using namespace System::Threading;
 using namespace System::Collections::Generic;
 using namespace System::Windows::Forms;
 
@@ -218,6 +221,71 @@ namespace DirectInput
 		return results;
 	}
 
+	IList<EffectInfo>^ Device::GetEffects()
+	{
+		return GetEffects( EffectType::All );
+	}
+
+	IList<EffectInfo>^ Device::GetEffects( EffectType type )
+	{
+		List<EffectInfo>^ results = gcnew List<EffectInfo>();
+		CollectionShim<EffectInfo> shim( results );
+
+		HRESULT hr = InternalPointer->EnumEffects( static_cast<LPDIENUMEFFECTSCALLBACK>( EnumerateEffects ), &shim, static_cast<DWORD>( type ) );
+		if( RECORD_DINPUT( hr ).IsFailure )
+			return nullptr;
+
+		return results;
+	}
+
+	IList<EffectFile>^ Device::GetEffectsInFile( String^ fileName )
+	{
+		return GetEffectsInFile( fileName, EffectFileFlags::None );
+	}
+
+	IList<EffectFile>^ Device::GetEffectsInFile( String^ fileName, EffectFileFlags flags )
+	{
+		List<EffectFile>^ results = gcnew List<EffectFile>();
+		CollectionShim<EffectFile> shim( results );
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+
+		HRESULT hr = InternalPointer->EnumEffectsInFile( reinterpret_cast<LPCWSTR>( pinnedName ), 
+			static_cast<LPDIENUMEFFECTSINFILECALLBACK>( EnumerateEffectsInFile ), &shim, static_cast<DWORD>( flags ) );
+
+		if( RECORD_DINPUT( hr ).IsFailure )
+			return nullptr;
+
+		return results;
+	}
+
+	Result Device::WriteEffectsToFile( String^ fileName, array<EffectFile>^ effects )
+	{
+		return WriteEffectsToFile( fileName, effects, false );
+	}
+
+	Result Device::WriteEffectsToFile( String^ fileName, array<EffectFile>^ effects, bool includeNonstandardEffects )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+		std::vector<DIFILEEFFECT> entries( effects->Length );
+
+		for( int i = 0; i < effects->Length; i++ )
+			entries[i] = effects[i].ToUnmanaged();
+
+		HRESULT hr = InternalPointer->WriteEffectToFile( reinterpret_cast<LPCWSTR>( pinnedName ), effects->Length,
+			&entries[0], includeNonstandardEffects ? DIFEF_INCLUDENONSTANDARD : 0 );
+
+		for( int i = 0; i < effects->Length; i++ )
+			delete entries[i].lpDiEffect;
+
+		return RECORD_DINPUT( hr );
+	}
+
+	Result Device::SetNotification( WaitHandle^ eventHandle )
+	{
+		HRESULT hr = InternalPointer->SetEventNotification( eventHandle->SafeWaitHandle->DangerousGetHandle().ToPointer() );
+		return RECORD_DINPUT( hr );
+	}
+
 	ObjectProperties^ Device::GetObjectPropertiesById( int objectId )
 	{
 		return gcnew ObjectProperties( InternalPointer, objectId, false );
@@ -256,6 +324,18 @@ namespace DirectInput
 			properties = gcnew DeviceProperties( InternalPointer );
 
 		return properties;
+	}
+
+	IList<Effect^>^ Device::CreatedEffects::get()
+	{
+		List<Effect^>^ results = gcnew List<Effect^>();
+		CollectionShim<Effect^> shim( results );
+
+		HRESULT hr = InternalPointer->EnumCreatedEffectObjects( static_cast<LPDIENUMCREATEDEFFECTOBJECTSCALLBACK>( EnumerateCreatedEffectObjects ), &shim, 0 );
+		if( RECORD_DINPUT( hr ).IsFailure )
+			return nullptr;
+
+		return results;
 	}
 }
 }

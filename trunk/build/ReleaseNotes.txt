@@ -27,3 +27,4 @@ DirectInput
 	* Added support for effects.
 	* Added type specific parameters for effects.
 	* Added the ability to get image and object info from a device.
+	* Filled in miscellaneous device functionality.

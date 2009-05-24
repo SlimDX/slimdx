@@ -28,6 +28,9 @@
 
 #include "DeviceDI.h"
 #include "DeviceInstance.h"
+#include "EffectDI.h"
+#include "EffectInfo.h"
+#include "EffectFile.h"
 #include "CallbacksDI.h"
 
 namespace SlimDX
@@ -36,7 +39,7 @@ namespace DirectInput
 {
 	BOOL CALLBACK EnumerateDevices( LPCDIDEVICEINSTANCE lpddi, LPVOID pvRef )
 	{
-		CollectionShim<DeviceInstance^>* shim = static_cast<CollectionShim<DeviceInstance^>*>( pvRef );
+		CollectionShim<DeviceInstance^>* shim = reinterpret_cast<CollectionShim<DeviceInstance^>*>( pvRef );
 		shim->GetItems()->Add( gcnew DeviceInstance( *lpddi ) );
 
 		return DIENUM_CONTINUE;
@@ -44,8 +47,32 @@ namespace DirectInput
 
 	BOOL CALLBACK EnumerateObjects( LPCDIDEVICEOBJECTINSTANCE lpddoi, LPVOID pvRef )
 	{
-		CollectionShim<DeviceObjectInstance>* shim = static_cast<CollectionShim<DeviceObjectInstance>*>( pvRef );
+		CollectionShim<DeviceObjectInstance>* shim = reinterpret_cast<CollectionShim<DeviceObjectInstance>*>( pvRef );
 		shim->GetItems()->Add( DeviceObjectInstance( *lpddoi ) );
+
+		return DIENUM_CONTINUE;
+	}
+
+	BOOL CALLBACK EnumerateCreatedEffectObjects( LPDIRECTINPUTEFFECT peff, LPVOID pvRef )
+	{
+		CollectionShim<Effect^>* shim = reinterpret_cast<CollectionShim<Effect^>*>( pvRef );
+		shim->GetItems()->Add( Effect::FromPointer( peff ) );
+
+		return DIENUM_CONTINUE;
+	}
+
+	BOOL CALLBACK EnumerateEffects( LPCDIEFFECTINFO pdei, LPVOID pvRef )
+	{
+		CollectionShim<EffectInfo>* shim = reinterpret_cast<CollectionShim<EffectInfo>*>( pvRef );
+		shim->GetItems()->Add( EffectInfo( *pdei ) );
+
+		return DIENUM_CONTINUE;
+	}
+
+	BOOL CALLBACK EnumerateEffectsInFile( LPCDIFILEEFFECT lpDiFileEf, LPVOID pvRef )
+	{
+		CollectionShim<EffectFile>* shim = reinterpret_cast<CollectionShim<EffectFile>*>( pvRef );
+		shim->GetItems()->Add( EffectFile( *lpDiFileEf ) );
 
 		return DIENUM_CONTINUE;
 	}

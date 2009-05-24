@@ -295,6 +295,14 @@ namespace SlimDX
 		};
 
 		[System::Flags]
+		public enum class EffectFileFlags : System::Int32
+		{
+			None = 0,
+			IncludeNonstandard = DIFEF_INCLUDENONSTANDARD,
+			ModifyIfNeeded = DIFEF_MODIFYIFNEEDED
+		};
+
+		[System::Flags]
 		public enum class EffectFlags : System::Int32
 		{
 			None = 0,

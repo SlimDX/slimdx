@@ -21,18 +21,22 @@
 */
 #pragma once
 
+#include "EffectParameters.h"
+
 namespace SlimDX
 {
 	namespace DirectInput
 	{
-		BOOL CALLBACK EnumerateDevices( LPCDIDEVICEINSTANCE lpddi, LPVOID pvRef );
+		public value class EffectFile
+		{
+		internal:
+			EffectFile( const DIFILEEFFECT &effect );
+			DIFILEEFFECT ToUnmanaged();
 
-		BOOL CALLBACK EnumerateObjects( LPCDIDEVICEOBJECTINSTANCE lpddoi, LPVOID pvRef );
-
-		BOOL CALLBACK EnumerateCreatedEffectObjects( LPDIRECTINPUTEFFECT peff, LPVOID pvRef );
-
-		BOOL CALLBACK EnumerateEffects( LPCDIEFFECTINFO pdei, LPVOID pvRef );
-
-		BOOL CALLBACK EnumerateEffectsInFile( LPCDIFILEEFFECT lpDiFileEf, LPVOID pvRef );
+		public:
+			property System::Guid Guid;
+			property EffectParameters Parameters;
+			property System::String^ Name;
+		};
 	}
 }
