@@ -55,8 +55,13 @@ namespace SlimDX
 			array<SamplerState^>^ GetSamplers( int startSlot, int count );
 			array<ShaderResourceView^>^ GetShaderResources( int startSlot, int count );
 
+			void SetConstantBuffer( Buffer^ constantBuffer, int slot );
 			void SetConstantBuffers( array<Buffer^>^ constantBuffers, int startSlot, int count );
+
+			void SetSampler( SamplerState^ sampler, int slot );
 			void SetSamplers( array<SamplerState^>^ samplers, int startSlot, int count );
+
+			void SetShaderResource( ShaderResourceView^ resourceView, int slot );
 			void SetShaderResources( array<ShaderResourceView^>^ resourceViews, int startSlot, int count );
 		};
 	}

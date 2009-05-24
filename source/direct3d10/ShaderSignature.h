@@ -31,7 +31,7 @@ namespace SlimDX
 		{
 		private:
 			const void* m_Buffer;
-			int m_Length;
+			long m_Length;
 			ID3D10Blob *blob;
 		
 		internal:
@@ -40,13 +40,13 @@ namespace SlimDX
 				const void* get();
 			}
 			
-			property int Length
+			property long Length
 			{
-				int get();
+				long get();
 			}
 
 			ShaderSignature( ID3D10Blob *blob );
-			ShaderSignature( const void* buffer, int length );
+			ShaderSignature( const void* buffer, long length );
 
 			void Destruct();
 

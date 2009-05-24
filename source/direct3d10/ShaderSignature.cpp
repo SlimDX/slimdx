@@ -40,7 +40,7 @@ namespace Direct3D10
 		this->blob = blob;
 	}
 
-	ShaderSignature::ShaderSignature( const void* buffer, int length )
+	ShaderSignature::ShaderSignature( const void* buffer, long length )
 	{
 		m_Buffer = buffer;
 		m_Length = length;
@@ -77,10 +77,10 @@ namespace Direct3D10
 			return m_Buffer;
 	}
 
-	int ShaderSignature::Length::get()
+	long ShaderSignature::Length::get()
 	{
 		if( m_Buffer == NULL )
-			return blob->GetBufferSize();
+			return static_cast<long>( blob->GetBufferSize() );
 		else
 			return m_Length;
 	}
