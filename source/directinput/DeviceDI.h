@@ -29,6 +29,8 @@
 #include "CapabilitiesDI.h"
 #include "DirectInput.h"
 #include "EffectInfo.h"
+#include "DeviceImageHeader.h"
+#include "ObjectData.h"
 
 namespace SlimDX
 {
@@ -101,7 +103,9 @@ namespace SlimDX
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Poll();
 
+			DeviceImageHeader GetDeviceImages();
 			EffectInfo GetEffectInfo( System::Guid guid );
+			Result SendData( array<ObjectData>^ data, bool overlay );
 
 			DeviceObjectInstance GetObjectInfoByUsage( int usageCode );
 			DeviceObjectInstance GetObjectInfoById( int objectId );

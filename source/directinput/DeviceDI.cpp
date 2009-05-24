@@ -94,6 +94,28 @@ namespace DirectInput
 		return RECORD_DINPUT( hr );
 	}
 
+	DeviceImageHeader Device::GetDeviceImages()
+	{
+		DIDEVICEIMAGEINFOHEADER header;
+		memset( &header, 0, sizeof( DIDEVICEIMAGEINFOHEADER ) );
+		header.dwSize = sizeof( DIDEVICEIMAGEINFOHEADER );
+		header.dwSizeImageInfo = sizeof( DIDEVICEIMAGEINFO );
+
+		HRESULT hr = InternalPointer->GetImageInfo( &header );
+		if( RECORD_DINPUT( hr ).IsFailure || header.dwBufferUsed <= 0 )
+			return DeviceImageHeader();
+
+		std::vector<DIDEVICEIMAGEINFO> images( header.dwBufferUsed / sizeof( DIDEVICEIMAGEINFO ) );
+		header.dwBufferSize = header.dwBufferUsed;
+		header.lprgImageInfoArray = &images[0];
+
+		hr = InternalPointer->GetImageInfo( &header );
+		if( RECORD_DINPUT( hr ).IsFailure )
+			return DeviceImageHeader();
+
+		return DeviceImageHeader( header );
+	}
+
 	EffectInfo Device::GetEffectInfo( Guid guid )
 	{
 		GUID nativeGuid = Utilities::ConvertManagedGuid( guid );
@@ -105,6 +127,21 @@ namespace DirectInput
 			return EffectInfo();
 
 		return EffectInfo( info );
+	}
+
+	Result Device::SendData( array<ObjectData>^ data, bool overlay )
+	{
+		DWORD count = data->Length;
+		std::vector<DIDEVICEOBJECTDATA> input( count );
+
+		for( UINT i = 0; i < count; i++ )
+		{
+			input[i].dwOfs = data[i].Instance;
+			input[i].dwData = data[i].Data;
+		}
+
+		HRESULT hr = InternalPointer->SendDeviceData( sizeof( DIDEVICEOBJECTDATA ), &input[0], &count, overlay ? DISDD_CONTINUE : 0 );
+		return RECORD_DINPUT( hr );
 	}
 
 	DeviceObjectInstance Device::GetObjectInfoByUsage( int usageCode )
