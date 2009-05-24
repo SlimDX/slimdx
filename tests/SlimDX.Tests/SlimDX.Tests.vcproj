@@ -44,6 +44,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/MP"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;$(SolutionDir)..\external\Boost\boost\tr1\tr1&quot;;&quot;$(SolutionDir)..\external\Boost&quot;;&quot;$(SolutionDir)..\external\GTest&quot;;&quot;$(SolutionDir)..\external\GMock&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG"
@@ -120,6 +121,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/MP"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;$(SolutionDir)..\external\Boost\boost\tr1\tr1&quot;;&quot;$(SolutionDir)..\external\Boost&quot;;&quot;$(SolutionDir)..\external\GTest&quot;;&quot;$(SolutionDir)..\external\GMock&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;X64"
@@ -196,6 +198,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/MP"
 				AdditionalIncludeDirectories="&quot;$(SolutionDir)..\external\Boost\boost\tr1\tr1&quot;;&quot;$(SolutionDir)..\external\Boost&quot;;&quot;$(SolutionDir)..\external\GTest&quot;;&quot;$(SolutionDir)..\external\GMock&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG"
 				RuntimeLibrary="2"
@@ -271,6 +274,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/MP"
 				AdditionalIncludeDirectories="&quot;$(SolutionDir)..\external\Boost\boost\tr1\tr1&quot;;&quot;$(SolutionDir)..\external\Boost&quot;;&quot;$(SolutionDir)..\external\GTest&quot;;&quot;$(SolutionDir)..\external\GMock&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;X64"
 				RuntimeLibrary="2"

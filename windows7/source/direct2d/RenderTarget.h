@@ -24,7 +24,7 @@
 #include "../directwrite/TextLayout.h"
 #include "../directwrite/RenderingParameters.h"
 
-#include "Resource.h"
+#include "ResourceD2D.h"
 #include "Matrix3x2.h"
 #include "StrokeStyle.h"
 #include "Brush.h"

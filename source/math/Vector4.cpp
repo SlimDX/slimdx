@@ -83,7 +83,7 @@ namespace SlimDX
 			return W;
 
 		default:
-			throw gcnew IndexOutOfRangeException( "Indices for Vector4 run from 0 to 3, inclusive." );
+			throw gcnew ArgumentOutOfRangeException( "index", "Indices for Vector4 run from 0 to 3, inclusive." );
 		}
 	}
 	
@@ -108,7 +108,7 @@ namespace SlimDX
 			break;
 
 		default:
-			throw gcnew IndexOutOfRangeException( "Indices for Vector4 run from 0 to 3, inclusive." );
+			throw gcnew ArgumentOutOfRangeException( "index", "Indices for Vector4 run from 0 to 3, inclusive." );
 		}
 	}
 	

@@ -19,7 +19,6 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
 // This header epitomizes the abomination that is C++/CLI
 // Modify it at your own peril
@@ -138,3 +137,17 @@ M^ ConstructFromUserPointer( System::IntPtr pointer )
 #else
 #	define SLIMDX_DEBUG_UNREFERENCED_PARAMETER(P) (P)
 #endif
+
+#include <windows.h>
+#include <vcclr.h>
+#include <unknwn.h>
+
+#include <d3d11.h>
+#include <d3dx11.h>
+#include <d2d1.h>
+#include <d2d1helper.h>
+#include <dwrite.h>
+
+#include <string>
+#include <memory>
+#include <vector>

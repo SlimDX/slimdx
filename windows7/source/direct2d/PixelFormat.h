@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#include "../ComObject.h"
-
 #include "Enums.h"
 
 namespace SlimDX

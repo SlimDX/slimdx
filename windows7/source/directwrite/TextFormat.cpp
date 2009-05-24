@@ -19,9 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <dwrite.h>
-#include <vcclr.h>
+#include "stdafx.h"
 
 #include "DirectWriteException.h"
 

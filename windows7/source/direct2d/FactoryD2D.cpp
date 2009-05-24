@@ -19,19 +19,62 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#include <d3d11.h>
+#include <d2d1.h>
+#include <d2d1helper.h>
 
-#include "ResourceView.h"
+#include "Direct2DException.h"
+
+#include "FactoryD2D.h"
+
+const IID IID_ID2D1Factory = __uuidof(ID2D1Factory);
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D11
+namespace Direct2D
 { 
-	ResourceView::ResourceView()
+	Factory::Factory()
 	{
+		Init( FactoryType::SingleThreaded, DebugLevel::None );
+	}
+
+	Factory::Factory( FactoryType factoryType )
+	{
+		Init( factoryType, DebugLevel::None );
+	}
+
+	Factory::Factory( FactoryType factoryType, DebugLevel debugLevel )
+	{
+		Init( factoryType, debugLevel );
+	}
+
+	void Factory::Init( FactoryType factoryType, DebugLevel debugLevel )
+	{
+		ID2D1Factory *factory = NULL;
+
+		D2D1_FACTORY_OPTIONS options;
+		options.debugLevel = static_cast<D2D1_DEBUG_LEVEL>( debugLevel );
+
+		if( RECORD_D2D( D2D1CreateFactory( static_cast<D2D1_FACTORY_TYPE>( factoryType ), options, &factory ) ).IsFailure )
+			throw gcnew Direct2DException( Result::Last );
+
+		Construct( factory );
+	}
+
+	Result Factory::ReloadSystemMetrics()
+	{
+		return RECORD_D2D( InternalPointer->ReloadSystemMetrics() );
+	}
+
+	System::Drawing::SizeF Factory::DesktopDpi::get()
+	{
+		float x, y;
+		InternalPointer->GetDesktopDpi( &x, &y );
+
+		return System::Drawing::SizeF( x, y );
 	}
 }
 }

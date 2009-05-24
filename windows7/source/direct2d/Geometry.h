@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "Resource.h"
+#include "ResourceD2D.h"
 #include "SimplifiedGeometrySink.h"
 #include "TessellationSink.h"
 #include "Enums.h"

@@ -55,7 +55,7 @@ namespace SlimDX
 			return Y;
 
 		default:
-			throw gcnew IndexOutOfRangeException( "Indices for Vector2 run from 0 to 1, inclusive." );
+			throw gcnew ArgumentOutOfRangeException( "index", "Indices for Vector2 run from 0 to 1, inclusive." );
 		}
 	}
 	
@@ -72,7 +72,7 @@ namespace SlimDX
 			break;
 
 		default:
-			throw gcnew IndexOutOfRangeException( "Indices for Vector2 run from 0 to 1, inclusive." );
+			throw gcnew ArgumentOutOfRangeException( "index", "Indices for Vector2 run from 0 to 1, inclusive." );
 		}
 	}
 	

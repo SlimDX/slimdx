@@ -19,26 +19,62 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include "stdafx.h"
 
-#include "Factory.h"
+#include "DirectWriteException.h"
+#include "ResultCodeDW.h"
 
 namespace SlimDX
 {
-	namespace Direct2D
+namespace DirectWrite
+{
+	ResultCode::ResultCode()
 	{
-		public ref class Resource abstract : ComObject
-		{
-			COMOBJECT_BASE(ID2D1Resource);
-
-		protected:
-			Resource() { }
-			
-		public:
-			property Factory^ Factory
-			{
-				SlimDX::Direct2D::Factory^ get();
-			}
-		};
 	}
+
+	Result ResultCode::InvalidFileFormat::get()
+	{
+		return Result( DWRITE_E_FILEFORMAT );
+	}
+
+	Result ResultCode::UnexpectedError::get()
+	{
+		return Result( DWRITE_E_UNEXPECTED );
+	}
+
+	Result ResultCode::NonexistentFont::get()
+	{
+		return Result( DWRITE_E_NOFONT );
+	}
+
+	Result ResultCode::FileNotFound::get()
+	{
+		return Result( DWRITE_E_FILENOTFOUND );
+	}
+
+	Result ResultCode::InvalidFileAccess::get()
+	{
+		return Result( DWRITE_E_FILEACCESS );
+	}
+
+	Result ResultCode::FontCollectionObsolete::get()
+	{
+		return Result( DWRITE_E_FONTCOLLECTIONOBSOLETE );
+	}
+
+	Result ResultCode::AlreadyRegistered::get()
+	{
+		return Result( DWRITE_E_ALREADYREGISTERED );
+	}
+
+	Result ResultCode::Failure::get()
+	{
+		return Result( E_FAIL );
+	}
+
+	Result ResultCode::Success::get()
+	{
+		return Result( S_OK );
+	}
+}
 }

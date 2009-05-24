@@ -19,8 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#define DEFINE_ENUM_FLAG_OPERATORS(x)
+#include "stdafx.h"
 
 #include <d2d1.h>
 #include <d2d1helper.h>
@@ -29,7 +28,7 @@
 
 #include "WindowRenderTargetProperties.h"
 #include "RenderTargetProperties.h"
-#include "Factory.h"
+#include "FactoryD2D.h"
 #include "RenderTarget.h"
 #include "WindowRenderTarget.h"
 

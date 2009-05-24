@@ -19,38 +19,29 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#include "Direct3D11Exception.h"
+#include <d2d1.h>
+#include <d2d1helper.h>
+
+#include "Direct2DException.h"
+
+#include "ResourceD2D.h"
+
+const IID IID_ID2D1Resource = __uuidof(ID2D1Resource);
 
 using namespace System;
-using namespace System::Runtime::Serialization;
 
 namespace SlimDX
 {
-namespace Direct3D11
+namespace Direct2D
 {
-	Direct3D11Exception::Direct3D11Exception( SerializationInfo^ info, StreamingContext context )
-	: SlimDXException( info, context )
+	SlimDX::Direct2D::Factory^ Resource::Factory::get()
 	{
-	}
+		ID2D1Factory *factory = NULL;
+		InternalPointer->GetFactory( &factory );
 
-	Direct3D11Exception::Direct3D11Exception()
-	{
-	}
-
-	Direct3D11Exception::Direct3D11Exception( String^ message )
-	: SlimDXException( message )
-	{
-	}
-
-	Direct3D11Exception::Direct3D11Exception( String^ message, Exception^ innerException )
-	: SlimDXException( message, innerException )
-	{
-	}
-
-	Direct3D11Exception::Direct3D11Exception( Result result )
-	: SlimDXException( result )
-	{
+		return SlimDX::Direct2D::Factory::FromPointer( factory );
 	}
 }
 }

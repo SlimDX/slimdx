@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#include "../ComObject.h"
-
 #define RECORD_DW_EX(x, key, value) Result::Record<DirectWriteException^>( (x), (key), (value) )
 #define RECORD_DW(x) RECORD_DW_EX(x, nullptr, nullptr)
 

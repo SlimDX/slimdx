@@ -47,7 +47,7 @@ namespace SlimDX
 	void Configuration::AddResultWatch( Result result, ResultWatchFlags flags )
 	{
 		if( result.IsSuccess )
-			throw gcnew System::ArgumentException( "result", "Cannot set a result watch on a success result." );
+			throw gcnew System::ArgumentException( "Cannot set a result watch on a success result.", "result" );
 
 		if( m_Watches->ContainsKey( result ) )
 			m_Watches[result] = flags;

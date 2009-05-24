@@ -39,7 +39,6 @@ namespace DirectInput
 {
 	TypeSpecificParameters::TypeSpecificParameters()
 	{
-		size = 0;
 		bytes = NULL;
 	}
 

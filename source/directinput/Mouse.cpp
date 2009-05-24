@@ -121,7 +121,9 @@ namespace DirectInput
 
 	Mouse::Mouse( DirectInput^ directInput ) : Device( directInput, Utilities::ConvertNativeGuid( GUID_SysMouse ) )
 	{
-		HRESULT hr = InternalPointer->SetDataFormat( &c_dfDIMouse2 );
+		IDirectInputDevice8* pointer = static_cast<IDirectInputDevice8*>( ComPointer.ToPointer() );
+
+		HRESULT hr = pointer->SetDataFormat( &c_dfDIMouse2 );
 		if( RECORD_DINPUT( hr ).IsFailure )
 			throw gcnew DirectInputException( Result::Last );
 	}

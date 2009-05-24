@@ -55,7 +55,7 @@ namespace XAudio2
 
 		// Manual Allocation: cleaned up in the finalizer / destructor
 		callback = new EngineCallbackShim( this );
-		hr = InternalPointer->RegisterForCallbacks( callback );
+		hr = pointer->RegisterForCallbacks( callback );
 
 		if( RECORD_XAUDIO2( hr ).IsFailure )
 			throw gcnew XAudio2Exception( Result::Last );
@@ -76,7 +76,7 @@ namespace XAudio2
 
 		// Manual Allocation: cleaned up in the finalizer / destructor
 		callback = new EngineCallbackShim( this );
-		hr = InternalPointer->RegisterForCallbacks( callback );
+		hr = pointer->RegisterForCallbacks( callback );
 
 		if( RECORD_XAUDIO2( hr ).IsFailure )
 			throw gcnew XAudio2Exception( Result::Last );

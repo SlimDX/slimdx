@@ -194,8 +194,7 @@ namespace DirectInput
 	generic<typename DataFormat>
 	Result CustomDevice<DataFormat>::GetCurrentState( DataFormat% data )
 	{
-		Type^ type = DataFormat::typeid;
-		size_t typeSize = sizeof( type );
+		size_t typeSize = sizeof( DataFormat );
 		std::vector<BYTE> bytes( typeSize );
 
 		HRESULT hr = InternalPointer->GetDeviceState( static_cast<DWORD>( typeSize ), &bytes[0] );
