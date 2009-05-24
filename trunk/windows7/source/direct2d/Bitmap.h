@@ -22,7 +22,7 @@
 #pragma once
 
 #include "Enums.h"
-#include "Resource.h"
+#include "ResourceD2D.h"
 #include "PixelFormat.h"
 #include "RenderTarget.h"
 #include "BitmapProperties.h"

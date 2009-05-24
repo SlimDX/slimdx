@@ -21,8 +21,8 @@
 */
 #pragma once
 
-#include "Factory.h"
-#include "Resource.h"
+#include "FactoryD2D.h"
+#include "ResourceD2D.h"
 #include "StrokeStyleProperties.h"
 
 namespace SlimDX

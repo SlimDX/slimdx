@@ -19,19 +19,38 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include "stdafx.h"
 
-#include "../ComObject.h"
+#include "DirectWriteException.h"
 
-#include "DeviceChild.h"
+#include "FactoryDW.h"
+
+const IID IID_IDWriteFactory = __uuidof(IDWriteFactory);
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct3D11
+namespace DirectWrite
+{
+	Factory::Factory()
 	{
-		public ref class GeometryShader : public DeviceChild
-		{
-			COMOBJECT(ID3D11GeometryShader, GeometryShader);
-		};
+		Init( FactoryType::Shared );
 	}
-};
+
+	Factory::Factory( FactoryType factoryType )
+	{
+		Init( factoryType );
+	}
+
+	void Factory::Init( FactoryType factoryType )
+	{
+		IDWriteFactory *factory = NULL;
+
+		if( RECORD_DW( DWriteCreateFactory( static_cast<DWRITE_FACTORY_TYPE>( factoryType ), IID_IDWriteFactory, reinterpret_cast<IUnknown**>( &factory ) ) ).IsFailure )
+			throw gcnew DirectWriteException( Result::Last );
+
+		Construct( factory );
+	}
+}
+}

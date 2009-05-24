@@ -71,7 +71,7 @@ namespace SlimDX
 			return Z;
 
 		default:
-			throw gcnew IndexOutOfRangeException( "Indices for Vector3 run from 0 to 2, inclusive." );
+			throw gcnew ArgumentOutOfRangeException( "index", "Indices for Vector3 run from 0 to 2, inclusive." );
 		}
 	}
 	
@@ -92,7 +92,7 @@ namespace SlimDX
 			break;
 
 		default:
-			throw gcnew IndexOutOfRangeException( "Indices for Vector3 run from 0 to 2, inclusive." );
+			throw gcnew ArgumentOutOfRangeException( "index", "Indices for Vector3 run from 0 to 2, inclusive." );
 		}
 	}
 	
@@ -593,7 +593,7 @@ namespace SlimDX
 	void Vector3::TransformCoordinate( array<Vector3>^ coordsIn, Matrix% transformation, array<Vector3>^ coordsOut, int offset, int count )
 	{
 		if(coordsIn->Length != coordsOut->Length)
-			throw gcnew ArgumentException( "Input and output arrays must be the same size.", "vectorsOut" );
+			throw gcnew ArgumentException( "Input and output arrays must be the same size.", "coordinatesOut" );
 		Utilities::CheckArrayBounds( coordsIn, offset, count );
 
 		pin_ptr<Vector3> pinnedIn = &coordsIn[offset];
@@ -652,7 +652,7 @@ namespace SlimDX
 	void Vector3::TransformNormal( array<Vector3>^ normalsIn, Matrix% transformation, array<Vector3>^ normalsOut, int offset, int count )
 	{
 		if(normalsIn->Length != normalsOut->Length)
-			throw gcnew ArgumentException( "Input and output arrays must be the same size.", "vectorsOut" );
+			throw gcnew ArgumentException( "Input and output arrays must be the same size.", "normalsOut" );
 		Utilities::CheckArrayBounds( normalsOut, offset, count );
 
 		pin_ptr<Vector3> pinnedIn = &normalsIn[offset];

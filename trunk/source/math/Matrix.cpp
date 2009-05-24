@@ -83,8 +83,11 @@ namespace SlimDX
 
 	float Matrix::default::get( int row, int column )
 	{
-		if( row < 0 || row > 3 || column < 0 || column > 3 )
-			throw gcnew IndexOutOfRangeException( "Rows and columns for matrices run from 0 to 3, inclusive." );
+		if( row < 0 || row > 3 )
+			throw gcnew ArgumentOutOfRangeException( "row", "Rows and columns for matrices run from 0 to 3, inclusive." );
+
+		if( column < 0 || column > 3 )
+			throw gcnew ArgumentOutOfRangeException( "column", "Rows and columns for matrices run from 0 to 3, inclusive." );
 
 		int index = row * 4 + column;
 		switch( index )

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -20,7 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
+#include "stdafx.h"
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <vcclr.h>
@@ -47,12 +46,14 @@ namespace Direct3D9
 {
 	AnimationController::AnimationController( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents )
 	{
-		HRESULT hr = D3DXCreateAnimationController( maxAnimationOutputs, maxAnimationSets, maxTracks, maxEvents, 
-			reinterpret_cast<LPD3DXANIMATIONCONTROLLER*>(InternalPointer) );
-		RECORD_D3D9( hr );
+		ID3DXAnimationController *pointer;
 
-		if( FAILED( hr ) )
+		HRESULT hr = D3DXCreateAnimationController( maxAnimationOutputs, maxAnimationSets, maxTracks, maxEvents, &pointer );
+		
+		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
+
+		Construct( pointer );
 	}
 
 	Result AnimationController::AdvanceTime( double time, AnimationCallback^ handler )

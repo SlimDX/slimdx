@@ -550,7 +550,7 @@ namespace SlimDX
 		/// <param name="coordsOut">The transformed coordinate <see cref="SlimDX::Vector3"/>s.</param>
 		/// <param name="outputStride">The stride in bytes between vectors in the output.</param>
 		/// <param name="count">The number of coordinate vectors to transform.</param>
-		static void TransformCoordinate( Vector3* coordsIn, int inputStride, Matrix* transformation, Vector3* coordsOut, int outputStride, int count );
+		static void TransformCoordinate( Vector3* coordinatesIn, int inputStride, Matrix* transformation, Vector3* coordinatesOut, int outputStride, int count );
 
 		/// <summary>
 		/// Performs a coordinate transformation using the given <see cref="SlimDX::Matrix"/>.
@@ -559,7 +559,7 @@ namespace SlimDX
 		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
 		/// <param name="coordsOut">The transformed coordinate <see cref="SlimDX::Vector3"/>s.</param>
 		/// <param name="count">The number of coordinate vectors to transform.</param>
-		static void TransformCoordinate( Vector3* coordsIn, Matrix* transformation, Vector3* coordsOut, int count ) { TransformCoordinate( coordsIn, (int) sizeof(Vector3), transformation, coordsOut, (int) sizeof(Vector3), count ); }
+		static void TransformCoordinate( Vector3* coordinatesIn, Matrix* transformation, Vector3* coordinatesOut, int count ) { TransformCoordinate( coordinatesIn, (int) sizeof(Vector3), transformation, coordinatesOut, (int) sizeof(Vector3), count ); }
 
 		/// <summary>
 		/// Performs a coordinate transformation using the given <see cref="SlimDX::Matrix"/>.
@@ -569,7 +569,7 @@ namespace SlimDX
 		/// <param name="coordsOut">The transformed coordinate <see cref="SlimDX::Vector3"/>s.</param>
 		/// <param name="offset">The offset at which to begin transforming.</param>
 		/// <param name="count">The number of coordinate vectors to transform, or 0 to process the whole array.</param>
-		static void TransformCoordinate( array<Vector3>^ coordsIn, Matrix% transformation, array<Vector3>^ coordsOut, int offset, int count );
+		static void TransformCoordinate( array<Vector3>^ coordinatesIn, Matrix% transformation, array<Vector3>^ coordinatesOut, int offset, int count );
 
 		/// <summary>
 		/// Performs a coordinate transformation using the given <see cref="SlimDX::Matrix"/>.
@@ -577,7 +577,7 @@ namespace SlimDX
 		/// <param name="coordsIn">The source coordinate vectors.</param>
 		/// <param name="transformation">The transformation <see cref="SlimDX::Matrix"/>.</param>
 		/// <param name="coordsOut">The transformed coordinate <see cref="SlimDX::Vector3"/>s.</param>
-		static void TransformCoordinate( array<Vector3>^ coordsIn, Matrix% transformation, array<Vector3>^ coordsOut ) { TransformCoordinate( coordsIn, transformation, coordsOut, 0, 0 ); }
+		static void TransformCoordinate( array<Vector3>^ coordinatesIn, Matrix% transformation, array<Vector3>^ coordinatesOut ) { TransformCoordinate( coordinatesIn, transformation, coordinatesOut, 0, 0 ); }
 
 		/// <summary>
 		/// Performs a coordinate transformation using the given <see cref="SlimDX::Matrix"/>.

@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "Factory.h"
+#include "FactoryDW.h"
 #include "TextFormat.h"
 #include "TextRange.h"
 #include "Typography.h"

@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "Factory.h"
+#include "FactoryD2D.h"
 #include "Geometry.h"
 #include "Ellipse.h"
 

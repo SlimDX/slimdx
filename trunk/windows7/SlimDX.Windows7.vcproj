@@ -48,7 +48,8 @@
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="stdafx.h"
 				WarningLevel="4"
 				DebugInformationFormat="3"
 			/>
@@ -126,7 +127,8 @@
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG;X64"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="stdafx.h"
 				WarningLevel="4"
 				DebugInformationFormat="3"
 			/>
@@ -203,7 +205,8 @@
 				AdditionalOptions="/MP"
 				PreprocessorDefinitions="WIN32;NDEBUG"
 				RuntimeLibrary="2"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="stdafx.h"
 				WarningLevel="4"
 				DebugInformationFormat="3"
 			/>
@@ -280,7 +283,8 @@
 				AdditionalOptions="/MP"
 				PreprocessorDefinitions="WIN32;NDEBUG;X64"
 				RuntimeLibrary="2"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="stdafx.h"
 				WarningLevel="4"
 				DebugInformationFormat="3"
 			/>
@@ -356,7 +360,8 @@
 				AdditionalOptions="/MP"
 				PreprocessorDefinitions="WIN32;NDEBUG;PUBLIC"
 				RuntimeLibrary="2"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="stdafx.h"
 				WarningLevel="4"
 				DebugInformationFormat="3"
 			/>
@@ -433,7 +438,8 @@
 				AdditionalOptions="/MP"
 				PreprocessorDefinitions="WIN32;NDEBUG;PUBLIC;X64"
 				RuntimeLibrary="2"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="stdafx.h"
 				WarningLevel="4"
 				DebugInformationFormat="3"
 			/>
@@ -505,482 +511,6 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Direct3D11"
-			>
-			<File
-				RelativePath=".\source\direct3d11\Direct3D11Exception.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\source\direct3d11\Direct3D11Exception.h"
-				>
-			</File>
-			<File
-				RelativePath=".\source\direct3d11\Enums.h"
-				>
-			</File>
-			<File
-				RelativePath=".\source\direct3d11\ResultCode.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\source\direct3d11\ResultCode.h"
-				>
-			</File>
-			<Filter
-				Name="Buffer"
-				>
-				<File
-					RelativePath=".\source\direct3d11\Buffer.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Buffer.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\BufferDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\BufferDescription.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\VertexBufferBinding.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\VertexBufferBinding.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Device"
-				>
-				<File
-					RelativePath=".\source\direct3d11\CommandList.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\CommandList.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Device.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Device.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\DeviceChild.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\DeviceChild.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\DeviceContext.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\DeviceContext.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\InputAssemblerWrapper.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\InputAssemblerWrapper.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\OutputMergerWrapper.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\OutputMergerWrapper.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\RasterizerWrapper.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\RasterizerWrapper.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\StreamOutputWrapper.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\StreamOutputWrapper.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Diagnostics"
-				>
-				<File
-					RelativePath=".\source\direct3d11\Counter.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Counter.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\CounterCapabilities.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\CounterCapabilities.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\CounterDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\CounterDescription.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\CounterMetadata.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\CounterMetadata.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Debug.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Debug.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Resource"
-				>
-				<File
-					RelativePath=".\source\direct3d11\Resource.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Resource.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\ResourceRegion.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\ResourceRegion.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Resource Views"
-				>
-				<File
-					RelativePath=".\source\direct3d11\DepthStencilView.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\DepthStencilView.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\DepthStencilViewDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\DepthStencilViewDescription.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\RenderTargetView.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\RenderTargetView.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\RenderTargetViewDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\RenderTargetViewDescription.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\ResourceView.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\ResourceView.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\ShaderResourceView.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\ShaderResourceView.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\ShaderResourceViewDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\ShaderResourceViewDescription.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Shader"
-				>
-				<File
-					RelativePath=".\source\direct3d11\GeometryShader.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\GeometryShader.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\PixelShader.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\PixelShader.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\ShaderBlob.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\ShaderBlob.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\ShaderBytecode.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\ShaderBytecode.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\ShaderMacro.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\ShaderMacro.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\ShaderSignature.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\ShaderSignature.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\VertexShader.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\VertexShader.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="State"
-				>
-				<File
-					RelativePath=".\source\direct3d11\BlendState.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\BlendState.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\BlendStateDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\BlendStateDescription.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\DepthStencilOperationDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\DepthStencilOperationDescription.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\DepthStencilState.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\DepthStencilState.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\DepthStencilStateDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\DepthStencilStateDescription.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\RasterizerState.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\RasterizerState.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\RasterizerStateDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\RasterizerStateDescription.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Stream Input"
-				>
-				<File
-					RelativePath=".\source\direct3d11\InputElement.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\InputElement.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\InputLayout.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\InputLayout.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Stream Output"
-				>
-				<File
-					RelativePath=".\source\direct3d11\StreamOutputBufferBinding.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\StreamOutputBufferBinding.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Texture"
-				>
-				<File
-					RelativePath=".\source\direct3d11\Texture.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Texture.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Texture1D.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Texture1D.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Texture1DDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Texture1DDescription.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Texture2D.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Texture2D.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Texture2DDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Texture2DDescription.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Texture3D.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Texture3D.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Texture3DDescription.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Texture3DDescription.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Threading"
-				>
-				<File
-					RelativePath=".\source\direct3d11\Asynchronous.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\Asynchronous.h"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="Base"
-			>
-			<File
-				RelativePath=".\source\ComObject.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="Direct2D"
 			>
 			<File
@@ -996,76 +526,22 @@
 				>
 			</File>
 			<File
-				RelativePath=".\source\direct2d\ResultCode.cpp"
+				RelativePath=".\source\direct2d\ResultCodeD2D.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Public|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Public|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\source\direct2d\ResultCode.h"
+				RelativePath=".\source\direct2d\ResultCodeD2D.h"
 				>
 			</File>
 			<Filter
 				Name="Factory"
 				>
 				<File
-					RelativePath=".\source\direct2d\Factory.cpp"
+					RelativePath=".\source\direct2d\FactoryD2D.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\source\direct2d\Factory.h"
+					RelativePath=".\source\direct2d\FactoryD2D.h"
 					>
 				</File>
 			</Filter>
@@ -1301,65 +777,11 @@
 				Name="Resource"
 				>
 				<File
-					RelativePath=".\source\direct2d\Resource.cpp"
+					RelativePath=".\source\direct2d\ResourceD2D.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Public|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Public|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\source\direct2d\Resource.h"
+					RelativePath=".\source\direct2d\ResourceD2D.h"
 					>
 				</File>
 			</Filter>
@@ -1592,76 +1014,22 @@
 				>
 			</File>
 			<File
-				RelativePath=".\source\directwrite\ResultCode.cpp"
+				RelativePath=".\source\directwrite\ResultCodeDW.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\directwrite\ResultCode.h"
+				RelativePath=".\source\directwrite\ResultCodeDW.h"
 				>
 			</File>
 			<Filter
 				Name="Factory"
 				>
 				<File
-					RelativePath=".\source\directwrite\Factory.cpp"
+					RelativePath=".\source\directwrite\FactoryDW.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Public|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Public|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							ObjectFile="$(IntDir)\$(InputName)1.obj"
-							XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\source\directwrite\Factory.h"
+					RelativePath=".\source\directwrite\FactoryDW.h"
 					>
 				</File>
 			</Filter>
@@ -1752,6 +1120,58 @@
 		</Filter>
 		<File
 			RelativePath=".\source\AssemblyInfo.cpp"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					UsePrecompiledHeader="1"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Debug|x64"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					UsePrecompiledHeader="1"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					UsePrecompiledHeader="1"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|x64"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					UsePrecompiledHeader="1"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Public|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					UsePrecompiledHeader="1"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Public|x64"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					UsePrecompiledHeader="1"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
+			RelativePath=".\source\stdafx.h"
 			>
 		</File>
 	</Files>

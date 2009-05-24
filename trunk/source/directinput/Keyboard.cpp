@@ -43,7 +43,9 @@ namespace DirectInput
 {
 	Keyboard::Keyboard( DirectInput^ directInput ) : Device( directInput, Utilities::ConvertNativeGuid( GUID_SysKeyboard ) )
 	{
-		HRESULT hr = InternalPointer->SetDataFormat( &c_dfDIKeyboard );
+		IDirectInputDevice8* pointer = static_cast<IDirectInputDevice8*>( ComPointer.ToPointer() );
+
+		HRESULT hr = pointer->SetDataFormat( &c_dfDIKeyboard );
 		if( RECORD_DINPUT( hr ).IsFailure )
 			throw gcnew DirectInputException( Result::Last );
 	}

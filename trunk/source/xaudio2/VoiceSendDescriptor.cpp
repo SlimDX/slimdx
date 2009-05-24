@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -20,7 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
+#include "stdafx.h"
 #include <xaudio2.h>
 
 #include "VoiceSendDescriptor.h"
@@ -34,11 +33,12 @@ namespace SlimDX
 {
 namespace XAudio2
 {
-	VoiceSendDescriptor::VoiceSendDescriptor( Voice^ outputVoice, VoiceSendFlags flags ) {
-		if( outputVoice == nullptr )
-			throw gcnew ArgumentNullException( "outputVoice" );
+	VoiceSendDescriptor::VoiceSendDescriptor( Voice^ voice, VoiceSendFlags flags )
+	{
+		if( voice == nullptr )
+			throw gcnew ArgumentNullException( "voice" );
 
-		OutputVoice = outputVoice;
+		OutputVoice = voice;
 		Flags = flags;
 	}
 

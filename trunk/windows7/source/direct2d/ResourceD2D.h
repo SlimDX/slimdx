@@ -19,39 +19,26 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#include <dwrite.h>
-
-#include "DirectWriteException.h"
-
-#include "Factory.h"
-
-const IID IID_IDWriteFactory = __uuidof(IDWriteFactory);
-
-using namespace System;
+#include "FactoryD2D.h"
 
 namespace SlimDX
 {
-namespace DirectWrite
-{
-	Factory::Factory()
+	namespace Direct2D
 	{
-		Init( FactoryType::Shared );
+		public ref class Resource abstract : ComObject
+		{
+			COMOBJECT_BASE(ID2D1Resource);
+
+		protected:
+			Resource() { }
+			
+		public:
+			property Factory^ Factory
+			{
+				SlimDX::Direct2D::Factory^ get();
+			}
+		};
 	}
-
-	Factory::Factory( FactoryType factoryType )
-	{
-		Init( factoryType );
-	}
-
-	void Factory::Init( FactoryType factoryType )
-	{
-		IDWriteFactory *factory = NULL;
-
-		if( RECORD_DW( DWriteCreateFactory( static_cast<DWRITE_FACTORY_TYPE>( factoryType ), IID_IDWriteFactory, reinterpret_cast<IUnknown**>( &factory ) ) ).IsFailure )
-			throw gcnew DirectWriteException( Result::Last );
-
-		Construct( factory );
-	}
-}
 }

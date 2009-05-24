@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "Factory.h"
+#include "FactoryDW.h"
 #include "Enums.h"
 #include "FontCollection.h"
 

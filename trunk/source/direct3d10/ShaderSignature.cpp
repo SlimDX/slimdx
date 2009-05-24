@@ -36,7 +36,6 @@ namespace Direct3D10
 	ShaderSignature::ShaderSignature( ID3D10Blob *blob )
 	{
 		m_Buffer = NULL;
-		m_Length = 0;
 
 		this->blob = blob;
 	}

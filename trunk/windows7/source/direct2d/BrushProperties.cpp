@@ -19,8 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include "BrushProperties.h"
+#include "stdafx.h"
 
 using namespace System;
 
