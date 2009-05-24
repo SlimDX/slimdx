@@ -38,8 +38,8 @@ namespace DirectInput
 		ffDriverGuid = Utilities::ConvertNativeGuid( deviceInstance.guidFFDriver );
 		type = static_cast<DeviceType>( deviceInstance.dwDevType );
 		subType = deviceInstance.dwDevType >> 8;
-		usage = static_cast<SlimDX::UsageId>( deviceInstance.wUsage );
-		usagePage = static_cast<SlimDX::UsagePage>( deviceInstance.wUsagePage );
+		usage = static_cast<SlimDX::Multimedia::UsageId>( deviceInstance.wUsage );
+		usagePage = static_cast<SlimDX::Multimedia::UsagePage>( deviceInstance.wUsagePage );
 		instanceName = gcnew String( deviceInstance.tszInstanceName );
 		productName = gcnew String( deviceInstance.tszProductName );
 

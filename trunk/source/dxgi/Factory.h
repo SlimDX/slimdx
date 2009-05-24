@@ -69,7 +69,7 @@ namespace SlimDX
 			/// <param name="module">The unmanaged HMODULE for the software adapter DLL.</param>
 			/// <returns>The specified adapter, or <c>null</c> on failure.</returns>
 			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
-			SDX_METHOD(IAdapter^ CreateSoftwareAdapter( System::IntPtr module ));
+			SDX_METHOD(IAdapter^ CreateSoftwareAdapter( System::IntPtr softwareModule ));
 			
 			/// <summary>
 			/// Creates a software adapater interface.
@@ -77,7 +77,7 @@ namespace SlimDX
 			/// <param name="module">The module for the software adapter DLL.</param>
 			/// <returns>The specified adapter, or <c>null</c> on failure.</returns>
 			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
-			SDX_METHOD(IAdapter^ CreateSoftwareAdapter( System::Reflection::Module^ module ));
+			SDX_METHOD(IAdapter^ CreateSoftwareAdapter( System::Reflection::Module^ softwareModule ));
 			
 			/// <summary>
 			/// Gets the window handle associated with the factory (the window through which the user signals fullscreen

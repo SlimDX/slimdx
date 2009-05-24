@@ -140,18 +140,9 @@
      </Message>
     </Messages>
    </Namespace>
-   <Namespace Name="SlimDX.Multimedia">
-    <Messages>
-     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2009-05-22 01:29:55Z">
-      <Issue>
-       <Item>SlimDX.Multimedia</Item>
-      </Issue>
-     </Message>
-    </Messages>
-   </Namespace>
    <Namespace Name="SlimDX.Windows">
     <Messages>
-     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2009-05-22 01:29:55Z">
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Status="Excluded" Created="2009-05-22 01:29:55Z">
       <Issue>
        <Item>SlimDX.Windows</Item>
       </Issue>
@@ -3359,7 +3350,7 @@
          </Type>
          <Type Name="Configuration">
           <Messages>
-           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue Name="System">
              <Item>'Configuration'</Item>
              <Item>System.Configuration</Item>
@@ -3406,7 +3397,7 @@
            </Member>
            <Member Name="#.ctor(System.IntPtr,System.Int64,System.Boolean,System.Boolean)">
             <Messages>
-             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue Name="OutsideDispose">
                <Item>'DataStream.DataStream(IntPtr, long, bool, bool)'</Item>
                <Item>'GC.SuppressFinalize(object)'</Item>
@@ -3416,12 +3407,6 @@
            </Member>
            <Member Name="#.ctor(System.Void*,System.Int64,System.Boolean,System.Boolean,System.Boolean)">
             <Messages>
-             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2009-05-22 01:29:55Z">
-              <Issue Name="OutsideDispose">
-               <Item>'DataStream.DataStream(void*, long, bool, bool, bool)'</Item>
-               <Item>'GC.SuppressFinalize(object)'</Item>
-              </Issue>
-             </Message>
              <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'DataStream.DataStream(void*, long, bool, bool, bool)'</Item>
@@ -3614,11 +3599,17 @@
                <Item>&#xD;&#xA;   -&gt;'DataStream.DataStream(void*, long, bool, bool, bool)'&#xD;&#xA;   -&gt;'DataStream.DataStream(void*, long, bool, bool, bool)'&#xD;&#xA;   -&gt;'XFileData.Lock()'</Item>
               </Issue>
              </Message>
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Status="Excluded" Created="2009-05-22 01:29:55Z">
+              <Issue Name="OutsideDispose">
+               <Item>'DataStream.DataStream(void*, long, bool, bool, bool)'</Item>
+               <Item>'GC.SuppressFinalize(object)'</Item>
+              </Issue>
+             </Message>
             </Messages>
            </Member>
            <Member Name="#~DataStream()">
             <Messages>
-             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue Name="OutsideDispose">
                <Item>'DataStream.~DataStream()'</Item>
                <Item>'GC.SuppressFinalize(object)'</Item>
@@ -3654,7 +3645,7 @@
            </Member>
            <Member Name="#Read`1()">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'DataStream.Read&lt;T&gt;()'</Item>
                <Item>'T'</Item>
@@ -3664,7 +3655,7 @@
            </Member>
            <Member Name="#ReadRange`1(System.Int32)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'DataStream.ReadRange&lt;T&gt;(int)'</Item>
                <Item>'T'</Item>
@@ -3777,18 +3768,6 @@
               </Issue>
              </Message>
             </Messages>
-            <Accessors>
-             <Accessor Name="#set_Item(System.Int32,System.Int32,System.Single)">
-              <Messages>
-               <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Created="2009-05-22 01:29:55Z">
-                <Issue Name="Reserved">
-                 <Item>'Matrix.this.set(int, int, float)'</Item>
-                 <Item>'IndexOutOfRangeException'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
            <Member Name="#M11">
             <Messages>
@@ -4526,19 +4505,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="Result">
-          <Members>
-           <Member Name="#Data">
-            <Messages>
-             <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Created="2009-05-22 01:29:55Z">
-              <Issue>
-               <Item>'Result.Data'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="ResultInfo">
           <Members>
            <Member Name="#Data">
@@ -4572,7 +4538,7 @@
          </Type>
          <Type Name="ResultWatchFlags">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsRename">
              <Item>'ResultWatchFlags'</Item>
              <Item>'ResultWatchFlags.AlwaysIgnore'</Item>
@@ -4590,7 +4556,7 @@
           <Members>
            <Member Name="#Coefficients">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'SHVector.Coefficients'</Item>
               </Issue>
@@ -4622,185 +4588,6 @@
              <Message Id="1#" TypeName="ParameterNamesShouldNotMatchMemberNames" Category="Microsoft.Naming" CheckId="CA1719" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'scale'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="Speakers">
-          <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-05-22 01:29:55Z">
-            <Issue>
-             <Item>'Speakers'</Item>
-             <Item>0x40000, 0x80000, 0x100000, 0x200000, 0x400000, 0x800000, 0x1000000, 0x2000000, 0x4000000, 0x8000000, 0x10000000, 0x20000000, 0x40000000, 0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#Reserved">
-            <Messages>
-             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Created="2009-05-22 01:29:55Z">
-              <Issue>
-               <Item>'Speakers.Reserved'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="UsageId">
-          <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
-            <Issue Name="FlagsRename">
-             <Item>'UsageId'</Item>
-             <Item>'UsageId.KeyboardNoEvent'</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
-            <Issue>
-             <Item>'UsageId'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#KeyboardaA">
-            <Messages>
-             <Message Id="Keyboarda" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
-              <Issue Name="Member">
-               <Item>Keyboarda</Item>
-               <Item>'UsageId.KeyboardaA'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#KeyboardNumLock">
-            <Messages>
-             <Message Id="Num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
-              <Issue Name="Member">
-               <Item>Num</Item>
-               <Item>'UsageId.KeyboardNumLock'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#KeyboardzZ">
-            <Messages>
-             <Message Id="Keyboardz" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
-              <Issue Name="Member">
-               <Item>Keyboardz</Item>
-               <Item>'UsageId.KeyboardzZ'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LedCav">
-            <Messages>
-             <Message Id="Cav" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
-              <Issue Name="Member">
-               <Item>Cav</Item>
-               <Item>'UsageId.LedCav'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LedClv">
-            <Messages>
-             <Message Id="Clv" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
-              <Issue Name="Member">
-               <Item>Clv</Item>
-               <Item>'UsageId.LedClv'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LedNumLock">
-            <Messages>
-             <Message Id="Num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
-              <Issue Name="Member">
-               <Item>Num</Item>
-               <Item>'UsageId.LedNumLock'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LedRecordingFormatDet">
-            <Messages>
-             <Message Id="Det" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
-              <Issue Name="Member">
-               <Item>Det</Item>
-               <Item>'UsageId.LedRecordingFormatDet'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#VbrX">
-            <Messages>
-             <Message Id="Vbr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
-              <Issue Name="Member">
-               <Item>Vbr</Item>
-               <Item>'UsageId.VbrX'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#VbrY">
-            <Messages>
-             <Message Id="Vbr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
-              <Issue Name="Member">
-               <Item>Vbr</Item>
-               <Item>'UsageId.VbrY'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#VbrZ">
-            <Messages>
-             <Message Id="Vbr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
-              <Issue Name="Member">
-               <Item>Vbr</Item>
-               <Item>'UsageId.VbrZ'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Vno">
-            <Messages>
-             <Message Id="Vno" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
-              <Issue Name="Member">
-               <Item>Vno</Item>
-               <Item>'UsageId.Vno'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="UsagePage">
-          <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2009-05-22 01:29:55Z">
-            <Issue>
-             <Item>'UsagePage'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#Msr">
-            <Messages>
-             <Message Id="Msr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
-              <Issue Name="Member">
-               <Item>Msr</Item>
-               <Item>'UsagePage.Msr'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Pid">
-            <Messages>
-             <Message Id="Pid" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
-              <Issue Name="Member">
-               <Item>Pid</Item>
-               <Item>'UsagePage.Pid'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -5077,57 +4864,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="WaveFormatTag">
-          <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
-            <Issue Name="NotFlagsNoZeroValue">
-             <Item>'WaveFormatTag'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-          <Members>
-           <Member Name="#AdPcm">
-            <Messages>
-             <Message Id="Pcm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
-              <Issue Name="Member">
-               <Item>Pcm</Item>
-               <Item>'WaveFormatTag.AdPcm'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#DolbyAC3Spdif">
-            <Messages>
-             <Message Id="Spdif" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
-              <Issue Name="Member">
-               <Item>Spdif</Item>
-               <Item>'WaveFormatTag.DolbyAC3Spdif'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Pcm">
-            <Messages>
-             <Message Id="Pcm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
-              <Issue Name="Member">
-               <Item>Pcm</Item>
-               <Item>'WaveFormatTag.Pcm'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#WmaSpdif">
-            <Messages>
-             <Message Id="Spdif" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
-              <Issue Name="Member">
-               <Item>Spdif</Item>
-               <Item>'WaveFormatTag.WmaSpdif'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
         </Types>
        </Namespace>
        <Namespace Name="SlimDX.Direct3D10">
@@ -5191,7 +4927,7 @@
          </Type>
          <Type Name="BlendOperation">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'BlendOperation'</Item>
             </Issue>
@@ -5200,13 +4936,13 @@
          </Type>
          <Type Name="BlendOption">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
-            <Issue Name="NotFlagsNoZeroValue">
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2009-05-22 01:29:55Z">
+            <Issue>
              <Item>'BlendOption'</Item>
             </Issue>
            </Message>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2009-05-22 01:29:55Z">
-            <Issue>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
              <Item>'BlendOption'</Item>
             </Issue>
            </Message>
@@ -5384,7 +5120,7 @@
          </Type>
          <Type Name="Comparison">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'Comparison'</Item>
             </Issue>
@@ -5443,7 +5179,7 @@
          </Type>
          <Type Name="CullMode">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'CullMode'</Item>
             </Issue>
@@ -5483,20 +5219,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'Debug.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
            <Member Name="#SwapChain">
             <Accessors>
@@ -5684,20 +5406,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'Device.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="DeviceChild">
@@ -5723,20 +5431,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'DeviceChild.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -5915,20 +5609,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'Effect.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -6138,20 +5818,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'EffectPool.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -6387,7 +6053,7 @@
          </Type>
          <Type Name="FillMode">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'FillMode'</Item>
             </Issue>
@@ -6396,19 +6062,19 @@
          </Type>
          <Type Name="Filter">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'Filter'</Item>
              <Item>0x40, 0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsRename">
              <Item>'Filter'</Item>
              <Item>'Filter.MinMagMipPoint'</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'Filter'</Item>
             </Issue>
@@ -6516,20 +6182,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'Font.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
            <Member Name="#Measure(SlimDX.Direct3D10.Sprite,System.String,System.Drawing.Rectangle,SlimDX.Direct3D10.FontDrawFlags)">
             <Messages>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-05-22 01:29:55Z">
@@ -6560,7 +6212,7 @@
          </Type>
          <Type Name="FontDrawFlags">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsMultipleZeros">
              <Item>'FontDrawFlags'</Item>
             </Issue>
@@ -6575,12 +6227,12 @@
          </Type>
          <Type Name="FontPitchAndFamily">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsMultipleZeros">
              <Item>'FontPitchAndFamily'</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'FontPitchAndFamily'</Item>
             </Issue>
@@ -6629,7 +6281,7 @@
          </Type>
          <Type Name="FormatSupport">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'FormatSupport'</Item>
             </Issue>
@@ -6638,7 +6290,7 @@
           <Members>
            <Member Name="#Reserved">
             <Messages>
-             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'FormatSupport.Reserved'</Item>
               </Issue>
@@ -6816,13 +6468,13 @@
          </Type>
          <Type Name="IncludeType">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsRename">
              <Item>'IncludeType'</Item>
              <Item>'IncludeType.Local'</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'IncludeType'</Item>
             </Issue>
@@ -6867,7 +6519,7 @@
          </Type>
          <Type Name="MapMode">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'MapMode'</Item>
             </Issue>
@@ -6995,20 +6647,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'Mesh.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
            <Member Name="#Optimize(SlimDX.Direct3D10.MeshOptimizeFlags)">
             <Messages>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-05-22 01:29:55Z">
@@ -7056,20 +6694,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'MeshBuffer.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -7562,7 +7186,7 @@
          </Type>
          <Type Name="ShaderFlags">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsMultipleZeros">
              <Item>'ShaderFlags'</Item>
             </Issue>
@@ -7695,20 +7319,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'Sprite.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
            <Member Name="#ProjectionTransform">
             <Accessors>
              <Accessor Name="#get_ProjectionTransform()">
@@ -7773,25 +7383,11 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'StateBlock.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="StencilOperation">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'StencilOperation'</Item>
             </Issue>
@@ -8034,7 +7630,7 @@
          </Type>
          <Type Name="TextureAddressMode">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'TextureAddressMode'</Item>
             </Issue>
@@ -8111,7 +7707,7 @@
           <Members>
            <Member Name="#RenderTargets">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'BlendStateDescription1.RenderTargets'</Item>
               </Issue>
@@ -8192,7 +7788,7 @@
          </Type>
          <Type Name="FeatureLevel">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'FeatureLevel'</Item>
             </Issue>
@@ -8283,18 +7879,6 @@
             </Issue>
            </Message>
           </Messages>
-          <Members>
-           <Member Name="#NumCubes">
-            <Messages>
-             <Message Id="Num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-05-22 01:29:55Z">
-              <Issue Name="Member">
-               <Item>Num</Item>
-               <Item>'ShaderResourceViewDescription1.NumCubes'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
          </Type>
         </Types>
        </Namespace>
@@ -8348,20 +7932,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'AnimationController.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="AnimationOutput">
@@ -8401,27 +7971,13 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'AnimationSet.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="BaseEffect">
           <Members>
            <Member Name="#GetValue`1(SlimDX.Direct3D9.EffectHandle)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'BaseEffect.GetValue&lt;T&gt;(EffectHandle)'</Item>
                <Item>'T'</Item>
@@ -8431,35 +7987,10 @@
            </Member>
            <Member Name="#GetValue`1(SlimDX.Direct3D9.EffectHandle,System.Int32)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'BaseEffect.GetValue&lt;T&gt;(EffectHandle, int)'</Item>
                <Item>'T'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'BaseEffect.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#SetValue`1(SlimDX.Direct3D9.EffectHandle,!!0)">
-            <Messages>
-             <Message Id="System.Convert.ToInt32(System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2009-05-22 01:29:55Z">
-              <Issue>
-               <Item>'Convert.ToInt32(object)'</Item>
-               <Item>'BaseEffect.SetValue&lt;T&gt;(EffectHandle, T)'</Item>
-               <Item>'Convert.ToInt32(object, IFormatProvider)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -8497,20 +8028,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'BaseMesh.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
            <Member Name="#LockIndexBuffer(SlimDX.Direct3D9.LockFlags)">
             <Messages>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-05-22 01:29:55Z">
@@ -8537,13 +8054,13 @@
          </Type>
          <Type Name="Blend">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
-            <Issue Name="NotFlagsNoZeroValue">
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2009-05-22 01:29:55Z">
+            <Issue>
              <Item>'Blend'</Item>
             </Issue>
            </Message>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2009-05-22 01:29:55Z">
-            <Issue>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
              <Item>'Blend'</Item>
             </Issue>
            </Message>
@@ -8551,7 +8068,7 @@
          </Type>
          <Type Name="BlendOperation">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'BlendOperation'</Item>
             </Issue>
@@ -8562,7 +8079,7 @@
           <Members>
            <Member Name="#BoneIds">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'BoneCombination.BoneIds'</Item>
               </Issue>
@@ -8573,13 +8090,13 @@
          </Type>
          <Type Name="CallbackSearchFlags">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
-            <Issue Name="NotFlagsNoZeroValue">
+           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2009-05-22 01:29:55Z">
+            <Issue>
              <Item>'CallbackSearchFlags'</Item>
             </Issue>
            </Message>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2009-05-22 01:29:55Z">
-            <Issue>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
              <Item>'CallbackSearchFlags'</Item>
             </Issue>
            </Message>
@@ -8619,7 +8136,7 @@
          </Type>
          <Type Name="Caps2">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'Caps2'</Item>
             </Issue>
@@ -8628,7 +8145,7 @@
          </Type>
          <Type Name="Caps3">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'Caps3'</Item>
             </Issue>
@@ -8649,7 +8166,7 @@
          </Type>
          <Type Name="Channel">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'Channel'</Item>
             </Issue>
@@ -8673,7 +8190,7 @@
          </Type>
          <Type Name="CleanType">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'CleanType'</Item>
             </Issue>
@@ -8702,7 +8219,7 @@
          </Type>
          <Type Name="ColorWriteEnable">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'ColorWriteEnable'</Item>
             </Issue>
@@ -8711,7 +8228,7 @@
          </Type>
          <Type Name="Compare">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'Compare'</Item>
             </Issue>
@@ -8720,7 +8237,7 @@
          </Type>
          <Type Name="ComposeRectOperation">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'ComposeRectOperation'</Item>
             </Issue>
@@ -8808,20 +8325,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'ConstantTable.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -8921,7 +8424,7 @@
          </Type>
          <Type Name="Cull">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'Cull'</Item>
             </Issue>
@@ -9076,7 +8579,7 @@
          </Type>
          <Type Name="DeclarationMethod">
           <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue Name="NotInt32">
              <Item>'DeclarationMethod'</Item>
              <Item>'byte'</Item>
@@ -9086,7 +8589,7 @@
          </Type>
          <Type Name="DeclarationType">
           <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue Name="NotInt32">
              <Item>'DeclarationType'</Item>
              <Item>'byte'</Item>
@@ -9108,7 +8611,7 @@
          </Type>
          <Type Name="DeclarationUsage">
           <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue Name="NotInt32">
              <Item>'DeclarationUsage'</Item>
              <Item>'byte'</Item>
@@ -9131,7 +8634,7 @@
          </Type>
          <Type Name="Degree">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'Degree'</Item>
             </Issue>
@@ -9174,7 +8677,7 @@
            </Member>
            <Member Name="#BindRenderTargetToVertexStream(SlimDX.Direct3D9.R2VBSampler,SlimDX.Direct3D9.Texture,System.Int32,System.Int32,SlimDX.Direct3D9.VertexBuffer)">
             <Messages>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'r2vbTarget'</Item>
                <Item>'Device.BindRenderTargetToVertexStream(R2VBSampler, Texture, int, int, VertexBuffer)'</Item>
@@ -9307,7 +8810,7 @@
            </Member>
            <Member Name="#GetRenderState`1(SlimDX.Direct3D9.RenderState)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'Device.GetRenderState&lt;T&gt;(RenderState)'</Item>
                <Item>'T'</Item>
@@ -9317,7 +8820,7 @@
            </Member>
            <Member Name="#GetSamplerState`1(System.Int32,SlimDX.Direct3D9.SamplerState)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'Device.GetSamplerState&lt;T&gt;(int, SamplerState)'</Item>
                <Item>'T'</Item>
@@ -9327,7 +8830,7 @@
            </Member>
            <Member Name="#GetTextureStageState`1(System.Int32,SlimDX.Direct3D9.TextureStage)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'Device.GetTextureStageState&lt;T&gt;(int, TextureStage)'</Item>
                <Item>'T'</Item>
@@ -9355,20 +8858,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'Device.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
            <Member Name="#Present(SlimDX.Direct3D9.Present)">
             <Messages>
@@ -9614,7 +9103,7 @@
          </Type>
          <Type Name="DeviceCaps2">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'DeviceCaps2'</Item>
             </Issue>
@@ -9785,7 +9274,7 @@
          </Type>
          <Type Name="DeviceType">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'DeviceType'</Item>
             </Issue>
@@ -9827,7 +9316,7 @@
            </Member>
            <Member Name="#Adapters">
             <Messages>
-             <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'Direct3D.Adapters'</Item>
               </Issue>
@@ -9854,20 +9343,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'Direct3D.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -9993,7 +9468,7 @@
          </Type>
          <Type Name="DisplayRotation">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'DisplayRotation'</Item>
             </Issue>
@@ -10002,12 +9477,12 @@
          </Type>
          <Type Name="DrawTextFormat">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsMultipleZeros">
              <Item>'DrawTextFormat'</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'DrawTextFormat'</Item>
             </Issue>
@@ -10039,7 +9514,7 @@
          </Type>
          <Type Name="DriverLevel">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'DriverLevel'</Item>
             </Issue>
@@ -10512,7 +9987,7 @@
          </Type>
          <Type Name="EffectDefaultType">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'EffectDefaultType'</Item>
             </Issue>
@@ -10535,7 +10010,7 @@
           <Members>
            <Member Name="#.ctor({modopt(System.Runtime.CompilerServices.IsConst),modopt(System.Runtime.CompilerServices.IsSignUnspecifiedByte)}System.SByte*)">
             <Messages>
-             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue Name="OutsideDispose">
                <Item>'EffectHandle.EffectHandle(sbyte*)'</Item>
                <Item>'GC.SuppressFinalize(object)'</Item>
@@ -10586,7 +10061,7 @@
           <Members>
            <Member Name="#Defaults">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'EffectInstance.Defaults'</Item>
               </Issue>
@@ -10619,20 +10094,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'EffectPool.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="EventDescription">
@@ -10651,7 +10112,7 @@
          </Type>
          <Type Name="FillMode">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'FillMode'</Item>
             </Issue>
@@ -10660,13 +10121,13 @@
          </Type>
          <Type Name="Filter">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'Filter'</Item>
              <Item>0x8, 0x10, 0x20, 0x40, 0x80, 0x100, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000, 0x100000, 0x800000, 0x1000000, 0x2000000, 0x4000000, 0x8000000, 0x10000000, 0x20000000, 0x40000000, 0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'Filter'</Item>
             </Issue>
@@ -10728,20 +10189,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'Font.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -10935,20 +10382,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'FragmentLinker.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
            <Member Name="#LinkPixelShader(System.String,SlimDX.Direct3D9.ShaderFlags,SlimDX.Direct3D9.EffectHandle[],System.String&amp;)">
             <Messages>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-05-22 01:29:55Z">
@@ -10986,7 +10419,7 @@
          </Type>
          <Type Name="FX">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'FX'</Item>
             </Issue>
@@ -11380,7 +10813,7 @@
          </Type>
          <Type Name="Issue">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'Issue'</Item>
             </Issue>
@@ -11429,7 +10862,7 @@
          </Type>
          <Type Name="LightType">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'LightType'</Item>
             </Issue>
@@ -11459,20 +10892,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'Line.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -12059,20 +11478,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'MatrixStack.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="Mesh">
@@ -12322,7 +11727,7 @@
          </Type>
          <Type Name="MeshDataType">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'MeshDataType'</Item>
             </Issue>
@@ -12351,7 +11756,7 @@
          </Type>
          <Type Name="MeshSimplification">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'MeshSimplification'</Item>
             </Issue>
@@ -12505,20 +11910,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'PatchMesh.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
            <Member Name="#LockAttributeBuffer(SlimDX.Direct3D9.LockFlags)">
             <Messages>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-05-22 01:29:55Z">
@@ -12566,7 +11957,7 @@
          </Type>
          <Type Name="PatchMeshType">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'PatchMeshType'</Item>
             </Issue>
@@ -12601,12 +11992,12 @@
          </Type>
          <Type Name="PitchAndFamily">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsMultipleZeros">
              <Item>'PitchAndFamily'</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'PitchAndFamily'</Item>
             </Issue>
@@ -12650,20 +12041,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'PixelShader.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="Precision">
@@ -12683,7 +12060,7 @@
          </Type>
          <Type Name="Present">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'Present'</Item>
             </Issue>
@@ -12702,19 +12079,19 @@
          </Type>
          <Type Name="PresentInterval">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'PresentInterval'</Item>
              <Item>0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsRename">
              <Item>'PresentInterval'</Item>
              <Item>'PresentInterval.Default'</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'PresentInterval'</Item>
             </Issue>
@@ -12792,7 +12169,7 @@
          </Type>
          <Type Name="PrimitiveType">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'PrimitiveType'</Item>
             </Issue>
@@ -12928,27 +12305,13 @@
            </Member>
            <Member Name="#GetData`1(System.Boolean)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'Query.GetData&lt;T&gt;(bool)'</Item>
                <Item>'T'</Item>
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'Query.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
            <Member Name="#Issue(SlimDX.Direct3D9.Issue)">
             <Messages>
@@ -12975,7 +12338,7 @@
          </Type>
          <Type Name="QueryType">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'QueryType'</Item>
             </Issue>
@@ -13052,7 +12415,7 @@
          </Type>
          <Type Name="RenderState">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'RenderState'</Item>
             </Issue>
@@ -13144,20 +12507,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'RenderToEnvironmentMap.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="RenderToSurface">
@@ -13184,20 +12533,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'RenderToSurface.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="Resource">
@@ -13213,25 +12548,11 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'Resource.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="ResourceType">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'ResourceType'</Item>
             </Issue>
@@ -13240,7 +12561,7 @@
          </Type>
          <Type Name="SamplerState">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'SamplerState'</Item>
             </Issue>
@@ -13271,7 +12592,7 @@
          </Type>
          <Type Name="ScanlineOrdering">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'ScanlineOrdering'</Item>
             </Issue>
@@ -13304,7 +12625,7 @@
          </Type>
          <Type Name="ShadeMode">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'ShadeMode'</Item>
             </Issue>
@@ -13533,25 +12854,11 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'ShaderBytecode.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="ShaderFlags">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsMultipleZeros">
              <Item>'ShaderFlags'</Item>
             </Issue>
@@ -13610,20 +12917,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'SkinInfo.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="Sprite">
@@ -13660,20 +12953,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'Sprite.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
            <Member Name="#SetWorldViewLH(SlimDX.Matrix,SlimDX.Matrix)">
             <Messages>
@@ -13733,25 +13012,11 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'StateBlock.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="StateBlockType">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'StateBlockType'</Item>
             </Issue>
@@ -13760,7 +13025,7 @@
          </Type>
          <Type Name="StencilOperation">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'StencilOperation'</Item>
             </Issue>
@@ -13769,7 +13034,7 @@
          </Type>
          <Type Name="StreamFrequency">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'StreamFrequency'</Item>
             </Issue>
@@ -13920,7 +13185,7 @@
            </Member>
            <Member Name="#GetContainer`1()">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'Surface.GetContainer&lt;TContainer&gt;()'</Item>
                <Item>'TContainer'</Item>
@@ -13999,20 +13264,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'SwapChain.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
            <Member Name="#Present(SlimDX.Direct3D9.Present)">
             <Messages>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-05-22 01:29:55Z">
@@ -14067,7 +13318,7 @@
          </Type>
          <Type Name="SwapEffect">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'SwapEffect'</Item>
             </Issue>
@@ -14172,7 +13423,7 @@
          </Type>
          <Type Name="TextureAddress">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'TextureAddress'</Item>
             </Issue>
@@ -14181,19 +13432,19 @@
          </Type>
          <Type Name="TextureArgument">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'TextureArgument'</Item>
              <Item>0x8</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsRename">
              <Item>'TextureArgument'</Item>
              <Item>'TextureArgument.Diffuse'</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'TextureArgument'</Item>
             </Issue>
@@ -14202,13 +13453,13 @@
          </Type>
          <Type Name="TextureCoordIndex">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsRename">
              <Item>'TextureCoordIndex'</Item>
              <Item>'TextureCoordIndex.PassThru'</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'TextureCoordIndex'</Item>
             </Issue>
@@ -14217,7 +13468,7 @@
          </Type>
          <Type Name="TextureOperation">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'TextureOperation'</Item>
             </Issue>
@@ -14248,25 +13499,11 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'TextureShader.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="TextureStage">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'TextureStage'</Item>
             </Issue>
@@ -14296,7 +13533,7 @@
          </Type>
          <Type Name="TextureWrapping">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'TextureWrapping'</Item>
             </Issue>
@@ -14305,7 +13542,7 @@
          </Type>
          <Type Name="TransformState">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'TransformState'</Item>
             </Issue>
@@ -14314,7 +13551,7 @@
          </Type>
          <Type Name="Usage">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'Usage'</Item>
             </Issue>
@@ -14344,13 +13581,6 @@
           </Members>
          </Type>
          <Type Name="UVAtlas">
-          <Messages>
-           <Message TypeName="StaticHolderTypesShouldBeSealed" Category="Microsoft.Design" CheckId="CA1052" Created="2009-05-22 01:29:55Z">
-            <Issue>
-             <Item>'UVAtlas'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Create(SlimDX.Direct3D9.Mesh,System.Int32,System.Single,System.Int32,System.Int32,System.Single,System.Int32,System.Int32[],System.Single[],SlimDX.Direct3D9.UVAtlasQuality,System.Predicate`1&lt;System.Single&gt;,System.Single)">
             <Messages>
@@ -14479,7 +13709,7 @@
            </Member>
            <Member Name="#Elements">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'VertexDeclaration.Elements'</Item>
               </Issue>
@@ -14496,20 +13726,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'VertexDeclaration.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -14529,18 +13745,18 @@
          </Type>
          <Type Name="VertexFormat">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'VertexFormat'</Item>
              <Item>0x4000</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsMultipleZeros">
              <Item>'VertexFormat'</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'VertexFormat'</Item>
             </Issue>
@@ -14561,7 +13777,7 @@
          </Type>
          <Type Name="VertexFormatCaps">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'VertexFormatCaps'</Item>
              <Item>0x1, 0x2, 0x4, 0x8, 0x10, 0x20, 0x40, 0x80, 0x100, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000</Item>
@@ -14592,20 +13808,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'VertexShader.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -14781,20 +13983,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'XFile.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="XFileData">
@@ -14820,20 +14008,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'XFileData.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
            <Member Name="#Type">
             <Messages>
@@ -14871,31 +14045,17 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'XFileEnumerationObject.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="XFileFormat">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsRename">
              <Item>'XFileFormat'</Item>
              <Item>'XFileFormat.Binary'</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'XFileFormat'</Item>
             </Issue>
@@ -14925,20 +14085,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'XFileSaveData.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
            <Member Name="#Type">
             <Messages>
@@ -14975,20 +14121,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'XFileSaveObject.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -15101,7 +14233,7 @@
           <Members>
            <Member Name="#Conditions">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-24 14:19:13Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-24 14:19:13Z">
               <Issue>
                <Item>'ConditionSet.Conditions'</Item>
               </Issue>
@@ -15112,7 +14244,7 @@
          </Type>
          <Type Name="CooperativeLevel">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'CooperativeLevel'</Item>
             </Issue>
@@ -15120,20 +14252,12 @@
           </Messages>
          </Type>
          <Type Name="CustomDevice`1">
-          <Messages>
-           <Message Id="T" TypeName="IdentifiersShouldHaveCorrectPrefix" Category="Microsoft.Naming" CheckId="CA1715" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
-            <Issue Name="TypeTypeParameter">
-             <Item>'CustomDevice&lt;DataFormat&gt;'</Item>
-             <Item>'DataFormat'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#.ctor(System.IntPtr)">
             <Messages>
              <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue Name="LanguageIndependentMemberParameter">
-               <Item>'CustomDevice&lt;DataFormat&gt;.CustomDevice(IntPtr)'</Item>
+               <Item>'CustomDevice&lt;TDataFormat&gt;.CustomDevice(IntPtr)'</Item>
                <Item>pointer</Item>
                <Item>'pointer'</Item>
               </Issue>
@@ -15142,15 +14266,15 @@
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
-             <Message TypeName="DoNotDeclareStaticMembersOnGenericTypes" Category="Microsoft.Design" CheckId="CA1000" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="DoNotDeclareStaticMembersOnGenericTypes" Category="Microsoft.Design" CheckId="CA1000" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
-               <Item>'CustomDevice&lt;DataFormat&gt;.FromPointer(IntPtr)'</Item>
-               <Item>'CustomDevice&lt;DataFormat&gt;'</Item>
+               <Item>'CustomDevice&lt;TDataFormat&gt;.FromPointer(IntPtr)'</Item>
+               <Item>'CustomDevice&lt;TDataFormat&gt;'</Item>
               </Issue>
              </Message>
              <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue Name="LanguageIndependentMemberParameter">
-               <Item>'CustomDevice&lt;DataFormat&gt;.FromPointer(IntPtr)'</Item>
+               <Item>'CustomDevice&lt;TDataFormat&gt;.FromPointer(IntPtr)'</Item>
                <Item>pointer</Item>
                <Item>'pointer'</Item>
               </Issue>
@@ -15161,14 +14285,14 @@
             <Messages>
              <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-05-22 01:29:55Z">
               <Issue>
-               <Item>'CustomDevice&lt;DataFormat&gt;.GetBufferedData()'</Item>
+               <Item>'CustomDevice&lt;TDataFormat&gt;.GetBufferedData()'</Item>
                <Item>'Marshal.OffsetOf(Type, string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'CustomDevice&lt;DataFormat&gt;.GetBufferedData()'&#xD;&#xA;   -&gt;'CustomDevice&lt;DataFormat&gt;.GetBufferedData()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'CustomDevice&lt;TDataFormat&gt;.GetBufferedData()'&#xD;&#xA;   -&gt;'CustomDevice&lt;TDataFormat&gt;.GetBufferedData()'</Item>
               </Issue>
              </Message>
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-05-22 01:29:55Z">
               <Issue Certainty="50">
-               <Item>'CustomDevice&lt;DataFormat&gt;.GetBufferedData()'</Item>
+               <Item>'CustomDevice&lt;TDataFormat&gt;.GetBufferedData()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -15177,9 +14301,9 @@
             <Messages>
              <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-05-22 01:29:55Z">
               <Issue>
-               <Item>'CustomDevice&lt;DataFormat&gt;.GetCurrentState()'</Item>
-               <Item>'CustomDevice&lt;DataFormat&gt;.GetCurrentState(ref DataFormat)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'CustomDevice&lt;DataFormat&gt;.GetCurrentState()'&#xD;&#xA;   -&gt;'CustomDevice&lt;DataFormat&gt;.GetCurrentState()'</Item>
+               <Item>'CustomDevice&lt;TDataFormat&gt;.GetCurrentState()'</Item>
+               <Item>'CustomDevice&lt;TDataFormat&gt;.GetCurrentState(ref TDataFormat)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'CustomDevice&lt;TDataFormat&gt;.GetCurrentState()'&#xD;&#xA;   -&gt;'CustomDevice&lt;TDataFormat&gt;.GetCurrentState()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -15188,9 +14312,19 @@
             <Messages>
              <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-05-24 14:19:13Z">
               <Issue>
-               <Item>'CustomDevice&lt;DataFormat&gt;.GetObjectInfoByName(string)'</Item>
+               <Item>'CustomDevice&lt;TDataFormat&gt;.GetObjectInfoByName(string)'</Item>
                <Item>'Marshal.OffsetOf(Type, string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'CustomDevice&lt;DataFormat&gt;.GetObjectInfoByName(string)'&#xD;&#xA;   -&gt;'CustomDevice&lt;DataFormat&gt;.GetObjectInfoByName(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'CustomDevice&lt;TDataFormat&gt;.GetObjectInfoByName(string)'&#xD;&#xA;   -&gt;'CustomDevice&lt;TDataFormat&gt;.GetObjectInfoByName(string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#NativeInterface">
+            <Messages>
+             <Message TypeName="DoNotDeclareStaticMembersOnGenericTypes" Category="Microsoft.Design" CheckId="CA1000" Status="Excluded" Created="2009-05-24 16:08:49Z">
+              <Issue>
+               <Item>'CustomDevice&lt;TDataFormat&gt;.NativeInterface'</Item>
+               <Item>'CustomDevice&lt;TDataFormat&gt;'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -15201,7 +14335,7 @@
           <Members>
            <Member Name="#ForceData">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-24 14:19:13Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-24 14:19:13Z">
               <Issue>
                <Item>'CustomForce.ForceData'</Item>
               </Issue>
@@ -15237,7 +14371,7 @@
          </Type>
          <Type Name="DataFormatFlag">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'DataFormatFlag'</Item>
             </Issue>
@@ -15307,20 +14441,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'Device.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
            <Member Name="#SetCooperativeLevel(System.IntPtr,SlimDX.DirectInput.CooperativeLevel)">
             <Messages>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-05-22 01:29:55Z">
@@ -15363,7 +14483,7 @@
          </Type>
          <Type Name="DeviceEnumerationFlags">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsRename">
              <Item>'DeviceEnumerationFlags'</Item>
              <Item>'DeviceEnumerationFlags.AllDevices'</Item>
@@ -15391,7 +14511,7 @@
           <Members>
            <Member Name="#CalloutLine">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-24 14:19:13Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-24 14:19:13Z">
               <Issue>
                <Item>'DeviceImage.CalloutLine'</Item>
               </Issue>
@@ -15424,7 +14544,7 @@
           <Members>
            <Member Name="#Images">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-24 14:19:13Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-24 14:19:13Z">
               <Issue>
                <Item>'DeviceImageHeader.Images'</Item>
               </Issue>
@@ -15497,7 +14617,7 @@
          </Type>
          <Type Name="DeviceType">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'DeviceType'</Item>
             </Issue>
@@ -15506,7 +14626,7 @@
          </Type>
          <Type Name="DirectInput">
           <Messages>
-           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'DirectInput'</Item>
              <Item>SlimDX.DirectInput</Item>
@@ -15569,20 +14689,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'DirectInput.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="Effect">
@@ -15641,20 +14747,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-24 14:19:13Z">
-                <Issue>
-                 <Item>'Effect.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
            <Member Name="#SetParameters(SlimDX.DirectInput.EffectParameters,SlimDX.DirectInput.EffectParameterFlags)">
             <Messages>
@@ -15725,161 +14817,25 @@
          </Type>
          <Type Name="EffectGuid">
           <Members>
-           <Member Name="#ConstantForce">
-            <Accessors>
-             <Accessor Name="#get_ConstantForce()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-05-24 14:19:13Z">
-                <Issue>
-                 <Item>'EffectGuid.ConstantForce.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#CustomForce">
-            <Accessors>
-             <Accessor Name="#get_CustomForce()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-05-24 14:19:13Z">
-                <Issue>
-                 <Item>'EffectGuid.CustomForce.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#Damper">
-            <Accessors>
-             <Accessor Name="#get_Damper()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-05-24 14:19:13Z">
-                <Issue>
-                 <Item>'EffectGuid.Damper.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#Friction">
-            <Accessors>
-             <Accessor Name="#get_Friction()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-05-24 14:19:13Z">
-                <Issue>
-                 <Item>'EffectGuid.Friction.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#Inertia">
-            <Accessors>
-             <Accessor Name="#get_Inertia()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-05-24 14:19:13Z">
-                <Issue>
-                 <Item>'EffectGuid.Inertia.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#RampForce">
-            <Accessors>
-             <Accessor Name="#get_RampForce()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-05-24 14:19:13Z">
-                <Issue>
-                 <Item>'EffectGuid.RampForce.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
            <Member Name="#SawtoothDown">
-            <Accessors>
-             <Accessor Name="#get_SawtoothDown()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-05-24 14:19:13Z">
-                <Issue>
-                 <Item>'EffectGuid.SawtoothDown.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
+            <Messages>
+             <Message Id="Sawtooth" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 15:57:01Z">
+              <Issue Name="Member">
+               <Item>Sawtooth</Item>
+               <Item>'EffectGuid.SawtoothDown'</Item>
+              </Issue>
+             </Message>
+            </Messages>
            </Member>
            <Member Name="#SawtoothUp">
-            <Accessors>
-             <Accessor Name="#get_SawtoothUp()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-05-24 14:19:13Z">
-                <Issue>
-                 <Item>'EffectGuid.SawtoothUp.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#Sine">
-            <Accessors>
-             <Accessor Name="#get_Sine()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-05-24 14:19:13Z">
-                <Issue>
-                 <Item>'EffectGuid.Sine.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#Spring">
-            <Accessors>
-             <Accessor Name="#get_Spring()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-05-24 14:19:13Z">
-                <Issue>
-                 <Item>'EffectGuid.Spring.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#Square">
-            <Accessors>
-             <Accessor Name="#get_Square()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-05-24 14:19:13Z">
-                <Issue>
-                 <Item>'EffectGuid.Square.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#Triangle">
-            <Accessors>
-             <Accessor Name="#get_Triangle()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2009-05-24 14:19:13Z">
-                <Issue>
-                 <Item>'EffectGuid.Triangle.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
+            <Messages>
+             <Message Id="Sawtooth" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 15:57:01Z">
+              <Issue Name="Member">
+               <Item>Sawtooth</Item>
+               <Item>'EffectGuid.SawtoothUp'</Item>
+              </Issue>
+             </Message>
+            </Messages>
            </Member>
           </Members>
          </Type>
@@ -15933,7 +14889,7 @@
          </Type>
          <Type Name="EffectPlayFlags">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-05-24 14:19:13Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-05-24 14:19:13Z">
             <Issue>
              <Item>'EffectPlayFlags'</Item>
              <Item>0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
@@ -15949,18 +14905,18 @@
          </Type>
          <Type Name="EffectType">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-05-24 14:19:13Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-05-24 14:19:13Z">
             <Issue>
              <Item>'EffectType'</Item>
              <Item>0x8, 0x10, 0x20, 0x40, 0x80</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-24 14:19:13Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-24 14:19:13Z" FixCategory="Breaking">
             <Issue Name="FlagsMultipleZeros">
              <Item>'EffectType'</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-24 14:19:13Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-24 14:19:13Z">
             <Issue>
              <Item>'EffectType'</Item>
             </Issue>
@@ -15995,7 +14951,7 @@
          </Type>
          <Type Name="ImageUsage">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-24 14:19:13Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-24 14:19:13Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'ImageUsage'</Item>
             </Issue>
@@ -16183,7 +15139,7 @@
          </Type>
          <Type Name="Mouse">
           <Messages>
-           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'Mouse'</Item>
              <Item>Mouse</Item>
@@ -16248,7 +15204,7 @@
          </Type>
          <Type Name="ObjectAspect">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'ObjectAspect'</Item>
             </Issue>
@@ -16267,19 +15223,19 @@
          </Type>
          <Type Name="ObjectDeviceType">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'ObjectDeviceType'</Item>
              <Item>0x100, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000, 0x10000, 0x20000, 0x40000, 0x80000, 0x100000, 0x200000, 0x400000, 0x800000</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsRename">
              <Item>'ObjectDeviceType'</Item>
              <Item>'ObjectDeviceType.All'</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'ObjectDeviceType'</Item>
             </Issue>
@@ -16480,7 +15436,12 @@
          </Type>
          <Type Name="TextAlignment">
           <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2009-05-24 14:19:13Z">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-24 16:45:17Z" FixCategory="Breaking">
+            <Issue Name="FlagsMultipleZeros">
+             <Item>'TextAlignment'</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-24 16:45:17Z">
             <Issue>
              <Item>'TextAlignment'</Item>
             </Issue>
@@ -16541,20 +15502,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'AcousticEchoCancel.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="BufferFlags">
@@ -16593,27 +15540,13 @@
            </Member>
            <Member Name="#GetEffect`1(System.Int32)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'CaptureBuffer.GetEffect&lt;T&gt;(int)'</Item>
                <Item>'T'</Item>
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'CaptureBuffer.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
            <Member Name="#SetNotificationPositions(SlimDX.DirectSound.NotificationPosition[])">
             <Messages>
@@ -16637,7 +15570,7 @@
           <Members>
            <Member Name="#EffectDescriptions">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'CaptureBufferDescription.EffectDescriptions'</Item>
               </Issue>
@@ -16648,7 +15581,7 @@
          </Type>
          <Type Name="CaptureEffectResult">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'CaptureEffectResult'</Item>
             </Issue>
@@ -16679,20 +15612,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'ChorusEffect.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="CompressorEffect">
@@ -16719,25 +15638,11 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'CompressorEffect.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="CooperativeLevel">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'CooperativeLevel'</Item>
             </Issue>
@@ -16746,7 +15651,7 @@
          </Type>
          <Type Name="DirectSound">
           <Messages>
-           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'DirectSound'</Item>
              <Item>SlimDX.DirectSound</Item>
@@ -16784,20 +15689,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'DirectSound.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -16858,20 +15749,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'DirectSoundCapture.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="DistortionEffect">
@@ -16897,20 +15774,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'DistortionEffect.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -16938,20 +15801,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'EchoEffect.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="FlangerEffect">
@@ -16977,20 +15826,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'FlangerEffect.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -17018,20 +15853,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'FullDuplex.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="GargleEffect">
@@ -17057,20 +15878,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'GargleEffect.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -17098,20 +15905,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'I3DL2Reverb.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="LockFlags">
@@ -17126,13 +15919,13 @@
          </Type>
          <Type Name="Mode3D">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsRename">
              <Item>'Mode3D'</Item>
              <Item>'Mode3D.Normal'</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'Mode3D'</Item>
             </Issue>
@@ -17162,20 +15955,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'NoiseSuppress.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -17214,20 +15993,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'ParametricEqualizer.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -17293,7 +16058,7 @@
            </Member>
            <Member Name="#GetEffect`1(System.Int32)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'SecondarySoundBuffer.GetEffect&lt;T&gt;(int)'</Item>
                <Item>'T'</Item>
@@ -17305,20 +16070,6 @@
          </Type>
          <Type Name="SoundBuffer">
           <Members>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'SoundBuffer.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
            <Member Name="#Lock(System.Int32,System.Int32,SlimDX.DirectSound.LockFlags,SlimDX.DataStream&amp;)">
             <Messages>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-05-22 01:29:55Z">
@@ -17405,20 +16156,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'SoundBuffer3D.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="SoundBufferDescription">
@@ -17459,20 +16196,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'SoundListener3D.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="WavesReverb">
@@ -17498,20 +16221,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'WavesReverb.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -18539,28 +17248,6 @@
          </Type>
          <Type Name="IFactory">
           <Members>
-           <Member Name="#CreateSoftwareAdapter(System.IntPtr)">
-            <Messages>
-             <Message Id="Module" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2009-05-22 01:29:55Z">
-              <Issue Name="MemberParameter">
-               <Item>'IFactory.CreateSoftwareAdapter(IntPtr)'</Item>
-               <Item>'module'</Item>
-               <Item>Module</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#CreateSoftwareAdapter(System.Reflection.Module)">
-            <Messages>
-             <Message Id="Module" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2009-05-22 01:29:55Z">
-              <Issue Name="MemberParameter">
-               <Item>'IFactory.CreateSoftwareAdapter(Module)'</Item>
-               <Item>'module'</Item>
-               <Item>Module</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#GetAdapterCount()">
             <Messages>
              <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-05-22 01:29:55Z">
@@ -18626,7 +17313,7 @@
           <Members>
            <Member Name="#GetBuffer`1(System.Int32)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'ISwapChain.GetBuffer&lt;T&gt;(int)'</Item>
                <Item>'T'</Item>
@@ -18748,7 +17435,7 @@
          </Type>
          <Type Name="Residency">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'Residency'</Item>
             </Issue>
@@ -18757,13 +17444,7 @@
          </Type>
          <Type Name="ResourcePriority">
           <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2009-05-22 01:29:55Z">
-            <Issue Name="NotIntegral">
-             <Item>'ResourcePriority'</Item>
-             <Item>'uint'</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'ResourcePriority'</Item>
             </Issue>
@@ -18864,7 +17545,7 @@
            </Member>
            <Member Name="#GetBuffer`1(System.Int32)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'SwapChain.GetBuffer&lt;T&gt;(int)'</Item>
                <Item>'T'</Item>
@@ -18914,7 +17595,7 @@
          </Type>
          <Type Name="Usage">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'Usage'</Item>
             </Issue>
@@ -18935,11 +17616,241 @@
        </Namespace>
        <Namespace Name="SlimDX.Multimedia">
         <Types>
+         <Type Name="Speakers">
+          <Messages>
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-05-24 16:14:09Z">
+            <Issue>
+             <Item>'Speakers'</Item>
+             <Item>0x40000, 0x80000, 0x100000, 0x200000, 0x400000, 0x800000, 0x1000000, 0x2000000, 0x4000000, 0x8000000, 0x10000000, 0x20000000, 0x40000000, 0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Reserved">
+            <Messages>
+             <Message TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700" Status="Excluded" Created="2009-05-24 16:14:09Z">
+              <Issue>
+               <Item>'Speakers.Reserved'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="UsageId">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-24 16:30:22Z" FixCategory="Breaking">
+            <Issue Name="FlagsRename">
+             <Item>'UsageId'</Item>
+             <Item>'UsageId.KeyboardNoEvent'</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-24 16:30:22Z">
+            <Issue>
+             <Item>'UsageId'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#KeyboardaA">
+            <Messages>
+             <Message Id="Keyboarda" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 16:30:22Z">
+              <Issue Name="Member">
+               <Item>Keyboarda</Item>
+               <Item>'UsageId.KeyboardaA'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#KeyboardNumLock">
+            <Messages>
+             <Message Id="Num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 16:30:22Z">
+              <Issue Name="Member">
+               <Item>Num</Item>
+               <Item>'UsageId.KeyboardNumLock'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#KeyboardzZ">
+            <Messages>
+             <Message Id="Keyboardz" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 16:30:22Z">
+              <Issue Name="Member">
+               <Item>Keyboardz</Item>
+               <Item>'UsageId.KeyboardzZ'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LedCav">
+            <Messages>
+             <Message Id="Cav" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 16:30:22Z">
+              <Issue Name="Member">
+               <Item>Cav</Item>
+               <Item>'UsageId.LedCav'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LedClv">
+            <Messages>
+             <Message Id="Clv" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 16:30:22Z">
+              <Issue Name="Member">
+               <Item>Clv</Item>
+               <Item>'UsageId.LedClv'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LedNumLock">
+            <Messages>
+             <Message Id="Num" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 16:30:22Z">
+              <Issue Name="Member">
+               <Item>Num</Item>
+               <Item>'UsageId.LedNumLock'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LedRecordingFormatDet">
+            <Messages>
+             <Message Id="Det" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 16:30:22Z">
+              <Issue Name="Member">
+               <Item>Det</Item>
+               <Item>'UsageId.LedRecordingFormatDet'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#VbrX">
+            <Messages>
+             <Message Id="Vbr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 16:30:22Z">
+              <Issue Name="Member">
+               <Item>Vbr</Item>
+               <Item>'UsageId.VbrX'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#VbrY">
+            <Messages>
+             <Message Id="Vbr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 16:30:22Z">
+              <Issue Name="Member">
+               <Item>Vbr</Item>
+               <Item>'UsageId.VbrY'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#VbrZ">
+            <Messages>
+             <Message Id="Vbr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 16:30:22Z">
+              <Issue Name="Member">
+               <Item>Vbr</Item>
+               <Item>'UsageId.VbrZ'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Vno">
+            <Messages>
+             <Message Id="Vno" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 16:30:22Z">
+              <Issue Name="Member">
+               <Item>Vno</Item>
+               <Item>'UsageId.Vno'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="UsagePage">
+          <Messages>
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2009-05-24 16:30:22Z">
+            <Issue>
+             <Item>'UsagePage'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Msr">
+            <Messages>
+             <Message Id="Msr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 16:30:22Z">
+              <Issue Name="Member">
+               <Item>Msr</Item>
+               <Item>'UsagePage.Msr'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Pid">
+            <Messages>
+             <Message Id="Pid" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 16:30:22Z">
+              <Issue Name="Member">
+               <Item>Pid</Item>
+               <Item>'UsagePage.Pid'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="WaveFormatTag">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-24 16:14:09Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
+             <Item>'WaveFormatTag'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#AdPcm">
+            <Messages>
+             <Message Id="Pcm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 16:14:09Z">
+              <Issue Name="Member">
+               <Item>Pcm</Item>
+               <Item>'WaveFormatTag.AdPcm'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#DolbyAC3Spdif">
+            <Messages>
+             <Message Id="Spdif" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 16:14:09Z">
+              <Issue Name="Member">
+               <Item>Spdif</Item>
+               <Item>'WaveFormatTag.DolbyAC3Spdif'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Pcm">
+            <Messages>
+             <Message Id="Pcm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 16:14:09Z">
+              <Issue Name="Member">
+               <Item>Pcm</Item>
+               <Item>'WaveFormatTag.Pcm'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#WmaSpdif">
+            <Messages>
+             <Message Id="Spdif" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-24 16:14:09Z">
+              <Issue Name="Member">
+               <Item>Spdif</Item>
+               <Item>'WaveFormatTag.WmaSpdif'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
          <Type Name="WaveStream">
           <Members>
            <Member Name="#~WaveStream()">
             <Messages>
-             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue Name="OutsideDispose">
                <Item>'WaveStream.~WaveStream()'</Item>
                <Item>'GC.SuppressFinalize(object)'</Item>
@@ -19006,9 +17917,9 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#RegisterDevice(SlimDX.UsagePage,SlimDX.UsageId,SlimDX.RawInput.DeviceFlags)">
+           <Member Name="#RegisterDevice(SlimDX.Multimedia.UsagePage,SlimDX.Multimedia.UsageId,SlimDX.RawInput.DeviceFlags)">
             <Messages>
-             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-05-22 01:29:55Z">
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-05-24 16:45:17Z">
               <Issue Name="MemberParameterNoAlternate">
                <Item>'Device.RegisterDevice(UsagePage, UsageId, DeviceFlags)'</Item>
                <Item>flags</Item>
@@ -19017,9 +17928,9 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#RegisterDevice(SlimDX.UsagePage,SlimDX.UsageId,SlimDX.RawInput.DeviceFlags,System.IntPtr)">
+           <Member Name="#RegisterDevice(SlimDX.Multimedia.UsagePage,SlimDX.Multimedia.UsageId,SlimDX.RawInput.DeviceFlags,System.IntPtr)">
             <Messages>
-             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-05-22 01:29:55Z">
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-05-24 16:45:17Z">
               <Issue Name="MemberParameterNoAlternate">
                <Item>'Device.RegisterDevice(UsagePage, UsageId, DeviceFlags, IntPtr)'</Item>
                <Item>flags</Item>
@@ -19071,7 +17982,7 @@
          </Type>
          <Type Name="DeviceFlags">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'DeviceFlags'</Item>
              <Item>0x10, 0x20</Item>
@@ -19112,7 +18023,7 @@
          </Type>
          <Type Name="KeyState">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'KeyState'</Item>
             </Issue>
@@ -19156,13 +18067,13 @@
          </Type>
          <Type Name="MouseMode">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsRename">
              <Item>'MouseMode'</Item>
              <Item>'MouseMode.RelativeMovement'</Item>
             </Issue>
            </Message>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'MouseMode'</Item>
             </Issue>
@@ -19173,7 +18084,7 @@
           <Members>
            <Member Name="#RawData">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'RawInputEventArgs.RawData'</Item>
               </Issue>
@@ -19184,7 +18095,7 @@
          </Type>
          <Type Name="ScanCodeFlags">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="Breaking">
             <Issue Name="FlagsRename">
              <Item>'ScanCodeFlags'</Item>
              <Item>'ScanCodeFlags.Make'</Item>
@@ -19294,7 +18205,7 @@
           <Members>
            <Member Name="#DelayTimes">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'DspSettings.DelayTimes'</Item>
               </Issue>
@@ -19323,7 +18234,7 @@
            </Member>
            <Member Name="#MatrixCoefficients">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'DspSettings.MatrixCoefficients'</Item>
               </Issue>
@@ -19336,7 +18247,7 @@
           <Members>
            <Member Name="#ChannelAzimuths">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'Emitter.ChannelAzimuths'</Item>
               </Issue>
@@ -19345,14 +18256,14 @@
            </Member>
            <Member Name="#LfeCurve">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-22 01:29:55Z">
-              <Issue>
-               <Item>'Emitter.LfeCurve'</Item>
-              </Issue>
-             </Message>
              <Message Id="Lfe" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue Name="Member">
                <Item>Lfe</Item>
+               <Item>'Emitter.LfeCurve'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-22 01:29:55Z">
+              <Issue>
                <Item>'Emitter.LfeCurve'</Item>
               </Issue>
              </Message>
@@ -19360,14 +18271,14 @@
            </Member>
            <Member Name="#LpfDirectCurve">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-22 01:29:55Z">
-              <Issue>
-               <Item>'Emitter.LpfDirectCurve'</Item>
-              </Issue>
-             </Message>
              <Message Id="Lpf" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue Name="Member">
                <Item>Lpf</Item>
+               <Item>'Emitter.LpfDirectCurve'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-22 01:29:55Z">
+              <Issue>
                <Item>'Emitter.LpfDirectCurve'</Item>
               </Issue>
              </Message>
@@ -19375,14 +18286,14 @@
            </Member>
            <Member Name="#LpfReverbCurve">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-22 01:29:55Z">
-              <Issue>
-               <Item>'Emitter.LpfReverbCurve'</Item>
-              </Issue>
-             </Message>
              <Message Id="Lpf" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue Name="Member">
                <Item>Lpf</Item>
+               <Item>'Emitter.LpfReverbCurve'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-22 01:29:55Z">
+              <Issue>
                <Item>'Emitter.LpfReverbCurve'</Item>
               </Issue>
              </Message>
@@ -19390,7 +18301,7 @@
            </Member>
            <Member Name="#ReverbCurve">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'Emitter.ReverbCurve'</Item>
               </Issue>
@@ -19399,7 +18310,7 @@
            </Member>
            <Member Name="#VolumeCurve">
             <Messages>
-             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2009-05-22 01:29:55Z">
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2009-05-22 01:29:55Z">
               <Issue>
                <Item>'Emitter.VolumeCurve'</Item>
               </Issue>
@@ -19410,7 +18321,7 @@
          </Type>
          <Type Name="X3DAudio">
           <Messages>
-           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'X3DAudio'</Item>
              <Item>SlimDX.X3DAudio</Item>
@@ -19503,16 +18414,6 @@
          </Type>
          <Type Name="BufferFlags">
           <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2009-05-22 01:29:55Z">
-            <Issue>
-             <Item>'BufferFlags'</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2009-05-22 01:29:55Z">
-            <Issue>
-             <Item>'BufferFlags'</Item>
-            </Issue>
-           </Message>
            <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue Name="TypeNoAlternate">
              <Item>Flags</Item>
@@ -19537,7 +18438,7 @@
          </Type>
          <Type Name="LogType">
           <Messages>
-           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'LogType'</Item>
             </Issue>
@@ -19570,16 +18471,6 @@
          </Type>
          <Type Name="PlayFlags">
           <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2009-05-22 01:29:55Z">
-            <Issue>
-             <Item>'PlayFlags'</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2009-05-22 01:29:55Z">
-            <Issue>
-             <Item>'PlayFlags'</Item>
-            </Issue>
-           </Message>
            <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue Name="TypeNoAlternate">
              <Item>Flags</Item>
@@ -19590,7 +18481,7 @@
          </Type>
          <Type Name="ProcessorSpecifier">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'ProcessorSpecifier'</Item>
             </Issue>
@@ -19742,7 +18633,7 @@
          </Type>
          <Type Name="XAudio2">
           <Messages>
-           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Created="2009-05-22 01:29:55Z">
+           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Status="Excluded" Created="2009-05-22 01:29:55Z">
             <Issue>
              <Item>'XAudio2'</Item>
              <Item>SlimDX.XAudio2</Item>
@@ -19818,20 +18709,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#InternalPointer">
-            <Accessors>
-             <Accessor Name="#get_InternalPointer()">
-              <Messages>
-               <Message TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222" Created="2009-05-22 01:29:55Z">
-                <Issue>
-                 <Item>'XAudio2.InternalPointer.get()'</Item>
-                 <Item>'ComObject'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -19928,7 +18805,7 @@
          </Type>
          <Type Name="DeviceSubtype">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'DeviceSubtype'</Item>
             </Issue>
@@ -19937,7 +18814,7 @@
          </Type>
          <Type Name="DeviceType">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'DeviceType'</Item>
             </Issue>
@@ -19946,10 +18823,16 @@
          </Type>
          <Type Name="GamepadButtonFlags">
           <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2009-05-22 01:29:55Z">
-            <Issue Name="NotIntegral">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-05-24 16:21:15Z">
+            <Issue>
              <Item>'GamepadButtonFlags'</Item>
-             <Item>'ushort'</Item>
+             <Item>0x8000, 0x10000, 0x20000, 0x40000, 0x80000, 0x100000, 0x200000, 0x400000, 0x800000, 0x1000000, 0x2000000, 0x4000000, 0x8000000, 0x10000000, 0x20000000, 0x40000000, 0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2009-05-22 01:29:55Z">
+            <Issue Name="NotInt32">
+             <Item>'GamepadButtonFlags'</Item>
+             <Item>'short'</Item>
             </Issue>
            </Message>
            <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-05-22 01:29:55Z">
@@ -19962,7 +18845,7 @@
          </Type>
          <Type Name="GamepadKeyCode">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'GamepadKeyCode'</Item>
             </Issue>
@@ -20055,7 +18938,7 @@
           <Members>
            <Member Name="#DrawMeshContainer(SkinnedMesh.CustomMeshContainer,SkinnedMesh.CustomFrame)">
             <Messages>
-             <Message Id="frame" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2009-05-22 01:29:55Z" FixCategory="NonBreaking">
+             <Message Id="frame" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2009-05-24 16:21:15Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'frame'</Item>
                <Item>'SkinnedMesh.DrawMeshContainer(CustomMeshContainer, CustomFrame)'</Item>
@@ -20710,9 +19593,6 @@
    <Rule TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051">
     <Resolution Name="Default">Because field {0} is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Resolution>
    </Rule>
-   <Rule TypeName="DoNotDecreaseInheritedMemberVisibility" Category="Microsoft.Usage" CheckId="CA2222">
-    <Resolution Name="Default">Make {0} non-private, mark it as final, or seal its declaring type. This method was originally defined in base class {1}.</Resolution>
-   </Rule>
    <Rule TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806">
     <Resolution Name="HResultOrErrorCode">{0} calls {1} but does not use the HRESULT or error code that the method returns. This could lead to unexpected behavior in error conditions or low-resource situations. Use the result in a conditional statement, assign the result to a variable, or pass it as an argument to another method.</Resolution>
    </Rule>
@@ -20736,7 +19616,6 @@
    </Rule>
    <Rule TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028">
     <Resolution Name="NotInt32">If possible, make the underlying type of {0} System.Int32 instead of {1}.</Resolution>
-    <Resolution Name="NotIntegral">If possible, make the underlying type of {0} Int32 instead of {1}. Otherwise consider Byte, Int16, or Int64.</Resolution>
    </Rule>
    <Rule TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008">
     <Resolution Name="FlagsMultipleZeros">Remove all members that have the value zero from {0} except for one member that is named 'None'.</Resolution>
@@ -20764,7 +19643,6 @@
    <Rule TypeName="IdentifiersShouldHaveCorrectPrefix" Category="Microsoft.Naming" CheckId="CA1715">
     <Resolution Name="Interface">Prefix interface name {0} with 'I'.</Resolution>
     <Resolution Name="MethodTypeParameter">On method {0}, prefix generic type parameter name {1} with 'T'.</Resolution>
-    <Resolution Name="TypeTypeParameter">On type {0}, prefix generic type parameter name {1} with 'T'.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720">
     <Resolution Name="LanguageIndependentMemberParameter">In member {0}, consider replacing the data type identifier '{1}' in parameter name {2} with a more generic term, such as 'value'.</Resolution>
@@ -20778,9 +19656,6 @@
     <Resolution Name="MemberNewerVersion">Either replace the suffix '{0}' in member name {1} with the suggested numeric alternate '2' or provide a more meaningful suffix that distinguishes it from the member it replaces.</Resolution>
     <Resolution Name="TypeNewerVersion">Either replace the suffix '{0}' in type name {1} with the suggested numeric alternate '2' or provide a more meaningful suffix that distinguishes it from the type it replaces.</Resolution>
     <Resolution Name="TypeNoAlternate">Rename type name {0} so that it does not end in '{1}'.</Resolution>
-   </Rule>
-   <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
-    <Resolution Name="MemberParameter">In virtual/interface member {0}, rename parameter {1} so that it no longer conflicts with the reserved language keyword '{2}'. Using a reserved keyword as the name of a parameter on a virtual/interface member makes it harder for consumers in other languages to override/implement the member.</Resolution>
    </Rule>
    <Rule TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063">
     <Resolution Name="DisposeBoolSignature">Ensure that {0} is declared as protected, virtual, and unsealed.</Resolution>
@@ -20827,14 +19702,8 @@
    <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
     <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
    </Rule>
-   <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
-    <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
-   </Rule>
    <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
     <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>
-   </Rule>
-   <Rule TypeName="StaticHolderTypesShouldBeSealed" Category="Microsoft.Design" CheckId="CA1052">
-    <Resolution Name="Default">Mark {0} as sealed.</Resolution>
    </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>

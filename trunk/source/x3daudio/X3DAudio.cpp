@@ -35,7 +35,7 @@ namespace X3DAudio
 {
 	X3DAUDIO_VECTOR Vector3ToX3DAudio( Vector3 value );
 
-	X3DAudio::X3DAudio( Speakers speakers, float speedOfSound )
+	X3DAudio::X3DAudio( SlimDX::Multimedia::Speakers speakers, float speedOfSound )
 	{
 		// Manual Allocation: cleaned up in the finalizer / destructor
 		handle = new HandleWrapper();

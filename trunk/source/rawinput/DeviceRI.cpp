@@ -42,12 +42,12 @@ namespace SlimDX
 {
 namespace RawInput
 {
-	void Device::RegisterDevice( UsagePage usagePage, UsageId usageId, DeviceFlags flags )
+	void Device::RegisterDevice( SlimDX::Multimedia::UsagePage usagePage, SlimDX::Multimedia::UsageId usageId, DeviceFlags flags )
 	{
 		RegisterDevice( usagePage, usageId, flags, IntPtr::Zero );
 	}
 
-	void Device::RegisterDevice( UsagePage usagePage, UsageId usageId, DeviceFlags flags, IntPtr target )
+	void Device::RegisterDevice( SlimDX::Multimedia::UsagePage usagePage, SlimDX::Multimedia::UsageId usageId, DeviceFlags flags, IntPtr target )
 	{
 		RAWINPUTDEVICE device;
 		device.usUsagePage = static_cast<USHORT>( usagePage );

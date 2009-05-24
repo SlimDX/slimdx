@@ -66,12 +66,12 @@ namespace DXGI
 		return Adapter::FromPointer( adapter );
 	}
 	
-	IAdapter^ Factory::CreateSoftwareAdapter( IntPtr module )
+	IAdapter^ Factory::CreateSoftwareAdapter( IntPtr softwareModule )
 	{
-		if( module == IntPtr::Zero )
-			throw gcnew ArgumentNullException( "module" );
+		if( softwareModule == IntPtr::Zero )
+			throw gcnew ArgumentNullException( "softwareModule" );
 			
-		HINSTANCE instance = reinterpret_cast<HINSTANCE>( module.ToPointer() );
+		HINSTANCE instance = reinterpret_cast<HINSTANCE>( softwareModule.ToPointer() );
 		IDXGIAdapter* adapter = 0;
 		RECORD_DXGI( InternalPointer->CreateSoftwareAdapter( instance, &adapter ) );
 		

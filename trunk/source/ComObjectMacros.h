@@ -24,7 +24,7 @@
 #undef COMOBJECT_BASE
 #undef COMOBJECT_CUSTOM
 
-//TODO: These are temporart. Once the interface refactor is complete, they
+//TODO: These are temporary. Once the interface refactor is complete, they
 //      should have replaced the existing COMOBJECT macros and we can remove
 //      the 'interface' designation.
 #undef COMOBJECT_INTERFACE
@@ -68,7 +68,7 @@
 
 
 #define COMOBJECT_BASE(nativeType) \
-	internal: \
+	public: \
 		static property System::Guid NativeInterface { System::Guid get() { return Utilities::ConvertNativeGuid( IID_ ## nativeType ); } } \
 		property nativeType* InternalPointer { nativeType* get() new { return static_cast<nativeType*>( UnknownPointer ); } } \
 	private:

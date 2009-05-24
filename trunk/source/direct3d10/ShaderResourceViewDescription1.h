@@ -45,7 +45,7 @@ namespace SlimDX
 			property int FirstArraySlice;
 			property int ArraySize;
 			property int First2DArrayFace;
-			property int NumCubes;
+			property int CubeCount;
 		};
 	}
 }

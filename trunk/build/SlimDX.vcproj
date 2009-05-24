@@ -1000,11 +1000,11 @@
 					Name="StateBlock"
 					>
 					<File
-						RelativePath="..\source\direct3d10\StateBlock.h"
+						RelativePath="..\source\direct3d10\StateBlock10.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\source\direct3d10\StateBlock10.cpp"
+						RelativePath="..\source\direct3d10\StateBlock10.h"
 						>
 					</File>
 					<File
@@ -1570,14 +1570,6 @@
 				</File>
 				<File
 					RelativePath="..\source\Viewport.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Input"
-				>
-				<File
-					RelativePath="..\source\InputEnums.h"
 					>
 				</File>
 			</Filter>

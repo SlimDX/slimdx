@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../InputEnums.h"
+#include "../multimedia/Enums.h"
 
 #include "Enums.h"
 #include "InputMessageFilter.h"
@@ -45,8 +45,8 @@ namespace SlimDX
 			static void OnWmInput( HRAWINPUT input );
 
 		public:
-			static void RegisterDevice( UsagePage usagePage, UsageId usageId, DeviceFlags flags );
-			static void RegisterDevice( UsagePage usagePage, UsageId usageId, DeviceFlags flags, System::IntPtr target );
+			static void RegisterDevice( SlimDX::Multimedia::UsagePage usagePage, SlimDX::Multimedia::UsageId usageId, DeviceFlags flags );
+			static void RegisterDevice( SlimDX::Multimedia::UsagePage usagePage, SlimDX::Multimedia::UsageId usageId, DeviceFlags flags, System::IntPtr target );
 
 			static System::Collections::ObjectModel::ReadOnlyCollection<DeviceInfo^>^ GetDevices();
 

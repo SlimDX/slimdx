@@ -352,7 +352,7 @@ namespace Direct3D9
 
 		if( T::typeid == bool::typeid )
 		{
-			BOOL newValue = Convert::ToInt32( value );
+			BOOL newValue = Convert::ToInt32( value, CultureInfo::InvariantCulture );
 			hr = InternalPointer->SetBool( handle, newValue );
 		}
 		else if( T::typeid == float::typeid )

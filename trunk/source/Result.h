@@ -92,6 +92,8 @@ namespace SlimDX
 		property System::Collections::SortedList^ Data
 		{
 			System::Collections::SortedList^ get();
+
+		private:
 			void set( System::Collections::SortedList^ value );
 		}
 

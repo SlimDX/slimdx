@@ -179,7 +179,8 @@ namespace SlimDX
 			EvictedToDisk = DXGI_RESIDENCY_EVICTED_TO_DISK
 		};
 		
-		public enum class ResourcePriority : System::UInt32
+#pragma warning(disable: 4369)
+		public enum class ResourcePriority : System::Int32
 		{
 			Minimum = DXGI_RESOURCE_PRIORITY_MINIMUM,
 			Low = DXGI_RESOURCE_PRIORITY_LOW,
@@ -187,6 +188,7 @@ namespace SlimDX
 			High = DXGI_RESOURCE_PRIORITY_HIGH,
 			Maximum = DXGI_RESOURCE_PRIORITY_MAXIMUM
 		};
+#pragma warning(default: 4369)
 
 		[System::Flags]
 		public enum class SwapChainFlags : System::Int32

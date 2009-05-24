@@ -1280,6 +1280,7 @@ namespace SlimDX
 			VendorDefined = DIDFT_VENDORDEFINED
 		};
 
+		[System::Flags]
 		public enum class TextAlignment : System::Int32
 		{
 			Left = DIDAL_LEFTALIGNED,
