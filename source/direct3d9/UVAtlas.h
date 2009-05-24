@@ -30,7 +30,7 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public ref class UVAtlas
+		public ref class UVAtlas sealed
 		{
 		private:
 			UVAtlas() { }

@@ -44,27 +44,27 @@ namespace SlimDX
 {
 namespace DirectInput
 {
-	generic<typename DataFormat>
-	CustomDevice<DataFormat>::CustomDevice( IDirectInputDevice8* device, ComObject^ owner )
+	generic<typename TDataFormat>
+	CustomDevice<TDataFormat>::CustomDevice( IDirectInputDevice8* device, ComObject^ owner )
 	{
 		Construct( device, owner );
 	}
 
-	generic<typename DataFormat>
-	CustomDevice<DataFormat>::CustomDevice( IntPtr device )
+	generic<typename TDataFormat>
+	CustomDevice<TDataFormat>::CustomDevice( IntPtr device )
 	{
 		Construct( device, NativeInterface );
 	}
 
-	generic<typename DataFormat>
-	CustomDevice<DataFormat>::CustomDevice( DirectInput^ directInput, Guid subsystem ) : Device( directInput, subsystem )
+	generic<typename TDataFormat>
+	CustomDevice<TDataFormat>::CustomDevice( DirectInput^ directInput, Guid subsystem ) : Device( directInput, subsystem )
 	{
-		Type^ type = DataFormat::typeid;
+		Type^ type = TDataFormat::typeid;
 		array<DataFormatAttribute^>^ formatAttributes = safe_cast<array<DataFormatAttribute^>^>( type->GetCustomAttributes(
 			DataFormatAttribute::typeid, false ) );
 
 		if( formatAttributes->Length != 1 )
-			throw gcnew InvalidOperationException( "The data format must be marked with one and only one DataFormat attribute." );
+			throw gcnew InvalidOperationException( "The data format must be marked with one and only one TDataFormat attribute." );
 		DataFormatAttribute^ formatAttribute = formatAttributes[0];
 
 		List<DataObjectAttribute^>^ objectAttributes = gcnew List<DataObjectAttribute^>();
@@ -116,13 +116,13 @@ namespace DirectInput
 			throw gcnew DirectInputException( Result::Last );
 	}
 
-	generic<typename DataFormat>
-	CustomDevice<DataFormat>^ CustomDevice<DataFormat>::FromPointer( IDirectInputDevice8W* pointer, ComObject^ owner, ComObjectFlags flags )
+	generic<typename TDataFormat>
+	CustomDevice<TDataFormat>^ CustomDevice<TDataFormat>::FromPointer( IDirectInputDevice8W* pointer, ComObject^ owner, ComObjectFlags flags )
 	{
 		if( pointer == 0 )
 			return nullptr;
 
-		CustomDevice<DataFormat>^ tableEntry = safe_cast<CustomDevice<DataFormat>^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		CustomDevice<TDataFormat>^ tableEntry = safe_cast<CustomDevice<TDataFormat>^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			if( static_cast<int>( flags & ComObjectFlags::IsAncillary ) == 0 ) 
@@ -130,35 +130,35 @@ namespace DirectInput
 			return tableEntry;
 		}
 
-		CustomDevice<DataFormat>^ result = gcnew CustomDevice<DataFormat>( pointer, owner );
+		CustomDevice<TDataFormat>^ result = gcnew CustomDevice<TDataFormat>( pointer, owner );
 		result->SetFlags( flags );
 		return result;
 	}
 
-	generic<typename DataFormat>
-	CustomDevice<DataFormat>^ CustomDevice<DataFormat>::FromPointer( IntPtr pointer )
+	generic<typename TDataFormat>
+	CustomDevice<TDataFormat>^ CustomDevice<TDataFormat>::FromPointer( IntPtr pointer )
 	{
 		if( pointer == IntPtr::Zero )
 			throw gcnew ArgumentNullException( "pointer" );
 
-		CustomDevice<DataFormat>^ tableEntry = safe_cast<CustomDevice<DataFormat>^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
+		CustomDevice<TDataFormat>^ tableEntry = safe_cast<CustomDevice<TDataFormat>^>( ObjectTable::Find( static_cast<IntPtr>( pointer ) ) );
 		if( tableEntry != nullptr )
 		{
 			return tableEntry;
 		}
 
-		return gcnew CustomDevice<DataFormat>( pointer );
+		return gcnew CustomDevice<TDataFormat>( pointer );
 	}
 
-	generic<typename DataFormat>
-	IList<DataFormat>^ CustomDevice<DataFormat>::GetBufferedData()
+	generic<typename TDataFormat>
+	IList<TDataFormat>^ CustomDevice<TDataFormat>::GetBufferedData()
 	{
 		DWORD size = INFINITE;
 		HRESULT hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), NULL, &size, DIGDD_PEEK );
 		if( RecordError( hr ).IsFailure )
 			return nullptr;
 
-		List<DataFormat>^ list = gcnew List<DataFormat>( size );
+		List<TDataFormat>^ list = gcnew List<TDataFormat>( size );
 		if( size == 0 )
 			return list;
 
@@ -170,12 +170,12 @@ namespace DirectInput
 		if( size == 0 )
 			return list;
 
-		Type^ type = DataFormat::typeid;
+		Type^ type = TDataFormat::typeid;
 		array<FieldInfo^>^ fields = type->GetFields();
 
 		for( unsigned int i = 0; i < size; i++ )
 		{
-			DataFormat dataPacket = safe_cast<DataFormat>( Activator::CreateInstance( type ) );
+			TDataFormat dataPacket = safe_cast<TDataFormat>( Activator::CreateInstance( type ) );
             for each( FieldInfo^ field in fields )
             {
 				if( static_cast<unsigned int>( Marshal::OffsetOf( type, field->Name ).ToInt32() ) == data[i].dwOfs )
@@ -191,10 +191,10 @@ namespace DirectInput
 		return list;
 	}
 
-	generic<typename DataFormat>
-	Result CustomDevice<DataFormat>::GetCurrentState( DataFormat% data )
+	generic<typename TDataFormat>
+	Result CustomDevice<TDataFormat>::GetCurrentState( TDataFormat% data )
 	{
-		size_t typeSize = sizeof( DataFormat );
+		size_t typeSize = sizeof( TDataFormat );
 		std::vector<BYTE> bytes( typeSize );
 
 		HRESULT hr = InternalPointer->GetDeviceState( static_cast<DWORD>( typeSize ), &bytes[0] );
@@ -209,27 +209,27 @@ namespace DirectInput
 		return Result::Last;
 	}
 
-	generic<typename DataFormat>
-	DataFormat CustomDevice<DataFormat>::GetCurrentState()
+	generic<typename TDataFormat>
+	TDataFormat CustomDevice<TDataFormat>::GetCurrentState()
 	{
-		DataFormat result = Activator::CreateInstance<DataFormat>();
+		TDataFormat result = Activator::CreateInstance<TDataFormat>();
 		GetCurrentState( result );
 		return result;
 	}
 
-	generic<typename DataFormat>
-	ObjectProperties^ CustomDevice<DataFormat>::GetObjectPropertiesByName( String^ name )
+	generic<typename TDataFormat>
+	ObjectProperties^ CustomDevice<TDataFormat>::GetObjectPropertiesByName( String^ name )
 	{
-		return gcnew ObjectProperties( InternalPointer, name, DataFormat::typeid );
+		return gcnew ObjectProperties( InternalPointer, name, TDataFormat::typeid );
 	}
 
-	generic<typename DataFormat>
-	DeviceObjectInstance CustomDevice<DataFormat>::GetObjectInfoByName( String^ name )
+	generic<typename TDataFormat>
+	DeviceObjectInstance CustomDevice<TDataFormat>::GetObjectInfoByName( String^ name )
 	{
 		DIDEVICEOBJECTINSTANCE di;
 		di.dwSize = sizeof( DIDEVICEOBJECTINSTANCE );
 
-		HRESULT hr = InternalPointer->GetObjectInfo( &di, Marshal::OffsetOf( DataFormat::typeid, name ).ToInt32(), DIPH_BYUSAGE );
+		HRESULT hr = InternalPointer->GetObjectInfo( &di, Marshal::OffsetOf( TDataFormat::typeid, name ).ToInt32(), DIPH_BYUSAGE );
 		if( RECORD_DINPUT( hr ).IsFailure )
 			return DeviceObjectInstance();
 

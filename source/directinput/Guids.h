@@ -32,6 +32,7 @@ namespace SlimDX
 		private:
 			EffectGuid() { }
 
+		public:
 			static property System::Guid ConstantForce
 			{
 				System::Guid get() { return Utilities::ConvertNativeGuid( GUID_ConstantForce ); }

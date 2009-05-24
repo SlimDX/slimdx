@@ -27,7 +27,7 @@ namespace SlimDX
 {
 	namespace DirectInput
 	{
-		generic<typename DataFormat>
+		generic<typename TDataFormat>
 		public ref class CustomDevice : public Device
 		{
 			COMOBJECT_CUSTOM(IDirectInputDevice8, CustomDevice);
@@ -44,20 +44,20 @@ namespace SlimDX
 			/// Retrieves the current device state.
 			/// </summary>
 			/// <returns>The current device state.</returns>
-			DataFormat GetCurrentState();
+			TDataFormat GetCurrentState();
 
 			/// <summary>
 			/// Retrieves the current device state.
 			/// </summary>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
-			Result GetCurrentState( DataFormat% data );
+			Result GetCurrentState( TDataFormat% data );
 
 			/// <summary>
 			/// Retrieves buffered data from the device.
 			/// </summary>
 			/// <returns>A collection of buffered input events.</returns>
-			System::Collections::Generic::IList<DataFormat>^ GetBufferedData();
+			System::Collections::Generic::IList<TDataFormat>^ GetBufferedData();
 
 			/// <summary>
 			/// Gets properties about a single object on an input device.

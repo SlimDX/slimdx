@@ -29,6 +29,7 @@ namespace SlimDX
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
 
+		[System::Flags]
 		public enum class BufferFlags : System::Int32
 		{
 			None = 0,
@@ -107,6 +108,7 @@ namespace SlimDX
 			DefaultProcessor = XAUDIO2_DEFAULT_PROCESSOR
 		};
 
+		[System::Flags]
 		public enum class PlayFlags : System::Int32
 		{
 			None = 0,

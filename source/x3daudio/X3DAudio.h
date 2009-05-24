@@ -40,7 +40,7 @@ namespace SlimDX
 			void Destruct();
 
 		public:
-			X3DAudio( Speakers speakers, float speedOfSound );
+			X3DAudio( SlimDX::Multimedia::Speakers speakers, float speedOfSound );
 			~X3DAudio() { Destruct(); }
 			!X3DAudio() { Destruct(); }
 

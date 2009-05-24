@@ -25,6 +25,7 @@ using System.Globalization;
 using System.Windows.Forms;
 using SlimDX;
 using SlimDX.RawInput;
+using SlimDX.Multimedia;
 
 namespace Mouse
 {

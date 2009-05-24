@@ -182,11 +182,12 @@ namespace SlimDX
 			FlightStick = XINPUT_DEVSUBTYPE_FLIGHT_SICK
 		};
 		
+	#pragma warning(disable: 4369)
 		/// <summary>
 		/// Describes a set of pressed buttons on a gamepad.
 		/// </summary>
 		[System::Flags]
-		public enum class GamepadButtonFlags : System::UInt16
+		public enum class GamepadButtonFlags : System::Int16
 		{
 			/// <summary>
 			/// No buttons are pressed.
@@ -263,6 +264,7 @@ namespace SlimDX
 			/// </summary>
 			Y = XINPUT_GAMEPAD_Y
 		};
+	#pragma warning(default: 4369)
 		
 		/// <summary>
 		/// Specifies possible key codes for gamepad buttons.
