@@ -282,7 +282,7 @@ namespace Direct3D10
 	Effect^ Effect::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] String^ %compilationErrors )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ memory = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ memory = Utilities::ReadStream( stream, &ds );
 
 		if( memory == nullptr )
 		{

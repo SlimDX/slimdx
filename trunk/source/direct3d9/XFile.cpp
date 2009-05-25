@@ -96,7 +96,7 @@ namespace Direct3D9
 	XFileEnumerationObject^ XFile::CreateEnumerationObject( Stream^ memory )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( memory, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( memory, &ds );
 
 		if( data == nullptr )
 		{
@@ -148,7 +148,7 @@ namespace Direct3D9
 	Result XFile::RegisterTemplates( Stream^ stream )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 
 		if( data == nullptr )
 		{

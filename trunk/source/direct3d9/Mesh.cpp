@@ -109,7 +109,7 @@ namespace Direct3D9
 	Mesh^ Mesh::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, MeshFlags flags )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 
 		if( data == nullptr )
 		{

@@ -146,7 +146,7 @@ namespace Direct3D9
 		String^ skipConstants, ShaderFlags flags, EffectPool^ pool, [Out] String^ %compilationErrors )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 		if( data == nullptr )
 		{
 			String^ compilationErrorsLocal;
@@ -166,7 +166,7 @@ namespace Direct3D9
 		String^ skipConstants, ShaderFlags flags, EffectPool^ pool )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 		if( data == nullptr )
 		{
 			UINT size = static_cast<UINT>( ds->RemainingLength );
@@ -182,7 +182,7 @@ namespace Direct3D9
 		String^ skipConstants, ShaderFlags flags )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 		if( data == nullptr )
 		{
 			UINT size = static_cast<UINT>( ds->RemainingLength );
@@ -197,7 +197,7 @@ namespace Direct3D9
 	Effect^ Effect::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, ShaderFlags flags )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 		if( data == nullptr )
 		{
 			UINT size = static_cast<UINT>( ds->RemainingLength );

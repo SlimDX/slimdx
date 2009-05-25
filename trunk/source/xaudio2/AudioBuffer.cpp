@@ -50,7 +50,7 @@ namespace XAudio2
 		result.pContext = Context.ToPointer();
 
 		DataStream^ dataStream;
-		array<Byte>^ bytes = Utilities::ReadStream( AudioData, 0, &dataStream );
+		array<Byte>^ bytes = Utilities::ReadStream( AudioData, &dataStream );
 
 		if( bytes == nullptr )
 			result.pAudioData = reinterpret_cast<BYTE*>( dataStream->RawPointer );
