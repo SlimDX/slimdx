@@ -139,11 +139,7 @@ namespace DirectSound
 		stream1->ReadRange( data, startIndex, count1 );
 
 		if( stream2 != nullptr && count > count1 )
-		{
-			int offset2 = count1 + startIndex;
-			int count2 = static_cast<int>( data->Length ) - offset2;
-			stream2->ReadRange( data, offset2, count2 );
-		}
+			stream2->ReadRange( data, count1 + startIndex, count - count1 );
 
 		return Unlock( stream1, stream2 );
 	}
