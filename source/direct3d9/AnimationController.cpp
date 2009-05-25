@@ -87,8 +87,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		AnimationShim *shim = reinterpret_cast<AnimationShim*>( set );
-		return shim->GetAnimationSet();
+		return AnimationSet::FromPointer( set, this );
 	}
 
 	AnimationSet^ AnimationController::GetAnimationSet( String^ name )
@@ -102,8 +101,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		AnimationShim *shim = reinterpret_cast<AnimationShim*>( set );
-		return shim->GetAnimationSet();
+		return AnimationSet::FromPointer( set, this );
 	}
 
 	int AnimationController::GetCurrentTrackEvent( int track, EventType eventType )
@@ -130,8 +128,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		AnimationShim *shim = static_cast<AnimationShim*>( set );
-		return shim->GetAnimationSet();
+		return AnimationSet::FromPointer( set, this );
 	}
 
 	TrackDescription AnimationController::GetTrackDescription( int track )

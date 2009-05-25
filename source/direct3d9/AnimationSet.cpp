@@ -223,6 +223,8 @@ namespace Direct3D9
 		// Manual Allocation: released in the destructor
 		// the pointer is never stored elsewhere
 		shim = new AnimationShim( this );
+
+		Construct( shim );
 	}
 
 	AnimationSet::~AnimationSet()
@@ -242,6 +244,15 @@ namespace Direct3D9
 			delete shim;
 			shim = NULL;
 		}
+	}
+
+	AnimationSet^ AnimationSet::FromPointer( ID3DXAnimationSet *pointer, ComObject^ owner )
+	{
+		AnimationSet^ tableEntry = safe_cast<AnimationSet^>( SlimDX::ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+			return tableEntry;
+
+		return InternalAnimationSet::FromPointer( pointer, owner );
 	}
 
 	int AnimationSet::GetAnimationIndex( String^ name )
