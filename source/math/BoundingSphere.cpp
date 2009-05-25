@@ -117,7 +117,7 @@ namespace SlimDX
 		float radius = sphere1.Radius;
 		float radius2 = sphere2.Radius;
 
-		if( radius + radius < distance )
+		if( radius + radius2 < distance )
 			return ContainmentType::Disjoint;
 
 		if( radius - radius2 < distance )
