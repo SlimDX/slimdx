@@ -31,6 +31,10 @@
 
 #include "Device10.h"
 #include "Resource10.h"
+#include "Buffer.h"
+#include "Texture1D.h"
+#include "Texture2D.h"
+#include "Texture3D.h"
 
 using namespace System;
 using namespace System::IO;
@@ -39,6 +43,44 @@ namespace SlimDX
 {
 namespace Direct3D10
 {
+	Resource^ Resource::FromPointer( System::IntPtr pointer )
+	{
+		if( pointer == System::IntPtr::Zero )
+			throw gcnew System::ArgumentNullException( "pointer" );
+
+		Resource^ tableEntry = safe_cast<Resource^>( SlimDX::ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+			return tableEntry;
+
+		void* result = 0;
+		IUnknown* unknown = static_cast<IUnknown*>( pointer.ToPointer() );
+		HRESULT hr = unknown->QueryInterface(IID_ID3D10Resource, &result);
+		if( FAILED( hr ) )
+			throw gcnew InvalidCastException( "Failed to QueryInterface on user-supplied pointer." );
+
+		// find out what this thing actually is
+		ID3D10Resource* resource = static_cast<ID3D10Resource*>( unknown );
+		D3D10_RESOURCE_DIMENSION type;
+		resource->GetType( &type );
+		resource->Release();
+
+		// chain to the correct ctor (not the fastest way to do this, but good enough for now)
+		switch(type)
+		{
+		case D3D10_RESOURCE_DIMENSION_BUFFER:
+			return Buffer::FromPointer( pointer );
+		case D3D10_RESOURCE_DIMENSION_TEXTURE1D:
+			return Texture1D::FromPointer( pointer );
+		case D3D10_RESOURCE_DIMENSION_TEXTURE2D:
+			return Texture2D::FromPointer( pointer );
+		case D3D10_RESOURCE_DIMENSION_TEXTURE3D:
+			return Texture3D::FromPointer( pointer );
+
+		default:
+			throw gcnew InvalidCastException( "Unrecognized resource type." );
+		}
+	}
+
 	DXGI::ResourcePriority Resource::EvictionPriority::get()
 	{
 		return static_cast<DXGI::ResourcePriority>( InternalPointer->GetEvictionPriority() );

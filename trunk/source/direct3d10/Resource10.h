@@ -47,7 +47,9 @@ namespace SlimDX
 			static ID3D10Resource* ConstructFromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory, D3DX10_IMAGE_LOAD_INFO* info );
 			static ID3D10Resource* ConstructFromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes, D3DX10_IMAGE_LOAD_INFO* info );
 		
-		public:			
+		public:
+			static Resource^ FromPointer( System::IntPtr pointer );
+
 			/// <summary>
 			/// Gets or sets the resource's eviction priority.
 			/// </summary>
