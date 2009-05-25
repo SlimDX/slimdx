@@ -90,7 +90,7 @@ namespace Direct3D10
 	EffectPool^ EffectPool::FromStream( Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, [Out] String^ %compilationErrors  )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ memory = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ memory = Utilities::ReadStream( stream, &ds );
 
 		if( memory == nullptr )
 		{

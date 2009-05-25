@@ -176,7 +176,7 @@ namespace Direct3D9
 	EffectCompiler^ EffectCompiler::FromStream( Stream^ stream, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% compilationErrors )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 		if( data == nullptr )
 		{
 			String^ compilationErrorsLocal;
@@ -193,7 +193,7 @@ namespace Direct3D9
 	EffectCompiler^ EffectCompiler::FromStream( Stream^ stream, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 		if( data == nullptr )
 		{
 			UINT size = static_cast<UINT>( ds->RemainingLength );
@@ -206,7 +206,7 @@ namespace Direct3D9
 	EffectCompiler^ EffectCompiler::FromStream( Stream^ stream, ShaderFlags flags )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 		if( data == nullptr )
 		{
 			UINT size = static_cast<UINT>( ds->RemainingLength );

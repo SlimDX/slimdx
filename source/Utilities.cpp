@@ -239,7 +239,14 @@ namespace SlimDX
 		return Drawing::Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
 	}
 
-	array<Byte>^ Utilities::ReadStream( Stream^ stream, int readLength, DataStream^* dataStream )
+	array<Byte>^ Utilities::ReadStream( Stream^ stream, DataStream^* dataStream )
+	{
+		int length = 0;
+
+		return ReadStream( stream, length, dataStream );
+	}
+
+	array<Byte>^ Utilities::ReadStream( Stream^ stream, int% readLength, DataStream^* dataStream )
 	{
 		if( stream == nullptr )
 			throw gcnew ArgumentNullException( "stream" );

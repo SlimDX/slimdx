@@ -312,7 +312,7 @@ namespace Direct3D9
 		IAllocateHierarchy^ allocator, ILoadUserData^ userDataLoader, [Out] AnimationController^% animationController )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 
 		if( data == nullptr )
 		{

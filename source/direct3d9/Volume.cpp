@@ -142,7 +142,7 @@ namespace Direct3D9
 		Box destinationBox, array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 
 		if( data == nullptr )
 		{
@@ -162,7 +162,7 @@ namespace Direct3D9
 		Box destinationBox, [Out] ImageInformation% imageInformation )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 
 		if( data == nullptr )
 		{
@@ -181,7 +181,7 @@ namespace Direct3D9
 		Box destinationBox )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 
 		if( data == nullptr )
 		{
@@ -197,7 +197,7 @@ namespace Direct3D9
 	Result Volume::FromFileInStream( Volume^ volume, Stream^ stream, Filter filter, int colorKey )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 
 		if( data == nullptr )
 		{

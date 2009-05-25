@@ -68,7 +68,7 @@ namespace Direct3D9
 	XFileSaveData^ XFileSaveData::AddDataObject( Guid dataTemplate, String^ name, Guid id, Stream^ data )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ memory = Utilities::ReadStream( data, 0, &ds );
+		array<Byte>^ memory = Utilities::ReadStream( data, &ds );
 
 		if( memory == nullptr )
 		{

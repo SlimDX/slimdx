@@ -71,7 +71,7 @@ namespace Direct3D10
 				}
 				else
 				{
-					array<Byte>^ localData = Utilities::ReadStream( stream, 0, NULL );
+					array<Byte>^ localData = Utilities::ReadStream( stream, NULL );
 					GCHandle handle = GCHandle::Alloc( localData, GCHandleType::Pinned );
 					*data = handle.AddrOfPinnedObject().ToPointer();
 					*bytes = localData->Length;

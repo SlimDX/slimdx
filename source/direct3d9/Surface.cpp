@@ -275,7 +275,7 @@ namespace Direct3D9
 		array<PaletteEntry>^ destinationPalette )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 
 		if( data == nullptr )
 		{
@@ -295,7 +295,7 @@ namespace Direct3D9
 		array<PaletteEntry>^ sourcePalette, array<PaletteEntry>^ destinationPalette )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 
 		if( data == nullptr )
 		{
@@ -314,7 +314,7 @@ namespace Direct3D9
 		System::Drawing::Rectangle destinationRectangle )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 
 		if( data == nullptr )
 		{
@@ -333,7 +333,7 @@ namespace Direct3D9
 		Format sourceFormat, int sourcePitch, System::Drawing::Rectangle sourceRectangle )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 
 		if( data == nullptr )
 		{
@@ -408,7 +408,7 @@ namespace Direct3D9
 		array<PaletteEntry>^ palette, [Out] ImageInformation% imageInformation )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 
 		if( data == nullptr )
 		{
@@ -430,7 +430,7 @@ namespace Direct3D9
 		[Out] ImageInformation% imageInformation )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 
 		if( data == nullptr )
 		{
@@ -451,7 +451,7 @@ namespace Direct3D9
 		System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 
 		if( data == nullptr )
 		{
@@ -469,7 +469,7 @@ namespace Direct3D9
 	Result Surface::FromFileInStream( Surface^ surface, Stream^ stream, Filter filter, int colorKey )
 	{
 		DataStream^ ds = nullptr;
-		array<Byte>^ data = Utilities::ReadStream( stream, 0, &ds );
+		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
 
 		if( data == nullptr )
 		{
