@@ -169,27 +169,27 @@ namespace Direct3D10
 	
 	Result Mesh::SetIndexData( DataStream^ data, int count ) 
 	{
-		return RECORD_D3D10( InternalPointer->SetIndexData( data->RawPointer, count ) );
+		return RECORD_D3D10( InternalPointer->SetIndexData( data->PositionPointer, count ) );
 	}
 
 	Result Mesh::SetVertexData( int index, DataStream^ data ) 
 	{
-		return RECORD_D3D10( InternalPointer->SetVertexData( index, data->RawPointer ) );
+		return RECORD_D3D10( InternalPointer->SetVertexData( index, data->PositionPointer ) );
 	}
 
 	Result Mesh::SetPointRepresentationData( DataStream^ data ) 
 	{
-		return RECORD_D3D10( InternalPointer->SetPointRepData( reinterpret_cast<const UINT*>( data->RawPointer ) ) );
+		return RECORD_D3D10( InternalPointer->SetPointRepData( reinterpret_cast<const UINT*>( data->PositionPointer ) ) );
 	}
 
 	Result Mesh::SetAdjacencyData( DataStream^ data ) 
 	{
-		return RECORD_D3D10( InternalPointer->SetAdjacencyData( reinterpret_cast<const UINT*>( data->RawPointer ) ) );
+		return RECORD_D3D10( InternalPointer->SetAdjacencyData( reinterpret_cast<const UINT*>( data->PositionPointer ) ) );
 	}
 
 	Result Mesh::SetAttributeData( DataStream^ data ) 
 	{
-		return RECORD_D3D10( InternalPointer->SetAttributeData( reinterpret_cast<const UINT*>( data->RawPointer ) ) );
+		return RECORD_D3D10( InternalPointer->SetAttributeData( reinterpret_cast<const UINT*>( data->PositionPointer ) ) );
 	}
 
 	Result Mesh::SetAttributeTable( array<MeshAttributeRange>^ ranges ) 

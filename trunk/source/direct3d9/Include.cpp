@@ -67,7 +67,7 @@ namespace Direct3D9
 				{
 					//Magic shortcut if we happen to get a DataStream
 					DataStream^ data = safe_cast<DataStream^>( stream );
-					*ppData = data->RawPointer;
+					*ppData = data->PositionPointer;
 					*pBytes = static_cast<UINT>( data->Length );
 
 					m_Frames->Push( IncludeFrame( stream, GCHandle() ) );

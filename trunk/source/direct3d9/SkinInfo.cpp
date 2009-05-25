@@ -471,7 +471,7 @@ namespace Direct3D9
 		pin_ptr<Matrix> pinnedInvTransforms = &boneInvTransposeTransforms[0];
 
 		HRESULT hr = InternalPointer->UpdateSkinnedMesh( reinterpret_cast<const D3DXMATRIX*>( pinnedTransforms ),
-			reinterpret_cast<const D3DXMATRIX*>( pinnedInvTransforms ), source->RawPointer, destination->RawPointer );
+			reinterpret_cast<const D3DXMATRIX*>( pinnedInvTransforms ), source->PositionPointer, destination->PositionPointer );
 		return RECORD_D3D9( hr );
 	}
 

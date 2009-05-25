@@ -46,7 +46,7 @@ namespace Direct3D9
 	{
 		ID3DXTextureShader *result;
 
-		HRESULT hr = D3DXCreateTextureShader( reinterpret_cast<const DWORD*>( stream->RawPointer ), &result );
+		HRESULT hr = D3DXCreateTextureShader( reinterpret_cast<const DWORD*>( stream->PositionPointer ), &result );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );

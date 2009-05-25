@@ -247,13 +247,13 @@ namespace Direct3D10
 	
 	void Device::UpdateSubresource( DataBox^ source, Resource^ resource, int subresource ) 
 	{
-		InternalPointer->UpdateSubresource( resource->InternalPointer, static_cast<UINT>( subresource), 0, source->Data->RawPointer, source->RowPitch,source->SlicePitch);
+		InternalPointer->UpdateSubresource( resource->InternalPointer, static_cast<UINT>( subresource), 0, source->Data->PositionPointer, source->RowPitch,source->SlicePitch);
 	}
 
 	void Device::UpdateSubresource( DataBox^ source, Resource^ resource, int subresource, ResourceRegion region ) 
 	{
 		D3D10_BOX nativeRegion = region.CreateNativeVersion();
-		InternalPointer->UpdateSubresource( resource->InternalPointer, static_cast<UINT>( subresource), &nativeRegion, source->Data->RawPointer, source->RowPitch,source->SlicePitch);
+		InternalPointer->UpdateSubresource( resource->InternalPointer, static_cast<UINT>( subresource), &nativeRegion, source->Data->PositionPointer, source->RowPitch,source->SlicePitch);
 	}
 
 	void Device::Draw( int vertexCount, int startVertexLocation )

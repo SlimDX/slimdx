@@ -44,7 +44,7 @@ namespace Direct3D9
 	{
 		IDirect3DVertexShader9 *result;
 
-		HRESULT hr = device->InternalPointer->CreateVertexShader( reinterpret_cast<const DWORD*>( function->Data->RawPointer ), &result );
+		HRESULT hr = device->InternalPointer->CreateVertexShader( reinterpret_cast<const DWORD*>( function->Data->PositionPointer ), &result );
 		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
