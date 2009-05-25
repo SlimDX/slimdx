@@ -35,11 +35,7 @@ using namespace System;
 namespace SlimDX
 {
 namespace Direct3D10
-{ 
-	DeviceChild::DeviceChild()
-	{
-	}
-	
+{
 	SlimDX::Direct3D10::Device^ DeviceChild::Device::get()
 	{
 		ID3D10Device* device = 0;

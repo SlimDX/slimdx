@@ -37,7 +37,7 @@ namespace SlimDX
 		public ref class Query : public Asynchronous
 		{
 			COMOBJECT(ID3D10Query, Query);
-		
+
 		protected:
 			Query();
 

@@ -36,24 +36,18 @@ namespace SlimDX
 		/// A resource object.
 		/// </summary>
 		/// <unmanaged>ID3D10Resource</unmanaged>
-		public ref class Resource : public DeviceChild
+		public ref class Resource abstract : public DeviceChild
 		{
 			COMOBJECT_BASE(ID3D10Resource);
-		
-		protected:
-			Resource();
-			
+
 		internal:
-			Resource( ID3D10Resource* pointer );
-		
-		public:
-			/// <summary>
-			/// Constructs a Resource object from a marshalled native pointer.
-			/// </summary>
-			/// <param name="pointer">The native object pointer.</param>
-			/// <returns>The Resource object for the native object.</returns>
-			Resource( System::IntPtr pointer );
+			static int GetMipSize( int mipSlice, int baseSliceSize );
 			
+			static ID3D10Resource* ConstructFromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName, D3DX10_IMAGE_LOAD_INFO* info );
+			static ID3D10Resource* ConstructFromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory, D3DX10_IMAGE_LOAD_INFO* info );
+			static ID3D10Resource* ConstructFromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes, D3DX10_IMAGE_LOAD_INFO* info );
+		
+		public:			
 			/// <summary>
 			/// Gets or sets the resource's eviction priority.
 			/// </summary>

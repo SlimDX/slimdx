@@ -34,7 +34,7 @@ using namespace System;
 namespace SlimDX
 {
 namespace Direct3D10
-{ 
+{
 	Query::Query() 
 	{
 	}

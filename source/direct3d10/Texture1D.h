@@ -24,7 +24,8 @@
 #include "../ComObject.h"
 
 #include "Enums.h"
-#include "Texture10.h"
+#include "Resource10.h"
+#include "ImageLoadInformation.h"
 
 namespace SlimDX
 {
@@ -35,7 +36,7 @@ namespace SlimDX
 		ref class Device;
 		value class Texture1DDescription;
 		
-		public ref class Texture1D : public Texture
+		public ref class Texture1D : public Resource
 		{
 			COMOBJECT(ID3D10Texture1D, Texture1D);
 		
@@ -96,6 +97,9 @@ namespace SlimDX
 			static Texture1D^ FromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory, ImageLoadInformation loadInfo );
 			static Texture1D^ FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes );
 			static Texture1D^ FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes, ImageLoadInformation loadInfo );
+
+			static Result ToFile( Texture1D^ texture, ImageFileFormat format, System::String^ fileName );
+			static Result ToStream( Texture1D^ texture, ImageFileFormat format, System::IO::Stream^ stream );
 		};
 	}
 };
