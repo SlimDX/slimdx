@@ -517,7 +517,7 @@ namespace Direct3D9
 	Result Effect::SetRawValue( EffectHandle^ handle, DataStream^ data, int offset, int count )
 	{
 		D3DXHANDLE value = handle != nullptr ? handle->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->SetRawValue( value, data->RawPointer, offset, count );
+		HRESULT hr = InternalPointer->SetRawValue( value, data->PositionPointer, offset, count );
 		return RECORD_D3D9( hr );
 	}
 

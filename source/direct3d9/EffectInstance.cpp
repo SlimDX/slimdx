@@ -69,7 +69,7 @@ namespace Direct3D9
 			result.pDefaults[i].pParamName = Utilities::AllocateNativeString( effect.Defaults[i].ParameterName );
 			result.pDefaults[i].Type = static_cast<D3DXEFFECTDEFAULTTYPE>( effect.Defaults[i].Type );
 			result.pDefaults[i].NumBytes = static_cast<DWORD>( effect.Defaults[i].Value->Length );
-			result.pDefaults[i].pValue = effect.Defaults[i].Value->RawPointer;
+			result.pDefaults[i].pValue = effect.Defaults[i].Value->PositionPointer;
 		}
 
 		return result;

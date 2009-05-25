@@ -131,7 +131,7 @@ namespace SlimDX
 	{
 		BoundingBox box;
 
-		HRESULT hr = D3DXComputeBoundingBox( reinterpret_cast<D3DXVECTOR3*>( points->RawPointer ), count, stride, 
+		HRESULT hr = D3DXComputeBoundingBox( reinterpret_cast<D3DXVECTOR3*>( points->PositionPointer ), count, stride, 
 			reinterpret_cast<D3DXVECTOR3*>( &box.Minimum ), reinterpret_cast<D3DXVECTOR3*>( &box.Maximum ) );
 
 		if( RECORD_SDX( hr ).IsFailure )

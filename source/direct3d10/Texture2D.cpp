@@ -50,7 +50,7 @@ namespace Direct3D10
 		if( data != nullptr )
 		{
 			D3D10_SUBRESOURCE_DATA initialData;
-			initialData.pSysMem = data->Data->RawPointer;
+			initialData.pSysMem = data->Data->PositionPointer;
 			initialData.SysMemPitch = data->Pitch;
 			Construct( Build( device, description, &initialData ) );	
 		}
@@ -67,8 +67,8 @@ namespace Direct3D10
 			stack_array<D3D10_SUBRESOURCE_DATA> initialData = stackalloc( D3D10_SUBRESOURCE_DATA, data->Length );
 			for( size_t dataIndex = 0; dataIndex < initialData.size(); ++dataIndex ) 
 			{
-				initialData[dataIndex].pSysMem = data[dataIndex]->Data->RawPointer;
-				initialData[dataIndex].SysMemPitch = data[dataIndex]->Pitch;
+				initialData[dataIndex].pSysMem = data[static_cast<int>( dataIndex )]->Data->PositionPointer;
+				initialData[dataIndex].SysMemPitch = data[static_cast<int>( dataIndex )]->Pitch;
 			}
 			
 			Construct( Build( device, description, &initialData[0] ) );	

@@ -64,7 +64,7 @@ namespace Direct3D10
 				if( stream->GetType() == DataStream::typeid )
 				{
 					DataStream^ localData = safe_cast<DataStream^>( stream );
-					*data = localData->RawPointer;
+					*data = localData->PositionPointer;
 					*bytes = static_cast<UINT>( localData->Length );
 
 					m_Frames->Push( IncludeFrame( stream, GCHandle() ) );

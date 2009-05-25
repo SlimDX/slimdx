@@ -87,7 +87,7 @@ namespace Multimedia
 		ZeroMemory( &info, sizeof( info ) );
 		info.fccIOProc = FOURCC_MEM;
 		info.cchBuffer = bytes->Length;
-		info.pchBuffer = internalMemory->RawPointer;
+		info.pchBuffer = internalMemory->PositionPointer;
 
 		handle = mmioOpen( NULL, &info, MMIO_ALLOCBUF | MMIO_READ );
 		if( handle == NULL )

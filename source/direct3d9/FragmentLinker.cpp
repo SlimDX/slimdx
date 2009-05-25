@@ -139,7 +139,7 @@ namespace Direct3D9
 
 	Result FragmentLinker::AddFragments( DataStream^ fragments )
 	{
-		HRESULT hr = InternalPointer->AddFragments( reinterpret_cast<const DWORD*>( fragments->RawPointer ) );
+		HRESULT hr = InternalPointer->AddFragments( reinterpret_cast<const DWORD*>( fragments->PositionPointer ) );
 		return RECORD_D3D9( hr );
 	}
 

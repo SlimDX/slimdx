@@ -57,7 +57,7 @@ namespace Direct3D10
 	{
 		int size = InternalPointer->GetDataSize();
 		DataStream^ result = gcnew DataStream( size, true, true );
-		if( RECORD_D3D10( InternalPointer->GetData( result->RawPointer, size, static_cast<UINT>( flags ) ) ).IsFailure )
+		if( RECORD_D3D10( InternalPointer->GetData( result->PositionPointer, size, static_cast<UINT>( flags ) ) ).IsFailure )
 			return nullptr;
 		return result;
 	}

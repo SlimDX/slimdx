@@ -53,7 +53,7 @@ namespace XAudio2
 		array<Byte>^ bytes = Utilities::ReadStream( AudioData, &dataStream );
 
 		if( bytes == nullptr )
-			result.pAudioData = reinterpret_cast<BYTE*>( dataStream->RawPointer );
+			result.pAudioData = reinterpret_cast<BYTE*>( dataStream->PositionPointer );
 		else
 		{
 			Destruct();

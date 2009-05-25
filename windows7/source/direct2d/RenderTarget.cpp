@@ -492,7 +492,7 @@ namespace Direct2D
 	{
 		ID2D1Bitmap *bitmap = NULL;
 
-		HRESULT hr = InternalPointer->CreateSharedBitmap( Utilities::ConvertManagedGuid( guid ), data->RawPointer, NULL, &bitmap );
+		HRESULT hr = InternalPointer->CreateSharedBitmap( Utilities::ConvertManagedGuid( guid ), data->PositionPointer, NULL, &bitmap );
 		if( RECORD_D2D( hr ).IsFailure )
 			return nullptr;
 
