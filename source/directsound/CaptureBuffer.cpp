@@ -22,11 +22,12 @@
 */
 #include <windows.h>
 #include <dsound.h>
-#include <vector>
 
+#include "../stack_array.h"
 #include "../ComObject.h"
 #include "../Utilities.h"
 #include "../DataStream.h"
+
 #include "../multimedia/WaveFormat.h"
 #include "../multimedia/WaveFormatExtensible.h"
 
@@ -155,7 +156,7 @@ namespace DirectSound
 		if( FAILED( hr ) )
 			return RECORD_DSOUND( hr );
 
-		std::vector<DSBPOSITIONNOTIFY> notifies( positions->Length );
+		stack_array<DSBPOSITIONNOTIFY> notifies = stackalloc( DSBPOSITIONNOTIFY, positions->Length );
 		for( int i = 0; i < positions->Length; i++ )
 		{
 			notifies[i].dwOffset = positions[i].Offset;
@@ -203,7 +204,7 @@ namespace DirectSound
 
 	array<CaptureEffectResult>^ CaptureBuffer::GetEffectStatus( int effectCount )
 	{
-		std::vector<DWORD> results( effectCount );
+		stack_array<DWORD> results = stackalloc( DWORD, effectCount );
 
 		HRESULT hr = InternalPointer->GetFXStatus( effectCount, &results[0] );
 		if( RECORD_DSOUND( hr ).IsFailure )

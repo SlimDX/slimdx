@@ -22,9 +22,9 @@
 #include "stdafx.h"
 #include <windows.h>
 #include <dinput.h>
-#include <vector>
 #include <vcclr.h>
 
+#include "../stack_array.h"
 #include "../ComObject.h"
 #include "../Utilities.h"
 #include "../CollectionShim.h"
@@ -108,7 +108,7 @@ namespace DirectInput
 		if( RECORD_DINPUT( hr ).IsFailure || header.dwBufferUsed <= 0 )
 			return DeviceImageHeader();
 
-		std::vector<DIDEVICEIMAGEINFO> images( header.dwBufferUsed / sizeof( DIDEVICEIMAGEINFO ) );
+		stack_array<DIDEVICEIMAGEINFO> images = stackalloc( DIDEVICEIMAGEINFO, header.dwBufferUsed / sizeof( DIDEVICEIMAGEINFO ) );
 		header.dwBufferSize = header.dwBufferUsed;
 		header.lprgImageInfoArray = &images[0];
 
@@ -135,7 +135,7 @@ namespace DirectInput
 	Result Device::SendData( array<ObjectData>^ data, bool overlay )
 	{
 		DWORD count = data->Length;
-		std::vector<DIDEVICEOBJECTDATA> input( count );
+		stack_array<DIDEVICEOBJECTDATA> input = stackalloc( DIDEVICEOBJECTDATA, count );
 
 		for( UINT i = 0; i < count; i++ )
 		{
@@ -266,7 +266,7 @@ namespace DirectInput
 	Result Device::WriteEffectsToFile( String^ fileName, array<EffectFile>^ effects, bool includeNonstandardEffects )
 	{
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
-		std::vector<DIFILEEFFECT> entries( effects->Length );
+		stack_array<DIFILEEFFECT> entries = stackalloc( DIFILEEFFECT, effects->Length );
 
 		for( int i = 0; i < effects->Length; i++ )
 			entries[i] = effects[i].ToUnmanaged();

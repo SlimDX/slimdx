@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -20,10 +19,11 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
+#include "stdafx.h"
 #include <d3dx10.h>
 #include <vcclr.h>
-#include <vector>
+
+#include "../stack_array.h"
 
 #include "Direct3D10Exception.h"
 
@@ -194,9 +194,10 @@ namespace Direct3D10
 
 	Result Mesh::SetAttributeTable( array<MeshAttributeRange>^ ranges ) 
 	{
-		std::vector<D3DX10_ATTRIBUTE_RANGE> nativeRanges( ranges->Length );
+		stack_array<D3DX10_ATTRIBUTE_RANGE> nativeRanges = stackalloc( D3DX10_ATTRIBUTE_RANGE, ranges->Length );
+
 		for( int rangeIndex = 0; rangeIndex < ranges->Length; ++rangeIndex )
-			nativeRanges[ rangeIndex ] = ranges[ rangeIndex].CreateNativeVersion();
+			nativeRanges[rangeIndex] = ranges[rangeIndex].CreateNativeVersion();
 
 		return RECORD_D3D10( InternalPointer->SetAttributeTable( &nativeRanges[0], ranges->Length ) );
 	}
@@ -207,7 +208,7 @@ namespace Direct3D10
 		if( RECORD_D3D10( InternalPointer->GetAttributeTable( 0, &count ) ).IsFailure )
 			return nullptr;
 
-		std::vector<D3DX10_ATTRIBUTE_RANGE> ranges( count );
+		stack_array<D3DX10_ATTRIBUTE_RANGE> ranges = stackalloc( D3DX10_ATTRIBUTE_RANGE, count );
 		if( RECORD_D3D10( InternalPointer->GetAttributeTable( reinterpret_cast<D3DX10_ATTRIBUTE_RANGE*>( &ranges[0] ), &count ) ).IsFailure )
 			return nullptr;
 		
@@ -241,7 +242,7 @@ namespace Direct3D10
 	
 	Result Mesh::Optimize( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
 	{
-		std::vector<UINT> nativeFaceRemap( FaceCount );
+		stack_array<UINT> nativeFaceRemap = stackalloc( UINT, FaceCount );
 		ID3D10Blob* nativeVertexRemap = 0;
 		
 		if( RECORD_D3D10( InternalPointer->Optimize( static_cast<UINT>( flags ), &nativeFaceRemap[0], &nativeVertexRemap ) ).IsFailure )

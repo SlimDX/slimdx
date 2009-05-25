@@ -22,8 +22,8 @@
 */
 
 #include <windows.h>
-#include <vector>
 
+#include "../stack_array.h"
 #include "../Utilities.h"
 #include "../SlimDXException.h"
 
@@ -127,7 +127,7 @@ namespace RawInput
 		if( count == 0 )
 			return nullptr;
 
-		std::vector<RAWINPUTDEVICELIST> deviceList( count );
+		stack_array<RAWINPUTDEVICELIST> deviceList = stackalloc( RAWINPUTDEVICELIST, count );
 		if( GetRawInputDeviceList( &deviceList[0], &count, sizeof(RAWINPUTDEVICELIST) ) == -1 )
 			throw gcnew Win32Exception();
 
@@ -141,7 +141,7 @@ namespace RawInput
 
 			if( size != 0 )
 			{
-				std::vector<TCHAR> chars( size );
+				stack_array<TCHAR> chars = stackalloc( TCHAR, size );
 				GetRawInputDeviceInfo( deviceList[i].hDevice, RIDI_DEVICENAME, &chars[0], &size );
 
 				name = gcnew String( &chars[0] );

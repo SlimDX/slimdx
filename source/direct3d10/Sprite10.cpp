@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -20,10 +19,11 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
+#include "stdafx.h"
 #include <d3d10.h>
 #include <d3dx10.h>
-#include <vector>
+
+#include "../stack_array.h"
 
 #include "Direct3D10Exception.h"
 
@@ -100,17 +100,19 @@ namespace Direct3D10
 
 	Result Sprite::DrawBuffered( array<SpriteInstance^>^ instances )
 	{
-		std::vector<D3DX10_SPRITE> nativeInstances( instances->Length );
+		stack_array<D3DX10_SPRITE> nativeInstances = stackalloc( D3DX10_SPRITE, instances->Length );
 		for( int instanceIndex = 0; instanceIndex < instances->Length; ++instanceIndex )
 			instances[instanceIndex]->ToNativeObject( nativeInstances[instanceIndex] );
+
 		return RECORD_D3D10( InternalPointer->DrawSpritesBuffered( &nativeInstances[0], instances->Length ) );
 	}
 
 	Result Sprite::DrawImmediate( array<SpriteInstance^>^ instances )
 	{
-		std::vector<D3DX10_SPRITE> nativeInstances( instances->Length );
+		stack_array<D3DX10_SPRITE> nativeInstances = stackalloc( D3DX10_SPRITE, instances->Length );
 		for( int instanceIndex = 0; instanceIndex < instances->Length; ++instanceIndex )
 			instances[instanceIndex]->ToNativeObject( nativeInstances[instanceIndex] );
+
 		return RECORD_D3D10( InternalPointer->DrawSpritesImmediate( &nativeInstances[0], instances->Length, sizeof(D3DX10_SPRITE), 0 ) );
 	}
 }

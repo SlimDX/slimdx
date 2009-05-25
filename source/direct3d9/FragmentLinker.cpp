@@ -22,10 +22,11 @@
 */
 #include <d3d9.h>
 #include <d3dx9.h>
-#include <vector>
 
+#include "../stack_array.h"
 #include "../DataStream.h"
 #include "../ComObject.h"
+
 #include "Direct3D9Exception.h"
 
 #include "Device.h"
@@ -66,7 +67,7 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 #pragma warning(push)
@@ -76,7 +77,7 @@ namespace Direct3D9
 #pragma warning(pop)
 
 		//clean up after marshaling macros
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 		//marshal errors if necessary
 		errors = Utilities::BufferToString( errorBuffer );
 		
@@ -109,7 +110,7 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 #pragma warning(push)
@@ -119,7 +120,7 @@ namespace Direct3D9
 #pragma warning(pop)
 
 		//clean up after marshaling macros
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 		//marshal errors if necessary
 		errors = Utilities::BufferToString( errorBuffer );
 		
@@ -226,11 +227,9 @@ namespace Direct3D9
 		array<Byte>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 		pin_ptr<const Byte> pinnedProfile = &profileBytes[0];
 
-		std::vector<D3DXHANDLE> handles(fragmentHandles->Length);
+		stack_array<D3DXHANDLE> handles = stackalloc( D3DXHANDLE, fragmentHandles->Length );
 		for( int i = 0; i < fragmentHandles->Length; ++i )
-		{
 			handles[i] = fragmentHandles[i] != nullptr ? fragmentHandles[i]->InternalHandle : NULL;
-		}
 
 		HRESULT hr = InternalPointer->LinkShader( reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<DWORD>( flags ), &handles[0], fragmentHandles->Length, &bytecode, &errorBuffer );
 		RECORD_D3D9( hr );
@@ -250,11 +249,9 @@ namespace Direct3D9
 		array<Byte>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 		pin_ptr<const Byte> pinnedProfile = &profileBytes[0];
 
-		std::vector<D3DXHANDLE> handles(fragmentHandles->Length);
+		stack_array<D3DXHANDLE> handles = stackalloc( D3DXHANDLE, fragmentHandles->Length );
 		for( int i = 0; i < fragmentHandles->Length; ++i )
-		{
 			handles[i] = fragmentHandles[i] != nullptr ? fragmentHandles[i]->InternalHandle : NULL;
-		}
 
 		HRESULT hr = InternalPointer->LinkVertexShader( reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<DWORD>( flags ), &handles[0], fragmentHandles->Length, &shader, &errorBuffer );
 		RECORD_D3D9( hr );
@@ -274,11 +271,9 @@ namespace Direct3D9
 		array<Byte>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 		pin_ptr<const Byte> pinnedProfile = &profileBytes[0];
 
-		std::vector<D3DXHANDLE> handles(fragmentHandles->Length);
+		stack_array<D3DXHANDLE> handles = stackalloc( D3DXHANDLE, fragmentHandles->Length);
 		for( int i = 0; i < fragmentHandles->Length; ++i )
-		{
 			handles[i] = fragmentHandles[i] != nullptr ? fragmentHandles[i]->InternalHandle : NULL;
-		}
 
 		HRESULT hr = InternalPointer->LinkPixelShader( reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<DWORD>( flags ), &handles[0], fragmentHandles->Length, &shader, &errorBuffer );
 		RECORD_D3D9( hr );

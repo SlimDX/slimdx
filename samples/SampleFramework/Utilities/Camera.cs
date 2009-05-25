@@ -30,7 +30,7 @@ namespace SampleFramework
     {
         Vector3 location;
         Vector3 target;
-        Vector3 up;
+        Vector3 up = Vector3.UnitY;
         float fieldOfView;
         float aspectRatio;
         float nearPlane;

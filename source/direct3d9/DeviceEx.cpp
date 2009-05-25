@@ -23,8 +23,8 @@
 #include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
-#include <vector>
 
+#include "../stack_array.h"
 #include "../ComObject.h"
 
 #include "Direct3D9Exception.h"
@@ -65,12 +65,10 @@ namespace Direct3D9
 				CreateFlags createFlags, D3DDISPLAYMODEEX* fullscreenDisplayMode, ... array<PresentParameters^>^ presentParameters )
 	{
 		IDirect3DDevice9Ex* device;
-		std::vector<D3DPRESENT_PARAMETERS> d3dpp;
-		d3dpp.reserve( presentParameters->Length );
+		stack_array<D3DPRESENT_PARAMETERS> d3dpp = stackalloc( D3DPRESENT_PARAMETERS, presentParameters->Length );
+
 		for( int i = 0; i < presentParameters->Length; ++i )
-		{
-			d3dpp.push_back( presentParameters[i]->ToUnmanaged() );
-		}
+			d3dpp[i] = presentParameters[i]->ToUnmanaged();
 
 		HRESULT hr = direct3D->InternalPointer->CreateDeviceEx( adapter,
 			static_cast<D3DDEVTYPE>( deviceType ),
@@ -118,12 +116,10 @@ namespace Direct3D9
 		CreateFlags createFlags, array<PresentParameters^>^ presentParameters, array<DisplayModeEx>^ fullscreenDisplayModes )
 		: Device( true )
 	{
-		std::vector<D3DDISPLAYMODEEX> nativeModes;
-		nativeModes.reserve( fullscreenDisplayModes->Length );
+		stack_array<D3DDISPLAYMODEEX> nativeModes = stackalloc( D3DDISPLAYMODEEX, fullscreenDisplayModes->Length );
+
 		for( int i = 0; i < fullscreenDisplayModes->Length; ++i )
-		{
-			nativeModes.push_back( fullscreenDisplayModes[i].ToUnmanaged() );
-		}
+			nativeModes[i] = fullscreenDisplayModes[i].ToUnmanaged();
 
 		Internal_Constructor( direct3D, adapter, deviceType, controlHandle, createFlags, &nativeModes[0], presentParameters );
 	}
@@ -173,13 +169,9 @@ namespace Direct3D9
 
 	ResourceResidency DeviceEx::CheckResourceResidency( array<Resource^>^ resources )
 	{
-		std::vector<IDirect3DResource9*> resourceArray;
-		resourceArray.reserve( resources->Length );
-
-		for each( Resource^ resource in resources )
-		{
-			resourceArray.push_back( resource->InternalPointer );
-		}
+		stack_array<IDirect3DResource9*> resourceArray = stackalloc( IDirect3DResource9*, resources->Length );
+		for( int i = 0; i < resources->Length; i++ )
+			resourceArray[i] = resources[i]->InternalPointer;
 
 		HRESULT hr = InternalPointer->CheckResourceResidency( &resourceArray[0], resources->Length );
 		return static_cast<ResourceResidency>( hr );

@@ -23,6 +23,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#include "../stack_array.h"
 #include "../DataStream.h"
 #include "../ComObject.h"
 #include "../Utilities.h"
@@ -113,7 +114,7 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		std::vector<D3DXCONSTANT_DESC> nativeDescArray( count );
+		stack_array<D3DXCONSTANT_DESC> nativeDescArray = stackalloc( D3DXCONSTANT_DESC, count );
 		hr = InternalPointer->GetConstantDesc( nativeHandle, &nativeDescArray[0], &count );
 		
 		if( RECORD_D3D9(hr).IsFailure )

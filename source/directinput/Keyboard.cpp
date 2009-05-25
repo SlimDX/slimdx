@@ -20,10 +20,11 @@
 * THE SOFTWARE.
 */
 #include "stdafx.h"
+
 #include <windows.h>
 #include <dinput.h>
-#include <vector>
 
+#include "../stack_array.h"
 #include "../ComObject.h"
 #include "../Utilities.h"
 
@@ -61,7 +62,7 @@ namespace DirectInput
 		if( size == 0 )
 			return list;
 
-		std::vector<DIDEVICEOBJECTDATA> data( size );
+		stack_array<DIDEVICEOBJECTDATA> data = stackalloc( DIDEVICEOBJECTDATA, size );
 		hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), &data[0], &size, 0 );
 		if( RecordError( hr ).IsFailure )
 			return nullptr;

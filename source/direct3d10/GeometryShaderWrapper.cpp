@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -20,8 +19,9 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#include <vector>
+#include "../stack_array.h"
 
 #include "Buffer.h"
 #include "SamplerState.h"
@@ -58,7 +58,7 @@ namespace Direct3D10
 	array<Buffer^>^ GeometryShaderWrapper::GetConstantBuffers( int startSlot, int count )
 	{
 		array<Buffer^>^ buffers = gcnew array<Buffer^>( count );
-		std::vector<ID3D10Buffer*> results( count );
+		stack_array<ID3D10Buffer*> results = stackalloc( ID3D10Buffer*, count );
 
 		m_Device->GSGetConstantBuffers( startSlot, count, &results[0] );
 
@@ -71,7 +71,7 @@ namespace Direct3D10
 	array<SamplerState^>^ GeometryShaderWrapper::GetSamplers( int startSlot, int count )
 	{
 		array<SamplerState^>^ samplers = gcnew array<SamplerState^>( count );
-		std::vector<ID3D10SamplerState*> results( count );
+		stack_array<ID3D10SamplerState*> results = stackalloc( ID3D10SamplerState*, count );
 
 		m_Device->GSGetSamplers( startSlot, count, &results[0] );
 
@@ -84,7 +84,7 @@ namespace Direct3D10
 	array<ShaderResourceView^>^ GeometryShaderWrapper::GetShaderResources( int startSlot, int count )
 	{
 		array<ShaderResourceView^>^ resources = gcnew array<ShaderResourceView^>( count );
-		std::vector<ID3D10ShaderResourceView*> results( count );
+		stack_array<ID3D10ShaderResourceView*> results = stackalloc( ID3D10ShaderResourceView*, count );
 
 		m_Device->GSGetShaderResources( startSlot, count, &results[0] );
 
@@ -105,7 +105,7 @@ namespace Direct3D10
 		if( count > constantBuffers->Length )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 
-		std::vector<ID3D10Buffer*> input( count );
+		stack_array<ID3D10Buffer*> input = stackalloc( ID3D10Buffer*, count );
 		for( int i = 0; i < count; i++ )
 			input[i] = constantBuffers[i] == nullptr ? NULL : constantBuffers[i]->InternalPointer;
 
@@ -123,7 +123,7 @@ namespace Direct3D10
 		if( count > samplers->Length )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 
-		std::vector<ID3D10SamplerState*> input( count );
+		stack_array<ID3D10SamplerState*> input = stackalloc( ID3D10SamplerState*, count );
 		for( int i = 0; i < count; i++ )
 			input[i] = samplers[i] == nullptr ? NULL : samplers[i]->InternalPointer;
 
@@ -141,7 +141,7 @@ namespace Direct3D10
 		if( count > resourceViews->Length )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 
-		std::vector<ID3D10ShaderResourceView*> input( count );
+		stack_array<ID3D10ShaderResourceView*> input = stackalloc( ID3D10ShaderResourceView*, count );
 		for( int i = 0; i < count; i++ )
 			input[i] = resourceViews[i] == nullptr ? NULL : resourceViews[i]->InternalPointer;
 

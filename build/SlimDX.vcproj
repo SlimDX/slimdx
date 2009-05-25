@@ -1510,6 +1510,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\stack_array.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\Utilities.cpp"
 				>
 			</File>

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -20,10 +19,10 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
+#include "stdafx.h"
 #include <d3d10.h>
-#include <vector>
 
+#include "../stack_array.h"
 #include "../DataStream.h"
 #include "../Utilities.h"
 
@@ -63,8 +62,8 @@ namespace Direct3D10
 	{
 		if( data != nullptr )
 		{
-			std::vector<D3D10_SUBRESOURCE_DATA> initialData( data->Length );
-			for(unsigned int dataIndex = 0; dataIndex < initialData.size(); ++dataIndex ) 
+			stack_array<D3D10_SUBRESOURCE_DATA> initialData = stackalloc( D3D10_SUBRESOURCE_DATA, data->Length );
+			for( int dataIndex = 0; dataIndex < initialData.size(); ++dataIndex ) 
 				initialData[dataIndex].pSysMem = data[dataIndex]->RawPointer;
 			
 			Construct( Build( device, description, &initialData[0] ) );	

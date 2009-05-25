@@ -23,8 +23,8 @@
 #include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
-#include <vector>
 
+#include "../stack_array.h"
 #include "../DataStream.h"
 #include "../ComObject.h"
 #include "../Utilities.h"
@@ -63,13 +63,10 @@ namespace Direct3D9
 	Device::Device( Direct3D^ direct3D, int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, ... array<PresentParameters^>^ presentParameters )
 	{
 		IDirect3DDevice9* device;
-		std::vector<D3DPRESENT_PARAMETERS> d3dpp;
-		d3dpp.reserve( presentParameters->Length );
+		stack_array<D3DPRESENT_PARAMETERS> d3dpp = stackalloc( D3DPRESENT_PARAMETERS, presentParameters->Length );
 
 		for( int p = 0; p < presentParameters->Length; ++p )
-		{
-			d3dpp.push_back( presentParameters[p]->ToUnmanaged() );
-		}
+			d3dpp[p] = presentParameters[p]->ToUnmanaged();
 
 		HRESULT hr = direct3D->InternalPointer->CreateDevice( adapter,
 			static_cast<D3DDEVTYPE>( deviceType ),
@@ -206,7 +203,7 @@ namespace Direct3D9
 			return Clear( clearFlags, color, zdepth, stencil );
 		}
 
-		std::vector<D3DRECT> rects( rectangles->Length );
+		stack_array<D3DRECT> rects = stackalloc( D3DRECT, rectangles->Length );
 		for( int i = 0; i < rectangles->Length; i++ )
 		{
 			D3DRECT rect;
@@ -891,7 +888,7 @@ namespace Direct3D9
 
 	array<bool>^ Device::GetVertexShaderBooleanConstant( int startRegister, int count )
 	{
-		std::vector<BOOL> booleans( count );
+		stack_array<BOOL> booleans = stackalloc( BOOL, count );
 
 		HRESULT hr = InternalPointer->GetVertexShaderConstantB( startRegister, &booleans[0], count );
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -906,7 +903,7 @@ namespace Direct3D9
 
 	array<float>^ Device::GetVertexShaderFloatConstant( int startRegister, int count )
 	{
-		std::vector<FLOAT> floats( count );
+		stack_array<FLOAT> floats = stackalloc( FLOAT, count );
 
 		HRESULT hr = InternalPointer->GetVertexShaderConstantF( startRegister, &floats[0], count );
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -921,7 +918,7 @@ namespace Direct3D9
 
 	array<int>^ Device::GetVertexShaderIntegerConstant( int startRegister, int count )
 	{
-		std::vector<INT> integers( count );
+		stack_array<INT> integers = stackalloc( INT, count );
 
 		HRESULT hr = InternalPointer->GetVertexShaderConstantI( startRegister, &integers[0], count );
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -936,7 +933,7 @@ namespace Direct3D9
 
 	array<bool>^ Device::GetPixelShaderBooleanConstant( int startRegister, int count )
 	{
-		std::vector<BOOL> booleans( count );
+		stack_array<BOOL> booleans = stackalloc( BOOL, count );
 
 		HRESULT hr = InternalPointer->GetPixelShaderConstantB( startRegister, &booleans[0], count );
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -951,7 +948,7 @@ namespace Direct3D9
 
 	array<float>^ Device::GetPixelShaderFloatConstant( int startRegister, int count )
 	{
-		std::vector<FLOAT> floats( count );
+		stack_array<FLOAT> floats = stackalloc( FLOAT, count );
 
 		HRESULT hr = InternalPointer->GetPixelShaderConstantF( startRegister, &floats[0], count );
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -966,7 +963,7 @@ namespace Direct3D9
 
 	array<int>^ Device::GetPixelShaderIntegerConstant( int startRegister, int count )
 	{
-		std::vector<INT> integers( count );
+		stack_array<INT> integers = stackalloc( INT, count );
 
 		HRESULT hr = InternalPointer->GetPixelShaderConstantI( startRegister, &integers[0], count );
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -1331,10 +1328,9 @@ namespace Direct3D9
 		int width = 0;
 		int heightSrc = 0;
 		int heightDest = 0;
-		std::vector<COLORREF> arrayMask;
-		std::vector<COLORREF> arrayColor;
 		COLORREF color;
 		COLORREF mask;
+		stack_array<COLORREF> arrayColor;
 		HDC hdcColor = NULL;
 		HDC hdcScreen = NULL;
 		HDC hdcMask = NULL;
@@ -1377,7 +1373,7 @@ namespace Direct3D9
 			return RECORD_D3D9( hr );
 		}
 
-		arrayMask.resize( width * heightSrc );
+		stack_array<COLORREF> arrayMask = stackalloc( COLORREF, width * heightSrc );
 
 		bmi.bmiHeader.biSize = sizeof( bmi.bmiHeader );
 		bmi.bmiHeader.biWidth = width;
@@ -1407,7 +1403,7 @@ namespace Direct3D9
 
 		if( !bwCursor )
 		{
-			arrayColor.resize( width * heightDest );
+			arrayColor = stack_array<COLORREF>( width * heightDest );
 			hdcColor = CreateCompatibleDC( hdcScreen );
 			if( hdcColor == NULL )
 			{
