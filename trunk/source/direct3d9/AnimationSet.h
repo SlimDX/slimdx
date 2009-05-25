@@ -79,6 +79,8 @@ namespace SlimDX
 		internal:
 			AnimationShim *shim;
 
+			static AnimationSet^ FromPointer( ID3DXAnimationSet *pointer, ComObject^ owner );
+
 		protected:
 			AnimationSet();
 
@@ -95,6 +97,11 @@ namespace SlimDX
 			virtual property System::String^ Name { System::String^ get(); }
 			virtual property int AnimationCount { int get(); }
 			virtual property double Period { double get(); }
+		};
+
+		ref class InternalAnimationSet : AnimationSet
+		{
+			COMOBJECT(ID3DXAnimationSet, InternalAnimationSet);
 		};
 	}
 }
