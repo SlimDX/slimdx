@@ -113,12 +113,8 @@ namespace DirectSound
 		int count1 = static_cast<int>( stream1->Length ) / sizeof(T);
 		stream1->WriteRange( data, startIndex, count1 );
 
-		if( stream2 != nullptr && count > count1 )				
-		{
-			int offset2 = count1 + startIndex;
-			int count2 = static_cast<int>( data->Length ) - offset2;
-			stream2->WriteRange( data, offset2, count2 );
-		}
+		if( stream2 != nullptr && count > count1 )
+			stream2->WriteRange( data, count1 + startIndex, count - count1 );
 
 		return Unlock( stream1, stream2 );
 	}

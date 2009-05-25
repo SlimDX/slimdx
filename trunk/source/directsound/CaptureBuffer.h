@@ -56,7 +56,7 @@ namespace SlimDX
 			CaptureBuffer( DirectSoundCapture^ capture, CaptureBufferDescription description );
 			
 			generic<typename T> where T : ComObject
-				T GetEffect( int index );
+			T GetEffect( int index );
 
 			/// <summary>
 			/// Retrieves the status of capture effects.
