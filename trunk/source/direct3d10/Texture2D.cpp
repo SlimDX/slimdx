@@ -22,8 +22,8 @@
 */
 
 #include <d3d10.h>
-#include <vector>
 
+#include "../stack_array.h"
 #include "../DataRectangle.h"
 #include "../DataStream.h"
 
@@ -64,8 +64,8 @@ namespace Direct3D10
 	{
 		if( data != nullptr )
 		{
-			std::vector<D3D10_SUBRESOURCE_DATA> initialData( data->Length );
-			for(unsigned int dataIndex = 0; dataIndex < initialData.size(); ++dataIndex ) 
+			stack_array<D3D10_SUBRESOURCE_DATA> initialData = stackalloc( D3D10_SUBRESOURCE_DATA, data->Length );
+			for( int dataIndex = 0; dataIndex < initialData.size(); ++dataIndex ) 
 			{
 				initialData[dataIndex].pSysMem = data[dataIndex]->Data->RawPointer;
 				initialData[dataIndex].SysMemPitch = data[dataIndex]->Pitch;

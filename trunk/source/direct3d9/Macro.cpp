@@ -24,6 +24,8 @@
 #include <d3dx9.h>
 #include <vcclr.h>
 
+#include "../stack_array.h"
+
 #include "Macro.h"
 
 using namespace System;
@@ -70,17 +72,16 @@ namespace Direct3D9
 	}
 
 	// helper function to resolve array<Macro>^ to D3DXMACRO*
-	std::vector<D3DXMACRO> Macro::Marshal( array<Macro>^ macros, [Out] array<GCHandle>^% handles )
+	stack_array<D3DXMACRO> Macro::Marshal( array<Macro>^ macros, [Out] array<GCHandle>^% handles )
 	{
 		if( macros == nullptr )
 		{
 			handles = nullptr;
-			return std::vector<D3DXMACRO>();
+			return stack_array<D3DXMACRO>();
 		}
 
 		//this array is null terminated, so we need to patch in an extra value
-		std::vector<D3DXMACRO> result;
-		result.resize(macros->Length + 1);
+		stack_array<D3DXMACRO> result( macros->Length + 1 );
 		handles = gcnew array<GCHandle>( macros->Length * 2 );
 
 		for( int i = 0; i < macros->Length; ++i )
@@ -101,15 +102,12 @@ namespace Direct3D9
 		return result;
 	}
 
-	void Macro::Unmarshal( std::vector<D3DXMACRO>& macros, array<GCHandle>^ handles )
+	void Macro::Unmarshal( array<GCHandle>^ handles )
 	{
-		macros.clear();
 		if( handles != nullptr )
 		{
 			for( int i = 0; i < handles->Length; ++i )
-			{
 				handles[i].Free();
-			}
 		}
 	}
 }

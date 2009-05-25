@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -20,9 +19,10 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
 #include "../DataBox.h"
-
+#include "../stack_array.h"
 #include "../dxgi/Adapter.h"
 
 #include "Direct3D10Exception.h"
@@ -184,9 +184,10 @@ namespace Direct3D10
 		if( RECORD_D3D10( InternalPointer->CheckCounter( &nativeDescription, &type, &count, 0, &nameLength, 0, &unitsLength, 0, &descriptionLength ) ).IsFailure )
 			return CounterMetadata();
 		
-		std::vector<char> nameChars( nameLength );
-		std::vector<char> unitsChars( unitsLength );
-		std::vector<char> descriptionChars( descriptionLength );
+		stack_array<char> nameChars = stackalloc( char, nameLength );
+		stack_array<char> unitsChars = stackalloc( char, unitsLength );
+		stack_array<char> descriptionChars = stackalloc( char, descriptionLength );
+
 		if( RECORD_D3D10( InternalPointer->CheckCounter( &nativeDescription, &type, &count, &nameChars[ 0 ], &nameLength, &unitsChars[ 0 ], &unitsLength, &descriptionChars[ 0 ], &descriptionLength ) ).IsFailure )
 			return CounterMetadata();
 			

@@ -21,9 +21,9 @@
 */
 #pragma once
 
-using System::Runtime::InteropServices::OutAttribute;
+#include "../stack_array.h"
 
-#include <vector>
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
@@ -36,8 +36,8 @@ namespace SlimDX
 		public value class Macro : System::IEquatable<Macro>
 		{
 		internal:
-			static std::vector<D3DXMACRO> Marshal( array<Macro>^ macros, [Out] array<System::Runtime::InteropServices::GCHandle>^% handles );
-			static void Unmarshal( std::vector<D3DXMACRO>& macros, array<System::Runtime::InteropServices::GCHandle>^ handles );
+			static stack_array<D3DXMACRO> Marshal( array<Macro>^ macros, [Out] array<System::Runtime::InteropServices::GCHandle>^% handles );
+			static void Unmarshal( array<System::Runtime::InteropServices::GCHandle>^ handles );
 
 		public:
 			/// <summary>

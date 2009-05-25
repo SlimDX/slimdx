@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../stack_array.h"
+
 using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
@@ -30,8 +32,8 @@ namespace SlimDX
 		public value class ShaderMacro : System::IEquatable<ShaderMacro>
 		{
 		internal:
-			static std::vector<D3D10_SHADER_MACRO> Marshal( array<ShaderMacro>^ macros, [Out] array<System::Runtime::InteropServices::GCHandle>^% handles );
-			static void Unmarshal( std::vector<D3D10_SHADER_MACRO>& macros, array<System::Runtime::InteropServices::GCHandle>^ handles );
+			static stack_array<D3D10_SHADER_MACRO> Marshal( array<ShaderMacro>^ macros, [Out] array<System::Runtime::InteropServices::GCHandle>^% handles );
+			static void Unmarshal( array<System::Runtime::InteropServices::GCHandle>^ handles );
 			
 		public:
 			property System::String^ Name;

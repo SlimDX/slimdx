@@ -23,7 +23,7 @@
 
 #include <dxgi.h>
 
-#include <vector>
+#include "../stack_array.h"
 
 #include "DXGIException.h"
 
@@ -80,13 +80,13 @@ namespace DXGI
 		if( Result::Last.IsFailure || modeCount == 0 )
 			return nullptr;
 		
-		std::vector<DXGI_MODE_DESC> nativeDescriptions(modeCount);
+		stack_array<DXGI_MODE_DESC> nativeDescriptions = stackalloc( DXGI_MODE_DESC, modeCount );
 		RECORD_DXGI( InternalPointer->GetDisplayModeList( static_cast<DXGI_FORMAT>( format ), static_cast<UINT>( flags ), &modeCount, &nativeDescriptions[0] ) );
 		if( Result::Last.IsFailure )
 			return nullptr;
 		
 		List<ModeDescription>^ descriptions = gcnew List<ModeDescription>( modeCount );
-		for( unsigned int descriptionIndex = 0; descriptionIndex < nativeDescriptions.size(); ++descriptionIndex )
+		for( int descriptionIndex = 0; descriptionIndex < nativeDescriptions.size(); ++descriptionIndex )
 			descriptions->Add( ModeDescription( nativeDescriptions[ descriptionIndex ] ) );
 		
 		return gcnew ReadOnlyCollection<ModeDescription>( descriptions );

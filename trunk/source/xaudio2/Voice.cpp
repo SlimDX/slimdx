@@ -22,7 +22,8 @@
 */
 
 #include <xaudio2.h>
-#include <vector>
+
+#include "../stack_array.h"
 
 #include "XAudio2Exception.h"
 #include "Voice.h"
@@ -181,7 +182,7 @@ namespace XAudio2
 		else
 		{
 #if SLIMDX_XAUDIO2_VERSION < 24
-			std::vector<IXAudio2Voice*> voices( outputVoices->Length );
+			stack_array<IXAudio2Voice*> voices = stackalloc( IXAudio2Voice*, outputVoices->Length );
 			for( int i = 0; i < outputVoices->Length; i++ )
 				voices[i] = outputVoices[i]->InternalPointer;
 
@@ -189,7 +190,7 @@ namespace XAudio2
 			sendList.OutputCount = outputVoices->Length;
 			sendList.pOutputVoices = &voices[0];
 #else
-			std::vector<XAUDIO2_SEND_DESCRIPTOR> voices( outputVoices->Length );
+			stack_array<XAUDIO2_SEND_DESCRIPTOR> voices = stackalloc( XAUDIO2_SEND_DESCRIPTOR, outputVoices->Length );
 			for( int i = 0; i < outputVoices->Length; i++ )
 				voices[i] = outputVoices[i].CreateNativeVersion();
 

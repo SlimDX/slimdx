@@ -22,8 +22,8 @@
 */
 #include <d3d9.h>
 #include <d3dx9.h>
-#include <vector>
 
+#include "../stack_array.h"
 #include "../DataStream.h"
 #include "../ComObject.h"
 
@@ -53,13 +53,13 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXCreateEffectCompiler( reinterpret_cast<LPCSTR>( pinnedData ), data->Length, macrosPtr, includePtr,
 			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
 
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 		compilationErrors = Utilities::BufferToString( errorBuffer );
 		
 		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
@@ -82,13 +82,13 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXCreateEffectCompiler( reinterpret_cast<LPCSTR>( pinnedData ), data->Length, macrosPtr, includePtr,
 			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
 
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
 		
 		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
@@ -127,13 +127,13 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXCreateEffectCompiler( memory, size, macrosPtr, includePtr,
 			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
 
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 
 		String^ compilationErrorsLocal = Utilities::BufferToString( errorBuffer );
 		if( compilationErrors != NULL )
@@ -230,13 +230,13 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXCreateEffectCompilerFromFile( reinterpret_cast<LPCTSTR>( pinnedFile ), macrosPtr, includePtr,
 			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
 
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 		errors = Utilities::BufferToString( errorBuffer );
 		
 		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, errors ).IsFailure )
@@ -258,13 +258,13 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXCreateEffectCompilerFromFile( reinterpret_cast<LPCTSTR>( pinnedFile ), macrosPtr, includePtr,
 			static_cast<DWORD>( flags ), &compiler, &errorBuffer );
 
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 		String^ errors = Utilities::BufferToString( errorBuffer );
 		
 		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, errors ).IsFailure )

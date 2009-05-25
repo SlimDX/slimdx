@@ -23,11 +23,12 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <vcclr.h>
-#include <vector>
 
+#include "../stack_array.h"
 #include "../ComObject.h"
-#include "../Math/Vector3.h"
 #include "../DataStream.h"
+
+#include "../Math/Vector3.h"
 
 #include "Device.h"
 #include "Mesh.h"
@@ -53,7 +54,7 @@ namespace Direct3D9
 
 		int count = callbackKeys->Length;
 
-		std::vector<D3DXKEY_CALLBACK> keys( count );
+		stack_array<D3DXKEY_CALLBACK> keys = stackalloc( D3DXKEY_CALLBACK, count );
 		for( int i = 0; i < count; i++ )
 		{
 			keys[i].Time = callbackKeys[i].Time;
@@ -106,7 +107,7 @@ namespace Direct3D9
 	array<CallbackKey>^ KeyframedAnimationSet::GetCallbackKeys()
 	{
 		int count = CallbackKeyCount;
-		std::vector<D3DXKEY_CALLBACK> keys( count );
+		stack_array<D3DXKEY_CALLBACK> keys = stackalloc( D3DXKEY_CALLBACK, count );
 
 		HRESULT hr = InternalPointer->GetCallbackKeys( &keys[0] );
 		
@@ -145,7 +146,7 @@ namespace Direct3D9
 	array<RotationKey>^ KeyframedAnimationSet::GetRotationKeys( int animation )
 	{
 		int count = GetRotationKeyCount( animation );
-		std::vector<D3DXKEY_QUATERNION> keys(count);
+		stack_array<D3DXKEY_QUATERNION> keys = stackalloc( D3DXKEY_QUATERNION, count );
 
 		HRESULT hr = InternalPointer->GetRotationKeys( animation, &keys[0] );
 		
@@ -195,7 +196,7 @@ namespace Direct3D9
 	array<ScaleKey>^ KeyframedAnimationSet::GetScaleKeys( int animation )
 	{
 		int count = GetScaleKeyCount( animation );
-		std::vector<D3DXKEY_VECTOR3> keys(count);
+		stack_array<D3DXKEY_VECTOR3> keys = stackalloc( D3DXKEY_VECTOR3, count );
 
 		HRESULT hr = InternalPointer->GetScaleKeys( animation, &keys[0] );
 		
@@ -243,7 +244,7 @@ namespace Direct3D9
 	array<TranslationKey>^ KeyframedAnimationSet::GetTranslationKeys( int animation )
 	{
 		int count = GetTranslationKeyCount( animation );
-		std::vector<D3DXKEY_VECTOR3> keys(count);
+		stack_array<D3DXKEY_VECTOR3> keys = stackalloc( D3DXKEY_VECTOR3, count );
 
 		HRESULT hr = InternalPointer->GetTranslationKeys( animation, &keys[0] );
 		
@@ -291,9 +292,9 @@ namespace Direct3D9
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		std::vector<D3DXKEY_VECTOR3> scales( scaleCount );
-		std::vector<D3DXKEY_QUATERNION> rotations( rotateCount );
-		std::vector<D3DXKEY_VECTOR3> translations( translateCount );
+		stack_array<D3DXKEY_VECTOR3> scales = stackalloc( D3DXKEY_VECTOR3, scaleCount );
+		stack_array<D3DXKEY_QUATERNION> rotations = stackalloc( D3DXKEY_QUATERNION, rotateCount );
+		stack_array<D3DXKEY_VECTOR3> translations = stackalloc( D3DXKEY_VECTOR3, translateCount );
 
 		HRESULT hr = InternalPointer->RegisterAnimationSRTKeys( reinterpret_cast<LPCSTR>( pinnedName ), scaleCount, rotateCount,
 			translateCount, &scales[0], &rotations[0], &translations[0], &result );

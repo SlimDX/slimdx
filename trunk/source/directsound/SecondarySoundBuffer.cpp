@@ -22,8 +22,8 @@
 */
 #include <windows.h>
 #include <dsound.h>
-#include <vector>
 
+#include "../stack_array.h"
 #include "../ComObject.h"
 #include "../Utilities.h"
 
@@ -67,8 +67,8 @@ namespace DirectSound
 		LPDWORD dwResults = NULL;
 		LPDSEFFECTDESC dsEffects = NULL;
 
-		std::vector<DWORD> outputs( count );
-		std::vector<DSEFFECTDESC> inputs( count );
+		stack_array<DWORD> outputs = stackalloc( DWORD, count );
+		stack_array<DSEFFECTDESC> inputs = stackalloc( DSEFFECTDESC, count );
 
 		if( effects != nullptr && count > 0 )
 		{

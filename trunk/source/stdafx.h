@@ -40,6 +40,5 @@
 #include <audiodefs.h>
 #include <xapo.h>
 
-#include <string>
 #include <memory>
-#include <vector>
+#include <stdexcept>

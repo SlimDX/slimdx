@@ -22,13 +22,14 @@
 */
 #include <d3d9.h>
 #include <d3dx9.h>
-#include <vector>
 
+#include "../stack_array.h"
 #include "../ComObject.h"
 #include "../DataStream.h"
-#include "XFile.h"
 
 #include "Direct3D9Exception.h"
+
+#include "XFile.h"
 
 using namespace System;
 using namespace System::IO;
@@ -106,18 +107,15 @@ namespace Direct3D9
 
 	String^ XFileSaveData::Name::get()
 	{
-		std::vector<char> name;
 		SIZE_T size = 0;
 
 		HRESULT hr = InternalPointer->GetName( NULL, &size );
-		
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 
-		name.resize( size );
+		stack_array<char> name = stackalloc( char, static_cast<size_t>( size ) );
 
 		hr = InternalPointer->GetName( &name[0], &size );
-
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 

@@ -23,7 +23,7 @@
 
 #include <dxgi.h>
 
-#include <vector>
+#include "../stack_array.h"
 
 #include "DXGIException.h"
 
@@ -73,8 +73,8 @@ namespace DXGI
 
 	ReadOnlyCollection<Residency>^ Device::QueryResourceResidency( IList<ComObject^>^ resources )
 	{
-		std::vector<DXGI_RESIDENCY> nativeResidency( resources->Count );
-		std::vector<IUnknown*> nativeResources( resources->Count );
+		stack_array<DXGI_RESIDENCY> nativeResidency = stackalloc( DXGI_RESIDENCY, resources->Count );
+		stack_array<IUnknown*> nativeResources = stackalloc( IUnknown*, resources->Count );
 		for( int resourceIndex = 0; resourceIndex < resources->Count; ++resourceIndex )
 			nativeResources[ resourceIndex ] = resources[ resourceIndex ]->UnknownPointer;
 		
@@ -83,7 +83,7 @@ namespace DXGI
 			return nullptr;
 		
 		List< Residency >^ result = gcnew List<Residency>( static_cast<int>( nativeResidency.size() ) );
-		for( unsigned long resourceIndex = 0; resourceIndex < nativeResidency.size(); ++resourceIndex )
+		for( int resourceIndex = 0; resourceIndex < nativeResidency.size(); ++resourceIndex )
 			result->Add( static_cast<Residency>( nativeResidency[ resourceIndex ] ) );
 		return gcnew ReadOnlyCollection<Residency>( result );
 	}

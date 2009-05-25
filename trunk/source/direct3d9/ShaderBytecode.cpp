@@ -23,6 +23,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#include "../stack_array.h"
 #include "../ComObject.h"
 #include "../DataStream.h"
 
@@ -70,13 +71,13 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXAssembleShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macrosPtr, includePtr,
 			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer );
 
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 		errors = Utilities::BufferToString( errorBuffer );
 
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -103,13 +104,13 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXAssembleShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macrosPtr, includePtr,
 			static_cast<DWORD>( flags ), &shaderBuffer, NULL );
 
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
@@ -170,13 +171,13 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXAssembleShaderFromFile( reinterpret_cast<LPCWSTR>( pinnedName ), macrosPtr, includePtr,
 			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer );
 
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 		errors = Utilities::BufferToString( errorBuffer );
 
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -203,13 +204,13 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXAssembleShaderFromFile( reinterpret_cast<LPCWSTR>( pinnedName ), macrosPtr, includePtr,
 			static_cast<DWORD>( flags ), &shaderBuffer, NULL );
 
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
@@ -255,14 +256,14 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXCompileShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macrosPtr, includePtr,
 			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
 			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, NULL );
 
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 		errors = Utilities::BufferToString( errorBuffer );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -294,14 +295,14 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXCompileShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macrosPtr, includePtr,
 			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
 			static_cast<DWORD>( flags ), &shaderBuffer, NULL, NULL );
 
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
@@ -373,14 +374,14 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXCompileShaderFromFile( pinnedFileName, macrosPtr, includePtr,
 			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
 			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, NULL );
 
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 		errors = Utilities::BufferToString( errorBuffer );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -412,14 +413,14 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXCompileShaderFromFile( pinnedFileName, macrosPtr, includePtr,
 			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
 			static_cast<DWORD>( flags ), &shaderBuffer, NULL, NULL );
 
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
@@ -466,13 +467,13 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXPreprocessShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macrosPtr, includePtr,
 			&shaderText, &errorBuffer );
 
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 		errors = Utilities::BufferToString( errorBuffer );
 
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -495,13 +496,13 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXPreprocessShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macrosPtr, includePtr,
 			&shaderText, NULL );
 
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
@@ -556,13 +557,13 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXPreprocessShaderFromFile( reinterpret_cast<LPCWSTR>( pinnedName ), macrosPtr, includePtr,
 			&shaderText, &errorBuffer );
 
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 		errors = Utilities::BufferToString( errorBuffer );
 
 		if( RECORD_D3D9( hr ).IsFailure )
@@ -586,13 +587,13 @@ namespace Direct3D9
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3DXMACRO> macros = Macro::Marshal( defines, handles );
+		stack_array<D3DXMACRO> macros = Macro::Marshal( defines, handles );
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXPreprocessShaderFromFile( reinterpret_cast<LPCWSTR>( pinnedName ), macrosPtr, includePtr,
 			&shaderText, NULL );
 
-		Macro::Unmarshal( macros, handles );
+		Macro::Unmarshal( handles );
 
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
@@ -750,7 +751,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure || count == 0 )
 			return nullptr;
 		
-		std::vector<LPCSTR> samplers( count );
+		stack_array<LPCSTR> samplers = stackalloc( LPCSTR, count );
 
 		hr = D3DXGetShaderSamplers( function, &samplers[0], &count );
 		
@@ -759,9 +760,7 @@ namespace Direct3D9
 		
 		array<String^>^ outputSamplers = gcnew array<String^>( count );
 		for( UINT i = 0; i < count; ++i )
-		{
 			outputSamplers[i] = gcnew String( samplers[i] );
-		}
 
 		return outputSamplers;
 	}

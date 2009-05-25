@@ -23,8 +23,8 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <vcclr.h>
-#include <vector>
 
+#include "../stack_array.h"
 #include "../ComObject.h"
 #include "../Utilities.h"
 #include "../DataStream.h"
@@ -433,19 +433,19 @@ namespace Direct3D9
 		array<ExtendedMaterial>^ materials = mesh->GetMaterials();
 		array<EffectInstance>^ effects = mesh->GetEffects();
 
-		std::vector<D3DXMATERIAL> nativeMaterials;
-		std::vector<D3DXEFFECTINSTANCE> nativeEffects;
+		stack_array<D3DXMATERIAL> nativeMaterials;
+		stack_array<D3DXEFFECTINSTANCE> nativeEffects;
 
 		if( materials != nullptr )
 		{
-			nativeMaterials.resize( materials->Length );
+			nativeMaterials = stack_array<D3DXMATERIAL>( materials->Length );
 			for( int i = 0; i < materials->Length; i++ )
 				nativeMaterials[i] = ExtendedMaterial::ToUnmanaged( materials[i] );
 		}
 
 		if( effects != nullptr )
 		{
-			nativeEffects.resize( effects->Length );
+			nativeEffects = stack_array<D3DXEFFECTINSTANCE>( effects->Length );
 			for( int i = 0; i < effects->Length; i++ )
 				nativeEffects[i] = EffectInstance::ToUnmanaged( effects[i] );
 		}

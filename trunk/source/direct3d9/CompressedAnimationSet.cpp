@@ -23,11 +23,12 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <vcclr.h>
-#include <vector>
 
+#include "../stack_array.h"
 #include "../ComObject.h"
-#include "../Math/Vector3.h"
 #include "../DataStream.h"
+
+#include "../Math/Vector3.h"
 
 #include "Device.h"
 #include "Mesh.h"
@@ -53,7 +54,7 @@ namespace Direct3D9
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 		int count = callbackKeys->Length;
 
-		std::vector<D3DXKEY_CALLBACK> keys( count );
+		stack_array<D3DXKEY_CALLBACK> keys = stackalloc( D3DXKEY_CALLBACK, count );
 		for( int i = 0; i < count; i++ )
 		{
 			keys[i].Time = callbackKeys[i].Time;
@@ -73,7 +74,7 @@ namespace Direct3D9
 	array<CallbackKey>^ CompressedAnimationSet::GetCallbackKeys()
 	{
 		int count = CallbackKeyCount;
-		std::vector<D3DXKEY_CALLBACK> keys( count );
+		stack_array<D3DXKEY_CALLBACK> keys = stackalloc( D3DXKEY_CALLBACK, count );
 
 		HRESULT hr = InternalPointer->GetCallbackKeys( &keys[0] );
 		

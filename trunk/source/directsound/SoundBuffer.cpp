@@ -22,10 +22,11 @@
 */
 #include <windows.h>
 #include <dsound.h>
-#include <vector>
 
+#include "../stack_array.h"
 #include "../ComObject.h"
 #include "../DataStream.h"
+
 #include "../multimedia/WaveFormatExtensible.h"
 
 #include "DirectSoundException.h"
@@ -130,7 +131,7 @@ namespace DirectSound
 		if( FAILED( hr ) )
 			return RECORD_DSOUND( hr );
 
-		std::vector<DSBPOSITIONNOTIFY> notifies( positions->Length );
+		stack_array<DSBPOSITIONNOTIFY> notifies = stackalloc( DSBPOSITIONNOTIFY, positions->Length );
 		for( int i = 0; i < positions->Length; i++ )
 		{
 			notifies[i].dwOffset = positions[i].Offset;

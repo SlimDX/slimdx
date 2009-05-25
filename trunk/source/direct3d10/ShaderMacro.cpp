@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -20,6 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
 #include "ShaderMacro.h"
 
@@ -30,17 +30,16 @@ namespace SlimDX
 {
 namespace Direct3D10
 {
-	std::vector<D3D10_SHADER_MACRO> ShaderMacro::Marshal( array<ShaderMacro>^ macros, [Out] array<GCHandle>^% handles )
+	stack_array<D3D10_SHADER_MACRO> ShaderMacro::Marshal( array<ShaderMacro>^ macros, [Out] array<GCHandle>^% handles )
 	{
 		if( macros == nullptr )
 		{
 			handles = nullptr;
-			return std::vector<D3D10_SHADER_MACRO>();
+			return stack_array<D3D10_SHADER_MACRO>();
 		}
 
-		//this array is null terminated, so we need to patch in an extra value
-		std::vector<D3D10_SHADER_MACRO> result;
-		result.resize(macros->Length + 1);
+		// this array is null terminated, so we need to patch in an extra value
+		stack_array<D3D10_SHADER_MACRO> result( macros->Length + 1 );
 		handles = gcnew array<GCHandle>( macros->Length * 2 );
 
 		for( int i = 0; i < macros->Length; ++i )
@@ -61,15 +60,12 @@ namespace Direct3D10
 		return result;
 	}
 
-	void ShaderMacro::Unmarshal( std::vector<D3D10_SHADER_MACRO>& macros, array<GCHandle>^ handles )
+	void ShaderMacro::Unmarshal( array<GCHandle>^ handles )
 	{
-		macros.clear();
 		if( handles != nullptr )
 		{
 			for( int i = 0; i < handles->Length; ++i )
-			{
 				handles[i].Free();
-			}
 		}
 	}
 

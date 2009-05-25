@@ -37,7 +37,7 @@ namespace Direct3D10
 	{
 		m_Name = gcnew String( native.Name );
 		m_Annotations = native.Annotations;
-		m_Signature = gcnew ShaderSignature( native.pIAInputSignature, native.IAInputSignatureSize );
+		m_Signature = gcnew ShaderSignature( native.pIAInputSignature, static_cast<long>( native.IAInputSignatureSize ) );
 		m_StencilRef = native.StencilRef;
 		m_SampleMask = native.SampleMask;
 		m_BlendFactor = Color4( native.BlendFactor[ 3 ], native.BlendFactor[ 0 ], native.BlendFactor[ 1 ], native.BlendFactor[ 2 ] );

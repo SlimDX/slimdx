@@ -20,10 +20,11 @@
 * THE SOFTWARE.
 */
 #include "stdafx.h"
+
 #include <windows.h>
 #include <dinput.h>
-#include <vector>
 
+#include "../stack_array.h"
 #include "../ComObject.h"
 #include "../Utilities.h"
 
@@ -90,7 +91,7 @@ namespace DirectInput
 		format.dwDataSize = static_cast<DWORD>( sizeof( type ) );
 		format.dwNumObjs = objectAttributes->Count;
 
-		std::vector<DIOBJECTDATAFORMAT> objectFormats( objectAttributes->Count );
+		stack_array<DIOBJECTDATAFORMAT> objectFormats = stackalloc( DIOBJECTDATAFORMAT, objectAttributes->Count );
 		for( int i = 0; i < objectAttributes->Count; i++ )
 		{
 			// Manual Allocation: handled properly
@@ -162,7 +163,7 @@ namespace DirectInput
 		if( size == 0 )
 			return list;
 
-		std::vector<DIDEVICEOBJECTDATA> data( size );
+		stack_array<DIDEVICEOBJECTDATA> data = stackalloc( DIDEVICEOBJECTDATA, size );
 		hr = InternalPointer->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ), &data[0], &size, 0 );
 		if( RecordError( hr ).IsFailure )
 			return nullptr;
@@ -195,7 +196,7 @@ namespace DirectInput
 	Result CustomDevice<TDataFormat>::GetCurrentState( TDataFormat% data )
 	{
 		size_t typeSize = sizeof( TDataFormat );
-		std::vector<BYTE> bytes( typeSize );
+		stack_array<BYTE> bytes = stackalloc( BYTE, typeSize );
 
 		HRESULT hr = InternalPointer->GetDeviceState( static_cast<DWORD>( typeSize ), &bytes[0] );
 		if( RecordError( hr ).IsFailure )

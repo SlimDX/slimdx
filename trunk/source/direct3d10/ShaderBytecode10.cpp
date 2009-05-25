@@ -132,14 +132,14 @@ namespace Direct3D10
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3D10_SHADER_MACRO> macros = ShaderMacro::Marshal( defines, handles );
+		stack_array<D3D10_SHADER_MACRO> macros = ShaderMacro::Marshal( defines, handles );
 		D3D10_SHADER_MACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DCompile( pinnedSource, shaderSource->Length, NULL, macrosPtr, includePtr, 
 			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
 			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), &code, &errors );
 
-		ShaderMacro::Unmarshal( macros, handles );
+		ShaderMacro::Unmarshal( handles );
 
 		String^ compilationErrorsLocal = Utilities::BlobToString( errors );
 		compilationErrors = compilationErrorsLocal;
@@ -183,14 +183,12 @@ namespace Direct3D10
 			includePtr = &includeShim;
 
 		array<GCHandle>^ handles;
-		std::vector<D3D10_SHADER_MACRO> macros = ShaderMacro::Marshal( defines, handles );
+		stack_array<D3D10_SHADER_MACRO> macros = ShaderMacro::Marshal( defines, handles );
 		D3D10_SHADER_MACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DCompile( NULL, 0, reinterpret_cast<LPCSTR>( pinnedName ), macrosPtr, includePtr, 
 			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
 			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), &code, &errors );
-
-		ShaderMacro::Unmarshal( macros, handles );
 
 		String^ compilationErrorsLocal = Utilities::BlobToString( errors );
 		compilationErrors = compilationErrorsLocal;

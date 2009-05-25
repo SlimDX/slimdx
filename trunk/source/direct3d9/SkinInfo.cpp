@@ -23,8 +23,8 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <vcclr.h>
-#include <vector>
 
+#include "../stack_array.h"
 #include "../DataStream.h"
 #include "../ComObject.h"
 
@@ -61,7 +61,7 @@ namespace Direct3D9
 		ID3DXSkinInfo *result;
 
 		int length = boneCombinationTable->Length;
-		std::vector<D3DXBONECOMBINATION> bones( length );
+		stack_array<D3DXBONECOMBINATION> bones = stackalloc( D3DXBONECOMBINATION, length );
 		for( int i = 0; i < length; i++ )
 			bones[i] = boneCombinationTable[i]->ToUnmanaged();
 
