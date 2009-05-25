@@ -32,11 +32,7 @@ using namespace System;
 namespace SlimDX
 {
 namespace Direct3D10
-{ 
-	Asynchronous::Asynchronous()
-	{
-	}
-
+{
 	bool Asynchronous::IsDataAvailable::get()
 	{
 		return InternalPointer->GetData( 0, 0, 0 ) == S_OK;

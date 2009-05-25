@@ -42,3 +42,4 @@
 
 #include <memory>
 #include <stdexcept>
+#include <cmath>

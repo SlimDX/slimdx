@@ -35,12 +35,9 @@ namespace SlimDX
 		/// Base class for objects that perform asynchronous GPU data access.
 		/// </summary>
 		/// <unmanaged>ID3D10Asynchronous</unmanaged>
-		public ref class Asynchronous : public DeviceChild
+		public ref class Asynchronous abstract : public DeviceChild
 		{
-			COMOBJECT(ID3D10Asynchronous, Asynchronous);
-		
-		protected:
-			Asynchronous();
+			COMOBJECT_BASE(ID3D10Asynchronous);
 		
 		public:
 			/// <summary>

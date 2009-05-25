@@ -29,12 +29,9 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class ResourceView : public DeviceChild
+		public ref class ResourceView abstract : public DeviceChild
 		{
-			COMOBJECT(ID3D10View, ResourceView);
-
-		protected:
-			ResourceView();
+			COMOBJECT_BASE(ID3D10View);
 		};
 	}
 };

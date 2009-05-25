@@ -25,7 +25,8 @@
 #include "../DataRectangle.h"
 
 #include "Enums.h"
-#include "Texture10.h"
+#include "Resource10.h"
+#include "ImageLoadInformation.h"
 
 namespace SlimDX
 {
@@ -36,7 +37,7 @@ namespace SlimDX
 		ref class Device;
 		value class Texture2DDescription;
 		
-		public ref class Texture2D : public Texture
+		public ref class Texture2D : public Resource
 		{
 			COMOBJECT(ID3D10Texture2D, Texture2D);
 			
@@ -97,6 +98,9 @@ namespace SlimDX
 			static Texture2D^ FromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory, ImageLoadInformation loadInfo );
 			static Texture2D^ FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes );
 			static Texture2D^ FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes, ImageLoadInformation loadInfo );
+
+			static Result ToFile( Texture2D^ texture, ImageFileFormat format, System::String^ fileName );
+			static Result ToStream( Texture2D^ texture, ImageFileFormat format, System::IO::Stream^ stream );
 		};
 	}
 };

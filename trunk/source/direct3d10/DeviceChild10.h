@@ -33,12 +33,9 @@ namespace SlimDX
 		/// An object that is bound to a Device.
 		/// </summary>
 		/// <unmanaged>ID3D10DeviceChild</unmanaged>
-		public ref class DeviceChild : public ComObject 
+		public ref class DeviceChild abstract : public ComObject 
 		{
-			COMOBJECT(ID3D10DeviceChild, DeviceChild);
-		
-		protected:
-			DeviceChild();
+			COMOBJECT_BASE(ID3D10DeviceChild);
 			
 		public:
 			/// <summary>

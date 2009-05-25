@@ -112,83 +112,116 @@ namespace Direct3D10
 	
 	Texture1D^ Texture1D::FromFile( SlimDX::Direct3D10::Device^ device, String^ fileName )
 	{
-		ID3D10Resource* resource = Texture::ConstructFromFile( device, fileName, 0 );
+		ID3D10Resource* resource = Resource::ConstructFromFile( device, fileName, 0 );
 		if( resource == 0 )
 			return nullptr;
 			
 		D3D10_RESOURCE_DIMENSION type;
 		resource->GetType( &type );
 		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE1D )
-			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
-		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( resource ), nullptr );
+			throw gcnew InvalidOperationException( "Could not load file as 1D texture." );
+
+		return Texture1D::FromPointer( static_cast<ID3D10Texture1D*>( resource ) );
 	}
 	
 	Texture1D^ Texture1D::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory )
 	{
-		ID3D10Resource* resource = Texture::ConstructFromMemory( device, memory, 0 );
+		ID3D10Resource* resource = Resource::ConstructFromMemory( device, memory, 0 );
 		if( resource == 0 )
 			return nullptr;
 			
 		D3D10_RESOURCE_DIMENSION type;
 		resource->GetType( &type );
 		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE1D )
-			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
-		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( resource ), nullptr );
+			throw gcnew InvalidOperationException( "Could not load file as 1D texture." );
+
+		return Texture1D::FromPointer( static_cast<ID3D10Texture1D*>( resource ) );
 	}
 	
 	Texture1D^ Texture1D::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, int sizeInBytes )
 	{
-		ID3D10Resource* resource = Texture::ConstructFromStream( device, stream, sizeInBytes, 0 );
+		ID3D10Resource* resource = Resource::ConstructFromStream( device, stream, sizeInBytes, 0 );
 		if( resource == 0 )
 			return nullptr;
 			
 		D3D10_RESOURCE_DIMENSION type;
 		resource->GetType( &type );
 		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE1D )
-			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
-		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( resource ), nullptr );
+			throw gcnew InvalidOperationException( "Could not load file as 1D texture." );
+
+		return Texture1D::FromPointer( static_cast<ID3D10Texture1D*>( resource ) );
 	}
 	
 	Texture1D^ Texture1D::FromFile( SlimDX::Direct3D10::Device^ device, String^ fileName, ImageLoadInformation loadInfo )
 	{
 		D3DX10_IMAGE_LOAD_INFO info = loadInfo.CreateNativeVersion();
-		ID3D10Resource* resource = Texture::ConstructFromFile( device, fileName, &info );
+		ID3D10Resource* resource = Resource::ConstructFromFile( device, fileName, &info );
 		if( resource == 0 )
 			return nullptr;
 
 		D3D10_RESOURCE_DIMENSION type;
 		resource->GetType( &type );
 		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE1D )
-			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
-		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( resource ), nullptr );
+			throw gcnew InvalidOperationException( "Could not load file as 1D texture." );
+
+		return Texture1D::FromPointer( static_cast<ID3D10Texture1D*>( resource ) );
 	}
 
 	Texture1D^ Texture1D::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, ImageLoadInformation loadInfo )
 	{
 		D3DX10_IMAGE_LOAD_INFO info = loadInfo.CreateNativeVersion();
-		ID3D10Resource* resource = Texture::ConstructFromMemory( device, memory, &info );
+		ID3D10Resource* resource = Resource::ConstructFromMemory( device, memory, &info );
 		if( resource == 0 )
 			return nullptr;
 
 		D3D10_RESOURCE_DIMENSION type;
 		resource->GetType( &type );
 		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE1D )
-			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
-		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( resource ), nullptr );
+			throw gcnew InvalidOperationException( "Could not load file as 1D texture." );
+
+		return Texture1D::FromPointer( static_cast<ID3D10Texture1D*>( resource ) );
 	}
 
 	Texture1D^ Texture1D::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, int sizeInBytes, ImageLoadInformation loadInfo )
 	{
 		D3DX10_IMAGE_LOAD_INFO info = loadInfo.CreateNativeVersion();
-		ID3D10Resource* resource = Texture::ConstructFromStream( device, stream, sizeInBytes, &info );
+		ID3D10Resource* resource = Resource::ConstructFromStream( device, stream, sizeInBytes, &info );
 		if( resource == 0 )
 			return nullptr;
 
 		D3D10_RESOURCE_DIMENSION type;
 		resource->GetType( &type );
 		if( type != D3D10_RESOURCE_DIMENSION_TEXTURE1D )
-			throw gcnew InvalidOperationException( "Could not load file as 1D texture." ); 
-		return gcnew Texture1D( static_cast<ID3D10Texture1D*>( resource ), nullptr );
+			throw gcnew InvalidOperationException( "Could not load file as 1D texture." );
+
+		return Texture1D::FromPointer( static_cast<ID3D10Texture1D*>( resource ) );
+	}
+
+	Result Texture1D::ToFile( Texture1D^ texture, ImageFileFormat format, String^ fileName )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+
+		HRESULT hr = D3DX10SaveTextureToFile( texture->InternalPointer, static_cast<D3DX10_IMAGE_FILE_FORMAT>( format ), pinnedName );
+		return RECORD_D3D10( hr );
+	}
+
+	Result Texture1D::ToStream( Texture1D^ texture, ImageFileFormat format, Stream^ stream )
+	{
+		ID3D10Blob* blob = 0;
+		HRESULT hr = D3DX10SaveTextureToMemory( texture->InternalPointer, static_cast<D3DX10_IMAGE_FILE_FORMAT>( format ), &blob, 0 );
+		if( RECORD_D3D10( hr ).IsFailure )
+			return Result::Last;
+		
+		if( static_cast<SIZE_T>( stream->Length - stream->Position ) < blob->GetBufferSize() )
+			throw gcnew InvalidOperationException( "The specified stream does not have sufficient capacity for the specified texture." );
+		
+		// Write byte-by-byte to avoid allocating a managed byte[] that will wastefully persist.
+		unsigned char* bytes = reinterpret_cast<unsigned char*>( blob->GetBufferPointer() );
+		for(SIZE_T byteIndex = 0; byteIndex < blob->GetBufferSize(); ++byteIndex)
+			stream->WriteByte( bytes[byteIndex] );
+		
+		blob->Release();
+		return Result::Last;
 	}
 }
 }
