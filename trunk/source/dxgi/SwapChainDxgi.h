@@ -42,8 +42,8 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
-		interface struct IFactory;
-		interface struct IOutput;
+		ref class Factory;
+		ref class Output;
 		value class FrameStatistics;
 		value class ModeDescription;
 		value class SwapChainDescription;
@@ -85,9 +85,9 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the output containing the swap chain target.
 			/// </summary>
-			property IOutput^ ContainingOutput
+			property Output^ ContainingOutput
 			{
-				SDX_METHOD( IOutput^ get());
+				SDX_METHOD( Output^ get());
 			}
 			
 			/// <summary>
@@ -96,7 +96,7 @@ namespace SlimDX
 			/// <param name="factory">The factory used to create the swap chain.</param>
 			/// <param name="device">The device used to present images to the swap chain.</param>
 			/// <param name="description">Swap chain properties.</param>
-			SDX_METHOD_CONCRETE(SwapChain( IFactory^ factory, ComObject^ device, SwapChainDescription description ));
+			SDX_METHOD_CONCRETE(SwapChain( Factory^ factory, ComObject^ device, SwapChainDescription description ));
 			
 			/// <summary>
 			/// Gets a swap chain back buffer.
@@ -113,7 +113,7 @@ namespace SlimDX
 			/// <param name="isFullScreen">Receives a value indicating if the swap chain is running in full screen mode.</param>
 			/// <param name="target">Receives the full screen ouput if the swap chain is in full screen mode. Otherwise ignored.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			SDX_METHOD(Result GetFullScreenState( [Out] bool% isFullScreen, [Out] IOutput^% target ));
+			SDX_METHOD(Result GetFullScreenState( [Out] bool% isFullScreen, [Out] Output^% target ));
 			
 			/// <summary>
 			/// Sets the full screen state.
@@ -123,7 +123,7 @@ namespace SlimDX
 			/// output containing the swap chain; otherwise, this parameter is ignored. If you set this parameter
 			/// to null, DXGI will choose the output based on the swap-chain's device and the output window's placement.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			SDX_METHOD(Result SetFullScreenState( bool isFullScreen, IOutput^ target ));
+			SDX_METHOD(Result SetFullScreenState( bool isFullScreen, Output^ target ));
 			
 			/// <summary>
 			/// Changes the swap chain's back buffer size, format, and count.

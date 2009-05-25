@@ -521,7 +521,7 @@ namespace SampleFramework
             else
             {
                 bool fullscreen;
-                IOutput output;
+                Output output;
                 Direct3D10.SwapChain.GetFullScreenState(out fullscreen, out output);
                 ResizeDXGIBuffers(0, 0, fullscreen);
                 game.Window.Show();

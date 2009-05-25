@@ -38,7 +38,7 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
-		interface struct IAdapter;
+		ref class Adapter;
 
 		SDX_COM_CLASS(Factory)
 		{
@@ -61,7 +61,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="index">The index of the desired adapter.</param>
 			/// <returns>The specified adapter, or <c>null</c> on failure.</returns>
-			SDX_METHOD(IAdapter^ GetAdapter( int index ));
+			SDX_METHOD(Adapter^ GetAdapter( int index ));
 		
 			/// <summary>
 			/// Creates a software adapater interface.
@@ -69,7 +69,7 @@ namespace SlimDX
 			/// <param name="softwareModule">The unmanaged HMODULE for the software adapter DLL.</param>
 			/// <returns>The specified adapter, or <c>null</c> on failure.</returns>
 			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
-			SDX_METHOD(IAdapter^ CreateSoftwareAdapter( System::IntPtr softwareModule ));
+			SDX_METHOD(Adapter^ CreateSoftwareAdapter( System::IntPtr softwareModule ));
 			
 			/// <summary>
 			/// Creates a software adapater interface.
@@ -77,7 +77,7 @@ namespace SlimDX
 			/// <param name="softwareModule">The module for the software adapter DLL.</param>
 			/// <returns>The specified adapter, or <c>null</c> on failure.</returns>
 			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
-			SDX_METHOD(IAdapter^ CreateSoftwareAdapter( System::Reflection::Module^ softwareModule ));
+			SDX_METHOD(Adapter^ CreateSoftwareAdapter( System::Reflection::Module^ softwareModule ));
 			
 			/// <summary>
 			/// Gets the window handle associated with the factory (the window through which the user signals fullscreen

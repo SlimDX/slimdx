@@ -40,7 +40,7 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
-		interface struct ISurface;
+		ref class Surface;
 		value class FrameStatistics;
 		value class GammaControl;
 		value class GammaControlCapabilities;
@@ -111,14 +111,14 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="surface">The new display surface.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			SDX_METHOD(Result SetDisplaySurface( ISurface^ surface ));
+			SDX_METHOD(Result SetDisplaySurface( Surface^ surface ));
 			
 			/// <summary>
 			/// Copies the display surface content to the specified destination surface.
 			/// </summary>
 			/// <param name="surface">The destination surface.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			SDX_METHOD(Result CopyDisplaySurfaceTo( ISurface^ surface ));
+			SDX_METHOD(Result CopyDisplaySurfaceTo( Surface^ surface ));
 			
 			/// <summary>
 			/// Takes ownership of an output.

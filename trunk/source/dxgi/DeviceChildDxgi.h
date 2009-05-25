@@ -36,7 +36,7 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
-		interface struct IDevice;
+		ref class Device;
 		
 		/// <summary>
 		/// An object that is bound to a Device.
@@ -54,9 +54,9 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the device the object is bound to.
 			/// </summary>
-			property DXGI::IDevice^ Device
+			property DXGI::Device^ Device
 			{
-				SDX_METHOD(DXGI::IDevice^ get());
+				SDX_METHOD(DXGI::Device^ get());
 			}
 		};
 	}

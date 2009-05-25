@@ -57,7 +57,7 @@ namespace DXGI
 		return count;
 	}
 
-	IAdapter^ Factory::GetAdapter( int index )
+	Adapter^ Factory::GetAdapter( int index )
 	{
 		IDXGIAdapter* adapter = 0;
 		RECORD_DXGI( InternalPointer->EnumAdapters( index, &adapter) );
@@ -66,7 +66,7 @@ namespace DXGI
 		return Adapter::FromPointer( adapter );
 	}
 	
-	IAdapter^ Factory::CreateSoftwareAdapter( IntPtr softwareModule )
+	Adapter^ Factory::CreateSoftwareAdapter( IntPtr softwareModule )
 	{
 		if( softwareModule == IntPtr::Zero )
 			throw gcnew ArgumentNullException( "softwareModule" );
@@ -80,7 +80,7 @@ namespace DXGI
 		return Adapter::FromPointer( adapter );
 	}
 	
-	IAdapter^ Factory::CreateSoftwareAdapter( Module^ module )
+	Adapter^ Factory::CreateSoftwareAdapter( Module^ module )
 	{
 		return CreateSoftwareAdapter( Marshal::GetHINSTANCE( module ) );
 	}

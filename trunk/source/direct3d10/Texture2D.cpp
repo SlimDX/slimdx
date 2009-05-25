@@ -65,7 +65,7 @@ namespace Direct3D10
 		if( data != nullptr )
 		{
 			stack_array<D3D10_SUBRESOURCE_DATA> initialData = stackalloc( D3D10_SUBRESOURCE_DATA, data->Length );
-			for( int dataIndex = 0; dataIndex < initialData.size(); ++dataIndex ) 
+			for( size_t dataIndex = 0; dataIndex < initialData.size(); ++dataIndex ) 
 			{
 				initialData[dataIndex].pSysMem = data[dataIndex]->Data->RawPointer;
 				initialData[dataIndex].SysMemPitch = data[dataIndex]->Pitch;
