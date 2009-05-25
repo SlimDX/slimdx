@@ -60,7 +60,7 @@ namespace Direct3D9
 		//this is called by DeviceEx
 	}
 
-	Device::Device( Direct3D^ direct3D, int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, ... array<PresentParameters^>^ presentParameters )
+	Device::Device( SlimDX::Direct3D9::Direct3D^ direct3D, int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, ... array<PresentParameters^>^ presentParameters )
 	{
 		IDirect3DDevice9* device;
 		stack_array<D3DPRESENT_PARAMETERS> d3dpp = stackalloc( D3DPRESENT_PARAMETERS, presentParameters->Length );
@@ -1600,6 +1600,17 @@ namespace Direct3D9
 		IDirect3DSurface9* destination = destinationSurface != nullptr ? destinationSurface->InternalPointer : NULL;
 		HRESULT hr = InternalPointer->GetRenderTargetData( target, destination );
 		return RECORD_D3D9( hr );
+	}
+
+	SlimDX::Direct3D9::Direct3D^ Device::Direct3D::get()
+	{
+		IDirect3D9 *pointer;
+
+		HRESULT hr = InternalPointer->GetDirect3D( &pointer );
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		return SlimDX::Direct3D9::Direct3D::FromPointer( pointer );
 	}
 }
 }

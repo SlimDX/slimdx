@@ -34,3 +34,11 @@ TEST( BoundingSphereTests, ConstructCenterRadius )
 	ASSERT_EQ( 3.0f, sphere.Center.Z );
 	ASSERT_EQ( 5.0f, sphere.Radius );
 }
+
+TEST( BoundingSphereTests, DisjointTest )
+{
+	BoundingSphere sphere1( Vector3::Zero, 300 );
+	BoundingSphere sphere2( Vector3( 301, 0, 0 ), 0.5f );
+
+	ASSERT_EQ( (int)ContainmentType::Disjoint, (int)BoundingSphere::Contains( sphere1, sphere2 ) );
+}

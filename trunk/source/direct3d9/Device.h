@@ -1385,6 +1385,11 @@ namespace SlimDX
 				SlimDX::Direct3D9::PixelShader^ get();
 				void set( SlimDX::Direct3D9::PixelShader^ value );
 			}
+
+			property Direct3D^ Direct3D
+			{
+				SlimDX::Direct3D9::Direct3D^ get();
+			}
 		};
 	}
 }
