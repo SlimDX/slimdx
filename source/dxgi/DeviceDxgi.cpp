@@ -62,7 +62,7 @@ namespace DXGI
 			throw gcnew DXGIException( Result::Last );
 	}
 
-	IAdapter^ Device::Adapter::get()
+	Adapter^ Device::Adapter::get()
 	{
 		IDXGIAdapter* adapter = 0;
 		RECORD_DXGI( InternalPointer->GetAdapter( &adapter ) );
@@ -83,7 +83,7 @@ namespace DXGI
 			return nullptr;
 		
 		List< Residency >^ result = gcnew List<Residency>( static_cast<int>( nativeResidency.size() ) );
-		for( int resourceIndex = 0; resourceIndex < nativeResidency.size(); ++resourceIndex )
+		for( size_t resourceIndex = 0; resourceIndex < nativeResidency.size(); ++resourceIndex )
 			result->Add( static_cast<Residency>( nativeResidency[ resourceIndex ] ) );
 		return gcnew ReadOnlyCollection<Residency>( result );
 	}

@@ -38,7 +38,7 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
-		interface struct IAdapter;
+		ref class Adapter;
 		
 		/// <summary>
 		/// An object that produces image data.
@@ -61,9 +61,9 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the adapter associated with the device.
 			/// </summary>
-			property IAdapter^ Adapter
+			property SlimDX::DXGI::Adapter^ Adapter
 			{
-				SDX_METHOD(IAdapter^ get());
+				SDX_METHOD(SlimDX::DXGI::Adapter^ get());
 			}
 			
 			/// <summary>

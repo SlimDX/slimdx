@@ -55,7 +55,7 @@ namespace DXGI
 		return count;
 	}
 	
-	IOutput^ Adapter::GetOutput( int index )
+	Output^ Adapter::GetOutput( int index )
 	{
 		IDXGIOutput* output = 0;
 		RECORD_DXGI( InternalPointer->EnumOutputs( index, &output) );

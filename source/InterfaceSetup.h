@@ -30,5 +30,5 @@
 #define FORWARD_DECL_REF(c)  interface class I##c; ref class c
 #define FORWARD_DECL_VALUE(c) value class c
 
-#define BOOST_PP_ITERATION_LIMITS (1, 2)
+#define BOOST_PP_ITERATION_LIMITS (1, 1)
 #include BOOST_PP_ITERATE()

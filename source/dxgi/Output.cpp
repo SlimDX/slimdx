@@ -86,7 +86,7 @@ namespace DXGI
 			return nullptr;
 		
 		List<ModeDescription>^ descriptions = gcnew List<ModeDescription>( modeCount );
-		for( int descriptionIndex = 0; descriptionIndex < nativeDescriptions.size(); ++descriptionIndex )
+		for( size_t descriptionIndex = 0; descriptionIndex < nativeDescriptions.size(); ++descriptionIndex )
 			descriptions->Add( ModeDescription( nativeDescriptions[ descriptionIndex ] ) );
 		
 		return gcnew ReadOnlyCollection<ModeDescription>( descriptions );
@@ -111,14 +111,14 @@ namespace DXGI
 		return RECORD_DXGI( InternalPointer->SetGammaControl( &nativeControl ) );
 	}
 	
-	Result Output::SetDisplaySurface( ISurface^ surface )
+	Result Output::SetDisplaySurface( Surface^ surface )
 	{
 		if( surface == nullptr )
 			throw gcnew System::ArgumentNullException( "surface" );
 		return RECORD_DXGI( InternalPointer->SetDisplaySurface( surface->InternalPointer ) );
 	}
 	
-	Result Output::CopyDisplaySurfaceTo( ISurface^ surface )
+	Result Output::CopyDisplaySurfaceTo( Surface^ surface )
 	{
 		if( surface == nullptr )
 			throw gcnew System::ArgumentNullException( "surface" );

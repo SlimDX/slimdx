@@ -37,7 +37,7 @@ namespace SlimDX
 {
 namespace DXGI
 { 	
-	SwapChain::SwapChain( IFactory^ factory, ComObject^ device, SwapChainDescription description )
+	SwapChain::SwapChain( Factory^ factory, ComObject^ device, SwapChainDescription description )
 	{
 		if( factory == nullptr )
 			throw gcnew ArgumentNullException( "factory" );
@@ -82,7 +82,7 @@ namespace DXGI
 		return result;
 	}
 	
-	IOutput^ SwapChain::ContainingOutput::get()
+	Output^ SwapChain::ContainingOutput::get()
 	{
 		IDXGIOutput* output = 0;
 		if( RECORD_DXGI( InternalPointer->GetContainingOutput( &output ) ).IsFailure )
@@ -111,7 +111,7 @@ namespace DXGI
 		return result;
 	}
 
-	Result SwapChain::GetFullScreenState( bool% isFullScreen, IOutput^% target )
+	Result SwapChain::GetFullScreenState( bool% isFullScreen, Output^% target )
 	{
 		BOOL result = false;
 		IDXGIOutput* output = 0;
@@ -127,7 +127,7 @@ namespace DXGI
 		return Result::Last;
 	}
 	
-	Result SwapChain::SetFullScreenState( bool isFullScreen, IOutput^ target )
+	Result SwapChain::SetFullScreenState( bool isFullScreen, Output^ target )
 	{
 		IDXGIOutput* output = target == nullptr ? 0 : target->InternalPointer;
 		return RECORD_DXGI( InternalPointer->SetFullscreenState( isFullScreen, output ) );

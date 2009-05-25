@@ -68,7 +68,7 @@ namespace SlimDX
 			/// Gets the specified output.
 			/// </summary>
 			/// <returns>The desired output, or <c>null</c> on failure.</returns>
-			SDX_METHOD(IOutput^ GetOutput( int index ));
+			SDX_METHOD(Output^ GetOutput( int index ));
 			
 			/// <summary>
 			/// Determines if a device interface for a graphics component is supported by the adapter.
