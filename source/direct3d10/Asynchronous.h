@@ -38,6 +38,9 @@ namespace SlimDX
 		public ref class Asynchronous abstract : public DeviceChild
 		{
 			COMOBJECT_BASE(ID3D10Asynchronous);
+
+		protected:
+			Asynchronous() { }
 		
 		public:
 			/// <summary>

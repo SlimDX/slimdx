@@ -36,6 +36,9 @@ namespace SlimDX
 		public ref class DeviceChild abstract : public ComObject 
 		{
 			COMOBJECT_BASE(ID3D10DeviceChild);
+
+		protected:
+			DeviceChild() { }
 			
 		public:
 			/// <summary>

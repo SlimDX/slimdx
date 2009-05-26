@@ -42,12 +42,13 @@ namespace XAudio2
 {
 	XAudio2::XAudio2()
 	{
-		CoInitializeEx( NULL, COINIT_APARTMENTTHREADED );
+		HRESULT hr = CoInitializeEx( NULL, COINIT_APARTMENTTHREADED );
+		if( RECORD_XAUDIO2( hr ).IsFailure )
+			throw gcnew XAudio2Exception( Result::Last );
 
 		IXAudio2 *pointer;
 
-		HRESULT hr = XAudio2Create( &pointer, 0, XAUDIO2_DEFAULT_PROCESSOR );
-
+		hr = XAudio2Create( &pointer, 0, XAUDIO2_DEFAULT_PROCESSOR );
 		if( RECORD_XAUDIO2( hr ).IsFailure )
 			throw gcnew XAudio2Exception( Result::Last );
 
@@ -63,12 +64,13 @@ namespace XAudio2
 	
 	XAudio2::XAudio2( XAudio2Flags flags, ProcessorSpecifier processor )
 	{
-		CoInitializeEx( NULL, COINIT_APARTMENTTHREADED );
+		HRESULT hr = CoInitializeEx( NULL, COINIT_APARTMENTTHREADED );
+		if( RECORD_XAUDIO2( hr ).IsFailure )
+			throw gcnew XAudio2Exception( Result::Last );
 
 		IXAudio2 *pointer;
 
-		HRESULT hr = XAudio2Create( &pointer, static_cast<UINT32>( flags ), static_cast<XAUDIO2_PROCESSOR>( processor ) );
-
+		hr = XAudio2Create( &pointer, static_cast<UINT32>( flags ), static_cast<XAUDIO2_PROCESSOR>( processor ) );
 		if( RECORD_XAUDIO2( hr ).IsFailure )
 			throw gcnew XAudio2Exception( Result::Last );
 

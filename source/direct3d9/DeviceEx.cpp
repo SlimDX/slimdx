@@ -39,28 +39,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	DeviceEx::DeviceEx( IDirect3DDevice9Ex* pointer, ComObject^ owner )
-		: Device( true )
-	{
-		Construct( pointer, owner );
-	}
-
-	DeviceEx::DeviceEx( IntPtr pointer )
-		: Device( true )
-	{
-		Construct( pointer, NativeInterface );
-	}
-	
-	DeviceEx^ DeviceEx::FromPointer( IDirect3DDevice9Ex* pointer, ComObject^ owner, ComObjectFlags flags ) 
-	{
-		return ComObject::ConstructFromPointer<DeviceEx,IDirect3DDevice9Ex>( pointer, owner, flags );
-	}
-	
-	DeviceEx^ DeviceEx::FromPointer( IntPtr pointer ) 
-	{
-		return ComObject::ConstructFromUserPointer<DeviceEx>( pointer );
-	}
-	
 	void DeviceEx::Internal_Constructor( Direct3DEx^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle,
 				CreateFlags createFlags, D3DDISPLAYMODEEX* fullscreenDisplayMode, ... array<PresentParameters^>^ presentParameters )
 	{
@@ -92,14 +70,12 @@ namespace Direct3D9
 
 	DeviceEx::DeviceEx( Direct3DEx^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle,
 		CreateFlags createFlags, PresentParameters^ presentParameters )
-		: Device( true )
 	{
 		Internal_Constructor( direct3D, adapter, deviceType, controlHandle, createFlags, NULL, presentParameters );
 	}
 
 	DeviceEx::DeviceEx( Direct3DEx^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle,
 		CreateFlags createFlags, PresentParameters^ presentParameters, DisplayModeEx fullscreenDisplayMode )
-		: Device( true )
 	{
 		D3DDISPLAYMODEEX nativeMode = fullscreenDisplayMode.ToUnmanaged();
 		Internal_Constructor( direct3D, adapter, deviceType, controlHandle, createFlags, &nativeMode, presentParameters );
@@ -107,14 +83,12 @@ namespace Direct3D9
 
 	DeviceEx::DeviceEx( Direct3DEx^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle,
 		CreateFlags createFlags, array<PresentParameters^>^ presentParameters )
-		: Device( true )
 	{
 		Internal_Constructor( direct3D, adapter, deviceType, controlHandle, createFlags, NULL, presentParameters );
 	}
 
 	DeviceEx::DeviceEx( Direct3DEx^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle,
 		CreateFlags createFlags, array<PresentParameters^>^ presentParameters, array<DisplayModeEx>^ fullscreenDisplayModes )
-		: Device( true )
 	{
 		stack_array<D3DDISPLAYMODEEX> nativeModes = stackalloc( D3DDISPLAYMODEEX, fullscreenDisplayModes->Length );
 
