@@ -66,8 +66,8 @@ namespace SlimDX
 		{
 			COMOBJECT(IDirect3DDevice9, Device);
 
-		protected:
-			Device( bool doNotConstruct );
+		private protected:
+			Device();
 
 		public:
 			/// <summary>

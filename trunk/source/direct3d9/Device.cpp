@@ -55,9 +55,9 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	Device::Device( bool )
+	Device::Device()
 	{
-		//this is called by DeviceEx
+		// this is called by DeviceEx
 	}
 
 	Device::Device( SlimDX::Direct3D9::Direct3D^ direct3D, int adapter, DeviceType deviceType, IntPtr controlHandle, CreateFlags createFlags, ... array<PresentParameters^>^ presentParameters )

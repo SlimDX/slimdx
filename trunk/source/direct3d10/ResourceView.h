@@ -32,6 +32,9 @@ namespace SlimDX
 		public ref class ResourceView abstract : public DeviceChild
 		{
 			COMOBJECT_BASE(ID3D10View);
+
+		protected:
+			ResourceView() { }
 		};
 	}
 };

@@ -23,6 +23,8 @@
 
 #include <d3dx9.h>
 
+#include "../SlimDXException.h"
+
 #include "BoundingSphere.h"
 #include "BoundingBox.h"
 #include "Ray.h"
@@ -161,7 +163,10 @@ namespace SlimDX
 		D3DXVECTOR3 center;
 		FLOAT radius;
 		pin_ptr<Vector3> pinnedPoints = &points[0];
-		D3DXComputeBoundingSphere( reinterpret_cast<const D3DXVECTOR3*>( pinnedPoints ), points->Length, sizeof(float) * 3, &center, &radius );
+
+		HRESULT hr = D3DXComputeBoundingSphere( reinterpret_cast<const D3DXVECTOR3*>( pinnedPoints ), points->Length, sizeof(float) * 3, &center, &radius );
+		if( RECORD_SDX( hr ).IsFailure )
+			return BoundingSphere();
 
 		BoundingSphere sphere;
 		sphere.Center = Vector3( center.x, center.y, center.z );

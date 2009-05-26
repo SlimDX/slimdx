@@ -53,8 +53,6 @@ namespace SlimDX
 			array<ConstantDescription>^ GetConstantDescriptionArray( EffectHandle^ handle );
 			
 			int GetSamplerIndex( EffectHandle^ sampler );
-
-			DataStream^ GetBuffer();
 			Result SetDefaults( Device^ device );
 
 			Result SetValue( Device^ device, EffectHandle^ constant, bool value );
@@ -71,6 +69,11 @@ namespace SlimDX
 			Result SetValue( Device^ device, EffectHandle^ constant, array<Matrix>^ values );
 			Result SetValueTranspose( Device^ device, EffectHandle^ constant, Matrix value );
 			Result SetValueTranspose( Device^ device, EffectHandle^ constant, array<Matrix>^ values );
+
+			property DataStream^ Buffer
+			{
+				DataStream^ get();
+			}
 
 			property int BufferSize
 			{

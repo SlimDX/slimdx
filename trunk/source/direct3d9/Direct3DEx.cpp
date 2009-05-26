@@ -44,16 +44,20 @@ namespace Direct3D9
 	Direct3DEx::Direct3DEx()
 		: Direct3D( true )
 	{
+		HRESULT hr;
 		IDirect3D9Ex *direct3D = NULL;
 
         try
         {
-		    Direct3DCreate9Ex( D3D_SDK_VERSION, &direct3D );
+		    hr = Direct3DCreate9Ex( D3D_SDK_VERSION, &direct3D );
         }
         catch( System::Runtime::InteropServices::SEHException^ ex )
         {
             throw gcnew Direct3D9NotFoundException( "Direct3D 9 was not found. Reinstalling DirectX may fix the problem.", ex );
         }
+
+		if( RECORD_D3D9( hr ).IsFailure )
+			throw gcnew Direct3D9Exception( Result::Last );
 
 		if( direct3D == NULL )
 			throw gcnew Direct3D9Exception( "Could not create Direct3DEx instance." );

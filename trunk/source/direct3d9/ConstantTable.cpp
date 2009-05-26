@@ -124,14 +124,9 @@ namespace Direct3D9
 		return result;
 	}
 
-	DataStream^ ConstantTable::GetBuffer()
+	DataStream^ ConstantTable::Buffer::get()
 	{
-		DWORD size = InternalPointer->GetBufferSize();
-		void* pointer = InternalPointer->GetBufferPointer();
-		if( pointer == NULL )
-			return nullptr;
-
-		return gcnew DataStream( pointer, size, true, true, false );
+		return gcnew DataStream( InternalPointer->GetBufferPointer(), InternalPointer->GetBufferSize(), true, true, false );
 	}
 
 	Result ConstantTable::SetDefaults( Device^ device )
