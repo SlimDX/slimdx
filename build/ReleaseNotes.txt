@@ -1,5 +1,16 @@
+General
+	* Changed most methods that deal with DataStream to take into account the current position of the stream.
+	* Added a stack_array type that replaces std::vector. In certain tests, it outperforms by a factor of 3.
+	* Added a Resources class that handles loading SlimDX resources from the SlimDX DLL.
+		* As of now, this contains two different versions of the SlimDX icon.
+
+Math
+	* Fixed a typo in BoundingSphere.Contains.
+
 Direct3D 9
 	* Fixed a bug that caused AdapterDetails.GetCertification to throw when the adapter wasn't certified.
+	* Fixed a bug in AnimationController.GetAnimationSet that caused hard crashes.
+	* Fixed a bug in the texture loading functions that could result in an invalid size.
 
 Direct3D 10
 	* Added the Predicate interface.
@@ -11,9 +22,11 @@ Direct3D 10
 	* Added functions to compile to shader bytecode.
 	* Added functions to extract shader signatures.
 	* Added constructors for geometry, vertex, and pixel shaders.
+	* Changed inheritance hierarchies to make base types abstract.
 
 DirectSound
 	* Removed the confusing lockEntireBuffer parameter from CaptureBuffer.Read.
+	* Fixed a bug in SoundBuffer.Read that caused EndOfStreamException to be thrown erroneously.
 
 DirectInput
 	* Refactored the Device class into an abstract base class.
@@ -28,3 +41,7 @@ DirectInput
 	* Added type specific parameters for effects.
 	* Added the ability to get image and object info from a device.
 	* Filled in miscellaneous device functionality.
+
+Windows
+	* Added a MessagePump.Run() method to wrap up all of the message loop functionality.
+	* Added a RenderForm class that sets a few desired properties and defaults.

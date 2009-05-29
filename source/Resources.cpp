@@ -19,41 +19,32 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include "stdafx.h"
+
+#include "Resources.h"
+
+using namespace System;
+using namespace System::Drawing;
+using namespace System::Globalization;
+using namespace System::Resources;
 
 namespace SlimDX
 {
-	namespace Windows
+	ResourceManager^ Resources::Manager::get()
 	{
-		public delegate void MainLoop();
+		if( manager == nullptr )
+			manager = gcnew ResourceManager( "SlimDX.Resources", Resources::typeid->Assembly );
 
-		public ref class MessagePump sealed
-		{
-		private:
-			ref class IdleHandler
-			{
-			private:
-				MainLoop^ loopDelegate;
+		return manager;
+	}
 
-			public:
-				IdleHandler( MainLoop^ mainLoop ) { loopDelegate = mainLoop; }
+	Icon^ Resources::BlackIcon::get()
+	{
+		return safe_cast<Icon^>( Manager->GetObject( "sdx_icon_black", CultureInfo::InvariantCulture ) );
+	}
 
-				void OnIdle( System::Object^ sender, System::EventArgs^ e )
-				{
-					SLIMDX_UNREFERENCED_PARAMETER( sender );
-					SLIMDX_UNREFERENCED_PARAMETER( e );
-
-					while( IsApplicationIdle )
-						loopDelegate();
-				}
-			};
-
-			MessagePump() { }
-
-		public:
-			static property bool IsApplicationIdle { bool get(); }
-
-			static void Run( System::Windows::Forms::Form^ form, MainLoop^ mainLoop );
-		};
+	Icon^ Resources::WhiteIcon::get()
+	{
+		return safe_cast<Icon^>( Manager->GetObject( "sdx_icon_white", CultureInfo::InvariantCulture ) );
 	}
 }

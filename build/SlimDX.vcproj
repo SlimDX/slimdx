@@ -1605,6 +1605,30 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Resources"
+				>
+				<File
+					RelativePath="..\source\Resources.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\Resources.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Resources.resx"
+					>
+				</File>
+				<File
+					RelativePath="..\media\sdx_icon_black.ico"
+					>
+				</File>
+				<File
+					RelativePath="..\media\sdx_icon_white.ico"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Direct3D9"
@@ -4628,6 +4652,14 @@
 			</File>
 			<File
 				RelativePath="..\source\windows\MessagePump.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\windows\RenderForm.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\windows\RenderForm.h"
 				>
 			</File>
 		</Filter>

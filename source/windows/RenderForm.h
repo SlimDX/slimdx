@@ -25,35 +25,12 @@ namespace SlimDX
 {
 	namespace Windows
 	{
-		public delegate void MainLoop();
-
-		public ref class MessagePump sealed
+		public ref class RenderForm : System::Windows::Forms::Form
 		{
-		private:
-			ref class IdleHandler
-			{
-			private:
-				MainLoop^ loopDelegate;
-
-			public:
-				IdleHandler( MainLoop^ mainLoop ) { loopDelegate = mainLoop; }
-
-				void OnIdle( System::Object^ sender, System::EventArgs^ e )
-				{
-					SLIMDX_UNREFERENCED_PARAMETER( sender );
-					SLIMDX_UNREFERENCED_PARAMETER( e );
-
-					while( IsApplicationIdle )
-						loopDelegate();
-				}
-			};
-
-			MessagePump() { }
-
 		public:
-			static property bool IsApplicationIdle { bool get(); }
+			RenderForm();
 
-			static void Run( System::Windows::Forms::Form^ form, MainLoop^ mainLoop );
+			virtual void OnPaintBackground( System::Windows::Forms::PaintEventArgs^ e ) override;
 		};
 	}
 }
