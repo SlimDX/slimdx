@@ -38,5 +38,13 @@ namespace Windows
 		MSG msg;
 		return !PeekMessage( &msg, NULL, 0, 0, 0 );
 	}
+
+	void MessagePump::Run( Form^ form, MainLoop^ mainLoop )
+	{
+		IdleHandler^ handler = gcnew IdleHandler( mainLoop );
+		Application::Idle += gcnew EventHandler( handler, &IdleHandler::OnIdle );
+
+		Application::Run( form );
+	}
 }
 }

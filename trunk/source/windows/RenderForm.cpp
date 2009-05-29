@@ -19,41 +19,37 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include "stdafx.h"
+
+#include "../InternalHelpers.h"
+#include "../Resources.h"
+
+#include "RenderForm.h"
+
+using namespace System;
+using namespace System::Drawing;
+using namespace System::Windows::Forms;
 
 namespace SlimDX
 {
-	namespace Windows
+namespace Windows
+{
+	RenderForm::RenderForm()
 	{
-		public delegate void MainLoop();
+		Text = "SlimDX";
+		ClientSize = System::Drawing::Size( 800, 600 );
 
-		public ref class MessagePump sealed
-		{
-		private:
-			ref class IdleHandler
-			{
-			private:
-				MainLoop^ loopDelegate;
+		DoubleBuffered = true;
+		ResizeRedraw = true;
+		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
+		SetStyle( ControlStyles::ResizeRedraw, true );
 
-			public:
-				IdleHandler( MainLoop^ mainLoop ) { loopDelegate = mainLoop; }
-
-				void OnIdle( System::Object^ sender, System::EventArgs^ e )
-				{
-					SLIMDX_UNREFERENCED_PARAMETER( sender );
-					SLIMDX_UNREFERENCED_PARAMETER( e );
-
-					while( IsApplicationIdle )
-						loopDelegate();
-				}
-			};
-
-			MessagePump() { }
-
-		public:
-			static property bool IsApplicationIdle { bool get(); }
-
-			static void Run( System::Windows::Forms::Form^ form, MainLoop^ mainLoop );
-		};
+		Icon = SlimDX::Resources::BlackIcon;
 	}
+
+	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
+	{
+		SLIMDX_UNREFERENCED_PARAMETER( e );
+	}
+}
 }

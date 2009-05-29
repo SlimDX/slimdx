@@ -23,37 +23,27 @@
 
 namespace SlimDX
 {
-	namespace Windows
+	public ref class Resources sealed
 	{
-		public delegate void MainLoop();
+	private:
+		Resources() { }
 
-		public ref class MessagePump sealed
+		static System::Resources::ResourceManager^ manager;
+
+		static property System::Resources::ResourceManager^ Manager
 		{
-		private:
-			ref class IdleHandler
-			{
-			private:
-				MainLoop^ loopDelegate;
+			System::Resources::ResourceManager^ get();
+		}
 
-			public:
-				IdleHandler( MainLoop^ mainLoop ) { loopDelegate = mainLoop; }
+	public:
+		static property System::Drawing::Icon^ BlackIcon
+		{
+			System::Drawing::Icon^ get();
+		}
 
-				void OnIdle( System::Object^ sender, System::EventArgs^ e )
-				{
-					SLIMDX_UNREFERENCED_PARAMETER( sender );
-					SLIMDX_UNREFERENCED_PARAMETER( e );
-
-					while( IsApplicationIdle )
-						loopDelegate();
-				}
-			};
-
-			MessagePump() { }
-
-		public:
-			static property bool IsApplicationIdle { bool get(); }
-
-			static void Run( System::Windows::Forms::Form^ form, MainLoop^ mainLoop );
-		};
-	}
+		static property System::Drawing::Icon^ WhiteIcon
+		{
+			System::Drawing::Icon^ get();
+		}
+	};
 }
