@@ -21,28 +21,28 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
+#include <d3d11.h>
 
-#include "Direct3D10Exception.h"
+#include "Direct3D11Exception.h"
 
-#include "DepthStencilState.h"
-#include "DepthStencilStateDescription.h"
-#include "Device10.h"
+#include "DepthStencilState11.h"
+#include "DepthStencilStateDescription11.h"
+#include "Device11.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 { 
-	DepthStencilState^ DepthStencilState::FromDescription( SlimDX::Direct3D10::Device^ device, DepthStencilStateDescription description )
+	DepthStencilState^ DepthStencilState::FromDescription( SlimDX::Direct3D11::Device^ device, DepthStencilStateDescription description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
 		
-		ID3D10DepthStencilState* state = 0;
-		D3D10_DEPTH_STENCIL_DESC nativeDescription = description.CreateNativeVersion();
-		if( RECORD_D3D10( device->InternalPointer->CreateDepthStencilState( &nativeDescription, &state ) ).IsFailure )
+		ID3D11DepthStencilState* state = 0;
+		D3D11_DEPTH_STENCIL_DESC nativeDescription = description.CreateNativeVersion();
+		if( RECORD_D3D11( device->InternalPointer->CreateDepthStencilState( &nativeDescription, &state ) ).IsFailure )
 			return nullptr;
 		
 		return FromPointer( state );
@@ -50,7 +50,7 @@ namespace Direct3D10
 
 	DepthStencilStateDescription DepthStencilState::Description::get()
 	{
-		D3D10_DEPTH_STENCIL_DESC description;
+		D3D11_DEPTH_STENCIL_DESC description;
 		InternalPointer->GetDesc( &description );
 		return DepthStencilStateDescription( description );
 	}

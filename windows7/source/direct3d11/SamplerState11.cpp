@@ -21,34 +21,32 @@
 */
 #include "stdafx.h"
 
-#include <d3d10.h>
-#include <d3dx10.h>
+#include <d3d11.h>
+#include <d3dx11.h>
 #include <d3dx9.h>
 #include <vcclr.h>
 #include <cmath>
 
-#include "Direct3D10Exception.h"
+#include "Direct3D11Exception.h"
 
-#include "../DataStream.h"
-
-#include "Device10.h"
-#include "SamplerState.h"
+#include "Device11.h"
+#include "SamplerState11.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 {
-	SamplerState^ SamplerState::FromDescription( Direct3D10::Device^ device, SamplerDescription description )
+	SamplerState^ SamplerState::FromDescription( Direct3D11::Device^ device, SamplerDescription description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
 
-		ID3D10SamplerState *sampler;
-		D3D10_SAMPLER_DESC nativeDescription = description.CreateNativeVersion();
+		ID3D11SamplerState *sampler;
+		D3D11_SAMPLER_DESC nativeDescription = description.CreateNativeVersion();
 
-		if( RECORD_D3D10( device->InternalPointer->CreateSamplerState( &nativeDescription, &sampler ) ).IsFailure )
+		if( RECORD_D3D11( device->InternalPointer->CreateSamplerState( &nativeDescription, &sampler ) ).IsFailure )
 			return nullptr;
 
 		return FromPointer( sampler );
@@ -56,7 +54,7 @@ namespace Direct3D10
 
 	SamplerDescription SamplerState::Description::get()
 	{
-		D3D10_SAMPLER_DESC desc;
+		D3D11_SAMPLER_DESC desc;
 		InternalPointer->GetDesc( &desc );
 
 		return SamplerDescription( desc );

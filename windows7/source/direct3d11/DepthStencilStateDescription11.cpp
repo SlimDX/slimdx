@@ -21,21 +21,21 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
+#include <d3d11.h>
 
-#include "DepthStencilOperationDescription.h"
-#include "DepthStencilStateDescription.h"
+#include "DepthStencilOperationDescription11.h"
+#include "DepthStencilStateDescription11.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 { 
-	DepthStencilStateDescription::DepthStencilStateDescription( const D3D10_DEPTH_STENCIL_DESC& native )
+	DepthStencilStateDescription::DepthStencilStateDescription( const D3D11_DEPTH_STENCIL_DESC& native )
 	{
 		m_DepthEnable = native.DepthEnable ? true : false;
-		m_DepthWriteMask = static_cast<Direct3D10::DepthWriteMask>( native.DepthWriteMask );
+		m_DepthWriteMask = static_cast<Direct3D11::DepthWriteMask>( native.DepthWriteMask );
 		m_DepthFunc = static_cast<Comparison>( native.DepthFunc );
 		m_StencilEnable = native.StencilEnable ? true : false;
 		m_StencilReadMask = native.StencilReadMask;
@@ -44,12 +44,12 @@ namespace Direct3D10
 		m_BackFace = DepthStencilOperationDescription( native.BackFace );
 	}
 	
-	D3D10_DEPTH_STENCIL_DESC DepthStencilStateDescription::CreateNativeVersion()
+	D3D11_DEPTH_STENCIL_DESC DepthStencilStateDescription::CreateNativeVersion()
 	{
-		D3D10_DEPTH_STENCIL_DESC native;
+		D3D11_DEPTH_STENCIL_DESC native;
 		native.DepthEnable = m_DepthEnable;
-		native.DepthWriteMask = static_cast<D3D10_DEPTH_WRITE_MASK>( m_DepthWriteMask );
-		native.DepthFunc = static_cast<D3D10_COMPARISON_FUNC>( m_DepthFunc );
+		native.DepthWriteMask = static_cast<D3D11_DEPTH_WRITE_MASK>( m_DepthWriteMask );
+		native.DepthFunc = static_cast<D3D11_COMPARISON_FUNC>( m_DepthFunc );
 		native.StencilEnable = m_StencilEnable;
 		native.StencilReadMask = m_StencilReadMask;
 		native.StencilWriteMask = m_StencilWriteMask;
@@ -69,12 +69,12 @@ namespace Direct3D10
 		m_DepthEnable = value;
 	}
 	
-	Direct3D10::DepthWriteMask DepthStencilStateDescription::DepthWriteMask::get()
+	Direct3D11::DepthWriteMask DepthStencilStateDescription::DepthWriteMask::get()
 	{
 		return m_DepthWriteMask;
 	}
 	
-	void DepthStencilStateDescription::DepthWriteMask::set( Direct3D10::DepthWriteMask value )
+	void DepthStencilStateDescription::DepthWriteMask::set( Direct3D11::DepthWriteMask value )
 	{
 		m_DepthWriteMask = value;
 	}

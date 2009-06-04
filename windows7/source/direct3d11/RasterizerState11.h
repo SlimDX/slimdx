@@ -21,14 +21,12 @@
 */
 #pragma once
 
-#include "../ComObject.h"
-
-#include "DeviceChild10.h"
-#include "Enums.h"
+#include "DeviceChild11.h"
+#include "Enums11.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	namespace Direct3D11
 	{	
 		ref class Device;
 		value class RasterizerStateDescription;
@@ -36,10 +34,10 @@ namespace SlimDX
 		/// <summary>
 		/// A state object defining the behavior of the rasterizer stage. 
 		/// </summary>
-		/// <unmanaged>ID3D10RasterizerState</unmanaged>
+		/// <unmanaged>ID3D11RasterizerState</unmanaged>
 		public ref class RasterizerState : public DeviceChild
 		{
-			COMOBJECT(ID3D10RasterizerState, RasterizerState);
+			COMOBJECT(ID3D11RasterizerState, RasterizerState);
 
 		public:
 			/// <summary>
@@ -58,7 +56,7 @@ namespace SlimDX
 			/// <param name="device">The device to associate the state object with</param>
 			/// <param name="description">The state description.</param>
 			/// <returns>The RasterizerState object.</returns>
-			static RasterizerState^ FromDescription( SlimDX::Direct3D10::Device^ device, RasterizerStateDescription description );
+			static RasterizerState^ FromDescription( SlimDX::Direct3D11::Device^ device, RasterizerStateDescription description );
 		};
 	}
 };
