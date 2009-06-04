@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -19,47 +20,41 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
+#include <d3d10.h>
+#include <d3dx10.h>
 
-#include "RenderForm.h"
+#include "Direct3D10Exception.h"
+
+#include "EffectMatrixVariable.h"
 
 using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
+namespace Direct3D10
+{ 
+	EffectMatrixVariable::EffectMatrixVariable( ID3D10EffectMatrixVariable* pointer )
+	: EffectVariable( pointer )
 	{
-		Construct( "SlimDX" );
+		m_Pointer = pointer;
 	}
-
-	RenderForm::RenderForm( System::String^ text )
+	
+	EffectMatrixVariable::EffectMatrixVariable( IntPtr pointer )
+	: EffectVariable( pointer )
 	{
-		Construct( text );
+		m_Pointer = reinterpret_cast<ID3D10EffectMatrixVariable*>( pointer.ToPointer() );
 	}
-
-	void RenderForm::Construct( System::String^ text )
+	
+	Result EffectMatrixVariable::SetMatrix( Matrix matrix )
 	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
+		return RECORD_D3D10( m_Pointer->SetMatrix( reinterpret_cast<float*>( &matrix ) ) );
 	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
+	
+	Result EffectMatrixVariable::SetMatrix( array<Matrix>^ matrices )
 	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
+		pin_ptr<Matrix> pinnedMatrices = &matrices[ 0 ];
+		return RECORD_D3D10( m_Pointer->SetMatrixArray( reinterpret_cast<float*>( pinnedMatrices ), 0, matrices->Length ) );
 	}
 }
 }

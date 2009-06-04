@@ -19,47 +19,38 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
+#pragma once
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
-
-#include "RenderForm.h"
-
-using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
+#include "EffectVariable.h"
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
+	namespace Direct3D10
 	{
-		Construct( "SlimDX" );
+		public ref class EffectScalarVariable : public EffectVariable
+		{	
+		private:
+			ID3D10EffectScalarVariable* m_Pointer;
+			
+		internal:
+			EffectScalarVariable( ID3D10EffectScalarVariable* pointer );
+			
+		public:
+			EffectScalarVariable( System::IntPtr pointer );
+			
+			Result Set( bool value );
+			Result Set( array<bool>^ values );
+			Result Set( float value );
+			Result Set( array<float>^ values );
+			Result Set( int value );
+			Result Set( array<int>^ values );
+
+			bool GetBool();
+			array<bool>^ GetBoolArray( int count );
+			int GetInt();
+			array<int>^ GetIntArray( int count );
+			float GetFloat();
+			array<float>^ GetFloatArray( int count );
+		};
 	}
-
-	RenderForm::RenderForm( System::String^ text )
-	{
-		Construct( text );
-	}
-
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
-	}
-}
-}
+};

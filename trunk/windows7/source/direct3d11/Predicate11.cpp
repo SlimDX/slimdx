@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -19,47 +20,26 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
+#include "Direct3D11Exception.h"
 
-#include "RenderForm.h"
+#include "Predicate11.h"
+#include "Device11.h"
 
 using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
+namespace Direct3D11
+{ 
+	Predicate::Predicate( SlimDX::Direct3D11::Device^ device, QueryDescription description )
 	{
-		Construct( "SlimDX" );
-	}
-
-	RenderForm::RenderForm( System::String^ text )
-	{
-		Construct( text );
-	}
-
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
+		D3D11_QUERY_DESC nativeDescription = description.CreateNativeVersion();
+		ID3D11Predicate* predicate = 0;
+		if( RECORD_D3D11( device->InternalPointer->CreatePredicate( &nativeDescription, &predicate ) ).IsFailure )
+			throw gcnew Direct3D11Exception( Result::Last );
+		
+		Construct( predicate );
 	}
 }
 }

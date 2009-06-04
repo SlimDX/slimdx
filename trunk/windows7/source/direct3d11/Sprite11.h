@@ -19,47 +19,49 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
+#pragma once
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
+#include "../ComObject.h"
 
-#include "RenderForm.h"
-
-using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
+#include "Enums.h"
+#include "SpriteInstance.h"
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
+	namespace Direct3D10
 	{
-		Construct( "SlimDX" );
+		ref class Device;
+
+		public ref class Sprite : public ComObject
+		{
+			COMOBJECT(ID3DX10Sprite, Sprite);
+
+		public:
+			property Matrix ViewTransform
+			{
+				Matrix get();
+				void set( Matrix value );
+			}
+			
+			property Matrix ProjectionTransform
+			{
+				Matrix get();
+				void set( Matrix value );
+			}
+
+			property Device^ Device
+			{
+				SlimDX::Direct3D10::Device^ get();
+			}
+
+			Sprite( SlimDX::Direct3D10::Device^ device, int bufferSize );
+
+			Result Begin( SpriteFlags flags );
+			Result End();
+			Result Flush();
+
+			Result DrawBuffered( array<SpriteInstance^>^ instances );
+			Result DrawImmediate( array<SpriteInstance^>^ instances );
+		};
 	}
-
-	RenderForm::RenderForm( System::String^ text )
-	{
-		Construct( text );
-	}
-
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
-	}
-}
 }

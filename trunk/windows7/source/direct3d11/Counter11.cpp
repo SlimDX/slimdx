@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -19,47 +20,36 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
+#include <d3d11.h>
 
-#include "RenderForm.h"
+#include "Direct3D11Exception.h"
+
+#include "Counter11.h"
+#include "CounterDescription11.h"
+#include "Device11.h"
 
 using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
+namespace Direct3D11
+{ 
+	Counter::Counter( SlimDX::Direct3D11::Device^ device, CounterDescription description )
 	{
-		Construct( "SlimDX" );
+		ID3D11Counter* counter = 0;
+		D3D11_COUNTER_DESC nativeDescription = description.CreateNativeVersion();
+		if( RECORD_D3D11( device->InternalPointer->CreateCounter( &nativeDescription, &counter ) ).IsFailure )
+			throw gcnew Direct3D11Exception( Result::Last );
+		
+		Construct( counter );
 	}
 
-	RenderForm::RenderForm( System::String^ text )
+	CounterDescription Counter::Description::get()
 	{
-		Construct( text );
-	}
-
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
+		D3D11_COUNTER_DESC description;
+		InternalPointer->GetDesc( &description );
+		return CounterDescription( description );
 	}
 }
 }

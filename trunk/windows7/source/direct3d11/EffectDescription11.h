@@ -21,20 +21,63 @@
 */
 #pragma once
 
+#include "Enums.h"
+
 namespace SlimDX
 {
-	namespace Windows
-	{
-		public ref class RenderForm : System::Windows::Forms::Form
+	namespace Direct3D10
+	{	
+		public value class EffectDescription : System::IEquatable<EffectDescription>
 		{
 		private:
-			void Construct( System::String^ text );
+			bool m_IsChildEffect;
+			int m_ConstantBuffers;
+			int m_SharedConstantBuffers;
+			int m_GlobalVariables;
+			int m_SharedGlobalVariables;
+			int m_Techniques;
 
+		internal:
+			EffectDescription( const D3D10_EFFECT_DESC& native );
+			
 		public:
-			RenderForm();
-			RenderForm( System::String^ text );
+			property bool IsChildEffect
+			{
+				bool get();
+			}
+			
+			property int ConstantBufferCount
+			{
+				int get();
+			}
+			
+			property int SharedConstantBufferCount
+			{
+				int get();
+			}
+			
+			property int GlobalVariableCount
+			{
+				int get();
+			}
+			
+			property int SharedGlobalVariableCount
+			{
+				int get();
+			}
+			
+			property int TechniqueCount
+			{
+				int get();
+			}
 
-			virtual void OnPaintBackground( System::Windows::Forms::PaintEventArgs^ e ) override;
+			static bool operator == ( EffectDescription left, EffectDescription right );
+			static bool operator != ( EffectDescription left, EffectDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( EffectDescription other );
+			static bool Equals( EffectDescription% value1, EffectDescription% value2 );
 		};
 	}
-}
+};

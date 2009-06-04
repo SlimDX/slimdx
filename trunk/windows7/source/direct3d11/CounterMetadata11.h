@@ -21,20 +21,57 @@
 */
 #pragma once
 
+#include "Enums11.h"
+
 namespace SlimDX
 {
-	namespace Windows
-	{
-		public ref class RenderForm : System::Windows::Forms::Form
+	namespace Direct3D11
+	{	
+		public value class CounterMetadata : System::IEquatable<CounterMetadata>
 		{
 		private:
-			void Construct( System::String^ text );
+			CounterType m_Type;
+			int m_ActiveCounters;
+			System::String^ m_Name;
+			System::String^ m_Units;
+			System::String^ m_Description;
 
+		internal:
+			CounterMetadata( CounterType type, int count, System::String^ name, System::String^ units, System::String^ description );
+			
 		public:
-			RenderForm();
-			RenderForm( System::String^ text );
+			property CounterType Type
+			{
+				CounterType get();
+			}
+			
+			property int HardwareCounterCount
+			{
+				int get();
+			}
+			
+			property System::String^ Name
+			{
+				System::String^ get();
+			}
+			
+			property System::String^ Units
+			{
+				System::String^ get();
+			}
+			
+			property System::String^ Description
+			{
+				System::String^ get();
+			}
 
-			virtual void OnPaintBackground( System::Windows::Forms::PaintEventArgs^ e ) override;
+			static bool operator == ( CounterMetadata left, CounterMetadata right );
+			static bool operator != ( CounterMetadata left, CounterMetadata right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( CounterMetadata other );
+			static bool Equals( CounterMetadata% value1, CounterMetadata% value2 );
 		};
 	}
-}
+};

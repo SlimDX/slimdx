@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -19,47 +20,51 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
+#include <d3d10.h>
+#include <d3dx10.h>
 
-#include "RenderForm.h"
+#include "StreamOutputWrapper.h"
+#include "Buffer.h"
 
 using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
+namespace Direct3D10
+{ 
+	StreamOutputWrapper::StreamOutputWrapper( ID3D10Device* device )
 	{
-		Construct( "SlimDX" );
+		if( device == 0 )
+			throw gcnew ArgumentNullException( "device" );
+		m_Device = device;
 	}
 
-	RenderForm::RenderForm( System::String^ text )
+	void StreamOutputWrapper::SetTargets( ... array<StreamOutputBufferBinding>^ bufferBindings )
 	{
-		Construct( text );
-	}
-
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
+		if( bufferBindings == nullptr )
+		{
+			m_Device->SOSetTargets( 0, 0, 0 );	
+		}
+		else 
+		{
+			ID3D10Buffer* buffers[D3D10_SO_BUFFER_SLOT_COUNT];
+			UINT offsets[D3D10_SO_BUFFER_SLOT_COUNT];
+			
+			for( int i = 0; i < D3D10_SO_BUFFER_SLOT_COUNT; ++i )
+			{
+				buffers[ i ] = 0;
+				offsets[ i ] = 0;
+			}
+			
+			for( int i = 0; i < bufferBindings->Length; ++i )
+			{
+				buffers[i] = static_cast<ID3D10Buffer*>( bufferBindings[ i ].Buffer->InternalPointer );
+				offsets[i] = bufferBindings[ i ].Offset;
+			}
+			
+			m_Device->SOSetTargets( bufferBindings->Length, buffers, offsets );
+		}
 	}
 }
 }

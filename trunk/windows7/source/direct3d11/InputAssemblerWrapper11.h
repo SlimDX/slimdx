@@ -19,47 +19,34 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
+#pragma once
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
-
-#include "RenderForm.h"
-
-using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
+#include "Enums11.h"
+#include "VertexBufferBinding11.h"
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
+	namespace Direct3D11
 	{
-		Construct( "SlimDX" );
+		ref class Buffer;
+		ref class InputLayout;
+		
+		public ref class InputAssemblerWrapper
+		{
+		private:
+			ID3D11Device* m_Device;
+			
+		internal:
+			InputAssemblerWrapper( ID3D11Device* device );
+			
+		public:
+			void SetInputLayout( InputLayout^ layout );
+			void SetPrimitiveTopology( PrimitiveTopology topology );
+			
+			void SetIndexBuffer( Buffer^ indexBuffer, DXGI::Format format, int offset );
+			
+			void SetVertexBuffers( int slot, VertexBufferBinding vertexBufferBinding );
+			void SetVertexBuffers( int firstSlot, ... array<VertexBufferBinding>^ vertexBufferBindings );
+		};
 	}
-
-	RenderForm::RenderForm( System::String^ text )
-	{
-		Construct( text );
-	}
-
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
-	}
-}
-}
+};

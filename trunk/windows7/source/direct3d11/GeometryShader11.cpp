@@ -20,46 +20,28 @@
 * THE SOFTWARE.
 */
 #include "stdafx.h"
+#include <d3d10.h>
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
+#include "Direct3D10Exception.h"
 
-#include "RenderForm.h"
+#include "Device10.h"
+#include "GeometryShader.h"
 
 using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
 
 namespace SlimDX
 {
-namespace Windows
+namespace Direct3D10
 {
-	RenderForm::RenderForm()
+	GeometryShader::GeometryShader( Direct3D10::Device^ device, ShaderBytecode^ shaderBytecode )
 	{
-		Construct( "SlimDX" );
-	}
+		ID3D10GeometryShader *shader;
 
-	RenderForm::RenderForm( System::String^ text )
-	{
-		Construct( text );
-	}
+		HRESULT hr = device->InternalPointer->CreateGeometryShader( shaderBytecode->Buffer, shaderBytecode->Length, &shader );
+		if( RECORD_D3D10( hr ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
 
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
+		Construct( shader );
 	}
 }
 }

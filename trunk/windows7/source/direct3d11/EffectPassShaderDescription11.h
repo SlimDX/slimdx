@@ -19,47 +19,40 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
-
-#include "../InternalHelpers.h"
-#include "../Resources.h"
-
-#include "RenderForm.h"
-
-using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
+#pragma once
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
-	{
-		Construct( "SlimDX" );
+	namespace Direct3D10	
+	{	
+		ref class EffectShaderVariable;
+		
+		public value class EffectPassShaderDescription : System::IEquatable<EffectPassShaderDescription>
+		{
+			EffectShaderVariable^ m_ShaderVariable;
+			int m_ShaderIndex;
+			
+		internal:
+			EffectPassShaderDescription( const D3D10_PASS_SHADER_DESC& native );
+			
+		public:
+			property EffectShaderVariable^ Variable
+			{
+				EffectShaderVariable^ get();
+			}
+			
+			property int Index
+			{
+				int get();
+			}
+
+			static bool operator == ( EffectPassShaderDescription left, EffectPassShaderDescription right );
+			static bool operator != ( EffectPassShaderDescription left, EffectPassShaderDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( EffectPassShaderDescription other );
+			static bool Equals( EffectPassShaderDescription% value1, EffectPassShaderDescription% value2 );
+		};
 	}
-
-	RenderForm::RenderForm( System::String^ text )
-	{
-		Construct( text );
-	}
-
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
-	}
-}
-}
+};

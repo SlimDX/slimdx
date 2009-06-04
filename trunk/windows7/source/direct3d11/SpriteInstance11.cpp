@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -19,47 +20,39 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
+#include <d3d10.h>
+#include <d3dx10.h>
 
-#include "RenderForm.h"
+#include "SpriteInstance.h"
+#include "ShaderResourceView.h"
 
-using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
+#include "../math/Matrix.h"
+#include "../math/Vector2.h"
 
 namespace SlimDX
 {
-namespace Windows
+namespace Direct3D10
 {
-	RenderForm::RenderForm()
+	SpriteInstance::SpriteInstance( ShaderResourceView^ texture, Vector2 coordinates, Vector2 dimensions )
+	: transform( Matrix::Identity ), textureCoordinates( coordinates ), textureDimensions( dimensions),
+		color( 1.0f, 1.0f, 1.0f, 1.0 ), texture( texture )
 	{
-		Construct( "SlimDX" );
 	}
 
-	RenderForm::RenderForm( System::String^ text )
+	void SpriteInstance::ToNativeObject( D3DX10_SPRITE& object )
 	{
-		Construct( text );
-	}
+		pin_ptr<Matrix> pinnedTransform = &transform;
+		pin_ptr<Vector2> pinnedCoordinates = &textureCoordinates;
+		pin_ptr<Vector2> pinnedDimensions = &textureDimensions;
+		pin_ptr<Color4> pinnedColor = &color;
 
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
+		object.matWorld = *reinterpret_cast<D3DXMATRIX*>( pinnedTransform );
+		object.TexCoord = *reinterpret_cast<D3DXVECTOR2*>( pinnedCoordinates );
+		object.TexSize = *reinterpret_cast<D3DXVECTOR2*>( pinnedDimensions );
+		object.ColorModulate = *reinterpret_cast<D3DXCOLOR*>( pinnedColor );
+		object.pTexture = static_cast<ID3D10ShaderResourceView*>( texture->InternalPointer );
+		object.TextureIndex = textureIndex;
 	}
 }
 }

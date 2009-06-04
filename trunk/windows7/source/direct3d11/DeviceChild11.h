@@ -19,47 +19,33 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
-
-#include "../InternalHelpers.h"
-#include "../Resources.h"
-
-#include "RenderForm.h"
-
-using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
+#pragma once
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
+	namespace Direct3D11
 	{
-		Construct( "SlimDX" );
+		ref class Device;
+		
+		/// <summary>
+		/// An object that is bound to a Device.
+		/// </summary>
+		/// <unmanaged>ID3D11DeviceChild</unmanaged>
+		public ref class DeviceChild abstract : public ComObject 
+		{
+			COMOBJECT_BASE(ID3D11DeviceChild);
+
+		protected:
+			DeviceChild() { }
+			
+		public:
+			/// <summary>
+			/// Gets the device the object is bound to.
+			/// </summary>
+			property SlimDX::Direct3D11::Device^ Device
+			{
+				SlimDX::Direct3D11::Device^ get();
+			}
+		};
 	}
-
-	RenderForm::RenderForm( System::String^ text )
-	{
-		Construct( text );
-	}
-
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
-	}
-}
-}
+};

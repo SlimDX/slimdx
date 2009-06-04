@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -19,47 +20,41 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
+#include <d3d10.h>
+#include <d3dx10.h>
 
-#include "RenderForm.h"
+#include "Direct3D10Exception.h"
+
+#include "BlendState.h"
+#include "BlendStateDescription.h"
+#include "Device10.h"
 
 using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
+namespace Direct3D10
+{ 
+	BlendState^ BlendState::FromDescription( SlimDX::Direct3D10::Device^ device, BlendStateDescription description )
 	{
-		Construct( "SlimDX" );
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+	
+		ID3D10BlendState* state = 0;
+		D3D10_BLEND_DESC nativeDescription = description.CreateNativeVersion();
+		
+		if( RECORD_D3D10( device->InternalPointer->CreateBlendState( &nativeDescription, &state ) ).IsFailure )
+			return nullptr;
+		
+		return FromPointer( state );
 	}
 
-	RenderForm::RenderForm( System::String^ text )
+	BlendStateDescription BlendState::Description::get()
 	{
-		Construct( text );
-	}
-
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
+		D3D10_BLEND_DESC description;
+		InternalPointer->GetDesc( &description );
+		return BlendStateDescription( description );
 	}
 }
 }

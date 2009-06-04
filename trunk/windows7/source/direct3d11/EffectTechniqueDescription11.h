@@ -19,47 +19,45 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
-
-#include "../InternalHelpers.h"
-#include "../Resources.h"
-
-#include "RenderForm.h"
-
-using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
+#pragma once
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
-	{
-		Construct( "SlimDX" );
+	namespace Direct3D10
+	{	
+		public value class EffectTechniqueDescription : System::IEquatable<EffectTechniqueDescription>
+		{
+		private:
+			System::String^ m_Name;
+			int m_Passes;
+			int m_Annotations;
+
+		internal:
+			EffectTechniqueDescription( const D3D10_TECHNIQUE_DESC& native );
+			
+		public:
+			property System::String^ Name
+			{
+				System::String^ get();
+			}
+			
+			property int PassCount
+			{
+				int get();
+			}
+			
+			property int AnnotationCount
+			{
+				int get();
+			}
+
+			static bool operator == ( EffectTechniqueDescription left, EffectTechniqueDescription right );
+			static bool operator != ( EffectTechniqueDescription left, EffectTechniqueDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( EffectTechniqueDescription other );
+			static bool Equals( EffectTechniqueDescription% value1, EffectTechniqueDescription% value2 );
+		};
 	}
-
-	RenderForm::RenderForm( System::String^ text )
-	{
-		Construct( text );
-	}
-
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
-	}
-}
-}
+};
