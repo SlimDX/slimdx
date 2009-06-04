@@ -21,14 +21,12 @@
 */
 #pragma once
 
-#include "../ComObject.h"
-
-#include "Enums.h"
-#include "DeviceChild10.h"
+#include "Enums11.h"
+#include "DeviceChild11.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	namespace Direct3D11
 	{	
 		ref class Device;
 		value class DepthStencilStateDescription;
@@ -36,10 +34,10 @@ namespace SlimDX
 		/// <summary>
 		/// A state object defining the behavior of the depth and stencil test stages of the output merger. 
 		/// </summary>
-		/// <unmanaged>ID3D10DepthStencilState</unmanaged>
+		/// <unmanaged>ID3D11DepthStencilState</unmanaged>
 		public ref class DepthStencilState : public DeviceChild
 		{
-			COMOBJECT(ID3D10DepthStencilState, DepthStencilState);
+			COMOBJECT(ID3D11DepthStencilState, DepthStencilState);
 		
 		public:
 			/// <summary>
@@ -58,7 +56,7 @@ namespace SlimDX
 			/// <param name="device">The device to associate the state object with</param>
 			/// <param name="description">The state description.</param>
 			/// <returns>The DepthStencilState object.</returns>
-			static DepthStencilState^ FromDescription( SlimDX::Direct3D10::Device^ device, DepthStencilStateDescription description );
+			static DepthStencilState^ FromDescription( SlimDX::Direct3D11::Device^ device, DepthStencilStateDescription description );
 		};
 	}
 };

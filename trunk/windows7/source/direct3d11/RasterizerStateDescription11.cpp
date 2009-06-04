@@ -21,18 +21,18 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
+#include <d3d11.h>
 
-#include "RasterizerStateDescription.h"
+#include "RasterizerStateDescription11.h"
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 { 
-	RasterizerStateDescription::RasterizerStateDescription( const D3D10_RASTERIZER_DESC& native )
+	RasterizerStateDescription::RasterizerStateDescription( const D3D11_RASTERIZER_DESC& native )
 	{
-		m_FillMode = static_cast<Direct3D10::FillMode>( native.FillMode );
-		m_CullMode = static_cast<Direct3D10::CullMode>( native.CullMode );
+		m_FillMode = static_cast<Direct3D11::FillMode>( native.FillMode );
+		m_CullMode = static_cast<Direct3D11::CullMode>( native.CullMode );
 		m_FrontCounterClockwise = native.FrontCounterClockwise ? true : false;
 		m_DepthBias = native.DepthBias;
 		m_DepthBiasClamp = native.DepthBiasClamp;
@@ -43,11 +43,11 @@ namespace Direct3D10
 		m_AntialiasedLineEnable = native.AntialiasedLineEnable ? true : false;
 	}
 	
-	D3D10_RASTERIZER_DESC RasterizerStateDescription::CreateNativeVersion()
+	D3D11_RASTERIZER_DESC RasterizerStateDescription::CreateNativeVersion()
 	{
-		D3D10_RASTERIZER_DESC native;
-		native.FillMode = static_cast<D3D10_FILL_MODE>( m_FillMode );
-		native.CullMode = static_cast<D3D10_CULL_MODE>( m_CullMode );
+		D3D11_RASTERIZER_DESC native;
+		native.FillMode = static_cast<D3D11_FILL_MODE>( m_FillMode );
+		native.CullMode = static_cast<D3D11_CULL_MODE>( m_CullMode );
 		native.FrontCounterClockwise = m_FrontCounterClockwise;
 		native.DepthBias = m_DepthBias;
 		native.DepthBiasClamp = m_DepthBiasClamp;
@@ -60,22 +60,22 @@ namespace Direct3D10
 		return native;
 	}
 	
-	Direct3D10::FillMode RasterizerStateDescription::FillMode::get()
+	Direct3D11::FillMode RasterizerStateDescription::FillMode::get()
 	{
 		return m_FillMode;
 	}
 	
-	void RasterizerStateDescription::FillMode::set( Direct3D10::FillMode value )
+	void RasterizerStateDescription::FillMode::set( Direct3D11::FillMode value )
 	{
 		m_FillMode = value;	
 	}
 	
-	Direct3D10::CullMode RasterizerStateDescription::CullMode::get()
+	Direct3D11::CullMode RasterizerStateDescription::CullMode::get()
 	{
 		return m_CullMode;
 	}
 	
-	void RasterizerStateDescription::CullMode::set( Direct3D10::CullMode value )
+	void RasterizerStateDescription::CullMode::set( Direct3D11::CullMode value )
 	{
 		m_CullMode = value;	
 	}

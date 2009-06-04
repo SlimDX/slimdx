@@ -21,91 +21,32 @@
 */
 #pragma once
 
-#include "Enums.h"
+#include "RenderTargetBlendDescription11.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
-	{	
-		public value class BlendStateDescription : System::IEquatable<BlendStateDescription>
+	namespace Direct3D11
+	{
+		public value class BlendStateDescription
 		{
-		private:		
-			bool m_AlphaToCoverageEnable;
-			array<bool>^ m_BlendEnable;
-			BlendOption m_SrcBlend;
-			BlendOption m_DestBlend;
-			Direct3D10::BlendOperation m_BlendOp;
-			BlendOption m_SrcBlendAlpha;
-			BlendOption m_DestBlendAlpha;
-			Direct3D10::BlendOperation m_BlendOpAlpha;
-			array<ColorWriteMaskFlags>^ m_RenderTargetWriteMask;
-		
+		private:
+			array<RenderTargetBlendDescription>^ m_RenderTargets;
+
 			void ConstructLazyProperties();
-			
+
 		internal:
-			BlendStateDescription( const D3D10_BLEND_DESC& native );
+			BlendStateDescription( const D3D11_BLEND_DESC& native );
 			
-			D3D10_BLEND_DESC CreateNativeVersion();
+			D3D11_BLEND_DESC CreateNativeVersion();
 			
 		public:
-			property bool IsAlphaToCoverageEnabled
+			property bool AlphaToCoverageEnable;
+			property bool IndependentBlendEnable;
+
+			property array<RenderTargetBlendDescription>^ RenderTargets
 			{
-				bool get();
-				void set( bool value );
+				array<RenderTargetBlendDescription>^ get();
 			}
-
-			property BlendOption SourceBlend
-			{
-				BlendOption get();
-				void set( BlendOption value );
-			}
-
-			property BlendOption DestinationBlend
-			{
-				BlendOption get();
-				void set( BlendOption value );
-			}
-
-			property Direct3D10::BlendOperation BlendOperation
-			{
-				Direct3D10::BlendOperation get();
-				void set( Direct3D10::BlendOperation value );
-			}
-
-			property BlendOption SourceAlphaBlend
-			{
-				BlendOption get();
-				void set( BlendOption value );
-			}
-
-			property BlendOption DestinationAlphaBlend
-			{
-				BlendOption get();
-				void set( BlendOption value );
-			}
-
-			property Direct3D10::BlendOperation AlphaBlendOperation
-			{
-				Direct3D10::BlendOperation get();
-				void set( Direct3D10::BlendOperation value );
-			}
-			
-			bool GetBlendEnable( System::UInt32 index );
-			
-			void SetBlendEnable( System::UInt32 index, bool value );
-			
-			ColorWriteMaskFlags GetWriteMask( System::UInt32 index );
-			
-			void SetWriteMask( System::UInt32 index, ColorWriteMaskFlags value );
-		
-			static bool operator == ( BlendStateDescription left, BlendStateDescription right );
-			static bool operator != ( BlendStateDescription left, BlendStateDescription right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( BlendStateDescription other );
-			static bool Equals( BlendStateDescription% value1, BlendStateDescription% value2 );
-
 		};
 	}
-};
+}

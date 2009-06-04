@@ -21,20 +21,18 @@
 */
 #pragma once
 
-#include "../math/color4.h"
-
-#include "Enums.h"
+#include "Enums11.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	namespace Direct3D11
 	{	
 		public value class SamplerDescription : System::IEquatable<SamplerDescription>
 		{
 		internal:
-			SamplerDescription( const D3D10_SAMPLER_DESC& native );
+			SamplerDescription( const D3D11_SAMPLER_DESC& native );
 			
-			D3D10_SAMPLER_DESC CreateNativeVersion();
+			D3D11_SAMPLER_DESC CreateNativeVersion();
 			
 		public:
 			property Filter Filter;

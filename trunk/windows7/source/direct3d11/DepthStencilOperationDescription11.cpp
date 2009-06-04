@@ -21,31 +21,31 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
+#include <d3d11.h>
 
-#include "DepthStencilOperationDescription.h"
+#include "DepthStencilOperationDescription11.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 { 
-	DepthStencilOperationDescription::DepthStencilOperationDescription( const D3D10_DEPTH_STENCILOP_DESC& native )
+	DepthStencilOperationDescription::DepthStencilOperationDescription( const D3D11_DEPTH_STENCILOP_DESC& native )
 	{
 		m_StencilFailOp = static_cast<StencilOperation>( native.StencilFailOp );
 		m_StencilDepthFailOp = static_cast<StencilOperation>( native.StencilDepthFailOp );
 		m_StencilPassOp = static_cast<StencilOperation>( native.StencilPassOp );
-		m_StencilFunc = static_cast<Direct3D10::Comparison>( native.StencilFunc );
+		m_StencilFunc = static_cast<Direct3D11::Comparison>( native.StencilFunc );
 	}
 	
-	D3D10_DEPTH_STENCILOP_DESC DepthStencilOperationDescription::CreateNativeVersion()
+	D3D11_DEPTH_STENCILOP_DESC DepthStencilOperationDescription::CreateNativeVersion()
 	{
-		D3D10_DEPTH_STENCILOP_DESC native;
-		native.StencilFailOp = static_cast<D3D10_STENCIL_OP>( m_StencilFailOp );
-		native.StencilDepthFailOp = static_cast<D3D10_STENCIL_OP>( m_StencilDepthFailOp );
-		native.StencilPassOp = static_cast<D3D10_STENCIL_OP>( m_StencilPassOp );
-		native.StencilFunc = static_cast<D3D10_COMPARISON_FUNC>( m_StencilFunc );
+		D3D11_DEPTH_STENCILOP_DESC native;
+		native.StencilFailOp = static_cast<D3D11_STENCIL_OP>( m_StencilFailOp );
+		native.StencilDepthFailOp = static_cast<D3D11_STENCIL_OP>( m_StencilDepthFailOp );
+		native.StencilPassOp = static_cast<D3D11_STENCIL_OP>( m_StencilPassOp );
+		native.StencilFunc = static_cast<D3D11_COMPARISON_FUNC>( m_StencilFunc );
 		
 		return native;
 	}
@@ -80,12 +80,12 @@ namespace Direct3D10
 		m_StencilPassOp = value;
 	}
 	
-	Direct3D10::Comparison DepthStencilOperationDescription::Comparison::get()
+	Direct3D11::Comparison DepthStencilOperationDescription::Comparison::get()
 	{
 		return m_StencilFunc;
 	}
 	
-	void DepthStencilOperationDescription::Comparison::set( Direct3D10::Comparison value )
+	void DepthStencilOperationDescription::Comparison::set( Direct3D11::Comparison value )
 	{
 		m_StencilFunc = value;
 	}

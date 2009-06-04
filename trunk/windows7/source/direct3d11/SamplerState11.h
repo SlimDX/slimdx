@@ -21,18 +21,18 @@
 */
 #pragma once
 
-#include "DeviceChild10.h"
-#include "SamplerDescription.h"
+#include "DeviceChild11.h"
+#include "SamplerDescription11.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	namespace Direct3D11
 	{
 		ref class Device;
 		
 		public ref class SamplerState : public DeviceChild
 		{
-			COMOBJECT(ID3D10SamplerState, SamplerState);
+			COMOBJECT(ID3D11SamplerState, SamplerState);
 
 		public:
 			property SamplerDescription Description
@@ -40,7 +40,7 @@ namespace SlimDX
 				SamplerDescription get();
 			}
 
-			static SamplerState^ FromDescription( Direct3D10::Device^ device, SamplerDescription description );
+			static SamplerState^ FromDescription( Direct3D11::Device^ device, SamplerDescription description );
 		};
 	}
 }

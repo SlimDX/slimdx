@@ -21,30 +21,30 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
-#include <d3dx10.h>
+#include <d3d11.h>
+#include <d3dx11.h>
 
-#include "Direct3D10Exception.h"
+#include "Direct3D11Exception.h"
 
-#include "BlendState.h"
-#include "BlendStateDescription.h"
-#include "Device10.h"
+#include "BlendState11.h"
+#include "BlendStateDescription11.h"
+#include "Device11.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 { 
-	BlendState^ BlendState::FromDescription( SlimDX::Direct3D10::Device^ device, BlendStateDescription description )
+	BlendState^ BlendState::FromDescription( SlimDX::Direct3D11::Device^ device, BlendStateDescription description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
 	
-		ID3D10BlendState* state = 0;
-		D3D10_BLEND_DESC nativeDescription = description.CreateNativeVersion();
+		ID3D11BlendState* state = 0;
+		D3D11_BLEND_DESC nativeDescription = description.CreateNativeVersion();
 		
-		if( RECORD_D3D10( device->InternalPointer->CreateBlendState( &nativeDescription, &state ) ).IsFailure )
+		if( RECORD_D3D11( device->InternalPointer->CreateBlendState( &nativeDescription, &state ) ).IsFailure )
 			return nullptr;
 		
 		return FromPointer( state );
@@ -52,7 +52,7 @@ namespace Direct3D10
 
 	BlendStateDescription BlendState::Description::get()
 	{
-		D3D10_BLEND_DESC description;
+		D3D11_BLEND_DESC description;
 		InternalPointer->GetDesc( &description );
 		return BlendStateDescription( description );
 	}

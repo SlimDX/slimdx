@@ -21,17 +21,17 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
+#include <d3d11.h>
 
-#include "SamplerDescription.h"
+#include "SamplerDescription11.h"
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 {
-	SamplerDescription::SamplerDescription( const D3D10_SAMPLER_DESC &native )
+	SamplerDescription::SamplerDescription( const D3D11_SAMPLER_DESC &native )
 	{
-		Filter = static_cast<Direct3D10::Filter>( native.Filter );
+		Filter = static_cast<Direct3D11::Filter>( native.Filter );
 		AddressU = static_cast<TextureAddressMode>( native.AddressU );
 		AddressV = static_cast<TextureAddressMode>( native.AddressV );
 		AddressW = static_cast<TextureAddressMode>( native.AddressW );
@@ -43,17 +43,17 @@ namespace Direct3D10
 		MaximumLod = native.MaxLOD;
 	}
 
-	D3D10_SAMPLER_DESC SamplerDescription::CreateNativeVersion()
+	D3D11_SAMPLER_DESC SamplerDescription::CreateNativeVersion()
 	{
-		D3D10_SAMPLER_DESC native;
+		D3D11_SAMPLER_DESC native;
 
-		native.Filter = static_cast<D3D10_FILTER>( Filter );
-		native.AddressU = static_cast<D3D10_TEXTURE_ADDRESS_MODE>( AddressU );
-		native.AddressV = static_cast<D3D10_TEXTURE_ADDRESS_MODE>( AddressV );
-		native.AddressW = static_cast<D3D10_TEXTURE_ADDRESS_MODE>( AddressW );
+		native.Filter = static_cast<D3D11_FILTER>( Filter );
+		native.AddressU = static_cast<D3D11_TEXTURE_ADDRESS_MODE>( AddressU );
+		native.AddressV = static_cast<D3D11_TEXTURE_ADDRESS_MODE>( AddressV );
+		native.AddressW = static_cast<D3D11_TEXTURE_ADDRESS_MODE>( AddressW );
 		native.MipLODBias = MipLodBias;
 		native.MaxAnisotropy = MaximumAnisotropy;
-		native.ComparisonFunc = static_cast<D3D10_COMPARISON_FUNC>( ComparisonFunction );
+		native.ComparisonFunc = static_cast<D3D11_COMPARISON_FUNC>( ComparisonFunction );
 		native.MinLOD = MinimumLod;
 		native.MaxLOD = MaximumLod;
 

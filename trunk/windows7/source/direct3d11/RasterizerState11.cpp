@@ -21,28 +21,28 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
+#include <d3d11.h>
 
-#include "Direct3D10Exception.h"
+#include "Direct3D11Exception.h"
 
-#include "Device10.h"
-#include "RasterizerState.h"
-#include "RasterizerStateDescription.h"
+#include "Device11.h"
+#include "RasterizerState11.h"
+#include "RasterizerStateDescription11.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 { 
-	RasterizerState^ RasterizerState::FromDescription( SlimDX::Direct3D10::Device^ device, RasterizerStateDescription description )
+	RasterizerState^ RasterizerState::FromDescription( SlimDX::Direct3D11::Device^ device, RasterizerStateDescription description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
 		
-		ID3D10RasterizerState* state = 0;
-		D3D10_RASTERIZER_DESC nativeDescription = description.CreateNativeVersion();
-		if( RECORD_D3D10( device->InternalPointer->CreateRasterizerState( &nativeDescription, &state ) ).IsFailure )
+		ID3D11RasterizerState* state = 0;
+		D3D11_RASTERIZER_DESC nativeDescription = description.CreateNativeVersion();
+		if( RECORD_D3D11( device->InternalPointer->CreateRasterizerState( &nativeDescription, &state ) ).IsFailure )
 			return nullptr;
 		
 		return FromPointer( state );
@@ -50,7 +50,7 @@ namespace Direct3D10
 
 	RasterizerStateDescription RasterizerState::Description::get()
 	{
-		D3D10_RASTERIZER_DESC description;
+		D3D11_RASTERIZER_DESC description;
 		InternalPointer->GetDesc( &description );
 		return RasterizerStateDescription( description );
 	}

@@ -21,17 +21,17 @@
 */
 #pragma once
 
-#include "Enums.h"
+#include "Enums11.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	namespace Direct3D11
 	{	
 		public value class RasterizerStateDescription : System::IEquatable<RasterizerStateDescription>
 		{
 		private:
-			Direct3D10::FillMode m_FillMode;
-			Direct3D10::CullMode m_CullMode;
+			Direct3D11::FillMode m_FillMode;
+			Direct3D11::CullMode m_CullMode;
 			bool m_FrontCounterClockwise;
 			int m_DepthBias;
 			float m_DepthBiasClamp;
@@ -42,21 +42,21 @@ namespace SlimDX
 			bool m_AntialiasedLineEnable;
 
 		internal:
-			RasterizerStateDescription( const D3D10_RASTERIZER_DESC& description );
+			RasterizerStateDescription( const D3D11_RASTERIZER_DESC& description );
 			
-			D3D10_RASTERIZER_DESC CreateNativeVersion();
+			D3D11_RASTERIZER_DESC CreateNativeVersion();
 			
 		public:
-			property Direct3D10::FillMode FillMode
+			property Direct3D11::FillMode FillMode
 			{
-				Direct3D10::FillMode get();
-				void set( Direct3D10::FillMode value );
+				Direct3D11::FillMode get();
+				void set( Direct3D11::FillMode value );
 			}
 
-			property Direct3D10::CullMode CullMode
+			property Direct3D11::CullMode CullMode
 			{
-				Direct3D10::CullMode get();
-				void set( Direct3D10::CullMode value );
+				Direct3D11::CullMode get();
+				void set( Direct3D11::CullMode value );
 			}
 
 			property bool IsFrontCounterclockwise

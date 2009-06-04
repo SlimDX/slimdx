@@ -21,14 +21,12 @@
 */
 #pragma once
 
-#include "../ComObject.h"
-
-#include "DeviceChild10.h"
-#include "Enums.h"
+#include "DeviceChild11.h"
+#include "Enums11.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	namespace Direct3D11
 	{	
 		ref class Device;
 		value class BlendStateDescription;
@@ -36,14 +34,10 @@ namespace SlimDX
 		/// <summary>
 		/// A state object defining the behavior of the pixel-blending stage of the output merger. 
 		/// </summary>
-		/// <unmanaged>ID3D10BlendState</unmanaged>
+		/// <unmanaged>ID3D11BlendState</unmanaged>
 		public ref class BlendState : public DeviceChild
 		{
-			COMOBJECT(ID3D10BlendState, BlendState);
-		
-		protected:
-			//no-op constructor for use by BlendState1
-			BlendState() { }
+			COMOBJECT(ID3D11BlendState, BlendState);
 
 		public:
 			/// <summary>
@@ -62,7 +56,7 @@ namespace SlimDX
 			/// <param name="device">The device to associate the state object with</param>
 			/// <param name="description">The state description.</param>
 			/// <returns>The BlendState object.</returns>
-			static BlendState^ FromDescription( SlimDX::Direct3D10::Device^ device, BlendStateDescription description );
+			static BlendState^ FromDescription( SlimDX::Direct3D11::Device^ device, BlendStateDescription description );
 		};
 	}
 };

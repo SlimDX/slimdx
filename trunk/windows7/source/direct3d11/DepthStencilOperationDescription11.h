@@ -21,11 +21,11 @@
 */
 #pragma once
 
-#include "Enums.h"
+#include "Enums11.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	namespace Direct3D11
 	{	
 		public value class DepthStencilOperationDescription : System::IEquatable<DepthStencilOperationDescription>
 		{
@@ -33,12 +33,12 @@ namespace SlimDX
 			StencilOperation m_StencilFailOp;
 			StencilOperation m_StencilDepthFailOp;
 			StencilOperation m_StencilPassOp;
-			Direct3D10::Comparison m_StencilFunc;
+			Direct3D11::Comparison m_StencilFunc;
 
 		internal:
-			DepthStencilOperationDescription( const D3D10_DEPTH_STENCILOP_DESC& native );
+			DepthStencilOperationDescription( const D3D11_DEPTH_STENCILOP_DESC& native );
 			
-			D3D10_DEPTH_STENCILOP_DESC CreateNativeVersion();
+			D3D11_DEPTH_STENCILOP_DESC CreateNativeVersion();
 			
 		public:
 			property StencilOperation FailOperation
@@ -59,10 +59,10 @@ namespace SlimDX
 				void set( StencilOperation value );
 			}
 
-			property Direct3D10::Comparison Comparison
+			property Direct3D11::Comparison Comparison
 			{
-				Direct3D10::Comparison get();
-				void set( Direct3D10::Comparison value );
+				Direct3D11::Comparison get();
+				void set( Direct3D11::Comparison value );
 			}
 
 			static bool operator == ( DepthStencilOperationDescription left, DepthStencilOperationDescription right );

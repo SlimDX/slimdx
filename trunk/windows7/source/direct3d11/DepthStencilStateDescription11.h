@@ -21,18 +21,18 @@
 */
 #pragma once
 
-#include "DepthStencilOperationDescription.h"
-#include "Enums.h"
+#include "DepthStencilOperationDescription11.h"
+#include "Enums11.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	namespace Direct3D11
 	{	
 		public value class DepthStencilStateDescription : System::IEquatable<DepthStencilStateDescription>
 		{
 		private:
 			bool m_DepthEnable;
-			Direct3D10::DepthWriteMask m_DepthWriteMask;
+			Direct3D11::DepthWriteMask m_DepthWriteMask;
 			Comparison m_DepthFunc;
 			bool m_StencilEnable;
 			System::Byte m_StencilReadMask;
@@ -41,9 +41,9 @@ namespace SlimDX
 			DepthStencilOperationDescription m_BackFace;
 
 		internal:
-			DepthStencilStateDescription( const D3D10_DEPTH_STENCIL_DESC& description );
+			DepthStencilStateDescription( const D3D11_DEPTH_STENCIL_DESC& description );
 			
-			D3D10_DEPTH_STENCIL_DESC CreateNativeVersion();
+			D3D11_DEPTH_STENCIL_DESC CreateNativeVersion();
 			
 		public:
 			property bool IsDepthEnabled
@@ -52,10 +52,10 @@ namespace SlimDX
 				void set( bool value );
 			}
 
-			property Direct3D10::DepthWriteMask DepthWriteMask
+			property Direct3D11::DepthWriteMask DepthWriteMask
 			{
-				Direct3D10::DepthWriteMask get();
-				void set( Direct3D10::DepthWriteMask value );
+				Direct3D11::DepthWriteMask get();
+				void set( Direct3D11::DepthWriteMask value );
 			}
 
 			property Comparison DepthComparison
