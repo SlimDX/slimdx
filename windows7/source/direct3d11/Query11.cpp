@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -19,47 +20,40 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
+#include <d3d11.h>
+#include <d3dx11.h>
 
-#include "RenderForm.h"
+#include "Direct3D11Exception.h"
+
+#include "Device11.h"
+#include "Query11.h"
 
 using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
 
 namespace SlimDX
 {
-namespace Windows
+namespace Direct3D11
 {
-	RenderForm::RenderForm()
+	Query::Query() 
 	{
-		Construct( "SlimDX" );
 	}
 
-	RenderForm::RenderForm( System::String^ text )
+	Query::Query( SlimDX::Direct3D11::Device^ device, QueryDescription description )
 	{
-		Construct( text );
+		D3D11_QUERY_DESC nativeDescription = description.CreateNativeVersion();
+		ID3D11Query* query = 0;
+		if( RECORD_D3D11( device->InternalPointer->CreateQuery( &nativeDescription, &query ) ).IsFailure )
+				throw gcnew Direct3D11Exception( Result::Last );
+		
+		Construct( query );
 	}
-
-	void RenderForm::Construct( System::String^ text )
+	
+	QueryDescription Query::Description::get()
 	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
+		D3D11_QUERY_DESC description;
+		InternalPointer->GetDesc( &description );
+		return QueryDescription( description );
 	}
 }
 }

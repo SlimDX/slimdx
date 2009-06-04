@@ -151,3 +151,4 @@ M^ ConstructFromUserPointer( System::IntPtr pointer )
 #include <string>
 #include <memory>
 #include <vector>
+#include <cmath>

@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -19,47 +20,40 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
+#include <d3dx10.h>
+#include <vcclr.h>
 
-#include "RenderForm.h"
+#include "../DataStream.h"
+
+#include "Direct3D10Exception.h"
+
+#include "MeshBuffer.h"
 
 using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
 
 namespace SlimDX
 {
-namespace Windows
+namespace Direct3D10
 {
-	RenderForm::RenderForm()
+	int MeshBuffer::SizeInBytes::get() 
 	{
-		Construct( "SlimDX" );
+		return static_cast<int>( InternalPointer->GetSize() );
 	}
 
-	RenderForm::RenderForm( System::String^ text )
+	DataStream^ MeshBuffer::Map()
 	{
-		Construct( text );
+		void* mappedPtr = 0;
+		SIZE_T mappedSize = 0;
+		if( RECORD_D3D10( InternalPointer->Map( &mappedPtr, &mappedSize ) ).IsFailure )
+			return nullptr;
+		
+		return gcnew DataStream( mappedPtr, mappedSize, true, true, false );
 	}
 
-	void RenderForm::Construct( System::String^ text )
+	Result MeshBuffer::Unmap()
 	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
+		return RECORD_D3D10( InternalPointer->Unmap() );
 	}
 }
 }

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2009 SlimDX Group
+* Copyright (c) 2007 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -19,47 +19,21 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
-
-#include "../InternalHelpers.h"
-#include "../Resources.h"
-
-#include "RenderForm.h"
+#pragma once
 
 using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
+
+#include "Enums.h"
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
+	namespace Direct3D10
 	{
-		Construct( "SlimDX" );
+		public value class StencilOperationDescription
+		{
+		public:
+			StencilOperation FailureOperation
+			
+		};
 	}
-
-	RenderForm::RenderForm( System::String^ text )
-	{
-		Construct( text );
-	}
-
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
-	}
-}
-}
+};

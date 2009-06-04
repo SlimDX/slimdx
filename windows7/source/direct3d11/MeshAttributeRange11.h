@@ -21,20 +21,64 @@
 */
 #pragma once
 
+#include <d3dx10.h>
+
 namespace SlimDX
 {
-	namespace Windows
+	namespace Direct3D10
 	{
-		public ref class RenderForm : System::Windows::Forms::Form
+		public value class MeshAttributeRange : System::IEquatable<MeshAttributeRange>
 		{
 		private:
-			void Construct( System::String^ text );
+			int m_AttribId;
+			int m_FaceStart;
+			int m_FaceCount;
+			int m_VertexStart;
+			int m_VertexCount;
+		
+		internal:
+			MeshAttributeRange( const D3DX10_ATTRIBUTE_RANGE &native );
+
+			D3DX10_ATTRIBUTE_RANGE CreateNativeVersion();
 
 		public:
-			RenderForm();
-			RenderForm( System::String^ text );
+			property int Id
+			{
+				int get();
+				void set( int value );
+			}
 
-			virtual void OnPaintBackground( System::Windows::Forms::PaintEventArgs^ e ) override;
+			property int FaceStart
+			{
+				int get();
+				void set( int value );
+			}
+
+			property int FaceCount
+			{
+				int get();
+				void set( int value );
+			}
+
+			property int VertexStart
+			{
+				int get();
+				void set( int value );
+			}
+
+			property int VertexCount
+			{
+				int get();
+				void set( int value );
+			}
+
+			static bool operator == ( MeshAttributeRange left, MeshAttributeRange right );
+			static bool operator != ( MeshAttributeRange left, MeshAttributeRange right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( MeshAttributeRange other );
+			static bool Equals( MeshAttributeRange% value1, MeshAttributeRange% value2 );
 		};
 	}
-}
+};

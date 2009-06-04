@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -19,47 +20,38 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
-
-#include "RenderForm.h"
+#include "Direct3D11Exception.h"
 
 using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
+using namespace System::Runtime::Serialization;
 
 namespace SlimDX
 {
-namespace Windows
+namespace Direct3D11
 {
-	RenderForm::RenderForm()
+	Direct3D11Exception::Direct3D11Exception( SerializationInfo^ info, StreamingContext context )
+	: SlimDXException( info, context )
 	{
-		Construct( "SlimDX" );
 	}
 
-	RenderForm::RenderForm( System::String^ text )
+	Direct3D11Exception::Direct3D11Exception()
 	{
-		Construct( text );
 	}
 
-	void RenderForm::Construct( System::String^ text )
+	Direct3D11Exception::Direct3D11Exception( String^ message )
+	: SlimDXException( message )
 	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
 	}
 
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
+	Direct3D11Exception::Direct3D11Exception( String^ message, Exception^ innerException )
+	: SlimDXException( message, innerException )
 	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
+	}
+
+	Direct3D11Exception::Direct3D11Exception( Result result )
+	: SlimDXException( result )
+	{
 	}
 }
 }

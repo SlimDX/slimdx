@@ -19,47 +19,21 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
+#pragma once
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
-
-#include "RenderForm.h"
-
-using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
+#include "DeviceChild10.h"
+#include "ShaderBytecode10.h"
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
+	namespace Direct3D10
 	{
-		Construct( "SlimDX" );
+		public ref class PixelShader : public DeviceChild
+		{
+			COMOBJECT(ID3D10PixelShader, PixelShader);
+
+		public:
+			PixelShader( Direct3D10::Device^ device, ShaderBytecode^ shaderBytecode );
+		};
 	}
-
-	RenderForm::RenderForm( System::String^ text )
-	{
-		Construct( text );
-	}
-
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
-	}
-}
-}
+};

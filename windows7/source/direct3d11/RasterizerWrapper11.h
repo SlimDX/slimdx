@@ -19,47 +19,31 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
-
-#include "../InternalHelpers.h"
-#include "../Resources.h"
-
-#include "RenderForm.h"
-
-using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
+#pragma once
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
+	namespace Direct3D11
 	{
-		Construct( "SlimDX" );
+		ref class RasterizerState;
+		
+		public ref class RasterizerWrapper
+		{
+		private:
+			ID3D11Device* m_Device;
+			
+		internal:
+			RasterizerWrapper( ID3D11Device* device );
+			
+		public:
+			property RasterizerState^ State
+			{
+				void set( RasterizerState^ value );
+				RasterizerState^ get();
+			}
+		
+			void SetViewports( SlimDX::Viewport viewport );
+			void SetViewports( ... array<SlimDX::Viewport>^ viewports );
+		};
 	}
-
-	RenderForm::RenderForm( System::String^ text )
-	{
-		Construct( text );
-	}
-
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
-	}
-}
-}
+};

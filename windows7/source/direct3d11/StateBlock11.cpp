@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -19,47 +20,52 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
+#include <d3d10.h>
 
-#include "RenderForm.h"
+#include "Direct3D10Exception.h"
+
+#include "StateBlock10.h"
+#include "Device10.h"
+#include "StateBlockMask.h"
 
 using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
+namespace Direct3D10
+{ 
+	StateBlock::StateBlock( SlimDX::Direct3D10::Device^ device, StateBlockMask mask )
 	{
-		Construct( "SlimDX" );
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+	
+		ID3D10StateBlock* stateBlock = 0;
+		D3D10_STATE_BLOCK_MASK nativeMask = mask.CreateNativeVersion();
+		
+		if( RECORD_D3D10( D3D10CreateStateBlock( device->InternalPointer, &nativeMask, &stateBlock ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+		
+		Construct( stateBlock );
 	}
 
-	RenderForm::RenderForm( System::String^ text )
+	Device^ StateBlock::Device::get()
 	{
-		Construct( text );
+		ID3D10Device* device = 0;
+		InternalPointer->GetDevice( &device );
+		return SlimDX::Direct3D10::Device::FromPointer( device );
 	}
-
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
+	
+	Result StateBlock::Apply() {
+		return RECORD_D3D10( InternalPointer->Apply() );
 	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
+	
+	Result StateBlock::Capture() {
+		return RECORD_D3D10( InternalPointer->Capture() );
+	}
+	
+	Result StateBlock::ReleaseAllDeviceObjects() {
+		return RECORD_D3D10( InternalPointer->ReleaseAllDeviceObjects() );
 	}
 }
 }

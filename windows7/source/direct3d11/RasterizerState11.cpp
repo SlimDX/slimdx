@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -19,47 +20,39 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
+#include <d3d10.h>
 
-#include "RenderForm.h"
+#include "Direct3D10Exception.h"
+
+#include "Device10.h"
+#include "RasterizerState.h"
+#include "RasterizerStateDescription.h"
 
 using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
+namespace Direct3D10
+{ 
+	RasterizerState^ RasterizerState::FromDescription( SlimDX::Direct3D10::Device^ device, RasterizerStateDescription description )
 	{
-		Construct( "SlimDX" );
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+		
+		ID3D10RasterizerState* state = 0;
+		D3D10_RASTERIZER_DESC nativeDescription = description.CreateNativeVersion();
+		if( RECORD_D3D10( device->InternalPointer->CreateRasterizerState( &nativeDescription, &state ) ).IsFailure )
+			return nullptr;
+		
+		return FromPointer( state );
 	}
 
-	RenderForm::RenderForm( System::String^ text )
+	RasterizerStateDescription RasterizerState::Description::get()
 	{
-		Construct( text );
-	}
-
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
+		D3D10_RASTERIZER_DESC description;
+		InternalPointer->GetDesc( &description );
+		return RasterizerStateDescription( description );
 	}
 }
 }

@@ -19,47 +19,28 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
+#pragma once
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
-
-#include "RenderForm.h"
-
-using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
+#include "DeviceChild10.h"
+#include "SamplerDescription.h"
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
+	namespace Direct3D10
 	{
-		Construct( "SlimDX" );
+		ref class Device;
+		
+		public ref class SamplerState : public DeviceChild
+		{
+			COMOBJECT(ID3D10SamplerState, SamplerState);
+
+		public:
+			property SamplerDescription Description
+			{
+				SamplerDescription get();
+			}
+
+			static SamplerState^ FromDescription( Direct3D10::Device^ device, SamplerDescription description );
+		};
 	}
-
-	RenderForm::RenderForm( System::String^ text )
-	{
-		Construct( text );
-	}
-
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
-	}
-}
 }

@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -19,47 +20,51 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
+#include <d3d10.h>
 
-#include "RenderForm.h"
+#include "Direct3D10Exception.h"
+
+#include "EffectResourceVariable.h"
+#include "ShaderResourceView.h"
 
 using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
+namespace Direct3D10
+{ 
+	EffectResourceVariable::EffectResourceVariable( ID3D10EffectShaderResourceVariable* pointer )
+	: EffectVariable( pointer )
 	{
-		Construct( "SlimDX" );
+		m_Pointer = pointer;
 	}
-
-	RenderForm::RenderForm( System::String^ text )
+	
+	EffectResourceVariable::EffectResourceVariable( IntPtr pointer )
+	: EffectVariable( pointer )
 	{
-		Construct( text );
+		m_Pointer = reinterpret_cast<ID3D10EffectShaderResourceVariable*>( pointer.ToPointer() );
 	}
-
-	void RenderForm::Construct( System::String^ text )
+	
+	Result EffectResourceVariable::SetResource( ShaderResourceView^ view )
 	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
+		if( view == nullptr )
+		{
+			return RECORD_D3D10( m_Pointer->SetResource( 0 ) );
+		}
+		else
+		{
+			return RECORD_D3D10( m_Pointer->SetResource( static_cast<ID3D10ShaderResourceView*>( view->InternalPointer ) ) );
+		}
 	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
+	
+	ShaderResourceView^ EffectResourceVariable::GetResource()
 	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
+		ID3D10ShaderResourceView* view = 0;
+		if( RECORD_D3D10( m_Pointer->GetResource( &view ) ).IsFailure )
+			return nullptr;
+			
+		return ShaderResourceView::FromPointer( view );
 	}
 }
 }

@@ -19,47 +19,45 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
-
-#include "../InternalHelpers.h"
-#include "../Resources.h"
-
-#include "RenderForm.h"
-
-using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
+#pragma once
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
-	{
-		Construct( "SlimDX" );
+	namespace Direct3D11
+	{	
+		public value class CounterCapabilities : System::IEquatable<CounterCapabilities>
+		{
+		private:
+			int m_LastDeviceDependentCounter;
+			int m_NumSimultaneousCounters;
+			System::Byte m_NumDetectableParallelUnits; 
+
+		internal:
+			CounterCapabilities( const D3D11_COUNTER_INFO& native );
+			
+		public:
+			property int LastDeviceDependantCounter
+			{
+				int get();
+			}
+			
+			property int MaximumSimultaneousCounters
+			{
+				int get();
+			}
+			
+			property int MaximumParallelUnits
+			{
+				int get();
+			}
+
+			static bool operator == ( CounterCapabilities left, CounterCapabilities right );
+			static bool operator != ( CounterCapabilities left, CounterCapabilities right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( CounterCapabilities other );
+			static bool Equals( CounterCapabilities% value1, CounterCapabilities% value2 );
+		};
 	}
-
-	RenderForm::RenderForm( System::String^ text )
-	{
-		Construct( text );
-	}
-
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
-	}
-}
-}
+};

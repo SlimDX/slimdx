@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -19,47 +20,38 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
+#include <d3d10.h>
 
-#include "RenderForm.h"
+#include "Direct3D10Exception.h"
+
+#include "EffectStringVariable.h"
 
 using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
+namespace Direct3D10
+{ 
+	EffectStringVariable::EffectStringVariable( ID3D10EffectStringVariable* pointer )
+	: EffectVariable( pointer )
 	{
-		Construct( "SlimDX" );
+		m_Pointer = pointer;
 	}
-
-	RenderForm::RenderForm( System::String^ text )
+	
+	EffectStringVariable::EffectStringVariable( IntPtr pointer )
+	: EffectVariable( pointer )
 	{
-		Construct( text );
+		m_Pointer = reinterpret_cast<ID3D10EffectStringVariable*>( pointer.ToPointer() );
 	}
-
-	void RenderForm::Construct( System::String^ text )
+	
+	String^ EffectStringVariable::GetString()
 	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
+		LPCSTR result = 0;
+		if( RECORD_D3D10( m_Pointer->GetString( &result ) ).IsFailure )
+			return nullptr;
+		
+		return gcnew String( result );
 	}
 }
 }

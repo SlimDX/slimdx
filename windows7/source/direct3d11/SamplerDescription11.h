@@ -19,47 +19,42 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
+#pragma once
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
+#include "../math/color4.h"
 
-#include "RenderForm.h"
-
-using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
+#include "Enums.h"
 
 namespace SlimDX
 {
-namespace Windows
-{
-	RenderForm::RenderForm()
-	{
-		Construct( "SlimDX" );
+	namespace Direct3D10
+	{	
+		public value class SamplerDescription : System::IEquatable<SamplerDescription>
+		{
+		internal:
+			SamplerDescription( const D3D10_SAMPLER_DESC& native );
+			
+			D3D10_SAMPLER_DESC CreateNativeVersion();
+			
+		public:
+			property Filter Filter;
+			property TextureAddressMode AddressU;
+			property TextureAddressMode AddressV;
+			property TextureAddressMode AddressW;
+			property float MipLodBias;
+			property int MaximumAnisotropy;
+			property Comparison ComparisonFunction;
+			property Color4 BorderColor;
+			property float MinimumLod;
+			property float MaximumLod;
+
+			static bool operator == ( SamplerDescription left, SamplerDescription right );
+			static bool operator != ( SamplerDescription left, SamplerDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( SamplerDescription other );
+			static bool Equals( SamplerDescription% value1, SamplerDescription% value2 );
+		};
 	}
-
-	RenderForm::RenderForm( System::String^ text )
-	{
-		Construct( text );
-	}
-
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
-	}
-}
-}
+};

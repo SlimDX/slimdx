@@ -1245,7 +1245,9 @@ namespace SlimDX
 			/// <summary>
 			/// Clear the depth buffer.
 			/// </summary>
-			ZBuffer = D3DCLEAR_ZBUFFER
+			ZBuffer = D3DCLEAR_ZBUFFER,
+
+			All = Stencil | Target | ZBuffer
 		};
 
 		/// <summary>

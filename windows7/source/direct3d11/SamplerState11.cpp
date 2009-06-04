@@ -21,45 +21,45 @@
 */
 #include "stdafx.h"
 
-#include "../InternalHelpers.h"
-#include "../Resources.h"
+#include <d3d10.h>
+#include <d3dx10.h>
+#include <d3dx9.h>
+#include <vcclr.h>
+#include <cmath>
 
-#include "RenderForm.h"
+#include "Direct3D10Exception.h"
+
+#include "../DataStream.h"
+
+#include "Device10.h"
+#include "SamplerState.h"
 
 using namespace System;
-using namespace System::Drawing;
-using namespace System::Windows::Forms;
 
 namespace SlimDX
 {
-namespace Windows
+namespace Direct3D10
 {
-	RenderForm::RenderForm()
+	SamplerState^ SamplerState::FromDescription( Direct3D10::Device^ device, SamplerDescription description )
 	{
-		Construct( "SlimDX" );
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+
+		ID3D10SamplerState *sampler;
+		D3D10_SAMPLER_DESC nativeDescription = description.CreateNativeVersion();
+
+		if( RECORD_D3D10( device->InternalPointer->CreateSamplerState( &nativeDescription, &sampler ) ).IsFailure )
+			return nullptr;
+
+		return FromPointer( sampler );
 	}
 
-	RenderForm::RenderForm( System::String^ text )
+	SamplerDescription SamplerState::Description::get()
 	{
-		Construct( text );
-	}
+		D3D10_SAMPLER_DESC desc;
+		InternalPointer->GetDesc( &desc );
 
-	void RenderForm::Construct( System::String^ text )
-	{
-		Text = text;
-		ClientSize = System::Drawing::Size( 800, 600 );
-
-		DoubleBuffered = true;
-		ResizeRedraw = true;
-		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
-	}
-
-	void RenderForm::OnPaintBackground( PaintEventArgs^ e )
-	{
-		SLIMDX_UNREFERENCED_PARAMETER( e );
+		return SamplerDescription( desc );
 	}
 }
 }
