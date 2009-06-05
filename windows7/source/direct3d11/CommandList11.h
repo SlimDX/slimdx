@@ -21,38 +21,15 @@
 */
 #pragma once
 
-#include "Enums11.h"
-
 namespace SlimDX
 {
 	namespace Direct3D11
-	{	
-		public value class CounterDescription : System::IEquatable<CounterDescription>
+	{
+		public ref class CommandList : ComObject
 		{
-		private:
-			Direct3D11::CounterKind m_Counter;
-
-		internal:
-			CounterDescription( const D3D11_COUNTER_DESC& native );
-			
-			D3D11_COUNTER_DESC CreateNativeVersion();
+			COMOBJECT(ID3D11CommandList, CommandList);
 			
 		public:
-			property Direct3D11::CounterKind CounterKind
-			{
-				Direct3D11::CounterKind get();
-				void set( Direct3D11::CounterKind value );
-			}
-			
-			CounterDescription( Direct3D11::CounterKind kind );
-
-			static bool operator == ( CounterDescription left, CounterDescription right );
-			static bool operator != ( CounterDescription left, CounterDescription right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( CounterDescription other );
-			static bool Equals( CounterDescription% value1, CounterDescription% value2 );
 		};
 	}
-};
+}

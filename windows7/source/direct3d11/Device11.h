@@ -27,21 +27,11 @@ using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
-	ref class DataBox;
-	
 	namespace Direct3D11
 	{
-		ref class Buffer;
-		ref class DepthStencilView;
-		ref class InputLayout;
-		ref class Predicate;
-		ref class RenderTargetView;
-		ref class Resource;
+		ref class DeviceContext;
 		value class CounterCapabilities;
-		value class CounterDescription;
 		value class CounterMetadata;
-		value class RenderTargetViewDescription;
-		value class ResourceRegion;
 
 		/// <summary>
 		/// A virtual adapter for performing rendering.
@@ -73,13 +63,23 @@ namespace SlimDX
 				Result get();
 			}
 
+			property FeatureLevel FeatureLevel
+			{
+				Direct3D11::FeatureLevel get();
+			}
+
+			property DeviceContext^ ImmediateContext
+			{
+				DeviceContext^ get();
+			}
+
 			Device( DXGI::Adapter^ adapter );
 			Device( DXGI::Adapter^ adapter, DeviceCreationFlags flags );
-			Device( DXGI::Adapter^ adapter, DeviceCreationFlags flags, ... array<FeatureLevel>^ featureLevels );
+			Device( DXGI::Adapter^ adapter, DeviceCreationFlags flags, ... array<Direct3D11::FeatureLevel>^ featureLevels );
 
 			Device( DriverType driverType );
 			Device( DriverType driverType, DeviceCreationFlags flags );
-			Device( DriverType driverType, DeviceCreationFlags flags, ... array<FeatureLevel>^ featureLevels );
+			Device( DriverType driverType, DeviceCreationFlags flags, ... array<Direct3D11::FeatureLevel>^ featureLevels );
 
 			/// <summary>
 			/// Gets information about the device's performance counters.
@@ -92,7 +92,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="description">The description of the counter to retrieve information about.</param>
 			/// <returns>Metadata for the specified counter.</returns>
-			CounterMetadata GetCounterMetadata( CounterDescription description );
+			CounterMetadata GetCounterMetadata( CounterKind counterKind );
 			
 			/// <summary>
 			/// Gets information about the supported applications of a specified format.
@@ -100,6 +100,10 @@ namespace SlimDX
 			/// <param name="format">The format to check support for.</param>
 			/// <returns>FormatSupport flags indicating usage contexts in which the specified format is supported.</returns>
 			FormatSupport CheckFormatSupport( DXGI::Format format );
+
+			ComputeShaderFormatSupport CheckComputeShaderFormatSupport( DXGI::Format format );
+			bool CheckFeatureSupport( Feature feature );
+			Result CheckThreadingSupport( [Out] bool% supportsConcurrentResources, [Out] bool% supportCommandLists );
 
 			/// <summary>
 			/// Gets the number of quality levels supported during multisampling of resources using a specified format.
@@ -109,9 +113,12 @@ namespace SlimDX
 			/// <returns>The number of quality levels supported. 0 if an error occured
 			/// or if the format/samplecount pair is not supported.</returns>
 			int CheckMultisampleQualityLevels( DXGI::Format format, int sampleCount );
+
+			static Direct3D11::FeatureLevel GetSupportedFeatureLevel();
+			static Direct3D11::FeatureLevel GetSupportedFeatureLevel( array<Direct3D11::FeatureLevel>^ featureLevels );
 			
 			static Result CreateWithSwapChain( DXGI::Adapter^ adapter, DriverType driverType, DeviceCreationFlags flags, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain );
-			static Result CreateWithSwapChain( DXGI::Adapter^ adapter, DriverType driverType, DeviceCreationFlags flags, array<FeatureLevel>^ featureLevels, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain );
+			static Result CreateWithSwapChain( DXGI::Adapter^ adapter, DriverType driverType, DeviceCreationFlags flags, array<Direct3D11::FeatureLevel>^ featureLevels, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain );
 		};
 	}
 };

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -20,38 +19,16 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
+#include "stdafx.h"
 #include <d3d11.h>
 
-#include "Direct3D11Exception.h"
-
-#include "Counter11.h"
-#include "Device11.h"
+#include "CommandList11.h"
 
 using namespace System;
 
 namespace SlimDX
 {
 namespace Direct3D11
-{ 
-	Counter::Counter( SlimDX::Direct3D11::Device^ device, Direct3D11::CounterKind counterKind )
-	{
-		ID3D11Counter* counter = 0;
-		D3D11_COUNTER_DESC nativeDescription;
-		nativeDescription.Counter = static_cast<D3D11_COUNTER>( counterKind );
-
-		if( RECORD_D3D11( device->InternalPointer->CreateCounter( &nativeDescription, &counter ) ).IsFailure )
-			throw gcnew Direct3D11Exception( Result::Last );
-		
-		Construct( counter );
-	}
-
-	Direct3D11::CounterKind Counter::CounterKind::get()
-	{
-		D3D11_COUNTER_DESC description;
-		InternalPointer->GetDesc( &description );
-
-		return static_cast<Direct3D11::CounterKind>( description.Counter );
-	}
+{
 }
 }

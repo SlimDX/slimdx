@@ -28,19 +28,18 @@ namespace SlimDX
 	namespace Direct3D11
 	{
 		ref class Device;
-		value class CounterDescription;
 		
 		public ref class Counter : public Asynchronous
 		{
 			COMOBJECT(ID3D11Counter, Counter);
 		
 		public:
-			property CounterDescription Description
+			property Direct3D11::CounterKind CounterKind
 			{
-				CounterDescription get();
+				Direct3D11::CounterKind get();
 			}
 			
-			Counter( SlimDX::Direct3D11::Device^ device, CounterDescription description );
+			Counter( SlimDX::Direct3D11::Device^ device, Direct3D11::CounterKind counterKind );
 		};
 	}
 };
