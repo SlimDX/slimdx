@@ -21,46 +21,86 @@
 */
 #include "stdafx.h"
 
-#include "../stack_array.h"
+#include "../../../source/stack_array.h"
 
-#include "Buffer.h"
-#include "SamplerState.h"
-#include "ShaderResourceView.h"
-#include "VertexShaderWrapper.h"
-#include "VertexShader10.h"
+#include "Buffer11.h"
+#include "SamplerState11.h"
+#include "ShaderResourceView11.h"
+#include "VertexShaderWrapper11.h"
+#include "VertexShader11.h"
+#include "ClassInstance11.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 { 
-	VertexShaderWrapper::VertexShaderWrapper( ID3D10Device* device )
+	VertexShaderWrapper::VertexShaderWrapper( ID3D11DeviceContext* device )
 	{
 		if( device == 0 )
 			throw gcnew ArgumentNullException( "device" );
-		m_Device = device;
+		deviceContext = device;
 	}
 
 	void VertexShaderWrapper::Set( VertexShader^ shader )
 	{
-		m_Device->VSSetShader( shader == nullptr ? 0 : shader->InternalPointer );
+		Set( shader, nullptr );
+	}
+
+	void VertexShaderWrapper::Set( VertexShader^ shader, array<ClassInstance^>^ classInstances )
+	{
+		ID3D11VertexShader *nativeShader = shader == nullptr ? NULL : shader->InternalPointer;
+		ID3D11ClassInstance** instancePtr = NULL;
+		stack_array<ID3D11ClassInstance*> instances;
+		UINT count = 0;
+
+		if( classInstances != nullptr && classInstances->Length > 0 )
+		{
+			instances = stack_array<ID3D11ClassInstance*>( classInstances->Length );
+			instancePtr = &instances[0];
+			count = classInstances->Length;
+
+			for( int i = 0; i < classInstances->Length; i++ )
+				instances[i] = classInstances[i]->InternalPointer;
+		}
+
+		deviceContext->VSSetShader( nativeShader, instancePtr, count );
 	}
 
 	VertexShader^ VertexShaderWrapper::Get()
 	{
-		ID3D10VertexShader* shader = 0;
-		m_Device->VSGetShader( &shader );
+		return Get( nullptr );
+	}
 
-		return shader == 0 ? nullptr : VertexShader::FromPointer( shader );
+	VertexShader^ VertexShaderWrapper::Get( array<ClassInstance^>^ classInstances )
+	{
+		ID3D11VertexShader *shader = NULL;
+		ID3D11ClassInstance** instancePtr = NULL;
+		stack_array<ID3D11ClassInstance*> instances;
+		UINT count = 0;
+
+		if( classInstances != nullptr && classInstances->Length > 0 )
+		{
+			instances = stack_array<ID3D11ClassInstance*>( classInstances->Length );
+			instancePtr = &instances[0];
+			count = classInstances->Length;
+		}
+
+		deviceContext->VSGetShader( &shader, instancePtr, &count );
+
+		for( UINT i = 0; i < count; i++ )
+			classInstances[i] = ClassInstance::FromPointer( instances[i] );
+
+		return shader == NULL ? nullptr : VertexShader::FromPointer( shader );
 	}
 
 	array<Buffer^>^ VertexShaderWrapper::GetConstantBuffers( int startSlot, int count )
 	{
 		array<Buffer^>^ buffers = gcnew array<Buffer^>( count );
-		stack_array<ID3D10Buffer*> results = stackalloc( ID3D10Buffer*, count );
+		stack_array<ID3D11Buffer*> results = stackalloc( ID3D11Buffer*, count );
 
-		m_Device->VSGetConstantBuffers( startSlot, count, &results[0] );
+		deviceContext->VSGetConstantBuffers( startSlot, count, &results[0] );
 
 		for( int i = 0; i < count; i++ )
 			buffers[i] = Buffer::FromPointer( results[i] );
@@ -71,9 +111,9 @@ namespace Direct3D10
 	array<SamplerState^>^ VertexShaderWrapper::GetSamplers( int startSlot, int count )
 	{
 		array<SamplerState^>^ samplers = gcnew array<SamplerState^>( count );
-		stack_array<ID3D10SamplerState*> results = stackalloc( ID3D10SamplerState*, count );
+		stack_array<ID3D11SamplerState*> results = stackalloc( ID3D11SamplerState*, count );
 
-		m_Device->VSGetSamplers( startSlot, count, &results[0] );
+		deviceContext->VSGetSamplers( startSlot, count, &results[0] );
 
 		for( int i = 0; i < count; i++ )
 			samplers[i] = SamplerState::FromPointer( results[i] );
@@ -84,9 +124,9 @@ namespace Direct3D10
 	array<ShaderResourceView^>^ VertexShaderWrapper::GetShaderResources( int startSlot, int count )
 	{
 		array<ShaderResourceView^>^ resources = gcnew array<ShaderResourceView^>( count );
-		stack_array<ID3D10ShaderResourceView*> results = stackalloc( ID3D10ShaderResourceView*, count );
+		stack_array<ID3D11ShaderResourceView*> results = stackalloc( ID3D11ShaderResourceView*, count );
 
-		m_Device->VSGetShaderResources( startSlot, count, &results[0] );
+		deviceContext->VSGetShaderResources( startSlot, count, &results[0] );
 
 		for( int i = 0; i < count; i++ )
 			resources[i] = ShaderResourceView::FromPointer( results[i] );
@@ -96,8 +136,8 @@ namespace Direct3D10
 
 	void VertexShaderWrapper::SetConstantBuffer( Buffer^ constantBuffer, int slot )
 	{
-		ID3D10Buffer *buffer = constantBuffer == nullptr ? NULL : constantBuffer->InternalPointer;
-		m_Device->VSSetConstantBuffers( slot, 1, &buffer );
+		ID3D11Buffer *buffer = constantBuffer == nullptr ? NULL : constantBuffer->InternalPointer;
+		deviceContext->VSSetConstantBuffers( slot, 1, &buffer );
 	}
 
 	void VertexShaderWrapper::SetConstantBuffers( array<Buffer^>^ constantBuffers, int startSlot, int count )
@@ -105,17 +145,17 @@ namespace Direct3D10
 		if( count > constantBuffers->Length )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 
-		stack_array<ID3D10Buffer*> input = stackalloc( ID3D10Buffer*, count );
+		stack_array<ID3D11Buffer*> input = stackalloc( ID3D11Buffer*, count );
 		for( int i = 0; i < count; i++ )
 			input[i] = constantBuffers[i] == nullptr ? NULL : constantBuffers[i]->InternalPointer;
 
-		m_Device->VSSetConstantBuffers( startSlot, count, &input[0] );
+		deviceContext->VSSetConstantBuffers( startSlot, count, &input[0] );
 	}
 
 	void VertexShaderWrapper::SetSampler( SamplerState^ sampler, int slot )
 	{
-		ID3D10SamplerState *pointer = sampler == nullptr ? NULL : sampler->InternalPointer;
-		m_Device->VSSetSamplers( slot, 1, &pointer );
+		ID3D11SamplerState *pointer = sampler == nullptr ? NULL : sampler->InternalPointer;
+		deviceContext->VSSetSamplers( slot, 1, &pointer );
 	}
 
 	void VertexShaderWrapper::SetSamplers( array<SamplerState^>^ samplers, int startSlot, int count )
@@ -123,17 +163,17 @@ namespace Direct3D10
 		if( count > samplers->Length )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 
-		stack_array<ID3D10SamplerState*> input = stackalloc( ID3D10SamplerState*, count );
+		stack_array<ID3D11SamplerState*> input = stackalloc( ID3D11SamplerState*, count );
 		for( int i = 0; i < count; i++ )
 			input[i] = samplers[i] == nullptr ? NULL : samplers[i]->InternalPointer;
 
-		m_Device->VSSetSamplers( startSlot, count, &input[0] );
+		deviceContext->VSSetSamplers( startSlot, count, &input[0] );
 	}
 
 	void VertexShaderWrapper::SetShaderResource( ShaderResourceView^ resourceView, int slot )
 	{
-		ID3D10ShaderResourceView *resource = resourceView == nullptr ? NULL : resourceView->InternalPointer;
-		m_Device->VSSetShaderResources( slot, 1, &resource );
+		ID3D11ShaderResourceView *resource = resourceView == nullptr ? NULL : resourceView->InternalPointer;
+		deviceContext->VSSetShaderResources( slot, 1, &resource );
 	}
 
 	void VertexShaderWrapper::SetShaderResources( array<ShaderResourceView^>^ resourceViews, int startSlot, int count )
@@ -141,11 +181,11 @@ namespace Direct3D10
 		if( count > resourceViews->Length )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 
-		stack_array<ID3D10ShaderResourceView*> input = stackalloc( ID3D10ShaderResourceView*, count );
+		stack_array<ID3D11ShaderResourceView*> input = stackalloc( ID3D11ShaderResourceView*, count );
 		for( int i = 0; i < count; i++ )
 			input[i] = resourceViews[i] == nullptr ? NULL : resourceViews[i]->InternalPointer;
 
-		m_Device->VSSetShaderResources( startSlot, count, &input[0] );
+		deviceContext->VSSetShaderResources( startSlot, count, &input[0] );
 	}
 }
 }

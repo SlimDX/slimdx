@@ -1176,6 +1176,66 @@
 					RelativePath=".\source\direct3d11\DeviceContext11.h"
 					>
 				</File>
+				<Filter
+					Name="Pipeline Wrappers"
+					>
+					<File
+						RelativePath=".\source\direct3d11\GeometryShaderWrapper11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\GeometryShaderWrapper11.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\InputAssemblerWrapper11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\InputAssemblerWrapper11.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\OutputMergerWrapper11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\OutputMergerWrapper11.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\PixelShaderWrapper11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\PixelShaderWrapper11.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\RasterizerWrapper11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\RasterizerWrapper11.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\StreamOutputWrapper11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\StreamOutputWrapper11.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\VertexShaderWrapper11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\VertexShaderWrapper11.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Resource"
@@ -1436,6 +1496,26 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="UnorderedAccessView"
+					>
+					<File
+						RelativePath=".\source\direct3d11\UnorderedAccessView11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\UnorderedAccessView11.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\UnorderedAccessViewDescription11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\UnorderedAccessViewDescription11.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Statistics"
@@ -1564,6 +1644,74 @@
 						>
 					</File>
 				</Filter>
+			</Filter>
+			<Filter
+				Name="Shader"
+				>
+				<File
+					RelativePath=".\source\direct3d11\ClassInstance11.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct3d11\ClassInstance11.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct3d11\ClassLinkage11.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct3d11\ClassLinkage11.h"
+					>
+				</File>
+				<Filter
+					Name="GeometryShader"
+					>
+					<File
+						RelativePath=".\source\direct3d11\GeometryShader11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\GeometryShader11.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="PixelShader"
+					>
+					<File
+						RelativePath=".\source\direct3d11\PixelShader11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\PixelShader11.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="VertexShader"
+					>
+					<File
+						RelativePath=".\source\direct3d11\VertexShader11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\VertexShader11.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="Stream Output"
+				>
+				<File
+					RelativePath=".\source\direct3d11\StreamOutputBufferBinding11.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct3d11\StreamOutputBufferBinding11.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<File

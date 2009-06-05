@@ -21,77 +21,77 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
-#include <d3dx10.h>
+#include <d3d11.h>
+#include <d3dx11.h>
 
-#include "Buffer.h"
-#include "InputAssemblerWrapper.h"
-#include "InputLayout.h"
+#include "Buffer11.h"
+#include "InputAssemblerWrapper11.h"
+#include "InputLayout11.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 { 
-	InputAssemblerWrapper::InputAssemblerWrapper( ID3D10Device* device )
+	InputAssemblerWrapper::InputAssemblerWrapper( ID3D11DeviceContext* device )
 	{
 		if( device == 0 )
 			throw gcnew ArgumentNullException( "device" );
-		m_Device = device;
+		deviceContext = device;
 	}
 
 	void InputAssemblerWrapper::SetInputLayout( InputLayout^ value)
 	{
 		if( value == nullptr )
 		{
-			m_Device->IASetInputLayout( 0 );
+			deviceContext->IASetInputLayout( 0 );
 		} else
 		{
-			m_Device->IASetInputLayout( value->InternalPointer );
+			deviceContext->IASetInputLayout( value->InternalPointer );
 		}
 	}
 	
 	void InputAssemblerWrapper::SetPrimitiveTopology( PrimitiveTopology value)
 	{
-		m_Device->IASetPrimitiveTopology( static_cast<D3D10_PRIMITIVE_TOPOLOGY>( value ) );
+		deviceContext->IASetPrimitiveTopology( static_cast<D3D11_PRIMITIVE_TOPOLOGY>( value ) );
 	}
 	
 	void InputAssemblerWrapper::SetIndexBuffer( Buffer^ indexBuffer, DXGI::Format format, int offset )
 	{
 		if( indexBuffer == nullptr )
 		{
-			m_Device->IASetIndexBuffer( 0, DXGI_FORMAT_UNKNOWN, 0 );
+			deviceContext->IASetIndexBuffer( 0, DXGI_FORMAT_UNKNOWN, 0 );
 		}
 		else
 		{
-			m_Device->IASetIndexBuffer( static_cast<ID3D10Buffer*>( indexBuffer->InternalPointer ), static_cast<DXGI_FORMAT>( format ), offset );
+			deviceContext->IASetIndexBuffer( static_cast<ID3D11Buffer*>( indexBuffer->InternalPointer ), static_cast<DXGI_FORMAT>( format ), offset );
 		}
 	}
 	
 	void InputAssemblerWrapper::SetVertexBuffers( int slot, VertexBufferBinding vertexBufferBinding )
 	{
-		ID3D10Buffer* buffers[] = { static_cast<ID3D10Buffer*>( vertexBufferBinding.Buffer == nullptr ? 0 : vertexBufferBinding.Buffer->InternalPointer ) };
+		ID3D11Buffer* buffers[] = { static_cast<ID3D11Buffer*>( vertexBufferBinding.Buffer == nullptr ? 0 : vertexBufferBinding.Buffer->InternalPointer ) };
 		UINT strides[] = { vertexBufferBinding.Stride };
 		UINT offsets[] = { vertexBufferBinding.Offset };
 		
-		m_Device->IASetVertexBuffers( slot, 1, buffers, strides, offsets );
+		deviceContext->IASetVertexBuffers( slot, 1, buffers, strides, offsets );
 	}
 	
 	void InputAssemblerWrapper::SetVertexBuffers( int firstSlot, ... array<VertexBufferBinding>^ vertexBufferBinding )
 	{
-		ID3D10Buffer* buffers[D3D10_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT];
-		UINT strides[D3D10_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT];
-		UINT offsets[D3D10_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT];
+		ID3D11Buffer* buffers[D3D11_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT];
+		UINT strides[D3D11_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT];
+		UINT offsets[D3D11_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT];
 		
 		for( int i = 0; i < vertexBufferBinding->Length; ++i )
 		{
-			buffers[i] = vertexBufferBinding[ i ].Buffer == nullptr ? 0 : static_cast<ID3D10Buffer*>( vertexBufferBinding[ i ].Buffer->InternalPointer );
+			buffers[i] = vertexBufferBinding[ i ].Buffer == nullptr ? 0 : static_cast<ID3D11Buffer*>( vertexBufferBinding[ i ].Buffer->InternalPointer );
 			strides[i] = vertexBufferBinding[ i ].Stride;
 			offsets[i] = vertexBufferBinding[ i ].Offset;
 		}
 		
-		m_Device->IASetVertexBuffers( firstSlot, vertexBufferBinding->Length, buffers, strides, offsets );
+		deviceContext->IASetVertexBuffers( firstSlot, vertexBufferBinding->Length, buffers, strides, offsets );
 	}
 }
 }

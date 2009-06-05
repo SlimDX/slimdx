@@ -21,26 +21,26 @@
 * THE SOFTWARE.
 */
 
-#include "Buffer.h"
-#include "StreamOutputBufferBinding.h"
+#include "Buffer11.h"
+#include "StreamOutputBufferBinding11.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 { 
-	StreamOutputBufferBinding::StreamOutputBufferBinding( Direct3D10::Buffer^ buffer, int offset )
+	StreamOutputBufferBinding::StreamOutputBufferBinding( Direct3D11::Buffer^ buffer, int offset )
 	: m_Buffer( buffer ), m_Offset( offset )
 	{
 	}
 	
-	Direct3D10::Buffer^ StreamOutputBufferBinding::Buffer::get()
+	Direct3D11::Buffer^ StreamOutputBufferBinding::Buffer::get()
 	{
 		return m_Buffer;
 	}
 	
-	void StreamOutputBufferBinding::Buffer::set( Direct3D10::Buffer^ value )
+	void StreamOutputBufferBinding::Buffer::set( Direct3D11::Buffer^ value )
 	{
 		m_Buffer = value;
 	}

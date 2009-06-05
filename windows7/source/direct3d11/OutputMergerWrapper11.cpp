@@ -21,131 +21,131 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
-#include <d3dx10.h>
+#include <d3d11.h>
+#include <d3dx11.h>
 
-#include "BlendState.h"
-#include "DepthStencilState.h"
-#include "DepthStencilView.h"
-#include "OutputMergerWrapper.h"
-#include "RenderTargetView.h"
+#include "BlendState11.h"
+#include "DepthStencilState11.h"
+#include "DepthStencilView11.h"
+#include "OutputMergerWrapper11.h"
+#include "RenderTargetView11.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 { 
-	OutputMergerWrapper::OutputMergerWrapper( ID3D10Device* device )
+	OutputMergerWrapper::OutputMergerWrapper( ID3D11DeviceContext* device )
 	{
 		if( device == 0 )
 			throw gcnew ArgumentNullException( "device" );
-		m_Device = device;
+		deviceContext = device;
 	}
 	
-	void OutputMergerWrapper::DepthStencilState::set( SlimDX::Direct3D10::DepthStencilState^ value )
+	void OutputMergerWrapper::DepthStencilState::set( SlimDX::Direct3D11::DepthStencilState^ value )
 	{
-		ID3D10DepthStencilState* oldState;
+		ID3D11DepthStencilState* oldState;
 		int oldReference;
-		m_Device->OMGetDepthStencilState( &oldState, reinterpret_cast<UINT*>( &oldReference ) );
+		deviceContext->OMGetDepthStencilState( &oldState, reinterpret_cast<UINT*>( &oldReference ) );
 	
 		if( value == nullptr )
-			m_Device->OMSetDepthStencilState( 0, oldReference );
+			deviceContext->OMSetDepthStencilState( 0, oldReference );
 		else
-			m_Device->OMSetDepthStencilState( value->InternalPointer, oldReference );
+			deviceContext->OMSetDepthStencilState( value->InternalPointer, oldReference );
 	}
 	
-	SlimDX::Direct3D10::DepthStencilState^ OutputMergerWrapper::DepthStencilState::get()
+	SlimDX::Direct3D11::DepthStencilState^ OutputMergerWrapper::DepthStencilState::get()
 	{
-		ID3D10DepthStencilState* oldState = 0;
+		ID3D11DepthStencilState* oldState = 0;
 		int oldReference = 0;
-		m_Device->OMGetDepthStencilState( &oldState, reinterpret_cast<UINT*>( &oldReference ) );
+		deviceContext->OMGetDepthStencilState( &oldState, reinterpret_cast<UINT*>( &oldReference ) );
 		
-		return SlimDX::Direct3D10::DepthStencilState::FromPointer( oldState );
+		return SlimDX::Direct3D11::DepthStencilState::FromPointer( oldState );
 	}
 	
 	void OutputMergerWrapper::DepthStencilReference::set( int value )
 	{
-		ID3D10DepthStencilState* oldState = 0;
+		ID3D11DepthStencilState* oldState = 0;
 		int oldReference = 0;
-		m_Device->OMGetDepthStencilState( &oldState, reinterpret_cast<UINT*>( &oldReference ) );
+		deviceContext->OMGetDepthStencilState( &oldState, reinterpret_cast<UINT*>( &oldReference ) );
 	
-		m_Device->OMSetDepthStencilState( oldState, value );
+		deviceContext->OMSetDepthStencilState( oldState, value );
 	}
 	
 	int OutputMergerWrapper::DepthStencilReference::get()
 	{
-		ID3D10DepthStencilState* oldState = 0;
+		ID3D11DepthStencilState* oldState = 0;
 		int oldReference = 0;
-		m_Device->OMGetDepthStencilState( &oldState, reinterpret_cast<UINT*>( &oldReference ) );
+		deviceContext->OMGetDepthStencilState( &oldState, reinterpret_cast<UINT*>( &oldReference ) );
 		
 		return oldReference;
 	}
 	
-	void OutputMergerWrapper::BlendState::set( SlimDX::Direct3D10::BlendState^ value )
+	void OutputMergerWrapper::BlendState::set( SlimDX::Direct3D11::BlendState^ value )
 	{
-		ID3D10BlendState* oldState = 0;
+		ID3D11BlendState* oldState = 0;
 		float oldFactor[4];
 		int oldMask = 0;
-		m_Device->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
+		deviceContext->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
 		
 		if( value == nullptr )
 		{
-			m_Device->OMSetBlendState( 0, oldFactor, oldMask );
+			deviceContext->OMSetBlendState( 0, oldFactor, oldMask );
 		}
 		else 
 		{
-			m_Device->OMSetBlendState( value->InternalPointer, oldFactor, oldMask );
+			deviceContext->OMSetBlendState( value->InternalPointer, oldFactor, oldMask );
 		}
 	}
 	
-	SlimDX::Direct3D10::BlendState^ OutputMergerWrapper::BlendState::get()
+	SlimDX::Direct3D11::BlendState^ OutputMergerWrapper::BlendState::get()
 	{
-		ID3D10BlendState* oldState = 0;
+		ID3D11BlendState* oldState = 0;
 		float oldFactor[4];
 		int oldMask = 0;
-		m_Device->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
+		deviceContext->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
 		
-		return SlimDX::Direct3D10::BlendState::FromPointer( oldState );
+		return SlimDX::Direct3D11::BlendState::FromPointer( oldState );
 	}
 	
 	void OutputMergerWrapper::BlendFactor::set( Color4 value )
 	{
-		ID3D10BlendState* oldState = 0;
+		ID3D11BlendState* oldState = 0;
 		float oldFactor[4];
 		int oldMask = 0;
-		m_Device->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
+		deviceContext->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
 		
 		float newFactor[4] = { value.Red, value.Green, value.Blue, value.Alpha };
-		m_Device->OMSetBlendState( oldState, newFactor, oldMask );
+		deviceContext->OMSetBlendState( oldState, newFactor, oldMask );
 	}
 	
 	Color4 OutputMergerWrapper::BlendFactor::get()
 	{
-		ID3D10BlendState* oldState = 0;
+		ID3D11BlendState* oldState = 0;
 		float oldFactor[4];
 		int oldMask = 0;
-		m_Device->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
+		deviceContext->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
 		
 		return Color4( oldFactor[3], oldFactor[0], oldFactor[1], oldFactor[2] );
 	}
 	
 	void OutputMergerWrapper::BlendSampleMask::set( int value )
 	{
-		ID3D10BlendState* oldState = 0;
+		ID3D11BlendState* oldState = 0;
 		float oldFactor[4];
 		int oldMask = 0;
-		m_Device->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
+		deviceContext->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
 	
-		m_Device->OMSetBlendState( oldState, oldFactor, value );
+		deviceContext->OMSetBlendState( oldState, oldFactor, value );
 	}
 	
 	int OutputMergerWrapper::BlendSampleMask::get()
 	{
-		ID3D10BlendState* oldState = 0;
+		ID3D11BlendState* oldState = 0;
 		float oldFactor[4];
 		int oldMask = 0;
-		m_Device->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
+		deviceContext->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
 		
 		return oldMask;
 	}
@@ -157,10 +157,10 @@ namespace Direct3D10
 	
 	void OutputMergerWrapper::SetTargets( DepthStencilView^ depthStencilView, RenderTargetView^ renderTargetView )
 	{
-		ID3D10DepthStencilView *nativeDSV = depthStencilView == nullptr ? 0 : static_cast<ID3D10DepthStencilView*>( depthStencilView->InternalPointer );
-		ID3D10RenderTargetView *nativeRTV[] = { renderTargetView == nullptr ? 0 : static_cast<ID3D10RenderTargetView*>( renderTargetView->InternalPointer ) };
+		ID3D11DepthStencilView *nativeDSV = depthStencilView == nullptr ? 0 : static_cast<ID3D11DepthStencilView*>( depthStencilView->InternalPointer );
+		ID3D11RenderTargetView *nativeRTV[] = { renderTargetView == nullptr ? 0 : static_cast<ID3D11RenderTargetView*>( renderTargetView->InternalPointer ) };
 		
-		m_Device->OMSetRenderTargets( 1, nativeRTV, nativeDSV );
+		deviceContext->OMSetRenderTargets( 1, nativeRTV, nativeDSV );
 	}
 
 	void OutputMergerWrapper::SetTargets( ... array<RenderTargetView^>^ renderTargets )
@@ -170,18 +170,18 @@ namespace Direct3D10
 
 	void OutputMergerWrapper::SetTargets( DepthStencilView^ depthStencilView, ... array<RenderTargetView^>^ renderTargets )
 	{
-		ID3D10DepthStencilView *nativeDSV = depthStencilView == nullptr ? 0 : static_cast<ID3D10DepthStencilView*>( depthStencilView->InternalPointer );
-		ID3D10RenderTargetView* nativeRTVs[D3D10_SIMULTANEOUS_RENDER_TARGET_COUNT];
+		ID3D11DepthStencilView *nativeDSV = depthStencilView == nullptr ? 0 : static_cast<ID3D11DepthStencilView*>( depthStencilView->InternalPointer );
+		ID3D11RenderTargetView* nativeRTVs[D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT];
 		
 		if( renderTargets == nullptr )
 		{
-			m_Device->OMSetRenderTargets( 0, 0, nativeDSV );
+			deviceContext->OMSetRenderTargets( 0, 0, nativeDSV );
 		}
 		else 
 		{
 			for( int i = 0; i < renderTargets->Length; ++i )
-				nativeRTVs[ i ] = renderTargets[ i ] == nullptr ? 0 : static_cast<ID3D10RenderTargetView*>( renderTargets[ i ]->InternalPointer );
-			m_Device->OMSetRenderTargets( renderTargets->Length, nativeRTVs, nativeDSV );
+				nativeRTVs[ i ] = renderTargets[ i ] == nullptr ? 0 : static_cast<ID3D11RenderTargetView*>( renderTargets[ i ]->InternalPointer );
+			deviceContext->OMSetRenderTargets( renderTargets->Length, nativeRTVs, nativeDSV );
 		}
 	}
 }

@@ -242,6 +242,12 @@ namespace SlimDX
 			Zero = D3D11_DEPTH_WRITE_MASK_ZERO,
 			All = D3D11_DEPTH_WRITE_MASK_ALL
 		};
+
+		public enum class DeviceContextType : System::Int32
+		{
+			Immediate = D3D11_DEVICE_CONTEXT_IMMEDIATE,
+			Deferred = D3D11_DEVICE_CONTEXT_DEFERRED
+		};
 		
 		/// <summary></summary>
 		/// <unmanaged>D3D11_CREATE_DEVICE_FLAG</unmanaged>
@@ -717,6 +723,25 @@ namespace SlimDX
 			Clamp = D3D11_TEXTURE_ADDRESS_CLAMP,
 			Border = D3D11_TEXTURE_ADDRESS_BORDER,
 			MirrorOnce = D3D11_TEXTURE_ADDRESS_MIRROR_ONCE
+		};
+
+		public enum class UnorderedAccessViewDimension : System::Int32
+		{
+			Unknown = D3D11_UAV_DIMENSION_UNKNOWN,
+			Buffer = D3D11_UAV_DIMENSION_BUFFER,
+			Texture1D = D3D11_UAV_DIMENSION_TEXTURE1D ,
+			Texture1DArray = D3D11_UAV_DIMENSION_TEXTURE1DARRAY,
+			Texture2D = D3D11_UAV_DIMENSION_TEXTURE2D,
+			Texture2DArray = D3D11_UAV_DIMENSION_TEXTURE2DARRAY,
+			Texture3D = D3D11_UAV_DIMENSION_TEXTURE3D
+		};
+
+		[System::Flags]
+		public enum class UnorderedAccessViewBufferFlags : System::Int32
+		{
+			None = 0,
+			RawData = D3D11_BUFFER_UAV_FLAG_RAW,
+			AllowAppend = D3D11_BUFFER_UAV_FLAG_APPEND
 		};
 	}
 }

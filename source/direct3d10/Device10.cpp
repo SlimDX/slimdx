@@ -74,7 +74,6 @@ namespace Direct3D10
 	{
 		Construct( pointer, NativeInterface );
 		InitializeSubclasses();
-		m_VertexShader = gcnew VertexShaderWrapper( InternalPointer );
 	}
 	
 	Device^ Device::FromPointer( ID3D10Device* pointer, ComObject^ owner, ComObjectFlags flags )

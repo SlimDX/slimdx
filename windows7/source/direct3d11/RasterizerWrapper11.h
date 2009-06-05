@@ -30,10 +30,10 @@ namespace SlimDX
 		public ref class RasterizerWrapper
 		{
 		private:
-			ID3D11Device* m_Device;
+			ID3D11DeviceContext* deviceContext;
 			
 		internal:
-			RasterizerWrapper( ID3D11Device* device );
+			RasterizerWrapper( ID3D11DeviceContext* device );
 			
 		public:
 			property RasterizerState^ State

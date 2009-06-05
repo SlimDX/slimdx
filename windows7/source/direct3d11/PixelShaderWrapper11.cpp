@@ -21,46 +21,86 @@
 */
 #include "stdafx.h"
 
-#include "../stack_array.h"
+#include "../../../source/stack_array.h"
 
-#include "Buffer.h"
-#include "SamplerState.h"
-#include "ShaderResourceView.h"
-#include "PixelShaderWrapper.h"
-#include "PixelShader10.h"
+#include "Buffer11.h"
+#include "SamplerState11.h"
+#include "ShaderResourceView11.h"
+#include "PixelShaderWrapper11.h"
+#include "PixelShader11.h"
+#include "ClassInstance11.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 { 
-	PixelShaderWrapper::PixelShaderWrapper( ID3D10Device* device )
+	PixelShaderWrapper::PixelShaderWrapper( ID3D11DeviceContext* device )
 	{
 		if( device == 0 )
 			throw gcnew ArgumentNullException( "device" );
-		m_Device = device;
+		deviceContext = device;
 	}
 
 	void PixelShaderWrapper::Set( PixelShader^ shader )
 	{
-		m_Device->PSSetShader( shader == nullptr ? 0 : shader->InternalPointer );
+		Set( shader, nullptr );
+	}
+
+	void PixelShaderWrapper::Set( PixelShader^ shader, array<ClassInstance^>^ classInstances )
+	{
+		ID3D11PixelShader *nativeShader = shader == nullptr ? NULL : shader->InternalPointer;
+		ID3D11ClassInstance** instancePtr = NULL;
+		stack_array<ID3D11ClassInstance*> instances;
+		UINT count = 0;
+
+		if( classInstances != nullptr && classInstances->Length > 0 )
+		{
+			instances = stack_array<ID3D11ClassInstance*>( classInstances->Length );
+			instancePtr = &instances[0];
+			count = classInstances->Length;
+
+			for( int i = 0; i < classInstances->Length; i++ )
+				instances[i] = classInstances[i]->InternalPointer;
+		}
+
+		deviceContext->PSSetShader( nativeShader, instancePtr, count );
 	}
 
 	PixelShader^ PixelShaderWrapper::Get()
 	{
-		ID3D10PixelShader* shader = 0;
-		m_Device->PSGetShader( &shader );
+		return Get( nullptr );
+	}
 
-		return shader == 0 ? nullptr : PixelShader::FromPointer( shader );
+	PixelShader^ PixelShaderWrapper::Get( array<ClassInstance^>^ classInstances )
+	{
+		ID3D11PixelShader *shader = NULL;
+		ID3D11ClassInstance** instancePtr = NULL;
+		stack_array<ID3D11ClassInstance*> instances;
+		UINT count = 0;
+
+		if( classInstances != nullptr && classInstances->Length > 0 )
+		{
+			instances = stack_array<ID3D11ClassInstance*>( classInstances->Length );
+			instancePtr = &instances[0];
+			count = classInstances->Length;
+		}
+
+		deviceContext->PSGetShader( &shader, instancePtr, &count );
+
+		for( UINT i = 0; i < count; i++ )
+			classInstances[i] = ClassInstance::FromPointer( instances[i] );
+
+		return shader == NULL ? nullptr : PixelShader::FromPointer( shader );
 	}
 
 	array<Buffer^>^ PixelShaderWrapper::GetConstantBuffers( int startSlot, int count )
 	{
 		array<Buffer^>^ buffers = gcnew array<Buffer^>( count );
-		stack_array<ID3D10Buffer*> results = stackalloc( ID3D10Buffer*, count );
+		stack_array<ID3D11Buffer*> results = stackalloc( ID3D11Buffer*, count );
 
-		m_Device->PSGetConstantBuffers( startSlot, count, &results[0] );
+		deviceContext->PSGetConstantBuffers( startSlot, count, &results[0] );
 
 		for( int i = 0; i < count; i++ )
 			buffers[i] = Buffer::FromPointer( results[i] );
@@ -71,9 +111,9 @@ namespace Direct3D10
 	array<SamplerState^>^ PixelShaderWrapper::GetSamplers( int startSlot, int count )
 	{
 		array<SamplerState^>^ samplers = gcnew array<SamplerState^>( count );
-		stack_array<ID3D10SamplerState*> results = stackalloc( ID3D10SamplerState*, count );
+		stack_array<ID3D11SamplerState*> results = stackalloc( ID3D11SamplerState*, count );
 
-		m_Device->PSGetSamplers( startSlot, count, &results[0] );
+		deviceContext->PSGetSamplers( startSlot, count, &results[0] );
 
 		for( int i = 0; i < count; i++ )
 			samplers[i] = SamplerState::FromPointer( results[i] );
@@ -84,9 +124,9 @@ namespace Direct3D10
 	array<ShaderResourceView^>^ PixelShaderWrapper::GetShaderResources( int startSlot, int count )
 	{
 		array<ShaderResourceView^>^ resources = gcnew array<ShaderResourceView^>( count );
-		stack_array<ID3D10ShaderResourceView*> results = stackalloc( ID3D10ShaderResourceView*, count );
+		stack_array<ID3D11ShaderResourceView*> results = stackalloc( ID3D11ShaderResourceView*, count );
 
-		m_Device->PSGetShaderResources( startSlot, count, &results[0] );
+		deviceContext->PSGetShaderResources( startSlot, count, &results[0] );
 
 		for( int i = 0; i < count; i++ )
 			resources[i] = ShaderResourceView::FromPointer( results[i] );
@@ -96,8 +136,8 @@ namespace Direct3D10
 
 	void PixelShaderWrapper::SetConstantBuffer( Buffer^ constantBuffer, int slot )
 	{
-		ID3D10Buffer *buffer = constantBuffer == nullptr ? NULL : constantBuffer->InternalPointer;
-		m_Device->PSSetConstantBuffers( slot, 1, &buffer );
+		ID3D11Buffer *buffer = constantBuffer == nullptr ? NULL : constantBuffer->InternalPointer;
+		deviceContext->PSSetConstantBuffers( slot, 1, &buffer );
 	}
 
 	void PixelShaderWrapper::SetConstantBuffers( array<Buffer^>^ constantBuffers, int startSlot, int count )
@@ -105,17 +145,17 @@ namespace Direct3D10
 		if( count > constantBuffers->Length )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 
-		stack_array<ID3D10Buffer*> input = stackalloc( ID3D10Buffer*, count );
+		stack_array<ID3D11Buffer*> input = stackalloc( ID3D11Buffer*, count );
 		for( int i = 0; i < count; i++ )
 			input[i] = constantBuffers[i] == nullptr ? NULL : constantBuffers[i]->InternalPointer;
 
-		m_Device->PSSetConstantBuffers( startSlot, count, &input[0] );
+		deviceContext->PSSetConstantBuffers( startSlot, count, &input[0] );
 	}
 
 	void PixelShaderWrapper::SetSampler( SamplerState^ sampler, int slot )
 	{
-		ID3D10SamplerState *pointer = sampler == nullptr ? NULL : sampler->InternalPointer;
-		m_Device->PSSetSamplers( slot, 1, &pointer );
+		ID3D11SamplerState *pointer = sampler == nullptr ? NULL : sampler->InternalPointer;
+		deviceContext->PSSetSamplers( slot, 1, &pointer );
 	}
 
 	void PixelShaderWrapper::SetSamplers( array<SamplerState^>^ samplers, int startSlot, int count )
@@ -123,17 +163,17 @@ namespace Direct3D10
 		if( count > samplers->Length )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 
-		stack_array<ID3D10SamplerState*> input = stackalloc( ID3D10SamplerState*, count );
+		stack_array<ID3D11SamplerState*> input = stackalloc( ID3D11SamplerState*, count );
 		for( int i = 0; i < count; i++ )
 			input[i] = samplers[i] == nullptr ? NULL : samplers[i]->InternalPointer;
 
-		m_Device->PSSetSamplers( startSlot, count, &input[0] );
+		deviceContext->PSSetSamplers( startSlot, count, &input[0] );
 	}
 
 	void PixelShaderWrapper::SetShaderResource( ShaderResourceView^ resourceView, int slot )
 	{
-		ID3D10ShaderResourceView *resource = resourceView == nullptr ? NULL : resourceView->InternalPointer;
-		m_Device->PSSetShaderResources( slot, 1, &resource );
+		ID3D11ShaderResourceView *resource = resourceView == nullptr ? NULL : resourceView->InternalPointer;
+		deviceContext->PSSetShaderResources( slot, 1, &resource );
 	}
 
 	void PixelShaderWrapper::SetShaderResources( array<ShaderResourceView^>^ resourceViews, int startSlot, int count )
@@ -141,11 +181,11 @@ namespace Direct3D10
 		if( count > resourceViews->Length )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 
-		stack_array<ID3D10ShaderResourceView*> input = stackalloc( ID3D10ShaderResourceView*, count );
+		stack_array<ID3D11ShaderResourceView*> input = stackalloc( ID3D11ShaderResourceView*, count );
 		for( int i = 0; i < count; i++ )
 			input[i] = resourceViews[i] == nullptr ? NULL : resourceViews[i]->InternalPointer;
 
-		m_Device->PSSetShaderResources( startSlot, count, &input[0] );
+		deviceContext->PSSetShaderResources( startSlot, count, &input[0] );
 	}
 }
 }

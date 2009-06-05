@@ -21,46 +21,86 @@
 */
 #include "stdafx.h"
 
-#include "../stack_array.h"
+#include "../../../source/stack_array.h"
 
-#include "Buffer.h"
-#include "SamplerState.h"
-#include "ShaderResourceView.h"
-#include "GeometryShaderWrapper.h"
-#include "GeometryShader.h"
+#include "Buffer11.h"
+#include "SamplerState11.h"
+#include "ShaderResourceView11.h"
+#include "GeometryShaderWrapper11.h"
+#include "GeometryShader11.h"
+#include "ClassInstance11.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 { 
-	GeometryShaderWrapper::GeometryShaderWrapper( ID3D10Device* device )
+	GeometryShaderWrapper::GeometryShaderWrapper( ID3D11DeviceContext* device )
 	{
 		if( device == 0 )
 			throw gcnew ArgumentNullException( "device" );
-		m_Device = device;
+		deviceContext = device;
 	}
 
 	void GeometryShaderWrapper::Set( GeometryShader^ shader )
 	{
-		m_Device->GSSetShader( shader == nullptr ? 0 : shader->InternalPointer );
+		Set( shader, nullptr );
+	}
+
+	void GeometryShaderWrapper::Set( GeometryShader^ shader, array<ClassInstance^>^ classInstances )
+	{
+		ID3D11GeometryShader *nativeShader = shader == nullptr ? NULL : shader->InternalPointer;
+		ID3D11ClassInstance** instancePtr = NULL;
+		stack_array<ID3D11ClassInstance*> instances;
+		UINT count = 0;
+
+		if( classInstances != nullptr && classInstances->Length > 0 )
+		{
+			instances = stack_array<ID3D11ClassInstance*>( classInstances->Length );
+			instancePtr = &instances[0];
+			count = classInstances->Length;
+
+			for( int i = 0; i < classInstances->Length; i++ )
+				instances[i] = classInstances[i]->InternalPointer;
+		}
+
+		deviceContext->GSSetShader( nativeShader, instancePtr, count );
 	}
 
 	GeometryShader^ GeometryShaderWrapper::Get()
 	{
-		ID3D10GeometryShader* shader = 0;
-		m_Device->GSGetShader( &shader );
+		return Get( nullptr );
+	}
 
-		return shader == 0 ? nullptr : GeometryShader::FromPointer( shader );
+	GeometryShader^ GeometryShaderWrapper::Get( array<ClassInstance^>^ classInstances )
+	{
+		ID3D11GeometryShader *shader = NULL;
+		ID3D11ClassInstance** instancePtr = NULL;
+		stack_array<ID3D11ClassInstance*> instances;
+		UINT count = 0;
+
+		if( classInstances != nullptr && classInstances->Length > 0 )
+		{
+			instances = stack_array<ID3D11ClassInstance*>( classInstances->Length );
+			instancePtr = &instances[0];
+			count = classInstances->Length;
+		}
+
+		deviceContext->GSGetShader( &shader, instancePtr, &count );
+
+		for( UINT i = 0; i < count; i++ )
+			classInstances[i] = ClassInstance::FromPointer( instances[i] );
+
+		return shader == NULL ? nullptr : GeometryShader::FromPointer( shader );
 	}
 
 	array<Buffer^>^ GeometryShaderWrapper::GetConstantBuffers( int startSlot, int count )
 	{
 		array<Buffer^>^ buffers = gcnew array<Buffer^>( count );
-		stack_array<ID3D10Buffer*> results = stackalloc( ID3D10Buffer*, count );
+		stack_array<ID3D11Buffer*> results = stackalloc( ID3D11Buffer*, count );
 
-		m_Device->GSGetConstantBuffers( startSlot, count, &results[0] );
+		deviceContext->GSGetConstantBuffers( startSlot, count, &results[0] );
 
 		for( int i = 0; i < count; i++ )
 			buffers[i] = Buffer::FromPointer( results[i] );
@@ -71,9 +111,9 @@ namespace Direct3D10
 	array<SamplerState^>^ GeometryShaderWrapper::GetSamplers( int startSlot, int count )
 	{
 		array<SamplerState^>^ samplers = gcnew array<SamplerState^>( count );
-		stack_array<ID3D10SamplerState*> results = stackalloc( ID3D10SamplerState*, count );
+		stack_array<ID3D11SamplerState*> results = stackalloc( ID3D11SamplerState*, count );
 
-		m_Device->GSGetSamplers( startSlot, count, &results[0] );
+		deviceContext->GSGetSamplers( startSlot, count, &results[0] );
 
 		for( int i = 0; i < count; i++ )
 			samplers[i] = SamplerState::FromPointer( results[i] );
@@ -84,9 +124,9 @@ namespace Direct3D10
 	array<ShaderResourceView^>^ GeometryShaderWrapper::GetShaderResources( int startSlot, int count )
 	{
 		array<ShaderResourceView^>^ resources = gcnew array<ShaderResourceView^>( count );
-		stack_array<ID3D10ShaderResourceView*> results = stackalloc( ID3D10ShaderResourceView*, count );
+		stack_array<ID3D11ShaderResourceView*> results = stackalloc( ID3D11ShaderResourceView*, count );
 
-		m_Device->GSGetShaderResources( startSlot, count, &results[0] );
+		deviceContext->GSGetShaderResources( startSlot, count, &results[0] );
 
 		for( int i = 0; i < count; i++ )
 			resources[i] = ShaderResourceView::FromPointer( results[i] );
@@ -96,8 +136,8 @@ namespace Direct3D10
 
 	void GeometryShaderWrapper::SetConstantBuffer( Buffer^ constantBuffer, int slot )
 	{
-		ID3D10Buffer *buffer = constantBuffer == nullptr ? NULL : constantBuffer->InternalPointer;
-		m_Device->GSSetConstantBuffers( slot, 1, &buffer );
+		ID3D11Buffer *buffer = constantBuffer == nullptr ? NULL : constantBuffer->InternalPointer;
+		deviceContext->GSSetConstantBuffers( slot, 1, &buffer );
 	}
 
 	void GeometryShaderWrapper::SetConstantBuffers( array<Buffer^>^ constantBuffers, int startSlot, int count )
@@ -105,17 +145,17 @@ namespace Direct3D10
 		if( count > constantBuffers->Length )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 
-		stack_array<ID3D10Buffer*> input = stackalloc( ID3D10Buffer*, count );
+		stack_array<ID3D11Buffer*> input = stackalloc( ID3D11Buffer*, count );
 		for( int i = 0; i < count; i++ )
 			input[i] = constantBuffers[i] == nullptr ? NULL : constantBuffers[i]->InternalPointer;
 
-		m_Device->GSSetConstantBuffers( startSlot, count, &input[0] );
+		deviceContext->GSSetConstantBuffers( startSlot, count, &input[0] );
 	}
 
 	void GeometryShaderWrapper::SetSampler( SamplerState^ sampler, int slot )
 	{
-		ID3D10SamplerState *pointer = sampler == nullptr ? NULL : sampler->InternalPointer;
-		m_Device->GSSetSamplers( slot, 1, &pointer );
+		ID3D11SamplerState *pointer = sampler == nullptr ? NULL : sampler->InternalPointer;
+		deviceContext->GSSetSamplers( slot, 1, &pointer );
 	}
 
 	void GeometryShaderWrapper::SetSamplers( array<SamplerState^>^ samplers, int startSlot, int count )
@@ -123,17 +163,17 @@ namespace Direct3D10
 		if( count > samplers->Length )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 
-		stack_array<ID3D10SamplerState*> input = stackalloc( ID3D10SamplerState*, count );
+		stack_array<ID3D11SamplerState*> input = stackalloc( ID3D11SamplerState*, count );
 		for( int i = 0; i < count; i++ )
 			input[i] = samplers[i] == nullptr ? NULL : samplers[i]->InternalPointer;
 
-		m_Device->GSSetSamplers( startSlot, count, &input[0] );
+		deviceContext->GSSetSamplers( startSlot, count, &input[0] );
 	}
 
 	void GeometryShaderWrapper::SetShaderResource( ShaderResourceView^ resourceView, int slot )
 	{
-		ID3D10ShaderResourceView *resource = resourceView == nullptr ? NULL : resourceView->InternalPointer;
-		m_Device->GSSetShaderResources( slot, 1, &resource );
+		ID3D11ShaderResourceView *resource = resourceView == nullptr ? NULL : resourceView->InternalPointer;
+		deviceContext->GSSetShaderResources( slot, 1, &resource );
 	}
 
 	void GeometryShaderWrapper::SetShaderResources( array<ShaderResourceView^>^ resourceViews, int startSlot, int count )
@@ -141,11 +181,11 @@ namespace Direct3D10
 		if( count > resourceViews->Length )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 
-		stack_array<ID3D10ShaderResourceView*> input = stackalloc( ID3D10ShaderResourceView*, count );
+		stack_array<ID3D11ShaderResourceView*> input = stackalloc( ID3D11ShaderResourceView*, count );
 		for( int i = 0; i < count; i++ )
 			input[i] = resourceViews[i] == nullptr ? NULL : resourceViews[i]->InternalPointer;
 
-		m_Device->GSSetShaderResources( startSlot, count, &input[0] );
+		deviceContext->GSSetShaderResources( startSlot, count, &input[0] );
 	}
 }
 }

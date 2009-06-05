@@ -30,13 +30,14 @@ namespace SlimDX
 		public ref class StreamOutputWrapper
 		{
 		private:
-			ID3D11Device* m_Device;
+			ID3D11DeviceContext* deviceContext;
 			
 		internal:
-			StreamOutputWrapper( ID3D11Device* device );
+			StreamOutputWrapper( ID3D11DeviceContext* device );
 			
 		public:
 			void SetTargets( ... array<StreamOutputBufferBinding>^ bufferBindings );
+			array<Buffer^>^ GetTargets( int count );
 		};
 	}
 };

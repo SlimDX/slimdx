@@ -21,55 +21,55 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
-#include <d3dx10.h>
+#include <d3d11.h>
+#include <d3dx11.h>
 
-#include "RasterizerWrapper.h"
-#include "RasterizerState.h"
+#include "RasterizerWrapper11.h"
+#include "RasterizerState11.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 { 
-	RasterizerWrapper::RasterizerWrapper( ID3D10Device* device )
+	RasterizerWrapper::RasterizerWrapper( ID3D11DeviceContext* device )
 	{
 		if( device == 0 )
 			throw gcnew ArgumentNullException( "device" );
-		m_Device = device;
+		deviceContext = device;
 	}
 	
 	void RasterizerWrapper::State::set( RasterizerState^ value )
 	{
 		if( value == nullptr )
-			m_Device->RSSetState( 0 );
+			deviceContext->RSSetState( 0 );
 		else
-			m_Device->RSSetState( value->InternalPointer );
+			deviceContext->RSSetState( value->InternalPointer );
 	}
 	
 	RasterizerState^ RasterizerWrapper::State::get()
 	{
-		ID3D10RasterizerState* state = 0;
-		m_Device->RSGetState( &state );
+		ID3D11RasterizerState* state = 0;
+		deviceContext->RSGetState( &state );
 		return RasterizerState::FromPointer( state );
 	}
 	
 	void RasterizerWrapper::SetViewports( SlimDX::Viewport viewport )
 	{
-		D3D10_VIEWPORT nativeVP = { viewport.X, viewport.Y, viewport.Width, viewport.Height, viewport.MinZ, viewport.MaxZ };
-		m_Device->RSSetViewports( 1, &nativeVP );
+		D3D11_VIEWPORT nativeVP = { viewport.X, viewport.Y, viewport.Width, viewport.Height, viewport.MinZ, viewport.MaxZ };
+		deviceContext->RSSetViewports( 1, &nativeVP );
 	}
 
 	void RasterizerWrapper::SetViewports( ... array<SlimDX::Viewport>^ viewports )
 	{
 		if( viewports == nullptr ) 
 		{
-			m_Device->RSSetViewports( 0, 0 );
+			deviceContext->RSSetViewports( 0, 0 );
 		}
 		else
 		{
-			D3D10_VIEWPORT nativeVPs[D3D10_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE];
+			D3D11_VIEWPORT nativeVPs[D3D11_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE];
 			for( int i = 0; i < viewports->Length; ++i )
 			{
 				nativeVPs[ i ].TopLeftX = viewports[ i ].X;
@@ -80,7 +80,7 @@ namespace Direct3D10
 				nativeVPs[ i ].MaxDepth = viewports[ i ].MaxZ;
 			}
 			
-			m_Device->RSSetViewports( viewports->Length, nativeVPs );
+			deviceContext->RSSetViewports( viewports->Length, nativeVPs );
 		}
 	}
 }

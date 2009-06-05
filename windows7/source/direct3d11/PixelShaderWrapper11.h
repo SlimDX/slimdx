@@ -29,14 +29,15 @@ namespace SlimDX
 		ref class Buffer;
 		ref class ShaderResourceView;
 		ref class SamplerState;
+		ref class ClassInstance;
 
 		public ref class PixelShaderWrapper
 		{
 		private:
-			ID3D11Device* m_Device;
+			ID3D11DeviceContext* deviceContext;
 			
 		internal:
-			PixelShaderWrapper( ID3D11Device* device );
+			PixelShaderWrapper( ID3D11DeviceContext* device );
 
 		public:
 			/// <summary>
@@ -44,12 +45,14 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="shader">The shader to assign to the device. Assign null to disable the pixel shader.</param>
 			void Set( PixelShader^ shader );
+			void Set( PixelShader^ shader, array<ClassInstance^>^ classInstances );
 
 			/// <summary>
 			/// Gets the pixel shader assigned to the device.
 			/// </summary>
 			/// <returns>The pixel shader (null if no shader is assigned).</returns>
 			PixelShader^ Get();
+			PixelShader^ Get( array<ClassInstance^>^ classInstances );
 
 			array<Buffer^>^ GetConstantBuffers( int startSlot, int count );
 			array<SamplerState^>^ GetSamplers( int startSlot, int count );

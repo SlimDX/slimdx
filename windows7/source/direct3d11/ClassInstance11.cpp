@@ -19,23 +19,16 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include "stdafx.h"
+#include <d3d11.h>
 
-#include "DeviceChild11.h"
+#include "ClassInstance11.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct3D11
-	{
-		ref class ClassLinkage;
-
-		public ref class PixelShader : public DeviceChild
-		{
-			COMOBJECT(ID3D11PixelShader, PixelShader);
-
-		public:
-			PixelShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode );
-			PixelShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage );
-		};
-	}
-};
+namespace Direct3D11
+{
+}
+}

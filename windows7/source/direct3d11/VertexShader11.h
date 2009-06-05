@@ -21,19 +21,21 @@
 */
 #pragma once
 
-#include "DeviceChild10.h"
-#include "ShaderBytecode10.h"
+#include "DeviceChild11.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	namespace Direct3D11
 	{
+		ref class ClassLinkage;
+
 		public ref class VertexShader : public DeviceChild
 		{
-			COMOBJECT(ID3D10VertexShader, VertexShader);
+			COMOBJECT(ID3D11VertexShader, VertexShader);
 
 		public:
-			VertexShader( Direct3D10::Device^ device, ShaderBytecode^ shaderBytecode );
+			VertexShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode );
+			VertexShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage );
 		};
 	}
 };

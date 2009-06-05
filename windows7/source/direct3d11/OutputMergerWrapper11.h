@@ -33,10 +33,10 @@ namespace SlimDX
 		public ref class OutputMergerWrapper
 		{
 		private:
-			ID3D11Device* m_Device;
+			ID3D11DeviceContext* deviceContext;
 			
 		internal:
-			OutputMergerWrapper( ID3D11Device* device );
+			OutputMergerWrapper( ID3D11DeviceContext* device );
 			
 		public:
 			property SlimDX::Direct3D11::DepthStencilState^ DepthStencilState
