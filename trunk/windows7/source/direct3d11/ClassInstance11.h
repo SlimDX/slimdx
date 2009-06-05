@@ -21,21 +21,15 @@
 */
 #pragma once
 
-#include "DeviceChild11.h"
-
 namespace SlimDX
 {
 	namespace Direct3D11
 	{
-		ref class ClassLinkage;
-
-		public ref class PixelShader : public DeviceChild
+		public ref class ClassInstance : ComObject
 		{
-			COMOBJECT(ID3D11PixelShader, PixelShader);
-
+			COMOBJECT(ID3D11ClassInstance, ClassInstance);
+			
 		public:
-			PixelShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode );
-			PixelShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage );
 		};
 	}
-};
+}

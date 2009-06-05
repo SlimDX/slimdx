@@ -29,14 +29,15 @@ namespace SlimDX
 		ref class Buffer;
 		ref class ShaderResourceView;
 		ref class SamplerState;
+		ref class ClassInstance;
 
 		public ref class VertexShaderWrapper
 		{
 		private:
-			ID3D11Device* m_Device;
+			ID3D11DeviceContext* deviceContext;
 			
 		internal:
-			VertexShaderWrapper( ID3D11Device* device );
+			VertexShaderWrapper( ID3D11DeviceContext* device );
 
 		public:
 			/// <summary>
@@ -44,12 +45,14 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="shader">The shader to assign to the device. Assign null to disable the vertex shader.</param>
 			void Set( VertexShader^ shader );
+			void Set( VertexShader^ shader, array<ClassInstance^>^ classInstances );
 
 			/// <summary>
 			/// Gets the vertex shader assigned to the device.
 			/// </summary>
 			/// <returns>The vertex shader (null if no shader is assigned).</returns>
 			VertexShader^ Get();
+			VertexShader^ Get( array<ClassInstance^>^ classInstances );
 
 			array<Buffer^>^ GetConstantBuffers( int startSlot, int count );
 			array<SamplerState^>^ GetSamplers( int startSlot, int count );

@@ -21,37 +21,39 @@
 * THE SOFTWARE.
 */
 
-#include <d3d10.h>
-#include <d3dx10.h>
+#include <d3d11.h>
+#include <d3dx11.h>
 
-#include "StreamOutputWrapper.h"
-#include "Buffer.h"
+#include "../../../source/stack_array.h"
+
+#include "StreamOutputWrapper11.h"
+#include "Buffer11.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 { 
-	StreamOutputWrapper::StreamOutputWrapper( ID3D10Device* device )
+	StreamOutputWrapper::StreamOutputWrapper( ID3D11DeviceContext* device )
 	{
 		if( device == 0 )
 			throw gcnew ArgumentNullException( "device" );
-		m_Device = device;
+		deviceContext = device;
 	}
 
 	void StreamOutputWrapper::SetTargets( ... array<StreamOutputBufferBinding>^ bufferBindings )
 	{
 		if( bufferBindings == nullptr )
 		{
-			m_Device->SOSetTargets( 0, 0, 0 );	
+			deviceContext->SOSetTargets( 0, 0, 0 );	
 		}
 		else 
 		{
-			ID3D10Buffer* buffers[D3D10_SO_BUFFER_SLOT_COUNT];
-			UINT offsets[D3D10_SO_BUFFER_SLOT_COUNT];
+			ID3D11Buffer* buffers[D3D11_SO_BUFFER_SLOT_COUNT];
+			UINT offsets[D3D11_SO_BUFFER_SLOT_COUNT];
 			
-			for( int i = 0; i < D3D10_SO_BUFFER_SLOT_COUNT; ++i )
+			for( int i = 0; i < D3D11_SO_BUFFER_SLOT_COUNT; ++i )
 			{
 				buffers[ i ] = 0;
 				offsets[ i ] = 0;
@@ -59,12 +61,25 @@ namespace Direct3D10
 			
 			for( int i = 0; i < bufferBindings->Length; ++i )
 			{
-				buffers[i] = static_cast<ID3D10Buffer*>( bufferBindings[ i ].Buffer->InternalPointer );
+				buffers[i] = static_cast<ID3D11Buffer*>( bufferBindings[ i ].Buffer->InternalPointer );
 				offsets[i] = bufferBindings[ i ].Offset;
 			}
 			
-			m_Device->SOSetTargets( bufferBindings->Length, buffers, offsets );
+			deviceContext->SOSetTargets( bufferBindings->Length, buffers, offsets );
 		}
+	}
+
+	array<Buffer^>^ StreamOutputWrapper::GetTargets( int count )
+	{
+		array<Buffer^>^ results = gcnew array<Buffer^>( count );
+		stack_array<ID3D11Buffer*> buffers = stackalloc( ID3D11Buffer*, count );
+
+		deviceContext->SOGetTargets( count, &buffers[0] );
+
+		for( int i = 0; i < buffers.size(); i++ )
+			results[i] = Buffer::FromPointer( buffers[i] );
+
+		return results;
 	}
 }
 }

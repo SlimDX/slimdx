@@ -753,7 +753,7 @@
 					>
 				</File>
 				<Filter
-					Name="PipelineWrappers"
+					Name="Pipeline Wrappers"
 					>
 					<File
 						RelativePath="..\source\direct3d10\GeometryShaderWrapper.cpp"

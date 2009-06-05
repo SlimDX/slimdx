@@ -21,21 +21,38 @@
 */
 #pragma once
 
-#include "DeviceChild11.h"
+#include "Enums11.h"
 
 namespace SlimDX
 {
 	namespace Direct3D11
-	{
-		ref class ClassLinkage;
-
-		public ref class PixelShader : public DeviceChild
-		{
-			COMOBJECT(ID3D11PixelShader, PixelShader);
-
+	{	
+		public value class UnorderedAccessViewDescription : System::IEquatable<UnorderedAccessViewDescription>
+		{				
+		internal:
+			UnorderedAccessViewDescription( const D3D11_UNORDERED_ACCESS_VIEW_DESC& native );
+			
+			D3D11_UNORDERED_ACCESS_VIEW_DESC CreateNativeVersion();
+		
 		public:
-			PixelShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode );
-			PixelShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage );
+			property DXGI::Format Format;
+			property UnorderedAccessViewDimension Dimension;
+			property int FirstElement;
+			property int ElementCount;
+			property UnorderedAccessViewBufferFlags Flags;
+			property int MipSlice;
+			property int FirstArraySlice;
+			property int ArraySize;
+			property int FirstDepthSlice;
+			property int DepthSliceCount;
+
+			static bool operator == ( UnorderedAccessViewDescription left, UnorderedAccessViewDescription right );
+			static bool operator != ( UnorderedAccessViewDescription left, UnorderedAccessViewDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( UnorderedAccessViewDescription other );
+			static bool Equals( UnorderedAccessViewDescription% value1, UnorderedAccessViewDescription% value2 );
 		};
 	}
 };

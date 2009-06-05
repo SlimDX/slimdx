@@ -34,10 +34,10 @@ namespace SlimDX
 		public ref class InputAssemblerWrapper
 		{
 		private:
-			ID3D11Device* m_Device;
+			ID3D11DeviceContext* deviceContext;
 			
 		internal:
-			InputAssemblerWrapper( ID3D11Device* device );
+			InputAssemblerWrapper( ID3D11DeviceContext* device );
 			
 		public:
 			void SetInputLayout( InputLayout^ layout );

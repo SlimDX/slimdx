@@ -20,26 +20,39 @@
 * THE SOFTWARE.
 */
 #include "stdafx.h"
-#include <d3d10.h>
+#include <d3d11.h>
 
-#include "Direct3D10Exception.h"
+#include "Direct3D11Exception.h"
 
-#include "Device10.h"
-#include "PixelShader10.h"
+#include "Device11.h"
+#include "PixelShader11.h"
+#include "ClassLinkage11.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D10
+namespace Direct3D11
 {
-	PixelShader::PixelShader( Direct3D10::Device^ device, ShaderBytecode^ shaderBytecode )
+	PixelShader::PixelShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode )
 	{
-		ID3D10PixelShader *shader;
+		ID3D11PixelShader *shader;
 
-		HRESULT hr = device->InternalPointer->CreatePixelShader( shaderBytecode->Buffer, shaderBytecode->Length, &shader );
-		if( RECORD_D3D10( hr ).IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last );
+		HRESULT hr = device->InternalPointer->CreatePixelShader( shaderBytecode->Buffer, shaderBytecode->Length, NULL, &shader );
+		if( RECORD_D3D11( hr ).IsFailure )
+			throw gcnew Direct3D11Exception( Result::Last );
+
+		Construct( shader );
+	}
+
+	PixelShader::PixelShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage )
+	{
+		ID3D11PixelShader *shader;
+		ID3D11ClassLinkage *nativeLinkage = linkage == nullptr ? NULL : linkage->InternalPointer;
+
+		HRESULT hr = device->InternalPointer->CreatePixelShader( shaderBytecode->Buffer, shaderBytecode->Length, nativeLinkage, &shader );
+		if( RECORD_D3D11( hr ).IsFailure )
+			throw gcnew Direct3D11Exception( Result::Last );
 
 		Construct( shader );
 	}

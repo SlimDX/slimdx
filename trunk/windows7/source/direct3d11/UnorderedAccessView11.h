@@ -21,21 +21,28 @@
 */
 #pragma once
 
-#include "DeviceChild11.h"
+#include "ResourceView11.h"
 
 namespace SlimDX
 {
 	namespace Direct3D11
 	{
-		ref class ClassLinkage;
-
-		public ref class PixelShader : public DeviceChild
+		ref class Device;
+		ref class Resource;
+		value class UnorderedAccessViewDescription;
+		
+		public ref class UnorderedAccessView : public ResourceView
 		{
-			COMOBJECT(ID3D11PixelShader, PixelShader);
-
+			COMOBJECT(ID3D11UnorderedAccessView, UnorderedAccessView);
+		
 		public:
-			PixelShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode );
-			PixelShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage );
+			property UnorderedAccessViewDescription Description
+			{
+				UnorderedAccessViewDescription get();
+			}
+			
+			UnorderedAccessView( SlimDX::Direct3D11::Device^ device, Resource^ resource );
+			UnorderedAccessView( SlimDX::Direct3D11::Device^ device, Resource^ resource, UnorderedAccessViewDescription description );
 		};
 	}
 };
