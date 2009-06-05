@@ -267,6 +267,12 @@ namespace SlimDX
 			Warp = D3D_DRIVER_TYPE_WARP
 		};
 
+		public enum class Feature : System::Int32
+		{
+			ShaderDoubles,
+			ComputeShaders
+		};
+
 		public enum class FeatureLevel : System::Int32
 		{
 			Level_11_0 = D3D_FEATURE_LEVEL_11_0,
@@ -448,6 +454,7 @@ namespace SlimDX
 		[System::Flags]
 		public enum class FormatSupport : System::Int32
 		{
+			None = 0,
 			Buffer = D3D11_FORMAT_SUPPORT_BUFFER,
 			VertexBuffer = D3D11_FORMAT_SUPPORT_IA_VERTEX_BUFFER,
 			IndexBuffer = D3D11_FORMAT_SUPPORT_IA_INDEX_BUFFER,
@@ -459,7 +466,6 @@ namespace SlimDX
 			ShaderLoadIntrinsic = D3D11_FORMAT_SUPPORT_SHADER_LOAD,
 			ShaderSampleIntrinsic = D3D11_FORMAT_SUPPORT_SHADER_SAMPLE,
 			ShaderSampleComparisonIntrinsic = D3D11_FORMAT_SUPPORT_SHADER_SAMPLE_COMPARISON,
-			Reserved = D3D11_FORMAT_SUPPORT_SHADER_SAMPLE_MONO_TEXT,
 			MipMap = D3D11_FORMAT_SUPPORT_MIP,
 			MipMapAutoGeneration = D3D11_FORMAT_SUPPORT_MIP_AUTOGEN,
 			RenderTarget = D3D11_FORMAT_SUPPORT_RENDER_TARGET,
@@ -470,7 +476,25 @@ namespace SlimDX
 			FormatDisplaySupport = D3D11_FORMAT_SUPPORT_DISPLAY,
 			FormatCastSupport = D3D11_FORMAT_SUPPORT_CAST_WITHIN_BIT_LAYOUT,
 			FormatMultisampleRenderTargetSupport = D3D11_FORMAT_SUPPORT_MULTISAMPLE_RENDERTARGET,
-			FormatMultisampleLoadSupport = D3D11_FORMAT_SUPPORT_MULTISAMPLE_LOAD
+			FormatMultisampleLoadSupport = D3D11_FORMAT_SUPPORT_MULTISAMPLE_LOAD,
+			ShaderGatherIntrinsic = D3D11_FORMAT_SUPPORT_SHADER_GATHER,
+			BackBufferCast = D3D11_FORMAT_SUPPORT_BACK_BUFFER_CAST,
+			UnorderedAccessView = D3D11_FORMAT_SUPPORT_TYPED_UNORDERED_ACCESS_VIEW,
+			ShaderGatherComparisonIntrinsic = D3D11_FORMAT_SUPPORT_SHADER_GATHER_COMPARISON
+		};
+
+		[System::Flags]
+		public enum class ComputeShaderFormatSupport : System::Int32
+		{
+			None = 0,
+			AtomicAdd = D3D11_FORMAT_SUPPORT2_UAV_ATOMIC_ADD,
+			AtomicBitwiseOperations = D3D11_FORMAT_SUPPORT2_UAV_ATOMIC_BITWISE_OPS,
+			AtomicCompareStoreOrCompareExchange = D3D11_FORMAT_SUPPORT2_UAV_ATOMIC_COMPARE_STORE_OR_COMPARE_EXCHANGE,
+			AtomicExchange = D3D11_FORMAT_SUPPORT2_UAV_ATOMIC_EXCHANGE,
+			AtomicSignedMinMax = D3D11_FORMAT_SUPPORT2_UAV_ATOMIC_SIGNED_MIN_OR_MAX,
+			AtomicUnsignedMinMax = D3D11_FORMAT_SUPPORT2_UAV_ATOMIC_UNSIGNED_MIN_OR_MAX,
+			TypedLoad = D3D11_FORMAT_SUPPORT2_UAV_TYPED_LOAD,
+			TypedStore = D3D11_FORMAT_SUPPORT2_UAV_TYPED_STORE
 		};
 		
 		/// <summary></summary>

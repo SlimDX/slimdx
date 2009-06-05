@@ -25,18 +25,10 @@
 
 #include "Direct3D11Exception.h"
 
-#include "Buffer11.h"
+#include "DeviceContext11.h"
 #include "CounterCapabilities11.h"
-#include "CounterDescription11.h"
 #include "CounterMetadata11.h"
-#include "DepthStencilView11.h"
 #include "Device11.h"
-#include "InputLayout11.h"
-#include "Predicate11.h"
-#include "RenderTargetView11.h"
-#include "Resource11.h"
-#include "ResourceRegion11.h"
-#include "ShaderResourceView11.h"
 
 using namespace System;
 
@@ -54,13 +46,13 @@ namespace Direct3D11
 		Initialize( adapter, DriverType::Unknown, flags, NULL, 0 );
 	}
 
-	Device::Device( DXGI::Adapter^ adapter, DeviceCreationFlags flags, ... array<FeatureLevel>^ featureLevels )
+	Device::Device( DXGI::Adapter^ adapter, DeviceCreationFlags flags, ... array<Direct3D11::FeatureLevel>^ featureLevels )
 	{
 		if( featureLevels == nullptr || featureLevels->Length == 0 )
 			Initialize( adapter, DriverType::Unknown, flags, NULL, 0 );
 		else
 		{
-			pin_ptr<FeatureLevel> pinnedLevels = &featureLevels[0];
+			pin_ptr<Direct3D11::FeatureLevel> pinnedLevels = &featureLevels[0];
 			Initialize( adapter, DriverType::Unknown, flags, reinterpret_cast<const D3D_FEATURE_LEVEL*>( pinnedLevels ), featureLevels->Length );
 		}
 	}
@@ -75,13 +67,13 @@ namespace Direct3D11
 		Initialize( nullptr, driverType, flags, NULL, 0 );
 	}
 
-	Device::Device( DriverType driverType, DeviceCreationFlags flags, ... array<FeatureLevel>^ featureLevels )
+	Device::Device( DriverType driverType, DeviceCreationFlags flags, ... array<Direct3D11::FeatureLevel>^ featureLevels )
 	{
 		if( featureLevels == nullptr || featureLevels->Length == 0 )
 			Initialize( nullptr, driverType, flags, NULL, 0 );
 		else
 		{
-			pin_ptr<FeatureLevel> pinnedLevels = &featureLevels[0];
+			pin_ptr<Direct3D11::FeatureLevel> pinnedLevels = &featureLevels[0];
 			Initialize( nullptr, driverType, flags, reinterpret_cast<const D3D_FEATURE_LEVEL*>( pinnedLevels ), featureLevels->Length );
 		}
 	}
@@ -109,6 +101,19 @@ namespace Direct3D11
 	{
 		return Result( InternalPointer->GetDeviceRemovedReason() );
 	}
+
+	Direct3D11::FeatureLevel Device::FeatureLevel::get()
+	{
+		return static_cast<Direct3D11::FeatureLevel>( InternalPointer->GetFeatureLevel() );
+	}
+
+	DeviceContext^ Device::ImmediateContext::get()
+	{
+		ID3D11DeviceContext *context = NULL;
+		InternalPointer->GetImmediateContext( &context );
+
+		return DeviceContext::FromPointer( context );
+	}
 	
 	CounterCapabilities Device::GetCounterCapabilities()
 	{
@@ -117,9 +122,11 @@ namespace Direct3D11
 		return CounterCapabilities( info );
 	}
 	
-	CounterMetadata Device::GetCounterMetadata( CounterDescription description )
+	CounterMetadata Device::GetCounterMetadata( CounterKind counterKind )
 	{
-		D3D11_COUNTER_DESC nativeDescription = description.CreateNativeVersion();
+		D3D11_COUNTER_DESC nativeDescription;
+		nativeDescription.Counter = static_cast<D3D11_COUNTER>( counterKind );
+
 		D3D11_COUNTER_TYPE type;
 		UINT count = 0;
 		UINT nameLength = 0;
@@ -144,6 +151,63 @@ namespace Direct3D11
 		InternalPointer->CheckFormatSupport( static_cast<DXGI_FORMAT>( format ), &support );
 		return static_cast<FormatSupport>( support );
 	}
+
+	ComputeShaderFormatSupport Device::CheckComputeShaderFormatSupport( DXGI::Format format )
+	{
+		D3D11_FEATURE_DATA_FORMAT_SUPPORT2 support;
+		support.InFormat = static_cast<DXGI_FORMAT>( format );
+
+		HRESULT hr = InternalPointer->CheckFeatureSupport( D3D11_FEATURE_FORMAT_SUPPORT2, &support, sizeof( D3D11_FEATURE_DATA_FORMAT_SUPPORT2 ) );
+		if( RECORD_D3D11( hr ).IsFailure )
+			return ComputeShaderFormatSupport::None;
+
+		return static_cast<ComputeShaderFormatSupport>( support.OutFormatSupport2 );
+	}
+
+	bool Device::CheckFeatureSupport( Feature feature )
+	{
+		if( feature == Feature::ShaderDoubles )
+		{
+			D3D11_FEATURE_DATA_DOUBLES support;
+
+			HRESULT hr = InternalPointer->CheckFeatureSupport( D3D11_FEATURE_DOUBLES, &support, sizeof( D3D11_FEATURE_DATA_DOUBLES ) );
+			if( RECORD_D3D11( hr ).IsFailure )
+				return false;
+
+			return support.DoublePrecisionFloatShaderOps != 0;
+		}
+		else if( feature == Feature::ComputeShaders )
+		{
+			D3D11_FEATURE_DATA_D3D10_X_HARDWARE_OPTIONS support;
+
+			HRESULT hr = InternalPointer->CheckFeatureSupport( D3D11_FEATURE_D3D10_X_HARDWARE_OPTIONS, &support, sizeof( D3D11_FEATURE_DATA_D3D10_X_HARDWARE_OPTIONS ) );
+			if( RECORD_D3D11( hr ).IsFailure )
+				return false;
+
+			return support.ComputeShaders_Plus_RawAndStructuredBuffers_Via_Shader_4_x != 0;
+		}
+
+		return false;
+	}
+
+	Result Device::CheckThreadingSupport( [Out] bool% supportsConcurrentResources, [Out] bool% supportsCommandLists )
+	{
+		D3D11_FEATURE_DATA_THREADING support;
+
+		HRESULT hr = InternalPointer->CheckFeatureSupport( D3D11_FEATURE_THREADING, &support, sizeof( D3D11_FEATURE_DATA_THREADING ) );
+		if( RECORD_D3D11( hr ).IsFailure )
+		{
+			supportsConcurrentResources = false;
+			supportsCommandLists = false;
+		}
+		else
+		{
+			supportsConcurrentResources = support.DriverConcurrentCreates != 0;
+			supportsCommandLists = support.DriverCommandLists != 0;
+		}
+
+		return Result::Last;
+	}
 	
 	int Device::CheckMultisampleQualityLevels( DXGI::Format format, int sampleCount )
 	{
@@ -152,13 +216,39 @@ namespace Direct3D11
 		return result;
 	}
 
+	Direct3D11::FeatureLevel Device::GetSupportedFeatureLevel()
+	{
+		return GetSupportedFeatureLevel( nullptr );
+	}
+
+	Direct3D11::FeatureLevel Device::GetSupportedFeatureLevel( array<Direct3D11::FeatureLevel>^ featureLevels )
+	{
+		D3D_FEATURE_LEVEL outputLevel;
+		const D3D_FEATURE_LEVEL* nativeLevels = NULL;
+		pin_ptr<Direct3D11::FeatureLevel> pinnedLevels;
+		int count = 0;
+
+		if( featureLevels != nullptr && featureLevels->Length > 0 )
+		{
+			pinnedLevels = &featureLevels[0];
+			nativeLevels = reinterpret_cast<const D3D_FEATURE_LEVEL*>( pinnedLevels );
+			count = featureLevels->Length;
+		}
+
+		HRESULT hr = D3D11CreateDevice( NULL, D3D_DRIVER_TYPE_UNKNOWN, NULL, 0, nativeLevels, count, D3D11_SDK_VERSION, NULL, &outputLevel, NULL );
+		if( RECORD_D3D11( hr ).IsFailure )
+			return Direct3D11::FeatureLevel::Level_9_1;
+
+		return static_cast<Direct3D11::FeatureLevel>( outputLevel );
+	}
+
 	Result Device::CreateWithSwapChain( DXGI::Adapter^ adapter, DriverType driverType, DeviceCreationFlags flags, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain )
 	{
 		return CreateWithSwapChain( adapter, driverType, flags, nullptr, swapChainDescription, device, swapChain );
 	}
 
 	Result Device::CreateWithSwapChain( DXGI::Adapter^ adapter, DriverType driverType, DeviceCreationFlags flags, 
-		array<FeatureLevel>^ featureLevels, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain )
+		array<Direct3D11::FeatureLevel>^ featureLevels, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain )
 	{
 		IDXGIAdapter* nativeAdapter = adapter == nullptr ? 0 : adapter->InternalPointer;
 		ID3D11Device* resultDevice = 0;
@@ -166,16 +256,18 @@ namespace Direct3D11
 		DXGI_SWAP_CHAIN_DESC nativeDescription = swapChainDescription.CreateNativeVersion();
 
 		const D3D_FEATURE_LEVEL* nativeLevels = NULL;
-		pin_ptr<FeatureLevel> pinnedLevels;
+		pin_ptr<Direct3D11::FeatureLevel> pinnedLevels;
+		int count = 0;
 
 		if( featureLevels != nullptr && featureLevels->Length > 0 )
 		{
 			pinnedLevels = &featureLevels[0];
 			nativeLevels = reinterpret_cast<const D3D_FEATURE_LEVEL*>( pinnedLevels );
+			count = featureLevels->Length;
 		}
 		
 		HRESULT hr = D3D11CreateDeviceAndSwapChain( nativeAdapter, static_cast<D3D_DRIVER_TYPE>( driverType ), 0, static_cast<UINT>( flags ), 
-			nativeLevels, featureLevels->Length, D3D11_SDK_VERSION, 
+			nativeLevels, count, D3D11_SDK_VERSION, 
 			&nativeDescription, &resultSwapChain, &resultDevice, NULL, NULL );
 
 		if( RECORD_D3D11( hr ).IsFailure )

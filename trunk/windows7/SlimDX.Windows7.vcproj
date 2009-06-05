@@ -1145,6 +1145,14 @@
 				Name="Device"
 				>
 				<File
+					RelativePath=".\source\direct3d11\CommandList11.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct3d11\CommandList11.h"
+					>
+				</File>
+				<File
 					RelativePath=".\source\direct3d11\Device11.cpp"
 					>
 				</File>
@@ -1234,14 +1242,6 @@
 				</File>
 				<File
 					RelativePath=".\source\direct3d11\CounterCapabilities11.h"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\CounterDescription11.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\source\direct3d11\CounterDescription11.h"
 					>
 				</File>
 				<File
