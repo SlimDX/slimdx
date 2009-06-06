@@ -36,6 +36,7 @@
 #include "GeometryShaderWrapper11.h"
 #include "DomainShaderWrapper11.h"
 #include "HullShaderWrapper11.h"
+#include "ComputeShaderWrapper11.h"
 #include "DepthStencilView11.h"
 #include "RenderTargetView11.h"
 #include "UnorderedAccessView11.h"
@@ -62,6 +63,7 @@ namespace Direct3D11
 		geometryShader = gcnew GeometryShaderWrapper( InternalPointer );
 		domainShader = gcnew DomainShaderWrapper( InternalPointer );
 		hullShader = gcnew HullShaderWrapper( InternalPointer );
+		computeShader = gcnew ComputeShaderWrapper( InternalPointer );
 	}
 
 	DeviceContext::DeviceContext( ID3D11DeviceContext* pointer, ComObject^ owner )
@@ -344,6 +346,11 @@ namespace Direct3D11
 	HullShaderWrapper^ DeviceContext::HullShader::get()
 	{
 		return hullShader;
+	}
+
+	ComputeShaderWrapper^ DeviceContext::ComputeShader::get()
+	{
+		return computeShader;
 	}
 }
 }
