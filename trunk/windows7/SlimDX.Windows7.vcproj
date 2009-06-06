@@ -1713,6 +1713,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Viewport"
+				>
+				<File
+					RelativePath=".\source\direct3d11\Viewport11.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct3d11\Viewport11.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\source\AssemblyInfo.cpp"

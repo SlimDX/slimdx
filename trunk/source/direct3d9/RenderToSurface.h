@@ -22,7 +22,7 @@
 #pragma once
 
 #include "Enums.h"
-#include "../Viewport.h"
+#include "Viewport9.h"
 #include "IResettable.h"
 
 #include "RenderToSurfaceDescription.h"
@@ -43,7 +43,7 @@ namespace SlimDX
 			RenderToSurface( Device^ device, int width, int height, Format format );
 			RenderToSurface( Device^ device, int width, int height, Format format, Format depthStencilFormat );
 
-			Result BeginScene( Surface^ renderSurface, SlimDX::Viewport viewport );
+			Result BeginScene( Surface^ renderSurface, Viewport viewport );
 			Result EndScene( Filter mipFilter );
 
 			virtual Result OnLostDevice();

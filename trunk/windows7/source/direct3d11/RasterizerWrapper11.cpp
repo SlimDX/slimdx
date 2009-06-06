@@ -24,10 +24,14 @@
 #include <d3d11.h>
 #include <d3dx11.h>
 
+#include "../../../source/InternalHelpers.h"
+#include "../../../source/stack_array.h"
+
 #include "RasterizerWrapper11.h"
 #include "RasterizerState11.h"
 
 using namespace System;
+using namespace msclr::interop;
 
 namespace SlimDX
 {
@@ -55,13 +59,13 @@ namespace Direct3D11
 		return RasterizerState::FromPointer( state );
 	}
 	
-	void RasterizerWrapper::SetViewports( SlimDX::Viewport viewport )
+	void RasterizerWrapper::SetViewports( Viewport viewport )
 	{
 		D3D11_VIEWPORT nativeVP = { viewport.X, viewport.Y, viewport.Width, viewport.Height, viewport.MinZ, viewport.MaxZ };
 		deviceContext->RSSetViewports( 1, &nativeVP );
 	}
 
-	void RasterizerWrapper::SetViewports( ... array<SlimDX::Viewport>^ viewports )
+	void RasterizerWrapper::SetViewports( ... array<Viewport>^ viewports )
 	{
 		if( viewports == nullptr ) 
 		{
@@ -82,6 +86,53 @@ namespace Direct3D11
 			
 			deviceContext->RSSetViewports( viewports->Length, nativeVPs );
 		}
+	}
+
+	void RasterizerWrapper::GetViewports( array<Viewport>^ viewports )
+	{
+		UINT count = viewports->Length;
+		stack_array<D3D11_VIEWPORT> nativeVPs = stackalloc( D3D11_VIEWPORT, viewports->Length );
+		deviceContext->RSGetViewports( &count, &nativeVPs[0] );
+
+		for( UINT i = 0; i < count; i++ )
+			viewports[i] = Viewport( nativeVPs[i].TopLeftX, nativeVPs[i].TopLeftY, nativeVPs[i].Width, nativeVPs[i].Height, nativeVPs[i].MinDepth, nativeVPs[i].MaxDepth );
+	}
+
+	void RasterizerWrapper::SetScissorRectangles( System::Drawing::Rectangle scissorRectangle )
+	{
+		D3D11_RECT rect = { scissorRectangle.Left, scissorRectangle.Top, scissorRectangle.Right, scissorRectangle.Bottom };
+		deviceContext->RSSetScissorRects( 1, &rect );
+	}
+
+	void RasterizerWrapper::SetScissorRectangles( ... array<System::Drawing::Rectangle>^ scissorRectangles )
+	{
+		if( scissorRectangles == nullptr ) 
+		{
+			deviceContext->RSSetScissorRects( 0, 0 );
+		}
+		else
+		{
+			D3D11_RECT rects[D3D11_VIEWPORT_AND_SCISSORRECT_OBJECT_COUNT_PER_PIPELINE];
+			for( int i = 0; i < scissorRectangles->Length; ++i )
+			{
+				rects[i].left = scissorRectangles[i].Left;
+				rects[i].right = scissorRectangles[i].Right;
+				rects[i].top = scissorRectangles[i].Top;
+				rects[i].bottom = scissorRectangles[i].Bottom;
+			}
+
+			deviceContext->RSSetScissorRects( scissorRectangles->Length, rects );
+		}
+	}
+
+	void RasterizerWrapper::GetScissorRectangles( array<System::Drawing::Rectangle>^ scissorRectangles )
+	{
+		UINT count = scissorRectangles->Length;
+		stack_array<D3D11_RECT> rects = stackalloc( D3D11_RECT, scissorRectangles->Length );
+		deviceContext->RSGetScissorRects( &count, &rects[0] );
+
+		for( UINT i = 0; i < count; i++ )
+			scissorRectangles[i] = marshal_as<System::Drawing::Rectangle>( rects[i] );
 	}
 }
 }

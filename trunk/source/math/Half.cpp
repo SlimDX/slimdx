@@ -23,8 +23,6 @@
 
 #include <d3dx9.h>
 
-#include "../Viewport.h"
-
 #include "Half.h"
 
 using namespace System;

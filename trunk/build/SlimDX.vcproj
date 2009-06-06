@@ -1461,6 +1461,18 @@
 					</File>
 				</Filter>
 			</Filter>
+			<Filter
+				Name="Viewport"
+				>
+				<File
+					RelativePath="..\source\direct3d10\Viewport10.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\Viewport10.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Base"
@@ -1590,18 +1602,6 @@
 				</File>
 				<File
 					RelativePath="..\source\Performance.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Viewport"
-				>
-				<File
-					RelativePath="..\source\Viewport.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\Viewport.h"
 					>
 				</File>
 			</Filter>
@@ -2850,6 +2850,18 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d9\UVAtlasOutput.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Viewport"
+				>
+				<File
+					RelativePath="..\source\direct3d9\Viewport9.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d9\Viewport9.h"
 					>
 				</File>
 			</Filter>

@@ -12,7 +12,7 @@ namespace MiniTri
     static class Program
     {
         static Form RenderForm;
-        static Viewport ViewArea;
+        static D3D10.Viewport ViewArea;
         static DXGI.SwapChain SwapChain;
         static D3D10.Device Device;
         static D3D10.Effect Effect;
@@ -62,7 +62,7 @@ namespace MiniTri
                 RenderTarget = new D3D10.RenderTargetView(Device, resource);
             }
 
-            ViewArea = new Viewport();
+            ViewArea = new D3D10.Viewport();
             ViewArea.X = 0;
             ViewArea.Y = 0;
             ViewArea.Width = RenderForm.ClientRectangle.Width;

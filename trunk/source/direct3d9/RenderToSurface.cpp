@@ -58,7 +58,7 @@ namespace Direct3D9
 		Construct(rtsPointer);
 	}
 
-	Result RenderToSurface::BeginScene( Surface^ renderSurface, SlimDX::Viewport viewport )
+	Result RenderToSurface::BeginScene( Surface^ renderSurface, Viewport viewport )
 	{
 		IDirect3DSurface9* surface = renderSurface->InternalPointer;
 		HRESULT hr = InternalPointer->BeginScene( surface, reinterpret_cast<D3DVIEWPORT9*>( &viewport ) );

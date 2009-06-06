@@ -21,61 +21,63 @@
 * THE SOFTWARE.
 */
 
-#include "Viewport.h"
+#include "Viewport11.h"
 
 using namespace System;
 using namespace System::Globalization;
 
 namespace SlimDX
 {
-	Viewport::Viewport( int x, int y, int width, int height )
+namespace Direct3D11
+{
+	Viewport::Viewport( float x, float y, float width, float height )
 	: m_X( x ), m_Y( y ), m_Width( width ), m_Height( height ),
 	  m_MinZ( 0.0f ), m_MaxZ( 1.0f )
 	{
 	}
 	
-	Viewport::Viewport( int x, int y, int width, int height, float minZ, float maxZ )
+	Viewport::Viewport( float x, float y, float width, float height, float minZ, float maxZ )
 	: m_X( x ), m_Y( y ), m_Width( width ), m_Height( height ),
 	  m_MinZ( minZ ), m_MaxZ( maxZ )
 	{
 	}
 
-	int Viewport::X::get()
+	float Viewport::X::get()
 	{
 		return m_X;
 	}
 	
-	void Viewport::X::set( int value )
+	void Viewport::X::set( float value )
 	{
 		m_X = value;
 	}
 	
-	int Viewport::Y::get()
+	float Viewport::Y::get()
 	{
 		return m_Y;
 	}
 	
-	void Viewport::Y::set( int value )
+	void Viewport::Y::set( float value )
 	{
 		m_Y = value;
 	}
 	
-	int Viewport::Width::get()
+	float Viewport::Width::get()
 	{
 		return m_Width;
 	}
 	
-	void Viewport::Width::set( int value )
+	void Viewport::Width::set( float value )
 	{
 		m_Width = value;
 	}
 	
-	int Viewport::Height::get()
+	float Viewport::Height::get()
 	{
 		return m_Height;
 	}
 	
-	void Viewport::Height::set( int value )
+	void Viewport::Height::set( float value )
 	{
 		m_Height = value;
 	}
@@ -144,4 +146,5 @@ namespace SlimDX
 		return ( value1.m_X == value2.m_X && value1.m_Y == value2.m_Y && value1.m_Width == value2.m_Width
 			 && value1.m_Height == value2.m_Height && value1.m_MinZ == value2.m_MinZ && value1.m_MaxZ == value2.m_MaxZ );
 	}
+}
 }
