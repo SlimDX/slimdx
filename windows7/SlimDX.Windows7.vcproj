@@ -1180,6 +1180,14 @@
 					Name="Pipeline Wrappers"
 					>
 					<File
+						RelativePath=".\source\direct3d11\ComputeShaderWrapper11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\ComputeShaderWrapper11.h"
+						>
+					</File>
+					<File
 						RelativePath=".\source\direct3d11\DomainShaderWrapper11.cpp"
 						>
 					</File>
@@ -1737,6 +1745,18 @@
 					</File>
 					<File
 						RelativePath=".\source\direct3d11\HullShader11.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="ComputeShader"
+					>
+					<File
+						RelativePath=".\source\direct3d11\ComputeShader11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\ComputeShader11.h"
 						>
 					</File>
 				</Filter>

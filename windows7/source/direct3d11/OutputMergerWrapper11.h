@@ -75,10 +75,10 @@ namespace SlimDX
 			void SetTargets( ... array<RenderTargetView^>^ renderTargetViews );
 			void SetTargets( DepthStencilView^ depthStencilView, ... array<RenderTargetView^>^ renderTargetViews );
 
-			void SetTargets( RenderTargetView^ renderTargetView, array<UnorderedAccessView^>^ unorderedAccessViews, int startSlot, int initialCounts );
-			void SetTargets( DepthStencilView^ depthStencilView, RenderTargetView^ renderTargetView, array<UnorderedAccessView^>^ unorderedAccessViews, int startSlot, int initialCounts );
-			void SetTargets( array<UnorderedAccessView^>^ unorderedAccessViews, int startSlot, int initialCounts, ... array<RenderTargetView^>^ renderTargetViews );
-			void SetTargets( DepthStencilView^ depthStencilView, array<UnorderedAccessView^>^ unorderedAccessViews, int startSlot, int initialCounts, ... array<RenderTargetView^>^ renderTargetViews );
+			void SetTargets( RenderTargetView^ renderTargetView, int startSlot, array<UnorderedAccessView^>^ unorderedAccessViews );
+			void SetTargets( DepthStencilView^ depthStencilView, RenderTargetView^ renderTargetView, int startSlot, array<UnorderedAccessView^>^ unorderedAccessViews );
+			void SetTargets( int startSlot, array<UnorderedAccessView^>^ unorderedAccessViews, ... array<RenderTargetView^>^ renderTargetViews );
+			void SetTargets( DepthStencilView^ depthStencilView, int startSlot, array<UnorderedAccessView^>^ unorderedAccessViews, ... array<RenderTargetView^>^ renderTargetViews );
 		
 			DepthStencilView^ GetDepthStencilView();
 			array<RenderTargetView^>^ GetRenderTargets( int count );

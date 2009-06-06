@@ -50,6 +50,7 @@ namespace SlimDX
 		ref class VertexShaderWrapper;
 		ref class DomainShaderWrapper;
 		ref class HullShaderWrapper;
+		ref class ComputeShaderWrapper;
 
 		public ref class DeviceContext : ComObject
 		{
@@ -65,6 +66,7 @@ namespace SlimDX
 			GeometryShaderWrapper^ geometryShader;
 			DomainShaderWrapper^ domainShader;
 			HullShaderWrapper^ hullShader;
+			ComputeShaderWrapper^ computeShader;
 
 			void InitializeSubclasses();
 
@@ -300,6 +302,14 @@ namespace SlimDX
 			property HullShaderWrapper^ HullShader
 			{
 				HullShaderWrapper^ get();
+			}
+
+			/// <summary>
+			/// Gets the device's compute shader interface.
+			/// </summary>
+			property ComputeShaderWrapper^ ComputeShader
+			{
+				ComputeShaderWrapper^ get();
 			}
 		};
 	}
