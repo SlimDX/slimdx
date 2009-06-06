@@ -48,6 +48,8 @@ namespace SlimDX
 		ref class PixelShaderWrapper;
 		ref class StreamOutputWrapper;
 		ref class VertexShaderWrapper;
+		ref class DomainShaderWrapper;
+		ref class HullShaderWrapper;
 
 		public ref class DeviceContext : ComObject
 		{
@@ -61,6 +63,8 @@ namespace SlimDX
 			VertexShaderWrapper^ vertexShader;
 			PixelShaderWrapper^ pixelShader;
 			GeometryShaderWrapper^ geometryShader;
+			DomainShaderWrapper^ domainShader;
+			HullShaderWrapper^ hullShader;
 
 			void InitializeSubclasses();
 
@@ -210,7 +214,7 @@ namespace SlimDX
 
 			void GetPredication( [Out] Predicate^ %predicate, [Out] bool %predicateValue );
 
-			DataBox^ MapSubresource( Resource^ resource, int subresource, MapMode mode, MapFlags flags );
+			DataBox^ MapSubresource( Resource^ resource, int subresource, int sizeInBytes, MapMode mode, MapFlags flags );
 			void UnmapSubresource( Resource^ resource, int subresource );
 			
 			/// <summary>
@@ -280,6 +284,22 @@ namespace SlimDX
 			property GeometryShaderWrapper^ GeometryShader
 			{
 				GeometryShaderWrapper^ get();
+			}
+
+			/// <summary>
+			/// Gets the device's domain shader interface.
+			/// </summary>
+			property DomainShaderWrapper^ DomainShader
+			{
+				DomainShaderWrapper^ get();
+			}
+
+			/// <summary>
+			/// Gets the device's hull shader interface.
+			/// </summary>
+			property HullShaderWrapper^ HullShader
+			{
+				HullShaderWrapper^ get();
 			}
 		};
 	}

@@ -1180,11 +1180,27 @@
 					Name="Pipeline Wrappers"
 					>
 					<File
+						RelativePath=".\source\direct3d11\DomainShaderWrapper11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\DomainShaderWrapper11.h"
+						>
+					</File>
+					<File
 						RelativePath=".\source\direct3d11\GeometryShaderWrapper11.cpp"
 						>
 					</File>
 					<File
 						RelativePath=".\source\direct3d11\GeometryShaderWrapper11.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\HullShaderWrapper11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\HullShaderWrapper11.h"
 						>
 					</File>
 					<File
@@ -1697,6 +1713,30 @@
 					</File>
 					<File
 						RelativePath=".\source\direct3d11\VertexShader11.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="DomainShader"
+					>
+					<File
+						RelativePath=".\source\direct3d11\DomainShader11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\DomainShader11.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="HullShader"
+					>
+					<File
+						RelativePath=".\source\direct3d11\HullShader11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\HullShader11.h"
 						>
 					</File>
 				</Filter>

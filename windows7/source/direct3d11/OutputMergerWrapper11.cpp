@@ -24,11 +24,14 @@
 #include <d3d11.h>
 #include <d3dx11.h>
 
+#include "../../../source/stack_array.h"
+
 #include "BlendState11.h"
 #include "DepthStencilState11.h"
 #include "DepthStencilView11.h"
 #include "OutputMergerWrapper11.h"
 #include "RenderTargetView11.h"
+#include "UnorderedAccessView11.h"
 
 using namespace System;
 
@@ -183,6 +186,85 @@ namespace Direct3D11
 				nativeRTVs[ i ] = renderTargets[ i ] == nullptr ? 0 : static_cast<ID3D11RenderTargetView*>( renderTargets[ i ]->InternalPointer );
 			deviceContext->OMSetRenderTargets( renderTargets->Length, nativeRTVs, nativeDSV );
 		}
+	}
+
+	void OutputMergerWrapper::SetTargets( RenderTargetView^ renderTargetView, array<UnorderedAccessView^>^ unorderedAccessViews, int startSlot, int initialCounts )
+	{
+		SetTargets( nullptr, renderTargetView, unorderedAccessViews, startSlot, initialCounts );
+	}
+	
+	void OutputMergerWrapper::SetTargets( DepthStencilView^ depthStencilView, RenderTargetView^ renderTargetView, array<UnorderedAccessView^>^ unorderedAccessViews, int startSlot, int initialCounts )
+	{
+		ID3D11DepthStencilView *nativeDSV = depthStencilView == nullptr ? 0 : static_cast<ID3D11DepthStencilView*>( depthStencilView->InternalPointer );
+		ID3D11RenderTargetView *nativeRTV[] = { renderTargetView == nullptr ? 0 : static_cast<ID3D11RenderTargetView*>( renderTargetView->InternalPointer ) };
+
+		stack_array<ID3D11UnorderedAccessView*> uavs = stackalloc( ID3D11UnorderedAccessView*, unorderedAccessViews->Length );
+		for( int i = 0; i < unorderedAccessViews->Length; i++ )
+			uavs[i] = unorderedAccessViews[i]->InternalPointer;
+		
+		UINT counts = initialCounts;
+		deviceContext->OMSetRenderTargetsAndUnorderedAccessViews( 1, nativeRTV, nativeDSV, startSlot, unorderedAccessViews->Length, &uavs[0], &counts );
+	}
+
+	void OutputMergerWrapper::SetTargets( array<UnorderedAccessView^>^ unorderedAccessViews, int startSlot, int initialCounts, ... array<RenderTargetView^>^ renderTargets )
+	{
+		SetTargets( nullptr, unorderedAccessViews, startSlot, initialCounts, renderTargets );
+	}
+
+	void OutputMergerWrapper::SetTargets( DepthStencilView^ depthStencilView, array<UnorderedAccessView^>^ unorderedAccessViews, int startSlot, int initialCounts, ... array<RenderTargetView^>^ renderTargets )
+	{
+		ID3D11DepthStencilView *nativeDSV = depthStencilView == nullptr ? 0 : static_cast<ID3D11DepthStencilView*>( depthStencilView->InternalPointer );
+		ID3D11RenderTargetView* nativeRTVs[D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT];
+
+		stack_array<ID3D11UnorderedAccessView*> uavs = stackalloc( ID3D11UnorderedAccessView*, unorderedAccessViews->Length );
+		for( int i = 0; i < unorderedAccessViews->Length; i++ )
+			uavs[i] = unorderedAccessViews[i]->InternalPointer;
+		
+		UINT counts = initialCounts;
+		if( renderTargets == nullptr )
+		{
+			deviceContext->OMSetRenderTargetsAndUnorderedAccessViews( 0, 0, nativeDSV, startSlot, unorderedAccessViews->Length, &uavs[0], &counts );
+		}
+		else 
+		{
+			for( int i = 0; i < renderTargets->Length; ++i )
+				nativeRTVs[ i ] = renderTargets[ i ] == nullptr ? 0 : static_cast<ID3D11RenderTargetView*>( renderTargets[ i ]->InternalPointer );
+			deviceContext->OMSetRenderTargetsAndUnorderedAccessViews( renderTargets->Length, nativeRTVs, nativeDSV, startSlot, unorderedAccessViews->Length, &uavs[0], &counts );
+		}
+	}
+
+	DepthStencilView^ OutputMergerWrapper::GetDepthStencilView()
+	{
+		ID3D11DepthStencilView *view;
+
+		deviceContext->OMGetRenderTargets( 0, NULL, &view );
+		return DepthStencilView::FromPointer( view );
+	}
+
+	array<RenderTargetView^>^ OutputMergerWrapper::GetRenderTargets( int count )
+	{
+		stack_array<ID3D11RenderTargetView*> targets = stackalloc( ID3D11RenderTargetView*, count );
+		array<RenderTargetView^>^ results = gcnew array<RenderTargetView^>( count );
+
+		deviceContext->OMGetRenderTargets( count, &targets[0], NULL );
+
+		for( int i = 0; i < count; i++ )
+			results[i] = RenderTargetView::FromPointer( targets[i] );
+
+		return results;
+	}
+
+	array<UnorderedAccessView^>^ OutputMergerWrapper::GetUnorderedAccessViews( int startSlot, int count )
+	{
+		stack_array<ID3D11UnorderedAccessView*> targets = stackalloc( ID3D11UnorderedAccessView*, count );
+		array<UnorderedAccessView^>^ results = gcnew array<UnorderedAccessView^>( count );
+
+		deviceContext->OMGetRenderTargetsAndUnorderedAccessViews( 0, NULL, NULL, startSlot, count, &targets[0] );
+
+		for( int i = 0; i < count; i++ )
+			results[i] = UnorderedAccessView::FromPointer( targets[i] );
+
+		return results;
 	}
 }
 }

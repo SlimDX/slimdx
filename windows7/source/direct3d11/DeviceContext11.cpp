@@ -34,6 +34,8 @@
 #include "VertexShaderWrapper11.h"
 #include "PixelShaderWrapper11.h"
 #include "GeometryShaderWrapper11.h"
+#include "DomainShaderWrapper11.h"
+#include "HullShaderWrapper11.h"
 #include "DepthStencilView11.h"
 #include "RenderTargetView11.h"
 #include "UnorderedAccessView11.h"
@@ -58,6 +60,8 @@ namespace Direct3D11
 		vertexShader = gcnew VertexShaderWrapper( InternalPointer );
 		pixelShader = gcnew PixelShaderWrapper( InternalPointer );
 		geometryShader = gcnew GeometryShaderWrapper( InternalPointer );
+		domainShader = gcnew DomainShaderWrapper( InternalPointer );
+		hullShader = gcnew HullShaderWrapper( InternalPointer );
 	}
 
 	DeviceContext::DeviceContext( ID3D11DeviceContext* pointer, ComObject^ owner )
@@ -276,15 +280,14 @@ namespace Direct3D11
 		InternalPointer->SetPredication( predicate->InternalPointer, predicateValue );
 	}
 
-	DataBox^ DeviceContext::MapSubresource( Resource^ resource, int subresource, MapMode mode, MapFlags flags )
+	DataBox^ DeviceContext::MapSubresource( Resource^ resource, int subresource, int sizeInBytes, MapMode mode, MapFlags flags )
 	{
 		D3D11_MAPPED_SUBRESOURCE mapped;
 		HRESULT hr = InternalPointer->Map( resource->InternalPointer, subresource, static_cast<D3D11_MAP>( mode ), static_cast<UINT>( flags ), &mapped );
 		if( RECORD_D3D11( hr ).IsFailure )
 			return nullptr;
 
-		int size = 0;
-		DataBox^ box = gcnew DataBox( mapped.RowPitch, mapped.DepthPitch, gcnew DataStream( mapped.pData, size, true, true, false ) );
+		DataBox^ box = gcnew DataBox( mapped.RowPitch, mapped.DepthPitch, gcnew DataStream( mapped.pData, sizeInBytes, true, true, false ) );
 		return box;
 	}
 
@@ -331,6 +334,16 @@ namespace Direct3D11
 	GeometryShaderWrapper^ DeviceContext::GeometryShader::get()
 	{
 		return geometryShader;
+	}
+
+	DomainShaderWrapper^ DeviceContext::DomainShader::get()
+	{
+		return domainShader;
+	}
+
+	HullShaderWrapper^ DeviceContext::HullShader::get()
+	{
+		return hullShader;
 	}
 }
 }
