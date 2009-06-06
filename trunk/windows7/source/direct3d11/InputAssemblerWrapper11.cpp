@@ -41,18 +41,31 @@ namespace Direct3D11
 		deviceContext = device;
 	}
 
-	void InputAssemblerWrapper::SetInputLayout( InputLayout^ value)
+	Direct3D11::InputLayout^ InputAssemblerWrapper::InputLayout::get()
+	{
+		ID3D11InputLayout *layout;
+		deviceContext->IAGetInputLayout( &layout );
+
+		return layout == NULL ? nullptr : Direct3D11::InputLayout::FromPointer( layout );
+	}
+
+	void InputAssemblerWrapper::InputLayout::set( Direct3D11::InputLayout^ value )
 	{
 		if( value == nullptr )
-		{
 			deviceContext->IASetInputLayout( 0 );
-		} else
-		{
+		else
 			deviceContext->IASetInputLayout( value->InternalPointer );
-		}
+	}
+
+	Direct3D11::PrimitiveTopology InputAssemblerWrapper::PrimitiveTopology::get()
+	{
+		D3D11_PRIMITIVE_TOPOLOGY topo;
+		deviceContext->IAGetPrimitiveTopology( &topo );
+
+		return static_cast<Direct3D11::PrimitiveTopology>( topo );
 	}
 	
-	void InputAssemblerWrapper::SetPrimitiveTopology( PrimitiveTopology value)
+	void InputAssemblerWrapper::PrimitiveTopology::set( Direct3D11::PrimitiveTopology value )
 	{
 		deviceContext->IASetPrimitiveTopology( static_cast<D3D11_PRIMITIVE_TOPOLOGY>( value ) );
 	}
@@ -67,6 +80,19 @@ namespace Direct3D11
 		{
 			deviceContext->IASetIndexBuffer( static_cast<ID3D11Buffer*>( indexBuffer->InternalPointer ), static_cast<DXGI_FORMAT>( format ), offset );
 		}
+	}
+
+	void InputAssemblerWrapper::GetIndexBuffer( [Out] Buffer^ %indexBuffer, [Out] DXGI::Format %format, [Out] int %offset )
+	{
+		ID3D11Buffer *buffer;
+		DXGI_FORMAT nativeFormat;
+		UINT nativeOffset;
+
+		deviceContext->IAGetIndexBuffer( &buffer, &nativeFormat, &nativeOffset );
+
+		indexBuffer = Buffer::FromPointer( buffer );
+		format = static_cast<DXGI::Format>( nativeFormat );
+		offset = nativeOffset;
 	}
 	
 	void InputAssemblerWrapper::SetVertexBuffers( int slot, VertexBufferBinding vertexBufferBinding )
@@ -92,6 +118,25 @@ namespace Direct3D11
 		}
 		
 		deviceContext->IASetVertexBuffers( firstSlot, vertexBufferBinding->Length, buffers, strides, offsets );
+	}
+
+	array<VertexBufferBinding>^ InputAssemblerWrapper::GetVertexBuffers( int firstSlot, int count )
+	{
+		ID3D11Buffer* buffers[D3D11_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT];
+		UINT strides[D3D11_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT];
+		UINT offsets[D3D11_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT];
+		array<VertexBufferBinding>^ results = gcnew array<VertexBufferBinding>( count );
+		
+		deviceContext->IAGetVertexBuffers( firstSlot, count, buffers, strides, offsets );
+
+		for( int i = 0; i < count; ++i )
+		{
+			results[i].Buffer = buffers[i] == NULL ? nullptr : Buffer::FromPointer( buffers[i] );
+			results[i].Stride = strides[i];
+			results[i].Offset = offsets[i];
+		}
+
+		return results;
 	}
 }
 }

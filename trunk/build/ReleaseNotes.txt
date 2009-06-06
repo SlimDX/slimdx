@@ -3,6 +3,7 @@ General
 	* Added a stack_array type that replaces std::vector. In certain tests, it outperforms by a factor of 3.
 	* Added a Resources class that handles loading SlimDX resources from the SlimDX DLL.
 		* As of now, this contains two different versions of the SlimDX icon.
+	* Moved Viewport from the base namespace into the individual subsystems that needed it.
 
 Math
 	* Fixed a typo in BoundingSphere.Contains.
@@ -23,6 +24,9 @@ Direct3D 10
 	* Added functions to extract shader signatures.
 	* Added constructors for geometry, vertex, and pixel shaders.
 	* Changed inheritance hierarchies to make base types abstract.
+	
+Direct3D11
+	* I added it.
 
 DirectSound
 	* Removed the confusing lockEntireBuffer parameter from CaptureBuffer.Read.

@@ -19,48 +19,42 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include "stdafx.h"
+#include <d3d11.h>
 
-#include "Enums11.h"
-#include "VertexBufferBinding11.h"
+#include "Direct3D11Exception.h"
 
-using System::Runtime::InteropServices::OutAttribute;
+#include "Device11.h"
+#include "DomainShader11.h"
+#include "ClassLinkage11.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct3D11
+namespace Direct3D11
+{
+	DomainShader::DomainShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode )
 	{
-		ref class Buffer;
-		ref class InputLayout;
-		
-		public ref class InputAssemblerWrapper
-		{
-		private:
-			ID3D11DeviceContext* deviceContext;
-			
-		internal:
-			InputAssemblerWrapper( ID3D11DeviceContext* device );
-			
-		public:
-			property InputLayout^ InputLayout
-			{
-				Direct3D11::InputLayout^ get();
-				void set( Direct3D11::InputLayout^ value );
-			}
+		ID3D11DomainShader *shader;
 
-			property PrimitiveTopology PrimitiveTopology
-			{
-				Direct3D11::PrimitiveTopology get();
-				void set( Direct3D11::PrimitiveTopology value );
-			}
-			
-			void SetIndexBuffer( Buffer^ indexBuffer, DXGI::Format format, int offset );
-			void GetIndexBuffer( [Out] Buffer^ %indexBuffer, [Out] DXGI::Format %format, [Out] int %offset );
-			
-			void SetVertexBuffers( int slot, VertexBufferBinding vertexBufferBinding );
-			void SetVertexBuffers( int firstSlot, ... array<VertexBufferBinding>^ vertexBufferBindings );
+		HRESULT hr = device->InternalPointer->CreateDomainShader( shaderBytecode->Buffer, shaderBytecode->Length, NULL, &shader );
+		if( RECORD_D3D11( hr ).IsFailure )
+			throw gcnew Direct3D11Exception( Result::Last );
 
-			array<VertexBufferBinding>^ GetVertexBuffers( int firstSlot, int count );
-		};
+		Construct( shader );
 	}
-};
+
+	DomainShader::DomainShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage )
+	{
+		ID3D11DomainShader *shader;
+		ID3D11ClassLinkage *nativeLinkage = linkage == nullptr ? NULL : linkage->InternalPointer;
+
+		HRESULT hr = device->InternalPointer->CreateDomainShader( shaderBytecode->Buffer, shaderBytecode->Length, nativeLinkage, &shader );
+		if( RECORD_D3D11( hr ).IsFailure )
+			throw gcnew Direct3D11Exception( Result::Last );
+
+		Construct( shader );
+	}
+}
+}

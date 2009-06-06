@@ -21,46 +21,21 @@
 */
 #pragma once
 
-#include "Enums11.h"
-#include "VertexBufferBinding11.h"
-
-using System::Runtime::InteropServices::OutAttribute;
+#include "DeviceChild11.h"
 
 namespace SlimDX
 {
 	namespace Direct3D11
 	{
-		ref class Buffer;
-		ref class InputLayout;
-		
-		public ref class InputAssemblerWrapper
+		ref class ClassLinkage;
+
+		public ref class DomainShader : public DeviceChild
 		{
-		private:
-			ID3D11DeviceContext* deviceContext;
-			
-		internal:
-			InputAssemblerWrapper( ID3D11DeviceContext* device );
-			
+			COMOBJECT(ID3D11DomainShader, DomainShader);
+
 		public:
-			property InputLayout^ InputLayout
-			{
-				Direct3D11::InputLayout^ get();
-				void set( Direct3D11::InputLayout^ value );
-			}
-
-			property PrimitiveTopology PrimitiveTopology
-			{
-				Direct3D11::PrimitiveTopology get();
-				void set( Direct3D11::PrimitiveTopology value );
-			}
-			
-			void SetIndexBuffer( Buffer^ indexBuffer, DXGI::Format format, int offset );
-			void GetIndexBuffer( [Out] Buffer^ %indexBuffer, [Out] DXGI::Format %format, [Out] int %offset );
-			
-			void SetVertexBuffers( int slot, VertexBufferBinding vertexBufferBinding );
-			void SetVertexBuffers( int firstSlot, ... array<VertexBufferBinding>^ vertexBufferBindings );
-
-			array<VertexBufferBinding>^ GetVertexBuffers( int firstSlot, int count );
+			DomainShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode );
+			DomainShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage );
 		};
 	}
 };

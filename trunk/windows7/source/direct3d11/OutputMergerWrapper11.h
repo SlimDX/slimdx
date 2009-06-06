@@ -29,6 +29,7 @@ namespace SlimDX
 		ref class DepthStencilState;
 		ref class DepthStencilView;
 		ref class RenderTargetView;
+		ref class UnorderedAccessView;
 		
 		public ref class OutputMergerWrapper
 		{
@@ -73,6 +74,15 @@ namespace SlimDX
 			void SetTargets( DepthStencilView^ depthStencilView, RenderTargetView^ renderTargetView );
 			void SetTargets( ... array<RenderTargetView^>^ renderTargetViews );
 			void SetTargets( DepthStencilView^ depthStencilView, ... array<RenderTargetView^>^ renderTargetViews );
+
+			void SetTargets( RenderTargetView^ renderTargetView, array<UnorderedAccessView^>^ unorderedAccessViews, int startSlot, int initialCounts );
+			void SetTargets( DepthStencilView^ depthStencilView, RenderTargetView^ renderTargetView, array<UnorderedAccessView^>^ unorderedAccessViews, int startSlot, int initialCounts );
+			void SetTargets( array<UnorderedAccessView^>^ unorderedAccessViews, int startSlot, int initialCounts, ... array<RenderTargetView^>^ renderTargetViews );
+			void SetTargets( DepthStencilView^ depthStencilView, array<UnorderedAccessView^>^ unorderedAccessViews, int startSlot, int initialCounts, ... array<RenderTargetView^>^ renderTargetViews );
+		
+			DepthStencilView^ GetDepthStencilView();
+			array<RenderTargetView^>^ GetRenderTargets( int count );
+			array<UnorderedAccessView^>^ GetUnorderedAccessViews( int startSlot, int count );
 		};
 	}
 };
