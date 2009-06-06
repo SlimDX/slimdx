@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "../Viewport.h"
+#include "Viewport10.h"
 
 namespace SlimDX
 {
@@ -44,8 +44,8 @@ namespace SlimDX
 				RasterizerState^ get();
 			}
 		
-			void SetViewports( SlimDX::Viewport viewport );
-			void SetViewports( ... array<SlimDX::Viewport>^ viewports );
+			void SetViewports( Viewport viewport );
+			void SetViewports( ... array<Viewport>^ viewports );
 		};
 	}
 };

@@ -24,11 +24,10 @@
 #include "Enums.h"
 #include "VertexDeclaration.h"
 
-#include "../Viewport.h"
-
 #include "../math/Plane.h"
 #include "../math/Matrix.h"
 
+#include "Viewport9.h"
 #include "PaletteEntry.h"
 #include "Light.h"
 #include "PatchInfo.h"
@@ -1265,10 +1264,10 @@ namespace SlimDX
 			/// <summary>
 			/// Gets or sets the currently active viewport.
 			/// </summary>
-			property SlimDX::Viewport Viewport
+			property SlimDX::Direct3D9::Viewport Viewport
 			{
-				SlimDX::Viewport get();
-				void set( SlimDX::Viewport value );
+				SlimDX::Direct3D9::Viewport get();
+				void set( SlimDX::Direct3D9::Viewport value );
 			}
 
 			/// <summary>

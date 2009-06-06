@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "Viewport11.h"
+
 namespace SlimDX
 {
 	namespace Direct3D11
@@ -42,8 +44,13 @@ namespace SlimDX
 				RasterizerState^ get();
 			}
 		
-			void SetViewports( SlimDX::Viewport viewport );
-			void SetViewports( ... array<SlimDX::Viewport>^ viewports );
+			void SetViewports( Viewport viewport );
+			void SetViewports( ... array<Viewport>^ viewports );
+			void GetViewports( array<Viewport>^ viewports );
+
+			void SetScissorRectangles( System::Drawing::Rectangle scissorRectangle );
+			void SetScissorRectangles( ... array<System::Drawing::Rectangle>^ scissorRectangles );
+			void GetScissorRectangles( array<System::Drawing::Rectangle>^ scissorRectangles );
 		};
 	}
 };

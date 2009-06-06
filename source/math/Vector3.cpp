@@ -24,7 +24,6 @@
 #include <d3dx9.h>
 
 #include "../Utilities.h"
-#include "../Viewport.h"
 
 #include "Quaternion.h"
 #include "Matrix.h"
@@ -683,50 +682,81 @@ namespace SlimDX
 		return results;
 	}
 	
-	Vector3 Vector3::Project( Vector3 vector, SlimDX::Viewport viewport, Matrix projection, Matrix view, Matrix world )
+	Vector3 Vector3::Project( Vector3 vector, int x, int y, int width, int height, float minZ, float maxZ, Matrix projection, Matrix view, Matrix world )
 	{
-		Vector3 result;
+		Matrix matrix;
+		Matrix::Multiply( world, view, matrix );
+		Matrix::Multiply( matrix, projection, matrix );
 
-		D3DXVec3Project( (D3DXVECTOR3*) &result, (D3DXVECTOR3*) &vector, (D3DVIEWPORT9*) &viewport,
-			(D3DXMATRIX*) &projection, (D3DXMATRIX*) &view, (D3DXMATRIX*) &world );
+		float w = ( vector.X * matrix.M14 ) + ( vector.Y * matrix.M24 ) + ( vector.Z * matrix.M34 ) + matrix.M44;
+		if( w - 1.0f < -float::Epsilon || w - 1.0f > float::Epsilon )
+			vector /= w;
 
-		return result;
+		return Vector3( ( ( vector.X + 1.0f ) * 0.5f * width ) + x, ( ( -vector.Y + 1.0f ) * 0.5f * height ) + y, ( vector.Z * ( maxZ - minZ ) ) + minZ );
 	}
 	
-	void Vector3::Project( Vector3% vector, SlimDX::Viewport% viewport, Matrix% projection, Matrix% view, Matrix% world, [Out] Vector3% result )
+	void Vector3::Project( Vector3% vector, int x, int y, int width, int height, float minZ, float maxZ, Matrix% projection, Matrix% view, Matrix% world, [Out] Vector3% result )
 	{
-		pin_ptr<Vector3> pinVector = &vector;
-		pin_ptr<SlimDX::Viewport> pinViewport = &viewport;
-		pin_ptr<Matrix> pinProjection = &projection;
-		pin_ptr<Matrix> pinView = &view;
-		pin_ptr<Matrix> pinWorld = &world;
-		pin_ptr<Vector3> pinResult = &result;
+		Vector3 v = vector;
+		Matrix matrix;
+		Matrix::Multiply( world, view, matrix );
+		Matrix::Multiply( matrix, projection, matrix );
 
-		D3DXVec3Project( (D3DXVECTOR3*) pinResult, (D3DXVECTOR3*) pinVector, (D3DVIEWPORT9*) pinViewport,
-			(D3DXMATRIX*) pinProjection, (D3DXMATRIX*) pinView, (D3DXMATRIX*) pinWorld ); 
+		float w = ( vector.X * matrix.M14 ) + ( vector.Y * matrix.M24 ) + ( vector.Z * matrix.M34 ) + matrix.M44;
+		if( w - 1.0f < -float::Epsilon || w - 1.0f > float::Epsilon )
+			v /= w;
+
+		result = Vector3( ( ( v.X + 1.0f ) * 0.5f * width ) + x, ( ( -v.Y + 1.0f ) * 0.5f * height ) + y, ( v.Z * ( maxZ - minZ ) ) + minZ );
 	}
 	
-	Vector3 Vector3::Unproject( Vector3 vector, SlimDX::Viewport viewport, Matrix projection, Matrix view, Matrix world )
+	Vector3 Vector3::Unproject( Vector3 vector, int x, int y, int width, int height, float minZ, float maxZ, Matrix projection, Matrix view, Matrix world )
 	{
-		Vector3 result;
+		Vector3 v;
+		Matrix matrix;
+		Matrix::Multiply( world, view, matrix );
+		Matrix::Multiply( matrix, projection, matrix );
+		Matrix::Invert( matrix, matrix );
 
-		D3DXVec3Unproject( (D3DXVECTOR3*) &result, (D3DXVECTOR3*) &vector, (D3DVIEWPORT9*) &viewport,
-			(D3DXMATRIX*) &projection, (D3DXMATRIX*) &view, (D3DXMATRIX*) &world );
+		v.X = ( ( ( vector.X - x ) / static_cast<float>( width ) ) * 2.0f ) - 1.0f;
+		v.Y = -( ( ( ( vector.Y - y ) / static_cast<float>( height ) ) * 2.0f ) - 1.0f );
+		v.Z = ( vector.Z - minZ ) / ( maxZ - minZ );
 
-		return result;
+		Vector4 r;
+		Vector3::Transform( v, matrix, r );
+		v.X = r.X;
+		v.Y = r.Y;
+		v.Z = r.Z;
+
+		float w = ( vector.X * matrix.M14 ) + ( vector.Y * matrix.M24 ) + ( vector.Z * matrix.M34 ) + matrix.M44;
+		if( w - 1.0f < -float::Epsilon || w - 1.0f > float::Epsilon )
+			v /= w;
+
+		return v;
 	}
 	
-	void Vector3::Unproject( Vector3% vector, SlimDX::Viewport% viewport, Matrix% projection, Matrix% view, Matrix% world, [Out] Vector3% result )
+	void Vector3::Unproject( Vector3% vector, int x, int y, int width, int height, float minZ, float maxZ, Matrix% projection, Matrix% view, Matrix% world, [Out] Vector3% result )
 	{
-		pin_ptr<Vector3> pinVector = &vector;
-		pin_ptr<SlimDX::Viewport> pinViewport = &viewport;
-		pin_ptr<Matrix> pinProjection = &projection;
-		pin_ptr<Matrix> pinView = &view;
-		pin_ptr<Matrix> pinWorld = &world;
-		pin_ptr<Vector3> pinResult = &result;
+		Vector3 v;
+		Matrix matrix;
+		Matrix::Multiply( world, view, matrix );
+		Matrix::Multiply( matrix, projection, matrix );
+		Matrix::Invert( matrix, matrix );
 
-		D3DXVec3Unproject( (D3DXVECTOR3*) pinResult, (D3DXVECTOR3*) pinVector, (D3DVIEWPORT9*) pinViewport,
-			(D3DXMATRIX*) pinProjection, (D3DXMATRIX*) pinView, (D3DXMATRIX*) pinWorld ); 
+		v.X = ( ( ( vector.X - x ) / static_cast<float>( width ) ) * 2.0f ) - 1.0f;
+		v.Y = -( ( ( ( vector.Y - y ) / static_cast<float>( height ) ) * 2.0f ) - 1.0f );
+		v.Z = ( vector.Z - minZ ) / ( maxZ - minZ );
+
+		Vector4 r;
+		Vector3::Transform( v, matrix, r );
+		v.X = r.X;
+		v.Y = r.Y;
+		v.Z = r.Z;
+
+		float w = ( vector.X * matrix.M14 ) + ( vector.Y * matrix.M24 ) + ( vector.Z * matrix.M34 ) + matrix.M44;
+		if( w - 1.0f < -float::Epsilon || w - 1.0f > float::Epsilon )
+			v /= w;
+
+		result = v;
 	}
 	
 	Vector3 Vector3::Minimize( Vector3 left, Vector3 right )

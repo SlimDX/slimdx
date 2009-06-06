@@ -55,13 +55,13 @@ namespace Direct3D10
 		return RasterizerState::FromPointer( state );
 	}
 	
-	void RasterizerWrapper::SetViewports( SlimDX::Viewport viewport )
+	void RasterizerWrapper::SetViewports( Viewport viewport )
 	{
 		D3D10_VIEWPORT nativeVP = { viewport.X, viewport.Y, viewport.Width, viewport.Height, viewport.MinZ, viewport.MaxZ };
 		m_Device->RSSetViewports( 1, &nativeVP );
 	}
 
-	void RasterizerWrapper::SetViewports( ... array<SlimDX::Viewport>^ viewports )
+	void RasterizerWrapper::SetViewports( ... array<Viewport>^ viewports )
 	{
 		if( viewports == nullptr ) 
 		{

@@ -28,7 +28,6 @@
 #include "../DataStream.h"
 #include "../ComObject.h"
 #include "../Utilities.h"
-#include "../Viewport.h"
 
 #include "Direct3D9Exception.h"
 
@@ -649,16 +648,16 @@ namespace Direct3D9
 		return Surface::FromPointer( surface );
 	}
 
-	SlimDX::Viewport Device::Viewport::get()
+	SlimDX::Direct3D9::Viewport Device::Viewport::get()
 	{
-		SlimDX::Viewport viewport;
+		SlimDX::Direct3D9::Viewport viewport;
 		HRESULT hr = InternalPointer->GetViewport( reinterpret_cast<D3DVIEWPORT9*>( &viewport ) );
 		RECORD_D3D9( hr );
 
 		return viewport;
 	}
 
-	void Device::Viewport::set( SlimDX::Viewport value )
+	void Device::Viewport::set( SlimDX::Direct3D9::Viewport value )
 	{
 		HRESULT hr = InternalPointer->SetViewport( reinterpret_cast<const D3DVIEWPORT9*>( &value ) );
 		RECORD_D3D9( hr );
