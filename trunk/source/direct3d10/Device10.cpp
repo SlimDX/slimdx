@@ -33,6 +33,7 @@
 #include "CounterMetadata.h"
 #include "DepthStencilView.h"
 #include "Device10.h"
+#include "Device10_1.h"
 #include "InputAssemblerWrapper.h"
 #include "InputLayout.h"
 #include "OutputMergerWrapper.h"
@@ -78,11 +79,28 @@ namespace Direct3D10
 	
 	Device^ Device::FromPointer( ID3D10Device* pointer, ComObject^ owner, ComObjectFlags flags )
 	{
+		void* pointer1;
+		HRESULT hr = pointer->QueryInterface(IID_ID3D10Device1, &pointer1);
+		if(SUCCEEDED(hr))
+		{
+			pointer->Release();
+			return SlimDX::Direct3D10_1::Device1::FromPointer( static_cast<ID3D10Device1*>( pointer1 ) );
+		}
+
 		return ComObject::ConstructFromPointer<Device,ID3D10Device>( pointer, owner, flags );
 	}
 	
 	Device^ Device::FromPointer( IntPtr pointer )
 	{
+		ID3D10Device* origPointer = static_cast<ID3D10Device*>( pointer.ToPointer() );
+		void* pointer1;
+		HRESULT hr = origPointer->QueryInterface(IID_ID3D10Device1, &pointer1);
+		if(SUCCEEDED(hr))
+		{
+			origPointer->Release();
+			return SlimDX::Direct3D10_1::Device1::FromPointer(pointer);
+		}
+
 		return ComObject::ConstructFromUserPointer<Device>( pointer );
 	}
 	
