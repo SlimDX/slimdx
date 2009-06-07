@@ -59,7 +59,7 @@ namespace Direct3D10_1
 	{
 		ID3D10Device1* device = 0;
 		RECORD_D3D10( D3D10CreateDevice1( 0, D3D10_DRIVER_TYPE_HARDWARE, 0, static_cast<UINT>( flags ),
-			static_cast<D3D10_FEATURE_LEVEL1>( hardwareLevel ), D3D10_SDK_VERSION, &device ) );
+			static_cast<D3D10_FEATURE_LEVEL1>( hardwareLevel ), D3D10_1_SDK_VERSION, &device ) );
 		if( Result::Last.IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );
 		
@@ -71,7 +71,7 @@ namespace Direct3D10_1
 	{
 		ID3D10Device1* device = 0;
 		RECORD_D3D10( D3D10CreateDevice1( 0, static_cast<D3D10_DRIVER_TYPE>( driverType ), 0, static_cast<UINT>( flags ),
-			static_cast<D3D10_FEATURE_LEVEL1>( hardwareLevel ), D3D10_SDK_VERSION, &device ) );
+			static_cast<D3D10_FEATURE_LEVEL1>( hardwareLevel ), D3D10_1_SDK_VERSION, &device ) );
 		if( Result::Last.IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );
 		
@@ -84,7 +84,7 @@ namespace Direct3D10_1
 		IDXGIAdapter* nativeAdapter = adapter == nullptr ? 0 : adapter->InternalPointer;
 		ID3D10Device1* device = 0;
 		RECORD_D3D10( D3D10CreateDevice1( nativeAdapter, static_cast<D3D10_DRIVER_TYPE>( driverType ), 0,
-			static_cast<UINT>( flags ), static_cast<D3D10_FEATURE_LEVEL1>( hardwareLevel ), D3D10_SDK_VERSION, &device ) );
+			static_cast<UINT>( flags ), static_cast<D3D10_FEATURE_LEVEL1>( hardwareLevel ), D3D10_1_SDK_VERSION, &device ) );
 		if( Result::Last.IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );
 		
@@ -105,7 +105,7 @@ namespace Direct3D10_1
 		DXGI_SWAP_CHAIN_DESC nativeDescription = swapChainDescription.CreateNativeVersion();
 		
 		if( RECORD_D3D10( D3D10CreateDeviceAndSwapChain1( nativeAdapter, static_cast<D3D10_DRIVER_TYPE>( driverType ),
-			0, static_cast<UINT>( flags ), static_cast<D3D10_FEATURE_LEVEL1>( hardwareLevel ), D3D10_SDK_VERSION,
+			0, static_cast<UINT>( flags ), static_cast<D3D10_FEATURE_LEVEL1>( hardwareLevel ), D3D10_1_SDK_VERSION,
 			&nativeDescription, &resultSwapChain, &resultDevice ) ).IsSuccess )
 		{
 			device = FromPointer( resultDevice );
