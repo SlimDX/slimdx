@@ -653,6 +653,12 @@ namespace SlimDX
 		/// Projects a 3D vector from object space into screen space. 
 		/// </summary>
 		/// <param name="vector">The vector to project.</param>
+		/// <param name="x">The X position of the viewport.</param>
+		/// <param name="y">The Y position of the viewport.</param>
+		/// <param name="width">The width of the viewport.</param>
+		/// <param name="height">The height of the viewport.</param>
+		/// <param name="minZ">The minimum depth of the viewport.</param>
+		/// <param name="maxZ">The maximum depth of the viewport.</param>
 		/// <param name="projection">The projection matrix.</param>
 		/// <param name="view">The view matrix.</param>
 		/// <param name="world">The world matrix.</param>
@@ -663,7 +669,12 @@ namespace SlimDX
 		/// Projects a 3D vector from object space into screen space. 
 		/// </summary>
 		/// <param name="vector">The vector to project.</param>
-		/// <param name="viewport">The viewport representing screen space.</param>
+		/// <param name="x">The X position of the viewport.</param>
+		/// <param name="y">The Y position of the viewport.</param>
+		/// <param name="width">The width of the viewport.</param>
+		/// <param name="height">The height of the viewport.</param>
+		/// <param name="minZ">The minimum depth of the viewport.</param>
+		/// <param name="maxZ">The maximum depth of the viewport.</param>
 		/// <param name="projection">The projection matrix.</param>
 		/// <param name="view">The view matrix.</param>
 		/// <param name="world">The world matrix.</param>
@@ -674,7 +685,12 @@ namespace SlimDX
 		/// Projects a 3D vector from screen space into object space. 
 		/// </summary>
 		/// <param name="vector">The vector to project.</param>
-		/// <param name="viewport">The viewport representing screen space.</param>
+		/// <param name="x">The X position of the viewport.</param>
+		/// <param name="y">The Y position of the viewport.</param>
+		/// <param name="width">The width of the viewport.</param>
+		/// <param name="height">The height of the viewport.</param>
+		/// <param name="minZ">The minimum depth of the viewport.</param>
+		/// <param name="maxZ">The maximum depth of the viewport.</param>
 		/// <param name="projection">The projection matrix.</param>
 		/// <param name="view">The view matrix.</param>
 		/// <param name="world">The world matrix.</param>
@@ -685,7 +701,12 @@ namespace SlimDX
 		/// Projects a 3D vector from screen space into object space. 
 		/// </summary>
 		/// <param name="vector">The vector to project.</param>
-		/// <param name="viewport">The viewport representing screen space.</param>
+		/// <param name="x">The X position of the viewport.</param>
+		/// <param name="y">The Y position of the viewport.</param>
+		/// <param name="width">The width of the viewport.</param>
+		/// <param name="height">The height of the viewport.</param>
+		/// <param name="minZ">The minimum depth of the viewport.</param>
+		/// <param name="maxZ">The maximum depth of the viewport.</param>
 		/// <param name="projection">The projection matrix.</param>
 		/// <param name="view">The view matrix.</param>
 		/// <param name="world">The world matrix.</param>

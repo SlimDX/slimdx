@@ -204,11 +204,26 @@ namespace Direct3D11
 
 	void ComputeShaderWrapper::SetUnorderedAccessView( UnorderedAccessView^ unorderedAccessView, int slot )
 	{
-		ID3D11UnorderedAccessView *resource = unorderedAccessView == nullptr ? NULL : unorderedAccessView->InternalPointer;
-		deviceContext->CSSetUnorderedAccessViews( slot, 1, &resource, NULL );	// TODO: Resolve last parameter
+		SetUnorderedAccessView( unorderedAccessView, slot, -1 );
 	}
 
 	void ComputeShaderWrapper::SetUnorderedAccessViews( array<UnorderedAccessView^>^ unorderedAccessViews, int startSlot, int count )
+	{
+		array<int>^ lengths = gcnew array<int>( count );
+		for( int i = 0; i < count; i++ )
+			lengths[i] = -1;
+
+		SetUnorderedAccessViews( unorderedAccessViews, startSlot, count, lengths );
+	}
+
+	void ComputeShaderWrapper::SetUnorderedAccessView( UnorderedAccessView^ unorderedAccessView, int slot, int initialLength  )
+	{
+		UINT nativeLength = initialLength;
+		ID3D11UnorderedAccessView *resource = unorderedAccessView == nullptr ? NULL : unorderedAccessView->InternalPointer;
+		deviceContext->CSSetUnorderedAccessViews( slot, 1, &resource, &nativeLength );
+	}
+
+	void ComputeShaderWrapper::SetUnorderedAccessViews( array<UnorderedAccessView^>^ unorderedAccessViews, int startSlot, int count, array<int>^ initialLengths )
 	{
 		if( count > unorderedAccessViews->Length )
 			throw gcnew ArgumentOutOfRangeException( "count" );
@@ -217,7 +232,8 @@ namespace Direct3D11
 		for( int i = 0; i < count; i++ )
 			input[i] = unorderedAccessViews[i] == nullptr ? NULL : unorderedAccessViews[i]->InternalPointer;
 
-		deviceContext->CSSetUnorderedAccessViews( startSlot, count, &input[0], NULL );	// TODO: Resolve last parameter
+		pin_ptr<int> pinnedLengths = &initialLengths[0];
+		deviceContext->CSSetUnorderedAccessViews( startSlot, count, &input[0], reinterpret_cast<UINT*>( pinnedLengths ) );
 	}
 }
 }

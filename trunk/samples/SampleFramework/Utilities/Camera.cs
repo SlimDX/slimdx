@@ -75,6 +75,10 @@ namespace SampleFramework
             }
         }
 
+        /// <summary>
+        /// Gets or sets the view up vector.
+        /// </summary>
+        /// <value>The view up vector.</value>
         public Vector3 Up
         {
             get { return up; }
