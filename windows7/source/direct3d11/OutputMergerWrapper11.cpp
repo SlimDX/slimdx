@@ -190,10 +190,46 @@ namespace Direct3D11
 
 	void OutputMergerWrapper::SetTargets( RenderTargetView^ renderTargetView, int startSlot, array<UnorderedAccessView^>^ unorderedAccessViews )
 	{
-		SetTargets( nullptr, renderTargetView, startSlot, unorderedAccessViews );
+		array<int>^ lengths = gcnew array<int>( unorderedAccessViews->Length );
+		for( int i = 0; i < unorderedAccessViews->Length; i++ )
+			lengths[i] = -1;
+
+		SetTargets( nullptr, renderTargetView, startSlot, unorderedAccessViews, lengths );
 	}
 	
 	void OutputMergerWrapper::SetTargets( DepthStencilView^ depthStencilView, RenderTargetView^ renderTargetView, int startSlot, array<UnorderedAccessView^>^ unorderedAccessViews )
+	{
+		array<int>^ lengths = gcnew array<int>( unorderedAccessViews->Length );
+		for( int i = 0; i < unorderedAccessViews->Length; i++ )
+			lengths[i] = -1;
+
+		SetTargets( depthStencilView, renderTargetView, startSlot, unorderedAccessViews, lengths );
+	}
+
+	void OutputMergerWrapper::SetTargets( int startSlot, array<UnorderedAccessView^>^ unorderedAccessViews, ... array<RenderTargetView^>^ renderTargets )
+	{
+		array<int>^ lengths = gcnew array<int>( unorderedAccessViews->Length );
+		for( int i = 0; i < unorderedAccessViews->Length; i++ )
+			lengths[i] = -1;
+
+		SetTargets( nullptr, startSlot, unorderedAccessViews, lengths, renderTargets );
+	}
+
+	void OutputMergerWrapper::SetTargets( DepthStencilView^ depthStencilView, int startSlot, array<UnorderedAccessView^>^ unorderedAccessViews, ... array<RenderTargetView^>^ renderTargets )
+	{
+		array<int>^ lengths = gcnew array<int>( unorderedAccessViews->Length );
+		for( int i = 0; i < unorderedAccessViews->Length; i++ )
+			lengths[i] = -1;
+
+		SetTargets( depthStencilView, startSlot, unorderedAccessViews, lengths, renderTargets );
+	}
+
+	void OutputMergerWrapper::SetTargets( RenderTargetView^ renderTargetView, int startSlot, array<UnorderedAccessView^>^ unorderedAccessViews, array<int>^ lengths )
+	{
+		SetTargets( nullptr, renderTargetView, startSlot, unorderedAccessViews, lengths );
+	}
+	
+	void OutputMergerWrapper::SetTargets( DepthStencilView^ depthStencilView, RenderTargetView^ renderTargetView, int startSlot, array<UnorderedAccessView^>^ unorderedAccessViews, array<int>^ initialLengths )
 	{
 		ID3D11DepthStencilView *nativeDSV = depthStencilView == nullptr ? 0 : static_cast<ID3D11DepthStencilView*>( depthStencilView->InternalPointer );
 		ID3D11RenderTargetView *nativeRTV[] = { renderTargetView == nullptr ? 0 : static_cast<ID3D11RenderTargetView*>( renderTargetView->InternalPointer ) };
@@ -202,15 +238,16 @@ namespace Direct3D11
 		for( int i = 0; i < unorderedAccessViews->Length; i++ )
 			uavs[i] = unorderedAccessViews[i]->InternalPointer;
 
-		deviceContext->OMSetRenderTargetsAndUnorderedAccessViews( 1, nativeRTV, nativeDSV, startSlot, unorderedAccessViews->Length, &uavs[0], NULL );	// TODO: Resolve last parameter
+		pin_ptr<int> pinnedLengths = &initialLengths[0];
+		deviceContext->OMSetRenderTargetsAndUnorderedAccessViews( 1, nativeRTV, nativeDSV, startSlot, unorderedAccessViews->Length, &uavs[0], reinterpret_cast<UINT*>( pinnedLengths ) );
 	}
 
-	void OutputMergerWrapper::SetTargets( int startSlot, array<UnorderedAccessView^>^ unorderedAccessViews, ... array<RenderTargetView^>^ renderTargets )
+	void OutputMergerWrapper::SetTargets( int startSlot, array<UnorderedAccessView^>^ unorderedAccessViews, array<int>^ initialLengths, ... array<RenderTargetView^>^ renderTargets )
 	{
-		SetTargets( nullptr, startSlot, unorderedAccessViews, renderTargets );
+		SetTargets( nullptr, startSlot, unorderedAccessViews, initialLengths, renderTargets );
 	}
 
-	void OutputMergerWrapper::SetTargets( DepthStencilView^ depthStencilView, int startSlot, array<UnorderedAccessView^>^ unorderedAccessViews, ... array<RenderTargetView^>^ renderTargets )
+	void OutputMergerWrapper::SetTargets( DepthStencilView^ depthStencilView, int startSlot, array<UnorderedAccessView^>^ unorderedAccessViews, array<int>^ initialLengths, ... array<RenderTargetView^>^ renderTargets )
 	{
 		ID3D11DepthStencilView *nativeDSV = depthStencilView == nullptr ? 0 : static_cast<ID3D11DepthStencilView*>( depthStencilView->InternalPointer );
 		ID3D11RenderTargetView* nativeRTVs[D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT];
@@ -219,15 +256,16 @@ namespace Direct3D11
 		for( int i = 0; i < unorderedAccessViews->Length; i++ )
 			uavs[i] = unorderedAccessViews[i]->InternalPointer;
 
+		pin_ptr<int> pinnedLengths = &initialLengths[0];
 		if( renderTargets == nullptr )
 		{
-			deviceContext->OMSetRenderTargetsAndUnorderedAccessViews( 0, 0, nativeDSV, startSlot, unorderedAccessViews->Length, &uavs[0], NULL );	// TODO: Resolve last parameter
+			deviceContext->OMSetRenderTargetsAndUnorderedAccessViews( 0, 0, nativeDSV, startSlot, unorderedAccessViews->Length, &uavs[0], reinterpret_cast<UINT*>( pinnedLengths ) );
 		}
 		else 
 		{
 			for( int i = 0; i < renderTargets->Length; ++i )
 				nativeRTVs[ i ] = renderTargets[ i ] == nullptr ? 0 : static_cast<ID3D11RenderTargetView*>( renderTargets[ i ]->InternalPointer );
-			deviceContext->OMSetRenderTargetsAndUnorderedAccessViews( renderTargets->Length, nativeRTVs, nativeDSV, startSlot, unorderedAccessViews->Length, &uavs[0], NULL );	// TODO: Resolve last parameter
+			deviceContext->OMSetRenderTargetsAndUnorderedAccessViews( renderTargets->Length, nativeRTVs, nativeDSV, startSlot, unorderedAccessViews->Length, &uavs[0], reinterpret_cast<UINT*>( pinnedLengths ) );
 		}
 	}
 

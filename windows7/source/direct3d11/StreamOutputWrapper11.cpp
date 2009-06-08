@@ -76,7 +76,7 @@ namespace Direct3D11
 
 		deviceContext->SOGetTargets( count, &buffers[0] );
 
-		for( int i = 0; i < buffers.size(); i++ )
+		for( UINT i = 0; i < buffers.size(); i++ )
 			results[i] = Buffer::FromPointer( buffers[i] );
 
 		return results;

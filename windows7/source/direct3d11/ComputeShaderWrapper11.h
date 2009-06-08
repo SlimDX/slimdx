@@ -71,6 +71,9 @@ namespace SlimDX
 
 			void SetUnorderedAccessView( UnorderedAccessView^ unorderedAccessView, int slot );
 			void SetUnorderedAccessViews( array<UnorderedAccessView^>^ unorderedAccessViews, int startSlot, int count );
+
+			void SetUnorderedAccessView( UnorderedAccessView^ unorderedAccessView, int slot, int initialLength );
+			void SetUnorderedAccessViews( array<UnorderedAccessView^>^ unorderedAccessViews, int startSlot, int count, array<int>^ initialLengths );
 		};
 	}
 };
