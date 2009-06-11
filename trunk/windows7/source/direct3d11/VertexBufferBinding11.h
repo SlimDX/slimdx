@@ -67,7 +67,7 @@ namespace SlimDX
 			}
 			
 			/// <summary>
-			/// Constructs a new VertexBufferBinding object.
+			/// Initializes a new instance of the <see cref="VertexBufferBinding"/> struct.
 			/// </summary>
 			/// <param name="buffer">The buffer being bound.</param>
 			/// <param name="stride">The stride between vertex element (in bytes).</param>

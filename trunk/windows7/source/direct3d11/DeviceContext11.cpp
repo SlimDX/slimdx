@@ -97,6 +97,7 @@ namespace Direct3D11
 			throw gcnew Direct3D11Exception( Result::Last );
 
 		Construct( context );
+		InitializeSubclasses();
 	}
 
 	void DeviceContext::Begin( Asynchronous^ data )

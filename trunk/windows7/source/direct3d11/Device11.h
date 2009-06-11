@@ -90,7 +90,7 @@ namespace SlimDX
 			/// <summary>
 			/// Gets metadata (name, type, measurement units, et cetera) for a specific counter.
 			/// </summary>
-			/// <param name="description">The description of the counter to retrieve information about.</param>
+			/// <param name="counterKind">The description of the counter to retrieve information about.</param>
 			/// <returns>Metadata for the specified counter.</returns>
 			CounterMetadata GetCounterMetadata( CounterKind counterKind );
 			

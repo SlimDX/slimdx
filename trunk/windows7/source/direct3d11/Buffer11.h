@@ -32,8 +32,8 @@ namespace SlimDX
 		value class BufferDescription;
 		
 		/// <summary>
-		/// A buffer resource. A buffer is a sequential collection of typed data elements,
-		/// typically used to contain vertex, index or shader constant data.
+		/// Represents a sequential collection of typed data elements,
+		/// typically used to contain vertices, indices, or shader constant data.
 		/// </summary>
 		/// <unmanaged>ID3D11Buffer</unmanaged>
 		public ref class Buffer : public Resource
@@ -53,41 +53,41 @@ namespace SlimDX
 			}
 			
 			/// <summary>
-			/// Constructs a new Buffer object.
+			/// Initializes a new instance of the <see cref="Buffer"/> class.
 			/// </summary>
-			/// <param name="device">The device to associate the buffer with.</param>
+			/// <param name="device">The device with which to associate the buffer.</param>
 			/// <param name="description">The description of the buffer.</param>
 			Buffer( SlimDX::Direct3D11::Device^ device, BufferDescription description );
 
 			/// <summary>
-			/// Constructs a new Buffer object.
+			/// Initializes a new instance of the <see cref="Buffer"/> class.
 			/// </summary>
-			/// <param name="device">The device to associate the buffer with.</param>
-			/// <param name="data">Initial data to fill the buffer with on creation.</param>
+			/// <param name="device">The device with which to associate the buffer.</param>
+			/// <param name="data">Initial data used to initialize the buffer.</param>
 			/// <param name="description">The description of the buffer.</param>
 			Buffer( SlimDX::Direct3D11::Device^ device, DataStream^ data, BufferDescription description );
 
 			/// <summary>
-			/// Constructs a new Buffer object.
+			/// Initializes a new instance of the <see cref="Buffer"/> class.
 			/// </summary>
-			/// <param name="device">The device to associate the buffer with.</param>
+			/// <param name="device">The device with which to associate the buffer.</param>
 			/// <param name="sizeInBytes">The size, in bytes, of the buffer.</param>
-			/// <param name="usage">Identifies the usage pattern for the buffer.</param>
-			/// <param name="bindFlags">Specifies how the buffer will be bound to the pipeline.</param>
-			/// <param name="accessFlags">Specifies how the buffer will be accessible from the CPU.</param>
-			/// <param name="optionFlags">Specifies miscellaneous resource options.</param>
+			/// <param name="usage">The usage pattern for the buffer.</param>
+			/// <param name="bindFlags">Flags specifying how the buffer will be bound to the pipeline.</param>
+			/// <param name="accessFlags">Flags specifying how the buffer will be accessible from the CPU.</param>
+			/// <param name="optionFlags">Miscellaneous resource options.</param>
 			Buffer( SlimDX::Direct3D11::Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D11::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
 			
 			/// <summary>
-			/// Constructs a new Buffer object.
+			/// Initializes a new instance of the <see cref="Buffer"/> class.
 			/// </summary>
-			/// <param name="device">The device to associate the buffer with.</param>
-			/// <param name="data">Initial data to fill the buffer with on creation.</param>
+			/// <param name="device">The device with which to associate the buffer.</param>
+			/// <param name="data">Initial data used to initialize the buffer.</param>
 			/// <param name="sizeInBytes">The size, in bytes, of the buffer.</param>
-			/// <param name="usage">Identifies the usage pattern for the buffer.</param>
-			/// <param name="bindFlags">Specifies how the buffer will be bound to the pipeline.</param>
-			/// <param name="accessFlags">Specifies how the buffer will be accessible from the CPU.</param>
-			/// <param name="optionFlags">Specifies miscellaneous resource options.</param>
+			/// <param name="usage">The usage pattern for the buffer.</param>
+			/// <param name="bindFlags">Flags specifying how the buffer will be bound to the pipeline.</param>
+			/// <param name="accessFlags">Flags specifying how the buffer will be accessible from the CPU.</param>
+			/// <param name="optionFlags">Miscellaneous resource options.</param>
 			Buffer( SlimDX::Direct3D11::Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D11::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
 		};
 	}
