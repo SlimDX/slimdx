@@ -22,7 +22,10 @@
 #include "stdafx.h"
 #include <d3d11.h>
 
+#include "Direct3D11Exception.h"
+
 #include "ClassLinkage11.h"
+#include "ClassInstance11.h"
 
 using namespace System;
 
@@ -30,5 +33,17 @@ namespace SlimDX
 {
 namespace Direct3D11
 {
+	ClassInstance^ ClassLinkage::GetInstance( String^ name, int index )
+	{
+		ID3D11ClassInstance *pointer;
+		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
+		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+
+		HRESULT hr = InternalPointer->GetClassInstance( reinterpret_cast<LPCSTR>( pinnedName ), index, &pointer );
+		if( RECORD_D3D11( hr ).IsFailure )
+			return nullptr;
+
+		return ClassInstance::FromPointer( pointer );
+	}
 }
 }

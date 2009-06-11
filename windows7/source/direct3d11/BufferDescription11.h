@@ -90,13 +90,13 @@ namespace SlimDX
 			}
 			
 			/// <summary>
-			/// Constructs a new BufferDescription object.
+			/// Initializes a new instance of the <see cref="BufferDescription"/> struct.
 			/// </summary>
 			/// <param name="sizeInBytes">The size, in bytes, of the buffer.</param>
-			/// <param name="usage">Identifies the usage pattern for the buffer.</param>
-			/// <param name="bindFlags">Specifies how the buffer will be bound to the pipeline.</param>
-			/// <param name="accessFlags">Specifies how the buffer will be accessible from the CPU.</param>
-			/// <param name="optionFlags">Specifies miscellaneous resource options.</param>
+			/// <param name="usage">The usage pattern for the buffer.</param>
+			/// <param name="bindFlags">Flags specifying how the buffer will be bound to the pipeline.</param>
+			/// <param name="accessFlags">Flags specifying how the buffer will be accessible from the CPU.</param>
+			/// <param name="optionFlags">Miscellaneous resource options.</param>
 			BufferDescription( int sizeInBytes, ResourceUsage usage, Direct3D11::BindFlags bindFlags, Direct3D11::CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
 		
 			/// <summary>

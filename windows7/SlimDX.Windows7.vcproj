@@ -203,10 +203,11 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/MP"
-				PreprocessorDefinitions="WIN32;NDEBUG"
+				PreprocessorDefinitions="WIN32;NDEBUG;XMLDOCS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"
+				GenerateXMLDocumentationFiles="true"
 				WarningLevel="4"
 				DebugInformationFormat="3"
 			/>
@@ -1678,6 +1679,14 @@
 				</File>
 				<File
 					RelativePath=".\source\direct3d11\ClassInstance11.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct3d11\ClassInstanceDescription11.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\direct3d11\ClassInstanceDescription11.h"
 					>
 				</File>
 				<File

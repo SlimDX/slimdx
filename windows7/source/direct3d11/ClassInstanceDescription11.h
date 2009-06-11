@@ -24,36 +24,31 @@
 namespace SlimDX
 {
 	namespace Direct3D11
-	{
-		ref class ClassLinkage;
-		value class ClassInstanceDescription;
-
-		public ref class ClassInstance : ComObject
-		{
-			COMOBJECT(ID3D11ClassInstance, ClassInstance);
+	{	
+		public value class ClassInstanceDescription : System::IEquatable<ClassInstanceDescription>
+		{				
+		internal:
+			ClassInstanceDescription( const D3D11_CLASS_INSTANCE_DESC& native );
 			
+			D3D11_CLASS_INSTANCE_DESC CreateNativeVersion();
+		
 		public:
-			ClassInstance( ClassLinkage^ linkage, System::String^ typeName, int constantBufferOffset, int constantVectorOffset, int textureOffset, int samplerOffset );
+			property int InstanceId;
+			property int InstanceIndex;
+			property int TypeId;
+			property int ConstantBuffer;
+			property int BaseConstantBufferOffset;
+			property int BaseTexture;
+			property int BaseSampler;
+			property bool IsCreated;
 
-			property ClassLinkage^ Linkage
-			{
-				ClassLinkage^ get();
-			}
+			static bool operator == ( ClassInstanceDescription left, ClassInstanceDescription right );
+			static bool operator != ( ClassInstanceDescription left, ClassInstanceDescription right );
 
-			property ClassInstanceDescription Description
-			{
-				ClassInstanceDescription get();
-			}
-
-			property System::String^ InstanceName
-			{
-				System::String^ get();
-			} 
-
-			property System::String^ TypeName
-			{
-				System::String^ get();
-			}
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( ClassInstanceDescription other );
+			static bool Equals( ClassInstanceDescription% value1, ClassInstanceDescription% value2 );
 		};
 	}
-}
+};

@@ -25,11 +25,14 @@ namespace SlimDX
 {
 	namespace Direct3D11
 	{
+		ref class ClassInstance;
+
 		public ref class ClassLinkage : ComObject
 		{
 			COMOBJECT(ID3D11ClassLinkage, ClassLinkage);
 			
 		public:
+			ClassInstance^ GetInstance( System::String^ name, int index );
 		};
 	}
 }
