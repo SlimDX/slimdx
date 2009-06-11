@@ -206,7 +206,7 @@ namespace SlimDX
 		/// <param name="buffer">An array of values to be read from the stream.</param>
 		/// <param name="offset">The zero-based byte offset in buffer at which to begin storing
 		/// the data read from the current stream.</param>
-		/// <param name="count">The maximum number of bytes to be read from the current stream.</param>
+		/// <param name="count">The number of values to be read from the current stream.</param>
 		/// <returns>The number of bytes read from the stream.</returns>
 		/// <exception cref="NotSupportedException">This stream does not support reading.</exception>
 		/// <exception cref="ArgumentNullException"><paramref name="buffer" /> is a null reference.</exception>

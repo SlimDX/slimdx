@@ -44,6 +44,16 @@ namespace Direct3D10
 	{
 		m_Pointer = reinterpret_cast<ID3D10EffectVectorVariable*>( pointer.ToPointer() );
 	}
+
+	Result EffectVectorVariable::Set( Vector2 value )
+	{
+		return RECORD_D3D10( m_Pointer->SetFloatVector( reinterpret_cast<float*>( &value ) ) );
+	}
+
+	Result EffectVectorVariable::Set( Vector3 value )
+	{
+		return RECORD_D3D10( m_Pointer->SetFloatVector( reinterpret_cast<float*>( &value ) ) );
+	}
 	
 	Result EffectVectorVariable::Set( Vector4 value )
 	{
