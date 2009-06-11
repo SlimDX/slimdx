@@ -33,6 +33,7 @@ namespace SlimDX
 		ref class Sprite;
 		ref class Asynchronous;
 		ref class DeviceContext;
+		value class TimestampQueryData;
 #endif
 	
 		// NOTE: The enumerations defined in this file are in alphabetical order. When
@@ -1705,22 +1706,64 @@ namespace SlimDX
 			MirrorOnce = D3D11_TEXTURE_ADDRESS_MIRROR_ONCE
 		};
 
+		/// <summary>Specifies unordered-access-view buffer options.</summary>
+		/// <unmanaged>D3D11_BUFFER_UAV_FLAG</unmanaged>
 		[System::Flags]
 		public enum class UnorderedAccessViewBufferFlags : System::Int32
 		{
+			/// <summary>
+			/// No specific flags specified.
+			/// </summary>
 			None = 0,
+
+			/// <summary>
+			/// Resource contains raw, unstructured data.
+			/// </summary>
 			RawData = D3D11_BUFFER_UAV_FLAG_RAW,
+
+			/// <summary>
+			/// Allow data to be appended to the end of the buffer.
+			/// </summary>
 			AllowAppend = D3D11_BUFFER_UAV_FLAG_APPEND
 		};
 
+		/// <summary>Identifies the type of the resource that will be viewed.</summary>
+		/// <unmanaged>D3D11_UAV_DIMENSION</unmanaged>
 		public enum class UnorderedAccessViewDimension : System::Int32
 		{
+			/// <summary>
+			/// The type of the resource is unknown.
+			/// </summary>
 			Unknown = D3D11_UAV_DIMENSION_UNKNOWN,
+
+			/// <summary>
+			/// The resource will be accessed as a buffer.
+			/// </summary>
 			Buffer = D3D11_UAV_DIMENSION_BUFFER,
-			Texture1D = D3D11_UAV_DIMENSION_TEXTURE1D ,
+
+			/// <summary>
+			/// The resource will be accessed as a 1D texture.
+			/// </summary>
+			Texture1D = D3D11_UAV_DIMENSION_TEXTURE1D,
+
+			/// <summary>
+			/// The resource will be accessed as an array of 1D textures.
+			/// </summary>
 			Texture1DArray = D3D11_UAV_DIMENSION_TEXTURE1DARRAY,
+
+			/// <summary>
+			/// The resource will be accessed as a 2D texture.
+			/// </summary>
 			Texture2D = D3D11_UAV_DIMENSION_TEXTURE2D,
+
+			/// <summary>
+			/// The resource will be accessed as an array of 2D textures.
+			/// </summary>
 			Texture2DArray = D3D11_UAV_DIMENSION_TEXTURE2DARRAY,
+
+			/// <summary>
+			/// The resource will be accessed as a 3D texture.
+			/// </summary>
 			Texture3D = D3D11_UAV_DIMENSION_TEXTURE3D
 		};
 	}

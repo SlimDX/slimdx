@@ -282,10 +282,11 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/MP"
-				PreprocessorDefinitions="WIN32;NDEBUG;X64"
+				PreprocessorDefinitions="WIN32;NDEBUG;X64;XMLDOCS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"
+				GenerateXMLDocumentationFiles="true"
 				WarningLevel="4"
 				DebugInformationFormat="3"
 			/>
@@ -1569,6 +1570,34 @@
 					RelativePath=".\source\direct3d11\QueryDescription11.h"
 					>
 				</File>
+				<Filter
+					Name="Queries"
+					>
+					<File
+						RelativePath=".\source\direct3d11\PipelineStatistics11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\PipelineStatistics11.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\StreamOutputStatistics11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\StreamOutputStatistics11.h"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\TimestampQueryData11.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\source\direct3d11\TimestampQueryData11.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="State"
