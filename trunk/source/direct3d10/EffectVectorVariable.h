@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../math/Vector2.h"
+#include "../math/Vector3.h"
 #include "../math/Vector4.h"
 
 #include "EffectVariable.h"
@@ -40,6 +42,8 @@ namespace SlimDX
 		public:
 			EffectVectorVariable( System::IntPtr pointer );
 			
+			Result Set( Vector2 value );
+			Result Set( Vector3 value );
 			Result Set( Vector4 value );
 			Result Set( array<Vector4>^ value );
 		};
