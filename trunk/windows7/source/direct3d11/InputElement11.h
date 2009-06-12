@@ -27,6 +27,8 @@ namespace SlimDX
 {
 	namespace Direct3D11
 	{
+		/// <summary>Describes a single element for the input-assembler stage.</summary>
+		/// <unmanaged>D3D11_INPUT_ELEMENT_DESC</unmanaged>
 		public value class InputElement : System::IEquatable<InputElement>
 		{
 		private:

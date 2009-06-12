@@ -29,7 +29,7 @@ namespace SlimDX
 		/// Defines a rectangular region of a render-target surface onto which 
 		/// a 3D rendering is projected.
 		/// </summary>
-		/// <unmanaged>D3DVIEWPORT9</unmanaged>
+		/// <unmanaged>D3D11_VIEWPORT</unmanaged>
 		public value class Viewport : System::IEquatable<Viewport>
 		{
 			float m_X;
