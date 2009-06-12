@@ -27,10 +27,19 @@
 
 namespace SlimDX
 {
+#ifdef XMLDOCS
+	namespace DXGI
+	{
+		ref class SwapChain;
+	}
+#endif
+
 	namespace Direct3D10
 	{
 #ifdef XMLDOCS
+		ref class Device;
 		ref class Sprite;
+		ref class Debug;
 #endif
 	
 		// NOTE: The enumerations defined in this file are in alphabetical order. When
@@ -271,7 +280,7 @@ namespace SlimDX
 			Never = D3D10_COMPARISON_NEVER,
 			
 			/// <summary>
-			/// The test passes if (source < destination).
+			/// The test passes if (source &lt; destination).
 			/// </summary>
 			Less = D3D10_COMPARISON_LESS,
 			
@@ -281,12 +290,12 @@ namespace SlimDX
 			Equal = D3D10_COMPARISON_EQUAL,
 			
 			/// <summary>
-			/// The test passes if (source <= destination).
+			/// The test passes if (source &lt;= destination).
 			/// </summary>
 			LessEqual = D3D10_COMPARISON_LESS_EQUAL,
 			
 			/// <summary>
-			/// The test passes if (source > destination).
+			/// The test passes if (source &gt; destination).
 			/// </summary>
 			Greater = D3D10_COMPARISON_GREATER,
 			
@@ -296,7 +305,7 @@ namespace SlimDX
 			NotEqual = D3D10_COMPARISON_NOT_EQUAL,
 			
 			/// <summary>
-			/// The test passes if (source >= destination).
+			/// The test passes if (source &gt;= destination).
 			/// </summary>
 			GreaterEqual = D3D10_COMPARISON_GREATER_EQUAL,
 			
@@ -478,14 +487,14 @@ namespace SlimDX
 			FinishPerRender = D3D10_DEBUG_FEATURE_FINISH_PER_RENDER_OP,
 			
 			/// <summary>
-			/// The runtime will call <see cref="SlimDX::Direct3D10::Device::Flush"/> after the render operation.
+			/// The runtime will call <see cref="SlimDX::Direct3D10::Device">Device.Flush</see> after the render operation.
 			/// </summary>
 			FlushPerRender = D3D10_DEBUG_FEATURE_FLUSH_PER_RENDER_OP,
 			
 			/// <summary>
-			/// The runtime will call <see cref="SlimDX::DXGI::SwapChain::Present"/> after the render operation.
+			/// The runtime will call <see cref="SlimDX::DXGI::SwapChain">SwapChain.Present</see> after the render operation.
 			/// Presentation of buffers will occur according to the settings specified by the 
-			/// <see cref="SlimDX::Direct3D10::Debug::SwapChain"/> and <see cref="SlimDX::Direct3D10::Debug::PresentDelay"/> properties.
+			/// <see cref="SlimDX::Direct3D10::Debug">Debug.SwapChain</see> and <see cref="SlimDX::Direct3D10::Debug">Debug.PresentDelay</see> properties.
 			/// </summary>
 			PresentPerRender = D3D10_DEBUG_FEATURE_PRESENT_PER_RENDER_OP
 		};
