@@ -110,10 +110,29 @@ namespace SlimDX
 		/// <unmanaged>D3D10_BLEND_OP</unmanaged>
 		public enum class BlendOperation : System::Int32
 		{
+			/// <summary>
+			/// Adds the source to the destination.
+			/// </summary>
 			Add = D3D10_BLEND_OP_ADD,
+			
+			/// <summary>
+			/// Subtracts the source from the destination.
+			/// </summary>
 			Subtract = D3D10_BLEND_OP_SUBTRACT,
+			
+			/// <summary>
+			/// Subtracts the destination from the source.
+			/// </summary>
 			ReverseSubtract = D3D10_BLEND_OP_REV_SUBTRACT,
+			
+			/// <summary>
+			/// Takes the lesser of the source and destination values.
+			/// </summary>
 			Minimum = D3D10_BLEND_OP_MIN,
+			
+			/// <summary>
+			/// Takes the greater of the source and destination values.
+			/// </summary>
 			Maximum = D3D10_BLEND_OP_MAX
 		};
 		
@@ -121,35 +140,124 @@ namespace SlimDX
 		/// <unmanaged>D3D10_BLEND</unmanaged>
 		public enum class BlendOption : System::Int32
 		{
+			/// <summary>
+			/// The source is the color (0,0,0,0) with no pre-blend.
+			/// </summary>
 			Zero = D3D10_BLEND_ZERO,
+			
+			/// <summary>
+			/// The source is the color (1,1,1,1) with no pre-blend.
+			/// </summary>
 			One = D3D10_BLEND_ONE,
+			
+			/// <summary>
+			/// The source is the color (RGB) from a pixel shader with no pre-blend.
+			/// </summary>
 			SourceColor = D3D10_BLEND_SRC_COLOR,
+			
+			/// <summary>
+			/// The source is the color (RGB) from a pixel shader with an inverting pre-blend (1 - RGB).
+			/// </summary>
 			InverseSourceColor = D3D10_BLEND_INV_SRC_COLOR,
+			
+			/// <summary>
+			/// The source is the alpha (A) from a pixel shader with no pre-blend.
+			/// </summary>
 			SourceAlpha = D3D10_BLEND_SRC_ALPHA,
+			
+			/// <summary>
+			/// The source is the alpha (A) from a pixel shader with an inverting pre-blend (1 - A).
+			/// </summary>
 			InverseSourceAlpha = D3D10_BLEND_INV_SRC_ALPHA,
+			
+			/// <summary>
+			/// The source is the alpha (A) from a rendertarget with no pre-blend.
+			/// </summary>
 			DestinationAlpha = D3D10_BLEND_DEST_ALPHA,
+			
+			/// <summary>
+			/// The source is the alpha (A) from a rendertarget with an inverting pre-blend (1 - A).
+			/// </summary>
 			InverseDestinationAlpha = D3D10_BLEND_INV_DEST_ALPHA,
+			
+			/// <summary>
+			/// The source is the color (RGB) from a rendertarget with no pre-blend.
+			/// </summary>
 			DestinationColor = D3D10_BLEND_DEST_COLOR,
+			
+			/// <summary>
+			/// The source is the color (RGB) from a rendertarget with an inverting pre-blend (1 - A).
+			/// </summary>
 			InverseDestinationColor = D3D10_BLEND_INV_DEST_COLOR,
+			
+			/// <summary>
+			/// The source is the alpha (A) from a render target with a saturation pre-blend (clamping to 1 or less).
+			/// </summary>
 			SourceAlphaSaturate = D3D10_BLEND_SRC_ALPHA_SAT,
+			
+			/// <summary>
+			/// The source is the blend factor (F) from the current blend state with no pre-blend operation.
+			/// </summary>
 			BlendFactor = D3D10_BLEND_BLEND_FACTOR,
+			
+			/// <summary>
+			/// The source is the blend factor (F) from the current blend state with an inverting pre-blend (1 - F).
+			/// </summary>
 			InverseBlendFactor = D3D10_BLEND_INV_BLEND_FACTOR,
+			
+			/// <summary>
+			/// The sources are both color (RGB) outputs from a pixel shader. There is no pre-blend operation. This option
+			/// allows for dual-source blending.
+			/// </summary>
 			SecondarySourceColor = D3D10_BLEND_SRC1_COLOR,
+			
+			/// <summary>
+			/// The sources are both color (RGB) outputs from a pixel shader. There is an inverting pre-blend (1 - RGB). This option
+			/// allows for dual-source blending.
+			/// </summary>
 			InverseSecondarySourceColor = D3D10_BLEND_INV_SRC1_COLOR,
+			
+			/// <summary>
+			/// The sources are both alpha (A) outputs from a pixel shader. There is no pre-blend. This option
+			/// allows for dual-source blending.
+			/// </summary>
 			SecondarySourceAlpha = D3D10_BLEND_SRC1_ALPHA,
+			
+			/// <summary>
+			/// The sources are both alpha (A) outputs from a pixel shader. There is an inverting pre-blend (1 - A). This option
+			/// allows for dual-source blending.
+			/// </summary>
 			InverseSecondarySourceAlpha = D3D10_BLEND_INV_SRC1_ALPHA
 		};
 		
-		/// <summary>Identify which components of each pixel of a render target are writable during blending.</summary>
+		/// <summary>Identifies mask values for writing to a render target.</summary>
 		/// <unmanaged>D3D10_COLOR_WRITE_ENABLE</unmanaged>
 		[System::Flags]
 		public enum class ColorWriteMaskFlags : System::Int32
 		{
-			None = 0,
+			/// <summary>
+			/// Indicates that writes to the red component should be enabled.
+			/// </summary>
 			Red = D3D10_COLOR_WRITE_ENABLE_RED,
+			
+			/// <summary>
+			/// Indicates that writes to the green component should be enabled.
+			/// </summary>
 			Green = D3D10_COLOR_WRITE_ENABLE_GREEN,
+			
+			/// <summary>
+			/// Indicates that writes to the blue component should be enabled.
+			/// </summary>
 			Blue = D3D10_COLOR_WRITE_ENABLE_BLUE,
+			
+			/// <summary>
+			/// Indicates that writes to the alpha component should be enabled.
+			/// </summary>
 			Alpha = D3D10_COLOR_WRITE_ENABLE_ALPHA,
+			
+			/// <summary>
+			/// Indicates that writes to all components should be enabled.
+			/// </summary>
 			All = D3D10_COLOR_WRITE_ENABLE_ALL
 		};
 		
@@ -157,13 +265,44 @@ namespace SlimDX
 		/// <unmanaged>D3D10_COMPARISON_FUNC</unmanaged>
 		public enum class Comparison : System::Int32
 		{
+			/// <summary>
+			/// The test never passes.
+			/// </summary>
 			Never = D3D10_COMPARISON_NEVER,
+			
+			/// <summary>
+			/// The test passes if (source < destination).
+			/// </summary>
 			Less = D3D10_COMPARISON_LESS,
+			
+			/// <summary>
+			/// The test passes if (source == destination).
+			/// </summary>
 			Equal = D3D10_COMPARISON_EQUAL,
+			
+			/// <summary>
+			/// The test passes if (source <= destination).
+			/// </summary>
 			LessEqual = D3D10_COMPARISON_LESS_EQUAL,
+			
+			/// <summary>
+			/// The test passes if (source > destination).
+			/// </summary>
 			Greater = D3D10_COMPARISON_GREATER,
+			
+			/// <summary>
+			/// The test passes if (source != destination).
+			/// </summary>
 			NotEqual = D3D10_COMPARISON_NOT_EQUAL,
+			
+			/// <summary>
+			/// The test passes if (source >= destination).
+			/// </summary>
 			GreaterEqual = D3D10_COMPARISON_GREATER_EQUAL,
+			
+			/// <summary>
+			/// The test always passes.
+			/// </summary>
 			Always = D3D10_COMPARISON_ALWAYS
 		};
 		
@@ -171,23 +310,94 @@ namespace SlimDX
 		/// <unmanaged>D3D10_COUNTER</unmanaged>
 		public enum class CounterKind : System::Int32
 		{
+			/// <summary>
+			/// The counter for the percentage of time the GPU is idle.
+			/// </summary>
 			Idle = D3D10_COUNTER_GPU_IDLE,
+			
+			/// <summary>
+			/// The counter for the percentage of time the GPU is processing vertices.
+			/// </summary>
 			VertexProcessing = D3D10_COUNTER_VERTEX_PROCESSING,
+			
+			/// <summary>
+			/// The counter for the percentage of time the GPU is processing geometry.
+			/// </summary>
 			GeometryProcessing = D3D10_COUNTER_GEOMETRY_PROCESSING,
+			
+			/// <summary>
+			/// The counter for the percentage of time the GPU is processing pixels. 
+			/// </summary>
 			PixelProcessing = D3D10_COUNTER_PIXEL_PROCESSING,
+			
+			/// <summary>
+			/// The counter for the percentage of time the GPU is performing processing that is not vertex, pixel or geometry processing.
+			/// </summary>
 			OtherProcessing = D3D10_COUNTER_OTHER_GPU_PROCESSING,
+			
+			/// <summary>
+			/// The counter for the percentage of bandwidth used on a host adapter.
+			/// </summary>
 			HostAdapterBandwidth = D3D10_COUNTER_HOST_ADAPTER_BANDWIDTH_UTILIZATION,
+			
+			/// <summary>
+			/// The counter for the percentage of bandwidth used by local video memory.
+			/// </summary>
 			LocalVideoMemoryBandwidth = D3D10_COUNTER_LOCAL_VIDMEM_BANDWIDTH_UTILIZATION,
+			
+			/// <summary>
+			/// The counter for the percentage of throughput for vertices.
+			/// </summary>
 			VertexThroughput = D3D10_COUNTER_VERTEX_THROUGHPUT_UTILIZATION,
+			
+			/// <summary>
+			/// The counter for the percentage of throughput used for triangle setup.
+			/// </summary>
 			TriangleSetupThroughput = D3D10_COUNTER_TRIANGLE_SETUP_THROUGHPUT_UTILIZATION,
+			
+			/// <summary>
+			/// The counter for the percentage of throughput used for fillrate.
+			/// </summary>
 			FillRateThroughput = D3D10_COUNTER_FILLRATE_THROUGHPUT_UTILIZATION,
+			
+			/// <summary>
+			/// The counter for the percentage of time the vertex shader spends sampling resources.
+			/// </summary>
 			VertexShaderMemoryLimited = D3D10_COUNTER_VS_MEMORY_LIMITED,
+			
+			/// <summary>
+			/// The counter for the percentage of time the vertex shader spends performing computations.
+			/// </summary>
 			VertexShaderComputationLimited = D3D10_COUNTER_VS_COMPUTATION_LIMITED,
+			
+			/// <summary>
+			/// The counter for the percentage of time the geometry shader spends sampling resources.
+			/// </summary>
 			GeometryShaderMemoryLimited = D3D10_COUNTER_GS_MEMORY_LIMITED,
+			
+			/// <summary>
+			/// The counter for the percentage of time the geometry shader spends performing computations.
+			/// </summary>
 			GeometryShaderComputationLimited = D3D10_COUNTER_GS_COMPUTATION_LIMITED,
+			
+			/// <summary>
+			/// The counter for the percentage of time the pixel shader spends sampling resources.
+			/// </summary>
 			PixelShaderMemoryLimited = D3D10_COUNTER_PS_MEMORY_LIMITED,
+			
+			/// <summary>
+			/// The counter for the percentage of time the pixel shader spends performing computations.
+			/// </summary>
 			PixelShaderComputationLimited = D3D10_COUNTER_PS_COMPUTATION_LIMITED,
+			
+			/// <summary>
+			/// The counter for the percentage of vertex data that was read from the cache.
+			/// </summary>
 			PostTransformCacheHitRate = D3D10_COUNTER_POST_TRANSFORM_CACHE_HIT_RATE,
+			
+			/// <summary>
+			/// The counter for the percentage of texel data that was read from the cache.
+			/// </summary>
 			TextureCacheHitRate = D3D10_COUNTER_TEXTURE_CACHE_HIT_RATE
 		};
 		
@@ -195,9 +405,24 @@ namespace SlimDX
 		/// <unmanaged>D3D10_COUNTER_TYPE</unmanaged>
 		public enum class CounterType : System::Int32
 		{
+			/// <summary>
+			/// 32-bit floating point.
+			/// </summary>
 			Float32 = D3D10_COUNTER_TYPE_FLOAT32,
+			
+			/// <summary>
+			/// 16-bit unsigned integer.
+			/// </summary>
 			UnsignedInt16 = D3D10_COUNTER_TYPE_UINT16,
+			
+			/// <summary>
+			/// 32-bit unsigned integer.
+			/// </summary>
 			UnsignedInt32 = D3D10_COUNTER_TYPE_UINT32, 
+			
+			/// <summary>
+			/// 64-bit unsigned integer.
+			/// </summary>
 			UnsignedInt64 = D3D10_COUNTER_TYPE_UINT64
 		};
 		
@@ -206,8 +431,19 @@ namespace SlimDX
 		[System::Flags]
 		public enum class CpuAccessFlags : System::Int32
 		{
+			/// <summary>
+			/// No access is required on the CPU.
+			/// </summary>
 			None = 0,
+			
+			/// <summary>
+			/// Write access is required on the CPU.
+			/// </summary>
 			Write = D3D10_CPU_ACCESS_WRITE,
+			
+			/// <summary>
+			/// Read access is required on the CPU.
+			/// </summary>
 			Read = D3D10_CPU_ACCESS_READ
 		};
 		
@@ -215,70 +451,172 @@ namespace SlimDX
 		/// <unmanaged>D3D10_CULL_MODE</unmanaged>
 		public enum class CullMode : System::Int32 
 		{
+			/// <summary>
+			/// Do not cull; all triangles are rendered.
+			/// </summary>
 			None = D3D10_CULL_NONE,
+			
+			/// <summary>
+			/// Cull triangles that are front-facing.
+			/// </summary>
 			Front = D3D10_CULL_FRONT,
+			
+			/// <summary>
+			/// Cull triangles that are back-facing.
+			/// </summary>
 			Back = D3D10_CULL_BACK
 		};
 		
-		/// <summary></summary>
+		/// <summary>Flags controlling which debug features are enabled.</summary>
 		/// <unmanaged href="bb173520">D3D10_DEBUG_FEATURE</unmanaged>
 		[System::Flags]
 		public enum class DebugFeatureFlags : System::Int32
 		{
+			/// <summary>
+			/// The application will wait for the GPU to complete the render operation before continuing.
+			/// </summary>
 			FinishPerRender = D3D10_DEBUG_FEATURE_FINISH_PER_RENDER_OP,
+			
+			/// <summary>
+			/// The runtime will call <see cref="SlimDX::Direct3D10::Device::Flush"/> after the render operation.
+			/// </summary>
 			FlushPerRender = D3D10_DEBUG_FEATURE_FLUSH_PER_RENDER_OP,
+			
+			/// <summary>
+			/// The runtime will call <see cref="SlimDX::DXGI::SwapChain::Present"/> after the render operation.
+			/// Presentation of buffers will occur according to the settings specified by the 
+			/// <see cref="SlimDX::Direct3D10::Debug::SwapChain"/> and <see cref="SlimDX::Direct3D10::Debug::PresentDelay"/> properties.
+			/// </summary>
 			PresentPerRender = D3D10_DEBUG_FEATURE_PRESENT_PER_RENDER_OP
 		};
 		
-		/// <summary>Specifies the parts of the depth stencil to clear.</summary>
+		/// <summary>Specifies which parts of the depth stencil buffer to clear.</summary>
 		/// <unmanaged>D3D10_CLEAR_FLAG</unmanaged>
 		[System::Flags]
 		public enum class DepthStencilClearFlags : System::Int32
 		{
+			/// <summary>
+			/// Indicates the depth buffer should be cleared.
+			/// </summary>
 			Depth = D3D10_CLEAR_DEPTH,
+			
+			/// <summary>
+			/// Indicates the stencil buffer should be cleared.
+			/// </summary>
 			Stencil = D3D10_CLEAR_STENCIL
 		};
 		
-		/// <summary></summary>
+		/// <summary>Specified the dimension (and access methodology) for depth-stencil resource views.</summary>
 		/// <unmanaged>D3D10_DSV_DIMENSION</unmanaged>
 		public enum class DepthStencilViewDimension : System::Int32
 		{
+			/// <summary>
+			/// The resource will be accessed according to its type, determined by the actual resource specified
+			/// during the creation of the view.
+			/// </summary>
 			Unknown = D3D10_DSV_DIMENSION_UNKNOWN,
+			
+			/// <summary>
+			/// The resource will be accessed as a 1D texture.
+			/// </summary>
 			Texture1D = D3D10_DSV_DIMENSION_TEXTURE1D,
+			
+			/// <summary>
+			/// The resource will be accessed as an array of 1D textures.
+			/// </summary>
 			Texture1DArray = D3D10_DSV_DIMENSION_TEXTURE1DARRAY,
+			
+			/// <summary>
+			/// The resource will be accessed as a 2D texture.
+			/// </summary>
 			Texture2D = D3D10_DSV_DIMENSION_TEXTURE2D,
+			
+			/// <summary>
+			/// The resource will be accessed as an array of 2D textures.
+			/// </summary>
 			Texture2DArray = D3D10_DSV_DIMENSION_TEXTURE2DARRAY,
+			
+			/// <summary>
+			/// The resource will be accessed as a 2D texture with multisampling support.
+			/// </summary>
 			Texture2DMultisampled = D3D10_DSV_DIMENSION_TEXTURE2DMS,
+			
+			/// <summary>
+			/// The resource will be accessed as an array of 2D textures with multisampling support.
+			/// </summary>
 			Texture2DMultisampledArray = D3D10_DSV_DIMENSION_TEXTURE2DMSARRAY
 		};
 		
-		/// <summary></summary>
+		/// <summary>Identifies mask values for writing to a depth-stencil buffer.</summary>
 		/// <unmanaged>D3D10_DEPTH_WRITE_MASK</unmanaged>
 		public enum class DepthWriteMask : System::Int32
 		{
+			/// <summary>
+			/// Disables all writes to the depth-stencil buffer.
+			/// </summary>
 			Zero = D3D10_DEPTH_WRITE_MASK_ZERO,
+			
+			/// <summary>
+			/// Enables all writes to the depth-stencil buffer.
+			/// </summary>
 			All = D3D10_DEPTH_WRITE_MASK_ALL
 		};
 		
-		/// <summary></summary>
+		/// <summary>Flags controlling the creation of a device.</summary>
 		/// <unmanaged>D3D10_CREATE_DEVICE_FLAG</unmanaged>
 		[System::Flags]
 		public enum class DeviceCreationFlags : System::Int32
 		{
+			/// <summary>
+			/// Indicates no specific behavior.
+			/// </summary>
 			None = 0,
+			
+			/// <summary>
+			/// Indicates that a single-threaded device should be created; by default, Direct3D 10 devices are
+			/// thread-safe. Specifying this flag causes thread-safety to be disabled.
+			/// </summary>
 			SingleThreaded = D3D10_CREATE_DEVICE_SINGLETHREADED,
+			
+			/// <summary>
+			/// Indicates that the device should support the debug layer.
+			/// </summary>
 			Debug = D3D10_CREATE_DEVICE_DEBUG,
+			
+			/// <summary>
+			/// Indicates that both a REF and HAL device should be created, allowing the application to toggle
+			/// between them.
+			/// </summary>
 			SwitchToRef = D3D10_CREATE_DEVICE_SWITCH_TO_REF,
+			
+			/// <summary>
+			/// Reserved. Do not use.
+			/// </summary>
 			PreventThreadingOptimizations = D3D10_CREATE_DEVICE_PREVENT_INTERNAL_THREADING_OPTIMIZATIONS
 		};
 	
-		/// <summary></summary>
+		/// <summary>Specifies a device driver type.</summary>
 		/// <unmanaged>D3D10_DRIVER_TYPE</unmanaged>
 		public enum class DriverType : System::Int32
-		{
+		{	
+			/// <summary>
+			/// A hardware (HAL) device.
+			/// </summary>
 			Hardware = D3D10_DRIVER_TYPE_HARDWARE,
+			
+			/// <summary>
+			/// A software reference (REF) device.
+			/// </summary>
 			Reference = D3D10_DRIVER_TYPE_REFERENCE,
+		
+			/// <summary>
+			/// A null device (a REF device with no rendering capability).
+			/// </summary>
 			Null = D3D10_DRIVER_TYPE_NULL,
+			
+			/// <summary>
+			/// Reserved. Do not use.
+			/// </summary>
 			Software = D3D10_DRIVER_TYPE_SOFTWARE
 		};
 
