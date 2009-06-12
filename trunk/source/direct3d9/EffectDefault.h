@@ -29,6 +29,8 @@ namespace SlimDX
 
 	namespace Direct3D9
 	{
+		/// <summary>Effect default parameters.</summary>
+		/// <unmanaged>D3DXEFFECTDEFAULT</unmanaged>
 		public value class EffectDefault : System::IEquatable<EffectDefault>
 		{
 		public:

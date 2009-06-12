@@ -30,6 +30,11 @@ namespace SlimDX
 		ref class Frame;
 		ref class MeshContainer;
 
+		/// <summary>
+		/// This interface is implemented by applications who wish to save additional user
+		/// data embedded in .X files. D3DX calls this interface when such data is encountered.
+		/// </summary>
+		/// <unmanaged>ID3DXSaveUserData</unmanaged>
 		public interface struct ISaveUserData
 		{
 			virtual void AddFrameChildData( Frame^ frame, XFileSaveObject^ saveObject, XFileSaveData^ saveData );

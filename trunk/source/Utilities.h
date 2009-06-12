@@ -55,6 +55,7 @@ namespace SlimDX
 		static int SizeOfFormatElement( DXGI_FORMAT format );
 		
 		static System::Drawing::Rectangle ConvertRect(RECT rect);
+		static void ConvertRect(System::Drawing::Rectangle& source, RECT& dest);
 
 		static System::String^ BlobToString( ID3D10Blob *blob );
 		static System::String^ BufferToString( ID3DXBuffer *buffer );

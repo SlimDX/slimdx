@@ -41,11 +41,33 @@ namespace SlimDX
 			/// <unmanaged>D3DXCreateSprite</unmanaged>
 			Sprite( Device^ device );
 
+			/// <summary>Prepares the object and device for drawing sprites.</summary>
+			/// <unmanaged>ID3DXSprite::Begin</unmanaged>
 			Result Begin( SpriteFlags flags );
+			
+			/// <summary>Calls <see cref="Flush()" /> and restores the device state to how it was before <see cref="Begin()" /> was called.</summary>
+			/// <unmanaged>ID3DXSprite::End</unmanaged>
 			Result End();
+
+			/// <summary>
+			/// Forces all batched sprites to be submitted to the device.
+			/// Device states remain as they were after the last call to <see cref="Begin(SpriteFlags)" />.
+			/// The list of batched sprites is then cleared.
+			/// </summary>
+			/// <unmanaged>ID3DXSprite::Flush</unmanaged>
 			Result Flush();
 
+			/// <summary>
+			/// Use this method to release all references to video memory resources and delete all stateblocks.
+			/// This method should be called whenever a device is lost, or before resetting a device.
+			/// </summary>
+			/// <unmanaged>ID3DXFont::OnLostDevice</unmanaged>
 			virtual Result OnLostDevice();
+
+			/// <summary>
+			/// Use this method to re-acquire resources and save initial state.
+			/// </summary>
+			/// <unmanaged>ID3DXFont::OnResetDevice</unmanaged>
 			virtual Result OnResetDevice();
 
 			property SlimDX::Direct3D9::Device^ Device
@@ -59,12 +81,44 @@ namespace SlimDX
 				void set( Matrix value );
 			}
 
+			/// <summary>
+			/// Sets the left-handed world-view transform for a sprite.
+			/// A call to this method is required before billboarding or sorting sprites.
+			/// </summary>
+			/// <unmanaged>ID3DXSprite::SetWorldViewLH</unmanaged>
 			Result SetWorldViewLH( Matrix world, Matrix view );
+
+			/// <summary>
+			/// Sets the right-handed world-view transform for a sprite.
+			/// A call to this method is required before billboarding or sorting sprites.
+			/// </summary>
+			/// <unmanaged>ID3DXSprite::SetWorldViewRH</unmanaged>
 			Result SetWorldViewRH( Matrix world, Matrix view );
 
-			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, Color4 color );
-			Result Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Color4 color );
-			Result Draw( Texture^ texture, Vector3 center, Vector3 position, Color4 color );
+			/// <summary>Adds a sprite to the list of batched sprites.</summary>
+			/// <param name="sourceRect">A rectangle that specifies the portion of the source texture to use. If null is passed, the entire source image will be used.</param>
+			/// <param name="center">Specifies the center position of the sprite.</param>
+			/// <param name="position">Specifies the position at which to render the sprite.</param>
+			/// <param name="color">The color and alpha channels of the texture are modulated by this color.</param>
+			/// <unmanaged>ID3DXSprite::Draw</unmanaged>
+			Result Draw( Texture^ texture, System::Nullable<System::Drawing::Rectangle> sourceRect, System::Nullable<Vector3> center, System::Nullable<Vector3> position, Color4 color );
+
+			/// <summary>Adds a sprite to the list of batched sprites.</summary>
+			/// <param name="sourceRect">A rectangle that specifies the portion of the source texture to use.</param>
+			/// <param name="color">The color and alpha channels of the texture are modulated by this color.</param>
+			/// <unmanaged>ID3DXSprite::Draw</unmanaged>
+			Result Draw( Texture^ texture, System::Nullable<System::Drawing::Rectangle> sourceRect, Color4 color );
+
+			/// <summary>Adds a sprite to the list of batched sprites.</summary>
+			/// <param name="center">Specifies the center position of the sprite.</param>
+			/// <param name="position">Specifies the position at which to render the sprite.</param>
+			/// <param name="color">The color and alpha channels of the texture are modulated by this color.</param>
+			/// <unmanaged>ID3DXSprite::Draw</unmanaged>
+			Result Draw( Texture^ texture, System::Nullable<Vector3> center, System::Nullable<Vector3> position, Color4 color );
+
+			/// <summary>Adds a sprite to the list of batched sprites.</summary>
+			/// <param name="color">The color and alpha channels of the texture are modulated by this color.</param>
+			/// <unmanaged>ID3DXSprite::Draw</unmanaged>
 			Result Draw( Texture^ texture, Color4 color );
 		};
 	}

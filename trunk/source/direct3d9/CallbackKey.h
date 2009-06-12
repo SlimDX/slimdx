@@ -31,6 +31,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		///<summary>Describes a callback key for use in key frame animation.</summary>
+		///<unmanaged>D3DXKEY_CALLBACK</unmanaged>
 		public value class CallbackKey : System::IEquatable<CallbackKey>
 		{
 		internal:
@@ -49,6 +51,8 @@ namespace SlimDX
 			static bool Equals( CallbackKey% value1, CallbackKey% value2 );
 		};
 
+		///<summary>Describes a quaternion rotation key for use in key frame animation.</summary>
+		///<unmanaged>D3DXKEY_QUATERNION</unmanaged>
 		public value class RotationKey : System::IEquatable<RotationKey>
 		{
 		internal:
@@ -67,6 +71,8 @@ namespace SlimDX
 			static bool Equals( RotationKey% value1, RotationKey% value2 );
 		};
 
+		///<summary>Describes a vector scale key for use in key frame animation.</summary>
+		///<unmanaged>D3DXKEY_VECTOR3</unmanaged>
 		public value class ScaleKey : System::IEquatable<ScaleKey>
 		{
 		internal:
@@ -85,6 +91,8 @@ namespace SlimDX
 			static bool Equals( ScaleKey% value1, ScaleKey% value2 );
 		};
 
+		///<summary>Describes a vector translation key for use in key frame animation.</summary>
+		///<unmanaged>D3DXKEY_VECTOR3</unmanaged>
 		public value class TranslationKey : System::IEquatable<TranslationKey>
 		{
 		internal:

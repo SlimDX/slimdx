@@ -239,6 +239,14 @@ namespace SlimDX
 		return Drawing::Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
 	}
 
+	void Utilities::ConvertRect(System::Drawing::Rectangle& source, RECT& dest)
+	{
+		dest.top = source.Top;
+		dest.bottom = source.Bottom;
+		dest.left = source.Left;
+		dest.right = source.Right;
+	}
+
 	array<Byte>^ Utilities::ReadStream( Stream^ stream, DataStream^* dataStream )
 	{
 		int length = 0;

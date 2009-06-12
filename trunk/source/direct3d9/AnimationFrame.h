@@ -47,6 +47,8 @@ namespace SlimDX
 			Frame^ GetFrame() { return m_Frame; }
 		};
 
+		///<summary>Describes a transform frame in a transformation hierarchy.</summary>
+		///<unmanaged>D3DXFRAME</unmanaged>
 		public ref class Frame : System::IEquatable<Frame^>
 		{
 		internal:

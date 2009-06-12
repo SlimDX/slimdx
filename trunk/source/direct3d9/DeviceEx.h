@@ -139,6 +139,7 @@ namespace SlimDX
 			/// <returns>The current status of this device.</returns>
 			/// <remarks>This method replaces the <see cref="SlimDX::Direct3D9::Device" />.TestCooperativeLevel function,
 			/// which always returns <see cref="SlimDX::Direct3D9::ResultCode" />.Success in Direct3D 9Ex applications.</remarks>
+			/// <unmanaged>IDirect3DDevice9Ex::CheckDeviceState</unmanaged>
 			DeviceState CheckDeviceState( System::IntPtr windowHandle );
 
 			/// <summary>
@@ -148,6 +149,7 @@ namespace SlimDX
 			/// <param name="resource">An resource to check the residency status of.</param>
 			/// <returns>See the DirectX documentation.</returns>
 			/// <remarks>See the DirectX documentation.</remarks>
+			/// <unmanaged>IDirect3DDevice9Ex::CheckResourceResidency</unmanaged>
 			ResourceResidency CheckResourceResidency( Resource^ resource );
 
 			/// <summary>
@@ -157,6 +159,7 @@ namespace SlimDX
 			/// <param name="resources">An array of resources to check the residency status of.</param>
 			/// <returns>See the DirectX documentation.</returns>
 			/// <remarks>See the DirectX documentation.</remarks>
+			/// <unmanaged>IDirect3DDevice9Ex::CheckResourceResidency</unmanaged>
 			ResourceResidency CheckResourceResidency( array<Resource^>^ resources );
 
 			/// <summary>
@@ -164,6 +167,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="swapChain">The swap chain to retrieve display mode data about.</param>
 			/// <returns>Extended display mode information about the adapter.</returns>
+			/// <unmanaged>IDirect3DDevice9Ex::GetDisplayModeEx</unmanaged>
 			DisplayModeEx GetDisplayModeEx( int swapChain );
 
 			/// <summary>
@@ -172,6 +176,7 @@ namespace SlimDX
 			/// <param name="swapChain">The swap chain to retrieve display mode data about.</param>
 			/// <param name="rotation">Receives the rotation setting of the adapter.</param>
 			/// <returns>Extended display mode information about the adapter.</returns>
+			/// <unmanaged>IDirect3DDevice9Ex::GetDisplayModeEx</unmanaged>
 			DisplayModeEx GetDisplayModeEx( int swapChain, [Out] DisplayRotation% rotation );
 
 			/// <summary>
@@ -179,6 +184,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="flags">Flags used to specify how the swap chain should be presented.</param>
 			/// <returns>A <see cref="SlimDX::Result"/>Object describing the result of the operation.</returns>
+			/// <unmanaged>IDirect3DDevice9Ex::PresentEx</unmanaged>
 			Result PresentEx( SlimDX::Direct3D9::Present flags );
 
 			/// <summary>
@@ -187,6 +193,7 @@ namespace SlimDX
 			/// <param name="windowOverride">The destination window whose client area is taken as the target for this presentation.</param>
 			/// <param name="flags">Flags used to specify how the swap chain should be presented.</param>
 			/// <returns>A <see cref="SlimDX::Result"/>Object describing the result of the operation.</returns>
+			/// <unmanaged>IDirect3DDevice9Ex::PresentEx</unmanaged>
 			Result PresentEx( System::IntPtr windowOverride, SlimDX::Direct3D9::Present flags );
 			
 			/// <summary>
@@ -194,6 +201,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="presentParameters">A set of new presentation parameters to apply to the device.</param>
 			/// <returns>A <see cref="SlimDX::Result"/>Object describing the result of the operation.</returns>
+			/// <unmanaged>IDirect3DDevice9Ex::ResetEx</unmanaged>
 			Result ResetEx( PresentParameters^ presentParameters );
 
 			/// <summary>
@@ -202,12 +210,14 @@ namespace SlimDX
 			/// <param name="presentParameters">A set of new presentation parameters to apply to the device.</param>
 			/// <param name="fullScreenDisplayMode">The properties of the desired display mode, when running fullscreen.</param>
 			/// <returns>A <see cref="SlimDX::Result"/>Object describing the result of the operation.</returns>
+			/// <unmanaged>IDirect3DDevice9Ex::ResetEx</unmanaged>
 			Result ResetEx( PresentParameters^ presentParameters, DisplayModeEx fullScreenDisplayMode );
 
 			/// <summary>
 			/// Suspend execution of the calling thread until the next vertical blank signal.
 			/// </summary>
 			/// <param name="swapChain">Zero based swap chain index to specify the target chain on a multihead card.</param>
+			/// <unmanaged>IDirect3DDevice9Ex::WaitForVBlank</unmanaged>
 			void WaitForVBlank( int swapChain );
 		};
 	}
