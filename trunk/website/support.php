@@ -63,8 +63,9 @@
 				You may at your discretion prefix your thread title with [SlimDX].
 				If you believe you have found a bug, or you have a feature request, please enter it in our <a href="http://code.google.com/p/slimdx/issues/list">Issue Tracker</a>.
 				The developers are also typically available in the #gamedev and #graphicsdev IRC channels on <a href="http://www.afternet.org">AfterNET</a> (irc.afternet.org).
-				Lastly, you can email the developer list, slimdx-devel@googlegroups.com. This is *not* a recommended method of communicating with us, but may be used if necessary.
-				E-mail is a good idea if you're interested in contributing to SlimDX.
+				Lastly, you can email support@slimdx.org. This is *not* a recommended method of communicating with us, unless you have a support contract.
+				We will still respond to people without a support contract; however, it is not considered a priority.
+				Email is a good idea if you're interested in contributing to SlimDX, though.
 			</p>
     </div>
 </div>
