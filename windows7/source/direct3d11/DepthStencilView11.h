@@ -32,18 +32,32 @@ namespace SlimDX
 		ref class Resource;
 		value class DepthStencilViewDescription;
 		
+		/// <summary>Accesses a texture resource during depth/stencil testing.</summary>
+		/// <unmanaged>ID3D11DepthStencilView</unmanaged>
 		public ref class DepthStencilView : public ResourceView
 		{
 			COMOBJECT(ID3D11DepthStencilView, DepthStencilView);
 		
 		public:
+			/// <summary>Gets a structure describing this <see cref="DepthStencilView" />.</summary>
+			/// <unmanaged>ID3D11DepthStencilView::GetDesc</unmanaged>
 			property DepthStencilViewDescription Description
 			{
 				DepthStencilViewDescription get();
 			}
 			
-			DepthStencilView( SlimDX::Direct3D11::Device^ device, Resource^ resource );
-			DepthStencilView( SlimDX::Direct3D11::Device^ device, Resource^ resource, DepthStencilViewDescription description );
+			/// <summary>Creates a <see cref="DepthStencilView" /> for accessing resource data.</summary>
+			/// <param name="device">The device to use when creating this <see cref="DepthStencilView" />.</param>
+			/// <param name="resource">The resource that will serve as the depth-stencil surface. This surface must have been created with the <see cref="BindFlags">DepthStencil</see> flag.</param>
+			/// <unmanaged>ID3D11Device::CreateDepthStencilView</unmanaged>
+			DepthStencilView( SlimDX::Direct3D11::Device^ device, SlimDX::Direct3D11::Resource^ resource );
+
+			/// <summary>Creates a <see cref="DepthStencilView" /> for accessing resource data.</summary>
+			/// <param name="device">The device to use when creating this <see cref="DepthStencilView" />.</param>
+			/// <param name="resource">The resource that will serve as the depth-stencil surface. This surface must have been created with the <see cref="BindFlags">DepthStencil</see> flag.</param>
+			/// <param name="description">A structure describing the <see cref="DepthStencilView" /> to be created.</param>
+			/// <unmanaged>ID3D11Device::CreateDepthStencilView</unmanaged>
+			DepthStencilView( SlimDX::Direct3D11::Device^ device, SlimDX::Direct3D11::Resource^ resource, DepthStencilViewDescription description );
 		};
 	}
 };

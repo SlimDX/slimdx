@@ -27,12 +27,24 @@ namespace SlimDX
 {
 	namespace Direct3D11
 	{
+		ref class Resource;
+
+		/// <summary>Specifies the parts of a resource the pipeline can access during rendering.</summary>
+		/// <unmanaged>ID3D11View</unmanaged>
 		public ref class ResourceView abstract : public DeviceChild
 		{
 			COMOBJECT_BASE(ID3D11View);
 
 		protected:
 			ResourceView() { }
+
+		public:
+			/// <summary>Gets the resource that is accessed through this view.</summary>
+			/// <unmanaged>ID3D11View::GetResource</unmanaged>
+			property SlimDX::Direct3D11::Resource^ Resource
+			{
+				SlimDX::Direct3D11::Resource^ get();
+			}
 		};
 	}
 };

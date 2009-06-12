@@ -31,22 +31,32 @@ namespace SlimDX
 		ref class Resource;
 		value class ShaderResourceViewDescription;
 
+		/// <summary>Specifies the subresources that a shader can access during rendering.</summary>
+		/// <unmanaged>ID3D11ShaderResourceView</unmanaged>
 		public ref class ShaderResourceView : public ResourceView
 		{
 			COMOBJECT(ID3D11ShaderResourceView, ShaderResourceView);
 			
-		protected:
-			//no-op ctor for use by ShaderResourceView1
-			ShaderResourceView() { }
-
 		public:
+			/// <summary>Gets a structure describing this <see cref="ShaderResourceView" />.</summary>
+			/// <unmanaged>ID3D11ShaderResourceView::GetDesc</unmanaged>
 			property ShaderResourceViewDescription Description
 			{
 				ShaderResourceViewDescription get();
 			}
 			
-			ShaderResourceView( SlimDX::Direct3D11::Device^ device, Resource^ resource );
-			ShaderResourceView( SlimDX::Direct3D11::Device^ device, Resource^ resource, ShaderResourceViewDescription description );
+			/// <summary>Creates a <see cref="ShaderResourceView" /> for accessing resource data.</summary>
+			/// <param name="device">The device to use when creating this <see cref="ShaderResourceView" />.</param>
+			/// <param name="resource">The resource that will serve as input to a shader. This resource must have been created with the <see cref="BindFlags">ShaderResource</see> flag.</param>
+			/// <unmanaged>ID3D11Device::CreateShaderResourceView</unmanaged>
+			ShaderResourceView( SlimDX::Direct3D11::Device^ device, SlimDX::Direct3D11::Resource^ resource );
+
+			/// <summary>Creates a <see cref="ShaderResourceView" /> for accessing resource data.</summary>
+			/// <param name="device">The device to use when creating this <see cref="ShaderResourceView" />.</param>
+			/// <param name="resource">The resource that will serve as input to a shader. This resource must have been created with the <see cref="BindFlags">ShaderResource</see> flag.</param>
+			/// <param name="description">A structure describing the <see cref="ShaderResourceView" /> to be created.</param>
+			/// <unmanaged>ID3D11Device::CreateShaderResourceView</unmanaged>
+			ShaderResourceView( SlimDX::Direct3D11::Device^ device, SlimDX::Direct3D11::Resource^ resource, ShaderResourceViewDescription description );
 		};
 	}
 };

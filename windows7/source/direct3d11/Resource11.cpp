@@ -40,12 +40,45 @@ namespace SlimDX
 {
 namespace Direct3D11
 {
+	Resource^ Resource::FromPointer( ID3D11Resource* pointer )
+	{
+		if( pointer == NULL )
+			return nullptr;
+
+		Resource^ tableEntry = safe_cast<Resource^>( SlimDX::ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+		if( tableEntry != nullptr )
+		{
+			pointer->Release();
+			return tableEntry;
+		}
+
+		//not in the table, find out what this thing actually is
+		D3D11_RESOURCE_DIMENSION type;
+		pointer->GetType( &type );
+
+		// chain to the correct ctor (not the fastest way to do this, but good enough for now)
+		switch(type)
+		{
+		case D3D11_RESOURCE_DIMENSION_BUFFER:
+			return Buffer::FromPointer( pointer );
+		case D3D11_RESOURCE_DIMENSION_TEXTURE1D:
+			return Texture1D::FromPointer( pointer );
+		case D3D11_RESOURCE_DIMENSION_TEXTURE2D:
+			return Texture2D::FromPointer( pointer );
+		case D3D11_RESOURCE_DIMENSION_TEXTURE3D:
+			return Texture3D::FromPointer( pointer );
+
+		default:
+			throw gcnew InvalidCastException( "Unrecognized resource type." );
+		}
+	}
+
 	Resource^ Resource::FromPointer( System::IntPtr pointer )
 	{
 		if( pointer == System::IntPtr::Zero )
 			throw gcnew System::ArgumentNullException( "pointer" );
 
-		Resource^ tableEntry = safe_cast<Resource^>( SlimDX::ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+		Resource^ tableEntry = safe_cast<Resource^>( SlimDX::ObjectTable::Find( pointer ) );
 		if( tableEntry != nullptr )
 			return tableEntry;
 

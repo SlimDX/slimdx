@@ -37,7 +37,7 @@ namespace SlimDX
 {
 namespace Direct3D11
 { 
-	ShaderResourceView::ShaderResourceView( SlimDX::Direct3D11::Device^ device, Resource^ resource )
+	ShaderResourceView::ShaderResourceView( SlimDX::Direct3D11::Device^ device, SlimDX::Direct3D11::Resource^ resource )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
@@ -51,7 +51,7 @@ namespace Direct3D11
 		Construct( view );
 	}
 	
-	ShaderResourceView::ShaderResourceView( SlimDX::Direct3D11::Device^ device, Resource^ resource, ShaderResourceViewDescription description )
+	ShaderResourceView::ShaderResourceView( SlimDX::Direct3D11::Device^ device, SlimDX::Direct3D11::Resource^ resource, ShaderResourceViewDescription description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
