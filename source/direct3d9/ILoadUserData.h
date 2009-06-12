@@ -30,6 +30,11 @@ namespace SlimDX
 		ref class Frame;
 		ref class MeshContainer;
 
+		///<summary>
+		/// This interface is implemented by applications who wish to load additional user
+		/// data embedded in .X files. D3DX calls this interface when such data is encountered.
+		/// </summary>
+		/// <unmanaged>ID3DXLoadUserData</unmanaged>
 		public interface struct ILoadUserData
 		{
 			virtual void LoadFrameData( Frame^ frame, XFileData^ data ) = 0;

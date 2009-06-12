@@ -124,27 +124,48 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	Result Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Vector3 center, Vector3 position, Color4 color )
+	Result Sprite::Draw( Texture^ texture, Nullable<System::Drawing::Rectangle> sourceRect, Nullable<Vector3> center, Nullable<Vector3> position, Color4 color )
 	{
-		RECT rect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
+		RECT rect = {0};
+		RECT* rectPtr = 0;
+		if(sourceRect.HasValue)
+		{
+			System::Drawing::Rectangle rectValue = sourceRect.Value;
+			Utilities::ConvertRect(rectValue, rect);
+		}
 
-		HRESULT hr = InternalPointer->Draw( texture->InternalPointer, &rect, reinterpret_cast<const D3DXVECTOR3*>( &center ),
-			reinterpret_cast<const D3DXVECTOR3*>( &position ), color.ToArgb() );
+		Vector3 centerVal = center.Value;
+		Vector3 positionVal = position.Value;
+		const D3DXVECTOR3* centerPtr = center.HasValue ? reinterpret_cast<const D3DXVECTOR3*>( &centerVal ) : NULL;
+		const D3DXVECTOR3* positionPtr = position.HasValue ? reinterpret_cast<const D3DXVECTOR3*>( &positionVal ) : NULL;
+
+		HRESULT hr = InternalPointer->Draw( texture->InternalPointer, rectPtr, centerPtr, positionPtr, color.ToArgb() );
 		return RECORD_D3D9( hr );
 	}
 
-	Result Sprite::Draw( Texture^ texture, System::Drawing::Rectangle sourceRect, Color4 color )
+	Result Sprite::Draw( Texture^ texture, Nullable<System::Drawing::Rectangle> sourceRect, Color4 color )
 	{
-		RECT rect = { sourceRect.Left, sourceRect.Top, sourceRect.Right, sourceRect.Bottom };
+		RECT rect = {0};
+		RECT* rectPtr = 0;
+		if(sourceRect.HasValue)
+		{
+			System::Drawing::Rectangle rectValue = sourceRect.Value;
+			Utilities::ConvertRect(rectValue, rect);
+			rectPtr = &rect;
+		}
 
 		HRESULT hr = InternalPointer->Draw( texture->InternalPointer, &rect, NULL, NULL, color.ToArgb() );
 		return RECORD_D3D9( hr );
 	}
 
-	Result Sprite::Draw( Texture^ texture, Vector3 center, Vector3 position, Color4 color )
+	Result Sprite::Draw( Texture^ texture, Nullable<Vector3> center, Nullable<Vector3> position, Color4 color )
 	{
-		HRESULT hr = InternalPointer->Draw( texture->InternalPointer, NULL, reinterpret_cast<const D3DXVECTOR3*>( &center ),
-			reinterpret_cast<const D3DXVECTOR3*>( &position ), color.ToArgb() );
+		Vector3 centerVal = center.Value;
+		Vector3 positionVal = position.Value;
+		const D3DXVECTOR3* centerPtr = center.HasValue ? reinterpret_cast<const D3DXVECTOR3*>( &centerVal ) : NULL;
+		const D3DXVECTOR3* positionPtr = position.HasValue ? reinterpret_cast<const D3DXVECTOR3*>( &positionVal ) : NULL;
+
+		HRESULT hr = InternalPointer->Draw( texture->InternalPointer, NULL, centerPtr, positionPtr, color.ToArgb() );
 		return RECORD_D3D9( hr );
 	}
 

@@ -43,19 +43,53 @@ namespace SlimDX
 			Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool italic, CharacterSet characterSet, Precision outputPrecision, FontQuality quality, PitchAndFamily pitchAndFamily, System::String^ faceName );
 			Font( Device^ device, System::Drawing::Font^ font );
 
+			/// <summary>Draws formatted text, optionally using a <see cref="SlimDX::Direct3D9::Sprite" /> object for improved performance.</summary>
+			/// <unmanaged>ID3DXFont::DrawText</unmanaged>
 			int DrawString( Sprite^ sprite, System::String^ text, System::Drawing::Rectangle rectangle, DrawTextFormat format, Color4 color );
+
+			/// <summary>Draws formatted text, optionally using a <see cref="SlimDX::Direct3D9::Sprite" /> object for improved performance.</summary>
+			/// <unmanaged>ID3DXFont::DrawText</unmanaged>
 			int DrawString( Sprite^ sprite, System::String^ text, System::Drawing::Rectangle rectangle, DrawTextFormat format, int color );
+
+			/// <summary>Draws formatted text, optionally using a <see cref="SlimDX::Direct3D9::Sprite" /> object for improved performance.</summary>
+			/// <unmanaged>ID3DXFont::DrawText</unmanaged>
 			int DrawString( Sprite^ sprite, System::String^ text, int x, int y, Color4 color );
+
+			/// <summary>Draws formatted text, optionally using a <see cref="SlimDX::Direct3D9::Sprite" /> object for improved performance.</summary>
+			/// <unmanaged>ID3DXFont::DrawText</unmanaged>
 			int DrawString( Sprite^ sprite, System::String^ text, int x, int y, int color );
 
+			/// <summary>Computes the bounding rectangle for a given string to be rendered using this font.</summary>
+			/// <unmanaged>ID3DXFont::DrawText</unmanaged>
 			System::Drawing::Rectangle MeasureString( Sprite^ sprite, System::String^ text, DrawTextFormat format );
+
+			/// <summary>Computes the bounding rectangle for a given string to be rendered using this font.</summary>
+			/// <unmanaged>ID3DXFont::DrawText</unmanaged>
 			int MeasureString( Sprite^ sprite, System::String^ text, DrawTextFormat format, System::Drawing::Rectangle% rectangle );
 
+			/// <summary>Loads a series of characters into video memory to improve the efficiency of rendering to the device.</summary>
+			/// <unmanaged>ID3DXFont::PreloadText</unmanaged>
 			Result PreloadCharacters( int first, int last );
+
+			/// <summary>Loads a series of glyphs into video memory to improve the efficiency of rendering to the device.</summary>
+			/// <unmanaged>ID3DXFont::PreloadText</unmanaged>
 			Result PreloadGlyphs( int first, int last );
+
+			/// <summary>Loads formatted text into video memory to improve the efficiency of rendering to the device.</summary>
+			/// <unmanaged>ID3DXFont::PreloadText</unmanaged>
 			Result PreloadText( System::String^ text );
 
+			/// <summary>
+			/// Use this method to release all references to video memory resources and delete all stateblocks.
+			/// This method should be called whenever a device is lost, or before resetting a device.
+			/// </summary>
+			/// <unmanaged>ID3DXFont::OnLostDevice</unmanaged>
 			virtual Result OnLostDevice();
+
+			/// <summary>
+			/// Use this method to re-acquire resources and save initial state.
+			/// </summary>
+			/// <unmanaged>ID3DXFont::OnResetDevice</unmanaged>
 			virtual Result OnResetDevice();
 
 			property FontDescription Description
