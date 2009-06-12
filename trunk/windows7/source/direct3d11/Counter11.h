@@ -29,16 +29,24 @@ namespace SlimDX
 	{
 		ref class Device;
 		
+		/// <summary>Encapsulates methods for measuring GPU performance.</summary>
+		/// <unmanaged>ID3D11Counter</unmanaged>
 		public ref class Counter : public Asynchronous
 		{
 			COMOBJECT(ID3D11Counter, Counter);
 		
 		public:
+			/// <summary>Gets the kind of this counter.</summary>
+			/// <unmanaged>ID3D11Counter::GetDesc</unmanaged>
 			property Direct3D11::CounterKind CounterKind
 			{
 				Direct3D11::CounterKind get();
 			}
 			
+			/// <summary>Creates a counter object for measuring GPU performance.</summary>
+			/// <param name="device">The device to use when creating the counter.</param>
+			/// <param name="counterKind">The kind of counter to create.</param>
+			/// <unmanaged>ID3D11Device::CreateCounter</unmanaged>
 			Counter( SlimDX::Direct3D11::Device^ device, Direct3D11::CounterKind counterKind );
 		};
 	}

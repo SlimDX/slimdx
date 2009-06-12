@@ -52,6 +52,8 @@ namespace SlimDX
 		ref class HullShaderWrapper;
 		ref class ComputeShaderWrapper;
 
+		/// <summary>Represents a device context which generates rendering commands.</summary>
+		/// <unmanaged>ID3D11DeviceContext</unmanaged>
 		public ref class DeviceContext : ComObject
 		{
 			COMOBJECT_CUSTOM(ID3D11DeviceContext, DeviceContext);

@@ -31,18 +31,32 @@ namespace SlimDX
 		ref class Resource;
 		value class UnorderedAccessViewDescription;
 		
+		/// <summary>Specifies the parts of a resource the pipeline can access during rendering.</summary>
+		/// <unmanaged>ID3D11UnorderedAccessView</unmanaged>
 		public ref class UnorderedAccessView : public ResourceView
 		{
 			COMOBJECT(ID3D11UnorderedAccessView, UnorderedAccessView);
 		
 		public:
+			/// <summary>Gets a structure describing this <see cref="UnorderedAccessView" />.</summary>
+			/// <unmanaged>ID3D11UnorderedAccessView::GetDesc</unmanaged>
 			property UnorderedAccessViewDescription Description
 			{
 				UnorderedAccessViewDescription get();
 			}
 			
-			UnorderedAccessView( SlimDX::Direct3D11::Device^ device, Resource^ resource );
-			UnorderedAccessView( SlimDX::Direct3D11::Device^ device, Resource^ resource, UnorderedAccessViewDescription description );
+			/// <summary>Creates a <see cref="UnorderedAccessView" /> for accessing resource data.</summary>
+			/// <param name="device">The device to use when creating this <see cref="UnorderedAccessView" />.</param>
+			/// <param name="resource">The resource that will serve as input to a shader.</param>
+			/// <unmanaged>ID3D11Device::CreateUnorderedAccessView</unmanaged>
+			UnorderedAccessView( SlimDX::Direct3D11::Device^ device, SlimDX::Direct3D11::Resource^ resource );
+
+			/// <summary>Creates a <see cref="UnorderedAccessView" /> for accessing resource data.</summary>
+			/// <param name="device">The device to use when creating this <see cref="UnorderedAccessView" />.</param>
+			/// <param name="resource">The resource that will serve as input to a shader.</param>
+			/// <param name="description">A structure describing the <see cref="UnorderedAccessView" /> to be created.</param>
+			/// <unmanaged>ID3D11Device::CreateUnorderedAccessView</unmanaged>
+			UnorderedAccessView( SlimDX::Direct3D11::Device^ device, SlimDX::Direct3D11::Resource^ resource, UnorderedAccessViewDescription description );
 		};
 	}
 };

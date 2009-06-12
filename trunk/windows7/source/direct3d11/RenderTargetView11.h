@@ -31,18 +31,32 @@ namespace SlimDX
 		ref class Resource;
 		value class RenderTargetViewDescription;
 		
+		/// <summary>Identifies the render-target subresources that can be accessed during rendering.</summary>
+		/// <unmanaged>ID3D11RenderTargetView</unmanaged>
 		public ref class RenderTargetView : public ResourceView
 		{
 			COMOBJECT(ID3D11RenderTargetView, RenderTargetView);
 		
 		public:
+			/// <summary>Gets a structure describing this <see cref="RenderTargetView" />.</summary>
+			/// <unmanaged>ID3D11RenderTargetView::GetDesc</unmanaged>
 			property RenderTargetViewDescription Description
 			{
 				RenderTargetViewDescription get();
 			}
 			
-			RenderTargetView( SlimDX::Direct3D11::Device^ device, Resource^ resource );
-			RenderTargetView( SlimDX::Direct3D11::Device^ device, Resource^ resource, RenderTargetViewDescription description );
+			/// <summary>Creates a <see cref="RenderTargetView" /> for accessing resource data.</summary>
+			/// <param name="device">The device to use when creating this <see cref="RenderTargetView" />.</param>
+			/// <param name="resource">The resource that represents the render-target surface. This surface must have been created with the <see cref="BindFlags">RenderTarget</see> flag.</param>
+			/// <unmanaged>ID3D11Device::CreateRenderTargetView</unmanaged>
+			RenderTargetView( SlimDX::Direct3D11::Device^ device, SlimDX::Direct3D11::Resource^ resource );
+
+			/// <summary>Creates a <see cref="RenderTargetView" /> for accessing resource data.</summary>
+			/// <param name="device">The device to use when creating this <see cref="RenderTargetView" />.</param>
+			/// <param name="resource">The resource that represents the render-target surface. This surface must have been created with the <see cref="BindFlags">RenderTarget</see> flag.</param>
+			/// <param name="description">A structure describing the <see cref="RenderTargetView" /> to be created.</param>
+			/// <unmanaged>ID3D11Device::CreateRenderTargetView</unmanaged>
+			RenderTargetView( SlimDX::Direct3D11::Device^ device, SlimDX::Direct3D11::Resource^ resource, RenderTargetViewDescription description );
 		};
 	}
 };
