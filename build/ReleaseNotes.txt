@@ -1,5 +1,6 @@
 General
 	* Changed most methods that deal with DataStream to take into account the current position of the stream.
+	* Added an overload to DataStream that allows a managed array to be used as a backing store for the stream.
 	* Added a stack_array type that replaces std::vector. In certain tests, it outperforms by a factor of 3.
 	* Added a Resources class that handles loading SlimDX resources from the SlimDX DLL.
 		* As of now, this contains two different versions of the SlimDX icon.
@@ -26,7 +27,7 @@ Direct3D 10
 	* Changed inheritance hierarchies to make base types abstract.
 	
 Direct3D11
-	* I added it.
+	* Added the Direct3D 11 subsystem.
 
 DirectSound
 	* Removed the confusing lockEntireBuffer parameter from CaptureBuffer.Read.

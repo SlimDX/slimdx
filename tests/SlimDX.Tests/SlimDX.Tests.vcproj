@@ -386,6 +386,10 @@
 			Name="Tests"
 			>
 			<File
+				RelativePath=".\source\Base.DataStream.Tests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\source\DXGI.Adapter.Tests.cpp"
 				>
 			</File>
