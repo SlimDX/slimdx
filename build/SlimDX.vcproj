@@ -3817,11 +3817,11 @@
 				Name="Resource"
 				>
 				<File
-					RelativePath="..\source\dxgi\Resource.cpp"
+					RelativePath="..\source\dxgi\ResourceDxgi.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\dxgi\Resource.h"
+					RelativePath="..\source\dxgi\ResourceDxgi.h"
 					>
 				</File>
 			</Filter>
