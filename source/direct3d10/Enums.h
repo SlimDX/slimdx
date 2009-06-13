@@ -38,6 +38,7 @@ namespace SlimDX
 	{
 #ifdef XMLDOCS
 		ref class Device;
+		ref class Effect;
 		ref class Sprite;
 		ref class Debug;
 #endif
@@ -629,235 +630,830 @@ namespace SlimDX
 			Software = D3D10_DRIVER_TYPE_SOFTWARE
 		};
 
-		/// <summary></summary>
+		/// <summary>Specifies compile- or run-time options during <see cref="SlimDX::Effect>Effect</see> creation.</summary>
 		/// <unmanaged>D3D10_EFFECT</unmanaged>
 		[System::Flags]
 		public enum class EffectFlags : System::Int32
 		{
+			/// <summary>
+			/// Standard compile- and run-time behavior.
+			/// </summary>
 			None = 0,
+			
+			/// <summary>
+			/// Compile the .fx file to a child effect. Child effects do not initialize shared values
+			/// (as those values are instead initialized by the effect pool).
+			/// </summary>
 			ChildEffect = D3D10_EFFECT_COMPILE_CHILD_EFFECT,
+			
+			/// <summary>
+			/// Allow mutable state objects (non-literal expressions may appear in state object definitions). This
+			/// has a negative impact on run-time performance.
+			/// </summary>
 			AllowSlowOperations = D3D10_EFFECT_COMPILE_ALLOW_SLOW_OPS,
+			
+			/// <summary>
+			/// Do not attempt to synchronize with other threads loading effects into the same pool.
+			/// </summary>
 			SingleThreaded = D3D10_EFFECT_SINGLE_THREADED,
 		};
 
-		/// <summary></summary>
+		/// <summary>Specifies detailed information about <see cref="SlimDX::Effect>Effect</see> variables.</summary>
 		/// <unmanaged>D3D10_EFFECT_VARIABLE</unmanaged>
 		[System::Flags]
 		public enum class EffectVariableFlags : System::Int32
 		{
+			/// <summary>
+			/// Standard effect variable.
+			/// </summary>
 			None = 0,
+			
+			/// <summary>
+			/// Indicates that the variable is an annotation or global.
+			/// </summary>
 			Annotation = D3D10_EFFECT_VARIABLE_ANNOTATION,
+			
+			/// <summary>
+			/// Indicates that the variable or constant buffer resides in an effect pool. 
+			/// </summary>
 			Pooled = D3D10_EFFECT_VARIABLE_POOLED,
+			
+			/// <summary>
+			/// Indicates the variable has been explicitly bound using the register keyword in the effect code.
+			/// </summary>
 			ExplicitBindPoint = D3D10_EFFECT_VARIABLE_EXPLICIT_BIND_POINT,
 		};
 		
-		/// <summary></summary>
+		/// <summary>Determines the fill mode to use when rendering triangles.</summary>
 		/// <unmanaged>D3D10_FILL_MODE</unmanaged>
 		public enum class FillMode : System::Int32
 		{
+			/// <summary>
+			/// Draw lines connecting the vertices. Adjacent vertices are not drawn.
+			/// </summary>
 			Wireframe = D3D10_FILL_WIREFRAME,
+			
+			/// <summary>
+			/// Fill the triangles formed by the vertices. Adjacent vertices are not drawn.
+			/// </summary>
 			Solid = D3D10_FILL_SOLID
 		};
-
-		[System::Flags]
+		
+		/// <summary>Specifies filtering options used during texture sampling.</summary>
+		/// <unmanaged>D3D10_FILTER</unmanaged>
 		public enum class Filter : System::Int32
 		{
+			/// <summary>
+			/// Use point sampling for minification, magnification, and mip-level sampling.
+			/// </summary>
 			MinMagMipPoint = D3D10_FILTER_MIN_MAG_MIP_POINT,
+			
+			/// <summary>
+			/// Use point sampling for minification and magnification; use linear interpolation for mip-level sampling.
+			/// </summary>
 			MinMagPointMipLinear = D3D10_FILTER_MIN_MAG_POINT_MIP_LINEAR,
+			
+			/// <summary>
+			/// Use point sampling for minification; use linear interpolation for magnification; use point sampling for mip-level sampling.
+			/// </summary>
 			MinPointMagLinearMipPoint = D3D10_FILTER_MIN_POINT_MAG_LINEAR_MIP_POINT,
+			
+			/// <summary>
+			/// Use point sampling for minification; use linear interpolation for magnification and mip-level sampling.
+			/// </summary>
 			MinPointMagMipLinear = D3D10_FILTER_MIN_POINT_MAG_MIP_LINEAR,
+			
+			/// <summary>
+			/// Use linear interpolation for minification; use point sampling for magnification and mip-level sampling.
+			/// </summary>
 			MinLinearMagMipPoint = D3D10_FILTER_MIN_LINEAR_MAG_MIP_POINT,
+			
+			/// <summary>
+			/// Use linear interpolation for minification; use point sampling for magnification; use linear interpolation for mip-level sampling.
+			/// </summary>
 			MinLinearMagPointMipLinear = D3D10_FILTER_MIN_LINEAR_MAG_POINT_MIP_LINEAR,
+			
+			/// <summary>
+			/// Use linear interpolation for minification and magnification; use point sampling for mip-level sampling.
+			/// </summary>
 			MinMagLinearMipPoint = D3D10_FILTER_MIN_MAG_LINEAR_MIP_POINT,
+			
+			/// <summary>
+			/// Use linear interpolation for minification, magnification, and mip-level sampling.
+			/// </summary>
 			MinMagMipLinear = D3D10_FILTER_MIN_MAG_MIP_LINEAR,
+			
+			/// <summary>
+			/// Use anisotropic interpolation for minification, magnification, and mip-level sampling.
+			/// </summary>
 			Anisotropic = D3D10_FILTER_ANISOTROPIC,
+			
+			/// <summary>
+			/// Use point sampling for minification, magnification, and mip-level sampling. Compare the result to the comparison value.
+			/// </summary>
 			ComparisonMinMagMipPoint = D3D10_FILTER_COMPARISON_MIN_MAG_MIP_POINT,
+			
+			/// <summary>
+			/// Use point sampling for minification and magnification; use linear interpolation for mip-level sampling.
+			/// Compare the result to the comparison value.
+			/// </summary>
 			ComparisonMinMagPointMipLinear = D3D10_FILTER_COMPARISON_MIN_MAG_POINT_MIP_LINEAR,
+			
+			/// <summary>
+			/// Use point sampling for minification; use linear interpolation for magnification; use point sampling for mip-level sampling. Compare the result to the comparison value.
+			/// </summary>
 			ComparisonMinPointMagLinearMipPoint = D3D10_FILTER_COMPARISON_MIN_POINT_MAG_LINEAR_MIP_POINT,
+			
+			/// <summary>
+			/// Use point sampling for minification; use linear interpolation for magnification and mip-level sampling. Compare the result to the comparison value.
+			/// </summary>
 			ComparisonMinPointMagMipLinear = D3D10_FILTER_COMPARISON_MIN_POINT_MAG_MIP_LINEAR,
+			
+			/// <summary>
+			/// Use linear interpolation for minification; use point sampling for magnification and mip-level sampling. Compare the result to the comparison value.
+			/// </summary>
 			ComparisonMinLinearMagMipPoint = D3D10_FILTER_COMPARISON_MIN_LINEAR_MAG_MIP_POINT,
+			
+			/// <summary>
+			/// Use linear interpolation for minification; use point sampling for magnification; use linear interpolation for mip-level sampling. Compare the result to the comparison value.
+			/// </summary>
 			ComparisonMinLinearMagPointMipLinear = D3D10_FILTER_COMPARISON_MIN_LINEAR_MAG_POINT_MIP_LINEAR,
+			
+			/// <summary>
+			/// Use linear interpolation for minification and magnification; use point sampling for mip-level sampling. Compare the result to the comparison value.
+			/// </summary>
 			ComparisonMinMagLinearMipPoint = D3D10_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT,
+			
+			/// <summary>
+			/// Use linear interpolation for minification, magnification, and mip-level sampling. Compare the result to the comparison value.
+			/// </summary>
 			ComparisonMinMagMipLinear = D3D10_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR,
+			
+			/// <summary>
+			/// Use anisotropic interpolation for minification, magnification, and mip-level sampling. Compare the result to the comparison value.
+			/// </summary>
 			ComparisonAnisotropic = D3D10_FILTER_COMPARISON_ANISOTROPIC,
+			
+			/// <summary>
+			/// For use with pixel shaders utilizing textures in the R1_UNorm format.
+			/// </summary>
 			Texture1Bit = D3D10_FILTER_TEXT_1BIT
 		};
 		
-		/// <summary></summary>
+		/// <summary>Specifies possible texture filtering flags.</summary>
 		/// <unmanaged>D3DX10_FILTER_FLAG</unmanaged>
 		[System::Flags]
 		public enum class FilterFlags : System::Int32
 		{
+			/// <summary>
+			/// No scaling or filtering will take place. Pixels outside the bounds of the source image are assumed to be transparent black.
+			/// </summary>
 			None = D3DX10_FILTER_NONE,
+			
+			/// <summary>
+			/// Each destination pixel is computed by sampling the nearest pixel from the source image.
+			/// </summary>
 			Point = D3DX10_FILTER_POINT,
+			
+			/// <summary>
+			/// Each destination pixel is computed by sampling the four nearest pixels from the source image. This filter
+			/// works best when the scale on both axes is less than two.
+			/// </summary>
 			Linear = D3DX10_FILTER_LINEAR,
+			
+			/// <summary>
+			/// Every pixel in the source image contributes equally to the destination image. This is the slowest of the filters.
+			/// </summary>
 			Triangle = D3DX10_FILTER_TRIANGLE,
+			
+			/// <summary>
+			/// Each pixel is computed by averaging a 2x2(x2) box of pixels from the source image. This filter works only when the
+			/// dimensions of the destination are half those of the source, as is the case with mipmaps.
+			/// </summary>
 			Box = D3DX10_FILTER_BOX,
+			
+			/// <summary>
+			/// Pixels off the edge of the texture on the u-axis should be mirrored, not wrapped.
+			/// </summary>
 			MirrorU = D3DX10_FILTER_MIRROR_U,
+			
+			/// <summary>
+			/// Pixels off the edge of the texture on the v-axis should be mirrored, not wrapped.
+			/// </summary>
 			MirrorV = D3DX10_FILTER_MIRROR_V,
+			
+			/// <summary>
+			/// Pixels off the edge of the texture on the w-axis should be mirrored, not wrapped.
+			/// </summary>
 			MirrowW = D3DX10_FILTER_MIRROR_W,
+			
+			/// <summary>
+			/// Combines the MirrorU, MirrorV, and MirrorW flags.
+			/// </summary>
 			Mirror = D3DX10_FILTER_MIRROR,
+			
+			/// <summary>
+			/// The resulting image must be dithered using a 4x4 ordered dither algorithm. This happens when converting from one format to another.
+			/// </summary>
 			Dither = D3DX10_FILTER_DITHER,
+			
+			/// <summary>
+			/// Do diffuse dithering on the image when changing from one format to another.
+			/// </summary>
 			DitherDiffusion = D3DX10_FILTER_DITHER_DIFFUSION,
+			
+			/// <summary>
+			/// Input data is in standard RGB (sRGB) color space.
+			/// </summary>
 			StandardRgbIn = D3DX10_FILTER_SRGB_IN,
+			
+			/// <summary>
+			/// Output data is in standard RGB (sRGB) color space.
+			/// </summary>
 			StandardRgbOut = D3DX10_FILTER_SRGB_OUT,
+			
+			/// <summary>
+			/// Combines the StandardRgbIn and StandardRgbOut flags.
+			/// </summary>
 			StandardRgb = D3DX10_FILTER_SRGB,
 		};
 	
-		/// <summary></summary>
+		/// <summary>
+		/// Defines possible character sets for fonts.
+		/// </summary>
 		/// <unmanaged>CHARSET</unmanaged>
 		public enum class FontCharacterSet : System::Int32
 		{
+			/// <summary>
+			/// The ANSI character set.
+			/// </summary>
 			Ansi = ANSI_CHARSET,
+
+			/// <summary>
+			/// The default system character set.
+			/// </summary>
 			Default = DEFAULT_CHARSET,
+
+			/// <summary>
+			/// The symbol character set.
+			/// </summary>
 			Symbol = SYMBOL_CHARSET,
+
+			/// <summary>
+			/// The ShiftJIS character set.
+			/// </summary>
 			ShiftJIS = SHIFTJIS_CHARSET,
+
+			/// <summary>
+			/// The Hangul character set.
+			/// </summary>
 			Hangul = HANGUL_CHARSET,
+
+			/// <summary>
+			/// The GB2312 character set.
+			/// </summary>
 			GB2312 = GB2312_CHARSET,
+
+			/// <summary>
+			/// The Chinese character set.
+			/// </summary>
 			ChineseBig5 = CHINESEBIG5_CHARSET,
+
+			/// <summary>
+			/// The OEM character set.
+			/// </summary>
 			Oem = OEM_CHARSET,
 
+			/// <summary>
+			/// The Johab character set.
+			/// </summary>
 			Johab = JOHAB_CHARSET,
+
+			/// <summary>
+			/// The Hebrew character set.
+			/// </summary>
 			Hebrew = HEBREW_CHARSET,
+
+			/// <summary>
+			/// The Arabic character set.
+			/// </summary>
 			Arabic = ARABIC_CHARSET,
+
+			/// <summary>
+			/// The Greek character set.
+			/// </summary>
 			Greek = GREEK_CHARSET,
+
+			/// <summary>
+			/// The Turkish character set.
+			/// </summary>
 			Turkish = TURKISH_CHARSET,
+
+			/// <summary>
+			/// The Vietnamese character set.
+			/// </summary>
 			Vietnamese = VIETNAMESE_CHARSET,
+
+			/// <summary>
+			/// The Thai character set.
+			/// </summary>
 			Thai = THAI_CHARSET,
+
+			/// <summary>
+			/// The East Europe character set.
+			/// </summary>
 			EastEurope = EASTEUROPE_CHARSET,
+
+			/// <summary>
+			/// The Russian character set.
+			/// </summary>
 			Russian = RUSSIAN_CHARSET,
 
+			/// <summary>
+			/// The Baltic character set.
+			/// </summary>
 			Baltic = BALTIC_CHARSET,
+
+			/// <summary>
+			/// The Mac character set.
+			/// </summary>
 			Mac = MAC_CHARSET
 		};
 
-		/// <summary></summary>
+		/// <summary>
+		/// Specifies formatting options for text rendering.
+		/// </summary>
 		/// <unmanaged href="bb773199">DT</unmanaged>
 		[System::Flags]
 		public enum class FontDrawFlags : System::Int32
 		{
-			Bottom = DT_BOTTOM,
-			Center = DT_CENTER,
-			ExpandTabs = DT_EXPANDTABS,
-			Left = DT_LEFT,
-			NoClip = DT_NOCLIP,
-			Right = DT_RIGHT,
-			RightToLeftReading = DT_RTLREADING,
-			SingleLine = DT_SINGLELINE,
+			/// <summary>
+			/// Align the text to the top.
+			/// </summary>
 			Top = DT_TOP,
+
+			/// <summary>
+			/// Align the text to the left.
+			/// </summary>
+			Left = DT_LEFT,
+
+			/// <summary>
+			/// Align the text to the center.
+			/// </summary>
+			Center = DT_CENTER,
+
+			/// <summary>
+			/// Align the text to the right.
+			/// </summary>
+			Right = DT_RIGHT,
+
+			/// <summary>
+			/// Vertically align the text to the center.
+			/// </summary>
 			VerticalCenter = DT_VCENTER,
-			Wordbreak = DT_WORDBREAK
+
+			/// <summary>
+			/// Align the text to the bottom.
+			/// </summary>
+			Bottom = DT_BOTTOM,
+
+			/// <summary>
+			/// Allow word breaks.
+			/// </summary>
+			WordBreak = DT_WORDBREAK,
+
+			/// <summary>
+			/// Force all text to a single line.
+			/// </summary>
+			SingleLine = DT_SINGLELINE,
+
+			/// <summary>
+			/// Expand tab characters.
+			/// </summary>
+			ExpandTabs = DT_EXPANDTABS,
+
+			/// <summary>
+			/// Don't clip the text.
+			/// </summary>
+			NoClip = DT_NOCLIP,
+
+			/// <summary>
+			/// Rendering the text in right-to-left reading order.
+			/// </summary>
+			RtlReading = DT_RTLREADING,
 		};
 		
-		/// <summary></summary>
-		/// <unmanaged>(various constants)</unmanaged>
+		/// <summary>
+		/// Defines pitch and family settings for fonts.
+		/// </summary>
+		/// <unmanaged href="ms901140">(various font constants)</unmanaged>
 		[System::Flags]
 		public enum class FontPitchAndFamily : System::Int32
 		{
+			/// <summary>
+			/// Default pitch.
+			/// </summary>
 			Default = DEFAULT_PITCH,
+
+			/// <summary>
+			/// Fixed pitch.
+			/// </summary>
 			Fixed = FIXED_PITCH,
+
+			/// <summary>
+			/// Variable pitch.
+			/// </summary>
 			Variable = VARIABLE_PITCH,
+
+			/// <summary>
+			/// Mono pitch.
+			/// </summary>
 			Mono = MONO_FONT,
 
-			DoNotCare = FF_DONTCARE,
+			/// <summary>
+			/// The font family doesn't matter.
+			/// </summary>
+			DontCare = FF_DONTCARE,
+
+			/// <summary>
+			/// Use the Roman family.
+			/// </summary>
 			Roman = FF_ROMAN,
+
+			/// <summary>
+			/// Use the Swiss family.
+			/// </summary>
 			Swiss = FF_SWISS,
+
+			/// <summary>
+			/// Use the Modern family.
+			/// </summary>
 			Modern = FF_MODERN,
+
+			/// <summary>
+			/// Use the Script family.
+			/// </summary>
 			Script = FF_SCRIPT,
-			Decorative = FF_DECORATIVE
+
+			/// <summary>
+			/// Use the Decorative family.
+			/// </summary>
+			Decorative = FF_DECORATIVE,
 		};
 
-		/// <summary></summary>
+		/// <summary>
+		/// Defines precision levels for font rendering.
+		/// </summary>
 		/// <unmanaged href="cc215248">OutPrecision</unmanaged>
 		public enum class FontPrecision : System::Int32
 		{
+			/// <summary>
+			/// Default precision.
+			/// </summary>
 			Default = OUT_DEFAULT_PRECIS,
+
+			/// <summary>
+			/// String-level precision.
+			/// </summary>
 			String = OUT_STRING_PRECIS,
+
+			/// <summary>
+			/// Character-level precision.
+			/// </summary>
 			Character = OUT_CHARACTER_PRECIS,
+
+			/// <summary>
+			/// Stroke-level precision.
+			/// </summary>
 			Stroke = OUT_STROKE_PRECIS,
+
+			/// <summary>
+			/// TrueType precision.
+			/// </summary>
 			TrueType = OUT_TT_PRECIS,
+
+			/// <summary>
+			/// Device precision.
+			/// </summary>
 			Device = OUT_DEVICE_PRECIS,
+
+			/// <summary>
+			/// Raster precision.
+			/// </summary>
 			Raster = OUT_RASTER_PRECIS,
+
+			/// <summary>
+			/// TrueType only precision.
+			/// </summary>
 			TrueTypeOnly = OUT_TT_ONLY_PRECIS,
+
+			/// <summary>
+			/// Outline precision.
+			/// </summary>
 			Outline = OUT_OUTLINE_PRECIS,
+
+			/// <summary>
+			/// Screen outline precision.
+			/// </summary>
 			ScreenOutline = OUT_SCREEN_OUTLINE_PRECIS,
-			PostScriptOnly = OUT_PS_ONLY_PRECIS
+
+			/// <summary>
+			/// PostScript only precision.
+			/// </summary>
+			PostScriptOnly = OUT_PS_ONLY_PRECIS,
 		};
 
-		/// <summary></summary>
-		/// <unmanaged>QUALITY</unmanaged>
+		/// <summary>
+		/// Specifies quality options for font rendering.
+		/// </summary>
+		/// <unmanaged href="ms901140">QUALITY</unmanaged>
 		public enum class FontQuality : System::Int32
 		{
+			/// <summary>
+			/// Default quality levels.
+			/// </summary>
 			Default = DEFAULT_QUALITY,
+
+			/// <summary>
+			/// Draft quality.
+			/// </summary>
 			Draft = DRAFT_QUALITY,
+
+			/// <summary>
+			/// Proof quality.
+			/// </summary>
 			Proof = PROOF_QUALITY,
+
+			/// <summary>
+			/// Non-antialiased quality.
+			/// </summary>
 			NonAntialiased = NONANTIALIASED_QUALITY,
+
+			/// <summary>
+			/// Antialiased quality.
+			/// </summary>
 			Antialiased = ANTIALIASED_QUALITY,
+
+			/// <summary>
+			/// Clear type quality.
+			/// </summary>
 			ClearType = CLEARTYPE_QUALITY,
-			ClearTypeNatural = CLEARTYPE_NATURAL_QUALITY
+
+			/// <summary>
+			/// Clear type natural quality.
+			/// </summary>
+			ClearTypeNatural = CLEARTYPE_NATURAL_QUALITY,
 		};
 
-		/// <summary></summary>
-		/// <unmanaged>FW</unmanaged>
+		/// <summary>
+		/// Specifies weights for font rendering.
+		/// </summary>
+		/// <unmanaged href="ms901140">FW</unmanaged>
 		public enum class FontWeight : System::Int32
 		{
+			/// <summary>
+			/// The font weight doesn't matter.
+			/// </summary>
 			DoNotCare = FW_DONTCARE,
+
+			/// <summary>
+			/// Make the font thin.
+			/// </summary>
 			Thin = FW_THIN,
+
+			/// <summary>
+			/// Make the font extra light.
+			/// </summary>
 			ExtraLight = FW_EXTRALIGHT,
+
+			/// <summary>
+			/// Make the font ultra light.
+			/// </summary>
 			UltraLight = FW_ULTRALIGHT,
+
+			/// <summary>
+			/// Make the font light.
+			/// </summary>
 			Light = FW_LIGHT,
+
+			/// <summary>
+			/// Use a normal weight.
+			/// </summary>
 			Normal = FW_NORMAL,
+
+			/// <summary>
+			/// Use a regular weight.
+			/// </summary>
 			Regular = FW_REGULAR,
+
+			/// <summary>
+			/// Use a medium weight.
+			/// </summary>
 			Medium = FW_MEDIUM,
+
+			/// <summary>
+			/// Use a semi-bold weight.
+			/// </summary>
 			SemiBold = FW_SEMIBOLD,
+
+			/// <summary>
+			/// Use a demi-bold weight.
+			/// </summary>
 			DemiBold = FW_DEMIBOLD,
+
+			/// <summary>
+			/// Use a bold weight.
+			/// </summary>
 			Bold = FW_BOLD,
+
+			/// <summary>
+			/// Use an extra bold weight.
+			/// </summary>
 			ExtraBold = FW_EXTRABOLD,
+
+			/// <summary>
+			/// Use an ultra bold weight.
+			/// </summary>
 			UltraBold = FW_ULTRABOLD,
+
+			/// <summary>
+			/// Use a heavy weight.
+			/// </summary>
 			Heavy = FW_HEAVY,
-			Black = FW_BLACK
+
+			/// <summary>
+			/// Use a black weight.
+			/// </summary>
+			Black = FW_BLACK,
 		};
 		
-		/// <summary></summary>
+		/// <summary>Identifies which resources are supported for a given format and given device.</summary>
 		/// <unmanaged>D3D10_FORMAT_SUPPORT</unmanaged>
 		[System::Flags]
 		public enum class FormatSupport : System::Int32
 		{
+			/// <summary>
+			/// No features are supported.
+			/// </summary>
+			None = 0,
+			
+			/// <summary>
+			/// Buffer resources are supported.
+			/// </summary>
 			Buffer = D3D10_FORMAT_SUPPORT_BUFFER,
+			
+			/// <summary>
+			/// Vertex buffers are supported.
+			/// </summary>
 			VertexBuffer = D3D10_FORMAT_SUPPORT_IA_VERTEX_BUFFER,
+			
+			/// <summary>
+			/// Index buffers are supported.
+			/// </summary>
 			IndexBuffer = D3D10_FORMAT_SUPPORT_IA_INDEX_BUFFER,
+			
+			/// <summary>
+			/// Streaming output buffers are supported.
+			/// </summary>
 			StreamOutputBuffer = D3D10_FORMAT_SUPPORT_SO_BUFFER,
+			
+			/// <summary>
+			/// 1D textures are supported.
+			/// </summary>
 			Texture1D = D3D10_FORMAT_SUPPORT_TEXTURE1D,
+			
+			/// <summary>
+			/// 2D textures are supported.
+			/// </summary>
 			Texture2D = D3D10_FORMAT_SUPPORT_TEXTURE2D,
+			
+			/// <summary>
+			/// 3D textures are supported.
+			/// </summary>
 			Texture3D = D3D10_FORMAT_SUPPORT_TEXTURE3D,
+			
+			/// <summary>
+			/// Cube textures are supported.
+			/// </summary>
 			TextureCube = D3D10_FORMAT_SUPPORT_TEXTURECUBE,
+		
+			/// <summary>
+			/// The intrinsic HLSL "load" function is supported.
+			/// </summary>
 			ShaderLoadIntrinsic = D3D10_FORMAT_SUPPORT_SHADER_LOAD,
+			
+			/// <summary>
+			/// The intrinsic HLSL "sample" function is supported.
+			/// </summary>
 			ShaderSampleIntrinsic = D3D10_FORMAT_SUPPORT_SHADER_SAMPLE,
+			
+			/// <summary>
+			/// The intrinsic HLSL "samplecmp" and "samplecmplevelzero" are supported.
+			/// </summary>
 			ShaderSampleComparisonIntrinsic = D3D10_FORMAT_SUPPORT_SHADER_SAMPLE_COMPARISON,
+			
+			/// <summary>
+			/// Reserved. Do not use.
+			/// </summary>
 			Reserved = D3D10_FORMAT_SUPPORT_SHADER_SAMPLE_MONO_TEXT,
+			
+			/// <summary>
+			/// Mipmaps are supported.
+			/// </summary>
 			MipMap = D3D10_FORMAT_SUPPORT_MIP,
+			
+			/// <summary>
+			/// Automatic generation of mipmaps is supported.
+			/// </summary>
 			MipMapAutoGeneration = D3D10_FORMAT_SUPPORT_MIP_AUTOGEN,
+			
+			/// <summary>
+			/// Rendertargets are supported.
+			/// </summary>
 			RenderTarget = D3D10_FORMAT_SUPPORT_RENDER_TARGET,
+			
+			/// <summary>
+			/// Blend operations are supported.
+			/// </summary>
 			BlendOperation = D3D10_FORMAT_SUPPORT_BLENDABLE,
+			
+			/// <summary>
+			/// Depth-stencil surfaces are supported.
+			/// </summary>
 			DepthStencil = D3D10_FORMAT_SUPPORT_DEPTH_STENCIL,
+			
+			/// <summary>
+			/// CPU locking is supported.
+			/// </summary>
 			CpuLocking = D3D10_FORMAT_SUPPORT_CPU_LOCKABLE,
+			
+			/// <summary>
+			/// Multisampling resolution is supported.
+			/// </summary>
 			MultisampleResolve = D3D10_FORMAT_SUPPORT_MULTISAMPLE_RESOLVE,
+			
+			/// <summary>
+			/// The format can be displayed on screen.
+			/// </summary>
 			FormatDisplaySupport = D3D10_FORMAT_SUPPORT_DISPLAY,
+			
+			/// <summary>
+			/// The format can be cast to another format.
+			/// </summary>
 			FormatCastSupport = D3D10_FORMAT_SUPPORT_CAST_WITHIN_BIT_LAYOUT,
+			
+			/// <summary>
+			/// The format can be used as a multisample render target.
+			/// </summary>
 			FormatMultisampleRenderTargetSupport = D3D10_FORMAT_SUPPORT_MULTISAMPLE_RENDERTARGET,
+			
+			/// <summary>
+			/// The format can be used as a multisample texture and read into a shader with the HLSL "load" function.
+			/// </summary>
 			FormatMultisampleLoadSupport = D3D10_FORMAT_SUPPORT_MULTISAMPLE_LOAD
 		};
 		
-		/// <summary></summary>
+		/// <summary>Specifies image file formats supported by runtime.</summary>
 		/// <unmanaged>D3DX10_IMAGE_FILE_FORMAT</unmanaged>
 		public enum class ImageFileFormat : System::Int32
 		{
+			/// <summary>
+			/// Windows bitmap (BMP) file format. Contains a header that describes the resolution of the device on which the
+			/// rectangle of pixels was created, the dimensions of the rectangle, the size of the array of bits, a logical palette,
+			/// and an array of bits that defines the relationship between pixels in the bitmapped image and entries in the logical palette.
+			/// </summary>
 			Bmp = D3DX10_IFF_BMP,
+			
+			/// <summary>
+			/// Joint Photographic Experts Group (JPEG) compressed file format. Specifies variable compression of 24-bit RGB color
+			/// and 8-bit gray-scale Tagged Image File Format (TIFF) image document files.
+			/// </summary>
 			Jpg = D3DX10_IFF_JPG,
+			
+			/// <summary>
+			/// Portable Network Graphics (PNG) file format. A non-proprietary bitmap format using lossless compression.
+			/// </summary>
 			Png = D3DX10_IFF_PNG,
+			
+			/// <summary>
+			/// DirectDraw surface (DDS) file format. Stores textures, volume textures, and cubic environment maps, with or without
+			/// mipmap levels, and with or without pixel compression.
+			/// </summary>
 			Dds = D3DX10_IFF_DDS,
+			
+			/// <summary>
+			/// Tagged Image File Format (TIFF).
+			/// </summary>
 			Tiff = D3DX10_IFF_TIFF,
+			
+			/// <summary>
+			/// Graphics Interchange Format (GIF).
+			/// </summary>
 			Gif = D3DX10_IFF_GIF,
+			
+			/// <summary>
+			/// Windows Media Player format (WMP).
+			/// </summary>
 			Wmp = D3DX10_IFF_WMP,
 		};
 		
@@ -883,7 +1479,14 @@ namespace SlimDX
 		/// <unmanaged>D3D10_INPUT_CLASSIFICATION</unmanaged>
 		public enum class InputClassification : System::Int32
 		{
+			/// <summary>
+			/// The data in the input slot is per-vertex data.
+			/// </summary>
 			PerVertexData = D3D10_INPUT_PER_VERTEX_DATA,
+			
+			/// <summary>
+			/// The data in the input slot is per-instance data.
+			/// </summary>
 			PerInstanceData = D3D10_INPUT_PER_INSTANCE_DATA
 		};
 		
@@ -891,41 +1494,99 @@ namespace SlimDX
 		/// <unmanaged>D3D10_MAP</unmanaged>
 		public enum class MapMode : System::Int32
 		{
+			/// <summary>
+			/// Resource is mapped for reading. The resource must have been created with read access.
+			/// </summary>
 			Read = D3D10_MAP_READ,
+			
+			/// <summary>
+			/// Resource is mapped for writing. The resource must have been created with write access.
+			/// </summary>
 			Write = D3D10_MAP_WRITE,
+			
+			/// <summary>
+			/// Resource is mapped for reading and writing. The resource must have been created with read and write access.
+			/// </summary>
 			ReadWrite = D3D10_MAP_READ_WRITE,
+			
+			/// <summary>
+			/// Resource is mapped for writing; the previous contents of the resource will be undefined. The resource must have been created with write access.
+			/// </summary>
 			WriteDiscard = D3D10_MAP_WRITE_DISCARD,
+			
+			/// <summary>
+			/// Resource is mapped for writing; the existing contents of the resource cannot be overwritten. This flag is only valid on
+			/// vertex and index buffers. The resource must have been created with write access.
+			/// </summary>
 			WriteNoOverwrite = D3D10_MAP_WRITE_NO_OVERWRITE
 		};
 		
-		/// <summary></summary>
+		/// <summary>Specifies how the CPU should respond when Map() is called on a resource being used by the GPU.</summary>
 		/// <unmanaged>D3D10_MAP_FLAG</unmanaged>
 		[System::Flags]
 		public enum class MapFlags : System::Int32
 		{
+			/// <summary>
+			/// Wait for the resource to become available.
+			/// </summary>
 			None = 0,
+			
+			/// <summary>
+			/// Do not wait for the resource to become available. The map method will return WasStillRendering when the GPU blocks the CPU from
+			/// accessing a resource.
+			/// </summary>
 			DoNotWait = D3D10_MAP_FLAG_DO_NOT_WAIT
 		};
 
-		/// <summary></summary>
+		/// <summary>Specifies creation options for a mesh.</summary>
 		/// <unmanaged>D3DX10_MESH</unmanaged>
 		[System::Flags]
 		public enum class MeshFlags : System::Int32
 		{
+			/// <summary>
+			/// Indicates standard mesh creation options..
+			/// </summary>
 			None = 0,
+			
+			/// <summary>
+			/// Indicates that the mesh should use 32-bit indices rather than 16-bit indices.
+			/// </summary>
 			Has32BitIndices = D3DX10_MESH_32_BIT,
+			
+			/// <summary>
+			/// Indicates that the mesh should contain adjacency information.
+			/// </summary>
 			HasAdjacency = D3DX10_MESH_GS_ADJACENCY
 		};
 
-		/// <summary></summary>
+		/// <summary>Specifies which types of mesh data to discard from the device.</summary>
 		/// <unmanaged>D3DX10_MESH_DISCARD_FLAGS</unmanaged>
 		[System::Flags]
 		public enum class MeshDiscardFlags : System::Int32
 		{
+			/// <summary>
+			/// Indicates that the attribute buffer should be discarded.
+			/// </summary>
 			DiscardAttributeBuffer = D3DX10_MESH_DISCARD_ATTRIBUTE_BUFFER,
+			
+			/// <summary>
+			/// Indicates that the attribute table should be discarded.
+			/// </summary>
 			DiscardAttributeTable = D3DX10_MESH_DISCARD_ATTRIBUTE_TABLE,
+			
+			/// <summary>
+			/// Indicates that the point representation buffer should be discarded.
+			/// </summary>
 			DiscardPointRepresentation = D3DX10_MESH_DISCARD_POINTREPS,
+			
+			/// <summary>
+			/// Indicates that the adjacency buffer should be discarded.
+			/// </summary>
 			DiscardAdjacency = D3DX10_MESH_DISCARD_ADJACENCY,
+			
+			/// <summary>
+			/// Indicates that any buffers committed to the device should be discarded.
+			/// </summary>
 			DiscardDeviceBuffers = D3DX10_MESH_DISCARD_DEVICE_BUFFERS
 		};
 		
@@ -972,19 +1633,58 @@ namespace SlimDX
 			DeviceIndependent = D3DX10_MESHOPT_DEVICE_INDEPENDENT,
 		};
 		
-		/// <summary></summary>
+		/// <summary>Specifies how the pipeline should interpret vertex data bound to the input assembler stage.</summary>
 		/// <unmanaged>D3D10_PRIMITIVE_TOPOLOGY</unmanaged>
 		public enum class PrimitiveTopology : System::Int32
 		{
+			// <summary>
+			/// The IA stage has not been initialized with a primitive topology. The IA stage will not function properly unless a primitive topology is defined.
+			/// </summary>
 			Undefined = D3D10_PRIMITIVE_TOPOLOGY_UNDEFINED,
+			
+			/// <summary>
+			/// Interpret the vertex data as a list of points.
+			/// </summary>
 			PointList = D3D10_PRIMITIVE_TOPOLOGY_POINTLIST,
+			
+			/// <summary>
+			/// Interpret the vertex data as a list of lines.
+			/// </summary>
 			LineList = D3D10_PRIMITIVE_TOPOLOGY_LINELIST,
+			
+			/// <summary>
+			/// Interpret the vertex data as a line strip.
+			/// </summary>
 			LineStrip = D3D10_PRIMITIVE_TOPOLOGY_LINESTRIP,
+			
+			/// <summary>
+			/// Interpret the vertex data as a list of triangles.
+			/// </summary>
 			TriangleList = D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+			
+			/// <summary>
+			/// Interpret the vertex data as a triangle strip.
+			/// </summary>
 			TriangleStrip = D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP,
+			
+			/// <summary>
+			/// Interpret the vertex data as list of lines with adjacency data.
+			/// </summary>
 			LineListWithAdjacency = D3D10_PRIMITIVE_TOPOLOGY_LINELIST_ADJ,
+			
+			/// <summary>
+			/// Interpret the vertex data as line strip with adjacency data.
+			/// </summary>
 			LineStripWithAdjacency = D3D10_PRIMITIVE_TOPOLOGY_LINESTRIP_ADJ,
+			
+			/// <summary>
+			/// Interpret the vertex data as list of triangles with adjacency data.
+			/// </summary>
 			TriangleListWithAdjacency = D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST_ADJ,
+			
+			/// <summary>
+			/// Interpret the vertex data as triangle strip with adjacency data.
+			/// </summary>
 			TriangleStripWithAdjacency = D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP_ADJ
 		};
 		

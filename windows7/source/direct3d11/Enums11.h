@@ -40,37 +40,6 @@ namespace SlimDX
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
 
-		/// <summary>Identifies modes in which a resource can be accessed by the CPU.</summary>
-		/// <unmanaged>D3D11_MAP</unmanaged>
-		public enum class MapMode : System::Int32
-		{
-			/// <summary>
-			/// Resource is mapped for reading. The resource must have been created with read access.
-			/// </summary>
-			Read = D3D11_MAP_READ,
-
-			/// <summary>
-			/// Resource is mapped for writing. The resource must have been created with write access.
-			/// </summary>
-			Write = D3D11_MAP_WRITE,
-
-			/// <summary>
-			/// Resource is mapped for reading and writing. The resource must have been created with read and write access.
-			/// </summary>
-			ReadWrite = D3D11_MAP_READ_WRITE,
-
-			/// <summary>
-			/// Resource is mapped for writing; the previous contents of the resource will be undefined. The resource must have been created with write access.
-			/// </summary>
-			WriteDiscard = D3D11_MAP_WRITE_DISCARD,
-
-			/// <summary>
-			/// Resource is mapped for writing; the existing contents of the resource cannot be overwritten. This flag is only valid on
-			/// vertex and index buffers. The resource must have been created with write access.
-			/// </summary>
-			WriteNoOverwrite = D3D11_MAP_WRITE_NO_OVERWRITE
-		};
-		
 		/// <summary>Optional flags that control the behavior of <see cref="Asynchronous">Asynchronous.GetData</see>.</summary>
 		/// <unmanaged>D3D11_ASYNC_GETDATA_FLAG</unmanaged>
 		[System::Flags]
@@ -120,7 +89,7 @@ namespace SlimDX
 			/// <summary>
 			/// Indicates the resource can be bound to the shader stage as a buffer or texture. 
 			/// Note that it is invalid to specify this flag and subsequently map the resource
-			/// using <see cref="MapMode"/>.WriteNoOverwrite.
+			/// using MapMode.WriteNoOverwrite.
 			/// </summary>
 			ShaderResource = D3D11_BIND_SHADER_RESOURCE, 
 
@@ -712,7 +681,6 @@ namespace SlimDX
 
 		/// <summary>Specifies filtering options used during texture sampling.</summary>
 		/// <unmanaged>D3D11_FILTER</unmanaged>
-		[System::Flags]
 		public enum class Filter : System::Int32
 		{
 			/// <summary>
@@ -1026,7 +994,7 @@ namespace SlimDX
 			ShaderGatherComparisonIntrinsic = D3D11_FORMAT_SUPPORT_SHADER_GATHER_COMPARISON
 		};
 		
-		/// <summary>Specifies image file formats supported by Direct3D.</summary>
+		/// <summary>Specifies image file formats supported by runtime.</summary>
 		/// <unmanaged>D3DX11_IMAGE_FILE_FORMAT</unmanaged>
 		public enum class ImageFileFormat : System::Int32
 		{
@@ -1085,7 +1053,7 @@ namespace SlimDX
 			PerInstanceData = D3D11_INPUT_PER_INSTANCE_DATA
 		};
 		
-		/// <summary>Specifies how the CPU should respond when map is called on a resource being used by the GPU.</summary>
+		/// <summary>Specifies how the CPU should respond when Map() is called on a resource being used by the GPU.</summary>
 		/// <unmanaged>D3D11_MAP_FLAG</unmanaged>
 		[System::Flags]
 		public enum class MapFlags : System::Int32
@@ -1102,7 +1070,38 @@ namespace SlimDX
 			DoNotWait = D3D11_MAP_FLAG_DO_NOT_WAIT
 		};
 		
-		/// <summary></summary>
+		/// <summary>Identifies modes in which a resource can be accessed by the CPU.</summary>
+		/// <unmanaged>D3D11_MAP</unmanaged>
+		public enum class MapMode : System::Int32
+		{
+			/// <summary>
+			/// Resource is mapped for reading. The resource must have been created with read access.
+			/// </summary>
+			Read = D3D11_MAP_READ,
+
+			/// <summary>
+			/// Resource is mapped for writing. The resource must have been created with write access.
+			/// </summary>
+			Write = D3D11_MAP_WRITE,
+
+			/// <summary>
+			/// Resource is mapped for reading and writing. The resource must have been created with read and write access.
+			/// </summary>
+			ReadWrite = D3D11_MAP_READ_WRITE,
+
+			/// <summary>
+			/// Resource is mapped for writing; the previous contents of the resource will be undefined. The resource must have been created with write access.
+			/// </summary>
+			WriteDiscard = D3D11_MAP_WRITE_DISCARD,
+
+			/// <summary>
+			/// Resource is mapped for writing; the existing contents of the resource cannot be overwritten. This flag is only valid on
+			/// vertex and index buffers. The resource must have been created with write access.
+			/// </summary>
+			WriteNoOverwrite = D3D11_MAP_WRITE_NO_OVERWRITE
+		};
+		
+		/// <summary>Specifies how the pipeline should interpret vertex data bound to the input assembler stage.</summary>
 		/// <unmanaged>D3D11_PRIMITIVE_TOPOLOGY</unmanaged>
 		public enum class PrimitiveTopology : System::Int32
 		{
