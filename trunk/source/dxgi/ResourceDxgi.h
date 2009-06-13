@@ -28,7 +28,7 @@
 #include "DeviceChildDxgi.h"
 #include "Enums.h"
 
-#define BOOST_PP_FILENAME_1 "Resource.h"
+#define BOOST_PP_FILENAME_1 "ResourceDxgi.h"
 #include "../InterfaceSetup.h"
 #endif
 #else

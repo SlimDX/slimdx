@@ -25,24 +25,14 @@
 
 #include "DXGIException.h"
 
-#include "Resource.h"
+#include "ResourceDxgi.h"
 
 using namespace System;
 
 namespace SlimDX
 {
 namespace DXGI
-{ 	
-	Resource::Resource( IDXGIResource* pointer )
-	{
-		Construct( pointer );
-	}
-	
-	Resource::Resource( IntPtr pointer )
-	{
-		Construct( pointer, NativeInterface );
-	}
-
+{
 	ResourcePriority Resource::EvictionPriority::get()
 	{
 		UINT priority = 0;
