@@ -51,6 +51,8 @@ namespace SlimDX
 		initonly bool m_CanRead;
 		initonly bool m_CanWrite;
 
+		System::Runtime::InteropServices::GCHandle m_GCHandle;
+
 	internal:
 		DataStream( ID3DXBuffer *buffer );
 		DataStream( void* buffer, System::Int64 sizeInBytes, bool canRead, bool canWrite, bool makeCopy );
@@ -86,7 +88,7 @@ namespace SlimDX
 		DataStream( System::Int64 sizeInBytes, bool canRead, bool canWrite );
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DataStream"/> class, using a user provided buffer as a backing store.
+		/// Initializes a new instance of the <see cref="DataStream"/> class, using an unmanaged buffer as a backing store.
 		/// </summary>
 		/// <param name="userBuffer">A pointer to the buffer to be used as a backing store.</param>
 		/// <param name="sizeInBytes">The size of the buffer provided, in bytes.</param>
@@ -95,6 +97,14 @@ namespace SlimDX
 		/// <exception cref="ArgumentNullException"><paramref name="userBuffer" /> is a zero pointer.</exception>
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="sizeInBytes" /> is less than 1.</exception>
 		DataStream( System::IntPtr userBuffer, System::Int64 sizeInBytes, bool canRead, bool canWrite );
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="DataStream"/> class, using a managed buffer as a backing store.
+		/// </summary>
+		/// <param name="userBuffer">A managed array to be used as a backing store.</param>
+		/// <param name="canRead"><c>true</c> if reading from the buffer should be allowed; otherwise, <c>false</c>.</param>
+		/// <param name="canWrite"><c>true</c> if writing to the buffer should be allowed; otherwise, <c>false</c>.</param>
+		DataStream( System::Array^ userBuffer, bool canRead, bool canWrite );
 		
 		/// <summary>
 		/// Releases all resources used by the <see cref="DataStream"/>.

@@ -31,6 +31,7 @@
 
 using namespace System;
 using namespace System::IO;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
@@ -119,6 +120,23 @@ namespace SlimDX
 		m_ID3DXBuffer = 0;
 		GC::SuppressFinalize( this );
 	}
+	
+	DataStream::DataStream( System::Array^ userBuffer, bool canRead, bool canWrite )
+	{
+		if( userBuffer == nullptr )
+			throw gcnew ArgumentNullException( "userBuffer" );
+		
+		m_GCHandle = GCHandle::Alloc( userBuffer, GCHandleType::Pinned );
+		
+		m_Buffer = static_cast<char*>( m_GCHandle.AddrOfPinnedObject().ToPointer() );
+		m_Size = userBuffer->Length;
+
+		m_CanRead = canRead;
+		m_CanWrite = canWrite;
+		
+		m_ID3DXBuffer = 0;
+		GC::SuppressFinalize( this );
+	}
 
 	DataStream::~DataStream()
 	{
@@ -144,6 +162,11 @@ namespace SlimDX
 		{
 			m_ID3DXBuffer->Release();
 			m_ID3DXBuffer = 0;
+		}
+		
+		if( m_GCHandle.IsAllocated )
+		{
+			m_GCHandle.Free();
 		}
 		
 		m_Buffer = 0;
