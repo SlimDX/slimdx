@@ -630,7 +630,7 @@ namespace SlimDX
 			Software = D3D10_DRIVER_TYPE_SOFTWARE
 		};
 
-		/// <summary>Specifies compile- or run-time options during <see cref="SlimDX::Effect>Effect</see> creation.</summary>
+		/// <summary>Specifies compile- or run-time options during <see cref="SlimDX::Direct3D10::Effect">Effect</see> creation.</summary>
 		/// <unmanaged>D3D10_EFFECT</unmanaged>
 		[System::Flags]
 		public enum class EffectFlags : System::Int32
@@ -658,7 +658,7 @@ namespace SlimDX
 			SingleThreaded = D3D10_EFFECT_SINGLE_THREADED,
 		};
 
-		/// <summary>Specifies detailed information about <see cref="SlimDX::Effect>Effect</see> variables.</summary>
+		/// <summary>Specifies detailed information about <see cref="SlimDX::Direct3D10::Effect">Effect</see> variables.</summary>
 		/// <unmanaged>D3D10_EFFECT_VARIABLE</unmanaged>
 		[System::Flags]
 		public enum class EffectVariableFlags : System::Int32
@@ -1637,7 +1637,7 @@ namespace SlimDX
 		/// <unmanaged>D3D10_PRIMITIVE_TOPOLOGY</unmanaged>
 		public enum class PrimitiveTopology : System::Int32
 		{
-			// <summary>
+			/// <summary>
 			/// The IA stage has not been initialized with a primitive topology. The IA stage will not function properly unless a primitive topology is defined.
 			/// </summary>
 			Undefined = D3D10_PRIMITIVE_TOPOLOGY_UNDEFINED,
