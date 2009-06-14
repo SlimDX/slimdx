@@ -27,7 +27,8 @@ namespace SlimDX
 {
 	namespace XInput
 	{
-		/// <summary>Defines error result codes that are returned by XInput functions.</summary>
+		/// <summary>Defines result codes that are returned by XInput functions.</summary>
+		/// <unmanaged href="ms679692">HRESULT</unmanaged>
 		public ref class ResultCode sealed
 		{
 		private:
@@ -37,6 +38,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the desired controller is not connected to the system.
 			/// </summary>
+			/// <unmanaged href="ms681383">ERROR_DEVICE_NOT_CONNECTED</unmanaged>
 			property static Result NotConnected
 			{
 				Result get();
@@ -45,6 +47,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the result of an operation is an empty set.
 			/// </summary>
+			/// <unmanaged href="ms681387">ERROR_EMPTY</unmanaged>
 			property static Result Empty
 			{
 				Result get();
@@ -53,6 +56,7 @@ namespace SlimDX
 			/// <summary>
 			/// Represents the result of a successful operation.
 			/// </summary>
+			/// <unmanaged href="ms681382">ERROR_SUCCESS</unmanaged>
 			property static Result Success
 			{
 				Result get();
@@ -61,6 +65,7 @@ namespace SlimDX
 			/// <summary>
 			/// Represents a generic failure result.
 			/// </summary>
+			/// <unmanaged href="aa378137">E_FAIL</unmanaged>
 			property static Result Failure
 			{
 				Result get();

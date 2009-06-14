@@ -25,52 +25,91 @@ namespace SlimDX
 {
 	namespace DirectWrite
 	{
+		/// <summary>Defines result codes that are returned by DirectWrite functions.</summary>
+		/// <unmanaged href="ms679692">HRESULT</unmanaged>
 		public ref class ResultCode sealed
 		{
 		private:
 			ResultCode();
 			
 		public:
+			/// <summary>
+			/// Indicates an error in an input file such as a font file.
+			/// </summary>
+			/// <unmanaged>DWRITE_E_FILEFORMAT</unmanaged>
 			property static Result InvalidFileFormat
 			{
 				Result get();
 			};
 
+			/// <summary>
+			/// Indicates an error originating in DirectWrite code, which is not expected to occur but is safe to recover from.
+			/// </summary>
+			/// <unmanaged>DWRITE_E_UNEXPECTED</unmanaged>
 			property static Result UnexpectedError
 			{
 				Result get();
 			};
 
+			/// <summary>
+			/// Indicates the specified font does not exist.
+			/// </summary>
+			/// <unmanaged>DWRITE_E_NOFONT</unmanaged>
 			property static Result NonexistentFont
 			{
 				Result get();
 			};
 
+			/// <summary>
+			/// Represents a generic failure result.
+			/// </summary>
+			/// <unmanaged href="aa378137">E_FAIL</unmanaged>
 			property static Result Failure
 			{
 				Result get();
 			};
 
+			/// <summary>
+			/// A font file could not be opened because the file, directory, network location, drive, or other storage
+			/// location does not exist or is unavailable.
+			/// </summary>
+			/// <unmanaged>DWRITE_E_FILENOTFOUND</unmanaged>
 			property static Result FileNotFound
 			{
 				Result get();
 			};
 
+			/// <summary>
+			/// A font file exists but could not be opened due to access denied, sharing violation, or similar error.
+			/// </summary>
+			/// <unmanaged>DWRITE_E_FILEACCESS</unmanaged>
 			property static Result InvalidFileAccess
 			{
 				Result get();
 			};
 
+			/// <summary>
+			/// A font collection is obsolete due to changes in the system.
+			/// </summary>
+			/// <unmanaged>DWRITE_E_FONTCOLLECTIONOBSOLETE</unmanaged>
 			property static Result FontCollectionObsolete
 			{
 				Result get();
 			};
 
+			/// <summary>
+			/// The given interface is already registered.
+			/// </summary>
+			/// <unmanaged>DWRITE_E_ALREADYREGISTERED</unmanaged>
 			property static Result AlreadyRegistered
 			{
 				Result get();
 			};
 
+			/// <summary>
+			/// Represents the result of a successful operation.
+			/// </summary>
+			/// <unmanaged href="aa378137">E_FAIL</unmanaged>
 			property static Result Success
 			{
 				Result get();

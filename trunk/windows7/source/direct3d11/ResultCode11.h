@@ -25,82 +25,144 @@ namespace SlimDX
 {
 	namespace Direct3D11
 	{
+		/// <summary>Defines result codes that are returned by Direct3D 11 functions.</summary>
+		/// <unmanaged href="ms679692">HRESULT</unmanaged>
 		public ref class ResultCode sealed
 		{
 		private:
 			ResultCode();
 			
 		public:
+			/// <summary>
+			/// The method call is invalid. For example, a method's parameter may not be a valid pointer.
+			/// </summary>
+			/// <unmanaged>D3DERR_INVALIDCALL</unmanaged>
 			property static Result InvalidCall
 			{
 				Result get();
 			}
 
+			/// <summary>
+			/// The previous blit operation that is transferring information to or from this surface is incomplete.
+			/// </summary>
+			/// <unmanaged>D3DERR_WASSTILLDRAWING</unmanaged>
 			property static Result WasStillDrawing
 			{
 				Result get();
 			}
 
+			/// <summary>
+			/// The file was not found.
+			/// </summary>
+			/// <unmanaged>D3D11_ERROR_FILE_NOT_FOUND</unmanaged>
 			property static Result FileNotFound
 			{
 				Result get();
 			}
 
+			/// <summary>
+			/// There are too many unique instances of a particular type of state object.
+			/// </summary>
+			/// <unmanaged>D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS</unmanaged>
 			property static Result TooManyUniqueStateObjects
 			{
 				Result get();
 			}
 			
+			/// <summary>
+			/// The index buffer cannot be modified. 
+			/// </summary>
+			/// <unmanaged>D3DX11_ERR_CANNOT_MODIFY_INDEX_BUFFER</unmanaged>
 			property static Result CannotModifyIndexBuffer
 			{
 				Result get();
 			}
 			
+			/// <summary>
+			/// The mesh is invalid.
+			/// </summary>
+			/// <unmanaged>D3DX11_ERR_INVALID_MESH</unmanaged>
 			property static Result InvalidMesh
 			{
 				Result get();
 			}
 			
+			/// <summary>
+			/// Attribute sort is not supported as an optimization technique. 
+			/// </summary>
+			/// <unmanaged>D3DX11_ERR_CANNOT_ATTR_SORT</unmanaged>
 			property static Result CannotSortByAttribute
 			{
 				Result get();
 			}
 			
+			/// <summary>
+			/// Skinning is not supported. 
+			/// </summary>
+			/// <unmanaged>D3DX11_ERR_SKINNING_NOT_SUPPORTED</unmanaged>
 			property static Result SkinningNotSupported
 			{
 				Result get();
 			}
 			
+			/// <summary>
+			/// Too many influences specified. 
+			/// </summary>
+			/// <unmanaged>D3DX11_ERR_TOO_MANY_INFLUENCES</unmanaged>
 			property static Result TooManyInfluences
 			{
 				Result get();
 			}
 			
+			/// <summary>
+			/// The data is invalid.
+			/// </summary>
+			/// <unmanaged>D3DX11_ERR_INVALID_DATA</unmanaged>
 			property static Result InvalidData
 			{
 				Result get();
 			}
 			
+			/// <summary>
+			/// The mesh has no data. 
+			/// </summary>
+			/// <unmanaged>D3DX11_ERR_LOADED_MESH_HAS_NO_DATA</unmanaged>
 			property static Result LoadedMeshHasNoData
 			{
 				Result get();
 			}
 			
+			/// <summary>
+			/// A fragment with that name already exists. 
+			/// </summary>
+			/// <unmanaged>D3DX11_ERR_DUPLICATE_NAMED_FRAGMENT</unmanaged>
 			property static Result DuplicateNamedFragment
 			{
 				Result get();
 			}
 			
+			/// <summary>
+			/// The last item cannot be deleted. 
+			/// </summary>
+			/// <unmanaged>D3DX11_ERR_CANNOT_REMOVE_LAST_ITEM</unmanaged>
 			property static Result CannotRemoveLastItem
 			{
 				Result get();
 			}
 
+			/// <summary>
+			/// Represents the result of a successful operation.
+			/// </summary>
+			/// <unmanaged href="aa378137">S_OK</unmanaged>
 			property static Result Success
 			{
 				Result get();
 			}
 
+			/// <summary>
+			/// Represents a generic failure result.
+			/// </summary>
+			/// <unmanaged href="aa378137">E_FAIL</unmanaged>
 			property static Result Failure
 			{
 				Result get();

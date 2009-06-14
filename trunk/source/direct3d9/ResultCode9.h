@@ -146,7 +146,7 @@ namespace SlimDX
 			/// <summary>
 			/// Represents a generic failure result.
 			/// </summary>
-			/// <unmanaged>E_FAIL</unmanaged>
+			/// <unmanaged href="aa378137">E_FAIL</unmanaged>
 			property static Result Failure
 			{
 				Result get();

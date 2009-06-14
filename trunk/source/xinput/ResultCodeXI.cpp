@@ -35,7 +35,7 @@ namespace XInput
 	
 	Result ResultCode::NotConnected::get()
 	{
-		return Result( HRESULT_FROM_WIN32( ERROR_NOT_CONNECTED ) );
+		return Result( HRESULT_FROM_WIN32( ERROR_DEVICE_NOT_CONNECTED ) );
 	}
 	
 	Result ResultCode::Empty::get()
