@@ -33,6 +33,11 @@ namespace XAudio2
 	{
 	}
 
+	Result ResultCode::InvalidCall::get()
+	{
+		return Result( XAUDIO2_E_INVALID_CALL );
+	}
+
 	Result ResultCode::XmaDecoderError::get()
 	{
 		return Result( XAUDIO2_E_XMA_DECODER_ERROR );

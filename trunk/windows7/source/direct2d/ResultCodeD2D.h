@@ -36,6 +36,7 @@ namespace SlimDX
 			/// <summary>
 			/// Invalid number.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_BAD_NUMBER</unmanaged>
 			property static Result BadNumber
 			{
@@ -45,6 +46,7 @@ namespace SlimDX
 			/// <summary>
 			/// The display format needed to render is not supported by the hardware device.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_DISPLAY_FORMAT_NOT_SUPPORTED</unmanaged>
 			property static Result DisplayFormatNotSupported
 			{
@@ -54,6 +56,7 @@ namespace SlimDX
 			/// <summary>
 			/// A valid display state could not be determined.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_DISPLAY_STATE_INVALID</unmanaged>
 			property static Result DisplayStateInvalid
 			{
@@ -63,6 +66,7 @@ namespace SlimDX
 			/// <summary>
 			/// Represents a generic failure result.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged href="aa378137">E_FAIL</unmanaged>
 			property static Result Failure
 			{
@@ -72,6 +76,7 @@ namespace SlimDX
 			/// <summary>
 			/// The brush types are incompatible for the call.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_INCOMPATIBLE_BRUSH_TYPES</unmanaged>
 			property static Result IncompatibleBrushTypes
 			{
@@ -81,6 +86,7 @@ namespace SlimDX
 			/// <summary>
 			/// The supplied buffer was too small to accomodate the data.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_INSUFFICIENT_BUFFER</unmanaged>
 			property static Result InsufficientBuffer
 			{
@@ -90,6 +96,7 @@ namespace SlimDX
 			/// <summary>
 			/// The object has not yet been initialized.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_NOT_INITIALIZED</unmanaged>
 			property static Result NotInitialized
 			{
@@ -100,6 +107,7 @@ namespace SlimDX
 			/// An internal error (D2D bug) occurred. On checked builds, we would assert.
 			/// The application should close this instance of D2D and should consider restarting its process.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_INTERNAL_ERROR</unmanaged>
 			property static Result InternalError
 			{
@@ -109,6 +117,7 @@ namespace SlimDX
 			/// <summary>
 			/// A call to this method is invalid.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_INVALID_CALL</unmanaged>
 			property static Result InvalidCall
 			{
@@ -118,6 +127,7 @@ namespace SlimDX
 			/// <summary>
 			/// A layer resource was used more than once.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_LAYER_ALREADY_IN_USE</unmanaged>
 			property static Result LayerAlreadyInUse
 			{
@@ -127,6 +137,7 @@ namespace SlimDX
 			/// <summary>
 			/// Requested DX surface size exceeded maximum texture size.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_MAX_TEXTURE_SIZE_EXCEEDED</unmanaged>
 			property static Result MaxTextureSizeExceeded
 			{
@@ -136,6 +147,7 @@ namespace SlimDX
 			/// <summary>
 			/// No HW rendering device is available for this operation.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_NO_HARDWARE_DEVICE</unmanaged>
 			property static Result NoHardwareDevice
 			{
@@ -145,6 +157,7 @@ namespace SlimDX
 			/// <summary>
 			/// The pop call did not match the corresponding push call.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_POP_CALL_DID_NOT_MATCH_PUSH</unmanaged>
 			property static Result PopCallDidNotMatchPush
 			{
@@ -154,6 +167,7 @@ namespace SlimDX
 			/// <summary>
 			/// The push and pop calls were unbalanced.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_PUSH_POP_UNBALANCED</unmanaged>
 			property static Result PushPopUnbalanced
 			{
@@ -164,6 +178,7 @@ namespace SlimDX
 			/// There has been a presentation error that may be recoverable. The caller
 			/// needs to recreate, rerender the entire frame, and reattempt present.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_RECREATE_TARGET</unmanaged>
 			property static Result RecreateTarget
 			{
@@ -173,6 +188,7 @@ namespace SlimDX
 			/// <summary>
 			/// Attempted to copy from a render target while a layer or clip rect is applied.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_RENDER_TARGET_HAS_LAYER_OR_CLIPRECT</unmanaged>
 			property static Result RenderTargetHasLayerOrClippingRectangle
 			{
@@ -182,6 +198,7 @@ namespace SlimDX
 			/// <summary>
 			/// The geometry scanner failed to process the data.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_SCANNER_FAILED</unmanaged>
 			property static Result ScannerFailed
 			{
@@ -191,6 +208,7 @@ namespace SlimDX
 			/// <summary>
 			/// D2D could not access the screen.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_SCREEN_ACCESS_DENIED</unmanaged>
 			property static Result ScreenAccessDenied
 			{
@@ -200,6 +218,7 @@ namespace SlimDX
 			/// <summary>
 			/// Shader compilation failed.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_SHADER_COMPILE_FAILED</unmanaged>
 			property static Result ShaderCompileFailed
 			{
@@ -209,6 +228,7 @@ namespace SlimDX
 			/// <summary>
 			/// Represents the result of a successful operation.
 			/// </summary>
+			/// <remarks>This is a successful result.</remarks>
 			/// <unmanaged href="aa378137">E_FAIL</unmanaged>
 			property static Result Success
 			{
@@ -218,6 +238,7 @@ namespace SlimDX
 			/// <summary>
 			/// The render target is not compatible with GDI.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_TARGET_NOT_GDI_COMPATIBLE</unmanaged>
 			property static Result TargetNotGdiCompatible
 			{
@@ -227,6 +248,7 @@ namespace SlimDX
 			/// <summary>
 			/// A text client drawing effect object is of the wrong type.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_TEXT_EFFECT_IS_WRONG_TYPE</unmanaged>
 			property static Result TextEffectIsWrongType
 			{
@@ -238,6 +260,7 @@ namespace SlimDX
 			/// after the corresponding DrawText or DrawTextLayout call has returned.
 			/// The TextRenderer instance will be zombied.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_TEXT_RENDERER_NOT_RELEASED</unmanaged>
 			property static Result TextRendererNotReleased
 			{
@@ -247,6 +270,7 @@ namespace SlimDX
 			/// <summary>
 			/// Shader construction failed because it was too complex.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_TOO_MANY_SHADER_ELEMENTS</unmanaged>
 			property static Result TooManyShaderElements
 			{
@@ -256,6 +280,7 @@ namespace SlimDX
 			/// <summary>
 			/// The requested opertion is not supported.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_UNSUPPORTED_OPERATION</unmanaged>
 			property static Result UnsupportedOperation
 			{
@@ -265,6 +290,7 @@ namespace SlimDX
 			/// <summary>
 			/// The requested D2D version is not supported.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_UNSUPPORTED_VERSION</unmanaged>
 			property static Result UnsupportedVersion
 			{
@@ -274,6 +300,7 @@ namespace SlimDX
 			/// <summary>
 			/// An unknown Win32 failure occurred.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_WIN32_ERROR</unmanaged>
 			property static Result Win32Error
 			{
@@ -283,6 +310,7 @@ namespace SlimDX
 			/// <summary>
 			/// Objects used together must be created from the same factory instance.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_WRONG_FACTORY</unmanaged>
 			property static Result WrongFactory
 			{
@@ -292,6 +320,7 @@ namespace SlimDX
 			/// <summary>
 			/// The resource was realized on the wrong render target.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_WRONG_RENDER_TARGET</unmanaged>
 			property static Result WrongRenderTarget
 			{
@@ -301,6 +330,7 @@ namespace SlimDX
 			/// <summary>
 			/// The object was not in the correct state to process the method.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_WRONG_STATE</unmanaged>
 			property static Result WrongState
 			{
@@ -310,6 +340,7 @@ namespace SlimDX
 			/// <summary>
 			/// The supplied vector is vero.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D2DERR_ZERO_VECTOR</unmanaged>
 			property static Result ZeroVector
 			{

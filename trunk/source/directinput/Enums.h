@@ -332,7 +332,7 @@ namespace SlimDX
 
 			Start = DIEP_START,
 			NoRestart = DIEP_NORESTART,
-			NoDownload = DIEP_NODOWNLOAD
+			NoDownload = (int) DIEP_NODOWNLOAD
 		};
 
 #pragma warning(disable: 4369)

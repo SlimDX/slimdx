@@ -108,5 +108,20 @@ namespace Direct3D11
 	{
 		return Result( E_FAIL );
 	}
+
+	Result ResultCode::InvalidArgument::get()
+	{
+		return Result( E_INVALIDARG );
+	}
+
+	Result ResultCode::OutOfMemory::get()
+	{
+		return Result( E_OUTOFMEMORY );
+	}
+
+	Result ResultCode::False::get()
+	{
+		return Result( S_FALSE );
+	}
 }
 }

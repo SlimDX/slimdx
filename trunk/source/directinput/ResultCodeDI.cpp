@@ -252,5 +252,20 @@ namespace DirectInput
 	{
 		return Result( DI_WRITEPROTECT );
 	}
+
+	Result ResultCode::InvalidHandle::get()
+	{
+		return Result( E_HANDLE );
+	}
+
+	Result ResultCode::Pending::get()
+	{
+		return Result( E_PENDING );
+	}
+
+	Result ResultCode::InvalidPointer::get()
+	{
+		return Result( E_POINTER );
+	}
 }
 }

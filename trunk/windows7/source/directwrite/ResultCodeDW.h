@@ -36,6 +36,7 @@ namespace SlimDX
 			/// <summary>
 			/// Indicates an error in an input file such as a font file.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>DWRITE_E_FILEFORMAT</unmanaged>
 			property static Result InvalidFileFormat
 			{
@@ -45,6 +46,7 @@ namespace SlimDX
 			/// <summary>
 			/// Indicates an error originating in DirectWrite code, which is not expected to occur but is safe to recover from.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>DWRITE_E_UNEXPECTED</unmanaged>
 			property static Result UnexpectedError
 			{
@@ -54,6 +56,7 @@ namespace SlimDX
 			/// <summary>
 			/// Indicates the specified font does not exist.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>DWRITE_E_NOFONT</unmanaged>
 			property static Result NonexistentFont
 			{
@@ -63,6 +66,7 @@ namespace SlimDX
 			/// <summary>
 			/// Represents a generic failure result.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged href="aa378137">E_FAIL</unmanaged>
 			property static Result Failure
 			{
@@ -73,6 +77,7 @@ namespace SlimDX
 			/// A font file could not be opened because the file, directory, network location, drive, or other storage
 			/// location does not exist or is unavailable.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>DWRITE_E_FILENOTFOUND</unmanaged>
 			property static Result FileNotFound
 			{
@@ -82,6 +87,7 @@ namespace SlimDX
 			/// <summary>
 			/// A font file exists but could not be opened due to access denied, sharing violation, or similar error.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>DWRITE_E_FILEACCESS</unmanaged>
 			property static Result InvalidFileAccess
 			{
@@ -91,6 +97,7 @@ namespace SlimDX
 			/// <summary>
 			/// A font collection is obsolete due to changes in the system.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>DWRITE_E_FONTCOLLECTIONOBSOLETE</unmanaged>
 			property static Result FontCollectionObsolete
 			{
@@ -100,6 +107,7 @@ namespace SlimDX
 			/// <summary>
 			/// The given interface is already registered.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>DWRITE_E_ALREADYREGISTERED</unmanaged>
 			property static Result AlreadyRegistered
 			{
@@ -109,7 +117,8 @@ namespace SlimDX
 			/// <summary>
 			/// Represents the result of a successful operation.
 			/// </summary>
-			/// <unmanaged href="aa378137">E_FAIL</unmanaged>
+			/// <remarks>This is a successful result.</remarks>
+			/// <unmanaged href="aa378137">S_OK</unmanaged>
 			property static Result Success
 			{
 				Result get();
