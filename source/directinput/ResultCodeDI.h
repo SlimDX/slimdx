@@ -27,6 +27,8 @@ namespace SlimDX
 {
 	namespace DirectInput
 	{
+		/// <summary>Defines result codes that are returned by DirectInput 8 functions.</summary>
+		/// <unmanaged href="ms679692">HRESULT</unmanaged>
 		public ref class ResultCode sealed
 		{
 		private:

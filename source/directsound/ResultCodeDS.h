@@ -25,7 +25,8 @@ namespace SlimDX
 {
 	namespace DirectSound
 	{
-		/// <summary>Defines error result codes that are returned by DirectSound functions.</summary>
+		/// <summary>Defines result codes that are returned by DirectSound 8 functions.</summary>
+		/// <unmanaged href="ms679692">HRESULT</unmanaged>
 		public ref class ResultCode sealed
 		{
 		private:

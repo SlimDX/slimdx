@@ -27,32 +27,54 @@ namespace SlimDX
 {
 	namespace XAudio2
 	{
+		/// <summary>Defines result codes that are returned by XAudio 2 functions.</summary>
+		/// <unmanaged href="ms679692">HRESULT</unmanaged>
 		public ref class ResultCode sealed
 		{
 		private:
 			ResultCode();
 			
 		public:
+			/// <summary>
+			/// The decoder suffered an unrecoverable error.
+			/// </summary>
+			/// <unmanaged>XAUDIO2_E_XMA_DECODER_ERROR</unmanaged>
 			property static Result XmaDecoderError
 			{
 				Result get();
 			}
 
+			/// <summary>
+			/// An effect failed to instantiate.
+			/// </summary>
+			/// <unmanaged>XAUDIO2_E_XAPO_CREATION_FAILED</unmanaged>
 			property static Result EffectCreationFailed
 			{
 				Result get();
 			}
 
+			/// <summary>
+			/// An audio device became unusable (possibly due to being unplugged, or some other event).
+			/// </summary>
+			/// <unmanaged>XAUDIO2_E_DEVICE_INVALIDATED</unmanaged>
 			property static Result DeviceInvalidated
 			{
 				Result get();
 			}
 
+			/// <summary>
+			/// Represents the result of a successful operation.
+			/// </summary>
+			/// <unmanaged href="aa378137">S_OK</unmanaged>
 			property static Result Success
 			{
 				Result get();
 			}
 
+			/// <summary>
+			/// Represents a generic failure result.
+			/// </summary>
+			/// <unmanaged href="aa378137">E_FAIL</unmanaged>
 			property static Result Failure
 			{
 				Result get();
