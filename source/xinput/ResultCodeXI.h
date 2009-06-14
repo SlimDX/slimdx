@@ -38,6 +38,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the desired controller is not connected to the system.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged href="ms681383">ERROR_DEVICE_NOT_CONNECTED</unmanaged>
 			property static Result NotConnected
 			{
@@ -47,6 +48,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the result of an operation is an empty set.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged href="ms681387">ERROR_EMPTY</unmanaged>
 			property static Result Empty
 			{
@@ -56,6 +58,7 @@ namespace SlimDX
 			/// <summary>
 			/// Represents the result of a successful operation.
 			/// </summary>
+			/// <remarks>This is a successful result.</remarks>
 			/// <unmanaged href="ms681382">ERROR_SUCCESS</unmanaged>
 			property static Result Success
 			{
@@ -65,6 +68,7 @@ namespace SlimDX
 			/// <summary>
 			/// Represents a generic failure result.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged href="aa378137">E_FAIL</unmanaged>
 			property static Result Failure
 			{

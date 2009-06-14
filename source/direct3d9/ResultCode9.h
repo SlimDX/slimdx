@@ -38,6 +38,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when attribute sorting is not supported as an optimization technique.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DXERR_CANNOTATTRSORT</unmanaged>
 			property static Result CannotAttributeSort
 			{
@@ -47,6 +48,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when a user tries to modify an immutable index buffer.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DXERR_CANNOTMODIFYINDEXBUFFER</unmanaged>
 			property static Result CannotModifyIndexBuffer
 			{
@@ -56,6 +58,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when a user tries to remove the last item in a collection.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DXERR_CANNOTREMOVELASTITEM</unmanaged>
 			property static Result CannotRemoveLastItem
 			{
@@ -65,6 +68,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when two set render states conflict with each other.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_CONFLICTINGRENDERSTATE</unmanaged>
 			property static Result ConflictingRenderState
 			{
@@ -74,6 +78,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when two set texture filters conflict with each other.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_CONFLICTINGTEXTUREFILTER</unmanaged>
 			property static Result ConflictingTextureFilter
 			{
@@ -83,6 +88,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when two texture palettes conflict with each other.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_CONFLICTINGTEXTUREPALETTE</unmanaged>
 			property static Result ConflictingTexturePalette
 			{
@@ -92,6 +98,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when a device is hung.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_DEVICEHUNG</unmanaged>
 			property static Result DeviceHung
 			{
@@ -101,6 +108,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when a device is lost.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged href="bb172554">D3DERR_DEVICELOST</unmanaged>
 			property static Result DeviceLost
 			{
@@ -110,6 +118,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when a lost yet resettable device has not yet been reset.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged href="bb172554">D3DERR_DEVICENOTRESET</unmanaged>
 			property static Result DeviceNotReset
 			{
@@ -119,6 +128,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when a device is removed from the system.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_DEVICEREMOVED</unmanaged>
 			property static Result DeviceRemoved
 			{
@@ -128,6 +138,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when a driver internal error is thrown.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_DRIVERINTERNALERROR</unmanaged>
 			property static Result DriverInternalError
 			{
@@ -137,6 +148,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when a fragment with the specified name already exists.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DXERR_DUPLICATENAMEDFRAGMENT</unmanaged>
 			property static Result DuplicateNamedFragment
 			{
@@ -146,6 +158,7 @@ namespace SlimDX
 			/// <summary>
 			/// Represents a generic failure result.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged href="aa378137">E_FAIL</unmanaged>
 			property static Result Failure
 			{
@@ -155,6 +168,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when an invalid method call is made. This is usually do to an invalid parameter.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged href="bb172554">D3DERR_INVALIDCALL</unmanaged>
 			property static Result InvalidCall
 			{
@@ -164,6 +178,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when passed data is invalid.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DXERR_INVALIDDATA</unmanaged>
 			property static Result InvalidData
 			{
@@ -173,6 +188,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when a requested device type is invalid.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_INVALIDDEVICE</unmanaged>
 			property static Result InvalidDevice
 			{
@@ -182,6 +198,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when an invalid mesh is passed.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DXERR_INVALIDMESH</unmanaged>
 			property static Result InvalidMesh
 			{
@@ -191,6 +208,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when a loaded mesh has no data.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DXERR_LOADEDMESHASNODATA</unmanaged>
 			property static Result LoadedMeshHasNoData
 			{
@@ -200,6 +218,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when there is more data available than the specified buffer can hold.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_MOREDATA</unmanaged>
 			property static Result MoreData
 			{
@@ -209,8 +228,9 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when a method succeeds but mipmaps could not be automatically generated.
 			/// </summary>
+			/// <remarks>This is a successful result.</remarks>
 			/// <unmanaged>D3DOK_NOAUTOGEN</unmanaged>
-			property static Result NoneButNoAutomaticGeneration
+			property static Result NoAutomaticGeneration
 			{
 				Result get();
 			};
@@ -218,6 +238,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the device does not support the queried technique.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged href="bb172554">D3DERR_NOTAVAILABLE</unmanaged>
 			property static Result NotAvailable
 			{
@@ -227,6 +248,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the requested item cannot be found.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_NOTFOUND</unmanaged>
 			property static Result NotFound
 			{
@@ -236,6 +258,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the resource is not resident in memory.
 			/// </summary>
+			/// <remarks>This is a successful result.</remarks>
 			/// <unmanaged href="bb174339">S_NOT_RESIDENT</unmanaged>
 			property static Result NotResident
 			{
@@ -245,6 +268,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the driver runs out of video memory.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_OUTOFVIDEOMEMORY</unmanaged>
 			property static Result OutOfVideoMemory
 			{
@@ -254,6 +278,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the desktop display mode changes.
 			/// </summary>
+			/// <remarks>This is a successful result.</remarks>
 			/// <unmanaged>S_PRESENT_MODE_CHANGED</unmanaged>
 			property static Result PresentModeChanged
 			{
@@ -263,6 +288,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the presentation area is occluded.
 			/// </summary>
+			/// <remarks>This is a successful result.</remarks>
 			/// <unmanaged href="bb219624">S_PRESENT_OCCLUDED</unmanaged>
 			property static Result PresentOccluded
 			{
@@ -272,6 +298,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the resource is resident in shared memory.
 			/// </summary>
+			/// <remarks>This is a successful result.</remarks>
 			/// <unmanaged href="bb174339">S_RESIDENT_IN_SHARED_MEMORY</unmanaged>
 			property static Result ResidentInSharedMemory
 			{
@@ -281,6 +308,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when skinning is not supported.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DXERR_SKINNINGNOTSUPPORTED</unmanaged>
 			property static Result SkinningNotSupported
 			{
@@ -290,6 +318,7 @@ namespace SlimDX
 			/// <summary>
 			/// Represents a generic success result.
 			/// </summary>
+			/// <remarks>This is a successful result.</remarks>
 			/// <unmanaged href="bb172554">D3D_OK</unmanaged>
 			property static Result Success
 			{
@@ -299,6 +328,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when too many vertex influences are specified.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DXERR_TOOMANYINFLUENCES</unmanaged>
 			property static Result TooManyInfluences
 			{
@@ -308,6 +338,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when more texture-filtering operations are requested than the device can support.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_TOOMANYOPERATIONS</unmanaged>
 			property static Result TooManyOperations
 			{
@@ -317,6 +348,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the device does not support the requested alpha blending argument.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_UNSUPPORTEDALPHAARG</unmanaged>
 			property static Result UnsupportedAlphaArgument
 			{
@@ -326,6 +358,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the device does not support the requested alpha blending operation.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_UNSUPPORTEDALPHAOPERATION</unmanaged>
 			property static Result UnsupportedAlphaOperation
 			{
@@ -335,6 +368,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the device not support the requested color blending argument.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_UNSUPPORTEDCOLORARG</unmanaged>
 			property static Result UnsupportedColorArgument
 			{
@@ -344,6 +378,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the device does not support the requested color blending operation.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_UNSUPPORTEDCOLOROPERATION</unmanaged>
 			property static Result UnsupportedColorOperation
 			{
@@ -353,6 +388,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the device does not support the requested texture factor value.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_UNSUPPORTEDFACTORVALUE</unmanaged>
 			property static Result UnsupportedFactorValue
 			{
@@ -362,6 +398,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the device does not support the requested texture filter.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_UNSUPPORTEDTEXTUREFILTER</unmanaged>
 			property static Result UnsupportedTextureFilter
 			{
@@ -371,6 +408,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when a previous draw operation has not yet completed at the time of a new draw call.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_WASSTILLDRAWING</unmanaged>
 			property static Result WasStillDrawing
 			{
@@ -380,6 +418,7 @@ namespace SlimDX
 			/// <summary>
 			/// Occurs when the pixel format for a texture is invalid.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3DERR_WRONGTEXTUREFORMAT</unmanaged>
 			property static Result WrongTextureFormat
 			{

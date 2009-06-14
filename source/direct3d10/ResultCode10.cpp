@@ -38,6 +38,21 @@ namespace Direct3D10
 	{
 		return Result( D3DERR_INVALIDCALL );
 	}
+
+	Result ResultCode::FileNotFound::get()
+	{
+		return Result( D3D10_ERROR_FILE_NOT_FOUND );
+	}
+
+	Result ResultCode::TooManyUniqueStateObjects::get()
+	{
+		return Result( D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS );
+	}
+
+	Result ResultCode::WasStillDrawing::get()
+	{
+		return Result( D3DERR_WASSTILLDRAWING );
+	}
 	
 	Result ResultCode::CannotModifyIndexBuffer::get()
 	{
@@ -92,6 +107,21 @@ namespace Direct3D10
 	Result ResultCode::Failure::get()
 	{
 		return Result( E_FAIL );
+	}
+
+	Result ResultCode::InvalidArgument::get()
+	{
+		return Result( E_INVALIDARG );
+	}
+
+	Result ResultCode::OutOfMemory::get()
+	{
+		return Result( E_OUTOFMEMORY );
+	}
+
+	Result ResultCode::False::get()
+	{
+		return Result( S_FALSE );
 	}
 }
 }

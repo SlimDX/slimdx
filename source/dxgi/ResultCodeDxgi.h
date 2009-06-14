@@ -39,7 +39,7 @@ namespace SlimDX
 			/// Returned when the window content is not visible.
 			/// </summary>
 			/// <remarks>This is a successful result.</remarks>
-			/// <unmanaged>DXGI_STATUS_OCCLUDED</unmanaged>
+			/// <unmanaged href="cc308061">DXGI_STATUS_OCCLUDED</unmanaged>
 			property static Result Occluded
 			{
 				Result get();
@@ -48,6 +48,7 @@ namespace SlimDX
 			/// <summary>
 			/// 
 			/// </summary>
+			/// <remarks>This is a successful result.</remarks>
 			/// <unmanaged>DXGI_STATUS_CLIPPED</unmanaged>
 			property static Result Clipped
 			{
@@ -57,6 +58,7 @@ namespace SlimDX
 			/// <summary>
 			/// 
 			/// </summary>
+			/// <remarks>This is a successful result.</remarks>
 			/// <unmanaged>DXGI_STATUS_NO_REDIRECTION</unmanaged>
 			property static Result NoRedirection
 			{
@@ -66,6 +68,7 @@ namespace SlimDX
 			/// <summary>
 			/// 
 			/// </summary>
+			/// <remarks>This is a successful result.</remarks>
 			/// <unmanaged>DXGI_STATUS_NO_DESKTOP_ACCESS</unmanaged>
 			property static Result NoDesktopAccess
 			{
@@ -75,6 +78,7 @@ namespace SlimDX
 			/// <summary>
 			/// 
 			/// </summary>
+			/// <remarks>This is a successful result.</remarks>
 			/// <unmanaged>DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE</unmanaged>
 			property static Result VideoPresentNetworkSourceInUse
 			{
@@ -84,7 +88,8 @@ namespace SlimDX
 			/// <summary>
 			/// 
 			/// </summary>
-			/// <unmanaged>DXGI_STATUS_MODE_CHANGED</unmanaged>
+			/// <remarks>This is a successful result.</remarks>
+			/// <unmanaged href="cc308061">DXGI_STATUS_MODE_CHANGED</unmanaged>
 			property static Result ModeChanged
 			{
 				Result get();
@@ -93,7 +98,8 @@ namespace SlimDX
 			/// <summary>
 			/// 
 			/// </summary>
-			/// <unmanaged>DXGI_STATUS_MODE_CHANGE_IN_PROGRESS</unmanaged>
+			/// <remarks>This is a successful result.</remarks>
+			/// <unmanaged href="cc308061">DXGI_STATUS_MODE_CHANGE_IN_PROGRESS</unmanaged>
 			property static Result ModeChangeInProgress
 			{
 				Result get();
@@ -102,7 +108,8 @@ namespace SlimDX
 			/// <summary>
 			/// 
 			/// </summary>
-			/// <unmanaged>DXGI_ERROR_INVALID_CALL</unmanaged>
+			/// <remarks>This is a failed result.</remarks>
+			/// <unmanaged href="bb509553">DXGI_ERROR_INVALID_CALL</unmanaged>
 			property static Result InvalidCall
 			{
 				Result get();
@@ -111,7 +118,8 @@ namespace SlimDX
 			/// <summary>
 			/// 
 			/// </summary>
-			/// <unmanaged>DXGI_ERROR_NOT_FOUND</unmanaged>
+			/// <remarks>This is a failed result.</remarks>
+			/// <unmanaged href="bb509553">DXGI_ERROR_NOT_FOUND</unmanaged>
 			property static Result NotFound
 			{
 				Result get();
@@ -120,7 +128,8 @@ namespace SlimDX
 			/// <summary>
 			/// 
 			/// </summary>
-			/// <unmanaged>DXGI_ERROR_MORE_DATA</unmanaged>
+			/// <remarks>This is a failed result.</remarks>
+			/// <unmanaged href="bb509553">DXGI_ERROR_MORE_DATA</unmanaged>
 			property static Result MoreData
 			{
 				Result get();
@@ -129,7 +138,8 @@ namespace SlimDX
 			/// <summary>
 			/// 
 			/// </summary>
-			/// <unmanaged>DXGI_ERROR_UNSUPPORTED</unmanaged>
+			/// <remarks>This is a failed result.</remarks>
+			/// <unmanaged href="bb509553">DXGI_ERROR_UNSUPPORTED</unmanaged>
 			property static Result Unsupported
 			{
 				Result get();
@@ -138,7 +148,8 @@ namespace SlimDX
 			/// <summary>
 			/// 
 			/// </summary>
-			/// <unmanaged>DXGI_ERROR_DEVICE_REMOVED</unmanaged>
+			/// <remarks>This is a failed result.</remarks>
+			/// <unmanaged href="bb509553">DXGI_ERROR_DEVICE_REMOVED</unmanaged>
 			property static Result DeviceRemoved
 			{
 				Result get();
@@ -147,7 +158,8 @@ namespace SlimDX
 			/// <summary>
 			/// 
 			/// </summary>
-			/// <unmanaged>DXGI_ERROR_DEVICE_HUNG</unmanaged>
+			/// <remarks>This is a failed result.</remarks>
+			/// <unmanaged href="bb509553">DXGI_ERROR_DEVICE_HUNG</unmanaged>
 			property static Result DeviceHung
 			{
 				Result get();
@@ -156,7 +168,8 @@ namespace SlimDX
 			/// <summary>
 			/// 
 			/// </summary>
-			/// <unmanaged>DXGI_ERROR_DEVICE_RESET</unmanaged>
+			/// <remarks>This is a failed result.</remarks>
+			/// <unmanaged href="bb509553">DXGI_ERROR_DEVICE_RESET</unmanaged>
 			property static Result DeviceReset
 			{
 				Result get();
@@ -165,7 +178,8 @@ namespace SlimDX
 			/// <summary>
 			/// 
 			/// </summary>
-			/// <unmanaged>DXGI_ERROR_WAS_STILL_DRAWING</unmanaged>
+			/// <remarks>This is a failed result.</remarks>
+			/// <unmanaged href="bb509553">DXGI_ERROR_WAS_STILL_DRAWING</unmanaged>
 			property static Result WasStillDrawing
 			{
 				Result get();
@@ -174,7 +188,8 @@ namespace SlimDX
 			/// <summary>
 			/// 
 			/// </summary>
-			/// <unmanaged>DXGI_ERROR_DRIVER_INTERNAL_ERROR</unmanaged>
+			/// <remarks>This is a failed result.</remarks>
+			/// <unmanaged href="bb509553">DXGI_ERROR_DRIVER_INTERNAL_ERROR</unmanaged>
 			property static Result DriverInternalError
 			{
 				Result get();
@@ -183,7 +198,8 @@ namespace SlimDX
 			/// <summary>
 			/// 
 			/// </summary>
-			/// <unmanaged>DXGI_ERROR_NONEXCLUSIVE</unmanaged>
+			/// <remarks>This is a failed result.</remarks>
+			/// <unmanaged href="bb509553">DXGI_ERROR_NONEXCLUSIVE</unmanaged>
 			property static Result Nonexclusive
 			{
 				Result get();
@@ -192,7 +208,8 @@ namespace SlimDX
 			/// <summary>
 			/// Represents the result of a successful operation.
 			/// </summary>
-			/// <unmanaged href="aa378137">S_OK</unmanaged>
+			/// <remarks>This is a successful result.</remarks>
+			/// <unmanaged href="bb509553">S_OK</unmanaged>
 			property static Result Success
 			{
 				Result get();
@@ -201,6 +218,7 @@ namespace SlimDX
 			/// <summary>
 			/// Represents a generic failure result.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged href="aa378137">E_FAIL</unmanaged>
 			property static Result Failure
 			{

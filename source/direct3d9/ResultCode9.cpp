@@ -129,7 +129,7 @@ namespace Direct3D9
 		return Result( D3DERR_MOREDATA );
 	}
 
-	Result ResultCode::NoneButNoAutomaticGeneration::get()
+	Result ResultCode::NoAutomaticGeneration::get()
 	{
 		return Result( D3DOK_NOAUTOGEN );
 	}

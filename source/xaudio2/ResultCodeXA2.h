@@ -36,9 +36,24 @@ namespace SlimDX
 			
 		public:
 			/// <summary>
+			/// Returned by XAudio2 for certain API usage errors (invalid calls etc) that
+			/// are hard to avoid completely and should be handled by a title at runtime.
+			/// (API usage errors that are completely avoidable, such as invalid parameters,
+			/// cause an ASSERT in debug builds and undefined behavior in retail builds,
+			/// so no error code is defined for them.)
+			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
+			/// <unmanaged href="cc308077">XAUDIO2_E_INVALID_CALL</unmanaged>
+			property static Result InvalidCall
+			{
+				Result get();
+			}
+
+			/// <summary>
 			/// The decoder suffered an unrecoverable error.
 			/// </summary>
-			/// <unmanaged>XAUDIO2_E_XMA_DECODER_ERROR</unmanaged>
+			/// <remarks>This is a failed result.</remarks>
+			/// <unmanaged href="cc308077">XAUDIO2_E_XMA_DECODER_ERROR</unmanaged>
 			property static Result XmaDecoderError
 			{
 				Result get();
@@ -47,7 +62,8 @@ namespace SlimDX
 			/// <summary>
 			/// An effect failed to instantiate.
 			/// </summary>
-			/// <unmanaged>XAUDIO2_E_XAPO_CREATION_FAILED</unmanaged>
+			/// <remarks>This is a failed result.</remarks>
+			/// <unmanaged href="cc308077">XAUDIO2_E_XAPO_CREATION_FAILED</unmanaged>
 			property static Result EffectCreationFailed
 			{
 				Result get();
@@ -56,7 +72,8 @@ namespace SlimDX
 			/// <summary>
 			/// An audio device became unusable (possibly due to being unplugged, or some other event).
 			/// </summary>
-			/// <unmanaged>XAUDIO2_E_DEVICE_INVALIDATED</unmanaged>
+			/// <remarks>This is a failed result.</remarks>
+			/// <unmanaged href="cc308077">XAUDIO2_E_DEVICE_INVALIDATED</unmanaged>
 			property static Result DeviceInvalidated
 			{
 				Result get();
@@ -65,6 +82,7 @@ namespace SlimDX
 			/// <summary>
 			/// Represents the result of a successful operation.
 			/// </summary>
+			/// <remarks>This is a successful result.</remarks>
 			/// <unmanaged href="aa378137">S_OK</unmanaged>
 			property static Result Success
 			{
@@ -74,6 +92,7 @@ namespace SlimDX
 			/// <summary>
 			/// Represents a generic failure result.
 			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged href="aa378137">E_FAIL</unmanaged>
 			property static Result Failure
 			{
