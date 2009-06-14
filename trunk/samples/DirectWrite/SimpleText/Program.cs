@@ -20,35 +20,33 @@
 * THE SOFTWARE.
 */
 using System;
-using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
+using SlimDX;
 using SlimDX.Direct2D;
 using SlimDX.DirectWrite;
-using System.Drawing;
+using SlimDX.Windows;
 
 namespace SimpleText
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            SlimDX.Direct2D.Factory d2dfactory = new SlimDX.Direct2D.Factory();
-            SlimDX.DirectWrite.Factory dwriteFactory = new SlimDX.DirectWrite.Factory();
+            var form = new RenderForm("SlimDX - DirectWrite Simple Text");
+            var renderTarget = new WindowRenderTarget(new SlimDX.Direct2D.Factory(), new WindowRenderTargetProperties()
+            {
+                Handle = form.Handle,
+                PixelSize = form.ClientSize
+            });
 
-            FlickerFreeForm form = new FlickerFreeForm();
-            form.ClientSize = new Size((int)(d2dfactory.DesktopDpi.Width * 800.0f / 96.0f), (int)(d2dfactory.DesktopDpi.Height * 600.0f / 96.0f));
-            form.Text = "SlimDX - DirectWrite Simple Text";
-
-            WindowRenderTarget renderTarget = new WindowRenderTarget(d2dfactory, new WindowRenderTargetProperties() { Handle = form.Handle, PixelSize = form.ClientSize });
-            SolidColorBrush brush = new SolidColorBrush(renderTarget, Color.Black);
-
-            TextFormat textFormat = new TextFormat(dwriteFactory, "Gabriola", FontWeight.Normal, SlimDX.DirectWrite.FontStyle.Normal, FontStretch.Normal, 72.0f, "en-us");
-            textFormat.TextAlignment = TextAlignment.Center;
-            textFormat.ParagraphAlignment = ParagraphAlignment.Center;
+            var brush = new SolidColorBrush(renderTarget, Color.Black);
+            var textFormat = new TextFormat(new SlimDX.DirectWrite.Factory(), "Gabriola", FontWeight.Normal, SlimDX.DirectWrite.FontStyle.Normal, FontStretch.Normal, 72.0f, "en-us")
+            {
+                TextAlignment = TextAlignment.Center,
+                ParagraphAlignment = ParagraphAlignment.Center
+            };
 
             form.ClientSizeChanged += (o, e) => { renderTarget.Resize(form.ClientSize); };
             form.Paint += (o, e) =>
@@ -67,12 +65,8 @@ namespace SimpleText
 
             Application.Run(form);
 
-            textFormat.Dispose();
-            brush.Dispose();
-            renderTarget.Dispose();
-            dwriteFactory.Dispose();
-            d2dfactory.Dispose();
-            form.Dispose();
+            foreach (var item in ObjectTable.Objects)
+                item.Dispose();
         }
     }
 }

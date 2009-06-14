@@ -20,42 +20,43 @@
 * THE SOFTWARE.
 */
 using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using SlimDX.Direct2D;
 using System.Drawing;
+using System.Windows.Forms;
+using SlimDX;
+using SlimDX.Direct2D;
 using SlimDX.DirectWrite;
+using SlimDX.Windows;
 
 namespace MultiformattedText
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            SlimDX.Direct2D.Factory d2dfactory = new SlimDX.Direct2D.Factory();
-            SlimDX.DirectWrite.Factory dwriteFactory = new SlimDX.DirectWrite.Factory();
+            var d2dFactory = new SlimDX.Direct2D.Factory();
+            var dwriteFactory = new SlimDX.DirectWrite.Factory();
 
-            FlickerFreeForm form = new FlickerFreeForm();
-            form.ClientSize = new Size((int)(d2dfactory.DesktopDpi.Width * 800.0f / 96.0f), (int)(d2dfactory.DesktopDpi.Height * 600.0f / 96.0f));
-            form.Text = "SlimDX - DirectWrite Multiformatted Text";
+            var form = new RenderForm("SlimDX - DirectWrite Multiformatted Text");
+            var renderTarget = new WindowRenderTarget(d2dFactory, new WindowRenderTargetProperties()
+            {
+                Handle = form.Handle,
+                PixelSize = form.ClientSize
+            });
 
-            WindowRenderTarget renderTarget = new WindowRenderTarget(d2dfactory, new WindowRenderTargetProperties() { Handle = form.Handle, PixelSize = form.ClientSize });
-            SolidColorBrush brush = new SolidColorBrush(renderTarget, Color.Black);
+            var brush = new SolidColorBrush(renderTarget, Color.Black);
+            var textFormat = new TextFormat(dwriteFactory, "Gabriola", FontWeight.Normal, SlimDX.DirectWrite.FontStyle.Normal, FontStretch.Normal, 72.0f, "en-us")
+            {
+                TextAlignment = TextAlignment.Center,
+                ParagraphAlignment = ParagraphAlignment.Center
+            };
 
-            TextFormat textFormat = new TextFormat(dwriteFactory, "Gabriola", FontWeight.Normal, SlimDX.DirectWrite.FontStyle.Normal, FontStretch.Normal, 72.0f, "en-us");
-            textFormat.TextAlignment = TextAlignment.Center;
-            textFormat.ParagraphAlignment = ParagraphAlignment.Center;
-
-            TextLayout textLayout = new TextLayout(dwriteFactory, "Hello World using DirectWrite!", textFormat, form.ClientSize.Width, form.ClientSize.Height);
+            var textLayout = new TextLayout(dwriteFactory, "Hello World using DirectWrite!", textFormat, form.ClientSize.Width, form.ClientSize.Height);
             textLayout.SetFontSize(100.0f, new TextRange(18, 2));
             textLayout.SetUnderline(true, new TextRange(18, 11));
             textLayout.SetFontWeight(FontWeight.Bold, new TextRange(18, 11));
 
-            Typography typography = new Typography(dwriteFactory);
+            var typography = new Typography(dwriteFactory);
             typography.AddFeature(new FontFeature(FontFeatureTag.StylisticSet7, 1));
             textLayout.SetTypography(typography, new TextRange(0, 30));
 
@@ -76,14 +77,8 @@ namespace MultiformattedText
 
             Application.Run(form);
 
-            typography.Dispose();
-            textLayout.Dispose();
-            textFormat.Dispose();
-            brush.Dispose();
-            renderTarget.Dispose();
-            dwriteFactory.Dispose();
-            d2dfactory.Dispose();
-            form.Dispose();
+            foreach (var item in ObjectTable.Objects)
+                item.Dispose();
         }
     }
 }

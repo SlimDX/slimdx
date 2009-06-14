@@ -10,7 +10,6 @@ struct PS_IN
 	float4 col : COLOR;
 };
 
-
 PS_IN VS( VS_IN input )
 {
 	PS_IN output = (PS_IN)0;

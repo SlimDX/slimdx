@@ -49,10 +49,8 @@ namespace Windows
 		Text = text;
 		ClientSize = System::Drawing::Size( 800, 600 );
 
-		DoubleBuffered = true;
 		ResizeRedraw = true;
 		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-		SetStyle( ControlStyles::ResizeRedraw, true );
 
 		Icon = SlimDX::Resources::BlackIcon;
 	}

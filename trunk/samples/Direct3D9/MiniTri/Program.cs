@@ -1,6 +1,26 @@
+/*
+* Copyright (c) 2007-2009 SlimDX Group
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*/
 using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using SlimDX;
 using SlimDX.Direct3D9;
@@ -8,70 +28,47 @@ using SlimDX.Windows;
 
 namespace MiniTri
 {
-    [StructLayout(LayoutKind.Sequential)]
     struct Vertex
     {
-        public Vector4 PositionRhw;
+        public Vector4 Position;
         public int Color;
     }
 
     static class Program
     {
-        static Form RenderForm;
-        static Device Device;
-        static VertexBuffer Vertices;
-
         [STAThread]
         static void Main()
         {
-            RenderForm = new Form();
-            RenderForm.ClientSize = new Size(800, 600);
-            RenderForm.Text = "SlimDX - MiniTri Direct3D9 Sample";
-
-            Direct3D direct3D = new Direct3D();
-
-            PresentParameters presentParams = new PresentParameters();
-            presentParams.BackBufferHeight = RenderForm.ClientRectangle.Height;
-            presentParams.BackBufferWidth = RenderForm.ClientRectangle.Width;
-            presentParams.DeviceWindowHandle = RenderForm.Handle;
-
-            Device = new Device(direct3D, 0, DeviceType.Hardware, RenderForm.Handle, CreateFlags.HardwareVertexProcessing, presentParams);
-            Vertices = new VertexBuffer(Device, 3 * 20, Usage.WriteOnly, VertexFormat.None, Pool.Managed);
-
-            DataStream stream = Vertices.Lock(0, 0, LockFlags.None);
-            Vertex[] vertexData = new Vertex[3];
-            vertexData[0].PositionRhw = new Vector4(400.0f, 100.0f, 0.5f, 1.0f);
-            vertexData[0].Color = Color.Red.ToArgb();
-            vertexData[1].PositionRhw = new Vector4(650.0f, 500.0f, 0.5f, 1.0f);
-            vertexData[1].Color = Color.Blue.ToArgb();
-            vertexData[2].PositionRhw = new Vector4(150.0f, 500.0f, 0.5f, 1.0f);
-            vertexData[2].Color = Color.Green.ToArgb();
-            stream.WriteRange(vertexData);
-            Vertices.Unlock();
-
-            Application.Idle += Application_Idle;
-            Application.Run(RenderForm);
-
-            Vertices.Dispose();
-            Device.Dispose();
-            direct3D.Dispose();
-
-            RenderForm.Dispose();
-        }
-
-        static void Application_Idle(object sender, EventArgs e)
-        {
-            while (MessagePump.IsApplicationIdle)
+            var form = new RenderForm("SlimDX - MiniTri Direct3D9 Sample");
+            var device = new Device(new Direct3D(), 0, DeviceType.Hardware, form.Handle, CreateFlags.HardwareVertexProcessing, new PresentParameters()
             {
-                Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
-                Device.BeginScene();
-                Device.SetStreamSource(0, Vertices, 0, 20);
-                Device.VertexFormat = VertexFormat.PositionRhw | VertexFormat.Diffuse;
-                Device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
-                Device.EndScene();
+                BackBufferWidth = form.ClientSize.Width,
+                BackBufferHeight = form.ClientSize.Height
+            });
 
-                Device.Present();
-            }
+            var vertices = new VertexBuffer(device, 3 * 20, Usage.WriteOnly, VertexFormat.None, Pool.Managed);
+            vertices.Lock(0, 0, LockFlags.None).WriteRange(new[] {
+                new Vertex() { Color = Color.Red.ToArgb(), Position = new Vector4(400.0f, 100.0f, 0.5f, 1.0f) },
+                new Vertex() { Color = Color.Blue.ToArgb(), Position = new Vector4(650.0f, 500.0f, 0.5f, 1.0f) },
+                new Vertex() { Color = Color.Green.ToArgb(), Position = new Vector4(150.0f, 500.0f, 0.5f, 1.0f) }
+            });
+            vertices.Unlock();
+
+            MessagePump.Run(form, () =>
+            {
+                device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
+                device.BeginScene();
+
+                device.SetStreamSource(0, vertices, 0, 20);
+                device.VertexFormat = VertexFormat.PositionRhw | VertexFormat.Diffuse;
+                device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
+
+                device.EndScene();
+                device.Present();
+            });
+
+            foreach (var item in ObjectTable.Objects)
+                item.Dispose();
         }
     }
 }

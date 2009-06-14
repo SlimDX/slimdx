@@ -20,30 +20,28 @@
 * THE SOFTWARE.
 */
 using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
+using SlimDX;
 using SlimDX.Direct2D;
+using SlimDX.Windows;
 
 namespace RenderDemo
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            Factory factory = new Factory();
+            var form = new RenderForm("SlimDX - Direct2D Render Demo");
+            var renderTarget = new WindowRenderTarget(new Factory(), new WindowRenderTargetProperties()
+            {
+                Handle = form.Handle,
+                PixelSize = form.ClientSize
+            });
 
-            FlickerFreeForm form = new FlickerFreeForm();
-            form.ClientSize = new Size((int)(factory.DesktopDpi.Width * 800.0f / 96.0f), (int)(factory.DesktopDpi.Height * 600.0f / 96.0f));
-            form.Text = "SlimDX - Direct2D Render Demo";
-
-            WindowRenderTarget renderTarget = new WindowRenderTarget(factory, new WindowRenderTargetProperties() { Handle = form.Handle, PixelSize = form.ClientSize });
-            SolidColorBrush brush1 = new SolidColorBrush(renderTarget, Color.LightSlateGray);
-            SolidColorBrush brush2 = new SolidColorBrush(renderTarget, Color.CornflowerBlue);
+            var brush1 = new SolidColorBrush(renderTarget, Color.LightSlateGray);
+            var brush2 = new SolidColorBrush(renderTarget, Color.CornflowerBlue);
 
             form.ClientSizeChanged += (o, e) => { renderTarget.Resize(form.ClientSize); };
             form.Paint += (o, e) =>
@@ -75,8 +73,8 @@ namespace RenderDemo
                         startPoint.Y += 10.0f;
                     }
 
-                    RectangleF rect1 = new RectangleF(renderTarget.Size.Width / 2 - 50.0f, renderTarget.Size.Height / 2 - 50.0f, 100.0f, 100.0f);
-                    RectangleF rect2 = new RectangleF(renderTarget.Size.Width / 2 - 100.0f, renderTarget.Size.Height / 2 - 100.0f, 200.0f, 200.0f);
+                    var rect1 = new RectangleF(renderTarget.Size.Width / 2 - 50.0f, renderTarget.Size.Height / 2 - 50.0f, 100.0f, 100.0f);
+                    var rect2 = new RectangleF(renderTarget.Size.Width / 2 - 100.0f, renderTarget.Size.Height / 2 - 100.0f, 200.0f, 200.0f);
 
                     renderTarget.FillRectangle(brush1, rect1);
                     renderTarget.DrawRectangle(brush2, rect2);
@@ -87,11 +85,8 @@ namespace RenderDemo
 
             Application.Run(form);
 
-            brush1.Dispose();
-            brush2.Dispose();
-            renderTarget.Dispose();
-            factory.Dispose();
-            form.Dispose();
+            foreach (var item in ObjectTable.Objects)
+                item.Dispose();
         }
     }
 }

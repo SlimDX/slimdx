@@ -1,146 +1,104 @@
+/*
+* Copyright (c) 2007-2009 SlimDX Group
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*/
 using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
 using SlimDX;
+using SlimDX.Direct3D10;
+using SlimDX.DXGI;
 using SlimDX.Windows;
-using D3D10 = SlimDX.Direct3D10;
-using DXGI = SlimDX.DXGI;
+using System.Windows.Forms;
 
 namespace MiniTri
 {
     static class Program
     {
-        static Form RenderForm;
-        static D3D10.Viewport ViewArea;
-        static DXGI.SwapChain SwapChain;
-        static D3D10.Device Device;
-        static D3D10.Effect Effect;
-        static D3D10.EffectTechnique Technique;
-        static D3D10.EffectPass Pass;
-        static D3D10.InputLayout Layout;
-        static D3D10.Buffer Vertices;
-        static D3D10.RenderTargetView RenderTarget;
-
-        const int vertexSize = 32;
-        const int vertexCount = 3;
-
         [STAThread]
         static void Main()
         {
-            RenderForm = new Form();
-            RenderForm.ClientSize = new Size(800, 600);
-            RenderForm.Text = "SlimDX - MiniTri Direct3D 10 Sample";
-
-            DXGI.SwapChainDescription swapChainDescription = new SlimDX.DXGI.SwapChainDescription();
-            DXGI.ModeDescription modeDescription = new DXGI.ModeDescription();
-            DXGI.SampleDescription sampleDescription = new DXGI.SampleDescription();
-
-            modeDescription.Format = DXGI.Format.R8G8B8A8_UNorm;
-            modeDescription.RefreshRate = new Rational(60, 1);
-            modeDescription.Scaling = DXGI.DisplayModeScaling.Unspecified;
-            modeDescription.ScanlineOrdering = DXGI.DisplayModeScanlineOrdering.Unspecified;
-            modeDescription.Width = RenderForm.ClientRectangle.Width;
-            modeDescription.Height = RenderForm.ClientRectangle.Height;
-
-            sampleDescription.Count = 1;
-            sampleDescription.Quality = 0;
-
-            swapChainDescription.ModeDescription = modeDescription;
-            swapChainDescription.SampleDescription = sampleDescription;
-            swapChainDescription.BufferCount = 1;
-            swapChainDescription.Flags = DXGI.SwapChainFlags.None;
-            swapChainDescription.IsWindowed = true;
-            swapChainDescription.OutputHandle = RenderForm.Handle;
-            swapChainDescription.SwapEffect = DXGI.SwapEffect.Discard;
-            swapChainDescription.Usage = DXGI.Usage.RenderTargetOutput;
-
-            D3D10.Device.CreateWithSwapChain(null, D3D10.DriverType.Hardware, D3D10.DeviceCreationFlags.Debug, swapChainDescription, out Device, out SwapChain);
-
-            using (D3D10.Texture2D resource = SwapChain.GetBuffer<D3D10.Texture2D>(0))
+            var form = new RenderForm("SlimDX - MiniTri Direct3D 10 Sample");
+            var desc = new SwapChainDescription()
             {
-                RenderTarget = new D3D10.RenderTargetView(Device, resource);
-            }
+                BufferCount = 1,
+                ModeDescription = new ModeDescription(form.ClientSize.Width, form.ClientSize.Height, new Rational(60, 1), Format.R8G8B8A8_UNorm),
+                IsWindowed = true,
+                OutputHandle = form.Handle,
+                SampleDescription = new SampleDescription(1, 0),
+                SwapEffect = SwapEffect.Discard,
+                Usage = Usage.RenderTargetOutput
+            };
 
-            ViewArea = new D3D10.Viewport();
-            ViewArea.X = 0;
-            ViewArea.Y = 0;
-            ViewArea.Width = RenderForm.ClientRectangle.Width;
-            ViewArea.Height = RenderForm.ClientRectangle.Height;
-            ViewArea.MinZ = 0.0f;
-            ViewArea.MaxZ = 1.0f;
+            SwapChain swapChain;
+            SlimDX.Direct3D10.Device device;
+            SlimDX.Direct3D10.Device.CreateWithSwapChain(null, DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
 
-            Device.Rasterizer.SetViewports(ViewArea);
-            Device.OutputMerger.SetTargets(RenderTarget);
+            var renderView = new RenderTargetView(device, swapChain.GetBuffer<Texture2D>(0));
+            var effect = Effect.FromFile(device, "MiniTri.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null);
+            var technique = effect.GetTechniqueByIndex(0);
+            var pass = technique.GetPassByIndex(0);
+            var layout = new InputLayout(device, new[] {
+                new InputElement("POSITION", 0, Format.R32G32B32A32_Float, 0, 0),
+                new InputElement("COLOR", 0, Format.R32G32B32A32_Float, 16, 0) 
+            }, pass.Description.Signature);
 
-            Effect = D3D10.Effect.FromFile(Device, "MiniTri.fx", "fx_4_0", D3D10.ShaderFlags.None, D3D10.EffectFlags.None, null, null);
-            Technique = Effect.GetTechniqueByIndex(0);
-            Pass = Technique.GetPassByIndex(0);
-
-            D3D10.InputElement[] inputElements = new SlimDX.Direct3D10.InputElement[]
-			{
-				new D3D10.InputElement("POSITION",0,DXGI.Format.R32G32B32A32_Float,0,0),
-				new D3D10.InputElement("COLOR",0,DXGI.Format.R32G32B32A32_Float,16,0)
-			};
-
-            Layout = new D3D10.InputLayout(Device, inputElements, Pass.Description.Signature);
-
-            DataStream stream = new DataStream(vertexCount * vertexSize, true, true);
-            stream.Write(new Vector4(0.0f, 0.5f, 0.5f, 1.0f));
-            stream.Write(new Vector4(1.0f, 0.0f, 0.0f, 1.0f));
-
-            stream.Write(new Vector4(0.5f, -0.5f, 0.5f, 1.0f));
-            stream.Write(new Vector4(0.0f, 1.0f, 0.0f, 1.0f));
-
-            stream.Write(new Vector4(-0.5f, -0.5f, 0.5f, 1.0f));
-            stream.Write(new Vector4(0.0f, 0.0f, 1.0f, 1.0f));
-
-            // Important: when specifying initial buffer data like this, the buffer will
-            // read from the current DataStream position; we must rewind the stream to 
-            // the start of the data we just wrote.
+            var stream = new DataStream(3 * 32, true, true);
+            stream.WriteRange(new[] {
+                new Vector4(0.0f, 0.5f, 0.5f, 1.0f), new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+                new Vector4(0.5f, -0.5f, 0.5f, 1.0f), new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
+                new Vector4(-0.5f, -0.5f, 0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f)
+            });
             stream.Position = 0;
 
-            D3D10.BufferDescription bufferDescription = new D3D10.BufferDescription();
-            bufferDescription.BindFlags = D3D10.BindFlags.VertexBuffer;
-            bufferDescription.CpuAccessFlags = D3D10.CpuAccessFlags.None;
-            bufferDescription.OptionFlags = D3D10.ResourceOptionFlags.None;
-            bufferDescription.SizeInBytes = vertexCount * vertexSize;
-            bufferDescription.Usage = D3D10.ResourceUsage.Default;
-
-            Vertices = new D3D10.Buffer(Device, stream, bufferDescription);
-            stream.Close();
-
-            Application.Idle += new EventHandler(Application_Idle);
-            Application.Run(RenderForm);
-
-            Device.ClearState();
-            RenderTarget.Dispose();
-            Effect.Dispose();
-            Vertices.Dispose();
-            Layout.Dispose();
-            Device.Dispose();
-            SwapChain.Dispose();
-            RenderForm.Dispose();
-        }
-
-        static void Application_Idle(object sender, EventArgs e)
-        {
-            while (MessagePump.IsApplicationIdle)
+            var vertices = new SlimDX.Direct3D10.Buffer(device, stream, new BufferDescription()
             {
-                Device.ClearRenderTargetView(RenderTarget, Color.Black);
+                BindFlags = BindFlags.VertexBuffer,
+                CpuAccessFlags = CpuAccessFlags.None,
+                OptionFlags = ResourceOptionFlags.None,
+                SizeInBytes = 3 * 32,
+                Usage = ResourceUsage.Default
+            });
+            stream.Dispose();
 
-                Device.InputAssembler.SetInputLayout(Layout);
-                Device.InputAssembler.SetPrimitiveTopology(D3D10.PrimitiveTopology.TriangleList);
-                Device.InputAssembler.SetVertexBuffers(0, new SlimDX.Direct3D10.VertexBufferBinding(Vertices, vertexSize, 0));
+            device.OutputMerger.SetTargets(renderView);
+            device.Rasterizer.SetViewports(new Viewport(0, 0, form.ClientSize.Width, form.ClientSize.Height, 0.0f, 1.0f));
 
-                for (int pass = 0; pass < Technique.Description.PassCount; ++pass)
+            MessagePump.Run(form, () =>
+            {
+                device.ClearRenderTargetView(renderView, Color.Black);
+
+                device.InputAssembler.SetInputLayout(layout);
+                device.InputAssembler.SetPrimitiveTopology(PrimitiveTopology.TriangleList);
+                device.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(vertices, 32, 0));
+
+                for (int i = 0; i < technique.Description.PassCount; ++i)
                 {
-                    Pass.Apply();
-                    Device.Draw(3, 0);
+                    pass.Apply();
+                    device.Draw(3, 0);
                 }
 
-                SwapChain.Present(0, DXGI.PresentFlags.None);
-            }
+                swapChain.Present(0, PresentFlags.None);
+            });
+
+            foreach (var item in ObjectTable.Objects)
+                item.Dispose();
         }
     }
 }
