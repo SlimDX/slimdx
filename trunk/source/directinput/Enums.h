@@ -328,7 +328,11 @@ namespace SlimDX
 			StartDelay = DIEP_STARTDELAY,
 			TriggerButton = DIEP_TRIGGERBUTTON,
 			TriggerRepeatInterval = DIEP_TRIGGERREPEATINTERVAL,
-			TypeSpecificParameters = DIEP_TYPESPECIFICPARAMS
+			TypeSpecificParameters = DIEP_TYPESPECIFICPARAMS,
+
+			Start = DIEP_START,
+			NoRestart = DIEP_NORESTART,
+			NoDownload = DIEP_NODOWNLOAD
 		};
 
 #pragma warning(disable: 4369)
