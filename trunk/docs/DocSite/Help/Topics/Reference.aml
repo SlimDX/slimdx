@@ -38,6 +38,12 @@
           </listItem>
           <listItem>
             <para>
+              <codeEntityReference>N:SlimDX.Direct3D10_1</codeEntityReference>
+              - Contains classes and types for Direct3D 10.1 graphics support.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
               <codeEntityReference>N:SlimDX.Direct3D9</codeEntityReference>
               - Contains classes and types for Direct3D 9 graphics support.
             </para>

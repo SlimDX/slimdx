@@ -5,6 +5,10 @@ General
 	* Added a Resources class that handles loading SlimDX resources from the SlimDX DLL.
 		* As of now, this contains two different versions of the SlimDX icon.
 	* Moved Viewport from the base namespace into the individual subsystems that needed it.
+	* Added documentation comments to many areas of the library.
+	
+Samples
+	* The samples have been updated to use C# 3.0 features, as well as the new convenience types provided in the SlimDX.Windows namespace.
 
 Math
 	* Fixed a typo in BoundingSphere.Contains.
@@ -13,6 +17,8 @@ Direct3D 9
 	* Fixed a bug that caused AdapterDetails.GetCertification to throw when the adapter wasn't certified.
 	* Fixed a bug in AnimationController.GetAnimationSet that caused hard crashes.
 	* Fixed a bug in the texture loading functions that could result in an invalid size.
+	* Fixed a bug in Device.SetPixelShaderConstant and Device.SetVertexShaderConstant that caused an exception when an array of boolean constants was provided.
+	* Updated the Sprite class to take nullable arguments where appropriate.
 
 Direct3D 10
 	* Added the Predicate interface.
@@ -25,6 +31,10 @@ Direct3D 10
 	* Added functions to extract shader signatures.
 	* Added constructors for geometry, vertex, and pixel shaders.
 	* Changed inheritance hierarchies to make base types abstract.
+	* Added overloads to EffectVectorVariable.Set to handle smaller sized vectors.
+	
+Direct3D 10.1
+	* Added the Direct3D 10.1 subsystem.
 	
 Direct3D11
 	* Added the Direct3D 11 subsystem.
@@ -46,6 +56,9 @@ DirectInput
 	* Added type specific parameters for effects.
 	* Added the ability to get image and object info from a device.
 	* Filled in miscellaneous device functionality.
+	
+XAudio2
+	* Changed the XAudio2 device to stop explicitly initializing COM. This allows the caller to use whichever calling model he wishes.
 
 Windows
 	* Added a MessagePump.Run() method to wrap up all of the message loop functionality.

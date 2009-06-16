@@ -30,6 +30,7 @@
           <listItem><para>Direct3D9</para></listItem>
           <listItem><para>Direct3D9Ex</para></listItem>
           <listItem><para>Direct3D10</para></listItem>
+          <listItem><para>Direct3D10.1</para></listItem>
           <listItem><para>DirectInput</para></listItem>
           <listItem><para>DirectSound</para></listItem>
           <listItem><para>DXGI</para></listItem>
@@ -41,7 +42,7 @@
           <listItem><para>XInput</para></listItem>
         </list>
         <para>
-          As of March 2009, SlimDX also has beta support for the following, in the form of a separate DLL.
+          As of June 2009, SlimDX also has beta support for the following, in the form of a separate DLL.
         </para>
         <list class="bullet">
           <listItem><para>Direct3D11</para></listItem>
@@ -52,10 +53,8 @@
           In addition, SlimDX plans to fully support these additional APIs in the future.
         </para>
         <list class="bullet">
-          <listItem><para>Direct3D10.1</para></listItem>
           <listItem><para>XACT3</para></listItem>
           <listItem><para>XAPOFX</para></listItem>
-          <listItem><para>Windows Vista Game Explorer</para></listItem>
         </list>
       </content>
     </section>
