@@ -82,6 +82,7 @@ namespace Multimedia
 			internalMemory = gcnew DataStream( bytes->LongLength, true, true );
 			internalMemory->Write( bytes, 0, bytes->Length );
 		}
+		internalMemory->Position = 0;
 
 		MMIOINFO info;
 		ZeroMemory( &info, sizeof( info ) );

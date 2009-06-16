@@ -979,8 +979,7 @@ namespace Direct3D9
 	{
 		Utilities::CheckArrayBounds( data, offset, count );
 
-		array<BOOL>^ boolData = gcnew array<BOOL>( data->Length );
-		data->CopyTo( boolData, 0 );
+		array<BOOL>^ boolData = Array::ConvertAll<bool, int>( data, gcnew Converter<bool, int>( Convert::ToInt32 ) );
 		pin_ptr<BOOL> pinnedData = &boolData[0];
 
 		Utilities::CheckArrayBounds( data, offset, count );
@@ -1039,8 +1038,7 @@ namespace Direct3D9
 
 	Result Device::SetPixelShaderConstant( int startRegister, array<bool>^ data, int offset, int count )
 	{
-		array<BOOL>^ boolData = gcnew array<BOOL>( data->Length );
-		data->CopyTo( boolData, 0 );
+		array<BOOL>^ boolData = Array::ConvertAll<bool, int>( data, gcnew Converter<bool, int>( Convert::ToInt32 ) );
 		pin_ptr<BOOL> pinnedData = &boolData[0];
 
 		Utilities::CheckArrayBounds( data, offset, count );
