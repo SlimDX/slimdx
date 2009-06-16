@@ -43,16 +43,6 @@
           This model of creating objects imposes some negligible management overhead, and almost completely solves the problems discussed here.
           Note that it is still possible for implicit creation to occur; the difference is that it will not occur in the vast majority of cases, and that in the remaining cases it can typically be moved to a single, predictable location rather than being allowed to happen arbitrarily.
         </para>
-        <para>
-          Consider a situation where a Direct3D 9 application is using multiple render targets.
-          At some point, the code may make a call to <codeEntityReference qualifyHint="false">M:SlimDX.Direct3D9.Device.GetRenderTarget(System.Int32)</codeEntityReference> in order to manipulate the render target currently in use.
-          If the returned target is not used again, it is tempting to Dispose the object (possibly via a using statement, as would be common when using Managed DirectX).
-          This works as long as the default render target is active.
-          If a user created render target is set, however, the Dispose call will inadvertently destroy the render target, probably causing the application to crash.
-          In this case, the most elegant solution would be to get and store the default render target as soon as the <codeEntityReference>T:SlimDX.Direct3D9.Device</codeEntityReference> is created.
-          Then, instead of disposing the retrieved render target every single frame, the application would simply dispose all of its render targets when shutting down.
-          In general, if a SlimDX application is using a function that can cause implicit creation (typically because it returns an object not created through SlimDX), that function should be called early and the resulting SlimDX object stored for the duration of the application.
-        </para>
       </content>
     </section>
 
@@ -79,6 +69,24 @@
           Once a SlimDX object has been disposed, it will release its internal COM object pointer and set it to zero, and that instance will become invalid.
           Any attempts to use it will most likely result in a NullPointerException, since it will attempt to use the cleared internal pointer.
           Note that SlimDX functions are not written to check if their parent object has been disposed, so it should not be expected that SlimDX will raise an ObjectDisposedException when this happens.
+        </para>
+      </content>
+    </section>
+
+    <section>
+      <title>Ancillary Objects</title>
+
+      <content>
+        <para>
+          In the past, implicitly created objects that were accessed by the user would present a confusing and inconsistent set of rules for disposal. Since objects created implicitly by
+          DirectX are not known to SlimDX, the first time they are accessed they end up as a new entry in the object table. This imposes the requirement that the user dispose of said objects
+          when they are finished with them, which violates the .NET principal that you "Dispose What You Create". This situation led to much confusion among SlimDX users, so a solution
+          was developed that the SlimDX team refers to as Ancillary Object Tracking.
+        </para>
+        <para>
+          The object table has been extended to include support to track implicitly created objects. This means that internally, whenever an ancillary object is created, SlimDX marks it as such.
+          The user no longer has to worry about disposing it when finished. The object table will take care to dispose of it once its parent object is disposed. Only a few such ancillary objects have
+          since been identified across the range of DirectX APIs, but now that full support is in place for handling them, any subsequent issues will be dealt with swiftly and consistently.
         </para>
       </content>
     </section>
