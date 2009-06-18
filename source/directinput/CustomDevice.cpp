@@ -202,10 +202,8 @@ namespace DirectInput
 		if( RecordError( hr ).IsFailure )
 			return Result::Last;
 
-		IntPtr pointerData( &bytes[0] );
-		GCHandle handle = GCHandle::Alloc( data, GCHandleType::Pinned );
-		memcpy( handle.AddrOfPinnedObject().ToPointer(), pointerData.ToPointer(), typeSize );
-		handle.Free();
+		pin_ptr<TDataFormat> pinnedData = &data;
+		memcpy( pinnedData, &bytes[0], typeSize );
 
 		return Result::Last;
 	}

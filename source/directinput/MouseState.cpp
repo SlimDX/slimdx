@@ -62,9 +62,15 @@ namespace DirectInput
 		for( int i = 0; i < 8; i++ )
 		{
 			if( ( state.rgbButtons[i] & 0x80 ) != 0 )
+			{
 				pressedButtons[i] = true;
+				releasedButtons[i] = false;
+			}
 			else
+			{
+				pressedButtons[i] = false;
 				releasedButtons[i] = true;
+			}
 		}
 	}
 }

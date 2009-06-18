@@ -161,8 +161,7 @@ namespace DirectInput
 		if( RecordError( hr ).IsFailure )
 			return Result::Last;
 
-		MouseState^ result = safe_cast<MouseState^>( data );
-		result->AssignState(state);
+		data->AssignState( state );
 
 		return Result::Last;
 	}
