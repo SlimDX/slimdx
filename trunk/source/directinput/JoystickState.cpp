@@ -102,9 +102,15 @@ namespace DirectInput
 		for( int i = 0; i < 128; i++ )
 		{
 			if( joystate.rgbButtons[i] )
+			{
 				pressedButtons[i] = true;
+				releasedButtons[i] = false;
+			}
 			else
+			{
+				pressedButtons[i] = false;
 				releasedButtons[i] = true;
+			}
 		}
 	}
 }
