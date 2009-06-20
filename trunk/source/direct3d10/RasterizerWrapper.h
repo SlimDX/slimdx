@@ -46,6 +46,11 @@ namespace SlimDX
 		
 			void SetViewports( Viewport viewport );
 			void SetViewports( ... array<Viewport>^ viewports );
+			void GetViewports( array<Viewport>^ viewports );
+
+			void SetScissorRectangles( System::Drawing::Rectangle scissorRectangle );
+			void SetScissorRectangles( ... array<System::Drawing::Rectangle>^ scissorRectangles );
+			void GetScissorRectangles( array<System::Drawing::Rectangle>^ scissorRectangles );
 		};
 	}
 };
