@@ -39,17 +39,17 @@ namespace Direct3D10
 {
 	Font::Font( Device^ device, FontDescription description )
 	{
-		Construct( Build( device, description.Width, description.Height, description.Weight, description.MipLevels, description.IsItalic, description.CharacterSet, description.Precision, description.Quality, description.PitchAndFamily, description.FaceName ) );
+		Construct( Build( device, description.Height, description.Width, description.Weight, description.MipLevels, description.IsItalic, description.CharacterSet, description.Precision, description.Quality, description.PitchAndFamily, description.FaceName ) );
 	}
 
 	Font::Font( Device^ device, int height, String^ faceName )
 	{
-		Construct( Build( device, 0, height, FontWeight::Normal, 1, false, FontCharacterSet::Default, FontPrecision::Default, FontQuality::Default, FontPitchAndFamily::Default, faceName ) );
+		Construct( Build( device, height, 0, FontWeight::Normal, 1, false, FontCharacterSet::Default, FontPrecision::Default, FontQuality::Default, FontPitchAndFamily::Default, faceName ) );
 	}
 
 	Font::Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic, FontCharacterSet characterSet, FontPrecision precision, FontQuality quality, FontPitchAndFamily pitchAndFamily, String^ faceName )
 	{
-		Construct( Build( device, width, height, weight, mipLevels, isItalic, characterSet, precision, quality, pitchAndFamily, faceName ) );
+		Construct( Build( device, height, width, weight, mipLevels, isItalic, characterSet, precision, quality, pitchAndFamily, faceName ) );
 	}
 
 	ID3DX10Font* Font::Build( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic, FontCharacterSet characterSet, FontPrecision precision, FontQuality quality, FontPitchAndFamily pitchAndFamily, String^ faceName )
