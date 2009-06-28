@@ -63,7 +63,7 @@ namespace DXGI
 		RECORD_DXGI( InternalPointer->EnumAdapters( index, &adapter) );
 		if( Result::Last.IsFailure )
 			return nullptr;
-		return Adapter::FromPointer( adapter );
+		return Adapter::FromPointer( adapter, this );
 	}
 	
 	Adapter^ Factory::CreateSoftwareAdapter( IntPtr softwareModule )
