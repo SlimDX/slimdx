@@ -13,6 +13,9 @@ Samples
 Math
 	* Fixed a typo in BoundingSphere.Contains.
 
+DXGI
+	* Fixed bugs that caused adapters to be created as non-ancillary objects requiring user disposal.
+
 Direct3D 9
 	* Fixed a bug that caused AdapterDetails.GetCertification to throw when the adapter wasn't certified.
 	* Fixed a bug in AnimationController.GetAnimationSet that caused hard crashes.
