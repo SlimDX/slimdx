@@ -390,6 +390,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\Direct3D10.Resource.Tests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\source\DXGI.Adapter.Tests.cpp"
 				>
 			</File>

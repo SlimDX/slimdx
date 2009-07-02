@@ -98,6 +98,11 @@ namespace Direct3D10
 		return static_cast<ResourceDimension>( type );
 	}
 
+	int Resource::CalculateSubresourceIndex( int mipSlice, int arraySlice, int mipLevels )
+	{
+		return D3D10CalcSubresource( static_cast<UINT>( mipSlice ), static_cast<UINT>( arraySlice ), static_cast<UINT>( mipLevels ) );
+	}
+
 	int Resource::GetMipSize( int mipSlice, int baseSliceSize )
 	{
 		float size = static_cast<float>( baseSliceSize );
