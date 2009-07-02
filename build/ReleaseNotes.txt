@@ -35,6 +35,7 @@ Direct3D 10
 	* Added constructors for geometry, vertex, and pixel shaders.
 	* Changed inheritance hierarchies to make base types abstract.
 	* Added overloads to EffectVectorVariable.Set to handle smaller sized vectors.
+	* Added the Resource.CalculateSubresourceIndex() static method.
 	
 Direct3D 10.1
 	* Added the Direct3D 10.1 subsystem.

@@ -69,6 +69,15 @@ namespace SlimDX
 			{
 				ResourceDimension get();
 			}
+			
+			/// <summary>
+			/// Calculates a subresource index.
+			/// </summary>
+			/// <param name="mipSlice">The index of the desired mip slice.</param>
+			/// <param name="arraySlice">The index of the desired array slice.</param>
+			/// <param name="mipLevels">The total number of mip levels.</param>
+			/// <returns>The subresource index (equivalent to mipSlice + (arraySlice * mipLevels)).</returns>
+			static int CalculateSubresourceIndex( int mipSlice, int arraySlice, int mipLevels );
 		};
 	}
 };
