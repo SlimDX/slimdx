@@ -92,7 +92,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copying SlimDX.dll..."
-				CommandLine="xcopy /Y $(SolutionDir)x86\$(ConfigurationName)\SlimDX.dll $(OutDir)\"
+				CommandLine="xcopy /Y &quot;$(SolutionDir)x86\$(ConfigurationName)\SlimDX.dll&quot; &quot;$(OutDir)\&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -169,7 +169,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copying SlimDX.dll..."
-				CommandLine="xcopy /Y $(SolutionDir)x64\$(ConfigurationName)\SlimDX.dll $(OutDir)\&#x0D;&#x0A;xcopy /Y $(SolutionDir)x64\$(ConfigurationName)\SlimDX.pdb $(OutDir)\&#x0D;&#x0A;"
+				CommandLine="xcopy /Y &quot;$(SolutionDir)x64\$(ConfigurationName)\SlimDX.dll&quot; &quot;$(OutDir)\&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -244,7 +244,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copying SlimDX.dll..."
-				CommandLine="xcopy /Y $(SolutionDir)x86\$(ConfigurationName)\SlimDX.dll $(OutDir)\"
+				CommandLine="xcopy /Y &quot;$(SolutionDir)x86\$(ConfigurationName)\SlimDX.dll&quot; &quot;$(OutDir)\&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -320,7 +320,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copying SlimDX.dll..."
-				CommandLine="xcopy /Y $(SolutionDir)x64\$(ConfigurationName)\SlimDX.dll $(OutDir)\&#x0D;&#x0A;xcopy /Y $(SolutionDir)x64\$(ConfigurationName)\SlimDX.pdb $(OutDir)\&#x0D;&#x0A;"
+				CommandLine="xcopy /Y &quot;$(SolutionDir)x64\$(ConfigurationName)\SlimDX.dll&quot; &quot;$(OutDir)\&quot;"
 			/>
 		</Configuration>
 	</Configurations>
