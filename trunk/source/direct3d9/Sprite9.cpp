@@ -134,11 +134,22 @@ namespace Direct3D9
 			Utilities::ConvertRect(rectValue, rect);
 		}
 
-		Vector3 centerVal = center.Value;
-		Vector3 positionVal = position.Value;
-		const D3DXVECTOR3* centerPtr = center.HasValue ? reinterpret_cast<const D3DXVECTOR3*>( &centerVal ) : NULL;
-		const D3DXVECTOR3* positionPtr = position.HasValue ? reinterpret_cast<const D3DXVECTOR3*>( &positionVal ) : NULL;
-
+		const D3DXVECTOR3* centerPtr = 0;
+		Vector3 centerValue;
+		if( center.HasValue ) 
+		{
+			centerValue = center.Value;
+			centerPtr = reinterpret_cast<const D3DXVECTOR3*>( &centerValue );
+		}
+		
+		const D3DXVECTOR3* positionPtr = 0;
+		Vector3 positionValue;
+		if( position.HasValue ) 
+		{
+			positionValue = position.Value;
+			positionPtr = reinterpret_cast<const D3DXVECTOR3*>( &positionValue );
+		}
+		
 		HRESULT hr = InternalPointer->Draw( texture->InternalPointer, rectPtr, centerPtr, positionPtr, color.ToArgb() );
 		return RECORD_D3D9( hr );
 	}
@@ -160,10 +171,21 @@ namespace Direct3D9
 
 	Result Sprite::Draw( Texture^ texture, Nullable<Vector3> center, Nullable<Vector3> position, Color4 color )
 	{
-		Vector3 centerVal = center.Value;
-		Vector3 positionVal = position.Value;
-		const D3DXVECTOR3* centerPtr = center.HasValue ? reinterpret_cast<const D3DXVECTOR3*>( &centerVal ) : NULL;
-		const D3DXVECTOR3* positionPtr = position.HasValue ? reinterpret_cast<const D3DXVECTOR3*>( &positionVal ) : NULL;
+		const D3DXVECTOR3* centerPtr = 0;
+		Vector3 centerValue;
+		if( center.HasValue ) 
+		{
+			centerValue = center.Value;
+			centerPtr = reinterpret_cast<const D3DXVECTOR3*>( &centerValue );
+		}
+		
+		const D3DXVECTOR3* positionPtr = 0;
+		Vector3 positionValue;
+		if( position.HasValue ) 
+		{
+			positionValue = position.Value;
+			positionPtr = reinterpret_cast<const D3DXVECTOR3*>( &positionValue );
+		}
 
 		HRESULT hr = InternalPointer->Draw( texture->InternalPointer, NULL, centerPtr, positionPtr, color.ToArgb() );
 		return RECORD_D3D9( hr );
