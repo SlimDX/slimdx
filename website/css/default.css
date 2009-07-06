@@ -15,6 +15,7 @@ body {
 a { text-decoration: none; color: #f56413; font-size: 12px; }
 h1 { font-size: 26px; color: #666666; margin-bottom: 10px; }
 h2 { font-size: 16px; color: #666666; margin-bottom: 5px; }
+ul { list-style: disc inside none; }
 
 .wrapper {
 	margin: 0px auto;
@@ -43,6 +44,7 @@ h2 { font-size: 16px; color: #666666; margin-bottom: 5px; }
 	.menu {
 		float: right;
 		padding-top: 60px;
+		list-style: none outside none;
 		}
 	
 	.menu li {
