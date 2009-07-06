@@ -602,7 +602,11 @@ namespace SlimDX
 			/// <summary>
 			/// Reserved. Do not use.
 			/// </summary>
-			PreventThreadingOptimizations = D3D10_CREATE_DEVICE_PREVENT_INTERNAL_THREADING_OPTIMIZATIONS
+			PreventThreadingOptimizations = D3D10_CREATE_DEVICE_PREVENT_INTERNAL_THREADING_OPTIMIZATIONS,
+
+			AllowNullFromMap = D3D10_CREATE_DEVICE_ALLOW_NULL_FROM_MAP,
+
+			BgraSupport = D3D10_CREATE_DEVICE_BGRA_SUPPORT
 		};
 	
 		/// <summary>Specifies a device driver type.</summary>
