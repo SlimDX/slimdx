@@ -566,7 +566,9 @@ namespace SlimDX
 			/// <summary>
 			/// Prevents multiple threads from being created. This flag is not recommended for general use.
 			/// </summary>
-			PreventThreadingOptimizations = D3D11_CREATE_DEVICE_PREVENT_INTERNAL_THREADING_OPTIMIZATIONS
+			PreventThreadingOptimizations = D3D11_CREATE_DEVICE_PREVENT_INTERNAL_THREADING_OPTIMIZATIONS,
+
+			BgraSupport = D3D10_CREATE_DEVICE_BGRA_SUPPORT
 		};
 	
 		/// <summary>Specifies possible driver types.</summary>
