@@ -42,7 +42,7 @@
           <listItem><para>XInput</para></listItem>
         </list>
         <para>
-          As of June 2009, SlimDX also has beta support for the following, in the form of a separate DLL.
+          As of July 2009, SlimDX also has beta support for the following, in the form of a separate DLL.
         </para>
         <list class="bullet">
           <listItem><para>Direct3D11</para></listItem>

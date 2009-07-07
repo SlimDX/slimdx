@@ -3,7 +3,7 @@
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>
-        There are no known issues in the June 2009 release of SlimDX. If you believe you have found a bug, or have a suggestion for an
+        There are no known issues in the July 2009 release of SlimDX. If you believe you have found a bug, or have a suggestion for an
         enhancement to the library, feel free to file an issue in our
         <externalLink>
           <linkText>issue tracker.</linkText>
