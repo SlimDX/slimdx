@@ -41,6 +41,7 @@ namespace SlimDX
 
 	bool Ray::Intersects( Ray ray, Plane plane, [Out] float% distance )
 	{
+		ray.Direction.Normalize();
 		float dotDirection = (plane.Normal.X * ray.Direction.X) + (plane.Normal.Y * ray.Direction.Y) + (plane.Normal.Z * ray.Direction.Z);
 
 		if( Math::Abs( dotDirection ) < 0.000001f )
@@ -85,6 +86,7 @@ namespace SlimDX
 		float d = 0.0f;
 		float maxValue = float::MaxValue;
 
+		ray.Direction.Normalize();
 		if( Math::Abs( ray.Direction.X ) < 0.0000001 )
 		{
 			if( ray.Position.X < box.Minimum.X || ray.Position.X > box.Maximum.X )
@@ -196,6 +198,7 @@ namespace SlimDX
 			return true;
 		}
 
+		ray.Direction.Normalize();
 		float dot = (x * ray.Direction.X) + (y * ray.Direction.Y) + (z * ray.Direction.Z);
 		if( dot < 0.0f )
 		{
