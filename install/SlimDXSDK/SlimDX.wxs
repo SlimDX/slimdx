@@ -10,6 +10,7 @@
 
     <PropertyRef Id="NETFRAMEWORK20" />
     <PropertyRef Id="NETFRAMEWORK35" />
+    <PropertyRef Id="NETFRAMEWORK35_CLIENT" />
 
     <WixVariable Id="WixUILicenseRtf" Value="..\ExtraFiles\License.rtf" />
     <WixVariable Id="WixUIDialogBmp" Value="..\ExtraFiles\SdxSideLogo.jpg" />
@@ -879,7 +880,7 @@
     </Feature>
 
     <Condition Message="This application requires .NET Framework 2.0 or later. Please install the .NET Framework then run this installer again.">
-      <![CDATA[Installed OR NETFRAMEWORK20 OR NETFRAMEWORK35]]>
+      <![CDATA[Installed OR NETFRAMEWORK20 OR NETFRAMEWORK35 OR NETFRAMEWORK35_CLIENT]]>
     </Condition>
 
     <CustomAction Id="InstallDirectX" FileKey="DXSETUP.exe" ExeCommand="/silent" Execute="deferred" Impersonate="no" Return="check" />
