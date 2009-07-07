@@ -104,6 +104,11 @@ namespace SlimDX
 			/// <summary>
 			/// Reports the current cooperative-level status of the device.
 			/// </summary>
+			/// <remarks>
+			/// This function always returns the result of the TestCooperativeLevel call.
+			/// It will not generate an exception for a failed result, or write to <see cref="SlimDX::Result::Last" />.
+			/// As a result, it is important to actually check the returned value.
+			/// </remarks>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			/// <unmanaged>IDirect3DDevice9::TestCooperativeLevel</unmanaged>
 			Result TestCooperativeLevel();
