@@ -23,6 +23,8 @@
 
 #include "Viewport10.h"
 
+using System::Runtime::InteropServices::OutAttribute;
+
 namespace SlimDX
 {
 	namespace Direct3D10
@@ -47,6 +49,7 @@ namespace SlimDX
 			void SetViewports( Viewport viewport );
 			void SetViewports( ... array<Viewport>^ viewports );
 			void GetViewports( array<Viewport>^ viewports );
+			void GetViewports( [Out] array<Viewport>^% viewports );
 
 			void SetScissorRectangles( System::Drawing::Rectangle scissorRectangle );
 			void SetScissorRectangles( ... array<System::Drawing::Rectangle>^ scissorRectangles );
