@@ -97,6 +97,19 @@ namespace Direct3D11
 		for( UINT i = 0; i < count; i++ )
 			viewports[i] = Viewport( nativeVPs[i].TopLeftX, nativeVPs[i].TopLeftY, nativeVPs[i].Width, nativeVPs[i].Height, nativeVPs[i].MinDepth, nativeVPs[i].MaxDepth );
 	}
+	
+	void RasterizerWrapper::GetViewports( [Out] array<Viewport>^% viewports )
+	{
+		UINT count = 0;
+		deviceContext->RSGetViewports( &count, 0 );
+		
+		stack_array<D3D11_VIEWPORT> nativeVPs = stackalloc( D3D11_VIEWPORT, count );
+		deviceContext->RSGetViewports( &count, &nativeVPs[0] );
+		
+		viewports = gcnew array<Viewport>( count );
+		for( UINT i = 0; i < count; i++ )
+			viewports[i] = Viewport( nativeVPs[i].TopLeftX, nativeVPs[i].TopLeftY, nativeVPs[i].Width, nativeVPs[i].Height, nativeVPs[i].MinDepth, nativeVPs[i].MaxDepth );
+	}
 
 	void RasterizerWrapper::SetScissorRectangles( System::Drawing::Rectangle scissorRectangle )
 	{
