@@ -54,6 +54,7 @@ namespace SlimDX
 			void SetScissorRectangles( System::Drawing::Rectangle scissorRectangle );
 			void SetScissorRectangles( ... array<System::Drawing::Rectangle>^ scissorRectangles );
 			void GetScissorRectangles( array<System::Drawing::Rectangle>^ scissorRectangles );
+			void GetScissorRectangles( [Out] array<System::Drawing::Rectangle>^% scissorRectangles );
 		};
 	}
 };
