@@ -146,5 +146,19 @@ namespace Direct3D10
 
 		for( UINT i = 0; i < count; i++ )
 			scissorRectangles[i] = marshal_as<System::Drawing::Rectangle>( rects[i] );
-	}}
+	}
+	
+	void RasterizerWrapper::GetScissorRectangles( [Out] array<System::Drawing::Rectangle>^% scissorRectangles )
+	{
+		UINT count = 0;
+		m_Device->RSGetScissorRects( &count, 0 );
+		
+		stack_array<D3D10_RECT> rects = stackalloc( D3D10_RECT, count );
+		m_Device->RSGetScissorRects( &count, &rects[0] );
+		
+		scissorRectangles = gcnew array<System::Drawing::Rectangle>( count );
+		for( UINT i = 0; i < count; i++ )
+			scissorRectangles[i] = System::Drawing::Rectangle( rects[i].left, rects[i].top, rects[i].right - rects[i].left, rects[i].bottom - rects[i].top );
+	}
+}
 }
