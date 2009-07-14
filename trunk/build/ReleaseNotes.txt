@@ -63,6 +63,7 @@ DirectInput
 	
 XAudio2
 	* Changed the XAudio2 device to stop explicitly initializing COM. This allows the caller to use whichever calling model he wishes.
+	* Fixed a bug in AudioBuffer that caused buffer submission to be inefficient.
 
 Windows
 	* Added a MessagePump.Run() method to wrap up all of the message loop functionality.
