@@ -31,7 +31,7 @@ namespace SlimDX
 		public:
 			property System::IntPtr Context;
 			property int BuffersQueued;
-			property long SamplesPlayed;
+			property System::Int64 SamplesPlayed;
 
 			/// <summary>
 			/// Tests for equality between two objects.
