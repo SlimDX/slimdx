@@ -242,7 +242,7 @@ namespace XAudio2
 		VoiceState result;
 		result.Context = IntPtr( state.pCurrentBufferContext );
 		result.BuffersQueued = state.BuffersQueued;
-		result.SamplesPlayed = static_cast<long>( state.SamplesPlayed );
+		result.SamplesPlayed = static_cast<Int64>( state.SamplesPlayed );
 
 		return result;
 	}
