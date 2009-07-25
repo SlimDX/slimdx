@@ -24,6 +24,8 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
+#include "../stack_array.h"
+
 #include "BlendState.h"
 #include "DepthStencilState.h"
 #include "DepthStencilView.h"
@@ -183,6 +185,27 @@ namespace Direct3D10
 				nativeRTVs[ i ] = renderTargets[ i ] == nullptr ? 0 : static_cast<ID3D10RenderTargetView*>( renderTargets[ i ]->InternalPointer );
 			m_Device->OMSetRenderTargets( renderTargets->Length, nativeRTVs, nativeDSV );
 		}
+	}
+	
+	DepthStencilView^ OutputMergerWrapper::GetDepthStencilView()
+	{
+		ID3D10DepthStencilView *view;
+
+		m_Device->OMGetRenderTargets( 0, 0, &view );
+		return DepthStencilView::FromPointer( view );
+	}
+
+	array<RenderTargetView^>^ OutputMergerWrapper::GetRenderTargets( int count )
+	{
+		stack_array<ID3D10RenderTargetView*> targets = stackalloc( ID3D10RenderTargetView*, count );
+		array<RenderTargetView^>^ results = gcnew array<RenderTargetView^>( count );
+
+		m_Device->OMGetRenderTargets( count, &targets[0], 0 );
+
+		for( int i = 0; i < count; i++ )
+			results[i] = RenderTargetView::FromPointer( targets[i] );
+
+		return results;
 	}
 }
 }

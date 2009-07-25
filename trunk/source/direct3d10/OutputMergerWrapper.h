@@ -75,6 +75,9 @@ namespace SlimDX
 			void SetTargets( DepthStencilView^ depthStencilView, RenderTargetView^ renderTargetView );
 			void SetTargets( ... array<RenderTargetView^>^ renderTargetViews );
 			void SetTargets( DepthStencilView^ depthStencilView, ... array<RenderTargetView^>^ renderTargetViews );
+			
+			DepthStencilView^ GetDepthStencilView();
+			array<RenderTargetView^>^ GetRenderTargets( int count );
 		};
 	}
 };

@@ -26,16 +26,18 @@ Direct3D 9
 Direct3D 10
 	* Added the Predicate interface.
 	* Added the Device.SetPredication() and Device.GetPredication() methods.
+	* Added GetRenderTargets() and GetDepthStencilView() to the output merger.
+	* Added GetViewports() and GetScissorRectangle() overloads to the rasterizer wrapper that return all appropriate objects.
 	* Added an overload to Device.UpdateSubresource() that allows the update to occur without a destination offset.
 	* Added the SamplerState interface.
-	* Filled in missing shader methods.
-	* Refactored ShaderSignature and ShaderBytecode to be independent of one another.
+	* Added missing shader methods.
+	* Added overloads to EffectVectorVariable.Set to handle smaller sized vectors.
+	* Added the Resource.CalculateSubresourceIndex() static method.
 	* Added functions to compile to shader bytecode.
 	* Added functions to extract shader signatures.
 	* Added constructors for geometry, vertex, and pixel shaders.
 	* Changed inheritance hierarchies to make base types abstract.
-	* Added overloads to EffectVectorVariable.Set to handle smaller sized vectors.
-	* Added the Resource.CalculateSubresourceIndex() static method.
+	* Changed ShaderSignature and ShaderBytecode to be independent of one another.
 	
 Direct3D 10.1
 	* Added the Direct3D 10.1 subsystem.
