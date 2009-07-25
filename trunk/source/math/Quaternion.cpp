@@ -831,10 +831,10 @@ namespace SlimDX
 	Quaternion Quaternion::operator - (Quaternion lhs, Quaternion rhs)
 	{
 		Quaternion result;
-		result.X = lhs.X * rhs.X;
-		result.Y = lhs.Y * rhs.Y;
-		result.Z = lhs.Z * rhs.Z;
-		result.W = lhs.W * rhs.W;
+		result.X = lhs.X - rhs.X;
+		result.Y = lhs.Y - rhs.Y;
+		result.Z = lhs.Z - rhs.Z;
+		result.W = lhs.W - rhs.W;
 		return result;
 	}
 
