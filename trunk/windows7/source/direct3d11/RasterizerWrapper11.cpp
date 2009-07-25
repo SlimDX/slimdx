@@ -98,7 +98,7 @@ namespace Direct3D11
 			viewports[i] = Viewport( nativeVPs[i].TopLeftX, nativeVPs[i].TopLeftY, nativeVPs[i].Width, nativeVPs[i].Height, nativeVPs[i].MinDepth, nativeVPs[i].MaxDepth );
 	}
 	
-	void RasterizerWrapper::GetViewports( [Out] array<Viewport>^% viewports )
+	array<Viewport>^ RasterizerWrapper::GetViewports()
 	{
 		UINT count = 0;
 		deviceContext->RSGetViewports( &count, 0 );
@@ -106,9 +106,10 @@ namespace Direct3D11
 		stack_array<D3D11_VIEWPORT> nativeVPs = stackalloc( D3D11_VIEWPORT, count );
 		deviceContext->RSGetViewports( &count, &nativeVPs[0] );
 		
-		viewports = gcnew array<Viewport>( count );
+		array<Viewport>^ viewports = gcnew array<Viewport>( count );
 		for( UINT i = 0; i < count; i++ )
 			viewports[i] = Viewport( nativeVPs[i].TopLeftX, nativeVPs[i].TopLeftY, nativeVPs[i].Width, nativeVPs[i].Height, nativeVPs[i].MinDepth, nativeVPs[i].MaxDepth );
+		return viewports;
 	}
 
 	void RasterizerWrapper::SetScissorRectangles( System::Drawing::Rectangle scissorRectangle )
@@ -148,7 +149,7 @@ namespace Direct3D11
 			scissorRectangles[i] = marshal_as<System::Drawing::Rectangle>( rects[i] );
 	}
 	
-	void RasterizerWrapper::GetScissorRectangles( [Out] array<System::Drawing::Rectangle>^% scissorRectangles )
+	array<System::Drawing::Rectangle>^ RasterizerWrapper::GetScissorRectangles()
 	{
 		UINT count = 0;
 		deviceContext->RSGetScissorRects( &count, 0 );
@@ -156,9 +157,10 @@ namespace Direct3D11
 		stack_array<D3D10_RECT> rects = stackalloc( D3D10_RECT, count );
 		deviceContext->RSGetScissorRects( &count, &rects[0] );
 		
-		scissorRectangles = gcnew array<System::Drawing::Rectangle>( count );
+		array<System::Drawing::Rectangle>^ scissorRectangles = gcnew array<System::Drawing::Rectangle>( count );
 		for( UINT i = 0; i < count; i++ )
 			scissorRectangles[i] = System::Drawing::Rectangle( rects[i].left, rects[i].top, rects[i].right - rects[i].left, rects[i].bottom - rects[i].top );
+		return scissorRectangles;
 	}
 }
 }
