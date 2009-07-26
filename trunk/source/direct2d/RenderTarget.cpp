@@ -331,6 +331,8 @@ namespace Direct2D
 		InternalPointer->DrawTextLayout( po, textLayout->InternalPointer, defaultBrush->InternalPointer, static_cast<D2D1_DRAW_TEXT_OPTIONS>( options ) );
 	}
 
+#pragma push_macro("DrawText")
+#undef DrawText
 	void RenderTarget::DrawText( String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::Rectangle layoutRectangle, Brush^ defaultBrush )
 	{
 		RectangleF rect = CastRectangle( layoutRectangle );
@@ -350,7 +352,7 @@ namespace Direct2D
 		D2D1_RECT_F rect = D2D1::RectF( layoutRectangle.Left, layoutRectangle.Top, layoutRectangle.Right, layoutRectangle.Bottom );
 		pin_ptr<const wchar_t> pinnedText = PtrToStringChars( text );
 
-		InternalPointer->DrawText( pinnedText, text->Length, textFormat->InternalPointer, rect, defaultBrush->InternalPointer );
+		InternalPointer->DrawTextW( pinnedText, text->Length, textFormat->InternalPointer, rect, defaultBrush->InternalPointer );
 	}
 
 	void RenderTarget::DrawText( String^ text, SlimDX::DirectWrite::TextFormat^ textFormat, System::Drawing::RectangleF layoutRectangle, Brush^ defaultBrush, DrawTextOptions options, SlimDX::DirectWrite::TextMeasuringMethod measuringMethod )
@@ -358,9 +360,10 @@ namespace Direct2D
 		D2D1_RECT_F rect = D2D1::RectF( layoutRectangle.Left, layoutRectangle.Top, layoutRectangle.Right, layoutRectangle.Bottom );
 		pin_ptr<const wchar_t> pinnedText = PtrToStringChars( text );
 
-		InternalPointer->DrawText( pinnedText, text->Length, textFormat->InternalPointer, rect, defaultBrush->InternalPointer,
+		InternalPointer->DrawTextW( pinnedText, text->Length, textFormat->InternalPointer, rect, defaultBrush->InternalPointer,
 			static_cast<D2D1_DRAW_TEXT_OPTIONS>( options ), static_cast<DWRITE_TEXT_MEASURING_METHOD>( measuringMethod ) );
 	}
+#pragma pop_macro("DrawText")
 
 	void RenderTarget::DrawBitmap( Bitmap^ bitmap )
 	{
