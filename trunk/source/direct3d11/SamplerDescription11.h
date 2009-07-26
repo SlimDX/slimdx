@@ -19,32 +19,42 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#define XAUDIO2_HELPER_FUNCTIONS
+#include "../math/color4.h"
 
-#include <windows.h>
-#include <vcclr.h>
-#include <unknwn.h>
+#include "Enums11.h"
 
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <dxgi.h>
-#include <d3d10_1.h>
-#include <d3d10.h>
-#include <d3dx10.h>
-#include <d3d11.h>
-#include <d3dx11.h>
-#include <d2d1.h>
-#include <d2d1helper.h>
-#include <dwrite.h>
-#include <dsound.h>
-#include <dinput.h>
-#include <xinput.h>
-#include <xaudio2.h>
-#include <x3daudio.h>
-#include <audiodefs.h>
-#include <xapo.h>
+namespace SlimDX
+{
+	namespace Direct3D11
+	{	
+		public value class SamplerDescription : System::IEquatable<SamplerDescription>
+		{
+		internal:
+			SamplerDescription( const D3D11_SAMPLER_DESC& native );
+			
+			D3D11_SAMPLER_DESC CreateNativeVersion();
+			
+		public:
+			property Filter Filter;
+			property TextureAddressMode AddressU;
+			property TextureAddressMode AddressV;
+			property TextureAddressMode AddressW;
+			property float MipLodBias;
+			property int MaximumAnisotropy;
+			property Comparison ComparisonFunction;
+			property Color4 BorderColor;
+			property float MinimumLod;
+			property float MaximumLod;
 
-#include <memory>
-#include <stdexcept>
-#include <cmath>
+			static bool operator == ( SamplerDescription left, SamplerDescription right );
+			static bool operator != ( SamplerDescription left, SamplerDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( SamplerDescription other );
+			static bool Equals( SamplerDescription% value1, SamplerDescription% value2 );
+		};
+	}
+};

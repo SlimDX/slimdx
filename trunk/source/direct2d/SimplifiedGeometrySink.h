@@ -19,32 +19,36 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#define XAUDIO2_HELPER_FUNCTIONS
+#include "../ComObject.h"
 
-#include <windows.h>
-#include <vcclr.h>
-#include <unknwn.h>
+#include "Enums.h"
+#include "BezierSegment.h"
 
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <dxgi.h>
-#include <d3d10_1.h>
-#include <d3d10.h>
-#include <d3dx10.h>
-#include <d3d11.h>
-#include <d3dx11.h>
-#include <d2d1.h>
-#include <d2d1helper.h>
-#include <dwrite.h>
-#include <dsound.h>
-#include <dinput.h>
-#include <xinput.h>
-#include <xaudio2.h>
-#include <x3daudio.h>
-#include <audiodefs.h>
-#include <xapo.h>
+namespace SlimDX
+{
+	namespace Direct2D
+	{
+		public ref class SimplifiedGeometrySink : ComObject
+		{
+			COMOBJECT(ID2D1SimplifiedGeometrySink, SimplifiedGeometrySink);
 
-#include <memory>
-#include <stdexcept>
-#include <cmath>
+		protected:
+			SimplifiedGeometrySink() { };
+			
+		public:
+			void BeginFigure( System::Drawing::Point startPoint, FigureBegin style );
+			void BeginFigure( System::Drawing::PointF startPoint, FigureBegin style );
+			void EndFigure( FigureEnd style );
+
+			Result Close();
+
+			void SetFillMode( FillMode fillMode );
+			void SetSegmentFlags( PathSegment vertexFlags );
+
+			void AddLines( array<System::Drawing::PointF>^ points );
+			void AddBeziers( array<BezierSegment>^ beziers );
+		};
+	}
+}
