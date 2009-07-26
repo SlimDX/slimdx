@@ -19,32 +19,33 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#define XAUDIO2_HELPER_FUNCTIONS
+#include "../Direct3D10/ShaderSignature.h"
 
-#include <windows.h>
-#include <vcclr.h>
-#include <unknwn.h>
+#include "DeviceChild11.h"
+#include "InputElement11.h"
 
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <dxgi.h>
-#include <d3d10_1.h>
-#include <d3d10.h>
-#include <d3dx10.h>
-#include <d3d11.h>
-#include <d3dx11.h>
-#include <d2d1.h>
-#include <d2d1helper.h>
-#include <dwrite.h>
-#include <dsound.h>
-#include <dinput.h>
-#include <xinput.h>
-#include <xaudio2.h>
-#include <x3daudio.h>
-#include <audiodefs.h>
-#include <xapo.h>
-
-#include <memory>
-#include <stdexcept>
-#include <cmath>
+namespace SlimDX
+{
+	namespace Direct3D11
+	{
+		ref class Device;
+		ref class ShaderSignature;
+		
+		/// <summary>Accesses the input data for the input-assembler stage.</summary>
+		/// <unmanaged>ID3D11InputLayout</unmanaged>
+		public ref class InputLayout : public DeviceChild
+		{
+			COMOBJECT(ID3D11InputLayout, InputLayout);
+		
+		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="InputLayout" /> object to describe the
+			/// input-buffer data for the input-assembler stage.
+			/// </summary>
+			/// <unmanaged>ID3D11Device::CreateInputLayout</unmanaged>
+			InputLayout( SlimDX::Direct3D11::Device^ device, array<InputElement>^ elements, Direct3D10::ShaderSignature^ shaderSignature );
+		};
+	}
+};

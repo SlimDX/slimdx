@@ -19,32 +19,24 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#define XAUDIO2_HELPER_FUNCTIONS
+#include "DeviceChild11.h"
+#include "../Direct3D10/ShaderBytecode10.h"
 
-#include <windows.h>
-#include <vcclr.h>
-#include <unknwn.h>
+namespace SlimDX
+{
+	namespace Direct3D11
+	{
+		ref class ClassLinkage;
 
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <dxgi.h>
-#include <d3d10_1.h>
-#include <d3d10.h>
-#include <d3dx10.h>
-#include <d3d11.h>
-#include <d3dx11.h>
-#include <d2d1.h>
-#include <d2d1helper.h>
-#include <dwrite.h>
-#include <dsound.h>
-#include <dinput.h>
-#include <xinput.h>
-#include <xaudio2.h>
-#include <x3daudio.h>
-#include <audiodefs.h>
-#include <xapo.h>
+		public ref class VertexShader : public DeviceChild
+		{
+			COMOBJECT(ID3D11VertexShader, VertexShader);
 
-#include <memory>
-#include <stdexcept>
-#include <cmath>
+		public:
+			VertexShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode );
+			VertexShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage );
+		};
+	}
+};

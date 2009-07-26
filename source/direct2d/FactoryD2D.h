@@ -19,32 +19,33 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#define XAUDIO2_HELPER_FUNCTIONS
+#include "../ComObject.h"
 
-#include <windows.h>
-#include <vcclr.h>
-#include <unknwn.h>
+#include "Enums.h"
 
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <dxgi.h>
-#include <d3d10_1.h>
-#include <d3d10.h>
-#include <d3dx10.h>
-#include <d3d11.h>
-#include <d3dx11.h>
-#include <d2d1.h>
-#include <d2d1helper.h>
-#include <dwrite.h>
-#include <dsound.h>
-#include <dinput.h>
-#include <xinput.h>
-#include <xaudio2.h>
-#include <x3daudio.h>
-#include <audiodefs.h>
-#include <xapo.h>
+namespace SlimDX
+{
+	namespace Direct2D
+	{
+		public ref class Factory : public ComObject
+		{
+			COMOBJECT(ID2D1Factory, Factory);
 
-#include <memory>
-#include <stdexcept>
-#include <cmath>
+			void Init( FactoryType factoryType, DebugLevel debugLevel );
+			
+		public:
+			Factory();
+			Factory( FactoryType factoryType );
+			Factory( FactoryType factoryType, DebugLevel debugLevel );
+
+			Result ReloadSystemMetrics();
+
+			property System::Drawing::SizeF DesktopDpi
+			{
+				System::Drawing::SizeF get();
+			}
+		};
+	}
+}

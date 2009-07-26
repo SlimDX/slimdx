@@ -97,10 +97,6 @@
       <Project>{8ECCE443-0440-40F4-A94C-F02E027282C3}</Project>
       <Name>SlimDX</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\windows7\SlimDX.Windows7.vcproj">
-      <Project>{01D1D752-A763-4D67-A7BD-0F13BDA0E866}</Project>
-      <Name>SlimDX.Windows7</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

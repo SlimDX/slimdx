@@ -19,32 +19,27 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#define XAUDIO2_HELPER_FUNCTIONS
+#include "../dxgi/Enums.h"
 
-#include <windows.h>
-#include <vcclr.h>
-#include <unknwn.h>
+#include "Enums.h"
 
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <dxgi.h>
-#include <d3d10_1.h>
-#include <d3d10.h>
-#include <d3dx10.h>
-#include <d3d11.h>
-#include <d3dx11.h>
-#include <d2d1.h>
-#include <d2d1helper.h>
-#include <dwrite.h>
-#include <dsound.h>
-#include <dinput.h>
-#include <xinput.h>
-#include <xaudio2.h>
-#include <x3daudio.h>
-#include <audiodefs.h>
-#include <xapo.h>
+namespace SlimDX
+{
+	namespace Direct2D
+	{
+		public value class PixelFormat
+		{
+		public:
+			PixelFormat( SlimDX::DXGI::Format format, AlphaMode alphaMode )
+			{
+				Format = format;
+				AlphaMode = alphaMode;
+			}
 
-#include <memory>
-#include <stdexcept>
-#include <cmath>
+			property SlimDX::DXGI::Format Format;
+			property AlphaMode AlphaMode;
+		};
+	}
+}

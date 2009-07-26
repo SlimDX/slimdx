@@ -19,32 +19,44 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#define XAUDIO2_HELPER_FUNCTIONS
-
-#include <windows.h>
-#include <vcclr.h>
-#include <unknwn.h>
-
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <dxgi.h>
-#include <d3d10_1.h>
-#include <d3d10.h>
-#include <d3dx10.h>
-#include <d3d11.h>
-#include <d3dx11.h>
 #include <d2d1.h>
 #include <d2d1helper.h>
-#include <dwrite.h>
-#include <dsound.h>
-#include <dinput.h>
-#include <xinput.h>
-#include <xaudio2.h>
-#include <x3daudio.h>
-#include <audiodefs.h>
-#include <xapo.h>
 
-#include <memory>
-#include <stdexcept>
-#include <cmath>
+#include "Direct2DException.h"
+
+#include "MeshD2D.h"
+
+const IID IID_ID2D1Mesh = __uuidof(ID2D1Mesh);
+
+using namespace System;
+
+namespace SlimDX
+{
+namespace Direct2D
+{
+	Mesh::Mesh( RenderTarget^ renderTarget )
+	{
+		ID2D1Mesh *mesh = NULL;
+
+		HRESULT hr = renderTarget->InternalPointer->CreateMesh( &mesh );
+
+		if( RECORD_D2D( hr ).IsFailure )
+			throw gcnew Direct2DException( Result::Last );
+
+		Construct( mesh );
+	}
+
+	TessellationSink^ Mesh::Open()
+	{
+		ID2D1TessellationSink *sink = NULL;
+
+		HRESULT hr = InternalPointer->Open( &sink );
+		if( RECORD_D2D( hr ).IsFailure )
+			return nullptr;
+
+		return TessellationSink::FromPointer( sink );
+	}
+}
+}
