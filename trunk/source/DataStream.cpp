@@ -129,7 +129,7 @@ namespace SlimDX
 		m_GCHandle = GCHandle::Alloc( userBuffer, GCHandleType::Pinned );
 		
 		m_Buffer = static_cast<char*>( m_GCHandle.AddrOfPinnedObject().ToPointer() );
-		m_Size = userBuffer->Length;
+		m_Size = (userBuffer->Length == 0) ? 0 : userBuffer->Length * Marshal::SizeOf(userBuffer->GetValue(0));
 
 		m_CanRead = canRead;
 		m_CanWrite = canWrite;
