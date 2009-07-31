@@ -27,6 +27,14 @@ struct D3DXMATRIX;
 
 using System::Runtime::InteropServices::OutAttribute;
 
+namespace SlimGen {
+	namespace Generator {
+		[System::AttributeUsageAttribute(System::AttributeTargets::Method)]
+		public ref class ReplaceMethodNativeAttribute {
+
+		};
+	}
+}
 namespace SlimDX
 {
 	value class Plane;
@@ -197,6 +205,7 @@ namespace SlimDX
 		/// <param name="left">The first matrix to add.</param>
 		/// <param name="right">The second matrix to add.</param>
 		/// <param name="result">When the method completes, contains the sum of the two matrices.</param>
+		[SlimGen::Generator::ReplaceMethodNativeAttribute]
 		static void Add( Matrix% left, Matrix% right, [Out] Matrix% result );
 
 		/// <summary>
@@ -213,6 +222,7 @@ namespace SlimDX
 		/// <param name="left">The first matrix to subtract.</param>
 		/// <param name="right">The second matrix to subtract.</param>
 		/// <param name="result">When the method completes, contains the difference between the two matrices.</param>
+		[SlimGen::Generator::ReplaceMethodNativeAttribute]
 		static void Subtract( Matrix% left, Matrix% right, [Out] Matrix% result );
 
 		/// <summary>
@@ -229,6 +239,7 @@ namespace SlimDX
 		/// <param name="left">The first matrix to multiply.</param>
 		/// <param name="right">The second matrix to multiply.</param>
 		/// <param name="result">The product of the two matrices.</param>
+		[SlimGen::Generator::ReplaceMethodNativeAttribute]
 		static void Multiply( Matrix% left, Matrix% right, [Out] Matrix% result );
 
 		/// <summary>
@@ -305,6 +316,7 @@ namespace SlimDX
 		/// <param name="left">The first matrix to divide.</param>
 		/// <param name="right">The second matrix to divide.</param>
 		/// <param name="result">When the method completes, contains the quotient of the two matrices.</param>
+		[SlimGen::Generator::ReplaceMethodNativeAttribute]
 		static void Divide( Matrix% left, Matrix% right, [Out] Matrix% result );
 
 		/// <summary>
@@ -335,6 +347,7 @@ namespace SlimDX
 		/// </summary>
 		/// <param name="matrix">The matrix to be negated.</param>
 		/// <param name="result">When the method completes, contains the negated matrix.</param>
+		[SlimGen::Generator::ReplaceMethodNativeAttribute]
 		static void Negate( Matrix% matrix, [Out] Matrix% result );
 
 		/// <summary>
@@ -847,6 +860,7 @@ namespace SlimDX
 		/// </summary>
 		/// <param name="matrix">The matrix whose transpose is to be calculated.</param>
 		/// <param name="result">When the method completes, contains the transpose of the specified matrix.</param>
+		[SlimGen::Generator::ReplaceMethodNativeAttribute]
 		static void Transpose( Matrix% matrix, [Out] Matrix% result );
 
 		/// <summary>
