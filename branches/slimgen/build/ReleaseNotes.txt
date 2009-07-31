@@ -1,0 +1,72 @@
+General
+	* Changed most methods that deal with DataStream to take into account the current position of the stream.
+	* Added an overload to DataStream that allows a managed array to be used as a backing store for the stream.
+	* Added a stack_array type that replaces std::vector. In certain tests, it outperforms by a factor of 3.
+	* Added a Resources class that handles loading SlimDX resources from the SlimDX DLL.
+		* As of now, this contains two different versions of the SlimDX icon.
+	* Moved Viewport from the base namespace into the individual subsystems that needed it.
+	* Added documentation comments to many areas of the library.
+	
+Samples
+	* The samples have been updated to use C# 3.0 features, as well as the new convenience types provided in the SlimDX.Windows namespace.
+
+Math
+	* Fixed a typo in BoundingSphere.Contains.
+
+DXGI
+	* Fixed bugs that caused adapters to be created as non-ancillary objects requiring user disposal.
+
+Direct3D 9
+	* Fixed a bug that caused AdapterDetails.GetCertification to throw when the adapter wasn't certified.
+	* Fixed a bug in AnimationController.GetAnimationSet that caused hard crashes.
+	* Fixed a bug in the texture loading functions that could result in an invalid size.
+	* Fixed a bug in Device.SetPixelShaderConstant and Device.SetVertexShaderConstant that caused an exception when an array of boolean constants was provided.
+	* Updated the Sprite class to take nullable arguments where appropriate.
+
+Direct3D 10
+	* Added the Predicate interface.
+	* Added the Device.SetPredication() and Device.GetPredication() methods.
+	* Added GetRenderTargets() and GetDepthStencilView() to the output merger.
+	* Added GetViewports() and GetScissorRectangle() overloads to the rasterizer wrapper that return all appropriate objects.
+	* Added an overload to Device.UpdateSubresource() that allows the update to occur without a destination offset.
+	* Added the SamplerState interface.
+	* Added missing shader methods.
+	* Added overloads to EffectVectorVariable.Set to handle smaller sized vectors.
+	* Added the Resource.CalculateSubresourceIndex() static method.
+	* Added functions to compile to shader bytecode.
+	* Added functions to extract shader signatures.
+	* Added constructors for geometry, vertex, and pixel shaders.
+	* Changed inheritance hierarchies to make base types abstract.
+	* Changed ShaderSignature and ShaderBytecode to be independent of one another.
+	
+Direct3D 10.1
+	* Added the Direct3D 10.1 subsystem.
+	
+Direct3D11
+	* Added the Direct3D 11 subsystem.
+
+DirectSound
+	* Removed the confusing lockEntireBuffer parameter from CaptureBuffer.Read.
+	* Fixed a bug in SoundBuffer.Read that caused EndOfStreamException to be thrown erroneously.
+
+DirectInput
+	* Refactored the Device class into an abstract base class.
+	* Added a CustomDevice<T> class for devices with custom data formats.
+	* Added the Keyboard class for keyboard devices.
+	* Added the Mouse class for mouse devices.
+	* Added the Joystick class for joystick devices.
+	* Changed a few collection results to return IList<T> instead of IEnumerable<T>.
+	* Removed the BufferedData indirection. Buffered data reads now return direct lists of data.
+	* Did some general code clean-up in DirectInput to better match recent changes in the library.
+	* Added support for effects.
+	* Added type specific parameters for effects.
+	* Added the ability to get image and object info from a device.
+	* Filled in miscellaneous device functionality.
+	
+XAudio2
+	* Changed the XAudio2 device to stop explicitly initializing COM. This allows the caller to use whichever calling model he wishes.
+	* Fixed a bug in AudioBuffer that caused buffer submission to be inefficient.
+
+Windows
+	* Added a MessagePump.Run() method to wrap up all of the message loop functionality.
+	* Added a RenderForm class that sets a few desired properties and defaults.
