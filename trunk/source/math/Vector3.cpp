@@ -682,80 +682,45 @@ namespace SlimDX
 		return results;
 	}
 	
-	Vector3 Vector3::Project( Vector3 vector, int x, int y, int width, int height, float minZ, float maxZ, Matrix projection, Matrix view, Matrix world )
+	Vector3 Vector3::Project( Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix worldViewProjection )
 	{
-		Matrix matrix;
-		Matrix::Multiply( world, view, matrix );
-		Matrix::Multiply( matrix, projection, matrix );
-
-		float w = ( vector.X * matrix.M14 ) + ( vector.Y * matrix.M24 ) + ( vector.Z * matrix.M34 ) + matrix.M44;
-		if( w - 1.0f < -float::Epsilon || w - 1.0f > float::Epsilon )
-			vector /= w;
-
-		return Vector3( ( ( vector.X + 1.0f ) * 0.5f * width ) + x, ( ( -vector.Y + 1.0f ) * 0.5f * height ) + y, ( vector.Z * ( maxZ - minZ ) ) + minZ );
+		Vector3::TransformCoordinate( vector, worldViewProjection, vector );
+		return Vector3( ( ( 1.0f + vector.X ) * 0.5f * width ) + x, ( ( 1.0f - vector.Y ) * 0.5f * height ) + y, ( vector.Z * ( maxZ - minZ ) ) + minZ );
 	}
 	
-	void Vector3::Project( Vector3% vector, int x, int y, int width, int height, float minZ, float maxZ, Matrix% projection, Matrix% view, Matrix% world, [Out] Vector3% result )
+	void Vector3::Project( Vector3% vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix% worldViewProjection, [Out] Vector3% result )
 	{
-		Vector3 v = vector;
-		Matrix matrix;
-		Matrix::Multiply( world, view, matrix );
-		Matrix::Multiply( matrix, projection, matrix );
+		Vector3 v;
+		Vector3::TransformCoordinate( vector, worldViewProjection, v );
 
-		float w = ( vector.X * matrix.M14 ) + ( vector.Y * matrix.M24 ) + ( vector.Z * matrix.M34 ) + matrix.M44;
-		if( w - 1.0f < -float::Epsilon || w - 1.0f > float::Epsilon )
-			v /= w;
-
-		result = Vector3( ( ( v.X + 1.0f ) * 0.5f * width ) + x, ( ( -v.Y + 1.0f ) * 0.5f * height ) + y, ( v.Z * ( maxZ - minZ ) ) + minZ );
+		result = Vector3( ( ( 1.0f + v.X ) * 0.5f * width ) + x, ( ( 1.0f - v.Y ) * 0.5f * height ) + y, ( v.Z * ( maxZ - minZ ) ) + minZ );
 	}
 	
-	Vector3 Vector3::Unproject( Vector3 vector, int x, int y, int width, int height, float minZ, float maxZ, Matrix projection, Matrix view, Matrix world )
+	Vector3 Vector3::Unproject( Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix worldViewProjection )
 	{
 		Vector3 v;
 		Matrix matrix;
-		Matrix::Multiply( world, view, matrix );
-		Matrix::Multiply( matrix, projection, matrix );
-		Matrix::Invert( matrix, matrix );
+		Matrix::Invert( worldViewProjection, matrix );
 
-		v.X = ( ( ( vector.X - x ) / static_cast<float>( width ) ) * 2.0f ) - 1.0f;
-		v.Y = -( ( ( ( vector.Y - y ) / static_cast<float>( height ) ) * 2.0f ) - 1.0f );
+		v.X = ( ( ( vector.X - x ) / width ) * 2.0f ) - 1.0f;
+		v.Y = -( ( ( ( vector.Y - y ) / height ) * 2.0f ) - 1.0f );
 		v.Z = ( vector.Z - minZ ) / ( maxZ - minZ );
 
-		Vector4 r;
-		Vector3::Transform( v, matrix, r );
-		v.X = r.X;
-		v.Y = r.Y;
-		v.Z = r.Z;
-
-		float w = ( vector.X * matrix.M14 ) + ( vector.Y * matrix.M24 ) + ( vector.Z * matrix.M34 ) + matrix.M44;
-		if( w - 1.0f < -float::Epsilon || w - 1.0f > float::Epsilon )
-			v /= w;
-
+		Vector3::TransformCoordinate( v, matrix, v );
 		return v;
 	}
 	
-	void Vector3::Unproject( Vector3% vector, int x, int y, int width, int height, float minZ, float maxZ, Matrix% projection, Matrix% view, Matrix% world, [Out] Vector3% result )
+	void Vector3::Unproject( Vector3% vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix% worldViewProjection, [Out] Vector3% result )
 	{
 		Vector3 v;
 		Matrix matrix;
-		Matrix::Multiply( world, view, matrix );
-		Matrix::Multiply( matrix, projection, matrix );
-		Matrix::Invert( matrix, matrix );
+		Matrix::Invert( worldViewProjection, matrix );
 
-		v.X = ( ( ( vector.X - x ) / static_cast<float>( width ) ) * 2.0f ) - 1.0f;
-		v.Y = -( ( ( ( vector.Y - y ) / static_cast<float>( height ) ) * 2.0f ) - 1.0f );
+		v.X = ( ( ( vector.X - x ) / width ) * 2.0f ) - 1.0f;
+		v.Y = -( ( ( ( vector.Y - y ) / height ) * 2.0f ) - 1.0f );
 		v.Z = ( vector.Z - minZ ) / ( maxZ - minZ );
 
-		Vector4 r;
-		Vector3::Transform( v, matrix, r );
-		v.X = r.X;
-		v.Y = r.Y;
-		v.Z = r.Z;
-
-		float w = ( vector.X * matrix.M14 ) + ( vector.Y * matrix.M24 ) + ( vector.Z * matrix.M34 ) + matrix.M44;
-		if( w - 1.0f < -float::Epsilon || w - 1.0f > float::Epsilon )
-			v /= w;
-
+		Vector3::TransformCoordinate( v, matrix, v );
 		result = v;
 	}
 	
