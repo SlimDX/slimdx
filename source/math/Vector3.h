@@ -659,11 +659,9 @@ namespace SlimDX
 		/// <param name="height">The height of the viewport.</param>
 		/// <param name="minZ">The minimum depth of the viewport.</param>
 		/// <param name="maxZ">The maximum depth of the viewport.</param>
-		/// <param name="projection">The projection matrix.</param>
-		/// <param name="view">The view matrix.</param>
-		/// <param name="world">The world matrix.</param>
+		/// <param name="worldViewProjection">The combined world-view-projection matrix.</param>
 		/// <returns>The vector in screen space.</returns>
-		static Vector3 Project( Vector3 vector, int x, int y, int width, int height, float minZ, float maxZ, Matrix projection, Matrix view, Matrix world );
+		static Vector3 Project( Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix worldViewProjection );
 		
 		/// <summary>
 		/// Projects a 3D vector from object space into screen space. 
@@ -675,11 +673,9 @@ namespace SlimDX
 		/// <param name="height">The height of the viewport.</param>
 		/// <param name="minZ">The minimum depth of the viewport.</param>
 		/// <param name="maxZ">The maximum depth of the viewport.</param>
-		/// <param name="projection">The projection matrix.</param>
-		/// <param name="view">The view matrix.</param>
-		/// <param name="world">The world matrix.</param>
+		/// <param name="worldViewProjection">The combined world-view-projection matrix.</param>
 		/// <param name="result">When the method completes, contains the vector in screen space.</param>
-		static void Project( Vector3% vector, int x, int y, int width, int height, float minZ, float maxZ, Matrix% projection, Matrix% view, Matrix% world, [Out] Vector3% result );
+		static void Project( Vector3% vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix% worldViewProjection, [Out] Vector3% result );
 		
 		/// <summary>
 		/// Projects a 3D vector from screen space into object space. 
@@ -691,11 +687,9 @@ namespace SlimDX
 		/// <param name="height">The height of the viewport.</param>
 		/// <param name="minZ">The minimum depth of the viewport.</param>
 		/// <param name="maxZ">The maximum depth of the viewport.</param>
-		/// <param name="projection">The projection matrix.</param>
-		/// <param name="view">The view matrix.</param>
-		/// <param name="world">The world matrix.</param>
+		/// <param name="worldViewProjection">The combined world-view-projection matrix.</param>
 		/// <returns>The vector in object space.</returns>
-		static Vector3 Unproject( Vector3 vector, int x, int y, int width, int height, float minZ, float maxZ, Matrix projection, Matrix view, Matrix world );
+		static Vector3 Unproject( Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix worldViewProjection );
 		
 		/// <summary>
 		/// Projects a 3D vector from screen space into object space. 
@@ -707,11 +701,9 @@ namespace SlimDX
 		/// <param name="height">The height of the viewport.</param>
 		/// <param name="minZ">The minimum depth of the viewport.</param>
 		/// <param name="maxZ">The maximum depth of the viewport.</param>
-		/// <param name="projection">The projection matrix.</param>
-		/// <param name="view">The view matrix.</param>
-		/// <param name="world">The world matrix.</param>
+		/// <param name="worldViewProjection">The combined world-view-projection matrix.</param>
 		/// <param name="result">When the method completes, contains the vector in object space.</param>
-		static void Unproject( Vector3% vector, int x, int y, int width, int height, float minZ, float maxZ, Matrix% projection, Matrix% view, Matrix% world, [Out] Vector3% result );
+		static void Unproject( Vector3% vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix% worldViewProjection, [Out] Vector3% result );
 		
 		/// <summary>
 		/// Returns a vector containing the smallest components of the specified vectors.
