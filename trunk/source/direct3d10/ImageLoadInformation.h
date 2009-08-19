@@ -55,7 +55,10 @@ namespace SlimDX
 			D3DX10_IMAGE_LOAD_INFO CreateNativeVersion();
 
 		public:
-			property static int FileDefaultValue {
+			static ImageLoadInformation FromDefaults();
+
+			property static int FileDefaultValue
+			{
 				int get();
 			}
 			

@@ -50,6 +50,7 @@ namespace Direct3D10
 		ID3D10DepthStencilState* oldState;
 		int oldReference;
 		m_Device->OMGetDepthStencilState( &oldState, reinterpret_cast<UINT*>( &oldReference ) );
+		oldState->Release();
 	
 		if( value == nullptr )
 			m_Device->OMSetDepthStencilState( 0, oldReference );
@@ -73,6 +74,7 @@ namespace Direct3D10
 		m_Device->OMGetDepthStencilState( &oldState, reinterpret_cast<UINT*>( &oldReference ) );
 	
 		m_Device->OMSetDepthStencilState( oldState, value );
+		oldState->Release();
 	}
 	
 	int OutputMergerWrapper::DepthStencilReference::get()
@@ -80,6 +82,7 @@ namespace Direct3D10
 		ID3D10DepthStencilState* oldState = 0;
 		int oldReference = 0;
 		m_Device->OMGetDepthStencilState( &oldState, reinterpret_cast<UINT*>( &oldReference ) );
+		oldState->Release();
 		
 		return oldReference;
 	}
@@ -90,15 +93,12 @@ namespace Direct3D10
 		float oldFactor[4];
 		int oldMask = 0;
 		m_Device->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
+		oldState->Release();
 		
 		if( value == nullptr )
-		{
 			m_Device->OMSetBlendState( 0, oldFactor, oldMask );
-		}
 		else 
-		{
 			m_Device->OMSetBlendState( value->InternalPointer, oldFactor, oldMask );
-		}
 	}
 	
 	SlimDX::Direct3D10::BlendState^ OutputMergerWrapper::BlendState::get()
@@ -120,6 +120,7 @@ namespace Direct3D10
 		
 		float newFactor[4] = { value.Red, value.Green, value.Blue, value.Alpha };
 		m_Device->OMSetBlendState( oldState, newFactor, oldMask );
+		oldState->Release();
 	}
 	
 	Color4 OutputMergerWrapper::BlendFactor::get()
@@ -128,6 +129,7 @@ namespace Direct3D10
 		float oldFactor[4];
 		int oldMask = 0;
 		m_Device->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
+		oldState->Release();
 		
 		return Color4( oldFactor[3], oldFactor[0], oldFactor[1], oldFactor[2] );
 	}
@@ -140,6 +142,7 @@ namespace Direct3D10
 		m_Device->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
 	
 		m_Device->OMSetBlendState( oldState, oldFactor, value );
+		oldState->Release();
 	}
 	
 	int OutputMergerWrapper::BlendSampleMask::get()
@@ -148,6 +151,7 @@ namespace Direct3D10
 		float oldFactor[4];
 		int oldMask = 0;
 		m_Device->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
+		oldState->Release();
 		
 		return oldMask;
 	}

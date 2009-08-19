@@ -63,8 +63,27 @@ namespace SlimDX
 
 			return native;
 		}
+
+		ImageLoadInformation ImageLoadInformation::FromDefaults()
+		{
+			ImageLoadInformation ret;
+			ret.m_Width = D3DX11_DEFAULT;
+			ret.m_Height = D3DX11_DEFAULT;
+			ret.m_Depth = D3DX11_DEFAULT;
+			ret.m_FirstMipLevel = D3DX11_DEFAULT;
+			ret.m_MipLevels = D3DX11_DEFAULT;
+			ret.m_Usage = static_cast<ResourceUsage>( D3DX11_DEFAULT );
+			ret.m_BindFlags = static_cast<Direct3D11::BindFlags>( D3DX11_DEFAULT );
+			ret.m_CPUAccessFlags = static_cast<Direct3D11::CpuAccessFlags>( D3DX11_DEFAULT );
+			ret.m_MiscFlags = static_cast<ResourceOptionFlags>( D3DX11_DEFAULT );
+			ret.m_Format = static_cast<DXGI::Format>( D3DX11_DEFAULT );
+			ret.m_Filter = static_cast<Direct3D11::FilterFlags>( D3DX11_DEFAULT );
+			ret.m_MipFilter = static_cast<Direct3D11::FilterFlags>( D3DX11_DEFAULT );
+			return ret;
+		}
 	
-		int ImageLoadInformation::FileDefaultValue::get() {
+		int ImageLoadInformation::FileDefaultValue::get()
+		{
 			return D3DX11_DEFAULT;
 		}
 
