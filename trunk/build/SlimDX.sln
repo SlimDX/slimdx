@@ -63,6 +63,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asteroids", "..\samples\Gam
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{0FBE5FEA-F20A-4D60-B605-99DE14402A64}"
 	ProjectSection(SolutionItems) = preProject
+		scripts\build-all.bat = scripts\build-all.bat
 		scripts\run-tests.bat = scripts\run-tests.bat
 	EndProjectSection
 EndProject

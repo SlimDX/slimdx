@@ -197,7 +197,7 @@
 	<Target
 		Name="_CheckProperties">
 		<Error
-			Condition="'$(Configruation)'==''"
+			Condition="'$(Configuration)'==''"
 			Text="The Configuration property must be specified."/>
 		<Error
 			Condition="'$(Platform)'==''"
