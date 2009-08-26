@@ -39,7 +39,7 @@
 			<p>The following APIs have beta support, in a separate assembly:
 			<ul style="margin-left: 2em;">
 				<li>Direct3D 11</li>
-				<li>Direct3D</li>
+				<li>Direct2D</li>
 				<li>DirectWrite</li>
 			</ul></p>
 			

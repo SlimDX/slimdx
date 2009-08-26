@@ -5,13 +5,14 @@ General
 	* Added a Resources class that handles loading SlimDX resources from the SlimDX DLL.
 		* As of now, this contains two different versions of the SlimDX icon.
 	* Moved Viewport from the base namespace into the individual subsystems that needed it.
-	* Added documentation comments to many areas of the library.
+	* Added and expanded documentation comments in many areas of the library.
 	
 Samples
 	* The samples have been updated to use C# 3.0 features, as well as the new convenience types provided in the SlimDX.Windows namespace.
 
 Math
 	* Fixed a typo in BoundingSphere.Contains.
+	* Ray intersection methods now normalize the Ray's direction vector.
 
 DXGI
 	* Fixed bugs that caused adapters to be created as non-ancillary objects requiring user disposal.
@@ -24,6 +25,8 @@ Direct3D 9
 	* Updated the Sprite class to take nullable arguments where appropriate.
 
 Direct3D 10
+	* Changed inheritance hierarchies to make base types abstract.
+	* Refactored ShaderSignature and ShaderBytecode to be independent of one another.
 	* Added the Predicate interface.
 	* Added the Device.SetPredication() and Device.GetPredication() methods.
 	* Added GetRenderTargets() and GetDepthStencilView() to the output merger.
@@ -36,8 +39,9 @@ Direct3D 10
 	* Added functions to compile to shader bytecode.
 	* Added functions to extract shader signatures.
 	* Added constructors for geometry, vertex, and pixel shaders.
-	* Changed inheritance hierarchies to make base types abstract.
 	* Changed ShaderSignature and ShaderBytecode to be independent of one another.
+	* Added missing device initialization flags.
+	* Added support for scissor rects to RasterizerWrapper.
 	
 Direct3D 10.1
 	* Added the Direct3D 10.1 subsystem.
@@ -50,18 +54,19 @@ DirectSound
 	* Fixed a bug in SoundBuffer.Read that caused EndOfStreamException to be thrown erroneously.
 
 DirectInput
+	* Changed a few collection results to return IList<T> instead of IEnumerable<T>.
 	* Refactored the Device class into an abstract base class.
 	* Added a CustomDevice<T> class for devices with custom data formats.
 	* Added the Keyboard class for keyboard devices.
 	* Added the Mouse class for mouse devices.
 	* Added the Joystick class for joystick devices.
-	* Changed a few collection results to return IList<T> instead of IEnumerable<T>.
 	* Removed the BufferedData indirection. Buffered data reads now return direct lists of data.
-	* Did some general code clean-up in DirectInput to better match recent changes in the library.
 	* Added support for effects.
 	* Added type specific parameters for effects.
 	* Added the ability to get image and object info from a device.
 	* Filled in miscellaneous device functionality.
+	* Added missing entries to EffectParameterFlags.
+	* Did some general code clean-up in DirectInput to better match recent changes in the library.
 	
 XAudio2
 	* Changed the XAudio2 device to stop explicitly initializing COM. This allows the caller to use whichever calling model he wishes.
@@ -70,3 +75,6 @@ XAudio2
 Windows
 	* Added a MessagePump.Run() method to wrap up all of the message loop functionality.
 	* Added a RenderForm class that sets a few desired properties and defaults.
+	
+Installer
+	* The .NET Framework 3.5 Client Profile is now supported.
