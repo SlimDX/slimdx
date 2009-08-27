@@ -29,9 +29,29 @@ namespace SlimDX
 {
 	namespace DirectWrite
 	{
+		ref class FontFamily;
+		ref class FontFace;
+		ref class Font;
+
 		public ref class FontCollection : public ComObject
 		{
 			COMOBJECT(IDWriteFontCollection, FontCollection);
+
+		public:
+			property int FontFamilyCount
+			{
+				int get();
+			};
+
+			property FontFamily^ default[int]
+			{
+				FontFamily^ get(int index);
+			};
+
+			int FindFamilyName( System::String^ familyName, [Out] bool% exists );
+			int FindFamilyName( System::String^ familyName );
+
+			Font^ GetFontFromFontFace( FontFace^ fontFace );
 		};
 	}
 }
