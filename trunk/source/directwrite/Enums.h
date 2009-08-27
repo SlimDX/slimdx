@@ -31,12 +31,51 @@ namespace SlimDX
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
 
+		/// <summary>
+		/// Indicates the condition at the edges of inline objects or text used to determine line-breaking behavior.
+		/// </summary>
+		public enum class BreakCondition : System::Int32
+		{
+			Neutral = DWRITE_BREAK_CONDITION_NEUTRAL,
+			CanBreak = DWRITE_BREAK_CONDITION_CAN_BREAK,
+			MayNotBreak = DWRITE_BREAK_CONDITION_MAY_NOT_BREAK,
+			MustBreak = DWRITE_BREAK_CONDITION_MUST_BREAK
+		};
+
+		/// <summary>
+		/// Specifies the type of the DirectWrite factory object.
+		/// </summary>
 		public enum class FactoryType : System::Int32
 		{
 			Shared = DWRITE_FACTORY_TYPE_SHARED,
 			Isolated = DWRITE_FACTORY_TYPE_ISOLATED
 		};
 
+		/// <summary>
+		/// Indicates the direction of flow for placing lines of text in a paragraph.
+		/// </summary>
+		public enum class FlowDirection : System::Int32
+		{
+			TopToBottom = DWRITE_FLOW_DIRECTION_TOP_TO_BOTTOM
+		};
+
+		/// <summary>
+		/// Indicates the file format of a font face.
+		/// </summary>
+		public enum class FontFaceType : System::Int32
+		{
+			Cff = DWRITE_FONT_FACE_TYPE_CFF,
+			TrueType = DWRITE_FONT_FACE_TYPE_TRUETYPE,
+			TrueTypeCollection = DWRITE_FONT_FACE_TYPE_TRUETYPE_COLLECTION,
+			Type1 = DWRITE_FONT_FACE_TYPE_TYPE1,
+			Vector = DWRITE_FONT_FACE_TYPE_VECTOR,
+			Bitmap = DWRITE_FONT_FACE_TYPE_BITMAP,
+			Unknown = DWRITE_FONT_FACE_TYPE_UNKNOWN
+		};
+
+		/// <summary>
+		/// Indicates the typographic feature of text supplied by the font.
+		/// </summary>
 		public enum class FontFeatureTag : System::Int32
 		{
 			AlternativeFractions = DWRITE_FONT_FEATURE_TAG_ALTERNATIVE_FRACTIONS,
@@ -119,6 +158,35 @@ namespace SlimDX
 			SlashedZero = DWRITE_FONT_FEATURE_TAG_SLASHED_ZERO
 		};
 
+		/// <summary>
+		/// The type of font represented by a single font file.
+		/// </summary>
+		public enum class FontFileType : System::Int32
+		{
+			Unknown = DWRITE_FONT_FILE_TYPE_UNKNOWN,
+			Cff = DWRITE_FONT_FILE_TYPE_CFF,
+			TrueType = DWRITE_FONT_FILE_TYPE_TRUETYPE,
+			TrueTypeCollection = DWRITE_FONT_FILE_TYPE_TRUETYPE_COLLECTION,
+			Type1Pfm = DWRITE_FONT_FILE_TYPE_TYPE1_PFM,
+			Type1Pfb = DWRITE_FONT_FILE_TYPE_TYPE1_PFB,
+			Vector = DWRITE_FONT_FILE_TYPE_VECTOR,
+			Bitmap = DWRITE_FONT_FILE_TYPE_BITMAP,
+		};
+
+		/// <summary>
+		/// Specifies algorithmic style simulations to be applied to the font face.
+		/// </summary>
+		[System::Flags]
+		public enum class FontSimulations : System::Int32
+		{
+			None = DWRITE_FONT_SIMULATIONS_NONE,
+			Bold = DWRITE_FONT_SIMULATIONS_BOLD,
+			Oblique = DWRITE_FONT_SIMULATIONS_OBLIQUE,
+		};
+
+		/// <summary>
+		/// Represents the degree to which a font has been stretched compared to a font's normal aspect ratio.
+		/// </summary>
 		public enum class FontStretch : System::Int32
 		{
 			Undefined =  DWRITE_FONT_STRETCH_UNDEFINED,
@@ -133,6 +201,9 @@ namespace SlimDX
 			UltraExpanded =  DWRITE_FONT_STRETCH_ULTRA_EXPANDED
 		};
 
+		/// <summary>
+		/// Represents the style of a font face as normal, italic, or oblique.
+		/// </summary>
 		public enum class FontStyle : System::Int32
 		{
 			Normal = DWRITE_FONT_STYLE_NORMAL,
@@ -140,6 +211,9 @@ namespace SlimDX
 			Italic = DWRITE_FONT_STYLE_ITALIC
 		};
 
+		/// <summary>
+		/// Describes common values for degree of blackness, or thickness of strokes of characters in a font.
+		/// </summary>
 		public enum class FontWeight : System::Int32
 		{
 			Thin = DWRITE_FONT_WEIGHT_THIN,
@@ -154,6 +228,53 @@ namespace SlimDX
 			ExtraBlack = DWRITE_FONT_WEIGHT_EXTRA_BLACK
 		};
 
+		/// <summary>
+		/// The informational string enumeration which identifies a string embedded in a font file.
+		/// </summary>
+		public enum class InformationalStringId : System::Int32
+		{
+			None = DWRITE_INFORMATIONAL_STRING_NONE,
+			CopyrightNotice = DWRITE_INFORMATIONAL_STRING_COPYRIGHT_NOTICE,
+			VersionStrings = DWRITE_INFORMATIONAL_STRING_VERSION_STRINGS,
+			Trademark = DWRITE_INFORMATIONAL_STRING_TRADEMARK,
+			Manufacturer = DWRITE_INFORMATIONAL_STRING_MANUFACTURER,
+			Designer = DWRITE_INFORMATIONAL_STRING_DESIGNER,
+			DesignerUrl = DWRITE_INFORMATIONAL_STRING_DESIGNER_URL,
+			Description = DWRITE_INFORMATIONAL_STRING_DESCRIPTION,
+			FontVendorUrl = DWRITE_INFORMATIONAL_STRING_FONT_VENDOR_URL,
+			LicenseDescription = DWRITE_INFORMATIONAL_STRING_LICENSE_DESCRIPTION,
+			LicenseInfoUrl = DWRITE_INFORMATIONAL_STRING_LICENSE_INFO_URL,
+			Win32FamilyNames = DWRITE_INFORMATIONAL_STRING_WIN32_FAMILY_NAMES,
+			Win32SubfamilyNames = DWRITE_INFORMATIONAL_STRING_WIN32_SUBFAMILY_NAMES,
+			PreferredFamilyNames = DWRITE_INFORMATIONAL_STRING_PREFERRED_FAMILY_NAMES,
+			PreferredSubfamilyNames = DWRITE_INFORMATIONAL_STRING_PREFERRED_SUBFAMILY_NAMES,
+			SampleText = DWRITE_INFORMATIONAL_STRING_SAMPLE_TEXT 
+		};
+
+		/// <summary>
+		/// The method used for line spacing in a text layout.
+		/// </summary>
+		public enum class LineSpacingMethod : System::Int32
+		{
+			Default = DWRITE_LINE_SPACING_METHOD_DEFAULT,
+			Uniform = DWRITE_LINE_SPACING_METHOD_UNIFORM 
+		};
+
+		/// <summary>
+		/// Specifies how to apply number substitution on digits and related punctuation.
+		/// </summary>
+		public enum class NumberSubstitutionMethod : System::Int32
+		{
+			FromCulture = DWRITE_NUMBER_SUBSTITUTION_METHOD_FROM_CULTURE,
+			Contextual = DWRITE_NUMBER_SUBSTITUTION_METHOD_CONTEXTUAL,
+			None = DWRITE_NUMBER_SUBSTITUTION_METHOD_NONE,
+			National = DWRITE_NUMBER_SUBSTITUTION_METHOD_NATIONAL,
+			Traditional = DWRITE_NUMBER_SUBSTITUTION_METHOD_TRADITIONAL 
+		};
+
+		/// <summary>
+		/// Specifies alignment of paragraph text along the flow direction axis, relative to the flow's beginning and trailing edge of the layout box.
+		/// </summary>
 		public enum class ParagraphAlignment : System::Int32
 		{
 			Near = DWRITE_PARAGRAPH_ALIGNMENT_NEAR,
@@ -161,6 +282,52 @@ namespace SlimDX
 			Center = DWRITE_PARAGRAPH_ALIGNMENT_CENTER
 		};
 
+		/// <summary>
+		/// Represents the internal structure of a device pixel (that is the physical arrangement of red, green,
+		/// and blue color components) that is assumed for purposes of rendering text. 
+		/// </summary>
+		public enum class PixelGeometry : System::Int32
+		{
+			Flat = DWRITE_PIXEL_GEOMETRY_FLAT,
+			Rgb = DWRITE_PIXEL_GEOMETRY_RGB,
+			Bgr = DWRITE_PIXEL_GEOMETRY_BGR 
+		};
+
+		/// <summary>
+		/// Specifies the direction in which reading progresses. 
+		/// </summary>
+		public enum class ReadingDirection : System::Int32
+		{
+			LeftToRight = DWRITE_READING_DIRECTION_LEFT_TO_RIGHT,
+			RightToLeft = DWRITE_READING_DIRECTION_RIGHT_TO_LEFT 
+		};
+
+		/// <summary>
+		/// Represents a method of rendering glyphs. 
+		/// </summary>
+		public enum class RenderingMode : System::Int32
+		{
+			Default = DWRITE_RENDERING_MODE_DEFAULT,
+			Aliased = DWRITE_RENDERING_MODE_ALIASED,
+			ClearTypeGdiClassic = DWRITE_RENDERING_MODE_CLEARTYPE_GDI_CLASSIC,
+			ClearTypeGdiNatural = DWRITE_RENDERING_MODE_CLEARTYPE_GDI_NATURAL,
+			ClearTypeNatural = DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL,
+			ClearTypeNaturalSymmetric = DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL_SYMMETRIC,
+			Outline = DWRITE_RENDERING_MODE_OUTLINE 
+		};
+
+		/// <summary>
+		/// Indicates additional shaping requirements for text.
+		/// </summary>
+		public enum class ScriptShapes : System::Int32
+		{
+			Default = DWRITE_SCRIPT_SHAPES_DEFAULT,
+			NoVisual = DWRITE_SCRIPT_SHAPES_NO_VISUAL 
+		};
+
+		/// <summary>
+		/// Specifies alignment of paragraph text along the reading direction axis relative to the leading and trailing edge of the layout box.
+		/// </summary>
 		public enum class TextAlignment : System::Int32
 		{
 			Leading = DWRITE_TEXT_ALIGNMENT_LEADING,
@@ -168,11 +335,45 @@ namespace SlimDX
 			Center = DWRITE_TEXT_ALIGNMENT_CENTER
 		};
 
+		/// <summary>
+		/// Specifies the measuring method used for text layout.
+		/// </summary>
 		public enum class TextMeasuringMethod : System::Int32
 		{
 			UseIdealMetrics = DWRITE_TEXT_MEASURING_METHOD_USE_IDEAL_METRICS,
 			UseDisplayCompatibleMetrics = DWRITE_TEXT_MEASURING_METHOD_USE_DISPLAY_COMPATIBLE_METRICS,
 			UseDisplayNaturalMetrics = DWRITE_TEXT_MEASURING_METHOD_USE_DISPLAY_NATURAL_METRICS
+		};
+
+		//Documented, does not actually exist.
+#if 0
+		/// <summary>
+		/// Identifies a type of alpha texture.
+		/// </summary>
+		public enum class TextureType : System::Int32
+		{
+			Bilevel_1x1 = DWRITE_TEXTURE_BILEVEL_1x1,
+			ClearType_3x1 = DWRITE_TEXTURE_CLEARTYPE_3x1 
+		};
+#endif
+
+		/// <summary>
+		/// Specifies the text granularity used to trim text overflowing the layout box.
+		/// </summary>
+		public enum class TrimmingGranularity : System::Int32
+		{
+			None = DWRITE_TRIMMING_GRANULARITY_NONE,
+			Character = DWRITE_TRIMMING_GRANULARITY_CHARACTER,
+			Word = DWRITE_TRIMMING_GRANULARITY_WORD 
+		};
+
+		/// <summary>
+		/// Specifies the word wrapping to be used in a particular multiline paragraph.
+		/// </summary>
+		public enum class WordWrapping : System::Int32
+		{
+			Wrap = DWRITE_WORD_WRAPPING_WRAP,
+			NoWrap = DWRITE_WORD_WRAPPING_NO_WRAP 
 		};
 	}
 }

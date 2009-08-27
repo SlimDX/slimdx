@@ -24,6 +24,9 @@
 #include "DirectWriteException.h"
 
 #include "FontCollection.h"
+#include "FontFamily.h"
+#include "FontFace.h"
+#include "Font.h"
 
 const IID IID_IDWriteFontCollection = __uuidof(IDWriteFontCollection);
 
@@ -33,5 +36,48 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
+	int FontCollection::FontFamilyCount::get()
+	{
+		return InternalPointer->GetFontFamilyCount();
+	}
+
+	FontFamily^ FontCollection::default::get(int index)
+	{
+		IDWriteFontFamily* fontFamily = NULL;
+		HRESULT hr = InternalPointer->GetFontFamily( index, &fontFamily );
+		RECORD_DW(hr);
+
+		if(fontFamily == NULL)
+			return nullptr;
+		return FontFamily::FromPointer( fontFamily );
+	}
+
+	int FontCollection::FindFamilyName( System::String^ familyName, [Out] bool% exists )
+	{
+		BOOL existsNative = FALSE;
+		UINT32 index = 0;
+		pin_ptr<const wchar_t> nameChars = PtrToStringChars( familyName );
+		HRESULT hr = InternalPointer->FindFamilyName( nameChars, &index, &existsNative );
+		exists = existsNative == TRUE;
+		RECORD_DW(hr);
+		return index;
+	}
+	
+	int FontCollection::FindFamilyName( System::String^ familyName )
+	{
+		bool exists;
+		return FindFamilyName( familyName, exists );
+	}
+
+	Font^ FontCollection::GetFontFromFontFace( FontFace^ fontFace )
+	{
+		IDWriteFont* font = NULL;
+		HRESULT hr = InternalPointer->GetFontFromFontFace( fontFace->InternalPointer, &font );
+		RECORD_DW(hr);
+		if(FAILED(hr))
+			return nullptr;
+
+		return Font::FromPointer(font);
+	}
 }
 }

@@ -5203,11 +5203,43 @@
 				Name="Fonts"
 				>
 				<File
+					RelativePath="..\source\directwrite\Font.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\Font.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\FontFace.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\FontFace.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\FontFamily.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\FontFamily.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directwrite\FontFeature.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\source\directwrite\FontFeature.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\FontList.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\FontList.h"
 					>
 				</File>
 				<Filter
@@ -5282,6 +5314,54 @@
 						>
 					</File>
 				</Filter>
+			</Filter>
+			<Filter
+				Name="Strings"
+				>
+				<File
+					RelativePath="..\source\directwrite\LocalizedStrings.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\LocalizedStrings.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Font Files"
+				>
+				<File
+					RelativePath="..\source\directwrite\FontFile.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\FontFile.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\FontFileEnumerator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\FontFileEnumerator.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\FontFileLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\FontFileLoader.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\FontFileStream.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\FontFileStream.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
