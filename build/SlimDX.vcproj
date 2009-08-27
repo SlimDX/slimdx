@@ -5168,6 +5168,14 @@
 			Name="DirectWrite"
 			>
 			<File
+				RelativePath="..\source\directwrite\BitmapRenderTarget.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directwrite\BitmapRenderTarget.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\directwrite\DirectWriteException.cpp"
 				>
 			</File>
@@ -5177,6 +5185,46 @@
 			</File>
 			<File
 				RelativePath="..\source\directwrite\Enums.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directwrite\GdiInterop.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directwrite\GdiInterop.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directwrite\GlyphRunAnalysis.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directwrite\GlyphRunAnalysis.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directwrite\InlineObject.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directwrite\InlineObject.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directwrite\NumberSubstitution.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directwrite\NumberSubstitution.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directwrite\PixelSnapping.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\directwrite\PixelSnapping.h"
 				>
 			</File>
 			<File
@@ -5253,6 +5301,14 @@
 						RelativePath="..\source\directwrite\FontCollection.h"
 						>
 					</File>
+					<File
+						RelativePath="..\source\directwrite\FontCollectionLoader.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directwrite\FontCollectionLoader.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter
@@ -5283,11 +5339,43 @@
 				Name="Text"
 				>
 				<File
+					RelativePath="..\source\directwrite\TextAnalysisSink.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\TextAnalysisSink.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\TextAnalysisSource.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\TextAnalysisSource.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\TextAnalyzer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\TextAnalyzer.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directwrite\TextRange.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\source\directwrite\TextRange.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\TextRenderer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\TextRenderer.h"
 					>
 				</File>
 				<Filter
