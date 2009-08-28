@@ -93,6 +93,16 @@ namespace Direct3D11
 		m_MiscFlags = value;
 	}
 
+	int BufferDescription::StructureByteStride::get()
+	{
+		return m_StructureByteStride;
+	}
+
+	void BufferDescription::StructureByteStride::set( int value )
+	{
+		m_StructureByteStride = value;
+	}
+
 	bool BufferDescription::operator == ( BufferDescription left, BufferDescription right )
 	{
 		return BufferDescription::Equals( left, right );
