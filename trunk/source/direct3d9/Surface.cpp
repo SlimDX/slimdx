@@ -92,6 +92,62 @@ namespace Direct3D9
 		return result;
 	}
 
+	Surface^ Surface::CreateRenderTarget( SlimDX::Direct3D9::Device^ device, int width, int height, Format format,
+		MultisampleType multiSampleType, int multiSampleQuality, bool lockable, [Out] IntPtr% sharedHandle )
+	{
+		IDirect3DSurface9* surface;
+		HANDLE sharedHandleNative = NULL;
+
+		HRESULT hr = device->InternalPointer->CreateRenderTarget( width, height, static_cast<D3DFORMAT>( format ),
+			static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ), multiSampleQuality, lockable, &surface, &sharedHandleNative );
+		
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		Surface^ result = gcnew Surface( surface, nullptr );
+		result->IsDefaultPool = true;
+		sharedHandle = IntPtr(sharedHandleNative);
+		return result;
+	}
+
+	Surface^ Surface::CreateOffscreenPlain( SlimDX::Direct3D9::Device^ device, int width, int height, Format format,
+		Pool pool, [Out] IntPtr% sharedHandle )
+	{
+		IDirect3DSurface9* surface;
+		HANDLE sharedHandleNative = NULL;
+
+		HRESULT hr = device->InternalPointer->CreateOffscreenPlainSurface( width, height,
+			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &surface, &sharedHandleNative );
+		
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		Surface^ result = gcnew Surface( surface, nullptr );
+		if( pool == Pool::Default )
+			result->IsDefaultPool = true;
+		sharedHandle = IntPtr(sharedHandleNative);
+
+		return result;
+	}
+
+	Surface^ Surface::CreateDepthStencil( SlimDX::Direct3D9::Device^ device, int width, int height, Format format,
+		MultisampleType multiSampleType, int multiSampleQuality, bool discard, [Out] IntPtr% sharedHandle )
+	{
+		IDirect3DSurface9* surface;
+		HANDLE sharedHandleNative = NULL;
+
+		HRESULT hr = device->InternalPointer->CreateDepthStencilSurface( width, height, static_cast<D3DFORMAT>( format ),
+			static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ), multiSampleQuality, discard, &surface, &sharedHandleNative );
+		
+		if( RECORD_D3D9( hr ).IsFailure )
+			return nullptr;
+
+		Surface^ result = gcnew Surface( surface, nullptr );
+		result->IsDefaultPool = true;
+		sharedHandle = IntPtr(sharedHandleNative);
+		return result;
+	}
+
 	Surface^ Surface::CreateRenderTargetEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format,
 		MultisampleType multiSampleType, int multiSampleQuality, bool lockable, Usage usage )
 	{

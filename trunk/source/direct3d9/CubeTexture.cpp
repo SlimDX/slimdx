@@ -61,6 +61,22 @@ namespace Direct3D9
 			this->IsDefaultPool = true;
 	}
 
+	CubeTexture::CubeTexture( SlimDX::Direct3D9::Device^ device, int edgeLength, int numLevels, Usage usage, Format format, Pool pool, [Out] IntPtr% sharedHandle )
+	{
+		IDirect3DCubeTexture9* texture;
+		HANDLE sharedHandleNative = NULL;
+		HRESULT hr = device->InternalPointer->CreateCubeTexture( edgeLength, numLevels, static_cast<DWORD>( usage ),
+			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &texture, &sharedHandleNative );
+		
+		if( RECORD_D3D9(hr).IsFailure )
+			throw gcnew Direct3D9Exception( Result::Last );
+
+		Construct(texture);
+		sharedHandle = IntPtr(sharedHandleNative);
+		if( pool == Pool::Default )
+			this->IsDefaultPool = true;
+	}
+
 	CubeTextureRequirements CubeTexture::CheckRequirements(SlimDX::Direct3D9::Device^ device, int size,
 		int numMipLevels, Usage usage, Format format, Pool pool)
 	{

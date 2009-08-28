@@ -51,6 +51,18 @@ namespace SlimDX
 			IndexBuffer( SlimDX::Direct3D9::Device^ device, int sizeInBytes, Usage usage, Pool pool, bool sixteenBit );
 			
 			/// <summary>
+			/// Initializes a new instance of the <see cref="IndexBuffer"/> class.
+			/// </summary>
+			/// <param name="device">The device that will be used to create the buffer.</param>
+			/// <param name="sizeInBytes">Size of the buffer, in bytes.</param>
+			/// <param name="usage">The requested usage of the buffer.</param>
+			/// <param name="pool">The memory class into which the resource will be placed.</param>
+			/// <param name="sixteenBit"><c>true</c> to create a buffer of 16-bit indices; <c>false</c> to create a buffer of 32-bit indices.</param>
+			/// <param name="sharedHandle">The variable that will receive the shared handle for this resource.</param>
+			/// <remarks>This method is only available in Direct3D9 Ex.</remarks>
+			IndexBuffer( SlimDX::Direct3D9::Device^ device, int sizeInBytes, Usage usage, Pool pool, bool sixteenBit, [Out] System::IntPtr% sharedHandle );
+			
+			/// <summary>
 			/// Locks the buffer and obtains a pointer to the memory.
 			/// </summary>
 			/// <param name="offset">Offset into the index data to lock, in bytes.</param>

@@ -49,6 +49,23 @@ namespace Direct3D9
 			this->IsDefaultPool = true;
 	}
 	
+	IndexBuffer::IndexBuffer( SlimDX::Direct3D9::Device^ device, int sizeInBytes, SlimDX::Direct3D9::Usage usage, SlimDX::Direct3D9::Pool pool, bool sixteenBit, [Out] IntPtr% sharedHandle )
+	{
+		IDirect3DIndexBuffer9* ib;
+		D3DFORMAT format = sixteenBit ? D3DFMT_INDEX16 : D3DFMT_INDEX32;
+		HANDLE sharedHandleNative = NULL;
+
+		HRESULT hr = device->InternalPointer->CreateIndexBuffer( sizeInBytes, static_cast<DWORD>( usage ), format, static_cast<D3DPOOL>( pool ), &ib, &sharedHandleNative );
+		if( RECORD_D3D9( hr ).IsFailure )
+			throw gcnew Direct3D9Exception( Result::Last );
+
+		Construct( ib );
+		sharedHandle = IntPtr(sharedHandleNative);
+
+		if( pool == Pool::Default )
+			this->IsDefaultPool = true;
+	}
+	
 	DataStream^ IndexBuffer::Lock( int offset, int size, LockFlags flags )
 	{
 		void* lockedPtr;
