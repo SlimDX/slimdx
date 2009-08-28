@@ -63,6 +63,19 @@ namespace SlimDX
 			CubeTexture( SlimDX::Direct3D9::Device^ device, int edgeLength, int levelCount, Usage usage, Format format, Pool pool );
 
 			/// <summary>
+			/// Initializes a new instance of the <see cref="CubeTexture"/> class.
+			/// </summary>
+			/// <param name="device">The device used to create the texture.</param>
+			/// <param name="edgeLength">The length of each edge of the texture, in pixels.</param>
+			/// <param name="levelCount">Number of mipmap levels in the texture. If set to 0, mipmaps will automatically be generated.</param>
+			/// <param name="usage">The requested usage for the texture.</param>
+			/// <param name="format">The surface format of the texture.</param>
+			/// <param name="pool">The memory class into which the texture should be placed.</param>
+			/// <param name="sharedHandle">The variable that will receive the shared handle for this resource.</param>
+			/// <remarks>This method is only available in Direct3D9 Ex.</remarks>
+			CubeTexture( SlimDX::Direct3D9::Device^ device, int edgeLength, int levelCount, Usage usage, Format format, Pool pool, [Out] System::IntPtr% sharedHandle );
+
+			/// <summary>
 			/// Releases all resources used by the <see cref="CubeTexture"/>.
 			/// </summary>
 			virtual ~CubeTexture() { }

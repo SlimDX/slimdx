@@ -51,6 +51,23 @@ namespace Direct3D9
 			this->IsDefaultPool = true;
 	}
 
+	VertexBuffer::VertexBuffer( SlimDX::Direct3D9::Device^ device, int sizeInBytes, SlimDX::Direct3D9::Usage usage, VertexFormat format, SlimDX::Direct3D9::Pool pool, [Out] IntPtr% sharedHandle )
+	{
+		IDirect3DVertexBuffer9* vb;
+		HANDLE sharedHandleNative = NULL;
+		HRESULT hr = device->InternalPointer->CreateVertexBuffer( sizeInBytes, static_cast<DWORD>( usage ), 
+			static_cast<DWORD>( format ), static_cast<D3DPOOL>( pool ), &vb, &sharedHandleNative );
+		
+		if( RECORD_D3D9(hr).IsFailure )
+			throw gcnew Direct3D9Exception( Result::Last );
+		
+		Construct( vb );
+		sharedHandle = IntPtr(sharedHandleNative);
+
+		if( pool == Pool::Default )
+			this->IsDefaultPool = true;
+	}
+
 	DataStream^ VertexBuffer::Lock( int offset, int size, LockFlags flags )
 	{
 		void* lockedPtr;
