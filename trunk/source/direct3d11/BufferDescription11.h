@@ -39,6 +39,7 @@ namespace SlimDX
 			BindFlags m_BindFlags;
 			CpuAccessFlags m_CPUAccessFlags;
 			ResourceOptionFlags m_MiscFlags;
+			int m_StructureByteStride;
 
 		internal:
 			BufferDescription( const D3D11_BUFFER_DESC& native );
@@ -89,6 +90,12 @@ namespace SlimDX
 				void set( ResourceOptionFlags value );
 			}
 			
+			property int StructureByteStride
+			{
+				int get();
+				void set( int value );
+			}
+
 			/// <summary>
 			/// Initializes a new instance of the <see cref="BufferDescription"/> struct.
 			/// </summary>
