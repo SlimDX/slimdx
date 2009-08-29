@@ -107,6 +107,15 @@ namespace SlimDX
 		Half( float value );
 
 		/// <summary>
+		/// Gets or sets the raw 16 bit value used to back this half-float.
+		/// </summary>
+		property System::UInt16 RawValue
+		{
+			System::UInt16 get();
+			void set( System::UInt16 value );
+		}
+
+		/// <summary>
 		/// Converts an array of half precision values into full precision values.
 		/// </summary>
 		/// <param name="values">The values to be converted.</param>
