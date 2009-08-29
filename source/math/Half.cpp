@@ -37,6 +37,16 @@ namespace SlimDX
 		m_Value = temp.m_Value;
 	}
 
+	UInt16 Half::RawValue::get()
+	{
+		return m_Value;
+	}
+
+	void Half::RawValue::set( UInt16 value )
+	{
+		m_Value = value;
+	}
+
 	array<float>^ Half::ConvertToFloat( array<Half>^ values )
 	{
 		array<float>^ results = gcnew array<float>( values->Length );
