@@ -1399,7 +1399,16 @@ namespace SlimDX
 			/// in conjunction with a StreamOutputStatistics query so that when an overflow occurs the query will let the application know how
 			/// much memory was needed to prevent an overflow.
 			/// </summary>
-			StreamOutputOverflowPredicate = D3D11_QUERY_SO_OVERFLOW_PREDICATE
+			StreamOutputOverflowPredicate = D3D11_QUERY_SO_OVERFLOW_PREDICATE,
+
+			StreamOutputStatisticsStream0 = D3D11_QUERY_SO_STATISTICS_STREAM0,
+			StreamOutputOverflowPredicateStream0 = D3D11_QUERY_SO_OVERFLOW_PREDICATE_STREAM0,
+			StreamOutputStatisticsStream1 = DD3D11_QUERY_SO_STATISTICS_STREAM1,
+			StreamOutputOverflowPredicateStream1 = D3D11_QUERY_SO_OVERFLOW_PREDICATE_STREAM1,
+			StreamOutputStatisticsStream2 = DD3D11_QUERY_SO_STATISTICS_STREAM2,
+			StreamOutputOverflowPredicateStream2 = D3D11_QUERY_SO_OVERFLOW_PREDICATE_STREAM2,
+			StreamOutputStatisticsStream3 = DD3D11_QUERY_SO_STATISTICS_STREAM3,
+			StreamOutputOverflowPredicateStream3 = D3D11_QUERY_SO_OVERFLOW_PREDICATE_STREAM3
 		};
 		
 		/// <summary>Identifies the type of resource that will be viewed as a render target.</summary>

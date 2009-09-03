@@ -30,5 +30,9 @@ namespace SlimDX
 {
 namespace Direct3D11
 {
+	int CommandList::ContextFlags::get()
+	{
+		return InternalPointer->GetContextFlags();
+	}
 }
 }

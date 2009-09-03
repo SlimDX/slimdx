@@ -32,6 +32,10 @@ namespace SlimDX
 			COMOBJECT(ID3D11CommandList, CommandList);
 			
 		public:
+			property int ContextFlags
+			{
+				int get();
+			}
 		};
 	}
 }
