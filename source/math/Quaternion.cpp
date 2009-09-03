@@ -163,54 +163,6 @@ namespace SlimDX
 			(D3DXQUATERNION*) pin2, (D3DXQUATERNION*) pin3, f, g );
 	}
 
-	Quaternion Quaternion::Concatenate( Quaternion left, Quaternion right )
-	{
-		Quaternion quaternion;
-		float rx = right.X;
-		float ry = right.Y;
-		float rz = right.Z;
-		float rw = right.W;
-		float lx = left.X;
-		float ly = left.Y;
-		float lz = left.Z;
-		float lw = left.W;
-		float yz = (ry * lz) - (rz * ly);
-		float xz = (rz * lx) - (rx * lz);
-		float xy = (rx * ly) - (ry * lx);
-		float lengthSq = ((rx * lx) + (ry * ly)) + (rz * lz);
-
-		quaternion.X = ((rx * lw) + (lx * rw)) + yz;
-		quaternion.Y = ((ry * lw) + (ly * rw)) + xz;
-		quaternion.Z = ((rz * lw) + (lz * rw)) + xy;
-		quaternion.W = (rw * lw) - lengthSq;
-
-		return quaternion;
-	}
-
-	void Quaternion::Concatenate( Quaternion% left, Quaternion% right, [Out] Quaternion% result )
-	{
-		float rx = right.X;
-		float ry = right.Y;
-		float rz = right.Z;
-		float rw = right.W;
-		float lx = left.X;
-		float ly = left.Y;
-		float lz = left.Z;
-		float lw = left.W;
-		float yz = (ry * lz) - (rz * ly);
-		float xz = (rz * lx) - (rx * lz);
-		float xy = (rx * ly) - (ry * lx);
-		float lengthSq = ((rx * lx) + (ry * ly)) + (rz * lz);
-
-		Quaternion r;
-		r.X = ((rx * lw) + (lx * rw)) + yz;
-		r.Y = ((ry * lw) + (ly * rw)) + xz;
-		r.Z = ((rz * lw) + (lz * rw)) + xy;
-		r.W = (rw * lw) - lengthSq;
-
-		result = r;
-	}
-
 	Quaternion Quaternion::Conjugate( Quaternion quat )
 	{
 		Quaternion result;
@@ -367,46 +319,38 @@ namespace SlimDX
 	Quaternion Quaternion::Multiply( Quaternion left, Quaternion right )
 	{
 		Quaternion quaternion;
-		float rx = right.X;
-		float ry = right.Y;
-		float rz = right.Z;
-		float rw = right.W;
 		float lx = left.X;
 		float ly = left.Y;
 		float lz = left.Z;
 		float lw = left.W;
-		float yz = (ry * lz) - (rz * ly);
-		float xz = (rz * lx) - (rx * lz);
-		float xy = (rx * ly) - (ry * lx);
-		float lengthSq = ((rx * lx) + (ry * ly)) + (rz * lz);
+		float rx = right.X;
+		float ry = right.Y;
+		float rz = right.Z;
+		float rw = right.W;
 
-		quaternion.X = ((rx * lw) + (lx * rw)) + yz;
-		quaternion.Y = ((ry * lw) + (ly * rw)) + xz;
-		quaternion.Z = ((rz * lw) + (lz * rw)) + xy;
-		quaternion.W = (rw * lw) - lengthSq;
+		quaternion.X = (lx * rw + rx * lw) + (ly * rz) - (lz * ry);
+		quaternion.Y = (ly * rw + ry * lw) + (lz * rx) - (lx * rz);
+		quaternion.Z = (lz * rw + rz * lw) + (lx * ry) - (ly * rx);
+		quaternion.W = (lw * rw) - (lx * rx + ly * ry + lz * rz);
 
 		return quaternion;
 	}
 
 	void Quaternion::Multiply( Quaternion% left, Quaternion% right, [Out] Quaternion% result )
 	{
-		float rx = right.X;
-		float ry = right.Y;
-		float rz = right.Z;
-		float rw = right.W;
 		float lx = left.X;
 		float ly = left.Y;
 		float lz = left.Z;
 		float lw = left.W;
-		float yz = (ry * lz) - (rz * ly);
-		float xz = (rz * lx) - (rx * lz);
-		float xy = (rx * ly) - (ry * lx);
-		float lengthSq = ((rx * lx) + (ry * ly)) + (rz * lz);
+		float rx = right.X;
+		float ry = right.Y;
+		float rz = right.Z;
+		float rw = right.W;
 
-		result.X = ((rx * lw) + (lx * rw)) + yz;
-		result.Y = ((ry * lw) + (ly * rw)) + xz;
-		result.Z = ((rz * lw) + (lz * rw)) + xy;
-		result.W = (rw * lw) - lengthSq;
+		result.X = (lx * rw + rx * lw) + (ly * rz) - (lz * ry);
+		result.Y = (ly * rw + ry * lw) + (lz * rx) - (lx * rz);
+		result.Z = (lz * rw + rz * lw) + (lx * ry) - (ly * rx);
+		result.W = (lw * rw) - (lx * rx + ly * ry + lz * rz);
 	}
 
 	Quaternion Quaternion::Multiply( Quaternion quaternion, float scale )
@@ -767,23 +711,19 @@ namespace SlimDX
 	Quaternion Quaternion::operator * (Quaternion left, Quaternion right)
 	{
 		Quaternion quaternion;
-		float rx = right.X;
-		float ry = right.Y;
-		float rz = right.Z;
-		float rw = right.W;
 		float lx = left.X;
 		float ly = left.Y;
 		float lz = left.Z;
 		float lw = left.W;
-		float yz = (ry * lz) - (rz * ly);
-		float xz = (rz * lx) - (rx * lz);
-		float xy = (rx * ly) - (ry * lx);
-		float lengthSq = ((rx * lx) + (ry * ly)) + (rz * lz);
+		float rx = right.X;
+		float ry = right.Y;
+		float rz = right.Z;
+		float rw = right.W;
 
-		quaternion.X = ((rx * lw) + (lx * rw)) + yz;
-		quaternion.Y = ((ry * lw) + (ly * rw)) + xz;
-		quaternion.Z = ((rz * lw) + (lz * rw)) + xy;
-		quaternion.W = (rw * lw) - lengthSq;
+		quaternion.X = (lx * rw + rx * lw) + (ly * rz) - (lz * ry);
+		quaternion.Y = (ly * rw + ry * lw) + (lz * rx) - (lx * rz);
+		quaternion.Z = (lz * rw + rz * lw) + (lx * ry) - (ly * rx);
+		quaternion.W = (lw * rw) - (lx * rx + ly * ry + lz * rz);
 
 		return quaternion;
 	}

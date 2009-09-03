@@ -167,22 +167,6 @@ namespace SlimDX
 		static void Barycentric( Quaternion% source1, Quaternion% source2, Quaternion% source3, float weight1, float weight2, [Out] Quaternion% result );
 
 		/// <summary>
-		/// Concatenates two quaternions.
-		/// </summary>
-		/// <param name="left">The first quaternion to concatenate.</param>
-		/// <param name="right">The second quaternion to concatenate.</param>
-		/// <returns>The concatentated quaternion.</returns>
-		static Quaternion Concatenate( Quaternion left, Quaternion right );
-
-		/// <summary>
-		/// Concatenates two quaternions.
-		/// </summary>
-		/// <param name="left">The first quaternion to concatenate.</param>
-		/// <param name="right">The second quaternion to concatenate.</param>
-		/// <param name="result">When the method completes, contains the concatentated quaternion.</param>
-		static void Concatenate( Quaternion% left, Quaternion% right, [Out] Quaternion% result );
-
-		/// <summary>
 		/// Conjugates a quaternion.
 		/// </summary>
 		/// <param name="quaternion">The quaternion to conjugate.</param>
