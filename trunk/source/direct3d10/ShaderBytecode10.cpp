@@ -21,7 +21,7 @@
 */
 #include "stdafx.h"
 
-#include "../../external/d3dcompiler.h"
+#include <d3dcompiler.h>
 
 #include "Direct3D10Exception.h"
 #include "ShaderBytecode10.h"

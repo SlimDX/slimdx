@@ -13,6 +13,8 @@ Samples
 Math
 	* Fixed a typo in BoundingSphere.Contains.
 	* Ray intersection methods now normalize the Ray's direction vector.
+	* Quaternion multiplication was being performed in the reverse direction. This has been fixed.
+	* Fixed the quaternion subtraction operator, which was actually performing a multiplication.
 
 DXGI
 	* Fixed bugs that caused adapters to be created as non-ancillary objects requiring user disposal.
