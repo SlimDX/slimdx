@@ -175,9 +175,9 @@ namespace Direct2D
 		return Result( D2DERR_WRONG_FACTORY );
 	}
 
-	Result ResultCode::WrongRenderTarget::get()
+	Result ResultCode::WrongResourceDomain::get()
 	{
-		return Result( D2DERR_WRONG_RENDER_TARGET );
+		return Result( D2DERR_WRONG_RESOURCE_DOMAIN );
 	}
 
 	Result ResultCode::WrongState::get()

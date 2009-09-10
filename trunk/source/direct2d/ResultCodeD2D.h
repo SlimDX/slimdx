@@ -321,8 +321,8 @@ namespace SlimDX
 			/// The resource was realized on the wrong render target.
 			/// </summary>
 			/// <remarks>This is a failed result.</remarks>
-			/// <unmanaged>D2DERR_WRONG_RENDER_TARGET</unmanaged>
-			property static Result WrongRenderTarget
+			/// <unmanaged>D2DERR_WRONG_RESOURCE_DOMAIN</unmanaged>
+			property static Result WrongResourceDomain
 			{
 				Result get();
 			};

@@ -338,24 +338,12 @@ namespace SlimDX
 		/// <summary>
 		/// Specifies the measuring method used for text layout.
 		/// </summary>
-		public enum class TextMeasuringMethod : System::Int32
+		public enum class MeasuringMethod : System::Int32
 		{
-			UseIdealMetrics = DWRITE_TEXT_MEASURING_METHOD_USE_IDEAL_METRICS,
-			UseDisplayCompatibleMetrics = DWRITE_TEXT_MEASURING_METHOD_USE_DISPLAY_COMPATIBLE_METRICS,
-			UseDisplayNaturalMetrics = DWRITE_TEXT_MEASURING_METHOD_USE_DISPLAY_NATURAL_METRICS
+			Natural = DWRITE_MEASURING_MODE_NATURAL,
+			GdiClassic = DWRITE_MEASURING_MODE_GDI_CLASSIC,
+			GdiNatural = DWRITE_MEASURING_MODE_GDI_NATURAL,
 		};
-
-		//Documented, does not actually exist.
-#if 0
-		/// <summary>
-		/// Identifies a type of alpha texture.
-		/// </summary>
-		public enum class TextureType : System::Int32
-		{
-			Bilevel_1x1 = DWRITE_TEXTURE_BILEVEL_1x1,
-			ClearType_3x1 = DWRITE_TEXTURE_CLEARTYPE_3x1 
-		};
-#endif
 
 		/// <summary>
 		/// Specifies the text granularity used to trim text overflowing the layout box.

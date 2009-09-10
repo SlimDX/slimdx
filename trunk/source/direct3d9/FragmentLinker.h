@@ -23,6 +23,7 @@
 
 #include "EffectHandle.h"
 #include "FragmentDescription.h"
+#include "VersionConfig.h"
 
 namespace SlimDX
 {
@@ -31,6 +32,7 @@ namespace SlimDX
 		ref class VertexShader;
 		ref class PixelShader;
 
+#if SLIMDX_D3DX_VERSION < 42
 		/// <summary>Used to link shader fragments at runtime.</summary>
 		/// <unmanaged>ID3DXFragmentLinker</unmanaged>
 		public ref class FragmentLinker : public ComObject
@@ -78,5 +80,6 @@ namespace SlimDX
 				DataStream^ get();
 			}
 		};
+#endif
 	}
 }
