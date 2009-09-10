@@ -20,6 +20,9 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "../VersionConfig.h"
+#if SLIMDX_D3DX_VERSION < 42
+
 #include <d3d9.h>
 #include <d3dx9.h>
 
@@ -292,3 +295,4 @@ namespace Direct3D9
 	}
 }
 }
+#endif

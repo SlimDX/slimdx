@@ -102,7 +102,7 @@ namespace SlimDX
 		{
 			None = D2D1_DRAW_TEXT_OPTIONS_NONE,
 			NoSnap = D2D1_DRAW_TEXT_OPTIONS_NO_SNAP,
-			NoClip = D2D1_DRAW_TEXT_OPTIONS_NO_CLIP
+			Clip = D2D1_DRAW_TEXT_OPTIONS_CLIP
 		};
 
 		public enum class ExtendMode : System::Int32

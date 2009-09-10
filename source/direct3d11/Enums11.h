@@ -1403,11 +1403,11 @@ namespace SlimDX
 
 			StreamOutputStatisticsStream0 = D3D11_QUERY_SO_STATISTICS_STREAM0,
 			StreamOutputOverflowPredicateStream0 = D3D11_QUERY_SO_OVERFLOW_PREDICATE_STREAM0,
-			StreamOutputStatisticsStream1 = DD3D11_QUERY_SO_STATISTICS_STREAM1,
+			StreamOutputStatisticsStream1 = D3D11_QUERY_SO_STATISTICS_STREAM1,
 			StreamOutputOverflowPredicateStream1 = D3D11_QUERY_SO_OVERFLOW_PREDICATE_STREAM1,
-			StreamOutputStatisticsStream2 = DD3D11_QUERY_SO_STATISTICS_STREAM2,
+			StreamOutputStatisticsStream2 = D3D11_QUERY_SO_STATISTICS_STREAM2,
 			StreamOutputOverflowPredicateStream2 = D3D11_QUERY_SO_OVERFLOW_PREDICATE_STREAM2,
-			StreamOutputStatisticsStream3 = DD3D11_QUERY_SO_STATISTICS_STREAM3,
+			StreamOutputStatisticsStream3 = D3D11_QUERY_SO_STATISTICS_STREAM3,
 			StreamOutputOverflowPredicateStream3 = D3D11_QUERY_SO_OVERFLOW_PREDICATE_STREAM3
 		};
 		
