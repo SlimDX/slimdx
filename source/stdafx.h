@@ -34,6 +34,7 @@
 #include <d3dx10.h>
 #include <d3d11.h>
 #include <d3dx11.h>
+#include <d3dcsx.h>
 #include <d2d1.h>
 #include <d2d1helper.h>
 #include <dwrite.h>
