@@ -24,6 +24,7 @@
 #include <windows.h>
 #include <d3d11.h>
 #include <d3dx11.h>
+#include <d3dcsx.h>
 
 namespace SlimDX
 {
@@ -1775,6 +1776,81 @@ namespace SlimDX
 			/// The resource will be accessed as a 3D texture.
 			/// </summary>
 			Texture3D = D3D11_UAV_DIMENSION_TEXTURE3D
+		};
+
+		/// <summary>Identifies the type for scan data.</summary>
+		/// <unmanaged>D3DX11_SCAN_DATA_TYPE</unmanaged>
+		public enum class ScanDataType : System::Int32
+		{
+			/// <summary>
+			/// The type of the scan is float.
+			/// </summary>
+			Float = D3DX11_SCAN_DATA_TYPE_FLOAT,
+
+			/// <summary>
+			/// The type of the scan is int.
+			/// </summary>
+			Int = D3DX11_SCAN_DATA_TYPE_INT,
+
+			/// <summary>
+			/// The type of the scan is uint.
+			/// </summary>
+			UInt = D3DX11_SCAN_DATA_TYPE_UINT
+		};
+
+		/// <summary>Identifies the operation for a scan.</summary>
+		/// <unmanaged>D3DX11_SCAN_OPCODE</unmanaged>
+		public enum class ScanOpCode : System::Int32
+		{
+			/// <summary>
+			/// The operation is add.
+			/// </summary>
+			Add = D3DX11_SCAN_OPCODE_ADD,
+
+			/// <summary>
+			/// The operation is min.
+			/// </summary>
+			Min = D3DX11_SCAN_OPCODE_MIN,
+
+			/// <summary>
+			/// The operation is max.
+			/// </summary>
+			Max = D3DX11_SCAN_OPCODE_MAX,
+
+			/// <summary>
+			/// The operation is mul.
+			/// </summary>
+			Mul = D3DX11_SCAN_OPCODE_MUL,
+
+			/// <summary>
+			/// The operation is and.
+			/// </summary>
+			And = D3DX11_SCAN_OPCODE_AND,
+
+			/// <summary>
+			/// The operation is or.
+			/// </summary>
+			Or = D3DX11_SCAN_OPCODE_OR,
+
+			/// <summary>
+			/// The operation is XOR.
+			/// </summary>
+			XOR = D3DX11_SCAN_OPCODE_XOR
+		};
+
+		/// <summary>Identifies the direction of scanning.</summary>
+		/// <unmanaged>D3DX11_SCAN_DIRECTION</unmanaged>
+		public enum class ScanDirection : System::Int32
+		{
+			/// <summary>
+			/// The direction is forward.
+			/// </summary>
+			Forward = D3DX11_SCAN_DIRECTION_FORWARD,
+
+			/// <summary>
+			/// The direction is backward.
+			/// </summary>
+			Backward = D3DX11_SCAN_DIRECTION_BACKWARD
 		};
 	}
 }

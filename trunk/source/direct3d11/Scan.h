@@ -33,47 +33,35 @@ namespace SlimDX
 {
 	namespace Direct3D11
 	{
-		ref class Device;
+		ref class DeviceContext;
 		ref class UnorderedAccessView;
 
 		/// <summary>
-		/// An object that encapsulates forward and inverse FFTs.
+		/// A scan context.
 		/// </summary>
-		/// <unmanaged>ID3DX11FFT</unmanaged>
-		public ref class FFT : public ComObject 
+		/// <unmanaged>ID3DX11Scan</unmanaged>
+		public ref class Scan : public ComObject 
 		{
-			COMOBJECT_BASE(ID3DX11FFT);
+			COMOBJECT_BASE(ID3DX11Scan);
 
 		protected:
-			FFT() { }
+			Scan() { }
 			
 		public:
 
-			/// <summary>
-			/// Gets or sets the forward scale of the FFT.
-			/// </summary>
-			property float ForwardScale
-			{
-				float get();
-				void set(float value);
-			}
+			Scan( DeviceContext^ deviceContext, int maxElementScanSize, int maxScanCount );
 
 			/// <summary>
-			/// Gets or sets the inverse scale of the FFT.
+			/// Sets the scan direction.
 			/// </summary>
-			property float InverseScale
+			property ScanDirection Direction
 			{
-				float get();
-				void set(float value);
+				void set( ScanDirection value );
 			}
 
-			void AttachBuffersAndPrecompute( array<UnorderedAccessView^>^ tempBuffers, array<UnorderedAccessView^>^ precomputeBuffers );
+			void PerformScan( ScanDataType elementType, ScanOpCode operation, int numberOfElements, UnorderedAccessView^ src, UnorderedAccessView^ dest );
 
-			void ForwardTransform( UnorderedAccessView^ input, UnorderedAccessView^ output );
-			UnorderedAccessView^  ForwardTransform( UnorderedAccessView^ input );
-
-			void InverseTransform( UnorderedAccessView^ input, UnorderedAccessView^ output );
-			UnorderedAccessView^  InverseTransform( UnorderedAccessView^ input );
+			void PerformMultiscan( ScanDataType elementType, ScanOpCode operation, int numberOfElements, int scanPitchInElements, int scanCount, UnorderedAccessView^ src, UnorderedAccessView^ dest );
 		};
 	}
 };
