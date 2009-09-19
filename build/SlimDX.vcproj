@@ -6166,6 +6166,14 @@
 					RelativePath="..\source\direct3d11\FFT.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d11\Scan.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d11\Scan.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<File
