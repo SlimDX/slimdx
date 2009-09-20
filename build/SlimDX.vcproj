@@ -6174,6 +6174,14 @@
 					RelativePath="..\source\direct3d11\Scan.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d11\SegmentedScan.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d11\SegmentedScan.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<File
