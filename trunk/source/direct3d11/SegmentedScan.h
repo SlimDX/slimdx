@@ -37,19 +37,19 @@ namespace SlimDX
 		ref class UnorderedAccessView;
 
 		/// <summary>
-		/// A scan context.
+		/// A segmented scan context.
 		/// </summary>
-		/// <unmanaged>ID3DX11Scan</unmanaged>
-		public ref class Scan : public ComObject 
+		/// <unmanaged>ID3DX11SegmentedScan</unmanaged>
+		public ref class SegmentedScan : public ComObject 
 		{
-			COMOBJECT(ID3DX11Scan, Scan);
+			COMOBJECT(ID3DX11SegmentedScan, SegmentedScan);
 
 		protected:
-			Scan() { }
+			SegmentedScan() { }
 			
 		public:
 
-			Scan( DeviceContext^ deviceContext, int maxElementScanSize, int maxScanCount );
+			SegmentedScan( DeviceContext^ deviceContext, int maxElementScanSize );
 
 			/// <summary>
 			/// Sets the scan direction.
@@ -59,9 +59,7 @@ namespace SlimDX
 				void set( ScanDirection value );
 			}
 
-			void PerformScan( ScanDataType elementType, ScanOpCode operation, int numberOfElements, UnorderedAccessView^ src, UnorderedAccessView^ dest );
-
-			void PerformMultiscan( ScanDataType elementType, ScanOpCode operation, int numberOfElements, int scanPitchInElements, int scanCount, UnorderedAccessView^ src, UnorderedAccessView^ dest );
+			void PerformSegmentedScan( ScanDataType elementType, ScanOpCode operation, int numberOfElements, UnorderedAccessView^ src, UnorderedAccessView^ srcElementFlags, UnorderedAccessView^ dest );
 		};
 	}
 };

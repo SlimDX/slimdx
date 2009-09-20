@@ -42,7 +42,7 @@ namespace SlimDX
 		/// <unmanaged>ID3DX11FFT</unmanaged>
 		public ref class FFT : public ComObject 
 		{
-			COMOBJECT_BASE(ID3DX11FFT);
+			COMOBJECT(ID3DX11FFT, FFT);
 
 		protected:
 			FFT() { }
