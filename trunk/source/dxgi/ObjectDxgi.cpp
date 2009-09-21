@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
@@ -19,51 +20,30 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#if !BOOST_PP_IS_ITERATING
-#ifndef SLIMDX_DXGI_DEVICECHILD_
-#define SLIMDX_DXGI_DEVICECHILD_
-
-#include "../ComObject.h"
+#include "DXGIException.h"
 #include "ObjectDxgi.h"
 
-#define BOOST_PP_FILENAME_1 "DeviceChildDxgi.h"
-#include "../InterfaceSetup.h"
-#endif
-#else
-#include "../InterfaceBegin.h"
-#include "../ComObjectMacros.h"
+using namespace System;
+using namespace System::Reflection;
+using namespace System::Globalization;
 
+namespace SlimDX { namespace DXGI {
+	generic<typename T> where T : DXGIObject, ref class
+	T DXGIObject::GetParent() {
+		IUnknown* unknown = 0;
+		GUID guid = Utilities::GetNativeGuidForType(T::typeid);
+		RECORD_DXGI(InternalPointer->GetParent(guid, reinterpret_cast<void**>(&unknown)));
+		if(Result::Last.IsFailure)
+			return T();
 
+		BindingFlags flags = BindingFlags::Static | BindingFlags::InvokeMethod | BindingFlags::NonPublic;
+		array<System::Object^>^ args = gcnew array<System::Object^>( 1 );
+		args[ 0 ] = IntPtr( unknown );
 
-namespace SlimDX
-{
-	namespace DXGI
-	{
-		ref class Device;
-		
-		/// <summary>
-		/// An object that is bound to a Device.
-		/// </summary>
-		/// <unmanaged>IDXGIDeviceSubObject</unmanaged>
-		SDX_COM_SUBCLASS(DeviceChild, DXGIObject) 
-		{
-			COMOBJECT_INTERFACE(IDXGIDeviceSubObject, DeviceChild);
-		
-#ifdef IS_CONCRETE
-		protected:
-			DeviceChild();
-#endif
-		public:
-			/// <summary>
-			/// Gets the device the object is bound to.
-			/// </summary>
-			property DXGI::Device^ Device
-			{
-				SDX_METHOD(DXGI::Device^ get());
-			}
-		};
-		}
-	};
-
-	#include "../InterfaceEnd.h"
-	#endif
+		// Trying to invoke "FromPointer" directly will choose the IntPtr overload since it's more
+		// cumbersome to pass a native pointer as an argument here. The IntPtr overload is intended
+		// to be the user-pointer overload, however, which isn't what we want; thus the thunk.
+		T result = safe_cast<T>( T::typeid->InvokeMember( "FromPointerReflectionThunk", flags, nullptr, nullptr, args, CultureInfo::InvariantCulture ) );
+		return result;
+	}
+}}

@@ -25,6 +25,8 @@
 
 #include "../ComObject.h"
 
+#include "ObjectDxgi.h"
+
 using System::Runtime::InteropServices::OutAttribute;
 
 #define BOOST_PP_FILENAME_1 "Adapter.h"
@@ -45,7 +47,7 @@ namespace SlimDX
 		/// A display subsystem (one or more GPUs, DACs, and video memory).
 		/// </summary>
 		/// <unmanaged>IDXGIAdapter</unmanaged>
-		SDX_COM_CLASS( Adapter )
+		SDX_COM_SUBCLASS( Adapter, DXGIObject)
 		{
 			COMOBJECT_INTERFACE(IDXGIAdapter, Adapter);
 

@@ -26,6 +26,7 @@
 #include "../ComObject.h"
 
 #include "Enums.h"
+#include "ObjectDxgi.h"
 
 using System::Runtime::InteropServices::OutAttribute;
 
@@ -51,7 +52,7 @@ namespace SlimDX
 		/// Represents the output of an adapter (such as a monitor).
 		/// </summary>
 		/// <unmanaged>IDXGIOutput</unmanaged>
-		SDX_COM_CLASS(Output)
+		SDX_COM_SUBCLASS(Output, DXGIObject)
 		{
 			COMOBJECT_INTERFACE(IDXGIOutput, Output);
 		
