@@ -26,6 +26,7 @@
 #include "../ComObject.h"
 
 #include "Enums.h"
+#include "ObjectDxgi.h"
 
 #define BOOST_PP_FILENAME_1 "Factory.h"
 #include "../InterfaceSetup.h"
@@ -40,7 +41,7 @@ namespace SlimDX
 	{
 		ref class Adapter;
 
-		SDX_COM_CLASS(Factory)
+		SDX_COM_SUBCLASS(Factory, DXGIObject)
 		{
 			COMOBJECT_INTERFACE(IDXGIFactory, Factory);
 			

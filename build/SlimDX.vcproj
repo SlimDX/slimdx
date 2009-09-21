@@ -3910,6 +3910,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Object"
+				>
+				<File
+					RelativePath="..\source\dxgi\ObjectDxgi.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\ObjectDxgi.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Design"

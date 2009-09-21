@@ -50,7 +50,11 @@ namespace MiniTri
             SlimDX.Direct3D10.Device device;
             SlimDX.Direct3D10.Device.CreateWithSwapChain(null, DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
 
-            var renderView = new RenderTargetView(device, swapChain.GetBuffer<Texture2D>(0));
+			//Stops Alt+enter from causing fullscreen skrewiness.
+        	var factory = swapChain.GetParent<Factory>();
+        	factory.SetWindowAssociation(form.Handle, WindowAssociationFlags.IgnoreAll);
+
+        	var renderView = new RenderTargetView(device, swapChain.GetBuffer<Texture2D>(0));
             var effect = Effect.FromFile(device, "MiniTri.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null);
             var technique = effect.GetTechniqueByIndex(0);
             var pass = technique.GetPassByIndex(0);

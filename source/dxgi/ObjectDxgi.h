@@ -20,67 +20,39 @@
 * THE SOFTWARE.
 */
 #if !BOOST_PP_IS_ITERATING
-#ifndef SLIMDX_DXGI_DEVICE_
-#define SLIMDX_DXGI_DEVICE_
+#ifndef SLIMDX_DXGI_OBJECTDXGI_
+#define SLIMDX_DXGI_OBJECTDXGI_
 
 #include "../ComObject.h"
-
 #include "Enums.h"
-#include "ObjectDxgi.h"
 
-#define BOOST_PP_FILENAME_1 "DeviceDxgi.h"
+#define BOOST_PP_FILENAME_1 "ObjectDxgi.h"
 #include "../InterfaceSetup.h"
 #endif
 #else
 #include "../InterfaceBegin.h"
 #include "../ComObjectMacros.h"
 
-
 namespace SlimDX
 {
 	namespace DXGI
 	{
-		ref class Adapter;
-		
+		ref class Object;
+
 		/// <summary>
-		/// An object that produces image data.
+		/// Base class for all DXGI objects
 		/// </summary>
-		/// <unmanaged>IDXGIDevice</unmanaged>
-		SDX_COM_SUBCLASS(Device, DXGIObject)
+		SDX_COM_CLASS(DXGIObject)
 		{
-			COMOBJECT_INTERFACE(IDXGIDevice, Device);
+			COMOBJECT_INTERFACE_BASE(IDXGIObject);
 
 		public:
 			/// <summary>
-			/// Gets or sets the device's GPU thread priority.
+			/// Gets the parent of the object.
 			/// </summary>
-			property int GpuThreadPriority
-			{
-				SDX_METHOD(int get());
-				SDX_METHOD(void set( int value ));
-			}
-			
-			/// <summary>
-			/// Gets the adapter associated with the device.
-			/// </summary>
-			property SlimDX::DXGI::Adapter^ Adapter
-			{
-				SDX_METHOD(SlimDX::DXGI::Adapter^ get());
-			}
-			
-			/// <summary>
-			/// Initializes a new instance of the <see cref="Device"/> class.
-			/// </summary>
-			/// <param name="device">The COM object implementing the IDXGIDevice interface.</param>
-			SDX_METHOD_CONCRETE(Device( IComObject^ device ));
-
-			/// <summary>
-			/// Gets the residency status of a list of resources.
-			/// </summary>
-			/// <param name="resources">The resources to query.</param>
-			/// <returns>A list of residency status values, one for each entry in the input resources list. The result will be
-			/// <c>null</c> on failure.</returns>
-			SDX_METHOD(System::Collections::ObjectModel::ReadOnlyCollection<Residency>^ QueryResourceResidency( System::Collections::Generic::IList<ComObject^>^ resources ));
+			/// <typeparam name="T">The type of the parent object.</typeparam>
+			generic<typename T> where T : DXGIObject, ref class 
+			T GetParent();
 		};
 	}
 };
