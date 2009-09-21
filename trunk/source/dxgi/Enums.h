@@ -152,7 +152,33 @@ namespace SlimDX
 			B5G6R5_UNorm = DXGI_FORMAT_B5G6R5_UNORM,
 			B5G5R5A1_UNorm = DXGI_FORMAT_B5G5R5A1_UNORM,
 			B8G8R8A8_UNorm = DXGI_FORMAT_B8G8R8A8_UNORM,
-			B8G8R8X8_UNorm = DXGI_FORMAT_B8G8R8X8_UNORM
+			B8G8R8X8_UNorm = DXGI_FORMAT_B8G8R8X8_UNORM,
+			//////////////////////////////////////////////////////////////////////////
+			// DirectX 11 Format entries
+			//////////////////////////////////////////////////////////////////////////
+
+			/// <summary>Not Supported below DirectX 11.</summary>
+			R10G10B10_XR_Bias_A2_UNorm = DXGI_FORMAT_R10G10B10_XR_BIAS_A2_UNORM,
+			/// <summary>Not Supported below DirectX 11.</summary>
+			B8G8R8A8_Typeless = DXGI_FORMAT_B8G8R8A8_TYPELESS,
+			/// <summary>Not Supported below DirectX 11.</summary>
+			B8G8R8A8_UNorm_SRGB = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB,
+			/// <summary>Not Supported below DirectX 11.</summary>
+			B8G8R8X8_Typeless = DXGI_FORMAT_B8G8R8X8_TYPELESS,
+			/// <summary>Not Supported below DirectX 11.</summary>
+			B8G8R8X8_UNorm_SRGB = DXGI_FORMAT_B8G8R8X8_UNORM_SRGB, 
+			/// <summary>Not Supported below DirectX 11.</summary>
+			BC6_Typeless = DXGI_FORMAT_BC6H_TYPELESS,
+			/// <summary>Not Supported below DirectX 11.</summary>
+			BC6_UFloat16 = DXGI_FORMAT_BC6H_UF16,
+			/// <summary>Not Supported below DirectX 11.</summary>
+			BC6_SFloat16 = DXGI_FORMAT_BC6H_SF16,
+			/// <summary>Not Supported below DirectX 11.</summary>
+			BC7_Typeless = DXGI_FORMAT_BC7_TYPELESS,
+			/// <summary>Not Supported below DirectX 11.</summary>
+			BC7_UNorm = DXGI_FORMAT_BC7_UNORM,
+			/// <summary>Not Supported below DirectX 11.</summary>
+			BC7_UNorm_SRGB = DXGI_FORMAT_BC7_UNORM_SRGB
 		};
 		
 		[System::Flags]
