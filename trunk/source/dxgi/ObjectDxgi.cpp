@@ -36,9 +36,15 @@ namespace SlimDX { namespace DXGI {
 		if(Result::Last.IsFailure)
 			return T();
 
+		if(ObjectTable::Find(IntPtr(unknown)) != nullptr) {
+			unknown->Release();
+			return safe_cast<T>(ObjectTable::Find(IntPtr(unknown)));
+		}
+
 		BindingFlags flags = BindingFlags::Static | BindingFlags::InvokeMethod | BindingFlags::NonPublic;
-		array<System::Object^>^ args = gcnew array<System::Object^>( 1 );
+		array<System::Object^>^ args = gcnew array<System::Object^>( 2 );
 		args[ 0 ] = IntPtr( unknown );
+		args[ 1 ] = this;
 
 		// Trying to invoke "FromPointer" directly will choose the IntPtr overload since it's more
 		// cumbersome to pass a native pointer as an argument here. The IntPtr overload is intended
