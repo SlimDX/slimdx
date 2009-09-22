@@ -52,6 +52,7 @@
 		managedType( System::IntPtr pointer ) { Construct( pointer, NativeInterface ); } \
 	internal: \
 		static managedType^ FromPointerReflectionThunk( System::IntPtr pointer ) { return FromPointer( static_cast<nativeType*>( pointer.ToPointer() ) ); } \
+		static managedType^ FromPointerReflectionThunk( System::IntPtr pointer, ComObject^ owner ) { return FromPointer( static_cast<nativeType*>( pointer.ToPointer()), owner ); } \
 		static managedType^ FromPointer( nativeType* pointer ) { return FromPointer( pointer, nullptr, ComObjectFlags::None ); } \
 		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner ) { return FromPointer( pointer, owner, ComObjectFlags::None ); } \
 		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner, ComObjectFlags flags ) { return ConstructFromPointer<managedType,nativeType>( pointer, owner, flags ); } \
@@ -80,6 +81,7 @@
 		managedType( System::IntPtr pointer ) { Construct( pointer, NativeInterface ); } \
 	internal: \
 		static managedType^ FromPointerReflectionThunk( System::IntPtr pointer ) { return FromPointer( static_cast<nativeType*>( pointer.ToPointer() ) ); } \
+		static managedType^ FromPointerReflectionThunk( System::IntPtr pointer, ComObject^ owner ) { return FromPointer( static_cast<nativeType*>( pointer.ToPointer()), owner ); } \
 		static managedType^ FromPointer( nativeType* pointer ) { return FromPointer( pointer, nullptr, ComObjectFlags::None ); } \
 		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner ) { return FromPointer( pointer, owner, ComObjectFlags::None ); } \
 		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner, ComObjectFlags flags ) { return ConstructFromPointer<managedType,nativeType>( pointer, owner, flags ); } \
