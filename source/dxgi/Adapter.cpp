@@ -61,7 +61,7 @@ namespace DXGI
 		RECORD_DXGI( InternalPointer->EnumOutputs( index, &output) );
 		if( Result::Last.IsFailure )
 			return nullptr;
-		return Output::FromPointer( output );
+		return Output::FromPointer( output, this );
 	}
 
 	bool Adapter::IsInterfaceSupported( Type^ type )

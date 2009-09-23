@@ -88,7 +88,7 @@ namespace DXGI
 		if( RECORD_DXGI( InternalPointer->GetContainingOutput( &output ) ).IsFailure )
 			return nullptr;
 			
-		return Output::FromPointer( output );
+		return Output::FromPointer( output, this );
 	}
 	
 	generic< class T > where T : ComObject, ref class
@@ -121,7 +121,7 @@ namespace DXGI
 			if( output == 0 )
 				target = nullptr;
 			else
-				target = Output::FromPointer( output );
+				target = Output::FromPointer( output, this );
 		}
 		
 		return Result::Last;
