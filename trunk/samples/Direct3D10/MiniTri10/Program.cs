@@ -47,8 +47,9 @@ namespace MiniTri
                 SwapEffect = SwapEffect.Discard,
                 Usage = Usage.RenderTargetOutput
             };
-			Factory factory = new Factory();
-        	Device device = new Device(null, DriverType.Hardware, DeviceCreationFlags.Debug);
+        	var factory = new Factory();
+        	var adapter = factory.GetAdapter(0);
+        	Device device = new Device(adapter, DriverType.Hardware, DeviceCreationFlags.None);
 			SwapChain swapChain = new SwapChain(factory, device, desc);
             //SlimDX.Direct3D10.Device.CreateWithSwapChain(null, DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
 
@@ -56,6 +57,9 @@ namespace MiniTri
         	Factory factory2 = swapChain.GetParent<Factory>();
 			factory2.SetWindowAssociation(form.Handle, WindowAssociationFlags.IgnoreAll);
 
+        	var swapChainOutput = swapChain.ContainingOutput;
+			var output = adapter.GetOutput(0);
+			System.Diagnostics.Debug.Assert(swapChainOutput.ComPointer != output.ComPointer);
         	var renderView = new RenderTargetView(device, swapChain.GetBuffer<Texture2D>(0));
             var effect = Effect.FromFile(device, "MiniTri.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null);
             var technique = effect.GetTechniqueByIndex(0);
