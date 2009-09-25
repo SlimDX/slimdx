@@ -47,21 +47,15 @@ namespace MiniTri
                 SwapEffect = SwapEffect.Discard,
                 Usage = Usage.RenderTargetOutput
             };
-        	var factory = new Factory();
-        	var adapter = factory.GetAdapter(0);
-        	Device device = new Device(adapter, DriverType.Hardware, DeviceCreationFlags.None);
-			SwapChain swapChain = new SwapChain(factory, device, desc);
-            //SlimDX.Direct3D10.Device.CreateWithSwapChain(null, DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
+        	Device device;
+        	SwapChain swapChain;
+            Device.CreateWithSwapChain(null, DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
 
 			//Stops Alt+enter from causing fullscreen skrewiness.
-        	Factory factory2 = swapChain.GetParent<Factory>();
-			factory2.SetWindowAssociation(form.Handle, WindowAssociationFlags.IgnoreAll);
-
-        	var swapChainOutput = swapChain.ContainingOutput;
-			var output = adapter.GetOutput(0);
-			System.Diagnostics.Debug.Assert(swapChainOutput.ComPointer != output.ComPointer); //if this fires, call Promit at: 1-728-639-4153. No really!
-
-        	var renderView = new RenderTargetView(device, swapChain.GetBuffer<Texture2D>(0));
+        	Factory factory = swapChain.GetParent<Factory>();
+			factory.SetWindowAssociation(form.Handle, WindowAssociationFlags.IgnoreAll);
+			
+	      	var renderView = new RenderTargetView(device, swapChain.GetBuffer<Texture2D>(0));
             var effect = Effect.FromFile(device, "MiniTri.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null);
             var technique = effect.GetTechniqueByIndex(0);
             var pass = technique.GetPassByIndex(0);
