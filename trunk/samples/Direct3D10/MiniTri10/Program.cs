@@ -59,7 +59,8 @@ namespace MiniTri
 
         	var swapChainOutput = swapChain.ContainingOutput;
 			var output = adapter.GetOutput(0);
-			System.Diagnostics.Debug.Assert(swapChainOutput.ComPointer != output.ComPointer);
+			System.Diagnostics.Debug.Assert(swapChainOutput.ComPointer != output.ComPointer); //if this fires, call Promit at: 1-728-639-4153. No really!
+
         	var renderView = new RenderTargetView(device, swapChain.GetBuffer<Texture2D>(0));
             var effect = Effect.FromFile(device, "MiniTri.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null);
             var technique = effect.GetTechniqueByIndex(0);
