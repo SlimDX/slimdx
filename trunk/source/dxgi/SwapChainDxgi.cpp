@@ -101,9 +101,9 @@ namespace DXGI
 			return T();
 		
 		BindingFlags flags = BindingFlags::Static | BindingFlags::InvokeMethod | BindingFlags::NonPublic;
-		array<System::Object^>^ args = gcnew array<System::Object^>( 1 );
+		array<System::Object^>^ args = gcnew array<System::Object^>( 2 );
 		args[ 0 ] = IntPtr( unknown );
-		
+		args[1] = this;
 		// Trying to invoke "FromPointer" directly will choose the IntPtr overload since it's more
 		// cumbersome to pass a native pointer as an argument here. The IntPtr overload is intended
 		// to be the user-pointer overload, however, which isn't what we want; thus the thunk.

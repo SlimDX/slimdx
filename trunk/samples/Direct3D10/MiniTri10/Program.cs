@@ -47,15 +47,16 @@ namespace MiniTri
                 SwapEffect = SwapEffect.Discard,
                 Usage = Usage.RenderTargetOutput
             };
+
         	Device device;
         	SwapChain swapChain;
-            Device.CreateWithSwapChain(null, DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
+            SlimDX.Direct3D10.Device.CreateWithSwapChain(null, DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
 
 			//Stops Alt+enter from causing fullscreen skrewiness.
         	Factory factory = swapChain.GetParent<Factory>();
 			factory.SetWindowAssociation(form.Handle, WindowAssociationFlags.IgnoreAll);
-			
-	      	var renderView = new RenderTargetView(device, swapChain.GetBuffer<Texture2D>(0));
+
+        	var renderView = new RenderTargetView(device, swapChain.GetBuffer<Texture2D>(0));
             var effect = Effect.FromFile(device, "MiniTri.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null);
             var technique = effect.GetTechniqueByIndex(0);
             var pass = technique.GetPassByIndex(0);
@@ -102,8 +103,14 @@ namespace MiniTri
                 swapChain.Present(0, PresentFlags.None);
             });
 
-            foreach (var item in ObjectTable.Objects)
-                item.Dispose();
+			vertices.Dispose();
+			layout.Dispose();
+			effect.Dispose();
+			renderView.Dispose();
+			device.Dispose();
+			swapChain.Dispose();
+            //foreach (var item in ObjectTable.Objects)
+            //    item.Dispose();
         }
     }
 }
