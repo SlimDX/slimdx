@@ -37,11 +37,32 @@
 
 using namespace System;
 using namespace System::IO;
+using namespace System::Reflection;
+using namespace System::Globalization;
 
 namespace SlimDX
 {
 namespace Direct3D11
 {
+	generic< class T > where T : Resource, ref class
+		T Resource::FromSwapChain( SlimDX::DXGI::SwapChain^ swapChain, int index )
+	{
+		IUnknown* unknown = 0;
+		GUID guid = Utilities::GetNativeGuidForType( T::typeid );
+		RECORD_D3D11( swapChain->InternalPointer->GetBuffer( index, guid, reinterpret_cast<void**>( &unknown ) ) );
+		if( Result::Last.IsFailure )
+			return T();
+
+		BindingFlags flags = BindingFlags::Static | BindingFlags::InvokeMethod | BindingFlags::NonPublic;
+		array<System::Object^>^ args = gcnew array<System::Object^>( 1 );
+		args[ 0 ] = IntPtr( unknown );
+
+		// Trying to invoke "FromPointer" directly will choose the IntPtr overload since it's more
+		// cumbersome to pass a native pointer as an argument here. The IntPtr overload is intended
+		// to be the user-pointer overload, however, which isn't what we want; thus the thunk.
+		T result = safe_cast<T>( T::typeid->InvokeMember( "FromPointerReflectionThunk", flags, nullptr, nullptr, args, CultureInfo::InvariantCulture ) );
+		return result;
+	}
 	Resource^ Resource::FromPointer( ID3D11Resource* pointer )
 	{
 		if( pointer == NULL )

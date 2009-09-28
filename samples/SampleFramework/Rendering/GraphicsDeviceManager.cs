@@ -996,7 +996,7 @@ namespace SampleFramework
 
         void SetupD3D10Views()
         {
-            Texture2D backBuffer = Direct3D10.SwapChain.GetBuffer<Texture2D>(0);
+            Texture2D backBuffer = Texture2D.FromSwapChain<Texture2D>(Direct3D10.SwapChain, 0);
 
             SlimDX.Direct3D10.Viewport viewport = new SlimDX.Direct3D10.Viewport();
             viewport.Width = backBuffer.Description.Width;
