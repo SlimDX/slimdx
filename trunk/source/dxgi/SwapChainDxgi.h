@@ -99,15 +99,6 @@ namespace SlimDX
 			SDX_METHOD_CONCRETE(SwapChain( Factory^ factory, ComObject^ device, SwapChainDescription description ));
 			
 			/// <summary>
-			/// Gets a swap chain back buffer.
-			/// </summary>
-			/// <typeparam name="T">The type of the buffer.</typeparam>
-			/// <param name="buffer">The index of the desired buffer.</param>
-			/// <returns>The buffer interface, or <c>null</c> on failure.</returns>
-			generic< typename T > where T : ComObject, ref class
-			SDX_METHOD(T GetBuffer( int buffer ));
-
-			/// <summary>
 			/// Gets the full screen state.
 			/// </summary>
 			/// <param name="isFullScreen">Receives a value indicating if the swap chain is running in full screen mode.</param>

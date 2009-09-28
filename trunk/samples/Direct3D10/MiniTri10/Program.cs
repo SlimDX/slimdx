@@ -25,9 +25,7 @@ using SlimDX;
 using SlimDX.Direct3D10;
 using SlimDX.DXGI;
 using SlimDX.Windows;
-using System.Windows.Forms;
 using Device=SlimDX.Direct3D10.Device;
-using DeviceChild=SlimDX.DXGI.DeviceChild;
 
 namespace MiniTri
 {
@@ -50,13 +48,14 @@ namespace MiniTri
 
         	Device device;
         	SwapChain swapChain;
-            SlimDX.Direct3D10.Device.CreateWithSwapChain(null, DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
+            Device.CreateWithSwapChain(null, DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
 
 			//Stops Alt+enter from causing fullscreen skrewiness.
         	Factory factory = swapChain.GetParent<Factory>();
 			factory.SetWindowAssociation(form.Handle, WindowAssociationFlags.IgnoreAll);
 
-        	var renderView = new RenderTargetView(device, swapChain.GetBuffer<Texture2D>(0));
+        	Texture2D backBuffer = Texture2D.FromSwapChain<Texture2D>(swapChain, 0);
+        	var renderView = new RenderTargetView(device, backBuffer);
             var effect = Effect.FromFile(device, "MiniTri.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null);
             var technique = effect.GetTechniqueByIndex(0);
             var pass = technique.GetPassByIndex(0);
@@ -107,6 +106,7 @@ namespace MiniTri
 			layout.Dispose();
 			effect.Dispose();
 			renderView.Dispose();
+			backBuffer.Dispose();
 			device.Dispose();
 			swapChain.Dispose();
             //foreach (var item in ObjectTable.Objects)

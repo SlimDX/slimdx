@@ -27,6 +27,7 @@
 
 #include "DeviceChild10.h"
 #include "Enums.h"
+#include "../dxgi/SwapChainDxgi.h"
 
 namespace SlimDX
 {
@@ -51,6 +52,16 @@ namespace SlimDX
 			Resource() { }
 
 		public:
+			/// <summary>
+			/// Gets a swap chain back buffer.
+			/// </summary>
+			/// <typeparam name="T">The type of the buffer.</typeparam>
+			/// <param name="swapChain">The swap chain to get the buffer from.</param>
+			/// <param name="index">The index of the desired buffer.</param>
+			/// <returns>The buffer interface, or <c>null</c> on failure.</returns>
+			generic< class T > where T : Resource, ref class
+			static T FromSwapChain( SlimDX::DXGI::SwapChain^ swapChain, int index );
+
 			static Resource^ FromPointer( System::IntPtr pointer );
 
 			/// <summary>

@@ -90,26 +90,6 @@ namespace DXGI
 			
 		return Output::FromPointer( output, this );
 	}
-	
-	generic< class T > where T : ComObject, ref class
-	T SwapChain::GetBuffer( int index )
-	{
-		IUnknown* unknown = 0;
-		GUID guid = Utilities::GetNativeGuidForType( T::typeid );
-		RECORD_DXGI( InternalPointer->GetBuffer( index, guid, reinterpret_cast<void**>( &unknown ) ) );
-		if( Result::Last.IsFailure )
-			return T();
-		
-		BindingFlags flags = BindingFlags::Static | BindingFlags::InvokeMethod | BindingFlags::NonPublic;
-		array<System::Object^>^ args = gcnew array<System::Object^>( 2 );
-		args[ 0 ] = IntPtr( unknown );
-		args[1] = this;
-		// Trying to invoke "FromPointer" directly will choose the IntPtr overload since it's more
-		// cumbersome to pass a native pointer as an argument here. The IntPtr overload is intended
-		// to be the user-pointer overload, however, which isn't what we want; thus the thunk.
-		T result = safe_cast<T>( T::typeid->InvokeMember( "FromPointerReflectionThunk", flags, nullptr, nullptr, args, CultureInfo::InvariantCulture ) );
-		return result;
-	}
 
 	Result SwapChain::GetFullScreenState( bool% isFullScreen, Output^% target )
 	{
