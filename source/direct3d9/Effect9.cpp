@@ -439,6 +439,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE handle = parameterBlock != nullptr ? parameterBlock->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->ApplyParameterBlock( handle );
+		GC::KeepAlive( parameterBlock );
 		return RECORD_D3D9( hr );
 	}
 
@@ -446,6 +447,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE handle = parameterBlock != nullptr ? parameterBlock->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->DeleteParameterBlock( handle );
+		GC::KeepAlive( parameterBlock );
 		return RECORD_D3D9( hr );
 	}
 
@@ -454,6 +456,7 @@ namespace Direct3D9
 		D3DXHANDLE paramHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		D3DXHANDLE techHandle = technique != nullptr ? technique->InternalHandle : NULL;
 		BOOL used = InternalPointer->IsParameterUsed( paramHandle, techHandle );
+		GC::KeepAlive( parameter );
 		return used > 0;
 	}
 
@@ -469,7 +472,7 @@ namespace Direct3D9
 		D3DXHANDLE parentHandle = technique != nullptr ? technique->InternalHandle : NULL;
 
 		HRESULT hr = InternalPointer->FindNextValidTechnique( parentHandle, &handle );
-
+		GC::KeepAlive( technique );
 		if( RECORD_D3D9( hr ).IsFailure || handle == NULL )
 			return nullptr;
 
@@ -479,7 +482,9 @@ namespace Direct3D9
 	bool Effect::ValidateTechnique( EffectHandle^ technique )
 	{
 		D3DXHANDLE handle = technique != nullptr ? technique->InternalHandle : NULL;
-		return SUCCEEDED( InternalPointer->ValidateTechnique( handle ) );
+		bool result = SUCCEEDED( InternalPointer->ValidateTechnique( handle ) );
+		GC::KeepAlive( technique );
+		return result;
 	}
 
 	EffectHandle^ Effect::Technique::get()
@@ -494,6 +499,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE handle = value != nullptr ? value->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetTechnique( handle );
+		GC::KeepAlive( value );
 		RECORD_D3D9( hr );
 	}
 
@@ -518,6 +524,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE value = handle != nullptr ? handle->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetRawValue( value, data->PositionPointer, offset, count );
+		GC::KeepAlive( handle );
 		return RECORD_D3D9( hr );
 	}
 
@@ -535,6 +542,7 @@ namespace Direct3D9
 		D3DXHANDLE value = handle != nullptr ? handle->InternalHandle : NULL;
 		pin_ptr<float> pinnedData = &data[startIndex];
 		HRESULT hr = InternalPointer->SetRawValue( value, pinnedData, 0, count * sizeof(float) );
+		GC::KeepAlive( handle );
 		return RECORD_D3D9( hr );
 	}
 

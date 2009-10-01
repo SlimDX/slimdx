@@ -58,6 +58,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		D3DXHANDLE result = InternalPointer->GetConstant( parentHandle, index );
+		GC::KeepAlive( handle );
 		
 		if( result == NULL )
 			return nullptr;
@@ -71,6 +72,7 @@ namespace Direct3D9
 		
 		D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		D3DXHANDLE result = InternalPointer->GetConstantByName( parentHandle, reinterpret_cast<const char*>( pinnedName ) );
+		GC::KeepAlive( handle );
 		
 		if( result == NULL )
 			return nullptr;
@@ -81,6 +83,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		D3DXHANDLE result = InternalPointer->GetConstantElement( parentHandle, index );
+		GC::KeepAlive( handle );
 		
 		if( result == NULL )
 			return nullptr;
@@ -96,6 +99,7 @@ namespace Direct3D9
 		unsigned int count = 1;
 
 		HRESULT hr = InternalPointer->GetConstantDesc( nativeHandle, &nativeDesc, &count );
+		GC::KeepAlive( handle );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			return description;
@@ -116,6 +120,7 @@ namespace Direct3D9
 
 		stack_array<D3DXCONSTANT_DESC> nativeDescArray = stackalloc( D3DXCONSTANT_DESC, count );
 		hr = InternalPointer->GetConstantDesc( nativeHandle, &nativeDescArray[0], &count );
+		GC::KeepAlive( handle );
 		
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
@@ -161,6 +166,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetBool( handle, value );
+		GC::KeepAlive( constant );
 		return RECORD_D3D9( hr );
 	}
 
@@ -174,6 +180,7 @@ namespace Direct3D9
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		pin_ptr<BOOL> pinnedValue = &expandedArray[0];
 		HRESULT hr = InternalPointer->SetBoolArray( handle, pinnedValue, values->Length );
+		GC::KeepAlive( parameter );
 		return RECORD_D3D9( hr );
 	}
 
@@ -181,6 +188,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetInt( handle, value );
+		GC::KeepAlive( constant );
 		return RECORD_D3D9( hr );
 	}
 
@@ -189,6 +197,7 @@ namespace Direct3D9
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<int> pinned_value = &values[0];
 		HRESULT hr = InternalPointer->SetIntArray( handle, pinned_value, values->Length );
+		GC::KeepAlive( constant );
 		return RECORD_D3D9( hr );
 	}
 
@@ -196,6 +205,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetFloat( handle, value );
+		GC::KeepAlive( constant );
 		return RECORD_D3D9( hr );
 	}
 
@@ -204,6 +214,7 @@ namespace Direct3D9
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<float> pinned_values = &values[0];
 		HRESULT hr = InternalPointer->SetFloatArray( handle, pinned_values, values->Length );
+		GC::KeepAlive( constant );
 		return RECORD_D3D9( hr );
 	}
 
@@ -211,6 +222,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetVector( handle, reinterpret_cast<const D3DXVECTOR4*>( &value ) );
+		GC::KeepAlive( constant );
 		return RECORD_D3D9( hr );
 	}
 
@@ -219,6 +231,7 @@ namespace Direct3D9
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<Vector4> pinned_value = &values[0];
 		HRESULT hr = InternalPointer->SetVectorArray( handle, reinterpret_cast<const D3DXVECTOR4*>( pinned_value ), values->Length );
+		GC::KeepAlive( constant );
 		return RECORD_D3D9( hr );
 	}
 
@@ -226,6 +239,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetVector( handle, reinterpret_cast<const D3DXVECTOR4*>( &value ) );
+		GC::KeepAlive( constant );
 		return RECORD_D3D9( hr );
 	}
 
@@ -234,6 +248,7 @@ namespace Direct3D9
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<Color4> pinned_value = &values[0];
 		HRESULT hr = InternalPointer->SetVectorArray( handle, reinterpret_cast<const D3DXVECTOR4*>( pinned_value ), values->Length );
+		GC::KeepAlive( constant );
 		return RECORD_D3D9( hr );
 	}
 
@@ -241,6 +256,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetMatrix( handle, reinterpret_cast<const D3DXMATRIX*>( &value ) );
+		GC::KeepAlive( constant );
 		return RECORD_D3D9( hr );
 	}
 
@@ -249,6 +265,7 @@ namespace Direct3D9
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<Matrix> pinned_value = &values[0];
 		HRESULT hr = InternalPointer->SetMatrixArray( handle, reinterpret_cast<const D3DXMATRIX*>( pinned_value ), values->Length );
+		GC::KeepAlive( constant );
 		return RECORD_D3D9( hr );
 	}
 
@@ -256,6 +273,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetMatrixTranspose( handle, reinterpret_cast<const D3DXMATRIX*>( &value ) );
+		GC::KeepAlive( constant );
 		return RECORD_D3D9( hr );
 	}
 
@@ -264,6 +282,7 @@ namespace Direct3D9
 		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
 		pin_ptr<Matrix> pinned_value = &values[0];
 		HRESULT hr = InternalPointer->SetMatrixTransposeArray( handle, reinterpret_cast<const D3DXMATRIX*>( pinned_value ), values->Length );
+		GC::KeepAlive( constant );
 		return RECORD_D3D9( hr );
 	}
 

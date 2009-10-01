@@ -52,6 +52,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		D3DXHANDLE annotation = InternalPointer->GetAnnotation( parentHandle, index );
+		GC::KeepAlive(handle);
 
 		if( annotation == NULL )
 			return nullptr;
@@ -65,6 +66,7 @@ namespace Direct3D9
 
 		D3DXHANDLE parentHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		D3DXHANDLE annotation = InternalPointer->GetAnnotationByName( parentHandle, reinterpret_cast<LPCSTR>( pinnedName ) );
+		GC::KeepAlive(handle);
 
 		if( annotation == NULL )
 			return nullptr;
@@ -75,6 +77,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE parentHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		D3DXHANDLE handle = InternalPointer->GetParameter( parentHandle, index );
+		GC::KeepAlive( parameter );
 
 		if( handle == NULL )
 			return nullptr;
@@ -88,6 +91,7 @@ namespace Direct3D9
 
 		D3DXHANDLE parentHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		D3DXHANDLE handle = InternalPointer->GetParameterByName( parentHandle, reinterpret_cast<const char*>( pinnedName ) );
+		GC::KeepAlive( parameter );
 
 		if( handle == NULL )
 			return nullptr;
@@ -101,6 +105,7 @@ namespace Direct3D9
 
 		D3DXHANDLE parentHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		D3DXHANDLE handle = InternalPointer->GetParameterBySemantic( parentHandle, reinterpret_cast<const char*>( pinnedSemantic ) );
+		GC::KeepAlive( parameter );
 
 		if( handle == NULL )
 			return nullptr;
@@ -111,6 +116,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE parentHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		D3DXHANDLE handle = InternalPointer->GetParameterElement( parentHandle, index );
+		GC::KeepAlive( parameter );
 
 		if( handle == NULL )
 			return nullptr;
@@ -122,6 +128,7 @@ namespace Direct3D9
 		D3DXPARAMETER_DESC description;
 
 		HRESULT hr = InternalPointer->GetParameterDesc( parameter->InternalHandle, &description );
+		GC::KeepAlive( parameter );
 		if( RECORD_D3D9( hr ).IsFailure )
 			return ParameterDescription();
 
@@ -167,6 +174,7 @@ namespace Direct3D9
 		D3DXFUNCTION_DESC description;
 
 		HRESULT hr = InternalPointer->GetFunctionDesc( handle->InternalHandle, &description );
+		GC::KeepAlive(handle);
 		if( RECORD_D3D9( hr ).IsFailure )
 			return FunctionDescription();
 
@@ -203,6 +211,7 @@ namespace Direct3D9
 		D3DXTECHNIQUE_DESC description;
 
 		HRESULT hr = InternalPointer->GetTechniqueDesc( handle->InternalHandle, &description );
+		GC::KeepAlive(handle);
 		if( RECORD_D3D9( hr ).IsFailure )
 			return TechniqueDescription();
 
@@ -218,6 +227,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		D3DXHANDLE pass = InternalPointer->GetPass( nativeHandle, index );
+		GC::KeepAlive(handle);
 
 		if( pass == NULL )
 			return nullptr;
@@ -231,6 +241,7 @@ namespace Direct3D9
 
 		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		D3DXHANDLE pass = InternalPointer->GetPassByName( nativeHandle, reinterpret_cast<const char*>( pinnedName ) );
+		GC::KeepAlive(handle);
 
 		if( pass == NULL )
 			return nullptr;
@@ -243,6 +254,7 @@ namespace Direct3D9
 		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
 
 		HRESULT hr = InternalPointer->GetPassDesc( nativeHandle, &description );
+		GC::KeepAlive(handle);
 		if( RECORD_D3D9( hr ).IsFailure )
 			return PassDescription();
 
@@ -261,6 +273,7 @@ namespace Direct3D9
 
 		D3DXHANDLE nativeHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->GetPixelShader( nativeHandle, &pixelShader );
+		GC::KeepAlive(parameter);
 
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
@@ -274,6 +287,7 @@ namespace Direct3D9
 
 		D3DXHANDLE nativeHandle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->GetVertexShader( nativeHandle, &vertexShader );
+		GC::KeepAlive( parameter );
 
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
@@ -306,6 +320,7 @@ namespace Direct3D9
 
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetTexture( handle, texture );
+		GC::KeepAlive( parameter );
 		return RECORD_D3D9( hr );
 	}
 
@@ -316,6 +331,7 @@ namespace Direct3D9
 
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetString( handle, reinterpret_cast<LPCSTR>( pinnedValue ) );
+		GC::KeepAlive( parameter );
 		return RECORD_D3D9( hr );
 	}
 
@@ -324,6 +340,7 @@ namespace Direct3D9
 		IDirect3DBaseTexture9* texture = NULL;
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->GetTexture( handle, &texture );
+		GC::KeepAlive( parameter );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
@@ -337,6 +354,7 @@ namespace Direct3D9
 		LPCSTR data = 0;
 
 		HRESULT hr = InternalPointer->GetString( handle, &data );
+		GC::KeepAlive( parameter );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
@@ -376,6 +394,7 @@ namespace Direct3D9
 			hr = InternalPointer->SetValue( handle, &value, static_cast<DWORD>( sizeof(T) ) );
 		}
 
+		GC::KeepAlive( parameter );
 		return RECORD_D3D9( hr );
 	}
 
@@ -386,7 +405,7 @@ namespace Direct3D9
 		T result;
 
 		HRESULT hr = InternalPointer->GetValue( handle, &result, static_cast<DWORD>( sizeof(T) ) );
-
+		GC::KeepAlive( parameter );
 		if( RECORD_D3D9( hr ).IsFailure )
 			return T();
 
@@ -432,6 +451,7 @@ namespace Direct3D9
 			hr = InternalPointer->SetValue( handle, pinnedData, static_cast<DWORD>( sizeof(T) ) * values->Length );
 		}
 
+		GC::KeepAlive( parameter );
 		return RECORD_D3D9( hr );
 	}
 
@@ -443,7 +463,7 @@ namespace Direct3D9
 		pin_ptr<T> pinnedData = &results[0];
 
 		HRESULT hr = InternalPointer->GetValue( handle, pinnedData, static_cast<DWORD>( sizeof(T) ) * count );
-
+		GC::KeepAlive( parameter );
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 

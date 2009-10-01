@@ -303,6 +303,7 @@ namespace Direct3D9
 		ID3DXConstantTable* table;
 
 		HRESULT hr = InternalPointer->CompileShader( handle, reinterpret_cast<LPCSTR>( pinnedTarget ), static_cast<DWORD>( flags ), &shader, &errorBuffer, &table );
+		GC::KeepAlive( functionHandle );
 
 		compilationErrors = Utilities::BufferToString( errorBuffer );
 			
@@ -324,6 +325,7 @@ namespace Direct3D9
 		ID3DXBuffer* shader;
 
 		HRESULT hr = InternalPointer->CompileShader( handle, reinterpret_cast<LPCSTR>( pinnedTarget ), static_cast<DWORD>( flags ), &shader, &errorBuffer, NULL );
+		GC::KeepAlive( functionHandle );
 
 		if( errorBuffer != NULL )
 			compilationErrors = Utilities::BufferToString( errorBuffer );
@@ -370,6 +372,7 @@ namespace Direct3D9
 	{
 		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		HRESULT hr = InternalPointer->SetLiteral( nativeHandle, literal );
+		GC::KeepAlive( handle );
 		return RECORD_D3D9( hr );
 	}
 
@@ -378,6 +381,7 @@ namespace Direct3D9
 		D3DXHANDLE nativeHandle = handle != nullptr ? handle->InternalHandle : NULL;
 		BOOL literal = false;
 		HRESULT hr = InternalPointer->GetLiteral( nativeHandle, &literal );
+		GC::KeepAlive( handle );
 		RECORD_D3D9( hr );
 		
 		return literal > 0;
