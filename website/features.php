@@ -57,10 +57,11 @@
 				This allows seamless cooperation with libraries such as DirectShow.NET, CUDA.NET, native code DirectX libraries, and more.
 			</p><br />
 			<p><h3>64-bit Systems and "Any CPU"</h3>
-				SlimDX includes 64 bit assemblies, and is the <i>only</i> DirectX interface for .NET to do so.
+				SlimDX includes x64 bit assemblies, and is the <i>only</i> DirectX interface for .NET to do so.
 				The redistributable and SDK installers automatically register the correct assemblies.
 				Applications can also compile for the "Any CPU" architecture when using SlimDX, and the correct version will be selected.
-				As a result, SlimDX based applications can smoothly target both 32 and 64 bit machines without the headaches introduced by other similar libraries.
+				As a result, SlimDX based applications can smoothly target both x86-32 and x86-64 bit machines without the headaches introduced by other similar libraries.
+				(Itanium IA64 is not a supported configuration, sorry.)
 			</p>
 		</div>
     </div>
