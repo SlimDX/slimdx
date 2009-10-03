@@ -87,7 +87,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return AnimationSet::FromPointer( set, this );
+		return InternalAnimationSet::FromPointer( set, this );
 	}
 
 	AnimationSet^ AnimationController::GetAnimationSet( String^ name )
@@ -101,7 +101,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return AnimationSet::FromPointer( set, this );
+		return InternalAnimationSet::FromPointer( set, this );
 	}
 
 	int AnimationController::GetCurrentTrackEvent( int track, EventType eventType )
@@ -128,7 +128,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return AnimationSet::FromPointer( set, this );
+		return InternalAnimationSet::FromPointer( set, this );
 	}
 
 	TrackDescription AnimationController::GetTrackDescription( int track )
@@ -223,7 +223,7 @@ namespace Direct3D9
 
 	Result AnimationController::RegisterAnimationSet( AnimationSet^ set )
 	{
-		HRESULT hr = InternalPointer->RegisterAnimationSet( set->shim );
+		HRESULT hr = InternalPointer->RegisterAnimationSet( set->InternalPointer );
 		return RECORD_D3D9( hr );
 	}
 
@@ -235,7 +235,7 @@ namespace Direct3D9
 
 	Result AnimationController::SetTrackAnimationSet( int track, AnimationSet^ set )
 	{
-		HRESULT hr = InternalPointer->SetTrackAnimationSet( track, set->shim );
+		HRESULT hr = InternalPointer->SetTrackAnimationSet( track, set->InternalPointer );
 		return RECORD_D3D9( hr );
 	}
 
@@ -301,7 +301,7 @@ namespace Direct3D9
 
 	Result AnimationController::UnregisterAnimationSet( AnimationSet^ set )
 	{
-		HRESULT hr = InternalPointer->UnregisterAnimationSet( set->shim );
+		HRESULT hr = InternalPointer->UnregisterAnimationSet( set->InternalPointer );
 		return RECORD_D3D9( hr );
 	}
 
