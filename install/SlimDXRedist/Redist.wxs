@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<?define Version="2.0.7.41" ?>
-<?define ReleaseName="March 2009" ?>
-<?define ShortName="Mar2009" ?>
+<?define Version="2.0.8.42" ?>
+<?define ReleaseName="August 2009" ?>
+<?define ShortName="Aug2009" ?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
   <Product Id="*" Language="1033" Manufacturer="SlimDX Group" Name="SlimDX Redistributable ($(var.ReleaseName))" Version="$(var.Version)">
@@ -56,33 +56,60 @@
             <File Id="DXSETUP.exe" Name="DXSETUP.exe" Source="..\ExtraFiles\DXRedist\DXSETUP.exe" />
             <File Id="dxupdate.cab" Name="dxupdate.cab" Source="..\ExtraFiles\DXRedist\dxupdate.cab" />
           </Component>
+          <Component Id="D3DCompiler_x86" DiskId="1" Guid="21E764E6-B901-44db-B24C-2CFC012C6EA9">
+            <File Id="$(var.ShortName)_D3DCompiler_42_x86" Name="$(var.ShortName)_D3DCompiler_42_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_D3DCompiler_42_x86.cab" />
+          </Component>
+          <Component Id="D3DCompiler_x64" DiskId="1" Guid="934D77B7-FD01-49e8-94E7-5257A2E273FE">
+            <Condition>
+              <![CDATA[Installed OR VersionNT64]]>
+            </Condition>
+            <File Id="$(var.ShortName)_D3DCompiler_42_x64" Name="$(var.ShortName)_D3DCompiler_42_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_D3DCompiler_42_x64.cab" />
+          </Component>
+          <Component Id="D3DCSX_x86" DiskId="1" Guid="FC7B1422-667E-47ba-9D7D-B50B75F548DB">
+            <File Id="$(var.ShortName)_d3dcsx_42_x86" Name="$(var.ShortName)_d3dcsx_42_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dcsx_42_x86.cab" />
+          </Component>
+          <Component Id="D3DCSX_x64" DiskId="1" Guid="93812D6F-4DE3-409c-95C0-FB4CA8E26741">
+            <Condition>
+              <![CDATA[Installed OR VersionNT64]]>
+            </Condition>
+            <File Id="$(var.ShortName)_d3dcsx_42_x64" Name="$(var.ShortName)_d3dcsx_42_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dcsx_42_x64.cab" />
+          </Component>
           <Component Id="D3D9_x86" DiskId="1" Guid="B2E02CED-418D-4BD9-B3A6-CDD06BAF745C">
-            <File Id="$(var.ShortName)_d3dx9_41_x86.cab" Name="$(var.ShortName)_d3dx9_41_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dx9_41_x86.cab" />
+            <File Id="$(var.ShortName)_d3dx9_42_x86.cab" Name="$(var.ShortName)_d3dx9_42_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dx9_42_x86.cab" />
           </Component>
           <Component Id="D3D9_x64" DiskId="1" Guid="45C1DD95-0608-4E12-83E0-F0FCAE410072">
             <Condition>
               <![CDATA[Installed OR VersionNT64]]>
             </Condition>
-            <File Id="$(var.ShortName)_d3dx9_41_x64.cab" Name="$(var.ShortName)_d3dx9_41_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dx9_41_x64.cab" />
+            <File Id="$(var.ShortName)_d3dx9_42_x64.cab" Name="$(var.ShortName)_d3dx9_42_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dx9_42_x64.cab" />
           </Component>
           <Component Id="D3D10_x86" DiskId="1" Guid="4EC2831F-89D2-45EE-974F-4AA33FBA89C8">
-            <File Id="$(var.ShortName)_d3dx10_41_x86.cab" Name="$(var.ShortName)_d3dx10_41_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dx10_41_x86.cab" />
+            <File Id="$(var.ShortName)_d3dx10_42_x86.cab" Name="$(var.ShortName)_d3dx10_42_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dx10_42_x86.cab" />
           </Component>
           <Component Id="D3D10_x64" DiskId="1" Guid="F9E02061-F1D1-4908-85C8-5203BDBB037E">
             <Condition>
               <![CDATA[Installed OR VersionNT64]]>
             </Condition>
-            <File Id="$(var.ShortName)_d3dx10_41_x64.cab" Name="$(var.ShortName)_d3dx10_41_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dx10_41_x64.cab" />
+            <File Id="$(var.ShortName)_d3dx10_42_x64.cab" Name="$(var.ShortName)_d3dx10_42_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dx10_42_x64.cab" />
+          </Component>
+          <Component Id="D3D11_x86" DiskId="1" Guid="9944D555-7B59-4ad2-B250-A213B0102A52">
+            <File Id="$(var.ShortName)_d3dx11_42_x86.cab" Name="$(var.ShortName)_d3dx11_42_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dx11_42_x86.cab" />
+          </Component>
+          <Component Id="D3D11_x64" DiskId="1" Guid="CA396BD2-BB57-4ee2-B622-826CFA97BC07">
+            <Condition>
+              <![CDATA[Installed OR VersionNT64]]>
+            </Condition>
+            <File Id="$(var.ShortName)_d3dx11_42_x64.cab" Name="$(var.ShortName)_d3dx11_42_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dx11_42_x64.cab" />
           </Component>
           <Component Id="XAudio_x86" DiskId="1" Guid="EE1AD00E-3092-47EB-9208-674C6044D32C">
-            <File Id="$(var.ShortName)_X3DAudio_x86.cab" Name="$(var.ShortName)_X3DAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_X3DAudio_x86.cab" />
+            <File Id="Mar2009_X3DAudio_x86.cab" Name="Mar2009_X3DAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Mar2009_X3DAudio_x86.cab" />
             <File Id="$(var.ShortName)_XAudio_x86.cab" Name="$(var.ShortName)_XAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_XAudio_x86.cab" />
           </Component>
           <Component Id="XAudio_x64" DiskId="1" Guid="FBCE9D47-EC9B-4DCE-A29C-BFBC8F60AA74">
             <Condition>
               <![CDATA[Installed OR VersionNT64]]>
             </Condition>
-            <File Id="$(var.ShortName)_X3DAudio_x64.cab" Name="$(var.ShortName)_X3DAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_X3DAudio_x64.cab" />
+            <File Id="Mar2009_X3DAudio_x64.cab" Name="Mar2009_X3DAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Mar2009_X3DAudio_x64.cab" />
             <File Id="$(var.ShortName)_XAudio_x64.cab" Name="$(var.ShortName)_XAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_XAudio_x64.cab" />
           </Component>
           <Component Id="XInput_x86" DiskId="1" Guid="9536D158-C39C-4B45-AB0B-8C125EB63E72">
@@ -105,10 +132,16 @@
     <Feature Id="DirectX" Level="1" AllowAdvertise="no" Absent="disallow"
              Title="DirectX runtime" Description="DirectX runtime components for $(var.ReleaseName). Does not include XACT or older releases. Strongly recommended.">
       <ComponentRef Id="DXRedist" />
+      <ComponentRef Id="D3DCompiler_x86" />
+      <ComponentRef Id="D3DCompiler_x64" />
+      <ComponentRef Id="D3DCSX_x86" />
+      <ComponentRef Id="D3DCSX_x64" />
       <ComponentRef Id="D3D9_x86" />
       <ComponentRef Id="D3D9_x64" />
       <ComponentRef Id="D3D10_x86" />
       <ComponentRef Id="D3D10_x64" />
+      <ComponentRef Id="D3D11_x86" />
+      <ComponentRef Id="D3D11_x64" />
       <ComponentRef Id="XAudio_x86" />
       <ComponentRef Id="XAudio_x64" />
       <ComponentRef Id="XInput_x86" />
