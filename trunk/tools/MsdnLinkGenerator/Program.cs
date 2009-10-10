@@ -64,16 +64,24 @@ namespace MsdnLinkGenerator
 			if(string.IsNullOrEmpty(uri))
 				return null;
 
-			int startPos = uri.LastIndexOf('/');
-			int endPos = uri.LastIndexOf('(');
-			//Sometimes the links don't have (VS.85), but it's ok to add them in
-			if(endPos < 0)
-				endPos = uri.LastIndexOf('.');
-			if(startPos < 0 || endPos < 0)
-				return null;
+			try
+			{
 
-			++startPos;
-			return uri.Substring(startPos, endPos - startPos);
+				int startPos = uri.LastIndexOf('/');
+				int endPos = uri.LastIndexOf('(');
+				//Sometimes the links don't have (VS.85), but it's ok to add them in
+				if(endPos < 0)
+					endPos = uri.LastIndexOf('.');
+				if(startPos < 0 || endPos < 0)
+					return null;
+
+				++startPos;
+				return uri.Substring(startPos, endPos - startPos);
+			}
+			catch(Exception ex)
+			{
+				return null;
+			}
 		}
 
 		static void ProcessXml(string file)
@@ -112,6 +120,8 @@ namespace MsdnLinkGenerator
 				XmlAttribute attrib = doc.CreateAttribute("href");
 				attrib.InnerText = core;
 				element.Attributes.Append(attrib);
+				if(i % 10 == 0)
+					doc.Save(file);
 				Console.WriteLine("({2}/{3}) Linked \"{0}\" to document: {1}.", text, core, i, nodes.Count);
 
 				System.Threading.Thread.Sleep(2 * 60 * 1000);
