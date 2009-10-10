@@ -6,8 +6,8 @@
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
   <Product Id="*" Language="1033" Manufacturer="SlimDX Group" Name="SlimDX Redistributable ($(var.ReleaseName))" Version="$(var.Version)">
-    <Package Id="*" InstallerVersion="200" Compressed="yes" />
-    
+    <Package Id="*" InstallerVersion="300" Compressed="yes" />
+
     <PropertyRef Id="NETFRAMEWORK20" />
     <PropertyRef Id="NETFRAMEWORK35" />
     <PropertyRef Id="NETFRAMEWORK35_CLIENT" />
@@ -122,6 +122,10 @@
             <File Id="APR2007_xinput_x64.cab" Name="APR2007_xinput_x64.cab" Source="..\ExtraFiles\DXRedist\x64\APR2007_xinput_x64.cab" />
           </Component>
         </Directory>
+        <Directory Id="VCRedist" Name="Visual C++ Redist">
+          <Merge Id="VCRuntime_x86" DiskId="1" Language="1033" SourceFile="..\ExtraFiles\VCRedist\Microsoft_VC90_CRT_x86.msm" />
+          <Merge Id="VCRuntime_x64" DiskId="1" Language="1033" SourceFile="..\ExtraFiles\VCRedist\Microsoft_VC90_CRT_x86_x64.msm" />
+        </Directory>
       </Directory>
     </Directory>
 
@@ -147,12 +151,23 @@
       <ComponentRef Id="XInput_x86" />
       <ComponentRef Id="XInput_x64" />
     </Feature>
-    
+    <Feature Id="VCRuntime_x86" Level="1" AllowAdvertise="no" Absent="disallow"
+             Title="Visual C++ runtime (x86)" Description="Visual C++ 2008 runtime components for x86.">
+      <MergeRef Id="VCRuntime_x86" />
+    </Feature>
+    <Feature Id="VCRuntime_x64" Level="0" AllowAdvertise="no" Absent="disallow"
+             Title="Visual C++ runtime (x64)" Description="Visual C++ 2008 runtime components for x86-64.">
+      <MergeRef Id="VCRuntime_x64" />
+      <Condition Level="1">
+        <![CDATA[Installed OR VersionNT64]]>
+      </Condition>
+    </Feature>
+
     <Condition Message="This application requires .NET Framework 2.0 or later. Please install the .NET Framework then run this installer again.">
       <![CDATA[Installed OR NETFRAMEWORK20 OR NETFRAMEWORK35 OR NETFRAMEWORK35_CLIENT]]>
     </Condition>
-    
-    <CustomAction Id="InstallDirectX" FileKey="DXSETUP.exe" ExeCommand="/silent" Execute="deferred" Impersonate="no" Return="check" />    
+
+    <CustomAction Id="InstallDirectX" FileKey="DXSETUP.exe" ExeCommand="/silent" Execute="deferred" Impersonate="no" Return="check" />
     <InstallExecuteSequence>
       <Custom Action="InstallDirectX" Before="InstallFinalize"><![CDATA[NOT REMOVE]]></Custom>
     </InstallExecuteSequence>
