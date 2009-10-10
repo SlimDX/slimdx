@@ -31,6 +31,9 @@
           <listItem><para>Direct3D9Ex</para></listItem>
           <listItem><para>Direct3D10</para></listItem>
           <listItem><para>Direct3D10.1</para></listItem>
+          <listItem><para>Direct3D11</para></listItem>
+          <listItem><para>Direct2D</para></listItem>
+          <listItem><para>DirectWrite</para></listItem>
           <listItem><para>DirectInput</para></listItem>
           <listItem><para>DirectSound</para></listItem>
           <listItem><para>DXGI</para></listItem>
@@ -40,14 +43,6 @@
           <listItem><para>XAPO</para></listItem>
           <listItem><para>XAudio2</para></listItem>
           <listItem><para>XInput</para></listItem>
-        </list>
-        <para>
-          As of July 2009, SlimDX also has beta support for the following, in the form of a separate DLL.
-        </para>
-        <list class="bullet">
-          <listItem><para>Direct3D11</para></listItem>
-          <listItem><para>Direct2D</para></listItem>
-          <listItem><para>DirectWrite</para></listItem>
         </list>
         <para>
           In addition, SlimDX plans to fully support these additional APIs in the future.
