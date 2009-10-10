@@ -18,6 +18,7 @@ Math
 
 DXGI
 	* Fixed bugs that caused adapters to be created as non-ancillary objects requiring user disposal.
+	* Moved DXGI.SwapChain.GetBuffer<T> to Resource.FromSwapChain<T>, under the appropriate API namespaces, to clarify ownership of resulting object.
 
 Direct3D 9
 	* Fixed a bug that caused AdapterDetails.GetCertification to throw when the adapter wasn't certified.
