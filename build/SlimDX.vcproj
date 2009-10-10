@@ -405,14 +405,16 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib d3d10_1.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib d3dcompiler.lib d3d11.lib d3dx11.lib d2d1.lib dwrite.lib d3dcsx.lib &quot;$(DXSDK_DIR)\Utilities\Source\Effects11\Release\D3DX11Effects.lib&quot; $(NOINHERIT)"
-				Version="2.0.7.41"
+				Version="2.0.8.42"
 				LinkIncremental="1"
-				DelayLoadDLLs="d3d9.dll;d3dx9_42.dll;d3dx10_42.dll;d3dx11_42.dll;d3dcompiler_42.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_6.dll;xinput1_3.dll;dsound.dll"
+				GenerateManifest="true"
+				DelayLoadDLLs="d3d9.dll;d3dx9_42.dll;d3dx10_42.dll;d3dx11_42.dll;d3dcompiler_42.dll;d3dcsx_42.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_6.dll;xinput1_3.dll;dsound.dll"
 				GenerateDebugInformation="true"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 				TargetMachine="1"
-				KeyFile="slimdxKey.snk"
+				KeyFile="D:\slimdxKey.snk"
+				DelaySign="false"
 				CLRUnmanagedCodeCheck="true"
 			/>
 			<Tool
@@ -435,6 +437,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy $(ProjectDir)\..\docs\SlimDX.xml $(OutDir)"
 			/>
 		</Configuration>
 		<Configuration
@@ -489,14 +492,16 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib d3d10_1.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib d3dcompiler.lib d3d11.lib d3dx11.lib d2d1.lib dwrite.lib d3dcsx.lib &quot;$(DXSDK_DIR)\Utilities\Source\Effects11\x64\Release\D3DX11Effects.lib&quot; $(NOINHERIT)"
-				Version="2.0.7.41"
+				Version="2.0.8.42"
 				LinkIncremental="1"
-				DelayLoadDLLs="d3d9.dll;d3dx9_42.dll;d3dx10_42.dll;d3dx11_42.dll;d3dcompiler_42.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_6.dll;xinput1_3.dll;dsound.dll"
+				GenerateManifest="true"
+				DelayLoadDLLs="d3d9.dll;d3dx9_42.dll;d3dx10_42.dll;d3dx11_42.dll;d3dcompiler_42.dll;d3dcsx_42.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_6.dll;xinput1_3.dll;dsound.dll"
 				GenerateDebugInformation="true"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 				TargetMachine="17"
-				KeyFile="slimdxKey.snk"
+				KeyFile="D:\slimdxKey.snk"
+				DelaySign="false"
 				CLRUnmanagedCodeCheck="true"
 			/>
 			<Tool
