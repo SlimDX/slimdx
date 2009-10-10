@@ -38,7 +38,7 @@
           Further customization of the Directory tag's contents may be necessary, depending on why exactly you are integrating the installer.
         </para>
         <para>
-          We are planning to include a pre-built merge module with the next release of the SDK, but it is not currently available.
+          We are planning to include a pre-built merge module eventually, but it is not currently available.
         </para>
       </content>
     </section>
@@ -60,6 +60,9 @@
           If you do happen to use the official script that is in our Subversion depot, it is critical that you do not duplicate the GUID for the Product tag.
           (It should not matter what you use for the Module tag in a merge module, but it's recommended you generate a new GUID anyway.)
           If you do happen to duplicate a product GUID, you are likely to experience major deployment bugs.
+        </para>
+        <para>
+          Remember, even after following these instructions, it is critical to test installation and uninstallation.
         </para>
       </content>
     </section>

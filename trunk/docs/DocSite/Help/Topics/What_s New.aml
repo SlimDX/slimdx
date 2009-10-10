@@ -3,14 +3,14 @@
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>
-        The July 2009 release has been focused on adding support for the new beta APIs in anticipation of the release of Windows 7 later in the year.
+        The August 2009 release has been focused on adding support for the new beta APIs in anticipation of the release of Windows 7 later in the year.
         This support is currently in the form of a SlimDX.Windows7 DLL. Once they are released completely, this beta DLL will be completely merged
         with the main SlimDX DLL. Until that happens, all contained APIs are considered experimental and as a result the Windows7 DLL is not distributed
         in the SlimDX End User Runtime. Developers are encouraged to try out the new support for Direct3D11, Direct2D, and DirectWrite in order to get a
         feel for the future of graphics programming.
       </para>
       <para>
-        In addition to these new technologies, the SlimDX team has focused on making the July 2009 release the most stable version of SlimDX ever. The usual
+        In addition to these new technologies, the SlimDX team has focused on making the August 2009 release the most stable version of SlimDX ever. The usual
         range of bugs have been fixed, and care was taken to ensure that minimal breaking changes were made across the board. Several convenience classes
         that help deal with programming in the Windows environment were added to a SlimDX.Windows namespace. The samples have been updated to make use of
         these new types wherever possible. In addition, sample support for Visual Studio 2005 has officially been dropped from SlimDX in this release. Developers
@@ -22,7 +22,7 @@
       <title>Full Release Notes</title>
       <content>
         <para>
-          The following is a list of changes that were made to SlimDX for the July 2009 release.
+          The following is a list of changes that were made to SlimDX for the August 2009 release.
         </para>
         <para>
           <list class="bullet">

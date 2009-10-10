@@ -4,6 +4,7 @@
     <introduction>
       <para>
         SlimDX is compatible with both Visual Studio 2005 and Visual Studio 2008.
+        However, it is expected that 2005 support will be dropped in the near future and it is strongly recommended to move to 2008.
         Development normally happens in VS 2008, mainly because the /MP compiler flag provides a massive improvement in compile times for the library.
         In the interests of maintenance ease, only the VS 2008 version of the project is maintained in the repository.
       </para>
