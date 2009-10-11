@@ -10,13 +10,14 @@
 		<div class="paragraph">
 			<h2>Donations</h2>
 			<p>
-			<!-- <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 <input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="4353527">
-<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+">
+<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
 <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form> -->
-			<b>Paypal link temporarily removed. Please e-mail instead.</b>
+</form>
+
 			We are now accepting PayPal donations!
 			SlimDX is over 150,000 lines of code, and that takes real time and effort to build outside of our normal lives.
 			By donating, you help to support us, support the project, and ensure that the library continues to thrive.
@@ -26,7 +27,6 @@
 			<p>
 			Alternately, we are very interested in computer hardware donations.
 			Implementing the latest and greatest in DirectX technology requires us to have the latest in computer hardware, and we simply can't afford it.
-			SlimDX releases mainly are done on a dual core Athlon64 with 2 GB of RAM; it can just barely run a virtual machine while compiling.
 			Generous donations have already allowed us to obtain Direct3D 10.1 and 64 bit hardware to work with.
 			Point is, if you have access to high end hardware that you can donate, used or new, we'd be very glad to have it because frankly it's getting very difficult to continue with our machines.
 			Again, if you think you can help, send an e-mail and we'll figure out the details.
