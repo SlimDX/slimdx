@@ -1,24 +1,3 @@
-#summary SlimDX -- March 2009 Release
+#summary SlimDX -- August 2009 Release
 = Introduction =
-It's recommended that you visit our official [http://slimdx.org/download.php Download page] instead of using this page. *Due to corrupted 64 bit binaries in the initial release, we are releasing a patched version of the March release to fix these problems. If you are on a 64 bit system, please uninstall SlimDX March and then install this version instead.*
-
-The March 2009 release of SlimDX is now out! This is a major release in terms of new functionality and improvements behind the scenes. Many missing corners were filled in, and several usability enhancements were made across the library on top of the standard array of bug fixes. A new DLL containing beta-level technologies, such as Direct2D and Direct3D 11, was added to showcase developing APIs. These APIs will be moved into the core SlimDX DLL once they are given a full release by Microsoft. Until then, they should be viewed as previews, and should not be used for products that expect stable behavior.
-
-Performance is another issue focused on in the March release. After extensive testing, several improvements were made to the error handling infrastructure, which showed significant performance increases across the entire library. On top of this, performance issues in the math library were discovered and subsequently eliminated. This involved modifying the types to use fields instead of properties, as value type getters are inlined in .NET prior to version 3.5. These small changes could have a substantial impact on your application simply by recompiling with the new DLL.  
-
-= End User Runtime =
-This is the package for end users. It works on both 32 and 64 bit systems, for all versions of Windows supported by the .NET Framework 2.0. If you're just trying to run a SlimDX program that someone else gave you, this is the installer you want to download. Developers should point users to this link, or include it with their own installers. However, developers should install the SDK below, not this package. See the documentation for more information.
-
-[http://slimdx.googlecode.com/files/slimdx_mar09.msi Download the SlimDX End User Runtime for March 2009]
-
-= Developer SDK =
-In the past, SlimDX was split into several different pieces for the core runtime, documentation, samples, and individual binaries. This is no longer the case; we have decided to follow the same model as the DirectX team and produce a redistributable runtime and a Developer SDK. The SDK includes all of the binaries, documentation, and samples. It also includes all of the files necessary to build custom installation packages if desired. The SDK supports both 32 bit and 64 bit systems. 
-
-[http://slimdx.googlecode.com/files/SlimDX%20SDK%20%28March%202009%29.exe Download the SlimDX SDK for March 2009]
-
-[http://code.google.com/p/slimdx/downloads/list?can=1 Older files] are still available, in case you have some need for them.
-
-= Remarks =
-We have updated our documentation so that it now links to the DirectX documentation for many classes, taking you straight to the original unmanaged type that a SlimDX type represents. However, this linking is machine generated, and we haven't filled it in for everything yet. If you see something that is incorrectly linked, please report it to [http://code.google.com/p/slimdx/issues/detail?id=464 issue 464]. 
-
-This release of SlimDX includes technology previews of Microsoft's beta Windows 7 technologies. They are strictly experimental and not guaranteed to work well or at all. The previews are contained in a new temporary library file called SlimDX.Windows7.dll. The new library is not digitally signed, and will not be installed to the Global Assembly Cache. Both the core library and the new library seem to work fine, but we make no promises as long as everything is still beta. You will need the full DirectX March 2009 SDK installed to run any Windows7 code, including the samples. 
+Please visit our official [http://slimdx.org/download.php Download page] instead of using this page. Thanks!
