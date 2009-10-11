@@ -25,6 +25,10 @@
 				<li>Direct3D9</li>
 				<li>Direct3D9Ex</li>
 				<li>Direct3D10</li>
+				<li>Direct3D 10.1</li>
+				<li>Direct3D 11*</li>
+				<li>Direct2D</li>
+				<li>DirectWrite</li>
 				<li>DirectInput</li>
 				<li>DirectSound</li>
 				<li>DXGI</li>
@@ -34,19 +38,10 @@
 				<li>XAPO</li>
 				<li>XAudio2</li>
 				<li>XInput</li>
-			</ul></p>
-			
-			<p>The following APIs have beta support, in a separate assembly:
-			<ul style="margin-left: 2em;">
-				<li>Direct3D 11</li>
-				<li>Direct2D</li>
-				<li>DirectWrite</li>
-			</ul></p>
-			
-			<p>The following APIs have full support in the current code but have not been released:
-			<ul style="margin-left: 2em;">
-				<li>Direct3D 10.1</li>
-			</ul></p>
+			</ul>
+			* Although Direct3D 11 support is available, it's new and minimally tested.
+			It would be a good idea to stick with the current Subversion source tree of SlimDX if you're working with it.
+			</p>
 		</div>
 		
 		<div class="paragraph">

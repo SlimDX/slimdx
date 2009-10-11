@@ -13,7 +13,7 @@
 			This role was previously filled for .NET 1.1 applications by Microsoft's own Managed DirectX (MDX) library.
 			However, the age of .NET 1.1, and Microsoft's lack of interest in continuing MDX, have made it necessary to build a new library.
 			Thanks to enthusiastic community support and the invaluable contributions of several other developers who have worked on and with SlimDX, the library has become a fully viable platform on which to build DirectX based applications.
-			Our latest release is March 2009, and can be found for users and developers on the <a href="download.php">Download page</a>.
+			Our latest release is August 2009, and can be found for users and developers on the <a href="download.php">Download page</a>.
 			<br /><br />
 			All development is based in our <a href="http://code.google.com/p/slimdx/">Google Code homepage</a>.
 			You can use that site to report bugs (using our issues page), as well as download a complete copy of the source code.
