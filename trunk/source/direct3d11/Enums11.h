@@ -107,7 +107,12 @@ namespace SlimDX
 			/// <summary>
 			/// Indicates the resource can be bound to the output-merger stage as a depth-stencil target. 
 			/// </summary>
-			DepthStencil = D3D11_BIND_DEPTH_STENCIL
+			DepthStencil = D3D11_BIND_DEPTH_STENCIL,
+			
+			/// <summary>
+			/// Indicates the resource can be bound as an unordered access resource.
+			/// </summary>
+			UnorderedAccess = D3D11_BIND_UNORDERED_ACCESS
 		};
 		
 		/// <summary>RGB or alpha blending operation.</summary>
