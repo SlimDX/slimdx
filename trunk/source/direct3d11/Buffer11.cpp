@@ -40,25 +40,25 @@ namespace Direct3D11
 { 
 	Buffer::Buffer( SlimDX::Direct3D11::Device^ device, BufferDescription description )
 	{
-		Construct( Build( device, nullptr, description.SizeInBytes, description.Usage, description.BindFlags, description.CpuAccessFlags, description.OptionFlags ) );
+		Construct( Build( device, nullptr, description.SizeInBytes, description.Usage, description.BindFlags, description.CpuAccessFlags, description.OptionFlags, description.StructureByteStride ) );
 	}
 
 	Buffer::Buffer( SlimDX::Direct3D11::Device^ device, DataStream^ data, BufferDescription description )
 	{
-		Construct( Build( device, data, description.SizeInBytes, description.Usage, description.BindFlags, description.CpuAccessFlags, description.OptionFlags ) );
+		Construct( Build( device, data, description.SizeInBytes, description.Usage, description.BindFlags, description.CpuAccessFlags, description.OptionFlags, description.StructureByteStride ) );
 	}
 	
-	Buffer::Buffer( SlimDX::Direct3D11::Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D11::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
+	Buffer::Buffer( SlimDX::Direct3D11::Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D11::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags, int structureByteStride )
 	{
-		Construct( Build( device, nullptr, sizeInBytes, usage, bindFlags, accessFlags, optionFlags ) );
+		Construct( Build( device, nullptr, sizeInBytes, usage, bindFlags, accessFlags, optionFlags, structureByteStride ) );
 	}
 	
-	Buffer::Buffer( SlimDX::Direct3D11::Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D11::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
+	Buffer::Buffer( SlimDX::Direct3D11::Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D11::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags, int structureByteStride )
 	{		
-		Construct( Build( device, data, sizeInBytes, usage, bindFlags, accessFlags, optionFlags ) );
+		Construct( Build( device, data, sizeInBytes, usage, bindFlags, accessFlags, optionFlags, structureByteStride ) );
 	}
 
-	ID3D11Buffer* Buffer::Build( SlimDX::Direct3D11::Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D11::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
+	ID3D11Buffer* Buffer::Build( SlimDX::Direct3D11::Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D11::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags, int structureByteStride )
 	{
 		D3D11_BUFFER_DESC description;
 		ZeroMemory( &description, sizeof( description ) );
@@ -67,6 +67,7 @@ namespace Direct3D11
 		description.BindFlags = static_cast<UINT>( bindFlags );
 		description.CPUAccessFlags = static_cast<UINT>( accessFlags );
 		description.MiscFlags = static_cast<UINT>( optionFlags );
+		description.StructureByteStride = structureByteStride;
 		
 		ID3D11Buffer* buffer = 0;
 		if( data == nullptr )

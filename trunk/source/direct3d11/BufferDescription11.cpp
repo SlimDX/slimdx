@@ -29,8 +29,8 @@ namespace SlimDX
 {
 namespace Direct3D11
 { 	
-	BufferDescription::BufferDescription( int sizeInBytes, ResourceUsage usage, Direct3D11::BindFlags bindFlags, Direct3D11::CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags )
-	: m_ByteWidth( sizeInBytes), m_Usage( usage ), m_BindFlags( bindFlags ), m_CPUAccessFlags( accessFlags ), m_MiscFlags( optionFlags )
+	BufferDescription::BufferDescription( int sizeInBytes, ResourceUsage usage, Direct3D11::BindFlags bindFlags, Direct3D11::CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags, int structureByteStride )
+	: m_ByteWidth( sizeInBytes), m_Usage( usage ), m_BindFlags( bindFlags ), m_CPUAccessFlags( accessFlags ), m_MiscFlags( optionFlags ), m_StructureByteStride( structureByteStride )
 	{
 	}
 	
@@ -41,6 +41,7 @@ namespace Direct3D11
 		m_BindFlags = static_cast<Direct3D11::BindFlags>( native.BindFlags );
 		m_CPUAccessFlags = static_cast<Direct3D11::CpuAccessFlags>( native.CPUAccessFlags );
 		m_MiscFlags = static_cast<ResourceOptionFlags>( native.MiscFlags );
+		m_StructureByteStride = native.StructureByteStride;
 	}
 
 	int BufferDescription::SizeInBytes::get()
@@ -116,7 +117,7 @@ namespace Direct3D11
 	int BufferDescription::GetHashCode()
 	{
 		return m_ByteWidth.GetHashCode() + m_Usage.GetHashCode() + m_BindFlags.GetHashCode()
-			 + m_CPUAccessFlags.GetHashCode() + m_MiscFlags.GetHashCode();
+			 + m_CPUAccessFlags.GetHashCode() + m_MiscFlags.GetHashCode() + m_StructureByteStride.GetHashCode();
 	}
 
 	bool BufferDescription::Equals( Object^ value )
@@ -133,13 +134,13 @@ namespace Direct3D11
 	bool BufferDescription::Equals( BufferDescription value )
 	{
 		return ( m_ByteWidth == value.m_ByteWidth && m_Usage == value.m_Usage && m_BindFlags == value.m_BindFlags
-			 && m_CPUAccessFlags == value.m_CPUAccessFlags && m_MiscFlags == value.m_MiscFlags );
+			 && m_CPUAccessFlags == value.m_CPUAccessFlags && m_MiscFlags == value.m_MiscFlags && m_StructureByteStride == value.m_StructureByteStride );
 	}
 
 	bool BufferDescription::Equals( BufferDescription% value1, BufferDescription% value2 )
 	{
 		return ( value1.m_ByteWidth == value2.m_ByteWidth && value1.m_Usage == value2.m_Usage && value1.m_BindFlags == value2.m_BindFlags
-			 && value1.m_CPUAccessFlags == value2.m_CPUAccessFlags && value1.m_MiscFlags == value2.m_MiscFlags );
+			 && value1.m_CPUAccessFlags == value2.m_CPUAccessFlags && value1.m_MiscFlags == value2.m_MiscFlags && value1.m_StructureByteStride == value2.m_StructureByteStride );
 	}
 }
 }
