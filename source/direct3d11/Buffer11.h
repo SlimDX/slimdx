@@ -41,7 +41,7 @@ namespace SlimDX
 			COMOBJECT(ID3D11Buffer, Buffer);
 			
 		private:
-			static ID3D11Buffer* Build( SlimDX::Direct3D11::Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
+			static ID3D11Buffer* Build( SlimDX::Direct3D11::Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags, int structureByteStride );
 		
 		public:
 			/// <summary>
@@ -76,7 +76,8 @@ namespace SlimDX
 			/// <param name="bindFlags">Flags specifying how the buffer will be bound to the pipeline.</param>
 			/// <param name="accessFlags">Flags specifying how the buffer will be accessible from the CPU.</param>
 			/// <param name="optionFlags">Miscellaneous resource options.</param>
-			Buffer( SlimDX::Direct3D11::Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D11::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
+			/// <param name="structureByteStride">The size (in bytes) of the structure element for structured buffers.</param>
+			Buffer( SlimDX::Direct3D11::Device^ device, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D11::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags, int structureByteStride );
 			
 			/// <summary>
 			/// Initializes a new instance of the <see cref="Buffer"/> class.
@@ -88,7 +89,8 @@ namespace SlimDX
 			/// <param name="bindFlags">Flags specifying how the buffer will be bound to the pipeline.</param>
 			/// <param name="accessFlags">Flags specifying how the buffer will be accessible from the CPU.</param>
 			/// <param name="optionFlags">Miscellaneous resource options.</param>
-			Buffer( SlimDX::Direct3D11::Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D11::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
+			/// <param name="structureByteStride">The size (in bytes) of the structure element for structured buffers.</param>
+			Buffer( SlimDX::Direct3D11::Device^ device, DataStream^ data, int sizeInBytes, ResourceUsage usage, SlimDX::Direct3D11::BindFlags bindFlags, CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags, int structureByteStride );
 		};
 	}
 };

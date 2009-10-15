@@ -90,6 +90,8 @@ namespace SlimDX
 				void set( ResourceOptionFlags value );
 			}
 			
+			/// <summary>
+			/// Gets or sets the size (in bytes) of the structure used for elements of a structured buffer.
 			property int StructureByteStride
 			{
 				int get();
@@ -104,7 +106,8 @@ namespace SlimDX
 			/// <param name="bindFlags">Flags specifying how the buffer will be bound to the pipeline.</param>
 			/// <param name="accessFlags">Flags specifying how the buffer will be accessible from the CPU.</param>
 			/// <param name="optionFlags">Miscellaneous resource options.</param>
-			BufferDescription( int sizeInBytes, ResourceUsage usage, Direct3D11::BindFlags bindFlags, Direct3D11::CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags );
+			/// <param name="structureByteStride">The size (in bytes) of the structure for a structured buffer.</param>
+			BufferDescription( int sizeInBytes, ResourceUsage usage, Direct3D11::BindFlags bindFlags, Direct3D11::CpuAccessFlags accessFlags, ResourceOptionFlags optionFlags, int structureByteStride );
 		
 			/// <summary>
 			/// Tests for equality between two BufferDescriptions.
