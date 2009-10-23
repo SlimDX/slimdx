@@ -52,7 +52,7 @@ namespace SlimDX
 			Font( Device^ device, int height, System::String^ faceName );
 			Font( Device^ device, int height, int width, FontWeight weight, int mipLevels, bool isItalic, FontCharacterSet characterSet, FontPrecision precision, FontQuality quality, FontPitchAndFamily pitchAndFamily, System::String^ faceName );
 
-			int Draw( Sprite^ sprite, System::String^ text, System::Drawing::Rectangle rect, FontDrawFlags flags, unsigned int color );
+			int Draw( Sprite^ sprite, System::String^ text, System::Drawing::Rectangle rect, FontDrawFlags flags, Color4 color );
 			
 			System::Drawing::Rectangle Measure( Sprite^ sprite, System::String^ text, System::Drawing::Rectangle rect, FontDrawFlags flags );
 
