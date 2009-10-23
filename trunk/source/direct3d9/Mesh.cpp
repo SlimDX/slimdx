@@ -816,6 +816,8 @@ namespace Direct3D9
 		array<EffectInstance>^ effects = mesh->GetEffects();
 
 		DWORD *adjacencyIn = NULL;
+		D3DXMATERIAL *materialPtr = NULL;
+		D3DXEFFECTINSTANCE *effectPtr = NULL;
 		stack_array<D3DXMATERIAL> nativeMaterials;
 		stack_array<D3DXEFFECTINSTANCE> nativeEffects;
 		pin_ptr<int> pinnedAdj;
@@ -833,6 +835,8 @@ namespace Direct3D9
 			nativeMaterials = stack_array<D3DXMATERIAL>( length );
 			for( int i = 0; i < length; i++ )
 				nativeMaterials[i] = ExtendedMaterial::ToUnmanaged( materials[i] );
+
+			materialPtr = &nativeMaterials[0];
 		}
 
 		if( effects != nullptr )
@@ -840,6 +844,8 @@ namespace Direct3D9
 			nativeEffects = stack_array<D3DXEFFECTINSTANCE>( effects->Length );
 			for( int i = 0; i < effects->Length; i++ )
 				nativeEffects[i] = EffectInstance::ToUnmanaged( effects[i] );
+
+			effectPtr = &nativeEffects[0];
 		}
 
 		DWORD f = static_cast<DWORD>( format );
@@ -849,17 +855,23 @@ namespace Direct3D9
 			f |= D3DXF_FILESAVE_TOFILE;
 
 		HRESULT hr = D3DXSaveMeshToX( reinterpret_cast<LPCWSTR>( pinnedName ), mesh->InternalPointer, 
-			adjacencyIn, &nativeMaterials[0], &nativeEffects[0], length, f );
+			adjacencyIn, materialPtr, effectPtr, length, f );
 
-		for( int i = 0; i < length; i++ )
-			Utilities::FreeNativeString( nativeMaterials[i].pTextureFilename );
-
-		for( int i = 0; i < effects->Length; i++ )
+		if( materials != nullptr )
 		{
-			for( UINT j = 0; j < nativeEffects[i].NumDefaults; j++ )
-				Utilities::FreeNativeString( nativeEffects[i].pDefaults[j].pParamName );
+			for( int i = 0; i < length; i++ )
+				Utilities::FreeNativeString( nativeMaterials[i].pTextureFilename );
+		}
 
-			delete[] nativeEffects[i].pDefaults;
+		if( effects != nullptr )
+		{
+			for( int i = 0; i < effects->Length; i++ )
+			{
+				for( UINT j = 0; j < nativeEffects[i].NumDefaults; j++ )
+					Utilities::FreeNativeString( nativeEffects[i].pDefaults[j].pParamName );
+
+				delete[] nativeEffects[i].pDefaults;
+			}
 		}
 
 		return RECORD_D3D9( hr );
