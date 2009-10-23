@@ -92,6 +92,7 @@ namespace SlimDX
 			
 			/// <summary>
 			/// Gets or sets the size (in bytes) of the structure used for elements of a structured buffer.
+			/// </summary>
 			property int StructureByteStride
 			{
 				int get();

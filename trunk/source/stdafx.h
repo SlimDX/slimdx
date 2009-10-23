@@ -22,6 +22,9 @@
 
 #define XAUDIO2_HELPER_FUNCTIONS
 
+#include <InitGuid.h>		// include these two headers in this order or die a horrible firey GUID related death
+#include <CGuid.h>
+
 #include <windows.h>
 #include <vcclr.h>
 #include <unknwn.h>
