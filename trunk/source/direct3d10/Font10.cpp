@@ -71,13 +71,14 @@ namespace Direct3D10
 		return FontDescription( nativeDescription );
 	}
 
-	int Font::Draw( Sprite^ sprite, String^ text, Drawing::Rectangle rect, FontDrawFlags flags, unsigned int color )
+	int Font::Draw( Sprite^ sprite, String^ text, Drawing::Rectangle rect, FontDrawFlags flags, Color4 color )
 	{
 		ID3DX10Sprite* nativeSprite = sprite == nullptr ? 0 : sprite->InternalPointer;
 		pin_ptr<const wchar_t> pinned_text = PtrToStringChars( text );
 		RECT nativeRect = { rect.Left, rect.Top, rect.Right, rect.Bottom };
+
 		int result = InternalPointer->DrawTextW( nativeSprite, pinned_text, text->Length, &nativeRect,
-			static_cast<DWORD>( flags ), color );
+			static_cast<DWORD>( flags ), color.ToUnmanaged() );
 		
 		return result;
 	}
