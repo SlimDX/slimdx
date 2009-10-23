@@ -41,8 +41,9 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="includeType">Flags specifying the type of the include file.</param>
 			/// <param name="fileName">Name of the include file to open.</param>
+			/// <param name="parentStream">The parent include file.</param>
 			/// <param name="stream">When the method completes, contains a stream pointing to the include file.</param>
-			virtual void Open( IncludeType includeType, System::String^ fileName, [Out] System::IO::Stream^ %stream ) = 0;
+			virtual void Open( IncludeType includeType, System::String^ fileName, System::IO::Stream^ parentStream, [Out] System::IO::Stream^ %stream ) = 0;
 			
 			/// <summary>
 			/// Closes a shader #include file.
@@ -73,7 +74,7 @@ namespace SlimDX
 		{
 		private:
 			gcroot<Include^> m_WrappedInterface;
-			gcroot<System::Collections::Generic::Stack<IncludeFrame>^> m_Frames;
+			gcroot<System::Collections::Generic::Dictionary<System::IntPtr, IncludeFrame>^> m_Frames;
 
 		public:
 			IncludeShim( Include^ wrappedInterface );

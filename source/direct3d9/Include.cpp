@@ -42,53 +42,48 @@ namespace Direct3D9
 	IncludeShim::IncludeShim( Include^ wrappedInterface )
 	{
 		m_WrappedInterface = wrappedInterface;
-		m_Frames = gcnew Stack<IncludeFrame>();
+		m_Frames = gcnew Dictionary<IntPtr, IncludeFrame>();
 	}
 
 	IncludeShim::~IncludeShim()
 	{
-		while( m_Frames->Count > 0 )
-			m_Frames->Pop().Close();
+		for each( IncludeFrame frame in m_Frames->Values )
+			frame.Close();
 	}
 
 	HRESULT IncludeShim::Open( D3DXINCLUDE_TYPE includeType, LPCSTR pFileName, LPCVOID pParentData, LPCVOID* ppData, UINT* pBytes )
 	{
-		SLIMDX_UNREFERENCED_PARAMETER(pParentData);
-		SLIMDX_UNREFERENCED_PARAMETER(ppData);
-
 		try
 		{
-			Stream^ stream;
-			m_WrappedInterface->Open( static_cast<IncludeType>( includeType ), gcnew String(pFileName), stream );
+			Stream^ stream = nullptr;
+			Stream^ parentStream = nullptr;
 
-			if( stream != nullptr )
+			IntPtr parentPtr( const_cast<void*>( pParentData ) );
+			if( m_Frames->ContainsKey( parentPtr ) )
+				parentStream = m_Frames->default[parentPtr].Stream;
+
+			m_WrappedInterface->Open( static_cast<IncludeType>( includeType ), gcnew String(pFileName), parentStream, stream );
+			if( stream == nullptr )
+				return E_FAIL;
+
+			if(stream->GetType() == DataStream::typeid)
 			{
-				if(stream->GetType() == DataStream::typeid)
-				{
-					//Magic shortcut if we happen to get a DataStream
-					DataStream^ data = safe_cast<DataStream^>( stream );
-					*ppData = data->PositionPointer;
-					*pBytes = static_cast<UINT>( data->Length );
+				// Magic shortcut if we happen to get a DataStream
+				DataStream^ data = safe_cast<DataStream^>( stream );
+				*ppData = data->PositionPointer;
+				*pBytes = static_cast<UINT>( data->Length );
 
-					m_Frames->Push( IncludeFrame( stream, GCHandle() ) );
-				}
-				else
-				{
-					//Read the stream into a byte array and pin it
-					array<Byte>^ data = Utilities::ReadStream( stream, NULL );
-					GCHandle handle = GCHandle::Alloc( data, GCHandleType::Pinned );
-					*ppData = handle.AddrOfPinnedObject().ToPointer();
-					*pBytes = data->Length;
-
-					m_Frames->Push( IncludeFrame( stream, handle ) );
-				}
+				m_Frames->Add( IntPtr( const_cast<void*>( *ppData ) ), IncludeFrame( stream, GCHandle() ) );
 			}
 			else
 			{
-				*ppData = NULL;
-				*pBytes = 0;
+				// Read the stream into a byte array and pin it
+				array<Byte>^ data = Utilities::ReadStream( stream, NULL );
+				GCHandle handle = GCHandle::Alloc( data, GCHandleType::Pinned );
+				*ppData = handle.AddrOfPinnedObject().ToPointer();
+				*pBytes = data->Length;
 
-				m_Frames->Push( IncludeFrame( nullptr, GCHandle() ) );
+				m_Frames->Add( IntPtr( const_cast<void*>( *ppData ) ), IncludeFrame( stream, handle ) );
 			}
 
 			return S_OK;
@@ -105,14 +100,11 @@ namespace Direct3D9
 
 	HRESULT IncludeShim::Close( LPCVOID pData )
 	{
-		SLIMDX_UNREFERENCED_PARAMETER(pData);
-
 		try
 		{
-			IncludeFrame frame = m_Frames->Pop();
+			IncludeFrame frame = m_Frames->default[IntPtr( const_cast<void*>( pData ) )];
 
 			m_WrappedInterface->Close( frame.Stream );
-			
 			frame.Close();
 
 			return S_OK;
