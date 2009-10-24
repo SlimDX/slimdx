@@ -9,3 +9,4 @@ Direct3D 10
 Direct3D 11
 	* Added the UnorderedAccess member to BindFlags.
 	* Added the ability to create structured buffer resources.
+	* Added missing fields to ShaderResourceViewDescription.

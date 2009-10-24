@@ -30,51 +30,66 @@ namespace SlimDX
 namespace Direct3D11
 {
 	ShaderResourceViewDescription::ShaderResourceViewDescription( const D3D11_SHADER_RESOURCE_VIEW_DESC& native )
-	: m_ElementOffset( 0 ), m_ElementWidth( 0 ), m_MipLevels( 0 ), m_MostDetailedMip( 0 ), m_ArraySize( 0 ), m_FirstArraySlice( 0 )
 	{
-		m_Format = static_cast<DXGI::Format>( native.Format );
-		m_ViewDimension = static_cast<ShaderResourceViewDimension>( native.ViewDimension );
-		switch( m_ViewDimension )
+		Format = static_cast<DXGI::Format>( native.Format );
+		Dimension = static_cast<ShaderResourceViewDimension>( native.ViewDimension );
+
+		switch( Dimension )
 		{
 			case ShaderResourceViewDimension::Buffer:
-				m_ElementOffset = native.Buffer.ElementOffset;
-				m_ElementWidth = native.Buffer.ElementWidth;
+				ElementOffset = native.Buffer.ElementOffset;
+				ElementWidth = native.Buffer.ElementWidth;
 				break;
+
 			case ShaderResourceViewDimension::Texture1D:
-				m_MipLevels = native.Texture1D.MipLevels;
-				m_MostDetailedMip = native.Texture1D.MostDetailedMip;
+				MipLevels = native.Texture1D.MipLevels;
+				MostDetailedMip = native.Texture1D.MostDetailedMip;
 				break;
+
 			case ShaderResourceViewDimension::Texture1DArray:
-				m_ArraySize = native.Texture1DArray.ArraySize;
-				m_FirstArraySlice = native.Texture1DArray.FirstArraySlice;
-				m_MipLevels = native.Texture1DArray.MipLevels;
-				m_MostDetailedMip = native.Texture1DArray.MostDetailedMip;
+				ArraySize = native.Texture1DArray.ArraySize;
+				FirstArraySlice = native.Texture1DArray.FirstArraySlice;
+				MipLevels = native.Texture1DArray.MipLevels;
+				MostDetailedMip = native.Texture1DArray.MostDetailedMip;
 				break;
+
 			case ShaderResourceViewDimension::Texture2D:
-				m_MipLevels = native.Texture2D.MipLevels;
-				m_MostDetailedMip = native.Texture2D.MostDetailedMip;
+				MipLevels = native.Texture2D.MipLevels;
+				MostDetailedMip = native.Texture2D.MostDetailedMip;
 				break;
+
 			case ShaderResourceViewDimension::Texture2DArray:
-				m_ArraySize = native.Texture2DArray.ArraySize;
-				m_FirstArraySlice = native.Texture2DArray.FirstArraySlice;
-				m_MipLevels = native.Texture2DArray.MipLevels;
-				m_MostDetailedMip = native.Texture2DArray.MostDetailedMip;
+				ArraySize = native.Texture2DArray.ArraySize;
+				FirstArraySlice = native.Texture2DArray.FirstArraySlice;
+				MipLevels = native.Texture2DArray.MipLevels;
+				MostDetailedMip = native.Texture2DArray.MostDetailedMip;
 				break;
+
 			case ShaderResourceViewDimension::Texture2DMultisampled:
 				// Nothing to do here.
 				break;
+
 			case ShaderResourceViewDimension::Texture2DMultisampledArray:
-				m_ArraySize = native.Texture2DMSArray.ArraySize;
-				m_FirstArraySlice = native.Texture2DMSArray.FirstArraySlice;
+				ArraySize = native.Texture2DMSArray.ArraySize;
+				FirstArraySlice = native.Texture2DMSArray.FirstArraySlice;
 				break;
+
 			case ShaderResourceViewDimension::Texture3D:
-				m_MipLevels = native.Texture3D.MipLevels;
-				m_MostDetailedMip = native.Texture3D.MostDetailedMip;
+				MipLevels = native.Texture3D.MipLevels;
+				MostDetailedMip = native.Texture3D.MostDetailedMip;
 				break;
+
 			case ShaderResourceViewDimension::TextureCube:
-				m_MipLevels = native.TextureCube.MipLevels;
-				m_MostDetailedMip = native.TextureCube.MostDetailedMip;
+				MipLevels = native.TextureCube.MipLevels;
+				MostDetailedMip = native.TextureCube.MostDetailedMip;
 				break;
+
+			case ShaderResourceViewDimension::ExtendedBuffer:
+				FirstElement = native.BufferEx.FirstElement;
+				ElementCount = native.BufferEx.NumElements;
+				Flags = static_cast<ShaderResourceViewExtendedBufferFlags>( native.BufferEx.Flags );
+				break;
+
 			default:
 				break;
 		}
@@ -83,49 +98,65 @@ namespace Direct3D11
 	D3D11_SHADER_RESOURCE_VIEW_DESC ShaderResourceViewDescription::CreateNativeVersion()
 	{
 		D3D11_SHADER_RESOURCE_VIEW_DESC native;
-		native.Format = static_cast<DXGI_FORMAT>( m_Format );
-		native.ViewDimension = static_cast<D3D11_SRV_DIMENSION>( m_ViewDimension );
-		switch( m_ViewDimension )
+		native.Format = static_cast<DXGI_FORMAT>( Format );
+		native.ViewDimension = static_cast<D3D11_SRV_DIMENSION>( Dimension );
+
+		switch( Dimension )
 		{
 			case ShaderResourceViewDimension::Buffer:
-				native.Buffer.ElementOffset = m_ElementOffset;
-				native.Buffer.ElementWidth = m_ElementWidth;
+				native.Buffer.ElementOffset = ElementOffset;
+				native.Buffer.ElementWidth = ElementWidth;
 				break;
+
 			case ShaderResourceViewDimension::Texture1D:
-				native.Texture1D.MipLevels = m_MipLevels;
-				native.Texture1D.MostDetailedMip = m_MostDetailedMip;
+				native.Texture1D.MipLevels = MipLevels;
+				native.Texture1D.MostDetailedMip = MostDetailedMip;
 				break;
+
 			case ShaderResourceViewDimension::Texture1DArray:
-				native.Texture1DArray.ArraySize = m_ArraySize;
-				native.Texture1DArray.FirstArraySlice = m_FirstArraySlice;
-				native.Texture1DArray.MipLevels = m_MipLevels;
-				native.Texture1DArray.MostDetailedMip = m_MostDetailedMip;
+				native.Texture1DArray.ArraySize = ArraySize;
+				native.Texture1DArray.FirstArraySlice = FirstArraySlice;
+				native.Texture1DArray.MipLevels = MipLevels;
+				native.Texture1DArray.MostDetailedMip = MostDetailedMip;
 				break;
+
 			case ShaderResourceViewDimension::Texture2D:
-				native.Texture2D.MipLevels = m_MipLevels;
-				native.Texture2D.MostDetailedMip = m_MostDetailedMip;
+				native.Texture2D.MipLevels = MipLevels;
+				native.Texture2D.MostDetailedMip = MostDetailedMip;
 				break;
+
 			case ShaderResourceViewDimension::Texture2DArray:
-				native.Texture2DArray.ArraySize = m_ArraySize;
-				native.Texture2DArray.FirstArraySlice = m_FirstArraySlice;
-				native.Texture2DArray.MipLevels = m_MipLevels;
-				native.Texture2DArray.MostDetailedMip = m_MostDetailedMip;
+				native.Texture2DArray.ArraySize = ArraySize;
+				native.Texture2DArray.FirstArraySlice = FirstArraySlice;
+				native.Texture2DArray.MipLevels = MipLevels;
+				native.Texture2DArray.MostDetailedMip = MostDetailedMip;
 				break;
+
 			case ShaderResourceViewDimension::Texture2DMultisampled:
 				// Nothing to do here.
 				break;
+
 			case ShaderResourceViewDimension::Texture2DMultisampledArray:
-				native.Texture2DMSArray.ArraySize = m_ArraySize;
-				native.Texture2DMSArray.FirstArraySlice = m_FirstArraySlice;
+				native.Texture2DMSArray.ArraySize = ArraySize;
+				native.Texture2DMSArray.FirstArraySlice = FirstArraySlice;
 				break;
+
 			case ShaderResourceViewDimension::Texture3D:
-				native.Texture3D.MipLevels = m_MipLevels;
-				native.Texture3D.MostDetailedMip = m_MostDetailedMip;
+				native.Texture3D.MipLevels = MipLevels;
+				native.Texture3D.MostDetailedMip = MostDetailedMip;
 				break;
+
 			case ShaderResourceViewDimension::TextureCube:
-				native.TextureCube.MipLevels = m_MipLevels;
-				native.TextureCube.MostDetailedMip = m_MostDetailedMip;
+				native.TextureCube.MipLevels = MipLevels;
+				native.TextureCube.MostDetailedMip = MostDetailedMip;
 				break;
+
+			case ShaderResourceViewDimension::ExtendedBuffer:
+				native.BufferEx.FirstElement = FirstElement;
+				native.BufferEx.NumElements = ElementCount;
+				native.BufferEx.Flags = static_cast<UINT>( Flags );
+				break;
+
 			default:
 				break;
 		}
@@ -133,87 +164,6 @@ namespace Direct3D11
 		return native;
 	}
 
-	DXGI::Format ShaderResourceViewDescription::Format::get()
-	{
-		return m_Format;
-	}
-
-	void ShaderResourceViewDescription::Format::set( DXGI::Format value )
-	{
-		m_Format = value;
-	}
-	
-	ShaderResourceViewDimension ShaderResourceViewDescription::Dimension::get()
-	{
-		return m_ViewDimension;
-	}
-
-	void ShaderResourceViewDescription::Dimension::set( ShaderResourceViewDimension value )
-	{
-		m_ViewDimension = value;
-	}
-	
-	int ShaderResourceViewDescription::ElementOffset::get()
-	{
-		return m_ElementOffset;
-	}
-
-	void ShaderResourceViewDescription::ElementOffset::set( int value )
-	{
-		m_ElementOffset = value;
-	}
-	
-	int ShaderResourceViewDescription::ElementWidth::get()
-	{
-		return m_ElementWidth;
-	}
-
-	void ShaderResourceViewDescription::ElementWidth::set( int value )
-	{
-		m_ElementWidth = value;
-	}
-	
-	int ShaderResourceViewDescription::MipLevels::get()
-	{
-		return m_MipLevels;
-	}
-
-	void ShaderResourceViewDescription::MipLevels::set( int value )
-	{
-		m_MipLevels = value;
-	}
-	
-	int ShaderResourceViewDescription::MostDetailedMip::get()
-	{
-		return m_MostDetailedMip;
-	}
-
-	void ShaderResourceViewDescription::MostDetailedMip::set( int value )
-	{
-		m_MostDetailedMip = value;
-	}
-	
-	int ShaderResourceViewDescription::ArraySize::get()
-	{
-		return m_ArraySize;
-	}
-
-	void ShaderResourceViewDescription::ArraySize::set( int value )
-	{
-		m_ArraySize = value;
-	}
-	
-	int ShaderResourceViewDescription::FirstArraySlice::get()
-	{
-		return m_FirstArraySlice;
-	}
-
-	void ShaderResourceViewDescription::FirstArraySlice::set( int value )
-	{
-		m_FirstArraySlice = value;
-	}
-
-	
 	bool ShaderResourceViewDescription::operator == ( ShaderResourceViewDescription left, ShaderResourceViewDescription right )
 	{
 		return ShaderResourceViewDescription::Equals( left, right );
@@ -226,9 +176,10 @@ namespace Direct3D11
 
 	int ShaderResourceViewDescription::GetHashCode()
 	{
-		return m_Format.GetHashCode() + m_ViewDimension.GetHashCode() + m_ElementOffset.GetHashCode()
-			 + m_ElementWidth.GetHashCode() + m_MostDetailedMip.GetHashCode() + m_MipLevels.GetHashCode()
-			 + m_FirstArraySlice.GetHashCode() + m_ArraySize.GetHashCode();
+		return Format.GetHashCode() + Dimension.GetHashCode() + ElementOffset.GetHashCode()
+			 + ElementWidth.GetHashCode() + MostDetailedMip.GetHashCode() + MipLevels.GetHashCode()
+			 + FirstArraySlice.GetHashCode() + ArraySize.GetHashCode() + FirstElement.GetHashCode()
+			 + ElementCount.GetHashCode() + Flags.GetHashCode();
 	}
 
 	bool ShaderResourceViewDescription::Equals( Object^ value )
@@ -244,16 +195,17 @@ namespace Direct3D11
 
 	bool ShaderResourceViewDescription::Equals( ShaderResourceViewDescription value )
 	{
-		return ( m_Format == value.m_Format && m_ViewDimension == value.m_ViewDimension && m_ElementOffset == value.m_ElementOffset
-			 && m_ElementWidth == value.m_ElementWidth && m_MostDetailedMip == value.m_MostDetailedMip && m_MipLevels == value.m_MipLevels
-			 && m_FirstArraySlice == value.m_FirstArraySlice && m_ArraySize == value.m_ArraySize );
+		return ( Format == value.Format && Dimension == value.Dimension && ElementOffset == value.ElementOffset && FirstElement == value.FirstElement && Flags == value.Flags
+			 && ElementCount == value.ElementCount && ElementWidth == value.ElementWidth && MostDetailedMip == value.MostDetailedMip && MipLevels == value.MipLevels
+			 && FirstArraySlice == value.FirstArraySlice && ArraySize == value.ArraySize );
 	}
 
 	bool ShaderResourceViewDescription::Equals( ShaderResourceViewDescription% value1, ShaderResourceViewDescription% value2 )
 	{
-		return ( value1.m_Format == value2.m_Format && value1.m_ViewDimension == value2.m_ViewDimension && value1.m_ElementOffset == value2.m_ElementOffset
-			 && value1.m_ElementWidth == value2.m_ElementWidth && value1.m_MostDetailedMip == value2.m_MostDetailedMip && value1.m_MipLevels == value2.m_MipLevels
-			 && value1.m_FirstArraySlice == value2.m_FirstArraySlice && value1.m_ArraySize == value2.m_ArraySize );
+		return ( value1.Format == value2.Format && value1.Dimension == value2.Dimension && value1.ElementOffset == value2.ElementOffset
+			 && value1.FirstElement == value2.FirstElement && value1.Flags == value2.Flags && value1.ElementCount == value2.ElementCount 
+			 && value1.ElementWidth == value2.ElementWidth && value1.MostDetailedMip == value2.MostDetailedMip && value1.MipLevels == value2.MipLevels
+			 && value1.FirstArraySlice == value2.FirstArraySlice && value1.ArraySize == value2.ArraySize );
 	}
 }
 }
