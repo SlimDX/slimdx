@@ -1645,6 +1645,22 @@ namespace SlimDX
 			ExtendedBuffer = D3D11_SRV_DIMENSION_BUFFEREX
 		};
 
+		/// <summary>Specifies shader resource view extended buffer options.</summary>
+		/// <unmanaged>D3D11_BUFFEREX_SRV_FLAG</unmanaged>
+		[System::Flags]
+		public enum class ShaderResourceViewExtendedBufferFlags : System::Int32
+		{
+			/// <summary>
+			/// No specific flags specified.
+			/// </summary>
+			None = 0,
+
+			/// <summary>
+			/// Resource contains raw, unstructured data.
+			/// </summary>
+			RawData = D3D11_BUFFEREX_SRV_FLAG_RAW
+		};
+
 		/// <summary>Specifies the stencil operations that can be performed during depth-stencil testing.</summary>
 		/// <unmanaged>D3D11_STENCIL_OP</unmanaged>
 		public enum class StencilOperation : System::Int32

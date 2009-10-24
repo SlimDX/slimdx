@@ -47,53 +47,17 @@ namespace SlimDX
 			D3D11_SHADER_RESOURCE_VIEW_DESC CreateNativeVersion();
 		
 		public:
-			property DXGI::Format Format
-			{
-				DXGI::Format get();
-				void set( DXGI::Format value );
-			}
-			
-			property ShaderResourceViewDimension Dimension
-			{
-				ShaderResourceViewDimension get();
-				void set( ShaderResourceViewDimension value );
-			}
-			
-			property int ElementOffset
-			{
-				int get();
-				void set( int value );
-			}
-			
-			property int ElementWidth
-			{
-				int get();
-				void set( int value );
-			}
-			
-			property int MostDetailedMip
-			{
-				int get();
-				void set( int value );
-			}
-			
-			property int MipLevels
-			{
-				int get();
-				void set( int value );
-			}
-			
-			property int FirstArraySlice
-			{
-				int get();
-				void set( int value );
-			}
-			
-			property int ArraySize
-			{
-				int get();
-				void set( int value );
-			}
+			property DXGI::Format Format;
+			property ShaderResourceViewDimension Dimension;
+			property int ElementOffset;
+			property int ElementWidth;
+			property int MostDetailedMip;
+			property int MipLevels;
+			property int FirstArraySlice;
+			property int ArraySize;
+			property int FirstElement;
+			property int ElementCount;
+			property ShaderResourceViewExtendedBufferFlags Flags;
 
 			static bool operator == ( ShaderResourceViewDescription left, ShaderResourceViewDescription right );
 			static bool operator != ( ShaderResourceViewDescription left, ShaderResourceViewDescription right );
