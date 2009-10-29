@@ -1,6 +1,7 @@
 Direct3D 9
 	* Changed Include.Open to include missing parentStream parameter.
 	* Fixed Mesh.ToXFile() to handle meshes that don't have materials and effects.
+	* EffectStateManager methods would crash if a null shader or texture was passed to them. This has been fixed.
 	
 Direct3D 10
 	* Changed Include.Open to include missing parentStream parameter.

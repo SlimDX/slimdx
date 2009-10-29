@@ -208,8 +208,13 @@ namespace Direct3D9
 	{
 		try
 		{
-			pShader->AddRef();
-			m_WrappedInterface->SetPixelShader( PixelShader::FromPointer( pShader ) );
+			if( pShader == NULL )
+				m_WrappedInterface->SetPixelShader( nullptr );
+			else
+			{
+				pShader->AddRef();
+				m_WrappedInterface->SetPixelShader( PixelShader::FromPointer( pShader ) );
+			}
 		}
 		catch( SlimDXException^ ex)
 		{
@@ -291,8 +296,13 @@ namespace Direct3D9
 	{
 		try
 		{
-			pShader->AddRef();
-			m_WrappedInterface->SetVertexShader( VertexShader::FromPointer( pShader ) );
+			if( pShader == NULL )
+				m_WrappedInterface->SetVertexShader( nullptr );
+			else
+			{
+				pShader->AddRef();
+				m_WrappedInterface->SetVertexShader( VertexShader::FromPointer( pShader ) );
+			}
 		}
 		catch( SlimDXException^ ex)
 		{
@@ -410,10 +420,13 @@ namespace Direct3D9
 	{
 		try
 		{
-			pTexture->AddRef();
-			BaseTexture^ texture = BaseTexture::FromUnmanaged( pTexture );
-
-			m_WrappedInterface->SetTexture( Stage, texture );
+			if( pTexture == NULL )
+				m_WrappedInterface->SetTexture( Stage, nullptr );
+			else
+			{
+				pTexture->AddRef();
+				m_WrappedInterface->SetTexture( Stage, BaseTexture::FromUnmanaged( pTexture ) );
+			}
 		}
 		catch( SlimDXException^ ex)
 		{
