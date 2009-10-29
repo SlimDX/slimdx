@@ -30,49 +30,19 @@ namespace SlimDX
 	namespace Direct3D11
 	{	
 		public value class DepthStencilViewDescription : System::IEquatable<DepthStencilViewDescription>
-		{
-		private:
-			DXGI::Format m_Format;
-			DepthStencilViewDimension m_ViewDimension;
-			int m_MipSlice;
-			int m_FirstArraySlice;
-			int m_ArraySize;
-				
+		{				
 		internal:
 			DepthStencilViewDescription( const D3D11_DEPTH_STENCIL_VIEW_DESC& native );
 			
 			D3D11_DEPTH_STENCIL_VIEW_DESC CreateNativeVersion();
 		
 		public:
-			property DXGI::Format Format
-			{
-				DXGI::Format get();
-				void set( DXGI::Format value );
-			}
-			
-			property DepthStencilViewDimension Dimension
-			{
-				DepthStencilViewDimension get();
-				void set( DepthStencilViewDimension value );
-			}
-			
-			property int MipSlice
-			{
-				int get();
-				void set( int value );
-			}
-			
-			property int FirstArraySlice
-			{
-				int get();
-				void set( int value );
-			}
-			
-			property int ArraySize
-			{
-				int get();
-				void set( int value );
-			}
+			property DXGI::Format Format;
+			property DepthStencilViewDimension Dimension;
+			property DepthStencilViewFlags Flags;
+			property int MipSlice;
+			property int FirstArraySlice;
+			property int ArraySize;
 
 			static bool operator == ( DepthStencilViewDescription left, DepthStencilViewDescription right );
 			static bool operator != ( DepthStencilViewDescription left, DepthStencilViewDescription right );

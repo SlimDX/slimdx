@@ -509,6 +509,14 @@ namespace SlimDX
 			/// </summary>
 			Texture2DMultisampledArray = D3D11_DSV_DIMENSION_TEXTURE2DMSARRAY
 		};
+
+		[System::Flags]
+		public enum class DepthStencilViewFlags : System::Int32
+		{
+			None = 0,
+			ReadOnlyDepth = D3D11_DSV_READ_ONLY_DEPTH,
+			ReadOnlyStencil = D3D11_DSV_READ_ONLY_STENCIL
+		};
 		
 		/// <summary>Identifies the portion of a depth-stencil buffer for writing depth data.</summary>
 		/// <unmanaged>D3D11_DEPTH_WRITE_MASK</unmanaged>
