@@ -132,6 +132,7 @@ namespace Direct3D9
 		{
 			System::Drawing::Rectangle rectValue = sourceRect.Value;
 			Utilities::ConvertRect(rectValue, rect);
+			rectPtr = &rect;
 		}
 
 		const D3DXVECTOR3* centerPtr = 0;
