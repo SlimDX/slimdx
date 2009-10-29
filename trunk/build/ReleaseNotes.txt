@@ -12,3 +12,4 @@ Direct3D 11
 	* Added the ability to create structured buffer resources.
 	* Added missing fields to ShaderResourceViewDescription.
 	* Added missing Flag field to DepthStencilViewDescription.
+	* Added NULL checks to OutputMergerWrapper methods.
