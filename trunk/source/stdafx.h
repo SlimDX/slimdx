@@ -48,6 +48,7 @@
 #include <x3daudio.h>
 #include <audiodefs.h>
 #include <xapo.h>
+#include <xapobase.h>
 
 #include <memory>
 #include <stdexcept>

@@ -4245,6 +4245,10 @@
 			Name="XAPO"
 			>
 			<File
+				RelativePath="..\source\xapo\BufferParameter.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\source\xapo\BufferParameter.h"
 				>
 			</File>
