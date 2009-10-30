@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#ifdef WRAP_XAPO
-
 namespace SlimDX
 {
 	namespace XAPO
@@ -46,10 +44,7 @@ namespace SlimDX
 			FrameRateMustMatch = XAPO_FLAG_FRAMERATE_MUST_MATCH,
 			BitsPerSampleMustMatch = XAPO_FLAG_BITSPERSAMPLE_MUST_MATCH,
 			BufferCountMustMatch = XAPO_FLAG_BUFFERCOUNT_MUST_MATCH,
-			Default = ChannelsMustMatch | FrameRateMustMatch | BitsPerSampleMustMatch |
-							BufferCountMustMatch | InPlaceSupported
+			Default = XAPOBASE_DEFAULT_FLAG
 		};
 	}
 }
-
-#endif

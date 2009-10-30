@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#ifdef WRAP_XAPO
-
 namespace SlimDX
 {
 	namespace XAPO
@@ -30,7 +28,7 @@ namespace SlimDX
 		public value class LockParameter : System::IEquatable<LockParameter>
 		{
 		public:
-			property WaveFormat^ Format;
+			property SlimDX::Multimedia::WaveFormat^ Format;
 			property int MaxFrameCount;
 
 			/// <summary>
@@ -80,5 +78,3 @@ namespace SlimDX
 		};
 	}
 }
-
-#endif

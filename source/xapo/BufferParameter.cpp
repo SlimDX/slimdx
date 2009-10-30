@@ -21,30 +21,28 @@
 */
 #include "stdafx.h"
 
-#include "../multimedia/WaveFormat.h"
-
-#include "LockParameter.h"
+#include "BufferParameter.h"
 
 namespace SlimDX
 {
 namespace XAPO
 {
-	bool LockParameter::operator == ( LockParameter left, LockParameter right )
+	bool BufferParameter::operator == ( BufferParameter left, BufferParameter right )
 	{
-		return LockParameter::Equals( left, right );
+		return BufferParameter::Equals( left, right );
 	}
 
-	bool LockParameter::operator != ( LockParameter left, LockParameter right )
+	bool BufferParameter::operator != ( BufferParameter left, BufferParameter right )
 	{
-		return !LockParameter::Equals( left, right );
+		return !BufferParameter::Equals( left, right );
 	}
 
-	int LockParameter::GetHashCode()
+	int BufferParameter::GetHashCode()
 	{
-		return Format->GetHashCode() + MaxFrameCount.GetHashCode();
+		return Buffer.GetHashCode() + ValidFrameCount.GetHashCode() + Flags.GetHashCode();
 	}
 
-	bool LockParameter::Equals( Object^ value )
+	bool BufferParameter::Equals( Object^ value )
 	{
 		if( value == nullptr )
 			return false;
@@ -52,17 +50,17 @@ namespace XAPO
 		if( value->GetType() != GetType() )
 			return false;
 
-		return Equals( safe_cast<LockParameter>( value ) );
+		return Equals( safe_cast<BufferParameter>( value ) );
 	}
 
-	bool LockParameter::Equals( LockParameter value )
+	bool BufferParameter::Equals( BufferParameter value )
 	{
-		return ( Format == value.Format && MaxFrameCount == value.MaxFrameCount );
+		return ( Buffer == value.Buffer && ValidFrameCount == value.ValidFrameCount && Flags == value.Flags );
 	}
 
-	bool LockParameter::Equals( LockParameter% value1, LockParameter% value2 )
+	bool BufferParameter::Equals( BufferParameter% value1, BufferParameter% value2 )
 	{
-		return ( value1.Format == value2.Format && value1.MaxFrameCount == value2.MaxFrameCount );
+		return ( value1.Buffer == value2.Buffer && value1.ValidFrameCount == value2.ValidFrameCount && value1.Flags == value2.Flags );
 	}
 }
 }

@@ -21,10 +21,10 @@
 */
 #pragma once
 
-#ifdef WRAP_XAPO
+#include "../SlimDXException.h"
+#include "../multimedia/WaveFormat.h"
 
 #include "RegistrationProperties.h"
-#include "../WaveFormat.h"
 #include "LockParameter.h"
 #include "BufferParameter.h"
 
@@ -39,19 +39,45 @@ namespace SlimDX
 			virtual int CalculateInputFrames( int outputFrameCount ) = 0;
 			virtual int CalculateOutputFrames( int inputFrameCount ) = 0;
 			virtual Result Initialize( DataStream^ data ) = 0;
-			virtual bool IsInputFormatSupported( WaveFormat^ outputFormat, WaveFormat^ requestedInputFormat, [Out] WaveFormat^% supportedInputFormat ) = 0;
-			virtual bool IsOutputFormatSupported( WaveFormat^ inputFormat, WaveFormat^ requestedOutputFormat, [Out] WaveFormat^% supportedOutputFormat ) = 0;
+			virtual bool IsInputFormatSupported( SlimDX::Multimedia::WaveFormat^ outputFormat, SlimDX::Multimedia::WaveFormat^ requestedInputFormat, [Out] SlimDX::Multimedia::WaveFormat^% supportedInputFormat ) = 0;
+			virtual bool IsOutputFormatSupported( SlimDX::Multimedia::WaveFormat^ inputFormat, SlimDX::Multimedia::WaveFormat^ requestedOutputFormat, [Out] SlimDX::Multimedia::WaveFormat^% supportedOutputFormat ) = 0;
 			virtual Result LockForProcess( array<LockParameter>^ inputParameters, array<LockParameter>^ outputParameters ) = 0;
-			virtual void Process( array<BufferParameter^>^ inputParameters, array<BufferParameter^>^ outputParameters, bool isEnabled ) = 0;
+			virtual void Process( array<BufferParameter>^ inputParameters, array<BufferParameter>^ outputParameters, bool isEnabled ) = 0;
 			virtual void Reset() = 0;
 			virtual void UnlockForProcess() = 0;
 
-			virtual property RegistrationProperties^ RegistrationProperties
+			virtual property RegistrationProperties RegistrationProperties
 			{
-				SlimDX::XAPO::RegistrationProperties^ get();
+				SlimDX::XAPO::RegistrationProperties get();
 			}
+		};
+
+		class XAPOShim : public IXAPO, public IXAPOParameters
+		{
+		private:
+			LONG refCount;
+			gcroot<IAudioProcessor^> m_interface;
+
+		public:
+			XAPOShim( IAudioProcessor^ wrappedInterface );
+
+			IAudioProcessor^ GetProcessor() { return m_interface; }
+
+		public:
+			HRESULT WINAPI QueryInterface( const IID &iid, LPVOID *ppv );
+			ULONG   WINAPI AddRef();
+			ULONG   WINAPI Release();
+
+			UINT32  WINAPI CalcInputFrames( UINT32 OutputFrameCount );
+			UINT32  WINAPI CalcOutputFrames( UINT32 InputFrameCount );
+			HRESULT WINAPI GetRegistrationProperties( XAPO_REGISTRATION_PROPERTIES **ppRegistrationProperties );
+			HRESULT WINAPI Initialize( const void *pData, UINT32 DataByteSize );
+			HRESULT WINAPI IsInputFormatSupported( const WAVEFORMATEX *pOutputFormat, const WAVEFORMATEX *pRequestedInputFormat, WAVEFORMATEX **ppSupportedInputFormat );
+			HRESULT WINAPI IsOutputFormatSupported( const WAVEFORMATEX *pInputFormat, const WAVEFORMATEX *pRequestedOutputFormat, WAVEFORMATEX **ppSupportedOutputFormat );
+			HRESULT WINAPI LockForProcess( UINT32 InputLockedParameterCount, const XAPO_LOCKFORPROCESS_BUFFER_PARAMETERS *pInputLockedParameters, UINT32 OutputLockedParameterCount, const XAPO_LOCKFORPROCESS_BUFFER_PARAMETERS *pOutputLockedParameters );
+			void	WINAPI Process( UINT32 InputProcessParameterCount, const XAPO_PROCESS_BUFFER_PARAMETERS *pInputProcessParameters, UINT32 OutputProcessParameterCount, const XAPO_PROCESS_BUFFER_PARAMETERS *pOutputProcessParameters, BOOL IsEnabled );
+			void	WINAPI Reset();
+			void	WINAPI UnlockForProcess();
 		};
 	}
 }
-
-#endif
