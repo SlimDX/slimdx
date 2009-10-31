@@ -34,6 +34,8 @@ namespace SlimDX
 			COMOBJECT_BASE(CXAPOBase);
 
 		internal:
+			BaseProcessor() { }
+
 			property XAPOBaseImpl *ImplPointer
 			{
 				XAPOBaseImpl *get() { return reinterpret_cast<XAPOBaseImpl*>( InternalPointer ); }

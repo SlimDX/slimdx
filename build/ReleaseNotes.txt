@@ -14,3 +14,6 @@ Direct3D 11
 	* Added missing fields to ShaderResourceViewDescription.
 	* Added missing Flag field to DepthStencilViewDescription.
 	* Added NULL checks to OutputMergerWrapper methods.
+	
+XAPO
+	* Implemented the subsystem.
