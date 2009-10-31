@@ -27,6 +27,7 @@
 #include "RegistrationProperties.h"
 #include "LockParameter.h"
 #include "BufferParameter.h"
+#include "IParameterProvider.h"
 
 using System::Runtime::InteropServices::OutAttribute;
 
@@ -57,6 +58,7 @@ namespace SlimDX
 		private:
 			LONG refCount;
 			gcroot<IAudioProcessor^> m_interface;
+			gcroot<IParameterProvider^> m_parameters;
 
 		public:
 			XAPOShim( IAudioProcessor^ wrappedInterface );
@@ -64,10 +66,12 @@ namespace SlimDX
 			IAudioProcessor^ GetProcessor() { return m_interface; }
 
 		public:
+			// IUnknown
 			HRESULT WINAPI QueryInterface( const IID &iid, LPVOID *ppv );
 			ULONG   WINAPI AddRef();
 			ULONG   WINAPI Release();
 
+			// IXAPO
 			UINT32  WINAPI CalcInputFrames( UINT32 OutputFrameCount );
 			UINT32  WINAPI CalcOutputFrames( UINT32 InputFrameCount );
 			HRESULT WINAPI GetRegistrationProperties( XAPO_REGISTRATION_PROPERTIES **ppRegistrationProperties );
@@ -78,6 +82,10 @@ namespace SlimDX
 			void	WINAPI Process( UINT32 InputProcessParameterCount, const XAPO_PROCESS_BUFFER_PARAMETERS *pInputProcessParameters, UINT32 OutputProcessParameterCount, const XAPO_PROCESS_BUFFER_PARAMETERS *pOutputProcessParameters, BOOL IsEnabled );
 			void	WINAPI Reset();
 			void	WINAPI UnlockForProcess();
+
+			// IXAPOParameters
+			void	WINAPI GetParameters( void *pParameters, UINT32 ParameterByteSize );
+			void	WINAPI SetParameters( const void *pParameters, UINT32 ParameterByteSize );
 		};
 	}
 }
