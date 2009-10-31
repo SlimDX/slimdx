@@ -4245,41 +4245,69 @@
 			Name="XAPO"
 			>
 			<File
-				RelativePath="..\source\xapo\BufferParameter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\xapo\BufferParameter.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\xapo\Enums.h"
 				>
 			</File>
-			<File
-				RelativePath="..\source\xapo\IAudioProcessor.cpp"
+			<Filter
+				Name="Interfaces"
 				>
-			</File>
-			<File
-				RelativePath="..\source\xapo\IAudioProcessor.h"
+				<File
+					RelativePath="..\source\xapo\IAudioProcessor.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xapo\IAudioProcessor.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xapo\IParameterProvider.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Parameters"
 				>
-			</File>
-			<File
-				RelativePath="..\source\xapo\LockParameter.cpp"
+				<File
+					RelativePath="..\source\xapo\BufferParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xapo\BufferParameter.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xapo\LockParameter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xapo\LockParameter.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Properties"
 				>
-			</File>
-			<File
-				RelativePath="..\source\xapo\LockParameter.h"
+				<File
+					RelativePath="..\source\xapo\RegistrationProperties.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xapo\RegistrationProperties.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Bases"
 				>
-			</File>
-			<File
-				RelativePath="..\source\xapo\RegistrationProperties.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\xapo\RegistrationProperties.h"
-				>
-			</File>
+				<File
+					RelativePath="..\source\xapo\BaseProcessor.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xapo\BaseProcessor.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="DirectSound"

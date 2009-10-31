@@ -26,6 +26,8 @@
 
 #include "RegistrationProperties.h"
 
+using namespace System;
+
 namespace SlimDX
 {
 namespace XAPO
@@ -46,6 +48,24 @@ namespace XAPO
 		props.MaxInputBufferCount = MaxInputBufferCount;
 		props.MinOutputBufferCount = MinOutputBufferCount;
 		props.MaxOutputBufferCount = MaxOutputBufferCount;
+
+		return props;
+	}
+
+	RegistrationProperties RegistrationProperties::FromUnmanaged( const XAPO_REGISTRATION_PROPERTIES &properties )
+	{
+		RegistrationProperties props;
+
+		props.ClassId = Utilities::ConvertNativeGuid( properties.clsid );
+		props.FriendlyName = gcnew String( properties.FriendlyName );
+		props.CopyrightInfo = gcnew String( properties.CopyrightInfo );
+		props.MajorVersion = properties.MajorVersion;
+		props.MinorVersion = properties.MinorVersion;
+		props.Flags = static_cast<PropertyFlags>( properties.Flags );
+		props.MinInputBufferCount = properties.MinInputBufferCount;
+		props.MaxInputBufferCount = properties.MaxInputBufferCount;
+		props.MinOutputBufferCount = properties.MinOutputBufferCount;
+		props.MaxOutputBufferCount = properties.MaxOutputBufferCount;
 
 		return props;
 	}

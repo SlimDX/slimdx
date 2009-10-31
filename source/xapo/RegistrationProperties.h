@@ -31,6 +31,7 @@ namespace SlimDX
 		{
 		internal:
 			XAPO_REGISTRATION_PROPERTIES ToUnmanaged();
+			static RegistrationProperties FromUnmanaged( const XAPO_REGISTRATION_PROPERTIES &properties );
 
 		public:
 			property System::Guid ClassId;

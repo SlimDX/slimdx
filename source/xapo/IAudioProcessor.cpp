@@ -35,6 +35,11 @@ namespace XAPO
 	{
 		m_interface = wrappedInterface;
 		refCount = 1;
+
+		if( IParameterProvider::typeid->IsAssignableFrom( wrappedInterface->GetType() ) )
+			m_parameters = safe_cast<IParameterProvider^>( wrappedInterface );
+		else
+			m_parameters = nullptr;
 	}
 
 	HRESULT XAPOShim::QueryInterface( const IID &iid, LPVOID *ppv )
@@ -51,7 +56,7 @@ namespace XAPO
 			*ppv = static_cast<IUnknown*>( static_cast<IXAPO*>( this ) );
 			return S_OK;
 		}
-		else if( iid == __uuidof(IXAPOParameters) )
+		else if( iid == __uuidof(IXAPOParameters) && safe_cast<IParameterProvider^>( m_parameters ) != nullptr )
 		{
 			AddRef();
 			*ppv = static_cast<IXAPOParameters*>( this );
@@ -149,7 +154,7 @@ namespace XAPO
 			bool result = m_interface->IsInputFormatSupported( WaveFormat::FromUnmanaged( *pOutputFormat ), WaveFormat::FromUnmanaged( *pRequestedInputFormat ), format );
 
 			auto_array<WAVEFORMATEX> native = WaveFormat::ToUnmanaged( format );
-			*ppSupportedInputFormat = native.get();
+			*ppSupportedInputFormat = native.release();
 
 			return result ? S_OK : XAPO_E_FORMAT_UNSUPPORTED;
 		}
@@ -173,7 +178,7 @@ namespace XAPO
 			bool result = m_interface->IsOutputFormatSupported( WaveFormat::FromUnmanaged( *pInputFormat ), WaveFormat::FromUnmanaged( *pRequestedOutputFormat ), format );
 
 			auto_array<WAVEFORMATEX> native = WaveFormat::ToUnmanaged( format );
-			*ppSupportedOutputFormat = native.get();
+			*ppSupportedOutputFormat = native.release();
 
 			return result ? S_OK : XAPO_E_FORMAT_UNSUPPORTED;
 		}
@@ -276,6 +281,28 @@ namespace XAPO
 		try
 		{
 			m_interface->UnlockForProcess();
+		}
+		catch(...)
+		{
+		}
+	}
+
+	void WINAPI XAPOShim::GetParameters( void *pParameters, UINT32 ParameterByteSize )
+	{
+		try
+		{
+			m_parameters->GetParameters( gcnew DataStream( pParameters, ParameterByteSize, true, true, false ) );
+		}
+		catch(...)
+		{
+		}
+	}
+
+	void WINAPI XAPOShim::SetParameters( const void *pParameters, UINT32 ParameterByteSize )
+	{
+		try
+		{
+			m_parameters->SetParameters( gcnew DataStream( const_cast<void*>( pParameters ), ParameterByteSize, true, false, false ) );
 		}
 		catch(...)
 		{
