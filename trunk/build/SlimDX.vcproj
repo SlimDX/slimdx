@@ -4307,6 +4307,14 @@
 					RelativePath="..\source\xapo\BaseProcessor.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\xapo\ParameterizedProcessor.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xapo\ParameterizedProcessor.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -6221,10 +6229,6 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d11\Effect11.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d11\EffectConstantBuffer.h"
 					>
 				</File>
 				<File
