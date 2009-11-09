@@ -11,7 +11,7 @@
 			<div class="paragraph">
 				<h2>Previous Releases</h2>
 				<ul>
-					<li><b><a href="download_aug09.php">March 2009</a> -- version 8.42.</b></li>
+					<li><b><a href="download_aug09.php">August 2009</a> -- version 8.42.</b></li>
 					<li><a href="download_mar09.php">March 2009</a> -- version 7.41.</li>
 					<li><a href="download_nov08.php">November 2008</a> -- version 6.40.</li>
 					<li><a>September 2008</a> -- version 5.39.</li>
