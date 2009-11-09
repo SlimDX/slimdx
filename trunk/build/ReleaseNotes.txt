@@ -1,11 +1,12 @@
 Direct3D 9
 	* Added VertexTextureSampler enumeration.
 	* Changed Include.Open to include missing parentStream parameter.
-	* Fixed Mesh.ToXFile() to handle meshes that don't have materials and effects.
+	* Fixed Mesh.ToXFile to handle meshes that don't have materials and effects.
 	* Fixed a bug in Sprite.Draw where source rectangle was not taken into account.
 	* Fixed a bug that would cause EffectStateManager methods to crash if a null shader or texture was passed to them.
 		
 Direct3D 10
+	* Added FromFile to ShaderResourceView.
 	* Changed Include.Open to include missing parentStream parameter.
 	* Changed Font.Draw color parameter to Color4 instead of unsigned int.
 

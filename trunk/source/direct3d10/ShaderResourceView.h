@@ -29,12 +29,15 @@ namespace SlimDX
 	{
 		ref class Device;
 		ref class Resource;
+		value class ImageLoadInformation;
 		value class ShaderResourceViewDescription;
 
 		public ref class ShaderResourceView : public ResourceView
 		{
 			COMOBJECT(ID3D10ShaderResourceView, ShaderResourceView);
 			
+			static ID3D10ShaderResourceView* ConstructFromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName, D3DX10_IMAGE_LOAD_INFO* loadInformation );
+
 		protected:
 			//no-op ctor for use by ShaderResourceView1
 			ShaderResourceView() { }
@@ -47,6 +50,20 @@ namespace SlimDX
 			
 			ShaderResourceView( SlimDX::Direct3D10::Device^ device, Resource^ resource );
 			ShaderResourceView( SlimDX::Direct3D10::Device^ device, Resource^ resource, ShaderResourceViewDescription description );
+			
+			/// <summary>
+			/// Creates a shader resource view from a file.
+			/// </summary>
+			/// <param name="device">The device that will own the resource.</param>
+			/// <param name="fileName">The name of the file that contains the shader resource view.</param>
+			static ShaderResourceView^ FromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName );
+
+			/// <summary>
+			/// Creates a shader resource view from a file.
+			/// </summary>
+			/// <param name="device">The device that will own the resource.</param>
+			/// <param name="fileName">The name of the file that contains the shader resource view.</param>
+			static ShaderResourceView^ FromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName, ImageLoadInformation loadInformation );
 		};
 	}
 };

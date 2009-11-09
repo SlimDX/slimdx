@@ -27,6 +27,7 @@
 #include "Direct3D10Exception.h"
 
 #include "Device10.h"
+#include "ImageLoadInformation.h"
 #include "Resource10.h"
 #include "ShaderResourceView.h"
 #include "ShaderResourceViewDescription.h"
@@ -71,6 +72,35 @@ namespace Direct3D10
 		D3D10_SHADER_RESOURCE_VIEW_DESC nativeDescription;
 		InternalPointer->GetDesc( &nativeDescription );
 		return ShaderResourceViewDescription( nativeDescription );
+	}
+
+	ShaderResourceView^ ShaderResourceView::FromFile(SlimDX::Direct3D10::Device^ device, System::String^ fileName)
+	{
+		ID3D10ShaderResourceView* resource = ConstructFromFile( device, fileName, 0 );
+		if( resource == 0 )
+			return nullptr;
+
+		return ShaderResourceView::FromPointer( static_cast<ID3D10ShaderResourceView*>( resource ) );
+	}
+
+	ShaderResourceView^ ShaderResourceView::FromFile(SlimDX::Direct3D10::Device^ device, System::String^ fileName, ImageLoadInformation loadInformation)
+	{
+		D3DX10_IMAGE_LOAD_INFO info = loadInformation.CreateNativeVersion();
+		ID3D10ShaderResourceView* resource = ConstructFromFile( device, fileName, &info );
+		if( resource == 0 )
+			return nullptr;
+
+		return ShaderResourceView::FromPointer( static_cast<ID3D10ShaderResourceView*>( resource ) );
+	}
+
+	ID3D10ShaderResourceView* ShaderResourceView::ConstructFromFile(SlimDX::Direct3D10::Device^ device, System::String^ fileName, D3DX10_IMAGE_LOAD_INFO* loadInformation)
+	{
+		ID3D10ShaderResourceView* resource = 0;
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
+		HRESULT hr = D3DX10CreateShaderResourceViewFromFile( device->InternalPointer, pinnedName, loadInformation, 0, &resource, 0 );
+		RECORD_D3D10( hr );
+		
+		return resource;
 	}
 }
 }
