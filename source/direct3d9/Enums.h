@@ -5222,5 +5222,18 @@ namespace SlimDX
 			/// </summary>
 			Constant = D3DTSS_CONSTANT
 		};
+
+		/// <summary>
+		/// Identifies texture samplers used by vertex shaders.
+		/// </summary>
+		/// <unmanaged>D3DVERTEXTEXTURESAMPLER</unmanaged>
+		public enum class VertexTextureSampler : System::Int32
+		{
+			Sampler0 = D3DVERTEXTEXTURESAMPLER0,
+			Sampler1 = D3DVERTEXTEXTURESAMPLER1,
+			Sampler2 = D3DVERTEXTEXTURESAMPLER2,
+			Sampler3 = D3DVERTEXTEXTURESAMPLER3,
+			DisplacementMapSampler = D3DDMAPSAMPLER,
+		};
 	}
 }

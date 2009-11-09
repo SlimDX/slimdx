@@ -1,9 +1,10 @@
 Direct3D 9
+	* Added VertexTextureSampler enumeration.
 	* Changed Include.Open to include missing parentStream parameter.
 	* Fixed Mesh.ToXFile() to handle meshes that don't have materials and effects.
-	* EffectStateManager methods would crash if a null shader or texture was passed to them. This has been fixed.
 	* Fixed a bug in Sprite.Draw where source rectangle was not taken into account.
-	
+	* Fixed a bug that would cause EffectStateManager methods to crash if a null shader or texture was passed to them.
+		
 Direct3D 10
 	* Changed Include.Open to include missing parentStream parameter.
 	* Changed Font.Draw color parameter to Color4 instead of unsigned int.
@@ -13,7 +14,7 @@ Direct3D 11
 	* Added the ability to create structured buffer resources.
 	* Added missing fields to ShaderResourceViewDescription.
 	* Added missing Flag field to DepthStencilViewDescription.
-	* Added NULL checks to OutputMergerWrapper methods.
+	* Added null checks to OutputMergerWrapper methods.
 	
 XAPO
 	* Implemented the subsystem.
