@@ -9,13 +9,16 @@
 	<div class="wrapper">    
     	<div class="paragraph">
 			<h1>What is SlimDX?</h1>
-			<p>SlimDX is an open source library originally prototyped by Promit Roy which allows .NET 2.0+ applications (including C#, VB.NET, IronPython, F#, and more) to use Microsoft's DirectX APIs, as well as several related Microsoft multimedia APIs.
-			This role was previously filled for .NET 1.1 applications by Microsoft's own Managed DirectX (MDX) library.
-			However, the age of .NET 1.1, and Microsoft's lack of interest in continuing MDX, have made it necessary to build a new library.
-			Thanks to enthusiastic community support and the invaluable contributions of several other developers who have worked on and with SlimDX, the library has become a fully viable platform on which to build DirectX based applications.
-			Our latest release is August 2009, and can be found for users and developers on the <a href="download.php">Download page</a>.
+			<p>SlimDX is a free open source framework that enables developers to easily build DirectX applications using .NET technologies such as C#, VB.NET, and !IronPython. 
+      It is designed to be an efficient, simple, and lean wrapper that fully encompasses all of Microsoft's gaming and multimedia technologies and exposes them to managed code.
+      All of the code is under the MIT/X11 license, and all content is under the Creative Commons Attribution-Share Alike license.
+      Our latest release is August 2009, and can be found for users and developers on the <a href="download.php">Download page</a>.
 			<br /><br />
-			All development is based in our <a href="http://code.google.com/p/slimdx/">Google Code homepage</a>.
+      Originally, the managed game development niche was filled by Microsoft's Managed DirectX, which is now deprecated and no longer recommended for new development. In it's wake, SlimDX has stepped up to provide support in a 
+      way that is very similar to the original MDX libraries. While similar, however, they are not intended to be the same APIs. SlimDX exposes a broader range of technologies, has a core design that improves upon that provided 
+      by MDX, and is more in-tune with managed methodologies since the advent of .NET 2.0. SlimDX is already widely used and can be found in several major multimedia and gaming applications.
+      <br /><br />  
+      All development is based in our <a href="http://code.google.com/p/slimdx/">Google Code homepage</a>.
 			You can use that site to report bugs (using our issues page), as well as download a complete copy of the source code.
 			If you have questions to ask, or otherwise wish to discuss SlimDX, we ask that you use the <a href="http://www.gamedev.net/community/forums/forum.asp?forum_id=10">DirectX forum</a> on GameDev.Net.
 			This is the only forum on which the developers are active; we do not use any other forums or mailing lists.
@@ -65,10 +68,10 @@
 			<h2>Current Status</h2>
 			<p>
 			SlimDX was first publically revealed in beta form on June 30, 2007.
-			It has grown explosively since then, with a number of new developers signing up to develop and test.
+			Since then, it has grown at a rapid pace and now covers just about every corner of multimedia provided by Microsoft.
 			As of the June 2008 release, it is no longer in beta and is considered stable.
 			Several commercial projects and companies are using SlimDX, including at least one shipped AAA game title for Windows.
-			With support for many libraries, including DirectX 9, DirectX 10, DirectSound, XAudio2, XInput, and even the Windows 7 beta libraries, SlimDX is the most complete multimedia library for .NET you will find anywhere.
+			With support for many libraries, including DirectX 9, DirectX 10, DirectX 11, DirectSound, XAudio2, and XInput, SlimDX is the most complete multimedia library for .NET you will find anywhere.
 			</p>
 			<a href="features.php" class="homea">Read More...</a>
 			</div>

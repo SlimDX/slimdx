@@ -27,7 +27,7 @@
 				Performance is another issue focused on in the March release.
 				After extensive testing, several improvements were made to the error handling infrastructure, which showed significant performance increases across the entire library.
 				On top of this, performance issues in the math library were discovered and subsequently eliminated.
-				This involved modifying the types to use fields instead of properties, as value type getters are inlined in .NET prior to version 3.5.
+				This involved modifying the types to use fields instead of properties, as value type getters are not inlined in .NET prior to version 3.5.
 				These small changes could have a substantial impact on your application simply by recompiling with the new DLL. 
 				</p>
 			</div>

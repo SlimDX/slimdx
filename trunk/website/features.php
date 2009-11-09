@@ -58,6 +58,11 @@
 				As a result, SlimDX based applications can smoothly target both x86-32 and x86-64 bit machines without the headaches introduced by other similar libraries.
 				(Itanium IA64 is not a supported configuration, sorry.)
 			</p>
+      <p><h3>Performance</h3>
+        Performance is a crucial factor in all of the design work done on SlimDX, and the team works carefully to ensure that overhead is kept to a minimum. SlimDX has proven to
+        be faster than both XNA and MDX in several performance tests, although the margin is often negligible. Additionally, an experimental offshoot of SlimDX called SlimGen
+        that is still under development promises to bring SIMD support straight into the math library, boosting performance considerably.
+      </p>
 		</div>
     </div>
 </div>
