@@ -21,84 +21,84 @@
 */
 using System.Drawing;
 using System.Windows.Forms;
-using SampleFramework;
+
 using SlimDX;
 using SlimDX.Direct3D9;
 
+using SlimDX.SampleFramework;
+
 namespace SimpleTriangle
 {
-    class SimpleTriangleSample : Game
+    class SimpleTriangleSample : Sample
     {
-        const int InitialWidth = 800;
-        const int InitialHeight = 600;
-
-        VertexBuffer vertices;
-
-        public Device Device
+        protected override void Dispose(bool disposeManagedResources)
         {
-            get { return GraphicsDeviceManager.Direct3D9.Device; }
+            if (disposeManagedResources)
+            {
+                vertexBuffer.Dispose();
+            }
         }
 
-        public Color ClearColor
+        protected override SampleConfiguration OnConfigure()
         {
-            get;
-            set;
+            return new SampleConfiguration
+            {
+                WindowTitle = "SlimDX Sample - Simple Triangle"
+            };
         }
 
-        public SimpleTriangleSample()
+        protected override void OnInitialize()
         {
-            ClearColor = Color.Black;
+            DeviceSettings9 settings = new DeviceSettings9
+            {
+                AdapterOrdinal = 0,
+                CreationFlags = CreateFlags.HardwareVertexProcessing,
+                Width = WindowWidth,
+                Height = WindowHeight
+            };
 
-            Window.ClientSize = new Size(InitialWidth, InitialHeight);
-            Window.Text = "SlimDX - Simple Triangle Sample";
-            Window.KeyDown += Window_KeyDown;
+            context = InitializeDevice(settings);
 
-            GraphicsDeviceManager.ChangeDevice(DeviceVersion.Direct3D9, true, InitialWidth, InitialHeight);
+            vertexBuffer = new VertexBuffer(
+                context.Device,
+                3 * TransformedColoredVertex.SizeInBytes,
+                Usage.WriteOnly,
+                VertexFormat.None,
+                Pool.Managed
+            );
+
+            DataStream stream = vertexBuffer.Lock(0, 0, LockFlags.None);
+            stream.Write(new TransformedColoredVertex(new Vector4(400.0f, 100.0f, 0.5f, 1.0f), Color.Red.ToArgb()));
+            stream.Write(new TransformedColoredVertex(new Vector4(650.0f, 500.0f, 0.5f, 1.0f), Color.Blue.ToArgb()));
+            stream.Write(new TransformedColoredVertex(new Vector4(150.0f, 500.0f, 0.5f, 1.0f), Color.Green.ToArgb()));
+            vertexBuffer.Unlock();
+
         }
 
-        void Window_KeyDown(object sender, KeyEventArgs e)
+        protected override void OnRenderBegin()
         {
-            // F1 toggles between full screen and windowed mode
-            // Escape quits the application
-            if (e.KeyCode == Keys.F1)
-                GraphicsDeviceManager.ToggleFullScreen();
-            else if (e.KeyCode == Keys.Escape)
-                Exit();
+            context.Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, new Color4(0.3f, 0.3f, 0.3f), 1.0f, 0);
+            context.Device.BeginScene();
         }
 
-        protected override void LoadContent()
+        protected override void OnRender()
         {
-            vertices = new VertexBuffer(Device, 3 * TransformedColoredVertex.SizeInBytes, Usage.WriteOnly, VertexFormat.None, Pool.Managed);
-            DataStream stream = vertices.Lock(0, 0, LockFlags.None);
-            stream.WriteRange(BuildVertexData());
-            vertices.Unlock();
+            context.Device.SetStreamSource(0, vertexBuffer, 0, TransformedColoredVertex.SizeInBytes);
+            context.Device.VertexFormat = VertexFormat.PositionRhw | VertexFormat.Diffuse;
+            context.Device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
         }
 
-        protected override void UnloadContent()
+        protected override void OnRenderEnd()
         {
-            if (vertices != null)
-                vertices.Dispose();
-            vertices = null;
+            context.Device.EndScene();
+            context.Device.Present();
         }
 
-        protected override void Draw(GameTime gameTime)
-        {
-            Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, ClearColor, 1.0f, 0);
-            Device.BeginScene();
+        #region Implementation Detail
 
-            Device.SetStreamSource(0, vertices, 0, TransformedColoredVertex.SizeInBytes);
-            Device.VertexFormat = TransformedColoredVertex.Format;
-            Device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
+        DeviceContext9 context;
+        VertexBuffer vertexBuffer;
 
-            Device.EndScene();
-        }
-
-        static TransformedColoredVertex[] BuildVertexData()
-        {
-            return new TransformedColoredVertex[3] {
-                new TransformedColoredVertex(new Vector4(400.0f, 100.0f, 0.5f, 1.0f), Color.Red.ToArgb()),
-                new TransformedColoredVertex(new Vector4(650.0f, 500.0f, 0.5f, 1.0f), Color.Blue.ToArgb()),
-                new TransformedColoredVertex(new Vector4(150.0f, 500.0f, 0.5f, 1.0f), Color.Green.ToArgb()) };
-        }
+        #endregion
     }
 }

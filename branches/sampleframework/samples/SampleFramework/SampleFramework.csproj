@@ -77,6 +77,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rendering\DeviceContext9.cs" />
+    <Compile Include="Rendering\DeviceSettings9.cs" />
+    <Compile Include="Sample.cs" />
+    <Compile Include="SampleConfiguration.cs" />
+    <Compile Include="Vertex\TransformedColoredVertex.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

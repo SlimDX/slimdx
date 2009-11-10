@@ -23,13 +23,13 @@ using System;
 
 namespace SimpleTriangle
 {
-    static class Program
-    {
-        [STAThread]
-        static void Main()
-        {
-            using (SimpleTriangleSample sample = new SimpleTriangleSample())
-                sample.Run();
-        }
-    }
+	static class Program
+	{
+		[STAThread]
+		static void Main()
+		{
+			using (SimpleTriangleSample sample = new SimpleTriangleSample())
+				sample.Run();
+		}
+	}
 }
