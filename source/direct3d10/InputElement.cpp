@@ -142,6 +142,11 @@ namespace Direct3D10
 		m_InstanceDataStepRate = value;
 	}
 
+	int InputElement::AppendAligned::get()
+	{
+		return D3D10_APPEND_ALIGNED_ELEMENT;
+	}
+
 	bool InputElement::operator == ( InputElement left, InputElement right )
 	{
 		return InputElement::Equals( left, right );
