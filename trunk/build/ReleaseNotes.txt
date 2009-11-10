@@ -6,6 +6,7 @@ Direct3D 9
 	* Fixed a bug that would cause EffectStateManager methods to crash if a null shader or texture was passed to them.
 		
 Direct3D 10
+	* Added InputElement.AppendAligned property.
 	* Added FromFile to ShaderResourceView.
 	* Changed Include.Open to include missing parentStream parameter.
 	* Changed Font.Draw color parameter to Color4 instead of unsigned int.
