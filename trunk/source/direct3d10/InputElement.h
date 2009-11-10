@@ -86,6 +86,16 @@ namespace SlimDX
 				void set( int value );
 			}
 
+			/// <summary>
+			/// Returns a value that can be used for the offset parameter of an InputElement to indicate that the element
+			/// should be aligned directly after the previous element, including any packing if neccessary.
+			/// </summary>
+			/// <returns>A value used to align input elements.</returns>
+			/// <unmanaged>D3D10_APPEND_ALIGNED_ELEMENT</unmanaged>
+			property static int AppendAligned {
+				int get();
+			}
+
 			InputElement( System::String^ name, int index, DXGI::Format format, int offset, int slot );
 			InputElement( System::String^ name, int index, DXGI::Format format, int offset, int slot, InputClassification slotClass, int stepRate );
 		
