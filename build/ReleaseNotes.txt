@@ -20,4 +20,4 @@ Direct3D 11
 	* Added null checks to OutputMergerWrapper methods.
 	
 XAPO
-	* Implemented the subsystem.
+	* Implemented XAPO.
