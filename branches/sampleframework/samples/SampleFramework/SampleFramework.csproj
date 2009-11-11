@@ -79,9 +79,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\DeviceContext9.cs" />
     <Compile Include="Rendering\DeviceSettings9.cs" />
+    <Compile Include="Rendering\DynamicPrimitiveBuffer9.cs" />
+    <Compile Include="Rendering\PrimitiveTopology.cs" />
+    <Compile Include="Rendering\Primitive\ColoredVertex.cs" />
+    <Compile Include="Rendering\Primitive\TransformedColoredVertex.cs" />
+    <Compile Include="Rendering\UI\DefaultVisual.cs" />
+    <Compile Include="Rendering\UI\IElementVisual.cs" />
+    <Compile Include="Rendering\UI\UserInterfaceRenderer.cs" />
+    <Compile Include="Rendering\UI\UserInterfaceRenderer9.cs" />
     <Compile Include="Sample.cs" />
     <Compile Include="SampleConfiguration.cs" />
-    <Compile Include="Vertex\TransformedColoredVertex.cs" />
+    <Compile Include="UI\Element.cs" />
+    <Compile Include="UI\ElementContainer.cs" />
+    <Compile Include="UI\UserInterface.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

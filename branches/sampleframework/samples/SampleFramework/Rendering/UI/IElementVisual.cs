@@ -20,51 +20,36 @@
 * THE SOFTWARE.
 */
 
+using SlimDX;
+
 namespace SlimDX.SampleFramework
 {
 	/// <summary>
-	/// Describes the desired application configuration of a <see cref="Sample"/>SlimDX sample</a>. 
+	/// Defines the interface required to specify an element's visual representation.
 	/// </summary>
-	public class SampleConfiguration
+	public interface IElementVisual
 	{
 		#region Public Interface
+
+		/// <summary>
+		/// Measures the element, returning the size (in pixels) it would occupy if
+		/// rendered with the specified renderer.
+		/// </summary>
+		/// <param name="renderer">The renderer.</param>
+		/// <param name="element">The element.</param>
+		/// <returns>The size of the element (in pixels).</returns>
+		Vector2 Measure(UserInterfaceRenderer renderer, Element element);
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SampleConfiguration"/> class.
+		/// Renders the element using the specified renderer.
 		/// </summary>
-		public SampleConfiguration()
-		{
-			WindowTitle = "SlimDX Sample";
-			WindowWidth = 800;
-			WindowHeight = 600;
-		}
-
-		/// <summary>
-		/// Gets or sets the window title.
-		/// </summary>
-		public string WindowTitle
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Gets or sets the width of the window.
-		/// </summary>
-		public int WindowWidth
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Gets or sets the height of the window.
-		/// </summary>
-		public int WindowHeight
-		{
-			get;
-			set;
-		}
+		/// <param name="renderer">The renderer.</param>
+		/// <param name="element">The element.</param>
+		/// <param name="x">The X coordinate (in pixels) of the upper left corner of the region the element should be rendered to.</param>
+		/// <param name="y">The Y coordinate (in pixels) of the upper left corner of the region the element should be rendered to.</param>
+		/// <param name="width">The width (in pixels) of the region the element should be rendered to.</param>
+		/// <param name="height">The height (in pixels) of the region the element should be rendered to.</param>
+		void Render(UserInterfaceRenderer renderer, Element element, int x, int y, int width, int height);
 		
 		#endregion
 	}

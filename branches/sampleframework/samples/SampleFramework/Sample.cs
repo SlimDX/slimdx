@@ -31,19 +31,21 @@ namespace SlimDX.SampleFramework
 {
 	/// <summary>
 	/// Implements core application logic of a SlimDX sample.
-    /// 
-    /// The Sample class provides a minimal wrapper around window setup, user
-    /// interaction, and OS-level details, but provides very little abstraction
-    /// of the underlying DirectX functionality. The reason for this is that the 
-    /// purpose of a SlimDX sample is to illustrate how a particular technique 
-    /// might be implemented using SlimDX; providing high level rendering abstractions
-    /// in the sample framework simplify obfuscates that.
-    /// 
-    /// A sample is implemented by overriding various base class methods (those prefixed
-    /// with "on"). 
+	/// 
+	/// The Sample class provides a minimal wrapper around window setup, user
+	/// interaction, and OS-level details, but provides very little abstraction
+	/// of the underlying DirectX functionality. The reason for this is that the 
+	/// purpose of a SlimDX sample is to illustrate how a particular technique 
+	/// might be implemented using SlimDX; providing high level rendering abstractions
+	/// in the sample framework simplify obfuscates that.
+	/// 
+	/// A sample is implemented by overriding various base class methods (those prefixed
+	/// with "on"). 
 	/// </summary>
 	public class Sample : IDisposable
 	{
+		#region Public Interface
+		
 		/// <summary>
 		/// Gets the width of the renderable area of the sample window.
 		/// </summary>
@@ -66,28 +68,36 @@ namespace SlimDX.SampleFramework
 			}
 		}
 
-        /// <summary>
-        /// Disposes of object resources.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+		public UserInterface UserInterface
+		{
+			get
+			{
+				return userInterface;
+			}
+		}
 
-        /// <summary>
-        /// Disposes of object resources.
-        /// </summary>
-        /// <param name="disposeManagedResources">If true, managed resources should be
-        /// disposed of in addition to unmanaged resources.</param>
-        protected virtual void Dispose(bool disposeManagedResources)
-        {
-            if (disposeManagedResources)
-            {
-                context.Dispose();
-                form.Dispose();
-            }
-        }
+		/// <summary>
+		/// Disposes of object resources.
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		/// <summary>
+		/// Disposes of object resources.
+		/// </summary>
+		/// <param name="disposeManagedResources">If true, managed resources should be
+		/// disposed of in addition to unmanaged resources.</param>
+		protected virtual void Dispose(bool disposeManagedResources)
+		{
+			if (disposeManagedResources)
+			{
+				context.Dispose();
+				form.Dispose();
+			}
+		}
 
 		/// <summary>
 		/// Runs the sample.
@@ -101,8 +111,12 @@ namespace SlimDX.SampleFramework
 			};
 
 			form.MouseClick += HandleMouseClick;
-
+			
+			userInterface = new UserInterface();
+			userInterface.Container.Add( new Element { Label = configuration.WindowTitle } );
+			
 			OnInitialize();
+
 			MessagePump.Run(form, () =>
 			{
 				Update();
@@ -120,52 +134,53 @@ namespace SlimDX.SampleFramework
 			return new SampleConfiguration();
 		}
 
-        /// <summary>
-        /// In a derived class, implements logic to initialize the sample.
-        /// </summary>
+		/// <summary>
+		/// In a derived class, implements logic to initialize the sample.
+		/// </summary>
 		protected virtual void OnInitialize()
 		{
 		}
 
-        /// <summary>
-        /// In a derived class, implements logic to update any relevant sample state.
-        /// </summary>
+		/// <summary>
+		/// In a derived class, implements logic to update any relevant sample state.
+		/// </summary>
 		protected virtual void OnUpdate()
 		{
 		}
 
-        /// <summary>
-        /// In a derived class, implements logic to render the sample.
-        /// </summary>
+		/// <summary>
+		/// In a derived class, implements logic to render the sample.
+		/// </summary>
 		protected virtual void OnRender()
 		{
 		}
 
-        /// <summary>
-        /// In a derived class, implements logic that should occur before all
-        /// other rendering.
-        /// </summary>
+		/// <summary>
+		/// In a derived class, implements logic that should occur before all
+		/// other rendering.
+		/// </summary>
 		protected virtual void OnRenderBegin()
 		{
 		}
 
-        /// <summary>
-        /// In a derived class, implements logic that should occur after all
-        /// other rendering.
-        /// </summary>
+		/// <summary>
+		/// In a derived class, implements logic that should occur after all
+		/// other rendering.
+		/// </summary>
 		protected virtual void OnRenderEnd()
 		{
 		}
 
 		/// <summary>
 		/// Initializes a <see cref="DeviceContext9">Direct3D9 device context</see> according to the specified settings.
-        /// The base class retains ownership of the context and will dispose of it when appropriate.
+		/// The base class retains ownership of the context and will dispose of it when appropriate.
 		/// </summary>
 		/// <param name="settings">The settings.</param>
 		/// <returns>The initialized device context.</returns>
 		protected DeviceContext9 InitializeDevice(DeviceSettings9 settings)
 		{
 			context = new DeviceContext9(form.Handle, settings);
+			userInterfaceRenderer = new UserInterfaceRenderer9( context.Device, settings.Width, settings.Height );
 			return context;
 		}
 
@@ -175,38 +190,43 @@ namespace SlimDX.SampleFramework
 		protected void Quit()
 		{
 			form.Close();
-        }
+		}
+		
+		#endregion
+		#region Implementation Detail
 
-        #region Implementation Detail
-
-        RenderForm form;
+		RenderForm form;
 		SampleConfiguration configuration;
+
+		UserInterface userInterface;
+		UserInterfaceRenderer userInterfaceRenderer;
 
 		DeviceContext9 context;
 
-        /// <summary>
-        /// Performs object finalization.
-        /// </summary>
-        ~Sample()
-        {
-            Dispose(false);
-        }
+		/// <summary>
+		/// Performs object finalization.
+		/// </summary>
+		~Sample()
+		{
+			Dispose(false);
+		}
 
-        /// <summary>
-        /// Updates sample state.
-        /// </summary>
+		/// <summary>
+		/// Updates sample state.
+		/// </summary>
 		void Update()
 		{
 			OnUpdate();
 		}
 
-        /// <summary>
-        /// Renders the sample.
-        /// </summary>
+		/// <summary>
+		/// Renders the sample.
+		/// </summary>
 		void Render()
 		{
 			OnRenderBegin();
 			OnRender();
+			userInterfaceRenderer.Render(userInterface);
 			OnRenderEnd();
 		}
 
@@ -219,6 +239,6 @@ namespace SlimDX.SampleFramework
 		{
 		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

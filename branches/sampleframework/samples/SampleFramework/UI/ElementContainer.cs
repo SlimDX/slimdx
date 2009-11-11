@@ -20,52 +20,57 @@
 * THE SOFTWARE.
 */
 
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Collections;
+
 namespace SlimDX.SampleFramework
 {
 	/// <summary>
-	/// Describes the desired application configuration of a <see cref="Sample"/>SlimDX sample</a>. 
+	/// A container for UI elements.
 	/// </summary>
-	public class SampleConfiguration
+	public class ElementContainer : IEnumerable<Element>
 	{
 		#region Public Interface
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SampleConfiguration"/> class.
+		/// Adds the specified element to the container.
 		/// </summary>
-		public SampleConfiguration()
+		/// <param name="element">The element.</param>
+		public void Add(Element element)
 		{
-			WindowTitle = "SlimDX Sample";
-			WindowWidth = 800;
-			WindowHeight = 600;
+			elements.Add(element);
 		}
 
 		/// <summary>
-		/// Gets or sets the window title.
+		/// Returns an enumerator that iterates through a collection.
 		/// </summary>
-		public string WindowTitle
+		/// <returns>
+		/// An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+		/// </returns>
+		IEnumerator IEnumerable.GetEnumerator()
 		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Gets or sets the width of the window.
-		/// </summary>
-		public int WindowWidth
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Gets or sets the height of the window.
-		/// </summary>
-		public int WindowHeight
-		{
-			get;
-			set;
+			throw new NotImplementedException();
 		}
 		
+		/// <summary>
+		/// Returns an enumerator that iterates through the collection.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="T:System.Collections.Generic.IEnumerator`1"/> that can be used to iterate through the collection.
+		/// </returns>
+		IEnumerator<Element> IEnumerable<Element>.GetEnumerator()
+		{
+			foreach (Element element in elements)
+				yield return element;
+		}
+
+		#endregion
+		#region Implementation Detail
+		
+		List<Element> elements = new List<Element>();
+
 		#endregion
 	}
 }

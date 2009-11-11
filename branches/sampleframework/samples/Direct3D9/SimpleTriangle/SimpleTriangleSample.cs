@@ -29,76 +29,75 @@ using SlimDX.SampleFramework;
 
 namespace SimpleTriangle
 {
-    class SimpleTriangleSample : Sample
-    {
-        protected override void Dispose(bool disposeManagedResources)
-        {
-            if (disposeManagedResources)
-            {
-                vertexBuffer.Dispose();
-            }
-        }
+	class SimpleTriangleSample : Sample
+	{
+		protected override void Dispose(bool disposeManagedResources)
+		{
+			if (disposeManagedResources)
+			{
+				vertexBuffer.Dispose();
+			}
+		}
 
-        protected override SampleConfiguration OnConfigure()
-        {
-            return new SampleConfiguration
-            {
-                WindowTitle = "SlimDX Sample - Simple Triangle"
-            };
-        }
+		protected override SampleConfiguration OnConfigure()
+		{
+			return new SampleConfiguration
+			{
+				WindowTitle = "SlimDX Sample - Simple Triangle"
+			};
+		}
 
-        protected override void OnInitialize()
-        {
-            DeviceSettings9 settings = new DeviceSettings9
-            {
-                AdapterOrdinal = 0,
-                CreationFlags = CreateFlags.HardwareVertexProcessing,
-                Width = WindowWidth,
-                Height = WindowHeight
-            };
+		protected override void OnInitialize()
+		{
+			DeviceSettings9 settings = new DeviceSettings9
+			{
+				AdapterOrdinal = 0,
+				CreationFlags = CreateFlags.HardwareVertexProcessing,
+				Width = WindowWidth,
+				Height = WindowHeight
+			};
 
-            context = InitializeDevice(settings);
+			context = InitializeDevice(settings);
 
-            vertexBuffer = new VertexBuffer(
-                context.Device,
-                3 * TransformedColoredVertex.SizeInBytes,
-                Usage.WriteOnly,
-                VertexFormat.None,
-                Pool.Managed
-            );
+			vertexBuffer = new VertexBuffer(
+				context.Device,
+				3 * TransformedColoredVertex.SizeInBytes,
+				Usage.WriteOnly,
+				VertexFormat.None,
+				Pool.Managed
+			);
 
-            DataStream stream = vertexBuffer.Lock(0, 0, LockFlags.None);
-            stream.Write(new TransformedColoredVertex(new Vector4(400.0f, 100.0f, 0.5f, 1.0f), Color.Red.ToArgb()));
-            stream.Write(new TransformedColoredVertex(new Vector4(650.0f, 500.0f, 0.5f, 1.0f), Color.Blue.ToArgb()));
-            stream.Write(new TransformedColoredVertex(new Vector4(150.0f, 500.0f, 0.5f, 1.0f), Color.Green.ToArgb()));
-            vertexBuffer.Unlock();
+			DataStream stream = vertexBuffer.Lock(0, 0, LockFlags.None);
+			stream.Write(new TransformedColoredVertex(new Vector4(400.0f, 100.0f, 0.5f, 1.0f), Color.Red.ToArgb()));
+			stream.Write(new TransformedColoredVertex(new Vector4(650.0f, 500.0f, 0.5f, 1.0f), Color.Blue.ToArgb()));
+			stream.Write(new TransformedColoredVertex(new Vector4(150.0f, 500.0f, 0.5f, 1.0f), Color.Green.ToArgb()));
+			vertexBuffer.Unlock();
+		}
 
-        }
+		protected override void OnRenderBegin()
+		{
+			context.Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, new Color4(0.3f, 0.3f, 0.3f), 1.0f, 0);
+			context.Device.BeginScene();
+		}
 
-        protected override void OnRenderBegin()
-        {
-            context.Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, new Color4(0.3f, 0.3f, 0.3f), 1.0f, 0);
-            context.Device.BeginScene();
-        }
+		protected override void OnRender()
+		{
+			context.Device.SetStreamSource(0, vertexBuffer, 0, TransformedColoredVertex.SizeInBytes);
+			context.Device.VertexFormat = VertexFormat.PositionRhw | VertexFormat.Diffuse;
+			context.Device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
+		}
 
-        protected override void OnRender()
-        {
-            context.Device.SetStreamSource(0, vertexBuffer, 0, TransformedColoredVertex.SizeInBytes);
-            context.Device.VertexFormat = VertexFormat.PositionRhw | VertexFormat.Diffuse;
-            context.Device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
-        }
+		protected override void OnRenderEnd()
+		{
+			context.Device.EndScene();
+			context.Device.Present();
+		}
 
-        protected override void OnRenderEnd()
-        {
-            context.Device.EndScene();
-            context.Device.Present();
-        }
+		#region Implementation Detail
 
-        #region Implementation Detail
+		DeviceContext9 context;
+		VertexBuffer vertexBuffer;
 
-        DeviceContext9 context;
-        VertexBuffer vertexBuffer;
-
-        #endregion
-    }
+		#endregion
+	}
 }

@@ -23,49 +23,23 @@
 namespace SlimDX.SampleFramework
 {
 	/// <summary>
-	/// Describes the desired application configuration of a <see cref="Sample"/>SlimDX sample</a>. 
+	/// Describes the primitive type represented in vertex data.
 	/// </summary>
-	public class SampleConfiguration
+	public enum PrimitiveTopology
 	{
-		#region Public Interface
+		/// <summary>
+		/// The vertex data represents a point list.
+		/// </summary>
+		PointList,
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SampleConfiguration"/> class.
+		/// The vertex data represents a line list.
 		/// </summary>
-		public SampleConfiguration()
-		{
-			WindowTitle = "SlimDX Sample";
-			WindowWidth = 800;
-			WindowHeight = 600;
-		}
-
-		/// <summary>
-		/// Gets or sets the window title.
-		/// </summary>
-		public string WindowTitle
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Gets or sets the width of the window.
-		/// </summary>
-		public int WindowWidth
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Gets or sets the height of the window.
-		/// </summary>
-		public int WindowHeight
-		{
-			get;
-			set;
-		}
+		LineList,
 		
-		#endregion
+		/// <summary>
+		/// The vertex data represents a triangle list.
+		/// </summary>
+		TriangleList
 	}
 }

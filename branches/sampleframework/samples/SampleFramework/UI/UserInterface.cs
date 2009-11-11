@@ -23,49 +23,25 @@
 namespace SlimDX.SampleFramework
 {
 	/// <summary>
-	/// Describes the desired application configuration of a <see cref="Sample"/>SlimDX sample</a>. 
+	/// Encapsulates logical user interface state.
 	/// </summary>
-	public class SampleConfiguration
+	public class UserInterface
 	{
-		#region Public Interface
-		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SampleConfiguration"/> class.
+		/// Initializes a new instance of the <see cref="UserInterface"/> class.
 		/// </summary>
-		public SampleConfiguration()
+		public UserInterface()
 		{
-			WindowTitle = "SlimDX Sample";
-			WindowWidth = 800;
-			WindowHeight = 600;
+			Container = new ElementContainer();
 		}
 
 		/// <summary>
-		/// Gets or sets the window title.
+		/// Gets or sets the interface's element container.
 		/// </summary>
-		public string WindowTitle
+		public ElementContainer Container
 		{
 			get;
 			set;
 		}
-
-		/// <summary>
-		/// Gets or sets the width of the window.
-		/// </summary>
-		public int WindowWidth
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Gets or sets the height of the window.
-		/// </summary>
-		public int WindowHeight
-		{
-			get;
-			set;
-		}
-		
-		#endregion
 	}
 }
