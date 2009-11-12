@@ -57,7 +57,7 @@ namespace Direct3D10_1
 		return ComObject::ConstructFromUserPointer<ShaderResourceView1>( pointer );
 	}
 
-	ShaderResourceView1::ShaderResourceView1( Device1^ device, Resource^ resource )
+	ShaderResourceView1::ShaderResourceView1( Device1^ device, SlimDX::Direct3D10::Resource^ resource )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
@@ -71,7 +71,7 @@ namespace Direct3D10_1
 		Construct( view );
 	}
 	
-	ShaderResourceView1::ShaderResourceView1( Device1^ device, Resource^ resource, ShaderResourceViewDescription1 description )
+	ShaderResourceView1::ShaderResourceView1( Device1^ device, SlimDX::Direct3D10::Resource^ resource, ShaderResourceViewDescription1 description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );

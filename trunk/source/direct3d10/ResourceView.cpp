@@ -24,6 +24,7 @@
 #include <d3d10.h>
 
 #include "ResourceView.h"
+#include "Resource10.h"
 
 using namespace System;
 
@@ -31,5 +32,11 @@ namespace SlimDX
 {
 namespace Direct3D10
 {
+	SlimDX::Direct3D10::Resource^ ResourceView::Resource::get()
+	{
+		ID3D10Resource* resource = 0;
+		InternalPointer->GetResource( &resource );
+		return SlimDX::Direct3D10::Resource::FromPointer( resource );
+	}
 }
 }

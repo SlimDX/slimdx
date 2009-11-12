@@ -47,7 +47,9 @@ namespace SlimDX
 			static ID3D10Resource* ConstructFromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName, D3DX10_IMAGE_LOAD_INFO* info );
 			static ID3D10Resource* ConstructFromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory, D3DX10_IMAGE_LOAD_INFO* info );
 			static ID3D10Resource* ConstructFromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes, D3DX10_IMAGE_LOAD_INFO* info );
-		
+			
+			static Resource^ FromPointer( ID3D10Resource* pointer );
+
 		protected:
 			Resource() { }
 
