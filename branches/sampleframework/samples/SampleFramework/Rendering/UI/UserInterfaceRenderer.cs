@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Reflection;
 
 using SlimDX;
@@ -86,7 +87,23 @@ namespace SlimDX.SampleFramework
 		/// In a derived class, implements logic to flush all pending rendering commands.
 		/// </summary>
 		protected abstract void Flush();
-
+		
+		/// <summary>
+		/// Computes the metrics for a string if it were to be rendered with this renderer.
+		/// </summary>
+		/// <param name="text">The string.</param>
+		/// <returns>The size metrics for the string.</returns>
+		internal abstract Vector2 MeasureString( string text );
+		
+		/// <summary>
+		/// Renders a string.
+		/// </summary>
+		/// <param name="text">The string.</param>
+		/// <param name="x">The X coordinate of the upper left corner of the text.</param>
+		/// <param name="y">The Y coordinate of the upper left corner of the text.</param>
+		/// <param name="color">The color of the text.</param>
+		internal abstract void RenderString( string text, int x, int y, Color4 color );
+		
 		/// <summary>
 		/// Renders a line.
 		/// </summary>
@@ -113,7 +130,7 @@ namespace SlimDX.SampleFramework
 			RenderLine(x + width, y + height, color, x, y + height, color);
 			RenderLine(x, y + height, color, x, y, color);
 		}
-
+		
 		#endregion
 	}
 }

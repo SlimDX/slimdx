@@ -19,7 +19,9 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 using SlimDX;
@@ -61,7 +63,7 @@ namespace SimpleTriangle
 
 			vertexBuffer = new VertexBuffer(
 				context.Device,
-				3 * TransformedColoredVertex.SizeInBytes,
+				3 * Marshal.SizeOf(typeof(TransformedColoredVertex)),
 				Usage.WriteOnly,
 				VertexFormat.None,
 				Pool.Managed
@@ -82,7 +84,7 @@ namespace SimpleTriangle
 
 		protected override void OnRender()
 		{
-			context.Device.SetStreamSource(0, vertexBuffer, 0, TransformedColoredVertex.SizeInBytes);
+			context.Device.SetStreamSource(0, vertexBuffer, 0, Marshal.SizeOf(typeof(TransformedColoredVertex)));
 			context.Device.VertexFormat = VertexFormat.PositionRhw | VertexFormat.Diffuse;
 			context.Device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
 		}

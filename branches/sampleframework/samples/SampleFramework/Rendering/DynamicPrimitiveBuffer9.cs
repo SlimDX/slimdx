@@ -24,13 +24,14 @@ using System;
 using System.Collections.Generic;
 
 using SlimDX.Direct3D9;
+using System.Runtime.InteropServices;
 
 namespace SlimDX.SampleFramework
 {
 	/// <summary>
 	/// An automatically-resizing buffer of primitive data, implemented using Direct3D 9.
 	/// </summary>
-	public class DynamicPrimitiveBuffer9 : IDisposable
+	public class DynamicPrimitiveBuffer9<T> : IDisposable where T : struct
 	{
 		#region Public Interface
 
@@ -86,7 +87,7 @@ namespace SlimDX.SampleFramework
 		/// Adds a vertex to the buffer.
 		/// </summary>
 		/// <param name="vertex">The vertex.</param>
-		public void Add(ColoredVertex vertex)
+		public void Add(T vertex)
 		{
 			vertices.Add(vertex);
 			if (vertices.Count > bufferSize)
@@ -120,8 +121,7 @@ namespace SlimDX.SampleFramework
 
 				for (int vertexIndex = 0; vertexIndex < vertices.Count; ++vertexIndex)
 				{
-					data.Write(vertices[vertexIndex].Position);
-					data.Write(vertices[vertexIndex].Color);
+					data.Write(vertices[vertexIndex]);
 				}
 
 				buffer.Unlock();
@@ -131,7 +131,7 @@ namespace SlimDX.SampleFramework
 			if (vertices.Count > 0)
 			{
 				buffer.Device.VertexFormat = VertexFormat.Position | VertexFormat.Diffuse;
-				buffer.Device.SetStreamSource(0, buffer, 0, ColoredVertex.SizeInBytes);
+				buffer.Device.SetStreamSource(0, buffer, 0, vertexSize);
 				buffer.Device.DrawPrimitives(primitiveType, 0, vertices.Count / verticesPerPrimitive);
 			}
 		}
@@ -146,9 +146,12 @@ namespace SlimDX.SampleFramework
 
 		VertexBuffer buffer;
 		int bufferSize = initialSize;
-		List<ColoredVertex> vertices = new List<ColoredVertex>();
+		
+		List<T> vertices = new List<T>();
 
 		bool needsCommit = false;
+
+		static int vertexSize = Marshal.SizeOf(typeof(T));
 		
 		/// <summary>
 		/// Disposes of object resources.
@@ -162,6 +165,7 @@ namespace SlimDX.SampleFramework
 				buffer.Dispose();
 			}
 		}
+		
 		/// <summary>
 		/// Creates the buffer.
 		/// </summary>
@@ -170,7 +174,7 @@ namespace SlimDX.SampleFramework
 		/// <returns>The created buffer.</returns>
 		static VertexBuffer CreateBuffer(Device device, int size)
 		{
-			return new VertexBuffer(device, size * ColoredVertex.SizeInBytes, Usage.Dynamic, VertexFormat.Position | VertexFormat.Diffuse, Pool.Default);
+			return new VertexBuffer(device, size * vertexSize, Usage.Dynamic, VertexFormat.Position | VertexFormat.Diffuse, Pool.Default);
 		}
 
 		#endregion

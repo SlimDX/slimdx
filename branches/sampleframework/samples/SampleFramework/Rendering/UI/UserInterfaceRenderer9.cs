@@ -42,22 +42,23 @@ namespace SlimDX.SampleFramework
 		/// <param name="device">The device.</param>
 		/// <param name="width">The width of the renderable area.</param>
 		/// <param name="height">The height of the renderable area.</param>
-		public UserInterfaceRenderer9( Device device, int width, int height )
+		public UserInterfaceRenderer9(Device device, int width, int height)
 		{
-			if( device == null ) 
-				throw new ArgumentNullException( "device" );
-			if( width < 0 )
-				throw new ArgumentException("Value must be positive.","width");
+			if (device == null)
+				throw new ArgumentNullException("device");
+			if (width < 0)
+				throw new ArgumentException("Value must be positive.", "width");
 			if (height < 0)
 				throw new ArgumentException("Value must be positive.", "height");
-			
+
 			this.device = device;
 			halfWidth = width / 2;
 			halfHeight = height / 2;
-			
-			lineBuffer = new DynamicPrimitiveBuffer9(device, PrimitiveTopology.LineList);
+
+			font = new Font(device, 18, 0, FontWeight.Bold, 0, false, CharacterSet.Default, Precision.Default, FontQuality.Antialiased, PitchAndFamily.Default, "Arial");
+			lineBuffer = new DynamicPrimitiveBuffer9<ColoredVertex>(device, PrimitiveTopology.LineList);
 		}
-		
+
 		/// <summary>
 		/// Disposes of object resources.
 		/// </summary>
@@ -68,11 +69,12 @@ namespace SlimDX.SampleFramework
 			if (disposeManagedResources)
 			{
 				lineBuffer.Dispose();
+				font.Dispose();
 			}
 
 			base.Dispose(disposeManagedResources);
 		}
-		
+
 		/// <summary>
 		/// In a derived class, implements logic to flush all pending rendering commands.
 		/// </summary>
@@ -86,9 +88,36 @@ namespace SlimDX.SampleFramework
 			device.SetTransform(TransformState.Projection, Matrix.Identity);
 
 			device.SetRenderState(RenderState.Lighting, false);
-			
+
 			lineBuffer.Render();
 			lineBuffer.Clear();
+
+			foreach (Text text in textBuffer)
+				font.DrawString(null, text.String, text.X, text.Y, text.Color);
+			textBuffer.Clear();
+		}
+
+		/// <summary>
+		/// Computes the metrics for a string if it were to be rendered with this renderer.
+		/// </summary>
+		/// <param name="text">The string.</param>
+		/// <returns>The size metrics for the string.</returns>
+		internal override Vector2 MeasureString(string text)
+		{
+			System.Drawing.Rectangle bounds = font.MeasureString(null, text, DrawTextFormat.SingleLine);
+			return new Vector2(bounds.Width, bounds.Height);
+		}
+
+		/// <summary>
+		/// Renders a string.
+		/// </summary>
+		/// <param name="text">The string.</param>
+		/// <param name="x">The X coordinate of the upper left corner of the text.</param>
+		/// <param name="y">The Y coordinate of the upper left corner of the text.</param>
+		/// <param name="color">The color of the text.</param>
+		internal override void RenderString(string text, int x, int y, Color4 color)
+		{
+			textBuffer.Add(new Text(x, y, text, color));
 		}
 
 		/// <summary>
@@ -119,9 +148,11 @@ namespace SlimDX.SampleFramework
 		Device device;
 		int halfWidth;
 		int halfHeight;
-		
-		DynamicPrimitiveBuffer9 lineBuffer;	
-		
+
+		Font font;
+		DynamicPrimitiveBuffer9<ColoredVertex> lineBuffer;
+		List<Text> textBuffer = new List<Text>();
+
 		#endregion
 	}
 }

@@ -44,8 +44,7 @@ namespace SlimDX.SampleFramework
 		/// <returns>The size of the element (in pixels).</returns>
 		public virtual Vector2 Measure(UserInterfaceRenderer renderer, Element element)
 		{
-			Size size = TextRenderer.MeasureText(element.Label, SystemFonts.CaptionFont);
-			return new Vector2(size.Width, size.Height);
+			return renderer.MeasureString(element.Label);
 		}
 
 		/// <summary>
@@ -61,8 +60,7 @@ namespace SlimDX.SampleFramework
 		{
 			Color4 color = new Color4(1.0f, 1.0f, 1.0f);
 			renderer.RenderRectangle(x, y, width, height, color);
-			renderer.RenderLine(x, y, color, x + width, y + height, color);
-			renderer.RenderLine(x, y + height, color, x + width, y, color);
+			renderer.RenderString(element.Label, 0, 0, new Color4(1.0f, 0.0f, 0.0f));
 		}
 
 		#endregion

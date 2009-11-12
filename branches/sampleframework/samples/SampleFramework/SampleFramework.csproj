@@ -80,11 +80,13 @@
     <Compile Include="Rendering\DeviceContext9.cs" />
     <Compile Include="Rendering\DeviceSettings9.cs" />
     <Compile Include="Rendering\DynamicPrimitiveBuffer9.cs" />
+    <Compile Include="Rendering\Primitive\TexturedVertex.cs" />
     <Compile Include="Rendering\PrimitiveTopology.cs" />
     <Compile Include="Rendering\Primitive\ColoredVertex.cs" />
     <Compile Include="Rendering\Primitive\TransformedColoredVertex.cs" />
     <Compile Include="Rendering\UI\DefaultVisual.cs" />
     <Compile Include="Rendering\UI\IElementVisual.cs" />
+    <Compile Include="Rendering\UI\Text.cs" />
     <Compile Include="Rendering\UI\UserInterfaceRenderer.cs" />
     <Compile Include="Rendering\UI\UserInterfaceRenderer9.cs" />
     <Compile Include="Sample.cs" />

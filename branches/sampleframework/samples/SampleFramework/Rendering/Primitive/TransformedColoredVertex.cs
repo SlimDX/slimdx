@@ -51,18 +51,7 @@ namespace SlimDX.SampleFramework
 			get;
 			set;
 		}
-
-		/// <summary>
-		/// Gets the size (in bytes) of a vertex.
-		/// </summary>
-		public static int SizeInBytes
-		{
-			get
-			{
-				return Marshal.SizeOf(typeof(TransformedColoredVertex));
-			}
-		}
-
+		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TransformedColoredVertex"/> struct.
 		/// </summary>

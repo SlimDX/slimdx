@@ -29,10 +29,10 @@ using SlimDX;
 namespace SlimDX.SampleFramework
 {
 	/// <summary>
-	/// Represents a vertex with a position and a color.
+	/// Represents a vertex with a position and a texture coordinate.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
-	public struct ColoredVertex : IEquatable<ColoredVertex>
+	public struct TexturedVertex : IEquatable<TexturedVertex>
 	{
 		/// <summary>
 		/// Gets or sets the position of the vertex.
@@ -44,24 +44,24 @@ namespace SlimDX.SampleFramework
 		}
 
 		/// <summary>
-		/// Gets or sets the color of the vertex.
+		/// Gets or sets the texture coordinate for the vertex.
 		/// </summary>
-		public int Color
+		public Vector2 TextureCoordinate
 		{
 			get;
 			set;
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ColoredVertex"/> struct.
+		/// Initializes a new instance of the <see cref="TexturedVertex"/> struct.
 		/// </summary>
 		/// <param name="position">The position.</param>
 		/// <param name="color">The color.</param>
-		public ColoredVertex(Vector3 position, int color)
+		public TexturedVertex(Vector3 position, Vector2 textureCoordinate)
 			: this()
 		{
 			Position = position;
-			Color = color;
+			TextureCoordinate = textureCoordinate;
 		}
 
 		/// <summary>
@@ -70,7 +70,7 @@ namespace SlimDX.SampleFramework
 		/// <param name="left">The left.</param>
 		/// <param name="right">The right.</param>
 		/// <returns>The result of the operator.</returns>
-		public static bool operator ==(ColoredVertex left, ColoredVertex right)
+		public static bool operator ==(TexturedVertex left, TexturedVertex right)
 		{
 			return left.Equals(right);
 		}
@@ -81,7 +81,7 @@ namespace SlimDX.SampleFramework
 		/// <param name="left">The left side of the operator.</param>
 		/// <param name="right">The right side of the operator.</param>
 		/// <returns>The result of the operator.</returns>
-		public static bool operator !=(ColoredVertex left, ColoredVertex right)
+		public static bool operator !=(TexturedVertex left, TexturedVertex right)
 		{
 			return !(left == right);
 		}
@@ -94,7 +94,7 @@ namespace SlimDX.SampleFramework
 		/// </returns>
 		public override int GetHashCode()
 		{
-			return Position.GetHashCode() + Color.GetHashCode();
+			return Position.GetHashCode() + TextureCoordinate.GetHashCode();
 		}
 
 		/// <summary>
@@ -112,7 +112,7 @@ namespace SlimDX.SampleFramework
 			if (GetType() != obj.GetType())
 				return false;
 
-			return Equals((ColoredVertex)obj);
+			return Equals((TexturedVertex)obj);
 		}
 
 		/// <summary>
@@ -122,9 +122,9 @@ namespace SlimDX.SampleFramework
 		/// <returns>
 		/// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
 		/// </returns>
-		public bool Equals(ColoredVertex other)
+		public bool Equals(TexturedVertex other)
 		{
-			return (Position == other.Position && Color == other.Color);
+			return (Position == other.Position && TextureCoordinate == other.TextureCoordinate);
 		}
 	}
 }
