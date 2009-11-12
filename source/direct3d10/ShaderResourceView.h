@@ -48,8 +48,8 @@ namespace SlimDX
 				ShaderResourceViewDescription get();
 			}
 			
-			ShaderResourceView( SlimDX::Direct3D10::Device^ device, Resource^ resource );
-			ShaderResourceView( SlimDX::Direct3D10::Device^ device, Resource^ resource, ShaderResourceViewDescription description );
+			ShaderResourceView( SlimDX::Direct3D10::Device^ device, SlimDX::Direct3D10::Resource^ resource );
+			ShaderResourceView( SlimDX::Direct3D10::Device^ device, SlimDX::Direct3D10::Resource^ resource, ShaderResourceViewDescription description );
 			
 			/// <summary>
 			/// Creates a shader resource view from a file.

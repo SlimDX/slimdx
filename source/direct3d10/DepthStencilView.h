@@ -42,8 +42,8 @@ namespace SlimDX
 				DepthStencilViewDescription get();
 			}
 			
-			DepthStencilView( SlimDX::Direct3D10::Device^ device, Resource^ resource );
-			DepthStencilView( SlimDX::Direct3D10::Device^ device, Resource^ resource, DepthStencilViewDescription description );
+			DepthStencilView( SlimDX::Direct3D10::Device^ device, SlimDX::Direct3D10::Resource^ resource );
+			DepthStencilView( SlimDX::Direct3D10::Device^ device, SlimDX::Direct3D10::Resource^ resource, DepthStencilViewDescription description );
 		};
 	}
 };

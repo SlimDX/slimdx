@@ -63,6 +63,7 @@ namespace Direct3D11
 		T result = safe_cast<T>( T::typeid->InvokeMember( "FromPointerReflectionThunk", flags, nullptr, nullptr, args, CultureInfo::InvariantCulture ) );
 		return result;
 	}
+
 	Resource^ Resource::FromPointer( ID3D11Resource* pointer )
 	{
 		if( pointer == NULL )

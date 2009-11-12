@@ -36,7 +36,7 @@ namespace SlimDX
 {
 namespace Direct3D10
 { 
-	DepthStencilView::DepthStencilView( SlimDX::Direct3D10::Device^ device, Resource^ resource )
+	DepthStencilView::DepthStencilView( SlimDX::Direct3D10::Device^ device, SlimDX::Direct3D10::Resource^ resource )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
@@ -50,7 +50,7 @@ namespace Direct3D10
 		Construct( view );
 	}
 	
-	DepthStencilView::DepthStencilView( SlimDX::Direct3D10::Device^ device, Resource^ resource, DepthStencilViewDescription description )
+	DepthStencilView::DepthStencilView( SlimDX::Direct3D10::Device^ device, SlimDX::Direct3D10::Resource^ resource, DepthStencilViewDescription description )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );

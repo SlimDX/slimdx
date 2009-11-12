@@ -29,12 +29,22 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
+		ref class Resource;
+
 		public ref class ResourceView abstract : public DeviceChild
 		{
 			COMOBJECT_BASE(ID3D10View);
 
 		protected:
 			ResourceView() { }
+
+		public:
+			/// <summary>Gets the resource that is accessed through this view.</summary>
+			/// <unmanaged>ID3D10View::GetResource</unmanaged>
+			property SlimDX::Direct3D10::Resource^ Resource
+			{
+				SlimDX::Direct3D10::Resource^ get();
+			}
 		};
 	}
 };

@@ -41,8 +41,8 @@ namespace SlimDX
 				RenderTargetViewDescription get();
 			}
 			
-			RenderTargetView( SlimDX::Direct3D10::Device^ device, Resource^ resource );
-			RenderTargetView( SlimDX::Direct3D10::Device^ device, Resource^ resource, RenderTargetViewDescription description );
+			RenderTargetView( SlimDX::Direct3D10::Device^ device, SlimDX::Direct3D10::Resource^ resource );
+			RenderTargetView( SlimDX::Direct3D10::Device^ device, SlimDX::Direct3D10::Resource^ resource, RenderTargetViewDescription description );
 		};
 	}
 };
