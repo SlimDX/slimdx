@@ -61,5 +61,31 @@ namespace Direct3D10
 
 		Construct( layout );
 	}
+
+	InputLayout::InputLayout( SlimDX::Direct3D10::Device^ device, ShaderSignature^ shaderSignature, array<InputElement>^ elements )
+	{
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+		if( shaderSignature == nullptr )
+			throw gcnew ArgumentNullException( "shaderSignature" );
+		if( elements == nullptr )
+			throw gcnew ArgumentNullException( "elements" );
+
+		D3D10_INPUT_ELEMENT_DESC nativeElements[D3D10_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT];
+		for( int i = 0; i < elements->Length; ++i )
+			nativeElements[i] = elements[i].CreateNativeVersion();
+			
+		ID3D10InputLayout* layout = 0;
+		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->Buffer,
+			static_cast<SIZE_T>( shaderSignature->Length ), &layout );
+
+		for( int i = 0; i < elements->Length; i++ )
+			Utilities::FreeNativeString( nativeElements[i].SemanticName );
+
+		if( RECORD_D3D10( hr ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+
+		Construct( layout );
+	}
 }
 }

@@ -38,7 +38,15 @@ namespace SlimDX
 			COMOBJECT(ID3D10InputLayout, InputLayout);
 		
 		public:
+			[System::Obsolete("Use the constructor overload taking a ShaderSignature as the second argument instead.")]
 			InputLayout( SlimDX::Direct3D10::Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature );
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="InputLayout" /> object to describe the
+			/// input-buffer data for the input-assembler stage.
+			/// </summary>
+			/// <unmanaged>ID3D11Device::CreateInputLayout</unmanaged>
+			InputLayout( SlimDX::Direct3D10::Device^ device, ShaderSignature^ shaderSignature, array<InputElement>^ elements );
 		};
 	}
 };

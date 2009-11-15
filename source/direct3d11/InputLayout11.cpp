@@ -59,5 +59,31 @@ namespace Direct3D11
 
 		Construct( layout );
 	}
+
+	InputLayout::InputLayout( SlimDX::Direct3D11::Device^ device, Direct3D10::ShaderSignature^ shaderSignature, array<InputElement>^ elements )
+	{
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
+		if( shaderSignature == nullptr )
+			throw gcnew ArgumentNullException( "shaderSignature" );
+		if( elements == nullptr )
+			throw gcnew ArgumentNullException( "elements" );
+
+		D3D11_INPUT_ELEMENT_DESC nativeElements[D3D11_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT];
+		for( int i = 0; i < elements->Length; ++i )
+			nativeElements[i] = elements[i].CreateNativeVersion();
+			
+		ID3D11InputLayout* layout = 0;
+		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->Buffer,
+			static_cast<SIZE_T>( shaderSignature->Length ), &layout );
+
+		for( int i = 0; i < elements->Length; i++ )
+			Utilities::FreeNativeString( nativeElements[i].SemanticName );
+
+		if( RECORD_D3D11( hr ).IsFailure )
+			throw gcnew Direct3D11Exception( Result::Last );
+
+		Construct( layout );
+	}
 }
 }

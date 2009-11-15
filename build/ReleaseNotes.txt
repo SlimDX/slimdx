@@ -10,6 +10,7 @@ Direct3D 10
 	* Added FromFile to ShaderResourceView.
 	* Changed Include.Open to include missing parentStream parameter.
 	* Changed Font.Draw color parameter to Color4 instead of unsigned int.
+	* Deprecated InputLayout constructor taking (device, elements, signature) in favor of one taking (device, signature, elements).
 
 Direct3D 11
 	* Added the UnorderedAccess member to BindFlags.
@@ -18,6 +19,7 @@ Direct3D 11
 	* Added missing fields to ShaderResourceViewDescription.
 	* Added missing Flag field to DepthStencilViewDescription.
 	* Added null checks to OutputMergerWrapper methods.
+	* Deprecated InputLayout constructor taking (device, elements, signature) in favor of one taking (device, signature, elements).
 	
 XAPO
 	* Implemented XAPO.
