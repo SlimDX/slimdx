@@ -91,7 +91,7 @@ namespace SimpleTriangle
 							new InputElement("POSITION", 0, SlimDX.DXGI.Format.R32G32B32A32_Float, 0, 0),
 							new InputElement("COLOR", 0, SlimDX.DXGI.Format.R32G32B32A32_Float, 16, 0)
 						};
-            layout = new InputLayout(Device, inputElements, pass.Description.Signature);
+            layout = new InputLayout(Device, pass.Description.Signature, inputElements);
 
             DataStream stream = new DataStream(3 * Marshal.SizeOf(typeof(Vertex)), true, true);
             stream.Write(new Vector4(0.0f, 0.5f, 0.5f, 1.0f));

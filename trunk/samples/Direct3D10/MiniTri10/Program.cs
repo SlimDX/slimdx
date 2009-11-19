@@ -59,10 +59,10 @@ namespace MiniTri
             var effect = Effect.FromFile(device, "MiniTri.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null);
             var technique = effect.GetTechniqueByIndex(0);
             var pass = technique.GetPassByIndex(0);
-            var layout = new InputLayout(device, new[] {
+            var layout = new InputLayout(device, pass.Description.Signature, new[] {
                 new InputElement("POSITION", 0, Format.R32G32B32A32_Float, 0, 0),
                 new InputElement("COLOR", 0, Format.R32G32B32A32_Float, 16, 0) 
-            }, pass.Description.Signature);
+            });
 
             var stream = new DataStream(3 * 32, true, true);
             stream.WriteRange(new[] {

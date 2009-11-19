@@ -35,6 +35,7 @@
 #include "PixelShader9.h"
 #include "VertexShader9.h"
 #include "Texture.h"
+#include "Effect9.h"
 #include "EffectStateManager.h"
 
 using namespace System;
@@ -44,9 +45,11 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	IEffectStateManagerShim::IEffectStateManagerShim( IEffectStateManager^ wrappedInterface )
+	IEffectStateManagerShim::IEffectStateManagerShim( IEffectStateManager^ wrappedInterface, Effect^ effect )
 	{
 		m_WrappedInterface = wrappedInterface;
+		m_Effect = effect;
+
 		refCount = 1;
 	}
 
@@ -211,10 +214,7 @@ namespace Direct3D9
 			if( pShader == NULL )
 				m_WrappedInterface->SetPixelShader( nullptr );
 			else
-			{
-				pShader->AddRef();
-				m_WrappedInterface->SetPixelShader( PixelShader::FromPointer( pShader ) );
-			}
+				m_WrappedInterface->SetPixelShader( PixelShader::FromPointer( pShader, m_Effect ) );
 		}
 		catch( SlimDXException^ ex)
 		{
@@ -299,10 +299,7 @@ namespace Direct3D9
 			if( pShader == NULL )
 				m_WrappedInterface->SetVertexShader( nullptr );
 			else
-			{
-				pShader->AddRef();
-				m_WrappedInterface->SetVertexShader( VertexShader::FromPointer( pShader ) );
-			}
+				m_WrappedInterface->SetVertexShader( VertexShader::FromPointer( pShader, m_Effect ) );
 		}
 		catch( SlimDXException^ ex)
 		{
@@ -423,10 +420,7 @@ namespace Direct3D9
 			if( pTexture == NULL )
 				m_WrappedInterface->SetTexture( Stage, nullptr );
 			else
-			{
-				pTexture->AddRef();
 				m_WrappedInterface->SetTexture( Stage, BaseTexture::FromUnmanaged( pTexture ) );
-			}
 		}
 		catch( SlimDXException^ ex)
 		{
