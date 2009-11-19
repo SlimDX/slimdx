@@ -51,10 +51,8 @@ namespace Direct3D10
 	{
 		D3D10_EFFECT_DESC nativeDescription;
 		RECORD_D3D10( InternalPointer->GetDesc( &nativeDescription ) );
-		if( Result::Last.IsSuccess )
-			return EffectDescription( nativeDescription );
-		
-		throw gcnew Direct3D10Exception( Result::Last );
+
+		return EffectDescription( nativeDescription );
 	}
 	
 	bool Effect::IsOptimized::get()

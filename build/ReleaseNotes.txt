@@ -12,6 +12,7 @@ Direct3D 10
 	* Changed Include.Open to include missing parentStream parameter.
 	* Changed Font.Draw color parameter to Color4 instead of unsigned int.
 	* Deprecated InputLayout constructor taking (device, elements, signature) in favor of one taking (device, signature, elements).
+	* Reconfigured ShaderBytecode to be a ComObject wrapping ID3D10Blob.
 
 Direct3D 11
 	* Added the UnorderedAccess member to BindFlags.

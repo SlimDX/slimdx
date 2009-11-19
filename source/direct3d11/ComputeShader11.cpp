@@ -38,7 +38,7 @@ namespace Direct3D11
 	{
 		ID3D11ComputeShader *shader;
 
-		HRESULT hr = device->InternalPointer->CreateComputeShader( shaderBytecode->Buffer, shaderBytecode->Length, NULL, &shader );
+		HRESULT hr = device->InternalPointer->CreateComputeShader( shaderBytecode->InternalPointer->GetBufferPointer(), shaderBytecode->InternalPointer->GetBufferSize(), NULL, &shader );
 		if( RECORD_D3D11( hr ).IsFailure )
 			throw gcnew Direct3D11Exception( Result::Last );
 
@@ -50,7 +50,7 @@ namespace Direct3D11
 		ID3D11ComputeShader *shader;
 		ID3D11ClassLinkage *nativeLinkage = linkage == nullptr ? NULL : linkage->InternalPointer;
 
-		HRESULT hr = device->InternalPointer->CreateComputeShader( shaderBytecode->Buffer, shaderBytecode->Length, nativeLinkage, &shader );
+		HRESULT hr = device->InternalPointer->CreateComputeShader( shaderBytecode->InternalPointer->GetBufferPointer(), shaderBytecode->InternalPointer->GetBufferSize(), nativeLinkage, &shader );
 		if( RECORD_D3D11( hr ).IsFailure )
 			throw gcnew Direct3D11Exception( Result::Last );
 

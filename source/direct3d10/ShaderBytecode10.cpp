@@ -21,7 +21,7 @@
 */
 #include "stdafx.h"
 
-#include <d3dcompiler.h>
+#include "../DataStream.h"
 
 #include "Direct3D10Exception.h"
 #include "ShaderBytecode10.h"
@@ -34,56 +34,33 @@ namespace SlimDX
 {
 namespace Direct3D10
 {
-	ShaderBytecode::ShaderBytecode( ID3D10Blob *blob )
+	ShaderBytecode::ShaderBytecode( const BYTE *data, UINT length )
 	{
-		m_Buffer = NULL;
+		ID3D10Blob *blob;
 
-		this->blob = blob;
+		HRESULT hr = D3D10CreateBlob( length, &blob );
+		if( RECORD_D3D10( hr ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+
+		memcpy( blob->GetBufferPointer(), data, length );
+		Construct( blob );
 	}
 
-	ShaderBytecode::ShaderBytecode( const void* buffer, long length )
+	ShaderBytecode::ShaderBytecode( array<Byte>^ data )
 	{
-		m_Buffer = buffer;
-		m_Length = length;
-	}
+		ID3D10Blob *blob;
 
-	ShaderBytecode::~ShaderBytecode()
-	{
-		Destruct();
-	}
+		if( data == nullptr )
+			throw gcnew ArgumentNullException( "data" );
 
-	ShaderBytecode::!ShaderBytecode()
-	{
-		Destruct();
-	}
+		HRESULT hr = D3D10CreateBlob( data->Length, &blob );
+		if( RECORD_D3D10( hr ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
 
-	void ShaderBytecode::Destruct()
-	{
-		if( blob != NULL )
-			blob->Release();
+		pin_ptr<Byte> pinnedData = &data[0];
+		memcpy( blob->GetBufferPointer(), pinnedData, data->Length );
 
-		blob = NULL;
-	}
-
-	int ShaderBytecode::GetHashCode()
-	{
-		return reinterpret_cast<int>( Buffer );
-	}
-
-	const void *ShaderBytecode::Buffer::get()
-	{
-		if( m_Buffer == NULL )
-			return blob->GetBufferPointer();
-		else
-			return m_Buffer;
-	}
-
-	long ShaderBytecode::Length::get()
-	{
-		if( m_Buffer == NULL )
-			return static_cast<long>( blob->GetBufferSize() );
-		else
-			return m_Length;
+		Construct( blob );
 	}
 
 	ShaderBytecode^ ShaderBytecode::Compile( String^ shaderSource, String^ entryPoint, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags )
@@ -135,9 +112,9 @@ namespace Direct3D10
 		stack_array<D3D10_SHADER_MACRO> macros = ShaderMacro::Marshal( defines, handles );
 		D3D10_SHADER_MACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
-		HRESULT hr = D3DCompile( pinnedSource, shaderSource->Length, NULL, macrosPtr, includePtr, 
+		HRESULT hr = D3DX10CompileFromMemory( reinterpret_cast<LPCSTR>( pinnedSource ), shaderSource->Length, NULL, macrosPtr, includePtr,
 			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
-			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), &code, &errors );
+			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), NULL, &code, &errors, NULL );
 
 		ShaderMacro::Unmarshal( handles );
 
@@ -150,7 +127,7 @@ namespace Direct3D10
 		if( code == NULL )
 			return nullptr;
 
-		return gcnew ShaderBytecode( code );
+		return ShaderBytecode::FromPointer( code );
 	}
 
 	ShaderBytecode^ ShaderBytecode::CompileFromFile( String^ fileName, String^ entryPoint, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags )
@@ -170,8 +147,7 @@ namespace Direct3D10
 		ID3D10Blob *code;
 		ID3D10Blob *errors;
 
-		array<Byte>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( fileName );
-		pin_ptr<Byte> pinnedName = &nameBytes[0];
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 		array<Byte>^ functionBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( entryPoint );
 		pin_ptr<Byte> pinnedFunction = &functionBytes[0];
 		array<Byte>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
@@ -186,9 +162,9 @@ namespace Direct3D10
 		stack_array<D3D10_SHADER_MACRO> macros = ShaderMacro::Marshal( defines, handles );
 		D3D10_SHADER_MACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
-		HRESULT hr = D3DCompile( NULL, 0, reinterpret_cast<LPCSTR>( pinnedName ), macrosPtr, includePtr, 
+		HRESULT hr = D3DX10CompileFromFile( reinterpret_cast<LPCWSTR>( pinnedName ), macrosPtr, includePtr,
 			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
-			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), &code, &errors );
+			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), NULL, &code, &errors, NULL );
 
 		String^ compilationErrorsLocal = Utilities::BlobToString( errors );
 		compilationErrors = compilationErrorsLocal;
@@ -199,7 +175,17 @@ namespace Direct3D10
 		if( code == NULL )
 			return nullptr;
 
-		return gcnew ShaderBytecode( code );
+		return ShaderBytecode::FromPointer( code );
+	}
+
+	DataStream^ ShaderBytecode::Data::get()
+	{
+		return gcnew DataStream( InternalPointer->GetBufferPointer(), InternalPointer->GetBufferSize(), true, true, false );
+	}
+
+	int ShaderBytecode::GetHashCode()
+	{
+		return reinterpret_cast<int>( InternalPointer->GetBufferPointer() );
 	}
 }
 }

@@ -37,7 +37,7 @@ namespace Direct3D10
 	{
 		ID3D10PixelShader *shader;
 
-		HRESULT hr = device->InternalPointer->CreatePixelShader( shaderBytecode->Buffer, shaderBytecode->Length, &shader );
+		HRESULT hr = device->InternalPointer->CreatePixelShader( shaderBytecode->InternalPointer->GetBufferPointer(), shaderBytecode->InternalPointer->GetBufferSize(), &shader );
 		if( RECORD_D3D10( hr ).IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );
 
