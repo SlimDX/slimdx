@@ -565,7 +565,7 @@ namespace Direct3D9
 
 		// Manual Allocation: Handled properly
 		// the class needs to keep this pointer around
-		shim = new IEffectStateManagerShim( manager );
+		shim = new IEffectStateManagerShim( manager, this );
 
 		HRESULT hr = InternalPointer->SetStateManager( shim );
 		RECORD_D3D9( hr );

@@ -4,6 +4,7 @@ Direct3D 9
 	* Fixed Mesh.ToXFile to handle meshes that don't have materials and effects.
 	* Fixed a bug in Sprite.Draw where source rectangle was not taken into account.
 	* Fixed a bug that would cause EffectStateManager methods to crash if a null shader or texture was passed to them.
+	* Fixed a memory leak in EffectStateManager by making implicit shaders ancillary objects.
 		
 Direct3D 10
 	* Added InputElement.AppendAligned property.

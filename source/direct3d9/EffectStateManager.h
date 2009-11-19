@@ -25,6 +25,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		ref class Effect;
+
 		public interface struct IEffectStateManager
 		{
 			virtual void EnableLight( int index, bool enable ) = 0;
@@ -55,9 +57,10 @@ namespace SlimDX
 		private:
 			int refCount;
 			gcroot<IEffectStateManager^> m_WrappedInterface;
+			gcroot<Effect^> m_Effect;
 
 		public:
-			IEffectStateManagerShim( IEffectStateManager^ wrappedInterface );
+			IEffectStateManagerShim( IEffectStateManager^ wrappedInterface, Effect^ effect );
 
 			IEffectStateManager^ GetManager() { return m_WrappedInterface; }
 
