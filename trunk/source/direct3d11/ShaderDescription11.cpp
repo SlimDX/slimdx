@@ -34,7 +34,7 @@ namespace Direct3D11
 	{
 		m_InputSignature = gcnew SlimDX::Direct3D10::ShaderSignature( static_cast<const void*>( native.pInputSignature ), static_cast<long>( native.BytecodeLength - (native.pInputSignature - native.pBytecode) ) );
 		m_IsInline = native.IsInline ? true : false;
-		m_Bytecode = gcnew SlimDX::Direct3D10::ShaderBytecode( static_cast<const void*>( native.pBytecode ), native.BytecodeLength );
+		m_Bytecode = gcnew SlimDX::Direct3D10::ShaderBytecode( native.pBytecode, native.BytecodeLength );
 		m_SODecl = gcnew array<System::String^>( D3D11_SO_STREAM_COUNT );
 		for( int i = 0; i < D3D11_SO_STREAM_COUNT; ++i )
 		{

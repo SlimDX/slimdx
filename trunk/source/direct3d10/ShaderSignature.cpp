@@ -89,7 +89,7 @@ namespace Direct3D10
 	{
 		ID3D10Blob *blob;
 
-		HRESULT hr = D3DGetInputSignatureBlob( shaderBytecode->Buffer, shaderBytecode->Length, &blob );
+		HRESULT hr = D3DGetInputSignatureBlob( shaderBytecode->InternalPointer->GetBufferPointer(), shaderBytecode->InternalPointer->GetBufferSize(), &blob );
 		if( RECORD_D3D10( hr ).IsFailure )
 			return nullptr;
 
@@ -100,7 +100,7 @@ namespace Direct3D10
 	{
 		ID3D10Blob *blob;
 
-		HRESULT hr = D3DGetOutputSignatureBlob( shaderBytecode->Buffer, shaderBytecode->Length, &blob );
+		HRESULT hr = D3DGetOutputSignatureBlob( shaderBytecode->InternalPointer->GetBufferPointer(), shaderBytecode->InternalPointer->GetBufferSize(), &blob );
 		if( RECORD_D3D10( hr ).IsFailure )
 			return nullptr;
 
@@ -111,7 +111,7 @@ namespace Direct3D10
 	{
 		ID3D10Blob *blob;
 
-		HRESULT hr = D3DGetInputAndOutputSignatureBlob( shaderBytecode->Buffer, shaderBytecode->Length, &blob );
+		HRESULT hr = D3DGetInputAndOutputSignatureBlob( shaderBytecode->InternalPointer->GetBufferPointer(), shaderBytecode->InternalPointer->GetBufferSize(), &blob );
 		if( RECORD_D3D10( hr ).IsFailure )
 			return nullptr;
 

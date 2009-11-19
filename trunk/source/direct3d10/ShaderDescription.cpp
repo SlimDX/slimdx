@@ -34,7 +34,7 @@ namespace Direct3D10
 	{
 		m_InputSignature = gcnew ShaderSignature( static_cast<const void*>( native.pInputSignature ), static_cast<long>( native.BytecodeLength - (native.pInputSignature - native.pBytecode) ) );
 		m_IsInline = native.IsInline ? true : false;
-		m_Bytecode = gcnew ShaderBytecode( static_cast<const void*>( native.pBytecode ), native.BytecodeLength );
+		m_Bytecode = gcnew ShaderBytecode( native.pBytecode, native.BytecodeLength );
 		m_SODecl = gcnew System::String( native.SODecl );
 		m_NumInputSignatureEntries = native.NumInputSignatureEntries;
 		m_NumOutputSignatureEntries = native.NumOutputSignatureEntries;

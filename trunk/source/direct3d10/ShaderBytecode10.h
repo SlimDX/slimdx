@@ -28,34 +28,17 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class ShaderBytecode : System::IDisposable
+		public ref class ShaderBytecode : ComObject
 		{
-		private:
-			const void* m_Buffer;
-			long m_Length;
-			ID3D10Blob *blob;
+			COMOBJECT(ID3D10Blob, ShaderBytecode);
 		
 		internal:
 			static System::String^ ExceptionDataKey = "CompilationErrors";
 
-			property const void* Buffer
-			{
-				const void* get();
-			}
-			
-			property long Length
-			{
-				long get();
-			}
-
-			ShaderBytecode( ID3D10Blob *blob );
-			ShaderBytecode( const void* buffer, long length );
-
-			void Destruct();
+			ShaderBytecode( const BYTE* data, UINT length );
 
 		public:
-			~ShaderBytecode();
-			!ShaderBytecode();
+			ShaderBytecode( array<System::Byte>^ data );
 
 			static ShaderBytecode^ Compile( System::String^ shaderSource, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
 			static ShaderBytecode^ Compile( System::String^ shaderSource, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include );
@@ -68,6 +51,11 @@ namespace SlimDX
 			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
 			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include );
 			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
+
+			property DataStream^ Data
+			{
+				DataStream^ get();
+			}
 
 			/// <summary>
 			/// Returns the hash code for this instance.

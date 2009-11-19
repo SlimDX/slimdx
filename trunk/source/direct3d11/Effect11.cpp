@@ -51,10 +51,8 @@ namespace Direct3D11
 	{
 		D3DX11_EFFECT_DESC nativeDescription;
 		RECORD_D3D11( InternalPointer->GetDesc( &nativeDescription ) );
-		if( Result::Last.IsSuccess )
-			return EffectDescription( nativeDescription );
-		
-		throw gcnew Direct3D11Exception( Result::Last );
+
+		return EffectDescription( nativeDescription );
 	}
 	
 	bool Effect::IsOptimized::get()
@@ -181,10 +179,9 @@ namespace Direct3D11
 
 	Effect^ Effect::FromMemory( SlimDX::Direct3D11::Device^ device, array<Byte>^ memory, int effectFlags )
 	{
-		pin_ptr<unsigned char> pinnedMemory = &memory[ 0 ];
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
-		Effect^ effect = FromMemory_Internal( device, pinnedMemory, static_cast<SIZE_T>( memory->Length ), effectFlags );
-		return effect;
+		return FromMemory_Internal( device, pinnedMemory, static_cast<SIZE_T>( memory->Length ), effectFlags );
 	}	
 	
 	Effect^ Effect::FromStream( SlimDX::Direct3D11::Device^ device, Stream^ stream, int effectFlags )
@@ -195,8 +192,7 @@ namespace Direct3D11
 		if( memory == nullptr )
 		{
 			SIZE_T size = static_cast<SIZE_T>( ds->RemainingLength );
-			Effect^ effect = FromMemory_Internal( device, ds->SeekToEnd(), size, effectFlags );
-			return effect;
+			return FromMemory_Internal( device, ds->SeekToEnd(), size, effectFlags );
 		}
 
 		return FromMemory( device, memory, effectFlags );

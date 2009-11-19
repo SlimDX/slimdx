@@ -37,7 +37,7 @@ namespace Direct3D10
 	{
 		ID3D10GeometryShader *shader;
 
-		HRESULT hr = device->InternalPointer->CreateGeometryShader( shaderBytecode->Buffer, shaderBytecode->Length, &shader );
+		HRESULT hr = device->InternalPointer->CreateGeometryShader( shaderBytecode->InternalPointer->GetBufferPointer(), shaderBytecode->InternalPointer->GetBufferSize(), &shader );
 		if( RECORD_D3D10( hr ).IsFailure )
 			throw gcnew Direct3D10Exception( Result::Last );
 
