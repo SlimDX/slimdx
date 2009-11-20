@@ -41,7 +41,10 @@ namespace SlimDX
 		public ref class SourceVoice : Voice
 		{
 		private:
+			static System::IntPtr DirectSubmitContext = System::IntPtr( 1234567890 );
+
 			VoiceCallbackShim *callback;
+			System::Threading::AutoResetEvent^ waitHandle;
 
 			property IXAudio2SourceVoice *SourcePointer
 			{
@@ -88,6 +91,9 @@ namespace SlimDX
 
 			Result SubmitSourceBuffer( AudioBuffer^ buffer );
 			Result SubmitSourceBuffer( AudioBuffer^ buffer, array<int>^ decodedPacketCumulativeBytes );
+
+			Result SubmitSourceDirect( BufferFlags flags, int playBegin, int playLength, int loopBegin, int loopLength, int loopCount, DataStream^ data );
+			Result SubmitSourceDirect( BufferFlags flags, int playBegin, int playLength, int loopBegin, int loopLength, int loopCount, array<System::Byte>^ data );
 			
 #if SLIMDX_XAUDIO2_VERSION >= 24
 			Result SetSourceSampleRate( int sampleRate );
