@@ -26,6 +26,7 @@
 
 #include "../VersionConfig.h"
 #include "../ComObject.h"
+#include "../DataStream.h"
 
 #include "XAudio2Exception.h"
 
@@ -34,6 +35,7 @@
 
 using namespace System;
 using namespace SlimDX::Multimedia;
+using namespace System::Threading;
 
 namespace SlimDX
 {
@@ -100,6 +102,9 @@ namespace XAudio2
 
 	void SourceVoice::OnBufferEnd( ContextEventArgs^ e )
 	{
+		if( e->Context == DirectSubmitContext && waitHandle != nullptr )
+			waitHandle->Set();
+
 		if( &SourceVoice::BufferEnd != nullptr )
 			BufferEnd( this, e );
 	}
@@ -223,6 +228,54 @@ namespace XAudio2
 
 		HRESULT hr = SourcePointer->SubmitSourceBuffer( &input, &wma );
 		return RECORD_XAUDIO2( hr );
+	}
+
+	Result SourceVoice::SubmitSourceDirect( BufferFlags flags, int playBegin, int playLength, int loopBegin, int loopLength, int loopCount, DataStream^ data )
+	{
+		XAUDIO2_BUFFER input;
+		input.AudioBytes = static_cast<UINT32>( data->RemainingLength );
+		input.Flags = static_cast<UINT32>( flags );
+		input.PlayBegin = playBegin;
+		input.PlayLength = playLength;
+		input.LoopBegin = loopBegin;
+		input.LoopLength = loopLength;
+		input.LoopCount = loopCount;
+		input.pContext = DirectSubmitContext.ToPointer();
+		input.pAudioData = reinterpret_cast<BYTE*>( data->PositionPointer );
+
+		waitHandle = gcnew AutoResetEvent( false );
+		HRESULT hr = SourcePointer->SubmitSourceBuffer( &input, NULL );
+		
+		if( RECORD_XAUDIO2( hr ).IsFailure )
+			return Result::Last;
+
+		waitHandle->WaitOne();
+		return Result::Last;
+	}
+
+	Result SourceVoice::SubmitSourceDirect( BufferFlags flags, int playBegin, int playLength, int loopBegin, int loopLength, int loopCount, array<Byte>^ data )
+	{
+		XAUDIO2_BUFFER input;
+		input.AudioBytes = static_cast<UINT32>( data->Length );
+		input.Flags = static_cast<UINT32>( flags );
+		input.PlayBegin = playBegin;
+		input.PlayLength = playLength;
+		input.LoopBegin = loopBegin;
+		input.LoopLength = loopLength;
+		input.LoopCount = loopCount;
+		input.pContext = DirectSubmitContext.ToPointer();
+
+		pin_ptr<Byte> pinnedData = &data[0];
+		input.pAudioData = reinterpret_cast<BYTE*>( pinnedData);
+
+		waitHandle = gcnew AutoResetEvent( false );
+		HRESULT hr = SourcePointer->SubmitSourceBuffer( &input, NULL );
+		
+		if( RECORD_XAUDIO2( hr ).IsFailure )
+			return Result::Last;
+
+		waitHandle->WaitOne();
+		return Result::Last;
 	}
 
 #if SLIMDX_XAUDIO2_VERSION >= 24

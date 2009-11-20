@@ -29,3 +29,6 @@ Direct3D 11
 	
 XAPO
 	* Implemented XAPO.
+
+XAudio2
+	* Added a SubmitSourceDirect method to SourceVoice that avoids any allocations by blocking the calling thread until all data has been consumed by XAudio2.
