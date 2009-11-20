@@ -32,6 +32,7 @@
 #include "Direct3D11Exception.h"
 
 #include "Device11.h"
+#include "ShaderBytecode11.h"
 #include "ClassLinkage11.h"
 #include "EffectConstantBuffer11.h"
 #include "EffectDescription11.h"
@@ -46,7 +47,20 @@ using namespace System::Runtime::InteropServices;
 namespace SlimDX
 {
 namespace Direct3D11
-{ 
+{
+	Effect::Effect( SlimDX::Direct3D11::Device^ device, ShaderBytecode^ data, int effectFlags )
+	{
+		ID3DX11Effect *effect;
+
+		HRESULT hr = D3DX11CreateEffectFromMemory( data->InternalPointer->GetBufferPointer(), data->InternalPointer->GetBufferSize(), 
+			effectFlags, device->InternalPointer, &effect);
+
+		if( RECORD_D3D11( hr ).IsFailure )
+			throw gcnew Direct3D11Exception( Result::Last );
+
+		Construct( effect );
+	}
+
 	EffectDescription Effect::Description::get()
 	{
 		D3DX11_EFFECT_DESC nativeDescription;
@@ -175,27 +189,6 @@ namespace Direct3D11
 		if( effect == NULL )
 			return nullptr;
 		return gcnew Effect( effect, nullptr );
-	}
-
-	Effect^ Effect::FromMemory( SlimDX::Direct3D11::Device^ device, array<Byte>^ memory, int effectFlags )
-	{
-		pin_ptr<unsigned char> pinnedMemory = &memory[0];
-
-		return FromMemory_Internal( device, pinnedMemory, static_cast<SIZE_T>( memory->Length ), effectFlags );
-	}	
-	
-	Effect^ Effect::FromStream( SlimDX::Direct3D11::Device^ device, Stream^ stream, int effectFlags )
-	{
-		DataStream^ ds = nullptr;
-		array<Byte>^ memory = Utilities::ReadStream( stream, &ds );
-
-		if( memory == nullptr )
-		{
-			SIZE_T size = static_cast<SIZE_T>( ds->RemainingLength );
-			return FromMemory_Internal( device, ds->SeekToEnd(), size, effectFlags );
-		}
-
-		return FromMemory( device, memory, effectFlags );
 	}
 }
 }
