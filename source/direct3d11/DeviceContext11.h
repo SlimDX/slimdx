@@ -27,6 +27,7 @@
 #include "../DataBox.h"
 #include "../ComObject.h"
 
+#include "DeviceChild11.h"
 #include "Enums11.h"
 
 using System::Runtime::InteropServices::OutAttribute;
@@ -60,7 +61,7 @@ namespace SlimDX
 
 		/// <summary>Represents a device context which generates rendering commands.</summary>
 		/// <unmanaged>ID3D11DeviceContext</unmanaged>
-		public ref class DeviceContext : ComObject
+		public ref class DeviceContext : DeviceChild
 		{
 			COMOBJECT_CUSTOM(ID3D11DeviceContext, DeviceContext);
 
@@ -79,7 +80,7 @@ namespace SlimDX
 			void InitializeSubclasses();
 
 		public:
-			DeviceContext( Device^ device );
+			DeviceContext( SlimDX::Direct3D11::Device^ device );
 
 			void Begin( Asynchronous^ data );
 
