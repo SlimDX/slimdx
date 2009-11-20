@@ -28,7 +28,7 @@
 #include "Device10.h"
 #include "InputLayout.h"
 #include "ShaderBytecode10.h"
-#include "ShaderSignature.h"
+#include "ShaderSignature10.h"
 
 using namespace System;
 
@@ -50,8 +50,8 @@ namespace Direct3D10
 			nativeElements[i] = elements[i].CreateNativeVersion();
 			
 		ID3D10InputLayout* layout = 0;
-		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->Buffer,
-			static_cast<SIZE_T>( shaderSignature->Length ), &layout );
+		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->InternalPointer->GetBufferPointer(),
+			shaderSignature->InternalPointer->GetBufferSize(), &layout );
 
 		for( int i = 0; i < elements->Length; i++ )
 			Utilities::FreeNativeString( nativeElements[i].SemanticName );
@@ -76,8 +76,8 @@ namespace Direct3D10
 			nativeElements[i] = elements[i].CreateNativeVersion();
 			
 		ID3D10InputLayout* layout = 0;
-		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->Buffer,
-			static_cast<SIZE_T>( shaderSignature->Length ), &layout );
+		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->InternalPointer->GetBufferPointer(),
+			shaderSignature->InternalPointer->GetBufferSize(), &layout );
 
 		for( int i = 0; i < elements->Length; i++ )
 			Utilities::FreeNativeString( nativeElements[i].SemanticName );

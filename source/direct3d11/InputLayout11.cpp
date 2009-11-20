@@ -34,7 +34,7 @@ namespace SlimDX
 {
 namespace Direct3D11
 { 
-	InputLayout::InputLayout( SlimDX::Direct3D11::Device^ device, array<InputElement>^ elements, Direct3D10::ShaderSignature^ shaderSignature )
+	InputLayout::InputLayout( SlimDX::Direct3D11::Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
@@ -48,8 +48,8 @@ namespace Direct3D11
 			nativeElements[i] = elements[i].CreateNativeVersion();
 			
 		ID3D11InputLayout* layout = 0;
-		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->Buffer,
-			static_cast<SIZE_T>( shaderSignature->Length ), &layout );
+		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->InternalPointer->GetBufferPointer(),
+			shaderSignature->InternalPointer->GetBufferSize(), &layout );
 
 		for( int i = 0; i < elements->Length; i++ )
 			Utilities::FreeNativeString( nativeElements[i].SemanticName );
@@ -60,7 +60,7 @@ namespace Direct3D11
 		Construct( layout );
 	}
 
-	InputLayout::InputLayout( SlimDX::Direct3D11::Device^ device, Direct3D10::ShaderSignature^ shaderSignature, array<InputElement>^ elements )
+	InputLayout::InputLayout( SlimDX::Direct3D11::Device^ device, ShaderSignature^ shaderSignature, array<InputElement>^ elements )
 	{
 		if( device == nullptr )
 			throw gcnew ArgumentNullException( "device" );
@@ -74,8 +74,8 @@ namespace Direct3D11
 			nativeElements[i] = elements[i].CreateNativeVersion();
 			
 		ID3D11InputLayout* layout = 0;
-		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->Buffer,
-			static_cast<SIZE_T>( shaderSignature->Length ), &layout );
+		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->InternalPointer->GetBufferPointer(),
+			shaderSignature->InternalPointer->GetBufferSize(), &layout );
 
 		for( int i = 0; i < elements->Length; i++ )
 			Utilities::FreeNativeString( nativeElements[i].SemanticName );

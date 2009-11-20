@@ -22,7 +22,7 @@
 #pragma once
 
 #include "../math/Color4.h"
-#include "../direct3d10/ShaderSignature.h"
+#include "../direct3d10/ShaderSignature10.h"
 
 namespace SlimDX
 {

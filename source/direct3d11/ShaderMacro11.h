@@ -21,22 +21,31 @@
 */
 #pragma once
 
-#include "DeviceChild11.h"
-#include "ShaderBytecode11.h"
+#include "../stack_array.h"
+
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
 	namespace Direct3D11
 	{
-		ref class ClassLinkage;
-
-		public ref class GeometryShader : public DeviceChild
+		public value class ShaderMacro : System::IEquatable<ShaderMacro>
 		{
-			COMOBJECT(ID3D11GeometryShader, GeometryShader);
-
+		internal:
+			static stack_array<D3D10_SHADER_MACRO> Marshal( array<ShaderMacro>^ macros, [Out] array<System::Runtime::InteropServices::GCHandle>^% handles );
+			static void Unmarshal( array<System::Runtime::InteropServices::GCHandle>^ handles );
+			
 		public:
-			GeometryShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode );
-			GeometryShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage );
+			property System::String^ Name;
+			property System::String^ Value;
+
+			static bool operator == ( ShaderMacro left, ShaderMacro right );
+			static bool operator != ( ShaderMacro left, ShaderMacro right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( ShaderMacro other );
+			static bool Equals( ShaderMacro% value1, ShaderMacro% value2 );
 		};
 	}
 };

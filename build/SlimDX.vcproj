@@ -882,11 +882,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\ShaderMacro.cpp"
+					RelativePath="..\source\direct3d10\ShaderMacro10.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\ShaderMacro.h"
+					RelativePath="..\source\direct3d10\ShaderMacro10.h"
 					>
 				</File>
 				<File
@@ -898,11 +898,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\ShaderSignature.cpp"
+					RelativePath="..\source\direct3d10\ShaderSignature10.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\ShaderSignature.h"
+					RelativePath="..\source\direct3d10\ShaderSignature10.h"
 					>
 				</File>
 				<Filter
@@ -5832,27 +5832,27 @@
 				Name="Shader"
 				>
 				<File
-					RelativePath="..\source\direct3d11\ClassInstance11.cpp"
+					RelativePath="..\source\direct3d11\Include11.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\ClassInstance11.h"
+					RelativePath="..\source\direct3d11\Include11.h"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\ClassInstanceDescription11.cpp"
+					RelativePath="..\source\direct3d11\ShaderBytecode11.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\ClassInstanceDescription11.h"
+					RelativePath="..\source\direct3d11\ShaderBytecode11.h"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\ClassLinkage11.cpp"
+					RelativePath="..\source\direct3d11\ShaderMacro11.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\ClassLinkage11.h"
+					RelativePath="..\source\direct3d11\ShaderMacro11.h"
 					>
 				</File>
 				<File
@@ -5861,6 +5861,14 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d11\ShaderParameterDescription11.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d11\ShaderSignature11.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d11\ShaderSignature11.h"
 					>
 				</File>
 				<Filter
@@ -5932,6 +5940,38 @@
 					</File>
 					<File
 						RelativePath="..\source\direct3d11\PixelShader11.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="ClassInstance"
+					>
+					<File
+						RelativePath="..\source\direct3d11\ClassInstance11.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\ClassInstance11.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\ClassInstanceDescription11.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\ClassInstanceDescription11.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="ClassLinkage"
+					>
+					<File
+						RelativePath="..\source\direct3d11\ClassLinkage11.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\ClassLinkage11.h"
 						>
 					</File>
 				</Filter>

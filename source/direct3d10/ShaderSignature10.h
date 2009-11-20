@@ -21,22 +21,36 @@
 */
 #pragma once
 
-#include "DeviceChild11.h"
-#include "ShaderBytecode11.h"
+#include "ShaderBytecode10.h"
 
 namespace SlimDX
 {
-	namespace Direct3D11
+	namespace Direct3D10
 	{
-		ref class ClassLinkage;
-
-		public ref class GeometryShader : public DeviceChild
+		public ref class ShaderSignature : ComObject
 		{
-			COMOBJECT(ID3D11GeometryShader, GeometryShader);
+			COMOBJECT(ID3D10Blob, ShaderSignature);
+		
+		internal:
+			ShaderSignature( const BYTE* buffer, UINT length );
 
 		public:
-			GeometryShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode );
-			GeometryShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage );
+			ShaderSignature( array<System::Byte>^ data );
+
+			static ShaderSignature^ GetInputSignature( ShaderBytecode^ shaderBytecode );
+			static ShaderSignature^ GetOutputSignature( ShaderBytecode^ shaderBytecode );
+			static ShaderSignature^ GetInputOutputSignature( ShaderBytecode^ shaderBytecode );
+
+			property DataStream^ Data
+			{
+				DataStream^ get();
+			}
+
+			/// <summary>
+			/// Returns the hash code for this instance.
+			/// </summary>
+			/// <returns>A 32-bit signed integer hash code.</returns>
+			virtual int GetHashCode() override;
 		};
 	}
 };

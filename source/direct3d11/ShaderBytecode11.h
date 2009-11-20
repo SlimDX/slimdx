@@ -21,12 +21,12 @@
 */
 #pragma once
 
-#include "Include10.h"
-#include "ShaderMacro10.h"
+#include "Include11.h"
+#include "ShaderMacro11.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	namespace Direct3D11
 	{
 		public ref class ShaderBytecode : ComObject
 		{

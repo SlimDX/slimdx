@@ -23,7 +23,7 @@
 
 #include "Enums.h"
 #include "ShaderBytecode10.h"
-#include "ShaderSignature.h"
+#include "ShaderSignature10.h"
 
 namespace SlimDX
 {
