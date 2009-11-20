@@ -36,6 +36,7 @@ namespace SlimDX
 		ref class EffectTechnique;
 		ref class EffectVariable;
 		ref class ClassLinkage;
+		ref class ShaderBytecode;
 		value class EffectDescription;
 		
 		public ref class Effect : public ComObject
@@ -46,6 +47,8 @@ namespace SlimDX
 			static Effect^ FromMemory_Internal( SlimDX::Direct3D11::Device^ device, void* memory, SIZE_T size, UINT effectFlags );
 
 		public:
+			Effect( SlimDX::Direct3D11::Device^ device, ShaderBytecode^ data, int effectFlags );
+
 			property EffectDescription Description
 			{
 				EffectDescription get();
@@ -82,9 +85,6 @@ namespace SlimDX
 			EffectVariable^ GetVariableBySemantic( System::String^ name );
 			
 			Result Optimize();
-			
-			static Effect^ FromMemory( SlimDX::Direct3D11::Device^ device, array<System::Byte>^ memory, int effectFlags );
-			static Effect^ FromStream( SlimDX::Direct3D11::Device^ device, System::IO::Stream^ stream, int effectFlags );
 		};
 	}
 }
