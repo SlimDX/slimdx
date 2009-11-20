@@ -91,6 +91,15 @@ namespace SlimDX
 			/// <param name="mipLevels">The total number of mip levels.</param>
 			/// <returns>The subresource index (equivalent to mipSlice + (arraySlice * mipLevels)).</returns>
 			static int CalculateSubresourceIndex( int mipSlice, int arraySlice, int mipLevels );
+
+			literal int MaximumMipLevels = D3D10_REQ_MIP_LEVELS;
+			literal int ResourceSizeInMegabytes = D3D10_REQ_RESOURCE_SIZE_IN_MEGABYTES;
+			literal int MaximumTexture1DArraySize = D3D10_REQ_TEXTURE1D_ARRAY_AXIS_DIMENSION;
+			literal int MaximumTexture2DArraySize = D3D10_REQ_TEXTURE1D_ARRAY_AXIS_DIMENSION;
+			literal int MaximumTexture1DSize = D3D10_REQ_TEXTURE1D_U_DIMENSION;
+			literal int MaximumTexture2DSize = D3D10_REQ_TEXTURE2D_U_OR_V_DIMENSION;
+			literal int MaximumTexture3DSize = D3D10_REQ_TEXTURE3D_U_V_OR_W_DIMENSION;
+			literal int MaximumTextureCubeSize = D3D10_REQ_TEXTURECUBE_DIMENSION;
 		};
 	}
 };
