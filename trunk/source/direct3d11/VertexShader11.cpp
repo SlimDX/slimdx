@@ -34,7 +34,7 @@ namespace SlimDX
 {
 namespace Direct3D11
 {
-	VertexShader::VertexShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode )
+	VertexShader::VertexShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode )
 	{
 		ID3D11VertexShader *shader;
 
@@ -45,7 +45,7 @@ namespace Direct3D11
 		Construct( shader );
 	}
 
-	VertexShader::VertexShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage )
+	VertexShader::VertexShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage )
 	{
 		ID3D11VertexShader *shader;
 		ID3D11ClassLinkage *nativeLinkage = linkage == nullptr ? NULL : linkage->InternalPointer;

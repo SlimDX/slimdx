@@ -21,42 +21,30 @@
 */
 #pragma once
 
-#include "ShaderBytecode10.h"
+#include "ShaderBytecode11.h"
 
 namespace SlimDX
 {
-	namespace Direct3D10
+	namespace Direct3D11
 	{
-		public ref class ShaderSignature : System::IDisposable
+		public ref class ShaderSignature : ComObject
 		{
-		private:
-			const void* m_Buffer;
-			long m_Length;
-			ID3D10Blob *blob;
+			COMOBJECT(ID3D10Blob, ShaderSignature);
 		
 		internal:
-			property const void* Buffer
-			{
-				const void* get();
-			}
-			
-			property long Length
-			{
-				long get();
-			}
-
-			ShaderSignature( ID3D10Blob *blob );
-			ShaderSignature( const void* buffer, long length );
-
-			void Destruct();
+			ShaderSignature( const BYTE* buffer, UINT length );
 
 		public:
-			~ShaderSignature();
-			!ShaderSignature();
+			ShaderSignature( array<System::Byte>^ data );
 
 			static ShaderSignature^ GetInputSignature( ShaderBytecode^ shaderBytecode );
 			static ShaderSignature^ GetOutputSignature( ShaderBytecode^ shaderBytecode );
 			static ShaderSignature^ GetInputOutputSignature( ShaderBytecode^ shaderBytecode );
+
+			property DataStream^ Data
+			{
+				DataStream^ get();
+			}
 
 			/// <summary>
 			/// Returns the hash code for this instance.

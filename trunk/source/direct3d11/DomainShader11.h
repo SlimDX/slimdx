@@ -22,7 +22,7 @@
 #pragma once
 
 #include "DeviceChild11.h"
-#include "../Direct3D10/ShaderBytecode10.h"
+#include "ShaderBytecode11.h"
 
 namespace SlimDX
 {
@@ -35,8 +35,8 @@ namespace SlimDX
 			COMOBJECT(ID3D11DomainShader, DomainShader);
 
 		public:
-			DomainShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode );
-			DomainShader( Direct3D11::Device^ device, Direct3D10::ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage );
+			DomainShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode );
+			DomainShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage );
 		};
 	}
 };

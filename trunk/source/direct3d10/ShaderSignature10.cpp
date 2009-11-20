@@ -24,8 +24,10 @@
 
 #include <d3dcompiler.h>
 
+#include "../DataStream.h"
+
 #include "Direct3D10Exception.h"
-#include "ShaderSignature.h"
+#include "ShaderSignature10.h"
 
 using namespace System;
 
@@ -33,56 +35,33 @@ namespace SlimDX
 {
 namespace Direct3D10
 {
-	ShaderSignature::ShaderSignature( ID3D10Blob *blob )
+	ShaderSignature::ShaderSignature( const BYTE *data, UINT length )
 	{
-		m_Buffer = NULL;
+		ID3D10Blob *blob;
 
-		this->blob = blob;
+		HRESULT hr = D3D10CreateBlob( length, &blob );
+		if( RECORD_D3D10( hr ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+
+		memcpy( blob->GetBufferPointer(), data, length );
+		Construct( blob );
 	}
 
-	ShaderSignature::ShaderSignature( const void* buffer, long length )
+	ShaderSignature::ShaderSignature( array<Byte>^ data )
 	{
-		m_Buffer = buffer;
-		m_Length = length;
-	}
+		ID3D10Blob *blob;
 
-	ShaderSignature::~ShaderSignature()
-	{
-		Destruct();
-	}
+		if( data == nullptr )
+			throw gcnew ArgumentNullException( "data" );
 
-	ShaderSignature::!ShaderSignature()
-	{
-		Destruct();
-	}
+		HRESULT hr = D3D10CreateBlob( data->Length, &blob );
+		if( RECORD_D3D10( hr ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
 
-	void ShaderSignature::Destruct()
-	{
-		if( blob != NULL )
-			blob->Release();
+		pin_ptr<Byte> pinnedData = &data[0];
+		memcpy( blob->GetBufferPointer(), pinnedData, data->Length );
 
-		blob = NULL;
-	}
-
-	int ShaderSignature::GetHashCode()
-	{
-		return reinterpret_cast<int>( Buffer );
-	}
-
-	const void *ShaderSignature::Buffer::get()
-	{
-		if( m_Buffer == NULL )
-			return blob->GetBufferPointer();
-		else
-			return m_Buffer;
-	}
-
-	long ShaderSignature::Length::get()
-	{
-		if( m_Buffer == NULL )
-			return static_cast<long>( blob->GetBufferSize() );
-		else
-			return m_Length;
+		Construct( blob );
 	}
 
 	ShaderSignature^ ShaderSignature::GetInputSignature( ShaderBytecode^ shaderBytecode )
@@ -93,7 +72,7 @@ namespace Direct3D10
 		if( RECORD_D3D10( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew ShaderSignature( blob );
+		return ShaderSignature::FromPointer( blob );
 	}
 
 	ShaderSignature^ ShaderSignature::GetOutputSignature( ShaderBytecode^ shaderBytecode )
@@ -104,7 +83,7 @@ namespace Direct3D10
 		if( RECORD_D3D10( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew ShaderSignature( blob );
+		return ShaderSignature::FromPointer( blob );
 	}
 
 	ShaderSignature^ ShaderSignature::GetInputOutputSignature( ShaderBytecode^ shaderBytecode )
@@ -115,7 +94,17 @@ namespace Direct3D10
 		if( RECORD_D3D10( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew ShaderSignature( blob );
+		return ShaderSignature::FromPointer( blob );
+	}
+
+	DataStream^ ShaderSignature::Data::get()
+	{
+		return gcnew DataStream( InternalPointer->GetBufferPointer(), InternalPointer->GetBufferSize(), true, true, false );
+	}
+
+	int ShaderSignature::GetHashCode()
+	{
+		return reinterpret_cast<int>( InternalPointer->GetBufferPointer() );
 	}
 }
 }

@@ -21,7 +21,7 @@
 */
 #include "stdafx.h"
 
-#include "ShaderMacro.h"
+#include "ShaderMacro10.h"
 
 using namespace System;
 using namespace System::Runtime::InteropServices;

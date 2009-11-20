@@ -25,7 +25,7 @@
 #include <d3dx10.h>
 
 #include "EffectPassDescription.h"
-#include "ShaderSignature.h"
+#include "ShaderSignature10.h"
 
 using namespace System;
 
