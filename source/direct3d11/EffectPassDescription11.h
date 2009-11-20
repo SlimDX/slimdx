@@ -22,7 +22,8 @@
 #pragma once
 
 #include "../math/Color4.h"
-#include "../direct3d10/ShaderSignature10.h"
+
+#include "ShaderSignature11.h"
 
 namespace SlimDX
 {
@@ -33,7 +34,7 @@ namespace SlimDX
 		private:
 			System::String^ m_Name;
 			int m_Annotations;
-			SlimDX::Direct3D10::ShaderSignature^ m_Signature;
+			SlimDX::Direct3D11::ShaderSignature^ m_Signature;
 			int m_StencilRef;
 			int m_SampleMask;
 			Color4 m_BlendFactor;
@@ -52,9 +53,9 @@ namespace SlimDX
 				int get();
 			}
 			
-			property SlimDX::Direct3D10::ShaderSignature^ Signature
+			property SlimDX::Direct3D11::ShaderSignature^ Signature
 			{
-				SlimDX::Direct3D10::ShaderSignature^ get();
+				SlimDX::Direct3D11::ShaderSignature^ get();
 			}
 			
 			property int StencilReference
