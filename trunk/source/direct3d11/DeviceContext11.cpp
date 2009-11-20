@@ -90,7 +90,7 @@ namespace Direct3D11
 		return ConstructFromUserPointer<DeviceContext>( pointer );
 	}
 
-	DeviceContext::DeviceContext( Device^ device )
+	DeviceContext::DeviceContext( SlimDX::Direct3D11::Device^ device )
 	{
 		ID3D11DeviceContext* context;
 
