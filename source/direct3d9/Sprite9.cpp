@@ -166,7 +166,7 @@ namespace Direct3D9
 			rectPtr = &rect;
 		}
 
-		HRESULT hr = InternalPointer->Draw( texture->InternalPointer, &rect, NULL, NULL, color.ToArgb() );
+		HRESULT hr = InternalPointer->Draw( texture->InternalPointer, rectPtr, NULL, NULL, color.ToArgb() );
 		return RECORD_D3D9( hr );
 	}
 
