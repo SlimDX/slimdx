@@ -27,8 +27,7 @@ using System.Windows.Forms;
 
 using SlimDX.Windows;
 
-namespace SlimDX.SampleFramework
-{
+namespace SlimDX.SampleFramework {
 	/// <summary>
 	/// Implements core application logic of a SlimDX sample.
 	/// 
@@ -42,17 +41,14 @@ namespace SlimDX.SampleFramework
 	/// A sample is implemented by overriding various base class methods (those prefixed
 	/// with "on"). 
 	/// </summary>
-	public class Sample : IDisposable
-	{
+	public class Sample : IDisposable {
 		#region Public Interface
-		
+
 		/// <summary>
 		/// Gets the width of the renderable area of the sample window.
 		/// </summary>
-		public int WindowWidth
-		{
-			get
-			{
+		public int WindowWidth {
+			get {
 				return configuration.WindowWidth;
 			}
 		}
@@ -60,18 +56,14 @@ namespace SlimDX.SampleFramework
 		/// <summary>
 		/// Gets the height of the renderable area of the sample window.
 		/// </summary>
-		public int WindowHeight
-		{
-			get
-			{
+		public int WindowHeight {
+			get {
 				return configuration.WindowHeight;
 			}
 		}
 
-		public UserInterface UserInterface
-		{
-			get
-			{
+		public UserInterface UserInterface {
+			get {
 				return userInterface;
 			}
 		}
@@ -79,10 +71,9 @@ namespace SlimDX.SampleFramework
 		/// <summary>
 		/// Disposes of object resources.
 		/// </summary>
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
+		public void Dispose() {
+			Dispose( true );
+			GC.SuppressFinalize( this );
 		}
 
 		/// <summary>
@@ -90,10 +81,8 @@ namespace SlimDX.SampleFramework
 		/// </summary>
 		/// <param name="disposeManagedResources">If true, managed resources should be
 		/// disposed of in addition to unmanaged resources.</param>
-		protected virtual void Dispose(bool disposeManagedResources)
-		{
-			if (disposeManagedResources)
-			{
+		protected virtual void Dispose( bool disposeManagedResources ) {
+			if( disposeManagedResources ) {
 				context.Dispose();
 				form.Dispose();
 			}
@@ -102,26 +91,24 @@ namespace SlimDX.SampleFramework
 		/// <summary>
 		/// Runs the sample.
 		/// </summary>
-		public void Run()
-		{
+		public void Run() {
 			configuration = OnConfigure();
-			form = new RenderForm(configuration.WindowTitle)
-			{
-				ClientSize = new Size(configuration.WindowWidth, configuration.WindowHeight)
+			form = new RenderForm( configuration.WindowTitle ) {
+				ClientSize = new Size( configuration.WindowWidth, configuration.WindowHeight )
 			};
 
 			form.MouseClick += HandleMouseClick;
-			
+
 			userInterface = new UserInterface();
 			userInterface.Container.Add( new Element { Label = configuration.WindowTitle } );
-			
+
 			OnInitialize();
 
-			MessagePump.Run(form, () =>
-			{
+			clock.Start();
+			MessagePump.Run( form, () => {
 				Update();
 				Render();
-			});
+			} );
 		}
 
 		/// <summary>
@@ -129,46 +116,40 @@ namespace SlimDX.SampleFramework
 		/// via a <see cref="SampleConfiguration"/> object.
 		/// </summary>
 		/// <returns>A <see cref="SampleConfiguration"/> object describing the desired configuration of the sample.</returns>
-		protected virtual SampleConfiguration OnConfigure()
-		{
+		protected virtual SampleConfiguration OnConfigure() {
 			return new SampleConfiguration();
 		}
 
 		/// <summary>
 		/// In a derived class, implements logic to initialize the sample.
 		/// </summary>
-		protected virtual void OnInitialize()
-		{
+		protected virtual void OnInitialize() {
 		}
 
 		/// <summary>
 		/// In a derived class, implements logic to update any relevant sample state.
 		/// </summary>
-		protected virtual void OnUpdate()
-		{
+		protected virtual void OnUpdate() {
 		}
 
 		/// <summary>
 		/// In a derived class, implements logic to render the sample.
 		/// </summary>
-		protected virtual void OnRender()
-		{
+		protected virtual void OnRender() {
 		}
 
 		/// <summary>
 		/// In a derived class, implements logic that should occur before all
 		/// other rendering.
 		/// </summary>
-		protected virtual void OnRenderBegin()
-		{
+		protected virtual void OnRenderBegin() {
 		}
 
 		/// <summary>
 		/// In a derived class, implements logic that should occur after all
 		/// other rendering.
 		/// </summary>
-		protected virtual void OnRenderEnd()
-		{
+		protected virtual void OnRenderEnd() {
 		}
 
 		/// <summary>
@@ -177,9 +158,8 @@ namespace SlimDX.SampleFramework
 		/// </summary>
 		/// <param name="settings">The settings.</param>
 		/// <returns>The initialized device context.</returns>
-		protected DeviceContext9 InitializeDevice(DeviceSettings9 settings)
-		{
-			context = new DeviceContext9(form.Handle, settings);
+		protected DeviceContext9 InitializeDevice( DeviceSettings9 settings ) {
+			context = new DeviceContext9( form.Handle, settings );
 			userInterfaceRenderer = new UserInterfaceRenderer9( context.Device, settings.Width, settings.Height );
 			return context;
 		}
@@ -187,11 +167,10 @@ namespace SlimDX.SampleFramework
 		/// <summary>
 		/// Quits the sample.
 		/// </summary>
-		protected void Quit()
-		{
+		protected void Quit() {
 			form.Close();
 		}
-		
+
 		#endregion
 		#region Implementation Detail
 
@@ -203,30 +182,41 @@ namespace SlimDX.SampleFramework
 
 		DeviceContext9 context;
 
+		Clock clock = new Clock();
+		float frameAccumulator;
+		int frameCount;
+
 		/// <summary>
 		/// Performs object finalization.
 		/// </summary>
-		~Sample()
-		{
-			Dispose(false);
+		~Sample() {
+			Dispose( false );
 		}
 
 		/// <summary>
 		/// Updates sample state.
 		/// </summary>
-		void Update()
-		{
+		void Update() {
 			OnUpdate();
 		}
 
 		/// <summary>
 		/// Renders the sample.
 		/// </summary>
-		void Render()
-		{
+		void Render() {
+			float elapsed = clock.Update();
+			frameAccumulator += elapsed;
+			++frameCount;
+			if( frameAccumulator >= 1.0f ) {
+				form.Text = ( frameCount / frameAccumulator ).ToString();
+
+				frameAccumulator = 0.0f;
+				frameCount = 0;
+			}
+
 			OnRenderBegin();
 			OnRender();
-			userInterfaceRenderer.Render(userInterface);
+			userInterfaceRenderer.Render( userInterface );
 			OnRenderEnd();
 		}
 
@@ -235,8 +225,7 @@ namespace SlimDX.SampleFramework
 		/// </summary>
 		/// <param name="sender">The sender.</param>
 		/// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
-		void HandleMouseClick(object sender, MouseEventArgs e)
-		{
+		void HandleMouseClick( object sender, MouseEventArgs e ) {
 		}
 
 		#endregion

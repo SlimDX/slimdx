@@ -94,6 +94,7 @@
     <Compile Include="UI\Element.cs" />
     <Compile Include="UI\ElementContainer.cs" />
     <Compile Include="UI\UserInterface.cs" />
+    <Compile Include="Utility\Clock.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
