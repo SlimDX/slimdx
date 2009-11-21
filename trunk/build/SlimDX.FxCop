@@ -135,13 +135,8 @@
     <Modules>
      <Module Name="slimdx.dll">
       <Messages>
-       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Created="2009-11-20 20:57:15Z">
+       <Message TypeName="AssembliesShouldHaveValidStrongNames" Category="Microsoft.Design" CheckId="CA2210" Status="Excluded" Created="2009-11-20 20:57:15Z">
         <Issue Name="NoStrongName">
-         <Item>'SlimDX.dll'</Item>
-        </Issue>
-       </Message>
-       <Message TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824" Created="2009-11-20 20:57:15Z">
-        <Issue>
          <Item>'SlimDX.dll'</Item>
         </Issue>
        </Message>
@@ -457,21 +452,21 @@
            </Member>
            <Member Name="#ConstructFromPointer&lt;SlimDX::Direct2D::GdiInteropRenderTarget,ID2D1GdiInteropRenderTarget&gt;(ID2D1GdiInteropRenderTarget*,SlimDX.ComObject,SlimDX.ComObjectFlags)">
             <Messages>
-             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-11-20 20:57:15Z">
-              <Issue Name="Member">
-               <Item>Gdi</Item>
-               <Item>'ComObject::ConstructFromPointer&lt;SlimDX::Direct2D::GdiInteropRenderTarget,ID2D1GdiInteropRenderTarget&gt;(ID2D1GdiInteropRenderTarget*, ComObject^, ComObjectFlags)'</Item>
-              </Issue>
-              <Issue Name="Member">
-               <Item>Gdi</Item>
-               <Item>'ComObject::ConstructFromPointer&lt;SlimDX::Direct2D::GdiInteropRenderTarget,ID2D1GdiInteropRenderTarget&gt;(ID2D1GdiInteropRenderTarget*, ComObject^, ComObjectFlags)'</Item>
-              </Issue>
-             </Message>
              <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="MemberAbbreviation">
                <Item>ID</Item>
                <Item>'ComObject::ConstructFromPointer&lt;SlimDX::Direct2D::GdiInteropRenderTarget,ID2D1GdiInteropRenderTarget&gt;(ID2D1GdiInteropRenderTarget*, ComObject^, ComObjectFlags)'</Item>
                <Item>Id</Item>
+              </Issue>
+             </Message>
+             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-11-20 20:57:15Z">
+              <Issue Name="Member">
+               <Item>Gdi</Item>
+               <Item>'ComObject::ConstructFromPointer&lt;SlimDX::Direct2D::GdiInteropRenderTarget,ID2D1GdiInteropRenderTarget&gt;(ID2D1GdiInteropRenderTarget*, ComObject^, ComObjectFlags)'</Item>
+              </Issue>
+              <Issue Name="Member">
+               <Item>Gdi</Item>
+               <Item>'ComObject::ConstructFromPointer&lt;SlimDX::Direct2D::GdiInteropRenderTarget,ID2D1GdiInteropRenderTarget&gt;(ID2D1GdiInteropRenderTarget*, ComObject^, ComObjectFlags)'</Item>
               </Issue>
              </Message>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-11-20 20:57:15Z">
@@ -809,17 +804,17 @@
            </Member>
            <Member Name="#ConstructFromPointer&lt;SlimDX::Direct2D::WindowRenderTarget,ID2D1HwndRenderTarget&gt;(ID2D1HwndRenderTarget*,SlimDX.ComObject,SlimDX.ComObjectFlags)">
             <Messages>
-             <Message Id="Hwnd" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-11-20 20:57:15Z">
-              <Issue Name="Member">
-               <Item>Hwnd</Item>
-               <Item>'ComObject::ConstructFromPointer&lt;SlimDX::Direct2D::WindowRenderTarget,ID2D1HwndRenderTarget&gt;(ID2D1HwndRenderTarget*, ComObject^, ComObjectFlags)'</Item>
-              </Issue>
-             </Message>
              <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="MemberAbbreviation">
                <Item>ID</Item>
                <Item>'ComObject::ConstructFromPointer&lt;SlimDX::Direct2D::WindowRenderTarget,ID2D1HwndRenderTarget&gt;(ID2D1HwndRenderTarget*, ComObject^, ComObjectFlags)'</Item>
                <Item>Id</Item>
+              </Issue>
+             </Message>
+             <Message Id="Hwnd" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-11-20 20:57:15Z">
+              <Issue Name="Member">
+               <Item>Hwnd</Item>
+               <Item>'ComObject::ConstructFromPointer&lt;SlimDX::Direct2D::WindowRenderTarget,ID2D1HwndRenderTarget&gt;(ID2D1HwndRenderTarget*, ComObject^, ComObjectFlags)'</Item>
               </Issue>
              </Message>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-11-20 20:57:15Z">
@@ -2377,17 +2372,17 @@
            </Member>
            <Member Name="#ConstructFromPointer&lt;SlimDX::Direct3D9::RenderToEnvironmentMap,ID3DXRenderToEnvMap&gt;(ID3DXRenderToEnvMap*,SlimDX.ComObject,SlimDX.ComObjectFlags)">
             <Messages>
-             <Message Id="Env" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-11-20 20:57:15Z">
-              <Issue Name="Member">
-               <Item>Env</Item>
-               <Item>'ComObject::ConstructFromPointer&lt;SlimDX::Direct3D9::RenderToEnvironmentMap,ID3DXRenderToEnvMap&gt;(ID3DXRenderToEnvMap*, ComObject^, ComObjectFlags)'</Item>
-              </Issue>
-             </Message>
              <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="MemberAbbreviation">
                <Item>ID</Item>
                <Item>'ComObject::ConstructFromPointer&lt;SlimDX::Direct3D9::RenderToEnvironmentMap,ID3DXRenderToEnvMap&gt;(ID3DXRenderToEnvMap*, ComObject^, ComObjectFlags)'</Item>
                <Item>Id</Item>
+              </Issue>
+             </Message>
+             <Message Id="Env" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-11-20 20:57:15Z">
+              <Issue Name="Member">
+               <Item>Env</Item>
+               <Item>'ComObject::ConstructFromPointer&lt;SlimDX::Direct3D9::RenderToEnvironmentMap,ID3DXRenderToEnvMap&gt;(ID3DXRenderToEnvMap*, ComObject^, ComObjectFlags)'</Item>
               </Issue>
              </Message>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-11-20 20:57:15Z">
@@ -2760,7 +2755,7 @@
            </Member>
            <Member Name="#ConstructFromPointer&lt;SlimDX::DirectSound::AcousticEchoCancel,IDirectSoundCaptureFXAec&gt;(IDirectSoundCaptureFXAec*,SlimDX.ComObject,SlimDX.ComObjectFlags)">
             <Messages>
-             <Message Id="Aec" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-11-20 20:57:15Z">
+             <Message Id="Aec" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="Member">
                <Item>Aec</Item>
                <Item>'ComObject::ConstructFromPointer&lt;SlimDX::DirectSound::AcousticEchoCancel,IDirectSoundCaptureFXAec&gt;(IDirectSoundCaptureFXAec*, ComObject^, ComObjectFlags)'</Item>
@@ -2916,23 +2911,23 @@
            </Member>
            <Member Name="#ConstructFromPointer&lt;SlimDX::DirectSound::ParametricEqualizer,IDirectSoundFXParamEq&gt;(IDirectSoundFXParamEq*,SlimDX.ComObject,SlimDX.ComObjectFlags)">
             <Messages>
-             <Message Id="Eq" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-11-20 20:57:15Z">
-              <Issue Name="Member">
-               <Item>Eq</Item>
-               <Item>'ComObject::ConstructFromPointer&lt;SlimDX::DirectSound::ParametricEqualizer,IDirectSoundFXParamEq&gt;(IDirectSoundFXParamEq*, ComObject^, ComObjectFlags)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="Param" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-11-20 20:57:15Z">
-              <Issue Name="Member">
-               <Item>Param</Item>
-               <Item>'ComObject::ConstructFromPointer&lt;SlimDX::DirectSound::ParametricEqualizer,IDirectSoundFXParamEq&gt;(IDirectSoundFXParamEq*, ComObject^, ComObjectFlags)'</Item>
-              </Issue>
-             </Message>
              <Message Id="Eq" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="Member">
                <Item>Eq</Item>
                <Item>'ComObject::ConstructFromPointer&lt;SlimDX::DirectSound::ParametricEqualizer,IDirectSoundFXParamEq&gt;(IDirectSoundFXParamEq*, ComObject^, ComObjectFlags)'</Item>
                <Item>EQ</Item>
+              </Issue>
+             </Message>
+             <Message Id="Eq" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-11-20 20:57:15Z">
+              <Issue Name="Member">
+               <Item>Eq</Item>
+               <Item>'ComObject::ConstructFromPointer&lt;SlimDX::DirectSound::ParametricEqualizer,IDirectSoundFXParamEq&gt;(IDirectSoundFXParamEq*, ComObject^, ComObjectFlags)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="Param" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-11-20 20:57:15Z">
+              <Issue Name="Member">
+               <Item>Param</Item>
+               <Item>'ComObject::ConstructFromPointer&lt;SlimDX::DirectSound::ParametricEqualizer,IDirectSoundFXParamEq&gt;(IDirectSoundFXParamEq*, ComObject^, ComObjectFlags)'</Item>
               </Issue>
              </Message>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-11-20 20:57:15Z">
@@ -3199,21 +3194,21 @@
            </Member>
            <Member Name="#ConstructFromPointer&lt;SlimDX::DirectWrite::GdiInterop,IDWriteGdiInterop&gt;(IDWriteGdiInterop*,SlimDX.ComObject,SlimDX.ComObjectFlags)">
             <Messages>
-             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-11-20 20:57:15Z">
-              <Issue Name="Member">
-               <Item>Gdi</Item>
-               <Item>'ComObject::ConstructFromPointer&lt;SlimDX::DirectWrite::GdiInterop,IDWriteGdiInterop&gt;(IDWriteGdiInterop*, ComObject^, ComObjectFlags)'</Item>
-              </Issue>
-              <Issue Name="Member">
-               <Item>Gdi</Item>
-               <Item>'ComObject::ConstructFromPointer&lt;SlimDX::DirectWrite::GdiInterop,IDWriteGdiInterop&gt;(IDWriteGdiInterop*, ComObject^, ComObjectFlags)'</Item>
-              </Issue>
-             </Message>
              <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="MemberAbbreviation">
                <Item>ID</Item>
                <Item>'ComObject::ConstructFromPointer&lt;SlimDX::DirectWrite::GdiInterop,IDWriteGdiInterop&gt;(IDWriteGdiInterop*, ComObject^, ComObjectFlags)'</Item>
                <Item>Id</Item>
+              </Issue>
+             </Message>
+             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-11-20 20:57:15Z">
+              <Issue Name="Member">
+               <Item>Gdi</Item>
+               <Item>'ComObject::ConstructFromPointer&lt;SlimDX::DirectWrite::GdiInterop,IDWriteGdiInterop&gt;(IDWriteGdiInterop*, ComObject^, ComObjectFlags)'</Item>
+              </Issue>
+              <Issue Name="Member">
+               <Item>Gdi</Item>
+               <Item>'ComObject::ConstructFromPointer&lt;SlimDX::DirectWrite::GdiInterop,IDWriteGdiInterop&gt;(IDWriteGdiInterop*, ComObject^, ComObjectFlags)'</Item>
               </Issue>
              </Message>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-11-20 20:57:15Z">
@@ -3317,17 +3312,17 @@
            </Member>
            <Member Name="#ConstructFromPointer&lt;SlimDX::DirectWrite::RenderingParameters,IDWriteRenderingParams&gt;(IDWriteRenderingParams*,SlimDX.ComObject,SlimDX.ComObjectFlags)">
             <Messages>
-             <Message Id="Params" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-11-20 20:57:15Z">
-              <Issue Name="Member">
-               <Item>Params</Item>
-               <Item>'ComObject::ConstructFromPointer&lt;SlimDX::DirectWrite::RenderingParameters,IDWriteRenderingParams&gt;(IDWriteRenderingParams*, ComObject^, ComObjectFlags)'</Item>
-              </Issue>
-             </Message>
              <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="MemberAbbreviation">
                <Item>ID</Item>
                <Item>'ComObject::ConstructFromPointer&lt;SlimDX::DirectWrite::RenderingParameters,IDWriteRenderingParams&gt;(IDWriteRenderingParams*, ComObject^, ComObjectFlags)'</Item>
                <Item>Id</Item>
+              </Issue>
+             </Message>
+             <Message Id="Params" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-11-20 20:57:15Z">
+              <Issue Name="Member">
+               <Item>Params</Item>
+               <Item>'ComObject::ConstructFromPointer&lt;SlimDX::DirectWrite::RenderingParameters,IDWriteRenderingParams&gt;(IDWriteRenderingParams*, ComObject^, ComObjectFlags)'</Item>
               </Issue>
              </Message>
              <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Status="Excluded" Created="2009-11-20 20:57:15Z">
@@ -3754,7 +3749,7 @@
            </Member>
            <Member Name="#ConstructFromUserPointer&lt;SlimDX::Direct2D::GdiInteropRenderTarget&gt;(System.IntPtr)">
             <Messages>
-             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-11-20 20:57:15Z">
+             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="Member">
                <Item>Gdi</Item>
                <Item>'ComObject::ConstructFromUserPointer&lt;SlimDX::Direct2D::GdiInteropRenderTarget&gt;(IntPtr)'</Item>
@@ -5575,7 +5570,7 @@
            </Member>
            <Member Name="#ConstructFromUserPointer&lt;SlimDX::DirectWrite::GdiInterop&gt;(System.IntPtr)">
             <Messages>
-             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2009-11-20 20:57:15Z">
+             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="Member">
                <Item>Gdi</Item>
                <Item>'ComObject::ConstructFromUserPointer&lt;SlimDX::DirectWrite::GdiInterop&gt;(IntPtr)'</Item>
@@ -5978,7 +5973,7 @@
                <Item>0</Item>
               </Issue>
              </Message>
-             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="Reserved">
                <Item>'DataStream::DataStream(long long, bool, bool)'</Item>
                <Item>'OutOfMemoryException'</Item>
@@ -6277,7 +6272,7 @@
            </Member>
            <Member Name="#GetD3DBuffer()">
             <Messages>
-             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="Reserved">
                <Item>'DataStream::GetD3DBuffer(void)'</Item>
                <Item>'OutOfMemoryException'</Item>
@@ -6287,7 +6282,7 @@
            </Member>
            <Member Name="#Read`1()">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'DataStream::Read&lt;T&gt;(void)'</Item>
                <Item>'T'</Item>
@@ -6297,7 +6292,7 @@
            </Member>
            <Member Name="#ReadRange`1(System.Int32)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'DataStream::ReadRange&lt;T&gt;(int)'</Item>
                <Item>'T'</Item>
@@ -6404,7 +6399,7 @@
           <Members>
            <Member Name="#Item[System.Int32,System.Int32]">
             <Messages>
-             <Message TypeName="IndexersShouldNotBeMultidimensional" Category="Microsoft.Design" CheckId="CA1023" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="IndexersShouldNotBeMultidimensional" Category="Microsoft.Design" CheckId="CA1023" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'Matrix::default[int, int]'</Item>
               </Issue>
@@ -7003,7 +6998,7 @@
           <Members>
            <Member Name="#GetStatus()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Performance::GetStatus(void)'</Item>
               </Issue>
@@ -7626,7 +7621,7 @@
           <Members>
            <Member Name="#EndPoint">
             <Messages>
-             <Message Id="EndPoint" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2009-11-20 20:57:15Z">
+             <Message Id="EndPoint" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="MemberShouldBeDiscreteTerm">
                <Item>EndPoint</Item>
                <Item>'ArcSegment::EndPoint'</Item>
@@ -7787,7 +7782,7 @@
          </Type>
          <Type Name="CompatibleRenderTargetOptions">
           <Messages>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'CompatibleRenderTargetOptions'</Item>
             </Issue>
@@ -8142,7 +8137,7 @@
            </Member>
            <Member Name="#EndPoint">
             <Messages>
-             <Message Id="EndPoint" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2009-11-20 20:57:15Z">
+             <Message Id="EndPoint" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="MemberShouldBeDiscreteTerm">
                <Item>EndPoint</Item>
                <Item>'LinearGradientBrush::EndPoint'</Item>
@@ -8178,7 +8173,7 @@
           <Members>
            <Member Name="#EndPoint">
             <Messages>
-             <Message Id="EndPoint" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2009-11-20 20:57:15Z">
+             <Message Id="EndPoint" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="MemberShouldBeDiscreteTerm">
                <Item>EndPoint</Item>
                <Item>'LinearGradientBrushProperties::EndPoint'</Item>
@@ -8332,7 +8327,7 @@
          </Type>
          <Type Name="PresentOptions">
           <Messages>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'PresentOptions'</Item>
             </Issue>
@@ -9360,7 +9355,7 @@
            </Member>
            <Member Name="#GetCounterCapabilities()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Device::GetCounterCapabilities(void)'</Item>
               </Issue>
@@ -9560,7 +9555,7 @@
            </Member>
            <Member Name="#GetConstantBuffer()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'EffectConstantBuffer::GetConstantBuffer(void)'</Item>
               </Issue>
@@ -9569,7 +9564,7 @@
            </Member>
            <Member Name="#GetTextureBuffer()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'EffectConstantBuffer::GetTextureBuffer(void)'</Item>
               </Issue>
@@ -9769,7 +9764,7 @@
            </Member>
            <Member Name="#GetResource()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'EffectResourceVariable::GetResource(void)'</Item>
               </Issue>
@@ -9793,14 +9788,14 @@
            </Member>
            <Member Name="#GetBool()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
-              <Issue Certainty="50">
-               <Item>'EffectScalarVariable::GetBool(void)'</Item>
-              </Issue>
-             </Message>
              <Message Id="bool" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="LanguageSpecificMember">
                <Item>Bool</Item>
+               <Item>'EffectScalarVariable::GetBool(void)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
+              <Issue Certainty="50">
                <Item>'EffectScalarVariable::GetBool(void)'</Item>
               </Issue>
              </Message>
@@ -9818,14 +9813,14 @@
            </Member>
            <Member Name="#GetFloat()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
-              <Issue Certainty="50">
-               <Item>'EffectScalarVariable::GetFloat(void)'</Item>
-              </Issue>
-             </Message>
              <Message Id="float" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="LanguageSpecificMember">
                <Item>Float</Item>
+               <Item>'EffectScalarVariable::GetFloat(void)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
+              <Issue Certainty="50">
                <Item>'EffectScalarVariable::GetFloat(void)'</Item>
               </Issue>
              </Message>
@@ -9833,14 +9828,14 @@
            </Member>
            <Member Name="#GetInt()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
-              <Issue>
-               <Item>'EffectScalarVariable::GetInt(void)'</Item>
-              </Issue>
-             </Message>
              <Message Id="int" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="LanguageSpecificMember">
                <Item>Int</Item>
+               <Item>'EffectScalarVariable::GetInt(void)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
+              <Issue>
                <Item>'EffectScalarVariable::GetInt(void)'</Item>
               </Issue>
              </Message>
@@ -9878,7 +9873,7 @@
            </Member>
            <Member Name="#GetString()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'EffectStringVariable::GetString(void)'</Item>
               </Issue>
@@ -10543,7 +10538,7 @@
            </Member>
            <Member Name="#GetAdjacencyBuffer()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Mesh::GetAdjacencyBuffer(void)'</Item>
               </Issue>
@@ -10552,7 +10547,7 @@
            </Member>
            <Member Name="#GetAttributeBuffer()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Mesh::GetAttributeBuffer(void)'</Item>
               </Issue>
@@ -10561,7 +10556,7 @@
            </Member>
            <Member Name="#GetAttributeTable()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Mesh::GetAttributeTable(void)'</Item>
               </Issue>
@@ -10570,7 +10565,7 @@
            </Member>
            <Member Name="#GetDeviceIndexBuffer()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Mesh::GetDeviceIndexBuffer(void)'</Item>
               </Issue>
@@ -10579,7 +10574,7 @@
            </Member>
            <Member Name="#GetIndexBuffer()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Mesh::GetIndexBuffer(void)'</Item>
               </Issue>
@@ -10588,7 +10583,7 @@
            </Member>
            <Member Name="#GetPointRepresentationBuffer()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Mesh::GetPointRepresentationBuffer(void)'</Item>
               </Issue>
@@ -10692,7 +10687,7 @@
           <Members>
            <Member Name="#GetDepthStencilView()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'OutputMergerWrapper::GetDepthStencilView(void)'</Item>
               </Issue>
@@ -10901,7 +10896,7 @@
            </Member>
            <Member Name="#FromSwapChain`1(SlimDX.DXGI.SwapChain,System.Int32)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'Resource::FromSwapChain&lt;T&gt;(SwapChain^, int)'</Item>
                <Item>'T'</Item>
@@ -12532,7 +12527,7 @@
            </Member>
            <Member Name="#GetCounterCapabilities()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Device::GetCounterCapabilities(void)'</Item>
               </Issue>
@@ -12751,7 +12746,7 @@
            </Member>
            <Member Name="#GetConstantBuffer()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'EffectConstantBuffer::GetConstantBuffer(void)'</Item>
               </Issue>
@@ -12760,7 +12755,7 @@
            </Member>
            <Member Name="#GetTextureBuffer()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'EffectConstantBuffer::GetTextureBuffer(void)'</Item>
               </Issue>
@@ -12838,7 +12833,7 @@
            </Member>
            <Member Name="#GetResource()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'EffectResourceVariable::GetResource(void)'</Item>
               </Issue>
@@ -12862,14 +12857,14 @@
            </Member>
            <Member Name="#GetBool()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
-              <Issue Certainty="50">
-               <Item>'EffectScalarVariable::GetBool(void)'</Item>
-              </Issue>
-             </Message>
              <Message Id="bool" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="LanguageSpecificMember">
                <Item>Bool</Item>
+               <Item>'EffectScalarVariable::GetBool(void)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
+              <Issue Certainty="50">
                <Item>'EffectScalarVariable::GetBool(void)'</Item>
               </Issue>
              </Message>
@@ -12887,14 +12882,14 @@
            </Member>
            <Member Name="#GetFloat()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
-              <Issue Certainty="50">
-               <Item>'EffectScalarVariable::GetFloat(void)'</Item>
-              </Issue>
-             </Message>
              <Message Id="float" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="LanguageSpecificMember">
                <Item>Float</Item>
+               <Item>'EffectScalarVariable::GetFloat(void)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
+              <Issue Certainty="50">
                <Item>'EffectScalarVariable::GetFloat(void)'</Item>
               </Issue>
              </Message>
@@ -12902,14 +12897,14 @@
            </Member>
            <Member Name="#GetInt()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
-              <Issue>
-               <Item>'EffectScalarVariable::GetInt(void)'</Item>
-              </Issue>
-             </Message>
              <Message Id="int" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="LanguageSpecificMember">
                <Item>Int</Item>
+               <Item>'EffectScalarVariable::GetInt(void)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
+              <Issue>
                <Item>'EffectScalarVariable::GetInt(void)'</Item>
               </Issue>
              </Message>
@@ -12947,7 +12942,7 @@
            </Member>
            <Member Name="#GetString()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'EffectStringVariable::GetString(void)'</Item>
               </Issue>
@@ -13513,7 +13508,7 @@
           <Members>
            <Member Name="#GetDepthStencilView()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'OutputMergerWrapper::GetDepthStencilView(void)'</Item>
               </Issue>
@@ -13735,7 +13730,7 @@
            </Member>
            <Member Name="#FromSwapChain`1(SlimDX.DXGI.SwapChain,System.Int32)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'Resource::FromSwapChain&lt;T&gt;(SwapChain^, int)'</Item>
                <Item>'T'</Item>
@@ -14755,7 +14750,7 @@
           <Members>
            <Member Name="#GetValue`1(SlimDX.Direct3D9.EffectHandle)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'BaseEffect::GetValue&lt;T&gt;(EffectHandle^)'</Item>
                <Item>'T'</Item>
@@ -14765,7 +14760,7 @@
            </Member>
            <Member Name="#GetValue`1(SlimDX.Direct3D9.EffectHandle,System.Int32)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'BaseEffect::GetValue&lt;T&gt;(EffectHandle^, int)'</Item>
                <Item>'T'</Item>
@@ -14868,13 +14863,13 @@
          </Type>
          <Type Name="CallbackSearchFlags">
           <Messages>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2009-11-20 20:57:15Z">
-            <Issue>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-11-20 20:57:15Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
              <Item>'CallbackSearchFlags'</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-11-20 20:57:15Z" FixCategory="NonBreaking">
-            <Issue Name="NotFlagsNoZeroValue">
+           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Excluded" Created="2009-11-20 20:57:15Z">
+            <Issue>
              <Item>'CallbackSearchFlags'</Item>
             </Issue>
            </Message>
@@ -15048,7 +15043,7 @@
            </Member>
            <Member Name="#GetCompressedData()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'CompressedAnimationSet::GetCompressedData(void)'</Item>
               </Issue>
@@ -15339,7 +15334,7 @@
          </Type>
          <Type Name="DebugMonitorTokens">
           <Messages>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'DebugMonitorTokens'</Item>
             </Issue>
@@ -15348,7 +15343,7 @@
          </Type>
          <Type Name="DeclarationMethod">
           <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue Name="NotInt32">
              <Item>'DeclarationMethod'</Item>
              <Item>'unsigned char'</Item>
@@ -15358,7 +15353,7 @@
          </Type>
          <Type Name="DeclarationType">
           <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue Name="NotInt32">
              <Item>'DeclarationType'</Item>
              <Item>'unsigned char'</Item>
@@ -15380,7 +15375,7 @@
          </Type>
          <Type Name="DeclarationUsage">
           <Messages>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue Name="NotInt32">
              <Item>'DeclarationUsage'</Item>
              <Item>'unsigned char'</Item>
@@ -15569,7 +15564,7 @@
            </Member>
            <Member Name="#GetRenderState`1(SlimDX.Direct3D9.RenderState)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'Device::GetRenderState&lt;T&gt;(RenderState)'</Item>
                <Item>'T'</Item>
@@ -15579,7 +15574,7 @@
            </Member>
            <Member Name="#GetSamplerState`1(System.Int32,SlimDX.Direct3D9.SamplerState)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'Device::GetSamplerState&lt;T&gt;(int, SamplerState)'</Item>
                <Item>'T'</Item>
@@ -15589,7 +15584,7 @@
            </Member>
            <Member Name="#GetTextureStageState`1(System.Int32,SlimDX.Direct3D9.TextureStage)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'Device::GetTextureStageState&lt;T&gt;(int, TextureStage)'</Item>
                <Item>'T'</Item>
@@ -16815,7 +16810,7 @@
          </Type>
          <Type Name="Filter">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'Filter'</Item>
              <Item>0x8, 0x10, 0x20, 0x40, 0x80, 0x100, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000, 0x100000, 0x800000, 0x1000000, 0x2000000, 0x4000000, 0x8000000, 0x10000000, 0x20000000, 0x40000000, 0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
@@ -18113,7 +18108,7 @@
                <Item>'Global::DeleteObject(void*)'</Item>
               </Issue>
              </Message>
-             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="Reserved">
                <Item>'Mesh::CreateText(Device^, Font^, String^, float, float)'</Item>
                <Item>'OutOfMemoryException'</Item>
@@ -18135,7 +18130,7 @@
                <Item>'Global::DeleteObject(void*)'</Item>
               </Issue>
              </Message>
-             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="Reserved">
                <Item>'Mesh::CreateText(Device^, Font^, String^, float, float, array&lt;GlyphMetricsFloat&gt;^%)'</Item>
                <Item>'OutOfMemoryException'</Item>
@@ -18674,7 +18669,7 @@
          </Type>
          <Type Name="PresentInterval">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'PresentInterval'</Item>
              <Item>0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
@@ -18900,7 +18895,7 @@
            </Member>
            <Member Name="#GetData`1(System.Boolean)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'Query::GetData&lt;T&gt;(bool)'</Item>
                <Item>'T'</Item>
@@ -19538,17 +19533,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#Draw(SlimDX.Direct3D9.Texture,System.Nullable`1&lt;System.Drawing.Rectangle&gt;,SlimDX.Color4)">
-            <Messages>
-             <Message Id="rectPtr" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2009-11-20 20:57:15Z">
-              <Issue>
-               <Item>'Sprite::Draw(Texture^, Nullable&lt;Rectangle&gt;, Color4)'</Item>
-               <Item>'rectPtr'</Item>
-               <Item>'tagRECT*'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
              <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-11-20 20:57:15Z">
@@ -19791,7 +19775,7 @@
            </Member>
            <Member Name="#GetContainer`1()">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'Surface::GetContainer&lt;TContainer&gt;(void)'</Item>
                <Item>'TContainer'</Item>
@@ -19801,7 +19785,7 @@
            </Member>
            <Member Name="#GetDC()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Surface::GetDC(void)'</Item>
               </Issue>
@@ -20038,7 +20022,7 @@
          </Type>
          <Type Name="TextureArgument">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'TextureArgument'</Item>
              <Item>0x8</Item>
@@ -20351,7 +20335,7 @@
          </Type>
          <Type Name="VertexFormat">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'VertexFormat'</Item>
              <Item>0x4000</Item>
@@ -20383,7 +20367,7 @@
          </Type>
          <Type Name="VertexFormatCaps">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'VertexFormatCaps'</Item>
              <Item>0x1, 0x2, 0x4, 0x8, 0x10, 0x20, 0x40, 0x80, 0x100, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000</Item>
@@ -20905,7 +20889,7 @@
                <Item>&#xD;&#xA;   -&gt;'CustomDevice&lt;TDataFormat&gt;::GetBufferedData(void)'&#xD;&#xA;   -&gt;'CustomDevice&lt;TDataFormat&gt;::GetBufferedData(void)'</Item>
               </Issue>
              </Message>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'CustomDevice&lt;TDataFormat&gt;::GetBufferedData(void)'</Item>
               </Issue>
@@ -21027,7 +21011,7 @@
           <Members>
            <Member Name="#GetDeviceImages()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Device::GetDeviceImages(void)'</Item>
               </Issue>
@@ -21470,7 +21454,7 @@
          </Type>
          <Type Name="EffectParameterFlags">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'EffectParameterFlags'</Item>
              <Item>0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
@@ -21510,7 +21494,7 @@
          </Type>
          <Type Name="EffectPlayFlags">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'EffectPlayFlags'</Item>
              <Item>0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
@@ -21526,7 +21510,7 @@
          </Type>
          <Type Name="EffectType">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'EffectType'</Item>
              <Item>0x8, 0x10, 0x20, 0x40, 0x80</Item>
@@ -21605,7 +21589,7 @@
            </Member>
            <Member Name="#GetBufferedData()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Joystick::GetBufferedData(void)'</Item>
               </Issue>
@@ -21711,7 +21695,7 @@
            </Member>
            <Member Name="#GetBufferedData()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Keyboard::GetBufferedData(void)'</Item>
               </Issue>
@@ -21768,7 +21752,7 @@
            </Member>
            <Member Name="#GetBufferedData()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Mouse::GetBufferedData(void)'</Item>
               </Issue>
@@ -21820,7 +21804,7 @@
          </Type>
          <Type Name="ObjectDeviceType">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'ObjectDeviceType'</Item>
              <Item>0x100, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000, 0x10000, 0x20000, 0x40000, 0x80000, 0x100000, 0x200000, 0x400000, 0x800000</Item>
@@ -22153,7 +22137,7 @@
            </Member>
            <Member Name="#GetEffect`1(System.Int32)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'CaptureBuffer::GetEffect&lt;T&gt;(int)'</Item>
                <Item>'T'</Item>
@@ -22296,7 +22280,7 @@
            </Member>
            <Member Name="#GetDevices()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'DirectSound::GetDevices(void)'</Item>
               </Issue>
@@ -22355,7 +22339,7 @@
            </Member>
            <Member Name="#GetDevices()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'DirectSoundCapture::GetDevices(void)'</Item>
               </Issue>
@@ -22671,7 +22655,7 @@
            </Member>
            <Member Name="#GetEffect`1(System.Int32)">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'SecondarySoundBuffer::GetEffect&lt;T&gt;(int)'</Item>
                <Item>'T'</Item>
@@ -23334,7 +23318,7 @@
           <Members>
            <Member Name="#ExtraBold">
             <Messages>
-             <Message Id="ExtraBold" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2009-11-20 20:57:15Z">
+             <Message Id="ExtraBold" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Name="MemberShouldBeDiscreteTerm">
                <Item>ExtraBold</Item>
                <Item>'FontWeight::ExtraBold'</Item>
@@ -23637,7 +23621,7 @@
          </Type>
          <Type Name="ScriptShapes">
           <Messages>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'ScriptShapes'</Item>
             </Issue>
@@ -23890,7 +23874,7 @@
            </Member>
            <Member Name="#GetOutputCount()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Adapter::GetOutputCount(void)'</Item>
               </Issue>
@@ -24021,7 +24005,7 @@
           <Members>
            <Member Name="#GetParent`1()">
             <Messages>
-             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="GenericMethodsShouldProvideTypeParameter" Category="Microsoft.Design" CheckId="CA1004" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'DXGIObject::GetParent&lt;T&gt;(void)'</Item>
                <Item>'T'</Item>
@@ -24057,7 +24041,7 @@
            </Member>
            <Member Name="#GetAdapterCount()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Factory::GetAdapterCount(void)'</Item>
               </Issue>
@@ -24066,7 +24050,7 @@
            </Member>
            <Member Name="#GetWindowAssociation()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Factory::GetWindowAssociation(void)'</Item>
               </Issue>
@@ -25417,7 +25401,7 @@
         <Types>
          <Type Name="Speakers">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'Speakers'</Item>
              <Item>0x40000, 0x80000, 0x100000, 0x200000, 0x400000, 0x800000, 0x1000000, 0x2000000, 0x4000000, 0x8000000, 0x10000000, 0x20000000, 0x40000000, 0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
@@ -25695,7 +25679,7 @@
                <Item>'Global::GetRawInputDeviceInfoW(void*, unsigned int, void*, unsigned int*)'</Item>
               </Issue>
              </Message>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Device::GetDevices(void)'</Item>
               </Issue>
@@ -25781,7 +25765,7 @@
          </Type>
          <Type Name="DeviceFlags">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'DeviceFlags'</Item>
              <Item>0x10, 0x20</Item>
@@ -26147,7 +26131,7 @@
         <Types>
          <Type Name="BufferFlags">
           <Messages>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'BufferFlags'</Item>
             </Issue>
@@ -26587,7 +26571,7 @@
          </Type>
          <Type Name="XAudio2Flags">
           <Messages>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'XAudio2Flags'</Item>
             </Issue>
@@ -26667,7 +26651,7 @@
            </Member>
            <Member Name="#GetState()">
             <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue Certainty="50">
                <Item>'Controller::GetState(void)'</Item>
               </Issue>
@@ -26696,13 +26680,13 @@
          </Type>
          <Type Name="GamepadButtonFlags">
           <Messages>
-           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'GamepadButtonFlags'</Item>
              <Item>0x8000, 0x10000, 0x20000, 0x40000, 0x80000, 0x100000, 0x200000, 0x400000, 0x800000, 0x1000000, 0x2000000, 0x4000000, 0x8000000, 0x10000000, 0x20000000, 0x40000000, 0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="EnumStorageShouldBeInt32" Category="Microsoft.Design" CheckId="CA1028" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue Name="NotInt32">
              <Item>'GamepadButtonFlags'</Item>
              <Item>'short'</Item>
@@ -26901,9 +26885,6 @@
    <Rule TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208">
     <Resolution Name="IncorrectParameterName">Method {0} passes '{1}' as the {2} argument to a {3} constructor. Replace this argument with one of the method's parameter names. Note that the provided parameter name should have the exact casing as declared on the method.</Resolution>
    </Rule>
-   <Rule TypeName="MarkAssembliesWithNeutralResourcesLanguage" Category="Microsoft.Performance" CheckId="CA1824">
-    <Resolution Name="Default">Because assembly {0} contains a ResX-based resource file, mark it with the NeutralResourcesLanguage attribute, specifying the language of the resources within the assembly. This could improve lookup performance the first time a resource is retrieved.</Resolution>
-   </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
    </Rule>
@@ -26932,9 +26913,6 @@
    </Rule>
    <Rule TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721">
     <Resolution Name="BaseType">The property name {0} is confusing given the existence of inherited method {1}. Rename or remove this property.</Resolution>
-   </Rule>
-   <Rule TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804">
-    <Resolution Name="Default">{0} declares a variable, {1}, of type {2}, which is never used or is only assigned to. Use this variable or remove it.</Resolution>
    </Rule>
    <Rule TypeName="ReplaceRepetitiveArgumentsWithParamsArray" Category="Microsoft.Design" CheckId="CA1025">
     <Resolution Name="Default">Consider implementing a version of {0} that accepts a parameter array argument.</Resolution>
