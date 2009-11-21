@@ -20,36 +20,41 @@
 * THE SOFTWARE.
 */
 
-using System.Collections.Generic;
+using System.Reflection;
+
 namespace SlimDX.SampleFramework {
-	/// <summary>
-	/// Provides basic logical UI component functionality.
-	/// </summary>
-	public class Element {
+	class Binding {
 		#region Public Interface
 
-		/// <summary>
-		/// Gets or sets the element's label.
-		/// </summary>
-		public string Label {
-			get;
-			set;
+		public Binding( string targetName, object source ) {
+			this.targetName = targetName;
+			this.source = source;
 		}
 
-		public void SetBinding( string targetName, object source ) {
-			bindings[targetName] = new Binding( targetName, source );
-		}
+		public void Update( object target ) {
+			PropertyInfo property = target.GetType().GetProperty( targetName );
+			if( property == null ) {
+				return;
+			}
 
-		public void Update() {
-			foreach( Binding binding in bindings.Values ) {
-				binding.Update( this );
+			object value = source;
+			IBindable bindable = source as IBindable;
+			if( bindable != null ) {
+				value = bindable.GetValue();
+			}
+
+			if( property.PropertyType.IsAssignableFrom( value.GetType() ) ) {
+				property.SetValue( target, value, null );
+			} else if( property.PropertyType == typeof( string ) ) {
+				property.SetValue( target, value.ToString(), null );
 			}
 		}
 
 		#endregion
 		#region Implementation Detail
 
-		Dictionary<string, Binding> bindings = new Dictionary<string, Binding>();
+		string targetName;
+		object source;
 
 		#endregion
 	}

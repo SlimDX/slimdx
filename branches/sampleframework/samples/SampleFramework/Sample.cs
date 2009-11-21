@@ -100,7 +100,9 @@ namespace SlimDX.SampleFramework {
 			form.MouseClick += HandleMouseClick;
 
 			userInterface = new UserInterface();
-			userInterface.Container.Add( new Element { Label = configuration.WindowTitle } );
+			Element stats = new Element();
+			stats.SetBinding( "Label", framesPerSecond );
+			userInterface.Container.Add( stats );
 
 			OnInitialize();
 
@@ -183,6 +185,7 @@ namespace SlimDX.SampleFramework {
 		DeviceContext9 context;
 
 		Clock clock = new Clock();
+		Bindable<float> framesPerSecond = new Bindable<float>();
 		float frameAccumulator;
 		int frameCount;
 
@@ -197,6 +200,7 @@ namespace SlimDX.SampleFramework {
 		/// Updates sample state.
 		/// </summary>
 		void Update() {
+			userInterface.Container.Update();
 			OnUpdate();
 		}
 
@@ -208,7 +212,7 @@ namespace SlimDX.SampleFramework {
 			frameAccumulator += elapsed;
 			++frameCount;
 			if( frameAccumulator >= 1.0f ) {
-				form.Text = ( frameCount / frameAccumulator ).ToString();
+				framesPerSecond.Value = frameCount / frameAccumulator;
 
 				frameAccumulator = 0.0f;
 				frameCount = 0;

@@ -91,6 +91,9 @@
     <Compile Include="Rendering\UI\UserInterfaceRenderer9.cs" />
     <Compile Include="Sample.cs" />
     <Compile Include="SampleConfiguration.cs" />
+    <Compile Include="UI\Binding\Bindable.cs" />
+    <Compile Include="UI\Binding\Binding.cs" />
+    <Compile Include="UI\Binding\IBindable.cs" />
     <Compile Include="UI\Element.cs" />
     <Compile Include="UI\ElementContainer.cs" />
     <Compile Include="UI\UserInterface.cs" />

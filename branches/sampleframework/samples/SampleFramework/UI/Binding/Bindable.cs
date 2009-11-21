@@ -20,36 +20,51 @@
 * THE SOFTWARE.
 */
 
-using System.Collections.Generic;
 namespace SlimDX.SampleFramework {
 	/// <summary>
-	/// Provides basic logical UI component functionality.
+	/// A wrapper for value types that enable their use in UI element bindings.
 	/// </summary>
-	public class Element {
+	/// <typeparam name="T">The underlying value type.</typeparam>
+	public class Bindable<T> : IBindable where T : struct {
 		#region Public Interface
 
 		/// <summary>
-		/// Gets or sets the element's label.
+		/// Gets or sets the value.
 		/// </summary>
-		public string Label {
-			get;
-			set;
-		}
-
-		public void SetBinding( string targetName, object source ) {
-			bindings[targetName] = new Binding( targetName, source );
-		}
-
-		public void Update() {
-			foreach( Binding binding in bindings.Values ) {
-				binding.Update( this );
+		public T Value {
+			get {
+				return value;
 			}
+			set {
+				if( !object.Equals( this.value, value ) ) {
+					this.value = value;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Bindable&lt;T&gt;"/> class.
+		/// </summary>
+		public Bindable()
+			: this( default( T ) ) {
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Bindable&lt;T&gt;"/> class.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		public Bindable( T value ) {
+			this.value = value;
 		}
 
 		#endregion
 		#region Implementation Detail
 
-		Dictionary<string, Binding> bindings = new Dictionary<string, Binding>();
+		T value;
+
+		object IBindable.GetValue() {
+			return Value;
+		}
 
 		#endregion
 	}
