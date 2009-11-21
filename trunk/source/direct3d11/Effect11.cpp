@@ -172,23 +172,5 @@ namespace Direct3D11
 	{
 		return RECORD_D3D11( InternalPointer->Optimize() );
 	}
-
-	Effect^ Effect::FromMemory_Internal( SlimDX::Direct3D11::Device^ device, void* memory, SIZE_T size, UINT effectFlags )
-	{
-		ID3DX11Effect* effect = 0;
-
-		HRESULT hr = D3DX11CreateEffectFromMemory(
-			memory,
-			size,
-			static_cast<UINT>( effectFlags ),
-			device->InternalPointer,
-			&effect
-		);
-		
-		RECORD_D3D11( hr );
-		if( effect == NULL )
-			return nullptr;
-		return gcnew Effect( effect, nullptr );
-	}
 }
 }

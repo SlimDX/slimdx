@@ -64,7 +64,7 @@ namespace SlimDX
 			property AdapterCollection^ Adapters
 			{
 				AdapterCollection^ get() { return adapters; }
-			protected:
+			private protected:
 				void set( AdapterCollection^ value ) { adapters = value; }
 			}
 

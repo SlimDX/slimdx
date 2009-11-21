@@ -42,9 +42,6 @@ namespace SlimDX
 		public ref class Effect : public ComObject
 		{
 			COMOBJECT(ID3DX11Effect, Effect);
-		
-		private:
-			static Effect^ FromMemory_Internal( SlimDX::Direct3D11::Device^ device, void* memory, SIZE_T size, UINT effectFlags );
 
 		public:
 			Effect( SlimDX::Direct3D11::Device^ device, ShaderBytecode^ data, int effectFlags );
