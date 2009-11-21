@@ -47,6 +47,9 @@ namespace SlimDX
 		{
 			COMOBJECT_BASE(ID3DXAnimationSet);
 
+		protected:
+			AnimationSet() { };
+
 		public:
 			virtual int GetAnimationIndex( System::String^ name );
 			virtual System::String^ GetAnimationName( int index );

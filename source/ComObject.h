@@ -66,7 +66,7 @@ namespace SlimDX
 		System::Diagnostics::StackTrace^ m_Source;
 		int m_CreationTime;
 
-	protected:
+	private protected:
 		ComObject();
 		
 		void Construct( IUnknown* pointer );
