@@ -54,7 +54,7 @@ namespace SlimDX.SampleFramework {
 			halfHeight = height / 2;
 
 			font = new Font( device, 18, 0, FontWeight.Bold, 0, false, FontCharacterSet.Default, FontPrecision.Default, FontQuality.Antialiased, FontPitchAndFamily.Default, "Arial" );
-			lineBuffer = new DynamicPrimitiveBuffer10<ColoredVertex>( device, PrimitiveTopology.LineList );
+			lineBuffer = new DynamicPrimitiveBuffer10<ColoredVertex>( device );
 
 			Assembly assembly = Assembly.GetExecutingAssembly();
 			using( Stream stream = assembly.GetManifestResourceStream( "SampleFramework.Resources.UserInterface10.fx" ) )
@@ -90,7 +90,7 @@ namespace SlimDX.SampleFramework {
 			EffectVariable transform = effect.GetVariableBySemantic( "MatrixWVP" );
 			transform.AsMatrix().SetMatrix( scale * offset );
 
-			lineBuffer.Render();
+		//	lineBuffer.Render();
 			lineBuffer.Clear();
 
 			foreach( Text text in textBuffer )

@@ -22,24 +22,48 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 using D3D = SlimDX.Direct3D10;
 
 namespace SlimDX.SampleFramework {
 	/// <summary>
-	/// An automatically-resizing buffer of primitive data, implemented using Direct3D10.
+	/// The base class for an automatically-resizing buffer of primitive data.
 	/// </summary>
-	public class DynamicPrimitiveBuffer10<T> : DynamicPrimitiveBuffer<T> where T : struct {
+	public abstract class DynamicPrimitiveBuffer<T> : IDisposable where T : struct {
 		#region Public Interface
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DynamicPrimitiveBuffer10"/> class.
+		/// Gets the number of vertices in the buffer.
 		/// </summary>
-		/// <param name="device">The device.</param>
-		public DynamicPrimitiveBuffer10( D3D.Device device ) {
-			if( device == null )
-				throw new ArgumentNullException( "device" );
-			this.device = device;
+		public int Count {
+			get {
+				return vertices.Count;
+			}
+		}
+
+		/// <summary>
+		/// Gets the size (in bytes) of a single buffer element.
+		/// </summary>
+		public int ElementSize {
+			get {
+				return Marshal.SizeOf( typeof( T ) );
+			}
+		}
+
+		/// <summary>
+		/// Performs object finalization.
+		/// </summary>
+		~DynamicPrimitiveBuffer() {
+			Dispose( false );
+		}
+
+		/// <summary>
+		/// Disposes of object resources.
+		/// </summary>
+		public void Dispose() {
+			Dispose( true );
+			GC.SuppressFinalize( this );
 		}
 
 		/// <summary>
@@ -47,58 +71,64 @@ namespace SlimDX.SampleFramework {
 		/// </summary>
 		/// <param name="disposeManagedResources">If true, managed resources should be
 		/// disposed of in addition to unmanaged resources.</param>
-		protected override void Dispose( bool disposeManagedResources ) {
-			if( disposeManagedResources ) {
-				buffer.Dispose();
-			}
+		protected virtual void Dispose( bool disposeManagedResources ) {
 		}
 
 		/// <summary>
-		/// Gets the underlying buffer.
+		/// Adds a vertex to the buffer.
 		/// </summary>
-		internal D3D.Buffer UnderlyingBuffer {
-			get {
-				return buffer;
+		/// <param name="vertex">The vertex.</param>
+		public void Add( T vertex ) {
+			vertices.Add( vertex );
+			if( vertices.Count > bufferSize ) {
+				bufferSize = bufferSize == 0 ? initialBufferSize : bufferSize * 2;
+				ResizeBuffer( bufferSize * ElementSize );
 			}
+
+			needsCommit = true;
 		}
 
-		#endregion
-		#region Implementation Detail
+		/// <summary>
+		/// Clears the buffer of all primitive data.
+		/// </summary>
+		public void Clear() {
+			// Note that we do not require a recommit here, since trying to render an
+			// empty buffer will just no-op. It doesn't matter what's in the real buffer
+			// on the card at this point, so there's no sense in locking it.
+			vertices.Clear();
+		}
 
-		D3D.Device device;
-		D3D.Buffer buffer;
+		/// <summary>
+		/// Commits the buffer changes in preparation for rendering.
+		/// </summary>
+		public void Commit() {
+			if( needsCommit ) {
+				FillBuffer( vertices );
+				needsCommit = false;
+			}
+		}
 
 		/// <summary>
 		/// In a derived class, implements logic to resize the buffer.
 		/// During resize, the existing buffer contents need not be preserved.
 		/// </summary>
 		/// <param name="sizeInBytes">The new size, in bytes.</param>
-		protected override void ResizeBuffer( int sizeInBytes ) {
-			if( buffer != null ) {
-				buffer.Dispose();
-			}
-
-			buffer = new D3D.Buffer( device, new D3D.BufferDescription {
-				BindFlags = D3D.BindFlags.VertexBuffer,
-				CpuAccessFlags = D3D.CpuAccessFlags.Write,
-				OptionFlags = D3D.ResourceOptionFlags.None,
-				SizeInBytes = sizeInBytes,
-				Usage = D3D.ResourceUsage.Dynamic
-			} );
-		}
+		protected abstract void ResizeBuffer( int sizeInBytes );
 
 		/// <summary>
 		/// In a derived class, implements logic to fill the buffer with vertex data.
 		/// </summary>
 		/// <param name="vertices">The vertex data.</param>
-		protected override void FillBuffer( List<T> vertices ) {
-			DataStream stream = buffer.Map( D3D.MapMode.WriteDiscard, D3D.MapFlags.None );
-			try {
-				stream.WriteRange( vertices.ToArray() );
-			} finally {
-				buffer.Unmap();
-			}
-		}
+		protected abstract void FillBuffer( List<T> vertices );
+
+		#endregion
+		#region Implementation Detail
+
+		const int initialBufferSize = 32;
+		int bufferSize;
+
+		List<T> vertices = new List<T>();
+		bool needsCommit = false;
 
 		#endregion
 	}

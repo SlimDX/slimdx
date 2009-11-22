@@ -81,6 +81,7 @@
     <Compile Include="Rendering\DeviceContext9.cs" />
     <Compile Include="Rendering\DeviceSettings10.cs" />
     <Compile Include="Rendering\DeviceSettings9.cs" />
+    <Compile Include="Rendering\DynamicPrimitiveBuffer.cs" />
     <Compile Include="Rendering\DynamicPrimitiveBuffer10.cs" />
     <Compile Include="Rendering\DynamicPrimitiveBuffer9.cs" />
     <Compile Include="Rendering\Primitive\TexturedVertex.cs" />
