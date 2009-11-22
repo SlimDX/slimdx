@@ -20,20 +20,17 @@
 * THE SOFTWARE.
 */
 
-using SlimDX.Direct3D9;
+using SlimDX.Direct3D10;
 
-namespace SlimDX.SampleFramework
-{
+namespace SlimDX.SampleFramework {
 	/// <summary>
-	/// Settings used to initialize a Direct3D9 device.
+	/// Settings used to initialize a Direct3D10 device.
 	/// </summary>
-	public class DeviceSettings9
-	{
+	public class DeviceSettings10 {
 		/// <summary>
 		/// Gets or sets the adapter ordinal.
 		/// </summary>
-		public int AdapterOrdinal
-		{
+		public int AdapterOrdinal {
 			get;
 			set;
 		}
@@ -41,8 +38,7 @@ namespace SlimDX.SampleFramework
 		/// <summary>
 		/// Gets or sets the creation flags.
 		/// </summary>
-		public CreateFlags CreationFlags
-		{
+		public DeviceCreationFlags CreationFlags {
 			get;
 			set;
 		}
@@ -50,8 +46,7 @@ namespace SlimDX.SampleFramework
 		/// <summary>
 		/// Gets or sets the width of the renderable area.
 		/// </summary>
-		public int Width
-		{
+		public int Width {
 			get;
 			set;
 		}
@@ -59,8 +54,7 @@ namespace SlimDX.SampleFramework
 		/// <summary>
 		/// Gets or sets the height of the renderable area.
 		/// </summary>
-		public int Height
-		{
+		public int Height {
 			get;
 			set;
 		}

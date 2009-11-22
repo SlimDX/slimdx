@@ -22,17 +22,24 @@
 
 using System.Drawing;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
 
 using SlimDX;
 using SlimDX.Direct3D9;
 
 using SlimDX.SampleFramework;
 
-namespace SimpleTriangle
+namespace SimpleTriangle9
 {
-	class SimpleTriangleSample : Sample
+	/// <summary>
+	/// Demonstrates how to render a simple colored triangle with Direct3D9.
+	/// </summary>
+	class SimpleTriangle9Sample : Sample
 	{
+		/// <summary>
+		/// Disposes of object resources.
+		/// </summary>
+		/// <param name="disposeManagedResources">If true, managed resources should be
+		/// disposed of in addition to unmanaged resources.</param>
 		protected override void Dispose(bool disposeManagedResources)
 		{
 			if (disposeManagedResources)
@@ -40,15 +47,7 @@ namespace SimpleTriangle
 				vertexBuffer.Dispose();
 			}
 		}
-
-		protected override SampleConfiguration OnConfigure()
-		{
-			return new SampleConfiguration
-			{
-				WindowTitle = "SlimDX Sample - Simple Triangle"
-			};
-		}
-
+		
 		protected override void OnInitialize()
 		{
 			DeviceSettings9 settings = new DeviceSettings9

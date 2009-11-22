@@ -22,21 +22,19 @@
 
 using System;
 
-using SlimDX.Direct3D9;
-
 namespace SlimDX.SampleFramework {
 	/// <summary>
-	/// Provides creation and management functionality for a Direct3D9 rendering device and related objects.
+	/// Provides creation and management functionality for a Direct3D10 rendering device and related objects.
 	/// </summary>
-	public class DeviceContext9 : IDisposable {
+	public class DeviceContext10 : IDisposable {
 		#region Public Interface
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DeviceContext9"/> class.
+		/// Initializes a new instance of the <see cref="DeviceContext10"/> class.
 		/// </summary>
 		/// <param name="handle">The window handle to associate with the device.</param>
 		/// <param name="settings">The settings used to configure the device.</param>
-		internal DeviceContext9( IntPtr handle, DeviceSettings9 settings ) {
+		internal DeviceContext10( IntPtr handle, DeviceSettings10 settings ) {
 			if( handle == IntPtr.Zero )
 				throw new ArgumentException( "Value must be a valid window handle.", "handle" );
 			if( settings == null )
@@ -44,27 +42,24 @@ namespace SlimDX.SampleFramework {
 
 			this.settings = settings;
 
-			presentParameters.BackBufferFormat = Format.X8R8G8B8;
-			presentParameters.BackBufferCount = 1;
-			presentParameters.BackBufferWidth = settings.Width;
-			presentParameters.BackBufferHeight = settings.Height;
-			presentParameters.Multisample = MultisampleType.None;
-			presentParameters.SwapEffect = SwapEffect.Discard;
-			presentParameters.EnableAutoDepthStencil = true;
-			presentParameters.AutoDepthStencilFormat = Format.D16;
-			presentParameters.PresentFlags = PresentFlags.DiscardDepthStencil;
-			presentParameters.PresentationInterval = PresentInterval.Default;
-			presentParameters.Windowed = true;
-			presentParameters.DeviceWindowHandle = handle;
-
-			direct3D = new Direct3D();
-			Device = new Device( direct3D, settings.AdapterOrdinal, DeviceType.Hardware, handle, settings.CreationFlags, presentParameters );
+			factory = new SlimDX.DXGI.Factory();
+			device = new SlimDX.Direct3D10.Device( factory.GetAdapter( settings.AdapterOrdinal ), SlimDX.Direct3D10.DriverType.Hardware, settings.CreationFlags );
+			swapChain = new SlimDX.DXGI.SwapChain( factory, device, new SlimDX.DXGI.SwapChainDescription {
+				BufferCount = 1,
+				Flags = SlimDX.DXGI.SwapChainFlags.None,
+				IsWindowed = true,
+				ModeDescription = new SlimDX.DXGI.ModeDescription( settings.Width, settings.Height, new Rational( 60, 1 ), SlimDX.DXGI.Format.R8G8B8A8_UNorm ),
+				OutputHandle = handle,
+				SampleDescription = new SlimDX.DXGI.SampleDescription( 1, 0 ),
+				SwapEffect = SlimDX.DXGI.SwapEffect.Discard,
+				Usage = SlimDX.DXGI.Usage.RenderTargetOutput
+			} );
 		}
 
 		/// <summary>
 		/// Performs object finalization.
 		/// </summary>
-		~DeviceContext9() {
+		~DeviceContext10() {
 			Dispose( false );
 		}
 
@@ -83,26 +78,46 @@ namespace SlimDX.SampleFramework {
 		/// disposed of in addition to unmanaged resources.</param>
 		protected virtual void Dispose( bool disposeManagedResources ) {
 			if( disposeManagedResources ) {
-				Device.Dispose();
-				direct3D.Dispose();
+				device.Dispose();
+				factory.Dispose();
 			}
 		}
 
 		/// <summary>
-		/// Gets the underlying Direct3D9 device.
+		/// Gets the underlying DXGI factory.
 		/// </summary>
-		public Device Device {
-			get;
-			private set;
+		public SlimDX.DXGI.Factory Factory {
+			get {
+				return factory;
+			}
+		}
+
+		/// <summary>
+		/// Gets the underlying Direct3D10 device.
+		/// </summary>
+		public SlimDX.Direct3D10.Device Device {
+			get {
+				return device;
+			}
+		}
+
+		/// <summary>
+		/// Gets the underlying DXGI swap chain.
+		/// </summary>
+		public SlimDX.DXGI.SwapChain SwapChain {
+			get {
+				return swapChain;
+			}
 		}
 
 		#endregion
 		#region Implementation Detail
 
-		DeviceSettings9 settings;
+		DeviceSettings10 settings;
 
-		Direct3D direct3D;
-		PresentParameters presentParameters = new PresentParameters();
+		SlimDX.DXGI.Factory factory;
+		SlimDX.Direct3D10.Device device;
+		SlimDX.DXGI.SwapChain swapChain;
 
 		#endregion
 	}

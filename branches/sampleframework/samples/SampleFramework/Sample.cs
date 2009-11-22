@@ -83,7 +83,7 @@ namespace SlimDX.SampleFramework {
 		/// disposed of in addition to unmanaged resources.</param>
 		protected virtual void Dispose( bool disposeManagedResources ) {
 			if( disposeManagedResources ) {
-				context.Dispose();
+				apiContext.Dispose();
 				form.Dispose();
 			}
 		}
@@ -161,9 +161,23 @@ namespace SlimDX.SampleFramework {
 		/// <param name="settings">The settings.</param>
 		/// <returns>The initialized device context.</returns>
 		protected DeviceContext9 InitializeDevice( DeviceSettings9 settings ) {
-			context = new DeviceContext9( form.Handle, settings );
-			userInterfaceRenderer = new UserInterfaceRenderer9( context.Device, settings.Width, settings.Height );
-			return context;
+			DeviceContext9 result = new DeviceContext9( form.Handle, settings );
+			userInterfaceRenderer = new UserInterfaceRenderer9( result.Device, settings.Width, settings.Height );
+			apiContext = result;
+			return result;
+		}
+
+		/// <summary>
+		/// Initializes a <see cref="DeviceContext10">Direct3D10 device context</see> according to the specified settings.
+		/// The base class retains ownership of the context and will dispose of it when appropriate.
+		/// </summary>
+		/// <param name="settings">The settings.</param>
+		/// <returns>The initialized device context.</returns>
+		protected DeviceContext10 InitializeDevice( DeviceSettings10 settings ) {
+			DeviceContext10 result = new DeviceContext10( form.Handle, settings );
+			userInterfaceRenderer = new UserInterfaceRenderer10( result.Device, settings.Width, settings.Height );
+			apiContext = result;
+			return result;
 		}
 
 		/// <summary>
@@ -182,7 +196,7 @@ namespace SlimDX.SampleFramework {
 		UserInterface userInterface;
 		UserInterfaceRenderer userInterfaceRenderer;
 
-		DeviceContext9 context;
+		IDisposable apiContext;
 
 		Clock clock = new Clock();
 		Bindable<float> framesPerSecond = new Bindable<float>();

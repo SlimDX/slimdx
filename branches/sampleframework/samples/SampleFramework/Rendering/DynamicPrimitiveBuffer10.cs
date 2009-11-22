@@ -22,78 +22,76 @@
 
 using System;
 using System.Collections.Generic;
-
-using SlimDX.Direct3D9;
 using System.Runtime.InteropServices;
 
-namespace SlimDX.SampleFramework
-{
+using D3D = SlimDX.Direct3D10;
+
+namespace SlimDX.SampleFramework {
 	/// <summary>
-	/// An automatically-resizing buffer of primitive data, implemented using Direct3D9.
+	/// An automatically-resizing buffer of primitive data, implemented using Direct3D10.
 	/// </summary>
-	public class DynamicPrimitiveBuffer9<T> : IDisposable where T : struct
-	{
+	public class DynamicPrimitiveBuffer10<T> : IDisposable where T : struct {
 		#region Public Interface
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DynamicPrimitiveBuffer9"/> class.
+		/// Initializes a new instance of the <see cref="DynamicPrimitiveBuffer10"/> class.
 		/// </summary>
 		/// <param name="device">The device.</param>
 		/// <param name="topology">The primitive topology.</param>
-		public DynamicPrimitiveBuffer9(Device device, PrimitiveTopology topology)
-		{
+		public DynamicPrimitiveBuffer10( D3D.Device device, PrimitiveTopology topology ) {
 			if( device == null )
-				throw new ArgumentNullException("device");
-				
-			switch (topology)
-			{
+				throw new ArgumentNullException( "device" );
+
+			switch( topology ) {
 				case PrimitiveTopology.PointList:
-					primitiveType = PrimitiveType.PointList;
+					primitiveTopology = D3D.PrimitiveTopology.PointList;
 					verticesPerPrimitive = 1;
 					break;
 				case PrimitiveTopology.LineList:
-					primitiveType = PrimitiveType.LineList;
+					primitiveTopology = D3D.PrimitiveTopology.LineList;
 					verticesPerPrimitive = 2;
 					break;
 				case PrimitiveTopology.TriangleList:
-					primitiveType = PrimitiveType.TriangleList;
+					primitiveTopology = D3D.PrimitiveTopology.TriangleList;
 					verticesPerPrimitive = 3;
 					break;
 				default:
-					throw new ArgumentException(string.Format("'{0}' is not a valid primitive topology for a primitive buffer.", topology), "topology");
+					throw new ArgumentException( string.Format( "'{0}' is not a valid primitive topology for a primitive buffer.", topology ), "topology" );
 			}
 
-			buffer = CreateBuffer(device, bufferSize);
+			buffer = CreateBuffer( device, bufferSize );
 		}
 
 		/// <summary>
 		/// Performs object finalization.
 		/// </summary>
-		~DynamicPrimitiveBuffer9()
-		{
-			Dispose(false);
+		~DynamicPrimitiveBuffer10() {
+			Dispose( false );
 		}
-		
+
 		/// <summary>
 		/// Disposes of object resources.
 		/// </summary>
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
+		public void Dispose() {
+			Dispose( true );
+			GC.SuppressFinalize( this );
+		}
+
+		internal D3D.Buffer UnderlyingBuffer {
+			get {
+				return buffer;
+			}
 		}
 
 		/// <summary>
 		/// Adds a vertex to the buffer.
 		/// </summary>
 		/// <param name="vertex">The vertex.</param>
-		public void Add(T vertex)
-		{
-			vertices.Add(vertex);
-			if (vertices.Count > bufferSize)
-			{
+		public void Add( T vertex ) {
+			vertices.Add( vertex );
+			if( vertices.Count > bufferSize ) {
 				bufferSize *= 2;
-				buffer = CreateBuffer(buffer.Device, bufferSize);
+				buffer = CreateBuffer( buffer.Device, bufferSize );
 			}
 
 			needsCommit = true;
@@ -102,8 +100,7 @@ namespace SlimDX.SampleFramework
 		/// <summary>
 		/// Clears the buffer of all primitive data.
 		/// </summary>
-		public void Clear()
-		{
+		public void Clear() {
 			// Note that we do not require a recommit here, since trying to render an
 			// empty buffer will just no-op. It doesn't matter what's in the real buffer
 			// on the card at this point, so there's no sense in locking it.
@@ -113,26 +110,24 @@ namespace SlimDX.SampleFramework
 		/// <summary>
 		/// Renders the buffer.
 		/// </summary>
-		public void Render()
-		{
-			if (needsCommit)
-			{
-				DataStream data = buffer.Lock(0, 0, LockFlags.Discard);
+		public void Render() {
+			if( needsCommit ) {
+				DataStream data = buffer.Map( D3D.MapMode.WriteDiscard, D3D.MapFlags.None );
 
-				for (int vertexIndex = 0; vertexIndex < vertices.Count; ++vertexIndex)
-				{
-					data.Write(vertices[vertexIndex]);
+				for( int vertexIndex = 0; vertexIndex < vertices.Count; ++vertexIndex ) {
+					data.Write( vertices[vertexIndex] );
 				}
 
-				buffer.Unlock();
+				buffer.Unmap();
 				needsCommit = false;
 			}
 
-			if (vertices.Count > 0)
-			{
-				buffer.Device.VertexFormat = VertexFormat.Position | VertexFormat.Diffuse;
-				buffer.Device.SetStreamSource(0, buffer, 0, vertexSize);
-				buffer.Device.DrawPrimitives(primitiveType, 0, vertices.Count / verticesPerPrimitive);
+			if( vertices.Count > 0 ) {
+				D3D.Device device = buffer.Device;
+				//device.InputAssembler.SetInputLayout( inputLayout );
+				device.InputAssembler.SetPrimitiveTopology( primitiveTopology );
+				device.InputAssembler.SetVertexBuffers( 0, new D3D.VertexBufferBinding( buffer, vertexSize, 0 ) );
+				device.Draw( vertices.Count, 0 );
 			}
 		}
 
@@ -141,40 +136,43 @@ namespace SlimDX.SampleFramework
 
 		const int initialSize = 32;
 
-		PrimitiveType primitiveType;
+		D3D.PrimitiveTopology primitiveTopology;
 		int verticesPerPrimitive;
 
-		VertexBuffer buffer;
+		D3D.Buffer buffer;
 		int bufferSize = initialSize;
-		
+
 		List<T> vertices = new List<T>();
 
 		bool needsCommit = false;
 
-		static int vertexSize = Marshal.SizeOf(typeof(T));
-		
+		static int vertexSize = Marshal.SizeOf( typeof( T ) );
+
 		/// <summary>
 		/// Disposes of object resources.
 		/// </summary>
 		/// <param name="disposeManagedResources">If true, managed resources should be
 		/// disposed of in addition to unmanaged resources.</param>
-		void Dispose(bool disposeManagedResources)
-		{
-			if (disposeManagedResources)
-			{
+		void Dispose( bool disposeManagedResources ) {
+			if( disposeManagedResources ) {
 				buffer.Dispose();
 			}
 		}
-		
+
 		/// <summary>
 		/// Creates the buffer.
 		/// </summary>
 		/// <param name="device">The device.</param>
 		/// <param name="size">The size (in vertices).</param>
 		/// <returns>The created buffer.</returns>
-		static VertexBuffer CreateBuffer(Device device, int size)
-		{
-			return new VertexBuffer(device, size * vertexSize, Usage.Dynamic, VertexFormat.Position | VertexFormat.Diffuse, Pool.Default);
+		static D3D.Buffer CreateBuffer( D3D.Device device, int size ) {
+			return new D3D.Buffer( device, new D3D.BufferDescription {
+				BindFlags = D3D.BindFlags.VertexBuffer,
+				CpuAccessFlags = D3D.CpuAccessFlags.Write,
+				OptionFlags = D3D.ResourceOptionFlags.None,
+				SizeInBytes = size * vertexSize,
+				Usage = D3D.ResourceUsage.Dynamic
+			} );
 		}
 
 		#endregion

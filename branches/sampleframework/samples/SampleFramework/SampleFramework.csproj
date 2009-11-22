@@ -77,8 +77,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rendering\DeviceContext10.cs" />
     <Compile Include="Rendering\DeviceContext9.cs" />
+    <Compile Include="Rendering\DeviceSettings10.cs" />
     <Compile Include="Rendering\DeviceSettings9.cs" />
+    <Compile Include="Rendering\DynamicPrimitiveBuffer10.cs" />
     <Compile Include="Rendering\DynamicPrimitiveBuffer9.cs" />
     <Compile Include="Rendering\Primitive\TexturedVertex.cs" />
     <Compile Include="Rendering\PrimitiveTopology.cs" />
@@ -88,6 +91,7 @@
     <Compile Include="Rendering\UI\IElementVisual.cs" />
     <Compile Include="Rendering\UI\Text.cs" />
     <Compile Include="Rendering\UI\UserInterfaceRenderer.cs" />
+    <Compile Include="Rendering\UI\UserInterfaceRenderer10.cs" />
     <Compile Include="Rendering\UI\UserInterfaceRenderer9.cs" />
     <Compile Include="Sample.cs" />
     <Compile Include="SampleConfiguration.cs" />
@@ -108,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\sdx_icon_black.ico" />
+    <EmbeddedResource Include="Resources\UserInterface10.fx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\build\SlimDX.vcproj">
