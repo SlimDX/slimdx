@@ -28,68 +28,61 @@ using SlimDX.Direct3D9;
 
 using SlimDX.SampleFramework;
 
-namespace SimpleTriangle9
-{
+namespace SimpleTriangle9 {
 	/// <summary>
 	/// Demonstrates how to render a simple colored triangle with Direct3D9.
 	/// </summary>
-	class SimpleTriangle9Sample : Sample
-	{
+	class SimpleTriangle9Sample : Sample {
 		/// <summary>
 		/// Disposes of object resources.
 		/// </summary>
 		/// <param name="disposeManagedResources">If true, managed resources should be
 		/// disposed of in addition to unmanaged resources.</param>
-		protected override void Dispose(bool disposeManagedResources)
-		{
-			if (disposeManagedResources)
-			{
+		protected override void Dispose( bool disposeManagedResources ) {
+			if( disposeManagedResources ) {
 				vertexBuffer.Dispose();
 			}
+
+			base.Dispose( disposeManagedResources );
 		}
-		
-		protected override void OnInitialize()
-		{
-			DeviceSettings9 settings = new DeviceSettings9
-			{
+
+		protected override void OnInitialize() {
+			DeviceSettings9 settings = new DeviceSettings9 {
 				AdapterOrdinal = 0,
 				CreationFlags = CreateFlags.HardwareVertexProcessing,
 				Width = WindowWidth,
 				Height = WindowHeight
 			};
 
-			context = InitializeDevice(settings);
+			context = InitializeDevice( settings );
 
 			vertexBuffer = new VertexBuffer(
 				context.Device,
-				3 * Marshal.SizeOf(typeof(TransformedColoredVertex)),
+				3 * Marshal.SizeOf( typeof( TransformedColoredVertex ) ),
 				Usage.WriteOnly,
 				VertexFormat.None,
 				Pool.Managed
 			);
 
-			DataStream stream = vertexBuffer.Lock(0, 0, LockFlags.None);
-			stream.Write(new TransformedColoredVertex(new Vector4(400.0f, 100.0f, 0.5f, 1.0f), Color.Red.ToArgb()));
-			stream.Write(new TransformedColoredVertex(new Vector4(650.0f, 500.0f, 0.5f, 1.0f), Color.Blue.ToArgb()));
-			stream.Write(new TransformedColoredVertex(new Vector4(150.0f, 500.0f, 0.5f, 1.0f), Color.Green.ToArgb()));
+			DataStream stream = vertexBuffer.Lock( 0, 0, LockFlags.None );
+			stream.Write( new TransformedColoredVertex( new Vector4( 400.0f, 100.0f, 0.5f, 1.0f ), Color.Red.ToArgb() ) );
+			stream.Write( new TransformedColoredVertex( new Vector4( 650.0f, 500.0f, 0.5f, 1.0f ), Color.Blue.ToArgb() ) );
+			stream.Write( new TransformedColoredVertex( new Vector4( 150.0f, 500.0f, 0.5f, 1.0f ), Color.Green.ToArgb() ) );
 			vertexBuffer.Unlock();
 		}
 
-		protected override void OnRenderBegin()
-		{
-			context.Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, new Color4(0.3f, 0.3f, 0.3f), 1.0f, 0);
+		protected override void OnRenderBegin() {
+			context.Device.Clear( ClearFlags.Target | ClearFlags.ZBuffer, new Color4( 0.3f, 0.3f, 0.3f ), 1.0f, 0 );
 			context.Device.BeginScene();
 		}
 
-		protected override void OnRender()
-		{
-			//context.Device.SetStreamSource(0, vertexBuffer, 0, Marshal.SizeOf(typeof(TransformedColoredVertex)));
-			//context.Device.VertexFormat = VertexFormat.PositionRhw | VertexFormat.Diffuse;
-			//context.Device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
+		protected override void OnRender() {
+			context.Device.SetStreamSource( 0, vertexBuffer, 0, Marshal.SizeOf( typeof( TransformedColoredVertex ) ) );
+			context.Device.VertexFormat = VertexFormat.PositionRhw | VertexFormat.Diffuse;
+			context.Device.DrawPrimitives( PrimitiveType.TriangleList, 0, 1 );
 		}
 
-		protected override void OnRenderEnd()
-		{
+		protected override void OnRenderEnd() {
 			context.Device.EndScene();
 			context.Device.Present();
 		}

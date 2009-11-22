@@ -53,7 +53,7 @@ namespace SlimDX.SampleFramework {
 			halfHeight = height / 2;
 
 			font = new D3D.Font( device, 18, 0, D3D.FontWeight.Bold, 0, false, D3D.FontCharacterSet.Default, D3D.FontPrecision.Default, D3D.FontQuality.Antialiased, D3D.FontPitchAndFamily.Default, "Arial" );
-			sprite = new SlimDX.Direct3D10.Sprite( device,0 );
+			sprite = new SlimDX.Direct3D10.Sprite( device, 0 );
 			lineBuffer = new DynamicPrimitiveBuffer10<ColoredVertex>( device );
 
 			Assembly assembly = Assembly.GetExecutingAssembly();
@@ -78,7 +78,10 @@ namespace SlimDX.SampleFramework {
 		/// disposed of in addition to unmanaged resources.</param>
 		protected override void Dispose( bool disposeManagedResources ) {
 			if( disposeManagedResources ) {
+				effect.Dispose();
+				inputLayout.Dispose();
 				lineBuffer.Dispose();
+				sprite.Dispose();
 				font.Dispose();
 			}
 
@@ -102,13 +105,13 @@ namespace SlimDX.SampleFramework {
 			device.InputAssembler.SetPrimitiveTopology( D3D.PrimitiveTopology.LineList );
 			device.Draw( lineBuffer.Count, 0 );
 			lineBuffer.Clear();
-			
-			sprite.Begin(SlimDX.Direct3D10.SpriteFlags.SaveState);
+
+			sprite.Begin( SlimDX.Direct3D10.SpriteFlags.SaveState );
 			foreach( Text text in textBuffer ) {
 				font.Draw( sprite, text.String, new System.Drawing.Rectangle( text.X, text.Y, 100, 100 ), D3D.FontDrawFlags.SingleLine, text.Color );
 			}
 			sprite.End();
-			
+
 			textBuffer.Clear();
 		}
 

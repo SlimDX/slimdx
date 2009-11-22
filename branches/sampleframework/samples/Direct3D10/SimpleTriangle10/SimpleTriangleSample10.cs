@@ -40,8 +40,13 @@ namespace SimpleTriangle10 {
 		/// disposed of in addition to unmanaged resources.</param>
 		protected override void Dispose( bool disposeManagedResources ) {
 			if( disposeManagedResources ) {
+				effect.Dispose();
+				inputLayout.Dispose();
+				renderTargetView.Dispose();
 				vertexBuffer.Dispose();
 			}
+
+			base.Dispose( disposeManagedResources );
 		}
 
 		/// <summary>

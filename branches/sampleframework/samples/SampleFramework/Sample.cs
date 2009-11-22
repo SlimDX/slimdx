@@ -83,6 +83,7 @@ namespace SlimDX.SampleFramework {
 		/// disposed of in addition to unmanaged resources.</param>
 		protected virtual void Dispose( bool disposeManagedResources ) {
 			if( disposeManagedResources ) {
+				userInterfaceRenderer.Dispose();
 				apiContext.Dispose();
 				form.Dispose();
 			}
