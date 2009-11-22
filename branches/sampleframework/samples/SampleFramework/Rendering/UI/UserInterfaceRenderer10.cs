@@ -25,8 +25,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-using SlimDX;
-using SlimDX.Direct3D10;
+using D3D = SlimDX.Direct3D10;
 
 namespace SlimDX.SampleFramework {
 	/// <summary>
@@ -41,7 +40,7 @@ namespace SlimDX.SampleFramework {
 		/// <param name="device">The device.</param>
 		/// <param name="width">The width of the renderable area.</param>
 		/// <param name="height">The height of the renderable area.</param>
-		public UserInterfaceRenderer10( Device device, int width, int height ) {
+		public UserInterfaceRenderer10( D3D.Device device, int width, int height ) {
 			if( device == null )
 				throw new ArgumentNullException( "device" );
 			if( width < 0 )
@@ -53,17 +52,23 @@ namespace SlimDX.SampleFramework {
 			halfWidth = width / 2;
 			halfHeight = height / 2;
 
-			font = new Font( device, 18, 0, FontWeight.Bold, 0, false, FontCharacterSet.Default, FontPrecision.Default, FontQuality.Antialiased, FontPitchAndFamily.Default, "Arial" );
+			font = new D3D.Font( device, 18, 0, D3D.FontWeight.Bold, 0, false, D3D.FontCharacterSet.Default, D3D.FontPrecision.Default, D3D.FontQuality.Antialiased, D3D.FontPitchAndFamily.Default, "Arial" );
+			sprite = new SlimDX.Direct3D10.Sprite( device,0 );
 			lineBuffer = new DynamicPrimitiveBuffer10<ColoredVertex>( device );
 
 			Assembly assembly = Assembly.GetExecutingAssembly();
 			using( Stream stream = assembly.GetManifestResourceStream( "SampleFramework.Resources.UserInterface10.fx" ) )
 			using( StreamReader reader = new StreamReader( stream ) ) {
-				string errors = null;
-				effect = Effect.FromString( device, reader.ReadToEnd(), "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null, out errors );
-				technique = effect.GetTechniqueByIndex( 0 );
-				pass = technique.GetPassByIndex( 0 );
+				effect = D3D.Effect.FromString( device, reader.ReadToEnd(), "fx_4_0", D3D.ShaderFlags.None, D3D.EffectFlags.None, null, null );
 			}
+
+			technique = effect.GetTechniqueByIndex( 0 );
+			pass = technique.GetPassByIndex( 0 );
+
+			inputLayout = new D3D.InputLayout( device, new[] {
+				new D3D.InputElement("POSITION", 0, SlimDX.DXGI.Format.R32G32B32_Float, 0, 0),
+				new D3D.InputElement("COLOR", 0, SlimDX.DXGI.Format.R8G8B8A8_UNorm, D3D.InputElement.AppendAligned, 0 )
+			}, pass.Description.Signature );
 		}
 
 		/// <summary>
@@ -87,14 +92,23 @@ namespace SlimDX.SampleFramework {
 			Matrix offset = Matrix.Translation( -1.0f, 1.0f, 0.0f );
 			Matrix scale = Matrix.Scaling( 1.0f / halfWidth, -1.0f / halfHeight, 1.0f );
 
-			EffectVariable transform = effect.GetVariableBySemantic( "MatrixWVP" );
+			D3D.EffectVariable transform = effect.GetVariableBySemantic( "MatrixWVP" );
 			transform.AsMatrix().SetMatrix( scale * offset );
+			pass.Apply();
 
-		//	lineBuffer.Render();
+			lineBuffer.Commit();
+			device.InputAssembler.SetInputLayout( inputLayout );
+			device.InputAssembler.SetVertexBuffers( 0, new D3D.VertexBufferBinding( lineBuffer.UnderlyingBuffer, lineBuffer.ElementSize, 0 ) );
+			device.InputAssembler.SetPrimitiveTopology( D3D.PrimitiveTopology.LineList );
+			device.Draw( lineBuffer.Count, 0 );
 			lineBuffer.Clear();
-
-			foreach( Text text in textBuffer )
-				font.Draw( null, text.String, new System.Drawing.Rectangle( text.X, text.Y, 100, 100 ), FontDrawFlags.SingleLine, text.Color );
+			
+			sprite.Begin(SlimDX.Direct3D10.SpriteFlags.SaveState);
+			foreach( Text text in textBuffer ) {
+				font.Draw( sprite, text.String, new System.Drawing.Rectangle( text.X, text.Y, 100, 100 ), D3D.FontDrawFlags.SingleLine, text.Color );
+			}
+			sprite.End();
+			
 			textBuffer.Clear();
 		}
 
@@ -104,7 +118,7 @@ namespace SlimDX.SampleFramework {
 		/// <param name="text">The string.</param>
 		/// <returns>The size metrics for the string.</returns>
 		internal override Vector2 MeasureString( string text ) {
-			System.Drawing.Rectangle bounds = new System.Drawing.Rectangle();//= font.MeasureString( null, text, DrawTextFormat.SingleLine );
+			System.Drawing.Rectangle bounds = font.Measure( null, text, new System.Drawing.Rectangle( 0, 0, halfWidth * 2, halfHeight * 2 ), D3D.FontDrawFlags.SingleLine );
 			return new Vector2( bounds.Width, bounds.Height );
 		}
 
@@ -143,17 +157,19 @@ namespace SlimDX.SampleFramework {
 		#endregion
 		#region Implementation Detail
 
-		Device device;
+		D3D.Device device;
 		int halfWidth;
 		int halfHeight;
 
-		Font font;
+		D3D.Font font;
+		D3D.Sprite sprite;
 		DynamicPrimitiveBuffer10<ColoredVertex> lineBuffer;
 		List<Text> textBuffer = new List<Text>();
 
-		Effect effect;
-		EffectTechnique technique;
-		EffectPass pass;
+		D3D.Effect effect;
+		D3D.EffectTechnique technique;
+		D3D.EffectPass pass;
+		D3D.InputLayout inputLayout;
 
 		#endregion
 	}

@@ -1,4 +1,4 @@
-﻿float4x4 wvp : MatrixWVP;
+﻿float4x4 transformWVP : MatrixWVP;
 
 struct VS_IN
 {
@@ -17,7 +17,7 @@ PS_IN VS( VS_IN input )
 {
 	PS_IN output = (PS_IN)0;
 	
-	output.position = input.position;
+	output.position = mul( input.position, transformWVP );
 	output.color = input.color;
 	
 	return output;

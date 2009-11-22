@@ -83,9 +83,9 @@ namespace SimpleTriangle9
 
 		protected override void OnRender()
 		{
-			context.Device.SetStreamSource(0, vertexBuffer, 0, Marshal.SizeOf(typeof(TransformedColoredVertex)));
-			context.Device.VertexFormat = VertexFormat.PositionRhw | VertexFormat.Diffuse;
-			context.Device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
+			//context.Device.SetStreamSource(0, vertexBuffer, 0, Marshal.SizeOf(typeof(TransformedColoredVertex)));
+			//context.Device.VertexFormat = VertexFormat.PositionRhw | VertexFormat.Diffuse;
+			//context.Device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
 		}
 
 		protected override void OnRenderEnd()
