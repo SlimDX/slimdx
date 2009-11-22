@@ -21,11 +21,8 @@
 */
 #pragma once
 
-#include "../VersionConfig.h"
 #include "Voice.h"
 #include "VoiceCallback.h"
-#include "../multimedia/WaveFormat.h"
-#include "../multimedia/WaveFormatExtensible.h"
 #include "ContextEventArgs.h"
 #include "ErrorEventArgs.h"
 #include "StartProcessingEventArgs.h"
@@ -34,6 +31,11 @@
 
 namespace SlimDX
 {
+	namespace Multimedia
+	{
+		ref class WaveFormat;
+	}
+
 	namespace XAudio2
 	{
 		ref class XAudio2;
@@ -41,10 +43,7 @@ namespace SlimDX
 		public ref class SourceVoice : Voice
 		{
 		private:
-			static System::IntPtr DirectSubmitContext = System::IntPtr( 1234567890 );
-
 			VoiceCallbackShim *callback;
-			System::Threading::AutoResetEvent^ waitHandle;
 
 			property IXAudio2SourceVoice *SourcePointer
 			{
@@ -91,9 +90,6 @@ namespace SlimDX
 
 			Result SubmitSourceBuffer( AudioBuffer^ buffer );
 			Result SubmitSourceBuffer( AudioBuffer^ buffer, array<int>^ decodedPacketCumulativeBytes );
-
-			Result SubmitSourceDirect( BufferFlags flags, int playBegin, int playLength, int loopBegin, int loopLength, int loopCount, DataStream^ data );
-			Result SubmitSourceDirect( BufferFlags flags, int playBegin, int playLength, int loopBegin, int loopLength, int loopCount, array<System::Byte>^ data );
 			
 #if SLIMDX_XAUDIO2_VERSION >= 24
 			Result SetSourceSampleRate( int sampleRate );
