@@ -21,6 +21,7 @@
 */
 
 using System;
+using SlimDX.DXGI;
 
 namespace SlimDX.SampleFramework {
 	/// <summary>
@@ -54,6 +55,8 @@ namespace SlimDX.SampleFramework {
 				SwapEffect = SlimDX.DXGI.SwapEffect.Discard,
 				Usage = SlimDX.DXGI.Usage.RenderTargetOutput
 			} );
+
+		    factory.SetWindowAssociation(handle, WindowAssociationFlags.IgnoreAll | WindowAssociationFlags.IgnoreAltEnter);
 		}
 
 		/// <summary>
