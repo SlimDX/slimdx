@@ -54,6 +54,11 @@ namespace SlimDX.SampleFramework {
 		}
 
 		/// <summary>
+		/// Gets the number of seconds passed since the last frame.
+		/// </summary>
+		public float FrameDelta { get; private set; }
+
+		/// <summary>
 		/// Gets the height of the renderable area of the sample window.
 		/// </summary>
 		public int WindowHeight {
@@ -99,6 +104,8 @@ namespace SlimDX.SampleFramework {
 			};
 
 			form.MouseClick += HandleMouseClick;
+			form.KeyDown += HandleKeyDown;
+			form.KeyUp += HandleKeyUp;
 
 			userInterface = new UserInterface();
 			Element stats = new Element();
@@ -199,8 +206,8 @@ namespace SlimDX.SampleFramework {
 
 		IDisposable apiContext;
 
-		Clock clock = new Clock();
-		Bindable<float> framesPerSecond = new Bindable<float>();
+		readonly Clock clock = new Clock();
+		readonly Bindable<float> framesPerSecond = new Bindable<float>();
 		float frameAccumulator;
 		int frameCount;
 
@@ -215,6 +222,7 @@ namespace SlimDX.SampleFramework {
 		/// Updates sample state.
 		/// </summary>
 		void Update() {
+			FrameDelta = clock.Update();
 			userInterface.Container.Update();
 			OnUpdate();
 		}
@@ -223,8 +231,7 @@ namespace SlimDX.SampleFramework {
 		/// Renders the sample.
 		/// </summary>
 		void Render() {
-			float elapsed = clock.Update();
-			frameAccumulator += elapsed;
+			frameAccumulator += FrameDelta;
 			++frameCount;
 			if( frameAccumulator >= 1.0f ) {
 				framesPerSecond.Value = frameCount / frameAccumulator;
@@ -247,6 +254,21 @@ namespace SlimDX.SampleFramework {
 		void HandleMouseClick( object sender, MouseEventArgs e ) {
 		}
 
+		/// <summary>
+		/// Handles a key down event.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="System.Windows.Forms.KeyEventArgs"/> instance containing the event data.</param>
+		void HandleKeyDown(object sender, KeyEventArgs e) {
+		}
+
+		/// <summary>
+		/// Handles a key up event.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="System.Windows.Forms.KeyEventArgs"/> instance containing the event data.</param>
+		void HandleKeyUp(object sender, KeyEventArgs e) {
+		}
 		#endregion
 	}
 }

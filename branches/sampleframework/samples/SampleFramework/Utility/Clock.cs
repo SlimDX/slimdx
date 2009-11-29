@@ -20,7 +20,7 @@
 * THE SOFTWARE.
 */
 
-using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 using SlimDX;
 
@@ -35,11 +35,11 @@ namespace SlimDX.SampleFramework {
 		/// Initializes a new instance of the <see cref="Clock"/> class.
 		/// </summary>
 		public Clock() {
-			QueryPerformanceFrequency( out frequency );
+			frequency = Stopwatch.Frequency;
 		}
 
 		public void Start() {
-			QueryPerformanceCounter( out count );
+			count = Stopwatch.GetTimestamp();
 			isRunning = true;
 		}
 
@@ -51,7 +51,7 @@ namespace SlimDX.SampleFramework {
 			float result = 0.0f;
 			if( isRunning ) {
 				long last = count;
-				QueryPerformanceCounter( out count );
+				count = Stopwatch.GetTimestamp();
 				result = (float)( count - last ) / frequency;
 			}
 
@@ -61,15 +61,9 @@ namespace SlimDX.SampleFramework {
 		#endregion
 		#region Implementation Detail
 
-		bool isRunning;
-		long frequency;
-		long count;
-
-		[DllImport( "kernel32.dll", SetLastError = true )]
-		internal static extern bool QueryPerformanceCounter( out long count );
-
-		[DllImport( "kernel32.dll", SetLastError = true )]
-		internal static extern bool QueryPerformanceFrequency( out long frequency );
+		private bool isRunning;
+		private readonly long frequency;
+		private long count;
 
 		#endregion
 	}
