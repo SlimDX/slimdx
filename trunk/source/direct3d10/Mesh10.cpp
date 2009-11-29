@@ -214,7 +214,7 @@ namespace Direct3D10
 		
 		List<MeshAttributeRange>^ list = gcnew List<MeshAttributeRange>( count );
 		for( UINT rangeIndex = 0; rangeIndex < count; ++rangeIndex ) 
-			list[rangeIndex] = MeshAttributeRange( ranges[rangeIndex] );
+			list->Add(MeshAttributeRange( ranges[rangeIndex] ));
 		return gcnew ReadOnlyCollection<MeshAttributeRange>( list );
 	}
 
