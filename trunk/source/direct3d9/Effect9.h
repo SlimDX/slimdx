@@ -47,10 +47,7 @@ namespace SlimDX
 		private:
 			IEffectStateManagerShim *shim;
 			
-			static Effect^ FromMemory_Internal( Device^ device, const void* memory, UINT size, array<Macro>^ preprocessorDefines, Include^ includeFile, System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool, System::String^* compilationErrors );
-
-		internal:
-			static System::String^ ExceptionDataKey = "CompilationErrors";
+			static Effect^ FromMemory_Internal( Device^ device, const void* memory, UINT size, array<Macro>^ preprocessorDefines, Include^ includeFile, System::String^ skipConstants, ShaderFlags flags, EffectPool^ pool, System::String^* compilationErrors, System::Exception^* exception );
 
 		public:
 			/// <summary>

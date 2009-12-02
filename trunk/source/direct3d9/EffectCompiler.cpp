@@ -26,6 +26,7 @@
 #include "../stack_array.h"
 #include "../DataStream.h"
 #include "../ComObject.h"
+#include "../CompilationException.h"
 
 #include "Direct3D9Exception.h"
 
@@ -62,8 +63,9 @@ namespace Direct3D9
 		Macro::Unmarshal( handles );
 		compilationErrors = Utilities::BufferToString( errorBuffer );
 		
-		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
-			throw gcnew Direct3D9Exception( Result::Last );
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>( hr, compilationErrors );
+		if( e != nullptr )
+			throw e;
 
 		Construct( compiler );
 	}
@@ -91,8 +93,9 @@ namespace Direct3D9
 		Macro::Unmarshal( handles );
 		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
 		
-		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
-			throw gcnew Direct3D9Exception( Result::Last );
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>( hr, compilationErrors );
+		if( e != nullptr )
+			throw e;
 
 		Construct( compiler );
 	}
@@ -110,13 +113,14 @@ namespace Direct3D9
 
 		String^ compilationErrors = Utilities::BufferToString( errorBuffer );
 		
-		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
-			throw gcnew Direct3D9Exception( Result::Last );
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>( hr, compilationErrors );
+		if( e != nullptr )
+			throw e;
 
 		Construct( compiler );
 	}
 
-	EffectCompiler^ EffectCompiler::FromMemory_Internal( const char* memory, UINT size, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, String^* compilationErrors )
+	EffectCompiler^ EffectCompiler::FromMemory_Internal( const char* memory, UINT size, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, String^* compilationErrors, Exception^* exception )
 	{
 		ID3DXEffectCompiler* compiler;
 		ID3DXBuffer* errorBuffer;
@@ -138,9 +142,16 @@ namespace Direct3D9
 		String^ compilationErrorsLocal = Utilities::BufferToString( errorBuffer );
 		if( compilationErrors != NULL )
 			*compilationErrors = compilationErrorsLocal;
-		
-		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrorsLocal ).IsFailure )
-			throw gcnew Direct3D9Exception( Result::Last );
+
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>( hr, compilationErrorsLocal );
+		if( e != nullptr )
+		{
+			if( compilationErrors == NULL || exception == NULL )
+				throw e;
+
+			*exception = e;
+			return nullptr;
+		}
 
 		return EffectCompiler::FromPointer( compiler );
 	}
@@ -149,10 +160,14 @@ namespace Direct3D9
 	{
 		pin_ptr<Byte> pinnedData = &data[0];
 		String^ compileErrorsLocal;
+		Exception^ e = nullptr;
 
 		EffectCompiler^ effectCompiler = FromMemory_Internal( reinterpret_cast<const char*>( pinnedData ),
-			static_cast<UINT>( data->Length ), defines, includeFile, flags, &compileErrorsLocal );
+			static_cast<UINT>( data->Length ), defines, includeFile, flags, &compileErrorsLocal, &e );
 		compilationErrors = compileErrorsLocal;
+
+		if( e != nullptr )
+			throw e;
 
 		return effectCompiler;
 	}
@@ -162,7 +177,7 @@ namespace Direct3D9
 		pin_ptr<Byte> pinnedData = &data[0];
 
 		return FromMemory_Internal( reinterpret_cast<const char*>( pinnedData ),
-			static_cast<UINT>( data->Length ), defines, includeFile, flags, NULL );
+			static_cast<UINT>( data->Length ), defines, includeFile, flags, NULL, NULL );
 	}
 
 	EffectCompiler^ EffectCompiler::FromMemory( array<Byte>^ data, ShaderFlags flags )
@@ -170,20 +185,25 @@ namespace Direct3D9
 		pin_ptr<Byte> pinnedData = &data[0];
 
 		return FromMemory_Internal( reinterpret_cast<const char*>( pinnedData ),
-			static_cast<UINT>( data->Length ), nullptr, nullptr, flags, NULL );
+			static_cast<UINT>( data->Length ), nullptr, nullptr, flags, NULL, NULL );
 	}
 
 	EffectCompiler^ EffectCompiler::FromStream( Stream^ stream, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] String^% compilationErrors )
 	{
 		DataStream^ ds = nullptr;
 		array<Byte>^ data = Utilities::ReadStream( stream, &ds );
+		Exception^ e = nullptr;
+
 		if( data == nullptr )
 		{
 			String^ compilationErrorsLocal;
 			UINT size = static_cast<UINT>( ds->RemainingLength );
-			EffectCompiler^ effectCompiler = FromMemory_Internal( ds->SeekToEnd(), size, defines, includeFile, flags, &compilationErrorsLocal );
+			EffectCompiler^ effectCompiler = FromMemory_Internal( ds->SeekToEnd(), size, defines, includeFile, flags, &compilationErrorsLocal, &e );
 
 			compilationErrors = compilationErrorsLocal;
+			if( e != nullptr )
+				throw e;
+
 			return effectCompiler;
 		}
 
@@ -197,7 +217,7 @@ namespace Direct3D9
 		if( data == nullptr )
 		{
 			UINT size = static_cast<UINT>( ds->RemainingLength );
-			return FromMemory_Internal( ds->SeekToEnd(), size, defines, includeFile, flags, NULL );
+			return FromMemory_Internal( ds->SeekToEnd(), size, defines, includeFile, flags, NULL, NULL );
 		}
 
 		return FromMemory( data, defines, includeFile, flags );
@@ -210,7 +230,7 @@ namespace Direct3D9
 		if( data == nullptr )
 		{
 			UINT size = static_cast<UINT>( ds->RemainingLength );
-			return FromMemory_Internal( ds->SeekToEnd(), size, nullptr, nullptr, flags, NULL );
+			return FromMemory_Internal( ds->SeekToEnd(), size, nullptr, nullptr, flags, NULL, NULL );
 		}
 
 		return FromMemory( data, flags );
@@ -239,8 +259,9 @@ namespace Direct3D9
 		Macro::Unmarshal( handles );
 		errors = Utilities::BufferToString( errorBuffer );
 		
-		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, errors ).IsFailure )
-			return nullptr;
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>( hr, errors );
+		if( e != nullptr )
+			throw e;
 
 		return EffectCompiler::FromPointer( compiler );
 	}
@@ -267,8 +288,9 @@ namespace Direct3D9
 		Macro::Unmarshal( handles );
 		String^ errors = Utilities::BufferToString( errorBuffer );
 		
-		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, errors ).IsFailure )
-			return nullptr;
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>( hr, errors );
+		if( e != nullptr )
+			throw e;
 
 		return EffectCompiler::FromPointer( compiler );
 	}
@@ -285,8 +307,9 @@ namespace Direct3D9
 
 		String^ errors = Utilities::BufferToString( errorBuffer );
 		
-		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, errors ).IsFailure )
-			return nullptr;
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>( hr, errors );
+		if( e != nullptr )
+			throw e;
 
 		return EffectCompiler::FromPointer( compiler );
 	}
@@ -306,9 +329,10 @@ namespace Direct3D9
 		GC::KeepAlive( functionHandle );
 
 		compilationErrors = Utilities::BufferToString( errorBuffer );
-			
-		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
-			return nullptr;
+
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>( hr, compilationErrors );
+		if( e != nullptr )
+			throw e;
 
 		constantTable = ConstantTable::FromPointer( table );
 		return ShaderBytecode::FromPointer( shader );
@@ -331,9 +355,10 @@ namespace Direct3D9
 			compilationErrors = Utilities::BufferToString( errorBuffer );
 		else
 			compilationErrors = String::Empty;
-			
-		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
-			return nullptr;
+
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>( hr, compilationErrors );
+		if( e != nullptr )
+			throw e;
 
 		return ShaderBytecode::FromPointer( shader );
 	}
@@ -355,9 +380,10 @@ namespace Direct3D9
 			compilationErrors = Utilities::BufferToString( errorBuffer );
 		else
 			compilationErrors = String::Empty;
-		
-		if( RECORD_D3D9_EX( hr, Effect::ExceptionDataKey, compilationErrors ).IsFailure )
-			return nullptr;
+
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>( hr, compilationErrors );
+		if( e != nullptr )
+			throw e;
 
 		return gcnew DataStream( effect );
 	}
