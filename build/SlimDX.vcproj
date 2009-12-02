@@ -1511,6 +1511,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\CompilationException.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\CompilationException.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\Configuration.cpp"
 				>
 			</File>

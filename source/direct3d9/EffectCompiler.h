@@ -34,7 +34,7 @@ namespace SlimDX
 			COMOBJECT(ID3DXEffectCompiler, EffectCompiler);
 
 		private:
-			static EffectCompiler^ FromMemory_Internal( const char* memory, UINT size, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, System::String^* compilationErrors );
+			static EffectCompiler^ FromMemory_Internal( const char* memory, UINT size, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, System::String^* compilationErrors, System::Exception^* exception );
 
 		public:
 			EffectCompiler( System::String^ data, array<Macro>^ defines, Include^ includeFile, ShaderFlags flags, [Out] System::String^% compilationErrors );
