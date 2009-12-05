@@ -19,17 +19,21 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+
 using System;
 
-namespace SimpleTriangle
-{
-    static class Program
-    {
-        [STAThread]
-        static void Main()
-        {
-            using (SimpleTriangleSample sample = new SimpleTriangleSample())
-                sample.Run();
-        }
-    }
+namespace SimpleTriangle9 {
+	/// <summary>
+	/// The main application class.
+	/// </summary>
+	static class Program {
+		/// <summary>
+		/// The application entry point.
+		/// </summary>
+		[STAThread]
+		static void Main() {
+			using( SimpleTriangle9Sample sample = new SimpleTriangle9Sample() )
+				sample.Run();
+		}
+	}
 }
