@@ -68,11 +68,13 @@ namespace SimpleTriangle10 {
 			effect = Effect.FromFile( context.Device, "SimpleTriangle10.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null );
 			technique = effect.GetTechniqueByIndex( 0 );
 			pass = technique.GetPassByIndex( 0 );
-
+			
+			ShaderSignature signature = pass.Description.Signature;
 			inputLayout = new InputLayout( context.Device, new[] {
 				new InputElement("POSITION", 0, SlimDX.DXGI.Format.R32G32B32A32_Float, 0, 0),
         new InputElement("COLOR", 0, SlimDX.DXGI.Format.R32G32B32A32_Float, 16, 0) 
-			}, pass.Description.Signature );
+			}, signature );
+			signature.Dispose();
 
 			vertexBuffer = new Buffer(
 				context.Device,

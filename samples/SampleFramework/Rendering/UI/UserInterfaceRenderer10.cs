@@ -64,11 +64,13 @@ namespace SlimDX.SampleFramework {
 
 			technique = effect.GetTechniqueByIndex( 0 );
 			pass = technique.GetPassByIndex( 0 );
-
+			
+			D3D.ShaderSignature signature = pass.Description.Signature;
 			inputLayout = new D3D.InputLayout( device, new[] {
 				new D3D.InputElement("POSITION", 0, SlimDX.DXGI.Format.R32G32B32_Float, 0, 0),
 				new D3D.InputElement("COLOR", 0, SlimDX.DXGI.Format.R8G8B8A8_UNorm, D3D.InputElement.AppendAligned, 0 )
-			}, pass.Description.Signature );
+			}, signature );
+			signature.Dispose();
 		}
 
 		/// <summary>
