@@ -54,6 +54,8 @@ namespace SlimDX.SampleFramework {
 
 			font = new Font( device, 18, 0, FontWeight.Bold, 0, false, CharacterSet.Default, Precision.Default, FontQuality.Antialiased, PitchAndFamily.Default, "Arial" );
 			lineBuffer = new DynamicPrimitiveBuffer9<ColoredVertex>( device );
+
+			stateBlock = new StateBlock( device, StateBlockType.All );
 		}
 
 		/// <summary>
@@ -74,24 +76,30 @@ namespace SlimDX.SampleFramework {
 		/// In a derived class, implements logic to flush all pending rendering commands.
 		/// </summary>
 		protected override void Flush() {
-			Matrix offset = Matrix.Translation( -1.0f, 1.0f, 0.0f );
-			Matrix scale = Matrix.Scaling( 1.0f / halfWidth, -1.0f / halfHeight, 1.0f );
+			try {
+				stateBlock.Capture();
 
-			device.SetTransform( TransformState.World, scale * offset );
-			device.SetTransform( TransformState.View, Matrix.Identity );
-			device.SetTransform( TransformState.Projection, Matrix.Identity );
+				Matrix offset = Matrix.Translation( -1.0f, 1.0f, 0.0f );
+				Matrix scale = Matrix.Scaling( 1.0f / halfWidth, -1.0f / halfHeight, 1.0f );
 
-			device.SetRenderState( RenderState.Lighting, false );
+				device.SetTransform( TransformState.World, scale * offset );
+				device.SetTransform( TransformState.View, Matrix.Identity );
+				device.SetTransform( TransformState.Projection, Matrix.Identity );
 
-			lineBuffer.Commit();
-			device.VertexFormat = VertexFormat.Position | VertexFormat.Diffuse;
-			device.SetStreamSource( 0, lineBuffer.UnderlyingBuffer, 0, lineBuffer.ElementSize );
-			device.DrawPrimitives( PrimitiveType.LineList, 0, lineBuffer.Count / 2 );
-			lineBuffer.Clear();
+				device.SetRenderState( RenderState.Lighting, false );
 
-			foreach( Text text in textBuffer )
-				font.DrawString( null, text.String, text.X, text.Y, text.Color );
-			textBuffer.Clear();
+				lineBuffer.Commit();
+				device.VertexFormat = VertexFormat.Position | VertexFormat.Diffuse;
+				device.SetStreamSource( 0, lineBuffer.UnderlyingBuffer, 0, lineBuffer.ElementSize );
+				device.DrawPrimitives( PrimitiveType.LineList, 0, lineBuffer.Count / 2 );
+				lineBuffer.Clear();
+
+				foreach( Text text in textBuffer )
+					font.DrawString( null, text.String, text.X, text.Y, text.Color );
+				textBuffer.Clear();
+			} finally {
+				stateBlock.Apply();
+			}
 		}
 
 		/// <summary>
@@ -146,6 +154,8 @@ namespace SlimDX.SampleFramework {
 		Font font;
 		DynamicPrimitiveBuffer9<ColoredVertex> lineBuffer;
 		List<Text> textBuffer = new List<Text>();
+
+		StateBlock stateBlock;
 
 		#endregion
 	}
