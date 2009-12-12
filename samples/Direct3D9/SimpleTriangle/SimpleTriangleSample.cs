@@ -58,17 +58,24 @@ namespace SimpleTriangle9 {
 
 			vertexBuffer = new VertexBuffer(
 				context.Device,
-				3 * Marshal.SizeOf( typeof( TransformedColoredVertex ) ),
+				3 * Marshal.SizeOf( typeof( ColoredVertex ) ),
 				Usage.WriteOnly,
 				VertexFormat.None,
 				Pool.Managed
 			);
 
 			DataStream stream = vertexBuffer.Lock( 0, 0, LockFlags.None );
-			stream.Write( new TransformedColoredVertex( new Vector4( 400.0f, 100.0f, 0.5f, 1.0f ), Color.Red.ToArgb() ) );
-			stream.Write( new TransformedColoredVertex( new Vector4( 650.0f, 500.0f, 0.5f, 1.0f ), Color.Blue.ToArgb() ) );
-			stream.Write( new TransformedColoredVertex( new Vector4( 150.0f, 500.0f, 0.5f, 1.0f ), Color.Green.ToArgb() ) );
+			stream.WriteRange( new[] {
+				new ColoredVertex( new Vector3(0.0f, 0.5f, 0.5f), Color.Red.ToArgb() ),
+				new ColoredVertex( new Vector3(0.5f, -0.5f, 0.5f), Color.Blue.ToArgb() ),
+				new ColoredVertex( new Vector3(-0.5f, -0.5f, 0.5f), Color.Green.ToArgb() ),
+			} );
+
 			vertexBuffer.Unlock();
+
+			// Since this sample does not use any lights, disable lighting (otherwise the
+			// triangle will appear flat black).
+			context.Device.SetRenderState( RenderState.Lighting, false );
 		}
 
 		protected override void OnRenderBegin() {
@@ -77,8 +84,8 @@ namespace SimpleTriangle9 {
 		}
 
 		protected override void OnRender() {
-			context.Device.SetStreamSource( 0, vertexBuffer, 0, Marshal.SizeOf( typeof( TransformedColoredVertex ) ) );
-			context.Device.VertexFormat = VertexFormat.PositionRhw | VertexFormat.Diffuse;
+			context.Device.SetStreamSource( 0, vertexBuffer, 0, Marshal.SizeOf( typeof( ColoredVertex ) ) );
+			context.Device.VertexFormat = VertexFormat.Position | VertexFormat.Diffuse;
 			context.Device.DrawPrimitives( PrimitiveType.TriangleList, 0, 1 );
 		}
 

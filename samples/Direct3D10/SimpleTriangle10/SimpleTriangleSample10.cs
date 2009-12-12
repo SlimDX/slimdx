@@ -68,12 +68,12 @@ namespace SimpleTriangle10 {
 			effect = Effect.FromFile( context.Device, "SimpleTriangle10.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null );
 			technique = effect.GetTechniqueByIndex( 0 );
 			pass = technique.GetPassByIndex( 0 );
-			
+
 			ShaderSignature signature = pass.Description.Signature;
-			inputLayout = new InputLayout( context.Device, new[] {
+			inputLayout = new InputLayout( context.Device, signature, new[] {
 				new InputElement("POSITION", 0, SlimDX.DXGI.Format.R32G32B32A32_Float, 0, 0),
         new InputElement("COLOR", 0, SlimDX.DXGI.Format.R32G32B32A32_Float, 16, 0) 
-			}, signature );
+			} );
 			signature.Dispose();
 
 			vertexBuffer = new Buffer(
@@ -87,10 +87,10 @@ namespace SimpleTriangle10 {
 
 			DataStream stream = vertexBuffer.Map( MapMode.WriteDiscard, MapFlags.None );
 			stream.WriteRange( new[] {
-                new Vector4(0.0f, 0.5f, 0.5f, 1.0f), new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-                new Vector4(0.5f, -0.5f, 0.5f, 1.0f), new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
-                new Vector4(-0.5f, -0.5f, 0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f)
-            } );
+				new Vector4(0.0f, 0.5f, 0.5f, 1.0f), new Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+				new Vector4(0.5f, -0.5f, 0.5f, 1.0f), new Vector4(0.0f, 1.0f, 0.0f, 1.0f),
+				new Vector4(-0.5f, -0.5f, 0.5f, 1.0f), new Vector4(0.0f, 0.0f, 1.0f, 1.0f)
+			} );
 			vertexBuffer.Unmap();
 		}
 
