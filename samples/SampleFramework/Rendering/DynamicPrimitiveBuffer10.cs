@@ -49,7 +49,9 @@ namespace SlimDX.SampleFramework {
 		/// disposed of in addition to unmanaged resources.</param>
 		protected override void Dispose( bool disposeManagedResources ) {
 			if( disposeManagedResources ) {
-				buffer.Dispose();
+				if( buffer != null ) {
+					buffer.Dispose();
+				}
 			}
 		}
 
