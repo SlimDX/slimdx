@@ -102,13 +102,13 @@ namespace Direct3D10
 	SlimDX::DataBox^ Texture3D::Map( int mipSlice, MapMode mode, MapFlags flags )
 	{
 		int subresource = D3D10CalcSubresource( mipSlice, 0, Description.MipLevels );
-		int mipHeight = GetMipSize( mipSlice, Description.Height );
+		int mipDepth = GetMipSize( mipSlice, Description.Depth );
 		
 		D3D10_MAPPED_TEXTURE3D mappedBox;
 		if( RECORD_D3D10( InternalPointer->Map( subresource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedBox ) ).IsFailure )
 			return nullptr;
 			
-		int lockedSize = mipHeight * mappedBox.DepthPitch;
+		int lockedSize = mipDepth * mappedBox.DepthPitch;
 		return gcnew SlimDX::DataBox( mappedBox.RowPitch, mappedBox.DepthPitch, gcnew DataStream( mappedBox.pData, lockedSize, true, true, false ) );
 	}
 
