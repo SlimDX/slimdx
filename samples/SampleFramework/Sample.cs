@@ -88,7 +88,10 @@ namespace SlimDX.SampleFramework {
 		/// disposed of in addition to unmanaged resources.</param>
 		protected virtual void Dispose( bool disposeManagedResources ) {
 			if( disposeManagedResources ) {
-				userInterfaceRenderer.Dispose();
+				if( userInterfaceRenderer != null ) {
+					userInterfaceRenderer.Dispose();
+				}
+				
 				apiContext.Dispose();
 				form.Dispose();
 			}
@@ -162,6 +165,19 @@ namespace SlimDX.SampleFramework {
 		protected virtual void OnRenderEnd() {
 		}
 
+		/// <summary>
+		/// Initializes a <see cref="DeviceContext2D">Direct2D device context</see> according to the specified settings.
+		/// The base class retains ownership of the context and will dispose of it when appropriate.
+		/// </summary>
+		/// <param name="settings">The settings.</param>
+		/// <returns>The initialized device context.</returns>
+		protected DeviceContext2D InitializeDevice( DeviceSettings2D settings ) {
+			DeviceContext2D result = new DeviceContext2D( form.Handle, settings );
+			//userInterfaceRenderer = new UserInterfaceRenderer9( result.Device, settings.Width, settings.Height );
+			apiContext = result;
+			return result;
+		}
+		
 		/// <summary>
 		/// Initializes a <see cref="DeviceContext9">Direct3D9 device context</see> according to the specified settings.
 		/// The base class retains ownership of the context and will dispose of it when appropriate.
@@ -242,7 +258,9 @@ namespace SlimDX.SampleFramework {
 
 			OnRenderBegin();
 			OnRender();
-			userInterfaceRenderer.Render( userInterface );
+			if( userInterfaceRenderer != null ) {
+				userInterfaceRenderer.Render( userInterface );
+			}
 			OnRenderEnd();
 		}
 
