@@ -9,6 +9,7 @@ Direct3D 9
 Direct3D 10
 	* Added InputElement.AppendAligned property.
 	* Added FromFile to ShaderResourceView.
+	* Added int and bool vector setter support to EffectVectorVariable.
 	* Changed Include.Open to include missing parentStream parameter.
 	* Changed Font.Draw color parameter to Color4 instead of unsigned int.
 	* Deprecated InputLayout constructor taking (device, elements, signature) in favor of one taking (device, signature, elements).
@@ -23,6 +24,7 @@ Direct3D 11
 	* Added missing fields to ShaderResourceViewDescription.
 	* Added missing Flag field to DepthStencilViewDescription.
 	* Added null checks to OutputMergerWrapper methods.
+	* Added int and bool vector setter support to EffectVectorVariable.
 	* Deprecated InputLayout constructor taking (device, elements, signature) in favor of one taking (device, signature, elements).
 	* Removed the dependence on D3D10 by duplicating ShaderBytecode and friends.
 	* Changed Effect construction to take a ShaderBytecode for the source data.
