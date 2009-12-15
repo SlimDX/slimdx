@@ -46,6 +46,8 @@ namespace SlimDX
 			Result Set( Vector3 value );
 			Result Set( Vector4 value );
 			Result Set( array<Vector4>^ value );
+			Result Set( array<int>^ value );
+			Result Set( array<bool>^ value );
 		};
 	}
 };

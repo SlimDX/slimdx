@@ -63,8 +63,26 @@ namespace Direct3D11
 	
 	Result EffectVectorVariable::Set( array<Vector4>^ values )
 	{
-		pin_ptr<Vector4> pinnedValues = &values[ 0 ];
+		pin_ptr<Vector4> pinnedValues = &values[0];
 		return RECORD_D3D11( m_Pointer->SetFloatVectorArray( reinterpret_cast<float*>( pinnedValues ), 0, values->Length ) );
+	}
+	
+	Result EffectVectorVariable::Set( array<int>^ value )
+	{
+		if( value->Length % 4 != 0 )
+			throw gcnew ArgumentException( "The length of the array must be a multiple of four." );
+			
+		pin_ptr<int> pinnedValue = &value[0];
+		return RECORD_D3D11( m_Pointer->SetIntVectorArray( reinterpret_cast<int*>( pinnedValue ), 0, value->Length / 4 ) );
+	}
+	
+	Result EffectVectorVariable::Set( array<bool>^ value )
+	{
+		if( value->Length % 4 != 0 )
+			throw gcnew ArgumentException( "The length of the array must be a multiple of four." );
+			
+		pin_ptr<bool> pinnedValue = &value[0];
+		return RECORD_D3D11( m_Pointer->SetBoolVectorArray( reinterpret_cast<BOOL*>( pinnedValue ), 0, value->Length / 4 ) );
 	}
 }
 }
