@@ -48,43 +48,43 @@ namespace SimpleModel10 {
                 Height = WindowHeight
             };
 
-            context = InitializeDevice(settings10);
+            InitializeDevice(settings10);
 
-            using(var swapChainBuffer = Resource.FromSwapChain<Texture2D>(context.SwapChain, 0)) {
-                renderTargetView = new RenderTargetView(context.Device, swapChainBuffer);
+            using(var swapChainBuffer = Resource.FromSwapChain<Texture2D>(Context10.SwapChain, 0)) {
+                renderTargetView = new RenderTargetView(Context10.Device, swapChainBuffer);
             }
 
             InputElement[] elements;
             using(var meshLoader = new XLoader()) {
-                jupiterMesh = meshLoader.LoadFile(context.Device, "jupiter.X", out elements);
+                jupiterMesh = meshLoader.LoadFile(Context10.Device, "jupiter.X", out elements);
             }
 
-            jupiterTexture = Texture2D.FromFile(context.Device, "jupitermap.jpg");
+            jupiterTexture = Texture2D.FromFile(Context10.Device, "jupitermap.jpg");
 
             string compilationErrors;
-            effect = Effect.FromFile(context.Device, "SimpleModel10.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null, out compilationErrors);
+            effect = Effect.FromFile(Context10.Device, "SimpleModel10.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null, out compilationErrors);
             technique = effect.GetTechniqueByIndex(0);
             pass = technique.GetPassByIndex(0);
 
             var signature = pass.Description.Signature;
-            layout = new InputLayout(context.Device, signature, elements);
+            layout = new InputLayout(Context10.Device, signature, elements);
 
             proj = Matrix.PerspectiveFovLH(45.0f, (float) WindowWidth/(float) WindowHeight, 1.0f, 1000.0f);
             view = Matrix.LookAtLH(new Vector3(0, 0, 160), new Vector3(0, 0, -128.0f), Vector3.UnitY);
             var world = Matrix.Identity; 
 
-            effect.GetVariableByName("jupiterTexture").AsResource().SetResource(new ShaderResourceView(context.Device, jupiterTexture));
+            effect.GetVariableByName("jupiterTexture").AsResource().SetResource(new ShaderResourceView(Context10.Device, jupiterTexture));
             effect.GetVariableByName("view").AsMatrix().SetMatrix(view);
             effect.GetVariableByName("proj").AsMatrix().SetMatrix(proj);
         }
 
         protected override void OnResize() {
-            context.Device.ClearState();
+            Context10.Device.ClearState();
             renderTargetView.Dispose();
 
-            context.SwapChain.ResizeBuffers(1, WindowWidth, WindowHeight, Format.R8G8B8A8_UNorm, SwapChainFlags.AllowModeSwitch);
-            using (var texture = Resource.FromSwapChain<Texture2D>(context.SwapChain, 0)) {
-                renderTargetView = new RenderTargetView(context.Device, texture);
+            Context10.SwapChain.ResizeBuffers(1, WindowWidth, WindowHeight, Format.R8G8B8A8_UNorm, SwapChainFlags.AllowModeSwitch);
+            using (var texture = Resource.FromSwapChain<Texture2D>(Context10.SwapChain, 0)) {
+                renderTargetView = new RenderTargetView(Context10.Device, texture);
             }
 
             proj = Matrix.PerspectiveFovLH(45.0f, (float)WindowWidth / (float)WindowHeight, 1.0f, 1000.0f);
@@ -92,9 +92,9 @@ namespace SimpleModel10 {
         }
 
         protected override void OnRenderBegin() {
-            context.Device.OutputMerger.SetTargets(renderTargetView);
-            context.Device.Rasterizer.SetViewports(new Viewport(0, 0, WindowWidth, WindowHeight, 0.0f, 1.0f));
-            context.Device.ClearRenderTargetView(renderTargetView, new Color4(0.0f, 0.0f, 0.0f));
+            Context10.Device.OutputMerger.SetTargets(renderTargetView);
+            Context10.Device.Rasterizer.SetViewports(new Viewport(0, 0, WindowWidth, WindowHeight, 0.0f, 1.0f));
+            Context10.Device.ClearRenderTargetView(renderTargetView, new Color4(0.0f, 0.0f, 0.0f));
         }
 
         protected override void OnRender() {
@@ -110,17 +110,16 @@ namespace SimpleModel10 {
 
             effect.GetVariableByName("world").AsMatrix().SetMatrix(world);
 
-            context.Device.InputAssembler.SetInputLayout(layout);
+            Context10.Device.InputAssembler.SetInputLayout(layout);
             pass.Apply();
             jupiterMesh.DrawSubset(0);
         }
 
         protected override void OnRenderEnd() {
-            context.SwapChain.Present(0, PresentFlags.None);
+            Context10.SwapChain.Present(0, PresentFlags.None);
         }
 
         #region Implementation Detail
-        private DeviceContext10 context;
         private RenderTargetView renderTargetView;
         private Mesh jupiterMesh;
         private Texture2D jupiterTexture;

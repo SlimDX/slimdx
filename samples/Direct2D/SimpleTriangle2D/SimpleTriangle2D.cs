@@ -55,8 +55,8 @@ namespace SimpleTriangle2D {
 				Height = WindowHeight
 			};
 
-			context = InitializeDevice( settings );
-			geometry = new PathGeometry( context.RenderTarget.Factory );
+			InitializeDevice( settings );
+			geometry = new PathGeometry( Context2D.RenderTarget.Factory );
 			using( GeometrySink sink = geometry.Open() ) {
 				PointF p0 = new PointF( 0.50f * WindowWidth, 0.25f * WindowHeight );
 				PointF p1 = new PointF( 0.75f * WindowWidth, 0.75f * WindowHeight );
@@ -72,7 +72,7 @@ namespace SimpleTriangle2D {
 				sink.Close();
 			}
 
-			brush = new SolidColorBrush( context.RenderTarget, new Color4( 0.93f, 0.40f, 0.08f ) );
+			brush = new SolidColorBrush( Context2D.RenderTarget, new Color4( 0.93f, 0.40f, 0.08f ) );
 		}
 
 		/// <summary>
@@ -80,16 +80,16 @@ namespace SimpleTriangle2D {
 		/// other rendering.
 		/// </summary>
 		protected override void OnRenderBegin() {
-			context.RenderTarget.BeginDraw();
-			context.RenderTarget.Transform = Matrix3x2.Identity;
-			context.RenderTarget.Clear( new Color4( 0.3f, 0.3f, 0.3f ) );
+			Context2D.RenderTarget.BeginDraw();
+			Context2D.RenderTarget.Transform = Matrix3x2.Identity;
+			Context2D.RenderTarget.Clear( new Color4( 0.3f, 0.3f, 0.3f ) );
 		}
 
 		/// <summary>
 		/// In a derived class, implements logic to render the sample.
 		/// </summary>
 		protected override void OnRender() {
-			context.RenderTarget.FillGeometry( geometry, brush );
+			Context2D.RenderTarget.FillGeometry( geometry, brush );
 		}
 
 		/// <summary>
@@ -97,12 +97,11 @@ namespace SimpleTriangle2D {
 		/// other rendering.
 		/// </summary>
 		protected override void OnRenderEnd() {
-			context.RenderTarget.EndDraw();
+			Context2D.RenderTarget.EndDraw();
 		}
 
 		#region Implementation Detail
 
-		DeviceContext2D context;
 		PathGeometry geometry;
 		SolidColorBrush brush;
 
