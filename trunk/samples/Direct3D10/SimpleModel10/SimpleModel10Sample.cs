@@ -78,6 +78,19 @@ namespace SimpleModel10 {
             effect.GetVariableByName("proj").AsMatrix().SetMatrix(proj);
         }
 
+        protected override void OnResize() {
+            context.Device.ClearState();
+            renderTargetView.Dispose();
+
+            context.SwapChain.ResizeBuffers(1, WindowWidth, WindowHeight, Format.R8G8B8A8_UNorm, SwapChainFlags.AllowModeSwitch);
+            using (var texture = Resource.FromSwapChain<Texture2D>(context.SwapChain, 0)) {
+                renderTargetView = new RenderTargetView(context.Device, texture);
+            }
+
+            proj = Matrix.PerspectiveFovLH(45.0f, (float)WindowWidth / (float)WindowHeight, 1.0f, 1000.0f);
+            effect.GetVariableByName("proj").AsMatrix().SetMatrix(proj);
+        }
+
         protected override void OnRenderBegin() {
             context.Device.OutputMerger.SetTargets(renderTargetView);
             context.Device.Rasterizer.SetViewports(new Viewport(0, 0, WindowWidth, WindowHeight, 0.0f, 1.0f));
@@ -94,6 +107,7 @@ namespace SimpleModel10 {
             Matrix.RotationY(rotation, out rotationMatrix);
             var world = Matrix.Identity;
             Matrix.Multiply(ref world, ref rotationMatrix, out world);
+
             effect.GetVariableByName("world").AsMatrix().SetMatrix(world);
 
             context.Device.InputAssembler.SetInputLayout(layout);

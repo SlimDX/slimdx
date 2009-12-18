@@ -109,6 +109,11 @@ namespace SlimDX.SampleFramework {
 			form.MouseClick += HandleMouseClick;
 			form.KeyDown += HandleKeyDown;
 			form.KeyUp += HandleKeyUp;
+		    form.Resize += delegate(object o, EventArgs args) {
+                configuration.WindowWidth = ((Form)o).ClientSize.Width;
+                configuration.WindowHeight = ((Form)o).ClientSize.Height;
+		        OnResize();
+            };
 
 			userInterface = new UserInterface();
 			Element stats = new Element();
@@ -139,6 +144,12 @@ namespace SlimDX.SampleFramework {
 		protected virtual void OnInitialize() {
 		}
 
+        /// <summary>
+        /// In a derived class, implments logic to handle the window resizing.
+        /// </summary>
+        protected virtual void OnResize() {
+            
+        }
 		/// <summary>
 		/// In a derived class, implements logic to update any relevant sample state.
 		/// </summary>
