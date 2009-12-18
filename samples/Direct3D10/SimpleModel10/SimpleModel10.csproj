@@ -104,7 +104,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="jupitermap.jpg">
+    <Content Include="jupiter.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
