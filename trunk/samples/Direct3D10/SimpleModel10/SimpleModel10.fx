@@ -2,7 +2,7 @@ float4x4 view;
 float4x4 proj;
 float4x4 world;
 
-float3 sun = float3(1, 0, 0);
+float3 sun = float3(.5, 0, -.5);
 
 Texture2D jupiterTexture;
 SamplerState JupiterSampler
@@ -40,7 +40,7 @@ PS_IN VS( VS_IN input )
 
 float4 PS( PS_IN input ) : SV_Target
 {
-	float lightAmount = max(.1,dot(normalize(input.normal),sun));
+	float lightAmount = max(.25,dot(normalize(input.normal),normalize(sun)));
 	return jupiterTexture.Sample(JupiterSampler, input.texCoord) * lightAmount;
 }
 

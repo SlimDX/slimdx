@@ -59,7 +59,7 @@ namespace SimpleModel10 {
                 jupiterMesh = meshLoader.LoadFile(Context10.Device, "jupiter.X", out elements);
             }
 
-            jupiterTexture = Texture2D.FromFile(Context10.Device, "jupitermap.jpg");
+            jupiterTexture = Texture2D.FromFile(Context10.Device, "jupiter.jpg");
 
             string compilationErrors;
             effect = Effect.FromFile(Context10.Device, "SimpleModel10.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null, out compilationErrors);
