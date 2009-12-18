@@ -191,8 +191,6 @@ namespace SimpleModel10 {
                     SwapEffect = D3D9.SwapEffect.Copy,
                     Windowed = true
                 });
-
-                MessageBox.Show("test");
             }
         }
 
