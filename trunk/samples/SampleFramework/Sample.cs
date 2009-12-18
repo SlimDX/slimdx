@@ -73,6 +73,21 @@ namespace SlimDX.SampleFramework {
 			}
 		}
 
+        /// <summary>
+        /// Represents a Direct3D9 Context, only valid after calling InitializeDevice(DeviceSettings9)
+        /// </summary>
+        public DeviceContext9 Context9 { get; private set; }
+
+        /// <summary>
+        /// Represents a Direct3D10 Context, only valid after calling InitializeDevice(DeviceSettings10)
+        /// </summary>
+        public DeviceContext10 Context10 { get; private set; }
+
+        /// <summary>
+        /// Represents a Direct2D Context, only valid after calling InitializeDevice(DeviceSettings2D)
+        /// </summary>
+        public DeviceContext2D Context2D { get; private set; }
+
 		/// <summary>
 		/// Disposes of object resources.
 		/// </summary>
@@ -182,11 +197,11 @@ namespace SlimDX.SampleFramework {
 		/// </summary>
 		/// <param name="settings">The settings.</param>
 		/// <returns>The initialized device context.</returns>
-		protected DeviceContext2D InitializeDevice( DeviceSettings2D settings ) {
+		protected void InitializeDevice( DeviceSettings2D settings ) {
 			DeviceContext2D result = new DeviceContext2D( form.Handle, settings );
 			//userInterfaceRenderer = new UserInterfaceRenderer9( result.Device, settings.Width, settings.Height );
 			apiContext = result;
-			return result;
+            Context2D = result;
 		}
 		
 		/// <summary>
@@ -195,11 +210,11 @@ namespace SlimDX.SampleFramework {
 		/// </summary>
 		/// <param name="settings">The settings.</param>
 		/// <returns>The initialized device context.</returns>
-		protected DeviceContext9 InitializeDevice( DeviceSettings9 settings ) {
+		protected void InitializeDevice( DeviceSettings9 settings ) {
 			DeviceContext9 result = new DeviceContext9( form.Handle, settings );
 			userInterfaceRenderer = new UserInterfaceRenderer9( result.Device, settings.Width, settings.Height );
 			apiContext = result;
-			return result;
+			Context9 = result;
 		}
 
 		/// <summary>
@@ -208,11 +223,11 @@ namespace SlimDX.SampleFramework {
 		/// </summary>
 		/// <param name="settings">The settings.</param>
 		/// <returns>The initialized device context.</returns>
-		protected DeviceContext10 InitializeDevice( DeviceSettings10 settings ) {
+		protected void InitializeDevice( DeviceSettings10 settings ) {
 			DeviceContext10 result = new DeviceContext10( form.Handle, settings );
 			userInterfaceRenderer = new UserInterfaceRenderer10( result.Device, settings.Width, settings.Height );
 			apiContext = result;
-			return result;
+			Context10 = result;
 		}
 
 		/// <summary>

@@ -54,10 +54,10 @@ namespace SimpleTriangle9 {
 				Height = WindowHeight
 			};
 
-			context = InitializeDevice( settings );
+			InitializeDevice( settings );
 
 			vertexBuffer = new VertexBuffer(
-				context.Device,
+				Context9.Device,
 				3 * Marshal.SizeOf( typeof( ColoredVertex ) ),
 				Usage.WriteOnly,
 				VertexFormat.None,
@@ -75,28 +75,27 @@ namespace SimpleTriangle9 {
 
 			// Since this sample does not use any lights, disable lighting (otherwise the
 			// triangle will appear flat black).
-			context.Device.SetRenderState( RenderState.Lighting, false );
+			Context9.Device.SetRenderState( RenderState.Lighting, false );
 		}
 
 		protected override void OnRenderBegin() {
-			context.Device.Clear( ClearFlags.Target | ClearFlags.ZBuffer, new Color4( 0.3f, 0.3f, 0.3f ), 1.0f, 0 );
-			context.Device.BeginScene();
+			Context9.Device.Clear( ClearFlags.Target | ClearFlags.ZBuffer, new Color4( 0.3f, 0.3f, 0.3f ), 1.0f, 0 );
+			Context9.Device.BeginScene();
 		}
 
 		protected override void OnRender() {
-			context.Device.SetStreamSource( 0, vertexBuffer, 0, Marshal.SizeOf( typeof( ColoredVertex ) ) );
-			context.Device.VertexFormat = VertexFormat.Position | VertexFormat.Diffuse;
-			context.Device.DrawPrimitives( PrimitiveType.TriangleList, 0, 1 );
+			Context9.Device.SetStreamSource( 0, vertexBuffer, 0, Marshal.SizeOf( typeof( ColoredVertex ) ) );
+			Context9.Device.VertexFormat = VertexFormat.Position | VertexFormat.Diffuse;
+			Context9.Device.DrawPrimitives( PrimitiveType.TriangleList, 0, 1 );
 		}
 
 		protected override void OnRenderEnd() {
-			context.Device.EndScene();
-			context.Device.Present();
+			Context9.Device.EndScene();
+			Context9.Device.Present();
 		}
 
 		#region Implementation Detail
 
-		DeviceContext9 context;
 		VertexBuffer vertexBuffer;
 
 		#endregion
