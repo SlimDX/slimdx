@@ -1,4 +1,4 @@
-﻿/*
+/*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,21 +19,25 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-using System;
-
-namespace SimpleModel10
+namespace SlimDX
 {
-    static class Program
-    {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            using (var sample = new SimpleModel10Sample())
-                sample.Run();
-        }
-    }
+	namespace DirectWrite
+	{
+		public value class FontMetrics
+		{
+		public:
+			property short DesignUnitsPerEm;
+			property short Ascent;
+			property short Descent;
+			property short LineGap;
+			property short CapHeight;
+			property short XHeight;
+			property short UnderlinePosition;
+			property short UnderlineThickness;
+			property short StrikethroughPosition;
+			property short StrikethroughThickness;
+		};
+	}
 }

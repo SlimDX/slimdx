@@ -24,6 +24,10 @@
 extern const IID IID_IDWriteFont;
 
 #include "../ComObject.h"
+#include "Enums.h"
+#include "LocalizedStrings.h"
+#include "FontFamily.h"
+#include "FontMetrics.h"
 
 namespace SlimDX
 {
@@ -33,6 +37,49 @@ namespace SlimDX
 		{
 			COMOBJECT(IDWriteFont, Font);
 
+		public:
+			LocalizedStrings^ GetInformationalStrings(InformationalStringId stringId);
+			bool HasCharacter(int characterCode);
+
+			property LocalizedStrings^ FaceNames
+			{
+				LocalizedStrings^ get();
+			}
+
+			property FontFamily^ FontFamily
+			{
+				SlimDX::DirectWrite::FontFamily^ get();
+			}
+
+			property FontMetrics Metrics
+			{
+				FontMetrics get();
+			}
+
+			property FontSimulations Simulations
+			{
+				FontSimulations get();
+			}
+
+			property FontStretch Stretch
+			{
+				FontStretch get();
+			}
+
+			property FontStyle Style
+			{
+				FontStyle get();
+			}
+
+			property FontWeight Weight
+			{
+				FontWeight get();
+			}
+
+			property bool IsSymbolFont
+			{
+				bool get();
+			}
 		};
 	}
 }

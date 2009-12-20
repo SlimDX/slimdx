@@ -33,5 +33,82 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
+	LocalizedStrings^ Font::GetInformationalStrings(InformationalStringId stringId)
+	{
+		IDWriteLocalizedStrings *names;
+		BOOL exists;
+
+		HRESULT hr = InternalPointer->GetInformationalStrings(static_cast<DWRITE_INFORMATIONAL_STRING_ID>(stringId), &names, &exists);
+		if (RECORD_DW(hr).IsFailure)
+			return nullptr;
+
+		return LocalizedStrings::FromPointer(names);
+	}
+
+	bool Font::HasCharacter(int characterCode)
+	{
+		BOOL exists = FALSE;
+
+		HRESULT hr = InternalPointer->HasCharacter(characterCode, &exists);
+		RECORD_DW(hr);
+
+		return exists > 0;
+	}
+
+	LocalizedStrings^ Font::FaceNames::get()
+	{
+		IDWriteLocalizedStrings *names;
+
+		HRESULT hr = InternalPointer->GetFaceNames(&names);
+		if (RECORD_DW(hr).IsFailure)
+			return nullptr;
+
+		return LocalizedStrings::FromPointer(names);
+	}
+
+	SlimDX::DirectWrite::FontFamily^ Font::FontFamily::get()
+	{
+		IDWriteFontFamily *names;
+
+		HRESULT hr = InternalPointer->GetFontFamily(&names);
+		if (RECORD_DW(hr).IsFailure)
+			return nullptr;
+
+		return SlimDX::DirectWrite::FontFamily::FromPointer(names);
+	}
+
+	FontMetrics Font::Metrics::get()
+	{
+		FontMetrics result;
+
+		InternalPointer->GetMetrics(reinterpret_cast<DWRITE_FONT_METRICS*>(&result));
+
+		return result;
+	}
+
+	FontSimulations Font::Simulations::get()
+	{
+		return static_cast<FontSimulations>(InternalPointer->GetSimulations());
+	}
+
+	FontStretch Font::Stretch::get()
+	{
+		return static_cast<FontStretch>(InternalPointer->GetStretch());
+	}
+
+	FontStyle Font::Style::get()
+	{
+		return static_cast<FontStyle>(InternalPointer->GetStyle());
+	}
+
+	FontWeight Font::Weight::get()
+	{
+		return static_cast<FontWeight>(InternalPointer->GetWeight());
+	}
+
+	bool Font::IsSymbolFont::get()
+	{
+		return InternalPointer->IsSymbolFont() > 0;
+	}
 }
 }

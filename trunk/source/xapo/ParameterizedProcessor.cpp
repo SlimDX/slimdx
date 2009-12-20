@@ -82,7 +82,7 @@ namespace XAPO
 
 	void XAPOParametersImpl::OnSetParameters( const void *pParameters, UINT32 ParameterByteSize )
 	{
-		m_processor->OnSetParameters( gcnew DataStream( const_cast<void*>( pParameters ), ParameterByteSize, true, false, false ) );
+		m_processor->OnSetParameters( gcnew DataStream( pParameters, ParameterByteSize, true, false ) );
 	}
 
 	void XAPOParametersImpl::Process( UINT32 InputProcessParameterCount, const XAPO_PROCESS_BUFFER_PARAMETERS *pInputProcessParameters, UINT32 OutputProcessParameterCount, XAPO_PROCESS_BUFFER_PARAMETERS *pOutputProcessParameters, BOOL IsEnabled )

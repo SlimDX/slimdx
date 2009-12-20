@@ -24,6 +24,16 @@
 extern const IID IID_IDWriteFontFace;
 
 #include "../ComObject.h"
+#include "../direct2d/Matrix3x2.h"
+#include "../direct2d/SimplifiedGeometrySink.h"
+
+#include "Enums.h"
+#include "FontMetrics.h"
+#include "GlyphMetrics.h"
+#include "FontFile.h"
+#include "GlyphOffset.h"
+#include "RenderingParameters.h"
+#include "FontTable.h"
 
 namespace SlimDX
 {
@@ -32,6 +42,53 @@ namespace SlimDX
 		public ref class FontFace : public ComObject
 		{
 			COMOBJECT(IDWriteFontFace, FontFace);
+
+		public:
+			array<GlyphMetrics>^ GetDesignGlyphMetrics(array<short>^ indices, bool isSideways);
+			array<GlyphMetrics>^ GetGdiCompatibleGlyphMetrics(float size, float pixelsPerDip, bool useGdiNatural, bool isSideways, array<short>^ indices);
+			array<GlyphMetrics>^ GetGdiCompatibleGlyphMetrics(float size, float pixelsPerDip, bool useGdiNatural, bool isSideways, array<short>^ indices, SlimDX::Direct2D::Matrix3x2 transform);
+			array<short>^ GetGlyphIndices(array<int>^ codePoints);
+			array<FontFile^>^ GetFiles();
+
+			FontMetrics GetGdiCompatibleMetrics(float size, float pixelsPerDip);
+			FontMetrics GetGdiCompatibleMetrics(float size, float pixelsPerDip, SlimDX::Direct2D::Matrix3x2 transform);
+
+			Result GetGlyphRunOutline(float size, array<short>^ glyphIndices, array<float>^ glyphAdvances, array<GlyphOffset>^ glyphOffsets, bool isSideways, bool isRightToLeft, SlimDX::Direct2D::SimplifiedGeometrySink^ geometrySink);
+			RenderingMode GetRecommendedRenderingMode(float size, float pixelsPerDip, MeasuringMode measuringMode, RenderingParameters^ renderingParameters);
+
+			FontTable^ GetFontTable(int tableTag);
+			FontTable^ GetFontTable(char a, char b, char c, char d);
+			void ReleaseFontTable(FontTable^ table);
+
+			property FontFaceType Type
+			{
+				FontFaceType get();
+			}
+
+			property FontMetrics Metrics
+			{
+				FontMetrics get();
+			}
+
+			property FontSimulations Simulations
+			{
+				FontSimulations get();
+			}
+
+			property bool IsSymbolFont
+			{
+				bool get();
+			}
+
+			property int GlyphCount
+			{
+				int get();
+			}
+
+			property int Index
+			{
+				int get();
+			}
 		};
 	}
 }

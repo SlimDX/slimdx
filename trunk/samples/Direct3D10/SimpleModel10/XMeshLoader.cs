@@ -26,30 +26,38 @@ using DXGI = SlimDX.DXGI;
 using D3D9 = SlimDX.Direct3D9;
 using SlimDX.Direct3D10;
 
-namespace SimpleModel10 {
-    class XLoader : IDisposable {
-        public XLoader() {
+namespace SimpleModel10
+{
+    class XLoader : IDisposable
+    {
+        public XLoader()
+        {
             CreateNullDevice();
         }
 
         #region IDisposable
-        ~XLoader() {
+        ~XLoader()
+        {
             Dispose(false);
         }
 
-        public void Dispose() {
+        public void Dispose()
+        {
             Dispose(true);
         }
 
-        private void Dispose(bool disposeManagedObjects) {
-            if (disposeManagedObjects) {
+        private void Dispose(bool disposeManagedObjects)
+        {
+            if (disposeManagedObjects)
+            {
                 device9.Dispose();
                 form.Dispose();
             }
         }
         #endregion
 
-        public Mesh CreateMesh(Device device, D3D9.Mesh mesh9, out InputElement[] outDecls) {
+        public Mesh CreateMesh(Device device, D3D9.Mesh mesh9, out InputElement[] outDecls)
+        {
             var inDecls = mesh9.GetDeclaration();
             outDecls = new InputElement[inDecls.Length - 1];
             ConvertDecleration(inDecls, outDecls);
@@ -71,17 +79,21 @@ namespace SimpleModel10 {
             return mesh;
         }
 
-        public Mesh LoadFile(Device device, string filename, out InputElement[] outDecls) {
-            using (var mesh9 = D3D9.Mesh.FromFile(device9, filename, D3D9.MeshFlags.SystemMemory)) {
+        public Mesh LoadFile(Device device, string filename, out InputElement[] outDecls)
+        {
+            using (var mesh9 = D3D9.Mesh.FromFile(device9, filename, D3D9.MeshFlags.SystemMemory))
+            {
                 return CreateMesh(device, mesh9, out outDecls);
             }
         }
 
         #region Implementation Details
-        private static void ConfigureAttributeTable(D3D9.BaseMesh inMesh, Mesh outMesh) {
+        private static void ConfigureAttributeTable(D3D9.BaseMesh inMesh, Mesh outMesh)
+        {
             var inAttribTable = inMesh.GetAttributeTable();
 
-            if (inAttribTable == null || inAttribTable.Length == 0) {
+            if (inAttribTable == null || inAttribTable.Length == 0)
+            {
                 outMesh.SetAttributeTable(new[] {new MeshAttributeRange {
                     FaceCount = outMesh.FaceCount,
                     FaceStart = 0,
@@ -89,9 +101,12 @@ namespace SimpleModel10 {
                     VertexCount = outMesh.VertexCount,
                     VertexStart = 0
                 }});
-            } else {
+            }
+            else
+            {
                 var outAttribTable = new MeshAttributeRange[inAttribTable.Length];
-                for (var i = 0; i < inAttribTable.Length; ++i) {
+                for (var i = 0; i < inAttribTable.Length; ++i)
+                {
                     outAttribTable[i].Id = inAttribTable[i].AttribId;
                     outAttribTable[i].FaceCount = inAttribTable[i].FaceCount;
                     outAttribTable[i].FaceStart = inAttribTable[i].FaceStart;
@@ -104,10 +119,13 @@ namespace SimpleModel10 {
             outMesh.GenerateAttributeBufferFromTable();
         }
 
-        private static void ConvertIndexBuffer(D3D9.BaseMesh inMesh, Mesh outMesh) {
+        private static void ConvertIndexBuffer(D3D9.BaseMesh inMesh, Mesh outMesh)
+        {
             using (var inStream = inMesh.LockIndexBuffer(D3D9.LockFlags.None))
-            using (var outBuffer = outMesh.GetIndexBuffer()) {
-                using (var outStream = outBuffer.Map()) {
+            using (var outBuffer = outMesh.GetIndexBuffer())
+            {
+                using (var outStream = outBuffer.Map())
+                {
                     if ((outMesh.Flags & MeshFlags.Has32BitIndices) != 0)
                         outStream.WriteRange(inStream.ReadRange<int>(inMesh.FaceCount * 3));
                     else
@@ -118,10 +136,13 @@ namespace SimpleModel10 {
             inMesh.UnlockIndexBuffer();
         }
 
-        private static void ConvertVertexBuffer(D3D9.BaseMesh inMesh, Mesh outMesh) {
+        private static void ConvertVertexBuffer(D3D9.BaseMesh inMesh, Mesh outMesh)
+        {
             using (var inStream = inMesh.LockVertexBuffer(D3D9.LockFlags.None))
-            using (var outBuffer = outMesh.GetVertexBuffer(0)) {
-                using (var outStream = outBuffer.Map()) {
+            using (var outBuffer = outMesh.GetVertexBuffer(0))
+            {
+                using (var outStream = outBuffer.Map())
+                {
                     outStream.WriteRange(inStream.ReadRange<byte>(inMesh.VertexCount * inMesh.BytesPerVertex));
                 }
                 outBuffer.Unmap();
@@ -129,8 +150,10 @@ namespace SimpleModel10 {
             inMesh.UnlockIndexBuffer();
         }
 
-        private static void ConvertDecleration(D3D9.VertexElement[] inDecls, InputElement[] outDecls) {
-            for (var i = 0; i < inDecls.Length - 1; ++i) {
+        private static void ConvertDecleration(D3D9.VertexElement[] inDecls, InputElement[] outDecls)
+        {
+            for (var i = 0; i < inDecls.Length - 1; ++i)
+            {
                 outDecls[i].SemanticName = ConvertSemanticName(inDecls[i].Usage);
                 outDecls[i].SemanticIndex = inDecls[i].UsageIndex;
                 outDecls[i].AlignedByteOffset = inDecls[i].Offset;
@@ -141,8 +164,10 @@ namespace SimpleModel10 {
             }
         }
 
-        private static string ConvertSemanticName(D3D9.DeclarationUsage usage) {
-            switch (usage) {
+        private static string ConvertSemanticName(D3D9.DeclarationUsage usage)
+        {
+            switch (usage)
+            {
                 case D3D9.DeclarationUsage.TextureCoordinate:
                     return "TEXCOORD";
                 case D3D9.DeclarationUsage.PositionTransformed:
@@ -156,8 +181,10 @@ namespace SimpleModel10 {
             }
         }
 
-        private static DXGI.Format ConvertFormat(D3D9.DeclarationType type) {
-            switch (type) {
+        private static DXGI.Format ConvertFormat(D3D9.DeclarationType type)
+        {
+            switch (type)
+            {
                 case D3D9.DeclarationType.Float1: return DXGI.Format.R32_Float;
                 case D3D9.DeclarationType.Float2: return DXGI.Format.R32G32_Float;
                 case D3D9.DeclarationType.Float3: return DXGI.Format.R32G32B32_Float;
@@ -179,11 +206,14 @@ namespace SimpleModel10 {
             }
         }
 
-        private void CreateNullDevice() {
+        private void CreateNullDevice()
+        {
             form = new Form();
-            using (var direct3D = new D3D9.Direct3D()) {
+            using (var direct3D = new D3D9.Direct3D())
+            {
                 var displayMode = direct3D.GetAdapterDisplayMode(0);
-                device9 = new D3D9.Device(direct3D, 0, D3D9.DeviceType.NullReference, form.Handle, D3D9.CreateFlags.HardwareVertexProcessing, new D3D9.PresentParameters {
+                device9 = new D3D9.Device(direct3D, 0, D3D9.DeviceType.NullReference, form.Handle, D3D9.CreateFlags.HardwareVertexProcessing, new D3D9.PresentParameters
+                {
                     BackBufferCount = 1,
                     BackBufferFormat = displayMode.Format,
                     BackBufferHeight = 1,

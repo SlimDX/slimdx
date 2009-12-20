@@ -48,6 +48,35 @@ namespace SlimDX
 		
 		m_ID3DXBuffer = buffer;
 	}
+
+	DataStream::DataStream( const void* buffer, Int64 sizeInBytes, bool canRead, bool makeCopy )
+	{
+		if( sizeInBytes < 1 )
+			throw gcnew ArgumentOutOfRangeException( "sizeInBytes" );
+	
+		if( makeCopy )
+		{
+			// Manual Allocation: this is fine
+			m_Buffer = new char[static_cast<size_t>( sizeInBytes )];
+			memcpy( m_Buffer, buffer, static_cast<size_t>( sizeInBytes ) );
+			GC::AddMemoryPressure( sizeInBytes );
+		}
+		else
+		{
+			m_Buffer = static_cast<char*>( const_cast<void*>( buffer ) );
+		}
+
+		m_Size = sizeInBytes;
+		
+		m_CanRead = canRead;
+		m_CanWrite = false;
+		m_OwnsBuffer = makeCopy;
+		
+		m_ID3DXBuffer = 0;
+
+		if( !m_OwnsBuffer )
+			GC::SuppressFinalize( this );
+	}
 	
 	DataStream::DataStream( void* buffer, Int64 sizeInBytes, bool canRead, bool canWrite, bool makeCopy )
 	{

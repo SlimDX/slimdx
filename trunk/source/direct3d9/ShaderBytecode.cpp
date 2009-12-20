@@ -675,7 +675,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew DataStream( const_cast<void*>( data ), size, true, false, false );
+		return gcnew DataStream( data, size, true, false );
 	}
 
 	DataStream^ ShaderBytecode::Data::get()

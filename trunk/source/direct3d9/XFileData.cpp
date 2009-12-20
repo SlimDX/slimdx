@@ -73,7 +73,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return gcnew DataStream( const_cast<void*>( data ), size, true, true, true );
+		return gcnew DataStream( data, size, true, true );
 	}
 
 	Result XFileData::Unlock()
