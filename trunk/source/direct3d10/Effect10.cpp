@@ -25,6 +25,7 @@
 #include <d3dx10.h>
 #include <vcclr.h>
 
+#include "../CompilationException.h"
 #include "../DataStream.h"
 #include "Effect10.h"
 
@@ -158,7 +159,7 @@ namespace Direct3D10
 	Effect^ Effect::FromFile( SlimDX::Direct3D10::Device^ device, String ^fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include )
 	{
 		String^ compilationErrors;
-		return (FromFile( device, fileName, profile, shaderFlags, effectFlags, pool, include, compilationErrors ));
+		return FromFile( device, fileName, profile, shaderFlags, effectFlags, pool, include, compilationErrors );
 	}
 	
 	Effect^ Effect::FromFile( SlimDX::Direct3D10::Device^ device, String ^fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] String^ %compilationErrors  )
@@ -191,19 +192,11 @@ namespace Direct3D10
 			0
 		);
 
-		if( errorBlob != 0 )
-		{
-		  compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBlob->GetBufferPointer() ) );
-		  errorBlob->Release();
-		}
-		else
-		{
-			compilationErrors = String::Empty;
-		}
-		
-		RECORD_D3D10( hr );
-		if( effect == NULL)
-			return nullptr;
+		compilationErrors = Utilities::BlobToString(errorBlob);
+		Exception^ e = CompilationException::Check<Direct3D10Exception^>(hr, compilationErrors);
+		if (e != nullptr)
+			throw e;
+
 		return gcnew Effect( effect, nullptr );
 	}
 	
@@ -238,20 +231,11 @@ namespace Direct3D10
 			0
 		);
 
-		if( compilationErrors != 0 )
-		{
-			if( errorBlob != 0 )
-				*compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBlob->GetBufferPointer() ) );
-			else
-				*compilationErrors = nullptr;
-		}		
-		
-		if( errorBlob != 0 )
-			errorBlob->Release();
+		*compilationErrors = Utilities::BlobToString(errorBlob);
+		Exception^ e = CompilationException::Check<Direct3D10Exception^>(hr, *compilationErrors);
+		if (e != nullptr)
+			throw e;
 
-		RECORD_D3D10( hr );
-		if( effect == NULL )
-			return nullptr;
 		return gcnew Effect( effect, nullptr );
 	}
 
@@ -333,19 +317,11 @@ namespace Direct3D10
 			0
 		);
 		
-		if( errorBlob != 0 )
-		{
-		  compilationErrors = gcnew String( reinterpret_cast<const char*>( errorBlob->GetBufferPointer() ) );
-		  errorBlob->Release();
-		}
-		else
-		{
-			compilationErrors = String::Empty;
-		}
-		
-		RECORD_D3D10( hr );
-		if( effect == NULL )
-			return nullptr;
+		compilationErrors = Utilities::BlobToString(errorBlob);
+		Exception^ e = CompilationException::Check<Direct3D10Exception^>(hr, compilationErrors);
+		if (e != nullptr)
+			throw e;
+
 		return gcnew Effect( effect, nullptr );
 	}
 }
