@@ -21,6 +21,7 @@
 */
 #include "stdafx.h"
 
+#include "../CompilationException.h"
 #include "../DataStream.h"
 
 #include "Direct3D11Exception.h"
@@ -118,14 +119,10 @@ namespace Direct3D11
 
 		ShaderMacro::Unmarshal( handles );
 
-		String^ compilationErrorsLocal = Utilities::BlobToString( errors );
-		compilationErrors = compilationErrorsLocal;
-
-		if( RECORD_D3D11_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
-			return nullptr;
-
-		if( code == NULL )
-			return nullptr;
+		compilationErrors = Utilities::BlobToString( errors );
+		Exception^ e = CompilationException::Check<Direct3D11Exception^>(hr, compilationErrors);
+		if (e != nullptr)
+			throw e;
 
 		return ShaderBytecode::FromPointer( code );
 	}
@@ -166,14 +163,10 @@ namespace Direct3D11
 			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
 			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), NULL, &code, &errors, NULL );
 
-		String^ compilationErrorsLocal = Utilities::BlobToString( errors );
-		compilationErrors = compilationErrorsLocal;
-
-		if( RECORD_D3D11_EX( hr, ExceptionDataKey, compilationErrors ).IsFailure )
-			return nullptr;
-
-		if( code == NULL )
-			return nullptr;
+		compilationErrors = Utilities::BlobToString( errors );
+		Exception^ e = CompilationException::Check<Direct3D11Exception^>(hr, compilationErrors);
+		if (e != nullptr)
+			throw e;
 
 		return ShaderBytecode::FromPointer( code );
 	}

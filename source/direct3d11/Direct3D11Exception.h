@@ -23,8 +23,7 @@
 
 #include "../SlimDXException.h"
 
-#define RECORD_D3D11_EX(x, key, value) Result::Record<Direct3D11Exception^>( (x), (key), (value) )
-#define RECORD_D3D11(x) RECORD_D3D11_EX(x, nullptr, nullptr)
+#define RECORD_D3D11(x) Result::Record<Direct3D11Exception^>( (x), (nullptr), (nullptr) )
 
 namespace SlimDX
 {
