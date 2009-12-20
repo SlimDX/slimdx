@@ -15,7 +15,8 @@ Direct3D 9
 	* Fixed a bug in Sprite.Draw where source rectangle was not taken into account.
 	* Fixed a bug that would cause EffectStateManager methods to crash if a null shader or texture was passed to them.
 	* Fixed a memory leak in EffectStateManager by making implicit shaders ancillary objects.
-		
+	* Updated ConstantTable to use a generic SetValue method instead of individual methods.
+	
 Direct3D 10
 	* Added InputElement.AppendAligned property.
 	* Added FromFile to ShaderResourceView.
@@ -40,6 +41,9 @@ Direct3D 11
 	* Deprecated InputLayout constructor taking (device, elements, signature) in favor of one taking (device, signature, elements).
 	* Removed the dependence on D3D10 by duplicating ShaderBytecode and friends.
 	* Changed Effect construction to take a ShaderBytecode for the source data.
+	
+DirectWrite
+	* Filled in tons of missing functionality.
 	
 XAPO
 	* Implemented XAPO.

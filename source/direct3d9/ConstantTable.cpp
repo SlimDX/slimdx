@@ -37,6 +37,7 @@
 #include "Device.h"
 
 using namespace System;
+using namespace System::Globalization;
 
 namespace SlimDX
 {
@@ -140,127 +141,82 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 
-	Result ConstantTable::SetValue( Device^ device, EffectHandle^ constant, bool value )
+	generic<typename T> where T : value class
+	Result ConstantTable::SetValue( Device^ device, EffectHandle^ parameter, T value )
 	{
-		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->SetBool( device->InternalPointer, handle, value );
-		GC::KeepAlive( constant );
-		return RECORD_D3D9( hr );
-	}
-
-	Result ConstantTable::SetValue( Device^ device, EffectHandle^ parameter, array<bool>^ values )
-	{
-		//implementing set for bool array is REALLY ANNOYING.
-		//Win32 uses BOOL, which is an int
-		array<BOOL>^ expandedArray = gcnew array<BOOL>( values->Length );
-		Array::Copy( values, expandedArray, values->Length );
-
+		HRESULT hr;
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
-		pin_ptr<BOOL> pinnedValue = &expandedArray[0];
-		HRESULT hr = InternalPointer->SetBoolArray( device->InternalPointer, handle, pinnedValue, values->Length );
+
+		if( T::typeid == bool::typeid )
+		{
+			BOOL newValue = Convert::ToInt32( value, CultureInfo::InvariantCulture );
+			hr = InternalPointer->SetBool( device->InternalPointer, handle, newValue );
+		}
+		else if( T::typeid == float::typeid )
+		{
+			hr = InternalPointer->SetFloat( device->InternalPointer, handle, static_cast<FLOAT>( value ) );
+		}
+		else if( T::typeid == int::typeid )
+		{
+			hr = InternalPointer->SetInt( device->InternalPointer, handle, static_cast<INT>( value ) );
+		}
+		else if( T::typeid == Matrix::typeid )
+		{
+			hr = InternalPointer->SetMatrix( device->InternalPointer, handle, reinterpret_cast<D3DXMATRIX*>( &value ) );
+		}
+		else if( T::typeid == Vector4::typeid )
+		{
+			hr = InternalPointer->SetVector( device->InternalPointer, handle, reinterpret_cast<D3DXVECTOR4*>( &value ) );
+		}
+		else
+		{
+			hr = InternalPointer->SetValue( device->InternalPointer, handle, &value, static_cast<DWORD>( sizeof(T) ) );
+		}
+
 		GC::KeepAlive( parameter );
 		return RECORD_D3D9( hr );
 	}
 
-	Result ConstantTable::SetValue( Device^ device, EffectHandle^ constant, int value )
+	generic<typename T> where T : value class
+	Result ConstantTable::SetValue( Device^ device, EffectHandle^ parameter, array<T>^ values )
 	{
-		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->SetInt( device->InternalPointer, handle, value );
-		GC::KeepAlive( constant );
-		return RECORD_D3D9( hr );
-	}
+		HRESULT hr;
+		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 
-	Result ConstantTable::SetValue( Device^ device, EffectHandle^ constant, array<int>^ values )
-	{
-		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		pin_ptr<int> pinned_value = &values[0];
-		HRESULT hr = InternalPointer->SetIntArray( device->InternalPointer, handle, pinned_value, values->Length );
-		GC::KeepAlive( constant );
-		return RECORD_D3D9( hr );
-	}
+		if( T::typeid == bool::typeid )
+		{
+			array<BOOL>^ newValues = Array::ConvertAll<bool, int>( safe_cast<array<bool>>( values ), gcnew Converter<bool, int>( Convert::ToInt32 ) );
+			pin_ptr<BOOL> pinnedValues = &newValues[0];
 
-	Result ConstantTable::SetValue( Device^ device, EffectHandle^ constant, float value )
-	{
-		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->SetFloat( device->InternalPointer, handle, value );
-		GC::KeepAlive( constant );
-		return RECORD_D3D9( hr );
-	}
+			hr = InternalPointer->SetBoolArray( device->InternalPointer, handle, pinnedValues, values->Length );
+		}
+		else if( T::typeid == float::typeid )
+		{
+			pin_ptr<T> pinnedData = &values[0];
+			hr = InternalPointer->SetFloatArray( device->InternalPointer, handle, reinterpret_cast<FLOAT*>( pinnedData ), values->Length );
+		}
+		else if( T::typeid == int::typeid )
+		{
+			pin_ptr<T> pinnedData = &values[0];
+			hr = InternalPointer->SetIntArray( device->InternalPointer, handle, reinterpret_cast<INT*>( pinnedData ), values->Length );
+		}
+		else if( T::typeid == Matrix::typeid )
+		{
+			pin_ptr<T> pinnedData = &values[0];
+			hr = InternalPointer->SetMatrixArray( device->InternalPointer, handle, reinterpret_cast<D3DXMATRIX*>( pinnedData ), values->Length );
+		}
+		else if( T::typeid == Vector4::typeid )
+		{
+			pin_ptr<T> pinnedData = &values[0];
+			hr = InternalPointer->SetVectorArray( device->InternalPointer, handle, reinterpret_cast<D3DXVECTOR4*>( pinnedData ), values->Length );
+		}
+		else
+		{
+			pin_ptr<T> pinnedData = &values[0];
+			hr = InternalPointer->SetValue( device->InternalPointer, handle, pinnedData, static_cast<DWORD>( sizeof(T) ) * values->Length );
+		}
 
-	Result ConstantTable::SetValue( Device^ device, EffectHandle^ constant, array<float>^ values )
-	{
-		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		pin_ptr<float> pinned_values = &values[0];
-		HRESULT hr = InternalPointer->SetFloatArray( device->InternalPointer, handle, pinned_values, values->Length );
-		GC::KeepAlive( constant );
-		return RECORD_D3D9( hr );
-	}
-
-	Result ConstantTable::SetValue( Device^ device, EffectHandle^ constant, Vector4 value )
-	{
-		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->SetVector( device->InternalPointer, handle, reinterpret_cast<const D3DXVECTOR4*>( &value ) );
-		GC::KeepAlive( constant );
-		return RECORD_D3D9( hr );
-	}
-
-	Result ConstantTable::SetValue( Device^ device, EffectHandle^ constant, array<Vector4>^ values )
-	{
-		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		pin_ptr<Vector4> pinned_value = &values[0];
-		HRESULT hr = InternalPointer->SetVectorArray( device->InternalPointer, handle, reinterpret_cast<const D3DXVECTOR4*>( pinned_value ), values->Length );
-		GC::KeepAlive( constant );
-		return RECORD_D3D9( hr );
-	}
-
-	Result ConstantTable::SetValue( Device^ device, EffectHandle^ constant, Color4 value )
-	{
-		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->SetVector( device->InternalPointer, handle, reinterpret_cast<const D3DXVECTOR4*>( &value ) );
-		GC::KeepAlive( constant );
-		return RECORD_D3D9( hr );
-	}
-
-	Result ConstantTable::SetValue( Device^ device, EffectHandle^ constant, array<Color4>^ values )
-	{
-		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		pin_ptr<Color4> pinned_value = &values[0];
-		HRESULT hr = InternalPointer->SetVectorArray( device->InternalPointer, handle, reinterpret_cast<const D3DXVECTOR4*>( pinned_value ), values->Length );
-		GC::KeepAlive( constant );
-		return RECORD_D3D9( hr );
-	}
-
-	Result ConstantTable::SetValue( Device^ device, EffectHandle^ constant, Matrix value )
-	{
-		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->SetMatrix( device->InternalPointer, handle, reinterpret_cast<const D3DXMATRIX*>( &value ) );
-		GC::KeepAlive( constant );
-		return RECORD_D3D9( hr );
-	}
-
-	Result ConstantTable::SetValue( Device^ device, EffectHandle^ constant, array<Matrix>^ values )
-	{
-		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		pin_ptr<Matrix> pinned_value = &values[0];
-		HRESULT hr = InternalPointer->SetMatrixArray( device->InternalPointer, handle, reinterpret_cast<const D3DXMATRIX*>( pinned_value ), values->Length );
-		GC::KeepAlive( constant );
-		return RECORD_D3D9( hr );
-	}
-
-	Result ConstantTable::SetValueTranspose( Device^ device, EffectHandle^ constant, Matrix value )
-	{
-		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		HRESULT hr = InternalPointer->SetMatrixTranspose( device->InternalPointer, handle, reinterpret_cast<const D3DXMATRIX*>( &value ) );
-		GC::KeepAlive( constant );
-		return RECORD_D3D9( hr );
-	}
-
-	Result ConstantTable::SetValueTranspose( Device^ device, EffectHandle^ constant, array<Matrix>^ values )
-	{
-		D3DXHANDLE handle = constant != nullptr ? constant->InternalHandle : NULL;
-		pin_ptr<Matrix> pinned_value = &values[0];
-		HRESULT hr = InternalPointer->SetMatrixTransposeArray( device->InternalPointer, handle, reinterpret_cast<const D3DXMATRIX*>( pinned_value ), values->Length );
-		GC::KeepAlive( constant );
+		GC::KeepAlive( parameter );
 		return RECORD_D3D9( hr );
 	}
 

@@ -55,20 +55,23 @@ namespace SlimDX
 			int GetSamplerIndex( EffectHandle^ sampler );
 			Result SetDefaults( Device^ device );
 
-			Result SetValue( Device^ device, EffectHandle^ constant, bool value );
-			Result SetValue( Device^ device, EffectHandle^ constant, array<bool>^ value );
-			Result SetValue( Device^ device, EffectHandle^ constant, int value );
-			Result SetValue( Device^ device, EffectHandle^ constant, array<int>^ values );
-			Result SetValue( Device^ device, EffectHandle^ constant, float value );
-			Result SetValue( Device^ device, EffectHandle^ constant, array<float>^ values );
-			Result SetValue( Device^ device, EffectHandle^ constant, Vector4 value );
-			Result SetValue( Device^ device, EffectHandle^ constant, array<Vector4>^ values );
-			Result SetValue( Device^ device, EffectHandle^ constant, Color4 value );
-			Result SetValue( Device^ device, EffectHandle^ constant, array<Color4>^ values );
-			Result SetValue( Device^ device, EffectHandle^ constant, Matrix value );
-			Result SetValue( Device^ device, EffectHandle^ constant, array<Matrix>^ values );
-			Result SetValueTranspose( Device^ device, EffectHandle^ constant, Matrix value );
-			Result SetValueTranspose( Device^ device, EffectHandle^ constant, array<Matrix>^ values );
+			/// <summary>
+			/// Sets the value of a parameter using the specified data.
+			/// </summary>
+			/// <param name="parameter">The parameter whose value is to be set.</param>
+			/// <param name="value">The new value for the parameter.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			generic<typename T> where T : value class
+				Result SetValue( Device^ device, EffectHandle^ parameter, T value );
+
+			/// <summary>
+			/// Sets the value of a parameter using the specified data.
+			/// </summary>
+			/// <param name="parameter">The array parameter whose value is to be set.</param>
+			/// <param name="values">The array of new values for the array parameter.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			generic<typename T> where T : value class
+				Result SetValue( Device^ device, EffectHandle^ parameter, array<T>^ values );
 
 			property DataStream^ Buffer
 			{
