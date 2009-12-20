@@ -25,8 +25,7 @@
 #include "InternalHelpers.h"
 #include "Result.h"
 
-#define RECORD_SDX_EX(x, key, value) Result::Record<SlimDXException^>( (x), (key), (value) )
-#define RECORD_SDX(x) RECORD_SDX_EX(x, nullptr, nullptr)
+#define RECORD_SDX(x) Result::Record<SlimDXException^>( (x), (nullptr), (nullptr) )
 
 namespace SlimDX
 {

@@ -593,10 +593,9 @@ namespace Direct3D9
 			adjacencyIn = reinterpret_cast<DWORD*>( pinnedAdj );
 		}
 
-		HRESULT hr = D3DXValidMesh( InternalPointer, adjacencyIn, &errorBuffer );
+		D3DXValidMesh( InternalPointer, adjacencyIn, &errorBuffer );
 		errors = Utilities::BufferToString( errorBuffer );
 
-		RECORD_D3D9_EX( hr, ExceptionDataKey, errors );
 		return errors;
 	}
 

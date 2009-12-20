@@ -23,8 +23,7 @@
 
 #include "../SlimDXException.h"
 
-#define RECORD_DSOUND_EX(x, key, value) Result::Record<DirectSoundException^>( (x), (key), (value) )
-#define RECORD_DSOUND(x) RECORD_DSOUND_EX(x, nullptr, nullptr)
+#define RECORD_DSOUND(x) Result::Record<DirectSoundException^>( (x), (nullptr), (nullptr) )
 
 namespace SlimDX
 {
