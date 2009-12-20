@@ -47,8 +47,6 @@ namespace DirectWrite
 		HRESULT hr = InternalPointer->GetFontFamily( index, &fontFamily );
 		RECORD_DW(hr);
 
-		if(fontFamily == NULL)
-			return nullptr;
 		return FontFamily::FromPointer( fontFamily );
 	}
 
@@ -57,9 +55,11 @@ namespace DirectWrite
 		BOOL existsNative = FALSE;
 		UINT32 index = 0;
 		pin_ptr<const wchar_t> nameChars = PtrToStringChars( familyName );
+
 		HRESULT hr = InternalPointer->FindFamilyName( nameChars, &index, &existsNative );
 		exists = existsNative == TRUE;
 		RECORD_DW(hr);
+
 		return index;
 	}
 	
@@ -72,9 +72,9 @@ namespace DirectWrite
 	Font^ FontCollection::GetFontFromFontFace( FontFace^ fontFace )
 	{
 		IDWriteFont* font = NULL;
+
 		HRESULT hr = InternalPointer->GetFontFromFontFace( fontFace->InternalPointer, &font );
-		RECORD_DW(hr);
-		if(FAILED(hr))
+		if (RECORD_DW(hr).IsFailure)
 			return nullptr;
 
 		return Font::FromPointer(font);

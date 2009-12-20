@@ -1,4 +1,4 @@
-﻿/*
+/*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,21 +19,28 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-using System;
-
-namespace SimpleModel10
+namespace SlimDX
 {
-    static class Program
-    {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            using (var sample = new SimpleModel10Sample())
-                sample.Run();
-        }
-    }
+	ref class DataStream;
+
+	namespace DirectWrite
+	{
+		public ref class FontTable
+		{
+		private:
+			DataStream^ data;
+
+		internal:
+			System::IntPtr Context;
+			FontTable(const void *data, int size, void *context);
+
+		public:
+			property DataStream^ Data
+			{
+				DataStream^ get() { return data; }
+			}
+		};
+	}
 }

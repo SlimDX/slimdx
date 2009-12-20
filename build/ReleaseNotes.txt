@@ -1,3 +1,13 @@
+General
+	* Changed effect and shader compilation errors to throw a consistent CompilationException containing the error messages.
+
+Samples
+	* Redesigned the entire sample framework
+	* Added D3D10 Simple Triangle sample.
+	* Added D3D10 Simple Model sample.
+	* Added D3D9 Simple Triangle sample.
+	* Added D2D Simple Triangle sample.
+
 Direct3D 9
 	* Added VertexTextureSampler enumeration.
 	* Changed Include.Open to include missing parentStream parameter.
@@ -16,6 +26,8 @@ Direct3D 10
 	* Reconfigured ShaderBytecode to be a ComObject wrapping ID3D10Blob.
 	* Reconfigured ShaderSignature to be a ComObject wrapping ID3D10Blob.
 	* Added missing Resource constants.
+	* Fixed slice size calculations for 3D textures.
+	* Fixed list bug in Mesh.GetAttributeTable.
 
 Direct3D 11
 	* Added the UnorderedAccess member to BindFlags.

@@ -1,4 +1,4 @@
-﻿/*
+/*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,21 +19,32 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-using System;
+#include "FontFace.h"
+#include "GlyphOffset.h"
 
-namespace SimpleModel10
+template<typename T>
+class stack_array;
+
+namespace SlimDX
 {
-    static class Program
-    {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            using (var sample = new SimpleModel10Sample())
-                sample.Run();
-        }
-    }
+	namespace DirectWrite
+	{
+		public ref class GlyphRun
+		{
+		internal:
+			DWRITE_GLYPH_RUN ToUnmanaged(stack_array<UINT16> &indices, stack_array<FLOAT> &advances, stack_array<DWRITE_GLYPH_OFFSET> &offsets);
+
+		public:
+			property FontFace^ FontFace;
+			property float FontSize;
+			property int GlyphCount;
+			property array<short>^ GlyphIndices;
+			property array<float>^ GlyphAdvances;
+			property array<GlyphOffset>^ GlyphOffsets;
+			property bool IsSideways;
+			property int BidiLevel;
+		};
+	}
 }

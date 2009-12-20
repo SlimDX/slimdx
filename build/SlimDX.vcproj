@@ -5241,14 +5241,6 @@
 			Name="DirectWrite"
 			>
 			<File
-				RelativePath="..\source\directwrite\BitmapRenderTarget.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directwrite\BitmapRenderTarget.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\directwrite\DirectWriteException.cpp"
 				>
 			</File>
@@ -5266,14 +5258,6 @@
 			</File>
 			<File
 				RelativePath="..\source\directwrite\GdiInterop.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directwrite\GlyphRunAnalysis.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\directwrite\GlyphRunAnalysis.h"
 				>
 			</File>
 			<File
@@ -5363,6 +5347,22 @@
 					RelativePath="..\source\directwrite\FontList.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\directwrite\FontMetrics.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\FontMetrics.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\FontTable.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\FontTable.h"
+					>
+				</File>
 				<Filter
 					Name="FontCollection"
 					>
@@ -5387,6 +5387,14 @@
 			<Filter
 				Name="Rendering"
 				>
+				<File
+					RelativePath="..\source\directwrite\BitmapRenderTargetDW.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\BitmapRenderTargetDW.h"
+					>
+				</File>
 				<File
 					RelativePath="..\source\directwrite\RenderingParameters.cpp"
 					>
@@ -5521,6 +5529,42 @@
 				</File>
 				<File
 					RelativePath="..\source\directwrite\FontFileStream.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Glyphs"
+				>
+				<File
+					RelativePath="..\source\directwrite\GlyphMetrics.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\GlyphMetrics.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\GlyphOffset.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\GlyphOffset.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\GlyphRunAnalysis.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\GlyphRunAnalysis.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\GlyphRunDW.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\GlyphRunDW.h"
 					>
 				</File>
 			</Filter>

@@ -56,6 +56,7 @@ namespace SlimDX
 	internal:
 		DataStream( ID3DXBuffer *buffer );
 		DataStream( void* buffer, System::Int64 sizeInBytes, bool canRead, bool canWrite, bool makeCopy );
+		DataStream( const void *buffer, System::Int64 sizeInBytes, bool canRead, bool makeCopy );
 
 		property char* RawPointer
 		{

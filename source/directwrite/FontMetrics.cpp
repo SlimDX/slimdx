@@ -1,4 +1,4 @@
-﻿/*
+/*
 * Copyright (c) 2007-2009 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,21 +19,15 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-using System;
+#include "FontMetrics.h"
 
-namespace SimpleModel10
+using namespace System;
+
+namespace SlimDX
 {
-    static class Program
-    {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            using (var sample = new SimpleModel10Sample())
-                sample.Run();
-        }
-    }
+namespace DirectWrite
+{
+}
 }

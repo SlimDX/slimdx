@@ -130,7 +130,7 @@ namespace XAPO
 	{
 		try
 		{
-			DataStream^ data = gcnew DataStream( const_cast<void*>( pData ), DataByteSize, true, false, false );
+			DataStream^ data = gcnew DataStream( pData, DataByteSize, true, false );
 			
 			return m_interface->Initialize( data ).Code;
 		}
@@ -302,7 +302,7 @@ namespace XAPO
 	{
 		try
 		{
-			m_parameters->SetParameters( gcnew DataStream( const_cast<void*>( pParameters ), ParameterByteSize, true, false, false ) );
+			m_parameters->SetParameters( gcnew DataStream( pParameters, ParameterByteSize, true, false ) );
 		}
 		catch(...)
 		{

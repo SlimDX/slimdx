@@ -260,6 +260,13 @@ namespace SlimDX
 			Uniform = DWRITE_LINE_SPACING_METHOD_UNIFORM 
 		};
 
+		public enum class MeasuringMode : System::Int32
+		{
+			Natural = DWRITE_MEASURING_MODE_NATURAL,
+			GdiClassic = DWRITE_MEASURING_MODE_GDI_CLASSIC,
+			GdiNatural = DWRITE_MEASURING_MODE_GDI_NATURAL
+		};
+
 		/// <summary>
 		/// Specifies how to apply number substitution on digits and related punctuation.
 		/// </summary>
