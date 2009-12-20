@@ -25,13 +25,30 @@ extern const IID IID_IDWriteFontFileEnumerator;
 
 #include "../ComObject.h"
 
+#include "FontFile.h"
+
 namespace SlimDX
 {
 	namespace DirectWrite
 	{
-		public ref class FontFileEnumerator : public ComObject
+		public ref class FontFileEnumerator : public ComObject, System::Collections::Generic::IEnumerator<FontFile^>
 		{
 			COMOBJECT(IDWriteFontFileEnumerator, FontFileEnumerator);
+
+		private:
+			virtual property System::Object^ Current2
+			{
+				System::Object^ get() sealed = System::Collections::IEnumerator::Current::get;
+			}
+
+		public:
+			virtual void Reset();
+			virtual bool MoveNext();
+
+			virtual property FontFile^ Current
+			{
+				FontFile^ get();
+			}
 		};
 	}
 }

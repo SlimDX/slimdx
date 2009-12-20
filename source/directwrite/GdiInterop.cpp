@@ -33,5 +33,44 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
+	Result GdiInterop::ToLogFont(FontFace^ fontFace, Object^ logFont)
+	{
+		pin_ptr<Object^> pinnedFont = &logFont;
+
+		HRESULT hr = InternalPointer->ConvertFontFaceToLOGFONT(fontFace->InternalPointer, reinterpret_cast<LOGFONTW*>(pinnedFont));
+		return RECORD_DW(hr);
+	}
+
+	Result GdiInterop::ToLogFont(Font^ font, Object^ logFont)
+	{
+		pin_ptr<Object^> pinnedFont = &logFont;
+		BOOL systemFont;
+
+		HRESULT hr = InternalPointer->ConvertFontToLOGFONT(font->InternalPointer, reinterpret_cast<LOGFONTW*>(pinnedFont), &systemFont);
+		return RECORD_DW(hr);
+	}
+
+	FontFace^ GdiInterop::FromHdc(IntPtr hdc)
+	{
+		IDWriteFontFace *face;
+
+		HRESULT hr = InternalPointer->CreateFontFaceFromHdc(reinterpret_cast<HDC>(hdc.ToPointer()), &face);
+		if (RECORD_DW(hr).IsFailure)
+			return nullptr;
+
+		return FontFace::FromPointer(face);
+	}
+
+	Font^ GdiInterop::FromLogFont(Object^ logFont)
+	{
+		IDWriteFont *font;
+		pin_ptr<Object^> pinnedFont = &logFont;
+
+		HRESULT hr = InternalPointer->CreateFontFromLOGFONT(reinterpret_cast<LOGFONTW*>(pinnedFont), &font);
+		if (RECORD_DW(hr).IsFailure)
+			return nullptr;
+
+		return Font::FromPointer(font);
+	}
 }
 }

@@ -46,7 +46,7 @@ namespace SlimDX
 				LocalizedStrings^ get();
 			}
 
-			property FontFamily^ FontFamily
+			property SlimDX::DirectWrite::FontFamily^ FontFamily
 			{
 				SlimDX::DirectWrite::FontFamily^ get();
 			}

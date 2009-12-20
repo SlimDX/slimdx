@@ -5508,6 +5508,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\directwrite\FontFileAnalysis.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\FontFileAnalysis.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directwrite\FontFileEnumerator.cpp"
 					>
 				</File>

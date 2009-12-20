@@ -21,8 +21,9 @@
 */
 #include "stdafx.h"
 
-#include "DirectWriteException.h"
+#include "../Utilities.h"
 
+#include "DirectWriteException.h"
 #include "GlyphRunAnalysis.h"
 
 const IID IID_IDWriteGlyphRunAnalysis = __uuidof(IDWriteGlyphRunAnalysis);
@@ -33,5 +34,47 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
+	Result GlyphRunAnalysis::CreateAlphaTexture(TextureType textureType, System::Drawing::Rectangle bounds, array<System::Byte>^ alphaValues)
+	{
+		RECT rect;
+		Utilities::ConvertRect(bounds, rect);
+		pin_ptr<BYTE> pinnedBytes = &alphaValues[0];
+
+		HRESULT hr = InternalPointer->CreateAlphaTexture(static_cast<DWRITE_TEXTURE_TYPE>(textureType), &rect, pinnedBytes, alphaValues->Length);
+		return RECORD_DW(hr);
+	}
+
+	Result GlyphRunAnalysis::GetAlphaBlendParameters(RenderingParameters^ renderingParameters, [Out] float% gamma, [Out] float% enhancedContrast, [Out] float% clearTypeLevel)
+	{
+		FLOAT blendGamma;
+		FLOAT blendEnhancedContrast;
+		FLOAT blendClearTypeLevel;
+
+		HRESULT hr = InternalPointer->GetAlphaBlendParams(renderingParameters->InternalPointer, &blendGamma, &blendEnhancedContrast, &blendClearTypeLevel);
+		if (RECORD_DW(hr).IsFailure)
+		{
+			gamma = 0.0f;
+			enhancedContrast = 0.0f;
+			clearTypeLevel = 0.0f;
+		}
+		else
+		{
+			gamma = blendGamma;
+			enhancedContrast = blendEnhancedContrast;
+			clearTypeLevel = blendClearTypeLevel;
+		}
+
+		return Result::Last;
+	}
+
+	System::Drawing::Rectangle GlyphRunAnalysis::GetAlphaTextureBounds(TextureType textureType)
+	{
+		RECT bounds;
+
+		HRESULT hr = InternalPointer->GetAlphaTextureBounds(static_cast<DWRITE_TEXTURE_TYPE>(textureType), &bounds);
+		RECORD_DW(hr);
+
+		return Utilities::ConvertRect(bounds);
+	}
 }
 }

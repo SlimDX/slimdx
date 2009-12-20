@@ -24,14 +24,36 @@
 extern const IID IID_IDWriteFontList;
 
 #include "../ComObject.h"
+#include "FontCollection.h"
 
 namespace SlimDX
 {
 	namespace DirectWrite
 	{
+		ref class Font;
+
 		public ref class FontList : public ComObject
 		{
 			COMOBJECT(IDWriteFontList, FontList);
+
+		private protected:
+			FontList() { }
+
+		public:
+			property Font^ default[int]
+			{
+				Font^ get(int index);
+			}
+
+			property FontCollection^ Collection
+			{
+				FontCollection^ get();
+			}
+
+			property int Count
+			{
+				int get();
+			}
 		};
 	}
 }

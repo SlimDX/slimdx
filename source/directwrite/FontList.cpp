@@ -24,6 +24,7 @@
 #include "DirectWriteException.h"
 
 #include "FontList.h"
+#include "Font.h"
 
 const IID IID_IDWriteFontList = __uuidof(IDWriteFontList);
 
@@ -33,5 +34,31 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
+	Font^ FontList::default::get(int index)
+	{
+		IDWriteFont *font;
+
+		HRESULT hr = InternalPointer->GetFont(index, &font);
+		if (RECORD_DW(hr).IsFailure)
+			return nullptr;
+
+		return Font::FromPointer(font);
+	}
+
+	FontCollection^ FontList::Collection::get()
+	{
+		IDWriteFontCollection *collection;
+
+		HRESULT hr = InternalPointer->GetFontCollection(&collection);
+		if (RECORD_DW(hr).IsFailure)
+			return nullptr;
+
+		return FontCollection::FromPointer(collection);
+	}
+
+	int FontList::Count::get()
+	{
+		return InternalPointer->GetFontCount();
+	}
 }
 }
