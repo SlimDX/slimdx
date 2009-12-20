@@ -33,5 +33,35 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
+	void FontFileEnumerator::Reset()
+	{
+		throw gcnew NotSupportedException();
+	}
+
+	bool FontFileEnumerator::MoveNext()
+	{
+		BOOL next;
+
+		HRESULT hr = InternalPointer->MoveNext(&next);
+		RECORD_DW(hr);
+
+		return next > 0;
+	}
+
+	Object^ FontFileEnumerator::Current2::get()
+	{
+		return Current;
+	}
+
+	FontFile^ FontFileEnumerator::Current::get()
+	{
+		IDWriteFontFile *file;
+
+		HRESULT hr = InternalPointer->GetCurrentFontFile(&file);
+		if (RECORD_DW(hr).IsFailure)
+			return nullptr;
+
+		return FontFile::FromPointer(file);
+	}
 }
 }

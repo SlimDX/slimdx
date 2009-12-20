@@ -21,8 +21,9 @@
 */
 #include "stdafx.h"
 
-#include "DirectWriteException.h"
+#include "../DataStream.h"
 
+#include "DirectWriteException.h"
 #include "FontFile.h"
 
 const IID IID_IDWriteFontFile = __uuidof(IDWriteFontFile);
@@ -33,5 +34,40 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
+	FontFileAnalysis FontFile::Analyze()
+	{
+		BOOL isSupported;
+		DWRITE_FONT_FILE_TYPE fileType;
+		DWRITE_FONT_FACE_TYPE faceType;
+		UINT32 faceCount;
+
+		HRESULT hr = InternalPointer->Analyze(&isSupported, &fileType, &faceType, &faceCount);
+		RECORD_DW(hr);
+
+		return FontFileAnalysis(isSupported > 0, static_cast<FontFileType>(fileType), static_cast<FontFaceType>(faceType), faceCount);
+	}
+
+	DataStream^ FontFile::GetReferenceKey()
+	{
+		const void *data;
+		UINT32 size;
+
+		HRESULT hr = InternalPointer->GetReferenceKey(&data, &size);
+		if (RECORD_DW(hr).IsFailure)
+			return nullptr;
+
+		return gcnew DataStream(data, size, true, false);
+	}
+
+	FontFileLoader^ FontFile::Loader::get()
+	{
+		IDWriteFontFileLoader *loader;
+
+		HRESULT hr = InternalPointer->GetLoader(&loader);
+		if (RECORD_DW(hr).IsFailure)
+			return nullptr;
+
+		return FontFileLoader::FromPointer(loader);
+	}
 }
 }

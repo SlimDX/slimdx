@@ -25,6 +25,7 @@
 
 #include "FontFamily.h"
 #include "LocalizedStrings.h"
+#include "Font.h"
 
 const IID IID_IDWriteFontFamily = __uuidof(IDWriteFontFamily);
 
@@ -34,12 +35,36 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
+	Font^ FontFamily::GetFirstMatchingFont(FontWeight weight, FontStretch stretch, FontStyle style)
+	{
+		IDWriteFont *font;
+
+		HRESULT hr = InternalPointer->GetFirstMatchingFont(static_cast<DWRITE_FONT_WEIGHT>(weight), static_cast<DWRITE_FONT_STRETCH>(stretch), 
+			static_cast<DWRITE_FONT_STYLE>(style), &font);
+		if (RECORD_DW(hr).IsFailure)
+			return nullptr;
+
+		return Font::FromPointer(font);
+	}
+
+	FontList^ FontFamily::GetMatchingFonts(FontWeight weight, FontStretch stretch, FontStyle style)
+	{
+		IDWriteFontList *list;
+
+		HRESULT hr = InternalPointer->GetMatchingFonts(static_cast<DWRITE_FONT_WEIGHT>(weight), static_cast<DWRITE_FONT_STRETCH>(stretch), 
+			static_cast<DWRITE_FONT_STYLE>(style), &list);
+		if (RECORD_DW(hr).IsFailure)
+			return nullptr;
+
+		return FontList::FromPointer(list);
+	}
+
 	LocalizedStrings^ FontFamily::FamilyNames::get()
 	{
 		IDWriteLocalizedStrings* strings;
+
 		HRESULT hr = InternalPointer->GetFamilyNames(&strings);
-		RECORD_DW(hr);
-		if(FAILED(hr))
+		if (RECORD_DW(hr).IsFailure)
 			return nullptr;
 
 		return LocalizedStrings::FromPointer(strings);

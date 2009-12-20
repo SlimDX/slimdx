@@ -342,6 +342,12 @@ namespace SlimDX
 			Center = DWRITE_TEXT_ALIGNMENT_CENTER
 		};
 
+		public enum class TextureType : System::Int32
+		{
+			Aliased1x1 = DWRITE_TEXTURE_ALIASED_1x1,
+			ClearType3x1 = DWRITE_TEXTURE_CLEARTYPE_3x1
+		};
+
 		/// <summary>
 		/// Specifies the measuring method used for text layout.
 		/// </summary>

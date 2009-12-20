@@ -24,18 +24,24 @@
 extern const IID IID_IDWriteFontFamily;
 
 #include "../ComObject.h"
+#include "Enums.h"
+#include "FontList.h"
 
 namespace SlimDX
 {
 	namespace DirectWrite
 	{
+		ref class Font;
 		ref class LocalizedStrings;
 
-		public ref class FontFamily : public ComObject
+		public ref class FontFamily : FontList
 		{
 			COMOBJECT(IDWriteFontFamily, FontFamily);
 
 		public:
+			Font^ GetFirstMatchingFont(FontWeight weight, FontStretch stretch, FontStyle style);
+			FontList^ GetMatchingFonts(FontWeight weight, FontStretch stretch, FontStyle style);
+
 			property LocalizedStrings^ FamilyNames
 			{
 				LocalizedStrings^ get();

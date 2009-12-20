@@ -24,6 +24,10 @@
 extern const IID IID_IDWriteGlyphRunAnalysis;
 
 #include "../ComObject.h"
+#include "Enums.h"
+#include "RenderingParameters.h"
+
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
@@ -32,6 +36,11 @@ namespace SlimDX
 		public ref class GlyphRunAnalysis : public ComObject
 		{
 			COMOBJECT(IDWriteGlyphRunAnalysis, GlyphRunAnalysis);
+
+		public:
+			Result CreateAlphaTexture(TextureType textureType, System::Drawing::Rectangle bounds, array<System::Byte>^ alphaValues);
+			Result GetAlphaBlendParameters(RenderingParameters^ renderingParameters, [Out] float% gamma, [Out] float% enhancedContrast, [Out] float% clearTypeLevel);
+			System::Drawing::Rectangle GetAlphaTextureBounds(TextureType textureType);
 		};
 	}
 }

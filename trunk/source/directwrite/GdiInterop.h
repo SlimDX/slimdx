@@ -24,6 +24,8 @@
 extern const IID IID_IDWriteGdiInterop;
 
 #include "../ComObject.h"
+#include "FontFace.h"
+#include "Font.h"
 
 namespace SlimDX
 {
@@ -32,6 +34,13 @@ namespace SlimDX
 		public ref class GdiInterop : public ComObject
 		{
 			COMOBJECT(IDWriteGdiInterop, GdiInterop);
+
+		public:
+			Result ToLogFont(FontFace^ fontFace, System::Object^ logFont);
+			Result ToLogFont(Font^ font, System::Object^ logFont);
+
+			FontFace^ FromHdc(System::IntPtr hdc);
+			Font^ FromLogFont(System::Object^ logFont);
 		};
 	}
 }

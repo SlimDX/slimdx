@@ -24,14 +24,29 @@
 extern const IID IID_IDWriteFontFile;
 
 #include "../ComObject.h"
+#include "FontFileAnalysis.h"
+#include "FontFileLoader.h"
+
+using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
+	ref class DataStream;
+
 	namespace DirectWrite
 	{
 		public ref class FontFile : public ComObject
 		{
 			COMOBJECT(IDWriteFontFile, FontFile);
+
+		public:
+			FontFileAnalysis Analyze();
+			DataStream^ GetReferenceKey();
+
+			property FontFileLoader^ Loader
+			{
+				FontFileLoader^ get();
+			}
 		};
 	}
 }
