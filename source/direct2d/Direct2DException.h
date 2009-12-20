@@ -21,8 +21,7 @@
 */
 #pragma once
 
-#define RECORD_D2D_EX(x, key, value) Result::Record<Direct2DException^>( (x), (key), (value) )
-#define RECORD_D2D(x) RECORD_D2D_EX(x, nullptr, nullptr)
+#define RECORD_D2D(x) Result::Record<Direct2DException^>( (x), (nullptr), (nullptr) )
 
 #include "../SlimDXException.h"
 

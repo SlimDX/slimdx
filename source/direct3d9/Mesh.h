@@ -57,7 +57,6 @@ namespace SlimDX
 			static Mesh^ FromMemory_Internal( SlimDX::Direct3D9::Device^ device, const void* memory, DWORD size, MeshFlags flags );
 
 		internal:
-			static System::String^ ExceptionDataKey = "MeshErrors";
 			void SetAdjacency( DWORD *adjacency );
 
 		public:

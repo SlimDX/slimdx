@@ -26,6 +26,7 @@
 #include "../stack_array.h"
 #include "../ComObject.h"
 #include "../DataStream.h"
+#include "../CompilationException.h"
 
 #include "Direct3D9Exception.h"
 #include "ConstantTable.h"
@@ -80,14 +81,9 @@ namespace Direct3D9
 		Macro::Unmarshal( handles );
 		errors = Utilities::BufferToString( errorBuffer );
 
-		if( RECORD_D3D9( hr ).IsFailure )
-		{
-			errors = nullptr;
-			return nullptr;
-		}
-
-		if( shaderBuffer == NULL )
-			return nullptr;
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>(hr, errors);
+		if (e != nullptr)
+			throw e;
 
 		return ShaderBytecode::FromPointer( shaderBuffer );
 	}
@@ -96,6 +92,7 @@ namespace Direct3D9
 		Include^ includeFile, ShaderFlags flags )
 	{
 		ID3DXBuffer* shaderBuffer;
+		ID3DXBuffer* errorBuffer;
 		pin_ptr<Byte> pinnedData = &sourceData[0];
 
 		IncludeShim includeShim = IncludeShim( includeFile );
@@ -108,15 +105,14 @@ namespace Direct3D9
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXAssembleShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macrosPtr, includePtr,
-			static_cast<DWORD>( flags ), &shaderBuffer, NULL );
+			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer );
 
 		Macro::Unmarshal( handles );
 
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
-
-		if( shaderBuffer == NULL )
-			return nullptr;
+		String^ errors = Utilities::BufferToString( errorBuffer );
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>(hr, errors);
+		if (e != nullptr)
+			throw e;
 
 		return ShaderBytecode::FromPointer( shaderBuffer );
 	}
@@ -124,16 +120,16 @@ namespace Direct3D9
 	ShaderBytecode^ ShaderBytecode::Assemble( array<Byte>^ sourceData, ShaderFlags flags )
 	{
 		ID3DXBuffer* shaderBuffer;
+		ID3DXBuffer* errorBuffer;
 		pin_ptr<Byte> pinnedData = &sourceData[0];
 
 		HRESULT hr = D3DXAssembleShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, NULL, NULL,
-			static_cast<DWORD>( flags ), &shaderBuffer, NULL );
+			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer );
 
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
-
-		if( shaderBuffer == NULL )
-			return nullptr;
+		String^ errors = Utilities::BufferToString( errorBuffer );
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>(hr, errors);
+		if (e != nullptr)
+			throw e;
 
 		return ShaderBytecode::FromPointer( shaderBuffer );
 	}
@@ -178,16 +174,11 @@ namespace Direct3D9
 			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer );
 
 		Macro::Unmarshal( handles );
+
 		errors = Utilities::BufferToString( errorBuffer );
-
-		if( RECORD_D3D9( hr ).IsFailure )
-		{
-			errors = nullptr;
-			return nullptr;
-		}
-
-		if( shaderBuffer == NULL )
-			return nullptr;
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>(hr, errors);
+		if (e != nullptr)
+			throw e;
 
 		return ShaderBytecode::FromPointer( shaderBuffer );
 	}
@@ -196,6 +187,7 @@ namespace Direct3D9
 		Include^ includeFile, ShaderFlags flags )
 	{
 		ID3DXBuffer* shaderBuffer;
+		ID3DXBuffer *errorBuffer;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
 		IncludeShim includeShim = IncludeShim( includeFile );
@@ -208,15 +200,14 @@ namespace Direct3D9
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXAssembleShaderFromFile( reinterpret_cast<LPCWSTR>( pinnedName ), macrosPtr, includePtr,
-			static_cast<DWORD>( flags ), &shaderBuffer, NULL );
+			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer );
 
 		Macro::Unmarshal( handles );
 
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
-
-		if( shaderBuffer == NULL )
-			return nullptr;
+		String^ errors = Utilities::BufferToString( errorBuffer );
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>(hr, errors);
+		if (e != nullptr)
+			throw e;
 
 		return ShaderBytecode::FromPointer( shaderBuffer );
 	}
@@ -224,16 +215,16 @@ namespace Direct3D9
 	ShaderBytecode^ ShaderBytecode::AssembleFromFile( String^ fileName, ShaderFlags flags )
 	{
 		ID3DXBuffer* shaderBuffer;
+		ID3DXBuffer* errorBuffer;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
 		HRESULT hr = D3DXAssembleShaderFromFile( reinterpret_cast<LPCWSTR>( pinnedName ), NULL, NULL,
-			static_cast<DWORD>( flags ), &shaderBuffer, NULL );
+			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer );
 
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
-
-		if( shaderBuffer == NULL )
-			return nullptr;
+		String^ errors = Utilities::BufferToString( errorBuffer );
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>(hr, errors);
+		if (e != nullptr)
+			throw e;
 
 		return ShaderBytecode::FromPointer( shaderBuffer );
 	}
@@ -264,16 +255,11 @@ namespace Direct3D9
 			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, NULL );
 
 		Macro::Unmarshal( handles );
-		errors = Utilities::BufferToString( errorBuffer );
 		
-		if( RECORD_D3D9( hr ).IsFailure )
-		{
-			errors = nullptr;
-			return nullptr;
-		}
-
-		if( shaderBuffer == NULL )
-			return nullptr;
+		errors = Utilities::BufferToString( errorBuffer );
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>(hr, errors);
+		if (e != nullptr)
+			throw e;
 
 		return ShaderBytecode::FromPointer( shaderBuffer );
 	}
@@ -282,6 +268,7 @@ namespace Direct3D9
 		Include^ includeFile, String^ functionName, String^ profile, ShaderFlags flags )
 	{
 		ID3DXBuffer* shaderBuffer;
+		ID3DXBuffer* errorBuffer;
 		pin_ptr<Byte> pinnedData = &sourceData[0];
 		
 		array<Byte>^ functionBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( functionName );
@@ -300,15 +287,14 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCompileShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macrosPtr, includePtr,
 			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
-			static_cast<DWORD>( flags ), &shaderBuffer, NULL, NULL );
+			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, NULL );
 
 		Macro::Unmarshal( handles );
 		
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
-
-		if( shaderBuffer == NULL )
-			return nullptr;
+		String^ errors = Utilities::BufferToString( errorBuffer );
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>(hr, errors);
+		if (e != nullptr)
+			throw e;
 
 		return ShaderBytecode::FromPointer( shaderBuffer );
 	}
@@ -316,6 +302,7 @@ namespace Direct3D9
 	ShaderBytecode^ ShaderBytecode::Compile( array<Byte>^ sourceData, String^ functionName, String^ profile, ShaderFlags flags )
 	{
 		ID3DXBuffer* shaderBuffer;
+		ID3DXBuffer* errorBuffer;
 		pin_ptr<Byte> pinnedData = &sourceData[0];
 		
 		array<Byte>^ functionBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( functionName );
@@ -325,13 +312,12 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCompileShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, NULL, NULL,
 			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
-			static_cast<DWORD>( flags ), &shaderBuffer, NULL, NULL );
+			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, NULL );
 		
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
-
-		if( shaderBuffer == NULL )
-			return nullptr;
+		String^ errors = Utilities::BufferToString( errorBuffer );
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>(hr, errors);
+		if (e != nullptr)
+			throw e;
 
 		return ShaderBytecode::FromPointer( shaderBuffer );
 	}
@@ -382,16 +368,11 @@ namespace Direct3D9
 			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, NULL );
 
 		Macro::Unmarshal( handles );
-		errors = Utilities::BufferToString( errorBuffer );
-		
-		if( RECORD_D3D9( hr ).IsFailure )
-		{
-			errors = nullptr;
-			return nullptr;
-		}
 
-		if( shaderBuffer == NULL )
-			return nullptr;
+		errors = Utilities::BufferToString( errorBuffer );
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>(hr, errors);
+		if (e != nullptr)
+			throw e;
 
 		return ShaderBytecode::FromPointer( shaderBuffer );
 	}
@@ -400,6 +381,7 @@ namespace Direct3D9
 		Include^ includeFile, String^ functionName, String^ profile, ShaderFlags flags )
 	{
 		ID3DXBuffer* shaderBuffer;
+		ID3DXBuffer* errorBuffer;
 		pin_ptr<const wchar_t> pinnedFileName = PtrToStringChars( fileName );
 		
 		array<Byte>^ functionBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( functionName );
@@ -418,15 +400,14 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCompileShaderFromFile( pinnedFileName, macrosPtr, includePtr,
 			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
-			static_cast<DWORD>( flags ), &shaderBuffer, NULL, NULL );
+			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, NULL );
 
 		Macro::Unmarshal( handles );
 		
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
-
-		if( shaderBuffer == NULL )
-			return nullptr;
+		String^ errors = Utilities::BufferToString( errorBuffer );
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>(hr, errors);
+		if (e != nullptr)
+			throw e;
 
 		return ShaderBytecode::FromPointer( shaderBuffer );
 	}
@@ -434,6 +415,7 @@ namespace Direct3D9
 	ShaderBytecode^ ShaderBytecode::CompileFromFile( String^ fileName, String^ functionName, String^ profile, ShaderFlags flags )
 	{
 		ID3DXBuffer* shaderBuffer;
+		ID3DXBuffer* errorBuffer;
 		pin_ptr<const wchar_t> pinnedFileName = PtrToStringChars( fileName );
 		
 		array<Byte>^ functionBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( functionName );
@@ -443,13 +425,12 @@ namespace Direct3D9
 
 		HRESULT hr = D3DXCompileShaderFromFile( pinnedFileName, NULL, NULL,
 			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
-			static_cast<DWORD>( flags ), &shaderBuffer, NULL, NULL );
+			static_cast<DWORD>( flags ), &shaderBuffer, &errorBuffer, NULL );
 		
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
-
-		if( shaderBuffer == NULL )
-			return nullptr;
+		String^ errors = Utilities::BufferToString( errorBuffer );
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>(hr, errors);
+		if (e != nullptr)
+			throw e;
 
 		return ShaderBytecode::FromPointer( shaderBuffer );
 	}
@@ -474,13 +455,11 @@ namespace Direct3D9
 			&shaderText, &errorBuffer );
 
 		Macro::Unmarshal( handles );
+		
 		errors = Utilities::BufferToString( errorBuffer );
-
-		if( RECORD_D3D9( hr ).IsFailure )
-		{
-			errors = nullptr;
-			return nullptr;
-		}
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>(hr, errors);
+		if (e != nullptr)
+			throw e;
 
 		return Utilities::BufferToString( shaderText );
 	}
@@ -488,6 +467,7 @@ namespace Direct3D9
 	String^ ShaderBytecode::Preprocess( array<Byte>^ sourceData, array<Macro>^ defines, Include^ includeFile )
 	{
 		ID3DXBuffer* shaderText;
+		ID3DXBuffer* errorBuffer;
 		pin_ptr<Byte> pinnedData = &sourceData[0];
 
 		IncludeShim includeShim = IncludeShim( includeFile );
@@ -500,12 +480,14 @@ namespace Direct3D9
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXPreprocessShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, macrosPtr, includePtr,
-			&shaderText, NULL );
+			&shaderText, &errorBuffer );
 
 		Macro::Unmarshal( handles );
 
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
+		String^ errors = Utilities::BufferToString( errorBuffer );
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>(hr, errors);
+		if (e != nullptr)
+			throw e;
 
 		return Utilities::BufferToString( shaderText );
 	}
@@ -513,13 +495,16 @@ namespace Direct3D9
 	String^ ShaderBytecode::Preprocess( array<Byte>^ sourceData )
 	{
 		ID3DXBuffer* shaderText;
+		ID3DXBuffer* errorBuffer;
 		pin_ptr<Byte> pinnedData = &sourceData[0];
 
 		HRESULT hr = D3DXPreprocessShader( reinterpret_cast<LPCSTR>( pinnedData ), sourceData->Length, NULL, NULL,
-			&shaderText, NULL );
+			&shaderText, &errorBuffer );
 
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
+		String^ errors = Utilities::BufferToString( errorBuffer );
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>(hr, errors);
+		if (e != nullptr)
+			throw e;
 
 		return Utilities::BufferToString( shaderText );
 	}
@@ -564,13 +549,11 @@ namespace Direct3D9
 			&shaderText, &errorBuffer );
 
 		Macro::Unmarshal( handles );
+		
 		errors = Utilities::BufferToString( errorBuffer );
-
-		if( RECORD_D3D9( hr ).IsFailure )
-		{
-			errors = nullptr;
-			return nullptr;
-		}
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>(hr, errors);
+		if (e != nullptr)
+			throw e;
 
 		return Utilities::BufferToString( shaderText );
 	}
@@ -579,6 +562,7 @@ namespace Direct3D9
 		Include^ includeFile )
 	{
 		ID3DXBuffer* shaderText;
+		ID3DXBuffer* errorBuffer;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
 		IncludeShim includeShim = IncludeShim( includeFile );
@@ -591,12 +575,14 @@ namespace Direct3D9
 		D3DXMACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 
 		HRESULT hr = D3DXPreprocessShaderFromFile( reinterpret_cast<LPCWSTR>( pinnedName ), macrosPtr, includePtr,
-			&shaderText, NULL );
+			&shaderText, &errorBuffer );
 
 		Macro::Unmarshal( handles );
 
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
+		String^ errors = Utilities::BufferToString( errorBuffer );
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>(hr, errors);
+		if (e != nullptr)
+			throw e;
 
 		return Utilities::BufferToString( shaderText );
 	}
@@ -604,13 +590,16 @@ namespace Direct3D9
 	String^ ShaderBytecode::PreprocessFromFile( String^ fileName )
 	{
 		ID3DXBuffer* shaderText;
+		ID3DXBuffer* errorBuffer;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
 		HRESULT hr = D3DXPreprocessShaderFromFile( reinterpret_cast<LPCWSTR>( pinnedName ), NULL, NULL,
-			&shaderText, NULL );
+			&shaderText, &errorBuffer );
 
-		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
+		String^ errors = Utilities::BufferToString( errorBuffer );
+		Exception^ e = CompilationException::Check<Direct3D9Exception^>(hr, errors);
+		if (e != nullptr)
+			throw e;
 
 		return Utilities::BufferToString( shaderText );
 	}

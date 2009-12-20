@@ -23,8 +23,7 @@
 
 #include "../SlimDXException.h"
 
-#define RECORD_DXGI_EX(x, key, value) Result::Record<DXGIException^>( (x), (key), (value) )
-#define RECORD_DXGI(x) RECORD_DXGI_EX(x, nullptr, nullptr)
+#define RECORD_DXGI(x) Result::Record<DXGIException^>( (x), (nullptr), (nullptr) )
 
 namespace SlimDX
 {
