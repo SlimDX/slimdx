@@ -27,14 +27,10 @@ using SlimDX.DXGI;
 using SlimDX.SampleFramework;
 using Resource = SlimDX.Direct3D10.Resource;
 
-namespace SimpleModel10
-{
-    class SimpleModel10Sample : Sample
-    {
-        protected override void Dispose(bool disposeManagedResources)
-        {
-            if (disposeManagedResources)
-            {
+namespace SimpleModel10 {
+    class SimpleModel10Sample : Sample {
+        protected override void Dispose(bool disposeManagedResources) {
+            if (disposeManagedResources) {
                 depthStencilView.Dispose();
                 depthStencilState.Dispose();
                 jupiterTexture.Dispose();
@@ -46,10 +42,8 @@ namespace SimpleModel10
             base.Dispose(disposeManagedResources);
         }
 
-        protected override void OnInitialize()
-        {
-            var settings10 = new DeviceSettings10()
-            {
+        protected override void OnInitialize() {
+            var settings10 = new DeviceSettings10() {
                 AdapterOrdinal = 0,
                 CreationFlags = DeviceCreationFlags.None,
                 Width = WindowWidth,
@@ -58,13 +52,11 @@ namespace SimpleModel10
 
             InitializeDevice(settings10);
 
-            using (var swapChainBuffer = Resource.FromSwapChain<Texture2D>(Context10.SwapChain, 0))
-            {
+            using (var swapChainBuffer = Resource.FromSwapChain<Texture2D>(Context10.SwapChain, 0)) {
                 renderTargetView = new RenderTargetView(Context10.Device, swapChainBuffer);
             }
 
-            var depthBufferDesc = new Texture2DDescription
-            {
+            var depthBufferDesc = new Texture2DDescription {
                 ArraySize = 1,
                 BindFlags = BindFlags.DepthStencil,
                 CpuAccessFlags = CpuAccessFlags.None,
@@ -77,13 +69,11 @@ namespace SimpleModel10
                 Usage = ResourceUsage.Default
             };
 
-            using (var depthBuffer = new Texture2D(Context10.Device, depthBufferDesc))
-            {
+            using (var depthBuffer = new Texture2D(Context10.Device, depthBufferDesc)) {
                 depthStencilView = new DepthStencilView(Context10.Device, depthBuffer);
             }
 
-            var dssd = new DepthStencilStateDescription
-            {
+            var dssd = new DepthStencilStateDescription {
                 IsDepthEnabled = true,
                 IsStencilEnabled = false,
                 DepthWriteMask = DepthWriteMask.All,
@@ -93,20 +83,17 @@ namespace SimpleModel10
             depthStencilState = DepthStencilState.FromDescription(Context10.Device, dssd);
 
             InputElement[] elements;
-            using (var meshLoader = new XLoader())
-            {
+            using (var meshLoader = new XLoader()) {
                 jupiterMesh = meshLoader.LoadFile(Context10.Device, "jupiter.X", out elements);
             }
 
             jupiterTexture = Texture2D.FromFile(Context10.Device, "jupiter.jpg");
 
-            string compilationErrors;
-            effect = Effect.FromFile(Context10.Device, "SimpleModel10.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null, out compilationErrors);
+            effect = Effect.FromFile(Context10.Device, "SimpleModel10.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null);
             var technique = effect.GetTechniqueByIndex(0);
 
             layout = new InputLayout[technique.Description.PassCount];
-            for (var pass = 0; pass < technique.Description.PassCount; ++pass)
-            {
+            for (var pass = 0; pass < technique.Description.PassCount; ++pass) {
                 layout[pass] = new InputLayout(Context10.Device, technique.GetPassByIndex(pass).Description.Signature, elements);
             }
 
@@ -118,21 +105,18 @@ namespace SimpleModel10
             effect.GetVariableByName("proj").AsMatrix().SetMatrix(proj);
         }
 
-        protected override void OnResize()
-        {
+        protected override void OnResize() {
             Context10.Device.ClearState();
             renderTargetView.Dispose();
             depthStencilView.Dispose();
 
             Context10.SwapChain.ResizeBuffers(1, WindowWidth, WindowHeight, Format.R8G8B8A8_UNorm, SwapChainFlags.AllowModeSwitch);
 
-            using (var texture = Resource.FromSwapChain<Texture2D>(Context10.SwapChain, 0))
-            {
+            using (var texture = Resource.FromSwapChain<Texture2D>(Context10.SwapChain, 0)) {
                 renderTargetView = new RenderTargetView(Context10.Device, texture);
             }
 
-            var depthBufferDesc = new Texture2DDescription
-            {
+            var depthBufferDesc = new Texture2DDescription {
                 ArraySize = 1,
                 BindFlags = BindFlags.DepthStencil,
                 CpuAccessFlags = CpuAccessFlags.None,
@@ -145,8 +129,7 @@ namespace SimpleModel10
                 Usage = ResourceUsage.Default
             };
 
-            using (var depthBuffer = new Texture2D(Context10.Device, depthBufferDesc))
-            {
+            using (var depthBuffer = new Texture2D(Context10.Device, depthBufferDesc)) {
                 depthStencilView = new DepthStencilView(Context10.Device, depthBuffer);
             }
 
@@ -154,8 +137,7 @@ namespace SimpleModel10
             effect.GetVariableByName("proj").AsMatrix().SetMatrix(proj);
         }
 
-        protected override void OnRenderBegin()
-        {
+        protected override void OnRenderBegin() {
             Context10.Device.OutputMerger.DepthStencilState = depthStencilState;
             Context10.Device.OutputMerger.SetTargets(depthStencilView, renderTargetView);
 
@@ -164,8 +146,7 @@ namespace SimpleModel10
             Context10.Device.ClearDepthStencilView(depthStencilView, DepthStencilClearFlags.Depth, 1.0f, 0);
         }
 
-        protected override void OnRender()
-        {
+        protected override void OnRender() {
             rotation += (float)(Math.PI / 4.0f * FrameDelta);
 
             if (rotation > 2 * Math.PI)
@@ -179,16 +160,14 @@ namespace SimpleModel10
             effect.GetVariableByName("world").AsMatrix().SetMatrix(world);
 
             var technique = effect.GetTechniqueByIndex(0);
-            for (var passIndex = 0; passIndex < technique.Description.PassCount; ++passIndex)
-            {
+            for (var passIndex = 0; passIndex < technique.Description.PassCount; ++passIndex) {
                 Context10.Device.InputAssembler.SetInputLayout(layout[passIndex]);
                 technique.GetPassByIndex(passIndex).Apply();
                 jupiterMesh.DrawSubset(0);
             }
         }
 
-        protected override void OnRenderEnd()
-        {
+        protected override void OnRenderEnd() {
             Context10.SwapChain.Present(0, PresentFlags.None);
         }
 

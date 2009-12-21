@@ -29,75 +29,75 @@ using SlimDX.Direct3D9;
 using SlimDX.SampleFramework;
 
 namespace SimpleTriangle9 {
-	/// <summary>
-	/// Demonstrates how to render a simple colored triangle with Direct3D9.
-	/// </summary>
-	class SimpleTriangle9Sample : Sample {
-		/// <summary>
-		/// Disposes of object resources.
-		/// </summary>
-		/// <param name="disposeManagedResources">If true, managed resources should be
-		/// disposed of in addition to unmanaged resources.</param>
-		protected override void Dispose( bool disposeManagedResources ) {
-			if( disposeManagedResources ) {
-				vertexBuffer.Dispose();
-			}
+    /// <summary>
+    /// Demonstrates how to render a simple colored triangle with Direct3D9.
+    /// </summary>
+    class SimpleTriangle9Sample : Sample {
+        /// <summary>
+        /// Disposes of object resources.
+        /// </summary>
+        /// <param name="disposeManagedResources">If true, managed resources should be
+        /// disposed of in addition to unmanaged resources.</param>
+        protected override void Dispose(bool disposeManagedResources) {
+            if (disposeManagedResources) {
+                vertexBuffer.Dispose();
+            }
 
-			base.Dispose( disposeManagedResources );
-		}
+            base.Dispose(disposeManagedResources);
+        }
 
-		protected override void OnInitialize() {
-			DeviceSettings9 settings = new DeviceSettings9 {
-				AdapterOrdinal = 0,
-				CreationFlags = CreateFlags.HardwareVertexProcessing,
-				Width = WindowWidth,
-				Height = WindowHeight
-			};
+        protected override void OnInitialize() {
+            DeviceSettings9 settings = new DeviceSettings9 {
+                AdapterOrdinal = 0,
+                CreationFlags = CreateFlags.HardwareVertexProcessing,
+                Width = WindowWidth,
+                Height = WindowHeight
+            };
 
-			InitializeDevice( settings );
+            InitializeDevice(settings);
 
-			vertexBuffer = new VertexBuffer(
-				Context9.Device,
-				3 * Marshal.SizeOf( typeof( ColoredVertex ) ),
-				Usage.WriteOnly,
-				VertexFormat.None,
-				Pool.Managed
-			);
+            vertexBuffer = new VertexBuffer(
+                Context9.Device,
+                3 * Marshal.SizeOf(typeof(ColoredVertex)),
+                Usage.WriteOnly,
+                VertexFormat.None,
+                Pool.Managed
+            );
 
-			DataStream stream = vertexBuffer.Lock( 0, 0, LockFlags.None );
-			stream.WriteRange( new[] {
+            DataStream stream = vertexBuffer.Lock(0, 0, LockFlags.None);
+            stream.WriteRange(new[] {
 				new ColoredVertex( new Vector3(0.0f, 0.5f, 0.5f), Color.Red.ToArgb() ),
 				new ColoredVertex( new Vector3(0.5f, -0.5f, 0.5f), Color.Blue.ToArgb() ),
 				new ColoredVertex( new Vector3(-0.5f, -0.5f, 0.5f), Color.Green.ToArgb() ),
-			} );
+			});
 
-			vertexBuffer.Unlock();
+            vertexBuffer.Unlock();
 
-			// Since this sample does not use any lights, disable lighting (otherwise the
-			// triangle will appear flat black).
-			Context9.Device.SetRenderState( RenderState.Lighting, false );
-		}
+            // Since this sample does not use any lights, disable lighting (otherwise the
+            // triangle will appear flat black).
+            Context9.Device.SetRenderState(RenderState.Lighting, false);
+        }
 
-		protected override void OnRenderBegin() {
-			Context9.Device.Clear( ClearFlags.Target | ClearFlags.ZBuffer, new Color4( 0.3f, 0.3f, 0.3f ), 1.0f, 0 );
-			Context9.Device.BeginScene();
-		}
+        protected override void OnRenderBegin() {
+            Context9.Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, new Color4(0.3f, 0.3f, 0.3f), 1.0f, 0);
+            Context9.Device.BeginScene();
+        }
 
-		protected override void OnRender() {
-			Context9.Device.SetStreamSource( 0, vertexBuffer, 0, Marshal.SizeOf( typeof( ColoredVertex ) ) );
-			Context9.Device.VertexFormat = VertexFormat.Position | VertexFormat.Diffuse;
-			Context9.Device.DrawPrimitives( PrimitiveType.TriangleList, 0, 1 );
-		}
+        protected override void OnRender() {
+            Context9.Device.SetStreamSource(0, vertexBuffer, 0, Marshal.SizeOf(typeof(ColoredVertex)));
+            Context9.Device.VertexFormat = VertexFormat.Position | VertexFormat.Diffuse;
+            Context9.Device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
+        }
 
-		protected override void OnRenderEnd() {
-			Context9.Device.EndScene();
-			Context9.Device.Present();
-		}
+        protected override void OnRenderEnd() {
+            Context9.Device.EndScene();
+            Context9.Device.Present();
+        }
 
-		#region Implementation Detail
+        #region Implementation Detail
 
-		VertexBuffer vertexBuffer;
+        VertexBuffer vertexBuffer;
 
-		#endregion
-	}
+        #endregion
+    }
 }

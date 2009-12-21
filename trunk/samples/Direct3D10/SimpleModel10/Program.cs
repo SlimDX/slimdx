@@ -22,16 +22,13 @@
 
 using System;
 
-namespace SimpleModel10
-{
-    static class Program
-    {
+namespace SimpleModel10 {
+    static class Program {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
-        {
+        static void Main() {
             using (var sample = new SimpleModel10Sample())
                 sample.Run();
         }

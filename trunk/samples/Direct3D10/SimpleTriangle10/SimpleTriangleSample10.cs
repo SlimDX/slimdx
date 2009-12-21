@@ -115,12 +115,12 @@ namespace SimpleTriangle10 {
 
         #region Implementation Detail
 
-        RenderTargetView renderTargetView;
-        Effect effect;
-        EffectTechnique technique;
-        EffectPass pass;
-        InputLayout inputLayout;
-        Buffer vertexBuffer;
+        private RenderTargetView renderTargetView;
+        private Effect effect;
+        private EffectTechnique technique;
+        private EffectPass pass;
+        private InputLayout inputLayout;
+        private Buffer vertexBuffer;
 
         #endregion
     }
