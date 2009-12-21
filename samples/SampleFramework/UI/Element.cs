@@ -22,35 +22,35 @@
 
 using System.Collections.Generic;
 namespace SlimDX.SampleFramework {
-	/// <summary>
-	/// Provides basic logical UI component functionality.
-	/// </summary>
-	public class Element {
-		#region Public Interface
+    /// <summary>
+    /// Provides basic logical UI component functionality.
+    /// </summary>
+    public class Element {
+        #region Public Interface
 
-		/// <summary>
-		/// Gets or sets the element's label.
-		/// </summary>
-		public string Label {
-			get;
-			set;
-		}
+        /// <summary>
+        /// Gets or sets the element's label.
+        /// </summary>
+        public string Label {
+            get;
+            set;
+        }
 
-		public void SetBinding( string targetName, object source ) {
-			bindings[targetName] = new Binding( targetName, source );
-		}
+        public void SetBinding(string targetName, object source) {
+            bindings[targetName] = new Binding(targetName, source);
+        }
 
-		public void Update() {
-			foreach( Binding binding in bindings.Values ) {
-				binding.Update( this );
-			}
-		}
+        public void Update() {
+            foreach (Binding binding in bindings.Values) {
+                binding.Update(this);
+            }
+        }
 
-		#endregion
-		#region Implementation Detail
+        #endregion
+        #region Implementation Detail
 
-		Dictionary<string, Binding> bindings = new Dictionary<string, Binding>();
+        Dictionary<string, Binding> bindings = new Dictionary<string, Binding>();
 
-		#endregion
-	}
+        #endregion
+    }
 }

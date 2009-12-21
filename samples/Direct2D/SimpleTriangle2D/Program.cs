@@ -23,17 +23,17 @@
 using System;
 
 namespace SimpleTriangle2D {
-	/// <summary>
-	/// The main application class.
-	/// </summary>
-	static class Program {
-		/// <summary>
-		/// The application entry point.
-		/// </summary>
-		[STAThread]
-		static void Main() {
-			using( SimpleTriangle2DSample sample = new SimpleTriangle2DSample() )
-				sample.Run();
-		}
-	}
+    /// <summary>
+    /// The main application class.
+    /// </summary>
+    static class Program {
+        /// <summary>
+        /// The application entry point.
+        /// </summary>
+        [STAThread]
+        static void Main() {
+            using (SimpleTriangle2DSample sample = new SimpleTriangle2DSample())
+                sample.Run();
+        }
+    }
 }

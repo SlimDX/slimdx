@@ -23,17 +23,17 @@
 using System;
 
 namespace SimpleTriangle10 {
-	/// <summary>
-	/// The main application class.
-	/// </summary>
-	static class Program {
-		/// <summary>
-		/// The application entry point.
-		/// </summary>
-		[STAThread]
-		static void Main() {
-			using( SimpleTriangle10Sample sample = new SimpleTriangle10Sample() )
-				sample.Run();
-		}
-	}
+    /// <summary>
+    /// The main application class.
+    /// </summary>
+    static class Program {
+        /// <summary>
+        /// The application entry point.
+        /// </summary>
+        [STAThread]
+        static void Main() {
+            using (SimpleTriangle10Sample sample = new SimpleTriangle10Sample())
+                sample.Run();
+        }
+    }
 }

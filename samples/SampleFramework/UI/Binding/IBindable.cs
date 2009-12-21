@@ -21,11 +21,11 @@
 */
 
 namespace SlimDX.SampleFramework {
-	public interface IBindable {
-		#region Public Interface
+    public interface IBindable {
+        #region Public Interface
 
-		object GetValue();
+        object GetValue();
 
-		#endregion
-	}
+        #endregion
+    }
 }

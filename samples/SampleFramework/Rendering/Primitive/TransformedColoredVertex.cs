@@ -26,105 +26,95 @@ using System.Runtime.InteropServices;
 
 using SlimDX;
 
-namespace SlimDX.SampleFramework
-{
-	/// <summary>
-	/// Represents a vertex with a pre-transformed position and a color.
-	/// </summary>
-	[StructLayout(LayoutKind.Sequential)]
-	public struct TransformedColoredVertex : IEquatable<TransformedColoredVertex>
-	{
-		/// <summary>
-		/// Gets or sets the pre-transformed position of the vertex.
-		/// </summary>
-		public Vector4 Position
-		{
-			get;
-			set;
-		}
+namespace SlimDX.SampleFramework {
+    /// <summary>
+    /// Represents a vertex with a pre-transformed position and a color.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct TransformedColoredVertex : IEquatable<TransformedColoredVertex> {
+        /// <summary>
+        /// Gets or sets the pre-transformed position of the vertex.
+        /// </summary>
+        public Vector4 Position {
+            get;
+            set;
+        }
 
-		/// <summary>
-		/// Gets or sets the color of the vertex.
-		/// </summary>
-		public int Color
-		{
-			get;
-			set;
-		}
-		
-		/// <summary>
-		/// Initializes a new instance of the <see cref="TransformedColoredVertex"/> struct.
-		/// </summary>
-		/// <param name="position">The position.</param>
-		/// <param name="color">The color.</param>
-		public TransformedColoredVertex(Vector4 position, int color)
-			: this()
-		{
-			Position = position;
-			Color = color;
-		}
+        /// <summary>
+        /// Gets or sets the color of the vertex.
+        /// </summary>
+        public int Color {
+            get;
+            set;
+        }
 
-		/// <summary>
-		/// Implements operator ==.
-		/// </summary>
-		/// <param name="left">The left.</param>
-		/// <param name="right">The right.</param>
-		/// <returns>The result of the operator.</returns>
-		public static bool operator ==(TransformedColoredVertex left, TransformedColoredVertex right)
-		{
-			return left.Equals(right);
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TransformedColoredVertex"/> struct.
+        /// </summary>
+        /// <param name="position">The position.</param>
+        /// <param name="color">The color.</param>
+        public TransformedColoredVertex(Vector4 position, int color)
+            : this() {
+            Position = position;
+            Color = color;
+        }
 
-		/// <summary>
-		/// Implements operator !=.
-		/// </summary>
-		/// <param name="left">The left side of the operator.</param>
-		/// <param name="right">The right side of the operator.</param>
-		/// <returns>The result of the operator.</returns>
-		public static bool operator !=(TransformedColoredVertex left, TransformedColoredVertex right)
-		{
-			return !(left == right);
-		}
+        /// <summary>
+        /// Implements operator ==.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator ==(TransformedColoredVertex left, TransformedColoredVertex right) {
+            return left.Equals(right);
+        }
 
-		/// <summary>
-		/// Returns the hash code for this instance.
-		/// </summary>
-		/// <returns>
-		/// A 32-bit signed integer that is the hash code for this instance.
-		/// </returns>
-		public override int GetHashCode()
-		{
-			return Position.GetHashCode() + Color.GetHashCode();
-		}
+        /// <summary>
+        /// Implements operator !=.
+        /// </summary>
+        /// <param name="left">The left side of the operator.</param>
+        /// <param name="right">The right side of the operator.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator !=(TransformedColoredVertex left, TransformedColoredVertex right) {
+            return !(left == right);
+        }
 
-		/// <summary>
-		/// Indicates whether this instance and a specified object are equal.
-		/// </summary>
-		/// <param name="obj">Another object to compare to.</param>
-		/// <returns>
-		/// true if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, false.
-		/// </returns>
-		public override bool Equals(object obj)
-		{
-			if (obj == null)
-				return false;
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A 32-bit signed integer that is the hash code for this instance.
+        /// </returns>
+        public override int GetHashCode() {
+            return Position.GetHashCode() + Color.GetHashCode();
+        }
 
-			if (GetType() != obj.GetType())
-				return false;
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="obj">Another object to compare to.</param>
+        /// <returns>
+        /// true if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, false.
+        /// </returns>
+        public override bool Equals(object obj) {
+            if (obj == null)
+                return false;
 
-			return Equals((TransformedColoredVertex)obj);
-		}
+            if (GetType() != obj.GetType())
+                return false;
 
-		/// <summary>
-		/// Indicates whether the current object is equal to another object of the same type.
-		/// </summary>
-		/// <param name="other">An object to compare with this object.</param>
-		/// <returns>
-		/// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
-		/// </returns>
-		public bool Equals(TransformedColoredVertex other)
-		{
-			return (Position == other.Position && Color == other.Color);
-		}
-	}
+            return Equals((TransformedColoredVertex)obj);
+        }
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns>
+        /// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+        /// </returns>
+        public bool Equals(TransformedColoredVertex other) {
+            return (Position == other.Position && Color == other.Color);
+        }
+    }
 }
