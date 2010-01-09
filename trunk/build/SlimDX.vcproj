@@ -6431,6 +6431,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\source\direct3d11\EffectUnorderedAccessViewVariable11.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\EffectUnorderedAccessViewVariable11.h"
+						>
+					</File>
+					<File
 						RelativePath="..\source\direct3d11\EffectVariable11.cpp"
 						>
 					</File>

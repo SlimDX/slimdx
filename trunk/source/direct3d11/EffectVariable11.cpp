@@ -36,6 +36,7 @@
 #include "EffectVariable11.h"
 #include "EffectVariableDescription11.h"
 #include "EffectVectorVariable11.h"
+#include "EffectUnorderedAccessViewVariable11.h"
 
 using namespace System;
 
@@ -180,6 +181,14 @@ namespace Direct3D11
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
 		return gcnew EffectStringVariable( variable );
+	}
+	
+	EffectUnorderedAccessViewVariable^ EffectVariable::AsUnorderedAccessView()
+	{
+		ID3DX11EffectUnorderedAccessViewVariable* variable = m_Pointer->AsUnorderedAccessView();
+		if( variable == 0 || !variable->IsValid() )
+			return nullptr;
+		return gcnew EffectUnorderedAccessViewVariable( variable );
 	}
 }
 }
