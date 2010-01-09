@@ -38,6 +38,7 @@ Direct3D 11
 	* Added missing Flag field to DepthStencilViewDescription.
 	* Added null checks to OutputMergerWrapper methods.
 	* Added int and bool vector setter support to EffectVectorVariable.
+	* Added support for unordered access view variables.
 	* Deprecated InputLayout constructor taking (device, elements, signature) in favor of one taking (device, signature, elements).
 	* Removed the dependence on D3D10 by duplicating ShaderBytecode and friends.
 	* Changed Effect construction to take a ShaderBytecode for the source data.
