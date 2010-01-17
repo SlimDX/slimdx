@@ -25,16 +25,20 @@ using SlimDX;
 using SlimDX.Direct3D10;
 using SlimDX.DXGI;
 using SlimDX.SampleFramework;
+using Buffer = SlimDX.Direct3D10.Buffer;
+using Device = SlimDX.Direct3D10.Device;
+using MapFlags = SlimDX.Direct3D10.MapFlags;
+using PrimitiveTopology=SlimDX.Direct3D10.PrimitiveTopology;
 using Resource = SlimDX.Direct3D10.Resource;
 
 namespace SimpleModel10 {
     class SimpleModel10Sample : Sample {
         protected override void Dispose(bool disposeManagedResources) {
             if (disposeManagedResources) {
+                jupiterMesh.Dispose();
                 depthStencilView.Dispose();
                 depthStencilState.Dispose();
                 jupiterTexture.Dispose();
-                jupiterMesh.Dispose();
                 effect.Dispose();
                 renderTargetView.Dispose();
             }
@@ -82,10 +86,7 @@ namespace SimpleModel10 {
 
             depthStencilState = DepthStencilState.FromDescription(Context10.Device, dssd);
 
-            InputElement[] elements;
-            using (var meshLoader = new XLoader()) {
-                jupiterMesh = meshLoader.LoadFile(Context10.Device, "jupiter.X", out elements);
-            }
+            jupiterMesh = new SimpleMesh(Context10.Device, Smd.FromFile("jupiter.SMD"));
 
             jupiterTexture = Texture2D.FromFile(Context10.Device, "jupiter.jpg");
 
@@ -94,11 +95,11 @@ namespace SimpleModel10 {
 
             layout = new InputLayout[technique.Description.PassCount];
             for (var pass = 0; pass < technique.Description.PassCount; ++pass) {
-                layout[pass] = new InputLayout(Context10.Device, technique.GetPassByIndex(pass).Description.Signature, elements);
+                layout[pass] = new InputLayout(Context10.Device, technique.GetPassByIndex(pass).Description.Signature, jupiterMesh.Elements);
             }
 
             proj = Matrix.PerspectiveFovLH(45.0f, (float)WindowWidth / (float)WindowHeight, 1.0f, 1000.0f);
-            view = Matrix.LookAtLH(new Vector3(0, 0, 160), new Vector3(0, 0, -128.0f), Vector3.UnitY);
+            view = Matrix.LookAtLH(new Vector3(0, 160, 0), new Vector3(0, -128.0f, 0), -Vector3.UnitZ);
 
             effect.GetVariableByName("jupiterTexture").AsResource().SetResource(new ShaderResourceView(Context10.Device, jupiterTexture));
             effect.GetVariableByName("view").AsMatrix().SetMatrix(view);
@@ -153,7 +154,7 @@ namespace SimpleModel10 {
                 rotation = 0;
 
             Matrix rotationMatrix;
-            Matrix.RotationY(rotation, out rotationMatrix);
+            Matrix.RotationZ(rotation, out rotationMatrix);
             var world = Matrix.Identity;
             Matrix.Multiply(ref world, ref rotationMatrix, out world);
 
@@ -163,7 +164,8 @@ namespace SimpleModel10 {
             for (var passIndex = 0; passIndex < technique.Description.PassCount; ++passIndex) {
                 Context10.Device.InputAssembler.SetInputLayout(layout[passIndex]);
                 technique.GetPassByIndex(passIndex).Apply();
-                jupiterMesh.DrawSubset(0);
+
+                jupiterMesh.Draw();
             }
         }
 
@@ -174,7 +176,7 @@ namespace SimpleModel10 {
         #region Implementation Detail
 
         private RenderTargetView renderTargetView;
-        private Mesh jupiterMesh;
+        private SimpleMesh jupiterMesh;
         private Texture2D jupiterTexture;
         private Effect effect;
         private Matrix view;
@@ -183,7 +185,6 @@ namespace SimpleModel10 {
         private float rotation;
         private DepthStencilView depthStencilView;
         private DepthStencilState depthStencilState;
-
         #endregion
     }
 }
