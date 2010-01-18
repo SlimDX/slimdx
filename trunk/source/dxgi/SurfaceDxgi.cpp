@@ -28,6 +28,7 @@
 
 #include "DXGIException.h"
 
+#include "SwapChainDxgi.h"
 #include "SurfaceDxgi.h"
 #include "SurfaceDescription.h"
 
@@ -62,6 +63,17 @@ namespace DXGI
 	Result Surface::Unmap()
 	{
 		return RECORD_DXGI( InternalPointer->Unmap() );
+	}
+
+	Surface^ Surface::FromSwapChain( SlimDX::DXGI::SwapChain^ swapChain, int index )
+	{
+		IDXGISurface *buffer;
+		GUID guid = Utilities::GetNativeGuidForType( Surface::typeid );
+		RECORD_DXGI( swapChain->InternalPointer->GetBuffer(index, guid, reinterpret_cast<void**>(&buffer)) );
+		if( Result::Last.IsSuccess )
+			return Surface::FromPointer( buffer );
+	
+		throw gcnew DXGIException( Result::Last );
 	}
 }
 }

@@ -8,6 +8,9 @@ Samples
 	* Added D3D9 Simple Triangle sample.
 	* Added D2D Simple Triangle sample.
 
+DXGI
+	* Added FromSwapChain method so Surface
+	
 Direct3D 9
 	* Added VertexTextureSampler enumeration.
 	* Changed Include.Open to include missing parentStream parameter.
