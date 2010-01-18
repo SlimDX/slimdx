@@ -991,7 +991,7 @@ namespace Direct3D9
 	{
 		pin_ptr<float> pinnedData = &data[0];
 
-		Utilities::CheckBounds( 0, data->Length / 4, offset, count );
+		Utilities::CheckArrayBounds( data, offset, count * 4 );
 		HRESULT hr = InternalPointer->SetVertexShaderConstantF( startRegister, pinnedData + offset, count );
 		return RECORD_D3D9( hr );
 	}
@@ -1010,7 +1010,7 @@ namespace Direct3D9
 	{
 		pin_ptr<int> pinnedData = &data[0];
 
-		Utilities::CheckBounds( 0, data->Length / 4, offset, count );
+		Utilities::CheckArrayBounds( data, offset, count * 4 );
 		HRESULT hr = InternalPointer->SetVertexShaderConstantI( startRegister, pinnedData + offset, count );
 		return RECORD_D3D9( hr );
 	}
@@ -1050,7 +1050,7 @@ namespace Direct3D9
 	{
 		pin_ptr<float> pinnedData = &data[0];
 
-		Utilities::CheckBounds( 0, data->Length / 4, offset, count );
+		Utilities::CheckArrayBounds( data, offset, count * 4 );
 		HRESULT hr = InternalPointer->SetPixelShaderConstantF( startRegister, pinnedData + offset, count );
 		return RECORD_D3D9( hr );
 	}
@@ -1069,7 +1069,7 @@ namespace Direct3D9
 	{
 		pin_ptr<int> pinnedData = &data[0];
 
-		Utilities::CheckBounds( 0, data->Length / 4, offset, count );
+		Utilities::CheckArrayBounds( data, offset, count * 4 );
 		HRESULT hr = InternalPointer->SetPixelShaderConstantI( startRegister, pinnedData + offset, count );
 		return RECORD_D3D9( hr );
 	}
