@@ -38,7 +38,7 @@ namespace Direct3D11
 		SourceBlendAlpha = static_cast<SlimDX::Direct3D11::BlendOption>( native.SrcBlendAlpha );
 		DestinationBlendAlpha = static_cast<SlimDX::Direct3D11::BlendOption>( native.DestBlendAlpha );
 		BlendOperationAlpha = static_cast<SlimDX::Direct3D11::BlendOperation>( native.BlendOpAlpha );
-		RenderTargetWriteMask = native.RenderTargetWriteMask;
+		RenderTargetWriteMask = static_cast<SlimDX::Direct3D11::ColorWriteMaskFlags>( native.RenderTargetWriteMask );
 	}
 
 	D3D11_RENDER_TARGET_BLEND_DESC RenderTargetBlendDescription::CreateNativeVersion()
@@ -52,7 +52,7 @@ namespace Direct3D11
 		native.SrcBlendAlpha = static_cast<D3D11_BLEND>( SourceBlendAlpha );
 		native.DestBlendAlpha = static_cast<D3D11_BLEND>( DestinationBlendAlpha );
 		native.BlendOpAlpha = static_cast<D3D11_BLEND_OP>( BlendOperationAlpha );
-		native.RenderTargetWriteMask = RenderTargetWriteMask;
+		native.RenderTargetWriteMask = static_cast<UINT8>( RenderTargetWriteMask );
 
 		return native;
 	}

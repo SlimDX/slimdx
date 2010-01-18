@@ -71,7 +71,7 @@ namespace SlimDX
 			/// <summary>
 			/// A write mask.
 			/// </summary>
-			property System::Byte RenderTargetWriteMask;
+			property SlimDX::Direct3D11::ColorWriteMaskFlags RenderTargetWriteMask;
 
 			/// <summary>
 			/// Tests for equality between two objects.
