@@ -102,7 +102,7 @@ namespace Direct3D11
 		int oldMask = 0;
 		deviceContext->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
 
-		if( oldState == NULL )
+		if( oldState != NULL )
 			oldState->Release();
 		
 		if( value == nullptr )
