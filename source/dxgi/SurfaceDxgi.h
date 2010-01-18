@@ -43,7 +43,8 @@ namespace SlimDX
 	namespace DXGI
 	{
 		value class SurfaceDescription;
-		
+		ref class SwapChain;
+
 		/// <summary>
 		/// A <see cref="Surface"/> implements methods for image-data objects.
 		/// </summary>
@@ -53,6 +54,14 @@ namespace SlimDX
 			COMOBJECT_INTERFACE(IDXGISurface, Surface);
 
 		public:
+			/// <summary>
+			/// Gets a swap chain back buffer.
+			/// </summary>
+			/// <param name="swapChain">The swap chain to get the buffer from.</param>
+			/// <param name="index">The index of the desired buffer.</param>
+			/// <returns>The buffer interface, or <c>null</c> on failure.</returns>
+			static Surface^ Surface::FromSwapChain( SlimDX::DXGI::SwapChain^ swapChain, int index );
+
 			/// <summary>
 			/// Gets the surface's description.
 			/// </summary>
@@ -73,6 +82,8 @@ namespace SlimDX
 			/// </summary>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			SDX_METHOD(Result Unmap());
+
+			
 		};
 	}
 };
