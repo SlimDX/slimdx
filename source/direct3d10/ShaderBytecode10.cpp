@@ -99,8 +99,8 @@ namespace Direct3D10
 		ID3D10Blob *errors;
 		pin_ptr<Byte> pinnedSource = &shaderSource[0];
 
-		array<Byte>^ functionBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( entryPoint );
-		pin_ptr<Byte> pinnedFunction = &functionBytes[0];
+		array<Byte>^ functionBytes = entryPoint == nullptr ? nullptr : System::Text::ASCIIEncoding::ASCII->GetBytes( entryPoint );
+		pin_ptr<Byte> pinnedFunction = functionBytes == nullptr ? nullptr : &functionBytes[0];
 		array<Byte>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 		pin_ptr<Byte> pinnedProfile = &profileBytes[0];
 
@@ -112,9 +112,10 @@ namespace Direct3D10
 		array<GCHandle>^ handles;
 		stack_array<D3D10_SHADER_MACRO> macros = ShaderMacro::Marshal( defines, handles );
 		D3D10_SHADER_MACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
-
+		
+		LPCSTR function = pinnedFunction == nullptr ? 0 : reinterpret_cast<LPCSTR>( pinnedFunction );
 		HRESULT hr = D3DX10CompileFromMemory( reinterpret_cast<LPCSTR>( pinnedSource ), shaderSource->Length, NULL, macrosPtr, includePtr,
-			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
+			function, reinterpret_cast<LPCSTR>( pinnedProfile ),
 			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), NULL, &code, &errors, NULL );
 
 		ShaderMacro::Unmarshal( handles );
