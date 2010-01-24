@@ -25,19 +25,19 @@
 			Please prefix your thread subject with [SlimDX] if the question is reasonably specific to SlimDX.
 			If it isn't, feel free to include or exclude the prefix as you like.
 			You can also try and get a hold of us on IRC, in the #graphicsdev channel on <a href="http://www.afternet.org/">AfterNET</a>.			
-			Lastly, be sure to check us out on <a href="http://twitter.com/SlimDX">Twitter</a>!
 			<br /><br />
-			Last but not least, the <b>SlimDX team is now accepting donations</b>, and offering support contracts as well.
-			Developing SlimDX takes a lot of time and work, alongside our normal lives.
-			By donating or purchasing contracts, you will ensure that the project continues to thrive and serve all its users as much as possible.
-			For more information, please visit the <a href="support.php">Support page</a>.
-			Thank you!
-			</p><br />
+			<h2>Consulting Highlight</h2>
+			SlimDX Consulting is now up and running to serve your custom software needs.
+			Our expertise in DirectX, SlimDX, and managed/unmanaged interop of all kinds means getting things done in a fraction of the time and cost.
+			That leaves you to focus on your application, instead of fighting with unfamiliar libraries.
+			<br />Our current Featured Customer is <a href="http://www.starcounter.com/">Starcounter AB</a>:<br />
+			See <a href="support.php">the Support page</a> for more information about our services.
+			</p><br /><br />
 
-			<a href="download.php"><img src="images/latest.jpg" alt="latest release" /></a>
-        </div>
+			<p><a href="download.php"><img src="images/latest.jpg" alt="latest release" /></a></p>
+      </div>
         
-        <div id="left_column">
+      <div id="left_column">
 			<h2>Why not use XNA Game Studio?</h2>
 			<p>
 			XNA Game Studio (XNA GS) is Microsoft's new initiative for game development in .NET, targeting Windows and the Xbox 360.
