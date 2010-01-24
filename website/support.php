@@ -22,15 +22,26 @@
 			SlimDX is over 150,000 lines of code, and that takes real time and effort to build outside of our normal lives.
 			By donating, you help to support us, support the project, and ensure that the library continues to thrive.
 			We don't request any specific minimum or maximum values for donations; all contributions are appreciated!
-			If you would prefer to mail a check, please e-mail <tt>promit /dot\ roy \at/ gmail.com</tt> directly to get an address.
+			If you would prefer to mail a check, please e-mail <tt>promit at slimdx.org</tt> directly to get an address.
 			</p><br />
+		</div>
+		
+		<div class="paragraph">
+			<h2>Consulting</h2>
 			<p>
-			Alternately, we are very interested in computer hardware donations.
-			Implementing the latest and greatest in DirectX technology requires us to have the latest in computer hardware, and we simply can't afford it.
-			Generous donations have already allowed us to obtain Direct3D 10.1 and 64 bit hardware to work with.
-			Point is, if you have access to high end hardware that you can donate, used or new, we'd be very glad to have it because frankly it's getting very difficult to continue with our machines.
-			Again, if you think you can help, send an e-mail and we'll figure out the details.
-			Thank you!
+			We're experts at interoperability, between DirectX components and between managed and native environments.
+			Our skills are quite unique, and as a result of working on SlimDX for several years they are unmatched.
+			Why stumble through mechanical problems with DirectX or interop when we can do it for you, fast and cheap?
+			We are willing to offer our skills on a contract basis for any client, whether or not the work is SlimDX related.
+			Please contact us directly for pricing details by e-mailing:
+			<br /><tt>promit at slimdx.org</tt><br />
+			Note that our ability to provide consulting services is limited by time and we may not be able to accept all jobs.
+			Pricing is provided on a per project basis, so contact us with details of what you need done and we will provide an estimate.
+			
+			<br /><br />Some of our recent customers include:
+			<br />
+			<a href="http://www.lizardtech.com/">LizardTech:
+			<br /><img src="images/sponsors/lizardtech_logo.jpg" /></a>
 			</p>
 		</div>
 		
@@ -41,18 +52,8 @@
 			Purchasing a support contract will help support the SlimDX project, but also provides you a range of benefits.
 			Contract customers are entitled to direct e-mail and phone support with guaranteed response times.
 			You may also be eligible for special services such as customized builds, custom documentation, and more.
-			Please contact us directly for pricing details by e-mailing <tt>promit /dot\ roy \at/ gmail.com</tt>.
+			Please contact us directly for pricing details by e-mailing <tt>promit at slimdx.org</tt>.
 			Don't forget to identify your company for us!
-			</p>
-		</div>
-		
-		<div class="paragraph">
-			<h2>Consulting</h2>
-			<p>
-			As a result of working on SlimDX, the SlimDX team posesses unparalleled expertise in interoperability between native and managed environments.
-			We are willing to offer our skills on a contract basis for any client, whether or not the work is SlimDX related.
-			Please contact us directly for pricing details by e-mailing <tt>promit /dot\ roy \at/ gmail.com</tt>.
-			Note that our ability to provide consulting services is limited by time and we may not be able to accept all jobs.
 			</p>
 		</div>
 		
