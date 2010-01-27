@@ -79,7 +79,7 @@ namespace Direct3D11
 		deviceContext->OMGetDepthStencilState( &oldState, reinterpret_cast<UINT*>( &oldReference ) );
 		deviceContext->OMSetDepthStencilState( oldState, value );
 
-		if( oldState == NULL )
+		if( oldState != NULL )
 			oldState->Release();
 	}
 	
@@ -89,7 +89,7 @@ namespace Direct3D11
 		int oldReference = 0;
 		deviceContext->OMGetDepthStencilState( &oldState, reinterpret_cast<UINT*>( &oldReference ) );
 
-		if( oldState == NULL )
+		if( oldState != NULL )
 			oldState->Release();
 		
 		return oldReference;
@@ -131,7 +131,7 @@ namespace Direct3D11
 		float newFactor[4] = { value.Red, value.Green, value.Blue, value.Alpha };
 		deviceContext->OMSetBlendState( oldState, newFactor, oldMask );
 
-		if( oldState == NULL )
+		if( oldState != NULL )
 			oldState->Release();
 	}
 	
@@ -142,7 +142,7 @@ namespace Direct3D11
 		int oldMask = 0;
 		deviceContext->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
 
-		if( oldState == NULL )
+		if( oldState != NULL )
 			oldState->Release();
 		
 		return Color4( oldFactor[3], oldFactor[0], oldFactor[1], oldFactor[2] );
@@ -156,7 +156,7 @@ namespace Direct3D11
 		deviceContext->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
 		deviceContext->OMSetBlendState( oldState, oldFactor, value );
 
-		if( oldState == NULL )
+		if( oldState != NULL )
 			oldState->Release();
 	}
 	
@@ -167,7 +167,7 @@ namespace Direct3D11
 		int oldMask = 0;
 		deviceContext->OMGetBlendState( &oldState, oldFactor, reinterpret_cast<UINT*>( &oldMask ) );
 
-		if( oldState == NULL )
+		if( oldState != NULL )
 			oldState->Release();
 		
 		return oldMask;
