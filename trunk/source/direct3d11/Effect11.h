@@ -44,7 +44,7 @@ namespace SlimDX
 			COMOBJECT(ID3DX11Effect, Effect);
 
 		public:
-			Effect( SlimDX::Direct3D11::Device^ device, ShaderBytecode^ data, int effectFlags );
+			Effect( SlimDX::Direct3D11::Device^ device, ShaderBytecode^ data, EffectFlags effectFlags );
 
 			property EffectDescription Description
 			{
