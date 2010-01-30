@@ -28,12 +28,15 @@ namespace SlimDX
 	namespace Direct3D11
 	{
 		ref class ClassInstance;
+		ref class Device;
 
 		public ref class ClassLinkage : ComObject
 		{
 			COMOBJECT(ID3D11ClassLinkage, ClassLinkage);
 			
 		public:
+			ClassLinkage( Device^ device );
+		
 			ClassInstance^ GetInstance( System::String^ name, int index );
 		};
 	}
