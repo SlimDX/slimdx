@@ -26,6 +26,7 @@
 
 #include "ClassLinkage11.h"
 #include "ClassInstance11.h"
+#include "Device11.h"
 
 using namespace System;
 
@@ -33,6 +34,17 @@ namespace SlimDX
 {
 namespace Direct3D11
 {
+	ClassLinkage::ClassLinkage( Direct3D11::Device^ device )
+	{
+		ID3D11ClassLinkage* result = 0;
+		HRESULT hr = device->InternalPointer->CreateClassLinkage( &result );
+		if( RECORD_D3D11( hr ).IsFailure )
+			throw gcnew Direct3D11Exception( Result::Last );
+
+		Construct( result );
+	}
+
+
 	ClassInstance^ ClassLinkage::GetInstance( String^ name, int index )
 	{
 		ID3D11ClassInstance *pointer;
