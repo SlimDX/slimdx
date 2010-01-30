@@ -48,8 +48,8 @@ namespace Direct3D11
 			nativeElements[i] = elements[i].CreateNativeVersion();
 			
 		ID3D11InputLayout* layout = 0;
-		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->InternalPointer->GetBufferPointer(),
-			shaderSignature->InternalPointer->GetBufferSize(), &layout );
+		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->GetBufferPointer(),
+			shaderSignature->GetBufferSize(), &layout );
 
 		for( int i = 0; i < elements->Length; i++ )
 			Utilities::FreeNativeString( nativeElements[i].SemanticName );
@@ -74,8 +74,8 @@ namespace Direct3D11
 			nativeElements[i] = elements[i].CreateNativeVersion();
 			
 		ID3D11InputLayout* layout = 0;
-		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->InternalPointer->GetBufferPointer(),
-			shaderSignature->InternalPointer->GetBufferSize(), &layout );
+		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->GetBufferPointer(),
+			shaderSignature->GetBufferSize(), &layout );
 
 		for( int i = 0; i < elements->Length; i++ )
 			Utilities::FreeNativeString( nativeElements[i].SemanticName );

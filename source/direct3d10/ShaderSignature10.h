@@ -27,16 +27,18 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		public ref class ShaderSignature : ComObject
+		public ref class ShaderSignature
 		{
-			COMOBJECT(ID3D10Blob, ShaderSignature);
-		
+			const BYTE* m_Buffer;
+			UINT m_Length;
+			
 		internal:
 			ShaderSignature( const BYTE* buffer, UINT length );
-
+			
+			const BYTE* GetBufferPointer();
+			UINT GetBufferSize();
+			
 		public:
-			ShaderSignature( array<System::Byte>^ data );
-
 			static ShaderSignature^ GetInputSignature( ShaderBytecode^ shaderBytecode );
 			static ShaderSignature^ GetOutputSignature( ShaderBytecode^ shaderBytecode );
 			static ShaderSignature^ GetInputOutputSignature( ShaderBytecode^ shaderBytecode );
