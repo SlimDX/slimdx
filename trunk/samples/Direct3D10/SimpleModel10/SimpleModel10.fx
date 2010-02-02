@@ -1,11 +1,11 @@
 float4x4 view;
 float4x4 proj;
 float4x4 world;
-
+Texture2D model_texture;
+float transparency = 0.0;
 float3 sun = float3(.5, 0, -.5);
 
-Texture2D jupiterTexture;
-SamplerState JupiterSampler {
+SamplerState ModelTextureSampler {
     Filter = MIN_MAG_MIP_LINEAR;
     AddressU = Wrap;
     AddressV = Wrap;
@@ -35,11 +35,11 @@ PS_IN VS( VS_IN input ) {
 }
 
 float4 PS( PS_IN input ) : SV_Target {
-	float lightAmount = max(.25,dot(normalize(input.normal),normalize(sun)));
-	return jupiterTexture.Sample(JupiterSampler, input.texCoord) * lightAmount;
+	float lightAmount = max(.125,dot(normalize(input.normal),normalize(sun)));
+	return model_texture.Sample(ModelTextureSampler, input.texCoord) * lightAmount * (1 - float4(transparency, transparency, transparency, transparency));
 }
 
-technique10 Render {
+technique10 RenderSolid {
 	pass P0 {
 		SetGeometryShader( 0 );
 		SetVertexShader( CompileShader( vs_4_0, VS() ) );
