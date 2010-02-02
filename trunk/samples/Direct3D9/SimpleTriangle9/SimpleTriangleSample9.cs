@@ -33,19 +33,6 @@ namespace SimpleTriangle9 {
     /// Demonstrates how to render a simple colored triangle with Direct3D9.
     /// </summary>
     class SimpleTriangle9Sample : Sample {
-        /// <summary>
-        /// Disposes of object resources.
-        /// </summary>
-        /// <param name="disposeManagedResources">If true, managed resources should be
-        /// disposed of in addition to unmanaged resources.</param>
-        protected override void Dispose(bool disposeManagedResources) {
-            if (disposeManagedResources) {
-                vertexBuffer.Dispose();
-            }
-
-            base.Dispose(disposeManagedResources);
-        }
-
         protected override void OnInitialize() {
             DeviceSettings9 settings = new DeviceSettings9 {
                 AdapterOrdinal = 0,
@@ -54,39 +41,45 @@ namespace SimpleTriangle9 {
                 Height = WindowHeight
             };
 
-            InitializeDevice(settings);
+            InitializeDevice( settings );
+        }
 
+        protected override void OnResourceLoad() {
             vertexBuffer = new VertexBuffer(
                 Context9.Device,
-                3 * Marshal.SizeOf(typeof(ColoredVertex)),
+                3 * Marshal.SizeOf( typeof( ColoredVertex ) ),
                 Usage.WriteOnly,
                 VertexFormat.None,
                 Pool.Managed
             );
 
-            DataStream stream = vertexBuffer.Lock(0, 0, LockFlags.None);
-            stream.WriteRange(new[] {
+            DataStream stream = vertexBuffer.Lock( 0, 0, LockFlags.None );
+            stream.WriteRange( new[] {
 				new ColoredVertex( new Vector3(0.0f, 0.5f, 0.5f), Color.Red.ToArgb() ),
 				new ColoredVertex( new Vector3(0.5f, -0.5f, 0.5f), Color.Blue.ToArgb() ),
 				new ColoredVertex( new Vector3(-0.5f, -0.5f, 0.5f), Color.Green.ToArgb() ),
-			});
+			} );
 
             vertexBuffer.Unlock();
 
             // Since this sample does not use any lights, disable lighting (otherwise the
             // triangle will appear flat black).
-            Context9.Device.SetRenderState(RenderState.Lighting, false);
+            Context9.Device.SetRenderState( RenderState.Lighting, false );
+        }
+
+        protected override void OnResourceUnload() {
+            vertexBuffer.Dispose();    
         }
 
         protected override void OnRenderBegin() {
-            Context9.Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, new Color4(0.3f, 0.3f, 0.3f), 1.0f, 0);
+            Context9.Device.Clear( ClearFlags.Target | ClearFlags.ZBuffer, new Color4( 0.3f, 0.3f, 0.3f ), 1.0f, 0 );
             Context9.Device.BeginScene();
         }
 
         protected override void OnRender() {
-            Context9.Device.SetStreamSource(0, vertexBuffer, 0, Marshal.SizeOf(typeof(ColoredVertex)));
+            Context9.Device.SetStreamSource( 0, vertexBuffer, 0, Marshal.SizeOf( typeof( ColoredVertex ) ) );
             Context9.Device.VertexFormat = VertexFormat.Position | VertexFormat.Diffuse;
-            Context9.Device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
+            Context9.Device.DrawPrimitives( PrimitiveType.TriangleList, 0, 1 );
         }
 
         protected override void OnRenderEnd() {
