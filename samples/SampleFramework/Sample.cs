@@ -139,6 +139,8 @@ namespace SlimDX.SampleFramework {
 
             clock.Start();
             MessagePump.Run(form, () => {
+                if(!form.Visible)
+                    return;
                 Update();
                 Render();
             });
