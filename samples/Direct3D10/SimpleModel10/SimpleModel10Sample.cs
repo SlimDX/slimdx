@@ -25,21 +25,17 @@ using SlimDX;
 using SlimDX.Direct3D10;
 using SlimDX.DXGI;
 using SlimDX.SampleFramework;
-using Buffer = SlimDX.Direct3D10.Buffer;
-using Device = SlimDX.Direct3D10.Device;
-using MapFlags = SlimDX.Direct3D10.MapFlags;
-using PrimitiveTopology=SlimDX.Direct3D10.PrimitiveTopology;
-using Resource = SlimDX.Direct3D10.Resource;
+using Resource=SlimDX.Direct3D10.Resource;
 
 namespace SimpleModel10 {
-    class SimpleModel10Sample : Sample {
+    internal class SimpleModel10Sample : Sample {
         protected override void Dispose(bool disposeManagedResources) {
             if (disposeManagedResources) {
                 jupiterMesh.Dispose();
                 depthStencilView.Dispose();
                 depthStencilState.Dispose();
-                jupiterTexture.Dispose();
-                effect.Dispose();
+                solidBlendState.Dispose();
+                transBlendState.Dispose();
                 renderTargetView.Dispose();
             }
 
@@ -47,7 +43,7 @@ namespace SimpleModel10 {
         }
 
         protected override void OnInitialize() {
-            var settings10 = new DeviceSettings10() {
+            var settings10 = new DeviceSettings10 {
                 AdapterOrdinal = 0,
                 CreationFlags = DeviceCreationFlags.None,
                 Width = WindowWidth,
@@ -56,26 +52,9 @@ namespace SimpleModel10 {
 
             InitializeDevice(settings10);
 
-            using (var swapChainBuffer = Resource.FromSwapChain<Texture2D>(Context10.SwapChain, 0)) {
-                renderTargetView = new RenderTargetView(Context10.Device, swapChainBuffer);
-            }
+            CreatePrimaryRenderTarget();
 
-            var depthBufferDesc = new Texture2DDescription {
-                ArraySize = 1,
-                BindFlags = BindFlags.DepthStencil,
-                CpuAccessFlags = CpuAccessFlags.None,
-                Format = Format.D32_Float,
-                Height = WindowHeight,
-                Width = WindowWidth,
-                MipLevels = 1,
-                OptionFlags = ResourceOptionFlags.None,
-                SampleDescription = new SampleDescription(1, 0),
-                Usage = ResourceUsage.Default
-            };
-
-            using (var depthBuffer = new Texture2D(Context10.Device, depthBufferDesc)) {
-                depthStencilView = new DepthStencilView(Context10.Device, depthBuffer);
-            }
+            CreateDepthBuffer();
 
             var dssd = new DepthStencilStateDescription {
                 IsDepthEnabled = true,
@@ -84,26 +63,35 @@ namespace SimpleModel10 {
                 DepthComparison = Comparison.Less
             };
 
+            var solidParentOp = new BlendStateDescription();
+            solidParentOp.SetBlendEnable(0, false);
+            solidParentOp.SetWriteMask(0, ColorWriteMaskFlags.All);
+
+            var transParentOp = new BlendStateDescription {
+                AlphaBlendOperation = BlendOperation.Add,
+                BlendOperation = BlendOperation.Add,
+                DestinationAlphaBlend = BlendOption.Zero,
+                DestinationBlend = BlendOption.One,
+                IsAlphaToCoverageEnabled = false,
+                SourceAlphaBlend = BlendOption.Zero,
+                SourceBlend = BlendOption.One,
+            };
+
+            transParentOp.SetBlendEnable(0, true);
+            transParentOp.SetWriteMask(0, ColorWriteMaskFlags.All);
+
+            transBlendState = BlendState.FromDescription(Context10.Device, transParentOp);
+            solidBlendState = BlendState.FromDescription(Context10.Device, solidParentOp);
+
             depthStencilState = DepthStencilState.FromDescription(Context10.Device, dssd);
 
-            jupiterMesh = new SimpleMesh(Context10.Device, Smd.FromFile("jupiter.SMD"));
-
-            jupiterTexture = Texture2D.FromFile(Context10.Device, "jupiter.jpg");
-
-            effect = Effect.FromFile(Context10.Device, "SimpleModel10.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null);
-            var technique = effect.GetTechniqueByIndex(0);
-
-            layout = new InputLayout[technique.Description.PassCount];
-            for (var pass = 0; pass < technique.Description.PassCount; ++pass) {
-                layout[pass] = new InputLayout(Context10.Device, technique.GetPassByIndex(pass).Description.Signature, jupiterMesh.Elements);
-            }
-
-            proj = Matrix.PerspectiveFovLH(45.0f, (float)WindowWidth / (float)WindowHeight, 1.0f, 1000.0f);
+            jupiterMesh = new SimpleModel(Context10.Device, "SimpleModel10.fx", "jupiter.SMD", "jupiter.jpg");
+           
             view = Matrix.LookAtLH(new Vector3(0, 160, 0), new Vector3(0, -128.0f, 0), -Vector3.UnitZ);
+            jupiterMesh.Effect.GetVariableByName("view").AsMatrix().SetMatrix(view);
 
-            effect.GetVariableByName("jupiterTexture").AsResource().SetResource(new ShaderResourceView(Context10.Device, jupiterTexture));
-            effect.GetVariableByName("view").AsMatrix().SetMatrix(view);
-            effect.GetVariableByName("proj").AsMatrix().SetMatrix(proj);
+            proj = Matrix.PerspectiveFovLH(45.0f, WindowWidth / (float)WindowHeight, 1.0f, 1000.0f);
+            jupiterMesh.Effect.GetVariableByName("proj").AsMatrix().SetMatrix(proj);
         }
 
         protected override void OnResize() {
@@ -113,29 +101,11 @@ namespace SimpleModel10 {
 
             Context10.SwapChain.ResizeBuffers(1, WindowWidth, WindowHeight, Format.R8G8B8A8_UNorm, SwapChainFlags.AllowModeSwitch);
 
-            using (var texture = Resource.FromSwapChain<Texture2D>(Context10.SwapChain, 0)) {
-                renderTargetView = new RenderTargetView(Context10.Device, texture);
-            }
+            CreatePrimaryRenderTarget();
+            CreateDepthBuffer();
 
-            var depthBufferDesc = new Texture2DDescription {
-                ArraySize = 1,
-                BindFlags = BindFlags.DepthStencil,
-                CpuAccessFlags = CpuAccessFlags.None,
-                Format = Format.D32_Float,
-                Height = WindowHeight,
-                Width = WindowWidth,
-                MipLevels = 1,
-                OptionFlags = ResourceOptionFlags.None,
-                SampleDescription = new SampleDescription(1, 0),
-                Usage = ResourceUsage.Default
-            };
-
-            using (var depthBuffer = new Texture2D(Context10.Device, depthBufferDesc)) {
-                depthStencilView = new DepthStencilView(Context10.Device, depthBuffer);
-            }
-
-            proj = Matrix.PerspectiveFovLH(45.0f, (float)WindowWidth / (float)WindowHeight, 1.0f, 1000.0f);
-            effect.GetVariableByName("proj").AsMatrix().SetMatrix(proj);
+            proj = Matrix.PerspectiveFovLH(45.0f, WindowWidth/(float) WindowHeight, 1.0f, 1000.0f);
+            jupiterMesh.Effect.GetVariableByName("proj").AsMatrix().SetMatrix(proj);
         }
 
         protected override void OnRenderBegin() {
@@ -148,43 +118,82 @@ namespace SimpleModel10 {
         }
 
         protected override void OnRender() {
-            rotation += (float)(Math.PI / 4.0f * FrameDelta);
+            rotation += (float) (Math.PI/4.0f*FrameDelta);
 
-            if (rotation > 2 * Math.PI)
+            if (rotation > 2*Math.PI)
                 rotation = 0;
 
+            /// First we'll setup the primary planet that we want to render. This is the big jupiter planet.
+            /// We're not doing anything overly fancy here, just setting it up to rotate on its axis at a fixed rate.
             Matrix rotationMatrix;
             Matrix.RotationZ(rotation, out rotationMatrix);
             var world = Matrix.Identity;
             Matrix.Multiply(ref world, ref rotationMatrix, out world);
 
-            effect.GetVariableByName("world").AsMatrix().SetMatrix(world);
+            jupiterMesh.Effect.GetVariableByName("transparency").AsScalar().Set(0.0f);
+            jupiterMesh.Effect.GetVariableByName("world").AsMatrix().SetMatrix(world);
+            Context10.Device.OutputMerger.BlendState = solidBlendState;
+            jupiterMesh.Draw();
 
-            var technique = effect.GetTechniqueByIndex(0);
-            for (var passIndex = 0; passIndex < technique.Description.PassCount; ++passIndex) {
-                Context10.Device.InputAssembler.SetInputLayout(layout[passIndex]);
-                technique.GetPassByIndex(passIndex).Apply();
+            /// At this point we want to render a small moon that will orbit the planet (and rotate as well). 
+            /// Again, we're not doing anything overly fancy, however we will set the transparency blend state and then
+            /// set the transparency of the pixels (a fixed amount).
+            Matrix.Translation(0, 72, 0, out world);
+            Matrix tempMatrix;
+            Matrix.Scaling(.125f, .125f, .125f, out tempMatrix);
+            Matrix.Multiply(ref tempMatrix, ref world, out world);
+            Matrix.Multiply(ref rotationMatrix, 1.25f, out rotationMatrix);
+            Matrix.Multiply(ref rotationMatrix, ref world, out world);
+            Matrix orbitMatrix;
+            Matrix.RotationZ(-rotation*2f, out orbitMatrix);
+            Matrix.Multiply(ref world, ref orbitMatrix, out world);
 
-                jupiterMesh.Draw();
-            }
+            jupiterMesh.Effect.GetVariableByName("world").AsMatrix().SetMatrix(world);
+            jupiterMesh.Effect.GetVariableByName("transparency").AsScalar().Set(.50f);
+            Context10.Device.OutputMerger.BlendState = transBlendState;
+            jupiterMesh.Draw();
         }
 
         protected override void OnRenderEnd() {
             Context10.SwapChain.Present(0, PresentFlags.None);
         }
 
+        private void CreatePrimaryRenderTarget() {
+            using (var swapChainBuffer = Resource.FromSwapChain<Texture2D>(Context10.SwapChain, 0)) {
+                renderTargetView = new RenderTargetView(Context10.Device, swapChainBuffer);
+            }
+        }
+
+        private void CreateDepthBuffer() {
+            var depthBufferDesc = new Texture2DDescription {
+                ArraySize = 1,
+                BindFlags = BindFlags.DepthStencil,
+                CpuAccessFlags = CpuAccessFlags.None,
+                Format = Format.D32_Float,
+                Height = WindowHeight,
+                Width = WindowWidth,
+                MipLevels = 1,
+                OptionFlags = ResourceOptionFlags.None,
+                SampleDescription = new SampleDescription(1, 0),
+                Usage = ResourceUsage.Default
+            };
+
+            using (var depthBuffer = new Texture2D(Context10.Device, depthBufferDesc)) {
+                depthStencilView = new DepthStencilView(Context10.Device, depthBuffer);
+            }
+        }
+
         #region Implementation Detail
 
-        private RenderTargetView renderTargetView;
-        private SimpleMesh jupiterMesh;
-        private Texture2D jupiterTexture;
-        private Effect effect;
-        private Matrix view;
-        private Matrix proj;
-        private InputLayout[] layout;
-        private float rotation;
-        private DepthStencilView depthStencilView;
         private DepthStencilState depthStencilState;
+        private DepthStencilView depthStencilView;
+        private SimpleModel jupiterMesh;
+        private Matrix proj;
+        private RenderTargetView renderTargetView;
+        private float rotation;
+        private Matrix view;
+        private BlendState solidBlendState;
+        private BlendState transBlendState;
         #endregion
     }
 }
