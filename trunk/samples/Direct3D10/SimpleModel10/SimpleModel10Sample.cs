@@ -171,15 +171,23 @@ namespace SimpleModel10 {
 
         #region Implementation Detail
 
+        ///
+        /// Disposable resources
+        ///
         private DepthStencilState depthStencilState;
         private DepthStencilView depthStencilView;
         private SimpleModel jupiterMesh;
-        private Matrix proj;
-        private RenderTargetView renderTargetView;
-        private float rotation;
-        private Matrix view;
         private BlendState solidBlendState;
         private BlendState transBlendState;
+        private RenderTargetView renderTargetView;
+ 
+        /// 
+        /// Non-Disposable resources
+        ///
+        private Matrix proj;
+        private float rotation;
+        private Matrix view;
+
         #endregion
     }
 }
