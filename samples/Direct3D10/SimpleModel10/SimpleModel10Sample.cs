@@ -25,23 +25,10 @@ using SlimDX;
 using SlimDX.Direct3D10;
 using SlimDX.DXGI;
 using SlimDX.SampleFramework;
-using Resource=SlimDX.Direct3D10.Resource;
+using Resource = SlimDX.Direct3D10.Resource;
 
 namespace SimpleModel10 {
     internal class SimpleModel10Sample : Sample {
-        protected override void Dispose(bool disposeManagedResources) {
-            if (disposeManagedResources) {
-                jupiterMesh.Dispose();
-                depthStencilView.Dispose();
-                depthStencilState.Dispose();
-                solidBlendState.Dispose();
-                transBlendState.Dispose();
-                renderTargetView.Dispose();
-            }
-
-            base.Dispose(disposeManagedResources);
-        }
-
         protected override void OnInitialize() {
             var settings10 = new DeviceSettings10 {
                 AdapterOrdinal = 0,
@@ -50,10 +37,12 @@ namespace SimpleModel10 {
                 Height = WindowHeight
             };
 
-            InitializeDevice(settings10);
+            InitializeDevice( settings10 );
 
+        }
+
+        protected override void OnResourceLoad() {
             CreatePrimaryRenderTarget();
-
             CreateDepthBuffer();
 
             var dssd = new DepthStencilStateDescription {
@@ -64,8 +53,8 @@ namespace SimpleModel10 {
             };
 
             var solidParentOp = new BlendStateDescription();
-            solidParentOp.SetBlendEnable(0, false);
-            solidParentOp.SetWriteMask(0, ColorWriteMaskFlags.All);
+            solidParentOp.SetBlendEnable( 0, false );
+            solidParentOp.SetWriteMask( 0, ColorWriteMaskFlags.All );
 
             var transParentOp = new BlendStateDescription {
                 AlphaBlendOperation = BlendOperation.Add,
@@ -77,90 +66,87 @@ namespace SimpleModel10 {
                 SourceBlend = BlendOption.One,
             };
 
-            transParentOp.SetBlendEnable(0, true);
-            transParentOp.SetWriteMask(0, ColorWriteMaskFlags.All);
+            transParentOp.SetBlendEnable( 0, true );
+            transParentOp.SetWriteMask( 0, ColorWriteMaskFlags.All );
 
-            transBlendState = BlendState.FromDescription(Context10.Device, transParentOp);
-            solidBlendState = BlendState.FromDescription(Context10.Device, solidParentOp);
+            transBlendState = BlendState.FromDescription( Context10.Device, transParentOp );
+            solidBlendState = BlendState.FromDescription( Context10.Device, solidParentOp );
 
-            depthStencilState = DepthStencilState.FromDescription(Context10.Device, dssd);
+            depthStencilState = DepthStencilState.FromDescription( Context10.Device, dssd );
 
-            jupiterMesh = new SimpleModel(Context10.Device, "SimpleModel10.fx", "jupiter.SMD", "jupiter.jpg");
-           
-            view = Matrix.LookAtLH(new Vector3(0, 160, 0), new Vector3(0, -128.0f, 0), -Vector3.UnitZ);
-            jupiterMesh.Effect.GetVariableByName("view").AsMatrix().SetMatrix(view);
+            jupiterMesh = new SimpleModel( Context10.Device, "SimpleModel10.fx", "jupiter.SMD", "jupiter.jpg" );
 
-            proj = Matrix.PerspectiveFovLH(45.0f, WindowWidth / (float)WindowHeight, 1.0f, 1000.0f);
-            jupiterMesh.Effect.GetVariableByName("proj").AsMatrix().SetMatrix(proj);
+            view = Matrix.LookAtLH( new Vector3( 0, 160, 0 ), new Vector3( 0, -128.0f, 0 ), -Vector3.UnitZ );
+            jupiterMesh.Effect.GetVariableByName( "view" ).AsMatrix().SetMatrix( view );
+
+            proj = Matrix.PerspectiveFovLH( 45.0f, WindowWidth / (float)WindowHeight, 1.0f, 1000.0f );
+            jupiterMesh.Effect.GetVariableByName( "proj" ).AsMatrix().SetMatrix( proj );
         }
 
-        protected override void OnResize() {
+        protected override void OnResourceUnload() {
             Context10.Device.ClearState();
             renderTargetView.Dispose();
             depthStencilView.Dispose();
-
-            Context10.SwapChain.ResizeBuffers(1, WindowWidth, WindowHeight, Format.R8G8B8A8_UNorm, SwapChainFlags.AllowModeSwitch);
-
-            CreatePrimaryRenderTarget();
-            CreateDepthBuffer();
-
-            proj = Matrix.PerspectiveFovLH(45.0f, WindowWidth/(float) WindowHeight, 1.0f, 1000.0f);
-            jupiterMesh.Effect.GetVariableByName("proj").AsMatrix().SetMatrix(proj);
+            
+            jupiterMesh.Dispose();
+            depthStencilState.Dispose();
+            solidBlendState.Dispose();
+            transBlendState.Dispose();
         }
 
         protected override void OnRenderBegin() {
             Context10.Device.OutputMerger.DepthStencilState = depthStencilState;
-            Context10.Device.OutputMerger.SetTargets(depthStencilView, renderTargetView);
+            Context10.Device.OutputMerger.SetTargets( depthStencilView, renderTargetView );
 
-            Context10.Device.Rasterizer.SetViewports(new Viewport(0, 0, WindowWidth, WindowHeight, 0.0f, 1.0f));
-            Context10.Device.ClearRenderTargetView(renderTargetView, new Color4(0.0f, 0.0f, 0.0f));
-            Context10.Device.ClearDepthStencilView(depthStencilView, DepthStencilClearFlags.Depth, 1.0f, 0);
+            Context10.Device.Rasterizer.SetViewports( new Viewport( 0, 0, WindowWidth, WindowHeight, 0.0f, 1.0f ) );
+            Context10.Device.ClearRenderTargetView( renderTargetView, new Color4( 0.0f, 0.0f, 0.0f ) );
+            Context10.Device.ClearDepthStencilView( depthStencilView, DepthStencilClearFlags.Depth, 1.0f, 0 );
         }
 
         protected override void OnRender() {
-            rotation += (float) (Math.PI/4.0f*FrameDelta);
+            rotation += (float)( Math.PI / 4.0f * FrameDelta );
 
-            if (rotation > 2*Math.PI)
+            if( rotation > 2 * Math.PI )
                 rotation = 0;
 
             /// First we'll setup the primary planet that we want to render. This is the big jupiter planet.
             /// We're not doing anything overly fancy here, just setting it up to rotate on its axis at a fixed rate.
             Matrix rotationMatrix;
-            Matrix.RotationZ(rotation, out rotationMatrix);
+            Matrix.RotationZ( rotation, out rotationMatrix );
             var world = Matrix.Identity;
-            Matrix.Multiply(ref world, ref rotationMatrix, out world);
+            Matrix.Multiply( ref world, ref rotationMatrix, out world );
 
-            jupiterMesh.Effect.GetVariableByName("transparency").AsScalar().Set(0.0f);
-            jupiterMesh.Effect.GetVariableByName("world").AsMatrix().SetMatrix(world);
+            jupiterMesh.Effect.GetVariableByName( "transparency" ).AsScalar().Set( 0.0f );
+            jupiterMesh.Effect.GetVariableByName( "world" ).AsMatrix().SetMatrix( world );
             Context10.Device.OutputMerger.BlendState = solidBlendState;
             jupiterMesh.Draw();
 
             /// At this point we want to render a small moon that will orbit the planet (and rotate as well). 
             /// Again, we're not doing anything overly fancy, however we will set the transparency blend state and then
             /// set the transparency of the pixels (a fixed amount).
-            Matrix.Translation(0, 72, 0, out world);
+            Matrix.Translation( 0, 72, 0, out world );
             Matrix tempMatrix;
-            Matrix.Scaling(.125f, .125f, .125f, out tempMatrix);
-            Matrix.Multiply(ref tempMatrix, ref world, out world);
-            Matrix.Multiply(ref rotationMatrix, 1.25f, out rotationMatrix);
-            Matrix.Multiply(ref rotationMatrix, ref world, out world);
+            Matrix.Scaling( .125f, .125f, .125f, out tempMatrix );
+            Matrix.Multiply( ref tempMatrix, ref world, out world );
+            Matrix.Multiply( ref rotationMatrix, 1.25f, out rotationMatrix );
+            Matrix.Multiply( ref rotationMatrix, ref world, out world );
             Matrix orbitMatrix;
-            Matrix.RotationZ(-rotation*2f, out orbitMatrix);
-            Matrix.Multiply(ref world, ref orbitMatrix, out world);
+            Matrix.RotationZ( -rotation * 2f, out orbitMatrix );
+            Matrix.Multiply( ref world, ref orbitMatrix, out world );
 
-            jupiterMesh.Effect.GetVariableByName("world").AsMatrix().SetMatrix(world);
-            jupiterMesh.Effect.GetVariableByName("transparency").AsScalar().Set(.50f);
+            jupiterMesh.Effect.GetVariableByName( "world" ).AsMatrix().SetMatrix( world );
+            jupiterMesh.Effect.GetVariableByName( "transparency" ).AsScalar().Set( .50f );
             Context10.Device.OutputMerger.BlendState = transBlendState;
             jupiterMesh.Draw();
         }
 
         protected override void OnRenderEnd() {
-            Context10.SwapChain.Present(0, PresentFlags.None);
+            Context10.SwapChain.Present( 0, PresentFlags.None );
         }
 
         private void CreatePrimaryRenderTarget() {
-            using (var swapChainBuffer = Resource.FromSwapChain<Texture2D>(Context10.SwapChain, 0)) {
-                renderTargetView = new RenderTargetView(Context10.Device, swapChainBuffer);
+            using( var swapChainBuffer = Resource.FromSwapChain<Texture2D>( Context10.SwapChain, 0 ) ) {
+                renderTargetView = new RenderTargetView( Context10.Device, swapChainBuffer );
             }
         }
 
@@ -174,12 +160,12 @@ namespace SimpleModel10 {
                 Width = WindowWidth,
                 MipLevels = 1,
                 OptionFlags = ResourceOptionFlags.None,
-                SampleDescription = new SampleDescription(1, 0),
+                SampleDescription = new SampleDescription( 1, 0 ),
                 Usage = ResourceUsage.Default
             };
 
-            using (var depthBuffer = new Texture2D(Context10.Device, depthBufferDesc)) {
-                depthStencilView = new DepthStencilView(Context10.Device, depthBuffer);
+            using( var depthBuffer = new Texture2D( Context10.Device, depthBufferDesc ) ) {
+                depthStencilView = new DepthStencilView( Context10.Device, depthBuffer );
             }
         }
 

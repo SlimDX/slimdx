@@ -44,21 +44,22 @@ namespace SlimDX.SampleFramework {
 
             this.settings = settings;
 
-            presentParameters.BackBufferFormat = Format.X8R8G8B8;
-            presentParameters.BackBufferCount = 1;
-            presentParameters.BackBufferWidth = settings.Width;
-            presentParameters.BackBufferHeight = settings.Height;
-            presentParameters.Multisample = MultisampleType.None;
-            presentParameters.SwapEffect = SwapEffect.Discard;
-            presentParameters.EnableAutoDepthStencil = true;
-            presentParameters.AutoDepthStencilFormat = Format.D16;
-            presentParameters.PresentFlags = PresentFlags.DiscardDepthStencil;
-            presentParameters.PresentationInterval = PresentInterval.Default;
-            presentParameters.Windowed = true;
-            presentParameters.DeviceWindowHandle = handle;
+            PresentParameters = new PresentParameters();
+            PresentParameters.BackBufferFormat = Format.X8R8G8B8;
+            PresentParameters.BackBufferCount = 1;
+            PresentParameters.BackBufferWidth = settings.Width;
+            PresentParameters.BackBufferHeight = settings.Height;
+            PresentParameters.Multisample = MultisampleType.None;
+            PresentParameters.SwapEffect = SwapEffect.Discard;
+            PresentParameters.EnableAutoDepthStencil = true;
+            PresentParameters.AutoDepthStencilFormat = Format.D16;
+            PresentParameters.PresentFlags = PresentFlags.DiscardDepthStencil;
+            PresentParameters.PresentationInterval = PresentInterval.Default;
+            PresentParameters.Windowed = true;
+            PresentParameters.DeviceWindowHandle = handle;
 
             direct3D = new Direct3D();
-            Device = new Device(direct3D, settings.AdapterOrdinal, DeviceType.Hardware, handle, settings.CreationFlags, presentParameters);
+            Device = new Device(direct3D, settings.AdapterOrdinal, DeviceType.Hardware, handle, settings.CreationFlags, PresentParameters);
         }
 
         /// <summary>
@@ -95,14 +96,17 @@ namespace SlimDX.SampleFramework {
             get;
             private set;
         }
+        
+        public PresentParameters PresentParameters {
+            get;
+            private set;
+        }
 
         #endregion
         #region Implementation Detail
 
         DeviceSettings9 settings;
-
         Direct3D direct3D;
-        PresentParameters presentParameters = new PresentParameters();
 
         #endregion
     }
