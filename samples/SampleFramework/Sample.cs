@@ -125,10 +125,21 @@ namespace SlimDX.SampleFramework {
             form.KeyDown += HandleKeyDown;
             form.KeyUp += HandleKeyUp;
             form.Resize += delegate(object o, EventArgs args) {
+                if(form.WindowState == FormWindowState.Minimized) {
+                    OnMinimize();
+                    return;
+                }
+
+                if(form.WindowState == FormWindowState.Maximized)
+                    OnMaximize();
+
                 configuration.WindowWidth = ((Form)o).ClientSize.Width;
                 configuration.WindowHeight = ((Form)o).ClientSize.Height;
                 OnResize();
             };
+
+            bool isFormClosed= false;
+            form.Closed += (o, args) => { isFormClosed = true; };
 
             userInterface = new UserInterface();
             Element stats = new Element();
@@ -139,8 +150,9 @@ namespace SlimDX.SampleFramework {
 
             clock.Start();
             MessagePump.Run(form, () => {
-                if(!form.Visible)
+                if(isFormClosed)
                     return;
+
                 Update();
                 Render();
             });
@@ -165,6 +177,20 @@ namespace SlimDX.SampleFramework {
         /// In a derived class, implments logic to handle the window resizing.
         /// </summary>
         protected virtual void OnResize() {
+
+        }
+
+        /// <summary>
+        /// In a derived class, implements logic to handle the case of the window being minimized.
+        /// </summary>
+        protected virtual void OnMinimize() {
+
+        }
+
+        /// <summary>
+        /// In a derived class, implements logic to handle the case of the window being maximized.
+        /// </summary>
+        protected virtual void OnMaximize() {
 
         }
         /// <summary>
@@ -283,6 +309,9 @@ namespace SlimDX.SampleFramework {
                 frameAccumulator = 0.0f;
                 frameCount = 0;
             }
+
+            if(form.WindowState == FormWindowState.Minimized)
+                return;
 
             OnRenderBegin();
             OnRender();
