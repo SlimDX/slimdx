@@ -24,6 +24,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using SlimDX.Direct3D9;
+using SlimDX.DXGI;
 using SlimDX.Windows;
 
 namespace SlimDX.SampleFramework {
@@ -123,16 +124,18 @@ namespace SlimDX.SampleFramework {
             form.KeyDown += HandleKeyDown;
             form.KeyUp += HandleKeyUp;
             form.Resize += (o, args) => {
-                               if (form.WindowState != currentFormWindowState)
-                                   HandleResize(o, args);
-                               currentFormWindowState = form.WindowState;
-                           };
+                if (form.WindowState != currentFormWindowState) {
+                    HandleResize(o, args);
+                }
+
+                currentFormWindowState = form.WindowState;
+            };
 
             form.ResizeBegin += (o, args) => { formIsResizing = true; };
             form.ResizeEnd += (o, args) => {
-                                  formIsResizing = false;
-                                  HandleResize(o, args);
-                              };
+                formIsResizing = false;
+                HandleResize(o, args);
+            };
 
             form.Closed += (o, args) => { isFormClosed = true; };
 
@@ -146,15 +149,15 @@ namespace SlimDX.SampleFramework {
 
             clock.Start();
             MessagePump.Run(form, () => {
-                                      if (isFormClosed) {
-                                          return;
-                                      }
+                if (isFormClosed) {
+                    return;
+                }
 
-                                      Update();
+                Update();
 
-                                      if (!formIsResizing)
-                                          Render();
-                                  });
+                if (!formIsResizing)
+                    Render();
+            });
 
             OnResourceUnload();
         }
@@ -171,43 +174,33 @@ namespace SlimDX.SampleFramework {
         /// <summary>
         /// In a derived class, implements logic to initialize the sample.
         /// </summary>
-        protected virtual void OnInitialize() {}
+        protected virtual void OnInitialize() { }
 
-        protected virtual void OnResourceLoad() {}
+        protected virtual void OnResourceLoad() { }
 
-        protected virtual void OnResourceUnload() {}
-
-        /// <summary>
-        /// In a derived class, implements logic to handle the case of the window being minimized.
-        /// </summary>
-        protected virtual void OnMinimize() {}
-
-        /// <summary>
-        /// In a derived class, implements logic to handle the case of the window being maximized.
-        /// </summary>
-        protected virtual void OnMaximize() {}
+        protected virtual void OnResourceUnload() { }
 
         /// <summary>
         /// In a derived class, implements logic to update any relevant sample state.
         /// </summary>
-        protected virtual void OnUpdate() {}
+        protected virtual void OnUpdate() { }
 
         /// <summary>
         /// In a derived class, implements logic to render the sample.
         /// </summary>
-        protected virtual void OnRender() {}
+        protected virtual void OnRender() { }
 
         /// <summary>
         /// In a derived class, implements logic that should occur before all
         /// other rendering.
         /// </summary>
-        protected virtual void OnRenderBegin() {}
+        protected virtual void OnRenderBegin() { }
 
         /// <summary>
         /// In a derived class, implements logic that should occur after all
         /// other rendering.
         /// </summary>
-        protected virtual void OnRenderEnd() {}
+        protected virtual void OnRenderEnd() { }
 
         /// <summary>
         /// Initializes a <see cref="DeviceContext2D">Direct2D device context</see> according to the specified settings.
@@ -293,7 +286,7 @@ namespace SlimDX.SampleFramework {
             frameAccumulator += FrameDelta;
             ++frameCount;
             if (frameAccumulator >= 1.0f) {
-                framesPerSecond.Value = frameCount/frameAccumulator;
+                framesPerSecond.Value = frameCount / frameAccumulator;
 
                 frameAccumulator = 0.0f;
                 frameCount = 0;
@@ -312,30 +305,57 @@ namespace SlimDX.SampleFramework {
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
-        private void HandleMouseClick(object sender, MouseEventArgs e) {}
+        private void HandleMouseClick(object sender, MouseEventArgs e) { }
 
         /// <summary>
         /// Handles a key down event.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.Windows.Forms.KeyEventArgs"/> instance containing the event data.</param>
-        private void HandleKeyDown(object sender, KeyEventArgs e) {}
+        private void HandleKeyDown(object sender, KeyEventArgs e) { }
 
         /// <summary>
         /// Handles a key up event.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.Windows.Forms.KeyEventArgs"/> instance containing the event data.</param>
-        private void HandleKeyUp(object sender, KeyEventArgs e) {}
+        private void HandleKeyUp(object sender, KeyEventArgs e) {
+            if(e.Alt && e.KeyCode == Keys.Enter) {
+                OnResourceUnload();
 
+                isFullScreen = !isFullScreen;
+
+                if (Context9 != null) {
+                    userInterfaceRenderer.Dispose();
+
+                    Context9.PresentParameters.BackBufferWidth = configuration.WindowWidth;
+                    Context9.PresentParameters.BackBufferHeight = configuration.WindowHeight;
+                    Context9.PresentParameters.Windowed = !isFullScreen;
+
+                    if(!isFullScreen)
+                        form.MaximizeBox = true;
+
+                    Context9.Device.Reset(Context9.PresentParameters);
+
+                    userInterfaceRenderer = new UserInterfaceRenderer9(Context9.Device, form.ClientSize.Width, form.ClientSize.Height);
+                } else if (Context10 != null) {
+                    userInterfaceRenderer.Dispose();
+
+                    Context10.SwapChain.ResizeBuffers(1, WindowWidth, WindowHeight, Context10.SwapChain.Description.ModeDescription.Format, SwapChainFlags.AllowModeSwitch);
+                    Context10.SwapChain.SetFullScreenState(isFullScreen, null);
+
+                    userInterfaceRenderer = new UserInterfaceRenderer10(Context10.Device, WindowWidth, WindowHeight);
+                }
+
+                OnResourceLoad();
+            }
+        }
+
+        private bool isFullScreen = false;
         private void HandleResize(object sender, EventArgs e) {
             if (form.WindowState == FormWindowState.Minimized) {
-                OnMinimize();
                 return;
             }
-
-            if (form.WindowState == FormWindowState.Maximized)
-                OnMaximize();
 
             OnResourceUnload();
 
@@ -351,8 +371,7 @@ namespace SlimDX.SampleFramework {
                 Context9.Device.Reset(Context9.PresentParameters);
 
                 userInterfaceRenderer = new UserInterfaceRenderer9(Context9.Device, form.ClientSize.Width, form.ClientSize.Height);
-            }
-            else if (Context10 != null) {
+            } else if (Context10 != null) {
                 userInterfaceRenderer.Dispose();
 
                 Context10.SwapChain.ResizeBuffers(1, WindowWidth, WindowHeight, Context10.SwapChain.Description.ModeDescription.Format, Context10.SwapChain.Description.Flags);
