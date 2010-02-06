@@ -46,7 +46,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/MP"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\external\Boost\&quot;;&quot;$(DXSDK_DIR)\Utilities\Source\Effects11\Inc&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)..\external\Boost\&quot;;&quot;$(DXSDK_DIR)\Samples\C++\Effects11\Inc&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;D3D_DEBUG_INFO;WINVER=0x501;_WIN32_WINNT=0x501;DIRECTINPUT_VERSION=0x0800;BOOST_ALL_NO_LIB"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
