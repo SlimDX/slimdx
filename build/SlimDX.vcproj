@@ -5924,6 +5924,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\direct3d11\ShaderReflection11.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d11\ShaderReflection11.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\direct3d11\ShaderSignature11.cpp"
 					>
 				</File>
