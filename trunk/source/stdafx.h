@@ -36,6 +36,7 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 #include <d3d11.h>
+#include <d3d11shader.h>
 #include <d3dx11.h>
 #include <d3dcsx.h>
 #include <d2d1.h>
@@ -49,6 +50,8 @@
 #include <audiodefs.h>
 #include <xapo.h>
 #include <xapobase.h>
+
+#include <d3dcompiler.h>
 
 #include <memory>
 #include <stdexcept>

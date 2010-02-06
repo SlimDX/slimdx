@@ -23,9 +23,8 @@
 
 #include "Direct3D11Exception.h"
 
-#include "ClassLinkage11.h"
-#include "ClassInstance11.h"
-#include "Device11.h"
+#include "ShaderReflection11.h"
+#include "ShaderBytecode11.h"
 
 using namespace System;
 
@@ -33,28 +32,44 @@ namespace SlimDX
 {
 namespace Direct3D11
 {
-	ClassLinkage::ClassLinkage( Direct3D11::Device^ device )
+	ShaderReflection::ShaderReflection( ShaderBytecode^ byteCode )
 	{
-		ID3D11ClassLinkage* result = 0;
-		HRESULT hr = device->InternalPointer->CreateClassLinkage( &result );
+		ID3D11ShaderReflection* result = 0;
+		HRESULT hr = D3DReflect( byteCode->InternalPointer->GetBufferPointer(), byteCode->InternalPointer->GetBufferSize(), IID_ID3D11ShaderReflection, reinterpret_cast<void**>( &result ) );
 		if( RECORD_D3D11( hr ).IsFailure )
 			throw gcnew Direct3D11Exception( Result::Last );
 
 		Construct( result );
 	}
-
-
-	ClassInstance^ ClassLinkage::GetInstance( String^ name, int index )
+	
+	int ShaderReflection::BitwiseInstructionCount::get()
 	{
-		ID3D11ClassInstance *pointer;
-		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
-		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
-
-		HRESULT hr = InternalPointer->GetClassInstance( reinterpret_cast<LPCSTR>( pinnedName ), index, &pointer );
-		if( RECORD_D3D11( hr ).IsFailure )
-			return nullptr;
-
-		return ClassInstance::FromPointer( pointer );
+		return InternalPointer->GetBitwiseInstructionCount();
+	}
+	
+	int ShaderReflection::ConversionInstructionCount::get()
+	{
+		return InternalPointer->GetConversionInstructionCount();
+	}
+	
+	int ShaderReflection::MoveInstructionCount::get()
+	{
+		return InternalPointer->GetMovInstructionCount();
+	}
+	
+	int ShaderReflection::ConditionalMoveInstructionCount::get()
+	{
+		return InternalPointer->GetMovcInstructionCount() ;
+	}
+	
+	int ShaderReflection::InterfaceSlotCount::get()
+	{
+		return InternalPointer->GetNumInterfaceSlots();
+	}
+	
+	bool ShaderReflection::IsSampleFrequencyShader::get()
+	{
+		return InternalPointer->IsSampleFrequencyShader();
 	}
 }
 }
