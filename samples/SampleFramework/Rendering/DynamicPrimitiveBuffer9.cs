@@ -83,7 +83,7 @@ namespace SlimDX.SampleFramework {
             buffer = new D3D.VertexBuffer(
                 device,
                 sizeInBytes,
-                D3D.Usage.Dynamic,
+                D3D.Usage.Dynamic | D3D.Usage.WriteOnly,
                 D3D.VertexFormat.None,
                 D3D.Pool.Default
             );
