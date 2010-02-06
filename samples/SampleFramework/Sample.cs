@@ -26,6 +26,7 @@ using System.Windows.Forms;
 using SlimDX.Direct3D9;
 using SlimDX.DXGI;
 using SlimDX.Windows;
+using System.Threading;
 
 namespace SlimDX.SampleFramework {
     /// <summary>
@@ -86,8 +87,8 @@ namespace SlimDX.SampleFramework {
         /// Disposes of object resources.
         /// </summary>
         public void Dispose() {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            Dispose( true );
+            GC.SuppressFinalize( this );
         }
 
         /// <summary>
@@ -95,9 +96,9 @@ namespace SlimDX.SampleFramework {
         /// </summary>
         /// <param name="disposeManagedResources">If true, managed resources should be
         /// disposed of in addition to unmanaged resources.</param>
-        protected virtual void Dispose(bool disposeManagedResources) {
-            if (disposeManagedResources) {
-                if (userInterfaceRenderer != null) {
+        protected virtual void Dispose( bool disposeManagedResources ) {
+            if( disposeManagedResources ) {
+                if( userInterfaceRenderer != null ) {
                     userInterfaceRenderer.Dispose();
                 }
 
@@ -111,8 +112,8 @@ namespace SlimDX.SampleFramework {
         /// </summary>
         public void Run() {
             configuration = OnConfigure();
-            form = new RenderForm(configuration.WindowTitle) {
-                ClientSize = new Size(configuration.WindowWidth, configuration.WindowHeight)
+            form = new RenderForm( configuration.WindowTitle ) {
+                ClientSize = new Size( configuration.WindowWidth, configuration.WindowHeight )
             };
 
             currentFormWindowState = form.WindowState;
@@ -123,41 +124,40 @@ namespace SlimDX.SampleFramework {
             form.MouseClick += HandleMouseClick;
             form.KeyDown += HandleKeyDown;
             form.KeyUp += HandleKeyUp;
-            form.Resize += (o, args) => {
-                if (form.WindowState != currentFormWindowState) {
-                    HandleResize(o, args);
+            form.Resize += ( o, args ) => {
+                if( form.WindowState != currentFormWindowState ) {
+                    HandleResize( o, args );
                 }
 
                 currentFormWindowState = form.WindowState;
             };
 
-            form.ResizeBegin += (o, args) => { formIsResizing = true; };
-            form.ResizeEnd += (o, args) => {
+            form.ResizeBegin += ( o, args ) => { formIsResizing = true; };
+            form.ResizeEnd += ( o, args ) => {
                 formIsResizing = false;
-                HandleResize(o, args);
+                HandleResize( o, args );
             };
 
-            form.Closed += (o, args) => { isFormClosed = true; };
+            form.Closed += ( o, args ) => { isFormClosed = true; };
 
             userInterface = new UserInterface();
             var stats = new Element();
-            stats.SetBinding("Label", framesPerSecond);
-            userInterface.Container.Add(stats);
+            stats.SetBinding( "Label", framesPerSecond );
+            userInterface.Container.Add( stats );
 
             OnInitialize();
             OnResourceLoad();
 
             clock.Start();
-            MessagePump.Run(form, () => {
-                if (isFormClosed) {
+            MessagePump.Run( form, () => {
+                if( isFormClosed ) {
                     return;
                 }
 
                 Update();
-
-                if (!formIsResizing)
+                if( !formIsResizing )
                     Render();
-            });
+            } );
 
             OnResourceUnload();
         }
@@ -208,8 +208,8 @@ namespace SlimDX.SampleFramework {
         /// </summary>
         /// <param name="settings">The settings.</param>
         /// <returns>The initialized device context.</returns>
-        protected void InitializeDevice(DeviceSettings2D settings) {
-            var result = new DeviceContext2D(form.Handle, settings);
+        protected void InitializeDevice( DeviceSettings2D settings ) {
+            var result = new DeviceContext2D( form.Handle, settings );
             //userInterfaceRenderer = new UserInterfaceRenderer9( result.Device, settings.Width, settings.Height );
             apiContext = result;
             Context2D = result;
@@ -221,9 +221,9 @@ namespace SlimDX.SampleFramework {
         /// </summary>
         /// <param name="settings">The settings.</param>
         /// <returns>The initialized device context.</returns>
-        protected void InitializeDevice(DeviceSettings9 settings) {
-            var result = new DeviceContext9(form.Handle, settings);
-            userInterfaceRenderer = new UserInterfaceRenderer9(result.Device, settings.Width, settings.Height);
+        protected void InitializeDevice( DeviceSettings9 settings ) {
+            var result = new DeviceContext9( form.Handle, settings );
+            userInterfaceRenderer = new UserInterfaceRenderer9( result.Device, settings.Width, settings.Height );
             apiContext = result;
             Context9 = result;
         }
@@ -234,9 +234,9 @@ namespace SlimDX.SampleFramework {
         /// </summary>
         /// <param name="settings">The settings.</param>
         /// <returns>The initialized device context.</returns>
-        protected void InitializeDevice(DeviceSettings10 settings) {
-            var result = new DeviceContext10(form.Handle, settings);
-            userInterfaceRenderer = new UserInterfaceRenderer10(result.Device, settings.Width, settings.Height);
+        protected void InitializeDevice( DeviceSettings10 settings ) {
+            var result = new DeviceContext10( form.Handle, settings );
+            userInterfaceRenderer = new UserInterfaceRenderer10( result.Device, settings.Width, settings.Height );
             apiContext = result;
             Context10 = result;
         }
@@ -260,6 +260,7 @@ namespace SlimDX.SampleFramework {
         private RenderForm form;
         private float frameAccumulator;
         private int frameCount;
+        private bool deviceLost = false;
         private UserInterface userInterface;
         private UserInterfaceRenderer userInterfaceRenderer;
 
@@ -267,7 +268,7 @@ namespace SlimDX.SampleFramework {
         /// Performs object finalization.
         /// </summary>
         ~Sample() {
-            Dispose(false);
+            Dispose( false );
         }
 
         /// <summary>
@@ -283,21 +284,45 @@ namespace SlimDX.SampleFramework {
         /// Renders the sample.
         /// </summary>
         private void Render() {
+            if( deviceLost ) {
+                // This should only become true if we're using D3D9, so we can assume the
+                // D3D9 context is valid at this point.
+                if( Context9.Device.TestCooperativeLevel() == SlimDX.Direct3D9.ResultCode.DeviceNotReset ) {
+                    Context9.Device.Reset( Context9.PresentParameters );
+                    deviceLost = false;
+                    userInterfaceRenderer = new UserInterfaceRenderer9( Context9.Device, WindowWidth, WindowHeight );
+                    OnResourceLoad();
+                } else {
+                    Thread.Sleep( 100 );
+                    return;
+                }
+            }
+
             frameAccumulator += FrameDelta;
             ++frameCount;
-            if (frameAccumulator >= 1.0f) {
+            if( frameAccumulator >= 1.0f ) {
                 framesPerSecond.Value = frameCount / frameAccumulator;
 
                 frameAccumulator = 0.0f;
                 frameCount = 0;
             }
 
-            OnRenderBegin();
-            OnRender();
-            if (userInterfaceRenderer != null) {
-                userInterfaceRenderer.Render(userInterface);
+            try {
+                OnRenderBegin();
+                OnRender();
+                if( userInterfaceRenderer != null ) {
+                    userInterfaceRenderer.Render( userInterface );
+                }
+                OnRenderEnd();
+            } catch( SlimDX.Direct3D9.Direct3D9Exception e ) {
+                if( e.ResultCode == SlimDX.Direct3D9.ResultCode.DeviceLost ) {
+                    OnResourceUnload();
+                    userInterfaceRenderer.Dispose();
+                    deviceLost = true;
+                } else {
+                    throw;
+                }
             }
-            OnRenderEnd();
         }
 
         /// <summary>
@@ -305,46 +330,46 @@ namespace SlimDX.SampleFramework {
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.Windows.Forms.MouseEventArgs"/> instance containing the event data.</param>
-        private void HandleMouseClick(object sender, MouseEventArgs e) { }
+        private void HandleMouseClick( object sender, MouseEventArgs e ) { }
 
         /// <summary>
         /// Handles a key down event.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.Windows.Forms.KeyEventArgs"/> instance containing the event data.</param>
-        private void HandleKeyDown(object sender, KeyEventArgs e) { }
+        private void HandleKeyDown( object sender, KeyEventArgs e ) { }
 
         /// <summary>
         /// Handles a key up event.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.Windows.Forms.KeyEventArgs"/> instance containing the event data.</param>
-        private void HandleKeyUp(object sender, KeyEventArgs e) {
-            if(e.Alt && e.KeyCode == Keys.Enter) {
+        private void HandleKeyUp( object sender, KeyEventArgs e ) {
+            if( e.Alt && e.KeyCode == Keys.Enter ) {
                 OnResourceUnload();
 
                 isFullScreen = !isFullScreen;
 
-                if (Context9 != null) {
+                if( Context9 != null ) {
                     userInterfaceRenderer.Dispose();
 
                     Context9.PresentParameters.BackBufferWidth = configuration.WindowWidth;
                     Context9.PresentParameters.BackBufferHeight = configuration.WindowHeight;
                     Context9.PresentParameters.Windowed = !isFullScreen;
 
-                    if(!isFullScreen)
+                    if( !isFullScreen )
                         form.MaximizeBox = true;
 
-                    Context9.Device.Reset(Context9.PresentParameters);
+                    Context9.Device.Reset( Context9.PresentParameters );
 
-                    userInterfaceRenderer = new UserInterfaceRenderer9(Context9.Device, form.ClientSize.Width, form.ClientSize.Height);
-                } else if (Context10 != null) {
+                    userInterfaceRenderer = new UserInterfaceRenderer9( Context9.Device, form.ClientSize.Width, form.ClientSize.Height );
+                } else if( Context10 != null ) {
                     userInterfaceRenderer.Dispose();
 
-                    Context10.SwapChain.ResizeBuffers(1, WindowWidth, WindowHeight, Context10.SwapChain.Description.ModeDescription.Format, SwapChainFlags.AllowModeSwitch);
-                    Context10.SwapChain.SetFullScreenState(isFullScreen, null);
+                    Context10.SwapChain.ResizeBuffers( 1, WindowWidth, WindowHeight, Context10.SwapChain.Description.ModeDescription.Format, SwapChainFlags.AllowModeSwitch );
+                    Context10.SwapChain.SetFullScreenState( isFullScreen, null );
 
-                    userInterfaceRenderer = new UserInterfaceRenderer10(Context10.Device, WindowWidth, WindowHeight);
+                    userInterfaceRenderer = new UserInterfaceRenderer10( Context10.Device, WindowWidth, WindowHeight );
                 }
 
                 OnResourceLoad();
@@ -352,8 +377,8 @@ namespace SlimDX.SampleFramework {
         }
 
         private bool isFullScreen = false;
-        private void HandleResize(object sender, EventArgs e) {
-            if (form.WindowState == FormWindowState.Minimized) {
+        private void HandleResize( object sender, EventArgs e ) {
+            if( form.WindowState == FormWindowState.Minimized ) {
                 return;
             }
 
@@ -362,22 +387,22 @@ namespace SlimDX.SampleFramework {
             configuration.WindowWidth = form.ClientSize.Width;
             configuration.WindowHeight = form.ClientSize.Height;
 
-            if (Context9 != null) {
+            if( Context9 != null ) {
                 userInterfaceRenderer.Dispose();
 
                 Context9.PresentParameters.BackBufferWidth = configuration.WindowWidth;
                 Context9.PresentParameters.BackBufferHeight = configuration.WindowHeight;
 
-                Context9.Device.Reset(Context9.PresentParameters);
+                Context9.Device.Reset( Context9.PresentParameters );
 
-                userInterfaceRenderer = new UserInterfaceRenderer9(Context9.Device, form.ClientSize.Width, form.ClientSize.Height);
-            } else if (Context10 != null) {
+                userInterfaceRenderer = new UserInterfaceRenderer9( Context9.Device, form.ClientSize.Width, form.ClientSize.Height );
+            } else if( Context10 != null ) {
                 userInterfaceRenderer.Dispose();
 
-                Context10.SwapChain.ResizeBuffers(1, WindowWidth, WindowHeight, Context10.SwapChain.Description.ModeDescription.Format, Context10.SwapChain.Description.Flags);
+                Context10.SwapChain.ResizeBuffers( 1, WindowWidth, WindowHeight, Context10.SwapChain.Description.ModeDescription.Format, Context10.SwapChain.Description.Flags );
 
 
-                userInterfaceRenderer = new UserInterfaceRenderer10(Context10.Device, form.ClientSize.Width, form.ClientSize.Height);
+                userInterfaceRenderer = new UserInterfaceRenderer10( Context10.Device, form.ClientSize.Width, form.ClientSize.Height );
             }
 
             OnResourceLoad();
