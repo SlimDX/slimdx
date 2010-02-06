@@ -7,6 +7,7 @@ Samples
 	* Added D3D10 Simple Model sample.
 	* Added D3D9 Simple Triangle sample.
 	* Added D2D Simple Triangle sample.
+	* Removed several samples based on the old sample framework.
 
 DXGI
 	* Added FromSwapChain method so Surface
@@ -43,13 +44,14 @@ Direct3D 11
 	* Added int and bool vector setter support to EffectVectorVariable.
 	* Added support for unordered access view variables.
 	* Added a constructor for the ClassLinkage interface.
+	* Added ShaderReflection interface.
 	* Deprecated InputLayout constructor taking (device, elements, signature) in favor of one taking (device, signature, elements).
 	* Removed the dependence on D3D10 by duplicating ShaderBytecode and friends.
 	* Changed Effect construction to take a ShaderBytecode for the source data.
 	* Changed Effect construction to use EffectFlags rather than bare integers.
 	
 DirectWrite
-	* Filled in tons of missing functionality.
+	* Added a large volume of missing functionality.
 	
 XAPO
 	* Implemented XAPO.
