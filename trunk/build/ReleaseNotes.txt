@@ -20,6 +20,7 @@ Direct3D 9
 	* Fixed a bug that would cause EffectStateManager methods to crash if a null shader or texture was passed to them.
 	* Fixed a memory leak in EffectStateManager by making implicit shaders ancillary objects.
 	* Updated ConstantTable to use a generic SetValue method instead of individual methods.
+	* Changed reference semantics for GetBackBuffer method, you must dispose of the object returned yourself.
 	
 Direct3D 10
 	* Added InputElement.AppendAligned property.
