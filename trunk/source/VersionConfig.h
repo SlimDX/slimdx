@@ -24,7 +24,7 @@
 #define STRINGIFY(x) #x
 #define TO_STRING(x) STRINGIFY(x)
 
-#define SLIMDX_VERSION_NAME "August 2009"
+#define SLIMDX_VERSION_NAME "February 2010"
 
 #define SLIMDX_D3DX_VERSION 42
 #define SLIMDX_XAUDIO2_VERSION 24

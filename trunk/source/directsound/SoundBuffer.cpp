@@ -114,7 +114,7 @@ namespace DirectSound
 		stream1->WriteRange( data, startIndex, count1 );
 
 		if( stream2 != nullptr && count > count1 )
-			stream2->WriteRange( data, count1 + startIndex, count - count1 );
+			stream2->WriteRange( data, count1 + startIndex, static_cast<int>( stream2->Length ) / sizeof(T) );
 
 		return Unlock( stream1, stream2 );
 	}
