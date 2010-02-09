@@ -59,7 +59,7 @@ namespace Direct3D11
 		if( RECORD_D3D11( hr ).IsFailure )
 			return nullptr;
 
-		ShaderSignature^ result = gcnew ShaderSignature( reinterpret_cast<const BYTE*>( blob->GetBufferPointer() ), blob->GetBufferSize() );
+		ShaderSignature^ result = gcnew ShaderSignature( reinterpret_cast<const BYTE*>( blob->GetBufferPointer() ), static_cast<UINT>( blob->GetBufferSize() ) );
 		blob->Release();
 		return result;
 	}
@@ -72,7 +72,7 @@ namespace Direct3D11
 		if( RECORD_D3D11( hr ).IsFailure )
 			return nullptr;
 
-		ShaderSignature^ result = gcnew ShaderSignature( reinterpret_cast<const BYTE*>( blob->GetBufferPointer() ), blob->GetBufferSize() );
+		ShaderSignature^ result = gcnew ShaderSignature( reinterpret_cast<const BYTE*>( blob->GetBufferPointer() ), static_cast<UINT>( blob->GetBufferSize() ) );
 		blob->Release();
 		return result;
 	}
@@ -85,7 +85,7 @@ namespace Direct3D11
 		if( RECORD_D3D11( hr ).IsFailure )
 			return nullptr;
 
-		ShaderSignature^ result = gcnew ShaderSignature( reinterpret_cast<const BYTE*>( blob->GetBufferPointer() ), blob->GetBufferSize() );
+		ShaderSignature^ result = gcnew ShaderSignature( reinterpret_cast<const BYTE*>( blob->GetBufferPointer() ), static_cast<UINT>( blob->GetBufferSize() ) );
 		blob->Release();
 		return result;
 	}

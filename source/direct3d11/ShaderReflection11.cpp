@@ -69,7 +69,7 @@ namespace Direct3D11
 	
 	bool ShaderReflection::IsSampleFrequencyShader::get()
 	{
-		return InternalPointer->IsSampleFrequencyShader();
+		return InternalPointer->IsSampleFrequencyShader() > 0;
 	}
 }
 }
