@@ -2,18 +2,19 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System;
+using System.Resources;
 
 [assembly: System.Web.UI.TagPrefix("DocSite", "DocSite")]
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SlimDX Documentation (March 2009)")]
-[assembly: AssemblyDescription("SlimDX Documentation March 2009")]
+[assembly: AssemblyTitle("SlimDX Documentation (February 2010)")]
+[assembly: AssemblyDescription("SlimDX Documentation February 2010")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SlimDX Group")]
 [assembly: AssemblyProduct("SlimDX Documentation")]
-[assembly: AssemblyCopyright("Copyright © 2009 SlimDX Group")]
+[assembly: AssemblyCopyright("Copyright © 2007-2010 SlimDX Group")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: CLSCompliant(false)]
@@ -35,3 +36,4 @@ using System;
 //
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: NeutralResourcesLanguageAttribute("en-US")]

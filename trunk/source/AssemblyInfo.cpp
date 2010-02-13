@@ -38,7 +38,7 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyConfigurationAttribute("")];
 [assembly:AssemblyCompanyAttribute("SlimDX Group")];
 [assembly:AssemblyProductAttribute("SlimDX")];
-[assembly:AssemblyCopyrightAttribute("Copyright © 2007-2009 SlimDX Group")];
+[assembly:AssemblyCopyrightAttribute("Copyright © 2007-2010 SlimDX Group")];
 [assembly:AssemblyTrademarkAttribute("")];
 [assembly:AssemblyCultureAttribute("")];
 
@@ -53,7 +53,7 @@ using namespace System::Security::Permissions;
 // You can specify all the value or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
 
-[assembly:AssemblyVersionAttribute("2.0.8.42")];
+[assembly:AssemblyVersionAttribute("2.0.9.42")];
 
 [assembly:ComVisible(false)];
 
