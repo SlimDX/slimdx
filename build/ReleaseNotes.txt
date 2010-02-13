@@ -10,7 +10,7 @@ Samples
 	* Removed several samples based on the old sample framework.
 
 DXGI
-	* Added FromSwapChain method so Surface
+	* Added FromSwapChain method to Surface
 	
 Direct3D 9
 	* Added VertexTextureSampler enumeration.

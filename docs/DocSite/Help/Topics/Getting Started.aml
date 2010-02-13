@@ -17,7 +17,7 @@
           We recommend
           <externalLink>
             <linkText>Visual C# Express</linkText>
-            <linkUri>http://www.microsoft.com/express/vcsharp/Default.aspx</linkUri>
+            <linkUri>http://www.microsoft.com/express/Downloads/#2008-Visual-CS</linkUri>
           </externalLink>, but any similar tool should work just fine.
           It's also recommended that you download the latest DirectX SDK from the
           <externalLink>
@@ -46,7 +46,7 @@
         </para>
         <para>
           You can also download and compile the SlimDX source code yourself.
-          This will require a Visual C++ 2005 or 2008 installation that is correctly set up to compile DirectX applications and is recommended for advanced users only.
+          This will require a Visual C++ 2008 installation that is correctly set up to compile DirectX applications and is recommended for advanced users only.
           In order to download the source, you will need a Subversion client, such as TortoiseSVN or SmartSVN.
           Once one has been installed, create a new folder on your system where you would like the source downloaded, and perform an SVN Checkout into that directory.
           The exact process will vary depending on what client you have installed.

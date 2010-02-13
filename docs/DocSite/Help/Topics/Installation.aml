@@ -33,15 +33,15 @@
             </para>
           </listItem>
           <listItem>
-            DirectX Components (March 2009)
+            DirectX Components (February 2010)
             <para>
               Most SlimDX based applications will also want to use at least some of DirectX.
               SlimDX is configured to <newTerm>delay load</newTerm> all of its DirectX DLL dependencies.
               This means that none of it is required until an application actually tries to use that component.
-              (Note that Direct3DX is forcibly loaded along with Direct3D in the March 2009 release; this may change in future versions.)
+              (Note that Direct3DX is forcibly loaded along with Direct3D in the February 2010 release; this may change in future versions.)
               Because SlimDX releases are matched with DirectX SDK releases, the versions of the two match up.
-              The March 2009 release of SlimDX is built on the March 2009 release of DirectX, which uses Direct3DX version 40.
-              An end user can install the March 2009 DirectX redistributable package, or any later version, and their system will be correctly configured.
+              The February 2010 release of SlimDX is built on the February 2010 release of DirectX, which uses Direct3DX version 42.
+              An end user can install the February 2010 DirectX redistributable package, or any later version, and their system will be correctly configured.
             </para>
           </listItem>
         </list>
@@ -63,8 +63,8 @@
           It also registers the signed SlimDX assembly in the Global Assembly Cache as a shared assembly, thus allowing other applications to use it as well.
           If you intend to set up SlimDX as a shared assembly, it is strongly recommended that you use the redistributable package.
           SlimDX versions can be identified in the GAC using the last two pieces of the version number (the first two match the base framework version, currently 2.0).
-          The third value is the SlimDX release number, which is 7 in the March 2009 release.
-          The last value corresponds to the Direct3DX version number for the SDK used to build SlimDX, which is 41 in the March 2009 release.
+          The third value is the SlimDX release number, which is 9 in the February 2010 release.
+          The last value corresponds to the Direct3DX version number for the SDK used to build SlimDX, which is 42 in the February 2010 release.
           Note that the source code for the redistributable is a WiX script and accompanying Visual Studio project, which is included in the SDK and may be customized if desired.
           Please read <link xlink:href="a2beac1b-ae9d-4695-8520-5731221e8f60">Integrating the Runtime</link> and <link xlink:href="ce55d4f2-33c3-4677-8ad4-e2ac0a56fa2e">Customizing the Runtime</link> for more information.
         </para>
