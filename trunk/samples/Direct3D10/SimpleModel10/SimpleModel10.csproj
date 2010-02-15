@@ -55,6 +55,7 @@
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
+    <NoWarn>1607</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
