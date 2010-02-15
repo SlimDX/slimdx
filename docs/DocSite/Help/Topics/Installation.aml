@@ -89,7 +89,7 @@
           The SlimDX runtime package is an MSI file, and can be run using this command line:
         </para>
         <para>
-          <command>msiexec /package "slimdx_mar09.msi"</command>
+          <command>msiexec /package "SlimDX Runtime (February 2010).msi"</command>
         </para>
         <para>
           Running <command>msiexec</command> without any parameters brings up a window with more available command line parameters.

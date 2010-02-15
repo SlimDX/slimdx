@@ -60,9 +60,10 @@
             <entry>
               <para>d3dx9_42.dll</para>
               <para>d3dx10_42.dll</para>
+              <para>d3dx11_42.dll</para>
               <para>d3dcsx_42.dll</para>
               <para>d3dcompiler_42.dll</para>
-              <para>x3daudio1_6.dll</para>
+              <para>x3daudio1_7.dll</para>
             </entry>
           </row>
 

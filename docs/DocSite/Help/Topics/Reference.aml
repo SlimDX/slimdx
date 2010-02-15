@@ -32,6 +32,12 @@
           </listItem>
           <listItem>
             <para>
+              <codeEntityReference>N:SlimDX.Direct2D</codeEntityReference>
+              - Contains classes and types for Direct2D graphics support.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
               <codeEntityReference>N:SlimDX.Direct3D10</codeEntityReference>
               - Contains classes and types for Direct3D 10 graphics support.
             </para>
@@ -40,6 +46,12 @@
             <para>
               <codeEntityReference>N:SlimDX.Direct3D10_1</codeEntityReference>
               - Contains classes and types for Direct3D 10.1 graphics support.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <codeEntityReference>N:SlimDX.Direct3D11</codeEntityReference>
+              - Contains classes and types for Direct3D 11 graphics support.
             </para>
           </listItem>
           <listItem>
@@ -58,6 +70,12 @@
             <para>
               <codeEntityReference>N:SlimDX.DirectSound</codeEntityReference>
               - Contains classes and types for DirectSound 8 support.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <codeEntityReference>N:SlimDX.DirectWrite</codeEntityReference>
+              - Contains classes and types for DirectWrite font and text support.
             </para>
           </listItem>
           <listItem>
@@ -88,6 +106,12 @@
             <para>
               <codeEntityReference>N:SlimDX.X3DAudio</codeEntityReference>
               - Contains classes and types for X3D Audio support.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              <codeEntityReference>N:SlimDX.XAPO</codeEntityReference>
+              - Contains classes and types for the cross platform audio processing object library (XAPO).
             </para>
           </listItem>
           <listItem>
