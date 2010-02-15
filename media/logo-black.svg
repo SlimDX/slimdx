@@ -15,7 +15,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.47 r22583"
-   sodipodi:docname="logo-black.svg">
+   sodipodi:docname="logo-black.svg"
+   inkscape:export-filename="D:\Promit\Documents\Projects\SlimDX\Main\trunk\media\logo-black-2000.png"
+   inkscape:export-xdpi="246.23276"
+   inkscape:export-ydpi="246.23276">
   <defs
      id="defs4">
     <linearGradient
@@ -259,9 +262,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="475.89126"
-     inkscape:cy="618.79123"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="665.80852"
+     inkscape:cy="607.15354"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -325,7 +328,7 @@
        id="path4203"
        d="m 224.00134,433.83316 18.68782,-25.00128 -33.0825,-39.14341 -35.60787,-0.25254 50.00255,64.39723 z"
        style="fill:#000000;fill-opacity:1;stroke:none;filter:url(#filter4205)"
-       transform="matrix(2.622975,0,0,2.622975,-274.95425,-663.87629)" />
+       transform="matrix(2.622975,0,0,2.622975,-277.98471,-663.37121)" />
     <path
        style="fill:#cdcdd9;fill-opacity:1;stroke:none"
        d="m 302.65964,473.56049 49.0177,-65.57773 -86.77458,-102.67219 -93.39856,-0.66242 131.15544,168.91234 z"
