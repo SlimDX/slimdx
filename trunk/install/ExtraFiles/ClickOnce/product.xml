@@ -2,7 +2,7 @@
 <Product xmlns="http://schemas.microsoft.com/developer/2004/01/bootstrapper" ProductCode="SlimDX.2.0.9.42">
   
   <PackageFiles>
-    <PackageFile Name="SlimDX Runtime (February 2010).msi" HomeSite="SlimDXHomeSite"/>
+    <PackageFile Name="SlimDX Runtime (February 2010).msi" HomeSite="SlimDXHomeSite" PublicKey="blah"/>
   </PackageFiles>
   
   <InstallChecks>
