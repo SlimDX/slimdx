@@ -135,7 +135,7 @@
     <Resource Include="Resources\lizard.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SlimDXControl\SlimDX.Wpf.csproj">
+    <ProjectReference Include="..\SlimDX.Wpf\SlimDX.Wpf.csproj">
       <Project>{493BFFF5-49B4-47BE-A98D-7724F5D90993}</Project>
       <Name>SlimDX.Wpf</Name>
     </ProjectReference>

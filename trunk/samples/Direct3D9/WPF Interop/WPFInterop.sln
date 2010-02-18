@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimDX.Wpf", "SlimDXControl\SlimDX.Wpf.csproj", "{493BFFF5-49B4-47BE-A98D-7724F5D90993}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfSample", "WpfSample\WpfSample.csproj", "{9693C3D4-DE3B-3395-9308-75C809CC84D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimDX.Wpf", "SlimDX.Wpf\SlimDX.Wpf.csproj", "{493BFFF5-49B4-47BE-A98D-7724F5D90993}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,6 @@ Global
 		Release_md|x86 = Release_md|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{493BFFF5-49B4-47BE-A98D-7724F5D90993}.Debug_md|x64.ActiveCfg = Debug_md|x64
-		{493BFFF5-49B4-47BE-A98D-7724F5D90993}.Debug_md|x64.Build.0 = Debug_md|x64
-		{493BFFF5-49B4-47BE-A98D-7724F5D90993}.Debug_md|x86.ActiveCfg = Debug_md|x86
-		{493BFFF5-49B4-47BE-A98D-7724F5D90993}.Debug_md|x86.Build.0 = Debug_md|x86
-		{493BFFF5-49B4-47BE-A98D-7724F5D90993}.Release_md|x64.ActiveCfg = Release_md|x64
-		{493BFFF5-49B4-47BE-A98D-7724F5D90993}.Release_md|x64.Build.0 = Release_md|x64
-		{493BFFF5-49B4-47BE-A98D-7724F5D90993}.Release_md|x86.ActiveCfg = Release_md|x86
-		{493BFFF5-49B4-47BE-A98D-7724F5D90993}.Release_md|x86.Build.0 = Release_md|x86
 		{9693C3D4-DE3B-3395-9308-75C809CC84D8}.Debug_md|x64.ActiveCfg = Debug_md|x64
 		{9693C3D4-DE3B-3395-9308-75C809CC84D8}.Debug_md|x64.Build.0 = Debug_md|x64
 		{9693C3D4-DE3B-3395-9308-75C809CC84D8}.Debug_md|x86.ActiveCfg = Debug_md|x86
@@ -29,6 +21,14 @@ Global
 		{9693C3D4-DE3B-3395-9308-75C809CC84D8}.Release_md|x64.Build.0 = Release_md|x64
 		{9693C3D4-DE3B-3395-9308-75C809CC84D8}.Release_md|x86.ActiveCfg = Release_md|x86
 		{9693C3D4-DE3B-3395-9308-75C809CC84D8}.Release_md|x86.Build.0 = Release_md|x86
+		{493BFFF5-49B4-47BE-A98D-7724F5D90993}.Debug_md|x64.ActiveCfg = Debug_md|x64
+		{493BFFF5-49B4-47BE-A98D-7724F5D90993}.Debug_md|x64.Build.0 = Debug_md|x64
+		{493BFFF5-49B4-47BE-A98D-7724F5D90993}.Debug_md|x86.ActiveCfg = Debug_md|x86
+		{493BFFF5-49B4-47BE-A98D-7724F5D90993}.Debug_md|x86.Build.0 = Debug_md|x86
+		{493BFFF5-49B4-47BE-A98D-7724F5D90993}.Release_md|x64.ActiveCfg = Release_md|x64
+		{493BFFF5-49B4-47BE-A98D-7724F5D90993}.Release_md|x64.Build.0 = Release_md|x64
+		{493BFFF5-49B4-47BE-A98D-7724F5D90993}.Release_md|x86.ActiveCfg = Release_md|x86
+		{493BFFF5-49B4-47BE-A98D-7724F5D90993}.Release_md|x86.Build.0 = Release_md|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
