@@ -1,4 +1,5 @@
-﻿// Copyright (c) 2010, LizardTech, a Celartem company
+﻿<!--
+// Copyright (c) 2010, LizardTech, a Celartem company
 // All rights reserved.
 //                                                              
 // Redistribution and use in source and binary forms, with or without
@@ -24,78 +25,22 @@
 // CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
+-->
 
-using System;
-using System.Windows;
-using System.Windows.Resources;
-using SlimDX;
-using SlimDX.Direct3D9;
-using System.IO;
-using System.Drawing;
-using SlimDX.Wpf;
-
-namespace WpfSample
-{
-   public class MyDataModel
-   {
-      private byte[] _buffer;
-      private SlimDXControl _control;
-
-      public MyDataModel(SlimDXControl slimDXControl, string imageName, Color color)
-      {
-         _control = slimDXControl;
-
-         Name = imageName;
-         Uri uri = new Uri("pack://application:,,,/Resources/" + imageName + ".png");
-
-         using (Stream s = Application.GetResourceStream(uri).Stream)
-         {
-            _buffer = new byte[s.Length];
-            s.Read(_buffer, 0, (int)s.Length);
-         }
-
-         Color = color;
-      }
-
-      public string Name
-      {
-         private set;
-         get;
-      }
-
-      public Stream Stream
-      {
-         get
-         {
-            MemoryStream ms = new MemoryStream(_buffer);
-            return ms;
-         }
-      }
-
-      private Color m_color;
-      public Color Color
-      {
-         get
-         {
-            return m_color;
-         }
-         set
-         {
-            if (m_color != value)
-            {
-               m_color = value;
-               Color4 = new Color4(m_color);
-               _control.ForceRendering();
-
-            }
-         }
-      }
-
-      public Color4 Color4
-      {
-         get;
-         private set;
-      }
-   }
-
-}
+<ContentControl x:Class="SlimDX.Wpf.SlimDXControl"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                xmlns:i="clr-namespace:System.Windows.Interop;assembly=PresentationCore"
+                HorizontalAlignment="Left" VerticalAlignment="Top"
+                HorizontalContentAlignment="Left" VerticalContentAlignment="Top"
+                SizeChanged="ContentControl_SizeChanged"
+                >
+   <Image Name="_image" 
+          MinWidth="50" MinHeight="50"
+          HorizontalAlignment="Left" VerticalAlignment="Top"
+          Stretch="None">
+      <Image.Source>
+         <i:D3DImage x:Name="_d3dimage"/>
+      </Image.Source>
+   </Image>
+</ContentControl>
