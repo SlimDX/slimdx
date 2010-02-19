@@ -25,6 +25,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>A handle to an effect or an object inside an effect.</summary>
+		/// <unmanaged>D3DXHANDLE</unmanaged>
 		public ref class EffectHandle : System::IEquatable<EffectHandle^>
 		{
 		private:
@@ -52,6 +54,7 @@ namespace SlimDX
 			static operator EffectHandle^ ( System::String^ name );
 
 			static bool operator == ( EffectHandle^ left, EffectHandle^ right );
+
 			static bool operator != ( EffectHandle^ left, EffectHandle^ right );
 
 			virtual int GetHashCode() override;
