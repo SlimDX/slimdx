@@ -47,7 +47,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="app.config" />
     <None Include="jupiter.SMD">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
