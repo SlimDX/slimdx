@@ -9,12 +9,12 @@
 	<div class="wrapper">    
     	<div class="paragraph">
 			<h1>What is SlimDX?</h1>
-			<p>SlimDX is a free open source framework that enables developers to easily build DirectX applications using .NET technologies such as C#, VB.NET, and !IronPython. 
+			<p>SlimDX is a free open source framework that enables developers to easily build DirectX applications using .NET technologies such as C#, VB.NET, and IronPython. 
       It is designed to be an efficient, simple, and lean wrapper that fully encompasses all of Microsoft's gaming and multimedia technologies and exposes them to managed code.
       All of the code is under the MIT/X11 license, and all content is under the Creative Commons Attribution-Share Alike license.
-      Our latest release is August 2009, and can be found for users and developers on the <a href="download.php">Download page</a>.
+      Our latest release is February 2010, and can be found for users and developers on the <a href="download.php">Download page</a>.
 			<br /><br />
-      Originally, the managed game development niche was filled by Microsoft's Managed DirectX, which is now deprecated and no longer recommended for new development. In it's wake, SlimDX has stepped up to provide support in a 
+      Originally, the managed game development niche was filled by Microsoft's Managed DirectX, which is now deprecated and no longer recommended for new development. In its wake, SlimDX has stepped up to provide support in a 
       way that is very similar to the original MDX libraries. While similar, however, they are not intended to be the same APIs. SlimDX exposes a broader range of technologies, has a core design that improves upon that provided 
       by MDX, and is more in-tune with managed methodologies since the advent of .NET 2.0. SlimDX is already widely used and can be found in several major multimedia and gaming applications.
       <br /><br />  

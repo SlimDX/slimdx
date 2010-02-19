@@ -1,6 +1,6 @@
 	<div class="footer">
 		<hr />
-		<p>Copyright (c) 2009 SlimDX Group. All Rights Reserved.</p>
+		<p>Copyright (c) 2009-2010 SlimDX Group. All Rights Reserved.</p>
 	</div>
 	
 <script type="text/javascript">
