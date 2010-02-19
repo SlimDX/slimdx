@@ -29,6 +29,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
+		/// <summary>Compiles an effect from a function or a vertex shader.</summary>
+		/// <unmanaged>ID3DXEffectCompiler</unmanaged>
 		public ref class EffectCompiler : public BaseEffect
 		{
 			COMOBJECT(ID3DXEffectCompiler, EffectCompiler);
