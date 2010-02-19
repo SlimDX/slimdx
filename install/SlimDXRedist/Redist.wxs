@@ -5,7 +5,7 @@
 <?define ShortName="Feb2010" ?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
-  <Product Id="*" Language="1033" Manufacturer="SlimDX Group" Name="SlimDX Redistributable ($(var.ReleaseName))" Version="$(var.Version)">
+  <Product Id="7748F5D9-4725-44f4-B1E8-3CB9BB843418" Language="1033" Manufacturer="SlimDX Group" Name="SlimDX Redistributable ($(var.ReleaseName))" Version="$(var.Version)">
     <Package Id="*" InstallerVersion="300" Compressed="yes" />
 
     <PropertyRef Id="NETFRAMEWORK20" />

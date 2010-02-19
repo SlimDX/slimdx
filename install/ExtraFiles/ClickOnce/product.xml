@@ -2,11 +2,11 @@
 <Product xmlns="http://schemas.microsoft.com/developer/2004/01/bootstrapper" ProductCode="SlimDX.2.0.9.42">
   
   <PackageFiles>
-    <PackageFile Name="SlimDX Runtime (February 2010).msi" HomeSite="SlimDXHomeSite" PublicKey="blah"/>
+    <PackageFile Name="SlimDX Runtime (February 2010).msi" />
   </PackageFiles>
   
   <InstallChecks>
-    <MsiProductCheck Property="IsInstalled" Product="**sdx-msi-guid**"/>
+    <MsiProductCheck Property="IsInstalled" Product="7748F5D9-4725-44f4-B1E8-3CB9BB843418"/>
   </InstallChecks>
   
   <Commands Reboot="Defer">

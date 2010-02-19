@@ -21,6 +21,7 @@ That means SlimDX.dll/pdb/xml for both platforms, and fresh docs.
 In SlimDXInstall.sln:
 Redist.wxs:
   Update version defines at the top of the file
+  Change the Product GUID (set this for ClickOnce product.xml as well)
   Update the DXRedist component for the correct CABs that haven't been updated this release. Luckily each filename is duplicated a couple times. Thanks WiX!
   Compile SlimDXRedist to make sure you've got those paths correct.
   There will be a huge list of warnings. They can be ignored.
