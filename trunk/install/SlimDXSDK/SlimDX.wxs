@@ -26,6 +26,15 @@
     <Property Id="ApplicationFolderName" Value="SlimDX SDK ($(var.ReleaseName))" />
     <Property Id="WIXUI_INSTALLDIR" Value="APPLICATIONFOLDER" />
 
+    <!-- VS Paths for ClickOnce -->
+    <Property Id="CLICKONCE_VS08">
+      <RegistrySearch Id="ClickOnce_VS08" Root="HKLM" Win64="no" Key="Software\Microsoft\GenericBootstrapper\3.5" Name="Path" Type="directory" />
+    </Property>
+
+    <Property Id="CLICKONCE_VS10">
+      <RegistrySearch Id="ClickOnce_VS10" Root="HKLM" Win64="no" Key="Software\Microsoft\GenericBootstrapper\4.0" Name="Path" Type="directory" />
+    </Property>
+
     <UI>
       <ProgressText Action="InstallDirectX">Installing DirectX runtime components ($(var.ReleaseName))</ProgressText>
     </UI>
@@ -196,6 +205,42 @@
           </Directory>
         </Directory>
       </Directory>
+
+      <Directory Id="CLICKONCE_VS08">
+        <Directory Id="PackagesVS08" Name="Packages">
+          <Directory Id="SlimDXClickOnce08" Name="SlimDX$(var.ShortName)_VS08">
+            <Component Id="ClickOnceProduct08" DiskId="1" Guid="0B851093-0BA6-4f2f-9781-AD4A2CF15191">
+              <File Id="ProductXml08" Name="Product.xml" Source="..\ExtraFiles\ClickOnce\product.xml" />
+              <File Id="Redist08" Name="SlimDX Runtime (February 2010).msi" Source="..\SlimDX Runtime (February 2010).msi" />
+            </Component>
+
+            <Directory Id="ClickOnceEn08" Name="en">
+              <Component Id="ClickOnceEn08" DiskId="1" Guid="CF8730B9-0151-4be5-A659-D3626E272BB8">
+                <File Id="PackageXml08" Name="package.xml" Source="..\ExtraFiles\ClickOnce\en\package.xml" />
+                <File Id="License08" Name="License.rtf" Source="..\ExtraFiles\License.rtf" />
+              </Component>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+
+      <Directory Id="CLICKONCE_VS10">
+        <Directory Id="PackagesVS10" Name="Packages">
+          <Directory Id="SlimDXClickOnce10" Name="SlimDX$(var.ShortName)_VS10">
+            <Component Id="ClickOnceProduct10" DiskId="1" Guid="C05AD47A-CAF9-4c76-A67C-4ABA0F65C70F">
+              <File Id="ProductXml10" Name="Product.xml" Source="..\ExtraFiles\ClickOnce\product.xml" />
+              <File Id="Redist10" Name="SlimDX Runtime (February 2010).msi" Source="..\SlimDX Runtime (February 2010).msi" />
+            </Component>
+
+            <Directory Id="ClickOnceEn10" Name="en">
+              <Component Id="ClickOnceEn10" DiskId="1" Guid="107F6F7C-556B-45d5-B372-1720BF9F9374">
+                <File Id="PackageXml10" Name="package.xml" Source="..\ExtraFiles\ClickOnce\en\package.xml" />
+                <File Id="License10" Name="License.rtf" Source="..\ExtraFiles\License.rtf" />
+              </Component>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
     </Directory>
 
     <DirectoryRef Id="TARGETDIR">
@@ -249,6 +294,7 @@
         </Condition>
       </Feature>
     </Feature>
+
     <Feature Id="Documentation" Level="1" AllowAdvertise="no"
              Title="Documentation" Description="SlimDX documentation in CHM format.">
       <ComponentRef Id="Documentation" />
@@ -256,11 +302,33 @@
     <Feature Id="Samples" Level="1" AllowAdvertise="no"
              Title="Samples" Description="SlimDX samples and sample framework.">
       <ComponentRef Id="Samples" />
-      <ComponentRef Id="SamplesShortcuts" />      
+      <ComponentRef Id="SamplesShortcuts" />
     </Feature>
+    
+    <Feature Id="ClickOnce" Level="1" AllowAdvertise="no"
+             Title="ClickOnce Support" Description="Support for ClickOnce distribution.">
+      <Feature Id="ClickOnce08" Level="0" AllowAdvertise="no"
+               Title="ClickOnce (VS 2008)" Description="Support for ClickOnce distribution in Visual Studio 2008.">
+        <Condition Level="1">
+          <![CDATA[Installed OR CLICKONCE_VS08]]>
+        </Condition>
+        <ComponentRef Id="ClickOnceProduct08" />
+        <ComponentRef Id="ClickOnceEn08" />
+      </Feature>
+      <Feature Id="ClickOnce10" Level="0" AllowAdvertise="no"
+               Title="ClickOnce (VS 2010)" Description="Support for ClickOnce distribution in Visual Studio 2010.">
+        <Condition Level="1">
+          <![CDATA[Installed OR CLICKONCE_VS10]]>
+        </Condition>
+        <ComponentRef Id="ClickOnceProduct10" />
+        <ComponentRef Id="ClickOnceEn10" />
+      </Feature>
+    </Feature>
+    
     <Feature Id="Shortcuts" Level="1" AllowAdvertise="no" Display="hidden"
              Title="Start menu shortcuts" Description="Start menu shortcuts to SlimDX.">
     </Feature>
+    
     <Feature Id="Licenses" Level="1" Absent="disallow" AllowAdvertise="no" Display="hidden">
       <ComponentRef Id="Licenses" />
     </Feature>
