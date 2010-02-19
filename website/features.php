@@ -19,14 +19,14 @@
 		<div class="paragraph">
 			<h2>Supported APIs</h2>
 			<p>	
-			SlimDX has full support for the following APIs in the March 2009 release:
+			SlimDX has full support for the following APIs in the February 2010 release:
 			<ul style="margin-left: 2em;">
 				<li>Math Library</li>
 				<li>Direct3D9</li>
 				<li>Direct3D9Ex</li>
 				<li>Direct3D10</li>
 				<li>Direct3D 10.1</li>
-				<li>Direct3D 11*</li>
+				<li>Direct3D 11</li>
 				<li>Direct2D</li>
 				<li>DirectWrite</li>
 				<li>DirectInput</li>
@@ -39,8 +39,6 @@
 				<li>XAudio2</li>
 				<li>XInput</li>
 			</ul>
-			* Although Direct3D 11 support is available, it's new and minimally tested.
-			It would be a good idea to stick with the current Subversion source tree of SlimDX if you're working with it.
 			</p>
 		</div>
 		
