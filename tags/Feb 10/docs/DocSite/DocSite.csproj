@@ -1,0 +1,636 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{39CED32B-8B35-4099-B167-F3B228BFE6B4}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DocSite</RootNamespace>
+    <AssemblyName>SlimDXDocSite</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DaveSexton.DocProject, Version=1.11.0.0, Culture=neutral, PublicKeyToken=af1a4bab65cc4ece, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DaveSexton.DocProject.DocSites, Version=1.0.1.0, Culture=neutral, PublicKeyToken=af1a4bab65cc4ece, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\DocSiteBreadcrumbs.ascx.cs">
+      <DependentUpon>DocSiteBreadcrumbs.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\DocSiteBreadcrumbs.ascx.designer.cs">
+      <DependentUpon>DocSiteBreadcrumbs.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DocSiteContents.ascx.cs">
+      <DependentUpon>DocSiteContents.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\DocSiteContents.ascx.designer.cs">
+      <DependentUpon>DocSiteContents.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DocSiteFooter.ascx.cs">
+      <DependentUpon>DocSiteFooter.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\DocSiteFooter.ascx.designer.cs">
+      <DependentUpon>DocSiteFooter.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DocSiteHeader.ascx.cs">
+      <DependentUpon>DocSiteHeader.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\DocSiteHeader.ascx.designer.cs">
+      <DependentUpon>DocSiteHeader.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DocSiteIndex.ascx.cs">
+      <DependentUpon>DocSiteIndex.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\DocSiteIndex.ascx.designer.cs">
+      <DependentUpon>DocSiteIndex.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DocSiteLetterBar.ascx.cs">
+      <DependentUpon>DocSiteLetterBar.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\DocSiteLetterBar.ascx.designer.cs">
+      <DependentUpon>DocSiteLetterBar.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DocSiteSidebar.ascx.cs">
+      <DependentUpon>DocSiteSidebar.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\DocSiteSidebar.ascx.designer.cs">
+      <DependentUpon>DocSiteSidebar.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="DocSiteAdmin.aspx.cs">
+      <DependentUpon>DocSiteAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DocSiteAdmin.aspx.designer.cs">
+      <DependentUpon>DocSiteAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DocSiteBrowseIndex.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>DocSiteBrowseIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DocSiteBrowseIndex.aspx.designer.cs">
+      <DependentUpon>DocSiteBrowseIndex.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DocSiteSearch.aspx.cs">
+      <DependentUpon>DocSiteSearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DocSiteSearch.aspx.designer.cs">
+      <DependentUpon>DocSiteSearch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DocSiteLogin.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>DocSiteLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DocSiteLogin.aspx.designer.cs">
+      <DependentUpon>DocSiteLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HelpFileNotFound.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>HelpFileNotFound.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HelpFileNotFound.aspx.designer.cs">
+      <DependentUpon>HelpFileNotFound.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BuildProcess.cs" />
+    <Compile Include="Default.aspx.cs">
+      <SubType>ASPXCodeBehind</SubType>
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DocSite.Master.cs">
+      <DependentUpon>DocSite.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DocSite.Master.designer.cs">
+      <DependentUpon>DocSite.Master</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Default.aspx" />
+    <Content Include="FileNotFound.htm" />
+    <Content Include="DocSite.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Themes\BasicBlue\Images\DocSiteBrowse.gif" />
+    <Content Include="App_Themes\BasicBlue\Images\DocSitePleaseWait.gif" />
+    <Content Include="App_Themes\BasicBlue\Images\DocSiteFilter.gif" />
+    <Content Include="App_Themes\BasicBlue\Images\DocSiteSave.gif" />
+    <Content Include="App_Themes\BasicBlue\Images\DocSiteBookmark.gif" />
+    <Content Include="App_Themes\BasicBlue\Images\DocSiteEmail.gif" />
+    <Content Include="App_Themes\BasicBlue\Images\DocSitePrint.gif" />
+    <Content Include="App_Themes\BasicBlue\Images\DocSiteRemoveKeyword.gif" />
+    <Content Include="App_Themes\BasicBlue\Styles\General.css" />
+    <Content Include="App_Themes\BasicBlue\Styles\Format.css" />
+    <Content Include="App_Themes\BasicBlue\Images\DocSiteSearch.gif" />
+    <Content Include="App_Themes\BasicBlue\Images\DocSiteSync.gif" />
+    <Content Include="App_Themes\BasicBlue\Styles\Header.css" />
+    <Content Include="App_Themes\BasicBlue\Styles\Index.css" />
+    <Content Include="App_Themes\BasicBlue\Styles\Master.css" />
+    <Content Include="App_Themes\BasicBlue\Styles\Sidebar.css" />
+    <Content Include="App_Themes\BasicBlue\Styles\Toc.css" />
+    <Content Include="Controls\DocSiteLetterBar.ascx" />
+    <Content Include="DocSiteAdmin.aspx" />
+    <Content Include="DocSiteBrowseIndex.aspx" />
+    <Content Include="DocSiteSearch.aspx" />
+    <Content Include="Controls\DocSiteBreadcrumbs.ascx" />
+    <Content Include="Controls\DocSiteContents.ascx" />
+    <Content Include="Controls\DocSiteFooter.ascx" />
+    <Content Include="Controls\DocSiteHeader.ascx" />
+    <Content Include="Controls\DocSiteIndex.ascx" />
+    <Content Include="Controls\DocSiteSidebar.ascx" />
+    <Content Include="App_Themes\BasicBlue\DocSite.skin" />
+    <Content Include="DocSiteLogin.aspx" />
+    <Content Include="Scripts\DocSiteScript.js" />
+    <Content Include="App_Themes\BasicBlue\DocSiteSearch.skin" />
+    <Content Include="App_Themes\BasicBlue\DocSiteBrowseIndex.skin" />
+    <Content Include="App_Themes\BasicBlue\DocSiteAdmin.skin" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DocSite.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\DocSiteAdmin.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\General.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\DocSiteBrowseIndex.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\DocSiteSearch.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\DocSiteLogin.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="HelpFileNotFound.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\HelpFileNotFound.aspx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controls\App_LocalResources\DocSiteContents.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controls\App_LocalResources\DocSiteHeader.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controls\App_LocalResources\DocSiteIndex.ascx.resx">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Help\Settings\bibliography.xml" />
+    <Content Include="Help\Settings\conceptual_art.xml" />
+    <Content Include="Help\Settings\conceptual_project.xml" />
+    <Content Include="Help\Settings\conceptual_snippets.xml" />
+    <Content Include="Help\Settings\conceptual_version.xml" />
+    <Content Include="Help\Settings\links.xml" />
+    <Content Include="Help\Settings\metadata.xml" />
+    <Content Include="Help\Settings\Projects\help2x.xslt" />
+    <Content Include="Help\Settings\tokens.xml" />
+    <Content Include="Help\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Help\Icons\alert_caution.gif" />
+    <Content Include="Help\Icons\alert_note.gif" />
+    <Content Include="Help\Icons\alert_security.gif" />
+    <Content Include="Help\Icons\Caution.gif" />
+    <Content Include="Help\Icons\CFW.gif" />
+    <Content Include="Help\Icons\collapse_all.gif" />
+    <Content Include="Help\Icons\copycode.gif" />
+    <Content Include="Help\Icons\expand_all.gif" />
+    <Content Include="Help\Icons\LastChild.gif" />
+    <Content Include="Help\Icons\NotLastChild.gif" />
+    <Content Include="Help\Icons\privclass.gif" />
+    <Content Include="Help\Icons\privdelegate.gif" />
+    <Content Include="Help\Icons\privenum.gif" />
+    <Content Include="Help\Icons\privevent.gif" />
+    <Content Include="Help\Icons\privfield.gif" />
+    <Content Include="Help\Icons\privinterface.gif" />
+    <Content Include="Help\Icons\privmethod.gif" />
+    <Content Include="Help\Icons\privproperty.gif" />
+    <Content Include="Help\Icons\privstructure.gif" />
+    <Content Include="Help\Icons\protclass.gif" />
+    <Content Include="Help\Icons\protdelegate.gif" />
+    <Content Include="Help\Icons\protenum.gif" />
+    <Content Include="Help\Icons\protevent.gif" />
+    <Content Include="Help\Icons\protfield.gif" />
+    <Content Include="Help\Icons\protfield.png" />
+    <Content Include="Help\Icons\protinterface.gif" />
+    <Content Include="Help\Icons\protmethod.gif" />
+    <Content Include="Help\Icons\protoperator.gif" />
+    <Content Include="Help\Icons\protproperty.gif" />
+    <Content Include="Help\Icons\protstructure.gif" />
+    <Content Include="Help\Icons\pubclass.gif" />
+    <Content Include="Help\Icons\pubdelegate.gif" />
+    <Content Include="Help\Icons\pubenum.gif" />
+    <Content Include="Help\Icons\pubevent.gif" />
+    <Content Include="Help\Icons\pubfield.gif" />
+    <Content Include="Help\Icons\pubinterface.gif" />
+    <Content Include="Help\Icons\pubmethod.gif" />
+    <Content Include="Help\Icons\puboperator.gif" />
+    <Content Include="Help\Icons\pubproperty.gif" />
+    <Content Include="Help\Icons\pubstructure.gif" />
+    <Content Include="Help\Icons\security.gif" />
+    <Content Include="Help\Icons\static.gif" />
+    <Content Include="Help\Presentation\Shared\content\syntax_content.xml" />
+    <Content Include="Help\Presentation\Shared\scripts\copycode.js" />
+    <Content Include="Help\Presentation\Shared\scripts\samples.js" />
+    <Content Include="Help\Presentation\Shared\transforms\utilities_bibliography.xsl" />
+    <Content Include="Help\Presentation\Shared\transforms\utilities_dduexml.xsl" />
+    <Content Include="Help\Presentation\Shared\transforms\utilities_metadata.xsl" />
+    <Content Include="Help\Presentation\Shared\transforms\utilities_reference.xsl" />
+    <Content Include="Help\Presentation\Style\Content\conceptual_content.xml" />
+    <Content Include="Help\Presentation\Style\Content\reference_content.xml" />
+    <Content Include="Help\Presentation\Style\Content\shared_content.xml" />
+    <Content Include="Help\Presentation\Style\Content\token_content.xml" />
+    <Content Include="Help\Presentation\Style\Transforms\main_conceptual.xsl" />
+    <Content Include="Help\Presentation\Style\Transforms\main_reference.xsl" />
+    <Content Include="Help\Presentation\Style\Transforms\main_sandcastle.xsl" />
+    <Content Include="Help\Presentation\Style\Transforms\main_schema.xsl" />
+    <Content Include="Help\Presentation\Style\Transforms\skeleton.xml" />
+    <Content Include="Help\Presentation\Style\Transforms\skeleton_conceptual.xml" />
+    <Content Include="Help\Presentation\Style\Transforms\utilities_dduexml.xsl" />
+    <Content Include="Help\Presentation\Style\Transforms\utilities_metadata.xsl" />
+    <Content Include="Help\Presentation\Style\Transforms\utilities_reference.xsl" />
+    <Content Include="Help\Scripts\CollapsibleSection.js" />
+    <Content Include="Help\Scripts\CookieDataStore.js" />
+    <Content Include="Help\Scripts\ElementCollection.js" />
+    <Content Include="Help\Scripts\EventUtilities.js" />
+    <Content Include="Help\Scripts\LanguageFilter.js" />
+    <Content Include="Help\Scripts\MemberFilter.js" />
+    <Content Include="Help\Scripts\script_prototype.js" />
+    <Content Include="Help\Scripts\SplitScreen.js" />
+    <Content Include="Help\Scripts\StyleUtilities.js" />
+    <Content Include="Help\Settings\Projects\help1x.config" />
+    <Content Include="Help\Styles\presentation.css" />
+    <Content Include="Help\Styles\TopicDesigner.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Help\Comments\project.xml" />
+    <Content Include="Help\Presentation\Shared\configuration\xamlSyntax.config" />
+    <None Include="Help\Presentation\Shared\copyHavana.bat" />
+    <None Include="Help\Presentation\Shared\HxsTemplate\template.HxF" />
+    <None Include="Help\Presentation\Shared\HxsTemplate\template_A.HxK" />
+    <None Include="Help\Presentation\Shared\HxsTemplate\template_B.HxK" />
+    <None Include="Help\Presentation\Shared\HxsTemplate\template_F.HxK" />
+    <None Include="Help\Presentation\Shared\HxsTemplate\template_K.HxK" />
+    <None Include="Help\Presentation\Shared\HxsTemplate\template_N.HxK" />
+    <None Include="Help\Presentation\Shared\HxsTemplate\template_S.HxK" />
+    <None Include="Help\Presentation\Shared\SharedDocModel.ps1" />
+    <Content Include="Help\Presentation\Style\Configuration\conceptual.help1x.config" />
+    <Content Include="Help\Presentation\Style\Configuration\conceptual.help2x.config" />
+    <Content Include="Help\Presentation\Style\Configuration\MRefBuilder.config" />
+    <Content Include="Help\Presentation\Style\Configuration\sandcastle.help1x.config" />
+    <Content Include="Help\Presentation\Style\Configuration\sandcastle.help2x.config" />
+    <Content Include="Help\Settings\topics.xml" />
+    <Content Include="Images\sdx_icon_black.png" />
+    <None Include="Help\Schemas\base.xsd" />
+    <None Include="Help\Schemas\base.xsx">
+      <DependentUpon>base.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\baseConditional.xsd" />
+    <None Include="Help\Schemas\baseConditional.xsx">
+      <DependentUpon>baseConditional.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\block.xsd" />
+    <None Include="Help\Schemas\block.xsx">
+      <DependentUpon>block.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\blockCommon.xsd" />
+    <None Include="Help\Schemas\blockSoftware.xsd" />
+    <None Include="Help\Schemas\blockSoftware.xsx">
+      <DependentUpon>blockSoftware.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\conditionSet.xsd" />
+    <None Include="Help\Schemas\conditionSet.xsx">
+      <DependentUpon>conditionSet.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\developer.xsd" />
+    <None Include="Help\Schemas\developer.xsx">
+      <DependentUpon>developer.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\developerReference.xsd" />
+    <None Include="Help\Schemas\developerReference.xsx">
+      <DependentUpon>developerReference.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\developerStructure.xsd" />
+    <None Include="Help\Schemas\developerStructure.xsx">
+      <DependentUpon>developerStructure.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\glossary.xsd" />
+    <None Include="Help\Schemas\glossary.xsx">
+      <DependentUpon>glossary.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\hierarchy.xsd" />
+    <None Include="Help\Schemas\hierarchy.xsx">
+      <DependentUpon>hierarchy.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\inline.xsd" />
+    <None Include="Help\Schemas\inline.xsx">
+      <DependentUpon>inline.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\inlineCommon.xsd" />
+    <None Include="Help\Schemas\inlineCommon.xsx">
+      <DependentUpon>inlineCommon.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\inlineLinking.xsd" />
+    <None Include="Help\Schemas\inlineLinking.xsx">
+      <DependentUpon>inlineLinking.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\inlineSoftware.xsd" />
+    <None Include="Help\Schemas\inlineSoftware.xsx">
+      <DependentUpon>inlineSoftware.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\inlineUi.xsd" />
+    <None Include="Help\Schemas\inlineUi.xsx">
+      <DependentUpon>inlineUi.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\space.xsd" />
+    <None Include="Help\Schemas\space.xsx">
+      <DependentUpon>space.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\standardCodes.xsd" />
+    <None Include="Help\Schemas\standardCodes.xsx">
+      <DependentUpon>standardCodes.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\structure.xsd" />
+    <None Include="Help\Schemas\structure.xsx">
+      <DependentUpon>structure.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\structureList.xsd" />
+    <None Include="Help\Schemas\structureList.xsx">
+      <DependentUpon>structureList.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\structureMedia.xsd" />
+    <None Include="Help\Schemas\structureMedia.xsx">
+      <DependentUpon>structureMedia.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\structureProcedure.xsd" />
+    <None Include="Help\Schemas\structureProcedure.xsx">
+      <DependentUpon>structureProcedure.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\structureTable.xsd" />
+    <None Include="Help\Schemas\structureTable.xsx">
+      <DependentUpon>structureTable.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\xlink.xsd" />
+    <None Include="Help\Schemas\xlink.xsx">
+      <DependentUpon>xlink.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Schemas\__internal.xsd" />
+    <None Include="Help\Schemas\__internal.xsx">
+      <DependentUpon>__internal.xsd</DependentUpon>
+    </None>
+    <None Include="Help\Topics\August 2007.aml" />
+    <None Include="Help\Topics\August 2007.cmp">
+      <DependentUpon>August 2007.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\August 2009.aml" />
+    <None Include="Help\Topics\August 2009.cmp">
+      <DependentUpon>August 2009.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Contact Us.aml" />
+    <None Include="Help\Topics\Contact Us.cmp">
+      <DependentUpon>Contact Us.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Custom Builds.aml" />
+    <None Include="Help\Topics\Custom Builds.cmp">
+      <DependentUpon>Custom Builds.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Customizing the Runtime.aml" />
+    <None Include="Help\Topics\Customizing the Runtime.cmp">
+      <DependentUpon>Customizing the Runtime.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Debugging Tips.aml" />
+    <None Include="Help\Topics\Debugging Tips.cmp">
+      <DependentUpon>Debugging Tips.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Deployment Guide.aml" />
+    <None Include="Help\Topics\Deployment Guide.cmp">
+      <DependentUpon>Deployment Guide.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Deployment Testing.aml" />
+    <None Include="Help\Topics\Deployment Testing.cmp">
+      <DependentUpon>Deployment Testing.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\DirectX Versions.aml" />
+    <None Include="Help\Topics\DirectX Versions.cmp">
+      <DependentUpon>DirectX Versions.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Getting Started.aml" />
+    <None Include="Help\Topics\Getting Started.cmp">
+      <DependentUpon>Getting Started.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Handling Bitness.aml" />
+    <None Include="Help\Topics\Handling Bitness.cmp">
+      <DependentUpon>Handling Bitness.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Installation.aml" />
+    <None Include="Help\Topics\Installation.cmp">
+      <DependentUpon>Installation.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Integrating the Runtime.aml" />
+    <None Include="Help\Topics\Integrating the Runtime.cmp">
+      <DependentUpon>Integrating the Runtime.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Introduction.aml" />
+    <None Include="Help\Topics\Introduction.cmp">
+      <DependentUpon>Introduction.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\June 2008.aml" />
+    <None Include="Help\Topics\June 2008.cmp">
+      <DependentUpon>June 2008.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\License Information.aml" />
+    <None Include="Help\Topics\License Information.cmp">
+      <DependentUpon>License Information.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Known Issues.aml" />
+    <None Include="Help\Topics\Known Issues.cmp">
+      <DependentUpon>Known Issues.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Managed Message Loop.aml" />
+    <None Include="Help\Topics\Managed Message Loop.cmp">
+      <DependentUpon>Managed Message Loop.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\March 2008.aml" />
+    <None Include="Help\Topics\March 2008.cmp">
+      <DependentUpon>March 2008.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\March 2009.aml" />
+    <None Include="Help\Topics\March 2009.cmp">
+      <DependentUpon>March 2009.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\November 2007.aml" />
+    <None Include="Help\Topics\November 2007.cmp">
+      <DependentUpon>November 2007.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\November 2008.aml" />
+    <None Include="Help\Topics\November 2008.cmp">
+      <DependentUpon>November 2008.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Object Lifetimes.aml" />
+    <None Include="Help\Topics\Object Lifetimes.cmp">
+      <DependentUpon>Object Lifetimes.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Official Build Process.aml" />
+    <None Include="Help\Topics\Official Build Process.cmp">
+      <DependentUpon>Official Build Process.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Previous Releases.aml" />
+    <None Include="Help\Topics\Previous Releases.cmp">
+      <DependentUpon>Previous Releases.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Programming Guide.aml" />
+    <None Include="Help\Topics\Programming Guide.cmp">
+      <DependentUpon>Programming Guide.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Reference.aml" />
+    <None Include="Help\Topics\Reference.cmp">
+      <DependentUpon>Reference.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\SDK Components.aml" />
+    <None Include="Help\Topics\SDK Components.cmp">
+      <DependentUpon>SDK Components.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\September 2007.aml" />
+    <None Include="Help\Topics\September 2007.cmp">
+      <DependentUpon>September 2007.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\September 2008.aml" />
+    <None Include="Help\Topics\September 2008.cmp">
+      <DependentUpon>September 2008.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Uninstallation.aml" />
+    <None Include="Help\Topics\Uninstallation.cmp">
+      <DependentUpon>Uninstallation.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\Visual Studio Versions.aml" />
+    <None Include="Help\Topics\Visual Studio Versions.cmp">
+      <DependentUpon>Visual Studio Versions.aml</DependentUpon>
+    </None>
+    <None Include="Help\Topics\What_s New.aml" />
+    <None Include="Help\Topics\What_s New.cmp">
+      <DependentUpon>What_s New.aml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\build\SlimDX.vcproj">
+      <Project>{8ECCE443-0440-40F4-A94C-F02E027282C3}</Project>
+      <Name>SlimDX</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Help\Art\" />
+    <Folder Include="Help\bin\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="$(DocProjectPath)\bin\DaveSexton.DocProject.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets and DaveSexton.DocProject.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>55297</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <UserProperties IsDocProject="true" ProcessComponentTypeName="DocSite.BuildProcess" DocProjectVersion="1.11.0.0" BuildEngineProviderName="Sandcastle" Sandcastle_Version="2.4.10520.1" Sandcastle_PresentationName="Sandcastle Prototype" Sandcastle_ProduceHelp1x="True" ExternalSources="" Sandcastle_DocumentationSetName="SlimDX" Sandcastle_UseFriendlyHtmlFileNames="True" DoNotAskIncludeOutputInProject="True" DefaultApplyToAll="True" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PreBuildEvent>copy /Y $(ProjectDir)\..\SlimDX.xml $(SolutionDir)\x86\Public\SlimDX.xml</PreBuildEvent>
+  </PropertyGroup>
+</Project>
