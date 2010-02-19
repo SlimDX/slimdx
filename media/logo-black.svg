@@ -217,14 +217,6 @@
          stdDeviation="1.330876"
          id="feGaussianBlur4207" />
     </filter>
-    <filter
-       inkscape:collect="always"
-       id="filter4227">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="8.3000001"
-         id="feGaussianBlur4229" />
-    </filter>
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient4101"
@@ -254,6 +246,14 @@
        y1="306.36453"
        x2="196.15184"
        y2="48.106907" />
+    <filter
+       inkscape:collect="always"
+       id="filter4515">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="5.9285715"
+         id="feGaussianBlur4517" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -263,8 +263,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="665.80852"
-     inkscape:cy="607.15354"
+     inkscape:cx="491.04054"
+     inkscape:cy="600.6503"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -302,7 +302,7 @@
        sodipodi:cy="190.93361"
        sodipodi:cx="376.07144"
        id="path4209"
-       style="fill:#000000;fill-opacity:1;stroke:#000000;filter:url(#filter4227)"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;filter:url(#filter4515)"
        sodipodi:type="arc" />
     <path
        sodipodi:type="arc"
