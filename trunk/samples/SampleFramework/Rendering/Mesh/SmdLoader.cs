@@ -20,96 +20,95 @@
 * THE SOFTWARE.
 */
 
+using System.Globalization;
 using System.IO;
 using System.Collections.Generic;
 using System;
 
 namespace SlimDX.SampleFramework {
-	public static class Smd {
-		public static MeshData FromFile( string file ) {
-			using( FileStream stream = new FileStream( file, FileMode.Open ) ) {
-				return FromStream( stream );
-			}
-		}
+    public static class Smd {
+        public static MeshData FromFile(string file) {
+            using (var stream = new FileStream(file, FileMode.Open)) {
+                return FromStream(stream);
+            }
+        }
 
-		public static MeshData FromStream( Stream stream ) {
-			MeshData result = new MeshData();
-			using( TextReader reader = new StreamReader( stream ) ) {
-				string line = reader.ReadLine();
-				if( line != "version 1" ) {
-					throw new InvalidDataException( string.Format( "Incorrect or unexpected file version directive ('{0}').", line ) );
-				}
+        public static MeshData FromStream(Stream stream) {
+            var result = new MeshData();
+            using (TextReader reader = new StreamReader(stream)) {
+                var line = reader.ReadLine();
+                if (line != "version 1") {
+                    throw new InvalidDataException(string.Format("Incorrect or unexpected file version directive ('{0}').", line));
+                }
 
-				// These blocks are not yet supported.
-				ReadBlock( reader, "nodes" );
-				ReadBlock( reader, "skeleton" );
-				
-				Dictionary<string,int> indexMap = new Dictionary<string,int>();
-				Queue<string> triangles = new Queue<string>( ReadBlock( reader, "triangles" ) );
-				while( triangles.Count > 0 ) {
-					// Ignore the texture.
-					triangles.Dequeue();
+                // These blocks are not yet supported.
+                ReadBlock(reader, "nodes");
+                ReadBlock(reader, "skeleton");
 
-					for( int vertexIndex = 0; vertexIndex < 3; ++vertexIndex ) {
-						string triangle = triangles.Dequeue();
-						//int index = 0;
-						//if( indexMap.TryGetValue( triangle, out index ) ) {
-						//	result.Indices.Add( index );
-						//} else {
-							string[] fields = triangle.Split( new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries );
-							
-							result.Positions.Add( new Vector3(
-								ReadFloat( fields[1] ),
-								ReadFloat( fields[2] ),
-								ReadFloat( fields[3] )
-							) );
-							
-							result.Normals.Add( new Vector3(
-								ReadFloat( fields[4] ),
-								ReadFloat( fields[5] ),
-								ReadFloat( fields[6] )
-							) );
-							
-							result.TextureCoordinates.Add(new Vector2(
-								ReadFloat( fields[7] ),
-								ReadFloat( fields[8] )
-							) );
+                var triangles = new Queue<string>(ReadBlock(reader, "triangles"));
+                while (triangles.Count > 0) {
+                    // Ignore the texture.
+                    triangles.Dequeue();
 
-							//indexMap.Add( triangle, indexMap.Count );
-							result.Indices.Add( result.Indices.Count );
-						//}
-					}
-					
-					//break;
-				}
-			}
+                    for (var vertexIndex = 0; vertexIndex < 3; ++vertexIndex) {
+                        var triangle = triangles.Dequeue();
+                        var fields = triangle.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-			return result;
-		}
+                        result.Positions.Add(
+                            new Vector3(
+                                ReadFloat(fields[1]),
+                                ReadFloat(fields[2]),
+                                ReadFloat(fields[3])
+                            )
+                        );
 
-		static string[] ReadBlock( TextReader reader, string name ) {
-			string line = reader.ReadLine();
-			if( line != name ) {
-				throw new InvalidDataException( string.Format( "Expected a '{0}' block, but found a '{1}' block instead.", name, line ) );
-			}
+                        result.Normals.Add(
+                            new Vector3(
+                                ReadFloat(fields[4]),
+                                ReadFloat(fields[5]),
+                                ReadFloat(fields[6])
+                            )
+                        );
 
-			List<string> lines = new List<string>();
-			line = reader.ReadLine();
-			while( line != "end" ) {
-				lines.Add( line );
-				line = reader.ReadLine();
-			}
+                        result.TextureCoordinates.Add(
+                            new Vector2(
+                                ReadFloat(fields[7]),
+                                ReadFloat(fields[8])
+                            )
+                        );
 
-			return lines.ToArray();
-		}
+                        result.Indices.Add(result.Indices.Count);
+                    }
 
-		static float ReadFloat( string value ) {
-			float result = 0.0f;
-			if( !float.TryParse( value, out result ) ) {
-				throw new InvalidDataException( string.Format( "Expected a floating point value, but found '{0}' instead.", value ) );
-			}
+                }
+            }
 
-			return result;
-		}
-	}
+            return result;
+        }
+
+        static string[] ReadBlock(TextReader reader, string name) {
+            var line = reader.ReadLine();
+            if (line != name) {
+                throw new InvalidDataException(string.Format("Expected a '{0}' block, but found a '{1}' block instead.", name, line));
+            }
+
+            var lines = new List<string>();
+            line = reader.ReadLine();
+            while (line != "end") {
+                lines.Add(line);
+                line = reader.ReadLine();
+            }
+
+            return lines.ToArray();
+        }
+
+        static float ReadFloat(string value) {
+            float result;
+            if (!float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out result)) {
+                throw new InvalidDataException(string.Format("Expected a floating point value, but found '{0}' instead.", value));
+            }
+
+            return result;
+        }
+    }
 }
