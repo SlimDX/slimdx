@@ -1,0 +1,81 @@
+IDWriteFontFileLoader (FontFileLoader)
+IDWriteLocalFontFileLoader
+IDWriteFontFileStream (FontFileStream)
+IDWriteRenderingParams (RenderingParameters)
+IDWriteFontCollectionLoader (FontCollectionLoader)
+DWRITE_TYPOGRAPHIC_FEATURES
+DWRITE_TRIMMING
+IDWriteTextFormat::SetWordWrapping (TextFormat)
+IDWriteTextFormat::SetReadingDirection
+IDWriteTextFormat::SetFlowDirection
+IDWriteTextFormat::SetIncrementalTabStop
+IDWriteTextFormat::SetTrimming
+IDWriteTextFormat::SetLineSpacing
+IDWriteTextFormat::GetWordWrapping
+IDWriteTextFormat::GetReadingDirection
+IDWriteTextFormat::GetFlowDirection
+IDWriteTextFormat::GetIncrementalTabStop
+IDWriteTextFormat::GetTrimming
+IDWriteTextFormat::GetLineSpacing
+IDWriteTextFormat::GetFontCollection
+IDWriteTextFormat::GetFontFamilyNameLength
+IDWriteTextFormat::GetFontFamilyName
+IDWriteTextFormat::GetFontWeight
+IDWriteTextFormat::GetFontStyle
+IDWriteTextFormat::GetFontStretch
+IDWriteTextFormat::GetFontSize
+IDWriteTextFormat::GetLocaleNameLength
+IDWriteTextFormat::GetLocaleName
+DWRITE_SCRIPT_ANALYSIS
+DWRITE_LINE_BREAKPOINT
+DWRITE_SHAPING_TEXT_PROPERTIES
+DWRITE_SHAPING_GLYPH_PROPERTIES
+IDWriteTextAnalysisSource (TextAnalysisSource)
+IDWriteTextAnalysisSink (TextAnalysisSink)
+IDWriteTextAnalyzer (TextAnalyzer)
+DWRITE_GLYPH_RUN_DESCRIPTION
+DWRITE_UNDERLINE
+DWRITE_STRIKETHROUGH
+DWRITE_LINE_METRICS
+DWRITE_TEXT_METRICS
+DWRITE_INLINE_OBJECT_METRICS
+DWRITE_OVERHANG_METRICS
+DWRITE_HIT_TEST_METRICS
+IDWriteInlineObject (InlineObject)
+IDWritePixelSnapping (PixelSnapping)
+IDWriteTextRenderer (TextRenderer)
+IDWriteTextLayout::SetFontCollection (TextLayout)
+IDWriteTextLayout::SetFontFamilyName
+IDWriteTextLayout::SetFontStyle
+IDWriteTextLayout::SetFontStretch
+IDWriteTextLayout::SetStrikethrough
+IDWriteTextLayout::SetDrawingEffect
+IDWriteTextLayout::SetInlineObject
+IDWriteTextLayout::SetLocaleName
+IDWriteTextLayout::GetFontCollection
+IDWriteTextLayout::GetFontFamilyNameLength
+IDWriteTextLayout::GetFontFamilyName
+IDWriteTextLayout::GetFontWeight
+IDWriteTextLayout::GetFontStyle
+IDWriteTextLayout::GetFontStretch
+IDWriteTextLayout::GetFontSize
+IDWriteTextLayout::GetUnderline
+IDWriteTextLayout::GetStrikethrough
+IDWriteTextLayout::GetDrawingEffect
+IDWriteTextLayout::GetInlineObject
+IDWriteTextLayout::GetTypography
+IDWriteTextLayout::GetLocaleNameLength
+IDWriteTextLayout::GetLocaleName
+IDWriteTextLayout::Draw
+IDWriteTextLayout::GetLineMetrics
+IDWriteTextLayout::GetMetrics
+IDWriteTextLayout::GetOverhangMetrics
+IDWriteTextLayout::GetClusterMetrics
+IDWriteTextLayout::DetermineMinWidth
+IDWriteTextLayout::HitTestPoint
+IDWriteTextLayout::HitTestTextPosition
+IDWriteTextLayout::HitTestTextRange
+LOGFONT IDWriteGdiInterop::(CreateFontFromLOGFONT, ConvertFontToLOGFONT, ConvertFontFaceToLOGFONT)
+IDWriteGdiInterop::CreateBitmapRenderTarget (GdiInterop)
+DWRITE_ALPHA_MAX
+IDWriteFactory (DirectWrite::Factory)
