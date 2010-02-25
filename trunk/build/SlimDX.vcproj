@@ -21,8 +21,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)x86\$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)x86\$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)x86\$(ConfigurationName)"
+			IntermediateDirectory="$(ProjectDir)x86\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			ManagedExtensions="1"
@@ -106,8 +106,8 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(ProjectDir)$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			ManagedExtensions="1"
@@ -193,8 +193,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)x86\$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)x86\$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)x86\$(ConfigurationName)"
+			IntermediateDirectory="$(ProjectDir)x86\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			ManagedExtensions="1"
@@ -278,8 +278,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(ProjectDir)$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			ManagedExtensions="1"
@@ -362,8 +362,8 @@
 		</Configuration>
 		<Configuration
 			Name="Public|Win32"
-			OutputDirectory="$(SolutionDir)x86\$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)x86\$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)x86\$(ConfigurationName)"
+			IntermediateDirectory="$(ProjectDir)x86\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			ManagedExtensions="1"
@@ -444,13 +444,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy $(ProjectDir)\..\docs\SlimDX.xml $(OutDir)&#x0D;&#x0A;mt -manifest SlimDX.dll.x86.manifest -outputresource:$(TargetPath);2&#x0D;&#x0A;sn -R $(TargetPath) D:\slimdxKey.snk"
+				CommandLine="copy $(ProjectDir)\..\docs\SlimDX.xml $(OutDir)&#x0D;&#x0A;mt -manifest SlimDX.dll.x86.manifest -outputresource:$(TargetPath);2&#x0D;&#x0A;sn -R $(TargetPath) D:\slimdxKey.snk&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Public|x64"
-			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(ProjectDir)$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			ManagedExtensions="1"
@@ -532,7 +532,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="mt -manifest SlimDX.dll.x64.manifest -outputresource:$(TargetPath);2&#x0D;&#x0A;sn -R $(TargetPath) D:\slimdxKey.snk"
+				CommandLine="mt -manifest SlimDX.dll.x64.manifest -outputresource:$(TargetPath);2&#x0D;&#x0A;sn -R $(TargetPath) D:\slimdxKey.snk&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
