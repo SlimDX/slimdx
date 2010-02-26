@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2010 SlimDX Group
+* Copyright (c) 2007-2009 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -26,57 +26,44 @@ namespace SlimDX
 	namespace DirectWrite
 	{
 		/// <summary>
-		/// Contains information about a glyph cluster.
+		/// Contains information about a formatted line of text.
 		/// </summary>
-		public value class ClusterMetrics
+		public value class LineMetrics
 		{
 		public:
-			ClusterMetrics( float width, UINT16 length, bool canWrapLineAfter,
-				bool isWhitespace, bool isNewline, bool isSoftHyphen, bool isRightToLeft )
+			LineMetrics( int length, int trailingWhitespaceLength, int newlineLength, float height, float baseline )
 			{
-				Width = width;
 				Length = length;
-				CanWrapLineAfter = canWrapLineAfter;
-				IsWhitespace = isWhitespace;
-				IsNewline = isNewline;
-				IsSoftHyphen = isSoftHyphen;
-				IsRightToLeft = isRightToLeft;
+				TrailingWhitespaceLength = trailingWhitespaceLength;
+				NewlineLength = newlineLength;
+				Height = height;
+				Baseline = baseline;
 			}
 
 			/// <summary>
-			/// The total advance width of all glyphs in the cluster.
+			/// The number of text positions in the text line. This includes any trailing whitespace and newline characters.
 			/// </summary>
-			property float Width;
+			property int Length;
 
 			/// <summary>
-			/// The number of text positions in the cluster.
+			/// The number of whitespace positions at the end of the text line. Newline sequences are considered whitespace.
 			/// </summary>
-			property UINT16 Length;
+			property int TrailingWhitespaceLength;
 
 			/// <summary>
-			/// Indicates whether a line can be broken right after the cluster.
+			/// The number of characters in the newline sequence at the end of the text line. If the count is zero, then the text line was either wrapped or it is the end of the text.
 			/// </summary>
-			property bool CanWrapLineAfter;
+			property int NewlineLength;
 
 			/// <summary>
-			/// Indicates whether the cluster corresponds to a whitespace character.
+			/// The height of the text line.
 			/// </summary>
-			property bool IsWhitespace;
+			property float Height;
 
 			/// <summary>
-			/// Indicates whether the cluster corresponds to a newline character.
+			/// The distance from the top of the text line to its baseline.
 			/// </summary>
-			property bool IsNewline;
-
-			/// <summary>
-			/// Indicates whether the cluster corresponds to a soft hyphen character.
-			/// </summary>
-			property bool IsSoftHyphen;
-
-			/// <summary>
-			/// Indicates whether the cluster is read from right to left.
-			/// </summary>
-			property bool IsRightToLeft;
+			property float Baseline;
 		};
 	}
 }

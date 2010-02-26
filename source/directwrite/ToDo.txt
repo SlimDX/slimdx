@@ -36,11 +36,7 @@ IDWriteTextAnalyzer (TextAnalyzer)
 DWRITE_GLYPH_RUN_DESCRIPTION
 DWRITE_UNDERLINE
 DWRITE_STRIKETHROUGH
-DWRITE_LINE_METRICS
-DWRITE_TEXT_METRICS
 DWRITE_INLINE_OBJECT_METRICS
-DWRITE_OVERHANG_METRICS
-DWRITE_HIT_TEST_METRICS
 IDWriteInlineObject (InlineObject)
 IDWritePixelSnapping (PixelSnapping)
 IDWriteTextRenderer (TextRenderer)
@@ -70,7 +66,6 @@ IDWriteTextLayout::Draw
 IDWriteTextLayout::GetLineMetrics
 IDWriteTextLayout::GetMetrics
 IDWriteTextLayout::GetOverhangMetrics
-IDWriteTextLayout::HitTestPoint
 IDWriteTextLayout::HitTestTextPosition
 IDWriteTextLayout::HitTestTextRange
 LOGFONT IDWriteGdiInterop::(CreateFontFromLOGFONT, ConvertFontToLOGFONT, ConvertFontFaceToLOGFONT)

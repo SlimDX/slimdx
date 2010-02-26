@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2010 SlimDX Group
+* Copyright (c) 2007-2009 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -26,57 +26,50 @@ namespace SlimDX
 	namespace DirectWrite
 	{
 		/// <summary>
-		/// Contains information about a glyph cluster.
+		/// Indicates how much any visible DIPs (device independent pixels)
+		/// overshoot each side of the layout or inline objects.
+		///
+		/// Positive overhangs indicate that the visible area extends outside
+		/// the layout box or inline object, while negative values mean there
+		/// is whitespace inside. The returned values are unaffected by
+		/// rendering transforms or pixel snapping. Additionally, they may not
+		/// exactly match the final target's pixel bounds after applying grid 
+		/// fitting and hinting.
 		/// </summary>
-		public value class ClusterMetrics
+		public value class OverhangMetrics
 		{
 		public:
-			ClusterMetrics( float width, UINT16 length, bool canWrapLineAfter,
-				bool isWhitespace, bool isNewline, bool isSoftHyphen, bool isRightToLeft )
+			OverhangMetrics( float left, float top, float right, float bottom )
 			{
-				Width = width;
-				Length = length;
-				CanWrapLineAfter = canWrapLineAfter;
-				IsWhitespace = isWhitespace;
-				IsNewline = isNewline;
-				IsSoftHyphen = isSoftHyphen;
-				IsRightToLeft = isRightToLeft;
+				Left = left;
+				Top = top;
+				Right = right;
+				Bottom = bottom;
 			}
 
 			/// <summary>
-			/// The total advance width of all glyphs in the cluster.
+			/// The distance from the left-most visible DIP to its left
+			/// alignment edge.
 			/// </summary>
-			property float Width;
+			property float Left;
 
 			/// <summary>
-			/// The number of text positions in the cluster.
+			/// The distance from the top-most visible DIP to its top
+			/// alignment edge.
 			/// </summary>
-			property UINT16 Length;
+			property float Top;
 
 			/// <summary>
-			/// Indicates whether a line can be broken right after the cluster.
+			/// The distance from the right-most visible DIP to its right
+			/// alignment edge.
 			/// </summary>
-			property bool CanWrapLineAfter;
+			property float Right;
 
 			/// <summary>
-			/// Indicates whether the cluster corresponds to a whitespace character.
+			/// The distance from the bottom-most visible DIP to its lower
+			/// alignment edge.
 			/// </summary>
-			property bool IsWhitespace;
-
-			/// <summary>
-			/// Indicates whether the cluster corresponds to a newline character.
-			/// </summary>
-			property bool IsNewline;
-
-			/// <summary>
-			/// Indicates whether the cluster corresponds to a soft hyphen character.
-			/// </summary>
-			property bool IsSoftHyphen;
-
-			/// <summary>
-			/// Indicates whether the cluster is read from right to left.
-			/// </summary>
-			property bool IsRightToLeft;
+			property float Bottom;
 		};
 	}
 }
