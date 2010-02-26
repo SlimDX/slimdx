@@ -24,6 +24,7 @@
 #include "DirectWriteException.h"
 
 #include "Font.h"
+#include "FontFace.h"
 
 const IID IID_IDWriteFont = __uuidof(IDWriteFont);
 
@@ -33,6 +34,18 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
+	FontFace^ Font::CreateFontFace()
+	{
+		IDWriteFontFace *face;
+		HRESULT const hr = InternalPointer->CreateFontFace(&face);
+		if (RECORD_DW(hr).IsFailure)
+		{
+			return nullptr;
+		}
+
+		return FontFace::FromPointer(face);
+	}
+
 	LocalizedStrings^ Font::GetInformationalStrings(InformationalStringId stringId)
 	{
 		IDWriteLocalizedStrings *names;
