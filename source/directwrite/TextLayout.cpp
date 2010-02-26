@@ -107,8 +107,7 @@ namespace DirectWrite
 
 		std::vector<DWRITE_CLUSTER_METRICS> metrics;
 		metrics.resize(count);
-		HRESULT const hr = InternalPointer->GetClusterMetrics(&metrics[0], count, &count);
-		if (RECORD_DW(hr).IsFailure)
+		if (RECORD_DW(InternalPointer->GetClusterMetrics(&metrics[0], count, &count)).IsFailure)
 		{
 			return nullptr;
 		}
@@ -126,6 +125,13 @@ namespace DirectWrite
 			result[i] = metric;
 		}
 		return result;
+	}
+
+	float TextLayout::MinWidth::get()
+	{
+		float minWidth = 0.0f;
+		RECORD_DW( InternalPointer->DetermineMinWidth(&minWidth) );
+		return minWidth;
 	}
 
 	float TextLayout::MaxWidth::get()

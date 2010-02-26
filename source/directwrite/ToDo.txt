@@ -70,7 +70,6 @@ IDWriteTextLayout::Draw
 IDWriteTextLayout::GetLineMetrics
 IDWriteTextLayout::GetMetrics
 IDWriteTextLayout::GetOverhangMetrics
-IDWriteTextLayout::DetermineMinWidth
 IDWriteTextLayout::HitTestPoint
 IDWriteTextLayout::HitTestTextPosition
 IDWriteTextLayout::HitTestTextRange

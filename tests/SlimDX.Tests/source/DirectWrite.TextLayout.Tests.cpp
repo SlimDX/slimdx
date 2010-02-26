@@ -28,7 +28,7 @@ using namespace System;
 using namespace SlimDX;
 using namespace SlimDX::DirectWrite;
 
-TEST(TextLayoutTests, ClusterMetricsGet)
+TEST(TextLayoutTests, GetClusterMetrics)
 {
 	IDWriteTextLayoutMock mockLayout;
 	TextLayout ^layout = TextLayout::FromPointer(System::IntPtr(&mockLayout));
@@ -64,4 +64,15 @@ TEST(TextLayoutTests, ClusterMetricsGet)
 	ASSERT_FALSE( metrics[0].IsNewline );
 	ASSERT_FALSE( metrics[0].IsSoftHyphen );
 	ASSERT_FALSE( metrics[0].IsRightToLeft );
+}
+
+TEST(TextLayoutTests, GetMinWidth)
+{
+	IDWriteTextLayoutMock mockLayout;
+	TextLayout ^layout = TextLayout::FromPointer(System::IntPtr(&mockLayout));
+	EXPECT_CALL(mockLayout, DetermineMinWidth(NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<0>(14.5f), Return(S_OK)));
+	float minWidth = -1.0f;
+	ASSERT_EQ( 14.5f, layout->MinWidth );
 }
