@@ -21,6 +21,7 @@
 */
 #pragma once
 
+#include "ClusterMetrics.h"
 #include "FactoryDW.h"
 #include "TextFormat.h"
 #include "TextRange.h"
@@ -46,6 +47,8 @@ namespace SlimDX
 			Result SetUnderline( bool underline, TextRange range );
 			Result SetFontWeight( FontWeight weight, TextRange range );
 			Result SetTypography( Typography^ typography, TextRange range );
+
+			array<SlimDX::DirectWrite::ClusterMetrics>^ GetClusterMetrics();
 
 			property float MaxWidth
 			{

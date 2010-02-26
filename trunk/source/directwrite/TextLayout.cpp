@@ -20,6 +20,8 @@
 * THE SOFTWARE.
 */
 #include "stdafx.h"
+#include <cassert>
+#include <vector>
 
 #include "DirectWriteException.h"
 
@@ -93,6 +95,37 @@ namespace DirectWrite
 
 		HRESULT hr = InternalPointer->SetTypography( typography->InternalPointer, tr );
 		return RECORD_DW( hr );
+	}
+
+	array<ClusterMetrics>^ TextLayout::GetClusterMetrics()
+	{
+		UINT32 count = 0;
+		{
+			HRESULT const hr = InternalPointer->GetClusterMetrics(0, 0, &count);
+			assert(FAILED(hr) && (HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER) == hr));
+		}
+
+		std::vector<DWRITE_CLUSTER_METRICS> metrics;
+		metrics.resize(count);
+		HRESULT const hr = InternalPointer->GetClusterMetrics(&metrics[0], count, &count);
+		if (RECORD_DW(hr).IsFailure)
+		{
+			return nullptr;
+		}
+		array<SlimDX::DirectWrite::ClusterMetrics>^ result = gcnew array<SlimDX::DirectWrite::ClusterMetrics>(count);
+		for (UINT32 i = 0; i < count; i++)
+		{
+			SlimDX::DirectWrite::ClusterMetrics metric;
+			metric.Width = metrics[i].width;
+			metric.Length = metrics[i].length;
+			metric.CanWrapLineAfter = metrics[i].canWrapLineAfter;
+			metric.IsWhitespace = metrics[i].isWhitespace;
+			metric.IsNewline = metrics[i].isNewline;
+			metric.IsSoftHyphen = metrics[i].isSoftHyphen;
+			metric.IsRightToLeft = metrics[i].isRightToLeft;
+			result[i] = metric;
+		}
+		return result;
 	}
 
 	float TextLayout::MaxWidth::get()
