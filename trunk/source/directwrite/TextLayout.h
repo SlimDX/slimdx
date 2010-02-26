@@ -46,6 +46,7 @@ namespace SlimDX
 
 			float DetermineMinWidth();
 			HitTestMetrics HitTestPoint( float pointX, float pointY, [Out] bool% isTrailingHit, [Out] bool% isInside );
+			HitTestMetrics HitTestTextPosition( int textPosition, bool isTrailingHit, [Out] float% pointX, [Out] float% pointY );
 			array<ClusterMetrics>^ GetClusterMetrics();
 
 			Result SetFontSize( float size, TextRange range );

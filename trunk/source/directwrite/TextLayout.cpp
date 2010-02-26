@@ -57,6 +57,42 @@ namespace DirectWrite
 		Construct( layout );
 	}
 
+	HitTestMetrics TextLayout::HitTestPoint( float pointX, float pointY, [Out] bool% isTrailingHit, [Out] bool% isInside )
+	{
+		DWRITE_HIT_TEST_METRICS htm;
+		BOOL trailingHit;
+		BOOL inside;
+
+		HRESULT hr = InternalPointer->HitTestPoint( pointX, pointY, &trailingHit, &inside, &htm );
+		if( RECORD_DW( hr ).IsFailure )
+		{
+			return HitTestMetrics();
+		}
+
+		isTrailingHit = trailingHit == TRUE;
+		isInside = inside == TRUE;
+		return HitTestMetrics( htm.textPosition, htm.length, htm.left, htm.top, htm.width, htm.height,
+			htm.bidiLevel, htm.isText == TRUE, htm.isTrimmed == TRUE );
+	}
+
+	HitTestMetrics TextLayout::HitTestTextPosition( int textPosition, bool isTrailingHit, [Out] float% pointX, [Out] float% pointY )
+	{
+		DWRITE_HIT_TEST_METRICS htm;
+		FLOAT x;
+		FLOAT y;
+
+		HRESULT hr = InternalPointer->HitTestTextPosition( textPosition, isTrailingHit, &x, &y, &htm );
+		if( RECORD_DW( hr ).IsFailure )
+		{
+			return HitTestMetrics();
+		}
+
+		pointX = x;
+		pointY = y;
+		return HitTestMetrics( htm.textPosition, htm.length, htm.left, htm.top, htm.width, htm.height,
+			htm.bidiLevel, htm.isText == TRUE, htm.isTrimmed == TRUE );
+	}
+
 	Result TextLayout::SetFontSize( float size, TextRange range )
 	{
 		DWRITE_TEXT_RANGE tr;
@@ -129,22 +165,6 @@ namespace DirectWrite
 		float minWidth = -1.0f;
 		RECORD_DW( InternalPointer->DetermineMinWidth(&minWidth) );
 		return minWidth;
-	}
-
-	HitTestMetrics TextLayout::HitTestPoint( float pointX, float pointY, [Out] bool% isTrailingHit, [Out] bool% isInside )
-	{
-		DWRITE_HIT_TEST_METRICS htm;
-		BOOL trailingHit;
-		BOOL inside;
-
-		HRESULT hr = InternalPointer->HitTestPoint( pointX, pointY, &trailingHit, &inside, &htm );
-		if( RECORD_DW( hr ).IsFailure )
-			return HitTestMetrics();
-
-		isTrailingHit = trailingHit == TRUE;
-		isInside = inside == TRUE;
-		return HitTestMetrics( htm.textPosition, htm.length, htm.left, htm.top, htm.width, htm.height,
-			htm.bidiLevel, htm.isText == TRUE, htm.isTrimmed == TRUE );
 	}
 
 	float TextLayout::MaxWidth::get()
