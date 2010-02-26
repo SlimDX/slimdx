@@ -91,8 +91,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copying SlimDX.dll..."
-				CommandLine="xcopy /Y &quot;$(SolutionDir)x86\$(ConfigurationName)\SlimDX.dll&quot; &quot;$(OutDir)\&quot;"
+				Description="Copying SlimDX.dll and running unit tests..."
+				CommandLine="xcopy /Y &quot;$(SolutionDir)x86\$(ConfigurationName)\SlimDX.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;&quot;$(TargetPath)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -168,8 +168,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copying SlimDX.dll..."
-				CommandLine="xcopy /Y &quot;$(SolutionDir)x64\$(ConfigurationName)\SlimDX.dll&quot; &quot;$(OutDir)\&quot;"
+				Description="Copying SlimDX.dll and running unit tests..."
+				CommandLine="xcopy /Y &quot;$(SolutionDir)x64\$(ConfigurationName)\SlimDX.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;&quot;$(TargetPath)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -243,8 +243,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copying SlimDX.dll..."
-				CommandLine="xcopy /Y &quot;$(SolutionDir)x86\$(ConfigurationName)\SlimDX.dll&quot; &quot;$(OutDir)\&quot;"
+				Description="Copying SlimDX.dll and running unit tests..."
+				CommandLine="xcopy /Y &quot;$(SolutionDir)x86\$(ConfigurationName)\SlimDX.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;&quot;$(TargetPath)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -319,8 +319,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copying SlimDX.dll..."
-				CommandLine="xcopy /Y &quot;$(SolutionDir)x64\$(ConfigurationName)\SlimDX.dll&quot; &quot;$(OutDir)\&quot;"
+				Description="Copying SlimDX.dll and running unit tests..."
+				CommandLine="xcopy /Y &quot;$(SolutionDir)x64\$(ConfigurationName)\SlimDX.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;&quot;$(TargetPath)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
