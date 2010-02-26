@@ -114,24 +114,37 @@ namespace DirectWrite
 		array<SlimDX::DirectWrite::ClusterMetrics>^ result = gcnew array<SlimDX::DirectWrite::ClusterMetrics>(count);
 		for (UINT32 i = 0; i < count; i++)
 		{
-			SlimDX::DirectWrite::ClusterMetrics metric;
-			metric.Width = metrics[i].width;
-			metric.Length = metrics[i].length;
-			metric.CanWrapLineAfter = metrics[i].canWrapLineAfter;
-			metric.IsWhitespace = metrics[i].isWhitespace;
-			metric.IsNewline = metrics[i].isNewline;
-			metric.IsSoftHyphen = metrics[i].isSoftHyphen;
-			metric.IsRightToLeft = metrics[i].isRightToLeft;
-			result[i] = metric;
+			result[i] = ClusterMetrics( metrics[i].width, metrics[i].length,
+				metrics[i].canWrapLineAfter != 0,
+				metrics[i].isWhitespace != 0,
+				metrics[i].isNewline != 0,
+				metrics[i].isSoftHyphen != 0,
+				metrics[i].isRightToLeft != 0 );
 		}
 		return result;
 	}
 
-	float TextLayout::MinWidth::get()
+	float TextLayout::DetermineMinWidth()
 	{
-		float minWidth = 0.0f;
+		float minWidth = -1.0f;
 		RECORD_DW( InternalPointer->DetermineMinWidth(&minWidth) );
 		return minWidth;
+	}
+
+	HitTestMetrics TextLayout::HitTestPoint( float pointX, float pointY, [Out] bool% isTrailingHit, [Out] bool% isInside )
+	{
+		DWRITE_HIT_TEST_METRICS htm;
+		BOOL trailingHit;
+		BOOL inside;
+
+		HRESULT hr = InternalPointer->HitTestPoint( pointX, pointY, &trailingHit, &inside, &htm );
+		if( RECORD_DW( hr ).IsFailure )
+			return HitTestMetrics();
+
+		isTrailingHit = trailingHit == TRUE;
+		isInside = inside == TRUE;
+		return HitTestMetrics( htm.textPosition, htm.length, htm.left, htm.top, htm.width, htm.height,
+			htm.bidiLevel, htm.isText == TRUE, htm.isTrimmed == TRUE );
 	}
 
 	float TextLayout::MaxWidth::get()

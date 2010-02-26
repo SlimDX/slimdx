@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2010 SlimDX Group
+* Copyright (c) 2007-2009 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -26,57 +26,69 @@ namespace SlimDX
 	namespace DirectWrite
 	{
 		/// <summary>
-		/// Contains information about a glyph cluster.
+		/// Describes the region obtained by a hit test.
 		/// </summary>
-		public value class ClusterMetrics
+		public value class HitTestMetrics
 		{
 		public:
-			ClusterMetrics( float width, UINT16 length, bool canWrapLineAfter,
-				bool isWhitespace, bool isNewline, bool isSoftHyphen, bool isRightToLeft )
+			HitTestMetrics( int textPosition, int length, float left, float top,
+				float width, float height, int bidiLevel, bool isText, bool isTrimmed )
 			{
-				Width = width;
+				TextPosition = textPosition;
 				Length = length;
-				CanWrapLineAfter = canWrapLineAfter;
-				IsWhitespace = isWhitespace;
-				IsNewline = isNewline;
-				IsSoftHyphen = isSoftHyphen;
-				IsRightToLeft = isRightToLeft;
+				Left = left;
+				Top = top;
+				Width = width;
+				Height = height;
+				BidiLevel = bidiLevel;
+				IsText = isText;
+				IsTrimmed = isTrimmed;
 			}
 
 			/// <summary>
-			/// The total advance width of all glyphs in the cluster.
+			/// The first text position within the hit region. 
+			/// </summary>
+			property int TextPosition;
+
+			/// <summary>
+			/// The number of text positions within the hit region. 
+			/// </summary>
+			property int Length;
+
+			/// <summary>
+			/// The x-coordinate of the upper-left corner of the hit region.
+			/// </summary>
+			property float Left;
+
+			/// <summary>
+			/// The y-coordinate of the upper-left corner of the hit region.
+			/// </summary>
+			property float Top;
+
+			/// <summary>
+			/// The width of the hit region.
 			/// </summary>
 			property float Width;
 
 			/// <summary>
-			/// The number of text positions in the cluster.
+			/// The height of the hit region.
 			/// </summary>
-			property UINT16 Length;
+			property float Height;
 
 			/// <summary>
-			/// Indicates whether a line can be broken right after the cluster.
+			/// The BIDI level of the text positions within the hit region.
 			/// </summary>
-			property bool CanWrapLineAfter;
+			property int BidiLevel;
 
 			/// <summary>
-			/// Indicates whether the cluster corresponds to a whitespace character.
+			/// true if the hit region contains text; otherwise, false.
 			/// </summary>
-			property bool IsWhitespace;
+			property bool IsText;
 
 			/// <summary>
-			/// Indicates whether the cluster corresponds to a newline character.
+			/// true if the region is trimmed; otherwise, false.
 			/// </summary>
-			property bool IsNewline;
-
-			/// <summary>
-			/// Indicates whether the cluster corresponds to a soft hyphen character.
-			/// </summary>
-			property bool IsSoftHyphen;
-
-			/// <summary>
-			/// Indicates whether the cluster is read from right to left.
-			/// </summary>
-			property bool IsRightToLeft;
+			property bool IsTrimmed;
 		};
 	}
 }

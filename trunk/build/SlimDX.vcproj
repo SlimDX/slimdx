@@ -5484,11 +5484,27 @@
 						>
 					</File>
 					<File
+						RelativePath="..\source\directwrite\HitTestMetrics.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directwrite\LineMetrics.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directwrite\OverhangMetrics.h"
+						>
+					</File>
+					<File
 						RelativePath="..\source\directwrite\TextLayout.cpp"
 						>
 					</File>
 					<File
 						RelativePath="..\source\directwrite\TextLayout.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directwrite\TextMetrics.h"
 						>
 					</File>
 				</Filter>

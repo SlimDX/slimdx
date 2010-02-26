@@ -23,6 +23,7 @@
 
 #include "ClusterMetrics.h"
 #include "FactoryDW.h"
+#include "HitTestMetrics.h"
 #include "TextFormat.h"
 #include "TextRange.h"
 #include "Typography.h"
@@ -43,17 +44,14 @@ namespace SlimDX
 			TextLayout( Factory^ factory, System::String^ text, TextFormat^ format );
 			TextLayout( Factory^ factory, System::String^ text, TextFormat^ format, float maxWidth, float maxHeight );
 
+			float DetermineMinWidth();
+			HitTestMetrics HitTestPoint( float pointX, float pointY, [Out] bool% isTrailingHit, [Out] bool% isInside );
+			array<ClusterMetrics>^ GetClusterMetrics();
+
 			Result SetFontSize( float size, TextRange range );
 			Result SetUnderline( bool underline, TextRange range );
 			Result SetFontWeight( FontWeight weight, TextRange range );
 			Result SetTypography( Typography^ typography, TextRange range );
-
-			array<SlimDX::DirectWrite::ClusterMetrics>^ GetClusterMetrics();
-
-			property float MinWidth
-			{
-				float get();
-			}
 
 			property float MaxWidth
 			{
