@@ -5293,6 +5293,10 @@
 				RelativePath="..\source\directwrite\ResultCodeDW.h"
 				>
 			</File>
+			<File
+				RelativePath="..\source\directwrite\ToDo.txt"
+				>
+			</File>
 			<Filter
 				Name="Factory"
 				>
@@ -5475,6 +5479,10 @@
 				<Filter
 					Name="TextLayout"
 					>
+					<File
+						RelativePath="..\source\directwrite\ClusterMetrics.h"
+						>
+					</File>
 					<File
 						RelativePath="..\source\directwrite\TextLayout.cpp"
 						>

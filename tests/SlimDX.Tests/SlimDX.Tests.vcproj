@@ -358,6 +358,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\IDWriteFontFaceMock.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\IDWriteFontMock.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\IDWriteTextLayoutMock.h"
+				>
+			</File>
+			<File
 				RelativePath=".\source\IDXGIAdapterMock.h"
 				>
 			</File>
@@ -391,6 +403,14 @@
 			</File>
 			<File
 				RelativePath=".\source\Direct3D10.Resource.Tests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\DirectWrite.Font.Tests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\DirectWrite.TextLayout.Tests.cpp"
 				>
 			</File>
 			<File
