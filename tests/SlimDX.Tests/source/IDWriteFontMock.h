@@ -21,66 +21,23 @@
 */
 #pragma once
 
-extern const IID IID_IDWriteFont;
+#include "CommonMocks.h"
+#include <dwrite.h>
 
-#include "../ComObject.h"
-#include "Enums.h"
-#include "LocalizedStrings.h"
-#include "FontFamily.h"
-#include "FontMetrics.h"
-
-namespace SlimDX
+struct IDWriteFontMock : public IDWriteFont
 {
-	namespace DirectWrite
-	{
-		public ref class Font : public ComObject
-		{
-			COMOBJECT(IDWriteFont, Font);
+	MOCK_IUNKNOWN;
 
-		public:
-			FontFace^ CreateFontFace();
-			LocalizedStrings^ GetInformationalStrings(InformationalStringId stringId);
-			bool HasCharacter(int characterCode);
-
-			property LocalizedStrings^ FaceNames
-			{
-				LocalizedStrings^ get();
-			}
-
-			property SlimDX::DirectWrite::FontFamily^ FontFamily
-			{
-				SlimDX::DirectWrite::FontFamily^ get();
-			}
-
-			property FontMetrics Metrics
-			{
-				FontMetrics get();
-			}
-
-			property FontSimulations Simulations
-			{
-				FontSimulations get();
-			}
-
-			property FontStretch Stretch
-			{
-				FontStretch get();
-			}
-
-			property FontStyle Style
-			{
-				FontStyle get();
-			}
-
-			property FontWeight Weight
-			{
-				FontWeight get();
-			}
-
-			property bool IsSymbolFont
-			{
-				bool get();
-			}
-		};
-	}
-}
+	// IDWriteFont
+	STDMETHOD(GetFontFamily)(IDWriteFontFamily**) { return E_NOTIMPL; }
+	STDMETHOD_(DWRITE_FONT_WEIGHT, GetWeight)() { return DWRITE_FONT_WEIGHT(0); }
+	STDMETHOD_(DWRITE_FONT_STRETCH, GetStretch)() { return DWRITE_FONT_STRETCH(0); }
+	STDMETHOD_(DWRITE_FONT_STYLE, GetStyle)() { return DWRITE_FONT_STYLE(0); }
+	STDMETHOD_(BOOL, IsSymbolFont)() { return BOOL(0); }
+	STDMETHOD(GetFaceNames)(IDWriteLocalizedStrings**) { return E_NOTIMPL; }
+	STDMETHOD(GetInformationalStrings)(DWRITE_INFORMATIONAL_STRING_ID, IDWriteLocalizedStrings**, BOOL*) { return E_NOTIMPL; }
+	STDMETHOD_(DWRITE_FONT_SIMULATIONS, GetSimulations)() { return DWRITE_FONT_SIMULATIONS(0); }
+	STDMETHOD_(void, GetMetrics)(DWRITE_FONT_METRICS*) { }
+	STDMETHOD(HasCharacter)(UINT32, BOOL*) { return E_NOTIMPL; }
+	MOCK_METHOD1_WITH_CALLTYPE( STDMETHODCALLTYPE, CreateFontFace, HRESULT( IDWriteFontFace** ) );
+};

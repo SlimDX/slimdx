@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -19,68 +20,38 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-extern const IID IID_IDWriteFont;
+#include "Asserts.h"
+#include "IDWriteFontMock.h"
+#include "IDWriteFontFaceMock.h"
 
-#include "../ComObject.h"
-#include "Enums.h"
-#include "LocalizedStrings.h"
-#include "FontFamily.h"
-#include "FontMetrics.h"
+using namespace testing;
+using namespace System;
+using namespace SlimDX;
+using namespace SlimDX::DirectWrite;
 
-namespace SlimDX
+TEST(FontTests, CreateFontFaceErrorThrowsSlimDXException)
 {
-	namespace DirectWrite
-	{
-		public ref class Font : public ComObject
-		{
-			COMOBJECT(IDWriteFont, Font);
+	IDWriteFontMock mockFont;
+	Font ^font = Font::FromPointer(System::IntPtr(&mockFont));
+	EXPECT_CALL(mockFont, CreateFontFace(NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<0>(static_cast<IDWriteFontFace *>(0)),
+						Return(E_UNEXPECTED)));
+	FontFace ^face;
+	ASSERT_MANAGED_THROW( face = font->CreateFontFace(), SlimDXException );
+}
 
-		public:
-			FontFace^ CreateFontFace();
-			LocalizedStrings^ GetInformationalStrings(InformationalStringId stringId);
-			bool HasCharacter(int characterCode);
-
-			property LocalizedStrings^ FaceNames
-			{
-				LocalizedStrings^ get();
-			}
-
-			property SlimDX::DirectWrite::FontFamily^ FontFamily
-			{
-				SlimDX::DirectWrite::FontFamily^ get();
-			}
-
-			property FontMetrics Metrics
-			{
-				FontMetrics get();
-			}
-
-			property FontSimulations Simulations
-			{
-				FontSimulations get();
-			}
-
-			property FontStretch Stretch
-			{
-				FontStretch get();
-			}
-
-			property FontStyle Style
-			{
-				FontStyle get();
-			}
-
-			property FontWeight Weight
-			{
-				FontWeight get();
-			}
-
-			property bool IsSymbolFont
-			{
-				bool get();
-			}
-		};
-	}
+TEST(FontTests, CreateFontFaceOK)
+{
+	IDWriteFontMock mockFont;
+	Font ^font = Font::FromPointer(System::IntPtr(&mockFont));
+	IDWriteFontFaceMock mockFace;
+	EXPECT_CALL(mockFont, CreateFontFace(NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<0>(&mockFace),
+						Return(S_OK)));
+	FontFace ^face = font->CreateFontFace();
+	ASSERT_TRUE( nullptr != face );
+	ASSERT_EQ( &mockFace, face->InternalPointer );
 }
