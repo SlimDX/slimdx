@@ -50,6 +50,11 @@ namespace SlimDX
 
 			array<SlimDX::DirectWrite::ClusterMetrics>^ GetClusterMetrics();
 
+			property float MinWidth
+			{
+				float get();
+			}
+
 			property float MaxWidth
 			{
 				float get();
