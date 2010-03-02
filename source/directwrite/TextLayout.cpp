@@ -57,6 +57,13 @@ namespace DirectWrite
 		Construct( layout );
 	}
 
+	float TextLayout::DetermineMinWidth()
+	{
+		float minWidth = -1.0f;
+		RECORD_DW( InternalPointer->DetermineMinWidth(&minWidth) );
+		return minWidth;
+	}
+
 	HitTestMetrics TextLayout::HitTestPoint( float pointX, float pointY, [Out] bool% isTrailingHit, [Out] bool% isInside )
 	{
 		DWRITE_HIT_TEST_METRICS htm;
@@ -92,6 +99,62 @@ namespace DirectWrite
 		return HitTestMetrics( htm.textPosition, htm.length, htm.left, htm.top, htm.width, htm.height,
 			htm.bidiLevel, htm.isText == TRUE, htm.isTrimmed == TRUE );
 	}
+
+	array<HitTestMetrics>^ TextLayout::HitTestTextRange( int textPosition, int textLength, float originX, float originY )
+	{
+		// Find out how many hit-test metrics to buffer for
+		UINT32 count = 0;
+		{
+			HRESULT const hr = InternalPointer->HitTestTextRange(textPosition, textLength,
+				originX, originY, 0, 0, &count);
+			assert(FAILED(hr) && (HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER) == hr));
+		}
+
+		std::vector<DWRITE_HIT_TEST_METRICS> metrics(count);
+		if (RECORD_DW(InternalPointer->HitTestTextRange(
+				textPosition, textLength, originX, originY, 
+				&metrics[0], count, &count)).IsFailure)
+		{
+			return nullptr;
+		}
+
+		array<HitTestMetrics>^ result = gcnew array<HitTestMetrics>(count);
+		for (UINT32 i = 0; i < count; ++i )
+		{
+			result[i] = HitTestMetrics( metrics[i].textPosition, metrics[i].length,
+				metrics[i].left, metrics[i].top, metrics[i].width, metrics[i].height,
+				metrics[i].bidiLevel, metrics[i].isText == TRUE, metrics[i].isTrimmed == TRUE);
+		}
+		return result;
+	}
+
+	array<ClusterMetrics>^ TextLayout::GetClusterMetrics()
+	{
+		UINT32 count = 0;
+		{
+			HRESULT const hr = InternalPointer->GetClusterMetrics(0, 0, &count);
+			assert(FAILED(hr) && (HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER) == hr));
+		}
+
+		std::vector<DWRITE_CLUSTER_METRICS> metrics;
+		metrics.resize(count);
+		if (RECORD_DW(InternalPointer->GetClusterMetrics(&metrics[0], count, &count)).IsFailure)
+		{
+			return nullptr;
+		}
+		array<SlimDX::DirectWrite::ClusterMetrics>^ result = gcnew array<SlimDX::DirectWrite::ClusterMetrics>(count);
+		for (UINT32 i = 0; i < count; i++)
+		{
+			result[i] = ClusterMetrics( metrics[i].width, metrics[i].length,
+				metrics[i].canWrapLineAfter != 0,
+				metrics[i].isWhitespace != 0,
+				metrics[i].isNewline != 0,
+				metrics[i].isSoftHyphen != 0,
+				metrics[i].isRightToLeft != 0 );
+		}
+		return result;
+	}
+
 
 	Result TextLayout::SetFontSize( float size, TextRange range )
 	{
@@ -131,40 +194,6 @@ namespace DirectWrite
 
 		HRESULT hr = InternalPointer->SetTypography( typography->InternalPointer, tr );
 		return RECORD_DW( hr );
-	}
-
-	array<ClusterMetrics>^ TextLayout::GetClusterMetrics()
-	{
-		UINT32 count = 0;
-		{
-			HRESULT const hr = InternalPointer->GetClusterMetrics(0, 0, &count);
-			assert(FAILED(hr) && (HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER) == hr));
-		}
-
-		std::vector<DWRITE_CLUSTER_METRICS> metrics;
-		metrics.resize(count);
-		if (RECORD_DW(InternalPointer->GetClusterMetrics(&metrics[0], count, &count)).IsFailure)
-		{
-			return nullptr;
-		}
-		array<SlimDX::DirectWrite::ClusterMetrics>^ result = gcnew array<SlimDX::DirectWrite::ClusterMetrics>(count);
-		for (UINT32 i = 0; i < count; i++)
-		{
-			result[i] = ClusterMetrics( metrics[i].width, metrics[i].length,
-				metrics[i].canWrapLineAfter != 0,
-				metrics[i].isWhitespace != 0,
-				metrics[i].isNewline != 0,
-				metrics[i].isSoftHyphen != 0,
-				metrics[i].isRightToLeft != 0 );
-		}
-		return result;
-	}
-
-	float TextLayout::DetermineMinWidth()
-	{
-		float minWidth = -1.0f;
-		RECORD_DW( InternalPointer->DetermineMinWidth(&minWidth) );
-		return minWidth;
 	}
 
 	float TextLayout::MaxWidth::get()

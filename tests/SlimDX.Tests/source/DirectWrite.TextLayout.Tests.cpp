@@ -28,13 +28,50 @@ using namespace System;
 using namespace SlimDX;
 using namespace SlimDX::DirectWrite;
 
-TEST(TextLayoutTests, GetClusterMetrics)
+ref class MockedTextLayout
 {
-	IDWriteTextLayoutMock mockLayout;
-	TextLayout ^layout = TextLayout::FromPointer(System::IntPtr(&mockLayout));
-	EXPECT_CALL(mockLayout, GetClusterMetrics(_, _, _))
+public:
+	MockedTextLayout()
+		: mockLayout(new IDWriteTextLayoutMock),
+		layout(TextLayout::FromPointer(System::IntPtr(mockLayout)))
+	{
+	}
+	~MockedTextLayout()
+	{
+		delete layout;
+		layout = nullptr;
+		delete mockLayout;
+		mockLayout = 0;
+	}
+	property IDWriteTextLayoutMock &Mock
+	{
+		IDWriteTextLayoutMock &get() { return *mockLayout; }
+	}
+	property TextLayout ^Layout
+	{
+		TextLayout ^get() { return layout; }
+	}
+
+private:
+	IDWriteTextLayoutMock *mockLayout;
+	TextLayout ^layout;
+};
+
+class TextLayoutTest : public testing::Test
+{
+protected:
+	virtual void TearDown()
+	{
+		ASSERT_EQ(0, ObjectTable::Objects->Count);
+	}
+};
+
+TEST_F(TextLayoutTest, GetClusterMetrics)
+{
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, GetClusterMetrics(_, _, _))
 		.WillRepeatedly(Return(E_UNEXPECTED));
-	EXPECT_CALL(mockLayout, GetClusterMetrics(0, 0, NotNull()))
+	EXPECT_CALL(layout.Mock, GetClusterMetrics(0, 0, NotNull()))
 		.WillOnce(DoAll(
 			SetArgumentPointee<2>(1),
 			Return(HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER))
@@ -47,13 +84,13 @@ TEST(TextLayoutTests, GetClusterMetrics)
 	expectedMetrics.isNewline = 0;
 	expectedMetrics.isSoftHyphen = 0;
 	expectedMetrics.isRightToLeft = 0;
-	EXPECT_CALL(mockLayout, GetClusterMetrics(NotNull(), Gt(0U), NotNull()))
+	EXPECT_CALL(layout.Mock, GetClusterMetrics(NotNull(), Gt(0U), NotNull()))
 		.WillOnce(DoAll(
 			SetArgumentPointee<0>(expectedMetrics),
 			SetArgumentPointee<2>(1),
 			Return(S_OK)
 		));
-	array<SlimDX::DirectWrite::ClusterMetrics>^ metrics = layout->GetClusterMetrics();
+	array<SlimDX::DirectWrite::ClusterMetrics>^ metrics = layout.Layout->GetClusterMetrics();
 	ASSERT_TRUE( Result::Last.IsSuccess );
 	ASSERT_TRUE( metrics != nullptr );
 	ASSERT_EQ( 1, metrics->Length );
@@ -66,15 +103,14 @@ TEST(TextLayoutTests, GetClusterMetrics)
 	ASSERT_FALSE( metrics[0].IsRightToLeft );
 }
 
-TEST(TextLayoutTests, DetermineMinWidth)
+TEST_F(TextLayoutTest, DetermineMinWidth)
 {
-	IDWriteTextLayoutMock mockLayout;
-	TextLayout ^layout = TextLayout::FromPointer(System::IntPtr(&mockLayout));
-	EXPECT_CALL(mockLayout, DetermineMinWidth(NotNull()))
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, DetermineMinWidth(NotNull()))
 		.Times(1)
 		.WillOnce(DoAll(SetArgumentPointee<0>(14.5f), Return(S_OK)));
 	float minWidth = -1.0f;
-	ASSERT_EQ( 14.5f, layout->DetermineMinWidth() );
+	ASSERT_EQ( 14.5f, layout.Layout->DetermineMinWidth() );
 }
 
 static DWRITE_HIT_TEST_METRICS ExpectedHitTestMetrics()
@@ -106,11 +142,10 @@ static void AssertHitTestMetricsMatchExpected(HitTestMetrics% actual)
 	ASSERT_EQ( expected.isTrimmed == TRUE, actual.IsTrimmed );
 }
 
-TEST(TextLayoutTests, HitTestPoint)
+TEST_F(TextLayoutTest, HitTestPoint)
 {
-	IDWriteTextLayoutMock mockLayout;
-	TextLayout ^layout = TextLayout::FromPointer(System::IntPtr(&mockLayout));
-	EXPECT_CALL(mockLayout, HitTestPoint(10.0f, 12.0f, NotNull(), NotNull(), NotNull()))
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, HitTestPoint(10.0f, 12.0f, NotNull(), NotNull(), NotNull()))
 		.Times(1)
 		.WillOnce(DoAll(SetArgumentPointee<2>(false),
 						SetArgumentPointee<3>(false),
@@ -118,27 +153,43 @@ TEST(TextLayoutTests, HitTestPoint)
 						Return(S_OK)));
 	bool isTrailingHit = true;
 	bool isInside = true;
-	HitTestMetrics metrics = layout->HitTestPoint(10.0f, 12.0f, isTrailingHit, isInside);
+	HitTestMetrics metrics = layout.Layout->HitTestPoint(10.0f, 12.0f, isTrailingHit, isInside);
 	ASSERT_TRUE( Result::Last.IsSuccess );
 	ASSERT_FALSE( isTrailingHit );
 	ASSERT_FALSE( isInside );
 	AssertHitTestMetricsMatchExpected(metrics);
 }
 
-TEST(TextLayoutTests, HitTestTextPosition)
+TEST_F(TextLayoutTest, HitTestTextPosition)
 {
-	IDWriteTextLayoutMock mockLayout;
-	TextLayout ^layout = TextLayout::FromPointer(System::IntPtr(&mockLayout));
-	EXPECT_CALL(mockLayout, HitTestTextPosition(12U, FALSE, NotNull(), NotNull(), NotNull()))
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, HitTestTextPosition(12U, FALSE, NotNull(), NotNull(), NotNull()))
 		.Times(1)
 		.WillOnce(DoAll(SetArgumentPointee<2>(12.5f),
 		SetArgumentPointee<3>(13.5f),
 		SetArgumentPointee<4>(ExpectedHitTestMetrics()),
 		Return(S_OK)));
 	float x, y;
-	HitTestMetrics metrics = layout->HitTestTextPosition(12U, false, x, y);
+	HitTestMetrics metrics = layout.Layout->HitTestTextPosition(12U, false, x, y);
 	ASSERT_TRUE( Result::Last.IsSuccess );
 	ASSERT_EQ( 12.5f, x );
 	ASSERT_EQ( 13.5f, y );
 	AssertHitTestMetricsMatchExpected(metrics);
+}
+
+TEST_F(TextLayoutTest, HitTestTextRange)
+{
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, HitTestTextRange(12U, 4U, 10.0f, 12.0f, 0, 0, NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<6>(1U), Return(HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER))));
+	EXPECT_CALL(layout.Mock, HitTestTextRange(12U, 4U, 10.0f, 12.0f, NotNull(), 1U, NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<6>(1U),
+						SetArgumentPointee<4>(ExpectedHitTestMetrics()),
+						Return(S_OK)));
+	array<HitTestMetrics> ^metrics = layout.Layout->HitTestTextRange(12U, 4U, 10.0f, 12.0f);
+	ASSERT_TRUE( Result::Last.IsSuccess );
+	ASSERT_EQ( 1, metrics->Length );
+	AssertHitTestMetricsMatchExpected(metrics[0]);
 }
