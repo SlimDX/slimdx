@@ -30,28 +30,65 @@ using namespace System;
 using namespace SlimDX;
 using namespace SlimDX::DirectWrite;
 
-TEST(FontTests, CreateFontFaceErrorThrowsSlimDXException)
+ref class MockedFont
 {
-	IDWriteFontMock mockFont;
-	Font ^font = Font::FromPointer(System::IntPtr(&mockFont));
-	EXPECT_CALL(mockFont, CreateFontFace(NotNull()))
+public:
+	MockedFont()
+		: mockFont(new IDWriteFontMock),
+		font(SlimDX::DirectWrite::Font::FromPointer(System::IntPtr(mockFont)))
+	{
+	}
+	~MockedFont()
+	{
+		delete font;
+		font = nullptr;
+		delete mockFont;
+		mockFont = 0;
+	}
+	property IDWriteFontMock &Mock
+	{
+		IDWriteFontMock &get() { return *mockFont; }
+	}
+	property SlimDX::DirectWrite::Font ^Font
+	{
+		SlimDX::DirectWrite::Font ^get() { return font; }
+	}
+
+private:
+	IDWriteFontMock *mockFont;
+	SlimDX::DirectWrite::Font ^font;
+};
+
+class FontTest : public testing::Test
+{
+protected:
+	virtual void TearDown()
+	{
+		ASSERT_EQ(0, ObjectTable::Objects->Count);
+	}
+};
+
+TEST_F(FontTest, CreateFontFaceErrorThrowsSlimDXException)
+{
+	MockedFont font;
+	EXPECT_CALL(font.Mock, CreateFontFace(NotNull()))
 		.Times(1)
 		.WillOnce(DoAll(SetArgumentPointee<0>(static_cast<IDWriteFontFace *>(0)),
 						Return(E_UNEXPECTED)));
 	FontFace ^face;
-	ASSERT_MANAGED_THROW( face = font->CreateFontFace(), SlimDXException );
+	ASSERT_MANAGED_THROW( face = font.Font->CreateFontFace(), SlimDXException );
 }
 
-TEST(FontTests, CreateFontFaceOK)
+TEST_F(FontTest, CreateFontFaceOK)
 {
-	IDWriteFontMock mockFont;
-	Font ^font = Font::FromPointer(System::IntPtr(&mockFont));
+	MockedFont font;
 	IDWriteFontFaceMock mockFace;
-	EXPECT_CALL(mockFont, CreateFontFace(NotNull()))
+	EXPECT_CALL(font.Mock, CreateFontFace(NotNull()))
 		.Times(1)
 		.WillOnce(DoAll(SetArgumentPointee<0>(&mockFace),
 						Return(S_OK)));
-	FontFace ^face = font->CreateFontFace();
+	FontFace ^face = font.Font->CreateFontFace();
 	ASSERT_TRUE( nullptr != face );
 	ASSERT_EQ( &mockFace, face->InternalPointer );
+	delete face;
 }

@@ -66,8 +66,6 @@ IDWriteTextLayout::Draw
 IDWriteTextLayout::GetLineMetrics
 IDWriteTextLayout::GetMetrics
 IDWriteTextLayout::GetOverhangMetrics
-IDWriteTextLayout::HitTestTextPosition
-IDWriteTextLayout::HitTestTextRange
 LOGFONT IDWriteGdiInterop::(CreateFontFromLOGFONT, ConvertFontToLOGFONT, ConvertFontFaceToLOGFONT)
 IDWriteGdiInterop::CreateBitmapRenderTarget (GdiInterop)
 DWRITE_ALPHA_MAX
