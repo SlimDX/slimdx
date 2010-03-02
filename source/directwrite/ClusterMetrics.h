@@ -31,7 +31,7 @@ namespace SlimDX
 		public value class ClusterMetrics
 		{
 		public:
-			ClusterMetrics( float width, UINT16 length, bool canWrapLineAfter,
+			ClusterMetrics( float width, short length, bool canWrapLineAfter,
 				bool isWhitespace, bool isNewline, bool isSoftHyphen, bool isRightToLeft )
 			{
 				Width = width;
@@ -51,7 +51,7 @@ namespace SlimDX
 			/// <summary>
 			/// The number of text positions in the cluster.
 			/// </summary>
-			property UINT16 Length;
+			property short Length;
 
 			/// <summary>
 			/// Indicates whether a line can be broken right after the cluster.
