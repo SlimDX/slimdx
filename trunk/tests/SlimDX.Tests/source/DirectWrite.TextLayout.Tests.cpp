@@ -66,16 +66,8 @@ protected:
 	}
 };
 
-TEST_F(TextLayoutTest, GetClusterMetrics)
+static DWRITE_CLUSTER_METRICS ExpectedClusterMetrics()
 {
-	MockedTextLayout layout;
-	EXPECT_CALL(layout.Mock, GetClusterMetrics(_, _, _))
-		.WillRepeatedly(Return(E_UNEXPECTED));
-	EXPECT_CALL(layout.Mock, GetClusterMetrics(0, 0, NotNull()))
-		.WillOnce(DoAll(
-			SetArgumentPointee<2>(1),
-			Return(HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER))
-		));
 	DWRITE_CLUSTER_METRICS expectedMetrics;
 	expectedMetrics.width = 15.0f;
 	expectedMetrics.length = 1;
@@ -84,23 +76,38 @@ TEST_F(TextLayoutTest, GetClusterMetrics)
 	expectedMetrics.isNewline = 0;
 	expectedMetrics.isSoftHyphen = 0;
 	expectedMetrics.isRightToLeft = 0;
+	return expectedMetrics;
+}
+
+static void AssertClusterMetricsMatchExpected(ClusterMetrics metrics)
+{
+	DWRITE_CLUSTER_METRICS expected = ExpectedClusterMetrics();
+	ASSERT_EQ( expected.width, metrics.Width );
+	ASSERT_EQ( expected.length, metrics.Length );
+	ASSERT_EQ( expected.canWrapLineAfter != 0, metrics.CanWrapLineAfter );
+	ASSERT_EQ( expected.isWhitespace != 0, metrics.IsWhitespace );
+	ASSERT_EQ( expected.isNewline != 0, metrics.IsNewline );
+	ASSERT_EQ( expected.isSoftHyphen != 0, metrics.IsSoftHyphen );
+	ASSERT_EQ( expected.isRightToLeft != 0, metrics.IsRightToLeft );
+}
+
+TEST_F(TextLayoutTest, GetClusterMetrics)
+{
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, GetClusterMetrics(_, _, _))
+		.WillRepeatedly(Return(E_UNEXPECTED));
+	EXPECT_CALL(layout.Mock, GetClusterMetrics(0, 0, NotNull()))
+		.WillOnce(DoAll(SetArgumentPointee<2>(1),
+						Return(HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER))));
 	EXPECT_CALL(layout.Mock, GetClusterMetrics(NotNull(), Gt(0U), NotNull()))
-		.WillOnce(DoAll(
-			SetArgumentPointee<0>(expectedMetrics),
-			SetArgumentPointee<2>(1),
-			Return(S_OK)
-		));
+		.WillOnce(DoAll(SetArgumentPointee<0>(ExpectedClusterMetrics()),
+						SetArgumentPointee<2>(1),
+						Return(S_OK)));
 	array<SlimDX::DirectWrite::ClusterMetrics>^ metrics = layout.Layout->GetClusterMetrics();
 	ASSERT_TRUE( Result::Last.IsSuccess );
 	ASSERT_TRUE( metrics != nullptr );
 	ASSERT_EQ( 1, metrics->Length );
-	ASSERT_EQ( 15.0f, metrics[0].Width );
-	ASSERT_EQ( 1, metrics[0].Length );
-	ASSERT_FALSE( metrics[0].CanWrapLineAfter );
-	ASSERT_FALSE( metrics[0].IsWhitespace );
-	ASSERT_FALSE( metrics[0].IsNewline );
-	ASSERT_FALSE( metrics[0].IsSoftHyphen );
-	ASSERT_FALSE( metrics[0].IsRightToLeft );
+	AssertClusterMetricsMatchExpected(metrics[0]);
 }
 
 TEST_F(TextLayoutTest, DetermineMinWidth)
@@ -166,9 +173,9 @@ TEST_F(TextLayoutTest, HitTestTextPosition)
 	EXPECT_CALL(layout.Mock, HitTestTextPosition(12U, FALSE, NotNull(), NotNull(), NotNull()))
 		.Times(1)
 		.WillOnce(DoAll(SetArgumentPointee<2>(12.5f),
-		SetArgumentPointee<3>(13.5f),
-		SetArgumentPointee<4>(ExpectedHitTestMetrics()),
-		Return(S_OK)));
+						SetArgumentPointee<3>(13.5f),
+						SetArgumentPointee<4>(ExpectedHitTestMetrics()),
+						Return(S_OK)));
 	float x, y;
 	HitTestMetrics metrics = layout.Layout->HitTestTextPosition(12U, false, x, y);
 	ASSERT_TRUE( Result::Last.IsSuccess );
