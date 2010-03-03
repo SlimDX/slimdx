@@ -184,6 +184,14 @@ namespace DirectWrite
 		return SlimDX::DirectWrite::FontCollection::FromPointer(fc);
 	}
 
+	Result TextLayout::SetFontCollection( FontCollection^ collection, TextRange range )
+	{
+		DWRITE_TEXT_RANGE tr;
+		tr.startPosition = range.StartPosition;
+		tr.length = range.Length;
+		return RECORD_DW(InternalPointer->SetFontCollection( collection->InternalPointer, tr ));
+	}
+
 	Result TextLayout::SetFontSize( float size, TextRange range )
 	{
 		DWRITE_TEXT_RANGE tr;
