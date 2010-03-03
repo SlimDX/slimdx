@@ -40,7 +40,8 @@ namespace SlimDX
 			COMOBJECT(IDWriteTextLayout, TextLayout);
 
 			void Init( Factory^ factory, System::String^ text, TextFormat^ format, float maxWidth, float maxHeight );
-			FontCollection ^TextLayout::GetFontCollectionInternal(int currentPosition, DWRITE_TEXT_RANGE *textRange);
+			FontCollection ^GetFontCollectionInternal(int currentPosition, DWRITE_TEXT_RANGE *textRange);
+			System::String ^GetFontFamilyNameInternal(int currentPosition, DWRITE_TEXT_RANGE *textRange);
 
 		public:
 			TextLayout( Factory^ factory, System::String^ text, TextFormat^ format );
@@ -51,8 +52,10 @@ namespace SlimDX
 			HitTestMetrics HitTestTextPosition( int textPosition, bool isTrailingHit, [Out] float% pointX, [Out] float% pointY );
 			array< HitTestMetrics >^ HitTestTextRange( int textPosition, int textLength, float originX, float originY );
 			array<ClusterMetrics>^ GetClusterMetrics();
-			FontCollection^ GetFontCollection ( int currentPosition );
-			FontCollection^ GetFontCollection ( int currentPosition, [Out] TextRange% textRange );
+			FontCollection^ GetFontCollection( int currentPosition );
+			FontCollection^ GetFontCollection( int currentPosition, [Out] TextRange% textRange );
+			System::String^ GetFontFamilyName( int currentPosition );
+			System::String^ GetFontFamilyName( int currentPosition, [Out] TextRange% textRange );
 
 			Result SetFontCollection( FontCollection^ collection, TextRange range );
 			Result SetFontSize( float size, TextRange range );
