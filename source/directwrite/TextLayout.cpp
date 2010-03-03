@@ -35,6 +35,39 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
+	LPWSTR AllocateNativeUnicodeString(String ^text)
+	{
+		return ( text == nullptr || String::IsNullOrEmpty( text ) ) ?
+			NULL
+			: reinterpret_cast<LPWSTR>( System::Runtime::InteropServices::Marshal::StringToHGlobalUni( text ).ToPointer() );
+	}
+	void FreeNativeUnicodeString(LPWSTR text)
+	{
+		if (text)
+		{
+			System::Runtime::InteropServices::Marshal::FreeHGlobal( IntPtr( reinterpret_cast<void*>( text ) ) );
+		}
+	}
+	class NativeUnicodeString
+	{
+	public:
+		explicit NativeUnicodeString(String ^text)
+			: m_nativeString(AllocateNativeUnicodeString(text))
+		{
+		}
+		~NativeUnicodeString()
+		{
+			FreeNativeUnicodeString(m_nativeString);
+		}
+		operator LPCWSTR() const
+		{
+			return m_nativeString;
+		}
+
+	private:
+		LPWSTR m_nativeString;
+	};
+
 	TextLayout::TextLayout( Factory^ factory, System::String^ text, TextFormat^ format )
 	{
 		Init( factory, text, format, 0, 0 );
@@ -225,6 +258,14 @@ namespace DirectWrite
 		tr.startPosition = range.StartPosition;
 		tr.length = range.Length;
 		return RECORD_DW(InternalPointer->SetFontCollection( collection->InternalPointer, tr ));
+	}
+
+	Result TextLayout::SetFontFamilyName(String ^name, TextRange range)
+	{
+		DWRITE_TEXT_RANGE tr;
+		tr.startPosition = range.StartPosition;
+		tr.length = range.Length;
+		return RECORD_DW(InternalPointer->SetFontFamilyName( NativeUnicodeString(name), tr ));
 	}
 
 	Result TextLayout::SetFontSize( float size, TextRange range )
