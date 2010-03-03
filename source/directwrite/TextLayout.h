@@ -29,6 +29,7 @@
 #include "Typography.h"
 
 extern const IID IID_IDWriteTextLayout;
+struct DWRITE_TEXT_RANGE;
 
 namespace SlimDX
 {
@@ -39,6 +40,7 @@ namespace SlimDX
 			COMOBJECT(IDWriteTextLayout, TextLayout);
 
 			void Init( Factory^ factory, System::String^ text, TextFormat^ format, float maxWidth, float maxHeight );
+			FontCollection ^TextLayout::GetFontCollectionInternal(int currentPosition, DWRITE_TEXT_RANGE *textRange);
 
 		public:
 			TextLayout( Factory^ factory, System::String^ text, TextFormat^ format );
@@ -49,6 +51,8 @@ namespace SlimDX
 			HitTestMetrics HitTestTextPosition( int textPosition, bool isTrailingHit, [Out] float% pointX, [Out] float% pointY );
 			array< HitTestMetrics >^ HitTestTextRange( int textPosition, int textLength, float originX, float originY );
 			array<ClusterMetrics>^ GetClusterMetrics();
+			FontCollection^ GetFontCollection ( int currentPosition );
+			FontCollection^ GetFontCollection ( int currentPosition, [Out] TextRange% textRange );
 
 			Result SetFontSize( float size, TextRange range );
 			Result SetUnderline( bool underline, TextRange range );

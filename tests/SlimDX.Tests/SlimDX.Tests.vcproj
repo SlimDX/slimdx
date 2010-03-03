@@ -363,6 +363,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\IDWriteFontCollectionMock.h"
+				>
+			</File>
+			<File
 				RelativePath=".\source\IDWriteFontFaceMock.h"
 				>
 			</File>
