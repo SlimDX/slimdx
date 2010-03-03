@@ -155,6 +155,34 @@ namespace DirectWrite
 		return result;
 	}
 
+	FontCollection^ TextLayout::GetFontCollection ( int currentPosition )
+	{
+		return GetFontCollectionInternal(currentPosition, 0);
+	}
+
+	FontCollection^ TextLayout::GetFontCollection ( int currentPosition, [Out] TextRange% textRange )
+	{
+		DWRITE_TEXT_RANGE tr;
+		FontCollection ^collection = GetFontCollectionInternal(currentPosition, &tr);
+		if (collection != nullptr)
+		{
+			textRange.StartPosition = tr.startPosition;
+			textRange.Length = tr.length;
+		}
+
+		return collection;
+	}
+
+	FontCollection ^TextLayout::GetFontCollectionInternal(int currentPosition, DWRITE_TEXT_RANGE *textRange)
+	{
+		IDWriteFontCollection* fc;
+		if( RECORD_DW(InternalPointer->GetFontCollection(currentPosition, &fc, textRange)).IsFailure)
+		{
+			return nullptr;
+		}
+
+		return SlimDX::DirectWrite::FontCollection::FromPointer(fc);
+	}
 
 	Result TextLayout::SetFontSize( float size, TextRange range )
 	{

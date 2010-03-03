@@ -72,7 +72,7 @@ struct IDWriteTextLayoutMock : IDWriteTextLayout
 	STDMETHODIMP SetLocaleName(WCHAR const *, DWRITE_TEXT_RANGE) { return E_NOTIMPL; }
 	STDMETHODIMP_(FLOAT) GetMaxWidth() { return FLOAT(0); }
 	STDMETHODIMP_(FLOAT) GetMaxHeight() { return FLOAT(0); }
-	STDMETHODIMP GetFontCollection( UINT32, IDWriteFontCollection**, DWRITE_TEXT_RANGE* ) { return E_NOTIMPL; }
+	MOCK_METHOD3_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFontCollection, HRESULT( UINT32, IDWriteFontCollection**, DWRITE_TEXT_RANGE* ) );
 	STDMETHODIMP GetFontFamilyNameLength( UINT32, UINT32*, DWRITE_TEXT_RANGE* ) { return E_NOTIMPL; }
 	STDMETHODIMP GetFontFamilyName( UINT32, WCHAR*, UINT32, DWRITE_TEXT_RANGE* ) { return E_NOTIMPL; }
 	STDMETHODIMP GetFontWeight( UINT32, DWRITE_FONT_WEIGHT*, DWRITE_TEXT_RANGE* ) { return E_NOTIMPL; }

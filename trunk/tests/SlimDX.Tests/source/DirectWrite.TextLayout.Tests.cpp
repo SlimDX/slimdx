@@ -21,6 +21,7 @@
 * THE SOFTWARE.
 */
 
+#include "IDWriteFontCollectionMock.h"
 #include "IDWriteTextLayoutMock.h"
 
 using namespace testing;
@@ -199,4 +200,17 @@ TEST_F(TextLayoutTest, HitTestTextRange)
 	ASSERT_TRUE( Result::Last.IsSuccess );
 	ASSERT_EQ( 1, metrics->Length );
 	AssertHitTestMetricsMatchExpected(metrics[0]);
+}
+
+TEST_F(TextLayoutTest, GetFontCollectionNoTextRange)
+{
+	MockedTextLayout layout;
+	IDWriteFontCollectionMock mockCollection;
+	EXPECT_CALL(layout.Mock, GetFontCollection(0, NotNull(), 0))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(&mockCollection), Return(S_OK)));
+	FontCollection ^collection = layout.Layout->GetFontCollection(0);
+	ASSERT_TRUE( collection != nullptr );
+	ASSERT_EQ( collection->InternalPointer, &mockCollection );
+	delete collection;
 }
