@@ -35,17 +35,19 @@ namespace SlimDX
 {
 	namespace DirectWrite
 	{
+		using namespace System;
+
 		public ref class TextLayout : public ComObject
 		{
 			COMOBJECT(IDWriteTextLayout, TextLayout);
 
-			void Init( Factory^ factory, System::String^ text, TextFormat^ format, float maxWidth, float maxHeight );
+			void Init( Factory^ factory, String^ text, TextFormat^ format, float maxWidth, float maxHeight );
 			FontCollection ^GetFontCollectionInternal(int currentPosition, DWRITE_TEXT_RANGE *textRange);
-			System::String ^GetFontFamilyNameInternal(int currentPosition, DWRITE_TEXT_RANGE *textRange);
+			String ^GetFontFamilyNameInternal(int currentPosition, DWRITE_TEXT_RANGE *textRange);
 
 		public:
-			TextLayout( Factory^ factory, System::String^ text, TextFormat^ format );
-			TextLayout( Factory^ factory, System::String^ text, TextFormat^ format, float maxWidth, float maxHeight );
+			TextLayout( Factory^ factory, String^ text, TextFormat^ format );
+			TextLayout( Factory^ factory, String^ text, TextFormat^ format, float maxWidth, float maxHeight );
 
 			float DetermineMinWidth();
 			HitTestMetrics HitTestPoint( float pointX, float pointY, [Out] bool% isTrailingHit, [Out] bool% isInside );
@@ -54,10 +56,11 @@ namespace SlimDX
 			array<ClusterMetrics>^ GetClusterMetrics();
 			FontCollection^ GetFontCollection( int currentPosition );
 			FontCollection^ GetFontCollection( int currentPosition, [Out] TextRange% textRange );
-			System::String^ GetFontFamilyName( int currentPosition );
-			System::String^ GetFontFamilyName( int currentPosition, [Out] TextRange% textRange );
+			String^ GetFontFamilyName( int currentPosition );
+			String^ GetFontFamilyName( int currentPosition, [Out] TextRange% textRange );
 
 			Result SetFontCollection( FontCollection^ collection, TextRange range );
+			Result SetFontFamilyName( String^ name, TextRange range );
 			Result SetFontSize( float size, TextRange range );
 			Result SetUnderline( bool underline, TextRange range );
 			Result SetFontWeight( FontWeight weight, TextRange range );

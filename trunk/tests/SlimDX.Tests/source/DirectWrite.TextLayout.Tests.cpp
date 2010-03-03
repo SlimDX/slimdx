@@ -282,3 +282,22 @@ TEST_F(TextLayoutTest, GetFontFamilyNameWithTextRange)
 	ASSERT_EQ(1, range.StartPosition );
 	ASSERT_EQ(2, range.Length );
 }
+
+static bool operator==(DWRITE_TEXT_RANGE const &lhs, DWRITE_TEXT_RANGE const &rhs)
+{
+	return lhs.startPosition == rhs.startPosition
+		&& lhs.length == rhs.length;
+}
+
+TEST_F(TextLayoutTest, SetFontFamilyName)
+{
+	MockedTextLayout layout;
+	DWRITE_TEXT_RANGE expectedRange;
+	expectedRange.startPosition = 2;
+	expectedRange.length = 4;
+	EXPECT_CALL(layout.Mock, SetFontFamilyName(NotNull(), expectedRange))
+		.Times(1)
+		.WillOnce(Return(S_OK));
+	
+	ASSERT_TRUE( layout.Layout->SetFontFamilyName(gcnew String("Slartibartfast!"), TextRange(2, 4)).IsSuccess );
+}
