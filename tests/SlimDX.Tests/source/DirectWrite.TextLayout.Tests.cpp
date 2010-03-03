@@ -214,3 +214,24 @@ TEST_F(TextLayoutTest, GetFontCollectionNoTextRange)
 	ASSERT_EQ( collection->InternalPointer, &mockCollection );
 	delete collection;
 }
+
+TEST_F(TextLayoutTest, GetFontCollectionWithTextRange)
+{
+	MockedTextLayout layout;
+	IDWriteFontCollectionMock mockCollection;
+	DWRITE_TEXT_RANGE fakeTextRange;
+	fakeTextRange.length = 1;
+	fakeTextRange.startPosition = 0;
+	EXPECT_CALL(layout.Mock, GetFontCollection(0, NotNull(), NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(&mockCollection),
+						SetArgumentPointee<2>(fakeTextRange),
+						Return(S_OK)));
+	TextRange textRange;
+	FontCollection ^collection = layout.Layout->GetFontCollection(0, textRange);
+	ASSERT_TRUE( collection != nullptr );
+	ASSERT_EQ( collection->InternalPointer, &mockCollection );
+	ASSERT_EQ( 1, textRange.Length );
+	ASSERT_EQ( 0, textRange.StartPosition );
+	delete collection;
+}
