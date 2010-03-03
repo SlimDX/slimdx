@@ -210,6 +210,7 @@ TEST_F(TextLayoutTest, GetFontCollectionNoTextRange)
 		.Times(1)
 		.WillOnce(DoAll(SetArgumentPointee<1>(&mockCollection), Return(S_OK)));
 	FontCollection ^collection = layout.Layout->GetFontCollection(0);
+	ASSERT_TRUE( Result::Last.IsSuccess );
 	ASSERT_TRUE( collection != nullptr );
 	ASSERT_EQ( collection->InternalPointer, &mockCollection );
 	delete collection;
@@ -229,9 +230,55 @@ TEST_F(TextLayoutTest, GetFontCollectionWithTextRange)
 						Return(S_OK)));
 	TextRange textRange;
 	FontCollection ^collection = layout.Layout->GetFontCollection(0, textRange);
+	ASSERT_TRUE( Result::Last.IsSuccess );
 	ASSERT_TRUE( collection != nullptr );
 	ASSERT_EQ( collection->InternalPointer, &mockCollection );
 	ASSERT_EQ( 1, textRange.Length );
 	ASSERT_EQ( 0, textRange.StartPosition );
 	delete collection;
+}
+
+#define NUM_OF(ary_) (sizeof(ary_)/sizeof(ary_[0]))
+
+TEST_F(TextLayoutTest, GetFontFamilyNameNoTextRange)
+{
+	MockedTextLayout layout;
+	WCHAR fakeName[] = L"Slartibartfast";
+	int const numFakeName = NUM_OF(fakeName);
+	EXPECT_CALL(layout.Mock, GetFontFamilyNameLength(0, NotNull(), 0))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(numFakeName), Return(S_OK)));
+	EXPECT_CALL(layout.Mock, GetFontFamilyName(0, NotNull(), numFakeName, 0))
+		.Times(1)
+		.WillOnce(DoAll(SetArrayArgument<1>(&fakeName[0], &fakeName[numFakeName]),
+						Return(S_OK)));
+	String^ name = layout.Layout->GetFontFamilyName(0);
+	ASSERT_TRUE( Result::Last.IsSuccess );
+	ASSERT_TRUE( name != nullptr );
+	ASSERT_TRUE( gcnew String(fakeName) == name );
+}
+
+TEST_F(TextLayoutTest, GetFontFamilyNameWithTextRange)
+{
+	MockedTextLayout layout;
+	WCHAR fakeName[] = L"Slartibartfast";
+	int const numFakeName = NUM_OF(fakeName);
+	EXPECT_CALL(layout.Mock, GetFontFamilyNameLength(0, NotNull(), NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(numFakeName), Return(S_OK)));
+	DWRITE_TEXT_RANGE fakeTextRange;
+	fakeTextRange.startPosition = 1;
+	fakeTextRange.length = 2;
+	EXPECT_CALL(layout.Mock, GetFontFamilyName(0, NotNull(), numFakeName, NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArrayArgument<1>(&fakeName[0], &fakeName[numFakeName]),
+						SetArgumentPointee<3>(fakeTextRange),
+						Return(S_OK)));
+	TextRange range;
+	String^ name = layout.Layout->GetFontFamilyName(0, range);
+	ASSERT_TRUE( Result::Last.IsSuccess );
+	ASSERT_TRUE( name != nullptr );
+	ASSERT_TRUE( gcnew String("Slartibartfast") == name );
+	ASSERT_EQ(1, range.StartPosition );
+	ASSERT_EQ(2, range.Length );
 }

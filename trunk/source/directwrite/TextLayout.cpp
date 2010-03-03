@@ -184,6 +184,41 @@ namespace DirectWrite
 		return SlimDX::DirectWrite::FontCollection::FromPointer(fc);
 	}
 
+	String^ TextLayout::GetFontFamilyNameInternal(int currentPosition, DWRITE_TEXT_RANGE *textRange)
+	{
+		UINT32 length = 0U;
+		if (RECORD_DW(InternalPointer->GetFontFamilyNameLength(currentPosition, &length, textRange)).IsFailure)
+		{
+			return String::Empty;
+		}
+
+		std::vector<WCHAR> name(length);
+		if (RECORD_DW(InternalPointer->GetFontFamilyName(currentPosition, &name[0], length, textRange)).IsFailure)
+		{
+			return String::Empty;
+		}
+
+		return gcnew String(&name[0]);
+	}
+
+	String^ TextLayout::GetFontFamilyName( int currentPosition )
+	{
+		return GetFontFamilyNameInternal(currentPosition, 0);
+	}
+
+	String^ TextLayout::GetFontFamilyName( int currentPosition, [Out] TextRange% textRange )
+	{
+		DWRITE_TEXT_RANGE range;
+		String ^familyName = GetFontFamilyNameInternal(currentPosition, &range);
+		if (familyName != nullptr)
+		{
+			textRange.StartPosition = range.startPosition;
+			textRange.Length = range.length;
+		}
+
+		return familyName;
+	}
+
 	Result TextLayout::SetFontCollection( FontCollection^ collection, TextRange range )
 	{
 		DWRITE_TEXT_RANGE tr;
