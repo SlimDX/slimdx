@@ -54,6 +54,7 @@ namespace SlimDX
 			FontCollection^ GetFontCollection ( int currentPosition );
 			FontCollection^ GetFontCollection ( int currentPosition, [Out] TextRange% textRange );
 
+			Result SetFontCollection( FontCollection^ collection, TextRange range );
 			Result SetFontSize( float size, TextRange range );
 			Result SetUnderline( bool underline, TextRange range );
 			Result SetFontWeight( FontWeight weight, TextRange range );
