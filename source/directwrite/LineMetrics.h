@@ -31,13 +31,14 @@ namespace SlimDX
 		public value class LineMetrics
 		{
 		public:
-			LineMetrics( int length, int trailingWhitespaceLength, int newlineLength, float height, float baseline )
+			LineMetrics( int length, int trailingWhitespaceLength, int newlineLength, float height, float baseline, bool isTrimmed )
 			{
 				Length = length;
 				TrailingWhitespaceLength = trailingWhitespaceLength;
 				NewlineLength = newlineLength;
 				Height = height;
 				Baseline = baseline;
+				IsTrimmed = isTrimmed;
 			}
 
 			/// <summary>
@@ -64,6 +65,11 @@ namespace SlimDX
 			/// The distance from the top of the text line to its baseline.
 			/// </summary>
 			property float Baseline;
+
+			/// <summary>
+			/// The line is trimmed.
+			/// </summary>
+			property bool IsTrimmed;
 		};
 	}
 }
