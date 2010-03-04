@@ -65,6 +65,8 @@ namespace SlimDX
 			FontStretch GetFontStretch(int currentPosition, [Out] TextRange %textRange);
 			FontStyle GetFontStyle(int currentPosition);
 			FontStyle GetFontStyle(int currentPosition, [Out] TextRange %textRange);
+			FontWeight GetFontWeight(int currentPosition);
+			FontWeight GetFontWeight(int currentPosition, [Out] TextRange %textRange);
 
 			Result SetFontCollection( FontCollection^ collection, TextRange range );
 			Result SetFontFamilyName( String^ name, TextRange range );

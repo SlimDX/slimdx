@@ -326,6 +326,31 @@ namespace DirectWrite
 		return static_cast<FontStyle>(style);
 	}
 
+	FontWeight TextLayout::GetFontWeight(int currentPosition)
+	{
+		DWRITE_FONT_WEIGHT weight;
+		if (RECORD_DW(InternalPointer->GetFontWeight(currentPosition, &weight, 0)).IsFailure)
+		{
+			weight = DWRITE_FONT_WEIGHT(-1);
+		}
+		return static_cast<FontWeight>(weight);
+	}
+
+	FontWeight TextLayout::GetFontWeight(int currentPosition, [Out] TextRange %textRange)
+	{
+		DWRITE_FONT_WEIGHT weight;
+		DWRITE_TEXT_RANGE range;
+		if (RECORD_DW(InternalPointer->GetFontWeight(currentPosition, &weight, &range)).IsFailure)
+		{
+			weight = DWRITE_FONT_WEIGHT(-1);
+		}
+		else
+		{
+			textRange = TextRangeFromNative(range);
+		}
+		return static_cast<FontWeight>(weight);
+	}
+
 	static DWRITE_TEXT_RANGE TextRangeFromManaged(TextRange range)
 	{
 		DWRITE_TEXT_RANGE tr;
