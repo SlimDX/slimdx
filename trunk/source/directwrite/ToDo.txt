@@ -45,10 +45,7 @@ IDWriteTextLayout::GetDrawingEffect
 IDWriteTextLayout::SetDrawingEffect
 IDWriteTextLayout::GetInlineObject
 IDWriteTextLayout::SetInlineObject
-IDWriteTextLayout::GetLocaleName
-IDWriteTextLayout::GetLocaleNameLength
 IDWriteTextLayout::SetLocaleName
-IDWriteTextLayout::GetStrikethrough
 IDWriteTextLayout::SetStrikethrough
 IDWriteTextLayout::GetTypography
 IDWriteTextLayout::GetUnderline

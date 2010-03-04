@@ -470,3 +470,24 @@ TEST_F(TextLayoutTest, GetLocaleNameWithTextRange)
 	ASSERT_EQ(gcnew String(fakeName), name);
 	AssertTextRangeMatchesExpected(range);
 }
+
+TEST_F(TextLayoutTest, GetStrikethroughNoTextRange)
+{
+	MockedTextLayoutGetters layout;
+	EXPECT_CALL(layout.Mock, GetStrikethrough(0U, NotNull(), 0))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(TRUE), Return(S_OK)));
+	ASSERT_TRUE(layout.Layout->GetStrikethrough(0));
+	AssertLastResultSucceeded();
+}
+
+TEST_F(TextLayoutTest, GetStrikethroughFailureReturnsFalse)
+{
+	MockedTextLayoutGetters layout;
+	EXPECT_CALL(layout.Mock, GetStrikethrough(0U, NotNull(), 0))
+		.Times(1)
+		.WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	ASSERT_FALSE(layout.Layout->GetStrikethrough(0));
+	AssertLastResultFailed();
+}

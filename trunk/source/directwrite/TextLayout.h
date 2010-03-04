@@ -72,16 +72,17 @@ namespace SlimDX
 			FontWeight GetFontWeight(int currentPosition, [Out] TextRange %textRange);
 			array<LineMetrics> ^GetLineMetrics();
 			String ^GetLocaleName(int currentPosition);
-			String ^GetLocaleName(int curretnPosition, [Out] TextRange %textRange);
+			String ^GetLocaleName(int currentPosition, [Out] TextRange %textRange);
+			bool GetStrikethrough(int currentPosition);
 
 			Result SetFontCollection( FontCollection^ collection, TextRange range );
 			Result SetFontFamilyName( String^ name, TextRange range );
 			Result SetFontSize( float size, TextRange range );
 			Result SetFontStretch(FontStretch stretch, TextRange range);
 			Result SetFontStyle(FontStyle style, TextRange range);
-			Result SetUnderline( bool underline, TextRange range );
 			Result SetFontWeight( FontWeight weight, TextRange range );
 			Result SetTypography( Typography^ typography, TextRange range );
+			Result SetUnderline( bool underline, TextRange range );
 
 			property float MaxWidth
 			{
