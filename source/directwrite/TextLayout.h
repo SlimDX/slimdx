@@ -74,6 +74,7 @@ namespace SlimDX
 			String ^GetLocaleName(int currentPosition);
 			String ^GetLocaleName(int currentPosition, [Out] TextRange %textRange);
 			bool GetStrikethrough(int currentPosition);
+			bool GetStrikethrough(int currentPosition, [Out] TextRange %textRange);
 
 			Result SetFontCollection( FontCollection^ collection, TextRange range );
 			Result SetFontFamilyName( String^ name, TextRange range );
