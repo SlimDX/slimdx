@@ -32,7 +32,7 @@ namespace SlimDX
 		{
 		public:
 			TextMetrics ( float left, float top, float width, float widthIncludingTrailingWhitespace,
-				float height, float layoutWidth, float layoutHeight, int maximumBidiReorderingDepth )
+				float height, float layoutWidth, float layoutHeight, int maximumBidiReorderingDepth, int lineCount )
 			{
 				Left = left;
 				Top = top;
@@ -42,6 +42,7 @@ namespace SlimDX
 				LayoutWidth = layoutWidth;
 				LayoutHeight = layoutHeight;
 				MaximumBidiReorderingDepth = maximumBidiReorderingDepth;
+				LineCount = lineCount;
 			}
 
 			/// <summary>
@@ -95,6 +96,11 @@ namespace SlimDX
 			/// minimum level is 1.
 			/// </summary>
 			property int MaximumBidiReorderingDepth;
+
+			/// <summary>
+			/// Total number of lines.
+			/// </summary>
+			property int LineCount;
 		};
 	}
 }

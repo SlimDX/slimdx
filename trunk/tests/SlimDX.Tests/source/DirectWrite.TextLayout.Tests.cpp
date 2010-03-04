@@ -22,8 +22,8 @@
 */
 #include <ostream>
 
-#include "IDWriteFontCollectionMock.h"
 #include "IDWriteTextLayoutMock.h"
+#include "TextLayoutTest.h"
 
 using namespace testing;
 using namespace System;
@@ -63,69 +63,7 @@ private:
 	TextLayout ^layout;
 };
 
-class TextLayoutTest : public testing::Test
-{
-protected:
-	virtual void TearDown()
-	{
-		ASSERT_EQ(0, ObjectTable::Objects->Count);
-	}
-
-	void AssertLastResultSucceeded()
-	{
-		ASSERT_TRUE(Result::Last.IsSuccess);
-	}
-
-	void AssertLastResultFailed()
-	{
-		ASSERT_TRUE(Result::Last.IsFailure);
-	}
-};
-
-static DWRITE_CLUSTER_METRICS ExpectedClusterMetrics()
-{
-	DWRITE_CLUSTER_METRICS expectedMetrics;
-	expectedMetrics.width = 15.0f;
-	expectedMetrics.length = 1;
-	expectedMetrics.canWrapLineAfter = 0;
-	expectedMetrics.isWhitespace = 0;
-	expectedMetrics.isNewline = 0;
-	expectedMetrics.isSoftHyphen = 0;
-	expectedMetrics.isRightToLeft = 0;
-	return expectedMetrics;
-}
-
-static void AssertClusterMetricsMatchExpected(ClusterMetrics metrics)
-{
-	DWRITE_CLUSTER_METRICS expected = ExpectedClusterMetrics();
-	ASSERT_EQ(expected.width, metrics.Width);
-	ASSERT_EQ(expected.length, metrics.Length);
-	ASSERT_EQ(expected.canWrapLineAfter != 0, metrics.CanWrapLineAfter);
-	ASSERT_EQ(expected.isWhitespace != 0, metrics.IsWhitespace);
-	ASSERT_EQ(expected.isNewline != 0, metrics.IsNewline);
-	ASSERT_EQ(expected.isSoftHyphen != 0, metrics.IsSoftHyphen);
-	ASSERT_EQ(expected.isRightToLeft != 0, metrics.IsRightToLeft);
-}
-
-static HRESULT const E_NOT_SUFFICIENT_BUFFER = HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER);
-
-TEST_F(TextLayoutTest, GetClusterMetrics)
-{
-	MockedTextLayout layout;
-	EXPECT_CALL(layout.Mock, GetClusterMetrics(_, _, _))
-		.WillRepeatedly(Return(E_UNEXPECTED));
-	EXPECT_CALL(layout.Mock, GetClusterMetrics(0, 0, NotNull()))
-		.WillOnce(DoAll(SetArgumentPointee<2>(1), Return(E_NOT_SUFFICIENT_BUFFER)));
-	EXPECT_CALL(layout.Mock, GetClusterMetrics(NotNull(), Gt(0U), NotNull()))
-		.WillOnce(DoAll(SetArgumentPointee<0>(ExpectedClusterMetrics()),
-						SetArgumentPointee<2>(1),
-						Return(S_OK)));
-	array<SlimDX::DirectWrite::ClusterMetrics>^ metrics = layout.Layout->GetClusterMetrics();
-	AssertLastResultSucceeded();
-	ASSERT_TRUE(metrics != nullptr);
-	ASSERT_EQ(1, metrics->Length);
-	AssertClusterMetricsMatchExpected(metrics[0]);
-}
+HRESULT const E_NOT_SUFFICIENT_BUFFER = HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER);
 
 TEST_F(TextLayoutTest, DetermineMinWidth)
 {
@@ -218,21 +156,7 @@ TEST_F(TextLayoutTest, HitTestTextRange)
 	AssertHitTestMetricsMatchExpected(metrics[0]);
 }
 
-TEST_F(TextLayoutTest, GetFontCollectionNoTextRange)
-{
-	MockedTextLayout layout;
-	IDWriteFontCollectionMock mockCollection;
-	EXPECT_CALL(layout.Mock, GetFontCollection(0, NotNull(), 0))
-		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<1>(&mockCollection), Return(S_OK)));
-	FontCollection ^collection = layout.Layout->GetFontCollection(0);
-	AssertLastResultSucceeded();
-	ASSERT_TRUE(collection != nullptr);
-	ASSERT_EQ(collection->InternalPointer, &mockCollection);
-	delete collection;
-}
-
-static DWRITE_TEXT_RANGE ExpectedTextRange()
+DWRITE_TEXT_RANGE ExpectedTextRange()
 {
 	DWRITE_TEXT_RANGE fakeTextRange;
 	fakeTextRange.length = 1;
@@ -240,70 +164,11 @@ static DWRITE_TEXT_RANGE ExpectedTextRange()
 	return fakeTextRange;
 }
 
-static void AssertTextRangeMatchesExpected(TextRange range)
+void AssertTextRangeMatchesExpected(TextRange range)
 {
 	DWRITE_TEXT_RANGE expected = ExpectedTextRange();
 	ASSERT_EQ(expected.startPosition, range.StartPosition);
 	ASSERT_EQ(expected.length, range.Length);
-}
-
-TEST_F(TextLayoutTest, GetFontCollectionWithTextRange)
-{
-	MockedTextLayout layout;
-	IDWriteFontCollectionMock mockCollection;
-	EXPECT_CALL(layout.Mock, GetFontCollection(0, NotNull(), NotNull()))
-		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<1>(&mockCollection),
-						SetArgumentPointee<2>(ExpectedTextRange()),
-						Return(S_OK)));
-	TextRange textRange;
-	FontCollection ^collection = layout.Layout->GetFontCollection(0, textRange);
-	AssertLastResultSucceeded();
-	ASSERT_TRUE(collection != nullptr);
-	ASSERT_EQ(collection->InternalPointer, &mockCollection);
-	AssertTextRangeMatchesExpected(textRange);
-	delete collection;
-}
-
-#define NUM_OF(ary_) (sizeof(ary_)/sizeof(ary_[0]))
-
-TEST_F(TextLayoutTest, GetFontFamilyNameNoTextRange)
-{
-	MockedTextLayout layout;
-	WCHAR fakeName[] = L"Slartibartfast";
-	int const numFakeName = NUM_OF(fakeName);
-	EXPECT_CALL(layout.Mock, GetFontFamilyNameLength(0, NotNull(), 0))
-		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<1>(numFakeName), Return(S_OK)));
-	EXPECT_CALL(layout.Mock, GetFontFamilyName(0, NotNull(), numFakeName, 0))
-		.Times(1)
-		.WillOnce(DoAll(SetArrayArgument<1>(&fakeName[0], &fakeName[numFakeName]),
-						Return(S_OK)));
-	String^ name = layout.Layout->GetFontFamilyName(0);
-	AssertLastResultSucceeded();
-	ASSERT_TRUE(name != nullptr);
-	ASSERT_TRUE(gcnew String(fakeName) == name);
-}
-
-TEST_F(TextLayoutTest, GetFontFamilyNameWithTextRange)
-{
-	MockedTextLayout layout;
-	WCHAR fakeName[] = L"Slartibartfast";
-	int const numFakeName = NUM_OF(fakeName);
-	EXPECT_CALL(layout.Mock, GetFontFamilyNameLength(0, NotNull(), NotNull()))
-		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<1>(numFakeName), Return(S_OK)));
-	EXPECT_CALL(layout.Mock, GetFontFamilyName(0, NotNull(), numFakeName, NotNull()))
-		.Times(1)
-		.WillOnce(DoAll(SetArrayArgument<1>(&fakeName[0], &fakeName[numFakeName]),
-						SetArgumentPointee<3>(ExpectedTextRange()),
-						Return(S_OK)));
-	TextRange range;
-	String^ name = layout.Layout->GetFontFamilyName(0, range);
-	AssertLastResultSucceeded();
-	ASSERT_TRUE(name != nullptr);
-	ASSERT_TRUE(gcnew String("Slartibartfast") == name);
-	AssertTextRangeMatchesExpected(range);
 }
 
 static bool operator==(DWRITE_TEXT_RANGE const &lhs, DWRITE_TEXT_RANGE const &rhs)
@@ -325,31 +190,7 @@ TEST_F(TextLayoutTest, SetFontFamilyName)
 	ASSERT_TRUE(layout.Layout->SetFontFamilyName(gcnew String("Slartibartfast!"), TextRange(2, 4)).IsSuccess);
 }
 
-TEST_F(TextLayoutTest, GetFontSizeNoTextRange)
-{
-	MockedTextLayout layout;
-	EXPECT_CALL(layout.Mock, GetFontSize(0U, NotNull(), 0))
-		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<1>(14.5f), Return(S_OK)));
-	ASSERT_EQ(14.5f, layout.Layout->GetFontSize(0));
-	AssertLastResultSucceeded();
-}
-
-TEST_F(TextLayoutTest, GetFontSizeWithTextRange)
-{
-	MockedTextLayout layout;
-	EXPECT_CALL(layout.Mock, GetFontSize(0U, NotNull(), NotNull()))
-		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<1>(14.5f),
-						SetArgumentPointee<2>(ExpectedTextRange()),
-						Return(S_OK)));
-	TextRange textRange;
-	ASSERT_EQ(14.5f, layout.Layout->GetFontSize(0, textRange));
-	AssertLastResultSucceeded();
-	AssertTextRangeMatchesExpected(textRange);
-}
-
-static std::ostream &operator<<(std::ostream &stream, String ^str)
+std::ostream &operator<<(std::ostream &stream, String ^str)
 {
 	LPSTR text = reinterpret_cast<LPSTR>(Marshal::StringToHGlobalAnsi(str).ToPointer());
 	stream << text;
@@ -357,96 +198,14 @@ static std::ostream &operator<<(std::ostream &stream, String ^str)
 	return stream;
 }
 
-static std::ostream &operator<<(std::ostream &stream, FontStretch stretch)
+std::ostream &operator<<(std::ostream &stream, FontStretch stretch)
 {
 	return stream << stretch.ToString();
 }
 
-TEST_F(TextLayoutTest, GetFontStretchNoTextRange)
-{
-	MockedTextLayout layout;
-	EXPECT_CALL(layout.Mock, GetFontStretch(0U, NotNull(), 0))
-		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<1>(DWRITE_FONT_STRETCH_ULTRA_EXPANDED), Return(S_OK)));
-	ASSERT_EQ(FontStretch::UltraExpanded, layout.Layout->GetFontStretch(0));
-	AssertLastResultSucceeded();
-}
-
-TEST_F(TextLayoutTest, GetFontStretchFailureReturnsUndefined)
-{
-	MockedTextLayout layout;
-	EXPECT_CALL(layout.Mock, GetFontStretch(0U, NotNull(), 0))
-		.Times(1)
-		.WillOnce(Return(E_FAIL));
-	SlimDX::Configuration::ThrowOnError = false;
-	ASSERT_EQ(FontStretch::Undefined, layout.Layout->GetFontStretch(0));
-	AssertLastResultFailed();
-}
-
-TEST_F(TextLayoutTest, GetFontStretchWithTextRange)
-{
-	MockedTextLayout layout;
-	EXPECT_CALL(layout.Mock, GetFontStretch(0U, NotNull(), NotNull()))
-		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<1>(DWRITE_FONT_STRETCH_ULTRA_EXPANDED),
-						SetArgumentPointee<2>(ExpectedTextRange()),
-						Return(S_OK)));
-	TextRange textRange;
-	ASSERT_EQ(FontStretch::UltraExpanded, layout.Layout->GetFontStretch(0, textRange));
-	AssertLastResultSucceeded();
-	AssertTextRangeMatchesExpected(textRange);
-}
-
-TEST_F(TextLayoutTest, GetFontStretchWithTextRangeFailureReturnsUndefined)
-{
-	MockedTextLayout layout;
-	EXPECT_CALL(layout.Mock, GetFontStretch(0U, NotNull(), NotNull()))
-		.Times(1)
-		.WillOnce(Return(E_FAIL));
-	SlimDX::Configuration::ThrowOnError = false;
-	TextRange textRange;
-	ASSERT_EQ(FontStretch::Undefined, layout.Layout->GetFontStretch(0, textRange));
-	AssertLastResultFailed();
-}
-
-TEST_F(TextLayoutTest, GetFontStyleFailureReturnsMinusOne)
-{
-	MockedTextLayout layout;
-	EXPECT_CALL(layout.Mock, GetFontStyle(0U, NotNull(), 0))
-		.Times(1)
-		.WillOnce(Return(E_FAIL));
-	SlimDX::Configuration::ThrowOnError = false;
-	ASSERT_EQ(-1, static_cast<int>(layout.Layout->GetFontStyle(0)));
-	AssertLastResultFailed();
-}
-
-static std::ostream &operator<<(std::ostream &stream, FontStyle style)
+std::ostream &operator<<(std::ostream &stream, FontStyle style)
 {
 	return stream << style.ToString();
-}
-
-TEST_F(TextLayoutTest, GetFontStyleNoTextRange)
-{
-	MockedTextLayout layout;
-	EXPECT_CALL(layout.Mock, GetFontStyle(0U, NotNull(), 0))
-		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<1>(DWRITE_FONT_STYLE_NORMAL), Return(S_OK)));
-	ASSERT_EQ(FontStyle::Normal, layout.Layout->GetFontStyle(0));
-	AssertLastResultSucceeded();
-}
-
-TEST_F(TextLayoutTest, GetFontStyleWithTextRange)
-{
-	MockedTextLayout layout;
-	EXPECT_CALL(layout.Mock, GetFontStyle(0U, NotNull(), NotNull()))
-		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<1>(DWRITE_FONT_STYLE_NORMAL),
-						SetArgumentPointee<2>(ExpectedTextRange()),
-						Return(S_OK)));
-	TextRange textRange;
-	ASSERT_EQ(FontStyle::Normal, layout.Layout->GetFontStyle(0, textRange));
-	AssertLastResultSucceeded();
-	AssertTextRangeMatchesExpected(textRange);
 }
 
 static TextRange ExpectedManagedTextRange()
@@ -478,80 +237,7 @@ TEST_F(TextLayoutTest, SetFontStretch)
 	AssertLastResultSucceeded();
 }
 
-static std::ostream &operator<<(std::ostream &stream, FontWeight weight)
+std::ostream &operator<<(std::ostream &stream, FontWeight weight)
 {
 	return stream << weight.ToString();
-}
-
-TEST_F(TextLayoutTest, GetFontWeightNoTextRange)
-{
-	MockedTextLayout layout;
-	EXPECT_CALL(layout.Mock, GetFontWeight(0U, NotNull(), 0))
-		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<1>(DWRITE_FONT_WEIGHT_ULTRA_BOLD),
-						Return(S_OK)));
-	ASSERT_EQ(FontWeight::UltraBold, layout.Layout->GetFontWeight(0));
-	AssertLastResultSucceeded();
-}
-
-TEST_F(TextLayoutTest, GetFontWeightNoTextRangeFailureReturnsMinusOne)
-{
-	MockedTextLayout layout;
-	EXPECT_CALL(layout.Mock, GetFontWeight(0U, NotNull(), 0))
-		.Times(1)
-		.WillOnce(Return(E_FAIL));
-	SlimDX::Configuration::ThrowOnError = false;
-	ASSERT_EQ(FontWeight(-1), layout.Layout->GetFontWeight(0));
-	AssertLastResultFailed();
-}
-
-TEST_F(TextLayoutTest, GetFontWeightWithTextRange)
-{
-	MockedTextLayout layout;
-	EXPECT_CALL(layout.Mock, GetFontWeight(0U, NotNull(), NotNull()))
-		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<1>(DWRITE_FONT_WEIGHT_ULTRA_BOLD),
-						SetArgumentPointee<2>(ExpectedTextRange()),
-						Return(S_OK)));
-	TextRange range;
-	ASSERT_EQ(FontWeight::UltraBold, layout.Layout->GetFontWeight(0, range));
-	AssertLastResultSucceeded();
-	AssertTextRangeMatchesExpected(range);
-}
-
-static DWRITE_LINE_METRICS ExpectedLineMetrics()
-{
-	DWRITE_LINE_METRICS const expected =
-	{
-		11, 13, 17, 333.0f, 123.f, TRUE
-	};
-	return expected;
-}
-
-static void AssertLineMetricsMatchExpected(LineMetrics metrics)
-{
-	DWRITE_LINE_METRICS expected = ExpectedLineMetrics();
-	ASSERT_EQ(metrics.Baseline, expected.baseline);
-	ASSERT_EQ(metrics.Height, expected.height);
-	ASSERT_EQ(metrics.Length, expected.length);
-	ASSERT_EQ(metrics.NewlineLength, expected.newlineLength);
-	ASSERT_EQ(metrics.TrailingWhitespaceLength, expected.trailingWhitespaceLength);
-}
-
-TEST_F(TextLayoutTest, GetLineMetrics)
-{
-	MockedTextLayout layout;
-	EXPECT_CALL(layout.Mock, GetLineMetrics(0, 0, NotNull()))
-		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<2>(1), Return(E_NOT_SUFFICIENT_BUFFER)));
-	EXPECT_CALL(layout.Mock, GetLineMetrics(NotNull(), 1, NotNull()))
-		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<0>(ExpectedLineMetrics()),
-						SetArgumentPointee<2>(1),
-						Return(S_OK)));
-	array<LineMetrics> ^metrics = layout.Layout->GetLineMetrics();
-	AssertLastResultSucceeded();
-	ASSERT_TRUE(metrics != nullptr);
-	ASSERT_EQ(1, metrics->Length);
-	AssertLineMetricsMatchExpected(metrics[0]);
 }
