@@ -58,6 +58,10 @@ namespace SlimDX
 			FontCollection^ GetFontCollection( int currentPosition, [Out] TextRange% textRange );
 			String^ GetFontFamilyName( int currentPosition );
 			String^ GetFontFamilyName( int currentPosition, [Out] TextRange% textRange );
+			float GetFontSize( int currentPosition );
+			float GetFontSize( int currentPosition, [Out] TextRange% textRange );
+			FontStretch GetFontStretch( int currentPosition );
+			FontStretch GetFontStretch(int currentPosition, [Out] TextRange %textRange);
 
 			Result SetFontCollection( FontCollection^ collection, TextRange range );
 			Result SetFontFamilyName( String^ name, TextRange range );

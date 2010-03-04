@@ -252,6 +252,47 @@ namespace DirectWrite
 		return familyName;
 	}
 
+	float TextLayout::GetFontSize( int currentPosition )
+	{
+		float result = -1.0f;
+		RECORD_DW(InternalPointer->GetFontSize(currentPosition, &result, 0));
+		return result;
+	}
+
+	float TextLayout::GetFontSize(int currentPosition, [Out] TextRange% textRange)
+	{
+		float result = -1.0f;
+		DWRITE_TEXT_RANGE range;
+		if (RECORD_DW(InternalPointer->GetFontSize(currentPosition, &result, &range)).IsSuccess)
+		{
+			textRange.StartPosition = range.startPosition;
+			textRange.Length = range.length;
+		}
+		return result;
+	}
+
+	FontStretch TextLayout::GetFontStretch(int currentPosition)
+	{
+		DWRITE_FONT_STRETCH stretch;
+		if (RECORD_DW(InternalPointer->GetFontStretch(currentPosition, &stretch, 0)).IsFailure)
+		{
+			stretch = DWRITE_FONT_STRETCH_UNDEFINED;
+		}
+		return static_cast<FontStretch>(stretch);
+	}
+
+	FontStretch TextLayout::GetFontStretch(int currentPosition, [Out] TextRange %textRange)
+	{
+		DWRITE_FONT_STRETCH stretch;
+		DWRITE_TEXT_RANGE range;
+		if (RECORD_DW(InternalPointer->GetFontStretch(currentPosition, &stretch, &range)).IsSuccess)
+		{
+			textRange.StartPosition = range.startPosition;
+			textRange.Length = range.length;
+		}
+		return static_cast<FontStretch>(stretch);
+	}
+
 	Result TextLayout::SetFontCollection( FontCollection^ collection, TextRange range )
 	{
 		DWRITE_TEXT_RANGE tr;
