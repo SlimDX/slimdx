@@ -330,9 +330,8 @@ TEST_F(TextLayoutTest, GetFontSizeNoTextRange)
 	EXPECT_CALL(layout.Mock, GetFontSize(0U, NotNull(), 0))
 		.Times(1)
 		.WillOnce(DoAll(SetArgumentPointee<1>(14.5f), Return(S_OK)));
-	float size = layout.Layout->GetFontSize(0);
+	ASSERT_EQ(14.5f, layout.Layout->GetFontSize(0));
 	AssertLastResultSucceeded();
-	ASSERT_EQ(14.5f, size);
 }
 
 TEST_F(TextLayoutTest, GetFontSizeWithTextRange)
@@ -344,18 +343,22 @@ TEST_F(TextLayoutTest, GetFontSizeWithTextRange)
 						SetArgumentPointee<2>(ExpectedTextRange()),
 						Return(S_OK)));
 	TextRange textRange;
-	float size = layout.Layout->GetFontSize(0, textRange);
+	ASSERT_EQ(14.5f, layout.Layout->GetFontSize(0, textRange));
 	AssertLastResultSucceeded();
-	ASSERT_EQ(14.5f, size);
 	AssertTextRangeMatchesExpected(textRange);
 }
 
-static std::ostream &operator<<(std::ostream &stream, System::Enum enumerant)
+static std::ostream &operator<<(std::ostream &stream, String ^str)
 {
-	LPSTR text = reinterpret_cast<LPSTR>(Marshal::StringToHGlobalAnsi(enumerant.ToString()).ToPointer());
+	LPSTR text = reinterpret_cast<LPSTR>(Marshal::StringToHGlobalAnsi(str).ToPointer());
 	stream << text;
 	Marshal::FreeHGlobal(IntPtr(static_cast<void *>(text)));
 	return stream;
+}
+
+static std::ostream &operator<<(std::ostream &stream, FontStretch stretch)
+{
+	return stream << stretch.ToString();
 }
 
 TEST_F(TextLayoutTest, GetFontStretchNoTextRange)
@@ -364,9 +367,8 @@ TEST_F(TextLayoutTest, GetFontStretchNoTextRange)
 	EXPECT_CALL(layout.Mock, GetFontStretch(0U, NotNull(), 0))
 		.Times(1)
 		.WillOnce(DoAll(SetArgumentPointee<1>(DWRITE_FONT_STRETCH_ULTRA_EXPANDED), Return(S_OK)));
-	FontStretch stretch = layout.Layout->GetFontStretch(0);
+	ASSERT_EQ(FontStretch::UltraExpanded, layout.Layout->GetFontStretch(0));
 	AssertLastResultSucceeded();
-	ASSERT_EQ(FontStretch::UltraExpanded, stretch);
 }
 
 TEST_F(TextLayoutTest, GetFontStretchFailureReturnsUndefined)
@@ -376,9 +378,8 @@ TEST_F(TextLayoutTest, GetFontStretchFailureReturnsUndefined)
 		.Times(1)
 		.WillOnce(Return(E_FAIL));
 	SlimDX::Configuration::ThrowOnError = false;
-	FontStretch stretch = layout.Layout->GetFontStretch(0);
+	ASSERT_EQ(FontStretch::Undefined, layout.Layout->GetFontStretch(0));
 	AssertLastResultFailed();
-	ASSERT_EQ(FontStretch::Undefined, stretch);
 }
 
 TEST_F(TextLayoutTest, GetFontStretchWithTextRange)
@@ -390,9 +391,8 @@ TEST_F(TextLayoutTest, GetFontStretchWithTextRange)
 						SetArgumentPointee<2>(ExpectedTextRange()),
 						Return(S_OK)));
 	TextRange textRange;
-	FontStretch stretch = layout.Layout->GetFontStretch(0, textRange);
+	ASSERT_EQ(FontStretch::UltraExpanded, layout.Layout->GetFontStretch(0, textRange));
 	AssertLastResultSucceeded();
-	ASSERT_EQ(FontStretch::UltraExpanded, stretch);
 	AssertTextRangeMatchesExpected(textRange);
 }
 
@@ -402,11 +402,10 @@ TEST_F(TextLayoutTest, GetFontStretchWithTextRangeFailureReturnsUndefined)
 	EXPECT_CALL(layout.Mock, GetFontStretch(0U, NotNull(), NotNull()))
 		.Times(1)
 		.WillOnce(Return(E_FAIL));
-	TextRange textRange;
 	SlimDX::Configuration::ThrowOnError = false;
-	FontStretch stretch = layout.Layout->GetFontStretch(0, textRange);
+	TextRange textRange;
+	ASSERT_EQ(FontStretch::Undefined, layout.Layout->GetFontStretch(0, textRange));
 	AssertLastResultFailed();
-	ASSERT_EQ(FontStretch::Undefined, stretch);
 }
 
 TEST_F(TextLayoutTest, GetFontStyleFailureReturnsMinusOne)
@@ -416,9 +415,13 @@ TEST_F(TextLayoutTest, GetFontStyleFailureReturnsMinusOne)
 		.Times(1)
 		.WillOnce(Return(E_FAIL));
 	SlimDX::Configuration::ThrowOnError = false;
-	FontStyle style = layout.Layout->GetFontStyle(0);
+	ASSERT_EQ(-1, static_cast<int>(layout.Layout->GetFontStyle(0)));
 	AssertLastResultFailed();
-	ASSERT_EQ(-1, static_cast<int>(style));
+}
+
+static std::ostream &operator<<(std::ostream &stream, FontStyle style)
+{
+	return stream << style.ToString();
 }
 
 TEST_F(TextLayoutTest, GetFontStyleNoTextRange)
@@ -427,9 +430,8 @@ TEST_F(TextLayoutTest, GetFontStyleNoTextRange)
 	EXPECT_CALL(layout.Mock, GetFontStyle(0U, NotNull(), 0))
 		.Times(1)
 		.WillOnce(DoAll(SetArgumentPointee<1>(DWRITE_FONT_STYLE_NORMAL), Return(S_OK)));
-	FontStyle style = layout.Layout->GetFontStyle(0);
+	ASSERT_EQ(FontStyle::Normal, layout.Layout->GetFontStyle(0));
 	AssertLastResultSucceeded();
-	ASSERT_EQ(FontStyle::Normal, style);
 }
 
 TEST_F(TextLayoutTest, GetFontStyleWithTextRange)
@@ -441,9 +443,8 @@ TEST_F(TextLayoutTest, GetFontStyleWithTextRange)
 						SetArgumentPointee<2>(ExpectedTextRange()),
 						Return(S_OK)));
 	TextRange textRange;
-	FontStyle style = layout.Layout->GetFontStyle(0, textRange);
+	ASSERT_EQ(FontStyle::Normal, layout.Layout->GetFontStyle(0, textRange));
 	AssertLastResultSucceeded();
-	ASSERT_EQ(FontStyle::Normal, style);
 	AssertTextRangeMatchesExpected(textRange);
 }
 
@@ -474,4 +475,45 @@ TEST_F(TextLayoutTest, SetFontStretch)
 		.WillOnce(Return(S_OK));
 	ASSERT_TRUE(layout.Layout->SetFontStretch(FontStretch::UltraExpanded, ExpectedManagedTextRange()).IsSuccess);
 	AssertLastResultSucceeded();
+}
+
+static std::ostream &operator<<(std::ostream &stream, FontWeight weight)
+{
+	return stream << weight.ToString();
+}
+
+TEST_F(TextLayoutTest, GetFontWeightNoTextRange)
+{
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, GetFontWeight(0U, NotNull(), 0))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(DWRITE_FONT_WEIGHT_ULTRA_BOLD),
+						Return(S_OK)));
+	ASSERT_EQ(FontWeight::UltraBold, layout.Layout->GetFontWeight(0));
+	AssertLastResultSucceeded();
+}
+
+TEST_F(TextLayoutTest, GetFontWeightNoTextRangeFailureReturnsMinusOne)
+{
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, GetFontWeight(0U, NotNull(), 0))
+		.Times(1)
+		.WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	ASSERT_EQ(FontWeight(-1), layout.Layout->GetFontWeight(0));
+	AssertLastResultFailed();
+}
+
+TEST_F(TextLayoutTest, GetFontWeightWithTextRange)
+{
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, GetFontWeight(0U, NotNull(), NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(DWRITE_FONT_WEIGHT_ULTRA_BOLD),
+						SetArgumentPointee<2>(ExpectedTextRange()),
+						Return(S_OK)));
+	TextRange range;
+	ASSERT_EQ(FontWeight::UltraBold, layout.Layout->GetFontWeight(0, range));
+	AssertLastResultSucceeded();
+	AssertTextRangeMatchesExpected(range);
 }
