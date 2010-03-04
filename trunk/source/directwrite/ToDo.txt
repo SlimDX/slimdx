@@ -40,18 +40,14 @@ DWRITE_INLINE_OBJECT_METRICS
 IDWriteInlineObject (InlineObject)
 IDWritePixelSnapping (PixelSnapping)
 IDWriteTextRenderer (TextRenderer)
-IDWriteTextLayout::SetFontFamilyName
 IDWriteTextLayout::SetFontStyle
 IDWriteTextLayout::SetFontStretch
 IDWriteTextLayout::SetStrikethrough
 IDWriteTextLayout::SetDrawingEffect
 IDWriteTextLayout::SetInlineObject
 IDWriteTextLayout::SetLocaleName
-IDWriteTextLayout::GetFontFamilyNameLength
-IDWriteTextLayout::GetFontFamilyName
 IDWriteTextLayout::GetFontWeight
 IDWriteTextLayout::GetFontStyle
-IDWriteTextLayout::GetFontStretch
 IDWriteTextLayout::GetFontSize
 IDWriteTextLayout::GetUnderline
 IDWriteTextLayout::GetStrikethrough
