@@ -40,26 +40,23 @@ DWRITE_INLINE_OBJECT_METRICS
 IDWriteInlineObject (InlineObject)
 IDWritePixelSnapping (PixelSnapping)
 IDWriteTextRenderer (TextRenderer)
-IDWriteTextLayout::SetFontStyle
-IDWriteTextLayout::SetFontStretch
-IDWriteTextLayout::SetStrikethrough
-IDWriteTextLayout::SetDrawingEffect
-IDWriteTextLayout::SetInlineObject
-IDWriteTextLayout::SetLocaleName
-IDWriteTextLayout::GetFontWeight
-IDWriteTextLayout::GetFontStyle
-IDWriteTextLayout::GetFontSize
-IDWriteTextLayout::GetUnderline
-IDWriteTextLayout::GetStrikethrough
-IDWriteTextLayout::GetDrawingEffect
-IDWriteTextLayout::GetInlineObject
-IDWriteTextLayout::GetTypography
-IDWriteTextLayout::GetLocaleNameLength
-IDWriteTextLayout::GetLocaleName
 IDWriteTextLayout::Draw
+IDWriteTextLayout::GetDrawingEffect
+IDWriteTextLayout::SetDrawingEffect
+IDWriteTextLayout::GetFontWeight
+IDWriteTextLayout::GetInlineObject
+IDWriteTextLayout::SetInlineObject
 IDWriteTextLayout::GetLineMetrics
+IDWriteTextLayout::GetLocaleName
+IDWriteTextLayout::GetLocaleNameLength
+IDWriteTextLayout::SetLocaleName
 IDWriteTextLayout::GetMetrics
 IDWriteTextLayout::GetOverhangMetrics
+IDWriteTextLayout::GetStrikethrough
+IDWriteTextLayout::SetStrikethrough
+IDWriteTextLayout::GetTypography
+IDWriteTextLayout::GetUnderline
+IDWriteTextLayout::SetFontStretch
 LOGFONT IDWriteGdiInterop::(CreateFontFromLOGFONT, ConvertFontToLOGFONT, ConvertFontFaceToLOGFONT)
 IDWriteGdiInterop::CreateBitmapRenderTarget (GdiInterop)
 DWRITE_ALPHA_MAX

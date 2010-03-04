@@ -193,14 +193,21 @@ namespace DirectWrite
 		return GetFontCollectionInternal(currentPosition, 0);
 	}
 
+	static TextRange TextRangeFromNative(DWRITE_TEXT_RANGE const &range)
+	{
+		TextRange result;
+		result.StartPosition = range.startPosition;
+		result.Length = range.length;
+		return result;
+	}
+
 	FontCollection^ TextLayout::GetFontCollection ( int currentPosition, [Out] TextRange% textRange )
 	{
 		DWRITE_TEXT_RANGE tr;
 		FontCollection ^collection = GetFontCollectionInternal(currentPosition, &tr);
 		if (collection != nullptr)
 		{
-			textRange.StartPosition = tr.startPosition;
-			textRange.Length = tr.length;
+			textRange = TextRangeFromNative(tr);
 		}
 
 		return collection;
@@ -245,8 +252,7 @@ namespace DirectWrite
 		String ^familyName = GetFontFamilyNameInternal(currentPosition, &range);
 		if (familyName != nullptr)
 		{
-			textRange.StartPosition = range.startPosition;
-			textRange.Length = range.length;
+			textRange = TextRangeFromNative(range);
 		}
 
 		return familyName;
@@ -265,8 +271,7 @@ namespace DirectWrite
 		DWRITE_TEXT_RANGE range;
 		if (RECORD_DW(InternalPointer->GetFontSize(currentPosition, &result, &range)).IsSuccess)
 		{
-			textRange.StartPosition = range.startPosition;
-			textRange.Length = range.length;
+			textRange = TextRangeFromNative(range);
 		}
 		return result;
 	}
@@ -287,66 +292,81 @@ namespace DirectWrite
 		DWRITE_TEXT_RANGE range;
 		if (RECORD_DW(InternalPointer->GetFontStretch(currentPosition, &stretch, &range)).IsSuccess)
 		{
-			textRange.StartPosition = range.startPosition;
-			textRange.Length = range.length;
+			textRange = TextRangeFromNative(range);
+		}
+		else
+		{
+			stretch = DWRITE_FONT_STRETCH_UNDEFINED;
 		}
 		return static_cast<FontStretch>(stretch);
 	}
 
-	Result TextLayout::SetFontCollection( FontCollection^ collection, TextRange range )
+	FontStyle TextLayout::GetFontStyle(int currentPosition)
+	{
+		DWRITE_FONT_STYLE style;
+		if (RECORD_DW(InternalPointer->GetFontStyle(currentPosition, &style, 0)).IsFailure)
+		{
+			style = DWRITE_FONT_STYLE(-1);
+		}
+		return static_cast<FontStyle>(style);
+	}
+
+	FontStyle TextLayout::GetFontStyle(int currentPosition, [Out] TextRange %textRange)
+	{
+		DWRITE_FONT_STYLE style;
+		DWRITE_TEXT_RANGE range;
+		if (RECORD_DW(InternalPointer->GetFontStyle(currentPosition, &style, &range)).IsFailure)
+		{
+			style = DWRITE_FONT_STYLE(-1);
+		}
+		else
+		{
+			textRange = TextRangeFromNative(range);
+		}
+		return static_cast<FontStyle>(style);
+	}
+
+	static DWRITE_TEXT_RANGE TextRangeFromManaged(TextRange range)
 	{
 		DWRITE_TEXT_RANGE tr;
 		tr.startPosition = range.StartPosition;
 		tr.length = range.Length;
-		return RECORD_DW(InternalPointer->SetFontCollection( collection->InternalPointer, tr ));
+		return tr;
+	}
+
+	Result TextLayout::SetFontCollection( FontCollection^ collection, TextRange range )
+	{
+		return RECORD_DW(InternalPointer->SetFontCollection( collection->InternalPointer, TextRangeFromManaged(range)));
 	}
 
 	Result TextLayout::SetFontFamilyName(String ^name, TextRange range)
 	{
-		DWRITE_TEXT_RANGE tr;
-		tr.startPosition = range.StartPosition;
-		tr.length = range.Length;
-		return RECORD_DW(InternalPointer->SetFontFamilyName( NativeUnicodeString(name), tr ));
+		return RECORD_DW(InternalPointer->SetFontFamilyName( NativeUnicodeString(name), TextRangeFromManaged(range)));
 	}
 
 	Result TextLayout::SetFontSize( float size, TextRange range )
 	{
-		DWRITE_TEXT_RANGE tr;
-		tr.startPosition = range.StartPosition;
-		tr.length = range.Length;
+		return RECORD_DW(InternalPointer->SetFontSize( size, TextRangeFromManaged(range)));
+	}
 
-		HRESULT hr = InternalPointer->SetFontSize( size, tr );
-		return RECORD_DW( hr );
+	Result TextLayout::SetFontStyle(FontStyle style, TextRange range)
+	{
+		return RECORD_DW(InternalPointer->SetFontStyle(static_cast<DWRITE_FONT_STYLE>(style), TextRangeFromManaged(range)));
 	}
 
 	Result TextLayout::SetUnderline( bool underline, TextRange range )
 	{
-		DWRITE_TEXT_RANGE tr;
-		tr.startPosition = range.StartPosition;
-		tr.length = range.Length;
-
-		HRESULT hr = InternalPointer->SetUnderline( underline, tr );
-		return RECORD_DW( hr );
+		return RECORD_DW(InternalPointer->SetUnderline( underline, TextRangeFromManaged(range)));
 	}
 
 	Result TextLayout::SetFontWeight( FontWeight weight, TextRange range )
 	{
-		DWRITE_TEXT_RANGE tr;
-		tr.startPosition = range.StartPosition;
-		tr.length = range.Length;
-
-		HRESULT hr = InternalPointer->SetFontWeight( static_cast<DWRITE_FONT_WEIGHT>( weight ), tr );
-		return RECORD_DW( hr );
+		return RECORD_DW(InternalPointer->SetFontWeight(static_cast<DWRITE_FONT_WEIGHT>(weight), TextRangeFromManaged(range)));
 	}
 
 	Result TextLayout::SetTypography( Typography^ typography, TextRange range )
 	{
-		DWRITE_TEXT_RANGE tr;
-		tr.startPosition = range.StartPosition;
-		tr.length = range.Length;
-
-		HRESULT hr = InternalPointer->SetTypography( typography->InternalPointer, tr );
-		return RECORD_DW( hr );
+		return RECORD_DW(InternalPointer->SetTypography(typography->InternalPointer, TextRangeFromManaged(range)));
 	}
 
 	float TextLayout::MaxWidth::get()

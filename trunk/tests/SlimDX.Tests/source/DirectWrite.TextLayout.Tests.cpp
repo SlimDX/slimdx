@@ -36,11 +36,13 @@ ref class MockedTextLayout
 public:
 	MockedTextLayout()
 		: mockLayout(new IDWriteTextLayoutMock),
-		layout(TextLayout::FromPointer(System::IntPtr(mockLayout)))
+		layout(TextLayout::FromPointer(System::IntPtr(mockLayout))),
+		throwOnError(SlimDX::Configuration::ThrowOnError)
 	{
 	}
 	~MockedTextLayout()
 	{
+		SlimDX::Configuration::ThrowOnError = throwOnError;
 		delete layout;
 		layout = nullptr;
 		delete mockLayout;
@@ -56,6 +58,7 @@ public:
 	}
 
 private:
+	bool const throwOnError;
 	IDWriteTextLayoutMock *mockLayout;
 	TextLayout ^layout;
 };
@@ -71,6 +74,11 @@ protected:
 	void AssertLastResultSucceeded()
 	{
 		ASSERT_TRUE(Result::Last.IsSuccess);
+	}
+
+	void AssertLastResultFailed()
+	{
+		ASSERT_TRUE(Result::Last.IsFailure);
 	}
 };
 
@@ -238,7 +246,6 @@ static void AssertTextRangeMatchesExpected(TextRange range)
 	ASSERT_EQ(expected.length, range.Length);
 }
 
-
 TEST_F(TextLayoutTest, GetFontCollectionWithTextRange)
 {
 	MockedTextLayout layout;
@@ -343,9 +350,9 @@ TEST_F(TextLayoutTest, GetFontSizeWithTextRange)
 	AssertTextRangeMatchesExpected(textRange);
 }
 
-static std::ostream &operator<<(std::ostream &stream, FontStretch stretch)
+static std::ostream &operator<<(std::ostream &stream, System::Enum enumerant)
 {
-	LPSTR text = reinterpret_cast<LPSTR>(Marshal::StringToHGlobalAnsi(stretch.ToString()).ToPointer());
+	LPSTR text = reinterpret_cast<LPSTR>(Marshal::StringToHGlobalAnsi(enumerant.ToString()).ToPointer());
 	stream << text;
 	Marshal::FreeHGlobal(IntPtr(static_cast<void *>(text)));
 	return stream;
@@ -362,6 +369,18 @@ TEST_F(TextLayoutTest, GetFontStretchNoTextRange)
 	ASSERT_EQ(FontStretch::UltraExpanded, stretch);
 }
 
+TEST_F(TextLayoutTest, GetFontStretchFailureReturnsUndefined)
+{
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, GetFontStretch(0U, NotNull(), 0))
+		.Times(1)
+		.WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	FontStretch stretch = layout.Layout->GetFontStretch(0);
+	AssertLastResultFailed();
+	ASSERT_EQ(FontStretch::Undefined, stretch);
+}
+
 TEST_F(TextLayoutTest, GetFontStretchWithTextRange)
 {
 	MockedTextLayout layout;
@@ -375,4 +394,74 @@ TEST_F(TextLayoutTest, GetFontStretchWithTextRange)
 	AssertLastResultSucceeded();
 	ASSERT_EQ(FontStretch::UltraExpanded, stretch);
 	AssertTextRangeMatchesExpected(textRange);
+}
+
+TEST_F(TextLayoutTest, GetFontStretchWithTextRangeFailureReturnsUndefined)
+{
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, GetFontStretch(0U, NotNull(), NotNull()))
+		.Times(1)
+		.WillOnce(Return(E_FAIL));
+	TextRange textRange;
+	SlimDX::Configuration::ThrowOnError = false;
+	FontStretch stretch = layout.Layout->GetFontStretch(0, textRange);
+	AssertLastResultFailed();
+	ASSERT_EQ(FontStretch::Undefined, stretch);
+}
+
+TEST_F(TextLayoutTest, GetFontStyleFailureReturnsMinusOne)
+{
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, GetFontStyle(0U, NotNull(), 0))
+		.Times(1)
+		.WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	FontStyle style = layout.Layout->GetFontStyle(0);
+	AssertLastResultFailed();
+	ASSERT_EQ(-1, static_cast<int>(style));
+}
+
+TEST_F(TextLayoutTest, GetFontStyleNoTextRange)
+{
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, GetFontStyle(0U, NotNull(), 0))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(DWRITE_FONT_STYLE_NORMAL), Return(S_OK)));
+	FontStyle style = layout.Layout->GetFontStyle(0);
+	AssertLastResultSucceeded();
+	ASSERT_EQ(FontStyle::Normal, style);
+}
+
+TEST_F(TextLayoutTest, GetFontStyleWithTextRange)
+{
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, GetFontStyle(0U, NotNull(), NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(DWRITE_FONT_STYLE_NORMAL),
+						SetArgumentPointee<2>(ExpectedTextRange()),
+						Return(S_OK)));
+	TextRange textRange;
+	FontStyle style = layout.Layout->GetFontStyle(0, textRange);
+	AssertLastResultSucceeded();
+	ASSERT_EQ(FontStyle::Normal, style);
+	AssertTextRangeMatchesExpected(textRange);
+}
+
+static TextRange ExpectedManagedTextRange()
+{
+	DWRITE_TEXT_RANGE expected = ExpectedTextRange();
+	TextRange managed;
+	managed.StartPosition = expected.startPosition;
+	managed.Length = expected.length;
+	return managed;
+}
+
+TEST_F(TextLayoutTest, SetFontStyle)
+{
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, SetFontStyle(DWRITE_FONT_STYLE_ITALIC, ExpectedTextRange()))
+		.Times(1)
+		.WillOnce(Return(S_OK));
+	ASSERT_TRUE(layout.Layout->SetFontStyle(FontStyle::Italic, ExpectedManagedTextRange()).IsSuccess);
+	AssertLastResultSucceeded();	
 }
