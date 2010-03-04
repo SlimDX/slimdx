@@ -378,12 +378,41 @@ static void AssertTextMetricsMatchExpected(TextMetrics %metrics)
 	ASSERT_EQ(expected.widthIncludingTrailingWhitespace, metrics.WidthIncludingTrailingWhitespace);
 }
 
-TEST_F(TextLayoutTest, GetMetrics)
+TEST_F(TextLayoutTest, Metrics)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetMetrics(NotNull()))
 		.Times(1)
 		.WillOnce(DoAll(SetArgumentPointee<0>(ExpectedTextMetrics()), Return(S_OK)));
 	AssertTextMetricsMatchExpected(layout.Layout->Metrics);
+	AssertLastResultSucceeded();
+}
+
+static DWRITE_OVERHANG_METRICS ExpectedOverhangMetrics()
+{
+	DWRITE_OVERHANG_METRICS expected;
+	expected.left = 23;
+	expected.top = 456;
+	expected.right = 1256;
+	expected.bottom = 20;
+	return expected;
+}
+
+static void AssertOverhangMetricsMatchExpected(OverhangMetrics %metrics)
+{
+	DWRITE_OVERHANG_METRICS expected = ExpectedOverhangMetrics();
+	ASSERT_EQ(expected.left, metrics.Left);
+	ASSERT_EQ(expected.top, metrics.Top);
+	ASSERT_EQ(expected.right, metrics.Right);
+	ASSERT_EQ(expected.bottom, metrics.Bottom);
+}
+
+TEST_F(TextLayoutTest, OverhangMetrics)
+{
+	MockedTextLayoutGetters layout;
+	EXPECT_CALL(layout.Mock, GetOverhangMetrics(NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<0>(ExpectedOverhangMetrics()), Return(S_OK)));
+	AssertOverhangMetricsMatchExpected(layout.Layout->OverhangMetrics);
 	AssertLastResultSucceeded();
 }

@@ -48,8 +48,6 @@ IDWriteTextLayout::SetInlineObject
 IDWriteTextLayout::GetLocaleName
 IDWriteTextLayout::GetLocaleNameLength
 IDWriteTextLayout::SetLocaleName
-IDWriteTextLayout::GetMetrics
-IDWriteTextLayout::GetOverhangMetrics
 IDWriteTextLayout::GetStrikethrough
 IDWriteTextLayout::SetStrikethrough
 IDWriteTextLayout::GetTypography

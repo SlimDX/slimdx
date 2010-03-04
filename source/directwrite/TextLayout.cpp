@@ -24,6 +24,7 @@
 #include <vector>
 
 #include "DirectWriteException.h"
+#include "OverhangMetrics.h"
 #include "TextLayout.h"
 #include "TextMetrics.h"
 
@@ -454,6 +455,17 @@ namespace DirectWrite
 			metrics.width, metrics.widthIncludingTrailingWhitespace, metrics.height,
 			metrics.layoutWidth, metrics.layoutHeight,
 			metrics.maxBidiReorderingDepth, metrics.lineCount);
+	}
+
+	OverhangMetrics TextLayout::OverhangMetrics::get()
+	{
+		DWRITE_OVERHANG_METRICS metrics;
+		if (RECORD_DW(InternalPointer->GetOverhangMetrics(&metrics)).IsFailure)
+		{
+			DWRITE_OVERHANG_METRICS zero = { 0 };
+			metrics = zero;
+		}
+		return SlimDX::DirectWrite::OverhangMetrics(metrics.left, metrics.top, metrics.right, metrics.bottom);
 	}
 }
 }
