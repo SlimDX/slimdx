@@ -505,3 +505,56 @@ TEST_F(TextLayoutTest, GetStrikethroughWithTextRange)
 	AssertLastResultSucceeded();
 	AssertTextRangeMatchesExpected(textRange);
 }
+
+class IDWriteTypographyMock : public IDWriteTypography
+{
+public:
+	MOCK_IUNKNOWN;
+
+	STDMETHOD(AddFontFeature)(DWRITE_FONT_FEATURE fontFeature) { return E_NOTIMPL; }
+	STDMETHOD_(UINT32, GetFontFeatureCount)() { return UINT32(0); }
+	STDMETHOD(GetFontFeature)(UINT32 fontFeatureIndex, DWRITE_FONT_FEATURE* fontFeature) { return E_NOTIMPL; }
+};
+
+TEST_F(TextLayoutTest, GetTypographyNoTextRange)
+{
+	MockedTextLayoutGetters layout;
+	IDWriteTypographyMock mockTypography;
+	EXPECT_CALL(layout.Mock, GetTypography(0U, NotNull(), 0))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(&mockTypography), Return(S_OK)));
+	Typography ^typography = layout.Layout->GetTypography(0);
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(typography != nullptr);
+	ASSERT_EQ(typography->InternalPointer, &mockTypography);
+	delete typography;
+}
+
+TEST_F(TextLayoutTest, GetTypographyErrorReturnsNullPtr)
+{
+	MockedTextLayoutGetters layout;
+	EXPECT_CALL(layout.Mock, GetTypography(0U, NotNull(), 0))
+		.Times(1)
+		.WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	ASSERT_TRUE(nullptr == layout.Layout->GetTypography(0));
+	AssertLastResultFailed();
+}
+
+TEST_F(TextLayoutTest, GetTypographyWithTextRange)
+{
+	MockedTextLayoutGetters layout;
+	IDWriteTypographyMock mockTypography;
+	EXPECT_CALL(layout.Mock, GetTypography(0U, NotNull(), NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(&mockTypography),
+						SetArgumentPointee<2>(ExpectedTextRange()),
+						Return(S_OK)));
+	TextRange textRange;
+	Typography ^typography = layout.Layout->GetTypography(0, textRange);
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(typography != nullptr);
+	ASSERT_EQ(typography->InternalPointer, &mockTypography);
+	AssertTextRangeMatchesExpected(textRange);
+	delete typography;
+}

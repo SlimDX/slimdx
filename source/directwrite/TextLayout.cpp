@@ -189,9 +189,20 @@ namespace DirectWrite
 		return result;
 	}
 
+	static FontCollection ^GetFontCollectionInternal(IDWriteTextLayout *layout, int currentPosition, DWRITE_TEXT_RANGE *textRange)
+	{
+		IDWriteFontCollection* fc;
+		if( RECORD_DW(layout->GetFontCollection(currentPosition, &fc, textRange)).IsFailure)
+		{
+			return nullptr;
+		}
+
+		return SlimDX::DirectWrite::FontCollection::FromPointer(fc);
+	}
+
 	FontCollection^ TextLayout::GetFontCollection ( int currentPosition )
 	{
-		return GetFontCollectionInternal(currentPosition, 0);
+		return GetFontCollectionInternal(InternalPointer, currentPosition, 0);
 	}
 
 	static TextRange TextRangeFromNative(DWRITE_TEXT_RANGE const &range)
@@ -205,7 +216,7 @@ namespace DirectWrite
 	FontCollection^ TextLayout::GetFontCollection ( int currentPosition, [Out] TextRange% textRange )
 	{
 		DWRITE_TEXT_RANGE tr;
-		FontCollection ^collection = GetFontCollectionInternal(currentPosition, &tr);
+		FontCollection ^collection = GetFontCollectionInternal(InternalPointer, currentPosition, &tr);
 		if (collection != nullptr)
 		{
 			textRange = TextRangeFromNative(tr);
@@ -214,27 +225,16 @@ namespace DirectWrite
 		return collection;
 	}
 
-	FontCollection ^TextLayout::GetFontCollectionInternal(int currentPosition, DWRITE_TEXT_RANGE *textRange)
-	{
-		IDWriteFontCollection* fc;
-		if( RECORD_DW(InternalPointer->GetFontCollection(currentPosition, &fc, textRange)).IsFailure)
-		{
-			return nullptr;
-		}
-
-		return SlimDX::DirectWrite::FontCollection::FromPointer(fc);
-	}
-
-	String^ TextLayout::GetFontFamilyNameInternal(int currentPosition, DWRITE_TEXT_RANGE *textRange)
+	static String ^GetFontFamilyNameInternal(IDWriteTextLayout *layout, int currentPosition, DWRITE_TEXT_RANGE *textRange)
 	{
 		UINT32 length = 0U;
-		if (RECORD_DW(InternalPointer->GetFontFamilyNameLength(currentPosition, &length, textRange)).IsFailure)
+		if (RECORD_DW(layout->GetFontFamilyNameLength(currentPosition, &length, textRange)).IsFailure)
 		{
 			return String::Empty;
 		}
 
 		std::vector<WCHAR> name(length);
-		if (RECORD_DW(InternalPointer->GetFontFamilyName(currentPosition, &name[0], length, textRange)).IsFailure)
+		if (RECORD_DW(layout->GetFontFamilyName(currentPosition, &name[0], length, textRange)).IsFailure)
 		{
 			return String::Empty;
 		}
@@ -244,14 +244,14 @@ namespace DirectWrite
 
 	String^ TextLayout::GetFontFamilyName( int currentPosition )
 	{
-		return GetFontFamilyNameInternal(currentPosition, 0);
+		return GetFontFamilyNameInternal(InternalPointer, currentPosition, 0);
 	}
 
 	String^ TextLayout::GetFontFamilyName( int currentPosition, [Out] TextRange% textRange )
 	{
 		DWRITE_TEXT_RANGE range;
-		String ^familyName = GetFontFamilyNameInternal(currentPosition, &range);
-		if (familyName != nullptr)
+		String ^familyName = GetFontFamilyNameInternal(InternalPointer, currentPosition, &range);
+		if (!String::IsNullOrEmpty(familyName))
 		{
 			textRange = TextRangeFromNative(range);
 		}
@@ -259,97 +259,105 @@ namespace DirectWrite
 		return familyName;
 	}
 
-	float TextLayout::GetFontSize( int currentPosition )
+	static float GetFontSizeInternal(IDWriteTextLayout *layout, int currentPosition, DWRITE_TEXT_RANGE *range)
 	{
 		float result = -1.0f;
-		RECORD_DW(InternalPointer->GetFontSize(currentPosition, &result, 0));
+		RECORD_DW(layout->GetFontSize(currentPosition, &result, range));
 		return result;
+	}
+
+	float TextLayout::GetFontSize( int currentPosition )
+	{
+		return GetFontSizeInternal(InternalPointer, currentPosition, 0);
 	}
 
 	float TextLayout::GetFontSize(int currentPosition, [Out] TextRange% textRange)
 	{
-		float result = -1.0f;
 		DWRITE_TEXT_RANGE range;
-		if (RECORD_DW(InternalPointer->GetFontSize(currentPosition, &result, &range)).IsSuccess)
+		float const result = GetFontSizeInternal(InternalPointer, currentPosition, &range);
+		if (result >= 0)
 		{
 			textRange = TextRangeFromNative(range);
 		}
 		return result;
 	}
 
-	FontStretch TextLayout::GetFontStretch(int currentPosition)
+	static FontStretch GetFontStretchInternal(IDWriteTextLayout *layout, int currentPosition, DWRITE_TEXT_RANGE *range)
 	{
 		DWRITE_FONT_STRETCH stretch;
-		if (RECORD_DW(InternalPointer->GetFontStretch(currentPosition, &stretch, 0)).IsFailure)
+		if (RECORD_DW(layout->GetFontStretch(currentPosition, &stretch, range)).IsFailure)
 		{
 			stretch = DWRITE_FONT_STRETCH_UNDEFINED;
 		}
 		return static_cast<FontStretch>(stretch);
+	}
+
+	FontStretch TextLayout::GetFontStretch(int currentPosition)
+	{
+		return GetFontStretchInternal(InternalPointer, currentPosition, 0);
 	}
 
 	FontStretch TextLayout::GetFontStretch(int currentPosition, [Out] TextRange %textRange)
 	{
-		DWRITE_FONT_STRETCH stretch;
 		DWRITE_TEXT_RANGE range;
-		if (RECORD_DW(InternalPointer->GetFontStretch(currentPosition, &stretch, &range)).IsSuccess)
+		FontStretch result = GetFontStretchInternal(InternalPointer, currentPosition, &range);
+		if (FontStretch::Undefined != result)
 		{
 			textRange = TextRangeFromNative(range);
 		}
-		else
+		return result;
+	}
+
+	static FontStyle GetFontStyleInternal(IDWriteTextLayout *layout, int currentPosition, DWRITE_TEXT_RANGE *range)
+	{
+		DWRITE_FONT_STYLE style;
+		if (RECORD_DW(layout->GetFontStyle(currentPosition, &style, range)).IsFailure)
 		{
-			stretch = DWRITE_FONT_STRETCH_UNDEFINED;
+			style = DWRITE_FONT_STYLE(-1);
 		}
-		return static_cast<FontStretch>(stretch);
+		return static_cast<FontStyle>(style);
 	}
 
 	FontStyle TextLayout::GetFontStyle(int currentPosition)
 	{
-		DWRITE_FONT_STYLE style;
-		if (RECORD_DW(InternalPointer->GetFontStyle(currentPosition, &style, 0)).IsFailure)
-		{
-			style = DWRITE_FONT_STYLE(-1);
-		}
-		return static_cast<FontStyle>(style);
+		return GetFontStyleInternal(InternalPointer, currentPosition, 0);
 	}
 
 	FontStyle TextLayout::GetFontStyle(int currentPosition, [Out] TextRange %textRange)
 	{
-		DWRITE_FONT_STYLE style;
 		DWRITE_TEXT_RANGE range;
-		if (RECORD_DW(InternalPointer->GetFontStyle(currentPosition, &style, &range)).IsFailure)
-		{
-			style = DWRITE_FONT_STYLE(-1);
-		}
-		else
+		FontStyle style = GetFontStyleInternal(InternalPointer, currentPosition, &range);
+		if (static_cast<FontStyle>(-1) != style)
 		{
 			textRange = TextRangeFromNative(range);
 		}
-		return static_cast<FontStyle>(style);
+		return style;
+	}
+
+	static FontWeight GetFontWeightInternal(IDWriteTextLayout *layout, int currentPosition, DWRITE_TEXT_RANGE *range)
+	{
+		DWRITE_FONT_WEIGHT weight;
+		if (RECORD_DW(layout->GetFontWeight(currentPosition, &weight, range)).IsFailure)
+		{
+			weight = DWRITE_FONT_WEIGHT(-1);
+		}
+		return static_cast<FontWeight>(weight);
 	}
 
 	FontWeight TextLayout::GetFontWeight(int currentPosition)
 	{
-		DWRITE_FONT_WEIGHT weight;
-		if (RECORD_DW(InternalPointer->GetFontWeight(currentPosition, &weight, 0)).IsFailure)
-		{
-			weight = DWRITE_FONT_WEIGHT(-1);
-		}
-		return static_cast<FontWeight>(weight);
+		return GetFontWeightInternal(InternalPointer, currentPosition, 0);
 	}
 
 	FontWeight TextLayout::GetFontWeight(int currentPosition, [Out] TextRange %textRange)
 	{
-		DWRITE_FONT_WEIGHT weight;
 		DWRITE_TEXT_RANGE range;
-		if (RECORD_DW(InternalPointer->GetFontWeight(currentPosition, &weight, &range)).IsFailure)
-		{
-			weight = DWRITE_FONT_WEIGHT(-1);
-		}
-		else
+		FontWeight result = GetFontWeightInternal(InternalPointer, currentPosition, &range);
+		if (static_cast<FontWeight>(-1) != result)
 		{
 			textRange = TextRangeFromNative(range);
 		}
-		return static_cast<FontWeight>(weight);
+		return result;
 	}
 
 	array<LineMetrics> ^TextLayout::GetLineMetrics()
@@ -375,65 +383,88 @@ namespace DirectWrite
 		return result;
 	}
 
-	String ^TextLayout::GetLocaleName(int currentPosition)
+	static String ^GetLocaleNameInternal(IDWriteTextLayout *layout, int currentPosition, DWRITE_TEXT_RANGE *range)
 	{
 		UINT32 length = 0U;
-		if (RECORD_DW(InternalPointer->GetLocaleNameLength(currentPosition, &length, 0)).IsFailure)
+		if (RECORD_DW(layout->GetLocaleNameLength(currentPosition, &length, 0)).IsFailure)
 		{
 			return String::Empty;
 		}
 
 		std::vector<WCHAR> name(length);
-		if (RECORD_DW(InternalPointer->GetLocaleName(currentPosition, &name[0], length, 0)).IsFailure)
+		if (RECORD_DW(layout->GetLocaleName(currentPosition, &name[0], length, range)).IsFailure)
 		{
 			return String::Empty;
 		}
 
 		return gcnew String(&name[0]);
+	}
+
+	String ^TextLayout::GetLocaleName(int currentPosition)
+	{
+		return GetLocaleNameInternal(InternalPointer, currentPosition, 0);
 	}
 
 	String ^TextLayout::GetLocaleName(int currentPosition, [Out] TextRange %range)
 	{
-		UINT32 length = 0U;
-		if (RECORD_DW(InternalPointer->GetLocaleNameLength(currentPosition, &length, 0)).IsFailure)
-		{
-			return String::Empty;
-		}
-
-		std::vector<WCHAR> name(length);
 		DWRITE_TEXT_RANGE textRange;
-		if (RECORD_DW(InternalPointer->GetLocaleName(currentPosition, &name[0], length, &textRange)).IsFailure)
+		String ^result = GetLocaleNameInternal(InternalPointer, currentPosition, &textRange);
+		if (!String::IsNullOrEmpty(result))
 		{
-			return String::Empty;
+			range = TextRangeFromNative(textRange);
 		}
+		return result;
+	}
 
-		range = TextRangeFromNative(textRange);
-		return gcnew String(&name[0]);
+	static bool GetStrikethroughInternal(IDWriteTextLayout *layout, int currentPosition, DWRITE_TEXT_RANGE *range)
+	{
+		BOOL strikethrough;
+		if (RECORD_DW(layout->GetStrikethrough(currentPosition, &strikethrough, range)).IsFailure)
+		{
+			strikethrough = FALSE;
+		}
+		return strikethrough == TRUE;
 	}
 
 	bool TextLayout::GetStrikethrough(int currentPosition)
 	{
-		BOOL strikethrough;
-		if (RECORD_DW(InternalPointer->GetStrikethrough(currentPosition, &strikethrough, 0)).IsFailure)
-		{
-			strikethrough = FALSE;
-		}
-		return strikethrough == TRUE;
+		return GetStrikethroughInternal(InternalPointer, currentPosition, 0);
 	}
 
 	bool TextLayout::GetStrikethrough(int currentPosition, [Out] TextRange %textRange)
 	{
-		BOOL strikethrough;
-		DWRITE_TEXT_RANGE range;
-		if (RECORD_DW(InternalPointer->GetStrikethrough(currentPosition, &strikethrough, &range)).IsFailure)
+		DWRITE_TEXT_RANGE range = { 0 };
+		bool const result = GetStrikethroughInternal(InternalPointer, currentPosition, &range);
+		textRange = TextRangeFromNative(range);
+		return result;
+	}
+
+	static Typography ^GetTypographyInternal(IDWriteTextLayout *layout, int currentPosition, DWRITE_TEXT_RANGE *range)
+	{
+		IDWriteTypography *typography = 0;
+		if (RECORD_DW(layout->GetTypography(currentPosition, &typography, range)).IsFailure)
 		{
-			strikethrough = FALSE;
+			return nullptr;
 		}
-		else
+
+		return Typography::FromPointer(typography);
+	}
+
+	Typography ^TextLayout::GetTypography(int currentPosition)
+	{
+		return GetTypographyInternal(InternalPointer, currentPosition, 0);
+	}
+
+	Typography ^TextLayout::GetTypography(int currentPosition, [Out] TextRange %textRange)
+	{
+		DWRITE_TEXT_RANGE range;
+		Typography ^result = GetTypographyInternal(InternalPointer, currentPosition, &range);
+		if (nullptr != result)
 		{
 			textRange = TextRangeFromNative(range);
 		}
-		return strikethrough == TRUE;
+
+		return result;
 	}
 
 	static DWRITE_TEXT_RANGE TextRangeFromManaged(TextRange range)

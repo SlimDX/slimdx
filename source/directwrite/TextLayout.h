@@ -45,8 +45,6 @@ namespace SlimDX
 			COMOBJECT(IDWriteTextLayout, TextLayout);
 
 			void Init( Factory^ factory, String^ text, TextFormat^ format, float maxWidth, float maxHeight );
-			FontCollection ^GetFontCollectionInternal(int currentPosition, DWRITE_TEXT_RANGE *textRange);
-			String ^GetFontFamilyNameInternal(int currentPosition, DWRITE_TEXT_RANGE *textRange);
 
 		public:
 			TextLayout( Factory^ factory, String^ text, TextFormat^ format );
@@ -75,6 +73,8 @@ namespace SlimDX
 			String ^GetLocaleName(int currentPosition, [Out] TextRange %textRange);
 			bool GetStrikethrough(int currentPosition);
 			bool GetStrikethrough(int currentPosition, [Out] TextRange %textRange);
+			Typography ^GetTypography(int currentPosition);
+			Typography ^GetTypography(int currentPosition, [Out] TextRange %textRange);
 
 			Result SetFontCollection( FontCollection^ collection, TextRange range );
 			Result SetFontFamilyName( String^ name, TextRange range );
