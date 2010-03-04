@@ -491,3 +491,17 @@ TEST_F(TextLayoutTest, GetStrikethroughFailureReturnsFalse)
 	ASSERT_FALSE(layout.Layout->GetStrikethrough(0));
 	AssertLastResultFailed();
 }
+
+TEST_F(TextLayoutTest, GetStrikethroughWithTextRange)
+{
+	MockedTextLayoutGetters layout;
+	EXPECT_CALL(layout.Mock, GetStrikethrough(0U, NotNull(), NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(TRUE),
+						SetArgumentPointee<2>(ExpectedTextRange()),
+						Return(S_OK)));
+	TextRange textRange;
+	ASSERT_TRUE(layout.Layout->GetStrikethrough(0, textRange));
+	AssertLastResultSucceeded();
+	AssertTextRangeMatchesExpected(textRange);
+}
