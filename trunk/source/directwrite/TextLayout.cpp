@@ -351,6 +351,29 @@ namespace DirectWrite
 		return static_cast<FontWeight>(weight);
 	}
 
+	array<LineMetrics> ^TextLayout::GetLineMetrics()
+	{
+		UINT32 count = 0;
+		{
+			HRESULT const hr = InternalPointer->GetLineMetrics(0, 0, &count);
+			assert(FAILED(hr) && (HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER) == hr));
+		}
+
+		std::vector<DWRITE_LINE_METRICS> metrics;
+		metrics.resize(count);
+		if (RECORD_DW(InternalPointer->GetLineMetrics(&metrics[0], count, &count)).IsFailure)
+		{
+			return nullptr;
+		}
+		array<SlimDX::DirectWrite::LineMetrics>^ result = gcnew array<SlimDX::DirectWrite::LineMetrics>(count);
+		for (UINT32 i = 0; i < count; i++)
+		{
+			result[i] = LineMetrics(metrics[i].length, metrics[i].trailingWhitespaceLength, metrics[i].newlineLength,
+				metrics[i].height, metrics[i].baseline, metrics[i].isTrimmed != 0);
+		}
+		return result;
+	}
+
 	static DWRITE_TEXT_RANGE TextRangeFromManaged(TextRange range)
 	{
 		DWRITE_TEXT_RANGE tr;

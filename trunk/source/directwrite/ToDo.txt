@@ -43,10 +43,8 @@ IDWriteTextRenderer (TextRenderer)
 IDWriteTextLayout::Draw
 IDWriteTextLayout::GetDrawingEffect
 IDWriteTextLayout::SetDrawingEffect
-IDWriteTextLayout::GetFontWeight
 IDWriteTextLayout::GetInlineObject
 IDWriteTextLayout::SetInlineObject
-IDWriteTextLayout::GetLineMetrics
 IDWriteTextLayout::GetLocaleName
 IDWriteTextLayout::GetLocaleNameLength
 IDWriteTextLayout::SetLocaleName

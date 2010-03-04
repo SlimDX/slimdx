@@ -24,6 +24,7 @@
 #include "ClusterMetrics.h"
 #include "FactoryDW.h"
 #include "HitTestMetrics.h"
+#include "LineMetrics.h"
 #include "TextFormat.h"
 #include "TextRange.h"
 #include "Typography.h"
@@ -67,6 +68,7 @@ namespace SlimDX
 			FontStyle GetFontStyle(int currentPosition, [Out] TextRange %textRange);
 			FontWeight GetFontWeight(int currentPosition);
 			FontWeight GetFontWeight(int currentPosition, [Out] TextRange %textRange);
+			array<LineMetrics> ^GetLineMetrics();
 
 			Result SetFontCollection( FontCollection^ collection, TextRange range );
 			Result SetFontFamilyName( String^ name, TextRange range );
