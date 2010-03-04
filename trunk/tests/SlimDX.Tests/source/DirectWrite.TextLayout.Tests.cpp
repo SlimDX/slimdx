@@ -465,3 +465,13 @@ TEST_F(TextLayoutTest, SetFontStyle)
 	ASSERT_TRUE(layout.Layout->SetFontStyle(FontStyle::Italic, ExpectedManagedTextRange()).IsSuccess);
 	AssertLastResultSucceeded();	
 }
+
+TEST_F(TextLayoutTest, SetFontStretch)
+{
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, SetFontStretch(DWRITE_FONT_STRETCH_ULTRA_EXPANDED, ExpectedTextRange()))
+		.Times(1)
+		.WillOnce(Return(S_OK));
+	ASSERT_TRUE(layout.Layout->SetFontStretch(FontStretch::UltraExpanded, ExpectedManagedTextRange()).IsSuccess);
+	AssertLastResultSucceeded();
+}

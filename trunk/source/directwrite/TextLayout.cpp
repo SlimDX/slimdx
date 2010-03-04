@@ -349,6 +349,11 @@ namespace DirectWrite
 		return RECORD_DW(InternalPointer->SetFontSize( size, TextRangeFromManaged(range)));
 	}
 
+	Result TextLayout::SetFontStretch(FontStretch stretch, TextRange range)
+	{
+		return RECORD_DW(InternalPointer->SetFontStretch(static_cast<DWRITE_FONT_STRETCH>(stretch), TextRangeFromManaged(range)));
+	}
+
 	Result TextLayout::SetFontStyle(FontStyle style, TextRange range)
 	{
 		return RECORD_DW(InternalPointer->SetFontStyle(static_cast<DWRITE_FONT_STYLE>(style), TextRangeFromManaged(range)));

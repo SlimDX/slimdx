@@ -53,6 +53,7 @@ namespace SlimDX
 			HitTestMetrics HitTestPoint( float pointX, float pointY, [Out] bool% isTrailingHit, [Out] bool% isInside );
 			HitTestMetrics HitTestTextPosition( int textPosition, bool isTrailingHit, [Out] float% pointX, [Out] float% pointY );
 			array< HitTestMetrics >^ HitTestTextRange( int textPosition, int textLength, float originX, float originY );
+
 			array<ClusterMetrics>^ GetClusterMetrics();
 			FontCollection^ GetFontCollection( int currentPosition );
 			FontCollection^ GetFontCollection( int currentPosition, [Out] TextRange% textRange );
@@ -68,6 +69,7 @@ namespace SlimDX
 			Result SetFontCollection( FontCollection^ collection, TextRange range );
 			Result SetFontFamilyName( String^ name, TextRange range );
 			Result SetFontSize( float size, TextRange range );
+			Result SetFontStretch(FontStretch stretch, TextRange range);
 			Result SetFontStyle(FontStyle style, TextRange range);
 			Result SetUnderline( bool underline, TextRange range );
 			Result SetFontWeight( FontWeight weight, TextRange range );
