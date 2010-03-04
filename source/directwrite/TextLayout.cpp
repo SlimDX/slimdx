@@ -411,6 +411,16 @@ namespace DirectWrite
 		return gcnew String(&name[0]);
 	}
 
+	bool TextLayout::GetStrikethrough(int currentPosition)
+	{
+		BOOL strikethrough;
+		if (RECORD_DW(InternalPointer->GetStrikethrough(currentPosition, &strikethrough, 0)).IsFailure)
+		{
+			strikethrough = FALSE;
+		}
+		return strikethrough == TRUE;
+	}
+
 	static DWRITE_TEXT_RANGE TextRangeFromManaged(TextRange range)
 	{
 		DWRITE_TEXT_RANGE tr;
