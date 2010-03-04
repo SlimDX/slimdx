@@ -62,10 +62,13 @@ namespace SlimDX
 			float GetFontSize( int currentPosition, [Out] TextRange% textRange );
 			FontStretch GetFontStretch( int currentPosition );
 			FontStretch GetFontStretch(int currentPosition, [Out] TextRange %textRange);
+			FontStyle GetFontStyle(int currentPosition);
+			FontStyle GetFontStyle(int currentPosition, [Out] TextRange %textRange);
 
 			Result SetFontCollection( FontCollection^ collection, TextRange range );
 			Result SetFontFamilyName( String^ name, TextRange range );
 			Result SetFontSize( float size, TextRange range );
+			Result SetFontStyle(FontStyle style, TextRange range);
 			Result SetUnderline( bool underline, TextRange range );
 			Result SetFontWeight( FontWeight weight, TextRange range );
 			Result SetTypography( Typography^ typography, TextRange range );
