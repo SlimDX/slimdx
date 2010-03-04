@@ -71,6 +71,8 @@ namespace SlimDX
 			FontWeight GetFontWeight(int currentPosition);
 			FontWeight GetFontWeight(int currentPosition, [Out] TextRange %textRange);
 			array<LineMetrics> ^GetLineMetrics();
+			String ^GetLocaleName(int currentPosition);
+			String ^GetLocaleName(int curretnPosition, [Out] TextRange %textRange);
 
 			Result SetFontCollection( FontCollection^ collection, TextRange range );
 			Result SetFontFamilyName( String^ name, TextRange range );

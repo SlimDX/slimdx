@@ -375,6 +375,42 @@ namespace DirectWrite
 		return result;
 	}
 
+	String ^TextLayout::GetLocaleName(int currentPosition)
+	{
+		UINT32 length = 0U;
+		if (RECORD_DW(InternalPointer->GetLocaleNameLength(currentPosition, &length, 0)).IsFailure)
+		{
+			return String::Empty;
+		}
+
+		std::vector<WCHAR> name(length);
+		if (RECORD_DW(InternalPointer->GetLocaleName(currentPosition, &name[0], length, 0)).IsFailure)
+		{
+			return String::Empty;
+		}
+
+		return gcnew String(&name[0]);
+	}
+
+	String ^TextLayout::GetLocaleName(int currentPosition, [Out] TextRange %range)
+	{
+		UINT32 length = 0U;
+		if (RECORD_DW(InternalPointer->GetLocaleNameLength(currentPosition, &length, 0)).IsFailure)
+		{
+			return String::Empty;
+		}
+
+		std::vector<WCHAR> name(length);
+		DWRITE_TEXT_RANGE textRange;
+		if (RECORD_DW(InternalPointer->GetLocaleName(currentPosition, &name[0], length, &textRange)).IsFailure)
+		{
+			return String::Empty;
+		}
+
+		range = TextRangeFromNative(textRange);
+		return gcnew String(&name[0]);
+	}
+
 	static DWRITE_TEXT_RANGE TextRangeFromManaged(TextRange range)
 	{
 		DWRITE_TEXT_RANGE tr;

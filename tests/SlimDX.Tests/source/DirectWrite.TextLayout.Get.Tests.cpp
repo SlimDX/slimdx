@@ -416,3 +416,57 @@ TEST_F(TextLayoutTest, OverhangMetrics)
 	AssertOverhangMetricsMatchExpected(layout.Layout->OverhangMetrics);
 	AssertLastResultSucceeded();
 }
+
+TEST_F(TextLayoutTest, OverhangMetricsReturnsZeroOnFailure)
+{
+	MockedTextLayoutGetters layout;
+	EXPECT_CALL(layout.Mock, GetOverhangMetrics(NotNull()))
+		.Times(1)
+		.WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	OverhangMetrics metrics = layout.Layout->OverhangMetrics;
+	AssertLastResultFailed();
+	ASSERT_EQ(0, metrics.Left);
+	ASSERT_EQ(0, metrics.Right);
+	ASSERT_EQ(0, metrics.Top);
+	ASSERT_EQ(0, metrics.Bottom);
+}
+
+TEST_F(TextLayoutTest, GetLocaleNameNoTextRange)
+{
+	MockedTextLayoutGetters layout;
+	WCHAR fakeName[] = L"Slartibartfast";
+	int const numFakeName = NUM_OF(fakeName);
+	EXPECT_CALL(layout.Mock, GetLocaleNameLength(0, NotNull(), 0))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(numFakeName), Return(S_OK)));
+	EXPECT_CALL(layout.Mock, GetLocaleName(0, NotNull(), numFakeName, 0))
+		.Times(1)
+		.WillOnce(DoAll(SetArrayArgument<1>(&fakeName[0], &fakeName[numFakeName]),
+		Return(S_OK)));
+	String^ name = layout.Layout->GetLocaleName(0);
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(name != nullptr);
+	ASSERT_EQ(gcnew String(fakeName), name);
+}
+
+TEST_F(TextLayoutTest, GetLocaleNameWithTextRange)
+{
+	MockedTextLayoutGetters layout;
+	WCHAR fakeName[] = L"Slartibartfast";
+	int const numFakeName = NUM_OF(fakeName);
+	EXPECT_CALL(layout.Mock, GetLocaleNameLength(0, NotNull(), 0))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(numFakeName), Return(S_OK)));
+	EXPECT_CALL(layout.Mock, GetLocaleName(0, NotNull(), numFakeName, NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArrayArgument<1>(&fakeName[0], &fakeName[numFakeName]),
+						SetArgumentPointee<3>(ExpectedTextRange()),
+						Return(S_OK)));
+	TextRange range;
+	String^ name = layout.Layout->GetLocaleName(0, range);
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(name != nullptr);
+	ASSERT_EQ(gcnew String(fakeName), name);
+	AssertTextRangeMatchesExpected(range);
+}
