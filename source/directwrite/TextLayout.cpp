@@ -24,8 +24,8 @@
 #include <vector>
 
 #include "DirectWriteException.h"
-
 #include "TextLayout.h"
+#include "TextMetrics.h"
 
 const IID IID_IDWriteTextLayout = __uuidof(IDWriteTextLayout);
 
@@ -440,6 +440,20 @@ namespace DirectWrite
 	void TextLayout::MaxHeight::set( float value )
 	{
 		RECORD_DW( InternalPointer->SetMaxHeight( value ) );
+	}
+
+	TextMetrics TextLayout::Metrics::get()
+	{
+		DWRITE_TEXT_METRICS metrics;
+		if (RECORD_DW(InternalPointer->GetMetrics(&metrics)).IsFailure)
+		{
+			DWRITE_TEXT_METRICS const zero = { 0 };
+			metrics = zero;
+		}
+		return TextMetrics(metrics.left, metrics.top,
+			metrics.width, metrics.widthIncludingTrailingWhitespace, metrics.height,
+			metrics.layoutWidth, metrics.layoutHeight,
+			metrics.maxBidiReorderingDepth, metrics.lineCount);
 	}
 }
 }

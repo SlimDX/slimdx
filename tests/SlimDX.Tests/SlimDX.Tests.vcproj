@@ -374,6 +374,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\IDWriteTextLayoutMockGetters.h"
+				>
+			</File>
+			<File
 				RelativePath=".\source\IDXGIAdapterMock.h"
 				>
 			</File>
@@ -397,6 +401,10 @@
 				RelativePath=".\source\IDXGISwapChainMock.h"
 				>
 			</File>
+			<File
+				RelativePath=".\source\TextLayoutTest.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Tests"
@@ -411,6 +419,10 @@
 			</File>
 			<File
 				RelativePath=".\source\DirectWrite.Font.Tests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\DirectWrite.TextLayout.Get.Tests.cpp"
 				>
 			</File>
 			<File

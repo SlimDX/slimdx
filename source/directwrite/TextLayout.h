@@ -37,6 +37,7 @@ namespace SlimDX
 	namespace DirectWrite
 	{
 		using namespace System;
+		value class TextMetrics;
 
 		public ref class TextLayout : public ComObject
 		{
@@ -89,6 +90,11 @@ namespace SlimDX
 			{
 				float get();
 				void set( float value );
+			}
+
+			property TextMetrics Metrics
+			{
+				TextMetrics get();
 			}
 		};
 	}
