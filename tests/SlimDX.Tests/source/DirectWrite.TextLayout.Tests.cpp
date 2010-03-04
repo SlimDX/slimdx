@@ -107,14 +107,15 @@ static void AssertClusterMetricsMatchExpected(ClusterMetrics metrics)
 	ASSERT_EQ(expected.isRightToLeft != 0, metrics.IsRightToLeft);
 }
 
+static HRESULT const E_NOT_SUFFICIENT_BUFFER = HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER);
+
 TEST_F(TextLayoutTest, GetClusterMetrics)
 {
 	MockedTextLayout layout;
 	EXPECT_CALL(layout.Mock, GetClusterMetrics(_, _, _))
 		.WillRepeatedly(Return(E_UNEXPECTED));
 	EXPECT_CALL(layout.Mock, GetClusterMetrics(0, 0, NotNull()))
-		.WillOnce(DoAll(SetArgumentPointee<2>(1),
-						Return(HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER))));
+		.WillOnce(DoAll(SetArgumentPointee<2>(1), Return(E_NOT_SUFFICIENT_BUFFER)));
 	EXPECT_CALL(layout.Mock, GetClusterMetrics(NotNull(), Gt(0U), NotNull()))
 		.WillOnce(DoAll(SetArgumentPointee<0>(ExpectedClusterMetrics()),
 						SetArgumentPointee<2>(1),
@@ -205,7 +206,7 @@ TEST_F(TextLayoutTest, HitTestTextRange)
 	MockedTextLayout layout;
 	EXPECT_CALL(layout.Mock, HitTestTextRange(12U, 4U, 10.0f, 12.0f, 0, 0, NotNull()))
 		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<6>(1U), Return(HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER))));
+		.WillOnce(DoAll(SetArgumentPointee<6>(1U), Return(E_NOT_SUFFICIENT_BUFFER)));
 	EXPECT_CALL(layout.Mock, HitTestTextRange(12U, 4U, 10.0f, 12.0f, NotNull(), 1U, NotNull()))
 		.Times(1)
 		.WillOnce(DoAll(SetArgumentPointee<6>(1U),
@@ -516,4 +517,41 @@ TEST_F(TextLayoutTest, GetFontWeightWithTextRange)
 	ASSERT_EQ(FontWeight::UltraBold, layout.Layout->GetFontWeight(0, range));
 	AssertLastResultSucceeded();
 	AssertTextRangeMatchesExpected(range);
+}
+
+static DWRITE_LINE_METRICS ExpectedLineMetrics()
+{
+	DWRITE_LINE_METRICS const expected =
+	{
+		11, 13, 17, 333.0f, 123.f, TRUE
+	};
+	return expected;
+}
+
+static void AssertLineMetricsMatchExpected(LineMetrics metrics)
+{
+	DWRITE_LINE_METRICS expected = ExpectedLineMetrics();
+	ASSERT_EQ(metrics.Baseline, expected.baseline);
+	ASSERT_EQ(metrics.Height, expected.height);
+	ASSERT_EQ(metrics.Length, expected.length);
+	ASSERT_EQ(metrics.NewlineLength, expected.newlineLength);
+	ASSERT_EQ(metrics.TrailingWhitespaceLength, expected.trailingWhitespaceLength);
+}
+
+TEST_F(TextLayoutTest, GetLineMetrics)
+{
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, GetLineMetrics(0, 0, NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<2>(1), Return(E_NOT_SUFFICIENT_BUFFER)));
+	EXPECT_CALL(layout.Mock, GetLineMetrics(NotNull(), 1, NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<0>(ExpectedLineMetrics()),
+						SetArgumentPointee<2>(1),
+						Return(S_OK)));
+	array<LineMetrics> ^metrics = layout.Layout->GetLineMetrics();
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(metrics != nullptr);
+	ASSERT_EQ(1, metrics->Length);
+	AssertLineMetricsMatchExpected(metrics[0]);
 }
