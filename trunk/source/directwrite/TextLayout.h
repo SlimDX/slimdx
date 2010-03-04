@@ -37,6 +37,7 @@ namespace SlimDX
 	namespace DirectWrite
 	{
 		using namespace System;
+		value class OverhangMetrics;
 		value class TextMetrics;
 
 		public ref class TextLayout : public ComObject
@@ -95,6 +96,11 @@ namespace SlimDX
 			property TextMetrics Metrics
 			{
 				TextMetrics get();
+			}
+
+			property SlimDX::DirectWrite::OverhangMetrics OverhangMetrics
+			{
+				SlimDX::DirectWrite::OverhangMetrics get();
 			}
 		};
 	}
