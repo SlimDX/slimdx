@@ -56,7 +56,6 @@ IDWriteTextLayout::GetStrikethrough
 IDWriteTextLayout::SetStrikethrough
 IDWriteTextLayout::GetTypography
 IDWriteTextLayout::GetUnderline
-IDWriteTextLayout::SetFontStretch
 LOGFONT IDWriteGdiInterop::(CreateFontFromLOGFONT, ConvertFontToLOGFONT, ConvertFontFaceToLOGFONT)
 IDWriteGdiInterop::CreateBitmapRenderTarget (GdiInterop)
 DWRITE_ALPHA_MAX
