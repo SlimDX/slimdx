@@ -43,9 +43,6 @@ IDWriteTextRenderer (TextRenderer)
 IDWriteTextLayout::Draw
 IDWriteTextLayout::GetDrawingEffect
 IDWriteTextLayout::SetDrawingEffect
-IDWriteTextLayout::GetInlineObject
-IDWriteTextLayout::SetInlineObject
-IDWriteTextLayout::SetStrikethrough
 LOGFONT IDWriteGdiInterop::(CreateFontFromLOGFONT, ConvertFontToLOGFONT, ConvertFontFaceToLOGFONT)
 IDWriteGdiInterop::CreateBitmapRenderTarget (GdiInterop)
 DWRITE_ALPHA_MAX

@@ -39,6 +39,7 @@ namespace SlimDX
 		using namespace System;
 		value class OverhangMetrics;
 		value class TextMetrics;
+		ref class InlineObject;
 
 		public ref class TextLayout : public ComObject
 		{
@@ -68,6 +69,8 @@ namespace SlimDX
 			FontStyle GetFontStyle(int currentPosition, [Out] TextRange %textRange);
 			FontWeight GetFontWeight(int currentPosition);
 			FontWeight GetFontWeight(int currentPosition, [Out] TextRange %textRange);
+			InlineObject ^GetInlineObject(int currentPosition);
+			InlineObject ^GetInlineObject(int currentPosition, [Out] TextRange %textRange);
 			array<LineMetrics> ^GetLineMetrics();
 			String ^GetLocaleName(int currentPosition);
 			String ^GetLocaleName(int currentPosition, [Out] TextRange %textRange);
@@ -84,7 +87,9 @@ namespace SlimDX
 			Result SetFontStretch(FontStretch stretch, TextRange range);
 			Result SetFontStyle(FontStyle style, TextRange range);
 			Result SetFontWeight( FontWeight weight, TextRange range );
+			Result SetInlineObject(InlineObject ^obj, TextRange range);
 			Result SetLocaleName(String ^name, TextRange range);
+			Result SetStrikethrough(bool strikethrough, TextRange range);
 			Result SetTypography( Typography^ typography, TextRange range );
 			Result SetUnderline( bool underline, TextRange range );
 

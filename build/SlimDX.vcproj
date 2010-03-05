@@ -5270,6 +5270,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\directwrite\InlineObjectMetrics.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\directwrite\NumberSubstitution.cpp"
 				>
 			</File>

@@ -19,31 +19,18 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
+#pragma once
 
-#include "DirectWriteException.h"
+#include "CommonMocks.h"
+#include <dwrite.h>
 
-#include "InlineObject.h"
-
-const IID IID_IDWriteInlineObject = __uuidof(IDWriteInlineObject);
-
-using namespace System;
-
-namespace SlimDX
+class IDWriteInlineObjectMock : public IDWriteInlineObject
 {
-namespace DirectWrite
-{
-	InlineObjectMetrics InlineObject::Metrics::get()
-	{
-		DWRITE_INLINE_OBJECT_METRICS metrics;
-		if (RECORD_DW(InternalPointer->GetMetrics(&metrics)).IsSuccess)
-		{
-			return InlineObjectMetrics(metrics.width, metrics.height, metrics.baseline, metrics.supportsSideways == TRUE);
-		}
-		else
-		{
-			return InlineObjectMetrics(0, 0, 0, false);
-		}
-	}
-}
-}
+public:
+	MOCK_IUNKNOWN;
+
+	STDMETHOD(Draw)(void* clientDrawingContext, IDWriteTextRenderer* renderer, FLOAT originX, FLOAT originY, BOOL isSideways, BOOL isRightToLeft, IUnknown* clientDrawingEffect) { return E_NOTIMPL; }
+	MOCK_METHOD1_WITH_CALLTYPE( STDMETHODCALLTYPE, GetMetrics, HRESULT(DWRITE_INLINE_OBJECT_METRICS*) );
+	STDMETHOD(GetOverhangMetrics)(DWRITE_OVERHANG_METRICS* overhangs) { return E_NOTIMPL; }
+	STDMETHOD(GetBreakConditions)(DWRITE_BREAK_CONDITION* breakConditionBefore, DWRITE_BREAK_CONDITION* breakConditionAfter) { return E_NOTIMPL; }
+};

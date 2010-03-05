@@ -24,6 +24,7 @@
 extern const IID IID_IDWriteInlineObject;
 
 #include "../ComObject.h"
+#include "InlineObjectMetrics.h"
 
 namespace SlimDX
 {
@@ -32,6 +33,12 @@ namespace SlimDX
 		public ref class InlineObject : public ComObject
 		{
 			COMOBJECT(IDWriteInlineObject, InlineObject);
+
+		public:
+			property InlineObjectMetrics Metrics
+			{
+				InlineObjectMetrics get();
+			}
 		};
 	}
 }

@@ -22,6 +22,7 @@
 */
 
 #include "IDWriteFontCollectionMock.h"
+#include "IDWriteInlineObjectMock.h"
 #include "IDWriteTextLayoutMockGetters.h"
 #include "TextLayoutTest.h"
 
@@ -592,4 +593,49 @@ TEST_F(TextLayoutTest, GetUnderlineWithTextRange)
 	ASSERT_TRUE(layout.Layout->GetUnderline(0, range));
 	AssertLastResultSucceeded();
 	AssertTextRangeMatchesExpected(range);
+}
+
+TEST_F(TextLayoutTest, GetInlineObjectNoTextRange)
+{
+	MockedTextLayoutGetters layout;
+	IDWriteInlineObjectMock mockInline;
+	EXPECT_CALL(layout.Mock, GetInlineObject(0U, NotNull(), 0))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(&mockInline), Return(S_OK)));
+	InlineObject ^obj = layout.Layout->GetInlineObject(0);
+	ASSERT_TRUE(obj != nullptr);
+	AssertLastResultSucceeded();
+	ASSERT_EQ(&mockInline, obj->InternalPointer);
+	delete obj;
+}
+
+TEST_F(TextLayoutTest, GetInlineObjectErrorReturnsNullPtr)
+{
+	MockedTextLayoutGetters layout;
+	IDWriteInlineObjectMock mockInline;
+	EXPECT_CALL(layout.Mock, GetInlineObject(0U, NotNull(), 0))
+		.Times(1)
+		.WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	InlineObject ^obj = layout.Layout->GetInlineObject(0);
+	ASSERT_TRUE(obj == nullptr);
+	AssertLastResultFailed();
+}
+
+TEST_F(TextLayoutTest, GetInlineObjectWithTextRange)
+{
+	MockedTextLayoutGetters layout;
+	IDWriteInlineObjectMock mockInline;
+	EXPECT_CALL(layout.Mock, GetInlineObject(0U, NotNull(), NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(&mockInline),
+						SetArgumentPointee<2>(ExpectedTextRange()),
+						Return(S_OK)));
+	TextRange range;
+	InlineObject ^obj = layout.Layout->GetInlineObject(0, range);
+	ASSERT_TRUE(obj != nullptr);
+	AssertLastResultSucceeded();
+	ASSERT_EQ(&mockInline, obj->InternalPointer);
+	AssertTextRangeMatchesExpected(range);
+	delete obj;
 }

@@ -21,26 +21,11 @@
 */
 #pragma once
 
+#include "SlimDXTest.h"
 #include <ostream>
 
-class TextLayoutTest : public testing::Test
+class TextLayoutTest : public SlimDXTest
 {
-protected:
-	virtual void TearDown()
-	{
-		ASSERT_EQ(0, SlimDX::ObjectTable::Objects->Count);
-	}
-
-	void AssertLastResultSucceeded()
-	{
-		ASSERT_TRUE(SlimDX::Result::Last.IsSuccess);
-	}
-
-	void AssertLastResultFailed()
-	{
-		ASSERT_TRUE(SlimDX::Result::Last.IsFailure);
-	}
-
 };
 
 extern HRESULT const E_NOT_SUFFICIENT_BUFFER;
