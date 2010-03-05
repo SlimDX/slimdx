@@ -84,6 +84,7 @@ namespace SlimDX
 			Result SetFontStretch(FontStretch stretch, TextRange range);
 			Result SetFontStyle(FontStyle style, TextRange range);
 			Result SetFontWeight( FontWeight weight, TextRange range );
+			Result SetLocaleName(String ^name, TextRange range);
 			Result SetTypography( Typography^ typography, TextRange range );
 			Result SetUnderline( bool underline, TextRange range );
 

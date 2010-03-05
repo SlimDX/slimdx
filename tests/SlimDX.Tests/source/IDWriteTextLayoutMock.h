@@ -69,7 +69,7 @@ struct IDWriteTextLayoutMock : IDWriteTextLayout
 	STDMETHODIMP SetDrawingEffect(IUnknown*, DWRITE_TEXT_RANGE) { return E_NOTIMPL; }
 	STDMETHODIMP SetInlineObject(IDWriteInlineObject*, DWRITE_TEXT_RANGE) { return E_NOTIMPL; }
 	STDMETHODIMP SetTypography(IDWriteTypography*, DWRITE_TEXT_RANGE) { return E_NOTIMPL; }
-	STDMETHODIMP SetLocaleName(WCHAR const *, DWRITE_TEXT_RANGE) { return E_NOTIMPL; }
+	MOCK_METHOD2_WITH_CALLTYPE( STDMETHODCALLTYPE, SetLocaleName, HRESULT(WCHAR const *, DWRITE_TEXT_RANGE) );
 	STDMETHODIMP_(FLOAT) GetMaxWidth() { return FLOAT(0); }
 	STDMETHODIMP_(FLOAT) GetMaxHeight() { return FLOAT(0); }
 	STDMETHODIMP GetFontCollection( UINT32, IDWriteFontCollection**, DWRITE_TEXT_RANGE* ) { return E_NOTIMPL; }

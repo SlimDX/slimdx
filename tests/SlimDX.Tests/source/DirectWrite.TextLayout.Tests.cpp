@@ -224,7 +224,6 @@ TEST_F(TextLayoutTest, SetFontStyle)
 		.Times(1)
 		.WillOnce(Return(S_OK));
 	ASSERT_TRUE(layout.Layout->SetFontStyle(FontStyle::Italic, ExpectedManagedTextRange()).IsSuccess);
-	AssertLastResultSucceeded();	
 }
 
 TEST_F(TextLayoutTest, SetFontStretch)
@@ -234,10 +233,18 @@ TEST_F(TextLayoutTest, SetFontStretch)
 		.Times(1)
 		.WillOnce(Return(S_OK));
 	ASSERT_TRUE(layout.Layout->SetFontStretch(FontStretch::UltraExpanded, ExpectedManagedTextRange()).IsSuccess);
-	AssertLastResultSucceeded();
 }
 
 std::ostream &operator<<(std::ostream &stream, FontWeight weight)
 {
 	return stream << weight.ToString();
+}
+
+TEST_F(TextLayoutTest, SetLocaleName)
+{
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, SetLocaleName(NotNull(), ExpectedTextRange()))
+		.Times(1)
+		.WillOnce(Return(S_OK));
+	ASSERT_TRUE(layout.Layout->SetLocaleName(gcnew String("Slartibartfast"), ExpectedManagedTextRange()).IsSuccess);
 }
