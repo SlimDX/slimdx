@@ -24,6 +24,7 @@
 #include <vector>
 
 #include "DirectWriteException.h"
+#include "InlineObject.h"
 #include "OverhangMetrics.h"
 #include "TextLayout.h"
 #include "TextMetrics.h"
@@ -360,6 +361,32 @@ namespace DirectWrite
 		return result;
 	}
 
+	static InlineObject ^GetInlineObjectInternal(IDWriteTextLayout *layout, int currentPosition, DWRITE_TEXT_RANGE *range)
+	{
+		IDWriteInlineObject *obj;
+		if (RECORD_DW(layout->GetInlineObject(currentPosition, &obj, range)).IsFailure)
+		{
+			return nullptr;
+		}
+		return InlineObject::FromPointer(obj);
+	}
+
+	InlineObject ^TextLayout::GetInlineObject(int currentPosition)
+	{
+		return GetInlineObjectInternal(InternalPointer, currentPosition, 0);
+	}
+
+	InlineObject ^TextLayout::GetInlineObject(int currentPosition, [Out] TextRange %textRange)
+	{
+		DWRITE_TEXT_RANGE range;
+		InlineObject ^result = GetInlineObjectInternal(InternalPointer, currentPosition, &range);
+		if (Result::Last.IsSuccess)
+		{
+			textRange = TextRangeFromNative(range);
+		}
+		return result;
+	}
+
 	array<LineMetrics> ^TextLayout::GetLineMetrics()
 	{
 		UINT32 count = 0;
@@ -534,19 +561,29 @@ namespace DirectWrite
 		return RECORD_DW(InternalPointer->SetFontWeight(static_cast<DWRITE_FONT_WEIGHT>(weight), TextRangeFromManaged(range)));
 	}
 
+	Result TextLayout::SetInlineObject(InlineObject ^obj, TextRange range)
+	{
+		return RECORD_DW(InternalPointer->SetInlineObject(obj->InternalPointer, TextRangeFromManaged(range)));
+	}
+
 	Result TextLayout::SetLocaleName(String ^name, TextRange range)
 	{
 		return RECORD_DW(InternalPointer->SetLocaleName(NativeUnicodeString(name), TextRangeFromManaged(range)));
 	}
 
-	Result TextLayout::SetUnderline( bool underline, TextRange range )
+	Result TextLayout::SetStrikethrough(bool strikethrough, TextRange range)
 	{
-		return RECORD_DW(InternalPointer->SetUnderline( underline, TextRangeFromManaged(range)));
+		return RECORD_DW(InternalPointer->SetStrikethrough(strikethrough, TextRangeFromManaged(range)));
 	}
 
 	Result TextLayout::SetTypography( Typography^ typography, TextRange range )
 	{
 		return RECORD_DW(InternalPointer->SetTypography(typography->InternalPointer, TextRangeFromManaged(range)));
+	}
+
+	Result TextLayout::SetUnderline( bool underline, TextRange range )
+	{
+		return RECORD_DW(InternalPointer->SetUnderline( underline, TextRangeFromManaged(range)));
 	}
 
 	float TextLayout::MaxWidth::get()

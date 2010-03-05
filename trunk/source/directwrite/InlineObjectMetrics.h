@@ -19,31 +19,48 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
-
-#include "DirectWriteException.h"
-
-#include "InlineObject.h"
-
-const IID IID_IDWriteInlineObject = __uuidof(IDWriteInlineObject);
-
-using namespace System;
+#pragma once
 
 namespace SlimDX
 {
-namespace DirectWrite
-{
-	InlineObjectMetrics InlineObject::Metrics::get()
+	namespace DirectWrite
 	{
-		DWRITE_INLINE_OBJECT_METRICS metrics;
-		if (RECORD_DW(InternalPointer->GetMetrics(&metrics)).IsSuccess)
+		/// <summary>
+		/// Properties describing the geometric measurement of an
+		/// application-defined inline object.
+		/// </summary>
+		public value class InlineObjectMetrics
 		{
-			return InlineObjectMetrics(metrics.width, metrics.height, metrics.baseline, metrics.supportsSideways == TRUE);
-		}
-		else
-		{
-			return InlineObjectMetrics(0, 0, 0, false);
-		}
+		public:
+			InlineObjectMetrics(float width, float height, float baseline, bool supportsSideways)
+			{
+				Width = width;
+				Height = height;
+				Baseline = baseline;
+				SupportsSideways = supportsSideways;
+			}
+
+			/// <summary>
+			/// Width of the inline object.
+			/// </summary>
+			property float Width;
+
+			/// <summary>
+			/// Height of the inline object as measured from top to bottom.
+			/// </summary>
+			property float Height;
+
+			/// <summary>
+			/// Distance from the top of the object to the baseline where it is lined up with the adjacent text.
+			/// If the baseline is at the bottom, baseline simply equals height.
+			/// </summary>
+			property float Baseline;
+
+			/// <summary>
+			/// Flag indicating whether the object is to be placed upright or alongside the text baseline
+			/// for vertical text.
+			/// </summary>
+			property bool SupportsSideways;
+		};
 	}
-}
 }

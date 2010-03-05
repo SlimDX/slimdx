@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -19,31 +20,20 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
 
-#include "DirectWriteException.h"
+#include "SlimDXTest.h"
 
-#include "InlineObject.h"
-
-const IID IID_IDWriteInlineObject = __uuidof(IDWriteInlineObject);
-
-using namespace System;
-
-namespace SlimDX
+void SlimDXTest::TearDown()
 {
-namespace DirectWrite
-{
-	InlineObjectMetrics InlineObject::Metrics::get()
-	{
-		DWRITE_INLINE_OBJECT_METRICS metrics;
-		if (RECORD_DW(InternalPointer->GetMetrics(&metrics)).IsSuccess)
-		{
-			return InlineObjectMetrics(metrics.width, metrics.height, metrics.baseline, metrics.supportsSideways == TRUE);
-		}
-		else
-		{
-			return InlineObjectMetrics(0, 0, 0, false);
-		}
-	}
+	ASSERT_EQ(0, SlimDX::ObjectTable::Objects->Count);
 }
+
+void SlimDXTest::AssertLastResultSucceeded()
+{
+	ASSERT_TRUE(SlimDX::Result::Last.IsSuccess);
+}
+
+void SlimDXTest::AssertLastResultFailed()
+{
+	ASSERT_TRUE(SlimDX::Result::Last.IsFailure);
 }

@@ -20,8 +20,8 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <ostream>
 
+#include "IDWriteInlineObjectMock.h"
 #include "IDWriteTextLayoutMock.h"
 #include "TextLayoutTest.h"
 
@@ -29,7 +29,6 @@ using namespace testing;
 using namespace System;
 using namespace SlimDX;
 using namespace SlimDX::DirectWrite;
-using namespace System::Runtime::InteropServices;
 
 ref class MockedTextLayout
 {
@@ -62,8 +61,6 @@ private:
 	IDWriteTextLayoutMock *mockLayout;
 	TextLayout ^layout;
 };
-
-HRESULT const E_NOT_SUFFICIENT_BUFFER = HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER);
 
 TEST_F(TextLayoutTest, DetermineMinWidth)
 {
@@ -156,56 +153,10 @@ TEST_F(TextLayoutTest, HitTestTextRange)
 	AssertHitTestMetricsMatchExpected(metrics[0]);
 }
 
-DWRITE_TEXT_RANGE ExpectedTextRange()
-{
-	DWRITE_TEXT_RANGE fakeTextRange;
-	fakeTextRange.length = 1;
-	fakeTextRange.startPosition = 0;
-	return fakeTextRange;
-}
-
-void AssertTextRangeMatchesExpected(TextRange range)
-{
-	DWRITE_TEXT_RANGE expected = ExpectedTextRange();
-	ASSERT_EQ(expected.startPosition, range.StartPosition);
-	ASSERT_EQ(expected.length, range.Length);
-}
-
 static bool operator==(DWRITE_TEXT_RANGE const &lhs, DWRITE_TEXT_RANGE const &rhs)
 {
 	return lhs.startPosition == rhs.startPosition
 		&& lhs.length == rhs.length;
-}
-
-TEST_F(TextLayoutTest, SetFontFamilyName)
-{
-	MockedTextLayout layout;
-	DWRITE_TEXT_RANGE expectedRange;
-	expectedRange.startPosition = 2;
-	expectedRange.length = 4;
-	EXPECT_CALL(layout.Mock, SetFontFamilyName(NotNull(), expectedRange))
-		.Times(1)
-		.WillOnce(Return(S_OK));
-	
-	ASSERT_TRUE(layout.Layout->SetFontFamilyName(gcnew String("Slartibartfast!"), TextRange(2, 4)).IsSuccess);
-}
-
-std::ostream &operator<<(std::ostream &stream, String ^str)
-{
-	LPSTR text = reinterpret_cast<LPSTR>(Marshal::StringToHGlobalAnsi(str).ToPointer());
-	stream << text;
-	Marshal::FreeHGlobal(IntPtr(static_cast<void *>(text)));
-	return stream;
-}
-
-std::ostream &operator<<(std::ostream &stream, FontStretch stretch)
-{
-	return stream << stretch.ToString();
-}
-
-std::ostream &operator<<(std::ostream &stream, FontStyle style)
-{
-	return stream << style.ToString();
 }
 
 static TextRange ExpectedManagedTextRange()
@@ -215,6 +166,16 @@ static TextRange ExpectedManagedTextRange()
 	managed.StartPosition = expected.startPosition;
 	managed.Length = expected.length;
 	return managed;
+}
+
+TEST_F(TextLayoutTest, SetFontFamilyName)
+{
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, SetFontFamilyName(NotNull(), ExpectedTextRange()))
+		.Times(1)
+		.WillOnce(Return(S_OK));
+	
+	ASSERT_TRUE(layout.Layout->SetFontFamilyName(gcnew String("Slartibartfast!"), ExpectedManagedTextRange()).IsSuccess);
 }
 
 TEST_F(TextLayoutTest, SetFontStyle)
@@ -235,11 +196,6 @@ TEST_F(TextLayoutTest, SetFontStretch)
 	ASSERT_TRUE(layout.Layout->SetFontStretch(FontStretch::UltraExpanded, ExpectedManagedTextRange()).IsSuccess);
 }
 
-std::ostream &operator<<(std::ostream &stream, FontWeight weight)
-{
-	return stream << weight.ToString();
-}
-
 TEST_F(TextLayoutTest, SetLocaleName)
 {
 	MockedTextLayout layout;
@@ -247,4 +203,25 @@ TEST_F(TextLayoutTest, SetLocaleName)
 		.Times(1)
 		.WillOnce(Return(S_OK));
 	ASSERT_TRUE(layout.Layout->SetLocaleName(gcnew String("Slartibartfast"), ExpectedManagedTextRange()).IsSuccess);
+}
+
+TEST_F(TextLayoutTest, SetStrikethrough)
+{
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, SetStrikethrough(TRUE, ExpectedTextRange()))
+		.Times(1)
+		.WillOnce(Return(S_OK));
+	ASSERT_TRUE(layout.Layout->SetStrikethrough(true, ExpectedManagedTextRange()).IsSuccess);
+}
+
+TEST_F(TextLayoutTest, SetInlineObject)
+{
+	MockedTextLayout layout;
+	IDWriteInlineObjectMock mockInlineObject;
+	EXPECT_CALL(layout.Mock, SetInlineObject(&mockInlineObject, ExpectedTextRange()))
+		.Times(1)
+		.WillOnce(Return(S_OK));
+	InlineObject ^obj = InlineObject::FromPointer(&mockInlineObject);
+	ASSERT_TRUE(layout.Layout->SetInlineObject(obj, ExpectedManagedTextRange()).IsSuccess);
+	delete obj;
 }

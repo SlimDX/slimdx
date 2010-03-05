@@ -370,6 +370,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\IDWriteInlineObjectMock.h"
+				>
+			</File>
+			<File
 				RelativePath=".\source\IDWriteTextLayoutMock.h"
 				>
 			</File>
@@ -402,6 +406,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\SlimDXTest.h"
+				>
+			</File>
+			<File
 				RelativePath=".\source\TextLayoutTest.h"
 				>
 			</File>
@@ -419,6 +427,10 @@
 			</File>
 			<File
 				RelativePath=".\source\DirectWrite.Font.Tests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\DirectWrite.InlineObject.Tests.cpp"
 				>
 			</File>
 			<File
@@ -455,6 +467,14 @@
 			</File>
 			<File
 				RelativePath=".\source\Math.Vector4.Tests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\SlimDXTest.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\TestLayoutTest.cpp"
 				>
 			</File>
 		</Filter>

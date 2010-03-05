@@ -19,31 +19,12 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include "stdafx.h"
+#pragma once
 
-#include "DirectWriteException.h"
-
-#include "InlineObject.h"
-
-const IID IID_IDWriteInlineObject = __uuidof(IDWriteInlineObject);
-
-using namespace System;
-
-namespace SlimDX
+class SlimDXTest : public testing::Test
 {
-namespace DirectWrite
-{
-	InlineObjectMetrics InlineObject::Metrics::get()
-	{
-		DWRITE_INLINE_OBJECT_METRICS metrics;
-		if (RECORD_DW(InternalPointer->GetMetrics(&metrics)).IsSuccess)
-		{
-			return InlineObjectMetrics(metrics.width, metrics.height, metrics.baseline, metrics.supportsSideways == TRUE);
-		}
-		else
-		{
-			return InlineObjectMetrics(0, 0, 0, false);
-		}
-	}
-}
-}
+protected:
+	virtual void TearDown();
+	void AssertLastResultSucceeded();
+	void AssertLastResultFailed();
+};

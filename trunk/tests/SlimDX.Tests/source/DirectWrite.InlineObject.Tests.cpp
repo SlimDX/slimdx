@@ -1,0 +1,111 @@
+#include "stdafx.h"
+/*
+* Copyright (c) 2007-2010 SlimDX Group
+* 
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*/
+#include <ostream>
+
+#include "IDWriteInlineObjectMock.h"
+#include "SlimDXTest.h"
+
+using namespace testing;
+using namespace SlimDX;
+using namespace SlimDX::DirectWrite;
+
+class InlineObjectTest : public SlimDXTest
+{
+};
+
+ref class MockedInlineObject
+{
+public:
+	MockedInlineObject()
+		: mockInlineObject(new IDWriteInlineObjectMock),
+		obj(SlimDX::DirectWrite::InlineObject::FromPointer(System::IntPtr(mockInlineObject))),
+		throwOnError(SlimDX::Configuration::ThrowOnError)
+	{
+	}
+	~MockedInlineObject()
+	{
+		SlimDX::Configuration::ThrowOnError = throwOnError;
+		delete obj;
+		obj = nullptr;
+		delete mockInlineObject;
+		mockInlineObject = 0;
+	}
+	property IDWriteInlineObjectMock &Mock
+	{
+		IDWriteInlineObjectMock &get() { return *mockInlineObject; }
+	}
+	property SlimDX::DirectWrite::InlineObject ^InlineObject
+	{
+		SlimDX::DirectWrite::InlineObject ^get() { return obj; }
+	}
+
+private:
+	bool const throwOnError;
+	IDWriteInlineObjectMock *mockInlineObject;
+	SlimDX::DirectWrite::InlineObject ^obj;
+};
+
+static DWRITE_INLINE_OBJECT_METRICS ExpectedInlineObjectMetrics()
+{
+	DWRITE_INLINE_OBJECT_METRICS expected;
+	expected.width = 24;
+	expected.height = 36;
+	expected.baseline = 12;
+	expected.supportsSideways = TRUE;
+	return expected;
+}
+
+static void AssertInlineObjectMetricsMatchExpected(InlineObjectMetrics metrics)
+{
+	DWRITE_INLINE_OBJECT_METRICS expected = ExpectedInlineObjectMetrics();
+	ASSERT_EQ(expected.width, metrics.Width);
+	ASSERT_EQ(expected.height, metrics.Height);
+	ASSERT_EQ(expected.baseline, metrics.Baseline);
+	ASSERT_EQ(expected.supportsSideways == TRUE, metrics.SupportsSideways);
+}
+
+TEST_F(InlineObjectTest, Metrics)
+{
+	MockedInlineObject obj;
+	EXPECT_CALL(obj.Mock, GetMetrics(NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<0>(ExpectedInlineObjectMetrics()), Return(S_OK)));
+	InlineObjectMetrics metrics = obj.InlineObject->Metrics;
+	AssertLastResultSucceeded();
+	AssertInlineObjectMetricsMatchExpected(metrics);
+}
+
+TEST_F(InlineObjectTest, MetricsReturnsZeroOnFailure)
+{
+	MockedInlineObject obj;
+	EXPECT_CALL(obj.Mock, GetMetrics(NotNull()))
+		.Times(1)
+		.WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	InlineObjectMetrics metrics = obj.InlineObject->Metrics;
+	AssertLastResultFailed();
+	ASSERT_EQ(0, metrics.Width);
+	ASSERT_EQ(0, metrics.Height);
+	ASSERT_EQ(0, metrics.Baseline);
+	ASSERT_FALSE(metrics.SupportsSideways);
+}
