@@ -529,14 +529,19 @@ namespace DirectWrite
 		return RECORD_DW(InternalPointer->SetFontStyle(static_cast<DWRITE_FONT_STYLE>(style), TextRangeFromManaged(range)));
 	}
 
-	Result TextLayout::SetUnderline( bool underline, TextRange range )
-	{
-		return RECORD_DW(InternalPointer->SetUnderline( underline, TextRangeFromManaged(range)));
-	}
-
 	Result TextLayout::SetFontWeight( FontWeight weight, TextRange range )
 	{
 		return RECORD_DW(InternalPointer->SetFontWeight(static_cast<DWRITE_FONT_WEIGHT>(weight), TextRangeFromManaged(range)));
+	}
+
+	Result TextLayout::SetLocaleName(String ^name, TextRange range)
+	{
+		return RECORD_DW(InternalPointer->SetLocaleName(NativeUnicodeString(name), TextRangeFromManaged(range)));
+	}
+
+	Result TextLayout::SetUnderline( bool underline, TextRange range )
+	{
+		return RECORD_DW(InternalPointer->SetUnderline( underline, TextRangeFromManaged(range)));
 	}
 
 	Result TextLayout::SetTypography( Typography^ typography, TextRange range )

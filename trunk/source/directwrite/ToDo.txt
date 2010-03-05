@@ -45,7 +45,6 @@ IDWriteTextLayout::GetDrawingEffect
 IDWriteTextLayout::SetDrawingEffect
 IDWriteTextLayout::GetInlineObject
 IDWriteTextLayout::SetInlineObject
-IDWriteTextLayout::SetLocaleName
 IDWriteTextLayout::SetStrikethrough
 LOGFONT IDWriteGdiInterop::(CreateFontFromLOGFONT, ConvertFontToLOGFONT, ConvertFontFaceToLOGFONT)
 IDWriteGdiInterop::CreateBitmapRenderTarget (GdiInterop)
