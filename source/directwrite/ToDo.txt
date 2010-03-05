@@ -47,8 +47,6 @@ IDWriteTextLayout::GetInlineObject
 IDWriteTextLayout::SetInlineObject
 IDWriteTextLayout::SetLocaleName
 IDWriteTextLayout::SetStrikethrough
-IDWriteTextLayout::GetTypography
-IDWriteTextLayout::GetUnderline
 LOGFONT IDWriteGdiInterop::(CreateFontFromLOGFONT, ConvertFontToLOGFONT, ConvertFontFaceToLOGFONT)
 IDWriteGdiInterop::CreateBitmapRenderTarget (GdiInterop)
 DWRITE_ALPHA_MAX

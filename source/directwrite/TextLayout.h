@@ -75,6 +75,8 @@ namespace SlimDX
 			bool GetStrikethrough(int currentPosition, [Out] TextRange %textRange);
 			Typography ^GetTypography(int currentPosition);
 			Typography ^GetTypography(int currentPosition, [Out] TextRange %textRange);
+			bool GetUnderline(int currentPosition);
+			bool GetUnderline(int currentPosition, [Out] TextRange %textRange);
 
 			Result SetFontCollection( FontCollection^ collection, TextRange range );
 			Result SetFontFamilyName( String^ name, TextRange range );
