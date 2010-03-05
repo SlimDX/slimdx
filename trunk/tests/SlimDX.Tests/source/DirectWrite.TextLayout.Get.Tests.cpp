@@ -558,3 +558,38 @@ TEST_F(TextLayoutTest, GetTypographyWithTextRange)
 	AssertTextRangeMatchesExpected(textRange);
 	delete typography;
 }
+
+TEST_F(TextLayoutTest, GetUnderlineNoTextRange)
+{
+	MockedTextLayoutGetters layout;
+	EXPECT_CALL(layout.Mock, GetUnderline(0U, NotNull(), 0))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(TRUE), Return(S_OK)));
+	ASSERT_TRUE(layout.Layout->GetUnderline(0));
+	AssertLastResultSucceeded();
+}
+
+TEST_F(TextLayoutTest, GetUnderlineFailureReturnsFalse)
+{
+	MockedTextLayoutGetters layout;
+	EXPECT_CALL(layout.Mock, GetUnderline(0U, NotNull(), 0))
+		.Times(1)
+		.WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	ASSERT_FALSE(layout.Layout->GetUnderline(0));
+	AssertLastResultFailed();
+}
+
+TEST_F(TextLayoutTest, GetUnderlineWithTextRange)
+{
+	MockedTextLayoutGetters layout;
+	EXPECT_CALL(layout.Mock, GetUnderline(0U, NotNull(), NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(TRUE),
+						SetArgumentPointee<2>(ExpectedTextRange()),
+						Return(S_OK)));
+	TextRange range;
+	ASSERT_TRUE(layout.Layout->GetUnderline(0, range));
+	AssertLastResultSucceeded();
+	AssertTextRangeMatchesExpected(range);
+}

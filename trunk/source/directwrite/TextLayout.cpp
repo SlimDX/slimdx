@@ -217,7 +217,7 @@ namespace DirectWrite
 	{
 		DWRITE_TEXT_RANGE tr;
 		FontCollection ^collection = GetFontCollectionInternal(InternalPointer, currentPosition, &tr);
-		if (collection != nullptr)
+		if (Result::Last.IsSuccess)
 		{
 			textRange = TextRangeFromNative(tr);
 		}
@@ -251,7 +251,7 @@ namespace DirectWrite
 	{
 		DWRITE_TEXT_RANGE range;
 		String ^familyName = GetFontFamilyNameInternal(InternalPointer, currentPosition, &range);
-		if (!String::IsNullOrEmpty(familyName))
+		if (Result::Last.IsSuccess)
 		{
 			textRange = TextRangeFromNative(range);
 		}
@@ -275,7 +275,7 @@ namespace DirectWrite
 	{
 		DWRITE_TEXT_RANGE range;
 		float const result = GetFontSizeInternal(InternalPointer, currentPosition, &range);
-		if (result >= 0)
+		if (Result::Last.IsSuccess)
 		{
 			textRange = TextRangeFromNative(range);
 		}
@@ -301,7 +301,7 @@ namespace DirectWrite
 	{
 		DWRITE_TEXT_RANGE range;
 		FontStretch result = GetFontStretchInternal(InternalPointer, currentPosition, &range);
-		if (FontStretch::Undefined != result)
+		if (Result::Last.IsSuccess)
 		{
 			textRange = TextRangeFromNative(range);
 		}
@@ -327,7 +327,7 @@ namespace DirectWrite
 	{
 		DWRITE_TEXT_RANGE range;
 		FontStyle style = GetFontStyleInternal(InternalPointer, currentPosition, &range);
-		if (static_cast<FontStyle>(-1) != style)
+		if (Result::Last.IsSuccess)
 		{
 			textRange = TextRangeFromNative(range);
 		}
@@ -353,7 +353,7 @@ namespace DirectWrite
 	{
 		DWRITE_TEXT_RANGE range;
 		FontWeight result = GetFontWeightInternal(InternalPointer, currentPosition, &range);
-		if (static_cast<FontWeight>(-1) != result)
+		if (Result::Last.IsSuccess)
 		{
 			textRange = TextRangeFromNative(range);
 		}
@@ -409,7 +409,7 @@ namespace DirectWrite
 	{
 		DWRITE_TEXT_RANGE textRange;
 		String ^result = GetLocaleNameInternal(InternalPointer, currentPosition, &textRange);
-		if (!String::IsNullOrEmpty(result))
+		if (Result::Last.IsSuccess)
 		{
 			range = TextRangeFromNative(textRange);
 		}
@@ -435,7 +435,10 @@ namespace DirectWrite
 	{
 		DWRITE_TEXT_RANGE range = { 0 };
 		bool const result = GetStrikethroughInternal(InternalPointer, currentPosition, &range);
-		textRange = TextRangeFromNative(range);
+		if (Result::Last.IsSuccess)
+		{
+			textRange = TextRangeFromNative(range);
+		}
 		return result;
 	}
 
@@ -459,11 +462,37 @@ namespace DirectWrite
 	{
 		DWRITE_TEXT_RANGE range;
 		Typography ^result = GetTypographyInternal(InternalPointer, currentPosition, &range);
-		if (nullptr != result)
+		if (Result::Last.IsSuccess)
 		{
 			textRange = TextRangeFromNative(range);
 		}
 
+		return result;
+	}
+
+	static bool GetUnderlineInternal(IDWriteTextLayout *layout, int currentPosition, DWRITE_TEXT_RANGE *range)
+	{
+		BOOL result;
+		if (RECORD_DW(layout->GetUnderline(currentPosition, &result, range)).IsFailure)
+		{
+			result = FALSE;
+		}
+		return result == TRUE;
+	}
+
+	bool TextLayout::GetUnderline(int currentPosition)
+	{
+		return GetUnderlineInternal(InternalPointer, currentPosition, 0);
+	}
+
+	bool TextLayout::GetUnderline(int currentPosition, [Out] TextRange %textRange)
+	{
+		DWRITE_TEXT_RANGE range;
+		bool const result = GetUnderlineInternal(InternalPointer, currentPosition, &range);
+		if (Result::Last.IsSuccess)
+		{
+			textRange = TextRangeFromNative(range);
+		}
 		return result;
 	}
 
