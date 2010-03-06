@@ -382,6 +382,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\IDWriteTextRendererMock.h"
+				>
+			</File>
+			<File
 				RelativePath=".\source\IDXGIAdapterMock.h"
 				>
 			</File>

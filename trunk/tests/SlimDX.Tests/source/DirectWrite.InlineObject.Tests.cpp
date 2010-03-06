@@ -23,6 +23,7 @@
 #include <ostream>
 
 #include "IDWriteInlineObjectMock.h"
+#include "IDWriteTextRendererMock.h"
 #include "SlimDXTest.h"
 
 using namespace testing;
@@ -174,22 +175,6 @@ TEST_F(InlineObjectTest, OverhangMetricsReturnsZeroOnFailure)
 	ASSERT_EQ(0, metrics.Top);
 	ASSERT_FALSE(metrics.Bottom);
 }
-
-class IDWriteTextRendererMock : public IDWriteTextRenderer
-{
-	MOCK_IUNKNOWN;
-
-	// IDWritePixelSnapping
-	STDMETHOD(IsPixelSnappingDisabled)(void* clientDrawingContext, BOOL* isDisabled) { return E_NOTIMPL; }
-	STDMETHOD(GetCurrentTransform)(void* clientDrawingContext, DWRITE_MATRIX* transform) { return E_NOTIMPL; }
-	STDMETHOD(GetPixelsPerDip)(void* clientDrawingContext, FLOAT* pixelsPerDip) { return E_NOTIMPL; }
-
-	// IDWriteTextRenderer
-	STDMETHOD(DrawGlyphRun)(void* clientDrawingContext, FLOAT baselineOriginX, FLOAT baselineOriginY, DWRITE_MEASURING_MODE measuringMode, DWRITE_GLYPH_RUN const* glyphRun, DWRITE_GLYPH_RUN_DESCRIPTION const* glyphRunDescription, IUnknown* clientDrawingEffect) { return E_NOTIMPL; }
-	STDMETHOD(DrawUnderline)(void* clientDrawingContext, FLOAT baselineOriginX, FLOAT baselineOriginY, DWRITE_UNDERLINE const* underline, IUnknown* clientDrawingEffect) { return E_NOTIMPL; }
-	STDMETHOD(DrawStrikethrough)(void* clientDrawingContext, FLOAT baselineOriginX, FLOAT baselineOriginY, DWRITE_STRIKETHROUGH const* strikethrough, IUnknown* clientDrawingEffect) { return E_NOTIMPL; }
-	STDMETHOD(DrawInlineObject)(void* clientDrawingContext, FLOAT originX, FLOAT originY, IDWriteInlineObject* inlineObject, BOOL isSideways, BOOL isRightToLeft, IUnknown* clientDrawingEffect) { return E_NOTIMPL; }
-};
 
 TEST_F(InlineObjectTest, Draw)
 {
