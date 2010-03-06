@@ -29,7 +29,7 @@ class IDWriteInlineObjectMock : public IDWriteInlineObject
 public:
 	MOCK_IUNKNOWN;
 
-	STDMETHOD(Draw)(void* clientDrawingContext, IDWriteTextRenderer* renderer, FLOAT originX, FLOAT originY, BOOL isSideways, BOOL isRightToLeft, IUnknown* clientDrawingEffect) { return E_NOTIMPL; }
+	MOCK_METHOD7_WITH_CALLTYPE( STDMETHODCALLTYPE, Draw, HRESULT(void* clientDrawingContext, IDWriteTextRenderer* renderer, FLOAT originX, FLOAT originY, BOOL isSideways, BOOL isRightToLeft, IUnknown* clientDrawingEffect) );
 	MOCK_METHOD1_WITH_CALLTYPE( STDMETHODCALLTYPE, GetMetrics, HRESULT(DWRITE_INLINE_OBJECT_METRICS*) );
 	MOCK_METHOD1_WITH_CALLTYPE( STDMETHODCALLTYPE, GetOverhangMetrics, HRESULT(DWRITE_OVERHANG_METRICS* overhangs) );
 	MOCK_METHOD2_WITH_CALLTYPE( STDMETHODCALLTYPE, GetBreakConditions, HRESULT(DWRITE_BREAK_CONDITION*, DWRITE_BREAK_CONDITION*) );

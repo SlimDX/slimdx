@@ -21,37 +21,14 @@
 */
 #pragma once
 
-extern const IID IID_IDWriteInlineObject;
-
 #include "../ComObject.h"
-#include "Enums.h"
-#include "InlineObjectMetrics.h"
-#include "OverhangMetrics.h"
 
 namespace SlimDX
 {
 	namespace DirectWrite
 	{
-		ref class TextRenderer;
-		interface struct IClientDrawingEffect;
-
-		public ref class InlineObject : public ComObject
+		public interface struct IClientDrawingEffect : public IComObject
 		{
-			COMOBJECT(IDWriteInlineObject, InlineObject);
-
-		public:
-			Result Draw(System::IntPtr clientDrawingContext, TextRenderer ^renderer,
-				float originX, float originY, bool isSideways, bool isRightToLeft,
-				IClientDrawingEffect ^clientDrawingEffect);
-			Result GetBreakConditions([Out] BreakCondition %before, [Out] BreakCondition %after);
-			property InlineObjectMetrics Metrics
-			{
-				InlineObjectMetrics get();
-			}
-			property SlimDX::DirectWrite::OverhangMetrics OverhangMetrics
-			{
-				SlimDX::DirectWrite::OverhangMetrics get();
-			}
 		};
 	}
 }
