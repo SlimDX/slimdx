@@ -40,6 +40,7 @@ namespace SlimDX
 		value class OverhangMetrics;
 		value class TextMetrics;
 		ref class InlineObject;
+		interface struct IClientDrawingEffect;
 
 		public ref class TextLayout : public ComObject
 		{
@@ -57,6 +58,8 @@ namespace SlimDX
 			array< HitTestMetrics >^ HitTestTextRange( int textPosition, int textLength, float originX, float originY );
 
 			array<ClusterMetrics>^ GetClusterMetrics();
+			IClientDrawingEffect ^GetDrawingEffect(int currentPosition);
+			IClientDrawingEffect ^GetDrawingEffect(int currentPosition, [Out] TextRange %textRange);
 			FontCollection^ GetFontCollection( int currentPosition );
 			FontCollection^ GetFontCollection( int currentPosition, [Out] TextRange% textRange );
 			String^ GetFontFamilyName( int currentPosition );
@@ -81,6 +84,7 @@ namespace SlimDX
 			bool GetUnderline(int currentPosition);
 			bool GetUnderline(int currentPosition, [Out] TextRange %textRange);
 
+			Result SetDrawingEffect(IClientDrawingEffect ^drawingEffect, TextRange range);
 			Result SetFontCollection( FontCollection^ collection, TextRange range );
 			Result SetFontFamilyName( String^ name, TextRange range );
 			Result SetFontSize( float size, TextRange range );
