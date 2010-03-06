@@ -109,3 +109,22 @@ TEST_F(InlineObjectTest, MetricsReturnsZeroOnFailure)
 	ASSERT_EQ(0, metrics.Baseline);
 	ASSERT_FALSE(metrics.SupportsSideways);
 }
+
+static std::ostream &operator<<(std::ostream &stream, BreakCondition bc)
+{
+	return stream << bc.ToString();
+}
+
+TEST_F(InlineObjectTest, GetBreakConditions)
+{
+	MockedInlineObject obj;
+	EXPECT_CALL(obj.Mock, GetBreakConditions(NotNull(), NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<0>(DWRITE_BREAK_CONDITION_CAN_BREAK),
+						SetArgumentPointee<1>(DWRITE_BREAK_CONDITION_MUST_BREAK),
+						Return(S_OK)));
+	BreakCondition before, after;
+	ASSERT_TRUE(obj.InlineObject->GetBreakConditions(before, after).IsSuccess);
+	ASSERT_EQ(BreakCondition::CanBreak, before);
+	ASSERT_EQ(BreakCondition::MustBreak, after);
+}

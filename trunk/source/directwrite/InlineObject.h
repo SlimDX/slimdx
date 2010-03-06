@@ -24,6 +24,7 @@
 extern const IID IID_IDWriteInlineObject;
 
 #include "../ComObject.h"
+#include "Enums.h"
 #include "InlineObjectMetrics.h"
 
 namespace SlimDX
@@ -35,6 +36,7 @@ namespace SlimDX
 			COMOBJECT(IDWriteInlineObject, InlineObject);
 
 		public:
+			Result GetBreakConditions([Out] BreakCondition %before, [Out] BreakCondition %after);
 			property InlineObjectMetrics Metrics
 			{
 				InlineObjectMetrics get();
