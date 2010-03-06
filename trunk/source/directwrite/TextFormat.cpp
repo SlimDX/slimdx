@@ -34,7 +34,7 @@ namespace SlimDX
 namespace DirectWrite
 {
 	TextFormat::TextFormat( Factory^ factory, String^ familyName, FontWeight weight, FontStyle style, FontStretch stretch, 
-		float fontSize, String^ localeName, FontCollection^ fontCollection )
+		float fontSize, String^ localeName, SlimDX::DirectWrite::FontCollection^ fontCollection )
 	{
 		Init( factory, familyName, weight, style, stretch, fontSize, localeName, fontCollection );
 	}
@@ -46,7 +46,7 @@ namespace DirectWrite
 	}
 
 	void TextFormat::Init( Factory^ factory, String^ familyName, FontWeight weight, FontStyle style, FontStretch stretch, 
-		float fontSize, String^ localeName, FontCollection^ fontCollection )
+		float fontSize, String^ localeName, SlimDX::DirectWrite::FontCollection^ fontCollection )
 	{
 		IDWriteTextFormat *textFormat = NULL;
 		IDWriteFontCollection *fc = fontCollection == nullptr ? NULL : fontCollection->InternalPointer;
@@ -70,6 +70,17 @@ namespace DirectWrite
 	void TextFormat::FlowDirection::set(SlimDX::DirectWrite::FlowDirection value)
 	{
 		InternalPointer->SetFlowDirection(static_cast<DWRITE_FLOW_DIRECTION>(value));
+	}
+
+	SlimDX::DirectWrite::FontCollection ^TextFormat::FontCollection::get()
+	{
+		IDWriteFontCollection *collection;
+		if (RECORD_DW(InternalPointer->GetFontCollection(&collection)).IsFailure)
+		{
+			return nullptr;
+		}
+
+		return SlimDX::DirectWrite::FontCollection::FromPointer(collection);
 	}
 
 	SlimDX::DirectWrite::ParagraphAlignment TextFormat::ParagraphAlignment::get()
