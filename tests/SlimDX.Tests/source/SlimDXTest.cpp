@@ -58,3 +58,8 @@ std::ostream &operator<<(std::ostream &stream, SlimDX::DirectWrite::FontStyle st
 {
 	return stream << style.ToString();
 }
+
+std::ostream &operator<<(std::ostream &stream, SlimDX::DirectWrite::FontWeight weight)
+{
+	return stream << weight.ToString();
+}

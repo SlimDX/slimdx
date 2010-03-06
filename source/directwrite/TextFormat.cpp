@@ -33,19 +33,19 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
-	TextFormat::TextFormat( Factory^ factory, String^ familyName, FontWeight weight, SlimDX::DirectWrite::FontStyle style, SlimDX::DirectWrite::FontStretch stretch, 
+	TextFormat::TextFormat( Factory^ factory, String^ familyName, SlimDX::DirectWrite::FontWeight weight, SlimDX::DirectWrite::FontStyle style, SlimDX::DirectWrite::FontStretch stretch, 
 		float fontSize, String^ localeName, SlimDX::DirectWrite::FontCollection^ fontCollection )
 	{
 		Init( factory, familyName, weight, style, stretch, fontSize, localeName, fontCollection );
 	}
 
-	TextFormat::TextFormat( Factory^ factory, String^ familyName, FontWeight weight, SlimDX::DirectWrite::FontStyle style, SlimDX::DirectWrite::FontStretch stretch, 
+	TextFormat::TextFormat( Factory^ factory, String^ familyName, SlimDX::DirectWrite::FontWeight weight, SlimDX::DirectWrite::FontStyle style, SlimDX::DirectWrite::FontStretch stretch, 
 		float fontSize, String^ localeName )
 	{
 		Init( factory, familyName, weight, style, stretch, fontSize, localeName, nullptr );
 	}
 
-	void TextFormat::Init( Factory^ factory, String^ familyName, FontWeight weight, SlimDX::DirectWrite::FontStyle style, SlimDX::DirectWrite::FontStretch stretch, 
+	void TextFormat::Init( Factory^ factory, String^ familyName, SlimDX::DirectWrite::FontWeight weight, SlimDX::DirectWrite::FontStyle style, SlimDX::DirectWrite::FontStretch stretch, 
 		float fontSize, String^ localeName, SlimDX::DirectWrite::FontCollection^ fontCollection )
 	{
 		IDWriteTextFormat *textFormat = NULL;
@@ -108,6 +108,11 @@ namespace DirectWrite
 	SlimDX::DirectWrite::FontStyle TextFormat::FontStyle::get()
 	{
 		return static_cast<SlimDX::DirectWrite::FontStyle>(InternalPointer->GetFontStyle());
+	}
+
+	SlimDX::DirectWrite::FontWeight TextFormat::FontWeight::get()
+	{
+		return static_cast<SlimDX::DirectWrite::FontWeight>(InternalPointer->GetFontWeight());
 	}
 
 	SlimDX::DirectWrite::ParagraphAlignment TextFormat::ParagraphAlignment::get()
