@@ -48,3 +48,8 @@ std::ostream &operator<<(std::ostream &stream, String ^str)
 	Marshal::FreeHGlobal(IntPtr(static_cast<void *>(text)));
 	return stream;
 }
+
+std::ostream &operator<<(std::ostream &stream, SlimDX::DirectWrite::FontStretch stretch)
+{
+	return stream << stretch.ToString();
+}

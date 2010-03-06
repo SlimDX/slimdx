@@ -44,11 +44,6 @@ void AssertTextRangeMatchesExpected(TextRange range)
 	ASSERT_EQ(expected.length, range.Length);
 }
 
-std::ostream &operator<<(std::ostream &stream, FontStretch stretch)
-{
-	return stream << stretch.ToString();
-}
-
 std::ostream &operator<<(std::ostream &stream, FontStyle style)
 {
 	return stream << style.ToString();
