@@ -90,6 +90,11 @@ namespace SlimDX
 			Result GetLineSpacing([Out] LineSpacingMethod %method, [Out] float %lineSpacing, [Out] float %baseline);
 			Result SetLineSpacing(LineSpacingMethod method, float lineSpacing, float baseline);
 
+			property String ^LocaleName
+			{
+				String ^get();
+			}
+
 			property ParagraphAlignment ParagraphAlignment
 			{
 				SlimDX::DirectWrite::ParagraphAlignment get();

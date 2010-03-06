@@ -61,8 +61,8 @@ public:
 	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFontStyle, DWRITE_FONT_STYLE() );
 	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFontStretch, DWRITE_FONT_STRETCH() );
 	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFontSize, FLOAT() );
-	STDMETHOD_(UINT32, GetLocaleNameLength)() { return ~0U; }
-	STDMETHOD(GetLocaleName)(WCHAR* localeName, UINT32 nameSize) { return E_NOTIMPL; }
+	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetLocaleNameLength, UINT32() );
+	MOCK_METHOD2_WITH_CALLTYPE( STDMETHODCALLTYPE, GetLocaleName, HRESULT(WCHAR*, UINT32) );
 };
 
 ref class MockedTextFormat
@@ -166,7 +166,7 @@ TEST_F(TextFormatTest, GetFontFamilyName)
 						Return(S_OK)));
 	String ^name = format.Format->FontFamilyName;
 	AssertLastResultSucceeded();
-	ASSERT_TRUE(!String::IsNullOrEmpty(name));
+	ASSERT_TRUE(gcnew String(fakeName) == name);
 }
 
 TEST_F(TextFormatTest, GetFontFamilyNameFailureReturnsEmptyString)
@@ -258,6 +258,7 @@ TEST_F(TextFormatTest, GetLineSpacing)
 	LineSpacingMethod method;
 	float lineSpacing, baseline;
 	ASSERT_TRUE(format.Format->GetLineSpacing(method, lineSpacing, baseline).IsSuccess);
+	AssertLastResultSucceeded();
 	ASSERT_EQ(LineSpacingMethod::Uniform, method);
 	ASSERT_EQ(12.5f, lineSpacing);
 	ASSERT_EQ(14.8f, baseline);
@@ -270,4 +271,39 @@ TEST_F(TextFormatTest, SetLineSpacing)
 		.Times(1)
 		.WillOnce(Return(S_OK));
 	ASSERT_TRUE(format.Format->SetLineSpacing(LineSpacingMethod::Uniform, 12.5f, 14.8f).IsSuccess);
+	AssertLastResultSucceeded();
+}
+
+TEST_F(TextFormatTest, LocaleName)
+{
+	MockedTextFormat format;
+	WCHAR const fakeName[] = L"Slartibartfast";
+	UINT32 const nameLength = NUM_OF(fakeName);
+	EXPECT_CALL(format.Mock, GetLocaleNameLength())
+		.Times(1)
+		.WillOnce(Return(nameLength - 1));
+	EXPECT_CALL(format.Mock, GetLocaleName(NotNull(), Gt(0U)))
+		.Times(1)
+		.WillOnce(DoAll(SetArrayArgument<0>(&fakeName[0], &fakeName[nameLength]),
+						Return(S_OK)));
+	String ^name = format.Format->LocaleName;
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(gcnew String(fakeName) == name);
+}
+
+TEST_F(TextFormatTest, LocaleNameFailureReturnsEmptyString)
+{
+	MockedTextFormat format;
+	WCHAR const fakeName[] = L"Slartibartfast";
+	UINT32 const nameLength = NUM_OF(fakeName);
+	EXPECT_CALL(format.Mock, GetLocaleNameLength())
+		.Times(1)
+		.WillOnce(Return(nameLength - 1));
+	EXPECT_CALL(format.Mock, GetLocaleName(NotNull(), Gt(0U)))
+		.Times(1)
+		.WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	String ^name = format.Format->LocaleName;
+	AssertLastResultFailed();
+	ASSERT_TRUE(String::Empty == name);
 }

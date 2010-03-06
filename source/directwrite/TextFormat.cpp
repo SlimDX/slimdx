@@ -141,6 +141,18 @@ namespace DirectWrite
 		return RECORD_DW(InternalPointer->SetLineSpacing(static_cast<DWRITE_LINE_SPACING_METHOD>(method), lineSpacing, baseline));
 	}
 
+	String ^TextFormat::LocaleName::get()
+	{
+		UINT32 count = InternalPointer->GetLocaleNameLength();
+		std::vector<WCHAR> name;
+		name.resize(count + 1);
+		if (RECORD_DW(InternalPointer->GetLocaleName(&name[0], name.size())).IsFailure)
+		{
+			return String::Empty;
+		}
+		return gcnew String(&name[0]);
+	}
+
 	SlimDX::DirectWrite::ParagraphAlignment TextFormat::ParagraphAlignment::get()
 	{
 		return static_cast<SlimDX::DirectWrite::ParagraphAlignment>( InternalPointer->GetParagraphAlignment() );
