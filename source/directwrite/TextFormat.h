@@ -49,6 +49,11 @@ namespace SlimDX
 				void set(SlimDX::DirectWrite::FlowDirection value);
 			}
 
+			property FontCollection ^FontCollection
+			{
+				SlimDX::DirectWrite::FontCollection ^get();
+			}
+
 			property ParagraphAlignment ParagraphAlignment
 			{
 				SlimDX::DirectWrite::ParagraphAlignment get();

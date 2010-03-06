@@ -24,8 +24,9 @@
 
 #include <dwrite.h>
 
-#include "SlimDXTest.h"
 #include "CommonMocks.h"
+#include "IDWriteFontCollectionMock.h"
+#include "SlimDXTest.h"
 
 using namespace testing;
 using namespace SlimDX::DirectWrite;
@@ -53,7 +54,7 @@ public:
 	STDMETHOD_(FLOAT, GetIncrementalTabStop)() { return -1.0f; }
 	STDMETHOD(GetTrimming)(DWRITE_TRIMMING* trimmingOptions, IDWriteInlineObject** trimmingSign) { return E_NOTIMPL; }
 	STDMETHOD(GetLineSpacing)(DWRITE_LINE_SPACING_METHOD* lineSpacingMethod, FLOAT* lineSpacing, FLOAT* baseline) { return E_NOTIMPL; }
-	STDMETHOD(GetFontCollection)(IDWriteFontCollection** fontCollection) { return E_NOTIMPL; }
+	MOCK_METHOD1_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFontCollection, HRESULT(IDWriteFontCollection**) );
 	STDMETHOD_(UINT32, GetFontFamilyNameLength)() { return ~0U; }
 	STDMETHOD(GetFontFamilyName)(WCHAR* fontFamilyName, UINT32 nameSize) { return E_NOTIMPL; }
 	STDMETHOD_(DWRITE_FONT_WEIGHT, GetFontWeight)() { return DWRITE_FONT_WEIGHT(-1); }
@@ -123,4 +124,30 @@ TEST_F(TextFormatTest, SetFlowDirection)
 		.WillOnce(Return(S_OK));
 	format.Format->FlowDirection = FlowDirection::TopToBottom;
 	AssertLastResultSucceeded();
+}
+
+TEST_F(TextFormatTest, GetFontCollection)
+{
+	MockedTextFormat format;
+	IDWriteFontCollectionMock mockCollection;
+	EXPECT_CALL(format.Mock, GetFontCollection(NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<0>(&mockCollection), Return(S_OK)));
+	FontCollection ^collection = format.Format->FontCollection;
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(collection != nullptr);
+	ASSERT_EQ(&mockCollection, collection->InternalPointer);
+	delete collection;
+}
+
+TEST_F(TextFormatTest, GetFontCollectionFailureReturnsNullPtr)
+{
+	MockedTextFormat format;
+	EXPECT_CALL(format.Mock, GetFontCollection(NotNull()))
+		.Times(1)
+		.WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	FontCollection ^collection = format.Format->FontCollection;
+	AssertLastResultFailed();
+	ASSERT_TRUE(collection == nullptr);
 }
