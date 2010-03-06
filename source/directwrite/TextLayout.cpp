@@ -273,8 +273,8 @@ namespace DirectWrite
 			return String::Empty;
 		}
 
-		std::vector<WCHAR> name(length);
-		if (RECORD_DW(layout->GetFontFamilyName(currentPosition, &name[0], length, textRange)).IsFailure)
+		std::vector<WCHAR> name(length + 1);
+		if (RECORD_DW(layout->GetFontFamilyName(currentPosition, &name[0], name.size(), textRange)).IsFailure)
 		{
 			return String::Empty;
 		}
@@ -457,8 +457,8 @@ namespace DirectWrite
 			return String::Empty;
 		}
 
-		std::vector<WCHAR> name(length);
-		if (RECORD_DW(layout->GetLocaleName(currentPosition, &name[0], length, range)).IsFailure)
+		std::vector<WCHAR> name(length + 1);
+		if (RECORD_DW(layout->GetLocaleName(currentPosition, &name[0], name.size(), range)).IsFailure)
 		{
 			return String::Empty;
 		}

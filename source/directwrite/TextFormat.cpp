@@ -20,9 +20,9 @@
 * THE SOFTWARE.
 */
 #include "stdafx.h"
+#include <vector>
 
 #include "DirectWriteException.h"
-
 #include "TextFormat.h"
 
 const IID IID_IDWriteTextFormat = __uuidof(IDWriteTextFormat);
@@ -81,6 +81,18 @@ namespace DirectWrite
 		}
 
 		return SlimDX::DirectWrite::FontCollection::FromPointer(collection);
+	}
+
+	String ^TextFormat::FontFamilyName::get()
+	{
+		UINT32 count = InternalPointer->GetFontFamilyNameLength();
+		std::vector<WCHAR> name;
+		name.resize(count + 1);
+		if (RECORD_DW(InternalPointer->GetFontFamilyName(&name[0], name.size())).IsFailure)
+		{
+			return String::Empty;
+		}
+		return gcnew String(&name[0]);
 	}
 
 	SlimDX::DirectWrite::ParagraphAlignment TextFormat::ParagraphAlignment::get()

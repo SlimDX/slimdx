@@ -32,3 +32,5 @@ protected:
 };
 
 extern std::ostream &operator<<(std::ostream &stream, System::String ^str);
+
+#define NUM_OF(ary_) (sizeof(ary_)/sizeof(ary_[0]))

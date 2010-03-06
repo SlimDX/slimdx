@@ -5,9 +5,6 @@ IDWriteRenderingParams (RenderingParameters)
 IDWriteFontCollectionLoader (FontCollectionLoader)
 DWRITE_TYPOGRAPHIC_FEATURES
 DWRITE_TRIMMING
-IDWriteTextFormat::GetFontCollection
-IDWriteTextFormat::GetFontFamilyName
-IDWriteTextFormat::GetFontFamilyNameLength
 IDWriteTextFormat::GetFontSize
 IDWriteTextFormat::GetFontStretch
 IDWriteTextFormat::GetFontStyle
