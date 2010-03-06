@@ -101,6 +101,12 @@ namespace SlimDX
 				void set( SlimDX::DirectWrite::ParagraphAlignment value );
 			}
 
+			property SlimDX::DirectWrite::ReadingDirection ReadingDirection
+			{
+				SlimDX::DirectWrite::ReadingDirection get();
+				void set(SlimDX::DirectWrite::ReadingDirection value);
+			}
+
 			property TextAlignment TextAlignment
 			{
 				SlimDX::DirectWrite::TextAlignment get();
