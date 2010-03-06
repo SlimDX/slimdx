@@ -23,6 +23,7 @@
 
 #include "IDWriteInlineObjectMock.h"
 #include "IDWriteTextLayoutMock.h"
+#include "IDWriteTextRendererMock.h"
 #include "TextLayoutTest.h"
 
 using namespace testing;
@@ -233,4 +234,16 @@ TEST_F(TextLayoutTest, SetDrawingEffect)
 		.Times(1)
 		.WillOnce(Return(S_OK));
 	ASSERT_TRUE(layout.Layout->SetDrawingEffect(nullptr, ExpectedManagedTextRange()).IsSuccess);
+}
+
+TEST_F(TextLayoutTest, Draw)
+{
+	MockedTextLayout layout;
+	IDWriteTextRendererMock mockRenderer;
+	EXPECT_CALL(layout.Mock, Draw(0, &mockRenderer, 12.5f, 33.0f))
+		.Times(1)
+		.WillOnce(Return(S_OK));
+	TextRenderer ^renderer = TextRenderer::FromPointer(&mockRenderer);
+	ASSERT_TRUE(layout.Layout->Draw(IntPtr(0), renderer, 12.5f, 33.0f).IsSuccess);
+	delete renderer;
 }

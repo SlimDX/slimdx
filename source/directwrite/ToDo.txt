@@ -39,7 +39,6 @@ DWRITE_STRIKETHROUGH
 DWRITE_INLINE_OBJECT_METRICS
 IDWritePixelSnapping (PixelSnapping)
 IDWriteTextRenderer (TextRenderer)
-IDWriteTextLayout::Draw
 LOGFONT IDWriteGdiInterop::(CreateFontFromLOGFONT, ConvertFontToLOGFONT, ConvertFontFaceToLOGFONT)
 IDWriteGdiInterop::CreateBitmapRenderTarget (GdiInterop)
 DWRITE_ALPHA_MAX
