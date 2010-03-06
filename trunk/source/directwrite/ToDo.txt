@@ -5,8 +5,6 @@ IDWriteRenderingParams (RenderingParameters)
 IDWriteFontCollectionLoader (FontCollectionLoader)
 DWRITE_TYPOGRAPHIC_FEATURES
 DWRITE_TRIMMING
-IDWriteTextFormat::GetLocaleName
-IDWriteTextFormat::GetLocaleNameLength
 IDWriteTextFormat::GetReadingDirection
 IDWriteTextFormat::SetReadingDirection
 IDWriteTextFormat::GetTrimming
