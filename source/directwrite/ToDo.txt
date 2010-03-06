@@ -37,12 +37,9 @@ DWRITE_GLYPH_RUN_DESCRIPTION
 DWRITE_UNDERLINE
 DWRITE_STRIKETHROUGH
 DWRITE_INLINE_OBJECT_METRICS
-IDWriteInlineObject (InlineObject)
 IDWritePixelSnapping (PixelSnapping)
 IDWriteTextRenderer (TextRenderer)
 IDWriteTextLayout::Draw
-IDWriteTextLayout::GetDrawingEffect
-IDWriteTextLayout::SetDrawingEffect
 LOGFONT IDWriteGdiInterop::(CreateFontFromLOGFONT, ConvertFontToLOGFONT, ConvertFontFaceToLOGFONT)
 IDWriteGdiInterop::CreateBitmapRenderTarget (GdiInterop)
 DWRITE_ALPHA_MAX

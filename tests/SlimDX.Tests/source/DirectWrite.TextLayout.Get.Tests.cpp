@@ -639,3 +639,42 @@ TEST_F(TextLayoutTest, GetInlineObjectWithTextRange)
 	AssertTextRangeMatchesExpected(range);
 	delete obj;
 }
+
+TEST_F(TextLayoutTest, GetDrawingEffectNoTextRange)
+{
+	MockedTextLayoutGetters layout;
+	EXPECT_CALL(layout.Mock, GetDrawingEffect(0U, NotNull(), 0))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(static_cast<IUnknown *>(0)),
+						Return(S_OK)));
+	IClientDrawingEffect ^effect = layout.Layout->GetDrawingEffect(0);
+	ASSERT_TRUE(effect == nullptr);
+	AssertLastResultSucceeded();
+}
+
+TEST_F(TextLayoutTest, GetDrawingEffectFailureReturnsNullPtr)
+{
+	MockedTextLayoutGetters layout;
+	EXPECT_CALL(layout.Mock, GetDrawingEffect(0U, NotNull(), 0))
+		.Times(1)
+		.WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError	= false;
+	IClientDrawingEffect ^effect = layout.Layout->GetDrawingEffect(0);
+	ASSERT_TRUE(effect == nullptr);
+	AssertLastResultFailed();
+}
+
+TEST_F(TextLayoutTest, GetDrawingEffectWithTextRange)
+{
+	MockedTextLayoutGetters layout;
+	EXPECT_CALL(layout.Mock, GetDrawingEffect(0U, NotNull(), NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<1>(static_cast<IUnknown *>(0)),
+						SetArgumentPointee<2>(ExpectedTextRange()),
+						Return(S_OK)));
+	TextRange textRange;
+	IClientDrawingEffect ^effect = layout.Layout->GetDrawingEffect(0, textRange);
+	ASSERT_TRUE(effect == nullptr);
+	AssertLastResultSucceeded();
+	AssertTextRangeMatchesExpected(textRange);
+}

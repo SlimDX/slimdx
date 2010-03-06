@@ -24,6 +24,7 @@
 #include <vector>
 
 #include "DirectWriteException.h"
+#include "IClientDrawingEffect.h"
 #include "InlineObject.h"
 #include "OverhangMetrics.h"
 #include "TextLayout.h"
@@ -190,6 +191,46 @@ namespace DirectWrite
 		return result;
 	}
 
+	static IClientDrawingEffect ^ClientDrawingEffectFromUnknown(IUnknown *)
+	{
+		// TOOD: Return the IClientDrawingEffect associated with this IUnknown
+		return nullptr;
+	}
+
+	static TextRange TextRangeFromNative(DWRITE_TEXT_RANGE const &range)
+	{
+		TextRange result;
+		result.StartPosition = range.startPosition;
+		result.Length = range.length;
+		return result;
+	}
+
+	static IClientDrawingEffect ^GetDrawingEffectInternal(IDWriteTextLayout *layout, int currentPosition, DWRITE_TEXT_RANGE *textRange)
+	{
+		IUnknown *nativeDrawingEffect;
+		if (RECORD_DW(layout->GetDrawingEffect(currentPosition, &nativeDrawingEffect, textRange)).IsFailure)
+		{
+			return nullptr;
+		}
+		return ClientDrawingEffectFromUnknown(nativeDrawingEffect);
+	}
+
+	IClientDrawingEffect ^TextLayout::GetDrawingEffect(int currentPosition)
+	{
+		return GetDrawingEffectInternal(InternalPointer, currentPosition, 0);
+	}
+
+	IClientDrawingEffect ^TextLayout::GetDrawingEffect(int currentPosition,	[Out] TextRange %textRange)
+	{
+		DWRITE_TEXT_RANGE range;
+		IClientDrawingEffect ^result = GetDrawingEffectInternal(InternalPointer, currentPosition, &range);
+		if (Result::Last.IsSuccess)
+		{
+			textRange = TextRangeFromNative(range);
+		}
+		return result;
+	}
+
 	static FontCollection ^GetFontCollectionInternal(IDWriteTextLayout *layout, int currentPosition, DWRITE_TEXT_RANGE *textRange)
 	{
 		IDWriteFontCollection* fc;
@@ -204,14 +245,6 @@ namespace DirectWrite
 	FontCollection^ TextLayout::GetFontCollection ( int currentPosition )
 	{
 		return GetFontCollectionInternal(InternalPointer, currentPosition, 0);
-	}
-
-	static TextRange TextRangeFromNative(DWRITE_TEXT_RANGE const &range)
-	{
-		TextRange result;
-		result.StartPosition = range.startPosition;
-		result.Length = range.length;
-		return result;
 	}
 
 	FontCollection^ TextLayout::GetFontCollection ( int currentPosition, [Out] TextRange% textRange )
@@ -529,6 +562,13 @@ namespace DirectWrite
 		tr.startPosition = range.StartPosition;
 		tr.length = range.Length;
 		return tr;
+	}
+
+	Result TextLayout::SetDrawingEffect(IClientDrawingEffect ^drawingEffect, TextRange range)
+	{
+		return RECORD_DW(InternalPointer->
+			SetDrawingEffect(drawingEffect == nullptr ? 0 : drawingEffect->UnknownPointer,
+				TextRangeFromManaged(range)));
 	}
 
 	Result TextLayout::SetFontCollection( FontCollection^ collection, TextRange range )

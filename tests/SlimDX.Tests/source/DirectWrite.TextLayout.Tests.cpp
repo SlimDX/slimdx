@@ -225,3 +225,12 @@ TEST_F(TextLayoutTest, SetInlineObject)
 	ASSERT_TRUE(layout.Layout->SetInlineObject(obj, ExpectedManagedTextRange()).IsSuccess);
 	delete obj;
 }
+
+TEST_F(TextLayoutTest, SetDrawingEffect)
+{
+	MockedTextLayout layout;
+	EXPECT_CALL(layout.Mock, SetDrawingEffect(0, ExpectedTextRange()))
+		.Times(1)
+		.WillOnce(Return(S_OK));
+	ASSERT_TRUE(layout.Layout->SetDrawingEffect(nullptr, ExpectedManagedTextRange()).IsSuccess);
+}
