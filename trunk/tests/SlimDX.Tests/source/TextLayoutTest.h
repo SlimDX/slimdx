@@ -30,4 +30,3 @@ class TextLayoutTest : public SlimDXTest
 extern HRESULT const E_NOT_SUFFICIENT_BUFFER;
 extern DWRITE_TEXT_RANGE ExpectedTextRange();
 extern void AssertTextRangeMatchesExpected(SlimDX::DirectWrite::TextRange range);
-extern std::ostream &operator<<(std::ostream &stream, SlimDX::DirectWrite::FontWeight weight);

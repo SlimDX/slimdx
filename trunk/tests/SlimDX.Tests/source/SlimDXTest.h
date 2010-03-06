@@ -34,5 +34,6 @@ protected:
 extern std::ostream &operator<<(std::ostream &stream, System::String ^str);
 extern std::ostream &operator<<(std::ostream &stream, SlimDX::DirectWrite::FontStretch stretch);
 extern std::ostream &operator<<(std::ostream &stream, SlimDX::DirectWrite::FontStyle stretch);
+extern std::ostream &operator<<(std::ostream &stream, SlimDX::DirectWrite::FontWeight weight);
 
 #define NUM_OF(ary_) (sizeof(ary_)/sizeof(ary_[0]))

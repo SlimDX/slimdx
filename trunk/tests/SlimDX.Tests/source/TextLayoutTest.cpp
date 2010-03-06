@@ -43,9 +43,3 @@ void AssertTextRangeMatchesExpected(TextRange range)
 	ASSERT_EQ(expected.startPosition, range.StartPosition);
 	ASSERT_EQ(expected.length, range.Length);
 }
-
-std::ostream &operator<<(std::ostream &stream, FontWeight weight)
-{
-	return stream << weight.ToString();
-}
-
