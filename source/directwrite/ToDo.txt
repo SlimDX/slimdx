@@ -5,10 +5,6 @@ IDWriteRenderingParams (RenderingParameters)
 IDWriteFontCollectionLoader (FontCollectionLoader)
 DWRITE_TYPOGRAPHIC_FEATURES
 DWRITE_TRIMMING
-IDWriteTextFormat::GetIncrementalTabStop
-IDWriteTextFormat::SetIncrementalTabStop
-IDWriteTextFormat::GetLineSpacing
-IDWriteTextFormat::SetLineSpacing
 IDWriteTextFormat::GetLocaleName
 IDWriteTextFormat::GetLocaleNameLength
 IDWriteTextFormat::GetReadingDirection
