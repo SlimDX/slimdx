@@ -25,8 +25,6 @@
 #include "TextLayoutTest.h"
 
 using namespace SlimDX::DirectWrite;
-using namespace System;
-using namespace System::Runtime::InteropServices;
 
 HRESULT const E_NOT_SUFFICIENT_BUFFER = HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER);
 
@@ -44,14 +42,6 @@ void AssertTextRangeMatchesExpected(TextRange range)
 	DWRITE_TEXT_RANGE expected = ExpectedTextRange();
 	ASSERT_EQ(expected.startPosition, range.StartPosition);
 	ASSERT_EQ(expected.length, range.Length);
-}
-
-std::ostream &operator<<(std::ostream &stream, String ^str)
-{
-	LPSTR text = reinterpret_cast<LPSTR>(Marshal::StringToHGlobalAnsi(str).ToPointer());
-	stream << text;
-	Marshal::FreeHGlobal(IntPtr(static_cast<void *>(text)));
-	return stream;
 }
 
 std::ostream &operator<<(std::ostream &stream, FontStretch stretch)

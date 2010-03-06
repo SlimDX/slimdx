@@ -33,6 +33,15 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
+	Result InlineObject::GetBreakConditions([Out] BreakCondition %before, [Out] BreakCondition %after)
+	{
+		DWRITE_BREAK_CONDITION beforeNative, afterNative;
+		Result result = RECORD_DW(InternalPointer->GetBreakConditions(&beforeNative, &afterNative));
+		before = static_cast<BreakCondition>(beforeNative);
+		after = static_cast<BreakCondition>(afterNative);
+		return result;
+	}
+
 	InlineObjectMetrics InlineObject::Metrics::get()
 	{
 		DWRITE_INLINE_OBJECT_METRICS metrics;

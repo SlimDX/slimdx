@@ -32,5 +32,5 @@ public:
 	STDMETHOD(Draw)(void* clientDrawingContext, IDWriteTextRenderer* renderer, FLOAT originX, FLOAT originY, BOOL isSideways, BOOL isRightToLeft, IUnknown* clientDrawingEffect) { return E_NOTIMPL; }
 	MOCK_METHOD1_WITH_CALLTYPE( STDMETHODCALLTYPE, GetMetrics, HRESULT(DWRITE_INLINE_OBJECT_METRICS*) );
 	STDMETHOD(GetOverhangMetrics)(DWRITE_OVERHANG_METRICS* overhangs) { return E_NOTIMPL; }
-	STDMETHOD(GetBreakConditions)(DWRITE_BREAK_CONDITION* breakConditionBefore, DWRITE_BREAK_CONDITION* breakConditionAfter) { return E_NOTIMPL; }
+	MOCK_METHOD2_WITH_CALLTYPE( STDMETHODCALLTYPE, GetBreakConditions, HRESULT(DWRITE_BREAK_CONDITION*, DWRITE_BREAK_CONDITION*) );
 };

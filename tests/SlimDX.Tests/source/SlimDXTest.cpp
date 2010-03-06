@@ -23,6 +23,9 @@
 
 #include "SlimDXTest.h"
 
+using namespace System;
+using namespace System::Runtime::InteropServices;
+
 void SlimDXTest::TearDown()
 {
 	ASSERT_EQ(0, SlimDX::ObjectTable::Objects->Count);
@@ -36,4 +39,12 @@ void SlimDXTest::AssertLastResultSucceeded()
 void SlimDXTest::AssertLastResultFailed()
 {
 	ASSERT_TRUE(SlimDX::Result::Last.IsFailure);
+}
+
+std::ostream &operator<<(std::ostream &stream, String ^str)
+{
+	LPSTR text = reinterpret_cast<LPSTR>(Marshal::StringToHGlobalAnsi(str).ToPointer());
+	stream << text;
+	Marshal::FreeHGlobal(IntPtr(static_cast<void *>(text)));
+	return stream;
 }

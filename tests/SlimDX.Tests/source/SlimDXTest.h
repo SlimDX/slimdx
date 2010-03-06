@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include <ostream>
+
 class SlimDXTest : public testing::Test
 {
 protected:
@@ -28,3 +30,5 @@ protected:
 	void AssertLastResultSucceeded();
 	void AssertLastResultFailed();
 };
+
+extern std::ostream &operator<<(std::ostream &stream, System::String ^str);
