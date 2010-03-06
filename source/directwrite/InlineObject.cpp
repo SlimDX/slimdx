@@ -45,14 +45,22 @@ namespace DirectWrite
 	InlineObjectMetrics InlineObject::Metrics::get()
 	{
 		DWRITE_INLINE_OBJECT_METRICS metrics;
-		if (RECORD_DW(InternalPointer->GetMetrics(&metrics)).IsSuccess)
+		if (RECORD_DW(InternalPointer->GetMetrics(&metrics)).IsFailure)
 		{
-			return InlineObjectMetrics(metrics.width, metrics.height, metrics.baseline, metrics.supportsSideways == TRUE);
+			DWRITE_INLINE_OBJECT_METRICS zero = { 0 };
+			metrics = zero;
 		}
-		else
+		return InlineObjectMetrics(metrics.width, metrics.height, metrics.baseline, metrics.supportsSideways == TRUE);
+	}
+	SlimDX::DirectWrite::OverhangMetrics InlineObject::OverhangMetrics::get()
+	{
+		DWRITE_OVERHANG_METRICS metrics;
+		if (RECORD_DW(InternalPointer->GetOverhangMetrics(&metrics)).IsFailure)
 		{
-			return InlineObjectMetrics(0, 0, 0, false);
+			DWRITE_OVERHANG_METRICS zero = { 0 };
+			metrics = zero;
 		}
+		return SlimDX::DirectWrite::OverhangMetrics(metrics.left, metrics.top, metrics.right, metrics.bottom);
 	}
 }
 }

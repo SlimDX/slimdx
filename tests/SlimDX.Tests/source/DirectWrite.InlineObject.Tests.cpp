@@ -128,3 +128,48 @@ TEST_F(InlineObjectTest, GetBreakConditions)
 	ASSERT_EQ(BreakCondition::CanBreak, before);
 	ASSERT_EQ(BreakCondition::MustBreak, after);
 }
+
+static DWRITE_OVERHANG_METRICS ExpectedOverhangMetrics()
+{
+	DWRITE_OVERHANG_METRICS expected;
+	expected.left = 40;
+	expected.right = 123;
+	expected.top = 50;
+	expected.bottom = 1256;
+	return expected;
+}
+
+static void AssertOverhangMetricsMatchExpected(OverhangMetrics metrics)
+{
+	DWRITE_OVERHANG_METRICS expected = ExpectedOverhangMetrics();
+	ASSERT_EQ(expected.left, metrics.Left);
+	ASSERT_EQ(expected.right, metrics.Right);
+	ASSERT_EQ(expected.top, metrics.Top);
+	ASSERT_EQ(expected.bottom, metrics.Bottom);
+}
+
+TEST_F(InlineObjectTest, OverhangMetrics)
+{
+	MockedInlineObject obj;
+	EXPECT_CALL(obj.Mock, GetOverhangMetrics(NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<0>(ExpectedOverhangMetrics()), Return(S_OK)));
+	OverhangMetrics metrics = obj.InlineObject->OverhangMetrics;
+	AssertLastResultSucceeded();
+	AssertOverhangMetricsMatchExpected(metrics);
+}
+
+TEST_F(InlineObjectTest, OverhangMetricsReturnsZeroOnFailure)
+{
+	MockedInlineObject obj;
+	EXPECT_CALL(obj.Mock, GetOverhangMetrics(NotNull()))
+		.Times(1)
+		.WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	OverhangMetrics metrics = obj.InlineObject->OverhangMetrics;
+	AssertLastResultFailed();
+	ASSERT_EQ(0, metrics.Left);
+	ASSERT_EQ(0, metrics.Right);
+	ASSERT_EQ(0, metrics.Top);
+	ASSERT_FALSE(metrics.Bottom);
+}

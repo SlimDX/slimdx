@@ -26,6 +26,7 @@ extern const IID IID_IDWriteInlineObject;
 #include "../ComObject.h"
 #include "Enums.h"
 #include "InlineObjectMetrics.h"
+#include "OverhangMetrics.h"
 
 namespace SlimDX
 {
@@ -40,6 +41,10 @@ namespace SlimDX
 			property InlineObjectMetrics Metrics
 			{
 				InlineObjectMetrics get();
+			}
+			property SlimDX::DirectWrite::OverhangMetrics OverhangMetrics
+			{
+				SlimDX::DirectWrite::OverhangMetrics get();
 			}
 		};
 	}
