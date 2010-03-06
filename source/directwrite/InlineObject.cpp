@@ -22,8 +22,9 @@
 #include "stdafx.h"
 
 #include "DirectWriteException.h"
-
+#include "IClientDrawingEffect.h"
 #include "InlineObject.h"
+#include "TextRenderer.h"
 
 const IID IID_IDWriteInlineObject = __uuidof(IDWriteInlineObject);
 
@@ -33,6 +34,17 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
+	Result InlineObject::Draw(IntPtr clientDrawingContext, TextRenderer ^renderer,
+		float originX, float originY, bool isSideways, bool isRightToLeft,
+		IClientDrawingEffect ^clientDrawingEffect)
+	{
+		IUnknown *nativeClientDrawingEffect = clientDrawingEffect == nullptr ? 0 : clientDrawingEffect->UnknownPointer;
+		void *nativeClientDrawingContext = static_cast<void *>(clientDrawingContext);
+		return RECORD_DW(InternalPointer->Draw(nativeClientDrawingContext, renderer->InternalPointer,
+			originX, originY, isSideways ? TRUE : FALSE, isRightToLeft ? TRUE : FALSE,
+			nativeClientDrawingEffect));
+	}
+
 	Result InlineObject::GetBreakConditions([Out] BreakCondition %before, [Out] BreakCondition %after)
 	{
 		DWRITE_BREAK_CONDITION beforeNative, afterNative;

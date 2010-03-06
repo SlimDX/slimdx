@@ -5262,6 +5262,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\directwrite\IClientDrawingEffect.h"
+				>
+			</File>
+			<File
 				RelativePath="..\source\directwrite\InlineObject.cpp"
 				>
 			</File>
