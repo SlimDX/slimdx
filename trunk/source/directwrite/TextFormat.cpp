@@ -125,6 +125,22 @@ namespace DirectWrite
 		RECORD_DW(InternalPointer->SetIncrementalTabStop(value));
 	}
 
+	Result TextFormat::GetLineSpacing([Out] LineSpacingMethod %method, [Out] float %lineSpacing, [Out] float %baseline)
+	{
+		DWRITE_LINE_SPACING_METHOD nativeMethod;
+		float nativeLineSpacing, nativeBaseline;
+		Result result = RECORD_DW(InternalPointer->GetLineSpacing(&nativeMethod, &nativeLineSpacing, &nativeBaseline));
+		method = static_cast<LineSpacingMethod>(nativeMethod);
+		lineSpacing = nativeLineSpacing;
+		baseline = nativeBaseline;
+		return result;
+	}
+
+	Result TextFormat::SetLineSpacing(LineSpacingMethod method, float lineSpacing, float baseline)
+	{
+		return RECORD_DW(InternalPointer->SetLineSpacing(static_cast<DWRITE_LINE_SPACING_METHOD>(method), lineSpacing, baseline));
+	}
+
 	SlimDX::DirectWrite::ParagraphAlignment TextFormat::ParagraphAlignment::get()
 	{
 		return static_cast<SlimDX::DirectWrite::ParagraphAlignment>( InternalPointer->GetParagraphAlignment() );

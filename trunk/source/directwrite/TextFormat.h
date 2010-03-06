@@ -87,6 +87,9 @@ namespace SlimDX
 				void set(float value);
 			}
 
+			Result GetLineSpacing([Out] LineSpacingMethod %method, [Out] float %lineSpacing, [Out] float %baseline);
+			Result SetLineSpacing(LineSpacingMethod method, float lineSpacing, float baseline);
+
 			property ParagraphAlignment ParagraphAlignment
 			{
 				SlimDX::DirectWrite::ParagraphAlignment get();
