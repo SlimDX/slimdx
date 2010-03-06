@@ -115,6 +115,16 @@ namespace DirectWrite
 		return static_cast<SlimDX::DirectWrite::FontWeight>(InternalPointer->GetFontWeight());
 	}
 
+	float TextFormat::IncrementalTabStop::get()
+	{
+		return InternalPointer->GetIncrementalTabStop();
+	}
+
+	void TextFormat::IncrementalTabStop::set(float value)
+	{
+		RECORD_DW(InternalPointer->SetIncrementalTabStop(value));
+	}
+
 	SlimDX::DirectWrite::ParagraphAlignment TextFormat::ParagraphAlignment::get()
 	{
 		return static_cast<SlimDX::DirectWrite::ParagraphAlignment>( InternalPointer->GetParagraphAlignment() );

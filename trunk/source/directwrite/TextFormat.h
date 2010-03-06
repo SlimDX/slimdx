@@ -81,6 +81,12 @@ namespace SlimDX
 				SlimDX::DirectWrite::FontWeight get();
 			}
 
+			property float IncrementalTabStop
+			{
+				float get();
+				void set(float value);
+			}
+
 			property ParagraphAlignment ParagraphAlignment
 			{
 				SlimDX::DirectWrite::ParagraphAlignment get();
