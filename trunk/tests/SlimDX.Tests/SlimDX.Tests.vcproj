@@ -438,6 +438,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\DirectWrite.TextFormat.Tests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\source\DirectWrite.TextLayout.Get.Tests.cpp"
 				>
 				<FileConfiguration
