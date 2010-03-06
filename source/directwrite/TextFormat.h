@@ -43,16 +43,22 @@ namespace SlimDX
 			TextFormat( Factory^ factory, System::String^ familyName, FontWeight weight, FontStyle style, FontStretch stretch, float fontSize, System::String^ localeName );
 			TextFormat( Factory^ factory, System::String^ familyName, FontWeight weight, FontStyle style, FontStretch stretch, float fontSize, System::String^ localeName, FontCollection^ fontCollection );
 
-			property TextAlignment TextAlignment
+			property FlowDirection FlowDirection
 			{
-				SlimDX::DirectWrite::TextAlignment get();
-				void set( SlimDX::DirectWrite::TextAlignment value );
+				SlimDX::DirectWrite::FlowDirection get();
+				void set(SlimDX::DirectWrite::FlowDirection value);
 			}
 
 			property ParagraphAlignment ParagraphAlignment
 			{
 				SlimDX::DirectWrite::ParagraphAlignment get();
 				void set( SlimDX::DirectWrite::ParagraphAlignment value );
+			}
+
+			property TextAlignment TextAlignment
+			{
+				SlimDX::DirectWrite::TextAlignment get();
+				void set( SlimDX::DirectWrite::TextAlignment value );
 			}
 		};
 	}

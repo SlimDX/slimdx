@@ -5,27 +5,25 @@ IDWriteRenderingParams (RenderingParameters)
 IDWriteFontCollectionLoader (FontCollectionLoader)
 DWRITE_TYPOGRAPHIC_FEATURES
 DWRITE_TRIMMING
-IDWriteTextFormat::SetWordWrapping (TextFormat)
-IDWriteTextFormat::SetReadingDirection
-IDWriteTextFormat::SetFlowDirection
-IDWriteTextFormat::SetIncrementalTabStop
-IDWriteTextFormat::SetTrimming
-IDWriteTextFormat::SetLineSpacing
-IDWriteTextFormat::GetWordWrapping
-IDWriteTextFormat::GetReadingDirection
-IDWriteTextFormat::GetFlowDirection
-IDWriteTextFormat::GetIncrementalTabStop
-IDWriteTextFormat::GetTrimming
-IDWriteTextFormat::GetLineSpacing
 IDWriteTextFormat::GetFontCollection
-IDWriteTextFormat::GetFontFamilyNameLength
 IDWriteTextFormat::GetFontFamilyName
-IDWriteTextFormat::GetFontWeight
-IDWriteTextFormat::GetFontStyle
-IDWriteTextFormat::GetFontStretch
+IDWriteTextFormat::GetFontFamilyNameLength
 IDWriteTextFormat::GetFontSize
-IDWriteTextFormat::GetLocaleNameLength
+IDWriteTextFormat::GetFontStretch
+IDWriteTextFormat::GetFontStyle
+IDWriteTextFormat::GetFontWeight
+IDWriteTextFormat::GetIncrementalTabStop
+IDWriteTextFormat::SetIncrementalTabStop
+IDWriteTextFormat::GetLineSpacing
+IDWriteTextFormat::SetLineSpacing
 IDWriteTextFormat::GetLocaleName
+IDWriteTextFormat::GetLocaleNameLength
+IDWriteTextFormat::GetReadingDirection
+IDWriteTextFormat::SetReadingDirection
+IDWriteTextFormat::GetTrimming
+IDWriteTextFormat::SetTrimming
+IDWriteTextFormat::GetWordWrapping
+IDWriteTextFormat::SetWordWrapping (TextFormat)
 DWRITE_SCRIPT_ANALYSIS
 DWRITE_LINE_BREAKPOINT
 DWRITE_SHAPING_TEXT_PROPERTIES

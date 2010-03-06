@@ -62,14 +62,14 @@ namespace DirectWrite
 		Construct( textFormat );
 	}
 
-	SlimDX::DirectWrite::TextAlignment TextFormat::TextAlignment::get()
+	SlimDX::DirectWrite::FlowDirection TextFormat::FlowDirection::get()
 	{
-		return static_cast<SlimDX::DirectWrite::TextAlignment>( InternalPointer->GetTextAlignment() );
+		return static_cast<SlimDX::DirectWrite::FlowDirection>(InternalPointer->GetFlowDirection());
 	}
 
-	void TextFormat::TextAlignment::set( SlimDX::DirectWrite::TextAlignment value )
+	void TextFormat::FlowDirection::set(SlimDX::DirectWrite::FlowDirection value)
 	{
-		InternalPointer->SetTextAlignment( static_cast<DWRITE_TEXT_ALIGNMENT>( value ) );
+		InternalPointer->SetFlowDirection(static_cast<DWRITE_FLOW_DIRECTION>(value));
 	}
 
 	SlimDX::DirectWrite::ParagraphAlignment TextFormat::ParagraphAlignment::get()
@@ -80,6 +80,16 @@ namespace DirectWrite
 	void TextFormat::ParagraphAlignment::set( SlimDX::DirectWrite::ParagraphAlignment value )
 	{
 		InternalPointer->SetParagraphAlignment( static_cast<DWRITE_PARAGRAPH_ALIGNMENT>( value ) );
+	}
+
+	SlimDX::DirectWrite::TextAlignment TextFormat::TextAlignment::get()
+	{
+		return static_cast<SlimDX::DirectWrite::TextAlignment>( InternalPointer->GetTextAlignment() );
+	}
+
+	void TextFormat::TextAlignment::set( SlimDX::DirectWrite::TextAlignment value )
+	{
+		InternalPointer->SetTextAlignment( static_cast<DWRITE_TEXT_ALIGNMENT>( value ) );
 	}
 }
 }
