@@ -43,7 +43,7 @@ public:
 	STDMETHOD(SetWordWrapping)(DWRITE_WORD_WRAPPING wordWrapping) { return E_NOTIMPL; }
 	STDMETHOD(SetReadingDirection)(DWRITE_READING_DIRECTION readingDirection) { return E_NOTIMPL; }
 	MOCK_METHOD1_WITH_CALLTYPE( STDMETHODCALLTYPE, SetFlowDirection, HRESULT(DWRITE_FLOW_DIRECTION) );
-	STDMETHOD(SetIncrementalTabStop)(FLOAT incrementalTabStop) { return E_NOTIMPL; }
+	MOCK_METHOD1_WITH_CALLTYPE( STDMETHODCALLTYPE, SetIncrementalTabStop, HRESULT(FLOAT) );
 	STDMETHOD(SetTrimming)(DWRITE_TRIMMING const* trimmingOptions, IDWriteInlineObject* trimmingSign) { return E_NOTIMPL; }
 	STDMETHOD(SetLineSpacing)(DWRITE_LINE_SPACING_METHOD lineSpacingMethod, FLOAT lineSpacing, FLOAT baseline) { return E_NOTIMPL; }
 	STDMETHOD_(DWRITE_TEXT_ALIGNMENT, GetTextAlignment)() { return DWRITE_TEXT_ALIGNMENT(-1); }
@@ -51,7 +51,7 @@ public:
 	STDMETHOD_(DWRITE_WORD_WRAPPING, GetWordWrapping)() { return DWRITE_WORD_WRAPPING(-1); }
 	STDMETHOD_(DWRITE_READING_DIRECTION, GetReadingDirection)() { return DWRITE_READING_DIRECTION(-1); }
 	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFlowDirection, DWRITE_FLOW_DIRECTION() );
-	STDMETHOD_(FLOAT, GetIncrementalTabStop)() { return -1.0f; }
+	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetIncrementalTabStop, FLOAT() );
 	STDMETHOD(GetTrimming)(DWRITE_TRIMMING* trimmingOptions, IDWriteInlineObject** trimmingSign) { return E_NOTIMPL; }
 	STDMETHOD(GetLineSpacing)(DWRITE_LINE_SPACING_METHOD* lineSpacingMethod, FLOAT* lineSpacing, FLOAT* baseline) { return E_NOTIMPL; }
 	MOCK_METHOD1_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFontCollection, HRESULT(IDWriteFontCollection**) );
@@ -220,4 +220,23 @@ TEST_F(TextFormatTest, GetFontWeight)
 		.Times(1)
 		.WillOnce(Return(DWRITE_FONT_WEIGHT_ULTRA_BOLD));
 	ASSERT_EQ(FontWeight::UltraBold, format.Format->FontWeight);
+}
+
+TEST_F(TextFormatTest, GetIncrementalTabStop)
+{
+	MockedTextFormat format;
+	EXPECT_CALL(format.Mock, GetIncrementalTabStop())
+		.Times(1)
+		.WillOnce(Return(45.5f));
+	ASSERT_EQ(45.5f, format.Format->IncrementalTabStop);
+}
+
+TEST_F(TextFormatTest, SetIncrementalTabStop)
+{
+	MockedTextFormat format;
+	EXPECT_CALL(format.Mock, SetIncrementalTabStop(45.5f))
+		.Times(1)
+		.WillOnce(Return(S_OK));
+	format.Format->IncrementalTabStop = 45.5f;
+	AssertLastResultSucceeded();
 }
