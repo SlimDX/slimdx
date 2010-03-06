@@ -41,7 +41,7 @@ public:
 	STDMETHOD(SetTextAlignment)(DWRITE_TEXT_ALIGNMENT textAlignment) { return E_NOTIMPL; }
 	STDMETHOD(SetParagraphAlignment)(DWRITE_PARAGRAPH_ALIGNMENT paragraphAlignment) { return E_NOTIMPL; }
 	STDMETHOD(SetWordWrapping)(DWRITE_WORD_WRAPPING wordWrapping) { return E_NOTIMPL; }
-	STDMETHOD(SetReadingDirection)(DWRITE_READING_DIRECTION readingDirection) { return E_NOTIMPL; }
+	MOCK_METHOD1_WITH_CALLTYPE( STDMETHODCALLTYPE, SetReadingDirection, HRESULT(DWRITE_READING_DIRECTION) );
 	MOCK_METHOD1_WITH_CALLTYPE( STDMETHODCALLTYPE, SetFlowDirection, HRESULT(DWRITE_FLOW_DIRECTION) );
 	MOCK_METHOD1_WITH_CALLTYPE( STDMETHODCALLTYPE, SetIncrementalTabStop, HRESULT(FLOAT) );
 	STDMETHOD(SetTrimming)(DWRITE_TRIMMING const* trimmingOptions, IDWriteInlineObject* trimmingSign) { return E_NOTIMPL; }
@@ -49,7 +49,7 @@ public:
 	STDMETHOD_(DWRITE_TEXT_ALIGNMENT, GetTextAlignment)() { return DWRITE_TEXT_ALIGNMENT(-1); }
 	STDMETHOD_(DWRITE_PARAGRAPH_ALIGNMENT, GetParagraphAlignment)() { return DWRITE_PARAGRAPH_ALIGNMENT(-1); }
 	STDMETHOD_(DWRITE_WORD_WRAPPING, GetWordWrapping)() { return DWRITE_WORD_WRAPPING(-1); }
-	STDMETHOD_(DWRITE_READING_DIRECTION, GetReadingDirection)() { return DWRITE_READING_DIRECTION(-1); }
+	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetReadingDirection, DWRITE_READING_DIRECTION() );
 	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFlowDirection, DWRITE_FLOW_DIRECTION() );
 	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetIncrementalTabStop, FLOAT() );
 	STDMETHOD(GetTrimming)(DWRITE_TRIMMING* trimmingOptions, IDWriteInlineObject** trimmingSign) { return E_NOTIMPL; }
@@ -102,6 +102,11 @@ class TextFormatTest : public SlimDXTest
 };
 
 static std::ostream &operator<<(std::ostream &stream, FlowDirection dir)
+{
+	return stream << dir.ToString();
+}
+
+static std::ostream &operator<<(std::ostream &stream, ReadingDirection dir)
 {
 	return stream << dir.ToString();
 }
@@ -306,4 +311,23 @@ TEST_F(TextFormatTest, LocaleNameFailureReturnsEmptyString)
 	String ^name = format.Format->LocaleName;
 	AssertLastResultFailed();
 	ASSERT_TRUE(String::Empty == name);
+}
+
+TEST_F(TextFormatTest, GetReadingDirection)
+{
+	MockedTextFormat format;
+	EXPECT_CALL(format.Mock, GetReadingDirection())
+		.Times(1)
+		.WillOnce(Return(DWRITE_READING_DIRECTION_RIGHT_TO_LEFT));
+	ASSERT_EQ(ReadingDirection::RightToLeft, format.Format->ReadingDirection);
+}
+
+TEST_F(TextFormatTest, SetReadingDirection)
+{
+	MockedTextFormat format;
+	EXPECT_CALL(format.Mock, SetReadingDirection(DWRITE_READING_DIRECTION_RIGHT_TO_LEFT))
+		.Times(1)
+		.WillOnce(Return(S_OK));
+	format.Format->ReadingDirection = ReadingDirection::RightToLeft;
+	AssertLastResultSucceeded();
 }

@@ -163,6 +163,16 @@ namespace DirectWrite
 		InternalPointer->SetParagraphAlignment( static_cast<DWRITE_PARAGRAPH_ALIGNMENT>( value ) );
 	}
 
+	SlimDX::DirectWrite::ReadingDirection TextFormat::ReadingDirection::get()
+	{
+		return static_cast<SlimDX::DirectWrite::ReadingDirection>(InternalPointer->GetReadingDirection());
+	}
+
+	void TextFormat::ReadingDirection::set(SlimDX::DirectWrite::ReadingDirection value)
+	{
+		RECORD_DW(InternalPointer->SetReadingDirection(static_cast<DWRITE_READING_DIRECTION>(value)));
+	}
+
 	SlimDX::DirectWrite::TextAlignment TextFormat::TextAlignment::get()
 	{
 		return static_cast<SlimDX::DirectWrite::TextAlignment>( InternalPointer->GetTextAlignment() );
