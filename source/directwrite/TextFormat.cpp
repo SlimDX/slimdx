@@ -95,6 +95,11 @@ namespace DirectWrite
 		return gcnew String(&name[0]);
 	}
 
+	float TextFormat::FontSize::get()
+	{
+		return InternalPointer->GetFontSize();
+	}
+
 	SlimDX::DirectWrite::ParagraphAlignment TextFormat::ParagraphAlignment::get()
 	{
 		return static_cast<SlimDX::DirectWrite::ParagraphAlignment>( InternalPointer->GetParagraphAlignment() );

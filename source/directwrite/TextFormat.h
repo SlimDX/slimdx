@@ -61,6 +61,11 @@ namespace SlimDX
 				String ^get();
 			}
 
+			property float FontSize
+			{
+				float get();
+			}
+
 			property ParagraphAlignment ParagraphAlignment
 			{
 				SlimDX::DirectWrite::ParagraphAlignment get();

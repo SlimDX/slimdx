@@ -60,7 +60,7 @@ public:
 	STDMETHOD_(DWRITE_FONT_WEIGHT, GetFontWeight)() { return DWRITE_FONT_WEIGHT(-1); }
 	STDMETHOD_(DWRITE_FONT_STYLE, GetFontStyle)() { return DWRITE_FONT_STYLE(-1); }
 	STDMETHOD_(DWRITE_FONT_STRETCH, GetFontStretch)() { return DWRITE_FONT_STRETCH(-1); }
-	STDMETHOD_(FLOAT, GetFontSize)() { return -1.0f; }
+	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFontSize, FLOAT() );
 	STDMETHOD_(UINT32, GetLocaleNameLength)() { return ~0U; }
 	STDMETHOD(GetLocaleName)(WCHAR* localeName, UINT32 nameSize) { return E_NOTIMPL; }
 };
@@ -184,4 +184,13 @@ TEST_F(TextFormatTest, GetFontFamilyNameFailureReturnsEmptyString)
 	String ^name = format.Format->FontFamilyName;
 	AssertLastResultFailed();
 	ASSERT_TRUE(String::Empty == name);
+}
+
+TEST_F(TextFormatTest, GetFontSize)
+{
+	MockedTextFormat format;
+	EXPECT_CALL(format.Mock, GetFontSize())
+		.Times(1)
+		.WillOnce(Return(45.4f));
+	ASSERT_EQ(45.4f, format.Format->FontSize);
 }
