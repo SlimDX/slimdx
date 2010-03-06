@@ -53,3 +53,8 @@ std::ostream &operator<<(std::ostream &stream, SlimDX::DirectWrite::FontStretch 
 {
 	return stream << stretch.ToString();
 }
+
+std::ostream &operator<<(std::ostream &stream, SlimDX::DirectWrite::FontStyle style)
+{
+	return stream << style.ToString();
+}
