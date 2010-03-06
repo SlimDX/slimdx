@@ -58,7 +58,7 @@ public:
 	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFontFamilyNameLength, UINT32() );
 	MOCK_METHOD2_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFontFamilyName, HRESULT(WCHAR*, UINT32) );
 	STDMETHOD_(DWRITE_FONT_WEIGHT, GetFontWeight)() { return DWRITE_FONT_WEIGHT(-1); }
-	STDMETHOD_(DWRITE_FONT_STYLE, GetFontStyle)() { return DWRITE_FONT_STYLE(-1); }
+	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFontStyle, DWRITE_FONT_STYLE() );
 	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFontStretch, DWRITE_FONT_STRETCH() );
 	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFontSize, FLOAT() );
 	STDMETHOD_(UINT32, GetLocaleNameLength)() { return ~0U; }
@@ -202,4 +202,13 @@ TEST_F(TextFormatTest, GetFontStretch)
 		.Times(1)
 		.WillOnce(Return(DWRITE_FONT_STRETCH_ULTRA_EXPANDED));
 	ASSERT_EQ(FontStretch::UltraExpanded, format.Format->FontStretch);
+}
+
+TEST_F(TextFormatTest, GetFontStyle)
+{
+	MockedTextFormat format;
+	EXPECT_CALL(format.Mock, GetFontStyle())
+		.Times(1)
+		.WillOnce(Return(DWRITE_FONT_STYLE_ITALIC));
+	ASSERT_EQ(FontStyle::Italic, format.Format->FontStyle);
 }

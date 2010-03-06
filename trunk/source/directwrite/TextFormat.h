@@ -71,6 +71,11 @@ namespace SlimDX
 				SlimDX::DirectWrite::FontStretch get();
 			}
 
+			property SlimDX::DirectWrite::FontStyle FontStyle
+			{
+				SlimDX::DirectWrite::FontStyle get();
+			}
+
 			property ParagraphAlignment ParagraphAlignment
 			{
 				SlimDX::DirectWrite::ParagraphAlignment get();
