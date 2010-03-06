@@ -55,8 +55,8 @@ public:
 	STDMETHOD(GetTrimming)(DWRITE_TRIMMING* trimmingOptions, IDWriteInlineObject** trimmingSign) { return E_NOTIMPL; }
 	STDMETHOD(GetLineSpacing)(DWRITE_LINE_SPACING_METHOD* lineSpacingMethod, FLOAT* lineSpacing, FLOAT* baseline) { return E_NOTIMPL; }
 	MOCK_METHOD1_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFontCollection, HRESULT(IDWriteFontCollection**) );
-	STDMETHOD_(UINT32, GetFontFamilyNameLength)() { return ~0U; }
-	STDMETHOD(GetFontFamilyName)(WCHAR* fontFamilyName, UINT32 nameSize) { return E_NOTIMPL; }
+	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFontFamilyNameLength, UINT32() );
+	MOCK_METHOD2_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFontFamilyName, HRESULT(WCHAR*, UINT32) );
 	STDMETHOD_(DWRITE_FONT_WEIGHT, GetFontWeight)() { return DWRITE_FONT_WEIGHT(-1); }
 	STDMETHOD_(DWRITE_FONT_STYLE, GetFontStyle)() { return DWRITE_FONT_STYLE(-1); }
 	STDMETHOD_(DWRITE_FONT_STRETCH, GetFontStretch)() { return DWRITE_FONT_STRETCH(-1); }
@@ -150,4 +150,38 @@ TEST_F(TextFormatTest, GetFontCollectionFailureReturnsNullPtr)
 	FontCollection ^collection = format.Format->FontCollection;
 	AssertLastResultFailed();
 	ASSERT_TRUE(collection == nullptr);
+}
+
+TEST_F(TextFormatTest, GetFontFamilyName)
+{
+	MockedTextFormat format;
+	WCHAR const fakeName[] = L"Slartibartfast";
+	UINT32 const fakeNameLength = NUM_OF(fakeName);
+	EXPECT_CALL(format.Mock, GetFontFamilyNameLength())
+		.Times(1)
+		.WillOnce(Return(fakeNameLength - 1));
+	EXPECT_CALL(format.Mock, GetFontFamilyName(NotNull(), Gt(0U)))
+		.Times(1)
+		.WillOnce(DoAll(SetArrayArgument<0>(&fakeName[0], &fakeName[fakeNameLength]),
+						Return(S_OK)));
+	String ^name = format.Format->FontFamilyName;
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(!String::IsNullOrEmpty(name));
+}
+
+TEST_F(TextFormatTest, GetFontFamilyNameFailureReturnsEmptyString)
+{
+	MockedTextFormat format;
+	WCHAR const fakeName[] = L"Slartibartfast";
+	UINT32 const fakeNameLength = NUM_OF(fakeName);
+	EXPECT_CALL(format.Mock, GetFontFamilyNameLength())
+		.Times(1)
+		.WillOnce(Return(fakeNameLength - 1));
+	EXPECT_CALL(format.Mock, GetFontFamilyName(NotNull(), Gt(0U)))
+		.Times(1)
+		.WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	String ^name = format.Format->FontFamilyName;
+	AssertLastResultFailed();
+	ASSERT_TRUE(String::Empty == name);
 }

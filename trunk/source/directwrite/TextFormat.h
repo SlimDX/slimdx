@@ -33,6 +33,8 @@ namespace SlimDX
 {
 	namespace DirectWrite
 	{
+		using namespace System;
+
 		public ref class TextFormat : public ComObject
 		{
 			COMOBJECT(IDWriteTextFormat, TextFormat);
@@ -52,6 +54,11 @@ namespace SlimDX
 			property FontCollection ^FontCollection
 			{
 				SlimDX::DirectWrite::FontCollection ^get();
+			}
+
+			property String ^FontFamilyName
+			{
+				String ^get();
 			}
 
 			property ParagraphAlignment ParagraphAlignment

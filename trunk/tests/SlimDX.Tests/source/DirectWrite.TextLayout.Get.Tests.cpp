@@ -137,8 +137,6 @@ TEST_F(TextLayoutTest, GetFontCollectionWithTextRange)
 	delete collection;
 }
 
-#define NUM_OF(ary_) (sizeof(ary_)/sizeof(ary_[0]))
-
 TEST_F(TextLayoutTest, GetFontFamilyNameNoTextRange)
 {
 	MockedTextLayoutGetters layout;
@@ -146,11 +144,11 @@ TEST_F(TextLayoutTest, GetFontFamilyNameNoTextRange)
 	int const numFakeName = NUM_OF(fakeName);
 	EXPECT_CALL(layout.Mock, GetFontFamilyNameLength(0, NotNull(), 0))
 		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<1>(numFakeName), Return(S_OK)));
+		.WillOnce(DoAll(SetArgumentPointee<1>(numFakeName - 1), Return(S_OK)));
 	EXPECT_CALL(layout.Mock, GetFontFamilyName(0, NotNull(), numFakeName, 0))
 		.Times(1)
 		.WillOnce(DoAll(SetArrayArgument<1>(&fakeName[0], &fakeName[numFakeName]),
-		Return(S_OK)));
+						Return(S_OK)));
 	String^ name = layout.Layout->GetFontFamilyName(0);
 	AssertLastResultSucceeded();
 	ASSERT_TRUE(name != nullptr);
@@ -164,12 +162,12 @@ TEST_F(TextLayoutTest, GetFontFamilyNameWithTextRange)
 	int const numFakeName = NUM_OF(fakeName);
 	EXPECT_CALL(layout.Mock, GetFontFamilyNameLength(0, NotNull(), NotNull()))
 		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<1>(numFakeName), Return(S_OK)));
+		.WillOnce(DoAll(SetArgumentPointee<1>(numFakeName - 1), Return(S_OK)));
 	EXPECT_CALL(layout.Mock, GetFontFamilyName(0, NotNull(), numFakeName, NotNull()))
 		.Times(1)
 		.WillOnce(DoAll(SetArrayArgument<1>(&fakeName[0], &fakeName[numFakeName]),
-		SetArgumentPointee<3>(ExpectedTextRange()),
-		Return(S_OK)));
+						SetArgumentPointee<3>(ExpectedTextRange()),
+						Return(S_OK)));
 	TextRange range;
 	String^ name = layout.Layout->GetFontFamilyName(0, range);
 	AssertLastResultSucceeded();
@@ -440,7 +438,7 @@ TEST_F(TextLayoutTest, GetLocaleNameNoTextRange)
 	int const numFakeName = NUM_OF(fakeName);
 	EXPECT_CALL(layout.Mock, GetLocaleNameLength(0, NotNull(), 0))
 		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<1>(numFakeName), Return(S_OK)));
+		.WillOnce(DoAll(SetArgumentPointee<1>(numFakeName - 1), Return(S_OK)));
 	EXPECT_CALL(layout.Mock, GetLocaleName(0, NotNull(), numFakeName, 0))
 		.Times(1)
 		.WillOnce(DoAll(SetArrayArgument<1>(&fakeName[0], &fakeName[numFakeName]),
@@ -458,7 +456,7 @@ TEST_F(TextLayoutTest, GetLocaleNameWithTextRange)
 	int const numFakeName = NUM_OF(fakeName);
 	EXPECT_CALL(layout.Mock, GetLocaleNameLength(0, NotNull(), 0))
 		.Times(1)
-		.WillOnce(DoAll(SetArgumentPointee<1>(numFakeName), Return(S_OK)));
+		.WillOnce(DoAll(SetArgumentPointee<1>(numFakeName - 1), Return(S_OK)));
 	EXPECT_CALL(layout.Mock, GetLocaleName(0, NotNull(), numFakeName, NotNull()))
 		.Times(1)
 		.WillOnce(DoAll(SetArrayArgument<1>(&fakeName[0], &fakeName[numFakeName]),
