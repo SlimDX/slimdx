@@ -27,11 +27,43 @@
 
 const IID IID_IDWritePixelSnapping = __uuidof(IDWritePixelSnapping);
 
+using namespace SlimDX::Direct2D;
 using namespace System;
 
 namespace SlimDX
 {
 namespace DirectWrite
 {
+	bool PixelSnapping::IsPixelSnappingDisabled(IntPtr clientDrawingContext)
+	{
+		BOOL val;
+		if (RECORD_DW(InternalPointer->IsPixelSnappingDisabled(static_cast<void *>(clientDrawingContext), &val)).IsFailure)
+		{
+			val = FALSE;
+		}
+		return val == TRUE;
+	}
+
+	Matrix3x2 PixelSnapping::GetCurrentTransform(IntPtr clientDrawingContext)
+	{
+		Matrix3x2 val;
+		if (RECORD_DW(InternalPointer->GetCurrentTransform(static_cast<void *>(clientDrawingContext),
+				reinterpret_cast<DWRITE_MATRIX *>(&val))).IsFailure)
+		{
+			Matrix3x2 zero;
+			val = zero;
+		}
+		return val;
+	}
+
+	float PixelSnapping::GetPixelsPerDip(IntPtr clientDrawingContext)
+	{
+		float val;
+		if (RECORD_DW(InternalPointer->GetPixelsPerDip(static_cast<void *>(clientDrawingContext), &val)).IsFailure)
+		{
+			val = 0.0f;
+		}
+		return val;
+	}
 }
 }

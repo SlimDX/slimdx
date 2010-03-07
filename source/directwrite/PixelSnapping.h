@@ -24,14 +24,22 @@
 extern const IID IID_IDWritePixelSnapping;
 
 #include "../ComObject.h"
+#include "../direct2d/Matrix3x2.h"
 
 namespace SlimDX
 {
 	namespace DirectWrite
 	{
+		using namespace System;
+
 		public ref class PixelSnapping : public ComObject
 		{
 			COMOBJECT(IDWritePixelSnapping, PixelSnapping);
+
+		public:
+			bool IsPixelSnappingDisabled(IntPtr clientDrawingContext);
+			SlimDX::Direct2D::Matrix3x2 GetCurrentTransform(IntPtr clientDrawingContext);
+			float GetPixelsPerDip(IntPtr clientDrawingContext);
 		};
 	}
 }
