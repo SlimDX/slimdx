@@ -1,7 +1,6 @@
 IDWriteFontFileLoader (FontFileLoader)
 IDWriteLocalFontFileLoader
 IDWriteFontFileStream (FontFileStream)
-IDWriteRenderingParams (RenderingParameters)
 IDWriteFontCollectionLoader (FontCollectionLoader)
 DWRITE_TYPOGRAPHIC_FEATURES
 DWRITE_SCRIPT_ANALYSIS
