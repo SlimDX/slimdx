@@ -14,7 +14,6 @@ DWRITE_GLYPH_RUN_DESCRIPTION
 DWRITE_UNDERLINE
 DWRITE_STRIKETHROUGH
 DWRITE_INLINE_OBJECT_METRICS
-IDWritePixelSnapping (PixelSnapping)
 IDWriteTextRenderer (TextRenderer)
 LOGFONT IDWriteGdiInterop::(CreateFontFromLOGFONT, ConvertFontToLOGFONT, ConvertFontFaceToLOGFONT)
 IDWriteGdiInterop::CreateBitmapRenderTarget (GdiInterop)

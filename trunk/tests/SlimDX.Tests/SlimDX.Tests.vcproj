@@ -438,6 +438,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\DirectWrite.PixelSnapping.Tests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\source\DirectWrite.RenderingParameters.Tests.cpp"
 				>
 			</File>
