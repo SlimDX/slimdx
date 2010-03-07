@@ -33,5 +33,25 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
+	float RenderingParameters::Gamma::get()
+	{
+		return InternalPointer->GetGamma();
+	}
+	float RenderingParameters::EnhancedContrast::get()
+	{
+		return InternalPointer->GetEnhancedContrast();
+	}
+	float RenderingParameters::ClearTypeLevel::get()
+	{
+		return InternalPointer->GetClearTypeLevel();
+	}
+	SlimDX::DirectWrite::PixelGeometry RenderingParameters::PixelGeometry::get()
+	{
+		return static_cast<SlimDX::DirectWrite::PixelGeometry>(InternalPointer->GetPixelGeometry());
+	}
+	SlimDX::DirectWrite::RenderingMode RenderingParameters::RenderingMode::get()
+	{
+		return static_cast<SlimDX::DirectWrite::RenderingMode>(InternalPointer->GetRenderingMode());
+	}
 }
 }

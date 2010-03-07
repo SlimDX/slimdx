@@ -24,6 +24,7 @@
 extern const IID IID_IDWriteRenderingParams;
 
 #include "../ComObject.h"
+#include "Enums.h"
 
 namespace SlimDX
 {
@@ -32,6 +33,28 @@ namespace SlimDX
 		public ref class RenderingParameters : public ComObject
 		{
 			COMOBJECT(IDWriteRenderingParams, RenderingParameters);
+
+		public:
+			property float Gamma
+			{
+				float get();
+			}
+			property float EnhancedContrast
+			{
+				float get();
+			}
+			property float ClearTypeLevel
+			{
+				float get();
+			}
+			property SlimDX::DirectWrite::PixelGeometry PixelGeometry
+			{
+				SlimDX::DirectWrite::PixelGeometry get();
+			}
+			property SlimDX::DirectWrite::RenderingMode RenderingMode
+			{
+				SlimDX::DirectWrite::RenderingMode get();
+			}
 		};
 	}
 }
