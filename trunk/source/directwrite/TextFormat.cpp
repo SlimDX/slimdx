@@ -23,6 +23,7 @@
 #include <vector>
 
 #include "DirectWriteException.h"
+#include "InlineObject.h"
 #include "TextFormat.h"
 
 const IID IID_IDWriteTextFormat = __uuidof(IDWriteTextFormat);
@@ -181,6 +182,43 @@ namespace DirectWrite
 	void TextFormat::TextAlignment::set( SlimDX::DirectWrite::TextAlignment value )
 	{
 		InternalPointer->SetTextAlignment( static_cast<DWRITE_TEXT_ALIGNMENT>( value ) );
+	}
+
+	static Trimming GetTrimmingInternal(IDWriteTextFormat *format, IDWriteInlineObject **obj)
+	{
+		DWRITE_TRIMMING trimming;
+		if (RECORD_DW(format->GetTrimming(&trimming, obj)).IsFailure)
+		{
+			DWRITE_TRIMMING zero = { DWRITE_TRIMMING_GRANULARITY(0) };
+			trimming = zero;
+		}
+		return Trimming(static_cast<TrimmingGranularity>(trimming.granularity),
+			trimming.delimiter, trimming.delimiterCount);
+	}
+
+	Trimming TextFormat::GetTrimming()
+	{
+		return GetTrimmingInternal(InternalPointer, 0);
+	}
+	Trimming TextFormat::GetTrimming([Out] InlineObject ^%trimmingSign)
+	{
+		IDWriteInlineObject *obj = 0;
+		Trimming result = GetTrimmingInternal(InternalPointer, &obj);
+		if (obj)
+		{
+			trimmingSign = InlineObject::FromPointer(obj);
+		}
+		return result;
+	}
+
+	SlimDX::DirectWrite::WordWrapping TextFormat::WordWrapping::get()
+	{
+		return static_cast<SlimDX::DirectWrite::WordWrapping>(InternalPointer->GetWordWrapping());
+	}
+
+	void TextFormat::WordWrapping::set(SlimDX::DirectWrite::WordWrapping value)
+	{
+		RECORD_DW(InternalPointer->SetWordWrapping(static_cast<DWRITE_WORD_WRAPPING>(value)));
 	}
 }
 }

@@ -26,6 +26,7 @@
 
 #include "CommonMocks.h"
 #include "IDWriteFontCollectionMock.h"
+#include "IDWriteInlineObjectMock.h"
 #include "SlimDXTest.h"
 
 using namespace testing;
@@ -40,19 +41,19 @@ public:
 	// IDWriteTextFormat
 	STDMETHOD(SetTextAlignment)(DWRITE_TEXT_ALIGNMENT textAlignment) { return E_NOTIMPL; }
 	STDMETHOD(SetParagraphAlignment)(DWRITE_PARAGRAPH_ALIGNMENT paragraphAlignment) { return E_NOTIMPL; }
-	STDMETHOD(SetWordWrapping)(DWRITE_WORD_WRAPPING wordWrapping) { return E_NOTIMPL; }
+	MOCK_METHOD1_WITH_CALLTYPE( STDMETHODCALLTYPE, SetWordWrapping, HRESULT(DWRITE_WORD_WRAPPING) );
 	MOCK_METHOD1_WITH_CALLTYPE( STDMETHODCALLTYPE, SetReadingDirection, HRESULT(DWRITE_READING_DIRECTION) );
 	MOCK_METHOD1_WITH_CALLTYPE( STDMETHODCALLTYPE, SetFlowDirection, HRESULT(DWRITE_FLOW_DIRECTION) );
 	MOCK_METHOD1_WITH_CALLTYPE( STDMETHODCALLTYPE, SetIncrementalTabStop, HRESULT(FLOAT) );
-	STDMETHOD(SetTrimming)(DWRITE_TRIMMING const* trimmingOptions, IDWriteInlineObject* trimmingSign) { return E_NOTIMPL; }
+	MOCK_METHOD2_WITH_CALLTYPE( STDMETHODCALLTYPE, SetTrimming, HRESULT(DWRITE_TRIMMING const*, IDWriteInlineObject*) );
 	MOCK_METHOD3_WITH_CALLTYPE( STDMETHODCALLTYPE, SetLineSpacing, HRESULT(DWRITE_LINE_SPACING_METHOD, FLOAT, FLOAT) );
 	STDMETHOD_(DWRITE_TEXT_ALIGNMENT, GetTextAlignment)() { return DWRITE_TEXT_ALIGNMENT(-1); }
 	STDMETHOD_(DWRITE_PARAGRAPH_ALIGNMENT, GetParagraphAlignment)() { return DWRITE_PARAGRAPH_ALIGNMENT(-1); }
-	STDMETHOD_(DWRITE_WORD_WRAPPING, GetWordWrapping)() { return DWRITE_WORD_WRAPPING(-1); }
+	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetWordWrapping, DWRITE_WORD_WRAPPING() );
 	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetReadingDirection, DWRITE_READING_DIRECTION() );
 	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFlowDirection, DWRITE_FLOW_DIRECTION() );
 	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetIncrementalTabStop, FLOAT() );
-	STDMETHOD(GetTrimming)(DWRITE_TRIMMING* trimmingOptions, IDWriteInlineObject** trimmingSign) { return E_NOTIMPL; }
+	MOCK_METHOD2_WITH_CALLTYPE( STDMETHODCALLTYPE, GetTrimming, HRESULT(DWRITE_TRIMMING*, IDWriteInlineObject**) );
 	MOCK_METHOD3_WITH_CALLTYPE( STDMETHODCALLTYPE, GetLineSpacing, HRESULT(DWRITE_LINE_SPACING_METHOD*, FLOAT*, FLOAT*) );
 	MOCK_METHOD1_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFontCollection, HRESULT(IDWriteFontCollection**) );
 	MOCK_METHOD0_WITH_CALLTYPE( STDMETHODCALLTYPE, GetFontFamilyNameLength, UINT32() );
@@ -109,6 +110,11 @@ static std::ostream &operator<<(std::ostream &stream, FlowDirection dir)
 static std::ostream &operator<<(std::ostream &stream, ReadingDirection dir)
 {
 	return stream << dir.ToString();
+}
+
+static std::ostream &operator<<(std::ostream &stream, WordWrapping wrap)
+{
+	return stream << wrap.ToString();
 }
 
 TEST_F(TextFormatTest, GetFlowDirection)
@@ -329,5 +335,85 @@ TEST_F(TextFormatTest, SetReadingDirection)
 		.Times(1)
 		.WillOnce(Return(S_OK));
 	format.Format->ReadingDirection = ReadingDirection::RightToLeft;
+	AssertLastResultSucceeded();
+}
+
+static DWRITE_TRIMMING ExpectedTrimming()
+{
+	DWRITE_TRIMMING expected;
+	expected.granularity = DWRITE_TRIMMING_GRANULARITY_WORD;
+	expected.delimiter = int('+');
+	expected.delimiterCount = 14;
+	return expected;
+}
+
+static void AssertTrimmingMatchesExpected(Trimming trimming)
+{
+	DWRITE_TRIMMING expected = ExpectedTrimming();
+	ASSERT_EQ(expected.granularity, static_cast<DWRITE_TRIMMING_GRANULARITY>(trimming.Granularity));
+	ASSERT_EQ(expected.delimiter, trimming.Delimiter);
+	ASSERT_EQ(expected.delimiterCount, trimming.DelimiterCount);
+}
+
+TEST_F(TextFormatTest, GetTrimmingNoSign)
+{
+	MockedTextFormat format;
+	EXPECT_CALL(format.Mock, GetTrimming(NotNull(), 0))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<0>(ExpectedTrimming()),
+						Return(S_OK)));
+	Trimming trimming = format.Format->GetTrimming();
+	AssertLastResultSucceeded();
+	AssertTrimmingMatchesExpected(trimming);
+}
+
+TEST_F(TextFormatTest, GetTrimmingFailureReturnsZero)
+{
+	MockedTextFormat format;
+	EXPECT_CALL(format.Mock, GetTrimming(NotNull(), 0))
+		.Times(1)
+		.WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	Trimming trimming = format.Format->GetTrimming();
+	AssertLastResultFailed();
+	ASSERT_EQ(DWRITE_TRIMMING_GRANULARITY(0), static_cast<DWRITE_TRIMMING_GRANULARITY>(trimming.Granularity));
+	ASSERT_EQ(0, trimming.Delimiter);
+	ASSERT_EQ(0, trimming.DelimiterCount);
+}
+
+TEST_F(TextFormatTest, GetTrimmingWithSign)
+{
+	MockedTextFormat format;
+	IDWriteInlineObjectMock mockSign;
+	EXPECT_CALL(format.Mock, GetTrimming(NotNull(), NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<0>(ExpectedTrimming()),
+						SetArgumentPointee<1>(&mockSign),
+						Return(S_OK)));
+	InlineObject ^sign = nullptr;
+	Trimming trimming = format.Format->GetTrimming(sign);
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(sign != nullptr);
+	ASSERT_EQ(&mockSign, sign->InternalPointer);
+	AssertTrimmingMatchesExpected(trimming);
+	delete sign;
+}
+
+TEST_F(TextFormatTest, GetWordWrapping)
+{
+	MockedTextFormat format;
+	EXPECT_CALL(format.Mock, GetWordWrapping())
+		.Times(1)
+		.WillOnce(Return(DWRITE_WORD_WRAPPING_WRAP));
+	ASSERT_EQ(WordWrapping::Wrap, format.Format->WordWrapping);
+}
+
+TEST_F(TextFormatTest, SetWordWrapping)
+{
+	MockedTextFormat format;
+	EXPECT_CALL(format.Mock, SetWordWrapping(DWRITE_WORD_WRAPPING_WRAP))
+		.Times(1)
+		.WillOnce(Return(S_OK));
+	format.Format->WordWrapping = WordWrapping::Wrap;
 	AssertLastResultSucceeded();
 }

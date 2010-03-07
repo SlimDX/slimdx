@@ -26,6 +26,7 @@
 #include "FactoryDW.h"
 #include "Enums.h"
 #include "FontCollection.h"
+#include "Trimming.h"
 
 extern const IID IID_IDWriteTextFormat;
 
@@ -34,6 +35,7 @@ namespace SlimDX
 	namespace DirectWrite
 	{
 		using namespace System;
+		ref class InlineObject;
 
 		public ref class TextFormat : public ComObject
 		{
@@ -111,6 +113,15 @@ namespace SlimDX
 			{
 				SlimDX::DirectWrite::TextAlignment get();
 				void set( SlimDX::DirectWrite::TextAlignment value );
+			}
+
+			Trimming GetTrimming();
+			Trimming GetTrimming([Out] InlineObject ^%trimmingSign);
+
+			property SlimDX::DirectWrite::WordWrapping WordWrapping
+			{
+				SlimDX::DirectWrite::WordWrapping get();
+				void set(SlimDX::DirectWrite::WordWrapping value);
 			}
 		};
 	}
