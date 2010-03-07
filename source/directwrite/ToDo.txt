@@ -4,11 +4,6 @@ IDWriteFontFileStream (FontFileStream)
 IDWriteRenderingParams (RenderingParameters)
 IDWriteFontCollectionLoader (FontCollectionLoader)
 DWRITE_TYPOGRAPHIC_FEATURES
-DWRITE_TRIMMING
-IDWriteTextFormat::GetTrimming
-IDWriteTextFormat::SetTrimming
-IDWriteTextFormat::GetWordWrapping
-IDWriteTextFormat::SetWordWrapping (TextFormat)
 DWRITE_SCRIPT_ANALYSIS
 DWRITE_LINE_BREAKPOINT
 DWRITE_SHAPING_TEXT_PROPERTIES

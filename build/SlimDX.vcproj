@@ -5483,6 +5483,10 @@
 						RelativePath="..\source\directwrite\TextFormat.h"
 						>
 					</File>
+					<File
+						RelativePath="..\source\directwrite\Trimming.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="TextLayout"
