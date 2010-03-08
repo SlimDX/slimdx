@@ -87,7 +87,7 @@ static void AssertClusterMetricsMatchExpected(ClusterMetrics metrics)
 	ASSERT_EQ(expected.isRightToLeft != 0, metrics.IsRightToLeft);
 }
 
-TEST_F(TextLayoutTest, GetClusterMetrics)
+TEXT_LAYOUT_TEST(GetClusterMetrics)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetClusterMetrics(_, _, _))
@@ -105,7 +105,7 @@ TEST_F(TextLayoutTest, GetClusterMetrics)
 	AssertClusterMetricsMatchExpected(metrics[0]);
 }
 
-TEST_F(TextLayoutTest, GetFontCollectionNoTextRange)
+TEXT_LAYOUT_TEST(GetFontCollectionNoTextRange)
 {
 	MockedTextLayoutGetters layout;
 	IDWriteFontCollectionMock mockCollection;
@@ -119,7 +119,7 @@ TEST_F(TextLayoutTest, GetFontCollectionNoTextRange)
 	delete collection;
 }
 
-TEST_F(TextLayoutTest, GetFontCollectionWithTextRange)
+TEXT_LAYOUT_TEST(GetFontCollectionWithTextRange)
 {
 	MockedTextLayoutGetters layout;
 	IDWriteFontCollectionMock mockCollection;
@@ -137,7 +137,7 @@ TEST_F(TextLayoutTest, GetFontCollectionWithTextRange)
 	delete collection;
 }
 
-TEST_F(TextLayoutTest, GetFontFamilyNameNoTextRange)
+TEXT_LAYOUT_TEST(GetFontFamilyNameNoTextRange)
 {
 	MockedTextLayoutGetters layout;
 	WCHAR fakeName[] = L"Slartibartfast";
@@ -155,7 +155,7 @@ TEST_F(TextLayoutTest, GetFontFamilyNameNoTextRange)
 	ASSERT_TRUE(gcnew String(fakeName) == name);
 }
 
-TEST_F(TextLayoutTest, GetFontFamilyNameWithTextRange)
+TEXT_LAYOUT_TEST(GetFontFamilyNameWithTextRange)
 {
 	MockedTextLayoutGetters layout;
 	WCHAR fakeName[] = L"Slartibartfast";
@@ -176,7 +176,7 @@ TEST_F(TextLayoutTest, GetFontFamilyNameWithTextRange)
 	AssertTextRangeMatchesExpected(range);
 }
 
-TEST_F(TextLayoutTest, GetFontSizeNoTextRange)
+TEXT_LAYOUT_TEST(GetFontSizeNoTextRange)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetFontSize(0U, NotNull(), 0))
@@ -186,7 +186,7 @@ TEST_F(TextLayoutTest, GetFontSizeNoTextRange)
 	AssertLastResultSucceeded();
 }
 
-TEST_F(TextLayoutTest, GetFontSizeWithTextRange)
+TEXT_LAYOUT_TEST(GetFontSizeWithTextRange)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetFontSize(0U, NotNull(), NotNull()))
@@ -200,7 +200,7 @@ TEST_F(TextLayoutTest, GetFontSizeWithTextRange)
 	AssertTextRangeMatchesExpected(textRange);
 }
 
-TEST_F(TextLayoutTest, GetFontStretchNoTextRange)
+TEXT_LAYOUT_TEST(GetFontStretchNoTextRange)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetFontStretch(0U, NotNull(), 0))
@@ -210,7 +210,7 @@ TEST_F(TextLayoutTest, GetFontStretchNoTextRange)
 	AssertLastResultSucceeded();
 }
 
-TEST_F(TextLayoutTest, GetFontStretchFailureReturnsUndefined)
+TEXT_LAYOUT_TEST(GetFontStretchFailureReturnsUndefined)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetFontStretch(0U, NotNull(), 0))
@@ -221,7 +221,7 @@ TEST_F(TextLayoutTest, GetFontStretchFailureReturnsUndefined)
 	AssertLastResultFailed();
 }
 
-TEST_F(TextLayoutTest, GetFontStretchWithTextRange)
+TEXT_LAYOUT_TEST(GetFontStretchWithTextRange)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetFontStretch(0U, NotNull(), NotNull()))
@@ -235,7 +235,7 @@ TEST_F(TextLayoutTest, GetFontStretchWithTextRange)
 	AssertTextRangeMatchesExpected(textRange);
 }
 
-TEST_F(TextLayoutTest, GetFontStretchWithTextRangeFailureReturnsUndefined)
+TEXT_LAYOUT_TEST(GetFontStretchWithTextRangeFailureReturnsUndefined)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetFontStretch(0U, NotNull(), NotNull()))
@@ -247,7 +247,7 @@ TEST_F(TextLayoutTest, GetFontStretchWithTextRangeFailureReturnsUndefined)
 	AssertLastResultFailed();
 }
 
-TEST_F(TextLayoutTest, GetFontStyleFailureReturnsMinusOne)
+TEXT_LAYOUT_TEST(GetFontStyleFailureReturnsMinusOne)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetFontStyle(0U, NotNull(), 0))
@@ -258,7 +258,7 @@ TEST_F(TextLayoutTest, GetFontStyleFailureReturnsMinusOne)
 	AssertLastResultFailed();
 }
 
-TEST_F(TextLayoutTest, GetFontStyleNoTextRange)
+TEXT_LAYOUT_TEST(GetFontStyleNoTextRange)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetFontStyle(0U, NotNull(), 0))
@@ -268,7 +268,7 @@ TEST_F(TextLayoutTest, GetFontStyleNoTextRange)
 	AssertLastResultSucceeded();
 }
 
-TEST_F(TextLayoutTest, GetFontStyleWithTextRange)
+TEXT_LAYOUT_TEST(GetFontStyleWithTextRange)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetFontStyle(0U, NotNull(), NotNull()))
@@ -282,7 +282,7 @@ TEST_F(TextLayoutTest, GetFontStyleWithTextRange)
 	AssertTextRangeMatchesExpected(textRange);
 }
 
-TEST_F(TextLayoutTest, GetFontWeightNoTextRange)
+TEXT_LAYOUT_TEST(GetFontWeightNoTextRange)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetFontWeight(0U, NotNull(), 0))
@@ -293,7 +293,7 @@ TEST_F(TextLayoutTest, GetFontWeightNoTextRange)
 	AssertLastResultSucceeded();
 }
 
-TEST_F(TextLayoutTest, GetFontWeightNoTextRangeFailureReturnsMinusOne)
+TEXT_LAYOUT_TEST(GetFontWeightNoTextRangeFailureReturnsMinusOne)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetFontWeight(0U, NotNull(), 0))
@@ -304,7 +304,7 @@ TEST_F(TextLayoutTest, GetFontWeightNoTextRangeFailureReturnsMinusOne)
 	AssertLastResultFailed();
 }
 
-TEST_F(TextLayoutTest, GetFontWeightWithTextRange)
+TEXT_LAYOUT_TEST(GetFontWeightWithTextRange)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetFontWeight(0U, NotNull(), NotNull()))
@@ -337,7 +337,7 @@ static void AssertLineMetricsMatchExpected(LineMetrics metrics)
 	ASSERT_EQ(metrics.TrailingWhitespaceLength, expected.trailingWhitespaceLength);
 }
 
-TEST_F(TextLayoutTest, GetLineMetrics)
+TEXT_LAYOUT_TEST(GetLineMetrics)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetLineMetrics(0, 0, NotNull()))
@@ -377,7 +377,7 @@ static void AssertTextMetricsMatchExpected(TextMetrics %metrics)
 	ASSERT_EQ(expected.widthIncludingTrailingWhitespace, metrics.WidthIncludingTrailingWhitespace);
 }
 
-TEST_F(TextLayoutTest, Metrics)
+TEXT_LAYOUT_TEST(Metrics)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetMetrics(NotNull()))
@@ -406,7 +406,7 @@ static void AssertOverhangMetricsMatchExpected(OverhangMetrics %metrics)
 	ASSERT_EQ(expected.bottom, metrics.Bottom);
 }
 
-TEST_F(TextLayoutTest, OverhangMetrics)
+TEXT_LAYOUT_TEST(OverhangMetrics)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetOverhangMetrics(NotNull()))
@@ -416,7 +416,7 @@ TEST_F(TextLayoutTest, OverhangMetrics)
 	AssertLastResultSucceeded();
 }
 
-TEST_F(TextLayoutTest, OverhangMetricsReturnsZeroOnFailure)
+TEXT_LAYOUT_TEST(OverhangMetricsReturnsZeroOnFailure)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetOverhangMetrics(NotNull()))
@@ -431,7 +431,7 @@ TEST_F(TextLayoutTest, OverhangMetricsReturnsZeroOnFailure)
 	ASSERT_EQ(0, metrics.Bottom);
 }
 
-TEST_F(TextLayoutTest, GetLocaleNameNoTextRange)
+TEXT_LAYOUT_TEST(GetLocaleNameNoTextRange)
 {
 	MockedTextLayoutGetters layout;
 	WCHAR fakeName[] = L"Slartibartfast";
@@ -449,7 +449,7 @@ TEST_F(TextLayoutTest, GetLocaleNameNoTextRange)
 	ASSERT_EQ(gcnew String(fakeName), name);
 }
 
-TEST_F(TextLayoutTest, GetLocaleNameWithTextRange)
+TEXT_LAYOUT_TEST(GetLocaleNameWithTextRange)
 {
 	MockedTextLayoutGetters layout;
 	WCHAR fakeName[] = L"Slartibartfast";
@@ -470,7 +470,7 @@ TEST_F(TextLayoutTest, GetLocaleNameWithTextRange)
 	AssertTextRangeMatchesExpected(range);
 }
 
-TEST_F(TextLayoutTest, GetStrikethroughNoTextRange)
+TEXT_LAYOUT_TEST(GetStrikethroughNoTextRange)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetStrikethrough(0U, NotNull(), 0))
@@ -480,7 +480,7 @@ TEST_F(TextLayoutTest, GetStrikethroughNoTextRange)
 	AssertLastResultSucceeded();
 }
 
-TEST_F(TextLayoutTest, GetStrikethroughFailureReturnsFalse)
+TEXT_LAYOUT_TEST(GetStrikethroughFailureReturnsFalse)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetStrikethrough(0U, NotNull(), 0))
@@ -491,7 +491,7 @@ TEST_F(TextLayoutTest, GetStrikethroughFailureReturnsFalse)
 	AssertLastResultFailed();
 }
 
-TEST_F(TextLayoutTest, GetStrikethroughWithTextRange)
+TEXT_LAYOUT_TEST(GetStrikethroughWithTextRange)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetStrikethrough(0U, NotNull(), NotNull()))
@@ -515,7 +515,7 @@ public:
 	STDMETHOD(GetFontFeature)(UINT32 fontFeatureIndex, DWRITE_FONT_FEATURE* fontFeature) { return E_NOTIMPL; }
 };
 
-TEST_F(TextLayoutTest, GetTypographyNoTextRange)
+TEXT_LAYOUT_TEST(GetTypographyNoTextRange)
 {
 	MockedTextLayoutGetters layout;
 	IDWriteTypographyMock mockTypography;
@@ -529,7 +529,7 @@ TEST_F(TextLayoutTest, GetTypographyNoTextRange)
 	delete typography;
 }
 
-TEST_F(TextLayoutTest, GetTypographyErrorReturnsNullPtr)
+TEXT_LAYOUT_TEST(GetTypographyErrorReturnsNullPtr)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetTypography(0U, NotNull(), 0))
@@ -540,7 +540,7 @@ TEST_F(TextLayoutTest, GetTypographyErrorReturnsNullPtr)
 	AssertLastResultFailed();
 }
 
-TEST_F(TextLayoutTest, GetTypographyWithTextRange)
+TEXT_LAYOUT_TEST(GetTypographyWithTextRange)
 {
 	MockedTextLayoutGetters layout;
 	IDWriteTypographyMock mockTypography;
@@ -558,7 +558,7 @@ TEST_F(TextLayoutTest, GetTypographyWithTextRange)
 	delete typography;
 }
 
-TEST_F(TextLayoutTest, GetUnderlineNoTextRange)
+TEXT_LAYOUT_TEST(GetUnderlineNoTextRange)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetUnderline(0U, NotNull(), 0))
@@ -568,7 +568,7 @@ TEST_F(TextLayoutTest, GetUnderlineNoTextRange)
 	AssertLastResultSucceeded();
 }
 
-TEST_F(TextLayoutTest, GetUnderlineFailureReturnsFalse)
+TEXT_LAYOUT_TEST(GetUnderlineFailureReturnsFalse)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetUnderline(0U, NotNull(), 0))
@@ -579,7 +579,7 @@ TEST_F(TextLayoutTest, GetUnderlineFailureReturnsFalse)
 	AssertLastResultFailed();
 }
 
-TEST_F(TextLayoutTest, GetUnderlineWithTextRange)
+TEXT_LAYOUT_TEST(GetUnderlineWithTextRange)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetUnderline(0U, NotNull(), NotNull()))
@@ -593,7 +593,7 @@ TEST_F(TextLayoutTest, GetUnderlineWithTextRange)
 	AssertTextRangeMatchesExpected(range);
 }
 
-TEST_F(TextLayoutTest, GetInlineObjectNoTextRange)
+TEXT_LAYOUT_TEST(GetInlineObjectNoTextRange)
 {
 	MockedTextLayoutGetters layout;
 	IDWriteInlineObjectMock mockInline;
@@ -607,7 +607,7 @@ TEST_F(TextLayoutTest, GetInlineObjectNoTextRange)
 	delete obj;
 }
 
-TEST_F(TextLayoutTest, GetInlineObjectErrorReturnsNullPtr)
+TEXT_LAYOUT_TEST(GetInlineObjectErrorReturnsNullPtr)
 {
 	MockedTextLayoutGetters layout;
 	IDWriteInlineObjectMock mockInline;
@@ -620,7 +620,7 @@ TEST_F(TextLayoutTest, GetInlineObjectErrorReturnsNullPtr)
 	AssertLastResultFailed();
 }
 
-TEST_F(TextLayoutTest, GetInlineObjectWithTextRange)
+TEXT_LAYOUT_TEST(GetInlineObjectWithTextRange)
 {
 	MockedTextLayoutGetters layout;
 	IDWriteInlineObjectMock mockInline;
@@ -638,7 +638,7 @@ TEST_F(TextLayoutTest, GetInlineObjectWithTextRange)
 	delete obj;
 }
 
-TEST_F(TextLayoutTest, GetDrawingEffectNoTextRange)
+TEXT_LAYOUT_TEST(GetDrawingEffectNoTextRange)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetDrawingEffect(0U, NotNull(), 0))
@@ -650,7 +650,7 @@ TEST_F(TextLayoutTest, GetDrawingEffectNoTextRange)
 	AssertLastResultSucceeded();
 }
 
-TEST_F(TextLayoutTest, GetDrawingEffectFailureReturnsNullPtr)
+TEXT_LAYOUT_TEST(GetDrawingEffectFailureReturnsNullPtr)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetDrawingEffect(0U, NotNull(), 0))
@@ -662,7 +662,7 @@ TEST_F(TextLayoutTest, GetDrawingEffectFailureReturnsNullPtr)
 	AssertLastResultFailed();
 }
 
-TEST_F(TextLayoutTest, GetDrawingEffectWithTextRange)
+TEXT_LAYOUT_TEST(GetDrawingEffectWithTextRange)
 {
 	MockedTextLayoutGetters layout;
 	EXPECT_CALL(layout.Mock, GetDrawingEffect(0U, NotNull(), NotNull()))
