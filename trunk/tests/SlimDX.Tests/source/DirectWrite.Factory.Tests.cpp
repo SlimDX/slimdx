@@ -27,6 +27,7 @@
 
 using namespace testing;
 using namespace SlimDX;
+using namespace SlimDX::Direct2D;
 using namespace SlimDX::DirectWrite;
 using namespace System;
 
@@ -55,7 +56,7 @@ public:
 	MOCK_METHOD2_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateEllipsisTrimmingSign, HRESULT(IDWriteTextFormat*, IDWriteInlineObject**));
 	STDMETHOD(CreateTextAnalyzer)(IDWriteTextAnalyzer** textAnalyzer) { return E_NOTIMPL; }
 	STDMETHOD(CreateNumberSubstitution)(DWRITE_NUMBER_SUBSTITUTION_METHOD substitutionMethod, WCHAR const* localeName, BOOL ignoreUserOverride, IDWriteNumberSubstitution** numberSubstitution) { return E_NOTIMPL; }
-	STDMETHOD(CreateGlyphRunAnalysis)(DWRITE_GLYPH_RUN const* glyphRun, FLOAT pixelsPerDip, DWRITE_MATRIX const* transform, DWRITE_RENDERING_MODE renderingMode, DWRITE_MEASURING_MODE measuringMode, FLOAT baselineOriginX, FLOAT baselineOriginY, IDWriteGlyphRunAnalysis** glyphRunAnalysis) { return E_NOTIMPL; }
+	MOCK_METHOD8_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateGlyphRunAnalysis, HRESULT(DWRITE_GLYPH_RUN const*, FLOAT, DWRITE_MATRIX const*, DWRITE_RENDERING_MODE, DWRITE_MEASURING_MODE, FLOAT, FLOAT, IDWriteGlyphRunAnalysis**));
 };
 
 class IDWriteFontFileFake : public IDWriteFontFile
@@ -88,6 +89,16 @@ public:
 	STDMETHOD(GetRecommendedRenderingMode)(FLOAT emSize, FLOAT pixelsPerDip, DWRITE_MEASURING_MODE measuringMode, IDWriteRenderingParams* renderingParams, DWRITE_RENDERING_MODE* renderingMode) { return E_NOTIMPL; }
 	STDMETHOD(GetGdiCompatibleMetrics)(FLOAT emSize, FLOAT pixelsPerDip, DWRITE_MATRIX const* transform, DWRITE_FONT_METRICS* fontFaceMetrics) { return E_NOTIMPL; }
 	STDMETHOD(GetGdiCompatibleGlyphMetrics)(FLOAT emSize, FLOAT pixelsPerDip, DWRITE_MATRIX const* transform, BOOL useGdiNatural, UINT16 const* glyphIndices, UINT32 glyphCount, DWRITE_GLYPH_METRICS* glyphMetrics, BOOL isSideways = FALSE) { return E_NOTIMPL; }
+};
+
+class IDWriteGlyphRunAnalysisFake : public IDWriteGlyphRunAnalysis
+{
+public:
+	MOCK_IUNKNOWN;
+
+	STDMETHOD(GetAlphaTextureBounds)(DWRITE_TEXTURE_TYPE textureType, RECT* textureBounds) { return E_NOTIMPL; }
+	STDMETHOD(CreateAlphaTexture)(DWRITE_TEXTURE_TYPE textureType, RECT const* textureBounds, BYTE* alphaValues, UINT32 bufferSize) { return E_NOTIMPL; }
+	STDMETHOD(GetAlphaBlendParams)(IDWriteRenderingParams* renderingParams, FLOAT* blendGamma, FLOAT* blendEnhancedContrast, FLOAT* blendClearTypeLevel) { return E_NOTIMPL; }
 };
 
 class IDWriteInlineObjectFake : public IDWriteInlineObject
@@ -316,4 +327,67 @@ FACTORY_TEST(CreateFontFileReferenceFailureReturnsNullPtr)
 	FontFile ^file = factory.Factory->CreateFontFileReference(gcnew String("Slartibartfast.fnt"));
 	AssertLastResultFailed();
 	ASSERT_TRUE(file == nullptr);
+}
+
+static GlyphRun ^CreateGlyphRun(IDWriteFontFaceFake &fakeFace)
+{
+	GlyphRun ^glyphRun = gcnew GlyphRun;
+	glyphRun->FontFace = FontFace::FromPointer(&fakeFace);
+	return glyphRun;
+}
+
+static void ReleaseGlyphRun(GlyphRun ^glyphRun)
+{
+	delete glyphRun->FontFace;
+	delete glyphRun;
+}
+
+FACTORY_TEST(CreateGlyphRunAnalysisFailureReturnsNullPtr)
+{
+	MockedFactory factory;
+	EXPECT_CALL(factory.Mock, CreateGlyphRunAnalysis(NotNull(), 640.0f, 0,
+			DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL, DWRITE_MEASURING_MODE_GDI_NATURAL,
+			12.5f, 33.3f, NotNull()))
+		.Times(1).WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	IDWriteFontFaceFake fakeFace;
+	GlyphRun ^glyphRun = CreateGlyphRun(fakeFace);
+	GlyphRunAnalysis ^analysis = factory.Factory->CreateGlyphRunAnalysis(glyphRun, 640.0f,
+		RenderingMode::ClearTypeNatural, MeasuringMode::GdiNatural,
+		12.5f, 33.3f);
+	AssertLastResultFailed();
+	ASSERT_TRUE(analysis == nullptr);
+	ReleaseGlyphRun(glyphRun);
+}
+
+static Matrix3x2 ExpectedMatrix()
+{
+	Matrix3x2 matrix;
+	matrix.M11 = 1.0f;
+	matrix.M12 = 0.0f;
+	matrix.M21 = 0.0f;
+	matrix.M22 = 1.0f;
+	matrix.M31 = 12.5f;
+	matrix.M32 = 55.5f;
+	return matrix;
+}
+
+FACTORY_TEST(CreateGlyphRunAnalysisWithTransform)
+{
+	MockedFactory factory;
+	IDWriteGlyphRunAnalysisFake fakeAnalysis;
+	EXPECT_CALL(factory.Mock, CreateGlyphRunAnalysis(NotNull(), 640.0f, NotNull(),
+			DWRITE_RENDERING_MODE_CLEARTYPE_NATURAL, DWRITE_MEASURING_MODE_GDI_NATURAL,
+			12.5f, 33.3f, NotNull()))
+		.Times(1).WillOnce(DoAll(SetArgumentPointee<7>(&fakeAnalysis), Return(S_OK)));
+	IDWriteFontFaceFake fakeFace;
+	GlyphRun ^glyphRun = CreateGlyphRun(fakeFace);
+	GlyphRunAnalysis ^analysis = factory.Factory->CreateGlyphRunAnalysis(glyphRun, 640.0f,
+		ExpectedMatrix(), RenderingMode::ClearTypeNatural, MeasuringMode::GdiNatural,
+		12.5f, 33.3f);
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(analysis != nullptr);
+	ASSERT_EQ(&fakeAnalysis, analysis->InternalPointer);
+	delete analysis;
+	ReleaseGlyphRun(glyphRun);
 }
