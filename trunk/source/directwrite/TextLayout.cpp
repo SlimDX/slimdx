@@ -30,6 +30,7 @@
 #include "TextLayout.h"
 #include "TextMetrics.h"
 #include "TextRenderer.h"
+#include "NativeUnicodeString.h"
 
 const IID IID_IDWriteTextLayout = __uuidof(IDWriteTextLayout);
 
@@ -39,39 +40,6 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
-	LPWSTR AllocateNativeUnicodeString(String ^text)
-	{
-		return ( text == nullptr || String::IsNullOrEmpty( text ) ) ?
-			NULL
-			: reinterpret_cast<LPWSTR>( System::Runtime::InteropServices::Marshal::StringToHGlobalUni( text ).ToPointer() );
-	}
-	void FreeNativeUnicodeString(LPWSTR text)
-	{
-		if (text)
-		{
-			System::Runtime::InteropServices::Marshal::FreeHGlobal( IntPtr( reinterpret_cast<void*>( text ) ) );
-		}
-	}
-	class NativeUnicodeString
-	{
-	public:
-		explicit NativeUnicodeString(String ^text)
-			: m_nativeString(AllocateNativeUnicodeString(text))
-		{
-		}
-		~NativeUnicodeString()
-		{
-			FreeNativeUnicodeString(m_nativeString);
-		}
-		operator LPCWSTR() const
-		{
-			return m_nativeString;
-		}
-
-	private:
-		LPWSTR m_nativeString;
-	};
-
 	TextLayout::TextLayout( Factory^ factory, System::String^ text, TextFormat^ format )
 	{
 		Init( factory, text, format, 0, 0 );

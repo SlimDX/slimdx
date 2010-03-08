@@ -430,6 +430,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\DirectWrite.Factory.Tests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\source\DirectWrite.Font.Tests.cpp"
 				>
 			</File>
