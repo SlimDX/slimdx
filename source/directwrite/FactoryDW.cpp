@@ -24,11 +24,14 @@
 
 #include "DirectWriteException.h"
 #include "../direct2d/Matrix3x2.h"
+#include "../stack_array.h"
 
 #include "FactoryDW.h"
 #include "FontCollection.h"
 #include "FontFile.h"
 #include "FontFace.h"
+#include "GlyphRunDW.h"
+#include "GlyphRunAnalysis.h"
 #include "InlineObject.h"
 #include "NativeUnicodeString.h"
 #include "TextFormat.h"
@@ -147,6 +150,46 @@ namespace DirectWrite
 	FontFile ^Factory::CreateFontFileReference(String ^filePath, System::Runtime::InteropServices::ComTypes::FILETIME fileTime)
 	{
 		return CreateFontFileReferenceInternal(InternalPointer, filePath, reinterpret_cast<FILETIME *>(&fileTime));
+	}
+
+	static GlyphRunAnalysis ^CreateGlyphRunAnalysisInternal(IDWriteFactory *factory,
+		GlyphRun ^glyphRun, float pixelsPerDip, DWRITE_MATRIX *transform,
+		RenderingMode renderingMode, MeasuringMode measuringMode,
+		float baselineOriginX, float baselineOriginY)
+	{
+		stack_array<UINT16> indices;
+		stack_array<FLOAT> advances;
+		stack_array<DWRITE_GLYPH_OFFSET> offsets;
+		DWRITE_GLYPH_RUN nativeGlyphRun = glyphRun->ToUnmanaged(indices, advances, offsets);
+		IDWriteGlyphRunAnalysis *analysis = 0;
+		if (RECORD_DW(factory->CreateGlyphRunAnalysis(&nativeGlyphRun,
+				pixelsPerDip, transform,
+				static_cast<DWRITE_RENDERING_MODE>(renderingMode),
+				static_cast<DWRITE_MEASURING_MODE>(measuringMode),
+				baselineOriginX, baselineOriginY, &analysis)).IsFailure)
+		{
+			return nullptr;
+		}
+		return GlyphRunAnalysis::FromPointer(analysis);
+	}
+
+	GlyphRunAnalysis ^Factory::CreateGlyphRunAnalysis(GlyphRun ^glyphRun, float pixelsPerDip,
+		RenderingMode renderingMode, MeasuringMode measuringMode,
+		float baselineOriginX, float baselineOriginY)
+	{
+		return CreateGlyphRunAnalysisInternal(InternalPointer,
+			glyphRun, pixelsPerDip, 0, renderingMode, measuringMode,
+			baselineOriginX, baselineOriginY);
+	}
+	GlyphRunAnalysis ^Factory::CreateGlyphRunAnalysis(GlyphRun ^glyphRun,
+		float pixelsPerDip, Matrix3x2 transform,
+		RenderingMode renderingMode, MeasuringMode measuringMode,
+		float baselineOriginX, float baselineOriginY)
+	{
+		return CreateGlyphRunAnalysisInternal(InternalPointer,
+			glyphRun, pixelsPerDip, reinterpret_cast<DWRITE_MATRIX *>(&transform),
+			renderingMode, measuringMode,
+			baselineOriginX, baselineOriginY);
 	}
 }
 }

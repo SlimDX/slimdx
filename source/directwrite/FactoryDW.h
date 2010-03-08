@@ -25,6 +25,7 @@ extern const IID IID_IDWriteFactory;
 
 #include "../ComObject.h"
 #include "Enums.h"
+#include "GlyphRunDW.h"
 
 namespace SlimDX
 {
@@ -34,10 +35,12 @@ namespace SlimDX
 	}
 	namespace DirectWrite
 	{
+		using namespace SlimDX::Direct2D;
 		using namespace System;
 		ref class FontCollection;
 		ref class FontFace;
 		ref class FontFile;
+		ref class GlyphRunAnalysis;
 		ref class InlineObject;
 		ref class TextFormat;
 		ref class TextLayout;
@@ -59,11 +62,18 @@ namespace SlimDX
 				bool useGdiNatural);
 			TextLayout ^CreateGdiCompatibleTextLayout(String ^string, TextFormat ^textFormat,
 				float layoutWidth, float layoutHeight, float pixelsPerDip,
-				SlimDX::Direct2D::Matrix3x2 transform, bool useGdiNatural);
+				Matrix3x2 transform, bool useGdiNatural);
 			InlineObject ^CreateEllipsisTrimmingSign(TextFormat ^textFormat);
 			FontFace ^CreateFontFace(FontFaceType fontFaceType, array<FontFile^> ^fontFiles, int faceIndex, FontSimulations fontFaceSimulationFlags);
 			FontFile ^CreateFontFileReference(String ^filePath);
 			FontFile ^CreateFontFileReference(String ^filePath, System::Runtime::InteropServices::ComTypes::FILETIME fileTime);
+			GlyphRunAnalysis ^CreateGlyphRunAnalysis(GlyphRun ^glyphRun, float pixelsPerDip,
+				RenderingMode renderingMode, MeasuringMode measuringMode,
+				float baselineOriginX, float baselineOriginY);
+			GlyphRunAnalysis ^CreateGlyphRunAnalysis(GlyphRun ^glyphRun,
+				float pixelsPerDip, Matrix3x2 transform,
+				RenderingMode renderingMode, MeasuringMode measuringMode,
+				float baselineOriginX, float baselineOriginY);
 		};
 	}
 }
