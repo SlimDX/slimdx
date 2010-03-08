@@ -214,5 +214,15 @@ namespace DirectWrite
 		}
 		return NumberSubstitution::FromPointer(sub);
 	}
+
+	RenderingParameters ^Factory::CreateRenderingParameters()
+	{
+		IDWriteRenderingParams *params = 0;
+		if (RECORD_DW(InternalPointer->CreateRenderingParams(&params)).IsFailure)
+		{
+			return nullptr;
+		}
+		return RenderingParameters::FromPointer(params);
+	}
 }
 }

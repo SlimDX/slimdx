@@ -77,6 +77,7 @@ namespace SlimDX
 				float baselineOriginX, float baselineOriginY);
 			RenderingParameters ^CreateMonitorRenderingParameters(IntPtr monitor);
 			NumberSubstitution ^CreateNumberSubstitution(NumberSubstitutionMethod method, String ^localeName, bool ignoreUserOverride);
+			RenderingParameters ^CreateRenderingParameters();
 		};
 	}
 }
