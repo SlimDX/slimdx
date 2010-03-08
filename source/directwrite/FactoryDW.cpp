@@ -20,10 +20,19 @@
 * THE SOFTWARE.
 */
 #include "stdafx.h"
+#include <vector>
 
 #include "DirectWriteException.h"
+#include "../direct2d/Matrix3x2.h"
 
 #include "FactoryDW.h"
+#include "FontCollection.h"
+#include "FontFile.h"
+#include "FontFace.h"
+#include "InlineObject.h"
+#include "NativeUnicodeString.h"
+#include "TextFormat.h"
+#include "TextLayout.h"
 
 const IID IID_IDWriteFactory = __uuidof(IDWriteFactory);
 
@@ -51,6 +60,93 @@ namespace DirectWrite
 			throw gcnew DirectWriteException( Result::Last );
 
 		Construct( factory );
+	}
+
+	FontCollection ^Factory::GetSystemFontCollection(bool checkForUpdates)
+	{
+		IDWriteFontCollection *collection = 0;
+		if (RECORD_DW(InternalPointer->GetSystemFontCollection(&collection, checkForUpdates ? TRUE : FALSE)).IsFailure)
+		{
+			return nullptr;
+		}
+		return FontCollection::FromPointer(collection);
+	}
+
+	static TextLayout ^CreateGdiCompatibleTextLayoutInternal(IDWriteFactory *factory,
+		String ^text, TextFormat ^textFormat,
+		float layoutWidth, float layoutHeight, float pixelsPerDip,
+		DWRITE_MATRIX *transform, bool useGdiNatural)
+	{
+		IDWriteTextLayout *layout = 0;
+		if (RECORD_DW(factory->CreateGdiCompatibleTextLayout(NativeUnicodeString(text), text->Length,
+			textFormat->InternalPointer, layoutWidth, layoutHeight, pixelsPerDip,
+			transform, useGdiNatural ? TRUE : FALSE, &layout)).IsFailure)
+		{
+			return nullptr;
+		}
+		return TextLayout::FromPointer(layout);			
+	}
+
+	TextLayout ^Factory::CreateGdiCompatibleTextLayout(String ^text, TextFormat ^textFormat,
+		float layoutWidth, float layoutHeight, float pixelsPerDip, bool useGdiNatural)
+	{
+		return CreateGdiCompatibleTextLayoutInternal(InternalPointer, text, textFormat,
+			layoutWidth, layoutHeight, pixelsPerDip, 0, useGdiNatural);
+	}
+	TextLayout ^Factory::CreateGdiCompatibleTextLayout(String ^text, TextFormat ^textFormat,
+		float layoutWidth, float layoutHeight, float pixelsPerDip,
+		SlimDX::Direct2D::Matrix3x2 transform, bool useGdiNatural)
+	{
+		return CreateGdiCompatibleTextLayoutInternal(InternalPointer, text, textFormat,
+			layoutWidth, layoutHeight, pixelsPerDip,
+			reinterpret_cast<DWRITE_MATRIX *>(&transform), useGdiNatural);
+	}
+	InlineObject ^Factory::CreateEllipsisTrimmingSign(TextFormat ^textFormat)
+	{
+		IDWriteInlineObject *obj = 0;
+		if (RECORD_DW(InternalPointer->
+			CreateEllipsisTrimmingSign(textFormat->InternalPointer, &obj)).IsFailure)
+		{
+			return nullptr;
+		}
+		return InlineObject::FromPointer(obj);
+	}
+	FontFace ^Factory::CreateFontFace(FontFaceType fontFaceType, array<FontFile^> ^fontFiles, int faceIndex, FontSimulations fontFaceSimulationFlags)
+	{
+		std::vector<IDWriteFontFile *> nativeFontFiles;
+		nativeFontFiles.resize(fontFiles->Length);
+		for (int i = 0; i < fontFiles->Length; i++)
+		{
+			nativeFontFiles[i] = fontFiles[i]->InternalPointer;
+		}
+		IDWriteFontFace *fontFace;
+		if (RECORD_DW(InternalPointer->CreateFontFace(static_cast<DWRITE_FONT_FACE_TYPE>(fontFaceType),
+			nativeFontFiles.size(), &nativeFontFiles[0],
+			faceIndex, static_cast<DWRITE_FONT_SIMULATIONS>(fontFaceSimulationFlags),
+			&fontFace)).IsFailure)
+		{
+			return nullptr;
+		}
+		return FontFace::FromPointer(fontFace);
+	}
+
+	static FontFile ^CreateFontFileReferenceInternal(IDWriteFactory *factory, String ^filePath, FILETIME const *fileTime)
+	{
+		IDWriteFontFile *fontFile = 0;
+		if (RECORD_DW(factory->CreateFontFileReference(NativeUnicodeString(filePath), fileTime, &fontFile)).IsFailure)
+		{
+			return nullptr;
+		}
+		return FontFile::FromPointer(fontFile);
+	}
+
+	FontFile ^Factory::CreateFontFileReference(String ^filePath)
+	{
+		return CreateFontFileReferenceInternal(InternalPointer, filePath, 0);
+	}
+	FontFile ^Factory::CreateFontFileReference(String ^filePath, System::Runtime::InteropServices::ComTypes::FILETIME fileTime)
+	{
+		return CreateFontFileReferenceInternal(InternalPointer, filePath, reinterpret_cast<FILETIME *>(&fileTime));
 	}
 }
 }
