@@ -34,6 +34,7 @@
 #include "GlyphRunAnalysis.h"
 #include "InlineObject.h"
 #include "NativeUnicodeString.h"
+#include "NumberSubstitution.h"
 #include "TextFormat.h"
 #include "TextLayout.h"
 
@@ -200,6 +201,18 @@ namespace DirectWrite
 			return nullptr;
 		}
 		return RenderingParameters::FromPointer(params);
+	}
+
+	NumberSubstitution ^Factory::CreateNumberSubstitution(NumberSubstitutionMethod method, String ^localeName, bool ignoreUserOverride)
+	{
+		IDWriteNumberSubstitution *sub = 0;
+		if (RECORD_DW(InternalPointer->CreateNumberSubstitution(
+			static_cast<DWRITE_NUMBER_SUBSTITUTION_METHOD>(method), NativeUnicodeString(localeName),
+			ignoreUserOverride ? TRUE : FALSE, &sub)).IsFailure)
+		{
+			return nullptr;
+		}
+		return NumberSubstitution::FromPointer(sub);
 	}
 }
 }
