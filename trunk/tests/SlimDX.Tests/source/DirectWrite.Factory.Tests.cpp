@@ -43,7 +43,7 @@ public:
 	MOCK_METHOD3_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateFontFileReference, HRESULT(WCHAR const*, FILETIME const*, IDWriteFontFile**));
 	STDMETHOD(CreateCustomFontFileReference)(void const* fontFileReferenceKey, UINT32 fontFileReferenceKeySize, IDWriteFontFileLoader* fontFileLoader, IDWriteFontFile** fontFile) { return E_NOTIMPL; } 
 	MOCK_METHOD6_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateFontFace, HRESULT(DWRITE_FONT_FACE_TYPE, UINT32, IDWriteFontFile* const*, UINT32, DWRITE_FONT_SIMULATIONS, IDWriteFontFace**));
-	STDMETHOD(CreateRenderingParams)(IDWriteRenderingParams** renderingParams) { return E_NOTIMPL; }
+	MOCK_METHOD1_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateRenderingParams, HRESULT(IDWriteRenderingParams**));
 	MOCK_METHOD2_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateMonitorRenderingParams, HRESULT(HMONITOR, IDWriteRenderingParams**));
 	STDMETHOD(CreateCustomRenderingParams)(FLOAT gamma, FLOAT enhancedContrast, FLOAT clearTypeLevel, DWRITE_PIXEL_GEOMETRY pixelGeometry, DWRITE_RENDERING_MODE renderingMode, IDWriteRenderingParams** renderingParams) { return E_NOTIMPL; }
 	STDMETHOD(RegisterFontFileLoader)(IDWriteFontFileLoader* fontFileLoader) { return E_NOTIMPL; } 
@@ -460,4 +460,28 @@ FACTORY_TEST(CreateNumberSubstitutionFailureReturnsNullPtr)
 		CreateNumberSubstitution(NumberSubstitutionMethod::Contextual, gcnew String("Slartibartfast"), true);
 	AssertLastResultFailed();
 	ASSERT_TRUE(sub == nullptr);
+}
+
+FACTORY_TEST(CreateRenderingParameters)
+{
+	MockedFactory factory;
+	IDWriteRenderingParamsFake fakeParams;
+	EXPECT_CALL(factory.Mock, CreateRenderingParams(NotNull()))
+		.Times(1).WillOnce(DoAll(SetArgumentPointee<0>(&fakeParams), Return(S_OK)));
+	RenderingParameters ^params = factory.Factory->CreateRenderingParameters();
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(params != nullptr);
+	ASSERT_EQ(&fakeParams, params->InternalPointer);
+	delete params;
+}
+
+FACTORY_TEST(CreateRenderingParametersFailureReturnsNullPtr)
+{
+	MockedFactory factory;
+	EXPECT_CALL(factory.Mock, CreateRenderingParams(NotNull()))
+		.Times(1).WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	RenderingParameters ^params = factory.Factory->CreateRenderingParameters();
+	AssertLastResultFailed();
+	ASSERT_TRUE(params == nullptr);
 }
