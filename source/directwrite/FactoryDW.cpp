@@ -191,5 +191,15 @@ namespace DirectWrite
 			renderingMode, measuringMode,
 			baselineOriginX, baselineOriginY);
 	}
+
+	RenderingParameters ^Factory::CreateMonitorRenderingParameters(IntPtr monitor)
+	{
+		IDWriteRenderingParams *params = 0;
+		if (RECORD_DW(InternalPointer->CreateMonitorRenderingParams(static_cast<HMONITOR>(monitor.ToPointer()), &params)).IsFailure)
+		{
+			return nullptr;
+		}
+		return RenderingParameters::FromPointer(params);
+	}
 }
 }
