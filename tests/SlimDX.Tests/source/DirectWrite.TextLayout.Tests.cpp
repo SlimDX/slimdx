@@ -63,7 +63,7 @@ private:
 	TextLayout ^layout;
 };
 
-TEST_F(TextLayoutTest, DetermineMinWidth)
+TEXT_LAYOUT_TEST(DetermineMinWidth)
 {
 	MockedTextLayout layout;
 	EXPECT_CALL(layout.Mock, DetermineMinWidth(NotNull()))
@@ -102,7 +102,7 @@ static void AssertHitTestMetricsMatchExpected(HitTestMetrics% actual)
 	ASSERT_EQ(expected.isTrimmed == TRUE, actual.IsTrimmed);
 }
 
-TEST_F(TextLayoutTest, HitTestPoint)
+TEXT_LAYOUT_TEST(HitTestPoint)
 {
 	MockedTextLayout layout;
 	EXPECT_CALL(layout.Mock, HitTestPoint(10.0f, 12.0f, NotNull(), NotNull(), NotNull()))
@@ -120,7 +120,7 @@ TEST_F(TextLayoutTest, HitTestPoint)
 	AssertHitTestMetricsMatchExpected(metrics);
 }
 
-TEST_F(TextLayoutTest, HitTestTextPosition)
+TEXT_LAYOUT_TEST(HitTestTextPosition)
 {
 	MockedTextLayout layout;
 	EXPECT_CALL(layout.Mock, HitTestTextPosition(12U, FALSE, NotNull(), NotNull(), NotNull()))
@@ -137,7 +137,7 @@ TEST_F(TextLayoutTest, HitTestTextPosition)
 	AssertHitTestMetricsMatchExpected(metrics);
 }
 
-TEST_F(TextLayoutTest, HitTestTextRange)
+TEXT_LAYOUT_TEST(HitTestTextRange)
 {
 	MockedTextLayout layout;
 	EXPECT_CALL(layout.Mock, HitTestTextRange(12U, 4U, 10.0f, 12.0f, 0, 0, NotNull()))
@@ -169,7 +169,7 @@ static TextRange ExpectedManagedTextRange()
 	return managed;
 }
 
-TEST_F(TextLayoutTest, SetFontFamilyName)
+TEXT_LAYOUT_TEST(SetFontFamilyName)
 {
 	MockedTextLayout layout;
 	EXPECT_CALL(layout.Mock, SetFontFamilyName(NotNull(), ExpectedTextRange()))
@@ -179,7 +179,7 @@ TEST_F(TextLayoutTest, SetFontFamilyName)
 	ASSERT_TRUE(layout.Layout->SetFontFamilyName(gcnew String("Slartibartfast!"), ExpectedManagedTextRange()).IsSuccess);
 }
 
-TEST_F(TextLayoutTest, SetFontStyle)
+TEXT_LAYOUT_TEST(SetFontStyle)
 {
 	MockedTextLayout layout;
 	EXPECT_CALL(layout.Mock, SetFontStyle(DWRITE_FONT_STYLE_ITALIC, ExpectedTextRange()))
@@ -188,7 +188,7 @@ TEST_F(TextLayoutTest, SetFontStyle)
 	ASSERT_TRUE(layout.Layout->SetFontStyle(FontStyle::Italic, ExpectedManagedTextRange()).IsSuccess);
 }
 
-TEST_F(TextLayoutTest, SetFontStretch)
+TEXT_LAYOUT_TEST(SetFontStretch)
 {
 	MockedTextLayout layout;
 	EXPECT_CALL(layout.Mock, SetFontStretch(DWRITE_FONT_STRETCH_ULTRA_EXPANDED, ExpectedTextRange()))
@@ -197,7 +197,7 @@ TEST_F(TextLayoutTest, SetFontStretch)
 	ASSERT_TRUE(layout.Layout->SetFontStretch(FontStretch::UltraExpanded, ExpectedManagedTextRange()).IsSuccess);
 }
 
-TEST_F(TextLayoutTest, SetLocaleName)
+TEXT_LAYOUT_TEST(SetLocaleName)
 {
 	MockedTextLayout layout;
 	EXPECT_CALL(layout.Mock, SetLocaleName(NotNull(), ExpectedTextRange()))
@@ -206,7 +206,7 @@ TEST_F(TextLayoutTest, SetLocaleName)
 	ASSERT_TRUE(layout.Layout->SetLocaleName(gcnew String("Slartibartfast"), ExpectedManagedTextRange()).IsSuccess);
 }
 
-TEST_F(TextLayoutTest, SetStrikethrough)
+TEXT_LAYOUT_TEST(SetStrikethrough)
 {
 	MockedTextLayout layout;
 	EXPECT_CALL(layout.Mock, SetStrikethrough(TRUE, ExpectedTextRange()))
@@ -215,7 +215,7 @@ TEST_F(TextLayoutTest, SetStrikethrough)
 	ASSERT_TRUE(layout.Layout->SetStrikethrough(true, ExpectedManagedTextRange()).IsSuccess);
 }
 
-TEST_F(TextLayoutTest, SetInlineObject)
+TEXT_LAYOUT_TEST(SetInlineObject)
 {
 	MockedTextLayout layout;
 	IDWriteInlineObjectMock mockInlineObject;
@@ -227,7 +227,7 @@ TEST_F(TextLayoutTest, SetInlineObject)
 	delete obj;
 }
 
-TEST_F(TextLayoutTest, SetDrawingEffect)
+TEXT_LAYOUT_TEST(SetDrawingEffect)
 {
 	MockedTextLayout layout;
 	EXPECT_CALL(layout.Mock, SetDrawingEffect(0, ExpectedTextRange()))
@@ -236,7 +236,7 @@ TEST_F(TextLayoutTest, SetDrawingEffect)
 	ASSERT_TRUE(layout.Layout->SetDrawingEffect(nullptr, ExpectedManagedTextRange()).IsSuccess);
 }
 
-TEST_F(TextLayoutTest, Draw)
+TEXT_LAYOUT_TEST(Draw)
 {
 	MockedTextLayout layout;
 	IDWriteTextRendererMock mockRenderer;

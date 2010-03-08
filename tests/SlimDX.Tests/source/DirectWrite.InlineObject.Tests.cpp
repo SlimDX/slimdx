@@ -86,7 +86,9 @@ static void AssertInlineObjectMetricsMatchExpected(InlineObjectMetrics metrics)
 	ASSERT_EQ(expected.supportsSideways == TRUE, metrics.SupportsSideways);
 }
 
-TEST_F(InlineObjectTest, Metrics)
+#define INLINE_OBJECT_TEST(name_) TEST_F(InlineObjectTest, name_)
+
+INLINE_OBJECT_TEST(Metrics)
 {
 	MockedInlineObject obj;
 	EXPECT_CALL(obj.Mock, GetMetrics(NotNull()))
@@ -97,7 +99,7 @@ TEST_F(InlineObjectTest, Metrics)
 	AssertInlineObjectMetricsMatchExpected(metrics);
 }
 
-TEST_F(InlineObjectTest, MetricsReturnsZeroOnFailure)
+INLINE_OBJECT_TEST(MetricsReturnsZeroOnFailure)
 {
 	MockedInlineObject obj;
 	EXPECT_CALL(obj.Mock, GetMetrics(NotNull()))
@@ -117,7 +119,7 @@ static std::ostream &operator<<(std::ostream &stream, BreakCondition bc)
 	return stream << bc.ToString();
 }
 
-TEST_F(InlineObjectTest, GetBreakConditions)
+INLINE_OBJECT_TEST(GetBreakConditions)
 {
 	MockedInlineObject obj;
 	EXPECT_CALL(obj.Mock, GetBreakConditions(NotNull(), NotNull()))
@@ -150,7 +152,7 @@ static void AssertOverhangMetricsMatchExpected(OverhangMetrics metrics)
 	ASSERT_EQ(expected.bottom, metrics.Bottom);
 }
 
-TEST_F(InlineObjectTest, OverhangMetrics)
+INLINE_OBJECT_TEST(OverhangMetrics)
 {
 	MockedInlineObject obj;
 	EXPECT_CALL(obj.Mock, GetOverhangMetrics(NotNull()))
@@ -161,7 +163,7 @@ TEST_F(InlineObjectTest, OverhangMetrics)
 	AssertOverhangMetricsMatchExpected(metrics);
 }
 
-TEST_F(InlineObjectTest, OverhangMetricsReturnsZeroOnFailure)
+INLINE_OBJECT_TEST(OverhangMetricsReturnsZeroOnFailure)
 {
 	MockedInlineObject obj;
 	EXPECT_CALL(obj.Mock, GetOverhangMetrics(NotNull()))
@@ -176,7 +178,7 @@ TEST_F(InlineObjectTest, OverhangMetricsReturnsZeroOnFailure)
 	ASSERT_FALSE(metrics.Bottom);
 }
 
-TEST_F(InlineObjectTest, Draw)
+INLINE_OBJECT_TEST(Draw)
 {
 	MockedInlineObject obj;
 	IDWriteTextRendererMock mockRenderer;

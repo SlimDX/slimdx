@@ -117,7 +117,9 @@ static std::ostream &operator<<(std::ostream &stream, WordWrapping wrap)
 	return stream << wrap.ToString();
 }
 
-TEST_F(TextFormatTest, GetFlowDirection)
+#define TEXT_FORMAT_TEST(name_) TEST_F(TextFormatTest, name_)
+
+TEXT_FORMAT_TEST(GetFlowDirection)
 {
 	MockedTextFormat format;
 	EXPECT_CALL(format.Mock, GetFlowDirection())
@@ -127,7 +129,7 @@ TEST_F(TextFormatTest, GetFlowDirection)
 	AssertLastResultSucceeded();
 }
 
-TEST_F(TextFormatTest, SetFlowDirection)
+TEXT_FORMAT_TEST(SetFlowDirection)
 {
 	MockedTextFormat format;
 	EXPECT_CALL(format.Mock, SetFlowDirection(DWRITE_FLOW_DIRECTION_TOP_TO_BOTTOM))
@@ -137,7 +139,7 @@ TEST_F(TextFormatTest, SetFlowDirection)
 	AssertLastResultSucceeded();
 }
 
-TEST_F(TextFormatTest, GetFontCollection)
+TEXT_FORMAT_TEST(GetFontCollection)
 {
 	MockedTextFormat format;
 	IDWriteFontCollectionMock mockCollection;
@@ -151,7 +153,7 @@ TEST_F(TextFormatTest, GetFontCollection)
 	delete collection;
 }
 
-TEST_F(TextFormatTest, GetFontCollectionFailureReturnsNullPtr)
+TEXT_FORMAT_TEST(GetFontCollectionFailureReturnsNullPtr)
 {
 	MockedTextFormat format;
 	EXPECT_CALL(format.Mock, GetFontCollection(NotNull()))
@@ -163,7 +165,7 @@ TEST_F(TextFormatTest, GetFontCollectionFailureReturnsNullPtr)
 	ASSERT_TRUE(collection == nullptr);
 }
 
-TEST_F(TextFormatTest, GetFontFamilyName)
+TEXT_FORMAT_TEST(GetFontFamilyName)
 {
 	MockedTextFormat format;
 	WCHAR const fakeName[] = L"Slartibartfast";
@@ -180,7 +182,7 @@ TEST_F(TextFormatTest, GetFontFamilyName)
 	ASSERT_TRUE(gcnew String(fakeName) == name);
 }
 
-TEST_F(TextFormatTest, GetFontFamilyNameFailureReturnsEmptyString)
+TEXT_FORMAT_TEST(GetFontFamilyNameFailureReturnsEmptyString)
 {
 	MockedTextFormat format;
 	WCHAR const fakeName[] = L"Slartibartfast";
@@ -197,7 +199,7 @@ TEST_F(TextFormatTest, GetFontFamilyNameFailureReturnsEmptyString)
 	ASSERT_TRUE(String::Empty == name);
 }
 
-TEST_F(TextFormatTest, GetFontSize)
+TEXT_FORMAT_TEST(GetFontSize)
 {
 	MockedTextFormat format;
 	EXPECT_CALL(format.Mock, GetFontSize())
@@ -206,7 +208,7 @@ TEST_F(TextFormatTest, GetFontSize)
 	ASSERT_EQ(45.4f, format.Format->FontSize);
 }
 
-TEST_F(TextFormatTest, GetFontStretch)
+TEXT_FORMAT_TEST(GetFontStretch)
 {
 	MockedTextFormat format;
 	EXPECT_CALL(format.Mock, GetFontStretch())
@@ -215,7 +217,7 @@ TEST_F(TextFormatTest, GetFontStretch)
 	ASSERT_EQ(FontStretch::UltraExpanded, format.Format->FontStretch);
 }
 
-TEST_F(TextFormatTest, GetFontStyle)
+TEXT_FORMAT_TEST(GetFontStyle)
 {
 	MockedTextFormat format;
 	EXPECT_CALL(format.Mock, GetFontStyle())
@@ -224,7 +226,7 @@ TEST_F(TextFormatTest, GetFontStyle)
 	ASSERT_EQ(FontStyle::Italic, format.Format->FontStyle);
 }
 
-TEST_F(TextFormatTest, GetFontWeight)
+TEXT_FORMAT_TEST(GetFontWeight)
 {
 	MockedTextFormat format;
 	EXPECT_CALL(format.Mock, GetFontWeight())
@@ -233,7 +235,7 @@ TEST_F(TextFormatTest, GetFontWeight)
 	ASSERT_EQ(FontWeight::UltraBold, format.Format->FontWeight);
 }
 
-TEST_F(TextFormatTest, GetIncrementalTabStop)
+TEXT_FORMAT_TEST(GetIncrementalTabStop)
 {
 	MockedTextFormat format;
 	EXPECT_CALL(format.Mock, GetIncrementalTabStop())
@@ -242,7 +244,7 @@ TEST_F(TextFormatTest, GetIncrementalTabStop)
 	ASSERT_EQ(45.5f, format.Format->IncrementalTabStop);
 }
 
-TEST_F(TextFormatTest, SetIncrementalTabStop)
+TEXT_FORMAT_TEST(SetIncrementalTabStop)
 {
 	MockedTextFormat format;
 	EXPECT_CALL(format.Mock, SetIncrementalTabStop(45.5f))
@@ -257,7 +259,7 @@ static std::ostream &operator<<(std::ostream &stream, LineSpacingMethod method)
 	return stream << method.ToString();
 }
 
-TEST_F(TextFormatTest, GetLineSpacing)
+TEXT_FORMAT_TEST(GetLineSpacing)
 {
 	MockedTextFormat format;
 	EXPECT_CALL(format.Mock, GetLineSpacing(NotNull(), NotNull(), NotNull()))
@@ -275,7 +277,7 @@ TEST_F(TextFormatTest, GetLineSpacing)
 	ASSERT_EQ(14.8f, baseline);
 }
 
-TEST_F(TextFormatTest, SetLineSpacing)
+TEXT_FORMAT_TEST(SetLineSpacing)
 {
 	MockedTextFormat format;
 	EXPECT_CALL(format.Mock, SetLineSpacing(DWRITE_LINE_SPACING_METHOD_UNIFORM, 12.5f, 14.8f))
@@ -285,7 +287,7 @@ TEST_F(TextFormatTest, SetLineSpacing)
 	AssertLastResultSucceeded();
 }
 
-TEST_F(TextFormatTest, LocaleName)
+TEXT_FORMAT_TEST(LocaleName)
 {
 	MockedTextFormat format;
 	WCHAR const fakeName[] = L"Slartibartfast";
@@ -302,7 +304,7 @@ TEST_F(TextFormatTest, LocaleName)
 	ASSERT_TRUE(gcnew String(fakeName) == name);
 }
 
-TEST_F(TextFormatTest, LocaleNameFailureReturnsEmptyString)
+TEXT_FORMAT_TEST(LocaleNameFailureReturnsEmptyString)
 {
 	MockedTextFormat format;
 	WCHAR const fakeName[] = L"Slartibartfast";
@@ -319,7 +321,7 @@ TEST_F(TextFormatTest, LocaleNameFailureReturnsEmptyString)
 	ASSERT_TRUE(String::Empty == name);
 }
 
-TEST_F(TextFormatTest, GetReadingDirection)
+TEXT_FORMAT_TEST(GetReadingDirection)
 {
 	MockedTextFormat format;
 	EXPECT_CALL(format.Mock, GetReadingDirection())
@@ -328,7 +330,7 @@ TEST_F(TextFormatTest, GetReadingDirection)
 	ASSERT_EQ(ReadingDirection::RightToLeft, format.Format->ReadingDirection);
 }
 
-TEST_F(TextFormatTest, SetReadingDirection)
+TEXT_FORMAT_TEST(SetReadingDirection)
 {
 	MockedTextFormat format;
 	EXPECT_CALL(format.Mock, SetReadingDirection(DWRITE_READING_DIRECTION_RIGHT_TO_LEFT))
@@ -355,7 +357,9 @@ static void AssertTrimmingMatchesExpected(Trimming trimming)
 	ASSERT_EQ(expected.delimiterCount, trimming.DelimiterCount);
 }
 
-TEST_F(TextFormatTest, GetTrimmingNoSign)
+#define TEXT_FORMAT_TEST(name_) TEST_F(TextFormatTest, name_)
+
+TEXT_FORMAT_TEST(GetTrimmingNoSign)
 {
 	MockedTextFormat format;
 	EXPECT_CALL(format.Mock, GetTrimming(NotNull(), 0))
@@ -367,7 +371,7 @@ TEST_F(TextFormatTest, GetTrimmingNoSign)
 	AssertTrimmingMatchesExpected(trimming);
 }
 
-TEST_F(TextFormatTest, GetTrimmingFailureReturnsZero)
+TEXT_FORMAT_TEST(GetTrimmingFailureReturnsZero)
 {
 	MockedTextFormat format;
 	EXPECT_CALL(format.Mock, GetTrimming(NotNull(), 0))
@@ -381,7 +385,7 @@ TEST_F(TextFormatTest, GetTrimmingFailureReturnsZero)
 	ASSERT_EQ(0, trimming.DelimiterCount);
 }
 
-TEST_F(TextFormatTest, GetTrimmingWithSign)
+TEXT_FORMAT_TEST(GetTrimmingWithSign)
 {
 	MockedTextFormat format;
 	IDWriteInlineObjectMock mockSign;
@@ -399,7 +403,7 @@ TEST_F(TextFormatTest, GetTrimmingWithSign)
 	delete sign;
 }
 
-TEST_F(TextFormatTest, GetWordWrapping)
+TEXT_FORMAT_TEST(GetWordWrapping)
 {
 	MockedTextFormat format;
 	EXPECT_CALL(format.Mock, GetWordWrapping())
@@ -408,7 +412,7 @@ TEST_F(TextFormatTest, GetWordWrapping)
 	ASSERT_EQ(WordWrapping::Wrap, format.Format->WordWrapping);
 }
 
-TEST_F(TextFormatTest, SetWordWrapping)
+TEXT_FORMAT_TEST(SetWordWrapping)
 {
 	MockedTextFormat format;
 	EXPECT_CALL(format.Mock, SetWordWrapping(DWRITE_WORD_WRAPPING_WRAP))

@@ -68,7 +68,9 @@ protected:
 	}
 };
 
-TEST_F(FontTest, CreateFontFaceErrorThrowsSlimDXException)
+#define FONT_TEST(name_) TEST_F(FontTest, name_)
+
+FONT_TEST(CreateFontFaceErrorThrowsSlimDXException)
 {
 	MockedFont font;
 	EXPECT_CALL(font.Mock, CreateFontFace(NotNull()))
@@ -79,7 +81,7 @@ TEST_F(FontTest, CreateFontFaceErrorThrowsSlimDXException)
 	ASSERT_MANAGED_THROW( face = font.Font->CreateFontFace(), SlimDXException );
 }
 
-TEST_F(FontTest, CreateFontFaceOK)
+FONT_TEST(CreateFontFaceOK)
 {
 	MockedFont font;
 	IDWriteFontFaceMock mockFace;
