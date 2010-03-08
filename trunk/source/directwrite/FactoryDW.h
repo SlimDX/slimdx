@@ -74,6 +74,7 @@ namespace SlimDX
 				float pixelsPerDip, Matrix3x2 transform,
 				RenderingMode renderingMode, MeasuringMode measuringMode,
 				float baselineOriginX, float baselineOriginY);
+			RenderingParameters ^CreateMonitorRenderingParameters(IntPtr monitor);
 		};
 	}
 }

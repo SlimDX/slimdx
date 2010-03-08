@@ -44,7 +44,7 @@ public:
 	STDMETHOD(CreateCustomFontFileReference)(void const* fontFileReferenceKey, UINT32 fontFileReferenceKeySize, IDWriteFontFileLoader* fontFileLoader, IDWriteFontFile** fontFile) { return E_NOTIMPL; } 
 	MOCK_METHOD6_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateFontFace, HRESULT(DWRITE_FONT_FACE_TYPE, UINT32, IDWriteFontFile* const*, UINT32, DWRITE_FONT_SIMULATIONS, IDWriteFontFace**));
 	STDMETHOD(CreateRenderingParams)(IDWriteRenderingParams** renderingParams) { return E_NOTIMPL; }
-	STDMETHOD(CreateMonitorRenderingParams)(HMONITOR monitor, IDWriteRenderingParams** renderingParams) { return E_NOTIMPL; } 
+	MOCK_METHOD2_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateMonitorRenderingParams, HRESULT(HMONITOR, IDWriteRenderingParams**));
 	STDMETHOD(CreateCustomRenderingParams)(FLOAT gamma, FLOAT enhancedContrast, FLOAT clearTypeLevel, DWRITE_PIXEL_GEOMETRY pixelGeometry, DWRITE_RENDERING_MODE renderingMode, IDWriteRenderingParams** renderingParams) { return E_NOTIMPL; }
 	STDMETHOD(RegisterFontFileLoader)(IDWriteFontFileLoader* fontFileLoader) { return E_NOTIMPL; } 
 	STDMETHOD(UnregisterFontFileLoader)(IDWriteFontFileLoader* fontFileLoader) { return E_NOTIMPL; } 
@@ -110,6 +110,18 @@ public:
 	STDMETHOD(GetMetrics)(DWRITE_INLINE_OBJECT_METRICS* metrics) { return E_NOTIMPL; }
 	STDMETHOD(GetOverhangMetrics)(DWRITE_OVERHANG_METRICS* overhangs) { return E_NOTIMPL; }
 	STDMETHOD(GetBreakConditions)(DWRITE_BREAK_CONDITION* breakConditionBefore,DWRITE_BREAK_CONDITION* breakConditionAfter) { return E_NOTIMPL; }
+};
+
+class IDWriteRenderingParamsFake : public IDWriteRenderingParams
+{
+public:
+	MOCK_IUNKNOWN;
+
+	STDMETHOD_(FLOAT, GetGamma)() { return -1.0f; }
+	STDMETHOD_(FLOAT, GetEnhancedContrast)() { return -1.0f; }
+	STDMETHOD_(FLOAT, GetClearTypeLevel)() { return -1.0f; }
+	STDMETHOD_(DWRITE_PIXEL_GEOMETRY, GetPixelGeometry)() { return DWRITE_PIXEL_GEOMETRY(-1); }
+	STDMETHOD_(DWRITE_RENDERING_MODE, GetRenderingMode)() { return DWRITE_RENDERING_MODE(-1); }
 };
 
 class IDWriteTextFormatFake : public IDWriteTextFormat
@@ -390,4 +402,28 @@ FACTORY_TEST(CreateGlyphRunAnalysisWithTransform)
 	ASSERT_EQ(&fakeAnalysis, analysis->InternalPointer);
 	delete analysis;
 	ReleaseGlyphRun(glyphRun);
+}
+
+FACTORY_TEST(CreateMonitorRenderingParameters)
+{
+	MockedFactory factory;
+	IDWriteRenderingParamsFake fakeParams;
+	EXPECT_CALL(factory.Mock, CreateMonitorRenderingParams(NotNull(), NotNull()))
+		.Times(1).WillOnce(DoAll(SetArgumentPointee<1>(&fakeParams), Return(S_OK)));
+	RenderingParameters ^params = factory.Factory->CreateMonitorRenderingParameters(IntPtr(0x666));
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(params != nullptr);
+	ASSERT_EQ(&fakeParams, params->InternalPointer);
+	delete params;
+}
+
+FACTORY_TEST(CreateMonitorRenderingParametersFailureReturnsNullPtr)
+{
+	MockedFactory factory;
+	EXPECT_CALL(factory.Mock, CreateMonitorRenderingParams(NotNull(), NotNull()))
+		.Times(1).WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	RenderingParameters ^params = factory.Factory->CreateMonitorRenderingParameters(IntPtr(0x666));
+	AssertLastResultFailed();
+	ASSERT_TRUE(params == nullptr);
 }
