@@ -25,6 +25,7 @@
 
 #include "DirectWriteException.h"
 #include "GlyphRunAnalysis.h"
+#include "RenderingParameters.h"
 
 const IID IID_IDWriteGlyphRunAnalysis = __uuidof(IDWriteGlyphRunAnalysis);
 

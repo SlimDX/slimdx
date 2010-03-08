@@ -43,6 +43,8 @@ namespace SlimDX
 		ref class GlyphRunAnalysis;
 		ref class InlineObject;
 		ref class NumberSubstitution;
+		ref class RenderingParameters;
+		ref class TextAnalyzer;
 		ref class TextFormat;
 		ref class TextLayout;
 
@@ -78,6 +80,7 @@ namespace SlimDX
 			RenderingParameters ^CreateMonitorRenderingParameters(IntPtr monitor);
 			NumberSubstitution ^CreateNumberSubstitution(NumberSubstitutionMethod method, String ^localeName, bool ignoreUserOverride);
 			RenderingParameters ^CreateRenderingParameters();
+			TextAnalyzer ^CreateTextAnalyzer();
 		};
 	}
 }

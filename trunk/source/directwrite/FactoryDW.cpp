@@ -35,6 +35,8 @@
 #include "InlineObject.h"
 #include "NativeUnicodeString.h"
 #include "NumberSubstitution.h"
+#include "RenderingParameters.h"
+#include "TextAnalyzer.h"
 #include "TextFormat.h"
 #include "TextLayout.h"
 
@@ -223,6 +225,16 @@ namespace DirectWrite
 			return nullptr;
 		}
 		return RenderingParameters::FromPointer(params);
+	}
+
+	TextAnalyzer ^Factory::CreateTextAnalyzer()
+	{
+		IDWriteTextAnalyzer *analyzer = 0;
+		if (RECORD_DW(InternalPointer->CreateTextAnalyzer(&analyzer)).IsFailure)
+		{
+			return nullptr;
+		}
+		return TextAnalyzer::FromPointer(analyzer);
 	}
 }
 }
