@@ -55,7 +55,7 @@ public:
 	MOCK_METHOD9_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateGdiCompatibleTextLayout, HRESULT(WCHAR const*, UINT32, IDWriteTextFormat*, FLOAT, FLOAT, FLOAT, DWRITE_MATRIX const*, BOOL, IDWriteTextLayout**) );
 	MOCK_METHOD2_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateEllipsisTrimmingSign, HRESULT(IDWriteTextFormat*, IDWriteInlineObject**));
 	STDMETHOD(CreateTextAnalyzer)(IDWriteTextAnalyzer** textAnalyzer) { return E_NOTIMPL; }
-	STDMETHOD(CreateNumberSubstitution)(DWRITE_NUMBER_SUBSTITUTION_METHOD substitutionMethod, WCHAR const* localeName, BOOL ignoreUserOverride, IDWriteNumberSubstitution** numberSubstitution) { return E_NOTIMPL; }
+	MOCK_METHOD4_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateNumberSubstitution, HRESULT(DWRITE_NUMBER_SUBSTITUTION_METHOD, WCHAR const*, BOOL, IDWriteNumberSubstitution**));
 	MOCK_METHOD8_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateGlyphRunAnalysis, HRESULT(DWRITE_GLYPH_RUN const*, FLOAT, DWRITE_MATRIX const*, DWRITE_RENDERING_MODE, DWRITE_MEASURING_MODE, FLOAT, FLOAT, IDWriteGlyphRunAnalysis**));
 };
 
@@ -110,6 +110,12 @@ public:
 	STDMETHOD(GetMetrics)(DWRITE_INLINE_OBJECT_METRICS* metrics) { return E_NOTIMPL; }
 	STDMETHOD(GetOverhangMetrics)(DWRITE_OVERHANG_METRICS* overhangs) { return E_NOTIMPL; }
 	STDMETHOD(GetBreakConditions)(DWRITE_BREAK_CONDITION* breakConditionBefore,DWRITE_BREAK_CONDITION* breakConditionAfter) { return E_NOTIMPL; }
+};
+
+class IDWriteNumberSubstitutionFake : public IDWriteNumberSubstitution
+{
+public:
+	MOCK_IUNKNOWN;
 };
 
 class IDWriteRenderingParamsFake : public IDWriteRenderingParams
@@ -426,4 +432,32 @@ FACTORY_TEST(CreateMonitorRenderingParametersFailureReturnsNullPtr)
 	RenderingParameters ^params = factory.Factory->CreateMonitorRenderingParameters(IntPtr(0x666));
 	AssertLastResultFailed();
 	ASSERT_TRUE(params == nullptr);
+}
+
+FACTORY_TEST(CreateNumberSubstitution)
+{
+	MockedFactory factory;
+	IDWriteNumberSubstitutionFake fakeSub;
+	EXPECT_CALL(factory.Mock,
+		CreateNumberSubstitution(DWRITE_NUMBER_SUBSTITUTION_METHOD_CONTEXTUAL, NotNull(), TRUE, NotNull()))
+		.Times(1).WillOnce(DoAll(SetArgumentPointee<3>(&fakeSub), Return(S_OK)));
+	NumberSubstitution ^sub = factory.Factory->
+		CreateNumberSubstitution(NumberSubstitutionMethod::Contextual, gcnew String("Slartibartfast"), true);
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(sub != nullptr);
+	ASSERT_EQ(&fakeSub, sub->InternalPointer);
+	delete sub;
+}
+
+FACTORY_TEST(CreateNumberSubstitutionFailureReturnsNullPtr)
+{
+	MockedFactory factory;
+	EXPECT_CALL(factory.Mock,
+		CreateNumberSubstitution(DWRITE_NUMBER_SUBSTITUTION_METHOD_CONTEXTUAL, NotNull(), TRUE, NotNull()))
+		.Times(1).WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	NumberSubstitution ^sub = factory.Factory->
+		CreateNumberSubstitution(NumberSubstitutionMethod::Contextual, gcnew String("Slartibartfast"), true);
+	AssertLastResultFailed();
+	ASSERT_TRUE(sub == nullptr);
 }
