@@ -2,7 +2,6 @@ IDWriteFactory (DirectWrite::Factory)
 	CreateCustomFontCollection
 	CreateCustomFontFileReference
 	CreateCustomRenderingParams
-	CreateTextAnalyzer
 	CreateTextFormat
 	CreateTextLayout
 	CreateTypography

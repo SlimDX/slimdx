@@ -25,7 +25,6 @@ extern const IID IID_IDWriteGlyphRunAnalysis;
 
 #include "../ComObject.h"
 #include "Enums.h"
-#include "RenderingParameters.h"
 
 using System::Runtime::InteropServices::OutAttribute;
 
@@ -33,6 +32,8 @@ namespace SlimDX
 {
 	namespace DirectWrite
 	{
+		ref class RenderingParameters;
+
 		public ref class GlyphRunAnalysis : public ComObject
 		{
 			COMOBJECT(IDWriteGlyphRunAnalysis, GlyphRunAnalysis);

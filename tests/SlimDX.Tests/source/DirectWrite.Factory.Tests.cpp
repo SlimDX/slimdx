@@ -54,7 +54,7 @@ public:
 	STDMETHOD(CreateTextLayout)(WCHAR const* string, UINT32 stringLength, IDWriteTextFormat* textFormat, FLOAT maxWidth, FLOAT maxHeight, IDWriteTextLayout** textLayout) { return E_NOTIMPL; } 
 	MOCK_METHOD9_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateGdiCompatibleTextLayout, HRESULT(WCHAR const*, UINT32, IDWriteTextFormat*, FLOAT, FLOAT, FLOAT, DWRITE_MATRIX const*, BOOL, IDWriteTextLayout**) );
 	MOCK_METHOD2_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateEllipsisTrimmingSign, HRESULT(IDWriteTextFormat*, IDWriteInlineObject**));
-	STDMETHOD(CreateTextAnalyzer)(IDWriteTextAnalyzer** textAnalyzer) { return E_NOTIMPL; }
+	MOCK_METHOD1_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateTextAnalyzer, HRESULT(IDWriteTextAnalyzer**));
 	MOCK_METHOD4_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateNumberSubstitution, HRESULT(DWRITE_NUMBER_SUBSTITUTION_METHOD, WCHAR const*, BOOL, IDWriteNumberSubstitution**));
 	MOCK_METHOD8_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateGlyphRunAnalysis, HRESULT(DWRITE_GLYPH_RUN const*, FLOAT, DWRITE_MATRIX const*, DWRITE_RENDERING_MODE, DWRITE_MEASURING_MODE, FLOAT, FLOAT, IDWriteGlyphRunAnalysis**));
 };
@@ -128,6 +128,30 @@ public:
 	STDMETHOD_(FLOAT, GetClearTypeLevel)() { return -1.0f; }
 	STDMETHOD_(DWRITE_PIXEL_GEOMETRY, GetPixelGeometry)() { return DWRITE_PIXEL_GEOMETRY(-1); }
 	STDMETHOD_(DWRITE_RENDERING_MODE, GetRenderingMode)() { return DWRITE_RENDERING_MODE(-1); }
+};
+
+class IDWriteTextAnalyzerFake : public IDWriteTextAnalyzer
+{
+public:
+	MOCK_IUNKNOWN;
+
+	STDMETHOD(AnalyzeScript)(IDWriteTextAnalysisSource* analysisSource, UINT32 textPosition, UINT32 textLength, IDWriteTextAnalysisSink* analysisSink) { return E_NOTIMPL; }
+	STDMETHOD(AnalyzeBidi)(IDWriteTextAnalysisSource* analysisSource, UINT32 textPosition, UINT32 textLength, IDWriteTextAnalysisSink* analysisSink) { return E_NOTIMPL; }
+	STDMETHOD(AnalyzeNumberSubstitution)(IDWriteTextAnalysisSource* analysisSource, UINT32 textPosition, UINT32 textLength, IDWriteTextAnalysisSink* analysisSink) { return E_NOTIMPL; }
+	STDMETHOD(AnalyzeLineBreakpoints)(IDWriteTextAnalysisSource* analysisSource, UINT32 textPosition, UINT32 textLength, IDWriteTextAnalysisSink* analysisSink) { return E_NOTIMPL; }
+	STDMETHOD(GetGlyphs)(WCHAR const* textString, UINT32 textLength, IDWriteFontFace* fontFace, BOOL isSideways, BOOL isRightToLeft,
+		DWRITE_SCRIPT_ANALYSIS const* scriptAnalysis, WCHAR const* localeName, IDWriteNumberSubstitution* numberSubstitution,
+		DWRITE_TYPOGRAPHIC_FEATURES const** features, UINT32 const* featureRangeLengths, UINT32 featureRanges, UINT32 maxGlyphCount,
+		UINT16* clusterMap, DWRITE_SHAPING_TEXT_PROPERTIES* textProps, UINT16* glyphIndices, DWRITE_SHAPING_GLYPH_PROPERTIES* glyphProps,
+		UINT32* actualGlyphCount) { return E_NOTIMPL; }
+	STDMETHOD(GetGlyphPlacements)(WCHAR const* textString, UINT16 const* clusterMap, DWRITE_SHAPING_TEXT_PROPERTIES* textProps, UINT32 textLength,
+		UINT16 const* glyphIndices, DWRITE_SHAPING_GLYPH_PROPERTIES const* glyphProps, UINT32 glyphCount, IDWriteFontFace * fontFace, FLOAT fontEmSize,
+		BOOL isSideways, BOOL isRightToLeft, DWRITE_SCRIPT_ANALYSIS const* scriptAnalysis, WCHAR const* localeName, DWRITE_TYPOGRAPHIC_FEATURES const** features,
+		UINT32 const* featureRangeLengths, UINT32 featureRanges, FLOAT* glyphAdvances, DWRITE_GLYPH_OFFSET* glyphOffsets) { return E_NOTIMPL; }
+	STDMETHOD(GetGdiCompatibleGlyphPlacements)(WCHAR const* textString, UINT16 const* clusterMap, DWRITE_SHAPING_TEXT_PROPERTIES* textProps, UINT32 textLength,
+		UINT16 const* glyphIndices, DWRITE_SHAPING_GLYPH_PROPERTIES const* glyphProps, UINT32 glyphCount, IDWriteFontFace * fontFace, FLOAT fontEmSize, FLOAT pixelsPerDip,
+		DWRITE_MATRIX const* transform, BOOL useGdiNatural, BOOL isSideways, BOOL isRightToLeft, DWRITE_SCRIPT_ANALYSIS const* scriptAnalysis, WCHAR const* localeName,
+		DWRITE_TYPOGRAPHIC_FEATURES const** features, UINT32 const* featureRangeLengths, UINT32 featureRanges, FLOAT* glyphAdvances, DWRITE_GLYPH_OFFSET* glyphOffsets) { return E_NOTIMPL; }
 };
 
 class IDWriteTextFormatFake : public IDWriteTextFormat
@@ -484,4 +508,28 @@ FACTORY_TEST(CreateRenderingParametersFailureReturnsNullPtr)
 	RenderingParameters ^params = factory.Factory->CreateRenderingParameters();
 	AssertLastResultFailed();
 	ASSERT_TRUE(params == nullptr);
+}
+
+FACTORY_TEST(CreateTextAnalyzer)
+{
+	MockedFactory factory;
+	IDWriteTextAnalyzerFake fakeAnalyzer;
+	EXPECT_CALL(factory.Mock, CreateTextAnalyzer(NotNull()))
+		.Times(1).WillOnce(DoAll(SetArgumentPointee<0>(&fakeAnalyzer), Return(S_OK)));
+	TextAnalyzer ^analyzer = factory.Factory->CreateTextAnalyzer();
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(analyzer != nullptr);
+	ASSERT_EQ(&fakeAnalyzer, analyzer->InternalPointer);
+	delete analyzer;
+}
+
+FACTORY_TEST(CreateTextAnalyzerFailureReturnsNullPtr)
+{
+	MockedFactory factory;
+	EXPECT_CALL(factory.Mock, CreateTextAnalyzer(NotNull()))
+		.Times(1).WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	TextAnalyzer ^analyzer = factory.Factory->CreateTextAnalyzer();
+	AssertLastResultFailed();
+	ASSERT_TRUE(analyzer == nullptr);
 }
