@@ -49,7 +49,7 @@ public:
 	STDMETHOD(RegisterFontFileLoader)(IDWriteFontFileLoader* fontFileLoader) { return E_NOTIMPL; } 
 	STDMETHOD(UnregisterFontFileLoader)(IDWriteFontFileLoader* fontFileLoader) { return E_NOTIMPL; } 
 	MOCK_METHOD8_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateTextFormat, HRESULT(WCHAR const*, IDWriteFontCollection*, DWRITE_FONT_WEIGHT, DWRITE_FONT_STYLE, DWRITE_FONT_STRETCH, FLOAT, WCHAR const*, IDWriteTextFormat**));
-	STDMETHOD(CreateTypography)(IDWriteTypography** typography) { return E_NOTIMPL; } 
+	MOCK_METHOD1_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateTypography, HRESULT(IDWriteTypography**));
 	STDMETHOD(GetGdiInterop)(IDWriteGdiInterop** gdiInterop) { return E_NOTIMPL; } 
 	MOCK_METHOD6_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateTextLayout, HRESULT(WCHAR const*, UINT32, IDWriteTextFormat*, FLOAT, FLOAT, IDWriteTextLayout**));
 	MOCK_METHOD9_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateGdiCompatibleTextLayout, HRESULT(WCHAR const*, UINT32, IDWriteTextFormat*, FLOAT, FLOAT, FLOAT, DWRITE_MATRIX const*, BOOL, IDWriteTextLayout**) );
@@ -184,6 +184,17 @@ public:
 	STDMETHOD_(FLOAT, GetFontSize)() { return -1.0f; }
 	STDMETHOD_(UINT32, GetLocaleNameLength)() { return UINT32(~0U); }
 	STDMETHOD(GetLocaleName)(__out_ecount_z(nameSize) WCHAR* localeName,UINT32 nameSize) { return E_NOTIMPL; }
+};
+
+class IDWriteTypographyFake : public IDWriteTypography
+{
+public:
+	MOCK_IUNKNOWN;
+
+	// IDWriteTypography
+	STDMETHOD(AddFontFeature)(DWRITE_FONT_FEATURE fontFeature) { return E_NOTIMPL; }
+	STDMETHOD_(UINT32, GetFontFeatureCount)() { return E_NOTIMPL; }
+	STDMETHOD(GetFontFeature)(UINT32 fontFeatureIndex, DWRITE_FONT_FEATURE* fontFeature) { return E_NOTIMPL; }
 };
 
 ref class MockedFactory
@@ -617,4 +628,29 @@ FACTORY_TEST(CreateTextLayoutFailureReturnsNullPtr)
 	AssertLastResultFailed();
 	ASSERT_TRUE(layout == nullptr);
 	delete format;
+}
+
+FACTORY_TEST(CreateTypography)
+{
+	MockedFactory factory;
+	IDWriteTypographyFake fakeTypography;
+	EXPECT_CALL(factory.Mock, CreateTypography(NotNull()))
+		.Times(1).WillOnce(DoAll(SetArgumentPointee<0>(&fakeTypography), Return(S_OK)));
+	Typography ^typography = factory.Factory->CreateTypography();
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(nullptr != typography);
+	ASSERT_EQ(&fakeTypography, typography->InternalPointer);
+	delete typography;
+}
+
+FACTORY_TEST(CreateTypographyFailureReturnsNullPtr)
+{
+	MockedFactory factory;
+	IDWriteTypographyFake fakeTypography;
+	EXPECT_CALL(factory.Mock, CreateTypography(NotNull()))
+		.Times(1).WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	Typography ^typography = factory.Factory->CreateTypography();
+	AssertLastResultFailed();
+	ASSERT_TRUE(nullptr == typography);
 }
