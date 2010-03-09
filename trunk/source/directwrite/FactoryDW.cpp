@@ -280,5 +280,15 @@ namespace DirectWrite
 		}
 		return TextLayout::FromPointer(layout);
 	}
+
+	Typography ^Factory::CreateTypography()
+	{
+		IDWriteTypography *typography;
+		if (RECORD_DW(InternalPointer->CreateTypography(&typography)).IsFailure)
+		{
+			return nullptr;
+		}
+		return Typography::FromPointer(typography);
+	}
 }
 }

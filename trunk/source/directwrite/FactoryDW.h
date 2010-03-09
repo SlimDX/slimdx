@@ -47,6 +47,7 @@ namespace SlimDX
 		ref class TextAnalyzer;
 		ref class TextFormat;
 		ref class TextLayout;
+		ref class Typography;
 
 		public ref class Factory : public ComObject
 		{
@@ -84,6 +85,7 @@ namespace SlimDX
 			TextFormat ^CreateTextFormat(String ^fontFamilyName, FontWeight fontWeight, FontStyle fontStyle, FontStretch fontStretch, float fontSize, String ^localeName);
 			TextFormat ^CreateTextFormat(String ^fontFamilyName, FontCollection ^fontCollection, FontWeight fontWeight, FontStyle fontStyle, FontStretch fontStretch, float fontSize, String ^localeName);
 			TextLayout ^CreateTextLayout(String ^text, TextFormat ^textFormat, float maxWidth, float maxHeight);
+			Typography ^CreateTypography();
 		};
 	}
 }
