@@ -48,10 +48,10 @@ public:
 	STDMETHOD(CreateCustomRenderingParams)(FLOAT gamma, FLOAT enhancedContrast, FLOAT clearTypeLevel, DWRITE_PIXEL_GEOMETRY pixelGeometry, DWRITE_RENDERING_MODE renderingMode, IDWriteRenderingParams** renderingParams) { return E_NOTIMPL; }
 	STDMETHOD(RegisterFontFileLoader)(IDWriteFontFileLoader* fontFileLoader) { return E_NOTIMPL; } 
 	STDMETHOD(UnregisterFontFileLoader)(IDWriteFontFileLoader* fontFileLoader) { return E_NOTIMPL; } 
-	STDMETHOD(CreateTextFormat)(WCHAR const* fontFamilyName, IDWriteFontCollection* fontCollection, DWRITE_FONT_WEIGHT fontWeight, DWRITE_FONT_STYLE fontStyle, DWRITE_FONT_STRETCH fontStretch, FLOAT fontSize, WCHAR const* localeName, IDWriteTextFormat** textFormat) { return E_NOTIMPL; } 
+	MOCK_METHOD8_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateTextFormat, HRESULT(WCHAR const*, IDWriteFontCollection*, DWRITE_FONT_WEIGHT, DWRITE_FONT_STYLE, DWRITE_FONT_STRETCH, FLOAT, WCHAR const*, IDWriteTextFormat**));
 	STDMETHOD(CreateTypography)(IDWriteTypography** typography) { return E_NOTIMPL; } 
 	STDMETHOD(GetGdiInterop)(IDWriteGdiInterop** gdiInterop) { return E_NOTIMPL; } 
-	STDMETHOD(CreateTextLayout)(WCHAR const* string, UINT32 stringLength, IDWriteTextFormat* textFormat, FLOAT maxWidth, FLOAT maxHeight, IDWriteTextLayout** textLayout) { return E_NOTIMPL; } 
+	MOCK_METHOD6_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateTextLayout, HRESULT(WCHAR const*, UINT32, IDWriteTextFormat*, FLOAT, FLOAT, IDWriteTextLayout**));
 	MOCK_METHOD9_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateGdiCompatibleTextLayout, HRESULT(WCHAR const*, UINT32, IDWriteTextFormat*, FLOAT, FLOAT, FLOAT, DWRITE_MATRIX const*, BOOL, IDWriteTextLayout**) );
 	MOCK_METHOD2_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateEllipsisTrimmingSign, HRESULT(IDWriteTextFormat*, IDWriteInlineObject**));
 	MOCK_METHOD1_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateTextAnalyzer, HRESULT(IDWriteTextAnalyzer**));
@@ -532,4 +532,89 @@ FACTORY_TEST(CreateTextAnalyzerFailureReturnsNullPtr)
 	TextAnalyzer ^analyzer = factory.Factory->CreateTextAnalyzer();
 	AssertLastResultFailed();
 	ASSERT_TRUE(analyzer == nullptr);
+}
+
+FACTORY_TEST(CreateTextFormat)
+{
+	MockedFactory factory;
+	IDWriteTextFormatFake fakeFormat;
+	EXPECT_CALL(factory.Mock, CreateTextFormat(NotNull(), 0,
+			DWRITE_FONT_WEIGHT_ULTRA_BOLD, DWRITE_FONT_STYLE_OBLIQUE,
+			DWRITE_FONT_STRETCH_ULTRA_EXPANDED, 12.5f, NotNull(), NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<7>(&fakeFormat), Return(S_OK)));
+	TextFormat ^format = factory.Factory->CreateTextFormat(gcnew String("Slanted"),
+		FontWeight::UltraBold, FontStyle::Oblique, FontStretch::UltraExpanded,
+		12.5f, gcnew String("Slartibartfast"));
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(format != nullptr);
+	ASSERT_EQ(&fakeFormat, format->InternalPointer);
+	delete format;
+}
+
+FACTORY_TEST(CreateTextFormatFailureReturnsNullPtr)
+{
+	MockedFactory factory;
+	EXPECT_CALL(factory.Mock, CreateTextFormat(NotNull(), 0,
+			DWRITE_FONT_WEIGHT_ULTRA_BOLD, DWRITE_FONT_STYLE_OBLIQUE,
+			DWRITE_FONT_STRETCH_ULTRA_EXPANDED, 12.5f, NotNull(), NotNull()))
+		.Times(1).WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	TextFormat ^format = factory.Factory->CreateTextFormat(gcnew String("Slanted"),
+		FontWeight::UltraBold, FontStyle::Oblique, FontStretch::UltraExpanded,
+		12.5f, gcnew String("Slartibartfast"));
+	AssertLastResultFailed();
+	ASSERT_TRUE(format == nullptr);
+}
+
+FACTORY_TEST(CreateTextFormatWithCollection)
+{
+	MockedFactory factory;
+	IDWriteTextFormatFake fakeFormat;
+	IDWriteFontCollectionMock fakeCollection;
+	EXPECT_CALL(factory.Mock, CreateTextFormat(NotNull(), &fakeCollection,
+			DWRITE_FONT_WEIGHT_ULTRA_BOLD, DWRITE_FONT_STYLE_OBLIQUE,
+			DWRITE_FONT_STRETCH_ULTRA_EXPANDED, 12.5f, NotNull(), NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<7>(&fakeFormat), Return(S_OK)));
+	FontCollection ^fontCollection = FontCollection::FromPointer(&fakeCollection);
+	TextFormat ^format = factory.Factory->CreateTextFormat(gcnew String("Slanted"),
+		fontCollection, FontWeight::UltraBold, FontStyle::Oblique, FontStretch::UltraExpanded,
+		12.5f, gcnew String("Slartibartfast"));
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(format != nullptr);
+	ASSERT_EQ(&fakeFormat, format->InternalPointer);
+	delete format;
+	delete fontCollection;
+}
+
+FACTORY_TEST(CreateTextLayout)
+{
+	MockedFactory factory;
+	IDWriteTextLayoutMock fakeLayout;
+	IDWriteTextFormatFake fakeFormat;
+	EXPECT_CALL(factory.Mock, CreateTextLayout(NotNull(), Gt(0U), &fakeFormat, 12.5f, 33.3f, NotNull()))
+		.Times(1)
+		.WillOnce(DoAll(SetArgumentPointee<5>(&fakeLayout), Return(S_OK)));
+	TextFormat ^format = TextFormat::FromPointer(&fakeFormat);
+	TextLayout ^layout = factory.Factory->CreateTextLayout(gcnew String("Text"), format, 12.5f, 33.3f);
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(layout != nullptr);
+	ASSERT_EQ(&fakeLayout, layout->InternalPointer);
+	delete layout;
+	delete format;
+}
+
+FACTORY_TEST(CreateTextLayoutFailureReturnsNullPtr)
+{
+	MockedFactory factory;
+	EXPECT_CALL(factory.Mock, CreateTextLayout(NotNull(), Gt(0U), NotNull(), 12.5f, 33.3f, NotNull()))
+		.Times(1).WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	IDWriteTextFormatFake fakeFormat;
+	TextFormat ^format = TextFormat::FromPointer(&fakeFormat);
+	TextLayout ^layout = factory.Factory->CreateTextLayout(gcnew String("Text"), format, 12.5f, 33.3f);
+	AssertLastResultFailed();
+	ASSERT_TRUE(layout == nullptr);
+	delete format;
 }
