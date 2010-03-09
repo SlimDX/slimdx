@@ -236,5 +236,49 @@ namespace DirectWrite
 		}
 		return TextAnalyzer::FromPointer(analyzer);
 	}
+
+	static TextFormat ^CreateTextFormatInternal(IDWriteFactory *factory,
+		String ^fontFamilyName, IDWriteFontCollection *fontCollection,
+		FontWeight fontWeight, FontStyle fontStyle, FontStretch fontStretch, float fontSize, String ^localeName)
+	{
+		IDWriteTextFormat *format = 0;
+		if (RECORD_DW(factory->CreateTextFormat(NativeUnicodeString(fontFamilyName),
+			fontCollection, static_cast<DWRITE_FONT_WEIGHT>(fontWeight),
+			static_cast<DWRITE_FONT_STYLE>(fontStyle),
+			static_cast<DWRITE_FONT_STRETCH>(fontStretch),
+			fontSize, NativeUnicodeString(localeName), &format)).IsFailure)
+		{
+			return nullptr;
+		}
+		return TextFormat::FromPointer(format);
+	}
+
+	TextFormat ^Factory::CreateTextFormat(String ^fontFamilyName,
+		FontWeight fontWeight, FontStyle fontStyle, FontStretch fontStretch,
+		float fontSize, String ^localeName)
+	{
+		return CreateTextFormatInternal(InternalPointer, fontFamilyName, 0,
+			fontWeight, fontStyle, fontStretch, fontSize, localeName);
+	}
+
+	TextFormat ^Factory::CreateTextFormat(String ^fontFamilyName, FontCollection ^fontCollection,
+		FontWeight fontWeight, FontStyle fontStyle, FontStretch fontStretch,
+		float fontSize, String ^localeName)
+	{
+		return CreateTextFormatInternal(InternalPointer, fontFamilyName,
+			fontCollection->InternalPointer,
+			fontWeight, fontStyle, fontStretch, fontSize, localeName);
+	}
+
+	TextLayout ^Factory::CreateTextLayout(String ^text, TextFormat ^textFormat, float maxWidth, float maxHeight)
+	{
+		IDWriteTextLayout *layout = 0;
+		if (RECORD_DW(InternalPointer->CreateTextLayout(NativeUnicodeString(text), text->Length,
+			textFormat->InternalPointer, maxWidth, maxHeight, &layout)).IsFailure)
+		{
+			return nullptr;
+		}
+		return TextLayout::FromPointer(layout);
+	}
 }
 }

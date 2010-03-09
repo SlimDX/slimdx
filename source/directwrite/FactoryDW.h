@@ -81,6 +81,9 @@ namespace SlimDX
 			NumberSubstitution ^CreateNumberSubstitution(NumberSubstitutionMethod method, String ^localeName, bool ignoreUserOverride);
 			RenderingParameters ^CreateRenderingParameters();
 			TextAnalyzer ^CreateTextAnalyzer();
+			TextFormat ^CreateTextFormat(String ^fontFamilyName, FontWeight fontWeight, FontStyle fontStyle, FontStretch fontStretch, float fontSize, String ^localeName);
+			TextFormat ^CreateTextFormat(String ^fontFamilyName, FontCollection ^fontCollection, FontWeight fontWeight, FontStyle fontStyle, FontStretch fontStretch, float fontSize, String ^localeName);
+			TextLayout ^CreateTextLayout(String ^text, TextFormat ^textFormat, float maxWidth, float maxHeight);
 		};
 	}
 }
