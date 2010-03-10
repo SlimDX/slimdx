@@ -5399,6 +5399,14 @@
 						RelativePath="..\source\directwrite\FontCollectionLoader.h"
 						>
 					</File>
+					<File
+						RelativePath="..\source\directwrite\IFontCollectionLoader.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\directwrite\IFontCollectionLoader.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter

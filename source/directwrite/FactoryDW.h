@@ -37,9 +37,11 @@ namespace SlimDX
 	{
 		using namespace SlimDX::Direct2D;
 		using namespace System;
+		interface struct IFontCollectionLoader;
 		ref class FontCollection;
 		ref class FontFace;
 		ref class FontFile;
+		ref class GdiInterop;
 		ref class GlyphRunAnalysis;
 		ref class InlineObject;
 		ref class NumberSubstitution;
@@ -86,6 +88,9 @@ namespace SlimDX
 			TextFormat ^CreateTextFormat(String ^fontFamilyName, FontCollection ^fontCollection, FontWeight fontWeight, FontStyle fontStyle, FontStretch fontStretch, float fontSize, String ^localeName);
 			TextLayout ^CreateTextLayout(String ^text, TextFormat ^textFormat, float maxWidth, float maxHeight);
 			Typography ^CreateTypography();
+			GdiInterop ^GetGdiInterop();
+			Result RegisterFontCollectionLoader(IFontCollectionLoader ^loader);
+			Result UnregisterFontCollectionLoader(IFontCollectionLoader ^loader);
 		};
 	}
 }

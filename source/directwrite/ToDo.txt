@@ -2,15 +2,8 @@ IDWriteFactory (DirectWrite::Factory)
 	CreateCustomFontCollection
 	CreateCustomFontFileReference
 	CreateCustomRenderingParams
-	CreateTypography
-	GetGdiInterop
-	RegisterFontCollectionLoader
 	RegisterFontFileLoader
-	UnregisterFontCollectionLoader
 	UnregisterFontFileLoader
-IDWriteFontCollectionLoader (FontCollectionLoader)
-	Client implements this interface to provide a custom font collection loader to
-	IDWriteFactory::CreateCustomFontCollection
 IDWriteFontFileLoader (FontFileLoader)
 	Client implements this interface to provide a custom font file loader to
 	IDWriteFactory::CreateCustomFontFileReference
