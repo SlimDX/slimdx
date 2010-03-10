@@ -30,8 +30,10 @@
 #include "FontCollection.h"
 #include "FontFile.h"
 #include "FontFace.h"
+#include "GdiInterop.h"
 #include "GlyphRunDW.h"
 #include "GlyphRunAnalysis.h"
+#include "IFontCollectionLoader.h"
 #include "InlineObject.h"
 #include "NativeUnicodeString.h"
 #include "NumberSubstitution.h"
@@ -289,6 +291,28 @@ namespace DirectWrite
 			return nullptr;
 		}
 		return Typography::FromPointer(typography);
+	}
+
+	GdiInterop ^Factory::GetGdiInterop()
+	{
+		IDWriteGdiInterop *gdiInterop;
+		if (RECORD_DW(InternalPointer->GetGdiInterop(&gdiInterop)).IsFailure)
+		{
+			return nullptr;
+		}
+		return GdiInterop::FromPointer(gdiInterop);
+	}
+
+	Result Factory::RegisterFontCollectionLoader(IFontCollectionLoader ^loader)
+	{
+		IFontCollectionLoaderShim *shim = new IFontCollectionLoaderShim(loader);
+		return RECORD_DW(InternalPointer->RegisterFontCollectionLoader(shim));
+	}
+
+	Result Factory::UnregisterFontCollectionLoader(IFontCollectionLoader ^loader)
+	{
+		IFontCollectionLoaderShim *shim = new IFontCollectionLoaderShim(loader);
+		return RECORD_DW(InternalPointer->UnregisterFontCollectionLoader(shim));
 	}
 }
 }

@@ -38,19 +38,19 @@ public:
 
 	MOCK_METHOD2_WITH_CALLTYPE(STDMETHODCALLTYPE, GetSystemFontCollection, HRESULT(IDWriteFontCollection**, BOOL) );
 	STDMETHOD(CreateCustomFontCollection)(IDWriteFontCollectionLoader* collectionLoader, void const* collectionKey, UINT32 collectionKeySize, IDWriteFontCollection** fontCollection) { return E_NOTIMPL; } 
-	STDMETHOD(RegisterFontCollectionLoader)(IDWriteFontCollectionLoader* fontCollectionLoader) { return E_NOTIMPL; } 
-	STDMETHOD(UnregisterFontCollectionLoader)(IDWriteFontCollectionLoader* fontCollectionLoader) { return E_NOTIMPL; } 
+	MOCK_METHOD1_WITH_CALLTYPE(STDMETHODCALLTYPE, RegisterFontCollectionLoader, HRESULT(IDWriteFontCollectionLoader*));
+	MOCK_METHOD1_WITH_CALLTYPE(STDMETHODCALLTYPE, UnregisterFontCollectionLoader, HRESULT(IDWriteFontCollectionLoader*));
 	MOCK_METHOD3_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateFontFileReference, HRESULT(WCHAR const*, FILETIME const*, IDWriteFontFile**));
 	STDMETHOD(CreateCustomFontFileReference)(void const* fontFileReferenceKey, UINT32 fontFileReferenceKeySize, IDWriteFontFileLoader* fontFileLoader, IDWriteFontFile** fontFile) { return E_NOTIMPL; } 
 	MOCK_METHOD6_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateFontFace, HRESULT(DWRITE_FONT_FACE_TYPE, UINT32, IDWriteFontFile* const*, UINT32, DWRITE_FONT_SIMULATIONS, IDWriteFontFace**));
 	MOCK_METHOD1_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateRenderingParams, HRESULT(IDWriteRenderingParams**));
 	MOCK_METHOD2_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateMonitorRenderingParams, HRESULT(HMONITOR, IDWriteRenderingParams**));
 	STDMETHOD(CreateCustomRenderingParams)(FLOAT gamma, FLOAT enhancedContrast, FLOAT clearTypeLevel, DWRITE_PIXEL_GEOMETRY pixelGeometry, DWRITE_RENDERING_MODE renderingMode, IDWriteRenderingParams** renderingParams) { return E_NOTIMPL; }
-	STDMETHOD(RegisterFontFileLoader)(IDWriteFontFileLoader* fontFileLoader) { return E_NOTIMPL; } 
+	MOCK_METHOD1_WITH_CALLTYPE(STDMETHODCALLTYPE, RegisterFontFileLoader, HRESULT(IDWriteFontFileLoader*));
 	STDMETHOD(UnregisterFontFileLoader)(IDWriteFontFileLoader* fontFileLoader) { return E_NOTIMPL; } 
 	MOCK_METHOD8_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateTextFormat, HRESULT(WCHAR const*, IDWriteFontCollection*, DWRITE_FONT_WEIGHT, DWRITE_FONT_STYLE, DWRITE_FONT_STRETCH, FLOAT, WCHAR const*, IDWriteTextFormat**));
 	MOCK_METHOD1_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateTypography, HRESULT(IDWriteTypography**));
-	STDMETHOD(GetGdiInterop)(IDWriteGdiInterop** gdiInterop) { return E_NOTIMPL; } 
+	MOCK_METHOD1_WITH_CALLTYPE(STDMETHODCALLTYPE, GetGdiInterop, HRESULT(IDWriteGdiInterop**));
 	MOCK_METHOD6_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateTextLayout, HRESULT(WCHAR const*, UINT32, IDWriteTextFormat*, FLOAT, FLOAT, IDWriteTextLayout**));
 	MOCK_METHOD9_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateGdiCompatibleTextLayout, HRESULT(WCHAR const*, UINT32, IDWriteTextFormat*, FLOAT, FLOAT, FLOAT, DWRITE_MATRIX const*, BOOL, IDWriteTextLayout**) );
 	MOCK_METHOD2_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateEllipsisTrimmingSign, HRESULT(IDWriteTextFormat*, IDWriteInlineObject**));
@@ -89,6 +89,19 @@ public:
 	STDMETHOD(GetRecommendedRenderingMode)(FLOAT emSize, FLOAT pixelsPerDip, DWRITE_MEASURING_MODE measuringMode, IDWriteRenderingParams* renderingParams, DWRITE_RENDERING_MODE* renderingMode) { return E_NOTIMPL; }
 	STDMETHOD(GetGdiCompatibleMetrics)(FLOAT emSize, FLOAT pixelsPerDip, DWRITE_MATRIX const* transform, DWRITE_FONT_METRICS* fontFaceMetrics) { return E_NOTIMPL; }
 	STDMETHOD(GetGdiCompatibleGlyphMetrics)(FLOAT emSize, FLOAT pixelsPerDip, DWRITE_MATRIX const* transform, BOOL useGdiNatural, UINT16 const* glyphIndices, UINT32 glyphCount, DWRITE_GLYPH_METRICS* glyphMetrics, BOOL isSideways = FALSE) { return E_NOTIMPL; }
+};
+
+class IDWriteGdiInteropFake : public IDWriteGdiInterop
+{
+public:
+	MOCK_IUNKNOWN;
+
+	// IDWriteGdiInterop
+	STDMETHOD(CreateFontFromLOGFONT)(LOGFONTW const* logFont, IDWriteFont** font) { return E_NOTIMPL; }
+	STDMETHOD(ConvertFontToLOGFONT)(IDWriteFont* font, LOGFONTW* logFont, BOOL* isSystemFont) { return E_NOTIMPL; }
+	STDMETHOD(ConvertFontFaceToLOGFONT)(IDWriteFontFace* font, LOGFONTW* logFont) { return E_NOTIMPL; }
+	STDMETHOD(CreateFontFaceFromHdc)(HDC hdc, IDWriteFontFace** fontFace) { return E_NOTIMPL; }
+	STDMETHOD(CreateBitmapRenderTarget)(HDC hdc, UINT32 width, UINT32 height, IDWriteBitmapRenderTarget** renderTarget) { return E_NOTIMPL; }
 };
 
 class IDWriteGlyphRunAnalysisFake : public IDWriteGlyphRunAnalysis
@@ -653,4 +666,64 @@ FACTORY_TEST(CreateTypographyFailureReturnsNullPtr)
 	Typography ^typography = factory.Factory->CreateTypography();
 	AssertLastResultFailed();
 	ASSERT_TRUE(nullptr == typography);
+}
+
+FACTORY_TEST(GetGdiInterop)
+{
+	MockedFactory factory;
+	IDWriteGdiInteropFake fakeGdiInterop;
+	EXPECT_CALL(factory.Mock, GetGdiInterop(NotNull()))
+		.Times(1).WillOnce(DoAll(SetArgumentPointee<0>(&fakeGdiInterop), Return(S_OK)));
+	GdiInterop ^gdiInterop = factory.Factory->GetGdiInterop();
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(nullptr != gdiInterop);
+	ASSERT_EQ(&fakeGdiInterop, gdiInterop->InternalPointer);
+	delete gdiInterop;
+}
+
+FACTORY_TEST(GetGdiInteropFailureReturnsNullPtr)
+{
+	MockedFactory factory;
+	IDWriteTypographyFake fakeGdiInterop;
+	EXPECT_CALL(factory.Mock, GetGdiInterop(NotNull()))
+		.Times(1).WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	GdiInterop ^gdiInterop = factory.Factory->GetGdiInterop();
+	AssertLastResultFailed();
+	ASSERT_TRUE(nullptr == gdiInterop);
+}
+
+ref class FontCollectionLoaderFake : public IFontCollectionLoader
+{
+public:
+	FontCollectionLoaderFake()
+	{
+	}
+
+	virtual FontFileEnumerator ^CreateEnumeratorFromKey(SlimDX::DirectWrite::Factory ^factory, IntPtr collectionKey, int collectionKeySize)
+	{
+		return nullptr;
+	}
+};
+
+FACTORY_TEST(RegisterFontCollectionLoader)
+{
+	MockedFactory factory;
+	FontCollectionLoaderFake ^loader = gcnew FontCollectionLoaderFake;
+	EXPECT_CALL(factory.Mock, RegisterFontCollectionLoader(NotNull()))
+		.Times(1).WillOnce(Return(S_OK));
+	ASSERT_TRUE(factory.Factory->RegisterFontCollectionLoader(loader).IsSuccess);
+	AssertLastResultSucceeded();
+	delete loader;	
+}
+
+FACTORY_TEST(UnregisterFontCollectionLoader)
+{
+	MockedFactory factory;
+	FontCollectionLoaderFake ^loader = gcnew FontCollectionLoaderFake;
+	EXPECT_CALL(factory.Mock, UnregisterFontCollectionLoader(NotNull()))
+		.Times(1).WillOnce(Return(S_OK));
+	ASSERT_TRUE(factory.Factory->UnregisterFontCollectionLoader(loader).IsSuccess);
+	AssertLastResultSucceeded();
+	delete loader;	
 }
