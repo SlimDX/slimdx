@@ -78,7 +78,7 @@ namespace SlimDX
 			/// <param name="pool">The memory class into which the texture should be placed.</param>
 			/// <param name="sharedHandle">The variable that will receive the shared handle for this resource.</param>
 			/// <remarks>This method is only available in Direct3D9 Ex.</remarks>
-			Texture( SlimDX::Direct3D9::Device^ device, int width, int height, int levelCount, Usage usage, Format format, Pool pool, [Out] System::IntPtr% sharedHandle );
+			Texture( SlimDX::Direct3D9::Device^ device, int width, int height, int levelCount, Usage usage, Format format, Pool pool, System::IntPtr% sharedHandle );
 			
 			/// <summary>
 			/// Releases all resources used by the <see cref="Texture"/>.

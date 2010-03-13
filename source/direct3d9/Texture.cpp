@@ -59,10 +59,10 @@ namespace Direct3D9
 			this->IsDefaultPool = true;
 	}
 
-	Texture::Texture( SlimDX::Direct3D9::Device^ device, int width, int height, int numLevels, Usage usage, Format format, Pool pool, [Out] IntPtr% sharedHandle )
+	Texture::Texture( SlimDX::Direct3D9::Device^ device, int width, int height, int numLevels, Usage usage, Format format, Pool pool, IntPtr% sharedHandle )
 	{
 		IDirect3DTexture9* texture;
-		HANDLE sharedHandleNative = NULL;
+		HANDLE sharedHandleNative = sharedHandle.ToPointer();
 		HRESULT hr = device->InternalPointer->CreateTexture( width, height, numLevels, static_cast<DWORD>( usage ), 
 			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &texture, &sharedHandleNative );
 		
