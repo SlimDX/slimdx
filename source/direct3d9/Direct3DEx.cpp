@@ -103,6 +103,7 @@ namespace Direct3D9
     DisplayModeEx Direct3DEx::GetAdapterDisplayModeEx( int adapter )
 	{
 		D3DDISPLAYMODEEX nativeMode = {0};
+		nativeMode.Size = sizeof(D3DDISPLAYMODEEX);
 		HRESULT hr = InternalPointer->GetAdapterDisplayModeEx( adapter, &nativeMode, NULL );
 		RECORD_D3D9( hr );
 
@@ -113,6 +114,7 @@ namespace Direct3D9
     DisplayModeEx Direct3DEx::GetAdapterDisplayModeEx( int adapter, [Out] DisplayRotation% rotation )
 	{
 		D3DDISPLAYMODEEX nativeMode = {0};
+		nativeMode.Size = sizeof(D3DDISPLAYMODEEX);
 		D3DDISPLAYROTATION nativeRotation = D3DDISPLAYROTATION_IDENTITY;
 		HRESULT hr = InternalPointer->GetAdapterDisplayModeEx( adapter, &nativeMode, &nativeRotation );
 		RECORD_D3D9( hr );
@@ -141,6 +143,7 @@ namespace Direct3D9
     DisplayModeEx Direct3DEx::EnumerateAdapterModesEx( int adapter, DisplayModeFilter filter, int modeIndex )
 	{
 		D3DDISPLAYMODEEX nativeMode = {0};
+		nativeMode.Size = sizeof(D3DDISPLAYMODEEX);
 		D3DDISPLAYMODEFILTER nativeFilter;
 		filter.ToUnmanaged( nativeFilter );
 
