@@ -63,6 +63,7 @@ namespace SlimDX
 
 			FontCollection ^GetSystemFontCollection(bool checkForUpdates);
 
+			FontCollection ^CreateCustomFontCollection(IFontCollectionLoader ^loader, IntPtr collectionKey, int collectionKeySize);
 			TextLayout ^CreateGdiCompatibleTextLayout(String ^string, TextFormat ^textFormat,
 				float layoutWidth, float layoutHeight, float pixelsPerDip,
 				bool useGdiNatural);

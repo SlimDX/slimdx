@@ -77,6 +77,7 @@ FONT_TEST(CreateFontFaceErrorThrowsSlimDXException)
 		.Times(1)
 		.WillOnce(DoAll(SetArgumentPointee<0>(static_cast<IDWriteFontFace *>(0)),
 						Return(E_UNEXPECTED)));
+	SlimDX::Configuration::ThrowOnError = true;
 	FontFace ^face;
 	ASSERT_MANAGED_THROW( face = font.Font->CreateFontFace(), SlimDXException );
 }

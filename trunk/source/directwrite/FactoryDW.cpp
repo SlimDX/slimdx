@@ -80,6 +80,18 @@ namespace DirectWrite
 		return FontCollection::FromPointer(collection);
 	}
 
+	FontCollection ^Factory::CreateCustomFontCollection(IFontCollectionLoader ^loader, IntPtr collectionKey, int collectionKeySize)
+	{
+		IDWriteFontCollection *collection = 0;
+		IFontCollectionLoaderShim *shim = new IFontCollectionLoaderShim(loader);
+		if (RECORD_DW(InternalPointer->CreateCustomFontCollection(shim, collectionKey.ToPointer(), collectionKeySize, &collection)).IsFailure)
+		{
+			shim->Release();
+			return nullptr;
+		}
+		return FontCollection::FromPointer(collection);
+	}
+
 	static TextLayout ^CreateGdiCompatibleTextLayoutInternal(IDWriteFactory *factory,
 		String ^text, TextFormat ^textFormat,
 		float layoutWidth, float layoutHeight, float pixelsPerDip,
