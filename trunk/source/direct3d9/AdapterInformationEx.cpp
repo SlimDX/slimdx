@@ -52,10 +52,12 @@ namespace Direct3D9
 
 	DisplayModeEx AdapterInformationEx::CurrentDisplayMode::get()
 	{
-		DisplayModeEx displayMode;
-        HRESULT hr = m_direct3D->GetAdapterDisplayMode( m_Adapter, reinterpret_cast<D3DDISPLAYMODE*>( &displayMode ) );
+		D3DDISPLAYMODEEX d3ddm = {0};
+		d3ddm.Size = sizeof(D3DDISPLAYMODEEX);
+        HRESULT hr = m_direct3D->GetAdapterDisplayModeEx( m_Adapter, &d3ddm, NULL );
 		RECORD_D3D9( hr );
-        return displayMode;
+
+		return DisplayModeEx::FromUnmanaged(d3ddm);
 	}
 
     Capabilities^ AdapterInformationEx::GetCaps( DeviceType type )

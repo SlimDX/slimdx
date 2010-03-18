@@ -114,7 +114,8 @@ namespace Direct3D9
 
 		for( int i = 0; i < count; ++i )
 		{
-			D3DDISPLAYMODEEX nativeDisplayMode;
+			D3DDISPLAYMODEEX nativeDisplayMode = {0};
+			nativeDisplayMode.Size = sizeof(D3DDISPLAYMODEEX);
 			HRESULT hr = direct3D->EnumAdapterModesEx( adapter, &nativeFilter, i, &nativeDisplayMode );
 			if( RECORD_D3D9( hr ).IsFailure )
 				continue;

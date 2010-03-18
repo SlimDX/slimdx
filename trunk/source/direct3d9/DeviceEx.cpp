@@ -154,6 +154,7 @@ namespace Direct3D9
 	DisplayModeEx DeviceEx::GetDisplayModeEx( int swapChain )
 	{
 		D3DDISPLAYMODEEX nativeMode = {0};
+		nativeMode.Size = sizeof(D3DDISPLAYMODEEX);
 		HRESULT hr = InternalPointer->GetDisplayModeEx( swapChain, &nativeMode, NULL );
 		RECORD_D3D9( hr );
 
@@ -164,6 +165,7 @@ namespace Direct3D9
 	DisplayModeEx DeviceEx::GetDisplayModeEx( int swapChain, [Out] DisplayRotation% rotation )
 	{
 		D3DDISPLAYMODEEX nativeMode = {0};
+		nativeMode.Size = sizeof(D3DDISPLAYMODEEX);
 		D3DDISPLAYROTATION nativeRotation = D3DDISPLAYROTATION_IDENTITY;
 
 		HRESULT hr = InternalPointer->GetDisplayModeEx( swapChain, &nativeMode, &nativeRotation );
