@@ -37,7 +37,7 @@ public:
 	MOCK_IUNKNOWN;
 
 	MOCK_METHOD2_WITH_CALLTYPE(STDMETHODCALLTYPE, GetSystemFontCollection, HRESULT(IDWriteFontCollection**, BOOL) );
-	STDMETHOD(CreateCustomFontCollection)(IDWriteFontCollectionLoader* collectionLoader, void const* collectionKey, UINT32 collectionKeySize, IDWriteFontCollection** fontCollection) { return E_NOTIMPL; } 
+	MOCK_METHOD4_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateCustomFontCollection, HRESULT(IDWriteFontCollectionLoader*, void const*, UINT32, IDWriteFontCollection**));
 	MOCK_METHOD1_WITH_CALLTYPE(STDMETHODCALLTYPE, RegisterFontCollectionLoader, HRESULT(IDWriteFontCollectionLoader*));
 	MOCK_METHOD1_WITH_CALLTYPE(STDMETHODCALLTYPE, UnregisterFontCollectionLoader, HRESULT(IDWriteFontCollectionLoader*));
 	MOCK_METHOD3_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateFontFileReference, HRESULT(WCHAR const*, FILETIME const*, IDWriteFontFile**));
@@ -726,4 +726,32 @@ FACTORY_TEST(UnregisterFontCollectionLoader)
 	ASSERT_TRUE(factory.Factory->UnregisterFontCollectionLoader(loader).IsSuccess);
 	AssertLastResultSucceeded();
 	delete loader;	
+}
+
+FACTORY_TEST(CreateCustomFontCollection)
+{
+	MockedFactory factory;
+	IDWriteFontCollectionMock mockCollection;
+	EXPECT_CALL(factory.Mock, CreateCustomFontCollection(NotNull(), 0, 0, NotNull()))
+		.Times(1).WillOnce(DoAll(SetArgumentPointee<3>(&mockCollection), Return(S_OK)));
+	FontCollectionLoaderFake ^loader = gcnew FontCollectionLoaderFake;
+	FontCollection ^collection = factory.Factory->CreateCustomFontCollection(loader, IntPtr(0), 0);
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(collection != nullptr);
+	delete collection;
+	delete loader;
+}
+
+FACTORY_TEST(CreateCustomFontCollectionFailureReturnsNullPtr)
+{
+	MockedFactory factory;
+	IDWriteFontCollectionMock mockCollection;
+	EXPECT_CALL(factory.Mock, CreateCustomFontCollection(NotNull(), 0, 0, NotNull()))
+		.Times(1).WillOnce(Return(E_FAIL));
+	FontCollectionLoaderFake ^loader = gcnew FontCollectionLoaderFake;
+	SlimDX::Configuration::ThrowOnError = false;
+	FontCollection ^collection = factory.Factory->CreateCustomFontCollection(loader, IntPtr(0), 0);
+	AssertLastResultFailed();
+	ASSERT_TRUE(collection == nullptr);
+	delete loader;
 }
