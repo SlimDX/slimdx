@@ -5588,6 +5588,14 @@
 					RelativePath="..\source\directwrite\FontFileStream.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\directwrite\IFontFileLoader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directwrite\IFontFileLoader.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Glyphs"

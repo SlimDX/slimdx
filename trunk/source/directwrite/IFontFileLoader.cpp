@@ -22,8 +22,8 @@
 #include "stdafx.h"
 
 #include "FactoryDW.h"
-#include "FontFileEnumerator.h"
-#include "IFontCollectionLoader.h"
+#include "FontFileStream.h"
+#include "IFontFileLoader.h"
 #include "../SlimDXException.h"
 
 using namespace SlimDX;
@@ -32,35 +32,35 @@ namespace SlimDX
 {
 	namespace DirectWrite
 	{
-		IFontCollectionLoaderShim *IFontCollectionLoaderShim::CreateInstance(IFontCollectionLoader ^wrappedInterface)
+		IFontFileLoaderShim *IFontFileLoaderShim::CreateInstance(IFontFileLoader ^loader)
 		{
-			return new IFontCollectionLoaderShim(wrappedInterface);
+			return new IFontFileLoaderShim(loader);
 		}
 
-		IFontCollectionLoaderShim::IFontCollectionLoaderShim(IFontCollectionLoader ^wrappedInterface)
-			: m_WrappedInterface(wrappedInterface),
+		IFontFileLoaderShim::IFontFileLoaderShim(IFontFileLoader ^wrappedInterface)
+			: m_wrappedInterface(wrappedInterface),
 			m_refCount(1)
 		{
 		}
 
-		HRESULT IFontCollectionLoaderShim::QueryInterface(const IID &iid, LPVOID *ppv)
+		HRESULT IFontFileLoaderShim::QueryInterface(const IID &iid, LPVOID *ppv)
 		{
 			if (iid == IID_IDWriteFontCollectionLoader)
 			{
 				AddRef();
-				*reinterpret_cast<IDWriteFontCollectionLoader**>(ppv) = this;
+				*reinterpret_cast<IDWriteFontFileLoader**>(ppv) = this;
 				return S_OK;
 			}
 
 			return E_NOTIMPL;
 		}
 
-		ULONG IFontCollectionLoaderShim::AddRef()
+		ULONG IFontFileLoaderShim::AddRef()
 		{
 			return ++m_refCount;
 		}
 
-		ULONG IFontCollectionLoaderShim::Release()
+		ULONG IFontFileLoaderShim::Release()
 		{
 			if (--m_refCount == 0)
 			{
@@ -69,18 +69,14 @@ namespace SlimDX
 			return m_refCount;
 		}
 
-		HRESULT IFontCollectionLoaderShim::CreateEnumeratorFromKey(IDWriteFactory *nativeFactory,
-			void const *collectionKey,
-			UINT32 collectionKeySize,
-			IDWriteFontFileEnumerator **fontFileEnumerator)
+		HRESULT IFontFileLoaderShim::CreateStreamFromKey(void const *fontFileReferenceKey,
+			UINT32 fontFileReferenceKeySize, IDWriteFontFileStream **fontFileStream)
 		{
 			try
 			{
-				Factory ^factory = Factory::FromPointer(nativeFactory);
-				FontFileEnumerator ^enumerator = m_WrappedInterface->CreateEnumeratorFromKey(factory,
-					IntPtr(const_cast<void *>(collectionKey)), collectionKeySize);
-				delete factory;
-				*fontFileEnumerator = enumerator->InternalPointer;
+				FontFileStream ^stream = m_wrappedInterface->CreateStreamFromKey(
+					IntPtr(const_cast<void *>(fontFileReferenceKey)), fontFileReferenceKeySize);
+				*fontFileStream = stream->InternalPointer;
 			}
 			catch (SlimDXException ^ex)
 			{
