@@ -66,6 +66,7 @@ namespace SlimDX
 			FontCollection ^GetSystemFontCollection(bool checkForUpdates);
 
 			FontCollection ^CreateCustomFontCollection(IFontCollectionLoader ^loader, IntPtr collectionKey, int collectionKeySize);
+			FontFile ^CreateCustomFontFileReference(IntPtr fontFileReferenceKey, int fontFileReferenceKeySize, IFontFileLoader ^loader);
 			RenderingParameters ^CreateCustomRenderingParameters(
 				float gamma, float enhancedContrast, float clearTypeLevel,
 				PixelGeometry pixelGeometry, RenderingMode renderingMode);
