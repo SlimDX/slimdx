@@ -94,6 +94,18 @@ namespace DirectWrite
 		return FontCollection::FromPointer(collection);
 	}
 
+	FontFile ^Factory::CreateCustomFontFileReference(IntPtr fontFileReferenceKey, int fontFileReferenceKeySize, IFontFileLoader ^loader)
+	{
+		IDWriteFontFile *file = 0;
+		IFontFileLoaderShim *shim = IFontFileLoaderShim::CreateInstance(loader);
+		if (RECORD_DW(InternalPointer->CreateCustomFontFileReference(fontFileReferenceKey.ToPointer(), fontFileReferenceKeySize, shim, &file)).IsFailure)
+		{
+			shim->Release();
+			return nullptr;
+		}
+		return FontFile::FromPointer(file);
+	}
+
 	RenderingParameters ^Factory::CreateCustomRenderingParameters(
 		float gamma, float enhancedContrast, float clearTypeLevel,
 		PixelGeometry pixelGeometry, RenderingMode renderingMode)

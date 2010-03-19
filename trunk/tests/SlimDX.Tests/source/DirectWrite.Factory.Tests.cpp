@@ -41,7 +41,7 @@ public:
 	MOCK_METHOD1_WITH_CALLTYPE(STDMETHODCALLTYPE, RegisterFontCollectionLoader, HRESULT(IDWriteFontCollectionLoader*));
 	MOCK_METHOD1_WITH_CALLTYPE(STDMETHODCALLTYPE, UnregisterFontCollectionLoader, HRESULT(IDWriteFontCollectionLoader*));
 	MOCK_METHOD3_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateFontFileReference, HRESULT(WCHAR const*, FILETIME const*, IDWriteFontFile**));
-	STDMETHOD(CreateCustomFontFileReference)(void const* fontFileReferenceKey, UINT32 fontFileReferenceKeySize, IDWriteFontFileLoader* fontFileLoader, IDWriteFontFile** fontFile) { return E_NOTIMPL; } 
+	MOCK_METHOD4_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateCustomFontFileReference, HRESULT(void const*, UINT32, IDWriteFontFileLoader*, IDWriteFontFile**));
 	MOCK_METHOD6_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateFontFace, HRESULT(DWRITE_FONT_FACE_TYPE, UINT32, IDWriteFontFile* const*, UINT32, DWRITE_FONT_SIMULATIONS, IDWriteFontFace**));
 	MOCK_METHOD1_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateRenderingParams, HRESULT(IDWriteRenderingParams**));
 	MOCK_METHOD2_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateMonitorRenderingParams, HRESULT(HMONITOR, IDWriteRenderingParams**));
@@ -89,6 +89,14 @@ public:
 	STDMETHOD(GetRecommendedRenderingMode)(FLOAT emSize, FLOAT pixelsPerDip, DWRITE_MEASURING_MODE measuringMode, IDWriteRenderingParams* renderingParams, DWRITE_RENDERING_MODE* renderingMode) { return E_NOTIMPL; }
 	STDMETHOD(GetGdiCompatibleMetrics)(FLOAT emSize, FLOAT pixelsPerDip, DWRITE_MATRIX const* transform, DWRITE_FONT_METRICS* fontFaceMetrics) { return E_NOTIMPL; }
 	STDMETHOD(GetGdiCompatibleGlyphMetrics)(FLOAT emSize, FLOAT pixelsPerDip, DWRITE_MATRIX const* transform, BOOL useGdiNatural, UINT16 const* glyphIndices, UINT32 glyphCount, DWRITE_GLYPH_METRICS* glyphMetrics, BOOL isSideways = FALSE) { return E_NOTIMPL; }
+};
+
+class IDWriteFontFileLoaderFake : public IDWriteFontFileLoader
+{
+public:
+	MOCK_IUNKNOWN;
+
+	STDMETHOD(CreateStreamFromKey)(void const* fontFileReferenceKey, UINT32 fontFileReferenceKeySize, IDWriteFontFileStream** fontFileStream) { return E_NOTIMPL; }
 };
 
 class IDWriteGdiInteropFake : public IDWriteGdiInterop
@@ -780,4 +788,42 @@ FACTORY_TEST(CreateCustomRenderingParametersFailureReturnsNullPtr)
 	RenderingParameters ^params = factory.Factory->CreateCustomRenderingParameters(1.1f, 2.2f, 3.3f, PixelGeometry::Flat, RenderingMode::Aliased);
 	AssertLastResultFailed();
 	ASSERT_TRUE(params == nullptr);
+}
+
+ref class FontFileLoaderFake : public IFontFileLoader
+{
+public:
+	virtual FontFileStream ^CreateStreamFromKey(IntPtr fontFileReferenceKey, int fontFileReferenceKeySize)
+	{
+		return nullptr;
+	}
+};
+
+FACTORY_TEST(CreateCustomFontFileReference)
+{
+	MockedFactory factory;
+	IDWriteFontFileFake mockFile;
+	EXPECT_CALL(factory.Mock, CreateCustomFontFileReference(0, 0, NotNull(), NotNull()))
+		.Times(1).WillOnce(DoAll(SetArgumentPointee<3>(&mockFile), Return(S_OK)));
+	FontFileLoaderFake ^loader = gcnew FontFileLoaderFake;
+	FontFile ^file = factory.Factory->CreateCustomFontFileReference(IntPtr(0), 0, loader);
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(file != nullptr);
+	ASSERT_EQ(&mockFile, file->InternalPointer);
+	delete file;
+	delete loader;
+}
+
+FACTORY_TEST(CreateCustomFontFileReferenceFailureReturnsNullPtr)
+{
+	MockedFactory factory;
+	IDWriteFontFileFake mockFile;
+	EXPECT_CALL(factory.Mock, CreateCustomFontFileReference(0, 0, NotNull(), NotNull()))
+		.Times(1).WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	FontFileLoaderFake ^loader = gcnew FontFileLoaderFake;
+	FontFile ^file = factory.Factory->CreateCustomFontFileReference(IntPtr(0), 0, loader);
+	AssertLastResultFailed();
+	ASSERT_TRUE(file == nullptr);
+	delete loader;
 }

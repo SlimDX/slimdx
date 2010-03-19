@@ -22,6 +22,7 @@
 #include "stdafx.h"
 
 #include "FactoryDW.h"
+#include "FontFileLoader.h"
 #include "FontFileStream.h"
 #include "IFontFileLoader.h"
 #include "../SlimDXException.h"
@@ -45,7 +46,7 @@ namespace SlimDX
 
 		HRESULT IFontFileLoaderShim::QueryInterface(const IID &iid, LPVOID *ppv)
 		{
-			if (iid == IID_IDWriteFontCollectionLoader)
+			if (iid == IID_IDWriteFontFileLoader)
 			{
 				AddRef();
 				*reinterpret_cast<IDWriteFontFileLoader**>(ppv) = this;
