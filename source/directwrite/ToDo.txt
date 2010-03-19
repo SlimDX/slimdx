@@ -1,6 +1,5 @@
 IDWriteFactory (DirectWrite::Factory)
 	CreateCustomFontFileReference
-	CreateCustomRenderingParams
 IDWriteFontFileLoader (FontFileLoader)
 	Client implements this interface to provide a custom font file loader to
 	IDWriteFactory::CreateCustomFontFileReference

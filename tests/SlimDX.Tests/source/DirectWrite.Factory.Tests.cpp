@@ -45,7 +45,7 @@ public:
 	MOCK_METHOD6_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateFontFace, HRESULT(DWRITE_FONT_FACE_TYPE, UINT32, IDWriteFontFile* const*, UINT32, DWRITE_FONT_SIMULATIONS, IDWriteFontFace**));
 	MOCK_METHOD1_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateRenderingParams, HRESULT(IDWriteRenderingParams**));
 	MOCK_METHOD2_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateMonitorRenderingParams, HRESULT(HMONITOR, IDWriteRenderingParams**));
-	STDMETHOD(CreateCustomRenderingParams)(FLOAT gamma, FLOAT enhancedContrast, FLOAT clearTypeLevel, DWRITE_PIXEL_GEOMETRY pixelGeometry, DWRITE_RENDERING_MODE renderingMode, IDWriteRenderingParams** renderingParams) { return E_NOTIMPL; }
+	MOCK_METHOD6_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateCustomRenderingParams, HRESULT(FLOAT, FLOAT, FLOAT, DWRITE_PIXEL_GEOMETRY, DWRITE_RENDERING_MODE, IDWriteRenderingParams**));
 	MOCK_METHOD1_WITH_CALLTYPE(STDMETHODCALLTYPE, RegisterFontFileLoader, HRESULT(IDWriteFontFileLoader*));
 	STDMETHOD(UnregisterFontFileLoader)(IDWriteFontFileLoader* fontFileLoader) { return E_NOTIMPL; } 
 	MOCK_METHOD8_WITH_CALLTYPE(STDMETHODCALLTYPE, CreateTextFormat, HRESULT(WCHAR const*, IDWriteFontCollection*, DWRITE_FONT_WEIGHT, DWRITE_FONT_STYLE, DWRITE_FONT_STRETCH, FLOAT, WCHAR const*, IDWriteTextFormat**));
@@ -738,6 +738,7 @@ FACTORY_TEST(CreateCustomFontCollection)
 	FontCollection ^collection = factory.Factory->CreateCustomFontCollection(loader, IntPtr(0), 0);
 	AssertLastResultSucceeded();
 	ASSERT_TRUE(collection != nullptr);
+	ASSERT_EQ(&mockCollection, collection->InternalPointer);
 	delete collection;
 	delete loader;
 }
@@ -754,4 +755,29 @@ FACTORY_TEST(CreateCustomFontCollectionFailureReturnsNullPtr)
 	AssertLastResultFailed();
 	ASSERT_TRUE(collection == nullptr);
 	delete loader;
+}
+
+FACTORY_TEST(CreateCustomRenderingParameters)
+{
+	MockedFactory factory;
+	IDWriteRenderingParamsFake mockRenderingParams;
+	EXPECT_CALL(factory.Mock, CreateCustomRenderingParams(1.1f, 2.2f, 3.3f, DWRITE_PIXEL_GEOMETRY_FLAT, DWRITE_RENDERING_MODE_ALIASED, NotNull()))
+		.Times(1).WillOnce(DoAll(SetArgumentPointee<5>(&mockRenderingParams), Return(S_OK)));
+	RenderingParameters ^params = factory.Factory->CreateCustomRenderingParameters(1.1f, 2.2f, 3.3f, PixelGeometry::Flat, RenderingMode::Aliased);
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(params != nullptr);
+	ASSERT_EQ(&mockRenderingParams, params->InternalPointer);
+	delete params;
+}
+
+FACTORY_TEST(CreateCustomRenderingParametersFailureReturnsNullPtr)
+{
+	MockedFactory factory;
+	IDWriteRenderingParamsFake mockRenderingParams;
+	EXPECT_CALL(factory.Mock, CreateCustomRenderingParams(1.1f, 2.2f, 3.3f, DWRITE_PIXEL_GEOMETRY_FLAT, DWRITE_RENDERING_MODE_ALIASED, NotNull()))
+		.Times(1).WillOnce(Return(E_FAIL));
+	SlimDX::Configuration::ThrowOnError = false;
+	RenderingParameters ^params = factory.Factory->CreateCustomRenderingParameters(1.1f, 2.2f, 3.3f, PixelGeometry::Flat, RenderingMode::Aliased);
+	AssertLastResultFailed();
+	ASSERT_TRUE(params == nullptr);
 }

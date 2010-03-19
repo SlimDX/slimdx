@@ -37,6 +37,7 @@ namespace SlimDX
 	{
 		using namespace SlimDX::Direct2D;
 		using namespace System;
+		using namespace System::Runtime::InteropServices;
 		interface struct IFontCollectionLoader;
 		interface struct IFontFileLoader;
 		ref class FontCollection;
@@ -65,16 +66,19 @@ namespace SlimDX
 			FontCollection ^GetSystemFontCollection(bool checkForUpdates);
 
 			FontCollection ^CreateCustomFontCollection(IFontCollectionLoader ^loader, IntPtr collectionKey, int collectionKeySize);
+			RenderingParameters ^CreateCustomRenderingParameters(
+				float gamma, float enhancedContrast, float clearTypeLevel,
+				PixelGeometry pixelGeometry, RenderingMode renderingMode);
 			TextLayout ^CreateGdiCompatibleTextLayout(String ^string, TextFormat ^textFormat,
-				float layoutWidth, float layoutHeight, float pixelsPerDip,
-				bool useGdiNatural);
+				float layoutWidth, float layoutHeight, float pixelsPerDip, bool useGdiNatural);
 			TextLayout ^CreateGdiCompatibleTextLayout(String ^string, TextFormat ^textFormat,
 				float layoutWidth, float layoutHeight, float pixelsPerDip,
 				Matrix3x2 transform, bool useGdiNatural);
 			InlineObject ^CreateEllipsisTrimmingSign(TextFormat ^textFormat);
-			FontFace ^CreateFontFace(FontFaceType fontFaceType, array<FontFile^> ^fontFiles, int faceIndex, FontSimulations fontFaceSimulationFlags);
+			FontFace ^CreateFontFace(FontFaceType fontFaceType,
+				array<FontFile^> ^fontFiles, int faceIndex, FontSimulations fontFaceSimulationFlags);
 			FontFile ^CreateFontFileReference(String ^filePath);
-			FontFile ^CreateFontFileReference(String ^filePath, System::Runtime::InteropServices::ComTypes::FILETIME fileTime);
+			FontFile ^CreateFontFileReference(String ^filePath, ComTypes::FILETIME fileTime);
 			GlyphRunAnalysis ^CreateGlyphRunAnalysis(GlyphRun ^glyphRun, float pixelsPerDip,
 				RenderingMode renderingMode, MeasuringMode measuringMode,
 				float baselineOriginX, float baselineOriginY);

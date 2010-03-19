@@ -46,6 +46,7 @@
 const IID IID_IDWriteFactory = __uuidof(IDWriteFactory);
 
 using namespace System;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
@@ -91,6 +92,20 @@ namespace DirectWrite
 			return nullptr;
 		}
 		return FontCollection::FromPointer(collection);
+	}
+
+	RenderingParameters ^Factory::CreateCustomRenderingParameters(
+		float gamma, float enhancedContrast, float clearTypeLevel,
+		PixelGeometry pixelGeometry, RenderingMode renderingMode)
+	{
+		IDWriteRenderingParams *params = 0;
+		if (RECORD_DW(InternalPointer->CreateCustomRenderingParams(gamma, enhancedContrast, clearTypeLevel,
+			static_cast<DWRITE_PIXEL_GEOMETRY>(pixelGeometry),
+			static_cast<DWRITE_RENDERING_MODE>(renderingMode), &params)).IsFailure)
+		{
+			return nullptr;
+		}
+		return RenderingParameters::FromPointer(params);
 	}
 
 	static TextLayout ^CreateGdiCompatibleTextLayoutInternal(IDWriteFactory *factory,
@@ -151,7 +166,7 @@ namespace DirectWrite
 		return FontFace::FromPointer(fontFace);
 	}
 
-	static FontFile ^CreateFontFileReferenceInternal(IDWriteFactory *factory, String ^filePath, FILETIME const *fileTime)
+	static FontFile ^CreateFontFileReferenceInternal(IDWriteFactory *factory, String ^filePath, ::FILETIME const *fileTime)
 	{
 		IDWriteFontFile *fontFile = 0;
 		if (RECORD_DW(factory->CreateFontFileReference(NativeUnicodeString(filePath), fileTime, &fontFile)).IsFailure)
@@ -165,9 +180,9 @@ namespace DirectWrite
 	{
 		return CreateFontFileReferenceInternal(InternalPointer, filePath, 0);
 	}
-	FontFile ^Factory::CreateFontFileReference(String ^filePath, System::Runtime::InteropServices::ComTypes::FILETIME fileTime)
+	FontFile ^Factory::CreateFontFileReference(String ^filePath, ComTypes::FILETIME fileTime)
 	{
-		return CreateFontFileReferenceInternal(InternalPointer, filePath, reinterpret_cast<FILETIME *>(&fileTime));
+		return CreateFontFileReferenceInternal(InternalPointer, filePath, reinterpret_cast<::FILETIME *>(&fileTime));
 	}
 
 	static GlyphRunAnalysis ^CreateGlyphRunAnalysisInternal(IDWriteFactory *factory,
