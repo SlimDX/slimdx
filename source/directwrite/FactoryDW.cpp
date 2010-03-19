@@ -34,6 +34,7 @@
 #include "GlyphRunDW.h"
 #include "GlyphRunAnalysis.h"
 #include "IFontCollectionLoader.h"
+#include "IFontFileLoader.h"
 #include "InlineObject.h"
 #include "NativeUnicodeString.h"
 #include "NumberSubstitution.h"
@@ -83,7 +84,7 @@ namespace DirectWrite
 	FontCollection ^Factory::CreateCustomFontCollection(IFontCollectionLoader ^loader, IntPtr collectionKey, int collectionKeySize)
 	{
 		IDWriteFontCollection *collection = 0;
-		IFontCollectionLoaderShim *shim = new IFontCollectionLoaderShim(loader);
+		IFontCollectionLoaderShim *shim = IFontCollectionLoaderShim::CreateInstance(loader);
 		if (RECORD_DW(InternalPointer->CreateCustomFontCollection(shim, collectionKey.ToPointer(), collectionKeySize, &collection)).IsFailure)
 		{
 			shim->Release();
@@ -317,14 +318,27 @@ namespace DirectWrite
 
 	Result Factory::RegisterFontCollectionLoader(IFontCollectionLoader ^loader)
 	{
-		IFontCollectionLoaderShim *shim = new IFontCollectionLoaderShim(loader);
+		IFontCollectionLoaderShim *shim = IFontCollectionLoaderShim::CreateInstance(loader);
 		return RECORD_DW(InternalPointer->RegisterFontCollectionLoader(shim));
+	}
+
+	Result Factory::RegisterFontFileLoader(IFontFileLoader ^loader)
+	{
+		IFontFileLoaderShim *shim = IFontFileLoaderShim::CreateInstance(loader);
+		return RECORD_DW(InternalPointer->RegisterFontFileLoader(shim));
 	}
 
 	Result Factory::UnregisterFontCollectionLoader(IFontCollectionLoader ^loader)
 	{
-		IFontCollectionLoaderShim *shim = new IFontCollectionLoaderShim(loader);
+		IFontCollectionLoaderShim *shim = IFontCollectionLoaderShim::CreateInstance(loader);
 		return RECORD_DW(InternalPointer->UnregisterFontCollectionLoader(shim));
 	}
+
+	Result Factory::UnregisterFontFileLoader(IFontFileLoader ^loader)
+	{
+		IFontFileLoaderShim *shim = IFontFileLoaderShim::CreateInstance(loader);
+		return RECORD_DW(InternalPointer->UnregisterFontFileLoader(shim));
+	}
+
 }
 }

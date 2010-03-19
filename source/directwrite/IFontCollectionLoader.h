@@ -61,7 +61,7 @@ namespace SlimDX
 		class IFontCollectionLoaderShim : public IDWriteFontCollectionLoader
 		{
 		public:
-			IFontCollectionLoaderShim(IFontCollectionLoader ^wrappedInterface);
+			static IFontCollectionLoaderShim *CreateInstance(IFontCollectionLoader ^wrappedInterface);
 
 			STDMETHOD(QueryInterface)(REFIID riid, void **ppvObject);
 			STDMETHOD_(ULONG, AddRef)();
@@ -70,6 +70,8 @@ namespace SlimDX
 			STDMETHOD(CreateEnumeratorFromKey)(IDWriteFactory *factory, void const *collectionKey, UINT32 collectionKeySize, IDWriteFontFileEnumerator **fontFileEnumerator);
 
 		private:
+			IFontCollectionLoaderShim(IFontCollectionLoader ^wrappedInterface);
+
 			int m_refCount;
 			gcroot<IFontCollectionLoader ^> m_WrappedInterface;
 		};

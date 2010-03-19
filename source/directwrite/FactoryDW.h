@@ -38,6 +38,7 @@ namespace SlimDX
 		using namespace SlimDX::Direct2D;
 		using namespace System;
 		interface struct IFontCollectionLoader;
+		interface struct IFontFileLoader;
 		ref class FontCollection;
 		ref class FontFace;
 		ref class FontFile;
@@ -91,7 +92,9 @@ namespace SlimDX
 			Typography ^CreateTypography();
 			GdiInterop ^GetGdiInterop();
 			Result RegisterFontCollectionLoader(IFontCollectionLoader ^loader);
+			Result RegisterFontFileLoader(IFontFileLoader ^loader);
 			Result UnregisterFontCollectionLoader(IFontCollectionLoader ^loader);
+			Result UnregisterFontFileLoader(IFontFileLoader ^loader);
 		};
 	}
 }
