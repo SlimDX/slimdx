@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Products", "Products", "{9C4AB399-9DA0-400E-B341-BBAB6AEF856D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{E695B2E8-897B-409C-AE04-08F9AB7FCBFE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Direct3D10", "Direct3D10", "{16B6FF23-5661-4317-BD88-663B856423FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTri10", "Samples\Direct3D10\MiniTri10\MiniTri10.csproj", "{05CC0CA3-8F11-49E6-B6AE-85DFD60B56F1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3DC818C4-DA4A-4465-A814-BD817C43A5D3} = {3DC818C4-DA4A-4465-A814-BD817C43A5D3}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimDX", "Products\SlimDX\SlimDX.csproj", "{174E62D9-D119-4D96-877F-3912F81E82C3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SlimDX.Implementation", "Products\SlimDX.Implementation\SlimDX.Implementation.vcproj", "{3DC818C4-DA4A-4465-A814-BD817C43A5D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05CC0CA3-8F11-49E6-B6AE-85DFD60B56F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05CC0CA3-8F11-49E6-B6AE-85DFD60B56F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05CC0CA3-8F11-49E6-B6AE-85DFD60B56F1}.Debug|x64.ActiveCfg = Debug|x64
+		{05CC0CA3-8F11-49E6-B6AE-85DFD60B56F1}.Debug|x64.Build.0 = Debug|x64
+		{05CC0CA3-8F11-49E6-B6AE-85DFD60B56F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05CC0CA3-8F11-49E6-B6AE-85DFD60B56F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05CC0CA3-8F11-49E6-B6AE-85DFD60B56F1}.Release|x64.ActiveCfg = Release|x64
+		{05CC0CA3-8F11-49E6-B6AE-85DFD60B56F1}.Release|x64.Build.0 = Release|x64
+		{174E62D9-D119-4D96-877F-3912F81E82C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{174E62D9-D119-4D96-877F-3912F81E82C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{174E62D9-D119-4D96-877F-3912F81E82C3}.Debug|x64.ActiveCfg = Debug|x64
+		{174E62D9-D119-4D96-877F-3912F81E82C3}.Debug|x64.Build.0 = Debug|x64
+		{174E62D9-D119-4D96-877F-3912F81E82C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{174E62D9-D119-4D96-877F-3912F81E82C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{174E62D9-D119-4D96-877F-3912F81E82C3}.Release|x64.ActiveCfg = Release|x64
+		{174E62D9-D119-4D96-877F-3912F81E82C3}.Release|x64.Build.0 = Release|x64
+		{3DC818C4-DA4A-4465-A814-BD817C43A5D3}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{3DC818C4-DA4A-4465-A814-BD817C43A5D3}.Debug|x64.ActiveCfg = Debug|x64
+		{3DC818C4-DA4A-4465-A814-BD817C43A5D3}.Debug|x64.Build.0 = Debug|x64
+		{3DC818C4-DA4A-4465-A814-BD817C43A5D3}.Release|Any CPU.ActiveCfg = Release|Win32
+		{3DC818C4-DA4A-4465-A814-BD817C43A5D3}.Release|x64.ActiveCfg = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{174E62D9-D119-4D96-877F-3912F81E82C3} = {9C4AB399-9DA0-400E-B341-BBAB6AEF856D}
+		{3DC818C4-DA4A-4465-A814-BD817C43A5D3} = {9C4AB399-9DA0-400E-B341-BBAB6AEF856D}
+		{16B6FF23-5661-4317-BD88-663B856423FF} = {E695B2E8-897B-409C-AE04-08F9AB7FCBFE}
+		{05CC0CA3-8F11-49E6-B6AE-85DFD60B56F1} = {16B6FF23-5661-4317-BD88-663B856423FF}
+	EndGlobalSection
+EndGlobal
