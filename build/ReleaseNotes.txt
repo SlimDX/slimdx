@@ -1,2 +1,0 @@
-Direct3D 9
-	* [628] Changed the shared handle parameter for texture creation to be a ref parameter.
