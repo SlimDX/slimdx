@@ -404,7 +404,18 @@ namespace Direct3D9
 		D3DXHANDLE handle = parameter != nullptr ? parameter->InternalHandle : NULL;
 		T result;
 
-		HRESULT hr = InternalPointer->GetValue( handle, &result, static_cast<DWORD>( sizeof(T) ) );
+		HRESULT hr = 0;
+		if( T::typeid == bool::typeid)
+		{
+			//bool is not the same as BOOL, so convert over appropriately
+			BOOL boolValue = 0;
+			hr = InternalPointer->GetValue( handle, &boolValue, sizeof(BOOL) );
+			result = (T)(boolValue == TRUE);
+		}
+		else
+		{
+			hr = InternalPointer->GetValue( handle, &result, static_cast<DWORD>( sizeof(T) ) );
+		}
 		GC::KeepAlive( parameter );
 		if( RECORD_D3D9( hr ).IsFailure )
 			return T();
