@@ -49,7 +49,7 @@ namespace Direct3D9
 
 	VolumeTexture::VolumeTexture( SlimDX::Direct3D9::Device^ device, int width, int height, int depth, int numLevels, Usage usage, Format format, Pool pool )
 	{
-		IDirect3DVolumeTexture9* texture;
+		IDirect3DVolumeTexture9* texture = NULL;
 		HRESULT hr = device->InternalPointer->CreateVolumeTexture( width, height, depth, numLevels,
 			static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &texture, NULL );
 		
@@ -63,7 +63,7 @@ namespace Direct3D9
 
 	VolumeTexture::VolumeTexture( SlimDX::Direct3D9::Device^ device, int width, int height, int depth, int numLevels, Usage usage, Format format, Pool pool, [Out] IntPtr% sharedHandle )
 	{
-		IDirect3DVolumeTexture9* texture;
+		IDirect3DVolumeTexture9* texture = NULL;
 		HANDLE sharedHandleNative = NULL;
 		HRESULT hr = device->InternalPointer->CreateVolumeTexture( width, height, depth, numLevels,
 			static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &texture, &sharedHandleNative );
@@ -111,7 +111,7 @@ namespace Direct3D9
 		int width, int height, int depth, int numLevels, Usage usage, Format format, Pool pool, Filter filter,
 		Filter mipFilter, int colorKey, ImageInformation* imageInformation, PaletteEntry* palette )
 	{
-		IDirect3DVolumeTexture9* texture;
+		IDirect3DVolumeTexture9* texture = NULL;
 
 		HRESULT hr = D3DXCreateVolumeTextureFromFileInMemoryEx( device->InternalPointer, memory, size,
 			width, height, depth, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ),
@@ -265,7 +265,7 @@ namespace Direct3D9
 		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette )
 	{
-		IDirect3DVolumeTexture9* texture;
+		IDirect3DVolumeTexture9* texture = NULL;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 		imageInformation = ImageInformation();
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
@@ -293,7 +293,7 @@ namespace Direct3D9
 		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation )
 	{
-		IDirect3DVolumeTexture9* texture;
+		IDirect3DVolumeTexture9* texture = NULL;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
 
@@ -314,7 +314,7 @@ namespace Direct3D9
 	VolumeTexture^ VolumeTexture::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName, int width, int height, int depth,
 		int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
-		IDirect3DVolumeTexture9* texture;
+		IDirect3DVolumeTexture9* texture = NULL;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
 		HRESULT hr = D3DXCreateVolumeTextureFromFileEx( device->InternalPointer, pinnedName, width, height,

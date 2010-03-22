@@ -219,7 +219,7 @@ namespace Direct3D9
 	ProgressiveMesh::ProgressiveMesh( Mesh^ mesh, array<AttributeWeights>^ attributeWeights,
 		array<float>^ vertexWeights, int minimumValue, MeshSimplification options )
 	{
-		ID3DXPMesh *result;
+		ID3DXPMesh* result = NULL;
 
 		DWORD *adjacencyIn = NULL;
 		pin_ptr<int> pinnedAdj;
@@ -247,7 +247,7 @@ namespace Direct3D9
 	ProgressiveMesh::ProgressiveMesh( Mesh^ mesh, array<AttributeWeights>^ attributeWeights,
 		int minimumValue, MeshSimplification options )
 	{
-		ID3DXPMesh *result;
+		ID3DXPMesh *result = NULL;
 
 		DWORD *adjacencyIn = NULL;
 		pin_ptr<int> pinnedAdj;
@@ -273,7 +273,7 @@ namespace Direct3D9
 
 	ProgressiveMesh::ProgressiveMesh( Mesh^ mesh, int minimumValue, MeshSimplification options )
 	{
-		ID3DXPMesh *result;
+		ID3DXPMesh *result = NULL;
 
 		DWORD *adjacencyIn = NULL;
 		pin_ptr<int> pinnedAdj;
@@ -296,9 +296,9 @@ namespace Direct3D9
 
 	ProgressiveMesh^ ProgressiveMesh::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, MeshFlags flags )
 	{
-		ID3DXPMesh *result;
-		ID3DXBuffer *om;
-		ID3DXBuffer *oe;
+		ID3DXPMesh *result = NULL;
+		ID3DXBuffer *om = NULL;
+		ID3DXBuffer *oe = NULL;
 		DWORD numMaterials;
 
 		StreamShim^ shim = gcnew StreamShim( stream );
@@ -320,7 +320,7 @@ namespace Direct3D9
 
 	ProgressiveMesh^ ProgressiveMesh::CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags flags, array<VertexElement>^ vertexDeclaration )
 	{
-		ID3DXPMesh* mesh;
+		ID3DXPMesh* mesh = NULL;
 		pin_ptr<VertexElement> pinned_elements = &vertexDeclaration[0];
 
 		HRESULT hr = InternalPointer->ClonePMesh( static_cast<DWORD>( flags ), reinterpret_cast<const D3DVERTEXELEMENT9*>( pinned_elements ),
@@ -334,7 +334,7 @@ namespace Direct3D9
 
 	ProgressiveMesh^ ProgressiveMesh::CloneProgressive( SlimDX::Direct3D9::Device^ device, MeshFlags flags, SlimDX::Direct3D9::VertexFormat format )
 	{
-		ID3DXPMesh* mesh;
+		ID3DXPMesh* mesh = NULL;
 
 		HRESULT hr = InternalPointer->ClonePMeshFVF( static_cast<DWORD>( flags ), static_cast<DWORD>( format ), 
 			device->InternalPointer, &mesh );
@@ -368,7 +368,7 @@ namespace Direct3D9
 
 	Mesh^ ProgressiveMesh::Optimize( MeshOptimizeFlags flags )
 	{
-		ID3DXMesh *result;
+		ID3DXMesh *result = NULL;
 
 		array<int>^ adjacencyOut = gcnew array<int>( FaceCount * 3 );
 		pin_ptr<int> pinnedAdj = &adjacencyOut[0];
@@ -386,8 +386,8 @@ namespace Direct3D9
 
 	Mesh^ ProgressiveMesh::Optimize( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
 	{
-		ID3DXMesh *result;
-		ID3DXBuffer *buffer;
+		ID3DXMesh *result = NULL;
+		ID3DXBuffer *buffer = NULL;
 		faceRemap = gcnew array<int>( FaceCount );
 		pin_ptr<int> pinnedFR = &faceRemap[0];
 

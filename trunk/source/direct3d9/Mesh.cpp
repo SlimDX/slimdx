@@ -49,7 +49,7 @@ namespace Direct3D9
 {
 	Mesh::Mesh( SlimDX::Direct3D9::Device^ device, int numFaces, int numVertices, MeshFlags options, array<VertexElement>^ vertexDeclaration )
 	{
-		ID3DXMesh* mesh;
+		ID3DXMesh* mesh = NULL;
 		pin_ptr<VertexElement> pinnedDecl = &vertexDeclaration[0];
 
 		HRESULT hr = D3DXCreateMesh( numFaces, numVertices, static_cast<DWORD>( options ),
@@ -63,7 +63,7 @@ namespace Direct3D9
 
 	Mesh::Mesh( SlimDX::Direct3D9::Device^ device, int numFaces, int numVertices, MeshFlags options, SlimDX::Direct3D9::VertexFormat fvf )
 	{
-		ID3DXMesh* mesh;
+		ID3DXMesh* mesh = NULL;
 
 		HRESULT hr = D3DXCreateMeshFVF( numFaces, numVertices, static_cast<DWORD>( options ), 
 			static_cast<DWORD>( fvf ), device->InternalPointer, &mesh );
@@ -76,11 +76,11 @@ namespace Direct3D9
 
 	Mesh^ Mesh::FromMemory_Internal( SlimDX::Direct3D9::Device^ device, const void* memory, DWORD size, MeshFlags flags )
 	{
-		ID3DXMesh* mesh;
-		ID3DXBuffer* adjacencyBuffer;
-		ID3DXBuffer* materialBuffer;
-		ID3DXBuffer* instanceBuffer;
-		DWORD materialCount;
+		ID3DXMesh* mesh = NULL;
+		ID3DXBuffer* adjacencyBuffer = NULL;
+		ID3DXBuffer* materialBuffer = NULL;
+		ID3DXBuffer* instanceBuffer = NULL;
+		DWORD materialCount = 0;
 		
 		HRESULT hr = D3DXLoadMeshFromXInMemory( memory, size, static_cast<DWORD>( flags ), device->InternalPointer,
 			&adjacencyBuffer, &materialBuffer, &instanceBuffer, &materialCount, &mesh );
@@ -122,11 +122,11 @@ namespace Direct3D9
 
 	Mesh^ Mesh::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName, MeshFlags flags )
 	{
-		ID3DXMesh* mesh;
-		ID3DXBuffer* adjacencyBuffer;
-		ID3DXBuffer* materialBuffer;
-		ID3DXBuffer* instanceBuffer;
-		DWORD materialCount;
+		ID3DXMesh* mesh = NULL;
+		ID3DXBuffer* adjacencyBuffer = NULL;
+		ID3DXBuffer* materialBuffer = NULL;
+		ID3DXBuffer* instanceBuffer = NULL;
+		DWORD materialCount = 0;
 		pin_ptr<const wchar_t> pinnedFileName = PtrToStringChars( fileName );
 		
 		HRESULT hr = D3DXLoadMeshFromX( pinnedFileName, static_cast<DWORD>( flags ), device->InternalPointer,
@@ -149,12 +149,12 @@ namespace Direct3D9
 
 	Mesh^ Mesh::FromXFile( SlimDX::Direct3D9::Device^ device, XFileData^ xfile, MeshFlags flags )
 	{
-		ID3DXMesh* mesh;
-		ID3DXSkinInfo* skin;
-		ID3DXBuffer* adjacencyBuffer;
-		ID3DXBuffer* materialBuffer;
-		ID3DXBuffer* instanceBuffer;
-		DWORD materialCount;
+		ID3DXMesh* mesh = NULL;
+		ID3DXSkinInfo* skin = NULL;
+		ID3DXBuffer* adjacencyBuffer = NULL;
+		ID3DXBuffer* materialBuffer = NULL;
+		ID3DXBuffer* instanceBuffer = NULL;
+		DWORD materialCount = 0;
 		
 		HRESULT hr = D3DXLoadSkinMeshFromXof( xfile->InternalPointer, static_cast<DWORD>( flags ), device->InternalPointer,
 			&adjacencyBuffer, &materialBuffer, &instanceBuffer, &materialCount, &skin, &mesh );
@@ -184,8 +184,8 @@ namespace Direct3D9
 
 	Mesh^ Mesh::CreateBox( SlimDX::Direct3D9::Device^ device, float width, float height, float depth )
 	{
-		ID3DXMesh *result;
-		ID3DXBuffer *adj;
+		ID3DXMesh *result = NULL;
+		ID3DXBuffer *adj = NULL;
 
 		HRESULT hr = D3DXCreateBox( device->InternalPointer, width, height, depth, &result, &adj );
 		
@@ -200,8 +200,8 @@ namespace Direct3D9
 
 	Mesh^ Mesh::CreateCylinder( SlimDX::Direct3D9::Device^ device, float radius1, float radius2, float length, int slices, int stacks )
 	{
-		ID3DXMesh *result;
-		ID3DXBuffer *adj;
+		ID3DXMesh *result = NULL;
+		ID3DXBuffer *adj = NULL;
 
 		HRESULT hr = D3DXCreateCylinder( device->InternalPointer, radius1, radius2, length, slices, stacks, &result, &adj );
 		
@@ -216,8 +216,8 @@ namespace Direct3D9
 
 	Mesh^ Mesh::CreateSphere( SlimDX::Direct3D9::Device^ device, float radius, int slices, int stacks )
 	{
-		ID3DXMesh *result;
-		ID3DXBuffer *adj;
+		ID3DXMesh *result = NULL;
+		ID3DXBuffer *adj = NULL;
 
 		HRESULT hr = D3DXCreateSphere( device->InternalPointer, radius, slices, stacks, &result, &adj );
 		
@@ -232,8 +232,8 @@ namespace Direct3D9
 
 	Mesh^ Mesh::CreateTeapot( SlimDX::Direct3D9::Device^ device )
 	{
-		ID3DXMesh *result;
-		ID3DXBuffer *adj;
+		ID3DXMesh *result = NULL;
+		ID3DXBuffer *adj = NULL;
 
 		HRESULT hr = D3DXCreateTeapot( device->InternalPointer, &result, &adj );
 		
@@ -248,8 +248,8 @@ namespace Direct3D9
 
 	Mesh^ Mesh::CreateTorus( SlimDX::Direct3D9::Device^ device, float innerRadius, float outerRadius, int sides, int rings )
 	{
-		ID3DXMesh *result;
-		ID3DXBuffer *adj;
+		ID3DXMesh *result = NULL;
+		ID3DXBuffer *adj = NULL;
 
 		HRESULT hr = D3DXCreateTorus( device->InternalPointer, innerRadius, outerRadius, sides, rings, &result, &adj );
 		
@@ -264,8 +264,8 @@ namespace Direct3D9
 
 	Mesh^ Mesh::CreateText( SlimDX::Direct3D9::Device^ device, Font^ font, String^ text, float deviation, float extrusion, [Out] array<GlyphMetricsFloat>^% glyphMetrics )
 	{
-		ID3DXMesh *result;
-		ID3DXBuffer *adj;
+		ID3DXMesh *result = NULL;
+		ID3DXBuffer *adj = NULL;
 
 		glyphMetrics = gcnew array<GlyphMetricsFloat>( text->Length );
 
@@ -302,8 +302,8 @@ namespace Direct3D9
 
 	Mesh^ Mesh::CreateText( SlimDX::Direct3D9::Device^ device, Font^ font, String^ text, float deviation, float extrusion )
 	{
-		ID3DXMesh *result;
-		ID3DXBuffer *adj;
+		ID3DXMesh *result = NULL;
+		ID3DXBuffer *adj = NULL;
 
 		pin_ptr<const wchar_t> pinnedText = PtrToStringChars( text );
 
@@ -334,7 +334,7 @@ namespace Direct3D9
 
 	DataStream^ Mesh::LockAttributeBuffer( LockFlags flags )
 	{
-		DWORD *data;
+		DWORD *data = NULL;
 		int faceCount = InternalPointer->GetNumFaces();
 		
 		HRESULT hr = InternalPointer->LockAttributeBuffer( static_cast<DWORD>( flags ), &data );
@@ -362,7 +362,7 @@ namespace Direct3D9
 
 	Result Mesh::OptimizeInPlace( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
 	{
-		ID3DXBuffer *buffer;
+		ID3DXBuffer *buffer = NULL;
 		DWORD *adjacencyIn = NULL;
 		DWORD *adjacencyOutPtr = NULL;
 		stack_array<DWORD> adjacencyOut = stackalloc( DWORD, FaceCount * 3 );
@@ -435,8 +435,8 @@ namespace Direct3D9
 
 	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
 	{
-		ID3DXMesh *result;
-		ID3DXBuffer *buffer;
+		ID3DXMesh *result = NULL;
+		ID3DXBuffer *buffer = NULL;
 		DWORD *adjacencyIn = NULL;
 		DWORD *adjacencyOutPtr = NULL;
 		stack_array<DWORD> adjacencyOut = stackalloc( DWORD, FaceCount * 3 );
@@ -476,7 +476,7 @@ namespace Direct3D9
 
 	Mesh^ Mesh::Optimize( MeshOptimizeFlags flags )
 	{
-		ID3DXMesh *result;
+		ID3DXMesh *result = NULL;
 		DWORD *adjacencyIn = NULL;
 		DWORD *adjacencyOutPtr = NULL;
 		stack_array<DWORD> adjacencyOut = stackalloc( DWORD, FaceCount * 3 );
@@ -507,8 +507,8 @@ namespace Direct3D9
 
 	Mesh^ Mesh::Clean( CleanType type, [Out] String^% errorsAndWarnings )
 	{
-		ID3DXMesh *result;
-		ID3DXBuffer *errors;
+		ID3DXMesh *result = NULL;
+		ID3DXBuffer *errors = NULL;
 		DWORD *adjacencyIn = NULL;
 		DWORD *adjacencyOutPtr = NULL;
 		stack_array<DWORD> adjacencyOut = stackalloc( DWORD, FaceCount * 3 );
@@ -544,7 +544,7 @@ namespace Direct3D9
 
 	Mesh^ Mesh::Clean( CleanType type )
 	{
-		ID3DXMesh *result;
+		ID3DXMesh *result = NULL;
 		DWORD *adjacencyIn = NULL;
 		DWORD *adjacencyOutPtr = NULL;
 		stack_array<DWORD> adjacencyOut = stackalloc( DWORD, FaceCount * 3 );
@@ -581,10 +581,10 @@ namespace Direct3D9
 
 	String^ Mesh::Validate()
 	{
-		ID3DXBuffer *errorBuffer;
+		ID3DXBuffer *errorBuffer = NULL;
 		DWORD *adjacencyIn = NULL;
 		pin_ptr<int> pinnedAdj;
-		String^ errors;
+		String^ errors = nullptr;
 
 		array<int>^ adjacency = GetAdjacency();
 		if( adjacency != nullptr )
@@ -648,8 +648,8 @@ namespace Direct3D9
 		int normalOutIndex, TangentOptions options, float partialEdgeThreshold,
 		float singularPointThreshold, float normalEdgeThreshold, [Out] array<int>^% vertexMapping )
 	{
-		ID3DXMesh *result;
-		ID3DXBuffer *vertex;
+		ID3DXMesh *result = NULL;
+		ID3DXBuffer *vertex = NULL;
 
 		array<int>^ adjacency = GetAdjacency();
 		DWORD *adjacencyIn = NULL;
@@ -685,7 +685,7 @@ namespace Direct3D9
 		int normalOutIndex, TangentOptions options, float partialEdgeThreshold,
 		float singularPointThreshold, float normalEdgeThreshold )
 	{
-		ID3DXMesh *result;
+		ID3DXMesh *result = NULL;
 
 		array<int>^ adjacency = GetAdjacency();
 		DWORD *adjacencyIn = NULL;
@@ -714,7 +714,7 @@ namespace Direct3D9
 	Mesh^ Mesh::Concatenate( SlimDX::Direct3D9::Device^ device, array<Mesh^>^ meshes, MeshFlags options, array<Matrix>^ geometryTransforms,
 		array<Matrix>^ textureTransforms, array<VertexElement>^ vertexDeclaration )
 	{
-		ID3DXMesh *result;
+		ID3DXMesh *result = NULL;
 		D3DXMATRIX *geoXForms = NULL;
 		D3DXMATRIX *textureXForms = NULL;
 		D3DVERTEXELEMENT9 *decl = NULL;
@@ -757,7 +757,7 @@ namespace Direct3D9
 	Mesh^ Mesh::Concatenate( SlimDX::Direct3D9::Device^ device, array<Mesh^>^ meshes, MeshFlags options, array<Matrix>^ geometryTransforms,
 		array<Matrix>^ textureTransforms )
 	{
-		ID3DXMesh *result;
+		ID3DXMesh *result = NULL;
 		D3DXMATRIX *geoXForms = NULL;
 		D3DXMATRIX *textureXForms = NULL;
 
@@ -791,7 +791,7 @@ namespace Direct3D9
 
 	Mesh^ Mesh::Concatenate( SlimDX::Direct3D9::Device^ device, array<Mesh^>^ meshes, MeshFlags options )
 	{
-		ID3DXMesh *result;
+		ID3DXMesh *result = NULL;
 
 		stack_array<ID3DXMesh*> input = stackalloc( ID3DXMesh*, meshes->Length );
 		for( int i = 0; i < meshes->Length; i++ )
@@ -884,7 +884,7 @@ namespace Direct3D9
 	Mesh^ Mesh::Simplify( Mesh^ mesh, array<AttributeWeights>^ attributeWeights,
 		array<float>^ vertexWeights, int minimumValue, MeshSimplification options )
 	{
-		ID3DXMesh *result;
+		ID3DXMesh *result = NULL;
 
 		DWORD *adjacencyIn = NULL;
 		pin_ptr<int> pinnedAdj;
@@ -912,7 +912,7 @@ namespace Direct3D9
 	Mesh^ Mesh::Simplify( Mesh^ mesh, array<AttributeWeights>^ attributeWeights,
 		int minimumValue, MeshSimplification options )
 	{
-		ID3DXMesh *result;
+		ID3DXMesh *result = NULL;
 
 		DWORD *adjacencyIn = NULL;
 		pin_ptr<int> pinnedAdj;
@@ -938,7 +938,7 @@ namespace Direct3D9
 
 	Mesh^ Mesh::Simplify( Mesh^ mesh, int minimumValue, MeshSimplification options )
 	{
-		ID3DXMesh *result;
+		ID3DXMesh *result = NULL;
 
 		DWORD *adjacencyIn = NULL;
 		array<int>^ adjacency = mesh->GetAdjacency();
@@ -961,8 +961,8 @@ namespace Direct3D9
 
 	Mesh^ Mesh::TessellateNPatches( Mesh^ mesh, float segmentCount, bool quadraticInterpolation )
 	{
-		ID3DXMesh *result;
-		ID3DXBuffer *adjacencyOut;
+		ID3DXMesh *result = NULL;
+		ID3DXBuffer *adjacencyOut = NULL;
 
 		DWORD *adjacencyIn = NULL;
 		array<int>^ adjacency = mesh->GetAdjacency();
@@ -1014,7 +1014,7 @@ namespace Direct3D9
 
 	Result Mesh::WeldVertices( WeldFlags flags, WeldEpsilons epsilons, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
 	{
-		ID3DXBuffer *buffer;
+		ID3DXBuffer *buffer = NULL;
 		DWORD *adjIn = NULL;
 		DWORD *adjOut = NULL;
 		stack_array<DWORD> adjacencyOut = stackalloc( DWORD, FaceCount * 3 );
@@ -1053,7 +1053,7 @@ namespace Direct3D9
 
 	Result Mesh::WeldVertices( WeldFlags flags, [Out] array<int>^% faceRemap, [Out] array<int>^% vertexRemap )
 	{
-		ID3DXBuffer *buffer;
+		ID3DXBuffer *buffer = NULL;
 		DWORD *adjIn = NULL;
 		DWORD *adjOut = NULL;
 		stack_array<DWORD> adjacencyOut = stackalloc( DWORD, FaceCount * 3 );

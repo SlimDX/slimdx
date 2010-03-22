@@ -46,7 +46,7 @@ namespace Direct3D9
 	Surface^ Surface::CreateRenderTarget( SlimDX::Direct3D9::Device^ device, int width, int height, Format format,
 		MultisampleType multiSampleType, int multiSampleQuality, bool lockable )
 	{
-		IDirect3DSurface9* surface;
+		IDirect3DSurface9* surface = NULL;
 
 		HRESULT hr = device->InternalPointer->CreateRenderTarget( width, height, static_cast<D3DFORMAT>( format ),
 			static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ), multiSampleQuality, lockable, &surface, NULL );
@@ -61,7 +61,7 @@ namespace Direct3D9
 
 	Surface^ Surface::CreateOffscreenPlain( SlimDX::Direct3D9::Device^ device, int width, int height, Format format, Pool pool )
 	{
-		IDirect3DSurface9* surface;
+		IDirect3DSurface9* surface = NULL;
 
 		HRESULT hr = device->InternalPointer->CreateOffscreenPlainSurface( width, height,
 			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &surface, NULL );
@@ -79,7 +79,7 @@ namespace Direct3D9
 	Surface^ Surface::CreateDepthStencil( SlimDX::Direct3D9::Device^ device, int width, int height, Format format,
 		MultisampleType multiSampleType, int multiSampleQuality, bool discard )
 	{
-		IDirect3DSurface9* surface;
+		IDirect3DSurface9* surface = NULL;
 
 		HRESULT hr = device->InternalPointer->CreateDepthStencilSurface( width, height, static_cast<D3DFORMAT>( format ),
 			static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ), multiSampleQuality, discard, &surface, NULL );
@@ -95,7 +95,7 @@ namespace Direct3D9
 	Surface^ Surface::CreateRenderTarget( SlimDX::Direct3D9::Device^ device, int width, int height, Format format,
 		MultisampleType multiSampleType, int multiSampleQuality, bool lockable, [Out] IntPtr% sharedHandle )
 	{
-		IDirect3DSurface9* surface;
+		IDirect3DSurface9* surface = NULL;
 		HANDLE sharedHandleNative = NULL;
 
 		HRESULT hr = device->InternalPointer->CreateRenderTarget( width, height, static_cast<D3DFORMAT>( format ),
@@ -113,7 +113,7 @@ namespace Direct3D9
 	Surface^ Surface::CreateOffscreenPlain( SlimDX::Direct3D9::Device^ device, int width, int height, Format format,
 		Pool pool, [Out] IntPtr% sharedHandle )
 	{
-		IDirect3DSurface9* surface;
+		IDirect3DSurface9* surface = NULL;
 		HANDLE sharedHandleNative = NULL;
 
 		HRESULT hr = device->InternalPointer->CreateOffscreenPlainSurface( width, height,
@@ -133,7 +133,7 @@ namespace Direct3D9
 	Surface^ Surface::CreateDepthStencil( SlimDX::Direct3D9::Device^ device, int width, int height, Format format,
 		MultisampleType multiSampleType, int multiSampleQuality, bool discard, [Out] IntPtr% sharedHandle )
 	{
-		IDirect3DSurface9* surface;
+		IDirect3DSurface9* surface = NULL;
 		HANDLE sharedHandleNative = NULL;
 
 		HRESULT hr = device->InternalPointer->CreateDepthStencilSurface( width, height, static_cast<D3DFORMAT>( format ),
@@ -151,7 +151,7 @@ namespace Direct3D9
 	Surface^ Surface::CreateRenderTargetEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format,
 		MultisampleType multiSampleType, int multiSampleQuality, bool lockable, Usage usage )
 	{
-		IDirect3DSurface9* surface;
+		IDirect3DSurface9* surface = NULL;
 
 		HRESULT hr = device->InternalPointer->CreateRenderTargetEx( width, height, static_cast<D3DFORMAT>( format ),
 			static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ), multiSampleQuality,
@@ -168,7 +168,7 @@ namespace Direct3D9
 	Surface^ Surface::CreateRenderTargetEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format,
 		MultisampleType multiSampleType, int multiSampleQuality, bool lockable, Usage usage, [Out] IntPtr% sharedHandle )
 	{
-		IDirect3DSurface9* surface;
+		IDirect3DSurface9* surface = NULL;
 		HANDLE localHandle = NULL;
 		sharedHandle = IntPtr::Zero;
 
@@ -188,7 +188,7 @@ namespace Direct3D9
 	Surface^ Surface::CreateOffscreenPlainEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height,
 		Format format, Pool pool, Usage usage )
 	{
-		IDirect3DSurface9* surface;
+		IDirect3DSurface9* surface = NULL;
 
 		HRESULT hr = device->InternalPointer->CreateOffscreenPlainSurfaceEx( width, height,
 			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &surface,
@@ -207,7 +207,7 @@ namespace Direct3D9
 	Surface^ Surface::CreateOffscreenPlainEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height,
 		Format format, Pool pool, Usage usage, [Out] IntPtr% sharedHandle )
 	{
-		IDirect3DSurface9* surface;
+		IDirect3DSurface9* surface = NULL;
 		HANDLE localHandle = NULL;
 		sharedHandle = IntPtr::Zero;
 
@@ -229,7 +229,7 @@ namespace Direct3D9
 	Surface^ Surface::CreateDepthStencilEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format,
 		MultisampleType multiSampleType, int multiSampleQuality, bool discard, Usage usage )
 	{
-		IDirect3DSurface9* surface;
+		IDirect3DSurface9* surface = NULL;
 
 		HRESULT hr = device->InternalPointer->CreateDepthStencilSurfaceEx( width, height, static_cast<D3DFORMAT>( format ),
 			static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ), multiSampleQuality, discard,
@@ -246,7 +246,7 @@ namespace Direct3D9
 	Surface^ Surface::CreateDepthStencilEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format,
 		MultisampleType multiSampleType, int multiSampleQuality, bool discard, Usage usage, [Out] IntPtr% sharedHandle )
 	{
-		IDirect3DSurface9* surface;
+		IDirect3DSurface9* surface = NULL;
 		HANDLE localHandle = NULL;
 		sharedHandle = IntPtr::Zero;
 

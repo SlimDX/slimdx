@@ -47,7 +47,7 @@ namespace Direct3D9
 {
 	Texture::Texture( SlimDX::Direct3D9::Device^ device, int width, int height, int numLevels, Usage usage, Format format, Pool pool )
 	{
-		IDirect3DTexture9* texture;
+		IDirect3DTexture9* texture = NULL;
 		HRESULT hr = device->InternalPointer->CreateTexture( width, height, numLevels, static_cast<DWORD>( usage ), 
 			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &texture, NULL );
 		
@@ -61,7 +61,7 @@ namespace Direct3D9
 
 	Texture::Texture( SlimDX::Direct3D9::Device^ device, int width, int height, int numLevels, Usage usage, Format format, Pool pool, IntPtr% sharedHandle )
 	{
-		IDirect3DTexture9* texture;
+		IDirect3DTexture9* texture = NULL;
 		HANDLE sharedHandleNative = sharedHandle.ToPointer();
 		HRESULT hr = device->InternalPointer->CreateTexture( width, height, numLevels, static_cast<DWORD>( usage ), 
 			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &texture, &sharedHandleNative );
@@ -103,7 +103,7 @@ namespace Direct3D9
 		int height, int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, 
 		ImageInformation* imageInformation, PaletteEntry* palette )
 	{
-		IDirect3DTexture9* texture;
+		IDirect3DTexture9* texture = NULL;
 
 		HRESULT hr = D3DXCreateTextureFromFileInMemoryEx( device->InternalPointer, memory, size, width,
 			height, numLevels, static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ),
@@ -141,7 +141,7 @@ namespace Direct3D9
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey, 
 		[Out] ImageInformation% imageInformation )
 	{
-		IDirect3DTexture9* texture;
+		IDirect3DTexture9* texture = NULL;
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 		imageInformation = ImageInformation();
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
@@ -163,7 +163,7 @@ namespace Direct3D9
 	Texture^ Texture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory, int width, int height, int numLevels,
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
-		IDirect3DTexture9* texture;
+		IDirect3DTexture9* texture = NULL;
 		pin_ptr<unsigned char> pinnedMemory = &memory[0];
 
 		HRESULT hr = D3DXCreateTextureFromFileInMemoryEx( device->InternalPointer, pinnedMemory, memory->Length, width,
@@ -277,7 +277,7 @@ namespace Direct3D9
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette )
 	{
-		IDirect3DTexture9* texture;
+		IDirect3DTexture9* texture = NULL;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 		imageInformation = ImageInformation();
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
@@ -304,7 +304,7 @@ namespace Direct3D9
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation )
 	{
-		IDirect3DTexture9* texture;
+		IDirect3DTexture9* texture = NULL;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
 
@@ -324,7 +324,7 @@ namespace Direct3D9
 	Texture^ Texture::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName, int width, int height, int numLevels,
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
-		IDirect3DTexture9* texture;
+		IDirect3DTexture9* texture = NULL;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
 		HRESULT hr = D3DXCreateTextureFromFileEx( device->InternalPointer, pinnedName, width, height, 

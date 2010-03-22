@@ -49,7 +49,7 @@ namespace Direct3D9
 
 	CubeTexture::CubeTexture( SlimDX::Direct3D9::Device^ device, int edgeLength, int numLevels, Usage usage, Format format, Pool pool )
 	{
-		IDirect3DCubeTexture9* texture;
+		IDirect3DCubeTexture9* texture = NULL;
 		HRESULT hr = device->InternalPointer->CreateCubeTexture( edgeLength, numLevels, static_cast<DWORD>( usage ),
 			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &texture, NULL );
 		
@@ -63,7 +63,7 @@ namespace Direct3D9
 
 	CubeTexture::CubeTexture( SlimDX::Direct3D9::Device^ device, int edgeLength, int numLevels, Usage usage, Format format, Pool pool, [Out] IntPtr% sharedHandle )
 	{
-		IDirect3DCubeTexture9* texture;
+		IDirect3DCubeTexture9* texture = NULL;
 		HANDLE sharedHandleNative = NULL;
 		HRESULT hr = device->InternalPointer->CreateCubeTexture( edgeLength, numLevels, static_cast<DWORD>( usage ),
 			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &texture, &sharedHandleNative );
@@ -104,7 +104,7 @@ namespace Direct3D9
 		int size, int numLevels, Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		ImageInformation* imageInformation, PaletteEntry* palette )
 	{
-		IDirect3DCubeTexture9* texture;
+		IDirect3DCubeTexture9* texture = NULL;
 
 		HRESULT hr = D3DXCreateCubeTextureFromFileInMemoryEx( device->InternalPointer, memory, sizeBytes, size, numLevels,
 			static_cast<DWORD>( usage ), static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), static_cast<DWORD>( filter ), static_cast<DWORD>( mipFilter ),
@@ -255,7 +255,7 @@ namespace Direct3D9
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation, [Out] array<PaletteEntry>^% palette )
 	{
-		IDirect3DCubeTexture9* texture;
+		IDirect3DCubeTexture9* texture = NULL;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 		imageInformation = ImageInformation();
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
@@ -282,7 +282,7 @@ namespace Direct3D9
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey,
 		[Out] ImageInformation% imageInformation )
 	{
-		IDirect3DCubeTexture9* texture;
+		IDirect3DCubeTexture9* texture = NULL;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 		pin_ptr<ImageInformation> pinnedImageInfo = &imageInformation;
 
@@ -302,7 +302,7 @@ namespace Direct3D9
 	CubeTexture^ CubeTexture::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName, int size, int numLevels,
 		Usage usage, Format format, Pool pool, Filter filter, Filter mipFilter, int colorKey )
 	{
-		IDirect3DCubeTexture9* texture;
+		IDirect3DCubeTexture9* texture = NULL;
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
 
 		HRESULT hr = D3DXCreateCubeTextureFromFileEx( device->InternalPointer, pinnedName, size, 
