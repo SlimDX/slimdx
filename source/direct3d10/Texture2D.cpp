@@ -217,9 +217,6 @@ namespace Direct3D10
 		if( RECORD_D3D10( hr ).IsFailure )
 			return Result::Last;
 		
-		if( static_cast<SIZE_T>( stream->Length - stream->Position ) < blob->GetBufferSize() )
-			throw gcnew InvalidOperationException( "The specified stream does not have sufficient capacity for the specified texture." );
-		
 		// Write byte-by-byte to avoid allocating a managed byte[] that will wastefully persist.
 		unsigned char* bytes = reinterpret_cast<unsigned char*>( blob->GetBufferPointer() );
 		for(SIZE_T byteIndex = 0; byteIndex < blob->GetBufferSize(); ++byteIndex)
