@@ -25,6 +25,11 @@
 
 namespace SlimDX
 {
+	namespace Multimedia
+	{
+		ref class WaveFormatExtensible;
+	}
+
 	namespace XAudio2
 	{
 		public ref class DeviceDetails : System::ICloneable, System::IEquatable<DeviceDetails^>
