@@ -24,6 +24,8 @@
 #include "DirectWriteException.h"
 
 #include "TextAnalyzer.h"
+#include "TextAnalysisSink.h"
+#include "TextAnalysisSource.h"
 
 const IID IID_IDWriteTextAnalyzer = __uuidof(IDWriteTextAnalyzer);
 
@@ -33,5 +35,9 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
+	Result TextAnalyzer::AnalyzeScript(TextAnalysisSource ^analysisSource, int textPosition, int textLength, TextAnalysisSink ^analysisSink)
+	{
+		return RECORD_DW(InternalPointer->AnalyzeScript(analysisSource->InternalPointer, textPosition, textLength, analysisSink->InternalPointer));
+	}
 }
 }

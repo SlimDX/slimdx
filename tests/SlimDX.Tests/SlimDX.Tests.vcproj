@@ -482,6 +482,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\DirectWrite.TextAnalyzer.Tests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\source\DirectWrite.TextFormat.Tests.cpp"
 				>
 				<FileConfiguration

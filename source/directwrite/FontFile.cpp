@@ -65,7 +65,9 @@ namespace DirectWrite
 
 		HRESULT hr = InternalPointer->GetLoader(&loader);
 		if (RECORD_DW(hr).IsFailure)
+		{
 			return nullptr;
+		}
 
 		return FontFileLoader::FromPointer(loader);
 	}
