@@ -22,5 +22,6 @@
 namespace SlimDX.DXGI {
     public interface ISwapChainDXGI : IComObject {
         T GetBuffer<T>( int index );
+        void Present(int syncInterval, PresentFlags presentFlags);
     }
 }
