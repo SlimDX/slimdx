@@ -298,6 +298,14 @@
 			Name="Direct3D10"
 			>
 			<File
+				RelativePath=".\Source\Direct3D10\DepthStencilView10.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\Direct3D10\DepthStencilView10.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\Direct3D10\Device10.cpp"
 				>
 			</File>

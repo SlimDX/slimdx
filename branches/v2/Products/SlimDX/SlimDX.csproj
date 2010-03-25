@@ -76,6 +76,7 @@
     <Compile Include="Direct3D10\Enumerations\MapMode.cs" />
     <Compile Include="Direct3D10\IDirect3D10Api.cs" />
     <Compile Include="Direct3D10\Interfaces\IBuffer10.cs" />
+    <Compile Include="Direct3D10\Interfaces\IDepthStencilView10.cs" />
     <Compile Include="Direct3D10\Interfaces\IDevice10.cs" />
     <Compile Include="Direct3D10\Interfaces\IDeviceChild10.cs" />
     <Compile Include="Direct3D10\Interfaces\IRenderTargetView10.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="DXGI\Enumerations\Format.cs" />
     <Compile Include="DXGI\Enumerations\DisplayModeScanlineOrder.cs" />
     <Compile Include="DXGI\Enumerations\DisplayModeScale.cs" />
+    <Compile Include="DXGI\Enumerations\PresentFlags.cs" />
     <Compile Include="DXGI\Enumerations\SwapEffect.cs" />
     <Compile Include="DXGI\Enumerations\SwapFlags.cs" />
     <Compile Include="DXGI\Enumerations\Usage.cs" />

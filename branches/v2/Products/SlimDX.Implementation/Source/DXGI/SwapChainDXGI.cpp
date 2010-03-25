@@ -30,5 +30,9 @@ namespace SlimDX
 			
 			return (T)Activator::CreateInstance( target, IntPtr( result ) );
 		}
+
+		void SwapChainDXGI::Present(int syncInterval, PresentFlags presentFlags) {
+			HRESULT hr = NativePointer->Present(syncInterval, static_cast<UINT>(presentFlags));
+		}
 	}
 }

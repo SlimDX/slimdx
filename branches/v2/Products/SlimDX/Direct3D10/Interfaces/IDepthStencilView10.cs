@@ -19,17 +19,8 @@
  * THE SOFTWARE.
  */
 
-using System;
-using System.Drawing;
-
 namespace SlimDX.Direct3D10 {
-    [InterfaceID( "9B7E4C0F-342C-4106-A19F-4F2704F689F0" )]
-    public interface IDevice10 : IComObject {
-        IRenderTargetView10 CreateRenderTargetView( IResource10 resource );
-        
-        void ClearRenderTargetView(IRenderTargetView10 renderTargetView, Color clearColor);
-
-        void OMSetRenderTargets(IRenderTargetView10[] renderTargetViews, IDepthStencilView10 depthStencilView);
-        void OMSetRenderTarget(IRenderTargetView10 renderTargetView, IDepthStencilView10 depthStencilView);
+    [InterfaceID("9B7E4C09-342C-4106-A19F-4F2704F689F0")]
+    public interface IDepthStencilView10 : IComObject {
     }
 }

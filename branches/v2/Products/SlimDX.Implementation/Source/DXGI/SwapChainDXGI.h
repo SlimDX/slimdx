@@ -14,6 +14,8 @@ namespace SlimDX
 				
 				generic<typename T>
 				virtual T GetBuffer( int index );
+
+				virtual void Present(int syncInterval, PresentFlags presentFlags);
 		};
 	}
 }

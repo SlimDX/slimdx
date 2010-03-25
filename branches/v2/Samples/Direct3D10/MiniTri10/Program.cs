@@ -1,17 +1,14 @@
-﻿using System;
-using SlimDX;
+﻿using SlimDX;
 using SlimDX.Direct3D10;
 using SlimDX.DXGI;
-using System.Windows.Forms;
 using System.Drawing;
-using System.Reflection;
 using SlimDX.Windows;
 
 namespace MiniTri10
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var window = new Window("SlimDX - MiniTri10");
 
@@ -35,17 +32,27 @@ namespace MiniTri10
                 SwapEffect = SwapEffect.Discard
             };
 
-            IDevice10 device = null;
-            ISwapChainDXGI swapChain = null;
-            api.CreateDeviceAndSwapChain(null, DriverType.Hardware, DeviceCreationFlags.Debug, swapChainDescription, out device, out swapChain);
+            IDevice10 device;
+            ISwapChainDXGI swapChain;
+            api.CreateDeviceAndSwapChain(null, DriverType.Hardware, DeviceCreationFlags.None, swapChainDescription, out device, out swapChain);
+
             var backbuffer = swapChain.GetBuffer<ITexture2D10>(0);
             var renderTargetView = device.CreateRenderTargetView( backbuffer );
-            
+
+            // At this point we have our render target, which holds a reference to the backbuffer, so we can release our reference to the backbuffer.
+            backbuffer.Release();
+
+            device.OMSetRenderTarget(renderTargetView, null);
+
             MessagePump.Run(window, () =>
             {
+                device.ClearRenderTargetView(renderTargetView, Color.Red);
+                swapChain.Present(0, PresentFlags.None);
             });
 
-            backbuffer.Release();
+            device.Release();
+            swapChain.Release();
+            renderTargetView.Release();
         }
     }
 }
