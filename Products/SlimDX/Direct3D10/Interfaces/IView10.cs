@@ -19,8 +19,9 @@
  * THE SOFTWARE.
  */
 
+using System;
 namespace SlimDX.Direct3D10 {
-    [InterfaceID( "9B7E4C04-342C-4106-A19F-4F2704F689F0" )]
-    public interface ITexture2D10 : IComObject, IResource10 {
+    [InterfaceID( "C902B03F-60A7-49BA-9936-2A3AB37A7E33" )]
+    public interface IView10 : IComObject {
     }
 }

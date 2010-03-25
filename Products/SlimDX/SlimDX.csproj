@@ -77,7 +77,11 @@
     <Compile Include="Direct3D10\IDirect3D10Api.cs" />
     <Compile Include="Direct3D10\Interfaces\IBuffer10.cs" />
     <Compile Include="Direct3D10\Interfaces\IDevice10.cs" />
+    <Compile Include="Direct3D10\Interfaces\IDeviceChild10.cs" />
+    <Compile Include="Direct3D10\Interfaces\IRenderTargetView10.cs" />
+    <Compile Include="Direct3D10\Interfaces\IResource10.cs" />
     <Compile Include="Direct3D10\Interfaces\ITexture2D.cs" />
+    <Compile Include="Direct3D10\Interfaces\IView10.cs" />
     <Compile Include="DXGI\Descriptions\DisplayModeDescription.cs" />
     <Compile Include="DXGI\Descriptions\SampleDescription.cs" />
     <Compile Include="DXGI\Descriptions\SwapChainDescription.cs" />

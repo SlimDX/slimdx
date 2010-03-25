@@ -12,6 +12,8 @@ namespace SlimDX
 				Device10( ID3D10Device* native );
 				Device10( System::IntPtr native );
 				
+				virtual IRenderTargetView10^ CreateRenderTargetView( IResource10^ resource );
+				
 			private:
 				ID3D10Device* m_Native;
 		};
