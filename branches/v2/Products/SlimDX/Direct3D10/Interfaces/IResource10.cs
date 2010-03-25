@@ -20,7 +20,7 @@
  */
 
 namespace SlimDX.Direct3D10 {
-    [InterfaceID( "9B7E4C04-342C-4106-A19F-4F2704F689F0" )]
-    public interface ITexture2D10 : IComObject, IResource10 {
+    [InterfaceID( "9B7E4C01-342C-4106-A19F-4F2704F689F0" )]
+    public interface IResource10 : IDeviceChild10, IComObject {
     }
 }

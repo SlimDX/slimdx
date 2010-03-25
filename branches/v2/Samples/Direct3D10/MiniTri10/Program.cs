@@ -39,7 +39,8 @@ namespace MiniTri10
             ISwapChainDXGI swapChain = null;
             api.CreateDeviceAndSwapChain(null, DriverType.Hardware, DeviceCreationFlags.Debug, swapChainDescription, out device, out swapChain);
             var backbuffer = swapChain.GetBuffer<ITexture2D10>(0);
-
+            var renderTargetView = device.CreateRenderTargetView( backbuffer );
+            
             MessagePump.Run(window, () =>
             {
             });
