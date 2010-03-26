@@ -12,9 +12,6 @@
 		<Platform
 			Name="Win32"
 		/>
-		<Platform
-			Name="x64"
-		/>
 	</Platforms>
 	<ToolFiles>
 	</ToolFiles>
@@ -40,29 +37,6 @@
 				AssemblySearchPath=""
 				ForcedUsingAssemblies=""
 				CompileAsManaged="1"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Debug|x64"
-			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="0"
-			CharacterSet="1"
-			ManagedExtensions="1"
-			BuildLogFile=""
-			>
-			<Tool
-				Name="VCNMakeTool"
-				BuildCommandLine="&quot;$(ProjectDir)..\..\External\SlimBuild\sb.exe&quot; build"
-				ReBuildCommandLine="&quot;$(ProjectDir)..\..\External\SlimBuild\sb.exe&quot;"
-				CleanCommandLine="&quot;$(ProjectDir)..\..\External\SlimBuild\sb.exe&quot; clean"
-				Output=""
-				PreprocessorDefinitions=""
-				IncludeSearchPath=""
-				ForcedIncludes=""
-				AssemblySearchPath=""
-				ForcedUsingAssemblies=""
-				CompileAsManaged=""
 			/>
 		</Configuration>
 		<Configuration
@@ -116,81 +90,6 @@
 				DelayLoadDLLs="d3d10.dll"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release|x64"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="2"
-			CharacterSet="1"
-			ManagedExtensions="1"
-			WholeProgramOptimization="1"
-			BuildLogFile="$(ProjectDir)"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				TargetEnvironment="3"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG"
-				RuntimeLibrary="2"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="stdafx.h"
-				WarningLevel="3"
-				DebugInformationFormat="3"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit)"
-				OutputFile="$(OutDir)\$(ProjectName).x86.dll"
-				LinkIncremental="1"
-				DelayLoadDLLs="d3d10.dll"
-				GenerateDebugInformation="true"
-				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -351,14 +250,6 @@
 			>
 			<FileConfiguration
 				Name="Release|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="1"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|x64"
 				>
 				<Tool
 					Name="VCCLCompilerTool"
