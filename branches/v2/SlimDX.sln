@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimDX", "Products\SlimDX\S
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SlimDX.Implementation", "Products\SlimDX.Implementation\SlimDX.Implementation.vcproj", "{3DC818C4-DA4A-4465-A814-BD817C43A5D3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B227065C-B3D5-450D-B2A8-7F53DF67E2D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,7 @@ Global
 		{3DC818C4-DA4A-4465-A814-BD817C43A5D3}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{3DC818C4-DA4A-4465-A814-BD817C43A5D3}.Debug|Any CPU.Build.0 = Debug|Win32
 		{3DC818C4-DA4A-4465-A814-BD817C43A5D3}.Release|Any CPU.ActiveCfg = Release|Win32
+		{3DC818C4-DA4A-4465-A814-BD817C43A5D3}.Release|Any CPU.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
