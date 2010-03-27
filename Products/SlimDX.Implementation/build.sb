@@ -27,7 +27,7 @@ def build( b ):
 		"C:\\Program Files\\Microsoft SDKs\\Windows\\v6.0A\\\\lib\\x64"
 	]
 	
-	b.add( CxxCliTask(
+	b( "c++",
 		output = "SlimDX.Implementation.x86",
 		format = "dll",
 		arch = "x86",
@@ -36,12 +36,9 @@ def build( b ):
 		library_dirs = library_paths_32,
 		assemblies = assembly_references,
 		libraries = library_references
-	) )
+	)
 	
-	#TODO: This should not be neccessary.
-	b.invalidateHashes()
-	
-	b.add( CxxCliTask(
+	b( "c++",
 		output = "SlimDX.Implementation.x64",
 		format = "dll",
 		arch = "x64",
@@ -50,4 +47,4 @@ def build( b ):
 		library_dirs = library_paths_64,
 		assemblies = assembly_references,
 		libraries = library_references
-	) )
+	)
