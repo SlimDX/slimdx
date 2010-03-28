@@ -31,9 +31,10 @@ def build( b ):
 		output = "SlimDX.Implementation.x86",
 		format = "dll",
 		arch = "x86",
+		features = "clr",
 		source = FileSet("Source/**/*.cpp"),
-		include_dirs = includes,
-		library_dirs = library_paths_32,
+		include_paths = includes,
+		library_paths = library_paths_32,
 		assemblies = assembly_references,
 		libraries = library_references
 	)
@@ -42,9 +43,10 @@ def build( b ):
 		output = "SlimDX.Implementation.x64",
 		format = "dll",
 		arch = "x64",
+		features = "clr",
 		source = FileSet("Source/**/*.cpp"),
-		include_dirs = includes,
-		library_dirs = library_paths_64,
+		include_paths = includes,
+		library_paths = library_paths_64,
 		assemblies = assembly_references,
 		libraries = library_references
 	)
