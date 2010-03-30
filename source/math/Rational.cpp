@@ -24,12 +24,17 @@
 #include "Rational.h"
 
 using namespace System;
+using namespace System::Globalization;
 
 namespace SlimDX
 {
 	Rational::Rational( int numerator, int denominator ) : Numerator( numerator ), Denominator( denominator )
 	{
 	}
+
+    String^ Rational::ToString() {
+        return String::Format( CultureInfo::CurrentCulture, "{0}", ((double)Numerator / Denominator).ToString(CultureInfo::CurrentCulture));
+    }
 
 	bool Rational::operator == ( Rational left, Rational right )
 	{

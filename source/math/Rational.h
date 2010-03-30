@@ -51,6 +51,8 @@ namespace SlimDX
 		/// <param name="denominator">The denominator of the rational pair.</param>
 		Rational( int numerator, int denominator );
 
+        virtual System::String^ ToString() override;
+
 		/// <summary>
 		/// Tests for equality between two objects.
 		/// </summary>
