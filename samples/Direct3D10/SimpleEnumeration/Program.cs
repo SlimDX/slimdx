@@ -32,7 +32,6 @@ namespace SimpleEnumeration {
 
         private static void PrintDeviceInformation(Adapter adapter) {
             using (var device = new Device(adapter, DriverType.Hardware, DeviceCreationFlags.None)) {
-                PrintSupportedQualityLevels(device);
                 PrintSupportedFormats(device);
             }
         }
@@ -43,20 +42,23 @@ namespace SimpleEnumeration {
                 Console.WriteLine("        Format: {0}", format);
                 var formatSupport = device.CheckFormatSupport((Format)format);
                 Console.WriteLine("            Format support: {0}", formatSupport);
+                PrintSupportedQualityLevels(device, (Format) format);
             }
         }
 
-        private static void PrintSupportedQualityLevels(Device device) {
-            Console.WriteLine("    Multi-Sample Support:");
+        private static void PrintSupportedQualityLevels(Device device, Format format) {
             for (var sampleCount = 1; sampleCount <= 32; sampleCount *= 2) {
-                var qualityLevels = device.CheckMultisampleQualityLevels(Format.R8G8B8A8_UNorm, sampleCount);
-                Console.WriteLine("        Sample Count: {0}", sampleCount);
+                var qualityLevels = device.CheckMultisampleQualityLevels(format, sampleCount);
+                Console.WriteLine("            Sample Count: {0}", sampleCount);
 
                 if (qualityLevels != 0)
-                    Console.WriteLine("            Max Quality Level: {0}", qualityLevels);
+                    Console.WriteLine("                Max Quality Level: {0}", qualityLevels);
                 else {
-                    Console.WriteLine("            Not supported");
+                    Console.WriteLine("                Not supported");
                 }
+
+                if (qualityLevels == 0)
+                    break;
             }
         }
 
@@ -71,7 +73,9 @@ namespace SimpleEnumeration {
                         Console.WriteLine("        {0}: {1}", ParseName(descProperty.Name), descProperty.GetValue(output.Description, null));
                     }
 
-                    PrintDisplayModes(output, Format.R8G8B8A8_UNorm);
+                    foreach (var format in Enum.GetValues(typeof(Format))) {
+                        PrintDisplayModes(output, (Format)format);
+                    }
                 }
             }
         }
@@ -80,6 +84,9 @@ namespace SimpleEnumeration {
             Console.WriteLine("        Display modes for format: {0}", format);
 
             var displayModes = output.GetDisplayModeList(format, 0);
+            
+            if(displayModes == null)
+                return;
 
             foreach (var displayMode in displayModes) {
                 foreach (var descProperty in displayMode.GetType().GetProperties()) {
