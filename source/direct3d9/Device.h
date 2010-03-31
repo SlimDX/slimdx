@@ -1415,9 +1415,9 @@ namespace SlimDX
 			/// Gets an estimate of the amount of available texture memory.
 			/// </summary>
 			/// <value>The amount of available texture memory, rounded to the nearest MB.</value>
-			property long AvailableTextureMemory
+			property System::Int64 AvailableTextureMemory
 			{
-				long get();
+				System::Int64 get();
 			}
 
 			/// <summary>
