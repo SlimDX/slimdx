@@ -45,7 +45,7 @@ namespace SlimDX
 			/// Initializes a new instance of the <see cref="InputLayout" /> object to describe the
 			/// input-buffer data for the input-assembler stage.
 			/// </summary>
-			/// <unmanaged>ID3D11Device::CreateInputLayout</unmanaged>
+			/// <unmanaged>ID3D10Device::CreateInputLayout</unmanaged>
 			InputLayout( SlimDX::Direct3D10::Device^ device, ShaderSignature^ shaderSignature, array<InputElement>^ elements );
 		};
 	}

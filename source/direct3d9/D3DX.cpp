@@ -166,7 +166,7 @@ namespace Direct3D9
 
 	array<int>^ D3DX::OptimizeFaces( array<int>^ indices, int faceCount, int vertexCount )
 	{
-		array<int>^ results;
+		array<int>^ results = gcnew array<int>( faceCount );
 
 		pin_ptr<int> pinnedResults = &results[0];
 		pin_ptr<int> pinnedIndices = &indices[0];
@@ -182,7 +182,7 @@ namespace Direct3D9
 
 	array<int>^ D3DX::OptimizeFaces( array<Int16>^ indices, int faceCount, int vertexCount )
 	{
-		array<int>^ results;
+		array<int>^ results = gcnew array<int>( faceCount );
 
 		pin_ptr<int> pinnedResults = &results[0];
 		pin_ptr<Int16> pinnedIndices = &indices[0];
@@ -198,7 +198,7 @@ namespace Direct3D9
 
 	array<int>^ D3DX::OptimizeVertices( array<int>^ indices, int faceCount, int vertexCount )
 	{
-		array<int>^ results;
+		array<int>^ results = gcnew array<int>( vertexCount );
 
 		pin_ptr<int> pinnedResults = &results[0];
 		pin_ptr<int> pinnedIndices = &indices[0];
@@ -214,7 +214,7 @@ namespace Direct3D9
 
 	array<int>^ D3DX::OptimizeVertices( array<Int16>^ indices, int faceCount, int vertexCount )
 	{
-		array<int>^ results;
+		array<int>^ results = gcnew array<int>( vertexCount );
 
 		pin_ptr<int> pinnedResults = &results[0];
 		pin_ptr<Int16> pinnedIndices = &indices[0];
