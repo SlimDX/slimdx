@@ -89,7 +89,7 @@ namespace DirectWrite
 		UINT32 count = InternalPointer->GetFontFamilyNameLength();
 		std::vector<WCHAR> name;
 		name.resize(count + 1);
-		if (RECORD_DW(InternalPointer->GetFontFamilyName(&name[0], name.size())).IsFailure)
+		if (RECORD_DW(InternalPointer->GetFontFamilyName(&name[0], static_cast<UINT32>(name.size()))).IsFailure)
 		{
 			return String::Empty;
 		}
