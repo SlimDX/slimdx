@@ -57,7 +57,7 @@ namespace SlimDX
 			void InvokeStreamEnd() { OnStreamEnd( System::EventArgs::Empty ); }
 			void InvokeVoiceError( ErrorEventArgs^ e ) { OnVoiceError( e ); }
 			void InvokeVoiceProcessingPassEnd() { OnVoiceProcessingPassEnd( System::EventArgs::Empty ); }
-			void InvokeVoiceProcessingPassStart( StartProcessingEventArgs^ e ) { OnVoiceProcessingPassStart( e ); }
+			void InvokeVoiceProcessingPassStart( int bytesRequired ) { OnVoiceProcessingPassStart( bytesRequired ); }
 
 		protected:
 			void OnBufferEnd( ContextEventArgs^ e );
@@ -65,7 +65,7 @@ namespace SlimDX
 			void OnLoopEnd( ContextEventArgs^ e );
 			void OnStreamEnd( System::EventArgs^ e );
 			void OnVoiceError( ErrorEventArgs^ e );
-			void OnVoiceProcessingPassStart( StartProcessingEventArgs^ e );
+			void OnVoiceProcessingPassStart( int bytesRequired );
 			void OnVoiceProcessingPassEnd( System::EventArgs^ e );
 
 		public:

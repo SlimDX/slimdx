@@ -137,10 +137,10 @@ namespace XAudio2
 			VoiceProcessingPassEnd( this, e );
 	}
 
-	void SourceVoice::OnVoiceProcessingPassStart( StartProcessingEventArgs^ e )
+	void SourceVoice::OnVoiceProcessingPassStart( int bytesRequired )
 	{
 		if( &SourceVoice::VoiceProcessingPassStart != nullptr )
-			VoiceProcessingPassStart( this, e );
+			VoiceProcessingPassStart( this, gcnew StartProcessingEventArgs( bytesRequired )  );
 	}
 
 	Result SourceVoice::Discontinuity()
