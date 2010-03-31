@@ -426,7 +426,7 @@ namespace DirectWrite
 		}
 
 		std::vector<WCHAR> name(length + 1);
-		if (RECORD_DW(layout->GetLocaleName(currentPosition, &name[0], name.size(), range)).IsFailure)
+		if (RECORD_DW(layout->GetLocaleName(currentPosition, &name[0], static_cast<UINT32>(name.size()), range)).IsFailure)
 		{
 			return String::Empty;
 		}
