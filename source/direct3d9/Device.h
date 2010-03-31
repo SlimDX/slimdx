@@ -848,7 +848,7 @@ namespace SlimDX
 			/// <param name="data">The constant data.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			/// <unmanaged>IDirect3DDevice9::SetVertexShaderConstantB</unmanaged>
-			Result SetVertexShaderConstant( int startRegister, array<bool>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, 0 ); }
+			Result SetVertexShaderConstant( int startRegister, array<bool>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, data->Length ); }
 			
 			/// <summary>
 			/// Sets a vertex shader constant.
@@ -857,7 +857,7 @@ namespace SlimDX
 			/// <param name="data">The constant data.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			/// <unmanaged>IDirect3DDevice9::SetVertexShaderConstantF</unmanaged>
-			Result SetVertexShaderConstant( int startRegister, array<float>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, 0 ); }
+			Result SetVertexShaderConstant( int startRegister, array<float>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, data->Length / 4 ); }
 			
 			/// <summary>
 			/// Sets a vertex shader constant.
@@ -866,7 +866,7 @@ namespace SlimDX
 			/// <param name="data">The constant data.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			/// <unmanaged>IDirect3DDevice9::SetVertexShaderConstantF</unmanaged>
-			Result SetVertexShaderConstant( int startRegister, array<Vector4>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, 0 ); }
+			Result SetVertexShaderConstant( int startRegister, array<Vector4>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, data->Length ); }
 			
 			/// <summary>
 			/// Sets a vertex shader constant.
@@ -875,7 +875,7 @@ namespace SlimDX
 			/// <param name="data">The constant data.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			/// <unmanaged>IDirect3DDevice9::SetVertexShaderConstantI</unmanaged>
-			Result SetVertexShaderConstant( int startRegister, array<int>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, 0 ); }
+			Result SetVertexShaderConstant( int startRegister, array<int>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, data->Length / 4 ); }
 
 			/// <summary>
 			/// Sets a vertex shader constant.
@@ -923,7 +923,7 @@ namespace SlimDX
 			/// <param name="data">The constant data.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			/// <unmanaged>IDirect3DDevice9::SetVertexShaderConstantF</unmanaged>
-			Result SetVertexShaderConstant( int startRegister, array<Matrix>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, 0 ); }
+			Result SetVertexShaderConstant( int startRegister, array<Matrix>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, data->Length ); }
 
 			/// <summary>
 			/// Sets a pixel shader constant.
@@ -976,7 +976,7 @@ namespace SlimDX
 			/// <param name="data">The constant data.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			/// <unmanaged>IDirect3DDevice9::SetPixelShaderConstantB</unmanaged>
-			Result SetPixelShaderConstant( int startRegister, array<bool>^ data ) { return SetPixelShaderConstant( startRegister, data, 0, 0 ); }
+			Result SetPixelShaderConstant( int startRegister, array<bool>^ data ) { return SetPixelShaderConstant( startRegister, data, 0, data->Length ); }
 			
 			/// <summary>
 			/// Sets a pixel shader constant.
@@ -985,7 +985,7 @@ namespace SlimDX
 			/// <param name="data">The constant data.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			/// <unmanaged>IDirect3DDevice9::SetPixelShaderConstantF</unmanaged>
-			Result SetPixelShaderConstant( int startRegister, array<float>^ data ) { return SetPixelShaderConstant( startRegister, data, 0, 0 ); }
+			Result SetPixelShaderConstant( int startRegister, array<float>^ data ) { return SetPixelShaderConstant( startRegister, data, 0, data->Length / 4 ); }
 			
 			/// <summary>
 			/// Sets a pixel shader constant.
@@ -994,7 +994,7 @@ namespace SlimDX
 			/// <param name="data">The constant data.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			/// <unmanaged>IDirect3DDevice9::SetPixelShaderConstantF</unmanaged>
-			Result SetPixelShaderConstant( int startRegister, array<Vector4>^ data ) { return SetPixelShaderConstant( startRegister, data, 0, 0 ); }
+			Result SetPixelShaderConstant( int startRegister, array<Vector4>^ data ) { return SetPixelShaderConstant( startRegister, data, 0, data->Length ); }
 			
 			/// <summary>
 			/// Sets a pixel shader constant.
@@ -1003,7 +1003,7 @@ namespace SlimDX
 			/// <param name="data">The constant data.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			/// <unmanaged>IDirect3DDevice9::SetPixelShaderConstantI</unmanaged>
-			Result SetPixelShaderConstant( int startRegister, array<int>^ data ) { return SetPixelShaderConstant( startRegister, data, 0, 0 ); }
+			Result SetPixelShaderConstant( int startRegister, array<int>^ data ) { return SetPixelShaderConstant( startRegister, data, 0, data->Length / 4 ); }
 			
 			/// <summary>
 			/// Sets a pixel shader constant.
@@ -1051,7 +1051,7 @@ namespace SlimDX
 			/// <param name="data">The constant data.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			/// <unmanaged>IDirect3DDevice9::SetPixelShaderConstantF</unmanaged>
-			Result SetPixelShaderConstant( int startRegister, array<Matrix>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, 0 ); }
+			Result SetPixelShaderConstant( int startRegister, array<Matrix>^ data ) { return SetVertexShaderConstant( startRegister, data, 0, data->Length ); }
 
 			/// <summary>
 			/// Signals Direct3D to begin recording a device-state block.
