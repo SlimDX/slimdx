@@ -597,7 +597,7 @@ namespace Direct3D9
 		return gcnew SlimDX::Direct3D9::Capabilities( caps );
 	}
 
-	long Device::AvailableTextureMemory::get()
+	System::Int64 Device::AvailableTextureMemory::get()
 	{
 		return InternalPointer->GetAvailableTextureMem();
 	}
