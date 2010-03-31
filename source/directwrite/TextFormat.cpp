@@ -147,7 +147,7 @@ namespace DirectWrite
 		UINT32 count = InternalPointer->GetLocaleNameLength();
 		std::vector<WCHAR> name;
 		name.resize(count + 1);
-		if (RECORD_DW(InternalPointer->GetLocaleName(&name[0], name.size())).IsFailure)
+		if (RECORD_DW(InternalPointer->GetLocaleName(&name[0], static_cast<UINT32>(name.size()))).IsFailure)
 		{
 			return String::Empty;
 		}
