@@ -90,7 +90,7 @@ namespace Multimedia
 		info.cchBuffer = bytes->Length;
 		info.pchBuffer = internalMemory->PositionPointer;
 
-		handle = mmioOpen( NULL, &info, MMIO_ALLOCBUF | MMIO_READ );
+		handle = mmioOpen( NULL, &info, MMIO_READ );
 		if( handle == NULL )
 			throw gcnew InvalidDataException( "Invalid wave file." );
 
@@ -156,6 +156,8 @@ namespace Multimedia
 
 		if( dataOffset < 0 || size <= 0 )
 			throw gcnew InvalidDataException( "Invalid wave file." );
+
+		publicMemory = gcnew DataStream(internalMemory->RawPointer + dataOffset, internalMemory->Length - dataOffset, true, false, false);
 	}
 
 	WaveStream::~WaveStream()
