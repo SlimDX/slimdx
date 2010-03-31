@@ -169,7 +169,7 @@ namespace DirectWrite
 		}
 		IDWriteFontFace *fontFace;
 		if (RECORD_DW(InternalPointer->CreateFontFace(static_cast<DWRITE_FONT_FACE_TYPE>(fontFaceType),
-			nativeFontFiles.size(), &nativeFontFiles[0],
+			static_cast<UINT32>(nativeFontFiles.size()), &nativeFontFiles[0],
 			faceIndex, static_cast<DWRITE_FONT_SIMULATIONS>(fontFaceSimulationFlags),
 			&fontFace)).IsFailure)
 		{
