@@ -24,6 +24,8 @@
 #include <d3dx9.h>
 #include <dxerr.h>
 
+#include "../stack_array.h"
+
 #include "Device.h"
 #include "VertexDeclaration.h"
 
@@ -41,10 +43,23 @@ namespace Direct3D9
 			throw gcnew ArgumentNullException( "elements" );
 
 		pin_ptr<VertexElement> pinnedElements = &elements[0];
+		D3DVERTEXELEMENT9 *elementPtr = reinterpret_cast<D3DVERTEXELEMENT9*>( pinnedElements );
+
+		stack_array<D3DVERTEXELEMENT9> nativeElements;
+		if (elements[elements->Length - 1] != VertexElement::VertexDeclarationEnd)
+		{
+			D3DVERTEXELEMENT9 end = D3DDECL_END();
+
+			nativeElements = stack_array<D3DVERTEXELEMENT9>(elements->Length + 1);
+			memcpy(&nativeElements[0], elementPtr, sizeof(D3DVERTEXELEMENT9) * elements->Length);
+			nativeElements[elements->Length] = end;
+
+			elementPtr = &nativeElements[0];
+		}
+		
 		IDirect3DVertexDeclaration9* decl;
 
-		HRESULT hr = device->InternalPointer->CreateVertexDeclaration( reinterpret_cast<const D3DVERTEXELEMENT9*>( pinnedElements ), &decl );
-		
+		HRESULT hr = device->InternalPointer->CreateVertexDeclaration( elementPtr, &decl );
 		if( RECORD_D3D9(hr).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
