@@ -51,7 +51,10 @@ namespace BasicSound
 
         static void PlayPCM(XAudio2 device, string fileName)
         {
-            WaveStream stream = new WaveStream(fileName);
+            //WaveStream stream = new WaveStream(fileName);
+            var s = System.IO.File.OpenRead(fileName);
+            WaveStream stream = new WaveStream(s);
+            s.Close();
 
             AudioBuffer buffer = new AudioBuffer();
             buffer.AudioData = stream;

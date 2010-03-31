@@ -36,6 +36,7 @@ namespace SlimDX
 			int size;
 			WaveFormat^ format;
 			DataStream^ internalMemory;
+			DataStream^ publicMemory;
 
 			void Destruct();
 			void Init();
@@ -44,7 +45,7 @@ namespace SlimDX
 		internal:
 			property DataStream^ InternalMemory
 			{
-				DataStream^ get() { return internalMemory; }
+				DataStream^ get() { return publicMemory; }
 			}
 
 		public:
