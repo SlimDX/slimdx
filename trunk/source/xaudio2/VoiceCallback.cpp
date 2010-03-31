@@ -68,7 +68,7 @@ namespace XAudio2
 
 	void VoiceCallbackShim::OnVoiceProcessingPassStart( UINT32 bytesRequired )
 	{
-		m_WrappedInterface->InvokeVoiceProcessingPassStart( gcnew StartProcessingEventArgs( bytesRequired ) );
+		m_WrappedInterface->InvokeVoiceProcessingPassStart( bytesRequired );
 	}
 
 	void VoiceCallbackShim::OnVoiceProcessingPassEnd()
