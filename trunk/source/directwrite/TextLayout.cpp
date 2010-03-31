@@ -242,7 +242,7 @@ namespace DirectWrite
 		}
 
 		std::vector<WCHAR> name(length + 1);
-		if (RECORD_DW(layout->GetFontFamilyName(currentPosition, &name[0], name.size(), textRange)).IsFailure)
+		if (RECORD_DW(layout->GetFontFamilyName(currentPosition, &name[0], static_cast<UINT32>(name.size()), textRange)).IsFailure)
 		{
 			return String::Empty;
 		}
