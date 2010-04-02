@@ -32,10 +32,14 @@ namespace SlimDX
 	{
 		ref class Device;
 		ref class ShaderSignature;
+		ref class ShaderBytecode;
 		
 		public ref class InputLayout : public DeviceChild
 		{
 			COMOBJECT(ID3D10InputLayout, InputLayout);
+
+		private:
+			void Init( SlimDX::Direct3D10::Device^ device, const void *shader, int length, array<InputElement>^ elements );
 		
 		public:
 			[System::Obsolete("Use the constructor overload taking a ShaderSignature as the second argument instead.")]
@@ -47,6 +51,8 @@ namespace SlimDX
 			/// </summary>
 			/// <unmanaged>ID3D10Device::CreateInputLayout</unmanaged>
 			InputLayout( SlimDX::Direct3D10::Device^ device, ShaderSignature^ shaderSignature, array<InputElement>^ elements );
+
+			InputLayout( SlimDX::Direct3D10::Device^ device, ShaderBytecode^ shaderBytecode, array<InputElement>^ elements );
 		};
 	}
 };

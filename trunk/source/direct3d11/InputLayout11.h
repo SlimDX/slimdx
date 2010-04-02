@@ -32,12 +32,16 @@ namespace SlimDX
 	{
 		ref class Device;
 		ref class ShaderSignature;
+		ref class ShaderBytecode;
 		
 		/// <summary>Accesses the input data for the input-assembler stage.</summary>
 		/// <unmanaged>ID3D11InputLayout</unmanaged>
 		public ref class InputLayout : public DeviceChild
 		{
 			COMOBJECT(ID3D11InputLayout, InputLayout);
+
+		private:
+			void Init( SlimDX::Direct3D11::Device^ device, const void *shader, int length, array<InputElement>^ elements );
 		
 		public:
 			/// <summary>
@@ -54,6 +58,8 @@ namespace SlimDX
 			/// </summary>
 			/// <unmanaged>ID3D11Device::CreateInputLayout</unmanaged>
 			InputLayout( SlimDX::Direct3D11::Device^ device, ShaderSignature^ shaderSignature, array<InputElement>^ elements );
+
+			InputLayout( SlimDX::Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, array<InputElement>^ elements );
 		};
 	}
 };

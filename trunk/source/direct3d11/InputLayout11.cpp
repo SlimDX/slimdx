@@ -36,36 +36,32 @@ namespace Direct3D11
 { 
 	InputLayout::InputLayout( SlimDX::Direct3D11::Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature )
 	{
-		if( device == nullptr )
-			throw gcnew ArgumentNullException( "device" );
-		if( elements == nullptr )
-			throw gcnew ArgumentNullException( "elements" );
 		if( shaderSignature == nullptr )
 			throw gcnew ArgumentNullException( "shaderSignature" );
-				
-		D3D11_INPUT_ELEMENT_DESC nativeElements[D3D11_IA_VERTEX_INPUT_STRUCTURE_ELEMENT_COUNT];
-		for( int i = 0; i < elements->Length; ++i )
-			nativeElements[i] = elements[i].CreateNativeVersion();
-			
-		ID3D11InputLayout* layout = 0;
-		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->GetBufferPointer(),
-			shaderSignature->GetBufferSize(), &layout );
 
-		for( int i = 0; i < elements->Length; i++ )
-			Utilities::FreeNativeString( nativeElements[i].SemanticName );
-
-		if( RECORD_D3D11( hr ).IsFailure )
-			throw gcnew Direct3D11Exception( Result::Last );
-
-		Construct( layout );
+		Init( device, shaderSignature->GetBufferPointer(), shaderSignature->GetBufferSize(), elements );
 	}
 
 	InputLayout::InputLayout( SlimDX::Direct3D11::Device^ device, ShaderSignature^ shaderSignature, array<InputElement>^ elements )
 	{
-		if( device == nullptr )
-			throw gcnew ArgumentNullException( "device" );
 		if( shaderSignature == nullptr )
 			throw gcnew ArgumentNullException( "shaderSignature" );
+
+		Init( device, shaderSignature->GetBufferPointer(), shaderSignature->GetBufferSize(), elements );
+	}
+
+	InputLayout::InputLayout( SlimDX::Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, array<InputElement>^ elements )
+	{
+		if( shaderBytecode == nullptr )
+			throw gcnew ArgumentNullException( "shaderBytecode" );
+
+		Init( device, shaderBytecode->InternalPointer->GetBufferPointer(), static_cast<int>( shaderBytecode->InternalPointer->GetBufferSize() ), elements );
+	}
+
+	void InputLayout::Init( SlimDX::Direct3D11::Device^ device, const void* shader, int length, array<InputElement>^ elements )
+	{
+		if( device == nullptr )
+			throw gcnew ArgumentNullException( "device" );
 		if( elements == nullptr )
 			throw gcnew ArgumentNullException( "elements" );
 
@@ -74,8 +70,7 @@ namespace Direct3D11
 			nativeElements[i] = elements[i].CreateNativeVersion();
 			
 		ID3D11InputLayout* layout = 0;
-		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shaderSignature->GetBufferPointer(),
-			shaderSignature->GetBufferSize(), &layout );
+		HRESULT hr = device->InternalPointer->CreateInputLayout( nativeElements, elements->Length, shader, length, &layout );
 
 		for( int i = 0; i < elements->Length; i++ )
 			Utilities::FreeNativeString( nativeElements[i].SemanticName );
