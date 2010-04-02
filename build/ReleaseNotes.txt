@@ -10,9 +10,11 @@ Direct3D 9
 	
 Direct3D 10
 	* Dropped stream size checks in texture ToStream functions.
+	* Added a constructor to InputLayout to take shader bytecode.
 	
 Direct3D 11
 	* Dropped stream size checks in texture ToStream functions.
+	* Added a constructor to InputLayout to take shader bytecode.
 
 DirectWrite
 	* Added a bunch of missing functionality.
