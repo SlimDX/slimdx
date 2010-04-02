@@ -1,2 +1,25 @@
 Direct3D 9
-	* [628] Changed the shared handle parameter for texture creation to be a ref parameter.
+	* Changed the shared handle parameter for texture creation to be a ref parameter.
+	* Changed Texture shared handle parameter from out to ref.
+	* Fixed 9Ex methods that didn't properly initialize display mode parameters.
+	* Added special casing for Effect.GetValue with boolean results.
+	* Fixed a null reference issue in D3DX.OptimizeFaces and OptimizeVertices.
+	* Changed Device.AvailableTextureMemory to return an Int64 instead of Int32.
+	* Fixed Device.Set*ShaderConstant* overloads that implicitly calculate the number of items to pass.
+	* Vertex declarations no longer require VertexElementArray at the end of the input array.
+	
+Direct3D 10
+	* Dropped stream size checks in texture ToStream functions.
+	
+Direct3D 11
+	* Dropped stream size checks in texture ToStream functions.
+
+DirectWrite
+	* Added a bunch of missing functionality.
+
+RawInput
+	* Fixed the data type of the mouse wheel delta.
+	
+XAudio2
+	* Fixed an issue in WaveStream that caused popping noises when loading data from an existing stream.
+	* Changed OnVoiceProcessingPassStart to only perform an allocation if an event handler is hooked up.

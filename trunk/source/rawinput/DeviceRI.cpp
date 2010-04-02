@@ -94,7 +94,7 @@ namespace RawInput
 			{
 				MouseInput( nullptr, gcnew MouseInputEventArgs( static_cast<MouseMode>( rawInput->data.mouse.usFlags ),
 					static_cast<MouseButtonFlags>( rawInput->data.mouse.usButtonFlags ),
-					rawInput->data.mouse.usButtonData,
+					static_cast<short>( rawInput->data.mouse.usButtonData ),
 					rawInput->data.mouse.ulRawButtons,
 					rawInput->data.mouse.lLastX,
 					rawInput->data.mouse.lLastY,
