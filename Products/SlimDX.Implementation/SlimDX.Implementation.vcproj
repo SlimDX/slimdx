@@ -197,6 +197,14 @@
 			Name="Direct3D10"
 			>
 			<File
+				RelativePath=".\Source\Direct3D10\Buffer10.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\Direct3D10\Buffer10.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\Direct3D10\DepthStencilView10.cpp"
 				>
 			</File>
@@ -244,6 +252,42 @@
 				RelativePath=".\Source\Direct3D10\Texture2D10.h"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="SlimBuffer"
+			>
+			<File
+				RelativePath=".\Source\SlimBuffer\MemoryBuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\SlimBuffer\MemoryBuffer.h"
+				>
+			</File>
+			<Filter
+				Name="Allocators"
+				>
+				<File
+					RelativePath=".\Source\SlimBuffer\CrtAllocator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\SlimBuffer\CrtAllocator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\SlimBuffer\DelegateAllocator.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\SlimBuffer\DelegatorAllocator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\SlimBuffer\IAllocator.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath=".\Source\AssemblyInfo.cpp"

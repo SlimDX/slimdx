@@ -26,8 +26,14 @@ namespace SlimDX.Direct3D10 {
     [InterfaceID( "9B7E4C0F-342C-4106-A19F-4F2704F689F0" )]
     public interface IDevice10 : IComObject {
         IRenderTargetView10 CreateRenderTargetView( IResource10 resource );
-        
+        IBuffer10 CreateBuffer<T>(BufferDescription10 bufferDescription10, T[] bufferData) where T : struct;
+
         void ClearRenderTargetView(IRenderTargetView10 renderTargetView, Color clearColor);
+
+        void IASetPrimitiveTopology(PrimitiveTopology10 primitiveTopology);
+
+        void RSSetViewport(Viewport10 viewport);
+        void RSSetViewports(Viewport10[] viewports);
 
         void OMSetRenderTargets(IRenderTargetView10[] renderTargetViews, IDepthStencilView10 depthStencilView);
         void OMSetRenderTarget(IRenderTargetView10 renderTargetView, IDepthStencilView10 depthStencilView);

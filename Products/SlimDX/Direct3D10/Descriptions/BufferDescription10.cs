@@ -20,11 +20,11 @@
  */
 
 namespace SlimDX.Direct3D10 {
-    public struct BufferDescription {
+    public struct BufferDescription10 {
         public int SizeInBytes { get; set; }
-        public int Usage { get; set; }
-        public BindFlags BindFlags { get; set; }
-        public CpuAccessFlags CpuAccessFlags { get; set; }
-        public int OptionFlags { get; set; }
+        public Usage10 Usage { get; set; }
+        public BindFlags10 BindFlags { get; set; }
+        public CpuAccessFlags10 CpuAccessFlags { get; set; }
+        public OptionFlags10 OptionFlags { get; set; }
     }
 }
