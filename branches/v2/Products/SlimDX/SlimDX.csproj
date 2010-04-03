@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,15 +50,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\IComObject.cs" />
+    <Compile Include="Common\IMemoryBuffer.cs" />
     <Compile Include="Common\InterfaceIDAttribute.cs" />
     <Compile Include="Common\Result.cs" />
     <Compile Include="Common\SlimDXException.cs" />
-    <Compile Include="Direct3D10\Enumerations\BindFlags.cs" />
-    <Compile Include="Direct3D10\Descriptions\BufferDescription.cs" />
-    <Compile Include="Direct3D10\Enumerations\CpuAccessFlags.cs" />
-    <Compile Include="Direct3D10\Enumerations\DeviceCreationFlags.cs" />
-    <Compile Include="Direct3D10\Enumerations\DriverType.cs" />
-    <Compile Include="Direct3D10\Enumerations\MapMode.cs" />
+    <Compile Include="Direct3D10\Descriptions\Viewport10.cs" />
+    <Compile Include="Direct3D10\Enumerations\BindFlags10.cs" />
+    <Compile Include="Direct3D10\Descriptions\BufferDescription10.cs" />
+    <Compile Include="Direct3D10\Enumerations\CpuAccessFlags10.cs" />
+    <Compile Include="Direct3D10\Enumerations\DeviceCreationFlags10.cs" />
+    <Compile Include="Direct3D10\Enumerations\DriverType10.cs" />
+    <Compile Include="Direct3D10\Enumerations\MapMode10.cs" />
+    <Compile Include="Direct3D10\Enumerations\OptionFlags10.cs" />
+    <Compile Include="Direct3D10\Enumerations\PrimitiveTopology10.cs" />
+    <Compile Include="Direct3D10\Enumerations\Usage10.cs" />
     <Compile Include="Direct3D10\IDirect3D10Api.cs" />
     <Compile Include="Direct3D10\Interfaces\IBuffer10.cs" />
     <Compile Include="Direct3D10\Interfaces\IDepthStencilView10.cs" />

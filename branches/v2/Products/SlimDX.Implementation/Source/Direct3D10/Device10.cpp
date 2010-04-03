@@ -5,6 +5,7 @@
 
 #include "../Common/Utilities.h"
 #include "RenderTargetView10.h"
+#include "Buffer10.h"
 
 using namespace System;
 
@@ -34,10 +35,48 @@ namespace SlimDX
 			return nullptr;
 		}
 
+		generic<typename T> where T : value class
+		IBuffer10^ Device10::CreateBuffer(BufferDescription10 bufferDescription, array<T>^ bufferData) {
+			D3D10_BUFFER_DESC desc = {
+				bufferDescription.SizeInBytes,
+				(D3D10_USAGE)bufferDescription.Usage,
+				(UINT)bufferDescription.BindFlags,
+				(UINT)bufferDescription.CpuAccessFlags,
+				(UINT)bufferDescription.OptionFlags
+			};
+
+			ID3D10Buffer* buffer;
+
+			if(bufferData != nullptr) {
+				pin_ptr<T> bufferPtr = &bufferData[0];
+				D3D10_SUBRESOURCE_DATA bufferDataRs = {  bufferPtr };
+
+				if(RecordResult(NativePointer->CreateBuffer(&desc, &bufferDataRs, &buffer)).IsSuccess)
+					return gcnew Buffer10(buffer);
+			} else {
+				if(RecordResult(NativePointer->CreateBuffer(&desc, nullptr, &buffer)).IsSuccess)
+					return gcnew Buffer10(buffer);
+			}
+			return nullptr;
+		}
+
 		void Device10::ClearRenderTargetView(IRenderTargetView10^ renderTargetView, System::Drawing::Color clearColor) {
 			float clearColorFloats[4] = {(float)clearColor.R / 255, (float)clearColor.G / 255, (float)clearColor.B / 255, (float)clearColor.A / 255 };
 			ID3D10RenderTargetView* nativeView = (ID3D10RenderTargetView*)Utilities::ToUnknown(renderTargetView);
 			NativePointer->ClearRenderTargetView(nativeView, clearColorFloats);
+		}
+
+		void Device10::IASetPrimitiveTopology(PrimitiveTopology10 primitiveTopology) {
+			NativePointer->IASetPrimitiveTopology(static_cast<D3D10_PRIMITIVE_TOPOLOGY>(primitiveTopology));
+		}
+
+		void Device10::RSSetViewport(Viewport10 viewport) {
+			NativePointer->RSSetViewports(1, reinterpret_cast<D3D10_VIEWPORT*>(&viewport));
+		}
+
+		void Device10::RSSetViewports(array<Viewport10>^ viewports) {
+			pin_ptr<Viewport10> vps = &viewports[0];
+			NativePointer->RSSetViewports(viewports->Length, reinterpret_cast<D3D10_VIEWPORT*>(vps));
 		}
 
 		void Device10::OMSetRenderTargets(array<IRenderTargetView10^>^ renderTargetViews, IDepthStencilView10^ depthStencilView) {
