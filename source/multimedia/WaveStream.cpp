@@ -157,7 +157,8 @@ namespace Multimedia
 		if( dataOffset < 0 || size <= 0 )
 			throw gcnew InvalidDataException( "Invalid wave file." );
 
-		publicMemory = gcnew DataStream(internalMemory->RawPointer + dataOffset, internalMemory->Length - dataOffset, true, false, false);
+		if (internalMemory != nullptr)
+		    publicMemory = gcnew DataStream(internalMemory->RawPointer + dataOffset, internalMemory->Length - dataOffset, true, false, false);
 	}
 
 	WaveStream::~WaveStream()
