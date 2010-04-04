@@ -27,10 +27,13 @@ namespace SlimDX.Direct3D10 {
     public interface IDevice10 : IComObject {
         IRenderTargetView10 CreateRenderTargetView( IResource10 resource );
         IBuffer10 CreateBuffer<T>(BufferDescription10 bufferDescription10, T[] bufferData) where T : struct;
+        IBuffer10 CreateEmptyBuffer(BufferDescription10 bufferDescription10);
 
         void ClearRenderTargetView(IRenderTargetView10 renderTargetView, Color clearColor);
 
         void IASetPrimitiveTopology(PrimitiveTopology10 primitiveTopology);
+        void IASetVertexBuffer(int startSlot, VertexBufferBinding10 vertexBufferBinding);
+        void IASetVertexBuffers(int startSlot, VertexBufferBinding10[] vertexBufferBindings);
 
         void RSSetViewport(Viewport10 viewport);
         void RSSetViewports(Viewport10[] viewports);
