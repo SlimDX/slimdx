@@ -54,6 +54,7 @@
     <Compile Include="Common\InterfaceIDAttribute.cs" />
     <Compile Include="Common\Result.cs" />
     <Compile Include="Common\SlimDXException.cs" />
+    <Compile Include="Direct3D10\Descriptions\VertexBufferBinding10.cs" />
     <Compile Include="Direct3D10\Descriptions\Viewport10.cs" />
     <Compile Include="Direct3D10\Enumerations\BindFlags10.cs" />
     <Compile Include="Direct3D10\Descriptions\BufferDescription10.cs" />

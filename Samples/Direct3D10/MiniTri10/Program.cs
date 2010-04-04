@@ -69,6 +69,7 @@ namespace MiniTri10 {
 
             device.OMSetRenderTarget(renderTargetView, null);
             device.IASetPrimitiveTopology(PrimitiveTopology10.TriangleList);
+            device.IASetVertexBuffer(0, new VertexBufferBinding10(buffer, 32, 0));
 
             MessagePump.Run(window, () => {
                 device.RSSetViewport(new Viewport10(0, 0, window.ClientWidth, window.ClientHeight, 0.0f, 1.0f));
