@@ -22,7 +22,7 @@
 
 namespace SlimDX.SampleFramework {
     /// <summary>
-    /// Describes the desired application configuration of a <see cref="Sample"/>SlimDX sample</a>. 
+    /// Describes the desired application configuration of a <see cref="Sample">SlimDX sample</see>. 
     /// </summary>
     public class SampleConfiguration {
         #region Public Interface
