@@ -6,12 +6,16 @@
 #include "../Common/Utilities.h"
 #include "../DXGI/SwapChainDXGI.h"
 
+#include <D3DX10.h>
+
 #include "Device10.h"
+#include "Effect10.h"
 #include "Texture2D10.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
 using namespace System::Reflection;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
@@ -31,6 +35,34 @@ namespace SlimDX
 		IDevice10^ Direct3D10Api::CreateDevice()
 		{
 			return nullptr;//gcnew Device10();
+		}
+
+		IEffect10^ Direct3D10Api::CreateEffect(IDevice10^ device, System::String^ filename, System::String^ shaderProfile, ShaderFlags10 shaderFlags, EffectFlags10 effectFlags) {
+			IntPtr filenamePtr = Marshal::StringToHGlobalAnsi(filename);
+			IntPtr profilePtr = Marshal::StringToHGlobalAnsi(shaderProfile);
+
+			ID3D10Effect* effect;
+			ID3D10Blob* errors;
+			HRESULT hr = D3DX10CreateEffectFromFileA(
+				reinterpret_cast<LPCSTR>(filenamePtr.ToPointer()),
+				NULL,
+				NULL,
+				reinterpret_cast<LPCSTR>(profilePtr.ToPointer()),
+				static_cast<UINT>(shaderFlags),
+				static_cast<UINT>(effectFlags),
+				static_cast<ID3D10Device*>(Utilities::ToUnknown(device)),
+				NULL,
+				NULL,
+				&effect,
+				&errors,
+				NULL);
+			
+			Marshal::FreeHGlobal(filenamePtr);
+			Marshal::FreeHGlobal(profilePtr);
+
+			RecordResult(hr);
+
+			return gcnew Effect10(effect);
 		}
 
 		SlimDX::Result Direct3D10Api::CreateDeviceAndSwapChain( SlimDX::DXGI::IAdapterDXGI^ adapter, DriverType10 driverType, DeviceCreationFlags10 creationFlags, SlimDX::DXGI::SwapChainDescription^ swapChainDescription, [Out] IDevice10^% device, [Out] SlimDX::DXGI::ISwapChainDXGI^% swapChain )
