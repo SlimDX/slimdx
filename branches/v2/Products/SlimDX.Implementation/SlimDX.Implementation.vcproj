@@ -237,6 +237,22 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Source\Direct3D10\Effect10.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\Direct3D10\Effect10.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\Direct3D10\InputLayout10.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\Direct3D10\InputLayout10.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\Direct3D10\RenderTargetView10.cpp"
 				>
 			</File>

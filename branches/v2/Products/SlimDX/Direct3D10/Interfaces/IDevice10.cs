@@ -28,17 +28,21 @@ namespace SlimDX.Direct3D10 {
         IRenderTargetView10 CreateRenderTargetView( IResource10 resource );
         IBuffer10 CreateBuffer<T>(BufferDescription10 bufferDescription10, T[] bufferData) where T : struct;
         IBuffer10 CreateEmptyBuffer(BufferDescription10 bufferDescription10);
+        IInputLayout10 CreateInputLayout(InputElement10[] elements, ShaderSignature10 signature);
 
         void ClearRenderTargetView(IRenderTargetView10 renderTargetView, Color clearColor);
 
         void IASetPrimitiveTopology(PrimitiveTopology10 primitiveTopology);
         void IASetVertexBuffer(int startSlot, VertexBufferBinding10 vertexBufferBinding);
         void IASetVertexBuffers(int startSlot, VertexBufferBinding10[] vertexBufferBindings);
+        void IASetInputLayout(IInputLayout10 inputLayout);
 
         void RSSetViewport(Viewport10 viewport);
         void RSSetViewports(Viewport10[] viewports);
 
         void OMSetRenderTargets(IRenderTargetView10[] renderTargetViews, IDepthStencilView10 depthStencilView);
         void OMSetRenderTarget(IRenderTargetView10 renderTargetView, IDepthStencilView10 depthStencilView);
+
+        void Draw(int vertexCount, int startLocation);
     }
 }

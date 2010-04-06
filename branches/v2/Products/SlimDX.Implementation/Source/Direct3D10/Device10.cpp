@@ -6,6 +6,7 @@
 #include "../Common/Utilities.h"
 #include "RenderTargetView10.h"
 #include "Buffer10.h"
+#include "inputlayout10.h"
 
 using namespace System;
 
@@ -64,6 +65,30 @@ namespace SlimDX
 			return nullptr;
 		}
 
+		IInputLayout10^ Device10::CreateInputLayout(array<InputElement10>^ elements, ShaderSignature10 signature) {
+			using namespace System::Runtime::InteropServices;
+
+			D3D10_INPUT_ELEMENT_DESC descriptions[16];
+			for(int i = 0; i < elements->Length && i < 16; ++i) {
+				descriptions[i].SemanticName = reinterpret_cast<char*>(Marshal::StringToHGlobalAnsi(elements[i].Name).ToPointer());
+				descriptions[i].SemanticIndex = elements[i].Index;
+				descriptions[i].Format = (DXGI_FORMAT)elements[i].Format;
+				descriptions[i].InputSlot = elements[i].Slot;
+				descriptions[i].AlignedByteOffset = elements[i].AlignedByteOffset;
+				descriptions[i].InputSlotClass = (D3D10_INPUT_CLASSIFICATION)elements[i].InputClassification;
+				descriptions[i].InstanceDataStepRate = elements[i].InstanceDataStep;
+			}
+
+			ID3D10InputLayout* layout;
+			NativePointer->CreateInputLayout(descriptions, elements->Length, signature.Signature.ToPointer(), signature.SignatureLength, &layout);
+
+			for(int i = 0; i < elements->Length && i < 16; ++i) {
+				Marshal::FreeHGlobal(IntPtr(const_cast<LPSTR>(descriptions[i].SemanticName)));
+			}
+
+			return gcnew InputLayout10(layout);
+		}
+
 		void Device10::ClearRenderTargetView(IRenderTargetView10^ renderTargetView, System::Drawing::Color clearColor) {
 			float clearColorFloats[4] = {(float)clearColor.R / 255, (float)clearColor.G / 255, (float)clearColor.B / 255, (float)clearColor.A / 255 };
 			ID3D10RenderTargetView* nativeView = reinterpret_cast<ID3D10RenderTargetView*>(Utilities::ToUnknown(renderTargetView));
@@ -91,6 +116,10 @@ namespace SlimDX
 			}
 
 			NativePointer->IASetVertexBuffers(startSlot, vertexBufferBindings->Length, buffers, strides, offsets);
+		}
+
+		void Device10::IASetInputLayout(IInputLayout10^ inputLayout) {
+			NativePointer->IASetInputLayout(static_cast<ID3D10InputLayout*>(Utilities::ToUnknown(inputLayout)));
 		}
 
 		void Device10::RSSetViewport(Viewport10 viewport) {
@@ -123,6 +152,10 @@ namespace SlimDX
 				depthStencilViewPtr = reinterpret_cast<ID3D10DepthStencilView*>(Utilities::ToUnknown( depthStencilView ));
 
 			NativePointer->OMSetRenderTargets(1, renderTargetViewsArray, depthStencilViewPtr);
+		}
+
+		void Device10::Draw(int vertexCount, int startLocation) {
+			NativePointer->Draw(vertexCount, startLocation);
 		}
 	}
 }
