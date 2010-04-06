@@ -41,6 +41,8 @@
 				The SDK includes all of the binaries, documentation, and samples.
 				It also includes all of the files necessary to build custom installation packages if desired.
 				The SDK supports both 32 bit and 64 bit systems.
+				<b>Note:</b> In this release, the samples must be unpackaged manually, via a start menu shortcut.
+				Make sure to unpack the samples to your user directory, not Program Files.
 				</p><br />
 				<a href="http://slimdx.googlecode.com/files/SlimDX%20SDK%20%28February%202010%29.msi"><img src="images/latest.jpg" alt="Latest Developer SDK" /></a>
 			</div>
