@@ -243,7 +243,7 @@
 				AdditionalOptions="/MP"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(ProjectDir)Binary&quot;;&quot;$(ProjectDir)Inc&quot;"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)Binary&quot;;&quot;$(ProjectDir)Inc&quot;;&quot;$(DXSDK_DIR)Include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;FXDPF"
 				MinimalRebuild="false"
 				RuntimeLibrary="2"
