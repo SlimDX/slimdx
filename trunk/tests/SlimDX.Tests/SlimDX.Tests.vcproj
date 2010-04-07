@@ -225,7 +225,7 @@
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(DXSDK_DIR)Lib\x86&quot;"
 				GenerateDebugInformation="true"
-				LinkTimeCodeGeneration="0"
+				LinkTimeCodeGeneration="1"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -248,8 +248,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copying SlimDX.dll and running unit tests..."
-				CommandLine="xcopy /Y &quot;$(SolutionDir)x86\$(ConfigurationName)\SlimDX.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;&quot;$(TargetPath)&quot;&#x0D;&#x0A;"
+				Description="Copying SlimDX.dll..."
+				CommandLine="xcopy /Y &quot;$(SolutionDir)x86\$(ConfigurationName)\SlimDX.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -280,6 +280,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/MP"
+				WholeProgramOptimization="false"
 				AdditionalIncludeDirectories="&quot;$(SolutionDir)..\external\Boost\boost\tr1\tr1&quot;;&quot;$(SolutionDir)..\external\Boost&quot;;&quot;$(SolutionDir)..\external\GTest&quot;;&quot;$(SolutionDir)..\external\GMock&quot;;&quot;$(DXSDK_DIR)Include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;X64"
 				RuntimeLibrary="2"
@@ -325,8 +326,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copying SlimDX.dll and running unit tests..."
-				CommandLine="xcopy /Y &quot;$(SolutionDir)x64\$(ConfigurationName)\SlimDX.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;&quot;$(TargetPath)&quot;&#x0D;&#x0A;"
+				Description="Copying SlimDX.dll..."
+				CommandLine="xcopy /Y &quot;$(SolutionDir)x64\$(ConfigurationName)\SlimDX.dll&quot; &quot;$(OutDir)\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
