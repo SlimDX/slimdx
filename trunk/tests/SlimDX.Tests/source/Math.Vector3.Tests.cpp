@@ -61,3 +61,14 @@ TEST( Vector3Tests, ConstructWithVector2 )
 	ASSERT_EQ( 2.0f, vector.Y );
 	ASSERT_EQ( 3.0f, vector.Z );
 }
+
+TEST( Vector3Tests, Add)
+{
+	Vector3 v1(5.6f, 2.1f, 8.3f);
+	Vector3 v2(3.4f, 7.9f, 7.7f);
+	Vector3 v3 = v1 + v2;
+
+	ASSERT_EQ(9.0f, v3.X);
+	ASSERT_EQ(10.0f, v3.Y);
+	ASSERT_EQ(16.0f, v3.Z);
+}
