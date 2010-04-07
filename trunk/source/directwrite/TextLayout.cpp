@@ -117,7 +117,7 @@ namespace DirectWrite
 		{
 			HRESULT const hr = InternalPointer->HitTestTextRange(textPosition, textLength,
 				originX, originY, 0, 0, &count);
-			assert(FAILED(hr) && (HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER) == hr));
+			hr, assert(FAILED(hr) && (HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER) == hr));
 		}
 
 		std::vector<DWRITE_HIT_TEST_METRICS> metrics(count);
@@ -143,7 +143,7 @@ namespace DirectWrite
 		UINT32 count = 0;
 		{
 			HRESULT const hr = InternalPointer->GetClusterMetrics(0, 0, &count);
-			assert(FAILED(hr) && (HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER) == hr));
+			hr, assert(FAILED(hr) && (HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER) == hr));
 		}
 
 		std::vector<DWRITE_CLUSTER_METRICS> metrics;
@@ -399,7 +399,7 @@ namespace DirectWrite
 		UINT32 count = 0;
 		{
 			HRESULT const hr = InternalPointer->GetLineMetrics(0, 0, &count);
-			assert(FAILED(hr) && (HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER) == hr));
+			hr, assert(FAILED(hr) && (HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER) == hr));
 		}
 
 		std::vector<DWRITE_LINE_METRICS> metrics;
