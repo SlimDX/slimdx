@@ -30,12 +30,18 @@
 		<Copy SourceFiles="@(SampleOutputFiles)" DestinationFiles="@(SampleOutputFiles->'%(PathInArtifacts)%(FileName)%(Extension)')"/>
 	</Target>
 
+  <Target Name="Clean">
+    <RemoveDir Directories="$(BuildDir)\x86;$(BuildDir)\x64"/>
+    <RemoveDir Directories="$(RootDir)\tests\SlimDX.Tests\x86;$(RootDir)\tests\SlimDX.Tests\x64"/>
+  </Target>
+  
 	<!-- ===================================================================== 
 	     RunTests
 	       Runs SlimDX unit tests. Expects the tests to have been built.
        ===================================================================== -->
 	<Target
-    Name="RunTests" DependsOnTargets="_CheckEnvironmentVariables">
+    Name="RunTests" DependsOnTargets="_CheckEnvironmentVariables"
+    Condition="'$(RunTests)'<>''">
 		<Exec Command="$(RootDir)\tests\SlimDX.Tests\x86\Release\SlimDX.Tests.exe"/>
 	</Target>
 
