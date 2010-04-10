@@ -19,23 +19,10 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#if !BOOST_PP_IS_ITERATING
-#ifndef SLIMDX_DXGI_OUTPUT_
-#define SLIMDX_DXGI_OUTPUT_
-
-#include "../ComObject.h"
+#pragma once
 
 #include "Enums.h"
 #include "ObjectDxgi.h"
-
-using System::Runtime::InteropServices::OutAttribute;
-
-#define BOOST_PP_FILENAME_1 "Output.h"
-#include "../InterfaceSetup.h"
-#endif
-#else
-#include "../InterfaceBegin.h"
-#include "../ComObjectMacros.h"
 
 namespace SlimDX
 {
@@ -52,9 +39,9 @@ namespace SlimDX
 		/// Represents the output of an adapter (such as a monitor).
 		/// </summary>
 		/// <unmanaged>IDXGIOutput</unmanaged>
-		SDX_COM_SUBCLASS(Output, DXGIObject)
+		public ref class Output : DXGIObject
 		{
-			COMOBJECT_INTERFACE(IDXGIOutput, Output);
+			COMOBJECT(IDXGIOutput, Output);
 		
 		public:
 			/// <summary>
@@ -62,7 +49,7 @@ namespace SlimDX
 			/// </summary>
 			property OutputDescription Description
 			{
-				SDX_METHOD(OutputDescription get());
+				OutputDescription get();
 			}
 			
 			/// <summary>
@@ -70,7 +57,7 @@ namespace SlimDX
 			/// </summary>
 			property DXGI::FrameStatistics FrameStatistics
 			{
-				SDX_METHOD(DXGI::FrameStatistics get());
+				DXGI::FrameStatistics get();
 			}
 			
 			/// <summary>
@@ -78,7 +65,7 @@ namespace SlimDX
 			/// </summary>
 			property DXGI::GammaControlCapabilities GammaControlCapabilities
 			{
-				SDX_METHOD(DXGI::GammaControlCapabilities get());
+				DXGI::GammaControlCapabilities get();
 			}
 
 			/// <summary>
@@ -87,7 +74,7 @@ namespace SlimDX
 			/// <param name="format">The display mode color format.</param>
 			/// <param name="flags">Flags indicating how the display mode scanline order and scaling.</param>
 			/// <returns>A list of matching display mode descriptions. The list is null if an error occured.</returns>
-			SDX_METHOD(System::Collections::ObjectModel::ReadOnlyCollection<ModeDescription>^ GetDisplayModeList( Format format, DisplayModeEnumerationFlags flags ));
+			System::Collections::ObjectModel::ReadOnlyCollection<ModeDescription>^ GetDisplayModeList( Format format, DisplayModeEnumerationFlags flags );
 			
 			/// <summary>
 			/// Gets the display mode that best matches the requested mode.
@@ -98,28 +85,28 @@ namespace SlimDX
 			/// <param name="modeToMatch">The description of the display mode to match.</param>
 			/// <param name="result">Receives the best-matching display mode.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			SDX_METHOD(Result GetClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription %result ));
+			Result GetClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription %result );
 			
 			/// <summary>
 			/// Sets gamma control information.
 			/// </summary>
 			/// <param name="control">The gamma control information.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			SDX_METHOD(Result SetGammaControl( GammaControl control ));
+			Result SetGammaControl( GammaControl control );
 			
 			/// <summary>
 			/// Changes the current display surface to the specified surface.
 			/// </summary>
 			/// <param name="surface">The new display surface.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			SDX_METHOD(Result SetDisplaySurface( Surface^ surface ));
+			Result SetDisplaySurface( Surface^ surface );
 			
 			/// <summary>
 			/// Copies the display surface content to the specified destination surface.
 			/// </summary>
 			/// <param name="surface">The destination surface.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			SDX_METHOD(Result CopyDisplaySurfaceTo( Surface^ surface ));
+			Result CopyDisplaySurfaceTo( Surface^ surface );
 			
 			/// <summary>
 			/// Takes ownership of an output.
@@ -127,27 +114,24 @@ namespace SlimDX
 			/// <param name="device">The device interface.</param>
 			/// <param name="exclusive">If true, ownership is exclusive.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			SDX_METHOD(Result TakeOwnership( ComObject^ device, bool exclusive ));
+			Result TakeOwnership( ComObject^ device, bool exclusive );
 			
 			/// <summary>
 			/// Releases ownership of an output.
 			/// </summary>
-			SDX_METHOD(void ReleaseOwnership());
+			void ReleaseOwnership();
 			
 			/// <summary>
 			/// Halts the current thread until a vertical blank occurs.
 			/// </summary>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			SDX_METHOD(Result WaitForVerticalBlank());
+			Result WaitForVerticalBlank();
 			
 			/// <summary>
 			/// Converts the value of the object to its equivalent string representation.
 			/// </summary>
 			/// <returns>The string representation of the value of this instance.</returns>
-			SDX_METHOD_CONCRETE(virtual System::String^ ToString() override);
+			virtual System::String^ ToString() override;
 		};
 	}
-};
-
-#include "../InterfaceEnd.h"
-#endif
+}

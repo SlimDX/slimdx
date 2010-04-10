@@ -19,21 +19,9 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#if !BOOST_PP_IS_ITERATING
-#ifndef SLIMDX_DXGI_DEVICECHILD_
-#define SLIMDX_DXGI_DEVICECHILD_
+#pragma once
 
-#include "../ComObject.h"
 #include "ObjectDxgi.h"
-
-#define BOOST_PP_FILENAME_1 "DeviceChildDxgi.h"
-#include "../InterfaceSetup.h"
-#endif
-#else
-#include "../InterfaceBegin.h"
-#include "../ComObjectMacros.h"
-
-
 
 namespace SlimDX
 {
@@ -45,25 +33,21 @@ namespace SlimDX
 		/// An object that is bound to a Device.
 		/// </summary>
 		/// <unmanaged>IDXGIDeviceSubObject</unmanaged>
-		SDX_COM_SUBCLASS(DeviceChild, DXGIObject) 
+		public ref class DeviceChild : DXGIObject
 		{
-			COMOBJECT_INTERFACE(IDXGIDeviceSubObject, DeviceChild);
-		
-#ifdef IS_CONCRETE
+			COMOBJECT(IDXGIDeviceSubObject, DeviceChild);
+
 		protected:
 			DeviceChild();
-#endif
+
 		public:
 			/// <summary>
 			/// Gets the device the object is bound to.
 			/// </summary>
 			property DXGI::Device^ Device
 			{
-				SDX_METHOD(DXGI::Device^ get());
+				DXGI::Device^ get();
 			}
 		};
-		}
-	};
-
-	#include "../InterfaceEnd.h"
-	#endif
+	}
+}

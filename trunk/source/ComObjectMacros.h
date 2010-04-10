@@ -24,50 +24,6 @@
 #undef COMOBJECT_BASE
 #undef COMOBJECT_CUSTOM
 
-//TODO: These are temporary. Once the interface refactor is complete, they
-//      should have replaced the existing COMOBJECT macros and we can remove
-//      the 'interface' designation.
-#undef COMOBJECT_INTERFACE
-#undef COMOBJECT_INTERFACE_BASE
-
-#ifdef IS_CONCRETE
-#define COMOBJECT_INTERFACE_BASE(nativeType) \
-	public: \
-		static property System::Guid NativeInterface { System::Guid get() { return Utilities::ConvertNativeGuid( IID_ ## nativeType ); } } \
-		property nativeType* InternalPointer { virtual nativeType* get() new { return static_cast<nativeType*>( UnknownPointer ); } } \
-	private:
-#endif
-
-#ifdef IS_INTERFACE
-#define COMOBJECT_INTERFACE_BASE(nativeType) \
-	public: \
-		property nativeType* InternalPointer { virtual nativeType* get() = 0; }
-#endif
-
-#ifdef IS_CONCRETE
-// This macro provides the basic infrastructure for SlimDX ComObject subclasses. 
-#define COMOBJECT_INTERFACE(nativeType, managedType) \
-	public protected: \
-		managedType( nativeType* pointer, ComObject^ owner ) { Construct( pointer, owner ); } \
-		managedType( System::IntPtr pointer ) { Construct( pointer, NativeInterface ); } \
-	internal: \
-		static managedType^ FromPointerReflectionThunk( System::IntPtr pointer ) { return FromPointer( static_cast<nativeType*>( pointer.ToPointer() ) ); } \
-		static managedType^ FromPointerReflectionThunk( System::IntPtr pointer, ComObject^ owner ) { return FromPointer( static_cast<nativeType*>( pointer.ToPointer()), owner ); } \
-		static managedType^ FromPointer( nativeType* pointer ) { return FromPointer( pointer, nullptr, ComObjectFlags::None ); } \
-		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner ) { return FromPointer( pointer, owner, ComObjectFlags::None ); } \
-		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner, ComObjectFlags flags ) { return ConstructFromPointer<managedType,nativeType>( pointer, owner, flags ); } \
-	public: \
-		static managedType^ FromPointer( System::IntPtr pointer ) { return ConstructFromUserPointer<managedType>( pointer ); } \
-	COMOBJECT_INTERFACE_BASE(nativeType)
-#endif
-
-#ifdef IS_INTERFACE
-#define COMOBJECT_INTERFACE(nativeType, managedType) \
-	public: \
-		property nativeType* InternalPointer { virtual nativeType* get() = 0; } 
-#endif
-
-
 #define COMOBJECT_BASE(nativeType) \
 	public: \
 		static property System::Guid NativeInterface { System::Guid get() { return Utilities::ConvertNativeGuid( IID_ ## nativeType ); } } \

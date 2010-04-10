@@ -160,7 +160,7 @@
 				DelayLoadDLLs="d3d9.dll;d3dx9_42.dll;d3dx10_42.dll;d3dx11_42.dll;d3dcompiler_42.dll;d3dcsx_42.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
-				LinkTimeCodeGeneration="1"
+				LinkTimeCodeGeneration="0"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
 				TargetMachine="17"
@@ -1529,18 +1529,6 @@
 			</File>
 			<File
 				RelativePath="..\source\Enums.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\InterfaceBegin.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\InterfaceEnd.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\InterfaceSetup.h"
 				>
 			</File>
 			<File
