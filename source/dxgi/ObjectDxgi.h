@@ -19,19 +19,9 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#if !BOOST_PP_IS_ITERATING
-#ifndef SLIMDX_DXGI_OBJECTDXGI_
-#define SLIMDX_DXGI_OBJECTDXGI_
+#pragma once
 
 #include "../ComObject.h"
-#include "Enums.h"
-
-#define BOOST_PP_FILENAME_1 "ObjectDxgi.h"
-#include "../InterfaceSetup.h"
-#endif
-#else
-#include "../InterfaceBegin.h"
-#include "../ComObjectMacros.h"
 
 namespace SlimDX
 {
@@ -42,9 +32,9 @@ namespace SlimDX
 		/// <summary>
 		/// Base class for all DXGI objects
 		/// </summary>
-		SDX_COM_CLASS(DXGIObject)
+		public ref class DXGIObject abstract : ComObject
 		{
-			COMOBJECT_INTERFACE_BASE(IDXGIObject);
+			COMOBJECT_BASE(IDXGIObject);
 
 		public:
 			/// <summary>
@@ -55,7 +45,4 @@ namespace SlimDX
 			T GetParent();
 		};
 	}
-};
-
-#include "../InterfaceEnd.h"
-#endif
+}

@@ -19,37 +19,24 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#if !BOOST_PP_IS_ITERATING
-#ifndef SLIMDX_DXGI_ADAPTER_
-#define SLIMDX_DXGI_ADAPTER_
-
-#include "../ComObject.h"
+#pragma once
 
 #include "ObjectDxgi.h"
-
-using System::Runtime::InteropServices::OutAttribute;
-
-#define BOOST_PP_FILENAME_1 "Adapter.h"
-#include "../InterfaceSetup.h"
-#endif
-#else
-#include "../InterfaceBegin.h"
-#include "../ComObjectMacros.h"
 
 namespace SlimDX
 {
 	namespace DXGI
 	{
-		FORWARD_DECL_REF(Output);
-		FORWARD_DECL_VALUE(AdapterDescription);
+		ref class Output;
+		value class AdapterDescription;
 
 		/// <summary>
 		/// A display subsystem (one or more GPUs, DACs, and video memory).
 		/// </summary>
 		/// <unmanaged>IDXGIAdapter</unmanaged>
-		SDX_COM_SUBCLASS( Adapter, DXGIObject)
+		public ref class Adapter : DXGIObject
 		{
-			COMOBJECT_INTERFACE(IDXGIAdapter, Adapter);
+			COMOBJECT(IDXGIAdapter, Adapter);
 
 		public:
 			/// <summary>
@@ -57,27 +44,27 @@ namespace SlimDX
 			/// </summary>
 			property AdapterDescription Description
 			{
-				SDX_METHOD(AdapterDescription get());
+				AdapterDescription get();
 			}
 
 			/// <summary>
 			/// Gets the number of outputs on the adapter.
 			/// </summary>
 			/// <returns>The number of outputs on the adapter.</returns>
-			SDX_METHOD(int GetOutputCount());
+			int GetOutputCount();
 			
 			/// <summary>
 			/// Gets the specified output.
 			/// </summary>
 			/// <returns>The desired output, or <c>null</c> on failure.</returns>
-			SDX_METHOD(Output^ GetOutput( int index ));
+			Output^ GetOutput( int index );
 			
 			/// <summary>
 			/// Determines if a device interface for a graphics component is supported by the adapter.
 			/// </summary>
 			/// <param name="type">The device interface type.</param>
 			/// <returns><c>true</c> if the device interface is supported; otherwise, <c>false</c>.</returns>
-			SDX_METHOD(bool IsInterfaceSupported( System::Type^ type ));
+			bool IsInterfaceSupported( System::Type^ type );
 			
 			/// <summary>
 			/// Determines if a device interface for a graphics component is supported by the adapter.
@@ -85,16 +72,13 @@ namespace SlimDX
 			/// <param name="type">The device interface type.</param>
 			/// <param name="userModeVersion">Receives the user-mode driver version of the interface.</param>
 			/// <returns><c>true</c> if the device interface is supported; otherwise, <c>false</c>.</returns>
-			SDX_METHOD(bool IsInterfaceSupported( System::Type^ type, [Out] System::Int64% userModeVersion ));
+			bool IsInterfaceSupported( System::Type^ type, [Out] System::Int64% userModeVersion );
 			
 			/// <summary>
 			/// Converts the value of the object to its equivalent string representation.
 			/// </summary>
 			/// <returns>The string representation of the value of this instance.</returns>
-			SDX_METHOD_CONCRETE(virtual System::String^ ToString() override);
+			virtual System::String^ ToString() override;
 		};
 	}
 };
-
-#include "../InterfaceEnd.h"
-#endif
