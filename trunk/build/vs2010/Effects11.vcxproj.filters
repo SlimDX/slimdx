@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Inc">
+      <UniqueIdentifier>{e14637da-5a6f-40d7-bb01-493472f6e738}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3DXCore">
+      <UniqueIdentifier>{579b1d64-19e5-4997-9fe7-225516674fc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Binary">
+      <UniqueIdentifier>{95c9fb5f-dc3e-4ad7-931d-5518f8f8b760}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\external\Effects11\Inc\d3dx11dbg.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\Effects11\Inc\d3dx11effect.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\Effects11\Inc\d3dxglobal.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\Effects11\pchfx.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\Effects11\Binary\EffectBinaryFormat.h">
+      <Filter>Binary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\Effects11\Binary\EffectStateBase11.h">
+      <Filter>Binary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\Effects11\Binary\EffectStates11.h">
+      <Filter>Binary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\Effects11\Binary\SOParser.h">
+      <Filter>Binary</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\external\Effects11\Effect.h" />
+    <ClInclude Include="..\..\external\Effects11\EffectLoad.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\external\Effects11\d3dx11dbg.cpp">
+      <Filter>D3DXCore</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\Effects11\d3dxGlobal.cpp">
+      <Filter>D3DXCore</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\external\Effects11\EffectAPI.cpp" />
+    <ClCompile Include="..\..\external\Effects11\EffectLoad.cpp" />
+    <ClCompile Include="..\..\external\Effects11\EffectNonRuntime.cpp" />
+    <ClCompile Include="..\..\external\Effects11\EffectReflection.cpp" />
+    <ClCompile Include="..\..\external\Effects11\EffectRuntime.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\external\Effects11\EffectVariable.inl" />
+  </ItemGroup>
+</Project>

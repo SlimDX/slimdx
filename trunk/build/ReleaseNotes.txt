@@ -1,3 +1,6 @@
+General
+	* Added a .NET 4.0 build via Visual Studio 2010.
+
 Direct3D 9
 	* Changed the shared handle parameter for texture creation to be a ref parameter.
 	* Changed Texture shared handle parameter from out to ref.
@@ -6,7 +9,7 @@ Direct3D 9
 	* Fixed a null reference issue in D3DX.OptimizeFaces and OptimizeVertices.
 	* Changed Device.AvailableTextureMemory to return an Int64 instead of Int32.
 	* Fixed Device.Set*ShaderConstant* overloads that implicitly calculate the number of items to pass.
-	* Vertex declarations no longer require VertexElementArray at the end of the input array.
+	* Vertex declarations no longer require VertexElementEnd at the end of the input array.
 	
 Direct3D 10
 	* Dropped stream size checks in texture ToStream functions.
