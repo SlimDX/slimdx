@@ -1333,6 +1333,14 @@
 					RelativePath="..\source\direct3d10\ResourceRegion.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d10\TextureLoadInformation10.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d10\TextureLoadInformation10.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Threading"
@@ -5853,6 +5861,14 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d11\ResourceRegion11.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d11\TextureLoadInformation11.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d11\TextureLoadInformation11.h"
 					>
 				</File>
 			</Filter>

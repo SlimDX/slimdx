@@ -153,6 +153,18 @@ namespace Direct3D10
 		return static_cast<ResourceDimension>( type );
 	}
 
+	Result Resource::LoadTextureFromTexture(Resource^ source, Resource^ destination, TextureLoadInformation loadInformation)
+	{
+		HRESULT hr = D3DX10LoadTextureFromTexture(source->InternalPointer, reinterpret_cast<D3DX10_TEXTURE_LOAD_INFO*>(&loadInformation), destination->InternalPointer);
+		return RECORD_D3D10(hr);
+	}
+
+	Result Resource::FilterTexture(Resource^ texture, int sourceLevel, FilterFlags mipFilter)
+	{
+		HRESULT hr = D3DX10FilterTexture(texture->InternalPointer, sourceLevel, static_cast<UINT>(mipFilter));
+		return RECORD_D3D10(hr);
+	}
+
 	int Resource::CalculateSubresourceIndex( int mipSlice, int arraySlice, int mipLevels )
 	{
 		return D3D10CalcSubresource( static_cast<UINT>( mipSlice ), static_cast<UINT>( arraySlice ), static_cast<UINT>( mipLevels ) );

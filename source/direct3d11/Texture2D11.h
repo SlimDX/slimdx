@@ -83,6 +83,8 @@ namespace SlimDX
 
 			static Result ToFile( DeviceContext^ context, Texture2D^ texture, ImageFileFormat format, System::String^ fileName );
 			static Result ToStream( DeviceContext^ context, Texture2D^ texture, ImageFileFormat format, System::IO::Stream^ stream );
+
+			static Result ComputeNormalMap(DeviceContext^ context, Texture2D^ source, Texture2D^ destination, NormalMapFlags flags, Channel channel, float amplitude);
 		};
 	}
 };

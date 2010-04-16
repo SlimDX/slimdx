@@ -22,6 +22,7 @@
 #pragma once
 
 #include "ResourceView11.h"
+#include "ImageLoadInformation11.h"
 
 namespace SlimDX
 {
@@ -36,15 +37,12 @@ namespace SlimDX
 		public ref class ShaderResourceView : public ResourceView
 		{
 			COMOBJECT(ID3D11ShaderResourceView, ShaderResourceView);
+
+			static ID3D11ShaderResourceView* ConstructFromFile( SlimDX::Direct3D11::Device^ device, System::String^ fileName, D3DX11_IMAGE_LOAD_INFO* loadInformation );
+			static ID3D11ShaderResourceView* ConstructFromMemory( SlimDX::Direct3D11::Device^ device, array<System::Byte>^ memory, D3DX11_IMAGE_LOAD_INFO* loadInformation );
+			static ID3D11ShaderResourceView* ConstructFromStream( SlimDX::Direct3D11::Device^ device, System::IO::Stream^ stream, int sizeInBytes, D3DX11_IMAGE_LOAD_INFO* loadInformation );
 			
 		public:
-			/// <summary>Gets a structure describing this <see cref="ShaderResourceView" />.</summary>
-			/// <unmanaged>ID3D11ShaderResourceView::GetDesc</unmanaged>
-			property ShaderResourceViewDescription Description
-			{
-				ShaderResourceViewDescription get();
-			}
-			
 			/// <summary>Creates a <see cref="ShaderResourceView" /> for accessing resource data.</summary>
 			/// <param name="device">The device to use when creating this <see cref="ShaderResourceView" />.</param>
 			/// <param name="resource">The resource that will serve as input to a shader. This resource must have been created with the <see cref="BindFlags">ShaderResource</see> flag.</param>
@@ -57,6 +55,32 @@ namespace SlimDX
 			/// <param name="description">A structure describing the <see cref="ShaderResourceView" /> to be created.</param>
 			/// <unmanaged>ID3D11Device::CreateShaderResourceView</unmanaged>
 			ShaderResourceView( SlimDX::Direct3D11::Device^ device, SlimDX::Direct3D11::Resource^ resource, ShaderResourceViewDescription description );
+
+			/// <summary>Gets a structure describing this <see cref="ShaderResourceView" />.</summary>
+			/// <unmanaged>ID3D11ShaderResourceView::GetDesc</unmanaged>
+			property ShaderResourceViewDescription Description
+			{
+				ShaderResourceViewDescription get();
+			}
+
+			/// <summary>
+			/// Creates a shader resource view from a file.
+			/// </summary>
+			/// <param name="device">The device that will own the resource.</param>
+			/// <param name="fileName">The name of the file that contains the shader resource view.</param>
+			static ShaderResourceView^ FromFile( SlimDX::Direct3D11::Device^ device, System::String^ fileName );
+
+			/// <summary>
+			/// Creates a shader resource view from a file.
+			/// </summary>
+			/// <param name="device">The device that will own the resource.</param>
+			/// <param name="fileName">The name of the file that contains the shader resource view.</param>
+			static ShaderResourceView^ FromFile( SlimDX::Direct3D11::Device^ device, System::String^ fileName, ImageLoadInformation loadInformation );
+
+			static ShaderResourceView^ FromMemory( SlimDX::Direct3D11::Device^ device, array<System::Byte>^ memory );
+			static ShaderResourceView^ FromMemory( SlimDX::Direct3D11::Device^ device, array<System::Byte>^ memory, ImageLoadInformation loadInfo );
+			static ShaderResourceView^ FromStream( SlimDX::Direct3D11::Device^ device, System::IO::Stream^ stream, int sizeInBytes );
+			static ShaderResourceView^ FromStream( SlimDX::Direct3D11::Device^ device, System::IO::Stream^ stream, int sizeInBytes, ImageLoadInformation loadInfo );
 		};
 	}
 };

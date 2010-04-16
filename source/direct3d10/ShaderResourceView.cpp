@@ -24,6 +24,8 @@
 #include <d3d10.h>
 #include <d3dx10.h>
 
+#include "../DataStream.h"
+
 #include "Direct3D10Exception.h"
 
 #include "Device10.h"
@@ -33,6 +35,7 @@
 #include "ShaderResourceViewDescription.h"
 
 using namespace System;
+using namespace System::IO;
 
 namespace SlimDX
 {
@@ -93,6 +96,44 @@ namespace Direct3D10
 		return ShaderResourceView::FromPointer( static_cast<ID3D10ShaderResourceView*>( resource ) );
 	}
 
+	ShaderResourceView^ ShaderResourceView::FromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory )
+	{
+		ID3D10ShaderResourceView* resource = ConstructFromMemory( device, memory, NULL );
+		if( resource == 0 )
+			return nullptr;
+
+		return ShaderResourceView::FromPointer( static_cast<ID3D10ShaderResourceView*>( resource ) );
+	}
+
+	ShaderResourceView^ ShaderResourceView::FromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory, ImageLoadInformation loadInfo )
+	{
+		D3DX10_IMAGE_LOAD_INFO info = loadInfo.CreateNativeVersion();
+		ID3D10ShaderResourceView* resource = ConstructFromMemory( device, memory, &info );
+		if( resource == 0 )
+			return nullptr;
+
+		return ShaderResourceView::FromPointer( static_cast<ID3D10ShaderResourceView*>( resource ) );
+	}
+
+	ShaderResourceView^ ShaderResourceView::FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes )
+	{
+		ID3D10ShaderResourceView* resource = ConstructFromStream( device, stream, sizeInBytes, NULL );
+		if( resource == 0 )
+			return nullptr;
+
+		return ShaderResourceView::FromPointer( static_cast<ID3D10ShaderResourceView*>( resource ) );
+	}
+
+	ShaderResourceView^ ShaderResourceView::FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes, ImageLoadInformation loadInfo )
+	{
+		D3DX10_IMAGE_LOAD_INFO info = loadInfo.CreateNativeVersion();
+		ID3D10ShaderResourceView* resource = ConstructFromStream( device, stream, sizeInBytes, &info );
+		if( resource == 0 )
+			return nullptr;
+
+		return ShaderResourceView::FromPointer( static_cast<ID3D10ShaderResourceView*>( resource ) );
+	}
+
 	ID3D10ShaderResourceView* ShaderResourceView::ConstructFromFile(SlimDX::Direct3D10::Device^ device, System::String^ fileName, D3DX10_IMAGE_LOAD_INFO* loadInformation)
 	{
 		ID3D10ShaderResourceView* resource = 0;
@@ -101,6 +142,36 @@ namespace Direct3D10
 		RECORD_D3D10( hr );
 		
 		return resource;
+	}
+
+	ID3D10ShaderResourceView* ShaderResourceView::ConstructFromMemory(SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, D3DX10_IMAGE_LOAD_INFO* loadInformation)
+	{
+		ID3D10ShaderResourceView* resource = 0;
+		pin_ptr<unsigned char> pinnedMemory = &memory[0];
+
+		HRESULT hr = D3DX10CreateShaderResourceViewFromMemory( device->InternalPointer, pinnedMemory, memory->Length, loadInformation, 0, &resource, 0 );
+		RECORD_D3D10( hr );
+		
+		return resource;
+	}
+
+	ID3D10ShaderResourceView* ShaderResourceView::ConstructFromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, int sizeInBytes, D3DX10_IMAGE_LOAD_INFO* info )
+	{
+		DataStream^ ds = nullptr;
+		array<Byte>^ memory = SlimDX::Utilities::ReadStream( stream, sizeInBytes, &ds );
+		
+		if( memory == nullptr )
+		{
+			ID3D10ShaderResourceView* resource = NULL;
+			SIZE_T size = static_cast<SIZE_T>( ds->RemainingLength );
+
+			HRESULT hr = D3DX10CreateShaderResourceViewFromMemory( device->InternalPointer, ds->SeekToEnd(), size, info, NULL, &resource, NULL );
+			RECORD_D3D10( hr );
+
+			return resource;
+		}
+
+		return ConstructFromMemory( device, memory, info );
 	}
 }
 }

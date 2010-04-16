@@ -37,6 +37,8 @@ namespace SlimDX
 			COMOBJECT(ID3D10ShaderResourceView, ShaderResourceView);
 			
 			static ID3D10ShaderResourceView* ConstructFromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName, D3DX10_IMAGE_LOAD_INFO* loadInformation );
+			static ID3D10ShaderResourceView* ConstructFromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory, D3DX10_IMAGE_LOAD_INFO* loadInformation );
+			static ID3D10ShaderResourceView* ConstructFromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes, D3DX10_IMAGE_LOAD_INFO* loadInformation );
 
 		protected:
 			//no-op ctor for use by ShaderResourceView1
@@ -64,6 +66,11 @@ namespace SlimDX
 			/// <param name="device">The device that will own the resource.</param>
 			/// <param name="fileName">The name of the file that contains the shader resource view.</param>
 			static ShaderResourceView^ FromFile( SlimDX::Direct3D10::Device^ device, System::String^ fileName, ImageLoadInformation loadInformation );
+
+			static ShaderResourceView^ FromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory );
+			static ShaderResourceView^ FromMemory( SlimDX::Direct3D10::Device^ device, array<System::Byte>^ memory, ImageLoadInformation loadInfo );
+			static ShaderResourceView^ FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes );
+			static ShaderResourceView^ FromStream( SlimDX::Direct3D10::Device^ device, System::IO::Stream^ stream, int sizeInBytes, ImageLoadInformation loadInfo );
 		};
 	}
 };

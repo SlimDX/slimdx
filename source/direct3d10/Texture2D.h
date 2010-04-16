@@ -101,6 +101,8 @@ namespace SlimDX
 
 			static Result ToFile( Texture2D^ texture, ImageFileFormat format, System::String^ fileName );
 			static Result ToStream( Texture2D^ texture, ImageFileFormat format, System::IO::Stream^ stream );
+
+			static Result ComputeNormalMap(Texture2D^ source, Texture2D^ destination, NormalMapFlags flags, Channel channel, float amplitude);
 		};
 	}
 };

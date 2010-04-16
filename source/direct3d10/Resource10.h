@@ -29,6 +29,8 @@
 #include "Enums.h"
 #include "../dxgi/SwapChainDxgi.h"
 
+#include "TextureLoadInformation10.h"
+
 namespace SlimDX
 {
 	namespace Direct3D10
@@ -82,6 +84,9 @@ namespace SlimDX
 			{
 				ResourceDimension get();
 			}
+
+			static Result LoadTextureFromTexture(Resource^ source, Resource^ destination, TextureLoadInformation loadInformation);
+			static Result FilterTexture(Resource^ texture, int sourceLevel, FilterFlags mipFilter);
 			
 			/// <summary>
 			/// Calculates a subresource index.
