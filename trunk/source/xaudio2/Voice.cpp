@@ -29,6 +29,7 @@
 #include "Voice.h"
 
 using namespace System;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
@@ -92,6 +93,16 @@ namespace XAudio2
 		return RECORD_XAUDIO2( hr );
 	}
 
+	generic<typename T>
+	T Voice::GetEffectParameters( int effectIndex )
+	{
+		T results;
+		HRESULT hr = InternalPointer->GetEffectParameters( effectIndex, &results, Marshal::SizeOf( T::typeid ) );
+		RECORD_XAUDIO2( hr );
+
+		return results;
+	}
+
 	Result Voice::SetEffectParameters( int effectIndex, array<Byte>^ parameters )
 	{
 		pin_ptr<Byte> pinParams = &parameters[0];
@@ -105,6 +116,20 @@ namespace XAudio2
 		pin_ptr<Byte> pinParams = &parameters[0];
 
 		HRESULT hr = InternalPointer->SetEffectParameters( effectIndex, pinParams, parameters->Length, operationSet );
+		return RECORD_XAUDIO2( hr );
+	}
+
+	generic<typename T>
+	Result Voice::SetEffectParameters( int effectIndex, T parameters )
+	{
+		HRESULT hr = InternalPointer->SetEffectParameters( effectIndex, &parameters, Marshal::SizeOf( T::typeid ) );
+		return RECORD_XAUDIO2( hr );
+	}
+
+	generic<typename T>
+	Result Voice::SetEffectParameters( int effectIndex, T parameters, int operationSet )
+	{
+		HRESULT hr = InternalPointer->SetEffectParameters( effectIndex, &parameters, Marshal::SizeOf( T::typeid ), operationSet );
 		return RECORD_XAUDIO2( hr );
 	}
 
@@ -133,6 +158,24 @@ namespace XAudio2
 			destinationChannels, reinterpret_cast<float*>( pinResults ) );
 
 		return results;
+	}
+
+	Result Voice::SetEffectChain( array<EffectDescriptor>^ effects )
+	{
+		stack_array<XAUDIO2_EFFECT_DESCRIPTOR> descriptors = stackalloc(XAUDIO2_EFFECT_DESCRIPTOR, effects->Length);
+		for (int i = 0; i < effects->Length; i++)
+			descriptors[i] = effects[i].ToUnmanaged();
+
+		XAUDIO2_EFFECT_CHAIN chain;
+		chain.EffectCount = effects->Length;
+		chain.pEffectDescriptors = &descriptors[0];
+
+		HRESULT hr = InternalPointer->SetEffectChain( &chain );
+		
+		for (int i = 0; i < effects->Length; i++)
+			effects[i].Free();
+
+		return RECORD_XAUDIO2( hr );
 	}
 
 	Result Voice::SetOutputMatrix( int sourceChannels, int destinationChannels, array<float>^ matrix )

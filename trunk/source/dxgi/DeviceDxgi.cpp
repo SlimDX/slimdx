@@ -41,7 +41,9 @@ namespace DXGI
 	Device::Device( IComObject^ device ) 
 	{
 		IDXGIDevice* result = 0;
-		if( RECORD_DXGI( device->UnknownPointer->QueryInterface( IID_IDXGIDevice, reinterpret_cast<void**>( &result ) ) ).IsFailure )
+
+		IUnknown *ptr = reinterpret_cast<IUnknown*>(device->ComPointer.ToPointer());
+		if( RECORD_DXGI( ptr->QueryInterface( IID_IDXGIDevice, reinterpret_cast<void**>( &result ) ) ).IsFailure )
 			throw gcnew DXGIException( Result::Last );
 		Construct( result );
 	}

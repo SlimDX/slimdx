@@ -21,6 +21,7 @@
 */
 #pragma once
 
+#include "../ComObject.h"
 #include "../SlimDXException.h"
 #include "../multimedia/WaveFormat.h"
 
@@ -35,7 +36,7 @@ namespace SlimDX
 {
 	namespace XAPO
 	{
-		public interface struct IAudioProcessor
+		public interface struct IAudioProcessor : IComObject
 		{
 			virtual int CalculateInputFrames( int outputFrameCount ) = 0;
 			virtual int CalculateOutputFrames( int inputFrameCount ) = 0;
@@ -79,7 +80,7 @@ namespace SlimDX
 			HRESULT WINAPI IsInputFormatSupported( const WAVEFORMATEX *pOutputFormat, const WAVEFORMATEX *pRequestedInputFormat, WAVEFORMATEX **ppSupportedInputFormat );
 			HRESULT WINAPI IsOutputFormatSupported( const WAVEFORMATEX *pInputFormat, const WAVEFORMATEX *pRequestedOutputFormat, WAVEFORMATEX **ppSupportedOutputFormat );
 			HRESULT WINAPI LockForProcess( UINT32 InputLockedParameterCount, const XAPO_LOCKFORPROCESS_BUFFER_PARAMETERS *pInputLockedParameters, UINT32 OutputLockedParameterCount, const XAPO_LOCKFORPROCESS_BUFFER_PARAMETERS *pOutputLockedParameters );
-			void	WINAPI Process( UINT32 InputProcessParameterCount, const XAPO_PROCESS_BUFFER_PARAMETERS *pInputProcessParameters, UINT32 OutputProcessParameterCount, const XAPO_PROCESS_BUFFER_PARAMETERS *pOutputProcessParameters, BOOL IsEnabled );
+			void	WINAPI Process( UINT32 InputProcessParameterCount, const XAPO_PROCESS_BUFFER_PARAMETERS *pInputProcessParameters, UINT32 OutputProcessParameterCount, XAPO_PROCESS_BUFFER_PARAMETERS *pOutputProcessParameters, BOOL IsEnabled );
 			void	WINAPI Reset();
 			void	WINAPI UnlockForProcess();
 

@@ -541,7 +541,7 @@ namespace DirectWrite
 	Result TextLayout::SetDrawingEffect(IClientDrawingEffect ^drawingEffect, TextRange range)
 	{
 		return RECORD_DW(InternalPointer->
-			SetDrawingEffect(drawingEffect == nullptr ? 0 : drawingEffect->UnknownPointer,
+			SetDrawingEffect(drawingEffect == nullptr ? 0 : reinterpret_cast<IUnknown*>(drawingEffect->ComPointer.ToPointer()),
 				TextRangeFromManaged(range)));
 	}
 

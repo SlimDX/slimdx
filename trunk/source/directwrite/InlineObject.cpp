@@ -38,7 +38,7 @@ namespace DirectWrite
 		float originX, float originY, bool isSideways, bool isRightToLeft,
 		IClientDrawingEffect ^clientDrawingEffect)
 	{
-		IUnknown *nativeClientDrawingEffect = clientDrawingEffect == nullptr ? 0 : clientDrawingEffect->UnknownPointer;
+		IUnknown *nativeClientDrawingEffect = clientDrawingEffect == nullptr ? 0 : reinterpret_cast<IUnknown*>(clientDrawingEffect->ComPointer.ToPointer());
 		void *nativeClientDrawingContext = static_cast<void *>(clientDrawingContext);
 		return RECORD_DW(InternalPointer->Draw(nativeClientDrawingContext, renderer->InternalPointer,
 			originX, originY, isSideways ? TRUE : FALSE, isRightToLeft ? TRUE : FALSE,
