@@ -47,9 +47,9 @@ namespace SlimDX
 	public interface struct IComObject : System::IDisposable
 	{
 	public:
-		property IUnknown* UnknownPointer
+		property System::IntPtr ComPointer
 		{
-			virtual IUnknown* get() = 0;
+			virtual System::IntPtr get() = 0;
 		}
 	};
 
@@ -117,6 +117,16 @@ namespace SlimDX
 		}
 		
 	internal:
+		property IUnknown* UnknownPointer
+		{
+			IUnknown* get();
+		}
+
+		property IUnknown* InternalPointer
+		{
+			IUnknown* get();
+		}
+
 		property ComObject^ Owner 
 		{
 			ComObject^ get();
@@ -141,17 +151,7 @@ namespace SlimDX
 		/// </summary>
 		property System::IntPtr ComPointer
 		{
-			System::IntPtr get();
-		}
-
-		property IUnknown* UnknownPointer
-		{
-			virtual IUnknown* get();
-		}
-
-		property IUnknown* InternalPointer
-		{
-			IUnknown* get();
+			virtual System::IntPtr get();
 		}
 		
 		/// <summary>

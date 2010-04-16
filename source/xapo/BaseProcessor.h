@@ -23,6 +23,8 @@
 
 #include "IAudioProcessor.h"
 
+extern const IID IID_CXAPOBase;
+
 namespace SlimDX
 {
 	namespace XAPO

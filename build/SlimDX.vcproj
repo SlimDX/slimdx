@@ -3551,6 +3551,14 @@
 				Name="Voices"
 				>
 				<File
+					RelativePath="..\source\xaudio2\EffectDescriptor.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xaudio2\EffectDescriptor.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\xaudio2\FilterParameters.cpp"
 					>
 				</File>

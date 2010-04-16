@@ -26,6 +26,7 @@
 #include "FilterParameters.h"
 #include "VoiceDetails.h"
 #include "VoiceSendDescriptor.h"
+#include "EffectDescriptor.h"
 
 namespace SlimDX
 {
@@ -60,8 +61,16 @@ namespace SlimDX
 
 			Result GetEffectParameters( int effectIndex, array<System::Byte>^ parameters );
 
+			generic<typename T> where T : value class
+			T GetEffectParameters( int effectIndex );
+
 			Result SetEffectParameters( int effectIndex, array<System::Byte>^ parameters );
 			Result SetEffectParameters( int effectIndex, array<System::Byte>^ parameters, int operationSet );
+
+			generic<typename T> where T : value class
+			Result SetEffectParameters( int effectIndex, T parameters );
+			generic<typename T> where T : value class
+			Result SetEffectParameters( int effectIndex, T parameters, int operationSet );
 
 			bool IsEffectEnabled( int effectIndex );
 
@@ -74,10 +83,7 @@ namespace SlimDX
 			Result SetOutputMatrix( Voice^ destinationVoice, int sourceChannels, int destinationChannels, array<float>^ matrix );
 			Result SetOutputMatrix( Voice^ destinationVoice, int sourceChannels, int destinationChannels, array<float>^ matrix, int operationSet );
 
-			// TODO: Implement the following method. Unfortunately, this will involve implementing
-			// almost all of XAPO, which will be a complete pain in the neck. Let's wait until
-			// someone complains :)
-			//Result SetEffectChain( EffectChain^ effectChain );
+			Result SetEffectChain( array<EffectDescriptor>^ effects );
 			
 #if SLIMDX_XAUDIO2_VERSION < 24
 			Result SetOutputVoices( array<Voice^>^ outputVoices );

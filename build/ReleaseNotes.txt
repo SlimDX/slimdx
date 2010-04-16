@@ -25,6 +25,10 @@ DirectWrite
 RawInput
 	* Fixed the data type of the mouse wheel delta.
 	
+XAPO
+	* Finished implementing the subsystem.
+	
 XAudio2
 	* Fixed an issue in WaveStream that caused popping noises when loading data from an existing stream.
 	* Changed OnVoiceProcessingPassStart to only perform an allocation if an event handler is hooked up.
+	* Hooked up the effect chain portions to XAPO.
