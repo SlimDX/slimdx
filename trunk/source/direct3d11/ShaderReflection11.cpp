@@ -58,6 +58,71 @@ namespace Direct3D11
 
 		return gcnew ConstantBuffer( InternalPointer->GetConstantBufferByName( reinterpret_cast<LPCSTR>(pinnedName) ) );
 	}
+
+	ShaderParameterDescription ShaderReflection::GetInputParameterDescription( int index )
+	{
+		D3D11_SIGNATURE_PARAMETER_DESC desc;
+
+		HRESULT hr = InternalPointer->GetInputParameterDesc( index, &desc );
+		RECORD_D3D11( hr );
+
+		return ShaderParameterDescription( desc );
+	}
+
+	ShaderParameterDescription ShaderReflection::GetOutputParameterDescription( int index )
+	{
+		D3D11_SIGNATURE_PARAMETER_DESC desc;
+
+		HRESULT hr = InternalPointer->GetOutputParameterDesc( index, &desc );
+		RECORD_D3D11( hr );
+
+		return ShaderParameterDescription( desc );
+	}
+
+	ShaderParameterDescription ShaderReflection::GetPatchConstantParameterDescription( int index )
+	{
+		D3D11_SIGNATURE_PARAMETER_DESC desc;
+
+		HRESULT hr = InternalPointer->GetPatchConstantParameterDesc( index, &desc );
+		RECORD_D3D11( hr );
+
+		return ShaderParameterDescription( desc );
+	}
+
+	InputBindingDescription ShaderReflection::GetResourceBindingDescription( int index )
+	{
+		D3D11_SHADER_INPUT_BIND_DESC desc;
+
+		HRESULT hr = InternalPointer->GetResourceBindingDesc( index, &desc );
+		RECORD_D3D11( hr );
+
+		return InputBindingDescription( desc );
+	}
+
+	InputBindingDescription ShaderReflection::GetResourceBindingDescription( String^ name )
+	{
+		D3D11_SHADER_INPUT_BIND_DESC desc;
+		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
+		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+
+		HRESULT hr = InternalPointer->GetResourceBindingDescByName( reinterpret_cast<LPCSTR>(pinnedName), &desc );
+		RECORD_D3D11( hr );
+
+		return InputBindingDescription( desc );
+	}
+
+	FeatureLevel ShaderReflection::MinimumFeatureLevel::get()
+	{
+		D3D_FEATURE_LEVEL fl;
+		InternalPointer->GetMinFeatureLevel( &fl );
+
+		return static_cast<FeatureLevel>( fl );
+	}
+
+	InputPrimitive ShaderReflection::GeometryShaderInputPrimitive::get()
+	{
+		return static_cast<InputPrimitive>( InternalPointer->GetGSInputPrimitive() );
+	}
 	
 	int ShaderReflection::BitwiseInstructionCount::get()
 	{

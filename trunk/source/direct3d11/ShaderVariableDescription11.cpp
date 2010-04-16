@@ -38,6 +38,7 @@ namespace Direct3D11
 		m_StartOffset = static_cast<int>( description.StartOffset );
 		m_Size = static_cast<int>( description.Size );
 		m_Flags = static_cast<SlimDX::Direct3D10::ShaderVariableFlags>( description.uFlags );
+		defaultValue = IntPtr( description.DefaultValue );
 	}
 	
 	System::String^ ShaderVariableDescription::Name::get()
@@ -53,6 +54,11 @@ namespace Direct3D11
 	int ShaderVariableDescription::Size::get()
 	{
 		return m_Size;
+	}
+
+	IntPtr ShaderVariableDescription::DefaultValue::get()
+	{
+		return defaultValue;
 	}
 
 	SlimDX::Direct3D10::ShaderVariableFlags ShaderVariableDescription::Flags::get()

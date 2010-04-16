@@ -19,35 +19,26 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include "stdafx.h"
 
-#include "../ComObject.h"
+#include "InputBindingDescription11.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct3D11
+namespace Direct3D11
+{
+	InputBindingDescription::InputBindingDescription( const D3D11_SHADER_INPUT_BIND_DESC &desc )
 	{
-		value class ConstantBufferDescription;
-		ref class ShaderReflectionVariable;
-
-		public ref class ConstantBuffer
-		{
-		private:
-			ID3D11ShaderReflectionConstantBuffer* m_Pointer;
-			
-		internal:
-			ConstantBuffer( ID3D11ShaderReflectionConstantBuffer* pointer );
-
-		public:
-			ConstantBuffer( System::IntPtr pointer );
-			
-			property ConstantBufferDescription Description
-			{
-				ConstantBufferDescription get();
-			}
-
-			ShaderReflectionVariable^ GetVariable( int index );
-			ShaderReflectionVariable^ GetVariable( System::String^ name );
-		};
+		Name = gcnew String(desc.Name);
+		Type = static_cast<SlimDX::Direct3D10::ShaderInputType>(desc.Type);
+		BindPoint = desc.BindPoint;
+		BindCount = desc.BindCount;
+		Flags = static_cast<SlimDX::Direct3D10::ShaderInputFlags>(desc.uFlags);
+		ReturnType = static_cast<ResourceReturnType>(desc.ReturnType);
+		Dimension = static_cast<ShaderResourceViewDimension>(desc.Dimension);
+		SampleCount = desc.NumSamples;
 	}
+}
 }

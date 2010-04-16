@@ -28,52 +28,21 @@
 namespace SlimDX
 {
 	namespace Direct3D11
-	{	
-		public value class ShaderVariableDescription : System::IEquatable<ShaderVariableDescription>
+	{
+		public value class InputBindingDescription
 		{
-		private:
-			System::String^ m_Name;
-			int m_StartOffset;
-			int m_Size;
-			SlimDX::Direct3D10::ShaderVariableFlags m_Flags;
-			System::IntPtr defaultValue;
-		
 		internal:
-			ShaderVariableDescription( const D3D11_SHADER_VARIABLE_DESC& description );
-		
+			InputBindingDescription( const D3D11_SHADER_INPUT_BIND_DESC &desc );
+
 		public:
-			property System::String^ Name
-			{
-				System::String^ get();
-			}
-			
-			property int StartOffset
-			{
-				int get();
-			}
-			
-			property int Size
-			{
-				int get();
-			}
-
-			property SlimDX::Direct3D10::ShaderVariableFlags Flags
-			{
-				SlimDX::Direct3D10::ShaderVariableFlags get();
-			}
-
-			property System::IntPtr DefaultValue
-			{
-				System::IntPtr get();
-			}
-
-			static bool operator == ( ShaderVariableDescription left, ShaderVariableDescription right );
-			static bool operator != ( ShaderVariableDescription left, ShaderVariableDescription right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( ShaderVariableDescription other );
-			static bool Equals( ShaderVariableDescription% value1, ShaderVariableDescription% value2 );
+			property System::String^ Name;
+			property SlimDX::Direct3D10::ShaderInputType Type;
+			property int BindPoint;
+			property int BindCount;
+			property SlimDX::Direct3D10::ShaderInputFlags Flags;
+			property ResourceReturnType ReturnType;
+			property ShaderResourceViewDimension Dimension;
+			property int SampleCount;
 		};
 	}
-};
+}

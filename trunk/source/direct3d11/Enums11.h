@@ -1654,6 +1654,18 @@ namespace SlimDX
 			GdiCompatible = D3D11_RESOURCE_MISC_GDI_COMPATIBLE
 		};
 
+		public enum class ResourceReturnType : System::Int32
+		{
+			UNorm = D3D11_RETURN_TYPE_UNORM,
+			SNorm = D3D11_RETURN_TYPE_SNORM,
+			SInt = D3D11_RETURN_TYPE_SINT,
+			UInt = D3D11_RETURN_TYPE_UINT,
+			Float = D3D11_RETURN_TYPE_FLOAT,
+			Mixed = D3D11_RETURN_TYPE_MIXED,
+			Double = D3D11_RETURN_TYPE_DOUBLE,
+			Continued = D3D11_RETURN_TYPE_CONTINUED
+		};
+
 		/// <summary>
 		/// Identifies expected resource use during rendering. The usage directly reflects whether a resource is 
 		/// accessible by the CPU and/or the GPU.
