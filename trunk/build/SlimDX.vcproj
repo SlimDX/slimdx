@@ -5984,14 +5984,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\ShaderReflection11.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d11\ShaderReflection11.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\direct3d11\ShaderSignature11.cpp"
 					>
 				</File>
@@ -6102,6 +6094,86 @@
 						RelativePath="..\source\direct3d11\ClassLinkage11.h"
 						>
 					</File>
+				</Filter>
+				<Filter
+					Name="Reflection"
+					>
+					<File
+						RelativePath="..\source\direct3d11\ShaderDescription11.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\ShaderDescription11.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\ShaderReflection11.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\ShaderReflection11.h"
+						>
+					</File>
+					<Filter
+						Name="ConstantBuffer"
+						>
+						<File
+							RelativePath="..\source\direct3d11\ConstantBuffer11.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d11\ConstantBuffer11.h"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d11\ConstantBufferDescription11.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d11\ConstantBufferDescription11.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="Type"
+						>
+						<File
+							RelativePath="..\source\direct3d11\ShaderReflectionType11.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d11\ShaderReflectionType11.h"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d11\ShaderTypeDescription11.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d11\ShaderTypeDescription11.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="Variable"
+						>
+						<File
+							RelativePath="..\source\direct3d11\ShaderReflectionVariable11.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d11\ShaderReflectionVariable11.h"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d11\ShaderVariableDescription11.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d11\ShaderVariableDescription11.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 			</Filter>
 			<Filter
@@ -6416,11 +6488,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\ShaderDescription11.cpp"
+					RelativePath="..\source\direct3d11\EffectShaderDescription11.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\ShaderDescription11.h"
+					RelativePath="..\source\direct3d11\EffectShaderDescription11.h"
 					>
 				</File>
 				<Filter
@@ -6556,6 +6628,26 @@
 					</File>
 					<File
 						RelativePath="..\source\direct3d11\EffectPassShaderDescription11.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Type"
+					>
+					<File
+						RelativePath="..\source\direct3d11\EffectType11.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\EffectType11.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\EffectTypeDescription11.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\EffectTypeDescription11.h"
 						>
 					</File>
 				</Filter>

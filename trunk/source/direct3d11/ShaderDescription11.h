@@ -22,75 +22,55 @@
 #pragma once
 
 #include "Enums11.h"
-#include "..\direct3d10\ShaderSignature10.h"
 
 namespace SlimDX
 {
 	namespace Direct3D11
 	{	
-		public value class ShaderDescription : System::IEquatable<ShaderDescription>
+		public ref class ShaderDescription
 		{
-		private:
-			SlimDX::Direct3D10::ShaderSignature^ m_InputSignature;
-			bool m_IsInline;
-			SlimDX::Direct3D10::ShaderBytecode^ m_Bytecode;
-			array<System::String^>^ m_SODecl;
-			int m_RasterizedStream;
-			int m_NumInputSignatureEntries;
-			int m_NumOutputSignatureEntries;
-			int m_NumPatchConstantSignatureEntries;
-
 		internal:
-			ShaderDescription( const D3DX11_EFFECT_SHADER_DESC& native );
-		
+			ShaderDescription( const D3D11_SHADER_DESC &desc );
+
 		public:
-			property SlimDX::Direct3D10::ShaderSignature^ Signature
-			{
-				SlimDX::Direct3D10::ShaderSignature^ get();
-			}
-			
-			property bool IsInline
-			{
-				bool get();
-			}
-			
-			property SlimDX::Direct3D10::ShaderBytecode^ Bytecode
-			{
-				SlimDX::Direct3D10::ShaderBytecode^ get();
-			}
-			
-			property System::String^ StreamOutputDeclaration[int]
-			{
-				System::String^ get(int index);
-			}
-			
-			property int RasterizedStream
-			{
-				int get();
-			}
-
-			property int InputParameterCount
-			{
-				int get();
-			}
-			
-			property int OutputParameterCount
-			{
-				int get();
-			}
-
-			property int PatchConstantCount
-			{
-				int get();
-			}
-
-			static bool operator == ( ShaderDescription left, ShaderDescription right );
-			static bool operator != ( ShaderDescription left, ShaderDescription right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( ShaderDescription other );
-			static bool Equals( ShaderDescription% value1, ShaderDescription% value2 );
+			property int Version;
+			property System::String^ Creator;
+			property ShaderFlags Flags;
+			property int ConstantBuffers;
+			property int BoundResources;
+			property int InputParameters;
+			property int OutputParameters;
+			property int InstructionCount;
+			property int TempRegisterCount;
+			property int TempArrayCount;
+			property int DefineCount;
+			property int DeclarationCount;
+			property int TextureNormalInstructions;
+			property int TextureLoadInstructions;
+			property int TextureCompareInstructions;
+			property int TextureBiasInstructions;
+			property int TextureGradientInstructions;
+			property int FloatInstructionCount;
+			property int IntInstructionCount;
+			property int UintInstructionCount;
+			property int StaticFlowControlCount;
+			property int DynamicFlowControlCount;
+			property int MacroInstructionCount;
+			property int ArrayInstructionCount;
+			property int CutInstructionCount;
+			property int EmitInstructionCount;
+			property PrimitiveTopology GeometryShaderOutputTopology;
+			property int MaximumOutputVertexCount;
+			property InputPrimitive InputPrimitive;
+			property int PatchConstantParameters;
+			property int GeometryShaderInstanceCount;
+			property int ControlPoints;
+			property TessellatorOutputPrimitive HullShaderOutputPrimitive;
+			property TessellatorPartitioning HullShaderPartitioning;
+			property TessellatorDomain TessellatorDomain;
+			property int BarrierInstructions;
+			property int InterlockedInstructions;
+			property int TextureStoreInstructions;
 		};
 	}
-};
+}

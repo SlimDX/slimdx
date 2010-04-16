@@ -1953,5 +1953,74 @@ namespace SlimDX
 			Border = D3D10_TEXTURE_ADDRESS_BORDER,
 			MirrorOnce = D3D10_TEXTURE_ADDRESS_MIRROR_ONCE
 		};
+
+		public enum class ShaderVariableClass : System::Int32
+		{
+			Scalar = D3D10_SVC_SCALAR,
+			Vector = D3D10_SVC_VECTOR,
+			MatrixRows = D3D10_SVC_MATRIX_ROWS,
+			MatrixColumns = D3D10_SVC_MATRIX_COLUMNS,
+			Object = D3D10_SVC_OBJECT,
+			Struct = D3D10_SVC_STRUCT,
+			InterfaceClass = D3D11_SVC_INTERFACE_CLASS,
+			InterfacePointer = D3D11_SVC_INTERFACE_POINTER,
+		};
+
+		public enum class ShaderVariableType : System::Int32
+		{
+			Void = D3D10_SVT_VOID,
+			Bool = D3D10_SVT_BOOL,
+			Int = D3D10_SVT_INT,
+			Float = D3D10_SVT_FLOAT,
+			String = D3D10_SVT_STRING,
+			Texture = D3D10_SVT_TEXTURE,
+			Texture1D = D3D10_SVT_TEXTURE1D,
+			Texture2D = D3D10_SVT_TEXTURE2D,
+			Texture3D = D3D10_SVT_TEXTURE3D,
+			TextureCube = D3D10_SVT_TEXTURECUBE,
+			Sampler = D3D10_SVT_SAMPLER,
+			PixelShader = D3D10_SVT_PIXELSHADER,
+			VertexShader = D3D10_SVT_VERTEXSHADER,
+			UInt = D3D10_SVT_UINT,
+			UInt8 = D3D10_SVT_UINT8,
+			GeometryShader = D3D10_SVT_GEOMETRYSHADER,
+			Rasterizer = D3D10_SVT_RASTERIZER,
+			DepthStencil = D3D10_SVT_DEPTHSTENCIL,
+			Blend = D3D10_SVT_BLEND,
+			Buffer = D3D10_SVT_BUFFER,
+			CBuffer = D3D10_SVT_CBUFFER,
+			TBuffer = D3D10_SVT_TBUFFER,
+			Texture1DArray = D3D10_SVT_TEXTURE1DARRAY,
+			Texture2DArray = D3D10_SVT_TEXTURE2DARRAY,
+			RenderTargetView = D3D10_SVT_RENDERTARGETVIEW,
+			DepthStencilView = D3D10_SVT_DEPTHSTENCILVIEW,
+			Texture2DMS = D3D10_SVT_TEXTURE2DMS,
+			Texture2DMSArray = D3D10_SVT_TEXTURE2DMSARRAY,
+			TextureCubeArray = D3D10_SVT_TEXTURECUBEARRAY,
+			HullShader = D3D11_SVT_HULLSHADER,
+			DomainShader = D3D11_SVT_DOMAINSHADER,
+			InterfacePointer = D3D11_SVT_INTERFACE_POINTER,
+			ComputeShader = D3D11_SVT_COMPUTESHADER,
+			Double = D3D11_SVT_DOUBLE,
+			RWTexture1D = D3D11_SVT_RWTEXTURE1D,
+			RWTexture1DArray = D3D11_SVT_RWTEXTURE1DARRAY,
+			RWTexture2D = D3D11_SVT_RWTEXTURE2D,
+			RWTexture2DArray = D3D11_SVT_RWTEXTURE2DARRAY,
+			RWTexture3D = D3D11_SVT_RWTEXTURE3D,
+			RWBuffer = D3D11_SVT_RWBUFFER,
+			ByteAddressBuffer = D3D11_SVT_BYTEADDRESS_BUFFER,
+			RWByteAddressBuffer = D3D11_SVT_RWBYTEADDRESS_BUFFER,
+			StructuredBuffer = D3D11_SVT_STRUCTURED_BUFFER,
+			RWStructuredBuffer = D3D11_SVT_RWSTRUCTURED_BUFFER,
+			AppendStructuredBuffer = D3D11_SVT_APPEND_STRUCTURED_BUFFER,
+			ConsumeStructuredBuffer = D3D11_SVT_CONSUME_STRUCTURED_BUFFER,
+		};
+
+		[System::Flags]
+		public enum class ShaderVariableFlags : System::Int32
+		{
+			UserPacked = D3D10_SVF_USERPACKED,
+			Used = D3D10_SVF_USED,
+		};
 	}
 }

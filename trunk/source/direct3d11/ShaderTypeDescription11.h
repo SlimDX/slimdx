@@ -21,82 +21,71 @@
 */
 #pragma once
 
-#include "../ComObject.h"
-
-#include "ConstantBuffer11.h"
-#include "ShaderDescription11.h"
+#include "Enums11.h"
+//yeah don't ask
+#include "../direct3d10/Enums.h"
 
 namespace SlimDX
 {
 	namespace Direct3D11
-	{
-		ref class ShaderBytecode;
-
-		public ref class ShaderReflection : ComObject
+	{	
+		public value class ShaderTypeDescription : System::IEquatable<ShaderTypeDescription>
 		{
-			COMOBJECT(ID3D11ShaderReflection, ShaderReflection);
-
 		private:
-			ShaderDescription^ description;
+			SlimDX::Direct3D10::ShaderVariableClass m_Class;
+			SlimDX::Direct3D10::ShaderVariableType m_Type;
+			int m_Rows;
+			int m_Columns;
+			int m_Elements;
+			int m_Members;
+			int m_Offset;
+
+		internal:
+			ShaderTypeDescription( const D3D11_SHADER_TYPE_DESC& native );
 			
 		public:
-			ShaderReflection( ShaderBytecode^ byteCode );
+			property SlimDX::Direct3D10::ShaderVariableClass Class
+			{
+				SlimDX::Direct3D10::ShaderVariableClass get();
+			}
+			
+			property SlimDX::Direct3D10::ShaderVariableType Type
+			{
+				SlimDX::Direct3D10::ShaderVariableType get();
+			}
+			
+			property int Rows
+			{
+				int get();
+			}
+			
+			property int Columns
+			{
+				int get();
+			}
 
-			ConstantBuffer^ GetConstantBuffer( int index );
-			ConstantBuffer^ GetConstantBuffer( System::String^ name );
+			property int Elements
+			{
+				int get();
+			}
+			
+			property int Members
+			{
+				int get();
+			}
+			
+			property int Offset
+			{
+				int get();
+			}
 
-			property ShaderDescription^ Description
-			{
-				ShaderDescription^ get() { return description; }
-			}
-			
-			/// <summary>
-			/// Gets the number of bitwise instructions.
-			/// </summary>
-			property int BitwiseInstructionCount 
-			{
-				int get();
-			}
-			
-			/// <summary>
-			/// Gets the number of conversion instructions.
-			/// </summary>
-			property int ConversionInstructionCount
-			{
-				int get();
-			}
-			
-			/// <summary>
-			/// Gets the number of move instructions.
-			/// </summary>
-			property int MoveInstructionCount
-			{
-				int get();
-			}
-			
-			/// <summary>
-			/// Gets the number of conditional move instructions.
-			/// </summary>
-			property int ConditionalMoveInstructionCount
-			{
-				int get();
-			}
-			
-			/// <summary>
-			/// Gets the number of interface slots.
-			/// </summary>
-			property int InterfaceSlotCount
-			{
-				int get();
-			}
-			
-			/// <summary>
-			/// Gets a value indicating whether the shader is a sample frequency shader.
-			/// </summary>
-			property bool IsSampleFrequencyShader
-			{
-				bool get();
-			}
+			static bool operator == ( ShaderTypeDescription left, ShaderTypeDescription right );
+			static bool operator != ( ShaderTypeDescription left, ShaderTypeDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( ShaderTypeDescription other );
+			static bool Equals( ShaderTypeDescription% value1, ShaderTypeDescription% value2 );
 		};
 	}
-}
+};
