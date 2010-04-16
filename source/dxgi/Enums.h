@@ -237,7 +237,8 @@ namespace SlimDX
 			RenderTargetOutput = DXGI_USAGE_RENDER_TARGET_OUTPUT,
 			BackBuffer = DXGI_USAGE_BACK_BUFFER,
 			Shared = DXGI_USAGE_SHARED,
-			ReadOnly = DXGI_USAGE_READ_ONLY 
+			ReadOnly = DXGI_USAGE_READ_ONLY,
+			UnorderedAccess = DXGI_USAGE_UNORDERED_ACCESS
 		};
 		
 		/// <summary>
