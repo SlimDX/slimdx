@@ -29,7 +29,7 @@
 #include "EffectShaderVariable11.h"
 #include "GeometryShader11.h"
 #include "PixelShader11.h"
-#include "ShaderDescription11.h"
+#include "EffectShaderDescription11.h"
 #include "ShaderParameterDescription11.h"
 #include "VertexShader11.h"
 
@@ -96,11 +96,11 @@ namespace Direct3D11
 		return Result::Last;
 	}
 	
-	Result EffectShaderVariable::GetShaderDescription( int shaderIndex, ShaderDescription% result )
+	Result EffectShaderVariable::GetShaderDescription( int shaderIndex, EffectShaderDescription% result )
 	{
 		D3DX11_EFFECT_SHADER_DESC description;
 		if( RECORD_D3D11( m_Pointer->GetShaderDesc( shaderIndex, &description ) ).IsSuccess )
-			result = ShaderDescription( description );
+			result = EffectShaderDescription( description );
 	
 		return Result::Last;
 	}

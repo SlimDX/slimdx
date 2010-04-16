@@ -18,6 +18,7 @@ Direct3D 10
 Direct3D 11
 	* Dropped stream size checks in texture ToStream functions.
 	* Added a constructor to InputLayout to take shader bytecode.
+	* Added shader reflection API.
 
 DirectWrite
 	* Added a bunch of missing functionality.

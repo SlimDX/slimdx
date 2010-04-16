@@ -38,6 +38,7 @@ namespace SlimDX
 		ref class EffectStringVariable;
 		ref class EffectUnorderedAccessViewVariable;
 		value class EffectVariableDescription;
+		ref class EffectType;
 		
 		public ref class EffectVariable
 		{
@@ -77,6 +78,8 @@ namespace SlimDX
 			EffectVectorVariable^ AsVector();
 			EffectStringVariable^ AsString();
 			EffectUnorderedAccessViewVariable^ AsUnorderedAccessView();
+
+			EffectType^ GetVariableType();
 		};
 	}
 };

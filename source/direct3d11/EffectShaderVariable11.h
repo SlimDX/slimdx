@@ -32,7 +32,7 @@ namespace SlimDX
 		ref class PixelShader;
 		ref class VertexShader;
 		ref class GeometryShader;
-		value class ShaderDescription;
+		value class EffectShaderDescription;
 		value class ShaderParameterDescription;
 		
 		public ref class EffectShaderVariable : public EffectVariable
@@ -53,7 +53,7 @@ namespace SlimDX
 			Result GetInputParameterDescription( int shaderIndex, int parameterIndex, [Out] ShaderParameterDescription% result );
 			Result GetOutputParameterDescription( int shaderIndex, int parameterIndex, [Out] ShaderParameterDescription% result );
 			
-			Result GetShaderDescription( int shaderIndex, [Out] ShaderDescription% result );
+			Result GetShaderDescription( int shaderIndex, [Out] EffectShaderDescription% result );
 		};
 	}
 };

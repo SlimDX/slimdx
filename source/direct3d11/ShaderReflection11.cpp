@@ -40,6 +40,23 @@ namespace Direct3D11
 			throw gcnew Direct3D11Exception( Result::Last );
 
 		Construct( result );
+
+		D3D11_SHADER_DESC desc;
+		InternalPointer->GetDesc( &desc );
+		description = gcnew ShaderDescription( desc );
+	}
+
+	ConstantBuffer^ ShaderReflection::GetConstantBuffer( int index )
+	{
+		return gcnew ConstantBuffer( InternalPointer->GetConstantBufferByIndex( index ) );
+	}
+
+	ConstantBuffer^ ShaderReflection::GetConstantBuffer( String^ name )
+	{
+		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
+		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+
+		return gcnew ConstantBuffer( InternalPointer->GetConstantBufferByName( reinterpret_cast<LPCSTR>(pinnedName) ) );
 	}
 	
 	int ShaderReflection::BitwiseInstructionCount::get()

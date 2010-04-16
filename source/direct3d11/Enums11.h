@@ -235,6 +235,14 @@ namespace SlimDX
 			/// </summary>
 			InverseSecondarySourceAlpha = D3D11_BLEND_INV_SRC1_ALPHA
 		};
+
+		public enum class ConstantBufferType : System::Int32
+		{
+			ConstantBuffer = D3D11_CT_CBUFFER,
+			TextureBuffer = D3D11_CT_TBUFFER,
+			InterfacePointers = D3D11_CT_INTERFACE_POINTERS,
+			ResourceBinding = D3D11_CT_RESOURCE_BIND_INFO,
+		};
 		
 		/// <summary>Identifies which components of each pixel of a render target are writable during blending.</summary>
 		/// <unmanaged>D3D11_COLOR_WRITE_ENABLE</unmanaged>
@@ -1115,6 +1123,48 @@ namespace SlimDX
 			/// </summary>
 			PerInstanceData = D3D11_INPUT_PER_INSTANCE_DATA
 		};
+
+		public enum class InputPrimitive : System::Int32
+		{
+			Undefined = D3D11_PRIMITIVE_UNDEFINED,
+			Point = D3D11_PRIMITIVE_POINT,
+			Line = D3D11_PRIMITIVE_LINE,
+			Triangle = D3D11_PRIMITIVE_TRIANGLE,
+			LineWithAdjacency = D3D11_PRIMITIVE_LINE_ADJ,
+			TriangleWithAdjacency = D3D11_PRIMITIVE_TRIANGLE_ADJ,
+			PatchWith1ControlPoint = D3D11_PRIMITIVE_1_CONTROL_POINT_PATCH,
+			PatchWith2ControlPoints = D3D11_PRIMITIVE_2_CONTROL_POINT_PATCH,
+			PatchWith3ControlPoints = D3D11_PRIMITIVE_3_CONTROL_POINT_PATCH,
+			PatchWith4ControlPoints = D3D11_PRIMITIVE_4_CONTROL_POINT_PATCH,
+			PatchWith5ControlPoints = D3D11_PRIMITIVE_5_CONTROL_POINT_PATCH,
+			PatchWith6ControlPoints = D3D11_PRIMITIVE_6_CONTROL_POINT_PATCH,
+			PatchWith7ControlPoints = D3D11_PRIMITIVE_7_CONTROL_POINT_PATCH,
+			PatchWith8ControlPoints = D3D11_PRIMITIVE_8_CONTROL_POINT_PATCH,
+			PatchWith9ControlPoints = D3D11_PRIMITIVE_9_CONTROL_POINT_PATCH,
+			PatchWith10ControlPoints = D3D11_PRIMITIVE_10_CONTROL_POINT_PATCH,
+			PatchWith11ControlPoints = D3D11_PRIMITIVE_11_CONTROL_POINT_PATCH,
+			PatchWith12ControlPoints = D3D11_PRIMITIVE_12_CONTROL_POINT_PATCH,
+			PatchWith13ControlPoints = D3D11_PRIMITIVE_13_CONTROL_POINT_PATCH,
+			PatchWith14ControlPoints = D3D11_PRIMITIVE_14_CONTROL_POINT_PATCH,
+			PatchWith15ControlPoints = D3D11_PRIMITIVE_15_CONTROL_POINT_PATCH,
+			PatchWith16ControlPoints = D3D11_PRIMITIVE_16_CONTROL_POINT_PATCH,
+			PatchWith17ControlPoints = D3D11_PRIMITIVE_17_CONTROL_POINT_PATCH,
+			PatchWith18ControlPoints = D3D11_PRIMITIVE_18_CONTROL_POINT_PATCH,
+			PatchWith19ControlPoints = D3D11_PRIMITIVE_19_CONTROL_POINT_PATCH,
+			PatchWith20ControlPoints = D3D11_PRIMITIVE_20_CONTROL_POINT_PATCH,
+			PatchWith21ControlPoints = D3D11_PRIMITIVE_21_CONTROL_POINT_PATCH,
+			PatchWith22ControlPoints = D3D11_PRIMITIVE_22_CONTROL_POINT_PATCH,
+			PatchWith23ControlPoints = D3D11_PRIMITIVE_23_CONTROL_POINT_PATCH,
+			PatchWith24ControlPoints = D3D11_PRIMITIVE_24_CONTROL_POINT_PATCH,
+			PatchWith25ControlPoints = D3D11_PRIMITIVE_25_CONTROL_POINT_PATCH,
+			PatchWith26ControlPoints = D3D11_PRIMITIVE_26_CONTROL_POINT_PATCH,
+			PatchWith27ControlPoints = D3D11_PRIMITIVE_27_CONTROL_POINT_PATCH,
+			PatchWith28ControlPoints = D3D11_PRIMITIVE_28_CONTROL_POINT_PATCH,
+			PatchWith29ControlPoints = D3D11_PRIMITIVE_29_CONTROL_POINT_PATCH,
+			PatchWith30ControlPoints = D3D11_PRIMITIVE_30_CONTROL_POINT_PATCH,
+			PatchWith31ControlPoints = D3D11_PRIMITIVE_31_CONTROL_POINT_PATCH,
+			PatchWith32ControlPoints = D3D11_PRIMITIVE_32_CONTROL_POINT_PATCH
+		};
 		
 		/// <summary>Specifies how the CPU should respond when Map() is called on a resource being used by the GPU.</summary>
 		/// <unmanaged>D3D11_MAP_FLAG</unmanaged>
@@ -1226,157 +1276,157 @@ namespace SlimDX
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 2 control points.
 			/// </summary>
-			PatchListWith2ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_2_CONTROL_POINT_PATCHLIST,
+			PatchListWith2ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_2_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 3 control points.
 			/// </summary>
-			PatchListWith3ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_3_CONTROL_POINT_PATCHLIST,
+			PatchListWith3ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_3_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 4 control points.
 			/// </summary>
-			PatchListWith4ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_4_CONTROL_POINT_PATCHLIST,
+			PatchListWith4ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_4_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 5 control points.
 			/// </summary>
-			PatchListWith5ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_5_CONTROL_POINT_PATCHLIST,
+			PatchListWith5ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_5_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 6 control points.
 			/// </summary>
-			PatchListWith6ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_6_CONTROL_POINT_PATCHLIST,
+			PatchListWith6ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_6_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 7 control points.
 			/// </summary>
-			PatchListWith7ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_7_CONTROL_POINT_PATCHLIST,
+			PatchListWith7ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_7_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 8 control points.
 			/// </summary>
-			PatchListWith8ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_8_CONTROL_POINT_PATCHLIST,
+			PatchListWith8ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_8_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 9 control points.
 			/// </summary>
-			PatchListWith9ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_9_CONTROL_POINT_PATCHLIST,
+			PatchListWith9ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_9_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 10 control points.
 			/// </summary>
-			PatchListWith10ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_10_CONTROL_POINT_PATCHLIST,
+			PatchListWith10ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_10_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 11 control points.
 			/// </summary>
-			PatchListWith11ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_11_CONTROL_POINT_PATCHLIST,
+			PatchListWith11ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_11_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 12 control points.
 			/// </summary>
-			PatchListWith12ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_12_CONTROL_POINT_PATCHLIST,
+			PatchListWith12ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_12_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 13 control points.
 			/// </summary>
-			PatchListWith13ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_13_CONTROL_POINT_PATCHLIST,
+			PatchListWith13ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_13_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 14 control points.
 			/// </summary>
-			PatchListWith14ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_14_CONTROL_POINT_PATCHLIST,
+			PatchListWith14ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_14_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 15 control points.
 			/// </summary>
-			PatchListWith15ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_15_CONTROL_POINT_PATCHLIST,
+			PatchListWith15ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_15_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 16 control points.
 			/// </summary>
-			PatchListWith16ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_16_CONTROL_POINT_PATCHLIST,
+			PatchListWith16ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_16_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 17 control points.
 			/// </summary>
-			PatchListWith17ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_17_CONTROL_POINT_PATCHLIST,
+			PatchListWith17ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_17_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 18 control points.
 			/// </summary>
-			PatchListWith18ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_18_CONTROL_POINT_PATCHLIST,
+			PatchListWith18ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_18_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 19 control points.
 			/// </summary>
-			PatchListWith19ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_19_CONTROL_POINT_PATCHLIST,
+			PatchListWith19ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_19_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 20 control points.
 			/// </summary>
-			PatchListWith20ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_20_CONTROL_POINT_PATCHLIST,
+			PatchListWith20ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_20_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 21 control points.
 			/// </summary>
-			PatchListWith21ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_21_CONTROL_POINT_PATCHLIST,
+			PatchListWith21ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_21_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 22 control points.
 			/// </summary>
-			PatchListWith22ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_22_CONTROL_POINT_PATCHLIST,
+			PatchListWith22ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_22_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 23 control points.
 			/// </summary>
-			PatchListWith23ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_23_CONTROL_POINT_PATCHLIST,
+			PatchListWith23ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_23_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 24 control points.
 			/// </summary>
-			PatchListWith24ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_24_CONTROL_POINT_PATCHLIST,
+			PatchListWith24ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_24_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 25 control points.
 			/// </summary>
-			PatchListWith25ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_25_CONTROL_POINT_PATCHLIST,
+			PatchListWith25ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_25_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 26 control points.
 			/// </summary>
-			PatchListWith26ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_26_CONTROL_POINT_PATCHLIST,
+			PatchListWith26ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_26_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 27 control points.
 			/// </summary>
-			PatchListWith27ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_27_CONTROL_POINT_PATCHLIST,
+			PatchListWith27ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_27_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 28 control points.
 			/// </summary>
-			PatchListWith28ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_28_CONTROL_POINT_PATCHLIST,
+			PatchListWith28ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_28_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 29 control points.
 			/// </summary>
-			PatchListWith29ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_29_CONTROL_POINT_PATCHLIST,
+			PatchListWith29ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_29_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 30 control points.
 			/// </summary>
-			PatchListWith30ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_30_CONTROL_POINT_PATCHLIST,
+			PatchListWith30ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_30_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 31 control points.
 			/// </summary>
-			PatchListWith31ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_31_CONTROL_POINT_PATCHLIST,
+			PatchListWith31ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_31_CONTROL_POINT_PATCHLIST,
 
 			/// <summary>
 			/// Interpret the vertex data as a patch list with 32 control points.
 			/// </summary>
-			PatchListWith32ControlPoint = D3D11_PRIMITIVE_TOPOLOGY_32_CONTROL_POINT_PATCHLIST
+			PatchListWith32ControlPoints = D3D11_PRIMITIVE_TOPOLOGY_32_CONTROL_POINT_PATCHLIST
 		};
 		
 		/// <summary>
@@ -1635,6 +1685,81 @@ namespace SlimDX
 			Staging = D3D11_USAGE_STAGING
 		};
 
+		/// <summary>Identifies the type for scan data.</summary>
+		/// <unmanaged>D3DX11_SCAN_DATA_TYPE</unmanaged>
+		public enum class ScanDataType : System::Int32
+		{
+			/// <summary>
+			/// The type of the scan is float.
+			/// </summary>
+			Float = D3DX11_SCAN_DATA_TYPE_FLOAT,
+
+			/// <summary>
+			/// The type of the scan is int.
+			/// </summary>
+			Int = D3DX11_SCAN_DATA_TYPE_INT,
+
+			/// <summary>
+			/// The type of the scan is uint.
+			/// </summary>
+			UInt = D3DX11_SCAN_DATA_TYPE_UINT
+		};
+
+		/// <summary>Identifies the direction of scanning.</summary>
+		/// <unmanaged>D3DX11_SCAN_DIRECTION</unmanaged>
+		public enum class ScanDirection : System::Int32
+		{
+			/// <summary>
+			/// The direction is forward.
+			/// </summary>
+			Forward = D3DX11_SCAN_DIRECTION_FORWARD,
+
+			/// <summary>
+			/// The direction is backward.
+			/// </summary>
+			Backward = D3DX11_SCAN_DIRECTION_BACKWARD
+		};
+
+		/// <summary>Identifies the operation for a scan.</summary>
+		/// <unmanaged>D3DX11_SCAN_OPCODE</unmanaged>
+		public enum class ScanOpCode : System::Int32
+		{
+			/// <summary>
+			/// The operation is add.
+			/// </summary>
+			Add = D3DX11_SCAN_OPCODE_ADD,
+
+			/// <summary>
+			/// The operation is min.
+			/// </summary>
+			Min = D3DX11_SCAN_OPCODE_MIN,
+
+			/// <summary>
+			/// The operation is max.
+			/// </summary>
+			Max = D3DX11_SCAN_OPCODE_MAX,
+
+			/// <summary>
+			/// The operation is mul.
+			/// </summary>
+			Mul = D3DX11_SCAN_OPCODE_MUL,
+
+			/// <summary>
+			/// The operation is and.
+			/// </summary>
+			And = D3DX11_SCAN_OPCODE_AND,
+
+			/// <summary>
+			/// The operation is or.
+			/// </summary>
+			Or = D3DX11_SCAN_OPCODE_OR,
+
+			/// <summary>
+			/// The operation is XOR.
+			/// </summary>
+			XOR = D3DX11_SCAN_OPCODE_XOR
+		};
+
 		/// <summary></summary>
 		/// <unmanaged>D3D10_SHADER</unmanaged>
 		[System::Flags]
@@ -1787,6 +1912,32 @@ namespace SlimDX
 			Decrement = D3D11_STENCIL_OP_DECR
 		};
 
+		public enum class TessellatorDomain : System::Int32
+		{
+			Undefined = D3D11_TESSELLATOR_DOMAIN_UNDEFINED,
+			Isoline = D3D11_TESSELLATOR_DOMAIN_ISOLINE,
+			Triangle = D3D11_TESSELLATOR_DOMAIN_TRI,
+			Quad = D3D11_TESSELLATOR_DOMAIN_QUAD
+		};
+
+		public enum class TessellatorOutputPrimitive : System::Int32
+		{
+			Undefined = D3D11_TESSELLATOR_OUTPUT_UNDEFINED,
+			Point = D3D11_TESSELLATOR_OUTPUT_POINT,
+			Line = D3D11_TESSELLATOR_OUTPUT_LINE,
+			TriangleClockwise = D3D11_TESSELLATOR_OUTPUT_TRIANGLE_CW,
+			TriangleCounterClockwise = D3D11_TESSELLATOR_OUTPUT_TRIANGLE_CCW
+		};
+
+		public enum class TessellatorPartitioning : System::Int32
+		{
+			Undefined = D3D11_TESSELLATOR_PARTITIONING_UNDEFINED,
+			Integer = D3D11_TESSELLATOR_PARTITIONING_INTEGER,
+			PowerOfTwo = D3D11_TESSELLATOR_PARTITIONING_POW2,
+			FractionalOdd = D3D11_TESSELLATOR_PARTITIONING_FRACTIONAL_ODD,
+			FractionalEven = D3D11_TESSELLATOR_PARTITIONING_FRACTIONAL_EVEN
+		};
+
 		/// <summary>Identifies techniques for resolving texture coordinates that are outside of the boundaries of a texture.</summary>
 		/// <unmanaged>D3D11_TEXTURE_ADDRESS_MODE</unmanaged>
 		public enum class TextureAddressMode : System::Int32
@@ -1878,81 +2029,6 @@ namespace SlimDX
 			/// The resource will be accessed as a 3D texture.
 			/// </summary>
 			Texture3D = D3D11_UAV_DIMENSION_TEXTURE3D
-		};
-
-		/// <summary>Identifies the type for scan data.</summary>
-		/// <unmanaged>D3DX11_SCAN_DATA_TYPE</unmanaged>
-		public enum class ScanDataType : System::Int32
-		{
-			/// <summary>
-			/// The type of the scan is float.
-			/// </summary>
-			Float = D3DX11_SCAN_DATA_TYPE_FLOAT,
-
-			/// <summary>
-			/// The type of the scan is int.
-			/// </summary>
-			Int = D3DX11_SCAN_DATA_TYPE_INT,
-
-			/// <summary>
-			/// The type of the scan is uint.
-			/// </summary>
-			UInt = D3DX11_SCAN_DATA_TYPE_UINT
-		};
-
-		/// <summary>Identifies the operation for a scan.</summary>
-		/// <unmanaged>D3DX11_SCAN_OPCODE</unmanaged>
-		public enum class ScanOpCode : System::Int32
-		{
-			/// <summary>
-			/// The operation is add.
-			/// </summary>
-			Add = D3DX11_SCAN_OPCODE_ADD,
-
-			/// <summary>
-			/// The operation is min.
-			/// </summary>
-			Min = D3DX11_SCAN_OPCODE_MIN,
-
-			/// <summary>
-			/// The operation is max.
-			/// </summary>
-			Max = D3DX11_SCAN_OPCODE_MAX,
-
-			/// <summary>
-			/// The operation is mul.
-			/// </summary>
-			Mul = D3DX11_SCAN_OPCODE_MUL,
-
-			/// <summary>
-			/// The operation is and.
-			/// </summary>
-			And = D3DX11_SCAN_OPCODE_AND,
-
-			/// <summary>
-			/// The operation is or.
-			/// </summary>
-			Or = D3DX11_SCAN_OPCODE_OR,
-
-			/// <summary>
-			/// The operation is XOR.
-			/// </summary>
-			XOR = D3DX11_SCAN_OPCODE_XOR
-		};
-
-		/// <summary>Identifies the direction of scanning.</summary>
-		/// <unmanaged>D3DX11_SCAN_DIRECTION</unmanaged>
-		public enum class ScanDirection : System::Int32
-		{
-			/// <summary>
-			/// The direction is forward.
-			/// </summary>
-			Forward = D3DX11_SCAN_DIRECTION_FORWARD,
-
-			/// <summary>
-			/// The direction is backward.
-			/// </summary>
-			Backward = D3DX11_SCAN_DIRECTION_BACKWARD
 		};
 	}
 }
