@@ -25,6 +25,8 @@
 
 #include "ConstantBuffer11.h"
 #include "ShaderDescription11.h"
+#include "ShaderParameterDescription11.h"
+#include "InputBindingDescription11.h"
 
 namespace SlimDX
 {
@@ -44,6 +46,23 @@ namespace SlimDX
 
 			ConstantBuffer^ GetConstantBuffer( int index );
 			ConstantBuffer^ GetConstantBuffer( System::String^ name );
+
+			ShaderParameterDescription GetInputParameterDescription( int index );
+			ShaderParameterDescription GetOutputParameterDescription( int index );
+			ShaderParameterDescription GetPatchConstantParameterDescription( int index );
+
+			InputBindingDescription GetResourceBindingDescription( int index );
+			InputBindingDescription GetResourceBindingDescription( System::String^ name );
+
+			property FeatureLevel MinimumFeatureLevel
+			{
+				FeatureLevel get();
+			}
+
+			property InputPrimitive GeometryShaderInputPrimitive
+			{
+				InputPrimitive get();
+			}
 
 			property ShaderDescription^ Description
 			{

@@ -5976,14 +5976,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\ShaderParameterDescription11.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d11\ShaderParameterDescription11.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\direct3d11\ShaderSignature11.cpp"
 					>
 				</File>
@@ -6099,11 +6091,27 @@
 					Name="Reflection"
 					>
 					<File
+						RelativePath="..\source\direct3d11\InputBindingDescription11.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\InputBindingDescription11.h"
+						>
+					</File>
+					<File
 						RelativePath="..\source\direct3d11\ShaderDescription11.cpp"
 						>
 					</File>
 					<File
 						RelativePath="..\source\direct3d11\ShaderDescription11.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\ShaderParameterDescription11.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\ShaderParameterDescription11.h"
 						>
 					</File>
 					<File

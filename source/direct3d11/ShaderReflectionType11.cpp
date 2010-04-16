@@ -40,6 +40,8 @@ namespace Direct3D11
 		if( pointer == 0 )
 			throw gcnew ArgumentNullException( "pointer" );
 		m_Pointer = pointer;
+
+		Init();
 	}
 	
 	ShaderReflectionType::ShaderReflectionType( System::IntPtr pointer )
@@ -47,35 +49,31 @@ namespace Direct3D11
 		if( pointer == IntPtr::Zero )
 			throw gcnew ArgumentNullException( "pointer" );
 		m_Pointer = reinterpret_cast<ID3D11ShaderReflectionType*>( pointer.ToPointer() );
+
+		Init();
+	}
+
+	void ShaderReflectionType::Init()
+	{
+		ID3D11ShaderReflectionType* type = m_Pointer->GetBaseClass();
+		if (type != NULL)
+			baseClass = gcnew ShaderReflectionType( type );
+
+		type = m_Pointer->GetSubType();
+		if (type != NULL)
+			subType = gcnew ShaderReflectionType( type );
 	}
 
 	ShaderTypeDescription ShaderReflectionType::Description::get()
 	{
 		D3D11_SHADER_TYPE_DESC nativeDescription;
-		RECORD_D3D11( m_Pointer->GetDesc( &nativeDescription ) );
-		if( Result::Last.IsSuccess )
-			return ShaderTypeDescription( nativeDescription );
-		
-		throw gcnew Direct3D11Exception( Result::Last );
+		HRESULT hr = m_Pointer->GetDesc( &nativeDescription );
+		RECORD_D3D11( hr );
+
+		return ShaderTypeDescription( nativeDescription );
 	}
 
-	ShaderReflectionType^ ShaderReflectionType::BaseClass::get()
-	{
-		ID3D11ShaderReflectionType* type = m_Pointer->GetBaseClass();
-		if( type == 0 )
-			return nullptr;
-		return gcnew ShaderReflectionType( type );
-	}
-
-	ShaderReflectionType^ ShaderReflectionType::SubType::get()
-	{
-		ID3D11ShaderReflectionType* type = m_Pointer->GetSubType();
-		if( type == 0 )
-			return nullptr;
-		return gcnew ShaderReflectionType( type );
-	}
-
-	ShaderReflectionType^ ShaderReflectionType::GetInterfaceByIndex( int index )
+	ShaderReflectionType^ ShaderReflectionType::GetInterface( int index )
 	{
 		ID3D11ShaderReflectionType* type = m_Pointer->GetInterfaceByIndex( index );
 		if( type == 0 )
@@ -83,21 +81,24 @@ namespace Direct3D11
 		return gcnew ShaderReflectionType( type );
 	}
 
-	ShaderReflectionType^ ShaderReflectionType::GetMemberTypeByIndex( int index )
+	ShaderReflectionType^ ShaderReflectionType::GetMemberType( int index )
 	{
 		ID3D11ShaderReflectionType* type = m_Pointer->GetMemberTypeByIndex( index );
 		if( type == 0 )
 			return nullptr;
+
 		return gcnew ShaderReflectionType( type );
 	}
 
-	ShaderReflectionType^ ShaderReflectionType::GetMemberTypeByName( System::String^ name )
+	ShaderReflectionType^ ShaderReflectionType::GetMemberType( System::String^ name )
 	{
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
-		pin_ptr<unsigned char> pinnedName = &nameBytes[ 0 ];
+		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+
 		ID3D11ShaderReflectionType* type = m_Pointer->GetMemberTypeByName( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( type == 0 )
 			return nullptr;
+
 		return gcnew ShaderReflectionType( type );
 	}
 
@@ -106,10 +107,11 @@ namespace Direct3D11
 		LPCSTR result = m_Pointer->GetMemberTypeName( index );
 		if ( result == 0 )
 			return nullptr;
+
 		return gcnew String(result);
 	}
 
-	bool ShaderReflectionType::ImpelmentsInterface( ShaderReflectionType^ base )
+	bool ShaderReflectionType::ImplementsInterface( ShaderReflectionType^ base )
 	{
 		return m_Pointer->ImplementsInterface( base->m_Pointer ) != S_FALSE;
 	}
@@ -117,6 +119,11 @@ namespace Direct3D11
 	bool ShaderReflectionType::IsOfType( ShaderReflectionType^ type )
 	{
 		return m_Pointer->IsOfType( type->m_Pointer ) != S_FALSE;
+	}
+
+	bool ShaderReflectionType::IsEqual( ShaderReflectionType^ type )
+	{
+		return m_Pointer->IsEqual( type->m_Pointer ) != S_FALSE;
 	}
 }
 }

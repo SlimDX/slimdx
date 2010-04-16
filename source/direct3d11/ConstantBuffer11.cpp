@@ -53,28 +53,30 @@ namespace Direct3D11
 	ConstantBufferDescription ConstantBuffer::Description::get()
 	{
 		D3D11_SHADER_BUFFER_DESC nativeDescription;
-		RECORD_D3D11( m_Pointer->GetDesc( &nativeDescription ) );
-		if( Result::Last.IsSuccess )
-			return ConstantBufferDescription( nativeDescription );
-		
-		throw gcnew Direct3D11Exception( Result::Last );
+		HRESULT hr = m_Pointer->GetDesc( &nativeDescription );
+		RECORD_D3D11( hr );
+
+		return ConstantBufferDescription( nativeDescription );
 	}
 
-	ShaderReflectionVariable^ ConstantBuffer::GetVariableByIndex( int index )
+	ShaderReflectionVariable^ ConstantBuffer::GetVariable( int index )
 	{
 		ID3D11ShaderReflectionVariable* variable = m_Pointer->GetVariableByIndex( index );
 		if( variable == 0 )
 			return nullptr;
+
 		return gcnew ShaderReflectionVariable( variable );
 	}
 	
-	ShaderReflectionVariable^ ConstantBuffer::GetVariableByName( String^ name )
+	ShaderReflectionVariable^ ConstantBuffer::GetVariable( String^ name )
 	{
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
-		pin_ptr<unsigned char> pinnedName = &nameBytes[ 0 ];
+		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+
 		ID3D11ShaderReflectionVariable* variable = m_Pointer->GetVariableByName( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( variable == 0 )
 			return nullptr;
+
 		return gcnew ShaderReflectionVariable( variable );
 	}
 }

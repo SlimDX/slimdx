@@ -53,11 +53,10 @@ namespace Direct3D11
 	ShaderVariableDescription ShaderReflectionVariable::Description::get()
 	{
 		D3D11_SHADER_VARIABLE_DESC nativeDescription;
-		RECORD_D3D11( m_Pointer->GetDesc( &nativeDescription ) );
-		if( Result::Last.IsSuccess )
-			return ShaderVariableDescription( nativeDescription );
-		
-		throw gcnew Direct3D11Exception( Result::Last );
+		HRESULT hr = m_Pointer->GetDesc( &nativeDescription );
+		RECORD_D3D11( hr );
+
+		return ShaderVariableDescription( nativeDescription );
 	}
 
 	int ShaderReflectionVariable::GetInterfaceSlot( int arrayIndex )
@@ -70,6 +69,7 @@ namespace Direct3D11
 		ID3D11ShaderReflectionType* type = m_Pointer->GetType();
 		if( type == 0 )
 			return nullptr;
+
 		return gcnew ShaderReflectionType( type );
 	}
 }
