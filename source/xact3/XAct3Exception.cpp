@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,40 +21,37 @@
 * THE SOFTWARE.
 */
 
-#define XAUDIO2_HELPER_FUNCTIONS
+#include "XACT3Exception.h"
 
-#include <InitGuid.h>		// include these two headers in this order or die a horrible firey GUID related death
-#include <CGuid.h>
+using namespace System;
+using namespace System::Runtime::Serialization;
 
-#include <windows.h>
-#include <vcclr.h>
-#include <unknwn.h>
+namespace SlimDX
+{
+namespace XACT3
+{
+	XACT3Exception::XACT3Exception( SerializationInfo^ info, StreamingContext context )
+	: SlimDXException( info, context )
+	{
+	}
 
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <dxgi.h>
-#include <d3d10_1.h>
-#include <d3d10.h>
-#include <d3dx10.h>
-#include <d3d11.h>
-#include <d3d11shader.h>
-#include <d3dx11.h>
-#include <d3dcsx.h>
-#include <d2d1.h>
-#include <d2d1helper.h>
-#include <dwrite.h>
-#include <dsound.h>
-#include <dinput.h>
-#include <xinput.h>
-#include <xaudio2.h>
-#include <x3daudio.h>
-#include <audiodefs.h>
-#include <xapo.h>
-#include <xapobase.h>
-#include <xact3.h>
+	XACT3Exception::XACT3Exception()
+	{
+	}
 
-#include <d3dcompiler.h>
+	XACT3Exception::XACT3Exception( String^ message )
+	: SlimDXException( message )
+	{
+	}
 
-#include <memory>
-#include <stdexcept>
-#include <cmath>
+	XACT3Exception::XACT3Exception( String^ message, Exception^ innerException )
+	: SlimDXException( message, innerException )
+	{
+	}
+
+	XACT3Exception::XACT3Exception( Result result )
+	: SlimDXException( result )
+	{
+	}
+}
+}

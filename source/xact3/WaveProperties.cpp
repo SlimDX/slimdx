@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,40 +21,21 @@
 * THE SOFTWARE.
 */
 
-#define XAUDIO2_HELPER_FUNCTIONS
-
-#include <InitGuid.h>		// include these two headers in this order or die a horrible firey GUID related death
-#include <CGuid.h>
-
-#include <windows.h>
-#include <vcclr.h>
-#include <unknwn.h>
-
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <dxgi.h>
-#include <d3d10_1.h>
-#include <d3d10.h>
-#include <d3dx10.h>
-#include <d3d11.h>
-#include <d3d11shader.h>
-#include <d3dx11.h>
-#include <d3dcsx.h>
-#include <d2d1.h>
-#include <d2d1helper.h>
-#include <dwrite.h>
-#include <dsound.h>
-#include <dinput.h>
-#include <xinput.h>
-#include <xaudio2.h>
-#include <x3daudio.h>
-#include <audiodefs.h>
-#include <xapo.h>
-#include <xapobase.h>
 #include <xact3.h>
 
-#include <d3dcompiler.h>
+#include "WaveProperties.h"
 
-#include <memory>
-#include <stdexcept>
-#include <cmath>
+namespace SlimDX
+{
+namespace XACT3
+{
+	WaveProperties::WaveProperties(const XACT_WAVE_PROPERTIES& waveProperties)
+	{
+		name = gcnew String(waveProperties.friendlyName);
+		format = gcnew WaveBankMiniWaveFormat(waveProperties.format);
+		durationInSamples = waveProperties.durationInSamples;
+		loopRegion = gcnew WaveBankSampleRegion(waveProperties.loopRegion);
+		isStreaming = waveProperties.streaming == TRUE;
+	}
+}
+}

@@ -19,41 +19,43 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#pragma once
 
-#define XAUDIO2_HELPER_FUNCTIONS
+using namespace System;
 
-#include <InitGuid.h>		// include these two headers in this order or die a horrible firey GUID related death
-#include <CGuid.h>
+namespace SlimDX
+{
+	namespace XACT3
+	{
+		/// <summary>
+		/// The sample region information for an XACT wave bank.
+		/// </summary>
+		/// <unmanaged>WAVEBANKSAMPLEREGION</unmanaged>
+		public ref class WaveBankSampleRegion
+		{
+		private:
+			long startSample;
+			long totalSamples;
 
-#include <windows.h>
-#include <vcclr.h>
-#include <unknwn.h>
+		internal:
+			WaveBankSampleRegion(const WAVEBANKSAMPLEREGION& sampleRegion)
+			{
+				startSample = sampleRegion.dwStartSample;
+				totalSamples = sampleRegion.dwTotalSamples;
+			}
 
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <dxgi.h>
-#include <d3d10_1.h>
-#include <d3d10.h>
-#include <d3dx10.h>
-#include <d3d11.h>
-#include <d3d11shader.h>
-#include <d3dx11.h>
-#include <d3dcsx.h>
-#include <d2d1.h>
-#include <d2d1helper.h>
-#include <dwrite.h>
-#include <dsound.h>
-#include <dinput.h>
-#include <xinput.h>
-#include <xaudio2.h>
-#include <x3daudio.h>
-#include <audiodefs.h>
-#include <xapo.h>
-#include <xapobase.h>
-#include <xact3.h>
+		public:
+			/// <summary>
+			/// Get the start sample of the region.
+			/// </summary>
+			/// <unmanaged>WAVEBANKSAMPLEREGION::dwStartSample</unmanaged>
+			property long StartSample { long get() { return startSample; } }
 
-#include <d3dcompiler.h>
-
-#include <memory>
-#include <stdexcept>
-#include <cmath>
+			/// <summary>
+			/// Get the sample count of the region.
+			/// </summary>
+			/// <unmanaged>WAVEBANKSAMPLEREGION::dwTotalSamples</unmanaged>
+			property long TotalSamples { long get() { return totalSamples; } }
+		};
+	}
+}
