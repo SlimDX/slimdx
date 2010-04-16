@@ -66,7 +66,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib d3d10_1.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib d3dcompiler.lib d3d11.lib d3dx11.lib d2d1.lib dwrite.lib d3dcsx.lib D3DX11Effects.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib d3d10_1.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib d3dcompiler.lib d3d11.lib d3dx11.lib d2d1.lib dwrite.lib d3dcsx.lib D3DX11Effects.lib advapi32.lib $(NOINHERIT)"
 				Version="0.0.0.0"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(ProjectDir)..\external\Effects11\x86\$(ConfigurationName)\&quot;;&quot;$(DXSDK_DIR)Lib\x86&quot;"
@@ -153,7 +153,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib d3d10_1.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib d3dcompiler.lib d3d11.lib d3dx11.lib d2d1.lib dwrite.lib d3dcsx.lib D3DX11Effects.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib d3d10_1.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib d3dcompiler.lib d3d11.lib d3dx11.lib d2d1.lib dwrite.lib d3dcsx.lib D3DX11Effects.lib advapi32.lib $(NOINHERIT)"
 				Version="0.0.0.0"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(ProjectDir)..\external\Effects11\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;$(DXSDK_DIR)Lib\x64&quot;"
@@ -244,7 +244,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib d3d10_1.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib d3dcompiler.lib d3d11.lib d3dx11.lib d2d1.lib dwrite.lib d3dcsx.lib D3DX11Effects.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib d3d10_1.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib d3dcompiler.lib d3d11.lib d3dx11.lib d2d1.lib dwrite.lib d3dcsx.lib D3DX11Effects.lib advapi32.lib $(NOINHERIT)"
 				Version="0.0.0.0"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(ProjectDir)..\external\Effects11\x86\$(ConfigurationName)\&quot;;&quot;$(DXSDK_DIR)Lib\x86&quot;"
@@ -331,7 +331,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib d3d10_1.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib d3dcompiler.lib d3d11.lib d3dx11.lib d2d1.lib dwrite.lib d3dcsx.lib D3DX11Effects.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib d3d10_1.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib d3dcompiler.lib d3d11.lib d3dx11.lib d2d1.lib dwrite.lib d3dcsx.lib D3DX11Effects.lib advapi32.lib $(NOINHERIT)"
 				Version="0.0.0.0"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(ProjectDir)..\external\Effects11\$(PlatformName)\$(ConfigurationName)\&quot;;&quot;$(DXSDK_DIR)Lib\x64&quot;"
@@ -416,7 +416,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib d3d10_1.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib d3dcompiler.lib d3d11.lib d3dx11.lib d2d1.lib dwrite.lib d3dcsx.lib D3DX11Effects.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib d3d10_1.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib d3dcompiler.lib d3d11.lib d3dx11.lib d2d1.lib dwrite.lib d3dcsx.lib D3DX11Effects.lib advapi32.lib $(NOINHERIT)"
 				Version="2.0.9.42"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(ProjectDir)..\external\Effects11\x86\Release\&quot;;&quot;$(DXSDK_DIR)Lib\x86&quot;"
@@ -505,7 +505,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib d3d10_1.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib d3dcompiler.lib d3d11.lib d3dx11.lib d2d1.lib dwrite.lib d3dcsx.lib D3DX11Effects.lib $(NOINHERIT)"
+				AdditionalDependencies="user32.lib gdi32.lib dxguid.lib d3d9.lib d3dx9.lib dxgi.lib d3d10.lib d3dx10.lib d3d10_1.lib dinput8.lib xinput.lib dxerr.lib ole32.lib x3daudio.lib xapobase.lib winmm.lib dsound.lib d3dcompiler.lib d3d11.lib d3dx11.lib d2d1.lib dwrite.lib d3dcsx.lib D3DX11Effects.lib advapi32.lib $(NOINHERIT)"
 				Version="2.0.9.42"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(ProjectDir)..\external\Effects11\$(PlatformName)\Release\&quot;;&quot;$(DXSDK_DIR)Lib\x64&quot;"
@@ -6685,6 +6685,166 @@
 				</File>
 				<File
 					RelativePath="..\source\direct3d11\SegmentedScan.h"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="XACT3"
+			>
+			<File
+				RelativePath="..\source\xact3\Enums.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\xact3\XACT3Exception.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\xact3\XACT3Exception.h"
+				>
+			</File>
+			<Filter
+				Name="Engine"
+				>
+				<File
+					RelativePath="..\source\xact3\Engine.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\Engine.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\RendererDetails.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\RendererDetails.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\RuntimeParameters.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\RuntimeParameters.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Wave"
+				>
+				<File
+					RelativePath="..\source\xact3\Wave.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\Wave.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\WaveInstanceProperties.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\WaveProperties.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\WaveProperties.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="WaveBank"
+				>
+				<File
+					RelativePath="..\source\xact3\WaveBank.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\WaveBank.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\WaveBankMiniWaveFormat.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\WaveBankSampleRegion.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Cue"
+				>
+				<File
+					RelativePath="..\source\xact3\Cue.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\Cue.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\CueInstanceProperties.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\CueInstanceProperties.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\CueProperties.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\CueProperties.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\SoundProperties.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\SoundProperties.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\SoundVariationProperties.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\SoundVariationProperties.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\TrackProperties.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\TrackProperties.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\VariationProperties.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\VariationProperties.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="SoundBank"
+				>
+				<File
+					RelativePath="..\source\xact3\SoundBank.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\SoundBank.h"
 					>
 				</File>
 			</Filter>
