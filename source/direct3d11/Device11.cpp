@@ -82,9 +82,10 @@ namespace Direct3D11
 	{
 		IDXGIAdapter* nativeAdapter = adapter == nullptr ? 0 : adapter->InternalPointer;
 		ID3D11Device* device = 0;
+		ID3D11DeviceContext* context = NULL;
 
 		HRESULT hr = D3D11CreateDevice( nativeAdapter, static_cast<D3D_DRIVER_TYPE>( driverType ), NULL, static_cast<UINT>( flags ), 
-			featureLevels, count, D3D11_SDK_VERSION, &device, NULL, NULL );
+			featureLevels, count, D3D11_SDK_VERSION, &device, NULL, &context );
 
 		if( RECORD_D3D11( hr ).IsFailure )
 			throw gcnew Direct3D11Exception( Result::Last );
@@ -252,6 +253,7 @@ namespace Direct3D11
 	{
 		IDXGIAdapter* nativeAdapter = adapter == nullptr ? 0 : adapter->InternalPointer;
 		ID3D11Device* resultDevice = 0;
+		ID3D11DeviceContext* context = 0;
 		IDXGISwapChain* resultSwapChain = 0;
 		DXGI_SWAP_CHAIN_DESC nativeDescription = swapChainDescription.CreateNativeVersion();
 
@@ -268,7 +270,7 @@ namespace Direct3D11
 		
 		HRESULT hr = D3D11CreateDeviceAndSwapChain( nativeAdapter, static_cast<D3D_DRIVER_TYPE>( driverType ), 0, static_cast<UINT>( flags ), 
 			nativeLevels, count, D3D11_SDK_VERSION, 
-			&nativeDescription, &resultSwapChain, &resultDevice, NULL, NULL );
+			&nativeDescription, &resultSwapChain, &resultDevice, NULL, &context );
 
 		if( RECORD_D3D11( hr ).IsFailure )
 		{
