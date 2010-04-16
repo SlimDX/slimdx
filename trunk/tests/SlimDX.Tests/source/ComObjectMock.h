@@ -28,7 +28,7 @@ public:
 	ComObjectMock( IUnknown* unknown );
 	~ComObjectMock();
 
-	property IUnknown* UnknownPointer {
-		virtual IUnknown* get();
+	property System::IntPtr ComPointer {
+		virtual System::IntPtr get();
 	}
 };
