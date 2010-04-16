@@ -30,6 +30,6 @@ ComObjectMock::ComObjectMock( IUnknown* unknown )
 ComObjectMock::~ComObjectMock() {
 }
 
-IUnknown* ComObjectMock::UnknownPointer::get() {
-	return m_unknown;
+System::IntPtr ComObjectMock::ComPointer::get() {
+	return (System::IntPtr) m_unknown;
 }
