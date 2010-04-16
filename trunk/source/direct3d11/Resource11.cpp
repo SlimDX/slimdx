@@ -169,6 +169,18 @@ namespace Direct3D11
 		
 		return (static_cast< int >(size));
 	}
+
+	Result Resource::LoadTextureFromTexture(DeviceContext^ context, Resource^ source, Resource^ destination, TextureLoadInformation loadInformation)
+	{
+		HRESULT hr = D3DX11LoadTextureFromTexture(context->InternalPointer, source->InternalPointer, reinterpret_cast<D3DX11_TEXTURE_LOAD_INFO*>(&loadInformation), destination->InternalPointer);
+		return RECORD_D3D11(hr);
+	}
+
+	Result Resource::FilterTexture(DeviceContext^ context, Resource^ texture, int sourceLevel, FilterFlags mipFilter)
+	{
+		HRESULT hr = D3DX11FilterTexture(context->InternalPointer, texture->InternalPointer, sourceLevel, static_cast<UINT>(mipFilter));
+		return RECORD_D3D11(hr);
+	}
 	
 	ID3D11Resource* Resource::ConstructFromFile( SlimDX::Direct3D11::Device^ device, String^ fileName, D3DX11_IMAGE_LOAD_INFO* info )
 	{	

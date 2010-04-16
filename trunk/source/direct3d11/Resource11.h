@@ -21,9 +21,12 @@
 */
 #pragma once
 
+#include "DeviceContext11.h"
 #include "DeviceChild11.h"
 #include "Enums11.h"
 #include "../dxgi/SwapChainDxgi.h"
+
+#include "TextureLoadInformation11.h"
 
 namespace SlimDX
 {
@@ -87,6 +90,9 @@ namespace SlimDX
 			/// <param name="mipLevels">The total number of mip levels.</param>
 			/// <returns>The subresource index (equivalent to mipSlice + (arraySlice * mipLevels)).</returns>
 			static int CalculateSubresourceIndex( int mipSlice, int arraySlice, int mipLevels );
+
+			static Result LoadTextureFromTexture(DeviceContext^ context, Resource^ source, Resource^ destination, TextureLoadInformation loadInformation);
+			static Result FilterTexture(DeviceContext^ context, Resource^ texture, int sourceLevel, FilterFlags mipFilter);
 		};
 	}
 };

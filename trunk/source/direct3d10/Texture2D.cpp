@@ -225,5 +225,11 @@ namespace Direct3D10
 		blob->Release();
 		return Result::Last;
 	}
+
+	Result Texture2D::ComputeNormalMap(Texture2D^ source, Texture2D^ destination, NormalMapFlags flags, Channel channel, float amplitude)
+	{
+		HRESULT hr = D3DX10ComputeNormalMap(source->InternalPointer, static_cast<UINT>(flags), static_cast<UINT>(channel), amplitude, destination->InternalPointer);
+		return RECORD_D3D10(hr);
+	}
 }
 }

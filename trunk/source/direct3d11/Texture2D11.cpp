@@ -208,5 +208,11 @@ namespace Direct3D11
 		blob->Release();
 		return Result::Last;
 	}
+
+	Result Texture2D::ComputeNormalMap(DeviceContext^ context, Texture2D^ source, Texture2D^ destination, NormalMapFlags flags, Channel channel, float amplitude)
+	{
+		HRESULT hr = D3DX11ComputeNormalMap(context->InternalPointer, source->InternalPointer, static_cast<UINT>(flags), static_cast<UINT>(channel), amplitude, destination->InternalPointer);
+		return RECORD_D3D11(hr);
+	}
 }
 }

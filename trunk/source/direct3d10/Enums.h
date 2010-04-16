@@ -239,6 +239,39 @@ namespace SlimDX
 			/// </summary>
 			InverseSecondarySourceAlpha = D3D10_BLEND_INV_SRC1_ALPHA
 		};
+
+		/// <summary>
+		/// The following flags are used to specify which channels in a texture to operate on.
+		/// </summary>
+		/// <unmanaged>D3DX10_CHANNEL_FLAG</unmanaged>
+		[System::Flags]
+		public enum class Channel : System::Int32
+		{
+			/// <summary>
+			/// Indicates the red channel should be used.
+			/// </summary>
+			Red = D3DX10_CHANNEL_RED,
+
+			/// <summary>
+			/// Indicates the blue channel should be used.
+			/// </summary>
+			Blue = D3DX10_CHANNEL_BLUE,
+
+			/// <summary>
+			/// Indicates the green channel should be used.
+			/// </summary>
+			Green = D3DX10_CHANNEL_GREEN,
+
+			/// <summary>
+			/// Indicates the alpha channel should be used.
+			/// </summary>
+			Alpha = D3DX10_CHANNEL_ALPHA,
+
+			/// <summary>
+			/// Indicates the luminances of the red, green, and blue channels should be used.
+			/// </summary>
+			Luminance = D3DX10_CHANNEL_LUMINANCE
+		};
 		
 		/// <summary>Identifies mask values for writing to a render target.</summary>
 		/// <unmanaged>D3D10_COLOR_WRITE_ENABLE</unmanaged>
@@ -1635,6 +1668,40 @@ namespace SlimDX
 			/// Affects the vertex cache size. Using this flag specifies a default vertex cache size that works well on legacy hardware.
 			/// </summary>
 			DeviceIndependent = D3DX10_MESHOPT_DEVICE_INDEPENDENT,
+		};
+
+		/// <summary>
+		/// Normal maps generation constants.
+		/// </summary>
+		/// <unmanaged>D3DX10_NORMALMAP_FLAG</unmanaged>
+		[System::Flags]
+		public enum class NormalMapFlags : System::Int32
+		{
+			/// <summary>
+			/// Indicates that pixels off the edge of the texture on the u-axis should be mirrored, not wrapped.
+			/// </summary>
+			MirrorU = D3DX10_NORMALMAP_MIRROR_U,
+
+			/// <summary>
+			/// Indicates that pixels off the edge of the texture on the v-axis should be mirrored, not wrapped.
+			/// </summary>
+			MirrorV = D3DX10_NORMALMAP_MIRROR_V,
+
+			/// <summary>
+			/// Same as specifying the MirrorU and MirrorV flags.
+			/// </summary>
+			Mirror = D3DX10_NORMALMAP_MIRROR,
+
+			/// <summary>
+			/// Inverts the direction of each normal.
+			/// </summary>
+			InvertSign = D3DX10_NORMALMAP_INVERTSIGN,
+
+			/// <summary>
+			/// Computes the per-pixel occlusion term and encodes it into the alpha. An alpha of 1 means that the
+			/// pixel is not obscured in any way, and an alpha of 0 means that the pixel is completely obscured.
+			/// </summary>
+			ComputeOcclusion = D3DX10_NORMALMAP_COMPUTE_OCCLUSION
 		};
 		
 		/// <summary>Specifies how the pipeline should interpret vertex data bound to the input assembler stage.</summary>
