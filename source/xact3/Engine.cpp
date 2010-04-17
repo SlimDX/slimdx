@@ -21,12 +21,17 @@
 */
 #include "stdafx.h"
 
-#include "XACT3Exception.h"
+#include "../DataStream.h"
 
+#include "XACT3Exception.h"
+#include "SoundBank.h"
+#include "WaveBank.h"
 #include "Engine.h"
 
 using namespace System;
+using namespace System::IO;
 using namespace System::Runtime::InteropServices;
+using namespace Microsoft::Win32::SafeHandles;
 
 namespace SlimDX
 {
@@ -52,6 +57,53 @@ namespace XACT3
 			throw gcnew XACT3Exception(Result::Last);
 
 		Construct(pointer);
+	}
+
+	SoundBank^ Engine::CreateSoundBank( DataStream^ data )
+	{
+		IXACT3SoundBank *result;
+
+		HRESULT hr = InternalPointer->CreateSoundBank( data->RawPointer, static_cast<int>(data->Length), 0, 0, &result );
+		if (RECORD_XACT3(hr).IsFailure)
+			return nullptr;
+
+		return gcnew SoundBank( result );
+	}
+
+	WaveBank^ Engine::CreateWaveBank( DataStream^ data )
+	{
+		IXACT3WaveBank *result;
+
+		HRESULT hr = InternalPointer->CreateInMemoryWaveBank( data->RawPointer, static_cast<int>(data->Length), 0, 0, &result );
+		if (RECORD_XACT3(hr).IsFailure)
+			return nullptr;
+
+		return gcnew WaveBank( result );
+	}
+
+	WaveBank^ Engine::CreateStreamingWaveBank(String^ fileName, int offset, int packetSize)
+	{
+		IXACT3WaveBank *result;
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(fileName);
+		HANDLE file = CreateFile(reinterpret_cast<LPCWSTR>(pinnedName), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING,
+			FILE_ATTRIBUTE_NORMAL | FILE_FLAG_NO_BUFFERING | FILE_FLAG_OVERLAPPED | FILE_FLAG_SEQUENTIAL_SCAN, NULL);
+
+		if (file == NULL || file == INVALID_HANDLE_VALUE)
+			throw gcnew System::IO::FileNotFoundException("Could not open the specified file.", fileName);
+
+		SafeFileHandle^ handle = gcnew SafeFileHandle(IntPtr(file), true);
+
+		XACT_STREAMING_PARAMETERS params;
+		params.file = file;
+		params.offset = offset;
+		params.flags = 0;
+		params.packetSize = packetSize;
+
+		HRESULT hr = InternalPointer->CreateStreamingWaveBank(&params, &result);
+		if (RECORD_XACT3(hr).IsFailure)
+			return nullptr;
+
+		return gcnew WaveBank( result, handle );
 	}
 
 	Result Engine::DoWork()

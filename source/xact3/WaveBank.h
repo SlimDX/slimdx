@@ -21,7 +21,6 @@
 */
 #pragma once
 
-#include "Engine.h"
 #include "Enums.h"
 #include "WaveProperties.h"
 #include "Wave.h"
@@ -38,6 +37,11 @@ namespace SlimDX
 		{
 		private:
 			IXACT3WaveBank* InternalPointer;
+			Microsoft::Win32::SafeHandles::SafeFileHandle^ handle;
+
+		internal:
+			WaveBank( IXACT3WaveBank *pointer );
+			WaveBank( IXACT3WaveBank *pointer, Microsoft::Win32::SafeHandles::SafeFileHandle^ handle );
 
 		public:
 			Result Destroy();
