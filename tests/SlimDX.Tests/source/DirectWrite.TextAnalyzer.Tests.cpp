@@ -35,7 +35,7 @@ public:
 	MOCK_IUNKNOWN;
 
 	MOCK_METHOD4_WITH_CALLTYPE(STDMETHODCALLTYPE, AnalyzeScript, HRESULT(IDWriteTextAnalysisSource*, UINT32, UINT32, IDWriteTextAnalysisSink*));
-	STDMETHOD(AnalyzeBidi)(IDWriteTextAnalysisSource* analysisSource, UINT32 textPosition, UINT32 textLength, IDWriteTextAnalysisSink* analysisSink) { return E_NOTIMPL; }
+	MOCK_METHOD4_WITH_CALLTYPE(STDMETHODCALLTYPE, AnalyzeBidi, HRESULT(IDWriteTextAnalysisSource*, UINT32, UINT32, IDWriteTextAnalysisSink*));
 	STDMETHOD(AnalyzeNumberSubstitution)(IDWriteTextAnalysisSource* analysisSource, UINT32 textPosition, UINT32 textLength, IDWriteTextAnalysisSink* analysisSink) { return E_NOTIMPL; }
 	STDMETHOD(AnalyzeLineBreakpoints)(IDWriteTextAnalysisSource* analysisSource, UINT32 textPosition, UINT32 textLength, IDWriteTextAnalysisSink* analysisSink) { return E_NOTIMPL; }
 	STDMETHOD(GetGlyphs)(WCHAR const* textString, UINT32 textLength, IDWriteFontFace* fontFace, BOOL isSideways, BOOL isRightToLeft,
@@ -129,6 +129,23 @@ ANALYZER_TEST(AnalyzeScript)
 	TextAnalysisSource ^source = TextAnalysisSource::FromPointer(&fakeSource);
 	TextAnalysisSink ^sink = TextAnalysisSink::FromPointer(&fakeSink);
 	Result result = analyzer.Analyzer->AnalyzeScript(source, 0, 10, sink);
+	AssertLastResultSucceeded();
+	ASSERT_TRUE(result.IsSuccess);
+	delete sink;
+	delete source;
+}
+
+ANALYZER_TEST(AnalyzeBidi)
+{
+	MockedTextAnalyzer analyzer;
+	IDWriteTextAnalysisSourceFake fakeSource;
+	IDWriteTextAnalysisSinkFake fakeSink;
+	EXPECT_CALL(analyzer.Mock, AnalyzeBidi(&fakeSource, 0U, 10U, &fakeSink))
+		.Times(1)
+		.WillOnce(Return(S_OK));
+	TextAnalysisSource ^source = TextAnalysisSource::FromPointer(&fakeSource);
+	TextAnalysisSink ^sink = TextAnalysisSink::FromPointer(&fakeSink);
+	Result result = analyzer.Analyzer->AnalyzeBidi(source, 0, 10, sink);
 	AssertLastResultSucceeded();
 	ASSERT_TRUE(result.IsSuccess);
 	delete sink;

@@ -54,7 +54,6 @@ namespace SlimDX
 			/// </returns>
 			Result AnalyzeScript(TextAnalysisSource ^analysisSource, int textPosition, int textLength, TextAnalysisSink ^analysisSink);
 
-#if 0
 			/// <summary>
 			/// Analyzes a text range for script directionality, reading attributes
 			/// from the source and reporting levels to the sink callback SetBidiLevel.
@@ -77,6 +76,7 @@ namespace SlimDX
 			/// </remarks>
 			Result AnalyzeBidi(TextAnalysisSource ^analysisSource, int textPosition, int textLength, TextAnalysisSink ^analysisSink);
 
+#if 0
 			/// <summary>
 			/// Analyzes a text range for spans where number substitution is applicable,
 			/// reading attributes from the source and reporting substitutable ranges
