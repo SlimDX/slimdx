@@ -81,7 +81,7 @@ namespace HelloWorld
 			};
 
 			InitializeDevice(settings);
-			_mainForm.SimpleTextRenderPanel.InitializeDevice(settings);
+			_mainForm.SimpleTextRenderPanel.InitializeDevice();
 			_writeFactory = new SlimDX.DirectWrite.Factory(SlimDX.DirectWrite.FactoryType.Shared);
 			_textFormat = _writeFactory.CreateTextFormat("Gabriola", FontWeight.Regular, FontStyle.Normal, FontStretch.Normal, 72.0f, "en-us");
 			_textFormat.TextAlignment = TextAlignment.Center;
@@ -102,7 +102,7 @@ namespace HelloWorld
 		{
 			RenderTarget.BeginDraw();
 			RenderTarget.Transform = Matrix3x2.Identity;
-			RenderTarget.Clear(new Color4(0.3f, 0.3f, 0.3f));
+			RenderTarget.Clear(new Color4(1.0f, 1.0f, 1.0f));
 		}
 
 		/// <summary>
