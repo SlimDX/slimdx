@@ -14,11 +14,20 @@ Direct3D 9
 Direct3D 10
 	* Dropped stream size checks in texture ToStream functions.
 	* Added a constructor to InputLayout to take shader bytecode.
+	* Added Texture2D.ComputeNormalMap.
+	* Added ShaderResourceView.FromMemory and ShaderResourceView.FromStream.
+	* Added Resource.LoadTextureFromTexture and Resource.FilterTexture.
 	
 Direct3D 11
 	* Dropped stream size checks in texture ToStream functions.
 	* Added a constructor to InputLayout to take shader bytecode.
 	* Added shader reflection API.
+	* Added Texture2D.ComputeNormalMap.
+	* Added ShaderResourceView.FromFile, ShaderResourceView.FromMemory and ShaderResourceView.FromStream.
+	* Added Resource.LoadTextureFromTexture and Resource.FilterTexture.
+	
+DXGI
+	* Added missing member to Usage enumeration.
 
 DirectWrite
 	* Added a bunch of missing functionality.
@@ -28,6 +37,9 @@ RawInput
 	
 XAPO
 	* Finished implementing the subsystem.
+	
+XACT3
+	* Added the subsystem.
 	
 XAudio2
 	* Fixed an issue in WaveStream that caused popping noises when loading data from an existing stream.

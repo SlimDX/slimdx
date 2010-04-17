@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,35 +19,72 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#include <xact3.h>
-
-#include "Xact3Exception.h"
+#include "XACT3Exception.h"
 #include "Wave.h"
 
 namespace SlimDX
 {
 namespace XACT3
 {
-	void Wave::Play()
+	Wave::Wave(IXACT3Wave *wave)
 	{
-		HRESULT hr = InternalPointer->Play();
-		if (RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
+		InternalPointer = wave;
 	}
 
-	void Wave::Stop(StopFlags flags)
+	Result Wave::Destroy()
 	{
-		HRESULT hr = InternalPointer->Stop((DWORD)flags);
-		if (RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
+		HRESULT hr = InternalPointer->Destroy();
+		return RECORD_XACT3(hr);
 	}
 
-	void Wave::Pause(bool pause)
+	Result Wave::Pause(bool pause)
 	{
 		HRESULT hr = InternalPointer->Pause(pause);
-		if (RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
+		return RECORD_XACT3(hr);
+	}
+
+	Result Wave::Play()
+	{
+		HRESULT hr = InternalPointer->Play();
+		return RECORD_XACT3(hr);
+	}
+
+	Result Wave::SetMatrixCoefficients(int srcChannelCount, int dstChannelCount, array<float>^ matrixCoefficients)
+	{
+		pin_ptr<float> pinnedMatrix = &matrixCoefficients[0];
+
+		HRESULT hr = InternalPointer->SetMatrixCoefficients(srcChannelCount, dstChannelCount, pinnedMatrix);
+		return RECORD_XACT3(hr);
+	}
+
+	Result Wave::SetPitch(int pitch)
+	{
+		HRESULT hr = InternalPointer->SetPitch(static_cast<XACTPITCH>(pitch));
+		return RECORD_XACT3(hr);
+	}
+
+	Result Wave::SetVolume(float volume)
+	{
+		HRESULT hr = InternalPointer->SetVolume(volume);
+		return RECORD_XACT3(hr);
+	}
+
+	Result Wave::Stop(StopFlags flags)
+	{
+		HRESULT hr = InternalPointer->Stop((DWORD)flags);
+		return RECORD_XACT3(hr);
+	}
+
+	WaveInstanceProperties Wave::Properties::get()
+	{
+		XACT_WAVE_INSTANCE_PROPERTIES result;
+
+		HRESULT hr = InternalPointer->GetProperties(&result);
+		RECORD_XACT3(hr);
+
+		return WaveInstanceProperties(result);
 	}
 
 	WaveState Wave::State::get()
@@ -56,44 +92,9 @@ namespace XACT3
 		DWORD result;
 
 		HRESULT hr = InternalPointer->GetState(&result);
-		if (RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
+		RECORD_XACT3(hr);
 
-		return (WaveState)result;
-	}
-
-	void Wave::SetPitch(short pitch)
-	{
-		HRESULT hr = InternalPointer->SetPitch(pitch);
-		if (RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
-	}
-
-	void Wave::SetVolume(float volume)
-	{
-		HRESULT hr = InternalPointer->SetVolume(volume);
-		if (RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
-	}
-
-	void Wave::SetMatrixCoefficients(int srcChannelCount, int dstChannelCount, array<float>^ matrixCoefficients)
-	{
-		pin_ptr<float> pinnedMatrix = &matrixCoefficients[0];
-
-		HRESULT hr = InternalPointer->SetMatrixCoefficients(srcChannelCount, dstChannelCount, pinnedMatrix);
-		if (RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
-	}
-
-	WaveInstanceProperties^ Wave::Properties::get()
-	{
-		XACT_WAVE_INSTANCE_PROPERTIES result;
-
-		HRESULT hr = InternalPointer->GetProperties(&result);
-		if (RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
-
-		return gcnew WaveInstanceProperties(result);
+		return static_cast<WaveState>(result);
 	}
 }
 }

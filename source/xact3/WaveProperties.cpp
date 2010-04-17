@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,10 +19,11 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <xact3.h>
+#include "stdafx.h"
 
 #include "WaveProperties.h"
+
+using namespace System;
 
 namespace SlimDX
 {
@@ -32,9 +32,9 @@ namespace XACT3
 	WaveProperties::WaveProperties(const XACT_WAVE_PROPERTIES& waveProperties)
 	{
 		name = gcnew String(waveProperties.friendlyName);
-		format = gcnew WaveBankMiniWaveFormat(waveProperties.format);
+		format = WaveBankMiniWaveFormat(waveProperties.format);
 		durationInSamples = waveProperties.durationInSamples;
-		loopRegion = gcnew WaveBankSampleRegion(waveProperties.loopRegion);
+		loopRegion = WaveBankSampleRegion(waveProperties.loopRegion);
 		isStreaming = waveProperties.streaming == TRUE;
 	}
 }

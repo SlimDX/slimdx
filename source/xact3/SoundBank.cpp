@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,8 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <xact3.h>
+#include "stdafx.h"
 
 #include "XACT3Exception.h"
 
@@ -29,23 +27,72 @@
 #include "Cue.h"
 
 using namespace System;
-using namespace System::IO;
 
 namespace SlimDX
 {
 namespace XACT3
 {
+	Result SoundBank::Destroy()
+	{
+		HRESULT hr = InternalPointer->Destroy();
+		return RECORD_XACT3(hr);
+	}
+
 	int SoundBank::GetCueIndex(String^ friendlyName)
 	{
-		XACTINDEX result;
-
 		array<unsigned char>^ friendlyNameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes(friendlyName);
 		pin_ptr<unsigned char> pinnedFriendlyName = &friendlyNameBytes[0];
-		result = InternalPointer->GetCueIndex(reinterpret_cast<PCSTR>(pinnedFriendlyName));
 
-		// Could throw an exception here, I guess.
-
+		XACTINDEX result = InternalPointer->GetCueIndex(reinterpret_cast<PCSTR>(pinnedFriendlyName));
 		return result == XACTINDEX_INVALID ? -1 : result;
+	}
+
+	CueProperties SoundBank::GetCueProperties(int cueIndex)
+	{
+		XACT_CUE_PROPERTIES result;
+
+		HRESULT hr = InternalPointer->GetCueProperties(static_cast<XACTINDEX>(cueIndex), &result);
+		RECORD_XACT3(hr);
+
+		return CueProperties(result);
+	}
+
+	Cue^ SoundBank::Prepare(int cueIndex, int timeOffset)
+	{
+		IXACT3Cue *cue;
+
+		HRESULT hr = InternalPointer->Prepare(static_cast<XACTINDEX>(cueIndex), 0, timeOffset, &cue);
+		if (RECORD_XACT3(hr).IsFailure)
+			return nullptr;
+
+		return gcnew Cue(cue);
+	}
+
+	Cue^ SoundBank::Play(int cueIndex, int timeOffset)
+	{
+		IXACT3Cue *cue = 0;
+
+		HRESULT hr = InternalPointer->Play(static_cast<XACTINDEX>(cueIndex), 0, timeOffset, &cue);
+		if (RECORD_XACT3(hr).IsFailure)
+			return nullptr;
+
+		return gcnew Cue(cue);
+	}
+
+	Result SoundBank::Stop(int cueIndex, StopFlags flags)
+	{
+		HRESULT hr = InternalPointer->Stop(static_cast<XACTINDEX>(cueIndex), static_cast<DWORD>(flags));
+		return RECORD_XACT3(hr);
+	}
+
+	SoundBankState SoundBank::State::get()
+	{
+		DWORD result;
+
+		HRESULT hr = InternalPointer->GetState(&result);
+		RECORD_XACT3(hr);
+
+		return static_cast<SoundBankState>(result);
 	}
 
 	int SoundBank::CueCount::get()
@@ -53,60 +100,9 @@ namespace XACT3
 		XACTINDEX result;
 
 		HRESULT hr = InternalPointer->GetNumCues(&result);
-		if(RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
+		RECORD_XACT3(hr);
 
 		return result;
-	}
-
-	CueProperties^ SoundBank::GetCueProperties(int cueIndex)
-	{
-		XACT_CUE_PROPERTIES result;
-
-		HRESULT hr = InternalPointer->GetCueProperties((XACTINDEX)cueIndex, &result);
-		if(RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
-
-		return gcnew CueProperties(result);
-	}
-
-	Cue^ SoundBank::Prepare(int cueIndex, int timeOffset)
-	{
-		IXACT3Cue *cue;
-
-		HRESULT hr = InternalPointer->Prepare((XACTINDEX)cueIndex, 0, timeOffset, &cue);
-		if(RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
-
-		//return gcnew Cue(engine, cue);
-	}
-
-	Cue^ SoundBank::Play(int cueIndex, int timeOffset)
-	{
-		IXACT3Cue *cue = 0;
-
-		HRESULT hr = InternalPointer->Play((XACTINDEX)cueIndex, 0, timeOffset, &cue);
-		if(RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
-
-		//return gcnew Cue(engine, cue);
-	}
-
-	void SoundBank::Stop(int cueIndex, StopFlags flags)
-	{
-		HRESULT hr = InternalPointer->Stop((XACTINDEX)cueIndex, (DWORD)flags);
-		if(RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
-	}
-
-	SoundBankState SoundBank::State::get()
-	{
-		DWORD result;
-		HRESULT hr = InternalPointer->GetState(&result);
-		if(RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
-
-		return static_cast<SoundBankState>(result);
 	}
 }
 }

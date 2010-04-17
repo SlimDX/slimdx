@@ -21,8 +21,6 @@
 */
 #pragma once
 
-using namespace System;
-
 namespace SlimDX
 {
 	namespace XACT3
@@ -31,31 +29,31 @@ namespace SlimDX
 		/// The sample region information for an XACT wave bank.
 		/// </summary>
 		/// <unmanaged>WAVEBANKSAMPLEREGION</unmanaged>
-		public ref class WaveBankSampleRegion
+		public value class WaveBankSampleRegion
 		{
 		private:
-			long startSample;
-			long totalSamples;
+			int startSample;
+			int totalSamples;
 
 		internal:
-			WaveBankSampleRegion(const WAVEBANKSAMPLEREGION& sampleRegion)
-			{
-				startSample = sampleRegion.dwStartSample;
-				totalSamples = sampleRegion.dwTotalSamples;
-			}
+			WaveBankSampleRegion(const WAVEBANKSAMPLEREGION& sampleRegion);
 
 		public:
 			/// <summary>
 			/// Get the start sample of the region.
 			/// </summary>
-			/// <unmanaged>WAVEBANKSAMPLEREGION::dwStartSample</unmanaged>
-			property long StartSample { long get() { return startSample; } }
+			property int StartSample
+			{
+				int get() { return startSample; }
+			}
 
 			/// <summary>
 			/// Get the sample count of the region.
 			/// </summary>
-			/// <unmanaged>WAVEBANKSAMPLEREGION::dwTotalSamples</unmanaged>
-			property long TotalSamples { long get() { return totalSamples; } }
+			property int TotalSamples
+			{
+				int get() { return totalSamples; }
+			}
 		};
 	}
 }

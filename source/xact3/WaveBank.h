@@ -26,9 +26,6 @@
 #include "WaveProperties.h"
 #include "Wave.h"
 
-using namespace System;
-using namespace System::IO;
-
 namespace SlimDX
 {
 	namespace XACT3
@@ -43,14 +40,13 @@ namespace SlimDX
 			IXACT3WaveBank* InternalPointer;
 
 		public:
-			//Result Destroy();
+			Result Destroy();
 
 			/// <summary>
 			/// Get a wave index based on a <see cref="String"/> that represents the friendly name of the wave.
 			/// </summary>
 			/// <param name="friendlyName">A <see cref="String"/> that contains the friendly name of the wave.</param>
 			/// <returns>The index for the wave if it exists, otherwise -1.</returns>
-			/// <unmanaged>IXACT3WaveBank::GetWaveIndex</unmanaged>
 			int GetWaveIndex(String^ friendlyName);
 
 			/// <summary>
@@ -58,19 +54,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="waveIndex">The index of the wave to get the properties of.</param>
 			/// <returns>A <see cref="WaveProperties"/> object containing the properties of the wave.</returns>
-			/// <unmanaged>IXACT3WaveBank::GetWaveProperties</unmanaged>
-			WaveProperties^ GetWaveProperties(int waveIndex);
-
-			/// <summary>
-			/// Prepare a wave for playback.
-			/// </summary>
-			/// <param name="waveIndex">The index of the wave to prepare.</param>
-			/// <param name="flags"><see cref="ContentPreparationFlags"/> to indicate how the wave is to be prepared.</param>
-			/// <param name="playOffset">Play offset to use as the start of the wave. The offset can be described in milliseconds or in samples. The <paramref name="flags"/> argument determines the offset units.</param>
-			/// <param name="loopCount">The number of loops for playback.</param>
-			/// <returns>A <see cref="Wave"/> object containing the newly prepared wave.</returns>
-			/// <unmanaged>IXACT3WaveBank::Prepare</unmanaged>
-			Wave^ Prepare(int waveIndex, ContentPreparationFlags flags, int playOffset, int loopCount); 
+			WaveProperties GetWaveProperties(int waveIndex);
 
 			/// <summary>
 			/// Play a wave.
@@ -80,21 +64,28 @@ namespace SlimDX
 			/// <param name="playOffset">Play offset to use as the start of the wave. The offset can be described in milliseconds or in samples. The <paramref name="flags"/> argument determines the offset units.</param>
 			/// <param name="loopCount">The number of loops for playback.</param>
 			/// <returns>A <see cref="Wave"/> object containing the newly playing wave.</returns>
-			/// <unmanaged>IXACT3WaveBank::Play</unmanaged>
 			Wave^ Play(int waveIndex, ContentPreparationFlags flags, int playOffset, int loopCount);
+
+			/// <summary>
+			/// Prepare a wave for playback.
+			/// </summary>
+			/// <param name="waveIndex">The index of the wave to prepare.</param>
+			/// <param name="flags"><see cref="ContentPreparationFlags"/> to indicate how the wave is to be prepared.</param>
+			/// <param name="playOffset">Play offset to use as the start of the wave. The offset can be described in milliseconds or in samples. The <paramref name="flags"/> argument determines the offset units.</param>
+			/// <param name="loopCount">The number of loops for playback.</param>
+			/// <returns>A <see cref="Wave"/> object containing the newly prepared wave.</returns>
+			Wave^ Prepare(int waveIndex, ContentPreparationFlags flags, int playOffset, int loopCount); 
 
 			/// <summary>
 			/// Stop playback of a wave.
 			/// </summary>
 			/// <param name="waveIndex">The index of the wave to stop.</param>
 			/// <param name="flags"><see cref="StopFlags"/> that specify how the wave is stopped.</param>
-			/// <unmanaged>IXACT3WaveBank::Stop</unmanaged>
 			Result Stop(int waveIndex, StopFlags flags);
 
 			/// <summary>
 			/// Get a <see cref="WaveBankState"/> value representing the current state of the wave bank.
 			/// </summary>
-			/// <unmanaged>IXACT3WaveBank::GetState</unmanaged>
 			property WaveBankState State
 			{
 				WaveBankState get();
@@ -103,7 +94,6 @@ namespace SlimDX
 			/// <summary>
 			/// Get the number of wave entries in the wave bank.
 			/// </summary>
-			/// <unmanaged>IXACT3WaveBank::GetNumWaves</unmanaged>
 			property int WaveCount
 			{
 				int get();

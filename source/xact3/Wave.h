@@ -34,61 +34,58 @@ namespace SlimDX
 		private:
 			IXACT3Wave* InternalPointer;
 
-		public:
-			/// <summary>
-			/// Play the wave.
-			/// </summary>
-			/// <unmanaged>IXACT3Wave::Play</unmanaged>
-			void Play();
+		internal:
+			Wave(IXACT3Wave* wave);
 
-			/// <summary>
-			/// Stop the wave.
-			/// </summary>
-			/// <param name="flags"><see cref="StopFlags"/> that specify how the wave is stopped.</param>
-			/// <unmanaged>IXACT3Wave::Stop</unmanaged>
-			void Stop(StopFlags flags);
+		public:
+			Result Destroy();
 
 			/// <summary>
 			/// Pause playback of the wave.
 			/// </summary>
 			/// <param name="pause">The action to take. If true, playback is paused, if false, playback is resumed.</param>
-			/// <unmanaged>IXACT3Wave::Pause</unmanaged>
-			void Pause(bool pause);
+			Result Pause(bool pause);
 
 			/// <summary>
-			/// Get a <see cref="WaveState"/> value representing the current state of the wave.
+			/// Play the wave.
 			/// </summary>
-			/// <unmanaged>IXACT3Wave::GetState</unmanaged>
-			property WaveState State { WaveState get(); }
+			Result Play();
+
+			Result SetMatrixCoefficients(int sourceChannelCount, int destinationChannelCount, array<float>^ matrixCoefficients);
 
 			/// <summary>
 			/// Set the pitch of the wave.
 			/// </summary>
 			/// <param name="pitch">The value that is used to set the pitch for playback of this wave. This value may be between -1200 and 1200, which is approximately one semitone.</param>
-			/// <unmanaged>IXACT3Wave::SetPitch</unmanaged>
-			void SetPitch(short pitch);
+			Result SetPitch(int pitch);
 
 			/// <summary>
 			/// Set the volume of the wave.
 			/// </summary>
 			/// <param name="volume">The volume level to set.</param>
-			/// <unmanaged>IXACT3Wave::SetVolume</unmanaged>
-			void SetVolume(float volume);
+			Result SetVolume(float volume);
 
 			/// <summary>
-			/// Sets the volume level that each source channel of the wave should play in each of its destination channels.
+			/// Stop the wave.
 			/// </summary>
-			/// <param name="srcChannelCount">Number of source channels. This must equal the number of emitter channels.</param>
-			/// <param name="dstChannelCount">Number of destination channels. This must equal the number of final mix channels.</param>
-			/// <param name="matrixCoefficients">Matrix coefficient table. This is an array that represents the volume level of each source channel present in each destination channel. The source channels are the column index and the destination channels are the row index of the table. The table must have at least <paramref name="srcChannelCount"/> * <paramref name="dstChannelCount"/> elements.</param>
-			/// <unmanaged>IXACT3Wave::SetMatrixCoefficients</unmanaged>
-			void SetMatrixCoefficients(int srcChannelCount, int dstChannelCount, array<float>^ matrixCoefficients);
+			/// <param name="flags"><see cref="StopFlags"/> that specify how the wave is stopped.</param>
+			Result Stop(StopFlags flags);
 
 			/// <summary>
 			/// Gets a <see cref="WaveInstanceProperties"/> object that contains the properties of the wave instance.
 			/// </summary>
-			/// <unmanaged>IXACT3Wave::GetProperties</unmanaged>
-			property WaveInstanceProperties^ Properties { WaveInstanceProperties^ get(); }
+			property WaveInstanceProperties Properties
+			{
+				WaveInstanceProperties get();
+			}
+
+			/// <summary>
+			/// Get a <see cref="WaveState"/> value representing the current state of the wave.
+			/// </summary>
+			property WaveState State
+			{
+				WaveState get();
+			}
 		};
 	}
 }

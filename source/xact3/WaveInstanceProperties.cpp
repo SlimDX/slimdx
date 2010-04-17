@@ -19,44 +19,18 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include "stdafx.h"
 
-#include "VariationProperties.h"
-#include "SoundProperties.h"
+#include "WaveInstanceProperties.h"
 
 namespace SlimDX
 {
-	namespace XACT3
+namespace XACT3
+{
+	WaveInstanceProperties::WaveInstanceProperties(const XACT_WAVE_INSTANCE_PROPERTIES& data)
 	{
-		/// <summary>
-		/// The properties of the sound variation that is currently active in a cue instance.
-		/// </summary>
-		/// <unmanaged>XACT_SOUND_VARIATION_PROPERTIES</unmanaged>
-		public value class SoundVariationProperties
-		{
-		private:
-			VariationProperties variationProperties;
-			SoundProperties soundProperties;
-
-		internal:
-			SoundVariationProperties(const XACT_SOUND_VARIATION_PROPERTIES& data);
-
-		public:
-			/// <summary>
-			/// Gets the properties of the currently active variation.
-			/// </summary>
-			property SlimDX::XACT3::VariationProperties VariationProperties
-			{
-				SlimDX::XACT3::VariationProperties get() { return variationProperties; }
-			}
-
-			/// <summary>
-			/// Gets the properties of the sound that the active variation references.
-			/// </summary>
-			property SlimDX::XACT3::SoundProperties SoundProperties
-			{
-				SlimDX::XACT3::SoundProperties get() { return soundProperties; }
-			}
-		};
+		waveProperties = SlimDX::XACT3::WaveProperties(data.properties);
+		isBackgroundMusic = data.backgroundMusic == TRUE;
 	}
+}
 }

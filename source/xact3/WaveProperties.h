@@ -21,8 +21,6 @@
 */
 #pragma once
 
-using namespace System;
-
 #include "WaveBankMiniWaveFormat.h"
 #include "WaveBankSampleRegion.h"
 
@@ -37,10 +35,10 @@ namespace SlimDX
 		public value class WaveProperties
 		{
 		private:
-			String^ name;
-			WaveBankMiniWaveFormat^ format;
-			long durationInSamples;
-			WaveBankSampleRegion^ loopRegion;
+			System::String^ name;
+			WaveBankMiniWaveFormat format;
+			int durationInSamples;
+			WaveBankSampleRegion loopRegion;
 			bool isStreaming;
 
 		internal:
@@ -50,43 +48,38 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the friendly name of the wave.
 			/// </summary>
-			/// <unmanaged>XACT_WAVE_PROPERTIES::friendlyName</unmanaged>
-			property String^ FriendlyName
+			property System::String^ FriendlyName
 			{
-				String^ get() { return name; }
+				System::String^ get() { return name; }
 			}
 
 			/// <summary>
 			/// Gets the format of the wave.
 			/// </summary>
-			/// <unmanaged>XACT_WAVE_PROPERTIES::format</unmanaged>
-			property WaveBankMiniWaveFormat^ Format
+			property WaveBankMiniWaveFormat Format
 			{
-				WaveBankMiniWaveFormat^ get() { return format; }
+				WaveBankMiniWaveFormat get() { return format; }
 			}
 
 			/// <summary>
 			/// Gets the duration of the wave in samples.
 			/// </summary>
-			/// <unmanaged>XACT_WAVE_PROPERTIES::durationInSamples</unmanaged>
-			property long DurationInSamples
+			property int DurationInSamples
 			{
-				long get() { return durationInSamples; }
+				int get() { return durationInSamples; }
 			}
 
 			/// <summary>
 			/// Gets the loop region of the wave.
 			/// </summary>
-			/// <unmanaged>XACT_WAVE_PROPERTIES::loopRegion</unmanaged>
-			property WaveBankSampleRegion^ LoopRegion
+			property WaveBankSampleRegion LoopRegion
 			{
-				WaveBankSampleRegion^ get() { return loopRegion; }
+				WaveBankSampleRegion get() { return loopRegion; }
 			}
 
 			/// <summary>
 			/// Gets a value that is true if the wave is streaming, otherwise false.
 			/// </summary>
-			/// <unmanaged>XACT_WAVE_PROPERTIES::streaming</unmanaged>
 			property bool IsStreaming
 			{
 				bool get() { return isStreaming; }

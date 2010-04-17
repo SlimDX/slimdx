@@ -23,8 +23,6 @@
 
 #include "WaveProperties.h"
 
-using namespace System;
-
 namespace SlimDX
 {
 	namespace XACT3
@@ -33,31 +31,31 @@ namespace SlimDX
 		/// The properties of a specific wave instance.
 		/// </summary>
 		/// <unmanaged>XACT_WAVE_INSTANCE_PROPERTIES</unmanaged>
-		public ref class WaveInstanceProperties
+		public value class WaveInstanceProperties
 		{
 		private:
-			SlimDX::XACT3::WaveProperties^ waveProperties;
+			WaveProperties waveProperties;
 			bool isBackgroundMusic;
 
 		internal:
-			WaveInstanceProperties(const XACT_WAVE_INSTANCE_PROPERTIES& data)
-			{
-				waveProperties = gcnew SlimDX::XACT3::WaveProperties(data.properties);
-				isBackgroundMusic = data.backgroundMusic == TRUE;
-			}
+			WaveInstanceProperties(const XACT_WAVE_INSTANCE_PROPERTIES& data);
 
 		public:
 			/// <summary>
 			/// Gets the properties that are common to all wave instances.
 			/// </summary>
-			/// <unmanaged>XACT_WAVE_INSTANCE_PROPERTIES::properties</unmanaged>
-			property SlimDX::XACT3::WaveProperties^ WaveProperties { SlimDX::XACT3::WaveProperties^ get() { return waveProperties; } }
+			property SlimDX::XACT3::WaveProperties WaveProperties
+			{
+				SlimDX::XACT3::WaveProperties get() { return waveProperties; }
+			}
 
 			/// <summary>
 			/// Gets a value that is true if the wave is tagged as background music, otherwise false.
 			/// </summary>
-			/// <unmanaged>XACT_WAVE_INSTANCE_PROPERTIES::backgroundMusic</unmanaged>
-			property bool IsBackgroundMusic { bool get() { return isBackgroundMusic; } }
+			property bool IsBackgroundMusic
+			{
+				bool get() { return isBackgroundMusic; }
+			}
 		};
 	}
 }

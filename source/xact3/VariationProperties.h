@@ -21,8 +21,6 @@
 */
 #pragma once
 
-using namespace System;
-
 namespace SlimDX
 {
 	namespace XACT3
@@ -47,7 +45,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the index of the variation in the parent variation list.
 			/// </summary>
-			/// <unmanaged>XACT_VARIATION_PROPERTIES::index</unmanaged>
 			property int Index
 			{
 				int get() { return index; }
@@ -56,7 +53,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the weight that is assigned to the variation. For non-interactive variations only.
 			/// </summary>
-			/// <unmanaged>XACT_VARIATION_PROPERTIES::weight</unmanaged>
 			property int Weight
 			{
 				int get() { return weight; }
@@ -65,7 +61,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the lower bound of the interactive variable that controls the variation.
 			/// </summary>
-			/// <unmanaged>XACT_VARIATION_PROPERTIES::iaVariableMin</unmanaged>
 			property float VariableMin
 			{
 				float get() { return variableMin; }
@@ -74,7 +69,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the upper bound of the interactive variable that controls the variation.
 			/// </summary>
-			/// <unmanaged>XACT_VARIATION_PROPERTIES::iaVariableMax</unmanaged>
 			property float VariableMax
 			{
 				float get() { return variableMax; }
@@ -83,7 +77,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets a value that indicates if the variation should linger.
 			/// </summary>
-			/// <unmanaged>XACT_VARIATION_PROPERTIES::linger</unmanaged>
 			property bool ShouldLinger
 			{
 				bool get() { return shouldLinger; }
