@@ -21,7 +21,6 @@
 */
 #pragma once
 
-#include "Engine.h"
 #include "CueProperties.h"
 #include "Enums.h"
 #include "Cue.h"
@@ -38,6 +37,9 @@ namespace SlimDX
 		{
 		private:
 			IXACT3SoundBank* InternalPointer;
+
+		internal:
+			SoundBank( IXACT3SoundBank* pointer );
 
 		public:
 			Result Destroy();

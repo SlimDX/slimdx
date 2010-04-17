@@ -34,6 +34,9 @@ namespace SlimDX
 
 	namespace XACT3
 	{
+		ref class SoundBank;
+		ref class WaveBank;
+
 		public ref class Engine : public ComObject
 		{
 			COMOBJECT(IXACT3Engine, Engine);
@@ -44,6 +47,10 @@ namespace SlimDX
 			/// </summary>
 			Engine();
 			Engine( CreationFlags flags );
+
+			SoundBank^ CreateSoundBank( DataStream^ data );
+			WaveBank^ CreateWaveBank( DataStream^ data );
+			WaveBank^ CreateStreamingWaveBank( System::String^ fileName, int offset, int packetSize );
 
 			/// <summary>
 			/// Performs periodic work that is required by the XACT engine. Typically this should be called every 30 to 100 milliseconds.

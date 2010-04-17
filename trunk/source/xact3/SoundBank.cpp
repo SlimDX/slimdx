@@ -32,6 +32,11 @@ namespace SlimDX
 {
 namespace XACT3
 {
+	SoundBank::SoundBank( IXACT3SoundBank *pointer )
+	{
+		InternalPointer = pointer;
+	}
+
 	Result SoundBank::Destroy()
 	{
 		HRESULT hr = InternalPointer->Destroy();

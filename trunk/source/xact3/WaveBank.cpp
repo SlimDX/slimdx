@@ -30,9 +30,24 @@ namespace SlimDX
 {
 namespace XACT3
 {
+	WaveBank::WaveBank( IXACT3WaveBank *pointer )
+	{
+		InternalPointer = pointer;
+		handle = nullptr;
+	}
+
+	WaveBank::WaveBank( IXACT3WaveBank *pointer, Microsoft::Win32::SafeHandles::SafeFileHandle^ file )
+	{
+		InternalPointer = pointer;
+		handle = file;
+	}
+
 	Result WaveBank::Destroy()
 	{
 		HRESULT hr = InternalPointer->Destroy();
+		if (handle != nullptr)
+			delete handle;
+
 		return RECORD_XACT3(hr);
 	}
 
