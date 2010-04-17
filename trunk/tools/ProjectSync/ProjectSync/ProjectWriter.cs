@@ -59,8 +59,10 @@ namespace ProjectSync
         public void UpdateItems(ItemType type, Dictionary<string, string> items, bool writeFilter)
         {
             var element = groups[type];
-            element.RemoveAll();
+            if (element == null)
+                return;
 
+            element.RemoveAll();
             foreach (var pair in items)
             {
                 XElement ne = null;

@@ -44,8 +44,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionSettings"></ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -83,8 +82,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader></PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -104,8 +102,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader></PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -123,8 +120,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader></PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -145,8 +141,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader></PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -155,30 +150,29 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\external\Effects11\Inc\d3dx11dbg.h" />
-    <ClInclude Include="..\..\external\Effects11\Inc\d3dx11effect.h" />
-    <ClInclude Include="..\..\external\Effects11\Inc\d3dxglobal.h" />
-    <ClInclude Include="..\..\external\Effects11\pchfx.h" />
-    <ClInclude Include="..\..\external\Effects11\Binary\EffectBinaryFormat.h" />
-    <ClInclude Include="..\..\external\Effects11\Binary\EffectStateBase11.h" />
-    <ClInclude Include="..\..\external\Effects11\Binary\EffectStates11.h" />
-    <ClInclude Include="..\..\external\Effects11\Binary\SOParser.h" />
-    <ClInclude Include="..\..\external\Effects11\Effect.h" />
-    <ClInclude Include="..\..\external\Effects11\EffectLoad.h" />
+    <ClInclude Include="..\..\external\Effects11\.\Inc\d3dx11dbg.h" />
+    <ClInclude Include="..\..\external\Effects11\.\Inc\d3dx11effect.h" />
+    <ClInclude Include="..\..\external\Effects11\.\Inc\d3dxglobal.h" />
+    <ClInclude Include="..\..\external\Effects11\.\pchfx.h" />
+    <ClInclude Include="..\..\external\Effects11\.\Binary\EffectBinaryFormat.h" />
+    <ClInclude Include="..\..\external\Effects11\.\Binary\EffectStateBase11.h" />
+    <ClInclude Include="..\..\external\Effects11\.\Binary\EffectStates11.h" />
+    <ClInclude Include="..\..\external\Effects11\.\Binary\SOParser.h" />
+    <ClInclude Include="..\..\external\Effects11\.\Effect.h" />
+    <ClInclude Include="..\..\external\Effects11\.\EffectLoad.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\external\Effects11\d3dx11dbg.cpp" />
-    <ClCompile Include="..\..\external\Effects11\d3dxGlobal.cpp" />
-    <ClCompile Include="..\..\external\Effects11\EffectAPI.cpp" />
-    <ClCompile Include="..\..\external\Effects11\EffectLoad.cpp" />
-    <ClCompile Include="..\..\external\Effects11\EffectNonRuntime.cpp" />
-    <ClCompile Include="..\..\external\Effects11\EffectReflection.cpp" />
-    <ClCompile Include="..\..\external\Effects11\EffectRuntime.cpp" />
+    <ClCompile Include="..\..\external\Effects11\.\d3dx11dbg.cpp" />
+    <ClCompile Include="..\..\external\Effects11\.\d3dxGlobal.cpp" />
+    <ClCompile Include="..\..\external\Effects11\.\EffectAPI.cpp" />
+    <ClCompile Include="..\..\external\Effects11\.\EffectLoad.cpp" />
+    <ClCompile Include="..\..\external\Effects11\.\EffectNonRuntime.cpp" />
+    <ClCompile Include="..\..\external\Effects11\.\EffectReflection.cpp" />
+    <ClCompile Include="..\..\external\Effects11\.\EffectRuntime.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\external\Effects11\EffectVariable.inl" />
+    <None Include="..\..\external\Effects11\.\EffectVariable.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets"></ImportGroup>
 </Project>
