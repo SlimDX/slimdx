@@ -24,6 +24,8 @@
 #include "XACT3Exception.h"
 #include "WaveBank.h"
 
+using namespace System;
+
 namespace SlimDX
 {
 namespace XACT3

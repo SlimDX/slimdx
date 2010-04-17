@@ -1,4 +1,3 @@
-
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -22,6 +21,8 @@
 */
 #include "stdafx.h"
 
+#include "../DataStream.h"
+
 #include "RuntimeParameters.h"
 
 using namespace System;
@@ -30,5 +31,59 @@ namespace SlimDX
 {
 namespace XACT3
 {
+	XACT_RUNTIME_PARAMETERS RuntimeParameters::ToUnmanaged()
+	{
+		XACT_RUNTIME_PARAMETERS results;
+		memset(&results, 0, sizeof(XACT_RUNTIME_PARAMETERS));
+
+		try
+		{
+			results.lookAheadTime = LookAheadTime;
+
+			if (!String::IsNullOrEmpty(RendererID))
+			{
+				pin_ptr<const wchar_t> pinnedID = PtrToStringChars(RendererID);
+				results.pRendererID = new WCHAR[RendererID->Length];
+				
+				memcpy(results.pRendererID, pinnedID, sizeof(wchar_t) * RendererID->Length);
+			}
+
+			if (AudioDevice != nullptr)
+				results.pXAudio2 = AudioDevice->InternalPointer;
+			if (MasteringVoice != nullptr)
+				results.pMasteringVoice = reinterpret_cast<IXAudio2MasteringVoice*>(MasteringVoice->InternalPointer);
+
+			if (SettingsBuffer != nullptr)
+			{
+				int size = static_cast<int>(SettingsBuffer->Length - SettingsBuffer->Position);
+				results.pGlobalSettingsBuffer = CoTaskMemAlloc(size);
+				results.globalSettingsBufferSize = size;
+				results.globalSettingsFlags = XACT_FLAG_ENGINE_CREATE_MANAGEDATA;
+
+				DataStream^ ds = dynamic_cast<DataStream^>(SettingsBuffer);
+				if (ds != nullptr)
+					memcpy(results.pGlobalSettingsBuffer, ds->PositionPointer, size);
+				else
+				{
+					array<Byte>^ buffer = gcnew array<Byte>(size); 
+					int bytesRead = 0;
+					while (bytesRead < size)
+						bytesRead += SettingsBuffer->Read(buffer, bytesRead, size - bytesRead);
+
+					pin_ptr<Byte> pinnedBuffer = &buffer[0];
+					memcpy(results.pGlobalSettingsBuffer, pinnedBuffer, size);
+				}
+			}
+		}
+		catch (...)
+		{
+			delete[] results.pRendererID;
+			CoTaskMemFree(results.pGlobalSettingsBuffer);
+
+			throw;
+		}
+
+		return results;
+	}
 }
 }

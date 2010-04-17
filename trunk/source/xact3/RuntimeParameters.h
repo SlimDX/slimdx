@@ -21,7 +21,8 @@
 */
 #pragma once
 
-using namespace System;
+#include "../xaudio2/XAudio2.h"
+#include "../xaudio2/MasteringVoice.h"
 
 namespace SlimDX
 {
@@ -29,7 +30,17 @@ namespace SlimDX
 	{
 		public value class RuntimeParameters
 		{
+		internal:
+			XACT_RUNTIME_PARAMETERS ToUnmanaged();
+			
 		public:
+			property int LookAheadTime;
+			property System::String^ RendererID;
+			property SlimDX::XAudio2::XAudio2^ AudioDevice;
+			property SlimDX::XAudio2::MasteringVoice^ MasteringVoice;
+			property System::IO::Stream^ SettingsBuffer;
+
+			literal int DefaultLookAhead = XACT_ENGINE_LOOKAHEAD_DEFAULT;
 		};
 	}
 }

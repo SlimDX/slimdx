@@ -22,9 +22,10 @@
 #include "stdafx.h"
 
 #include "XACT3Exception.h"
-#include "Engine.h"
 
 #include "Cue.h"
+
+using namespace System;
 
 namespace SlimDX
 {
