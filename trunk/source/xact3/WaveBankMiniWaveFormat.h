@@ -23,8 +23,6 @@
 
 #include "Enums.h"
 
-using namespace System;
-
 namespace SlimDX
 {
 	namespace XACT3
@@ -33,81 +31,73 @@ namespace SlimDX
 		/// The mini-wave format for an XACT wave bank.
 		/// </summary>
 		/// <unmanaged>WAVEBANKMINIWAVEFORMAT</unmanaged>
-		public ref class WaveBankMiniWaveFormat
+		public value class WaveBankMiniWaveFormat
 		{
 		private:
 			WaveBankMiniFormatTag formatTag;
 			int channels;
 			int samplesPerSecond;
 			int blockAlign;
-			// Not used in xWMA.
 			int bitsPerSample;
-			// Only used in xWMA.
 			int bytesPerSecond;
 			bool isWmaPro;
 
 		internal:
-			WaveBankMiniWaveFormat(const WAVEBANKMINIWAVEFORMAT& format)
-			{
-				formatTag = (WaveBankMiniFormatTag)format.wFormatTag;
-				channels = format.nChannels;
-				samplesPerSecond = format.nSamplesPerSec;
-
-				if (formatTag == WaveBankMiniFormatTag::Wma)
-				{
-					blockAlign = format.wBlockAlign & 0x3F;
-					bytesPerSecond = (format.wBlockAlign >> 6) & 0x03;
-					isWmaPro = format.wBitsPerSample == 1;
-				}
-				else
-				{
-					blockAlign = format.wBlockAlign;
-					bitsPerSample = format.wBitsPerSample == 0 ? 8 : 16;
-				}
-			}
+			WaveBankMiniWaveFormat(const WAVEBANKMINIWAVEFORMAT& format);
 
 		public:
 			/// <summary>
 			/// Gets the format of the wave file.
 			/// </summary>
-			/// <unmanaged>WAVEBANKMINIWAVEFORMAT::wFormatTag</unmanaged>
-			property WaveBankMiniFormatTag FormatTag { WaveBankMiniFormatTag get() { return formatTag; } }
+			property WaveBankMiniFormatTag FormatTag
+			{
+				WaveBankMiniFormatTag get() { return formatTag; } 
+			}
 
 			/// <summary>
 			/// Gets the number of channels in the wave file
 			/// </summary>
-			/// <unmanaged>WAVEBANKMINIWAVEFORMAT::nChannels</unmanaged>
-			property int Channels { int get() { return channels; } }
+			property int Channels
+			{
+				int get() { return channels; } 
+			}
 
 			/// <summary>
 			/// Gets the sample rate of the wave file or of the decoded audio for compressed formats.
 			/// </summary>
-			/// <unmanaged>WAVEBANKMINIWAVEFORMAT::nSamplesPerSec</unmanaged>
-			property int SamplesPerSecond { int get() { return samplesPerSecond; } }
+			property int SamplesPerSecond
+			{
+				int get() { return samplesPerSecond; } 
+			}
 
 			/// <summary>
 			/// Gets the block alignment index.
 			/// </summary>
-			/// <unmanaged>WAVEBANKMINIWAVEFORMAT::wBlockAlign</unmanaged>
-			property int BlockAlignment { int get() { return blockAlign; } }
+			property int BlockAlignment
+			{
+				int get() { return blockAlign; } 
+			}
 
 			/// <summary>
 			/// Gets the bit depth of the wave file.
 			/// </summary>
-			/// <unmanaged>WAVEBANKMINIWAVEFORMAT::wBitsPerSample</unmanaged>
-			property int BitsPerSample { int get() { return bitsPerSample; } }
+			property int BitsPerSample
+			{
+				int get() { return bitsPerSample; } 
+			}
 
 			/// <summary>
-			/// (xWMA files only) Gets the bytes per second index of the xWMA file.
+			/// Gets the bytes per second index of the xWMA file.
 			/// </summary>
-			/// <unmanaged>WAVEBANKMINIWAVEFORMAT::wBlockAlign</unmanaged>
-			property int BytesPerSecond { int get() { return bytesPerSecond; } }
+			property int BytesPerSecond
+			{
+				int get() { return bytesPerSecond; } 
+			}
 
-			/// <summary>
-			/// (xWMA files only) Gets a value that is true if the file is WMA pro format, otherwise false.
-			/// </summary>
-			/// <unmanaged>WAVEBANKMINIWAVEFORMAT::wBitsPerSample</unmanaged>
-			property bool IsWmaPro { bool get() { return isWmaPro; } }
+			property bool IsWmaPro
+			{
+				bool get() { return isWmaPro; }
+			}
 		};
 	}
 }

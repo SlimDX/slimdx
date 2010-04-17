@@ -22,75 +22,63 @@
 #include "stdafx.h"
 
 #include "XACT3Exception.h"
-
 #include "WaveBank.h"
 
 namespace SlimDX
 {
 namespace XACT3
 {
-	int WaveBank::WaveCount::get()
+	Result WaveBank::Destroy()
 	{
-		XACTINDEX count;
-
-		HRESULT hr = InternalPointer->GetNumWaves(&count);
-		if(RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
-
-		return count;
+		HRESULT hr = InternalPointer->Destroy();
+		return RECORD_XACT3(hr);
 	}
 
 	int WaveBank::GetWaveIndex(String^ friendlyName)
 	{
-		XACTINDEX result;
-
 		array<unsigned char>^ friendlyNameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes(friendlyName);
 		pin_ptr<unsigned char> pinnedFriendlyName = &friendlyNameBytes[0];
-		result = InternalPointer->GetWaveIndex(reinterpret_cast<PCSTR>(pinnedFriendlyName));
 
-		// Could throw an exception here, I guess.
-
+		XACTINDEX result = InternalPointer->GetWaveIndex(reinterpret_cast<PCSTR>(pinnedFriendlyName));
 		return result == XACTINDEX_INVALID ? -1 : result;
 	}
 
-	WaveProperties^ WaveBank::GetWaveProperties(int waveIndex)
+	WaveProperties WaveBank::GetWaveProperties(int waveIndex)
 	{
 		XACT_WAVE_PROPERTIES props;
 
-		HRESULT hr = InternalPointer->GetWaveProperties((XACTINDEX)waveIndex, &props);
-		if(RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
+		HRESULT hr = InternalPointer->GetWaveProperties(static_cast<XACTINDEX>(waveIndex), &props);
+		RECORD_XACT3(hr);
 
-		return gcnew WaveProperties(props);
-	}
-
-	Wave^ WaveBank::Prepare(int waveIndex, ContentPreparationFlags flags, int playOffset, int loopCount)
-	{
-		IXACT3Wave* result;
-
-		HRESULT hr = InternalPointer->Prepare((XACTINDEX)waveIndex, (DWORD)flags, playOffset, (XACTLOOPCOUNT)loopCount, &result);
-		if(RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
-
-		//return gcnew Wave(engine, result);
+		return WaveProperties(props);
 	}
 
 	Wave^ WaveBank::Play(int waveIndex, ContentPreparationFlags flags, int playOffset, int loopCount)
 	{
 		IXACT3Wave* result;
 
-		HRESULT hr = InternalPointer->Play((XACTINDEX)waveIndex, (DWORD)flags, playOffset, (XACTLOOPCOUNT)loopCount, &result);
-		if(RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
+		HRESULT hr = InternalPointer->Play(static_cast<XACTINDEX>(waveIndex), static_cast<DWORD>(flags), playOffset, static_cast<XACTLOOPCOUNT>(loopCount), &result);
+		if (RECORD_XACT3(hr).IsFailure)
+			return nullptr;
 
-		//return gcnew Wave(engine, result);
+		return gcnew Wave(result);
+	}
+
+	Wave^ WaveBank::Prepare(int waveIndex, ContentPreparationFlags flags, int playOffset, int loopCount)
+	{
+		IXACT3Wave* result;
+
+		HRESULT hr = InternalPointer->Prepare(static_cast<XACTINDEX>(waveIndex), static_cast<DWORD>(flags), playOffset, static_cast<XACTLOOPCOUNT>(loopCount), &result);
+		if (RECORD_XACT3(hr).IsFailure)
+			return nullptr;
+
+		return gcnew Wave(result);
 	}
 
 	Result WaveBank::Stop(int waveIndex, StopFlags flags)
 	{
-		HRESULT hr = InternalPointer->Stop((XACTINDEX)waveIndex, (DWORD)flags);
-		if(RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
+		HRESULT hr = InternalPointer->Stop(static_cast<XACTINDEX>(waveIndex), static_cast<DWORD>(flags));
+		return RECORD_XACT3(hr);
 	}
 
 	WaveBankState WaveBank::State::get()
@@ -98,10 +86,19 @@ namespace XACT3
 		DWORD result;
 
 		HRESULT hr = InternalPointer->GetState(&result);
-		if(RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
+		RECORD_XACT3(hr);
 
-		return (WaveBankState)result;
+		return static_cast<WaveBankState>(result);
+	}
+
+	int WaveBank::WaveCount::get()
+	{
+		XACTINDEX count;
+
+		HRESULT hr = InternalPointer->GetNumWaves(&count);
+		RECORD_XACT3(hr);
+
+		return count;
 	}
 }
 }

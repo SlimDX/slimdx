@@ -30,18 +30,79 @@ namespace SlimDX
 {
 namespace XACT3
 {
-	void Cue::Play()
+	Cue::Cue( IXACT3Cue *cue )
 	{
-		HRESULT hr = InternalPointer->Play();
-		if (RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
+		InternalPointer = cue;
 	}
 
-	void Cue::Stop(StopFlags flags)
+	Result Cue::Destroy()
 	{
-		HRESULT hr = InternalPointer->Stop((DWORD)flags);
-		if (RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
+		HRESULT hr = InternalPointer->Destroy();
+		return RECORD_XACT3(hr);
+	}
+
+	float Cue::GetVariable(int index)
+	{
+		XACTVARIABLEVALUE value;
+
+		HRESULT hr = InternalPointer->GetVariable(static_cast<XACTVARIABLEINDEX>(index), &value);
+		RECORD_XACT3(hr);
+
+		return value;
+	}
+
+	int Cue::GetVariableIndex(String^ friendlyName)
+	{
+		array<unsigned char>^ friendlyNameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes(friendlyName);
+		pin_ptr<unsigned char> pinnedFriendlyName = &friendlyNameBytes[0];
+
+		XACTVARIABLEINDEX result = InternalPointer->GetVariableIndex(reinterpret_cast<PCSTR>(pinnedFriendlyName));
+		return result == XACTVARIABLEINDEX_INVALID ? -1 : result;
+	}
+
+	Result Cue::Pause(bool pause)
+	{
+		HRESULT hr = InternalPointer->Pause(pause);
+		return RECORD_XACT3(hr);
+	}
+
+	Result Cue::Play()
+	{
+		HRESULT hr = InternalPointer->Play();
+		return RECORD_XACT3(hr);
+	}
+
+	Result Cue::SetMatrixCoefficients(int srcChannelCount, int dstChannelCount, array<float>^ matrixCoefficients)
+	{
+		pin_ptr<float> pinnedMatrix = &matrixCoefficients[0];
+
+		HRESULT hr = InternalPointer->SetMatrixCoefficients(srcChannelCount, dstChannelCount, pinnedMatrix);
+		return RECORD_XACT3(hr);
+	}
+
+	Result Cue::SetVariable(int index, float value)
+	{
+		HRESULT hr = InternalPointer->SetVariable(static_cast<XACTVARIABLEINDEX>(index), value);
+		return RECORD_XACT3(hr);
+	}
+
+	Result Cue::Stop(StopFlags flags)
+	{
+		HRESULT hr = InternalPointer->Stop(static_cast<DWORD>(flags));
+		return RECORD_XACT3(hr);
+	}
+
+	CueInstanceProperties Cue::Properties::get()
+	{
+		LPXACT_CUE_INSTANCE_PROPERTIES resultPointer = NULL;
+
+		HRESULT hr = InternalPointer->GetProperties(&resultPointer);
+		RECORD_XACT3(hr);
+
+		CueInstanceProperties result = CueInstanceProperties(*resultPointer);
+		CoTaskMemFree(resultPointer);
+
+		return result;
 	}
 
 	CueState Cue::State::get()
@@ -49,69 +110,9 @@ namespace XACT3
 		DWORD result;
 
 		HRESULT hr = InternalPointer->GetState(&result);
-		if (RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
+		RECORD_XACT3(hr);
 
-		return (CueState)result;
-	}
-
-	void Cue::SetMatrixCoefficients(int srcChannelCount, int dstChannelCount, array<float>^ matrixCoefficients)
-	{
-		pin_ptr<float> pinnedMatrix = &matrixCoefficients[0];
-
-		HRESULT hr = InternalPointer->SetMatrixCoefficients(srcChannelCount, dstChannelCount, pinnedMatrix);
-		if (RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
-	}
-
-	int Cue::GetVariableIndex(String^ friendlyName)
-	{
-		XACTVARIABLEINDEX result;
-
-		array<unsigned char>^ friendlyNameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes(friendlyName);
-		pin_ptr<unsigned char> pinnedFriendlyName = &friendlyNameBytes[0];
-		result = InternalPointer->GetVariableIndex(reinterpret_cast<PCSTR>(pinnedFriendlyName));
-
-		return result == XACTVARIABLEINDEX_INVALID ? -1 : result;
-	}
-
-	void Cue::SetVariable(int index, float value)
-	{
-		HRESULT hr = InternalPointer->SetVariable((XACTVARIABLEINDEX)index, (XACTVARIABLEVALUE)value);
-		if (RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
-	}
-
-	float Cue::GetVariable(int index)
-	{
-		XACTVARIABLEVALUE value;
-
-		HRESULT hr = InternalPointer->GetVariable((XACTVARIABLEINDEX)index, &value);
-		if (RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
-
-		return value;
-	}
-
-	void Cue::Pause(bool pause)
-	{
-		HRESULT hr = InternalPointer->Pause(pause);
-		if (RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
-	}
-
-	CueInstanceProperties^ Cue::Properties::get()
-	{
-		LPXACT_CUE_INSTANCE_PROPERTIES resultPointer = NULL;
-
-		HRESULT hr = InternalPointer->GetProperties(&resultPointer);
-		if (RECORD_XACT3(hr).IsFailure)
-			throw gcnew XACT3Exception(Result::Last);
-
-		CueInstanceProperties^ result = gcnew CueInstanceProperties(*resultPointer);
-		CoTaskMemFree(resultPointer);
-
-		return result;
+		return static_cast<CueState>(result);
 	}
 }
 }

@@ -23,6 +23,8 @@
 
 #include "CueProperties.h"
 
+using namespace System;
+
 namespace SlimDX
 {
 namespace XACT3

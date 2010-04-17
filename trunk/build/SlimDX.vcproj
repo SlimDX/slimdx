@@ -6760,6 +6760,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\xact3\WaveInstanceProperties.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\xact3\WaveInstanceProperties.h"
 					>
 				</File>
@@ -6784,7 +6788,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\xact3\WaveBankMiniWaveFormat.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\source\xact3\WaveBankMiniWaveFormat.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\xact3\WaveBankSampleRegion.cpp"
 					>
 				</File>
 				<File

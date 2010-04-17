@@ -36,13 +36,11 @@ namespace SlimDX
 			/// <summary>
 			/// Indicates that the units that are passed in are measured in milliseconds.
 			/// </summary>
-			/// <unmanaged>XACT_FLAG_UNITS_MS</unmanaged>
 			UnitsMs = XACT_FLAG_UNITS_MS,
 
 			/// <summary>
 			/// Indicates that the units that are passed in are in samples.
 			/// </summary>
-			/// <unmanaged>XACT_FLAG_UNITS_SAMPLES</unmanaged>
 			UnitsSamples = XACT_FLAG_UNITS_SAMPLES,
 		};
 
@@ -63,43 +61,36 @@ namespace SlimDX
 			/// <summary>
 			/// The cue is created, but nothing else.
 			/// </summary>
-			/// <unmanaged>XACT_CUESTATE_CREATED</unmanaged>
 			Created = XACT_CUESTATE_CREATED,
 
 			/// <summary>
 			/// The cue is preparing to play.
 			/// </summary>
-			/// <unmanaged>XACT_CUESTATE_PREPARING</unmanaged>
 			Preparing = XACT_CUESTATE_PREPARING,
 
 			/// <summary>
 			/// The cue is prepared, but not yet played.
 			/// </summary>
-			/// <unmanaged>XACT_CUESTATE_PREPARED</unmanaged>
 			Prepared = XACT_CUESTATE_PREPARED,
 
 			/// <summary>
 			/// The cue is playing, but can be paused.
 			/// </summary>
-			/// <unmanaged>XACT_CUESTATE_PLAYING</unmanaged>
 			Playing = XACT_CUESTATE_PLAYING,
 
 			/// <summary>
 			/// The cue is stopping.
 			/// </summary>
-			/// <unmanaged>XACT_CUESTATE_STOPPING</unmanaged>
 			Stopping = XACT_CUESTATE_STOPPING,
 
 			/// <summary>
 			/// The cue is stopped.
 			/// </summary>
-			/// <unmanaged>XACT_CUESTATE_STOPPED</unmanaged>
 			Stopped = XACT_CUESTATE_STOPPED,
 
 			/// <summary>
 			/// The cue is paused.
 			/// </summary>
-			/// <unmanaged>XACT_CUESTATE_PAUSED</unmanaged>
 			Paused = XACT_CUESTATE_PAUSED
 		};
 
@@ -112,7 +103,6 @@ namespace SlimDX
 			/// <summary>
 			/// Indicates that the sound bank is referenced by at least one valid cue instance or other client.
 			/// </summary>
-			/// <unmanaged>XACT_SOUNDBANKSTATE_INUSE</unmanaged>
 			InUse = XACT_SOUNDBANKSTATE_INUSE
 		};
 
@@ -125,13 +115,11 @@ namespace SlimDX
 			/// <summary>
 			/// Plays a sound to completion, then stops after the release (or tail) phase of a song is played.
 			/// </summary>
-			/// <unmanaged>XACT_FLAG_STOP_RELEASE</unmanaged>
 			Release = XACT_FLAG_STOP_RELEASE,
 
 			/// <summary>
 			/// Stops playback immediately.
 			/// </summary>
-			/// <unmanaged>XACT_FLAG_STOP_IMMEDIATE</unmanaged>
 			Immediate = XACT_FLAG_STOP_IMMEDIATE
 		};
 
@@ -143,25 +131,21 @@ namespace SlimDX
 			/// <summary>
 			/// PCM wave format.
 			/// </summary>
-			/// <unmanaged>WAVEBANKMINIFORMAT_TAG_PCM</unmanaged>
 			Pcm = WAVEBANKMINIFORMAT_TAG_PCM,
 
 			/// <summary>
 			/// XMA format.
 			/// </summary>
-			/// <unmanaged>WAVEBANKMINIFORMAT_TAG_XMA</unmanaged>
 			Xma = WAVEBANKMINIFORMAT_TAG_XMA,
 
 			/// <summary>
 			/// ADPCM wave format.
 			/// </summary>
-			/// <unmanaged>WAVEBANKMINIFORMAT_TAG_ADPCM</unmanaged>
 			Adpcm = WAVEBANKMINIFORMAT_TAG_ADPCM,
 
 			/// <summary>
 			/// WMA format.
 			/// </summary>
-			/// <unmanaged>WAVEBANKMINIFORMAT_TAG_WMA</unmanaged>
 			Wma = WAVEBANKMINIFORMAT_TAG_WMA
 		};
 
@@ -174,13 +158,11 @@ namespace SlimDX
 			/// <summary>
 			/// Indicates that the wave bank is referenced by at least one valid cue instance or other client.
 			/// </summary>
-			/// <unmanaged>XACT_WAVEBANKSTATE_INUSE</unmanaged>
 			InUse = XACT_WAVEBANKSTATE_INUSE,
 
 			/// <summary>
 			/// The wave is prepared for use by a cue instance.
 			/// </summary>
-			/// <unmanaged>XACT_WAVEBANKSTATE_PREPARED</unmanaged>
 			Prepared = XACT_WAVEBANKSTATE_PREPARED
 		};
 
@@ -193,55 +175,46 @@ namespace SlimDX
 			/// <summary>
 			/// The wave is created, but nothing else.
 			/// </summary>
-			/// <unmanaged>XACT_STATE_CREATED</unmanaged>
 			Created = XACT_STATE_CREATED,
 
 			/// <summary>
 			/// The wave is preparing to play.
 			/// </summary>
-			/// <unmanaged>XACT_STATE_PREPARING</unmanaged>
 			Preparing = XACT_STATE_PREPARING,
 
 			/// <summary>
 			/// The wave is prepared, but not yet played.
 			/// </summary>
-			/// <unmanaged>XACT_CUESTATE_PREPARED</unmanaged>
 			Prepared = XACT_STATE_PREPARED,
 
 			/// <summary>
 			/// The wave is playing, but can be paused.
 			/// </summary>
-			/// <unmanaged>XACT_STATE_PLAYING</unmanaged>
 			Playing = XACT_STATE_PLAYING,
 
 			/// <summary>
 			/// The wave is stopping.
 			/// </summary>
-			/// <unmanaged>XACT_STATE_STOPPING</unmanaged>
 			Stopping = XACT_STATE_STOPPING,
 
 			/// <summary>
 			/// The wave is stopped.
 			/// </summary>
-			/// <unmanaged>XACT_STATE_STOPPED</unmanaged>
 			Stopped = XACT_STATE_STOPPED,
 
 			/// <summary>
 			/// The wave is paused.
 			/// </summary>
-			/// <unmanaged>XACT_STATE_PAUSED</unmanaged>
 			Paused = XACT_STATE_PAUSED,
 
 			/// <summary>
 			/// Indicates that the wave is in use.
 			/// </summary>
-			/// <unmanaged>XACT_STATE_INUSE</unmanaged>
 			InUse = XACT_STATE_INUSE,
 
 			/// <summary>
 			/// Indicates that wave preparation failed.
 			/// </summary>
-			/// <unmanaged>XACT_STATE_PREPAREFAILED</unmanaged>
 			PrepareFailed = (int)XACT_STATE_PREPAREFAILED
 		};
 	}

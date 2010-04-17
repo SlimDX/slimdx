@@ -19,44 +19,18 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include "stdafx.h"
 
-#include "VariationProperties.h"
-#include "SoundProperties.h"
+#include "WaveBankSampleRegion.h"
 
 namespace SlimDX
 {
-	namespace XACT3
+namespace XACT3
+{
+	WaveBankSampleRegion::WaveBankSampleRegion(const WAVEBANKSAMPLEREGION& sampleRegion)
 	{
-		/// <summary>
-		/// The properties of the sound variation that is currently active in a cue instance.
-		/// </summary>
-		/// <unmanaged>XACT_SOUND_VARIATION_PROPERTIES</unmanaged>
-		public value class SoundVariationProperties
-		{
-		private:
-			VariationProperties variationProperties;
-			SoundProperties soundProperties;
-
-		internal:
-			SoundVariationProperties(const XACT_SOUND_VARIATION_PROPERTIES& data);
-
-		public:
-			/// <summary>
-			/// Gets the properties of the currently active variation.
-			/// </summary>
-			property SlimDX::XACT3::VariationProperties VariationProperties
-			{
-				SlimDX::XACT3::VariationProperties get() { return variationProperties; }
-			}
-
-			/// <summary>
-			/// Gets the properties of the sound that the active variation references.
-			/// </summary>
-			property SlimDX::XACT3::SoundProperties SoundProperties
-			{
-				SlimDX::XACT3::SoundProperties get() { return soundProperties; }
-			}
-		};
+		startSample = sampleRegion.dwStartSample;
+		totalSamples = sampleRegion.dwTotalSamples;
 	}
+}
 }

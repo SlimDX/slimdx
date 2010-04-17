@@ -21,8 +21,6 @@
 */
 #pragma once
 
-using namespace System;
-
 namespace SlimDX
 {
 	namespace XACT3
@@ -34,7 +32,7 @@ namespace SlimDX
 		public value class CueProperties
 		{
 		private:
-			String^ name;
+			System::String^ name;
 			bool isInteractive;
 			int variableIndex;
 			int variations;
@@ -48,16 +46,14 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the friendly name of the cue.
 			/// </summary>
-			/// <unmanaged>XACT_CUE_PROPERTIES::friendlyName</unmanaged>
-			property String^ FriendlyName
+			property System::String^ FriendlyName
 			{
-				String^ get() { return name; }
+				System::String^ get() { return name; }
 			}
 
 			/// <summary>
 			/// Gets a value that is true if the cue is an interactive audio cue, otherwise false.
 			/// </summary>
-			/// <unmanaged>XACT_CUE_PROPERTIES::interactive</unmanaged>
 			property bool IsInteractive
 			{
 				bool get() { return isInteractive; }
@@ -66,7 +62,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the index of the variable to control the cue. This is only relevant for interactive audio cues.
 			/// </summary>
-			/// <unmanaged>XACT_CUE_PROPERTIES::iaVariableIndex</unmanaged>
 			property int VariableIndex
 			{
 				int get() { return variableIndex; }
@@ -75,7 +70,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the number of sound variations for this cue.
 			/// </summary>
-			/// <unmanaged>XACT_CUE_PROPERTIES::numVariations</unmanaged>
 			property int VariationCount
 			{
 				int get() { return variations; }
@@ -84,7 +78,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the maximum number of instances that are allowed for this cue.
 			/// </summary>
-			/// <unmanaged>XACT_CUE_PROPERTIES::maxInstances</unmanaged>
 			property int MaxInstances
 			{
 				int get() { return maxInstances; }
@@ -93,7 +86,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the number of currently active instances of this cue.
 			/// </summary>
-			/// <unmanaged>XACT_CUE_PROPERTIES::currentInstances</unmanaged>
 			property int CurrentInstances
 			{
 				int get() { return currentInstances; }

@@ -26,9 +26,6 @@
 #include "Enums.h"
 #include "Cue.h"
 
-using namespace System;
-using namespace System::IO;
-
 namespace SlimDX
 {
 	namespace XACT3
@@ -43,36 +40,21 @@ namespace SlimDX
 			IXACT3SoundBank* InternalPointer;
 
 		public:
+			Result Destroy();
+
 			/// <summary>
 			/// Get a sound cue index based on a <see cref="String"/> that represents the friendly name of the cue.
 			/// </summary>
 			/// <param name="friendlyName">A <see cref="String"/> that contains the friendly name of the cue.</param>
 			/// <returns>The index for the cue if it exists, otherwise -1.</returns>
-			/// <unmanaged>IXACT3SoundBank::GetCueIndex</unmanaged>
 			int GetCueIndex(String^ friendlyName);
-
-			/// <summary>
-			/// Get the number of sound cues in the sound bank.
-			/// </summary>
-			/// <unmanaged>IXACT3SoundBank::GetNumCues</unmanaged>
-			property int CueCount { int get(); }
 
 			/// <summary>
 			/// Get the properties of a cue.
 			/// </summary>
 			/// <param name="cueIndex">The index of the cue to get the properties of.</param>
 			/// <returns>A <see cref="CueProperties"/> object containing the properties of the cue.</returns>
-			/// <unmanaged>IXACT3SoundBank::GetCueProperties</unmanaged>
-			CueProperties^ GetCueProperties(int cueIndex);
-
-			/// <summary>
-			/// Prepare a cue for playback.
-			/// </summary>
-			/// <param name="cueIndex">The index of the cue to prepare.</param>
-			/// <param name="timeOffset">The time offset into the cue to start from, in milliseconds.</param>
-			/// <returns>A <see cref="Cue"/> object containing the newly prepared cue.</returns>
-			/// <unmanaged>IXACT3SoundBank::Prepare</unmanaged>
-			Cue^ Prepare(int cueIndex, int timeOffset);
+			CueProperties GetCueProperties(int cueIndex);
 
 			/// <summary>
 			/// Play a cue.
@@ -80,22 +62,38 @@ namespace SlimDX
 			/// <param name="cueIndex">The index of the cue to play.</param>
 			/// <param name="timeOffset">The time offset into the cue to start from, in milliseconds.</param>
 			/// <returns>A <see cref="Cue"/> object containing the newly playing cue.</returns>
-			/// <unmanaged>IXACT3SoundBank::Play</unmanaged>
 			Cue^ Play(int cueIndex, int timeOffset);
+
+			/// <summary>
+			/// Prepare a cue for playback.
+			/// </summary>
+			/// <param name="cueIndex">The index of the cue to prepare.</param>
+			/// <param name="timeOffset">The time offset into the cue to start from, in milliseconds.</param>
+			/// <returns>A <see cref="Cue"/> object containing the newly prepared cue.</returns>
+			Cue^ Prepare(int cueIndex, int timeOffset);
 
 			/// <summary>
 			/// Stop playback of a cue.
 			/// </summary>
 			/// <param name="cueIndex">The index of the cue to stop.</param>
 			/// <param name="flags"><see cref="StopFlags"/> that specify how the cue is stopped.</param>
-			/// <unmanaged>IXACT3SoundBank::Stop</unmanaged>
-			void Stop(int cueIndex, StopFlags flags);
+			Result Stop(int cueIndex, StopFlags flags);
 
 			/// <summary>
 			/// Get a <see cref="SoundBankState"/> value representing the current state of the sound bank.
 			/// </summary>
-			/// <unmanaged>IXACT3SoundBank::GetState</unmanaged>
-			property SoundBankState State { SoundBankState get(); }
+			property SoundBankState State
+			{
+				SoundBankState get();
+			}
+
+			/// <summary>
+			/// Get the number of sound cues in the sound bank.
+			/// </summary>
+			property int CueCount
+			{
+				int get();
+			}
 		};
 	}
 }

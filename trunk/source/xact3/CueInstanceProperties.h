@@ -24,8 +24,6 @@
 #include "CueProperties.h"
 #include "SoundVariationProperties.h"
 
-using namespace System;
-
 namespace SlimDX
 {
 	namespace XACT3
@@ -47,7 +45,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the properties of a cue that are shared by all instances of the cue.
 			/// </summary>
-			/// <unmanaged>XACT_CUE_INSTANCE_PROPERTIES::cueProperties</unmanaged>
 			property SlimDX::XACT3::CueProperties CueProperties
 			{
 				SlimDX::XACT3::CueProperties get() { return cueProperties; }
@@ -56,7 +53,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the properties the current cue variation.
 			/// </summary>
-			/// <unmanaged>XACT_CUE_INSTANCE_PROPERTIES::activeVariationProperties</unmanaged>
 			property SoundVariationProperties ActiveVariationProperties
 			{
 				SoundVariationProperties get() { return activeVariationProperties; }

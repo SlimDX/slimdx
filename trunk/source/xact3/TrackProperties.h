@@ -21,8 +21,6 @@
 */
 #pragma once
 
-using namespace System;
-
 namespace SlimDX
 {
 	namespace XACT3
@@ -47,7 +45,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the duration of the track in milliseconds.
 			/// </summary>
-			/// <unmanaged>XACT_TRACK_PROPERTIES::duration</unmanaged>
 			property int Duration
 			{
 				int get() { return duration; }
@@ -56,7 +53,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the number of wave variations in the track.
 			/// </summary>
-			/// <unmanaged>XACT_TRACK_PROPERTIES::numVariations</unmanaged>
 			property int VariationCount
 			{
 				int get() { return numVariations; }
@@ -65,7 +61,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the number of channels that are required to play the track.
 			/// </summary>
-			/// <unmanaged>XACT_TRACK_PROPERTIES::numChannels</unmanaged>
 			property int ChannelCount
 			{
 				int get() { return numChannels; }
@@ -74,7 +69,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the index of the currently active wave variation.
 			/// </summary>
-			/// <unmanaged>XACT_TRACK_PROPERTIES::waveVariation</unmanaged>
 			property int WaveVariation
 			{
 				int get() { return waveVariation; }
@@ -83,7 +77,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the current loop count on the track.
 			/// </summary>
-			/// <unmanaged>XACT_TRACK_PROPERTIES::loopCount</unmanaged>
 			property int LoopCount
 			{
 				int get() { return loopCount; }

@@ -47,7 +47,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the category that this sound belongs to.
 			/// </summary>
-			/// <unmanaged>XACT_SOUND_PROPERTIES::category</unmanaged>
 			property int Category
 			{
 				int get() { return category; }
@@ -56,7 +55,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the priority that is assigned to this sound.
 			/// </summary>
-			/// <unmanaged>XACT_SOUND_PROPERTIES::priority</unmanaged>
 			property int Priority
 			{
 				int get() { return priority; }
@@ -65,7 +63,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the current pitch of the sound.
 			/// </summary>
-			/// <unmanaged>XACT_SOUND_PROPERTIES::pitch</unmanaged>
 			property int Pitch
 			{
 				int get() { return pitch; }
@@ -74,7 +71,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the current volume of the sound.
 			/// </summary>
-			/// <unmanaged>XACT_SOUND_PROPERTIES::volume</unmanaged>
 			property float Volume
 			{
 				float get() { return volume; }
@@ -83,7 +79,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets an array of tracks contained in this sound.
 			/// </summary>
-			/// <unmanaged>XACT_SOUND_PROPERTIES::arrTrackProperties</unmanaged>
 			property array<TrackProperties>^ Tracks
 			{
 				array<TrackProperties>^ get() { return trackProperties; }

@@ -19,44 +19,31 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include "stdafx.h"
 
-#include "VariationProperties.h"
-#include "SoundProperties.h"
+#include "WaveBankMiniWaveFormat.h"
 
 namespace SlimDX
 {
-	namespace XACT3
+namespace XACT3
+{
+	WaveBankMiniWaveFormat::WaveBankMiniWaveFormat(const WAVEBANKMINIWAVEFORMAT& format)
 	{
-		/// <summary>
-		/// The properties of the sound variation that is currently active in a cue instance.
-		/// </summary>
-		/// <unmanaged>XACT_SOUND_VARIATION_PROPERTIES</unmanaged>
-		public value class SoundVariationProperties
+		formatTag = static_cast<WaveBankMiniFormatTag>(format.wFormatTag);
+		channels = format.nChannels;
+		samplesPerSecond = format.nSamplesPerSec;
+
+		if (formatTag == WaveBankMiniFormatTag::Wma)
 		{
-		private:
-			VariationProperties variationProperties;
-			SoundProperties soundProperties;
-
-		internal:
-			SoundVariationProperties(const XACT_SOUND_VARIATION_PROPERTIES& data);
-
-		public:
-			/// <summary>
-			/// Gets the properties of the currently active variation.
-			/// </summary>
-			property SlimDX::XACT3::VariationProperties VariationProperties
-			{
-				SlimDX::XACT3::VariationProperties get() { return variationProperties; }
-			}
-
-			/// <summary>
-			/// Gets the properties of the sound that the active variation references.
-			/// </summary>
-			property SlimDX::XACT3::SoundProperties SoundProperties
-			{
-				SlimDX::XACT3::SoundProperties get() { return soundProperties; }
-			}
-		};
+			blockAlign = format.wBlockAlign & 0x3F;
+			bytesPerSecond = (format.wBlockAlign >> 6) & 0x03;
+			isWmaPro = format.wBitsPerSample == 1;
+		}
+		else
+		{
+			blockAlign = format.wBlockAlign;
+			bitsPerSample = format.wBitsPerSample == 0 ? 8 : 16;
+		}
 	}
+}
 }
