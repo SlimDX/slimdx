@@ -14,8 +14,13 @@ namespace HelloWorld
 			InitializeComponent();
 		}
 
-		public void InitializeDevice(DeviceSettings2D settings)
+		public void InitializeDevice()
 		{
+			DeviceSettings2D settings = new DeviceSettings2D
+        		{
+	        		Width = ClientSize.Width,
+					Height = ClientSize.Height
+        		};
 			var result = new DeviceContext2D(Handle, settings);
 			apiContext = result;
 			Context2D = result;
