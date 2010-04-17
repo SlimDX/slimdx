@@ -10,8 +10,8 @@ namespace ProjectSync
     {
         static void Main(string[] args)
         {
-            if (args.Length != 2)
-                Console.WriteLine("Usage: ProjectSync vs2008project vs2010project");
+            if (args.Length != 3)
+                Console.WriteLine("Usage: ProjectSync vs2008project vs2010project prepend_ext");
             else
             {
                 if (!File.Exists(args[0]))
@@ -21,13 +21,13 @@ namespace ProjectSync
                 else if (!File.Exists(args[1] + ".filters"))
                     Console.WriteLine("Could not open VS2010 filters file.");
                 else
-                    Synchronize(args[0], args[1]);
+                    Synchronize(args[0], args[1], args[2]);
             }
         }
 
-        static void Synchronize(string vs2008project, string vs2010project)
+        static void Synchronize(string vs2008project, string vs2010project, string prepend)
         {
-            var parser = new ProjectParser(vs2008project);
+            var parser = new ProjectParser(vs2008project, prepend);
             var writer = new ProjectWriter(vs2010project);
 
             var filterWriter = new ProjectWriter(vs2010project + ".filters");

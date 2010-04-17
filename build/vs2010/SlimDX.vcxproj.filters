@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Direct3D10">
@@ -676,6 +676,18 @@
     <Filter Include="Direct3D11\Shader\ClassLinkage">
       <UniqueIdentifier>{dfeae1fe-5ec7-4b55-91a4-dce6b6ab04ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Direct3D11\Shader\Reflection">
+      <UniqueIdentifier>{38055c0a-ff1d-49fd-ab01-0ae615b602be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Shader\Reflection\ConstantBuffer">
+      <UniqueIdentifier>{2cfd8630-5a26-4952-8cbc-9b09b01149ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Shader\Reflection\Type">
+      <UniqueIdentifier>{75ccbf24-c523-4141-ba36-5b23655db45b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Shader\Reflection\Variable">
+      <UniqueIdentifier>{49a332ba-eed6-44d4-b378-3b2be4521987}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Direct3D11\State">
       <UniqueIdentifier>{3c3c5f9b-ef9f-4ce0-b238-bd48a6111089}</UniqueIdentifier>
     </Filter>
@@ -736,8 +748,29 @@
     <Filter Include="Direct3D11\Effects\Pass">
       <UniqueIdentifier>{fa511f82-2619-489c-8017-2c7ff8dfad30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Direct3D11\Effects\Type">
+      <UniqueIdentifier>{aad0dc71-0315-4533-8d4e-d4c7db33fabd}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Direct3D11\Compute">
       <UniqueIdentifier>{e1ffb9ee-22dd-4a7f-8309-2cf43ae5e824}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XACT3">
+      <UniqueIdentifier>{71120e01-8ee1-4ff0-9f77-065f11404e41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XACT3\Engine">
+      <UniqueIdentifier>{b8b9dbe8-07b9-4444-bc43-6012ecbfca29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XACT3\Wave">
+      <UniqueIdentifier>{ad028f1b-21bb-4c5f-bcfb-3546822bf352}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XACT3\WaveBank">
+      <UniqueIdentifier>{0f706822-54d9-4f1d-85b4-6ebdb1980dde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XACT3\Cue">
+      <UniqueIdentifier>{fba36237-9504-476e-8b10-33d567c1b29c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XACT3\SoundBank">
+      <UniqueIdentifier>{5112df4e-e6b5-4126-bf27-5db37b29e1f7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -973,6 +1006,9 @@
       <Filter>Direct3D10\Resource</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d10\ResourceRegion.cpp">
+      <Filter>Direct3D10\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d10\TextureLoadInformation10.cpp">
       <Filter>Direct3D10\Resource</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d10\Asynchronous.cpp">
@@ -1632,6 +1668,9 @@
     <ClCompile Include="..\..\source\xaudio2\VoiceCallback.cpp">
       <Filter>XAudio2\Callbacks</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\xaudio2\EffectDescriptor.cpp">
+      <Filter>XAudio2\Voices</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\xaudio2\FilterParameters.cpp">
       <Filter>XAudio2\Voices</Filter>
     </ClCompile>
@@ -2286,6 +2325,9 @@
     <ClCompile Include="..\..\source\direct3d11\ResourceRegion11.cpp">
       <Filter>Direct3D11\Resource</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\TextureLoadInformation11.cpp">
+      <Filter>Direct3D11\Resource</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\ResourceView11.cpp">
       <Filter>Direct3D11\Resource Views</Filter>
     </ClCompile>
@@ -2322,12 +2364,6 @@
     <ClCompile Include="..\..\source\direct3d11\ShaderMacro11.cpp">
       <Filter>Direct3D11\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\ShaderParameterDescription11.cpp">
-      <Filter>Direct3D11\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\ShaderReflection11.cpp">
-      <Filter>Direct3D11\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\ShaderSignature11.cpp">
       <Filter>Direct3D11\Shader</Filter>
     </ClCompile>
@@ -2357,6 +2393,36 @@
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\ClassLinkage11.cpp">
       <Filter>Direct3D11\Shader\ClassLinkage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\InputBindingDescription11.cpp">
+      <Filter>Direct3D11\Shader\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\ShaderDescription11.cpp">
+      <Filter>Direct3D11\Shader\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\ShaderParameterDescription11.cpp">
+      <Filter>Direct3D11\Shader\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\ShaderReflection11.cpp">
+      <Filter>Direct3D11\Shader\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\ConstantBuffer11.cpp">
+      <Filter>Direct3D11\Shader\Reflection\ConstantBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\ConstantBufferDescription11.cpp">
+      <Filter>Direct3D11\Shader\Reflection\ConstantBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\ShaderReflectionType11.cpp">
+      <Filter>Direct3D11\Shader\Reflection\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\ShaderTypeDescription11.cpp">
+      <Filter>Direct3D11\Shader\Reflection\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\ShaderReflectionVariable11.cpp">
+      <Filter>Direct3D11\Shader\Reflection\Variable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\ShaderVariableDescription11.cpp">
+      <Filter>Direct3D11\Shader\Reflection\Variable</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\BlendState11.cpp">
       <Filter>Direct3D11\State\BlendState</Filter>
@@ -2451,7 +2517,7 @@
     <ClCompile Include="..\..\source\direct3d11\EffectDescription11.cpp">
       <Filter>Direct3D11\Effects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\ShaderDescription11.cpp">
+    <ClCompile Include="..\..\source\direct3d11\EffectShaderDescription11.cpp">
       <Filter>Direct3D11\Effects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\EffectTechnique11.cpp">
@@ -2499,6 +2565,12 @@
     <ClCompile Include="..\..\source\direct3d11\EffectPassShaderDescription11.cpp">
       <Filter>Direct3D11\Effects\Pass</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectType11.cpp">
+      <Filter>Direct3D11\Effects\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectTypeDescription11.cpp">
+      <Filter>Direct3D11\Effects\Type</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\FFT.cpp">
       <Filter>Direct3D11\Compute</Filter>
     </ClCompile>
@@ -2507,6 +2579,60 @@
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\SegmentedScan.cpp">
       <Filter>Direct3D11\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\xact3\XACT3Exception.cpp">
+      <Filter>XACT3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\xact3\Engine.cpp">
+      <Filter>XACT3\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\xact3\RendererDetails.cpp">
+      <Filter>XACT3\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\xact3\RuntimeParameters.cpp">
+      <Filter>XACT3\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\xact3\Wave.cpp">
+      <Filter>XACT3\Wave</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\xact3\WaveInstanceProperties.cpp">
+      <Filter>XACT3\Wave</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\xact3\WaveProperties.cpp">
+      <Filter>XACT3\Wave</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\xact3\WaveBank.cpp">
+      <Filter>XACT3\WaveBank</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\xact3\WaveBankMiniWaveFormat.cpp">
+      <Filter>XACT3\WaveBank</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\xact3\WaveBankSampleRegion.cpp">
+      <Filter>XACT3\WaveBank</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\xact3\Cue.cpp">
+      <Filter>XACT3\Cue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\xact3\CueInstanceProperties.cpp">
+      <Filter>XACT3\Cue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\xact3\CueProperties.cpp">
+      <Filter>XACT3\Cue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\xact3\SoundProperties.cpp">
+      <Filter>XACT3\Cue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\xact3\SoundVariationProperties.cpp">
+      <Filter>XACT3\Cue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\xact3\TrackProperties.cpp">
+      <Filter>XACT3\Cue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\xact3\VariationProperties.cpp">
+      <Filter>XACT3\Cue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\xact3\SoundBank.cpp">
+      <Filter>XACT3\SoundBank</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\AssemblyInfo.cpp" />
   </ItemGroup>
@@ -2746,6 +2872,9 @@
       <Filter>Direct3D10\Resource</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d10\ResourceRegion.h">
+      <Filter>Direct3D10\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d10\TextureLoadInformation10.h">
       <Filter>Direct3D10\Resource</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d10\Asynchronous.h">
@@ -3501,6 +3630,9 @@
     <ClInclude Include="..\..\source\xaudio2\VoiceCallback.h">
       <Filter>XAudio2\Callbacks</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\xaudio2\EffectDescriptor.h">
+      <Filter>XAudio2\Voices</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\source\xaudio2\FilterParameters.h">
       <Filter>XAudio2\Voices</Filter>
     </ClInclude>
@@ -4245,6 +4377,9 @@
     <ClInclude Include="..\..\source\direct3d11\ResourceRegion11.h">
       <Filter>Direct3D11\Resource</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\TextureLoadInformation11.h">
+      <Filter>Direct3D11\Resource</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\ResourceView11.h">
       <Filter>Direct3D11\Resource Views</Filter>
     </ClInclude>
@@ -4281,12 +4416,6 @@
     <ClInclude Include="..\..\source\direct3d11\ShaderMacro11.h">
       <Filter>Direct3D11\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\ShaderParameterDescription11.h">
-      <Filter>Direct3D11\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\ShaderReflection11.h">
-      <Filter>Direct3D11\Shader</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\ShaderSignature11.h">
       <Filter>Direct3D11\Shader</Filter>
     </ClInclude>
@@ -4316,6 +4445,36 @@
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\ClassLinkage11.h">
       <Filter>Direct3D11\Shader\ClassLinkage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\InputBindingDescription11.h">
+      <Filter>Direct3D11\Shader\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\ShaderDescription11.h">
+      <Filter>Direct3D11\Shader\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\ShaderParameterDescription11.h">
+      <Filter>Direct3D11\Shader\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\ShaderReflection11.h">
+      <Filter>Direct3D11\Shader\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\ConstantBuffer11.h">
+      <Filter>Direct3D11\Shader\Reflection\ConstantBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\ConstantBufferDescription11.h">
+      <Filter>Direct3D11\Shader\Reflection\ConstantBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\ShaderReflectionType11.h">
+      <Filter>Direct3D11\Shader\Reflection\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\ShaderTypeDescription11.h">
+      <Filter>Direct3D11\Shader\Reflection\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\ShaderReflectionVariable11.h">
+      <Filter>Direct3D11\Shader\Reflection\Variable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\ShaderVariableDescription11.h">
+      <Filter>Direct3D11\Shader\Reflection\Variable</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\BlendState11.h">
       <Filter>Direct3D11\State\BlendState</Filter>
@@ -4410,7 +4569,7 @@
     <ClInclude Include="..\..\source\direct3d11\EffectDescription11.h">
       <Filter>Direct3D11\Effects</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\ShaderDescription11.h">
+    <ClInclude Include="..\..\source\direct3d11\EffectShaderDescription11.h">
       <Filter>Direct3D11\Effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\EffectTechnique11.h">
@@ -4458,6 +4617,12 @@
     <ClInclude Include="..\..\source\direct3d11\EffectPassShaderDescription11.h">
       <Filter>Direct3D11\Effects\Pass</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectType11.h">
+      <Filter>Direct3D11\Effects\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectTypeDescription11.h">
+      <Filter>Direct3D11\Effects\Type</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\FFT.h">
       <Filter>Direct3D11\Compute</Filter>
     </ClInclude>
@@ -4467,10 +4632,67 @@
     <ClInclude Include="..\..\source\direct3d11\SegmentedScan.h">
       <Filter>Direct3D11\Compute</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\xact3\Enums.h">
+      <Filter>XACT3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\xact3\XACT3Exception.h">
+      <Filter>XACT3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\xact3\Engine.h">
+      <Filter>XACT3\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\xact3\RendererDetails.h">
+      <Filter>XACT3\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\xact3\RuntimeParameters.h">
+      <Filter>XACT3\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\xact3\Wave.h">
+      <Filter>XACT3\Wave</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\xact3\WaveInstanceProperties.h">
+      <Filter>XACT3\Wave</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\xact3\WaveProperties.h">
+      <Filter>XACT3\Wave</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\xact3\WaveBank.h">
+      <Filter>XACT3\WaveBank</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\xact3\WaveBankMiniWaveFormat.h">
+      <Filter>XACT3\WaveBank</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\xact3\WaveBankSampleRegion.h">
+      <Filter>XACT3\WaveBank</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\xact3\Cue.h">
+      <Filter>XACT3\Cue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\xact3\CueInstanceProperties.h">
+      <Filter>XACT3\Cue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\xact3\CueProperties.h">
+      <Filter>XACT3\Cue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\xact3\SoundProperties.h">
+      <Filter>XACT3\Cue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\xact3\SoundVariationProperties.h">
+      <Filter>XACT3\Cue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\xact3\TrackProperties.h">
+      <Filter>XACT3\Cue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\xact3\VariationProperties.h">
+      <Filter>XACT3\Cue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\xact3\SoundBank.h">
+      <Filter>XACT3\SoundBank</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\source\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\Resources.resx">
+    <EmbeddedResource Include="..\.\Resources.resx">
       <Filter>Base\Resources</Filter>
     </EmbeddedResource>
   </ItemGroup>
@@ -4484,7 +4706,7 @@
     <None Include="..\..\source\directwrite\ToDo.txt">
       <Filter>DirectWrite</Filter>
     </None>
-    <None Include="..\DocComments.txt" />
-    <None Include="..\ReleaseNotes.txt" />
+    <None Include="..\.\DocComments.txt" />
+    <None Include="..\.\ReleaseNotes.txt" />
   </ItemGroup>
 </Project>

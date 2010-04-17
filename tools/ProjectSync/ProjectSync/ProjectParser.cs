@@ -39,7 +39,7 @@ namespace ProjectSync
             private set;
         }
 
-        public ProjectParser(string path)
+        public ProjectParser(string path, string prepend)
         {
             Filters = new Dictionary<string, string>();
             IncludeFiles = new Dictionary<string, string>();
@@ -48,10 +48,10 @@ namespace ProjectSync
             OtherFiles = new Dictionary<string, string>();
 
             var filesElement = XDocument.Load(path).Element("VisualStudioProject").Element("Files");
-            Parse(filesElement, null);
+            Parse(filesElement, null, prepend);
         }
 
-        void Parse(XElement element, string filterBase)
+        void Parse(XElement element, string filterBase, string prepend)
         {
             foreach (var child in element.Elements())
             {
@@ -60,11 +60,11 @@ namespace ProjectSync
                     string filter = (string.IsNullOrEmpty(filterBase) ? "" : filterBase + "\\") + (string)child.Attribute("Name");
                     Filters.Add(filter, "");
 
-                    Parse(child, filter);
+                    Parse(child, filter, prepend);
                 }
                 else
                 {
-                    string path = Path.Combine("..", (string)child.Attribute("RelativePath"));
+                    string path = Path.Combine(prepend, (string)child.Attribute("RelativePath"));
                     string extension = Path.GetExtension(path);
 
                     if (extension == ".h")
