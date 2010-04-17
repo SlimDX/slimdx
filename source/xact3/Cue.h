@@ -52,7 +52,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="friendlyName">A <see cref="String"/> that contains the friendly name of the variable.</param>
 			/// <returns>The index for the variable if it exists, otherwise -1.</returns>
-			int GetVariableIndex(String^ friendlyName);
+			int GetVariableIndex(System::String^ friendlyName);
 
 			/// <summary>
 			/// Pause playback of the cue.

@@ -21,8 +21,6 @@
 */
 #pragma once
 
-using namespace System;
-
 namespace SlimDX
 {
 	namespace XACT3
@@ -35,8 +33,8 @@ namespace SlimDX
 		{
 		private:
 			bool isDefault;
-			String^ name;
-			String^ id;
+			System::String^ name;
+			System::String^ id;
 
 		internal:
 			RendererDetails(const XACT_RENDERER_DETAILS& rendererDetails);
@@ -45,7 +43,6 @@ namespace SlimDX
 			/// <summary>
 			/// Gets a value that is true if this is the default audio renderer, otherwise false.
 			/// </summary>
-			/// <unmanaged>XACT_RENDERER_DETAILS::defaultDevice</unmanaged>
 			property bool IsDefault 
 			{
 				bool get() { return isDefault; } 
@@ -54,19 +51,17 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the name of the renderer.
 			/// </summary>
-			/// <unmanaged>XACT_RENDERER_DETAILS::displayName</unmanaged>
-			property String^ DisplayName 
+			property System::String^ DisplayName 
 			{
-				String^ get() { return name; } 
+				System::String^ get() { return name; } 
 			}
 
 			/// <summary>
 			/// Gets the id of the renderer.
 			/// </summary>
-			/// <unmanaged>XACT_RENDERER_DETAILS::rendererID</unmanaged>
-			property String^ RendererId 
+			property System::String^ RendererId 
 			{
-				String^ get() { return id; }
+				System::String^ get() { return id; }
 			}
 		};
 	}

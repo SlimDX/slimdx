@@ -43,39 +43,15 @@ namespace XACT3
 		Construct(pointer);
 	}
 
-	int Engine::RendererCount::get()
+	Engine::Engine( CreationFlags flags )
 	{
-		XACTINDEX result;
-		HRESULT hr = InternalPointer->GetRendererCount(&result);
-		RECORD_XACT3(hr);
+		IXACT3Engine *pointer;
 
-		return static_cast<int>(result);
-	}
+		HRESULT hr = XACT3CreateEngine(static_cast<DWORD>(flags), &pointer);
+		if (RECORD_XACT3(hr).IsFailure)
+			throw gcnew XACT3Exception(Result::Last);
 
-	RendererDetails Engine::GetRendererDetails(int rendererIndex)
-	{
-		XACT_RENDERER_DETAILS rendererDetails;
-
-		HRESULT hr = InternalPointer->GetRendererDetails((XACTINDEX)rendererIndex, &rendererDetails);
-		RECORD_XACT3(hr);
-
-		return RendererDetails(rendererDetails);
-	}
-
-	WaveFormatExtensible^ Engine::FinalMixFormat::get()
-	{
-		WAVEFORMATEXTENSIBLE finalMixFormat;
-
-		HRESULT hr = InternalPointer->GetFinalMixFormat(&finalMixFormat);
-		RECORD_XACT3(hr);
-
-		return gcnew WaveFormatExtensible(finalMixFormat);
-	}
-
-	Result Engine::ShutDown()
-	{
-		HRESULT hr = InternalPointer->ShutDown();
-		return RECORD_XACT3(hr);
+		Construct(pointer);
 	}
 
 	Result Engine::DoWork()
@@ -86,48 +62,11 @@ namespace XACT3
 
 	int Engine::GetCategory(String^ friendlyName)
 	{
-		XACTCATEGORY result;
-
 		array<unsigned char>^ friendlyNameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes(friendlyName);
 		pin_ptr<unsigned char> pinnedFriendlyName = &friendlyNameBytes[0];
-		result = InternalPointer->GetCategory(reinterpret_cast<PCSTR>(pinnedFriendlyName));
 
+		XACTCATEGORY result = InternalPointer->GetCategory(reinterpret_cast<PCSTR>(pinnedFriendlyName));
 		return result == XACTCATEGORY_INVALID ? -1 : result;
-	}
-
-	Result Engine::Stop(int category, StopFlags flags)
-	{
-		HRESULT hr = InternalPointer->Stop((XACTCATEGORY)category, (DWORD)flags);
-		return RECORD_XACT3(hr);
-	}
-
-	Result Engine::SetVolume(int category, float volume)
-	{
-		HRESULT hr = InternalPointer->SetVolume((XACTCATEGORY)category, volume);
-		return RECORD_XACT3(hr);
-	}
-
-	Result Engine::Pause(int category, bool pause)
-	{
-		HRESULT hr = InternalPointer->Pause((XACTCATEGORY)category, pause);
-		return RECORD_XACT3(hr);
-	}
-
-	int Engine::GetGlobalVariableIndex(String^ friendlyName)
-	{
-		XACTVARIABLEINDEX result;
-
-		array<unsigned char>^ friendlyNameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes(friendlyName);
-		pin_ptr<unsigned char> pinnedFriendlyName = &friendlyNameBytes[0];
-		result = InternalPointer->GetGlobalVariableIndex(reinterpret_cast<PCSTR>(pinnedFriendlyName));
-
-		return result == XACTVARIABLEINDEX_INVALID ? -1 : result;
-	}
-
-	Result Engine::SetGlobalVariable(int index, float value)
-	{
-		HRESULT hr = InternalPointer->SetGlobalVariable((XACTVARIABLEINDEX)index, value);
-		return RECORD_XACT3(hr);
 	}
 
 	float Engine::GetGlobalVariable(int index)
@@ -138,6 +77,84 @@ namespace XACT3
 		RECORD_XACT3(hr);
 
 		return result;
+	}
+
+	int Engine::GetGlobalVariableIndex(String^ friendlyName)
+	{
+		array<unsigned char>^ friendlyNameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes(friendlyName);
+		pin_ptr<unsigned char> pinnedFriendlyName = &friendlyNameBytes[0];
+
+		XACTVARIABLEINDEX result = InternalPointer->GetGlobalVariableIndex(reinterpret_cast<PCSTR>(pinnedFriendlyName));
+		return result == XACTVARIABLEINDEX_INVALID ? -1 : result;
+	}
+
+	RendererDetails Engine::GetRendererDetails(int rendererIndex)
+	{
+		XACT_RENDERER_DETAILS rendererDetails;
+
+		HRESULT hr = InternalPointer->GetRendererDetails(static_cast<XACTINDEX>(rendererIndex), &rendererDetails);
+		RECORD_XACT3(hr);
+
+		return RendererDetails(rendererDetails);
+	}
+
+	Result Engine::Initialize( RuntimeParameters parameters )
+	{
+		XACT_RUNTIME_PARAMETERS rp = parameters.ToUnmanaged();
+
+		HRESULT hr = InternalPointer->Initialize(&rp);
+		delete[] rp.pRendererID;
+
+		return RECORD_XACT3(hr);
+	}
+
+	Result Engine::Pause(int category, bool pause)
+	{
+		HRESULT hr = InternalPointer->Pause(static_cast<XACTCATEGORY>(category), pause);
+		return RECORD_XACT3(hr);
+	}
+
+	Result Engine::SetGlobalVariable(int index, float value)
+	{
+		HRESULT hr = InternalPointer->SetGlobalVariable(static_cast<XACTVARIABLEINDEX>(index), value);
+		return RECORD_XACT3(hr);
+	}
+
+	Result Engine::SetVolume(int category, float volume)
+	{
+		HRESULT hr = InternalPointer->SetVolume(static_cast<XACTCATEGORY>(category), volume);
+		return RECORD_XACT3(hr);
+	}
+
+	Result Engine::ShutDown()
+	{
+		HRESULT hr = InternalPointer->ShutDown();
+		return RECORD_XACT3(hr);
+	}
+
+	Result Engine::Stop(int category, StopFlags flags)
+	{
+		HRESULT hr = InternalPointer->Stop(static_cast<XACTCATEGORY>(category), static_cast<DWORD>(flags));
+		return RECORD_XACT3(hr);
+	}
+
+	int Engine::RendererCount::get()
+	{
+		XACTINDEX result;
+		HRESULT hr = InternalPointer->GetRendererCount(&result);
+		RECORD_XACT3(hr);
+
+		return static_cast<int>(result);
+	}
+
+	WaveFormatExtensible^ Engine::FinalMixFormat::get()
+	{
+		WAVEFORMATEXTENSIBLE finalMixFormat;
+
+		HRESULT hr = InternalPointer->GetFinalMixFormat(&finalMixFormat);
+		RECORD_XACT3(hr);
+
+		return gcnew WaveFormatExtensible(finalMixFormat);
 	}
 }
 }

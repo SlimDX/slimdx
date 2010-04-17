@@ -47,7 +47,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="friendlyName">A <see cref="String"/> that contains the friendly name of the cue.</param>
 			/// <returns>The index for the cue if it exists, otherwise -1.</returns>
-			int GetCueIndex(String^ friendlyName);
+			int GetCueIndex(System::String^ friendlyName);
 
 			/// <summary>
 			/// Get the properties of a cue.
