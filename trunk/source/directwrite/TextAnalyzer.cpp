@@ -39,5 +39,9 @@ namespace DirectWrite
 	{
 		return RECORD_DW(InternalPointer->AnalyzeScript(analysisSource->InternalPointer, textPosition, textLength, analysisSink->InternalPointer));
 	}
+	Result TextAnalyzer::AnalyzeBidi(TextAnalysisSource ^analysisSource, int textPosition, int textLength, TextAnalysisSink ^analysisSink)
+	{
+		return RECORD_DW(InternalPointer->AnalyzeBidi(analysisSource->InternalPointer, textPosition, textLength, analysisSink->InternalPointer));
+	}
 }
 }
