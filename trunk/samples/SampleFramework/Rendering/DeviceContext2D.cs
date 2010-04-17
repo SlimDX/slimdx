@@ -37,7 +37,7 @@ namespace SlimDX.SampleFramework {
         /// </summary>
         /// <param name="handle">The window handle to associate with the device.</param>
         /// <param name="settings">The settings used to configure the device.</param>
-        internal DeviceContext2D(IntPtr handle, DeviceSettings2D settings) {
+        public DeviceContext2D(IntPtr handle, DeviceSettings2D settings) {
             if (handle == IntPtr.Zero)
                 throw new ArgumentException("Value must be a valid window handle.", "handle");
             if (settings == null)
