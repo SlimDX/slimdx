@@ -22,17 +22,30 @@
 using System;
 
 namespace SlimDX {
+    /// <summary>
+    /// Contains information about the result of an operation.
+    /// </summary>
     public struct Result {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Result"/> struct.
+        /// </summary>
+        /// <param name="code">The code.</param>
         public Result( int code )
             : this() {
             Code = code;
         }
 
+        /// <summary>
+        /// Gets or sets the result code.
+        /// </summary>
         public int Code {
             get;
             private set;
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this Result instance represents success.
+        /// </summary>
         public bool IsSuccess {
             get {
                 // This is equivalent to the native SUCCEEDED macro.
@@ -40,6 +53,9 @@ namespace SlimDX {
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this Result instance represents failure.
+        /// </summary>
         public bool IsFailure {
             get {
                 // This is equivalent to the native FAILED macro.
@@ -47,6 +63,9 @@ namespace SlimDX {
             }
         }
 
+        /// <summary>
+        /// Gets the last recorded Result instance for the currently executing thread.
+        /// </summary>
         public static Result Last {
             get {
                 return last;

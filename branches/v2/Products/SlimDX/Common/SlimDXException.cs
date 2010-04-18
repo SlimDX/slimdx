@@ -69,8 +69,7 @@ namespace SlimDX {
             if( info == null ) {
                 throw new ArgumentNullException( "info" );
             }
-            //info->AddValue("Result", m_Result);
-
+            
             base.GetObjectData( info, context );
         }
     }
