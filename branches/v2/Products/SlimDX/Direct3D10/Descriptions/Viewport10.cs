@@ -6,8 +6,8 @@ using System.Text;
 
 namespace SlimDX.Direct3D10 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct Viewport10 {
-        public Viewport10(int x, int y, int width, int height, float minDepth, float maxDepth) {
+    public struct Viewport {
+        public Viewport(int x, int y, int width, int height, float minDepth, float maxDepth) {
             topLeftX = x;
             topLeftY = y;
             this.width = width;

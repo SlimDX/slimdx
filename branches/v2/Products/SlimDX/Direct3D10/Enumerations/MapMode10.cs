@@ -23,7 +23,7 @@ namespace SlimDX.Direct3D10 {
     /// <summary>
     /// Indicates how a resource is to be mapped for access (reading and writing) by the CPU.
     /// </summary>
-    public enum MapMode10 : int {
+    public enum MapMode : int {
         /// <summary>
         /// The resource is mapped for reading.
         /// </summary>

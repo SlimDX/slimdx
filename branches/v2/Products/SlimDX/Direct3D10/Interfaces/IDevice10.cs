@@ -24,24 +24,24 @@ using System.Drawing;
 
 namespace SlimDX.Direct3D10 {
     [InterfaceID( "9B7E4C0F-342C-4106-A19F-4F2704F689F0" )]
-    public interface IDevice10 : IComObject {
-        IRenderTargetView10 CreateRenderTargetView( IResource10 resource );
-        IBuffer10 CreateBuffer<T>(BufferDescription10 bufferDescription10, T[] bufferData) where T : struct;
-        IBuffer10 CreateEmptyBuffer(BufferDescription10 bufferDescription10);
-        IInputLayout10 CreateInputLayout(InputElement10[] elements, ShaderSignature10 signature);
+    public interface IDevice : IComObject {
+        IRenderTargetView CreateRenderTargetView( IResource resource );
+        IBuffer CreateBuffer<T>(BufferDescription bufferDescription, T[] bufferData) where T : struct;
+        IBuffer CreateEmptyBuffer(BufferDescription bufferDescription);
+        IInputLayout CreateInputLayout(InputElement[] elements, ShaderSignature signature);
 
-        void ClearRenderTargetView(IRenderTargetView10 renderTargetView, Color clearColor);
+        void ClearRenderTargetView(IRenderTargetView renderTargetView, Color clearColor);
 
-        void IASetPrimitiveTopology(PrimitiveTopology10 primitiveTopology);
-        void IASetVertexBuffer(int startSlot, VertexBufferBinding10 vertexBufferBinding);
-        void IASetVertexBuffers(int startSlot, VertexBufferBinding10[] vertexBufferBindings);
-        void IASetInputLayout(IInputLayout10 inputLayout);
+        void IASetPrimitiveTopology(PrimitiveTopology primitiveTopology);
+        void IASetVertexBuffer(int startSlot, VertexBufferBinding vertexBufferBinding);
+        void IASetVertexBuffers(int startSlot, VertexBufferBinding[] vertexBufferBindings);
+        void IASetInputLayout(IInputLayout inputLayout);
 
-        void RSSetViewport(Viewport10 viewport);
-        void RSSetViewports(Viewport10[] viewports);
+        void RSSetViewport(Viewport viewport);
+        void RSSetViewports(Viewport[] viewports);
 
-        void OMSetRenderTargets(IRenderTargetView10[] renderTargetViews, IDepthStencilView10 depthStencilView);
-        void OMSetRenderTarget(IRenderTargetView10 renderTargetView, IDepthStencilView10 depthStencilView);
+        void OMSetRenderTargets(IRenderTargetView[] renderTargetViews, IDepthStencilView depthStencilView);
+        void OMSetRenderTarget(IRenderTargetView renderTargetView, IDepthStencilView depthStencilView);
 
         void Draw(int vertexCount, int startLocation);
     }

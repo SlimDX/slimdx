@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 
 namespace SlimDX.Direct3D10 {
-    public interface IEffect10 : IComObject {
-        IEffectTechnique10 GetTechniqueByIndex(int index);
+    public interface IEffect : IComObject {
+        IEffectTechnique GetTechniqueByIndex(int index);
     }
 
-    public interface IEffectTechnique10 {
-        IEffectPass10 GetPassByIndex(int index);
+    public interface IEffectTechnique {
+        IEffectPass GetPassByIndex(int index);
     }
 
-    public interface IEffectPass10 {
-        EffectPassDescription10 GetDescription();
+    public interface IEffectPass {
+        EffectPassDescription GetDescription();
         void Apply();
     }
 }

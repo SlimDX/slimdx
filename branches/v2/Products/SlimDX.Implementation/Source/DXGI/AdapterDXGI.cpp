@@ -8,12 +8,12 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
-		AdapterDXGI::AdapterDXGI( IDXGIAdapter* native )
+		Adapter::Adapter( IDXGIAdapter* native )
 		: ComObject( native )
 		{
 		}
 		
-		AdapterDXGI::AdapterDXGI( IntPtr native )
+		Adapter::Adapter( IntPtr native )
 		: ComObject( native )
 		{
 		}

@@ -20,7 +20,7 @@
  */
 
 namespace SlimDX.Direct3D10 {
-    public enum DriverType10 : int {
+    public enum DriverType : int {
        Hardware = 0,
        Reference = 1,
        Null = 2,

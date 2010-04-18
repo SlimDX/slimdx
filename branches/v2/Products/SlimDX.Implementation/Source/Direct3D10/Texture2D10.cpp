@@ -8,12 +8,12 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		Texture2D10::Texture2D10( ID3D10Texture2D* native )
+		Texture2D::Texture2D( ID3D10Texture2D* native )
 		: ComObject( native )
 		{
 		}
 		
-		Texture2D10::Texture2D10( IntPtr native )
+		Texture2D::Texture2D( IntPtr native )
 		: ComObject( native )
 		{
 		}

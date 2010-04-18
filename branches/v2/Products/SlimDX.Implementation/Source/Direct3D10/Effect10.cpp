@@ -1,4 +1,5 @@
 #include "stdafx.h"
+
 #include "Effect10.h"
 
 using namespace System;
@@ -8,15 +9,15 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		EffectPass10::EffectPass10(ID3D10EffectPass* native) : native(native) {
+		EffectPass::EffectPass(ID3D10EffectPass* native) : native(native) {
 		}
 
-		void EffectPass10::Apply() {
+		void EffectPass::Apply() {
 			native->Apply(0);
 		}
 
-		EffectPassDescription10 EffectPass10::GetDescription() {
-			EffectPassDescription10 result;
+		EffectPassDescription EffectPass::GetDescription() {
+			EffectPassDescription result;
 			D3D10_PASS_DESC passDesc;
 			native->GetDesc(&passDesc);
 
@@ -29,7 +30,7 @@ namespace SlimDX
 			result.BlendFactorB = passDesc.BlendFactor[2];
 			result.BlendFactorA = passDesc.BlendFactor[3];
 
-			ShaderSignature10 signature;
+			ShaderSignature signature;
 			signature.Signature = IntPtr(passDesc.pIAInputSignature);
 			signature.SignatureLength = static_cast<int>( passDesc.IAInputSignatureSize );
 
@@ -38,31 +39,31 @@ namespace SlimDX
 			return result;
 		}
 
-		EffectTechnique10::EffectTechnique10(ID3D10EffectTechnique* native) : native(native) {
-			passes = gcnew Dictionary<IntPtr, EffectPass10^>();
+		EffectTechnique::EffectTechnique(ID3D10EffectTechnique* native) : native(native) {
+			passes = gcnew Dictionary<IntPtr, EffectPass^>();
 		}
 
-		IEffectPass10^ EffectTechnique10::GetPassByIndex(int index) {
+		IEffectPass^ EffectTechnique::GetPassByIndex(int index) {
 			ID3D10EffectPass* pass = native->GetPassByIndex(index);
 			if(!passes->ContainsKey(IntPtr(pass))) {
-				passes->Add(IntPtr(pass), gcnew EffectPass10(pass));;
+				passes->Add(IntPtr(pass), gcnew EffectPass(pass));;
 			}
 
 			return passes[IntPtr(pass)];
 		}
 
-		Effect10::Effect10( ID3D10Effect* native ) : ComObject<ID3D10Effect>(native) {
-			techniques = gcnew Dictionary<IntPtr, EffectTechnique10^>();
+		Effect::Effect( ID3D10Effect* native ) : ComObject<ID3D10Effect>(native) {
+			techniques = gcnew Dictionary<IntPtr, EffectTechnique^>();
 		}
 
-		Effect10::Effect10( System::IntPtr native ) : ComObject<ID3D10Effect>(native) {
-			techniques = gcnew Dictionary<IntPtr, EffectTechnique10^>();
+		Effect::Effect( System::IntPtr native ) : ComObject<ID3D10Effect>(native) {
+			techniques = gcnew Dictionary<IntPtr, EffectTechnique^>();
 		}
 
-		IEffectTechnique10^ Effect10::GetTechniqueByIndex(int index) {
+		IEffectTechnique^ Effect::GetTechniqueByIndex(int index) {
 			ID3D10EffectTechnique* technique = NativePointer->GetTechniqueByIndex(index);
 			if(!techniques->ContainsKey(IntPtr(technique))) {
-				techniques->Add(IntPtr(technique), gcnew EffectTechnique10(technique));;
+				techniques->Add(IntPtr(technique), gcnew EffectTechnique(technique));;
 			}
 
 			return techniques[IntPtr(technique)];

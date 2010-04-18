@@ -6,11 +6,11 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		ref class DepthStencilView10 : IDepthStencilView10, ComObject<ID3D10DepthStencilView>
+		ref class DepthStencilView : IDepthStencilView, ComObject<ID3D10DepthStencilView>
 		{
 			public:
-				DepthStencilView10( ID3D10DepthStencilView* native );
-				DepthStencilView10( System::IntPtr native );
+				DepthStencilView( ID3D10DepthStencilView* native );
+				DepthStencilView( System::IntPtr native );
 		};
 	}
 }

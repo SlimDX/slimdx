@@ -6,7 +6,7 @@
 #include "../Common/Utilities.h"
 #include "RenderTargetView10.h"
 #include "Buffer10.h"
-#include "inputlayout10.h"
+#include "Inputlayout10.h"
 
 using namespace System;
 
@@ -14,17 +14,17 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		Device10::Device10( ID3D10Device* native )
+		Device::Device( ID3D10Device* native )
 		: ComObject( native )
 		{
 		}
 		
-		Device10::Device10( IntPtr native )
+		Device::Device( IntPtr native )
 		: ComObject( native )
 		{
 		}
 		
-		IRenderTargetView10^ Device10::CreateRenderTargetView( IResource10^ resource ) {
+		IRenderTargetView^ Device::CreateRenderTargetView( IResource^ resource ) {
 			if( resource == nullptr )
 				throw gcnew ArgumentNullException( "resource" );
 			
@@ -32,16 +32,16 @@ namespace SlimDX
 			ID3D10Resource* nativeResource = reinterpret_cast<ID3D10Resource*>(Utilities::ToUnknown( resource ));
 			ID3D10RenderTargetView* nativeView = 0;
 			if( RecordResult( NativePointer->CreateRenderTargetView( nativeResource, NULL, &nativeView ) ).IsSuccess )
-				return gcnew RenderTargetView10( nativeView );
+				return gcnew RenderTargetView( nativeView );
 			return nullptr;
 		}
 
-		IBuffer10^ Device10::CreateEmptyBuffer(BufferDescription10 bufferDescription) {
+		IBuffer^ Device::CreateEmptyBuffer(BufferDescription bufferDescription) {//TODO: Huh?
 			return CreateBuffer<char>(bufferDescription, nullptr);
 		}
 
 		generic<typename T> where T : value class
-		IBuffer10^ Device10::CreateBuffer(BufferDescription10 bufferDescription, array<T>^ bufferData) {
+		IBuffer^ Device::CreateBuffer(BufferDescription bufferDescription, array<T>^ bufferData) {
 			D3D10_BUFFER_DESC desc = {
 				bufferDescription.SizeInBytes,
 				(D3D10_USAGE)bufferDescription.Usage,
@@ -57,15 +57,15 @@ namespace SlimDX
 				D3D10_SUBRESOURCE_DATA bufferDataRs = {  bufferPtr };
 
 				if(RecordResult(NativePointer->CreateBuffer(&desc, &bufferDataRs, &buffer)).IsSuccess)
-					return gcnew Buffer10(buffer);
+					return gcnew Buffer(buffer);
 			} else {
 				if(RecordResult(NativePointer->CreateBuffer(&desc, nullptr, &buffer)).IsSuccess)
-					return gcnew Buffer10(buffer);
+					return gcnew Buffer(buffer);
 			}
 			return nullptr;
 		}
 
-		IInputLayout10^ Device10::CreateInputLayout(array<InputElement10>^ elements, ShaderSignature10 signature) {
+		IInputLayout^ Device::CreateInputLayout(array<InputElement>^ elements, ShaderSignature signature) {
 			using namespace System::Runtime::InteropServices;
 
 			D3D10_INPUT_ELEMENT_DESC descriptions[16];
@@ -86,25 +86,25 @@ namespace SlimDX
 				Marshal::FreeHGlobal(IntPtr(const_cast<LPSTR>(descriptions[i].SemanticName)));
 			}
 
-			return gcnew InputLayout10(layout);
+			return gcnew InputLayout(layout);
 		}
 
-		void Device10::ClearRenderTargetView(IRenderTargetView10^ renderTargetView, System::Drawing::Color clearColor) {
+		void Device::ClearRenderTargetView(IRenderTargetView^ renderTargetView, System::Drawing::Color clearColor) {
 			float clearColorFloats[4] = {(float)clearColor.R / 255, (float)clearColor.G / 255, (float)clearColor.B / 255, (float)clearColor.A / 255 };
 			ID3D10RenderTargetView* nativeView = reinterpret_cast<ID3D10RenderTargetView*>(Utilities::ToUnknown(renderTargetView));
 			NativePointer->ClearRenderTargetView(nativeView, clearColorFloats);
 		}
 
-		void Device10::IASetPrimitiveTopology(PrimitiveTopology10 primitiveTopology) {
+		void Device::IASetPrimitiveTopology(PrimitiveTopology primitiveTopology) {
 			NativePointer->IASetPrimitiveTopology(static_cast<D3D10_PRIMITIVE_TOPOLOGY>(primitiveTopology));
 		}
 
-		void Device10::IASetVertexBuffer(int startSlot, VertexBufferBinding10 vertexBufferBinding) {
+		void Device::IASetVertexBuffer(int startSlot, VertexBufferBinding vertexBufferBinding) {
 			ID3D10Buffer* buffer = reinterpret_cast<ID3D10Buffer*>(Utilities::ToUnknown(vertexBufferBinding.VertexBuffer));
 			NativePointer->IASetVertexBuffers(startSlot, 1, &buffer, reinterpret_cast<UINT*>(&vertexBufferBinding.Stride), reinterpret_cast<UINT*>(&vertexBufferBinding.Offset));
 		}
 
-		void Device10::IASetVertexBuffers(int startSlot, array<VertexBufferBinding10>^ vertexBufferBindings) {
+		void Device::IASetVertexBuffers(int startSlot, array<VertexBufferBinding>^ vertexBufferBindings) {
 			ID3D10Buffer* buffers[16];
 			UINT strides[16];
 			UINT offsets[16];
@@ -118,20 +118,20 @@ namespace SlimDX
 			NativePointer->IASetVertexBuffers(startSlot, vertexBufferBindings->Length, buffers, strides, offsets);
 		}
 
-		void Device10::IASetInputLayout(IInputLayout10^ inputLayout) {
+		void Device::IASetInputLayout(IInputLayout^ inputLayout) {
 			NativePointer->IASetInputLayout(static_cast<ID3D10InputLayout*>(Utilities::ToUnknown(inputLayout)));
 		}
 
-		void Device10::RSSetViewport(Viewport10 viewport) {
+		void Device::RSSetViewport(Viewport viewport) {
 			NativePointer->RSSetViewports(1, reinterpret_cast<D3D10_VIEWPORT*>(&viewport));
 		}
 
-		void Device10::RSSetViewports(array<Viewport10>^ viewports) {
-			pin_ptr<Viewport10> vps = &viewports[0];
+		void Device::RSSetViewports(array<Viewport>^ viewports) {
+			pin_ptr<Viewport> vps = &viewports[0];
 			NativePointer->RSSetViewports(viewports->Length, reinterpret_cast<D3D10_VIEWPORT*>(vps));
 		}
 
-		void Device10::OMSetRenderTargets(array<IRenderTargetView10^>^ renderTargetViews, IDepthStencilView10^ depthStencilView) {
+		void Device::OMSetRenderTargets(array<IRenderTargetView^>^ renderTargetViews, IDepthStencilView^ depthStencilView) {
 			ID3D10RenderTargetView* renderTargetViewsArray[D3D10_SIMULTANEOUS_RENDER_TARGET_COUNT];
 			for(int i = 0; i < renderTargetViews->Length; ++i) {
 				renderTargetViewsArray[i] = reinterpret_cast<ID3D10RenderTargetView*>(Utilities::ToUnknown( renderTargetViews[i] ));
@@ -144,7 +144,7 @@ namespace SlimDX
 			NativePointer->OMSetRenderTargets(renderTargetViews->Length, renderTargetViewsArray, depthStencilViewPtr);
 		}
 
-		void Device10::OMSetRenderTarget(IRenderTargetView10^ renderTargetView, IDepthStencilView10^ depthStencilView) {
+		void Device::OMSetRenderTarget(IRenderTargetView^ renderTargetView, IDepthStencilView^ depthStencilView) {
 			ID3D10RenderTargetView* renderTargetViewsArray[1] = { (ID3D10RenderTargetView*)Utilities::ToUnknown( renderTargetView ) };
 
 			ID3D10DepthStencilView* depthStencilViewPtr = NULL;
@@ -154,7 +154,7 @@ namespace SlimDX
 			NativePointer->OMSetRenderTargets(1, renderTargetViewsArray, depthStencilViewPtr);
 		}
 
-		void Device10::Draw(int vertexCount, int startLocation) {
+		void Device::Draw(int vertexCount, int startLocation) {
 			NativePointer->Draw(vertexCount, startLocation);
 		}
 	}

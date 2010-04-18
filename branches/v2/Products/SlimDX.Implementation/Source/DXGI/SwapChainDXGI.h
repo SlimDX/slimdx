@@ -6,11 +6,11 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
-		ref class SwapChainDXGI : ISwapChainDXGI, ComObject<IDXGISwapChain>
+		ref class SwapChain : ISwapChain, ComObject<IDXGISwapChain>
 		{
 			public:
-				SwapChainDXGI( IDXGISwapChain* native );
-				SwapChainDXGI( System::IntPtr native );
+				SwapChain( IDXGISwapChain* native );
+				SwapChain( System::IntPtr native );
 				
 				generic<typename T>
 				virtual T GetBuffer( int index );

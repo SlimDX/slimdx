@@ -6,17 +6,17 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		ref class Buffer10 : IBuffer10, ComObject<ID3D10Buffer>
+		ref class Buffer : IBuffer, ComObject<ID3D10Buffer>
 		{
 			public:
-				Buffer10( ID3D10Buffer* native );
-				Buffer10( System::IntPtr native );
+				Buffer( ID3D10Buffer* native );
+				Buffer( System::IntPtr native );
 
-				property BufferDescription10 Description {
-					virtual BufferDescription10 get();
+				property BufferDescription Description {
+					virtual BufferDescription get();
 				}
 
-				virtual IMemoryBuffer^ Map(MapMode10 mapMode);
+				virtual IMemoryBuffer^ Map(MapMode mapMode);
 				virtual void Unmap();
 		};
 	}

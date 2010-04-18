@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace SlimDX.Direct3D10 {
-    public enum ShaderFlags10 {
+    public enum ShaderFlags {
         None = 0,
         Debug = (1 << 0),
         SkipValidation = (1 << 1),
