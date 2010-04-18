@@ -27,7 +27,14 @@ using SlimDX.DXGI;
 using System.IO;
 
 namespace SlimDX {
+    /// <summary>
+    /// Provides methods to load any of the various subsystem APIs supported by SlimDX.
+    /// </summary>
     public static class Loader {
+        /// <summary>
+        /// Loads the Direct3D 10 subsystem.
+        /// </summary>
+        /// <returns>An interface to the D3D10 API object.</returns>
         public static IDirect3D10Api LoadDirect3D10() {
             Assembly implementation = null;
             if( IntPtr.Size == 8 ) {
@@ -41,6 +48,10 @@ namespace SlimDX {
             return implementation.CreateInstance( "SlimDX.Direct3D10.Direct3D10Api" ) as IDirect3D10Api;
         }
 
+        /// <summary>
+        /// Loads the DXGI subsystem.
+        /// </summary>
+        /// <returns>An interface to the DXGI API object.</returns>
         public static IDXGIApi LoadDXGI() {
             Assembly implementation = null;
             if( IntPtr.Size == 8 ) {
