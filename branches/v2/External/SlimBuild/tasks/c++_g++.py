@@ -3,7 +3,7 @@ from sbuild import *
 def execute( build, state, **kwargs ):
 	objects = []
 	for source in kwargs["source"]:
-		object = FileReference( os.path.join( workPath, source.name + ".o" ) )
+		object = FileReference( os.path.join( state.work_path, source.name + ".o" ) )
 		objects.append( object )
 
 		command = [ "g++" ]

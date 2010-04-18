@@ -16,7 +16,9 @@ def execute( build, state, **kwargs ):
 	
 	if "clr" in features:
 		assemblies = kwargs.get( "assemblies", [] )
-	
+	else:
+		assemblies = []
+		
 	extension = "exe"
 	if format == "dll":
 		extension = "dll"
