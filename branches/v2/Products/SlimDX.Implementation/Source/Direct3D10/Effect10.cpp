@@ -31,7 +31,7 @@ namespace SlimDX
 
 			ShaderSignature10 signature;
 			signature.Signature = IntPtr(passDesc.pIAInputSignature);
-			signature.SignatureLength = passDesc.IAInputSignatureSize;
+			signature.SignatureLength = static_cast<int>( passDesc.IAInputSignatureSize );
 
 			result.ShaderSignature = signature;
 
