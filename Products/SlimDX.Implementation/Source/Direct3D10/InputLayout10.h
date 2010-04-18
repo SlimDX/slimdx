@@ -6,11 +6,11 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		ref class InputLayout10 : IInputLayout10, ComObject<ID3D10InputLayout>
+		ref class InputLayout : IInputLayout, ComObject<ID3D10InputLayout>
 		{
 			public:
-				InputLayout10( ID3D10InputLayout* native );
-				InputLayout10( System::IntPtr native );
+				InputLayout( ID3D10InputLayout* native );
+				InputLayout( System::IntPtr native );
 		};
 	}
 }

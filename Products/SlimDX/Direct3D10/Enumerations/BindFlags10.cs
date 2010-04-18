@@ -23,7 +23,7 @@ namespace SlimDX.Direct3D10 {
     /// <summary>
     /// Indicates how a resource should be bound to the graphics pipeline.
     /// </summary>
-    public enum BindFlags10 : int {
+    public enum BindFlags : int {
         /// <summary>
         /// 
         /// </summary>

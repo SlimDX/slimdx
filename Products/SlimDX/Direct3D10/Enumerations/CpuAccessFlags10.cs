@@ -23,7 +23,7 @@ namespace SlimDX.Direct3D10 {
     /// <summary>
     /// Indicates the type of CPU access allowed on a resource.
     /// </summary>
-    public enum CpuAccessFlags10 : int {
+    public enum CpuAccessFlags : int {
         None = 0,
         /// <summary>
         /// 

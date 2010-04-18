@@ -24,10 +24,10 @@ using SlimDX.DXGI;
 
 namespace SlimDX.Direct3D10 {
     public interface IDirect3D10Api {
-        IDevice10 CreateDevice();
-        IEffect10 CreateEffect(IDevice10 device, string filename, string shaderProfile, ShaderFlags10 shaderFlags, EffectFlags10 effectFlags);
+        IDevice CreateDevice();
+        IEffect CreateEffect(IDevice device, string filename, string shaderProfile, ShaderFlags shaderFlags, EffectFlags effectFlags);
 
-        Result CreateDeviceAndSwapChain( IAdapterDXGI adapter, DriverType10 driverType, DeviceCreationFlags10 creationFlags, SwapChainDescription swapChainDescription, out IDevice10 device, out ISwapChainDXGI swapChain );
+        Result CreateDeviceAndSwapChain( IAdapter adapter, DriverType driverType, DeviceCreationFlags creationFlags, SwapChainDescription swapChainDescription, out IDevice device, out ISwapChain swapChain );
         
         T CreateWrapper<T>( IntPtr pointer ) where T : IComObject;
     }

@@ -20,6 +20,6 @@
  */
 
 namespace SlimDX.DXGI {
-    public interface IAdapterDXGI : IObjectDXGI {
+    public interface IAdapter : IObject {
     }
 }

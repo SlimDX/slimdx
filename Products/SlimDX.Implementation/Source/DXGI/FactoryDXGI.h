@@ -6,13 +6,13 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
-		ref class FactoryDXGI : IFactoryDXGI, ComObject<IDXGIFactory>
+		ref class Factory : IFactory, ComObject<IDXGIFactory>
 		{
 			public:
-				FactoryDXGI( IDXGIFactory* native );
-				FactoryDXGI( System::IntPtr native );
+				Factory( IDXGIFactory* native );
+				Factory( System::IntPtr native );
 				
-				virtual ISwapChainDXGI^ CreateSwapChain( IComObject^ device, SwapChainDescription^ description );
+				virtual ISwapChain^ CreateSwapChain( IComObject^ device, SwapChainDescription^ description );
 		};
 	}
 }

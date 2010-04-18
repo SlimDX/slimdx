@@ -23,7 +23,7 @@ using System;
 
 namespace SlimDX.Direct3D10 {
     [Flags]
-    public enum DeviceCreationFlags10 : int {
+    public enum DeviceCreationFlags : int {
         None = 0,
         SingleThreaded = 0x1,
         Debug = 0x2,

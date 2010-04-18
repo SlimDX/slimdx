@@ -20,7 +20,7 @@
  */
 
 namespace SlimDX.DXGI {
-    public interface IFactoryDXGI : IObjectDXGI {
-        ISwapChainDXGI CreateSwapChain( IComObject device, SwapChainDescription description );
+    public interface IFactory : IObject {
+        ISwapChain CreateSwapChain( IComObject device, SwapChainDescription description );
     }
 }

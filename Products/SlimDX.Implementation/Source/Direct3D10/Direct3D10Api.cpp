@@ -32,12 +32,12 @@ namespace SlimDX
 			return (T)Activator::CreateInstance( target, pointer );
 		}
 		
-		IDevice10^ Direct3D10Api::CreateDevice()
+		IDevice^ Direct3D10Api::CreateDevice()
 		{
 			return nullptr;//gcnew Device10();
 		}
 
-		IEffect10^ Direct3D10Api::CreateEffect(IDevice10^ device, System::String^ filename, System::String^ shaderProfile, ShaderFlags10 shaderFlags, EffectFlags10 effectFlags) {
+		IEffect^ Direct3D10Api::CreateEffect(IDevice^ device, System::String^ filename, System::String^ shaderProfile, ShaderFlags shaderFlags, EffectFlags effectFlags) {
 			IntPtr filenamePtr = Marshal::StringToHGlobalAnsi(filename);
 			IntPtr profilePtr = Marshal::StringToHGlobalAnsi(shaderProfile);
 
@@ -62,10 +62,10 @@ namespace SlimDX
 
 			RecordResult(hr);
 
-			return gcnew Effect10(effect);
+			return gcnew Effect(effect);
 		}
 
-		SlimDX::Result Direct3D10Api::CreateDeviceAndSwapChain( SlimDX::DXGI::IAdapterDXGI^ adapter, DriverType10 driverType, DeviceCreationFlags10 creationFlags, SlimDX::DXGI::SwapChainDescription^ swapChainDescription, [Out] IDevice10^% device, [Out] SlimDX::DXGI::ISwapChainDXGI^% swapChain )
+		SlimDX::Result Direct3D10Api::CreateDeviceAndSwapChain( SlimDX::DXGI::IAdapter^ adapter, DriverType driverType, DeviceCreationFlags creationFlags, SlimDX::DXGI::SwapChainDescription^ swapChainDescription, [Out] IDevice^% device, [Out] SlimDX::DXGI::ISwapChain^% swapChain )
 		{
 			ID3D10Device* nativeDevice = 0;
 			IDXGISwapChain* nativeSwapChain = 0;
@@ -84,8 +84,8 @@ namespace SlimDX
 			
 			if( RecordResult( hr ).IsSuccess )
 			{
-				device = gcnew Device10( nativeDevice );
-				swapChain = gcnew SlimDX::DXGI::SwapChainDXGI( nativeSwapChain );
+				device = gcnew Device( nativeDevice );
+				swapChain = gcnew SlimDX::DXGI::SwapChain( nativeSwapChain );
 			}
 			else
 			{

@@ -10,7 +10,7 @@ namespace SlimDX
 		{
 		}
 		
-		IFactoryDXGI^ DXGIApi::CreateFactory() {
+		IFactory^ DXGIApi::CreateFactory() {
 			return nullptr;// gcnew FactoryDXGI( this, 0 );
 		}
 	}

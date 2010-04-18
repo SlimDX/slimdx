@@ -22,6 +22,6 @@
 using System;
 namespace SlimDX.Direct3D10 {
     [InterfaceID( "C902B03F-60A7-49BA-9936-2A3AB37A7E33" )]
-    public interface IView10 : IComObject {
+    public interface IView : IComObject {
     }
 }

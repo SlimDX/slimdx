@@ -9,7 +9,7 @@ namespace SlimDX
 			public:
 				DXGIApi();
 				
-				virtual IFactoryDXGI^ CreateFactory();
+				virtual IFactory^ CreateFactory();
 		};
 	}
 }

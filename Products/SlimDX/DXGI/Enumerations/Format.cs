@@ -142,22 +142,22 @@ namespace SlimDX.DXGI {
         /// <summary>
         /// 
         /// </summary>
-        R10G10B10A2_TYPELESS = 23,
+        R10G10BA2_TYPELESS = 23,
 
         /// <summary>
         /// 
         /// </summary>
-        R10G10B10A2_UNORM = 24,
+        R10G10BA2_UNORM = 24,
 
         /// <summary>
         /// 
         /// </summary>
-        R10G10B10A2_UINT = 25,
+        R10G10BA2_UINT = 25,
 
         /// <summary>
         /// 
         /// </summary>
-        R11G11B10_FLOAT = 26,
+        R11G11B_FLOAT = 26,
 
         /// <summary>
         /// 
@@ -472,7 +472,7 @@ namespace SlimDX.DXGI {
         /// <summary>
         /// 
         /// </summary>
-        R10G10B10_XR_BIAS_A2_UNORM = 89,
+        R10G10B_XR_BIAS_A2_UNORM = 89,
 
         /// <summary>
         /// 

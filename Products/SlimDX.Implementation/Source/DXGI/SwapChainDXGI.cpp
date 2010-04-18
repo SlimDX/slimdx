@@ -10,18 +10,18 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
-		SwapChainDXGI::SwapChainDXGI( IDXGISwapChain* native )
+		SwapChain::SwapChain( IDXGISwapChain* native )
 		: ComObject( native )
 		{
 		}
 		
-		SwapChainDXGI::SwapChainDXGI( IntPtr native )
+		SwapChain::SwapChain( IntPtr native )
 		: ComObject( native )
 		{
 		}
 		
 		generic<typename T>
-		T SwapChainDXGI::GetBuffer( int index )
+		T SwapChain::GetBuffer( int index )
 		{
 			void* result = 0;
 			IID iid = Utilities::ToNative( Utilities::GetInterfaceID<T>() );
@@ -31,7 +31,7 @@ namespace SlimDX
 			return (T)Activator::CreateInstance( target, IntPtr( result ) );
 		}
 
-		void SwapChainDXGI::Present(int syncInterval, PresentFlags presentFlags) {
+		void SwapChain::Present(int syncInterval, PresentFlags presentFlags) {
 			HRESULT hr = NativePointer->Present(syncInterval, static_cast<UINT>(presentFlags));
 		}
 	}

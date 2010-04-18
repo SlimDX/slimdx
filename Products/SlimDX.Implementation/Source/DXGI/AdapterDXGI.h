@@ -6,11 +6,11 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
-		ref class AdapterDXGI : IAdapterDXGI, ComObject<IDXGIAdapter>
+		ref class Adapter : IAdapter, ComObject<IDXGIAdapter>
 		{
 			public:
-				AdapterDXGI( IDXGIAdapter* native );
-				AdapterDXGI( System::IntPtr native );
+				Adapter( IDXGIAdapter* native );
+				Adapter( System::IntPtr native );
 		};
 	}
 }

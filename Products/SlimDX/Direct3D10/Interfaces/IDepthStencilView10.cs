@@ -21,6 +21,6 @@
 
 namespace SlimDX.Direct3D10 {
     [InterfaceID("9B7E4C09-342C-4106-A19F-4F2704F689F0")]
-    public interface IDepthStencilView10 : IComObject {
+    public interface IDepthStencilView : IComObject {
     }
 }

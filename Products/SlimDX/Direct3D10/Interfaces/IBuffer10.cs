@@ -20,10 +20,10 @@
  */
 
 namespace SlimDX.Direct3D10 {
-    public interface IBuffer10 : IComObject {
-        BufferDescription10 Description { get; }
+    public interface IBuffer : IComObject {
+        BufferDescription Description { get; }
 
-        IMemoryBuffer Map(MapMode10 mapMode);
+        IMemoryBuffer Map(MapMode mapMode);
         void Unmap();
     }
 }

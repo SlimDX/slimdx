@@ -11,22 +11,22 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
-		FactoryDXGI::FactoryDXGI( IDXGIFactory* native )
+		Factory::Factory( IDXGIFactory* native )
 		: ComObject( native )
 		{
 		}
 		
-		FactoryDXGI::FactoryDXGI( IntPtr native )
+		Factory::Factory( IntPtr native )
 		: ComObject( native )
 		{
 		}
 		
-		ISwapChainDXGI^ FactoryDXGI::CreateSwapChain( IComObject^ device, SwapChainDescription^ description )
+		ISwapChain^ Factory::CreateSwapChain( IComObject^ device, SwapChainDescription^ description )
 		{
 			IDXGISwapChain* object = 0;
 			DXGI_SWAP_CHAIN_DESC nativeDescription = Utilities::ToNative( description );
 			HRESULT hr = NativePointer->CreateSwapChain( Utilities::ToUnknown( device ), &nativeDescription, &object );
-			return gcnew SwapChainDXGI( object );
+			return gcnew SwapChain( object );
 		}
 	}
 }

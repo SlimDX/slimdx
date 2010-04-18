@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace SlimDX.Direct3D10 {
-    public enum PrimitiveTopology10 {
+    public enum PrimitiveTopology {
         Undefined                   = 0,
         PointList                   = 1,
         LineList                    = 2,

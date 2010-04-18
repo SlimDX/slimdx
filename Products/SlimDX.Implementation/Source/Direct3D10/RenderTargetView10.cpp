@@ -8,12 +8,12 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		RenderTargetView10::RenderTargetView10( ID3D10RenderTargetView* native )
+		RenderTargetView::RenderTargetView( ID3D10RenderTargetView* native )
 		: ComObject( native )
 		{
 		}
 		
-		RenderTargetView10::RenderTargetView10( IntPtr native )
+		RenderTargetView::RenderTargetView( IntPtr native )
 		: ComObject( native )
 		{
 		}
