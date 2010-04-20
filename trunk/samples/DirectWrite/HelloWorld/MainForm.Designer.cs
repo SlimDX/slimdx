@@ -28,30 +28,30 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.tabControl1 = new System.Windows.Forms.TabControl();
+			this.TabControl = new System.Windows.Forms.TabControl();
 			this.simpleTextTabPage = new System.Windows.Forms.TabPage();
-			this.SimpleTextRenderPanel = new HelloWorld.RenderPanel();
 			this.multiformattedTextTabPage = new System.Windows.Forms.TabPage();
-			this.MultiformattedTextRenderPanel = new HelloWorld.RenderPanel();
 			this.customTextRendererTabPage = new System.Windows.Forms.TabPage();
+			this.SimpleTextRenderPanel = new HelloWorld.RenderPanel();
+			this.MultiformattedTextRenderPanel = new HelloWorld.RenderPanel();
 			this.CustomTextRenderPanel = new HelloWorld.RenderPanel();
-			this.tabControl1.SuspendLayout();
+			this.TabControl.SuspendLayout();
 			this.simpleTextTabPage.SuspendLayout();
 			this.multiformattedTextTabPage.SuspendLayout();
 			this.customTextRendererTabPage.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// tabControl1
+			// TabControl
 			// 
-			this.tabControl1.Controls.Add(this.simpleTextTabPage);
-			this.tabControl1.Controls.Add(this.multiformattedTextTabPage);
-			this.tabControl1.Controls.Add(this.customTextRendererTabPage);
-			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabControl1.Location = new System.Drawing.Point(0, 0);
-			this.tabControl1.Name = "tabControl1";
-			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(629, 449);
-			this.tabControl1.TabIndex = 0;
+			this.TabControl.Controls.Add(this.simpleTextTabPage);
+			this.TabControl.Controls.Add(this.multiformattedTextTabPage);
+			this.TabControl.Controls.Add(this.customTextRendererTabPage);
+			this.TabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.TabControl.Location = new System.Drawing.Point(0, 0);
+			this.TabControl.Name = "TabControl";
+			this.TabControl.SelectedIndex = 0;
+			this.TabControl.Size = new System.Drawing.Size(629, 449);
+			this.TabControl.TabIndex = 0;
 			// 
 			// simpleTextTabPage
 			// 
@@ -64,15 +64,6 @@
 			this.simpleTextTabPage.Text = "Simple Text";
 			this.simpleTextTabPage.UseVisualStyleBackColor = true;
 			// 
-			// SimpleTextRenderPanel
-			// 
-			this.SimpleTextRenderPanel.BackColor = System.Drawing.Color.White;
-			this.SimpleTextRenderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.SimpleTextRenderPanel.Location = new System.Drawing.Point(3, 3);
-			this.SimpleTextRenderPanel.Name = "SimpleTextRenderPanel";
-			this.SimpleTextRenderPanel.Size = new System.Drawing.Size(615, 417);
-			this.SimpleTextRenderPanel.TabIndex = 0;
-			// 
 			// multiformattedTextTabPage
 			// 
 			this.multiformattedTextTabPage.Controls.Add(this.MultiformattedTextRenderPanel);
@@ -84,14 +75,6 @@
 			this.multiformattedTextTabPage.Text = "Multiformatted Text";
 			this.multiformattedTextTabPage.UseVisualStyleBackColor = true;
 			// 
-			// MultiformattedTextRenderPanel
-			// 
-			this.MultiformattedTextRenderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.MultiformattedTextRenderPanel.Location = new System.Drawing.Point(3, 3);
-			this.MultiformattedTextRenderPanel.Name = "MultiformattedTextRenderPanel";
-			this.MultiformattedTextRenderPanel.Size = new System.Drawing.Size(615, 417);
-			this.MultiformattedTextRenderPanel.TabIndex = 0;
-			// 
 			// customTextRendererTabPage
 			// 
 			this.customTextRendererTabPage.Controls.Add(this.CustomTextRenderPanel);
@@ -101,6 +84,23 @@
 			this.customTextRendererTabPage.TabIndex = 2;
 			this.customTextRendererTabPage.Text = "Custom Text Renderer";
 			this.customTextRendererTabPage.UseVisualStyleBackColor = true;
+			// 
+			// SimpleTextRenderPanel
+			// 
+			this.SimpleTextRenderPanel.BackColor = System.Drawing.Color.White;
+			this.SimpleTextRenderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.SimpleTextRenderPanel.Location = new System.Drawing.Point(3, 3);
+			this.SimpleTextRenderPanel.Name = "SimpleTextRenderPanel";
+			this.SimpleTextRenderPanel.Size = new System.Drawing.Size(615, 417);
+			this.SimpleTextRenderPanel.TabIndex = 0;
+			// 
+			// MultiformattedTextRenderPanel
+			// 
+			this.MultiformattedTextRenderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.MultiformattedTextRenderPanel.Location = new System.Drawing.Point(3, 3);
+			this.MultiformattedTextRenderPanel.Name = "MultiformattedTextRenderPanel";
+			this.MultiformattedTextRenderPanel.Size = new System.Drawing.Size(615, 417);
+			this.MultiformattedTextRenderPanel.TabIndex = 0;
 			// 
 			// CustomTextRenderPanel
 			// 
@@ -115,10 +115,10 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(629, 449);
-			this.Controls.Add(this.tabControl1);
+			this.Controls.Add(this.TabControl);
 			this.Name = "MainForm";
 			this.Text = "Hello World";
-			this.tabControl1.ResumeLayout(false);
+			this.TabControl.ResumeLayout(false);
 			this.simpleTextTabPage.ResumeLayout(false);
 			this.multiformattedTextTabPage.ResumeLayout(false);
 			this.customTextRendererTabPage.ResumeLayout(false);
@@ -128,12 +128,12 @@
 
 		#endregion
 
-		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage simpleTextTabPage;
 		private System.Windows.Forms.TabPage multiformattedTextTabPage;
 		private System.Windows.Forms.TabPage customTextRendererTabPage;
 		public RenderPanel SimpleTextRenderPanel;
 		public RenderPanel MultiformattedTextRenderPanel;
 		public RenderPanel CustomTextRenderPanel;
+		public System.Windows.Forms.TabControl TabControl;
 	}
 }
