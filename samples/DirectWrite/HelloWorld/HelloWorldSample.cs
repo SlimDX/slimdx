@@ -20,6 +20,7 @@
 * THE SOFTWARE.
 */
 
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using SlimDX;
@@ -36,7 +37,7 @@ namespace HelloWorld
 	class HelloWorldSample : Sample
 	{
 		private MainForm _mainForm;
-		private SolidColorBrush _brush;
+		private SolidColorBrush _simpleTextBrush;
 
 		/// <summary>
 		/// Disposes of object resources.
@@ -47,7 +48,9 @@ namespace HelloWorld
 		{
 			if (disposeManagedResources)
 			{
-				_brush.Dispose();
+				_simpleTextBrush.Dispose();
+				_multiformattedLayout.Dispose();
+				_multiformattedTextBrush.Dispose();
 			}
 
 			base.Dispose(disposeManagedResources);
@@ -63,8 +66,10 @@ namespace HelloWorld
 		private TextFormat _textFormat;
 		float _dpiY;
 		float _dpiX;
+		private SolidColorBrush _multiformattedTextBrush;
+		private TextLayout _multiformattedLayout;
 
-		private WindowRenderTarget RenderTarget
+		private WindowRenderTarget SimpleTextRenderTarget
 		{
 			get { return _mainForm.SimpleTextRenderPanel.Context2D.RenderTarget; }
 		}
@@ -81,28 +86,84 @@ namespace HelloWorld
 			};
 
 			InitializeDevice(settings);
-			_mainForm.SimpleTextRenderPanel.InitializeDevice();
 			_writeFactory = new SlimDX.DirectWrite.Factory(SlimDX.DirectWrite.FactoryType.Shared);
 			_textFormat = _writeFactory.CreateTextFormat("Gabriola", FontWeight.Regular, FontStyle.Normal, FontStretch.Normal, 72.0f, "en-us");
 			_textFormat.TextAlignment = TextAlignment.Center;
 			_textFormat.ParagraphAlignment = ParagraphAlignment.Center;
-			_brush = new SolidColorBrush(RenderTarget, new Color4(0.0f, 0.0f, 0.0f));
-			using (Graphics graphics = Graphics.FromHwnd(_mainForm.SimpleTextRenderPanel.Handle))
+			using (Graphics graphics = Graphics.FromHwnd(_mainForm.Handle))
 			{
 				_dpiY = graphics.DpiY/96.0f;
 				_dpiX = graphics.DpiX/96.0f;
 			}
+
+			InitializeSimpleText();
+			InitializeMultiformattedText();
 		}
 
+		private void InitializeMultiformattedText()
+		{
+			_mainForm.MultiformattedTextRenderPanel.InitializeDevice();
+			_multiformattedTextBrush = new SolidColorBrush(MultiformattedRenderTarget, new Color4(0.0f, 0.0f, 0.0f));
+			string text = "Hello World using   DirectWrite!";
+			_multiformattedLayout = _writeFactory.CreateTextLayout(text, _textFormat, 640.0f, 480.0f);
+			_multiformattedLayout.SetFontSize(100.0f, new TextRange(20, 6));
+			_multiformattedLayout.SetUnderline(true, new TextRange(20, 11));
+			_multiformattedLayout.SetFontWeight(FontWeight.Bold, new TextRange(20, 11));
+			using (Typography typography = _writeFactory.CreateTypography())
+			{
+				typography.AddFeature(new FontFeature(FontFeatureTag.StylisticSet7, 1));
+				_multiformattedLayout.SetTypography(typography, new TextRange(0, text.Length));
+			}
+		}
+
+		protected WindowRenderTarget MultiformattedRenderTarget
+		{
+			get { return _mainForm.MultiformattedTextRenderPanel.Context2D.RenderTarget; }
+		}
+
+		private void InitializeSimpleText()
+		{
+			_mainForm.SimpleTextRenderPanel.InitializeDevice();
+			_simpleTextBrush = new SolidColorBrush(SimpleTextRenderTarget, new Color4(0.0f, 0.0f, 0.0f));
+		}
+
+		private int SelectedTab
+		{
+			get { return _mainForm.TabControl.SelectedIndex; }
+		}
 		/// <summary>
 		/// In a derived class, implements logic that should occur before all
 		/// other rendering.
 		/// </summary>
 		protected override void OnRenderBegin()
 		{
-			RenderTarget.BeginDraw();
-			RenderTarget.Transform = Matrix3x2.Identity;
-			RenderTarget.Clear(new Color4(1.0f, 1.0f, 1.0f));
+			switch (SelectedTab)
+			{
+			case 0:
+				SimpleTextRenderBegin();
+				break;
+
+			case 1:
+				MultiformattedRenderBegin();
+				break;
+
+			default:
+				break;
+			}
+		}
+
+		private void MultiformattedRenderBegin()
+		{
+			MultiformattedRenderTarget.BeginDraw();
+			MultiformattedRenderTarget.Transform = Matrix3x2.Identity;
+			MultiformattedRenderTarget.Clear(new Color4(1.0f, 1.0f, 1.0f));
+		}
+
+		private void SimpleTextRenderBegin()
+		{
+			SimpleTextRenderTarget.BeginDraw();
+			SimpleTextRenderTarget.Transform = Matrix3x2.Identity;
+			SimpleTextRenderTarget.Clear(new Color4(1.0f, 1.0f, 1.0f));
 		}
 
 		/// <summary>
@@ -110,9 +171,30 @@ namespace HelloWorld
 		/// </summary>
 		protected override void OnRender()
 		{
+			switch (SelectedTab)
+			{
+			case 0:
+				SimpleTextRender();
+				break;
+
+			case 1:
+				MultiformattedTextRender();
+				break;
+			}
+		}
+
+		private void MultiformattedTextRender()
+		{
+			RectangleF layoutRect = _mainForm.MultiformattedTextRenderPanel.ClientRectangle;
+			MultiformattedRenderTarget.DrawTextLayout(new PointF(layoutRect.Left/_dpiX, layoutRect.Top/_dpiY),
+				_multiformattedLayout, _multiformattedTextBrush);
+		}
+
+		private void SimpleTextRender()
+		{
 			RectangleF layoutRect = _mainForm.SimpleTextRenderPanel.ClientRectangle;
 			layoutRect = new RectangleF(layoutRect.Left/_dpiX, layoutRect.Top/_dpiY, layoutRect.Width/_dpiX, layoutRect.Height/_dpiY);
-			RenderTarget.DrawText("Hello World using  DirectWrite!", _textFormat, layoutRect, _brush);
+			SimpleTextRenderTarget.DrawText("Hello World using  DirectWrite!", _textFormat, layoutRect, _simpleTextBrush);
 		}
 
 		/// <summary>
@@ -121,8 +203,26 @@ namespace HelloWorld
 		/// </summary>
 		protected override void OnRenderEnd()
 		{
-			RenderTarget.EndDraw();
+			switch (SelectedTab)
+			{
+			case 0:
+				SimpleTextRenderEnd();
+				break;
+
+			case 1:
+				MultiformattedTextRenderEnd();
+				break;
+			}
 		}
 
+		private void MultiformattedTextRenderEnd()
+		{
+			MultiformattedRenderTarget.EndDraw();
+		}
+
+		private void SimpleTextRenderEnd()
+		{
+			SimpleTextRenderTarget.EndDraw();
+		}
 	}
 }
