@@ -140,11 +140,11 @@ namespace HelloWorld
 			switch (SelectedTab)
 			{
 			case 0:
-				SimpleTextRenderBegin();
+				RenderBegin(SimpleTextRenderTarget);
 				break;
 
 			case 1:
-				MultiformattedRenderBegin();
+				RenderBegin(MultiformattedRenderTarget);
 				break;
 
 			default:
@@ -152,18 +152,11 @@ namespace HelloWorld
 			}
 		}
 
-		private void MultiformattedRenderBegin()
+		private static void RenderBegin(RenderTarget renderTarget)
 		{
-			MultiformattedRenderTarget.BeginDraw();
-			MultiformattedRenderTarget.Transform = Matrix3x2.Identity;
-			MultiformattedRenderTarget.Clear(new Color4(1.0f, 1.0f, 1.0f));
-		}
-
-		private void SimpleTextRenderBegin()
-		{
-			SimpleTextRenderTarget.BeginDraw();
-			SimpleTextRenderTarget.Transform = Matrix3x2.Identity;
-			SimpleTextRenderTarget.Clear(new Color4(1.0f, 1.0f, 1.0f));
+			renderTarget.BeginDraw();
+			renderTarget.Transform = Matrix3x2.Identity;
+			renderTarget.Clear(new Color4(1.0f, 1.0f, 1.0f));
 		}
 
 		/// <summary>
@@ -206,23 +199,13 @@ namespace HelloWorld
 			switch (SelectedTab)
 			{
 			case 0:
-				SimpleTextRenderEnd();
+				SimpleTextRenderTarget.EndDraw();
 				break;
 
 			case 1:
-				MultiformattedTextRenderEnd();
+				MultiformattedRenderTarget.EndDraw();
 				break;
 			}
-		}
-
-		private void MultiformattedTextRenderEnd()
-		{
-			MultiformattedRenderTarget.EndDraw();
-		}
-
-		private void SimpleTextRenderEnd()
-		{
-			SimpleTextRenderTarget.EndDraw();
 		}
 	}
 }
