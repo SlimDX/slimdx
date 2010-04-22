@@ -55,13 +55,10 @@ namespace Direct3D10
 
 		unknown->Release();
 		
-		SlimDX::DXGI::Surface^ result;
-		ComObject^ object = ObjectTable::Find(IntPtr(unknown));
-		result = SlimDX::DXGI::Surface::FromPointer(unknown);
-
-		if(object == nullptr) {
-			ObjectTable::Remove(result);
-		}
+		ObjectTable::Remove(this);
+		SlimDX::DXGI::Surface^ result = gcnew SlimDX::DXGI::Surface(unknown, nullptr);
+		ObjectTable::Remove(result);
+		ObjectTable::Add(this, nullptr);
 
 		return result;
 	}
