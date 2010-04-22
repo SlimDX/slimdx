@@ -48,17 +48,12 @@ namespace Direct3D10
 	SlimDX::DXGI::Surface^ Resource::AsSurface()
 	{
 		IDXGISurface* unknown = 0;
-		GUID guid = Utilities::GetNativeGuidForType( this->GetType() );
+		GUID guid = Utilities::GetNativeGuidForType( SlimDX::DXGI::Surface::typeid );
 		HRESULT hr = InternalPointer->QueryInterface(guid, reinterpret_cast<void**>(&unknown));
 		if(RECORD_D3D10(hr).IsFailure)
 			return nullptr;
 
-		unknown->Release();
-		
-		ObjectTable::Remove(this);
 		SlimDX::DXGI::Surface^ result = gcnew SlimDX::DXGI::Surface(unknown, nullptr);
-		ObjectTable::Remove(result);
-		ObjectTable::Add(this, nullptr);
 
 		return result;
 	}
