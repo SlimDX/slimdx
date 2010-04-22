@@ -58,7 +58,7 @@ namespace SlimDX
 
 		public:
 			/// <summary>
-			/// Returns a DXGI Surface for this resource. Do not dispose of the returned type.
+			/// Returns a DXGI Surface for this resource.
 			/// </summary>
 			/// <returns>The buffer interface, or <c>null</c> on failure.</returns>
 			SlimDX::DXGI::Surface^ AsSurface();
