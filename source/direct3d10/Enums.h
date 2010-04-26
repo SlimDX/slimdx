@@ -664,7 +664,12 @@ namespace SlimDX
 			/// <summary>
 			/// Reserved. Do not use.
 			/// </summary>
-			Software = D3D10_DRIVER_TYPE_SOFTWARE
+			Software = D3D10_DRIVER_TYPE_SOFTWARE,
+
+			/// <summary>
+			/// A WARP high performance software rasterizer.
+			/// </summary>
+			Warp = D3D10_DRIVER_TYPE_WARP,
 		};
 
 		/// <summary>Specifies compile- or run-time options during <see cref="SlimDX::Direct3D10::Effect">Effect</see> creation.</summary>
