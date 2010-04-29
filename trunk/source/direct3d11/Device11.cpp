@@ -243,10 +243,34 @@ namespace Direct3D11
 		return static_cast<Direct3D11::FeatureLevel>( outputLevel );
 	}
 
+#pragma warning(disable : 4947)
+	Result Device::CreateWithSwapChain( DXGI::Adapter^ adapter, DeviceCreationFlags flags, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain )
+	{
+		return CreateWithSwapChain( adapter, DriverType::Unknown, flags, nullptr, swapChainDescription, device, swapChain );
+	}
+
+	Result Device::CreateWithSwapChain( DXGI::Adapter^ adapter, DeviceCreationFlags flags, array<Direct3D11::FeatureLevel>^ featureLevels, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain )
+	{
+		return CreateWithSwapChain( adapter, DriverType::Unknown, flags, featureLevels, swapChainDescription, device, swapChain );
+	}
+
+	Result Device::CreateWithSwapChain( DriverType driverType, DeviceCreationFlags flags, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain )
+	{
+		return CreateWithSwapChain( nullptr, driverType, flags, nullptr, swapChainDescription, device, swapChain );
+	}
+
+	Result Device::CreateWithSwapChain( DriverType driverType, DeviceCreationFlags flags, array<Direct3D11::FeatureLevel>^ featureLevels, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain )
+	{
+		return CreateWithSwapChain( nullptr, driverType, flags, featureLevels, swapChainDescription, device, swapChain );
+	}
+
+	// DEPRECATED METHODS //
+
 	Result Device::CreateWithSwapChain( DXGI::Adapter^ adapter, DriverType driverType, DeviceCreationFlags flags, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain )
 	{
 		return CreateWithSwapChain( adapter, driverType, flags, nullptr, swapChainDescription, device, swapChain );
 	}
+#pragma warning(default : 4947)
 
 	Result Device::CreateWithSwapChain( DXGI::Adapter^ adapter, DriverType driverType, DeviceCreationFlags flags, 
 		array<Direct3D11::FeatureLevel>^ featureLevels, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain )

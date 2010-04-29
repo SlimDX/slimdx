@@ -124,8 +124,17 @@ namespace SlimDX
 
 			static Direct3D11::FeatureLevel GetSupportedFeatureLevel();
 			static Direct3D11::FeatureLevel GetSupportedFeatureLevel( array<Direct3D11::FeatureLevel>^ featureLevels );
-			
+
+			static Result CreateWithSwapChain( DXGI::Adapter^ adapter, DeviceCreationFlags flags, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain );
+			static Result CreateWithSwapChain( DXGI::Adapter^ adapter, DeviceCreationFlags flags, array<Direct3D11::FeatureLevel>^ featureLevels, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain );
+
+			static Result CreateWithSwapChain( DriverType driverType, DeviceCreationFlags flags, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain );
+			static Result CreateWithSwapChain( DriverType driverType, DeviceCreationFlags flags, array<Direct3D11::FeatureLevel>^ featureLevels, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain );
+
+			[System::Obsolete("This method is confusing because only one of the adapter/driverType parameters is valid during the call. Use one of the overloads that explicitly uses the parameter you wish to provide.")]
 			static Result CreateWithSwapChain( DXGI::Adapter^ adapter, DriverType driverType, DeviceCreationFlags flags, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain );
+
+			[System::Obsolete("This method is confusing because only one of the adapter/driverType parameters is valid during the call. Use one of the overloads that explicitly uses the parameter you wish to provide.")]
 			static Result CreateWithSwapChain( DXGI::Adapter^ adapter, DriverType driverType, DeviceCreationFlags flags, array<Direct3D11::FeatureLevel>^ featureLevels, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain );
 		};
 	}
