@@ -146,8 +146,8 @@ namespace Direct3D10
 		ID3D10Blob *errors;
 
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
-		array<Byte>^ functionBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( entryPoint );
-		pin_ptr<Byte> pinnedFunction = &functionBytes[0];
+		array<Byte>^ functionBytes = entryPoint == nullptr ? nullptr : System::Text::ASCIIEncoding::ASCII->GetBytes( entryPoint );
+		pin_ptr<Byte> pinnedFunction = functionBytes == nullptr ? nullptr : &functionBytes[0];
 		array<Byte>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 		pin_ptr<Byte> pinnedProfile = &profileBytes[0];
 
