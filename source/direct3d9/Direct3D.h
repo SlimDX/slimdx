@@ -262,6 +262,8 @@ namespace SlimDX
 			/// <param name="deviceType">The desired device type.</param>
 			/// <returns><c>true</c> if the adapter supports R2VB; otherwise, <c>false</c>.</returns>
 			bool SupportsR2VB( int adapter, DeviceType deviceType );
+
+			Result RegisterSoftwareDevice( System::IntPtr entryPoint );
 		};
 	}
 }
