@@ -234,5 +234,11 @@ namespace Direct3D9
 	{
 		return CheckDeviceFormat( adapter, deviceType, Format::X8R8G8B8, Usage::None, ResourceType::Surface, Format::ATI_R2VB );
 	}
+
+	Result Direct3D::RegisterSoftwareDevice( IntPtr entryPoint )
+	{
+		HRESULT hr = InternalPointer->RegisterSoftwareDevice( entryPoint.ToPointer() );
+		return RECORD_D3D9( hr );
+	}
 }
 }
