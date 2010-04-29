@@ -53,7 +53,9 @@ namespace SlimDX
 		public:
 			static property bool IsApplicationIdle { bool get(); }
 
+			static void Run( MainLoop^ mainLoop );
 			static void Run( System::Windows::Forms::Form^ form, MainLoop^ mainLoop );
+			static void Run( System::Windows::Forms::ApplicationContext^ context, MainLoop^ mainLoop );
 		};
 	}
 }

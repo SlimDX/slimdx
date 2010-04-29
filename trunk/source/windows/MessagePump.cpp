@@ -39,12 +39,28 @@ namespace Windows
 		return !PeekMessage( &msg, NULL, 0, 0, 0 );
 	}
 
+	void MessagePump::Run( MainLoop^ mainLoop )
+	{
+		IdleHandler^ handler = gcnew IdleHandler( mainLoop );
+		Application::Idle += gcnew EventHandler( handler, &IdleHandler::OnIdle );
+
+		Application::Run();
+	}
+
 	void MessagePump::Run( Form^ form, MainLoop^ mainLoop )
 	{
 		IdleHandler^ handler = gcnew IdleHandler( mainLoop );
 		Application::Idle += gcnew EventHandler( handler, &IdleHandler::OnIdle );
 
 		Application::Run( form );
+	}
+
+	void MessagePump::Run( ApplicationContext^ context, MainLoop^ mainLoop )
+	{
+		IdleHandler^ handler = gcnew IdleHandler( mainLoop );
+		Application::Idle += gcnew EventHandler( handler, &IdleHandler::OnIdle );
+
+		Application::Run( context );
 	}
 }
 }
