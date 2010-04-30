@@ -219,26 +219,22 @@ namespace Direct3D11
 
 	Direct3D11::FeatureLevel Device::GetSupportedFeatureLevel()
 	{
-		return GetSupportedFeatureLevel( nullptr );
+		D3D_FEATURE_LEVEL outputLevel;
+
+		HRESULT hr = D3D11CreateDevice( NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, NULL, 0, D3D11_SDK_VERSION, NULL, &outputLevel, NULL );
+		if( RECORD_D3D11( hr ).IsFailure )
+			return static_cast<Direct3D11::FeatureLevel>(0);
+
+		return static_cast<Direct3D11::FeatureLevel>( outputLevel );
 	}
 
-	Direct3D11::FeatureLevel Device::GetSupportedFeatureLevel( array<Direct3D11::FeatureLevel>^ featureLevels )
+	Direct3D11::FeatureLevel Device::GetSupportedFeatureLevel( DXGI::Adapter^ adapter )
 	{
 		D3D_FEATURE_LEVEL outputLevel;
-		const D3D_FEATURE_LEVEL* nativeLevels = NULL;
-		pin_ptr<Direct3D11::FeatureLevel> pinnedLevels;
-		int count = 0;
 
-		if( featureLevels != nullptr && featureLevels->Length > 0 )
-		{
-			pinnedLevels = &featureLevels[0];
-			nativeLevels = reinterpret_cast<const D3D_FEATURE_LEVEL*>( pinnedLevels );
-			count = featureLevels->Length;
-		}
-
-		HRESULT hr = D3D11CreateDevice( NULL, D3D_DRIVER_TYPE_UNKNOWN, NULL, 0, nativeLevels, count, D3D11_SDK_VERSION, NULL, &outputLevel, NULL );
+		HRESULT hr = D3D11CreateDevice( adapter->InternalPointer, D3D_DRIVER_TYPE_UNKNOWN, NULL, 0, NULL, 0, D3D11_SDK_VERSION, NULL, &outputLevel, NULL );
 		if( RECORD_D3D11( hr ).IsFailure )
-			return Direct3D11::FeatureLevel::Level_9_1;
+			return static_cast<Direct3D11::FeatureLevel>(0);
 
 		return static_cast<Direct3D11::FeatureLevel>( outputLevel );
 	}

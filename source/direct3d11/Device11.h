@@ -123,7 +123,7 @@ namespace SlimDX
 			int CheckMultisampleQualityLevels( DXGI::Format format, int sampleCount );
 
 			static Direct3D11::FeatureLevel GetSupportedFeatureLevel();
-			static Direct3D11::FeatureLevel GetSupportedFeatureLevel( array<Direct3D11::FeatureLevel>^ featureLevels );
+			static Direct3D11::FeatureLevel GetSupportedFeatureLevel( DXGI::Adapter^ adapter );
 
 			static Result CreateWithSwapChain( DXGI::Adapter^ adapter, DeviceCreationFlags flags, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain );
 			static Result CreateWithSwapChain( DXGI::Adapter^ adapter, DeviceCreationFlags flags, array<Direct3D11::FeatureLevel>^ featureLevels, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain );

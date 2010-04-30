@@ -10,6 +10,7 @@ Direct3D 9
 	* Changed Device.AvailableTextureMemory to return an Int64 instead of Int32.
 	* Fixed Device.Set*ShaderConstant* overloads that implicitly calculate the number of items to pass.
 	* Vertex declarations no longer require VertexElementEnd at the end of the input array.
+	* Added RegisterSoftwareDevice to support software renderers.
 	
 Direct3D 10
 	* Dropped stream size checks in texture ToStream functions.
@@ -17,6 +18,9 @@ Direct3D 10
 	* Added Texture2D.ComputeNormalMap.
 	* Added ShaderResourceView.FromMemory and ShaderResourceView.FromStream.
 	* Added Resource.LoadTextureFromTexture and Resource.FilterTexture.
+	* Added Resource.AsSurface to retrieve a DXGI Surface from a resource.
+	* Added missing WARP device type.
+	* Fixed shader compilation to allow null entry points.
 	
 Direct3D 11
 	* Dropped stream size checks in texture ToStream functions.
@@ -25,6 +29,12 @@ Direct3D 11
 	* Added Texture2D.ComputeNormalMap.
 	* Added ShaderResourceView.FromFile, ShaderResourceView.FromMemory and ShaderResourceView.FromStream.
 	* Added Resource.LoadTextureFromTexture and Resource.FilterTexture.
+	* Fixed shader compilation to allow null entry points.
+	* Added new overloads for CreateDeviceWithSwapChain that better prevent argument errors. Old overloads have been deprecated.
+	* Fixed the Device.GetSupportedFeatureLevel functions.
+	
+Windows
+	* Added several overloads to MessagePump.Run to allow access to corresponding Application.Run overloads.
 	
 DXGI
 	* Added missing member to Usage enumeration.
