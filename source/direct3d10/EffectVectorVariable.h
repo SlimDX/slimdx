@@ -24,6 +24,7 @@
 #include "../math/Vector2.h"
 #include "../math/Vector3.h"
 #include "../math/Vector4.h"
+#include "../math/Color4.h"
 
 #include "EffectVariable.h"
 
@@ -45,7 +46,9 @@ namespace SlimDX
 			Result Set( Vector2 value );
 			Result Set( Vector3 value );
 			Result Set( Vector4 value );
+			Result Set( Color4 value );
 			Result Set( array<Vector4>^ value );
+			Result Set( array<Color4>^ value );
 			Result Set( array<int>^ value );
 			Result Set( array<bool>^ value );
 		};
