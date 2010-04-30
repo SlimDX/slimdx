@@ -25,6 +25,7 @@
 #include "DeviceChild11.h"
 #include "Enums11.h"
 #include "../dxgi/SwapChainDxgi.h"
+#include "../dxgi/SurfaceDxgi.h"
 
 #include "TextureLoadInformation11.h"
 
@@ -53,6 +54,12 @@ namespace SlimDX
 			Resource() { }
 
 		public:
+			/// <summary>
+			/// Returns a DXGI Surface for this resource.
+			/// </summary>
+			/// <returns>The buffer interface, or <c>null</c> on failure.</returns>
+			SlimDX::DXGI::Surface^ AsSurface();
+
 			/// <summary>
 			/// Gets a swap chain back buffer.
 			/// </summary>

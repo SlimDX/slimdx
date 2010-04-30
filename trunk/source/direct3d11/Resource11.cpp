@@ -44,6 +44,19 @@ namespace SlimDX
 {
 namespace Direct3D11
 {
+	SlimDX::DXGI::Surface^ Resource::AsSurface()
+	{
+		IDXGISurface* unknown = 0;
+		GUID guid = Utilities::GetNativeGuidForType( SlimDX::DXGI::Surface::typeid );
+		HRESULT hr = InternalPointer->QueryInterface(guid, reinterpret_cast<void**>(&unknown));
+		if(RECORD_D3D11(hr).IsFailure)
+			return nullptr;
+
+		SlimDX::DXGI::Surface^ result = gcnew SlimDX::DXGI::Surface(unknown, nullptr);
+
+		return result;
+	}
+
 	generic< class T > where T : Resource, ref class
 		T Resource::FromSwapChain( SlimDX::DXGI::SwapChain^ swapChain, int index )
 	{

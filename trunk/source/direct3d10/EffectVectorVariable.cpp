@@ -59,10 +59,21 @@ namespace Direct3D10
 	{
 		return RECORD_D3D10( m_Pointer->SetFloatVector( reinterpret_cast<float*>( &value ) ) );
 	}
+
+	Result EffectVectorVariable::Set( Color4 value )
+	{
+		return RECORD_D3D10( m_Pointer->SetFloatVector( reinterpret_cast<float*>( &value ) ) );
+	}
 	
 	Result EffectVectorVariable::Set( array<Vector4>^ value )
 	{
 		pin_ptr<Vector4> pinnedValue = &value[0];
+		return RECORD_D3D10( m_Pointer->SetFloatVectorArray( reinterpret_cast<float*>( pinnedValue ), 0, value->Length ) );
+	}
+
+	Result EffectVectorVariable::Set( array<Color4>^ value )
+	{
+		pin_ptr<Color4> pinnedValue = &value[0];
 		return RECORD_D3D10( m_Pointer->SetFloatVectorArray( reinterpret_cast<float*>( pinnedValue ), 0, value->Length ) );
 	}
 	

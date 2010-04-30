@@ -60,11 +60,22 @@ namespace Direct3D11
 	{
 		return RECORD_D3D11( m_Pointer->SetFloatVector( reinterpret_cast<float*>( &value ) ) );
 	}
+
+	Result EffectVectorVariable::Set( Color4 value )
+	{
+		return RECORD_D3D11( m_Pointer->SetFloatVector( reinterpret_cast<float*>( &value ) ) );
+	}
 	
 	Result EffectVectorVariable::Set( array<Vector4>^ values )
 	{
 		pin_ptr<Vector4> pinnedValues = &values[0];
 		return RECORD_D3D11( m_Pointer->SetFloatVectorArray( reinterpret_cast<float*>( pinnedValues ), 0, values->Length ) );
+	}
+
+	Result EffectVectorVariable::Set( array<Color4>^ value )
+	{
+		pin_ptr<Color4> pinnedValue = &value[0];
+		return RECORD_D3D11( m_Pointer->SetFloatVectorArray( reinterpret_cast<float*>( pinnedValue ), 0, value->Length ) );
 	}
 	
 	Result EffectVectorVariable::Set( array<int>^ value )
