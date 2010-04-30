@@ -21,6 +21,7 @@ Direct3D 10
 	* Added Resource.AsSurface to retrieve a DXGI Surface from a resource.
 	* Added missing WARP device type.
 	* Fixed shader compilation to allow null entry points.
+	* Fixed ShaderSignature Get*Signature methods.
 	
 Direct3D 11
 	* Dropped stream size checks in texture ToStream functions.
@@ -32,6 +33,7 @@ Direct3D 11
 	* Fixed shader compilation to allow null entry points.
 	* Added new overloads for CreateDeviceWithSwapChain that better prevent argument errors. Old overloads have been deprecated.
 	* Fixed the Device.GetSupportedFeatureLevel functions.
+	* Fixed ShaderSignature Get*Signature methods.
 	
 Windows
 	* Added several overloads to MessagePump.Run to allow access to corresponding Application.Run overloads.

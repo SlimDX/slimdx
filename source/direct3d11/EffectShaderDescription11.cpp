@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,9 +19,9 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#include <d3d11.h>
-#include <d3dx11effect.h>
+#include "../DataStream.h"
 
 #include "EffectShaderDescription11.h"
 
@@ -32,7 +31,7 @@ namespace Direct3D11
 { 
 	EffectShaderDescription::EffectShaderDescription( const D3DX11_EFFECT_SHADER_DESC& native )
 	{
-		m_InputSignature = gcnew ShaderSignature( native.pInputSignature, static_cast<long>( native.BytecodeLength - (native.pInputSignature - native.pBytecode) ) );
+		m_InputSignature = gcnew ShaderSignature( gcnew DataStream( native.pInputSignature, native.BytecodeLength - (native.pInputSignature - native.pBytecode), true, false ) );
 		m_IsInline = native.IsInline ? true : false;
 		m_Bytecode = gcnew ShaderBytecode( native.pBytecode, native.BytecodeLength );
 		m_SODecl = gcnew array<System::String^>( D3D11_SO_STREAM_COUNT );

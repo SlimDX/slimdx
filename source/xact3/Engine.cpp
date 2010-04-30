@@ -97,7 +97,7 @@ namespace XACT3
 		params.file = file;
 		params.offset = offset;
 		params.flags = 0;
-		params.packetSize = packetSize;
+		params.packetSize = static_cast<WORD>(packetSize);
 
 		HRESULT hr = InternalPointer->CreateStreamingWaveBank(&params, &result);
 		if (RECORD_XACT3(hr).IsFailure)

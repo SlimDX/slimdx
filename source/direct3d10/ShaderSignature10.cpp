@@ -1,4 +1,3 @@
-
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -35,20 +34,15 @@ namespace SlimDX
 {
 namespace Direct3D10
 {
-	ShaderSignature::ShaderSignature( const BYTE* data, UINT length )
-	: m_Buffer( data )
-	, m_Length( length )
+	ShaderSignature::ShaderSignature( DataStream^ data )
+		: data(data)
 	{
 	}
-	
-	const BYTE* ShaderSignature::GetBufferPointer() 
+
+	ShaderSignature::~ShaderSignature()
 	{
-		return m_Buffer;
-	}
-	
-	UINT ShaderSignature::GetBufferSize() 
-	{
-		return m_Length;
+		delete data;
+		data = nullptr;
 	}
 
 	ShaderSignature^ ShaderSignature::GetInputSignature( ShaderBytecode^ shaderBytecode )
@@ -58,8 +52,8 @@ namespace Direct3D10
 		HRESULT hr = D3DGetInputSignatureBlob( shaderBytecode->InternalPointer->GetBufferPointer(), shaderBytecode->InternalPointer->GetBufferSize(), &blob );
 		if( RECORD_D3D10( hr ).IsFailure )
 			return nullptr;
-		
-		ShaderSignature^ result = gcnew ShaderSignature( reinterpret_cast<const BYTE*>( blob->GetBufferPointer() ), static_cast<UINT>( blob->GetBufferSize() ) );
+
+		ShaderSignature^ result = gcnew ShaderSignature( gcnew DataStream( blob->GetBufferPointer(), blob->GetBufferSize(), true, false, true ) );
 		blob->Release();
 		return result;
 	}
@@ -72,7 +66,7 @@ namespace Direct3D10
 		if( RECORD_D3D10( hr ).IsFailure )
 			return nullptr;
 
-		ShaderSignature^ result = gcnew ShaderSignature( reinterpret_cast<const BYTE*>( blob->GetBufferPointer() ), static_cast<UINT>( blob->GetBufferSize() ) );
+		ShaderSignature^ result = gcnew ShaderSignature( gcnew DataStream( blob->GetBufferPointer(), blob->GetBufferSize(), true, false, true ) );
 		blob->Release();
 		return result;
 	}
@@ -85,19 +79,14 @@ namespace Direct3D10
 		if( RECORD_D3D10( hr ).IsFailure )
 			return nullptr;
 
-		ShaderSignature^ result = gcnew ShaderSignature( reinterpret_cast<const BYTE*>( blob->GetBufferPointer() ), static_cast<UINT>( blob->GetBufferSize() ) );
+		ShaderSignature^ result = gcnew ShaderSignature( gcnew DataStream( blob->GetBufferPointer(), blob->GetBufferSize(), true, false, true ) );
 		blob->Release();
 		return result;
 	}
 
-	DataStream^ ShaderSignature::Data::get()
-	{
-		return gcnew DataStream( (void*)m_Buffer, m_Length, true, true, false );
-	}
-
 	int ShaderSignature::GetHashCode()
 	{
-		return reinterpret_cast<int>( m_Buffer );
+		return reinterpret_cast<int>( data->RawPointer );
 	}
 }
 }

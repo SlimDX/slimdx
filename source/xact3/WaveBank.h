@@ -47,9 +47,9 @@ namespace SlimDX
 			Result Destroy();
 
 			/// <summary>
-			/// Get a wave index based on a <see cref="String"/> that represents the friendly name of the wave.
+			/// Get a wave index based on a string that represents the friendly name of the wave.
 			/// </summary>
-			/// <param name="friendlyName">A <see cref="String"/> that contains the friendly name of the wave.</param>
+			/// <param name="friendlyName">A string that contains the friendly name of the wave.</param>
 			/// <returns>The index for the wave if it exists, otherwise -1.</returns>
 			int GetWaveIndex(System::String^ friendlyName);
 

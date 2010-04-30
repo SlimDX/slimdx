@@ -29,23 +29,20 @@ namespace SlimDX
 	{
 		public ref class ShaderSignature
 		{
-			const BYTE* m_Buffer;
-			UINT m_Length;
-			
-		internal:
-			ShaderSignature( const BYTE* buffer, UINT length );
-			
-			const BYTE* GetBufferPointer();
-			UINT GetBufferSize();
+		private:
+			DataStream^ data;
 			
 		public:
+			ShaderSignature( DataStream^ data );
+			~ShaderSignature();
+
 			static ShaderSignature^ GetInputSignature( ShaderBytecode^ shaderBytecode );
 			static ShaderSignature^ GetOutputSignature( ShaderBytecode^ shaderBytecode );
 			static ShaderSignature^ GetInputOutputSignature( ShaderBytecode^ shaderBytecode );
 
 			property DataStream^ Data
 			{
-				DataStream^ get();
+				DataStream^ get() { return data; }
 			}
 
 			/// <summary>

@@ -45,9 +45,9 @@ namespace SlimDX
 			Result Destroy();
 
 			/// <summary>
-			/// Get a sound cue index based on a <see cref="String"/> that represents the friendly name of the cue.
+			/// Get a sound cue index based on a string that represents the friendly name of the cue.
 			/// </summary>
-			/// <param name="friendlyName">A <see cref="String"/> that contains the friendly name of the cue.</param>
+			/// <param name="friendlyName">A string that contains the friendly name of the cue.</param>
 			/// <returns>The index for the cue if it exists, otherwise -1.</returns>
 			int GetCueIndex(System::String^ friendlyName);
 

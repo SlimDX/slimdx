@@ -60,7 +60,7 @@ namespace SlimDX
 			/// <summary>
 			/// Get the sound category index that corresponds to a friendly name string.
 			/// </summary>
-			/// <param name="friendlyName">A <see cref="String"/> describing the category's friendly name.</param>
+			/// <param name="friendlyName">A string describing the category's friendly name.</param>
 			/// <returns>The category index for the friendly name if successful, otherwise -1.</returns>
 			int GetCategory(System::String^ friendlyName);
 
@@ -74,7 +74,7 @@ namespace SlimDX
 			/// <summary>
 			/// Get the corresponding index for a global variable name string.
 			/// </summary>
-			/// <param name="friendlyName">A <see cref="String"/> that contains the friendly name of the global variable.</param>
+			/// <param name="friendlyName">A string that contains the friendly name of the global variable.</param>
 			/// <returns>The index for the global variable if it exists, otherwise -1.</returns>
 			int GetGlobalVariableIndex(System::String^ friendlyName);
 

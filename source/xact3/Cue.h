@@ -50,7 +50,7 @@ namespace SlimDX
 			/// <summary>
 			/// Get the corresponding index for a variable name string.
 			/// </summary>
-			/// <param name="friendlyName">A <see cref="String"/> that contains the friendly name of the variable.</param>
+			/// <param name="friendlyName">A string that contains the friendly name of the variable.</param>
 			/// <returns>The index for the variable if it exists, otherwise -1.</returns>
 			int GetVariableIndex(System::String^ friendlyName);
 
