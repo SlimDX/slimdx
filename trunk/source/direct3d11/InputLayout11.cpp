@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,8 +19,8 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <d3d11.h>
+#include "stdafx.h"
+#include "../DataStream.h"
 
 #include "Direct3D11Exception.h"
 
@@ -39,7 +38,7 @@ namespace Direct3D11
 		if( shaderSignature == nullptr )
 			throw gcnew ArgumentNullException( "shaderSignature" );
 
-		Init( device, shaderSignature->GetBufferPointer(), shaderSignature->GetBufferSize(), elements );
+		Init( device, shaderSignature->Data->RawPointer, static_cast<int>(shaderSignature->Data->Length), elements );
 	}
 
 	InputLayout::InputLayout( SlimDX::Direct3D11::Device^ device, ShaderSignature^ shaderSignature, array<InputElement>^ elements )
@@ -47,7 +46,7 @@ namespace Direct3D11
 		if( shaderSignature == nullptr )
 			throw gcnew ArgumentNullException( "shaderSignature" );
 
-		Init( device, shaderSignature->GetBufferPointer(), shaderSignature->GetBufferSize(), elements );
+		Init( device, shaderSignature->Data->RawPointer, static_cast<int>(shaderSignature->Data->Length), elements );
 	}
 
 	InputLayout::InputLayout( SlimDX::Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, array<InputElement>^ elements )

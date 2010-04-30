@@ -37,6 +37,7 @@
 #include <d3dx10.h>
 #include <d3d11.h>
 #include <d3d11shader.h>
+#include <d3dx11effect.h>
 #include <d3dx11.h>
 #include <d3dcsx.h>
 #include <d2d1.h>

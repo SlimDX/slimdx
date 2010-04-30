@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,9 +19,9 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#include <d3d10.h>
-#include <d3dx10.h>
+#include "../DataStream.h"
 
 #include "ShaderDescription.h"
 
@@ -32,7 +31,7 @@ namespace Direct3D10
 { 
 	ShaderDescription::ShaderDescription( const D3D10_EFFECT_SHADER_DESC& native )
 	{
-		m_InputSignature = gcnew ShaderSignature( native.pInputSignature, static_cast<long>( native.BytecodeLength - (native.pInputSignature - native.pBytecode) ) );
+		m_InputSignature = gcnew ShaderSignature( gcnew DataStream( native.pInputSignature, native.BytecodeLength - (native.pInputSignature - native.pBytecode), true, false ) );
 		m_IsInline = native.IsInline ? true : false;
 		m_Bytecode = gcnew ShaderBytecode( native.pBytecode, native.BytecodeLength );
 		m_SODecl = gcnew System::String( native.SODecl );

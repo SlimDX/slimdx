@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,9 +19,9 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#include <d3d10.h>
-#include <d3dx10.h>
+#include "../DataStream.h"
 
 #include "EffectPassDescription.h"
 #include "ShaderSignature10.h"
@@ -37,7 +36,7 @@ namespace Direct3D10
 	{
 		m_Name = gcnew String( native.Name );
 		m_Annotations = native.Annotations;
-		m_Signature = gcnew ShaderSignature( native.pIAInputSignature, static_cast<long>( native.IAInputSignatureSize ) );
+		m_Signature = gcnew ShaderSignature( gcnew DataStream( native.pIAInputSignature, native.IAInputSignatureSize, true, false ) );
 		m_StencilRef = native.StencilRef;
 		m_SampleMask = native.SampleMask;
 		m_BlendFactor = Color4( native.BlendFactor[ 3 ], native.BlendFactor[ 0 ], native.BlendFactor[ 1 ], native.BlendFactor[ 2 ] );
