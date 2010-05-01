@@ -5944,7 +5944,13 @@
           <Members>
            <Member Name="#.ctor({modopt(System.Runtime.CompilerServices.IsConst)}System.Void*,System.Int64,System.Boolean,System.Boolean)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Status="Excluded" Created="2010-05-01 19:11:59Z">
+              <Issue Name="OutsideDispose">
+               <Item>'DataStream::DataStream(const void*, long long, bool, bool)'</Item>
+               <Item>'GC::SuppressFinalize(Object^)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'DataStream::DataStream(const void*, long long, bool, bool)'</Item>
                <Item>'GC::AddMemoryPressure(long long)'</Item>
@@ -5981,17 +5987,17 @@
                <Item>&#xD;&#xA;   -&gt;'DataStream::DataStream(const void*, long long, bool, bool)'&#xD;&#xA;   -&gt;'DataStream::DataStream(const void*, long long, bool, bool)'&#xD;&#xA;   -&gt;'XFileData::Lock(void)'</Item>
               </Issue>
              </Message>
-             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Status="Excluded" Created="2010-05-01 19:11:59Z">
-              <Issue Name="OutsideDispose">
-               <Item>'DataStream::DataStream(const void*, long long, bool, bool)'</Item>
-               <Item>'GC::SuppressFinalize(Object^)'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#.ctor(System.Array,System.Boolean,System.Boolean)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Status="Excluded" Created="2009-11-20 20:57:15Z">
+              <Issue Name="OutsideDispose">
+               <Item>'DataStream::DataStream(Array^, bool, bool)'</Item>
+               <Item>'GC::SuppressFinalize(Object^)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'DataStream::DataStream(Array^, bool, bool)'</Item>
                <Item>'GCHandle::AddrOfPinnedObject(void)'</Item>
@@ -6008,17 +6014,17 @@
                <Item>&#xD;&#xA;   -&gt;'DataStream::DataStream(Array^, bool, bool)'&#xD;&#xA;   -&gt;'DataStream::DataStream(Array^, bool, bool)'</Item>
               </Issue>
              </Message>
-             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Status="Excluded" Created="2009-11-20 20:57:15Z">
-              <Issue Name="OutsideDispose">
-               <Item>'DataStream::DataStream(Array^, bool, bool)'</Item>
-               <Item>'GC::SuppressFinalize(Object^)'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#.ctor(System.Int64,System.Boolean,System.Boolean)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+             <Message Id="&lt;Module&gt;.__CxxRegisterExceptionObject(System.Void*,System.Void*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2010-05-01 19:11:59Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'DataStream::DataStream(long long, bool, bool)'</Item>
+               <Item>'Global::__CxxRegisterExceptionObject(void*, void*)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'DataStream::DataStream(long long, bool, bool)'</Item>
                <Item>'GC::AddMemoryPressure(long long)'</Item>
@@ -6028,12 +6034,6 @@
                <Item>'DataStream::DataStream(long long, bool, bool)'</Item>
                <Item>'Marshal::GetExceptionPointers(void)'</Item>
                <Item>&#xD;&#xA;   -&gt;'DataStream::DataStream(long long, bool, bool)'&#xD;&#xA;   -&gt;'DataStream::DataStream(long long, bool, bool)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="&lt;Module&gt;.__CxxRegisterExceptionObject(System.Void*,System.Void*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2010-05-01 19:11:59Z">
-              <Issue Name="HResultOrErrorCode">
-               <Item>'DataStream::DataStream(long long, bool, bool)'</Item>
-               <Item>'Global::__CxxRegisterExceptionObject(void*, void*)'</Item>
               </Issue>
              </Message>
              <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Status="Excluded" Created="2009-11-20 20:57:15Z">
@@ -6056,7 +6056,13 @@
            </Member>
            <Member Name="#.ctor(System.Void*,System.Int64,System.Boolean,System.Boolean,System.Boolean)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Status="Excluded" Created="2009-11-20 20:57:15Z">
+              <Issue Name="OutsideDispose">
+               <Item>'DataStream::DataStream(void*, long long, bool, bool, bool)'</Item>
+               <Item>'GC::SuppressFinalize(Object^)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'DataStream::DataStream(void*, long long, bool, bool, bool)'</Item>
                <Item>'GC::AddMemoryPressure(long long)'</Item>
@@ -6313,12 +6319,6 @@
                <Item>&#xD;&#xA;   -&gt;'DataStream::DataStream(void*, long long, bool, bool, bool)'&#xD;&#xA;   -&gt;'DataStream::DataStream(void*, long long, bool, bool, bool)'&#xD;&#xA;   -&gt;'WaveStream::Init(void)'&#xD;&#xA;   -&gt;'WaveStream::WaveStream(String^)'</Item>
               </Issue>
              </Message>
-             <Message TypeName="CallGCSuppressFinalizeCorrectly" Category="Microsoft.Usage" CheckId="CA1816" Status="Excluded" Created="2009-11-20 20:57:15Z">
-              <Issue Name="OutsideDispose">
-               <Item>'DataStream::DataStream(void*, long long, bool, bool, bool)'</Item>
-               <Item>'GC::SuppressFinalize(Object^)'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#~DataStream()">
@@ -6333,7 +6333,7 @@
            </Member>
            <Member Name="#Destruct()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'DataStream::Destruct(void)'</Item>
                <Item>'GC::RemoveMemoryPressure(long long)'</Item>
@@ -7548,7 +7548,7 @@
             <Accessors>
              <Accessor Name="#get_SizeInBytes()">
               <Messages>
-               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
                 <Issue>
                  <Item>'Vector2::SizeInBytes::get(void)'</Item>
                  <Item>'Marshal::SizeOf(Type^)'</Item>
@@ -7609,7 +7609,7 @@
             <Accessors>
              <Accessor Name="#get_SizeInBytes()">
               <Messages>
-               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
                 <Issue>
                  <Item>'Vector3::SizeInBytes::get(void)'</Item>
                  <Item>'Marshal::SizeOf(Type^)'</Item>
@@ -7679,7 +7679,7 @@
             <Accessors>
              <Accessor Name="#get_SizeInBytes()">
               <Messages>
-               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
                 <Issue>
                  <Item>'Vector4::SizeInBytes::get(void)'</Item>
                  <Item>'Marshal::SizeOf(Type^)'</Item>
@@ -11999,7 +11999,7 @@
           <Members>
            <Member Name="#Close()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'IncludeFrame::Close(void)'</Item>
                <Item>'GCHandle::Free(void)'</Item>
@@ -13013,7 +13013,7 @@
           <Members>
            <Member Name="#Marshal(stack_array&lt;_D3D10_SHADER_MACRO&gt;*,SlimDX.Direct3D10.ShaderMacro[],System.Runtime.InteropServices.GCHandle[]&amp;)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'ShaderMacro::Marshal(stack_array&lt;_D3D10_SHADER_MACRO&gt;*, array&lt;ShaderMacro&gt;^, array&lt;GCHandle&gt;^%)'</Item>
                <Item>'GCHandle::AddrOfPinnedObject(void)'</Item>
@@ -13039,7 +13039,7 @@
            </Member>
            <Member Name="#Unmarshal(System.Runtime.InteropServices.GCHandle[])">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'ShaderMacro::Unmarshal(array&lt;GCHandle&gt;^)'</Item>
                <Item>'GCHandle::Free(void)'</Item>
@@ -16342,7 +16342,7 @@
           <Members>
            <Member Name="#Close()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'IncludeFrame::Close(void)'</Item>
                <Item>'GCHandle::Free(void)'</Item>
@@ -17523,7 +17523,7 @@
           <Members>
            <Member Name="#Marshal(stack_array&lt;_D3D10_SHADER_MACRO&gt;*,SlimDX.Direct3D11.ShaderMacro[],System.Runtime.InteropServices.GCHandle[]&amp;)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'ShaderMacro::Marshal(stack_array&lt;_D3D10_SHADER_MACRO&gt;*, array&lt;ShaderMacro&gt;^, array&lt;GCHandle&gt;^%)'</Item>
                <Item>'GCHandle::AddrOfPinnedObject(void)'</Item>
@@ -17549,7 +17549,7 @@
            </Member>
            <Member Name="#Unmarshal(System.Runtime.InteropServices.GCHandle[])">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'ShaderMacro::Unmarshal(array&lt;GCHandle&gt;^)'</Item>
                <Item>'GCHandle::Free(void)'</Item>
@@ -20727,7 +20727,7 @@
             <Accessors>
              <Accessor Name="#get_StateManager()">
               <Messages>
-               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
                 <Issue>
                  <Item>'Effect::StateManager::get(void)'</Item>
                  <Item>'GCHandle::Target::get(void)'</Item>
@@ -21011,7 +21011,7 @@
           <Members>
            <Member Name="#!EffectHandle()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'EffectHandle::!EffectHandle(void)'</Item>
                <Item>'GC::RemoveMemoryPressure(long long)'</Item>
@@ -21037,7 +21037,7 @@
            </Member>
            <Member Name="#Dispose(System.Boolean)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'EffectHandle::Dispose(bool)'</Item>
                <Item>'GC::RemoveMemoryPressure(long long)'</Item>
@@ -21393,7 +21393,7 @@
           <Members>
            <Member Name="#BuildManagedFrames(SlimDX.Direct3D9.Frame&amp;,SlimDX.Direct3D9.FrameShim*)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'Frame::BuildManagedFrames(Frame^%, FrameShim*)'</Item>
                <Item>'GCHandle::Target::get(void)'</Item>
@@ -21429,7 +21429,7 @@
            </Member>
            <Member Name="#BuildManagedMeshes(SlimDX.Direct3D9.MeshContainer&amp;,SlimDX.Direct3D9.MeshContainerShim*)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'Frame::BuildManagedMeshes(MeshContainer^%, MeshContainerShim*)'</Item>
                <Item>'GCHandle::Target::get(void)'</Item>
@@ -21465,7 +21465,7 @@
            </Member>
            <Member Name="#DestroyHierarchy(SlimDX.Direct3D9.Frame,SlimDX.Direct3D9.IAllocateHierarchy)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'Frame::DestroyHierarchy(Frame^, IAllocateHierarchy^)'</Item>
                <Item>'GCHandle::Alloc(Object^)'</Item>
@@ -21491,7 +21491,7 @@
            </Member>
            <Member Name="#FindChild(System.String)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'Frame::FindChild(String^)'</Item>
                <Item>'GCHandle::Target::get(void)'</Item>
@@ -21507,7 +21507,15 @@
            </Member>
            <Member Name="#LoadHierarchyFromX(SlimDX.Direct3D9.Device,System.String,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.IAllocateHierarchy,SlimDX.Direct3D9.ILoadUserData,SlimDX.Direct3D9.AnimationController&amp;)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2010-05-01 19:11:59Z">
+              <Issue>
+               <Item>'device'</Item>
+               <Item>'Frame::LoadHierarchyFromX(Device^, String^, MeshFlags, IAllocateHierarchy^, ILoadUserData^, AnimationController^%)'</Item>
+               <Item>'Device'</Item>
+               <Item>'ComObject'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'Frame::LoadHierarchyFromX(Device^, String^, MeshFlags, IAllocateHierarchy^, ILoadUserData^, AnimationController^%)'</Item>
                <Item>'GCHandle::Free(void)'</Item>
@@ -21519,19 +21527,11 @@
                <Item>&#xD;&#xA;   -&gt;'Frame::LoadHierarchyFromX(Device^, String^, MeshFlags, IAllocateHierarchy^, ILoadUserData^, AnimationController^%)'&#xD;&#xA;   -&gt;'Frame::LoadHierarchyFromX(Device^, String^, MeshFlags, IAllocateHierarchy^, ILoadUserData^, AnimationController^%)'</Item>
               </Issue>
              </Message>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2010-05-01 19:11:59Z">
-              <Issue>
-               <Item>'device'</Item>
-               <Item>'Frame::LoadHierarchyFromX(Device^, String^, MeshFlags, IAllocateHierarchy^, ILoadUserData^, AnimationController^%)'</Item>
-               <Item>'Device'</Item>
-               <Item>'ComObject'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#LoadHierarchyFromX_Internal(SlimDX.Direct3D9.Device,{modopt(System.Runtime.CompilerServices.IsConst)}System.Void*,{modopt(System.Runtime.CompilerServices.IsLong)}System.UInt32,SlimDX.Direct3D9.MeshFlags,SlimDX.Direct3D9.IAllocateHierarchy,SlimDX.Direct3D9.ILoadUserData,SlimDX.Direct3D9.AnimationController&amp;)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'Frame::LoadHierarchyFromX_Internal(Device^, const void*, unsigned int, MeshFlags, IAllocateHierarchy^, ILoadUserData^, AnimationController^%)'</Item>
                <Item>'GCHandle::Free(void)'</Item>
@@ -21581,7 +21581,15 @@
            </Member>
            <Member Name="#SaveHierarchyToFile(System.String,SlimDX.Direct3D9.XFileFormat,SlimDX.Direct3D9.Frame,SlimDX.Direct3D9.AnimationController,SlimDX.Direct3D9.ISaveUserData)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2010-05-01 19:11:59Z">
+              <Issue>
+               <Item>'animationController'</Item>
+               <Item>'Frame::SaveHierarchyToFile(String^, XFileFormat, Frame^, AnimationController^, ISaveUserData^)'</Item>
+               <Item>'AnimationController'</Item>
+               <Item>'ComObject'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'Frame::SaveHierarchyToFile(String^, XFileFormat, Frame^, AnimationController^, ISaveUserData^)'</Item>
                <Item>'GCHandle::Alloc(Object^)'</Item>
@@ -21601,14 +21609,6 @@
                <Item>'Frame::SaveHierarchyToFile(String^, XFileFormat, Frame^, AnimationController^, ISaveUserData^)'</Item>
                <Item>'GCHandle::explicit operator GCHandle(IntPtr)'</Item>
                <Item>&#xD;&#xA;   -&gt;'Frame::SaveHierarchyToFile(String^, XFileFormat, Frame^, AnimationController^, ISaveUserData^)'&#xD;&#xA;   -&gt;'Frame::SaveHierarchyToFile(String^, XFileFormat, Frame^, AnimationController^, ISaveUserData^)'</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2010-05-01 19:11:59Z">
-              <Issue>
-               <Item>'animationController'</Item>
-               <Item>'Frame::SaveHierarchyToFile(String^, XFileFormat, Frame^, AnimationController^, ISaveUserData^)'</Item>
-               <Item>'AnimationController'</Item>
-               <Item>'ComObject'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -21716,7 +21716,7 @@
           <Members>
            <Member Name="#Close()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'IncludeFrame::Close(void)'</Item>
                <Item>'GCHandle::Free(void)'</Item>
@@ -22125,7 +22125,7 @@
           <Members>
            <Member Name="#Marshal(stack_array&lt;_D3DXMACRO&gt;*,SlimDX.Direct3D9.Macro[],System.Runtime.InteropServices.GCHandle[]&amp;)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'Macro::Marshal(stack_array&lt;_D3DXMACRO&gt;*, array&lt;Macro&gt;^, array&lt;GCHandle&gt;^%)'</Item>
                <Item>'GCHandle::AddrOfPinnedObject(void)'</Item>
@@ -22491,7 +22491,7 @@
            </Member>
            <Member Name="#Unmarshal(System.Runtime.InteropServices.GCHandle[])">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'Macro::Unmarshal(array&lt;GCHandle&gt;^)'</Item>
                <Item>'GCHandle::Free(void)'</Item>
@@ -25788,7 +25788,7 @@
           <Members>
            <Member Name="#Create(SlimDX.Direct3D9.Mesh,System.Int32,System.Single,System.Int32,System.Int32,System.Single,System.Int32,System.Int32[],System.Single[],SlimDX.Direct3D9.UVAtlasQuality,System.Predicate`1&lt;System.Single&gt;,System.Single)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'UVAtlas::Create(Mesh^, int, float, int, int, float, int, array&lt;int&gt;^, array&lt;float&gt;^, UVAtlasQuality, Predicate&lt;float&gt;^, float)'</Item>
                <Item>'GCHandle::Alloc(Object^, GCHandleType)'</Item>
@@ -25804,7 +25804,15 @@
            </Member>
            <Member Name="#Pack(SlimDX.Direct3D9.Mesh,System.Int32,System.Int32,System.Single,System.Int32,System.Int32[],SlimDX.Direct3D9.UVAtlasQuality,SlimDX.DataStream,System.Predicate`1&lt;System.Single&gt;,System.Single)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2010-05-01 19:11:59Z">
+              <Issue>
+               <Item>'mesh'</Item>
+               <Item>'UVAtlas::Pack(Mesh^, int, int, float, int, array&lt;int&gt;^, UVAtlasQuality, DataStream^, Predicate&lt;float&gt;^, float)'</Item>
+               <Item>'Mesh'</Item>
+               <Item>'ComObject'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'UVAtlas::Pack(Mesh^, int, int, float, int, array&lt;int&gt;^, UVAtlasQuality, DataStream^, Predicate&lt;float&gt;^, float)'</Item>
                <Item>'GCHandle::Alloc(Object^, GCHandleType)'</Item>
@@ -25816,19 +25824,11 @@
                <Item>&#xD;&#xA;   -&gt;'UVAtlas::Pack(Mesh^, int, int, float, int, array&lt;int&gt;^, UVAtlasQuality, DataStream^, Predicate&lt;float&gt;^, float)'&#xD;&#xA;   -&gt;'UVAtlas::Pack(Mesh^, int, int, float, int, array&lt;int&gt;^, UVAtlasQuality, DataStream^, Predicate&lt;float&gt;^, float)'</Item>
               </Issue>
              </Message>
-             <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2010-05-01 19:11:59Z">
-              <Issue>
-               <Item>'mesh'</Item>
-               <Item>'UVAtlas::Pack(Mesh^, int, int, float, int, array&lt;int&gt;^, UVAtlasQuality, DataStream^, Predicate&lt;float&gt;^, float)'</Item>
-               <Item>'Mesh'</Item>
-               <Item>'ComObject'</Item>
-              </Issue>
-             </Message>
             </Messages>
            </Member>
            <Member Name="#Partition(SlimDX.Direct3D9.Mesh,System.Int32,System.Single,System.Int32,System.Int32[],System.Single[],SlimDX.Direct3D9.UVAtlasQuality,SlimDX.DataStream&amp;,System.Predicate`1&lt;System.Single&gt;,System.Single)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'UVAtlas::Partition(Mesh^, int, float, int, array&lt;int&gt;^, array&lt;float&gt;^, UVAtlasQuality, DataStream^%, Predicate&lt;float&gt;^, float)'</Item>
                <Item>'GCHandle::Alloc(Object^, GCHandleType)'</Item>
@@ -26850,7 +26850,7 @@
            </Member>
            <Member Name="#GetBufferedData()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'CustomDevice&lt;TDataFormat&gt;::GetBufferedData(void)'</Item>
                <Item>'Marshal::OffsetOf(Type^, String^)'</Item>
@@ -26981,7 +26981,7 @@
             <Accessors>
              <Accessor Name="#get_CreatedEffects()">
               <Messages>
-               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+               <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
                 <Issue>
                  <Item>'Device::CreatedEffects::get(void)'</Item>
                  <Item>'GCHandle::Alloc(Object^)'</Item>
@@ -27024,7 +27024,7 @@
            </Member>
            <Member Name="#GetEffects(SlimDX.DirectInput.EffectType)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'Device::GetEffects(EffectType)'</Item>
                <Item>'GCHandle::Alloc(Object^)'</Item>
@@ -27045,7 +27045,7 @@
            </Member>
            <Member Name="#GetEffectsInFile(System.String,SlimDX.DirectInput.EffectFileFlags)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'Device::GetEffectsInFile(String^, EffectFileFlags)'</Item>
                <Item>'GCHandle::Alloc(Object^)'</Item>
@@ -27073,7 +27073,7 @@
            </Member>
            <Member Name="#GetObjects(SlimDX.DirectInput.ObjectDeviceType)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'Device::GetObjects(ObjectDeviceType)'</Item>
                <Item>'GCHandle::Alloc(Object^)'</Item>
@@ -27320,7 +27320,7 @@
            </Member>
            <Member Name="#GetDevices(SlimDX.DirectInput.DeviceClass,SlimDX.DirectInput.DeviceEnumerationFlags)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'DirectInput::GetDevices(DeviceClass, DeviceEnumerationFlags)'</Item>
                <Item>'GCHandle::Alloc(Object^)'</Item>
@@ -27348,7 +27348,7 @@
            </Member>
            <Member Name="#GetDevices(SlimDX.DirectInput.DeviceType,SlimDX.DirectInput.DeviceEnumerationFlags)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'DirectInput::GetDevices(DeviceType, DeviceEnumerationFlags)'</Item>
                <Item>'GCHandle::Alloc(Object^)'</Item>
@@ -28374,7 +28374,7 @@
            </Member>
            <Member Name="#GetDevices()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'DirectSound::GetDevices(void)'</Item>
                <Item>'GCHandle::Alloc(Object^)'</Item>
@@ -28450,7 +28450,7 @@
            </Member>
            <Member Name="#GetDevices()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'DirectSoundCapture::GetDevices(void)'</Item>
                <Item>'GCHandle::Alloc(Object^)'</Item>
@@ -33246,7 +33246,13 @@
           <Members>
            <Member Name="#ToUnmanaged(XACT_RUNTIME_PARAMETERS*)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message Id="&lt;Module&gt;.__CxxRegisterExceptionObject(System.Void*,System.Void*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2010-05-01 19:11:59Z">
+              <Issue Name="HResultOrErrorCode">
+               <Item>'RuntimeParameters::ToUnmanaged(XACT_RUNTIME_PARAMETERS*)'</Item>
+               <Item>'Global::__CxxRegisterExceptionObject(void*, void*)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'RuntimeParameters::ToUnmanaged(XACT_RUNTIME_PARAMETERS*)'</Item>
                <Item>'Marshal::GetExceptionCode(void)'</Item>
@@ -33256,12 +33262,6 @@
                <Item>'RuntimeParameters::ToUnmanaged(XACT_RUNTIME_PARAMETERS*)'</Item>
                <Item>'Marshal::GetExceptionPointers(void)'</Item>
                <Item>&#xD;&#xA;   -&gt;'RuntimeParameters::ToUnmanaged(XACT_RUNTIME_PARAMETERS*)'&#xD;&#xA;   -&gt;'RuntimeParameters::ToUnmanaged(XACT_RUNTIME_PARAMETERS*)'&#xD;&#xA;   -&gt;'Engine::Initialize(RuntimeParameters)'</Item>
-              </Issue>
-             </Message>
-             <Message Id="&lt;Module&gt;.__CxxRegisterExceptionObject(System.Void*,System.Void*)" TypeName="DoNotIgnoreMethodResults" Category="Microsoft.Usage" CheckId="CA1806" Status="Excluded" Created="2010-05-01 19:11:59Z">
-              <Issue Name="HResultOrErrorCode">
-               <Item>'RuntimeParameters::ToUnmanaged(XACT_RUNTIME_PARAMETERS*)'</Item>
-               <Item>'Global::__CxxRegisterExceptionObject(void*, void*)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -33623,7 +33623,7 @@
           <Members>
            <Member Name="#!AudioBuffer()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'AudioBuffer::!AudioBuffer(void)'</Item>
                <Item>'GCHandle::Free(void)'</Item>
@@ -33643,7 +33643,7 @@
            </Member>
            <Member Name="#Dispose(System.Boolean)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'AudioBuffer::Dispose(bool)'</Item>
                <Item>'GCHandle::Free(void)'</Item>
@@ -33664,7 +33664,7 @@
            </Member>
            <Member Name="#ToUnmanaged(XAUDIO2_BUFFER*)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2009-11-20 20:57:15Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2009-11-20 20:57:15Z">
               <Issue>
                <Item>'AudioBuffer::ToUnmanaged(XAUDIO2_BUFFER*)'</Item>
                <Item>'GCHandle::AddrOfPinnedObject(void)'</Item>
@@ -33828,7 +33828,7 @@
            </Member>
            <Member Name="#~SourceVoice()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'SourceVoice::~SourceVoice(void)'</Item>
                <Item>'GCHandle::Free(void)'</Item>
@@ -34037,7 +34037,7 @@
            </Member>
            <Member Name="#~XAudio2()">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'XAudio2::~XAudio2(void)'</Item>
                <Item>'GCHandle::Free(void)'</Item>

@@ -31,6 +31,7 @@
 #include "Device11.h"
 
 using namespace System;
+using namespace System::Reflection;
 
 namespace SlimDX
 {
@@ -90,6 +91,7 @@ namespace Direct3D11
 		if( RECORD_D3D11( hr ).IsFailure )
 			throw gcnew Direct3D11Exception( Result::Last );
 
+		context->Release();
 		Construct( device );
 	}
 
@@ -113,7 +115,7 @@ namespace Direct3D11
 		ID3D11DeviceContext *context = NULL;
 		InternalPointer->GetImmediateContext( &context );
 
-		return DeviceContext::FromPointer( context );
+		return DeviceContext::FromPointer( context, this );
 	}
 	
 	CounterCapabilities Device::GetCounterCapabilities()
@@ -239,6 +241,20 @@ namespace Direct3D11
 		return static_cast<Direct3D11::FeatureLevel>( outputLevel );
 	}
 
+	generic<typename T> where T : ComObject
+	T Device::OpenSharedResource(System::IntPtr handle)
+	{
+		GUID guid = Utilities::GetNativeGuidForType( T::typeid );
+		void *resultPointer;
+
+		HRESULT hr = InternalPointer->OpenSharedResource( handle.ToPointer(), guid, &resultPointer );
+		if( RECORD_D3D11( hr ).IsFailure )
+			return T();
+
+		MethodInfo^ method = T::typeid->GetMethod( "FromPointer", BindingFlags::Public | BindingFlags::Static );
+		return safe_cast<T>( method->Invoke( nullptr, gcnew array<Object^> { IntPtr( resultPointer ) } ) );
+	}
+
 #pragma warning(disable : 4947)
 	Result Device::CreateWithSwapChain( DXGI::Adapter^ adapter, DeviceCreationFlags flags, DXGI::SwapChainDescription swapChainDescription, [Out] Device^ %device, [Out] DXGI::SwapChain^ %swapChain )
 	{
@@ -301,8 +317,9 @@ namespace Direct3D11
 		{
 			device = FromPointer( resultDevice );
 			swapChain = DXGI::SwapChain::FromPointer( resultSwapChain );
+			context->Release();
 		}
-		
+
 		return Result::Last;
 	}
 }

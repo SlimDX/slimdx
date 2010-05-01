@@ -27,6 +27,10 @@ namespace SlimDX
 {
 	namespace Direct3D11
 	{
+		/// <summary>
+		/// Provides a description for blending state objects.
+		/// </summary>
+		/// <unmanaged>D3D11_BLEND_DESC</unmanaged>
 		public value class BlendStateDescription
 		{
 		private:
@@ -40,9 +44,19 @@ namespace SlimDX
 			D3D11_BLEND_DESC CreateNativeVersion();
 			
 		public:
+			/// <summary>
+			/// Gets or sets a value specifying whether alpha-to-coverage is used as a multisampling technique when setting a pixel to a rendertarget.
+			/// </summary>
 			property bool AlphaToCoverageEnable;
+
+			/// <summary>
+			/// Gets or sets a value determining whether independent blending is enabled for simultaneous render targets.
+			/// </summary>
 			property bool IndependentBlendEnable;
 
+			/// <summary>
+			/// Gets the set of render-target-blend descriptors describing independent blending operations for up to eight simultaneous render targets.
+			/// </summary>
 			property array<RenderTargetBlendDescription>^ RenderTargets
 			{
 				array<RenderTargetBlendDescription>^ get();

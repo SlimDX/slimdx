@@ -25,6 +25,10 @@ namespace SlimDX
 {
 	namespace Direct3D11
 	{
+		/// <summary>
+		/// Provides a description for render target blending.
+		/// </summary>
+		/// <unmanaged>D3D11_RENDER_TARGET_BLEND_DESC</unmanaged>
 		public value class RenderTargetBlendDescription
 		{
 		internal:
