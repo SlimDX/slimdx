@@ -40,7 +40,7 @@ namespace SlimDX
 		Result m_Result;
 	
 	protected:
-		SlimDXException( System::Runtime::Serialization::SerializationInfo^ info, System::Runtime::Serialization::StreamingContext context );	
+		SlimDXException( System::Runtime::Serialization::SerializationInfo^ info, System::Runtime::Serialization::StreamingContext context );
 
 	public:
 		/// <summary>

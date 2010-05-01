@@ -5917,16 +5917,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="CompilationException">
-          <Messages>
-           <Message TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032" Created="2010-05-01 19:11:59Z">
-            <Issue Name="MissingConstructor">
-             <Item>'CompilationException'</Item>
-             <Item>protected CompilationException(SerializationInfo, StreamingContext)</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="Configuration">
           <Messages>
            <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Status="Excluded" Created="2009-11-20 20:57:15Z">
@@ -10306,13 +10296,13 @@
          </Type>
          <Type Name="BlendOption">
           <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2009-11-20 20:57:15Z">
-            <Issue>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-11-20 20:57:15Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
              <Item>'BlendOption'</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-11-20 20:57:15Z" FixCategory="NonBreaking">
-            <Issue Name="NotFlagsNoZeroValue">
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2009-11-20 20:57:15Z">
+            <Issue>
              <Item>'BlendOption'</Item>
             </Issue>
            </Message>
@@ -13183,7 +13173,7 @@
          </Type>
          <Type Name="ShaderVariableType">
           <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2010-05-01 19:11:59Z">
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2010-05-01 19:11:59Z">
             <Issue>
              <Item>'ShaderVariableType'</Item>
             </Issue>
@@ -13298,7 +13288,7 @@
          </Type>
          <Type Name="SystemValueType">
           <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'SystemValueType'</Item>
             </Issue>
@@ -14115,13 +14105,13 @@
          </Type>
          <Type Name="BlendOption">
           <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2009-11-20 20:57:15Z">
-            <Issue>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-11-20 20:57:15Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
              <Item>'BlendOption'</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-11-20 20:57:15Z" FixCategory="NonBreaking">
-            <Issue Name="NotFlagsNoZeroValue">
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2009-11-20 20:57:15Z">
+            <Issue>
              <Item>'BlendOption'</Item>
             </Issue>
            </Message>
@@ -14494,18 +14484,6 @@
          </Type>
          <Type Name="ComputeShaderWrapper">
           <Members>
-           <Member Name="#.ctor(ID3D11DeviceContext*)">
-            <Messages>
-             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2009-11-20 20:57:15Z">
-              <Issue Name="IncorrectParameterName">
-               <Item>'ComputeShaderWrapper::ComputeShaderWrapper(ID3D11DeviceContext*)'</Item>
-               <Item>device</Item>
-               <Item>'paramName'</Item>
-               <Item>'ArgumentNullException'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Set(SlimDX.Direct3D11.ComputeShader,SlimDX.Direct3D11.ClassInstance[])">
             <Messages>
              <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2010-05-01 19:11:59Z">
@@ -15368,18 +15346,6 @@
          </Type>
          <Type Name="DomainShaderWrapper">
           <Members>
-           <Member Name="#.ctor(ID3D11DeviceContext*)">
-            <Messages>
-             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2009-11-20 20:57:15Z">
-              <Issue Name="IncorrectParameterName">
-               <Item>'DomainShaderWrapper::DomainShaderWrapper(ID3D11DeviceContext*)'</Item>
-               <Item>device</Item>
-               <Item>'paramName'</Item>
-               <Item>'ArgumentNullException'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Set(SlimDX.Direct3D11.DomainShader,SlimDX.Direct3D11.ClassInstance[])">
             <Messages>
              <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2010-05-01 19:11:59Z">
@@ -16143,18 +16109,6 @@
          </Type>
          <Type Name="GeometryShaderWrapper">
           <Members>
-           <Member Name="#.ctor(ID3D11DeviceContext*)">
-            <Messages>
-             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2009-11-20 20:57:15Z">
-              <Issue Name="IncorrectParameterName">
-               <Item>'GeometryShaderWrapper::GeometryShaderWrapper(ID3D11DeviceContext*)'</Item>
-               <Item>device</Item>
-               <Item>'paramName'</Item>
-               <Item>'ArgumentNullException'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Set(SlimDX.Direct3D11.GeometryShader,SlimDX.Direct3D11.ClassInstance[])">
             <Messages>
              <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2010-05-01 19:11:59Z">
@@ -16233,18 +16187,6 @@
          </Type>
          <Type Name="HullShaderWrapper">
           <Members>
-           <Member Name="#.ctor(ID3D11DeviceContext*)">
-            <Messages>
-             <Message TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208" Created="2009-11-20 20:57:15Z">
-              <Issue Name="IncorrectParameterName">
-               <Item>'HullShaderWrapper::HullShaderWrapper(ID3D11DeviceContext*)'</Item>
-               <Item>device</Item>
-               <Item>'paramName'</Item>
-               <Item>'ArgumentNullException'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Set(SlimDX.Direct3D11.HullShader,SlimDX.Direct3D11.ClassInstance[])">
             <Messages>
              <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2010-05-01 19:11:59Z">
@@ -17870,7 +17812,7 @@
           <Members>
            <Member Name="#Isoline">
             <Messages>
-             <Message Id="Isoline" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
+             <Message Id="Isoline" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Isoline</Item>
                <Item>'TessellatorDomain::Isoline'</Item>
@@ -18380,7 +18322,7 @@
          </Type>
          <Type Name="UnorderedAccessViewDimension">
           <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'UnorderedAccessViewDimension'</Item>
             </Issue>
@@ -18755,13 +18697,13 @@
          </Type>
          <Type Name="Blend">
           <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2009-11-20 20:57:15Z">
-            <Issue>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-11-20 20:57:15Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
              <Item>'Blend'</Item>
             </Issue>
            </Message>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2009-11-20 20:57:15Z" FixCategory="NonBreaking">
-            <Issue Name="NotFlagsNoZeroValue">
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2009-11-20 20:57:15Z">
+            <Issue>
              <Item>'Blend'</Item>
             </Issue>
            </Message>
@@ -25786,7 +25728,7 @@
          </Type>
          <Type Name="TextureTransform">
           <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'TextureTransform'</Item>
             </Issue>
@@ -26568,7 +26510,7 @@
            </Member>
            <Member Name="#CreateEnumerationObject_Internal({modopt(System.Runtime.CompilerServices.IsConst)}System.Void*,System.UInt64)">
             <Messages>
-             <Message Id="size" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2010-05-01 19:11:59Z" FixCategory="NonBreaking">
+             <Message Id="size" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Status="Excluded" Created="2010-05-01 19:11:59Z" FixCategory="NonBreaking">
               <Issue>
                <Item>'size'</Item>
                <Item>'XFile::CreateEnumerationObject_Internal(const void*, unsigned long long)'</Item>
@@ -29143,13 +29085,6 @@
            </Member>
            <Member Name="#CreateGdiCompatibleTextLayout(System.String,SlimDX.DirectWrite.TextFormat,System.Single,System.Single,System.Single,SlimDX.Direct2D.Matrix3x2,System.Boolean)">
             <Messages>
-             <Message Id="string" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2010-05-01 19:11:59Z">
-              <Issue Name="LanguageIndependentMemberParameter">
-               <Item>'Factory::CreateGdiCompatibleTextLayout(String^, TextFormat^, float, float, float, Matrix3x2, bool)'</Item>
-               <Item>string</Item>
-               <Item>'string'</Item>
-              </Issue>
-             </Message>
              <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Gdi</Item>
@@ -29165,13 +29100,6 @@
            </Member>
            <Member Name="#CreateGdiCompatibleTextLayout(System.String,SlimDX.DirectWrite.TextFormat,System.Single,System.Single,System.Single,System.Boolean)">
             <Messages>
-             <Message Id="string" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2010-05-01 19:11:59Z">
-              <Issue Name="LanguageIndependentMemberParameter">
-               <Item>'Factory::CreateGdiCompatibleTextLayout(String^, TextFormat^, float, float, float, bool)'</Item>
-               <Item>string</Item>
-               <Item>'string'</Item>
-              </Issue>
-             </Message>
              <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Gdi</Item>
@@ -29908,7 +29836,7 @@
          </Type>
          <Type Name="FontTable">
           <Messages>
-           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Created="2010-05-01 19:11:59Z" FixCategory="DependsOnFix">
+           <Message TypeName="TypesThatOwnDisposableFieldsShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1001" Status="Excluded" Created="2010-05-01 19:11:59Z" FixCategory="DependsOnFix">
             <Issue Name="DependsOnFix">
              <Item>'FontTable'</Item>
              <Item>'DataStream'</Item>
@@ -32549,7 +32477,7 @@
          </Type>
          <Type Name="UsagePage">
           <Messages>
-           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2009-11-20 20:57:15Z">
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Status="Excluded" Created="2009-11-20 20:57:15Z">
             <Issue>
              <Item>'UsagePage'</Item>
             </Issue>
@@ -32679,7 +32607,7 @@
                <Item>'Global::GetRawInputDeviceInfoW(void*, unsigned int, void*, unsigned int*)'</Item>
               </Issue>
              </Message>
-             <Message Id="nativeInfo" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Created="2010-05-01 19:11:59Z">
+             <Message Id="nativeInfo" TypeName="RemoveUnusedLocals" Category="Microsoft.Performance" CheckId="CA1804" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'Device::GetDevices(void)'</Item>
                <Item>'nativeInfo'</Item>
@@ -34474,14 +34402,8 @@
     <Resolution Name="TypeNewerVersion">Either replace the suffix '{0}' in type name {1} with the suggested numeric alternate '2' or provide a more meaningful suffix that distinguishes it from the type it replaces.</Resolution>
     <Resolution Name="TypeNoAlternate">Rename type name {0} so that it does not end in '{1}'.</Resolution>
    </Rule>
-   <Rule TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032">
-    <Resolution Name="MissingConstructor">Add the following constructor to {0}: {1}.</Resolution>
-   </Rule>
    <Rule TypeName="IndexersShouldNotBeMultidimensional" Category="Microsoft.Design" CheckId="CA1023">
     <Resolution Name="Default">Redesign indexer {0} to use a single string or integer value as its index.</Resolution>
-   </Rule>
-   <Rule TypeName="InstantiateArgumentExceptionsCorrectly" Category="Microsoft.Usage" CheckId="CA2208">
-    <Resolution Name="IncorrectParameterName">Method {0} passes '{1}' as the {2} argument to a {3} constructor. Replace this argument with one of the method's parameter names. Note that the provided parameter name should have the exact casing as declared on the method.</Resolution>
    </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>

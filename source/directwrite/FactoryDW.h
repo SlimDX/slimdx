@@ -67,26 +67,15 @@ namespace SlimDX
 
 			FontCollection ^CreateCustomFontCollection(IFontCollectionLoader ^loader, IntPtr collectionKey, int collectionKeySize);
 			FontFile ^CreateCustomFontFileReference(IntPtr fontFileReferenceKey, int fontFileReferenceKeySize, IFontFileLoader ^loader);
-			RenderingParameters ^CreateCustomRenderingParameters(
-				float gamma, float enhancedContrast, float clearTypeLevel,
-				PixelGeometry pixelGeometry, RenderingMode renderingMode);
-			TextLayout ^CreateGdiCompatibleTextLayout(String ^string, TextFormat ^textFormat,
-				float layoutWidth, float layoutHeight, float pixelsPerDip, bool useGdiNatural);
-			TextLayout ^CreateGdiCompatibleTextLayout(String ^string, TextFormat ^textFormat,
-				float layoutWidth, float layoutHeight, float pixelsPerDip,
-				Matrix3x2 transform, bool useGdiNatural);
+			RenderingParameters ^CreateCustomRenderingParameters(float gamma, float enhancedContrast, float clearTypeLevel, PixelGeometry pixelGeometry, RenderingMode renderingMode);
+			TextLayout ^CreateGdiCompatibleTextLayout(String ^text, TextFormat ^textFormat, float layoutWidth, float layoutHeight, float pixelsPerDip, bool useGdiNatural);
+			TextLayout ^CreateGdiCompatibleTextLayout(String ^text, TextFormat ^textFormat, float layoutWidth, float layoutHeight, float pixelsPerDip, Matrix3x2 transform, bool useGdiNatural);
 			InlineObject ^CreateEllipsisTrimmingSign(TextFormat ^textFormat);
-			FontFace ^CreateFontFace(FontFaceType fontFaceType,
-				array<FontFile^> ^fontFiles, int faceIndex, FontSimulations fontFaceSimulationFlags);
+			FontFace ^CreateFontFace(FontFaceType fontFaceType, array<FontFile^> ^fontFiles, int faceIndex, FontSimulations fontFaceSimulationFlags);
 			FontFile ^CreateFontFileReference(String ^filePath);
 			FontFile ^CreateFontFileReference(String ^filePath, ComTypes::FILETIME fileTime);
-			GlyphRunAnalysis ^CreateGlyphRunAnalysis(GlyphRun ^glyphRun, float pixelsPerDip,
-				RenderingMode renderingMode, MeasuringMode measuringMode,
-				float baselineOriginX, float baselineOriginY);
-			GlyphRunAnalysis ^CreateGlyphRunAnalysis(GlyphRun ^glyphRun,
-				float pixelsPerDip, Matrix3x2 transform,
-				RenderingMode renderingMode, MeasuringMode measuringMode,
-				float baselineOriginX, float baselineOriginY);
+			GlyphRunAnalysis ^CreateGlyphRunAnalysis(GlyphRun ^glyphRun, float pixelsPerDip, RenderingMode renderingMode, MeasuringMode measuringMode, float baselineOriginX, float baselineOriginY);
+			GlyphRunAnalysis ^CreateGlyphRunAnalysis(GlyphRun ^glyphRun, float pixelsPerDip, Matrix3x2 transform, RenderingMode renderingMode, MeasuringMode measuringMode, float baselineOriginX, float baselineOriginY);
 			RenderingParameters ^CreateMonitorRenderingParameters(IntPtr monitor);
 			NumberSubstitution ^CreateNumberSubstitution(NumberSubstitutionMethod method, String ^localeName, bool ignoreUserOverride);
 			RenderingParameters ^CreateRenderingParameters();

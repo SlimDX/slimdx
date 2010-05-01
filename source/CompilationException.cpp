@@ -25,6 +25,7 @@
 #include "CompilationException.h"
 
 using namespace System;
+using namespace System::Runtime::Serialization;
 
 namespace SlimDX
 {
@@ -41,6 +42,11 @@ namespace SlimDX
 		}
 
 		return nullptr;
+	}
+
+	CompilationException::CompilationException( SerializationInfo^ info, StreamingContext context )
+	: Exception( info, context )
+	{
 	}
 
 	CompilationException::CompilationException()
