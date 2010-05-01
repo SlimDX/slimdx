@@ -49,6 +49,9 @@ namespace SlimDX
 			/// input-buffer data for the input-assembler stage.
 			/// </summary>
 			/// <unmanaged>ID3D11Device::CreateInputLayout</unmanaged>
+			/// <param name="device">The device used to create the layout.</param>
+			/// <param name="elements">An array of input elements describing the layout of the input data.</param>
+			/// <param name="shaderSignature">The shader signature used to validate the input elements.</param>
 			[System::Obsolete("Use the constructor overload taking a ShaderSignature as the second argument instead.")]
 			InputLayout( SlimDX::Direct3D11::Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature );
 			
@@ -57,8 +60,19 @@ namespace SlimDX
 			/// input-buffer data for the input-assembler stage.
 			/// </summary>
 			/// <unmanaged>ID3D11Device::CreateInputLayout</unmanaged>
+			/// <param name="device">The device used to create the layout.</param>
+			/// <param name="elements">An array of input elements describing the layout of the input data.</param>
+			/// <param name="shaderSignature">The shader signature used to validate the input elements.</param>
 			InputLayout( SlimDX::Direct3D11::Device^ device, ShaderSignature^ shaderSignature, array<InputElement>^ elements );
 
+			/// <summary>
+			/// Initializes a new instance of the <see cref="InputLayout" /> object to describe the
+			/// input-buffer data for the input-assembler stage.
+			/// </summary>
+			/// <unmanaged>ID3D11Device::CreateInputLayout</unmanaged>
+			/// <param name="device">The device used to create the layout.</param>
+			/// <param name="elements">An array of input elements describing the layout of the input data.</param>
+			/// <param name="shaderBytecode">The compiled shader used to validate the input elements.</param>
 			InputLayout( SlimDX::Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, array<InputElement>^ elements );
 		};
 	}

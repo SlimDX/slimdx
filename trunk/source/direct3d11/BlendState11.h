@@ -53,9 +53,9 @@ namespace SlimDX
 			/// is identical to that of an existing BlendState object, the existing BlendState object
 			/// is returned instead of a new instance.
 			/// </summary>
-			/// <param name="device">The device to associate the state object with</param>
+			/// <param name="device">The device with which to associate the state object.</param>
 			/// <param name="description">The state description.</param>
-			/// <returns>The BlendState object.</returns>
+			/// <returns>The newly created object.</returns>
 			static BlendState^ FromDescription( SlimDX::Direct3D11::Device^ device, BlendStateDescription description );
 		};
 	}

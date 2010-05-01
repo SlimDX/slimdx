@@ -34,7 +34,7 @@ namespace SlimDX
 		ref class Device;
 		
 		/// <summary>
-		/// An object that is bound to a Device.
+		/// An object that is bound to a device.
 		/// </summary>
 		/// <unmanaged>ID3D11DeviceChild</unmanaged>
 		public ref class DeviceChild abstract : public ComObject 
@@ -46,7 +46,7 @@ namespace SlimDX
 			
 		public:
 			/// <summary>
-			/// Gets the device the object is bound to.
+			/// Gets the device to which the object is bound.
 			/// </summary>
 			property SlimDX::Direct3D11::Device^ Device
 			{

@@ -30,15 +30,19 @@ namespace SlimDX
 	{
 		ref class Device;
 
+		/// <summary>
+		/// Used to determine whether geometry should be processed depending on the results of a previous draw call.
+		/// </summary>
+		/// <unmanaged>ID3D11Predicate</unmanaged>
 		public ref class Predicate : public Query
 		{
 			COMOBJECT(ID3D11Predicate, Predicate);
 	
 		public:
 			/// <summary>
-			/// Constructs a new Predicate object.
+			/// Initializes a new instance of the <see cref="Predicate"/> class.
 			/// </summary>
-			/// <param name="device">The device to associate the predicate with.</param>
+			/// <param name="device">The device used to create the predicate object.</param>
 			/// <param name="description">The query description.</param>
 			Predicate( SlimDX::Direct3D11::Device^ device, QueryDescription description );
 		};

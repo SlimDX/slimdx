@@ -96,9 +96,13 @@ namespace SlimDX
 		generic<typename T>
 		static bool CheckElementEquality( System::Collections::Generic::IList<T>^ left, System::Collections::Generic::IList<T>^ right );
 		
+		[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 		static void FreeNativeString( LPCSTR string );
+
+		[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 		static void FreeNativeString( LPSTR string );
 
+		[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 		static LPSTR AllocateNativeString( System::String^ string );
 
 		generic<typename T> where T : value class

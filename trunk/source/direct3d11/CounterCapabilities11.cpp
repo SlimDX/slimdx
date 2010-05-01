@@ -36,7 +36,7 @@ namespace Direct3D11
 		m_NumDetectableParallelUnits = native.NumDetectableParallelUnits;
 	}
 	
-	int CounterCapabilities::LastDeviceDependantCounter::get()
+	int CounterCapabilities::LastDeviceDependentCounter::get()
 	{
 		return m_LastDeviceDependentCounter;
 	}

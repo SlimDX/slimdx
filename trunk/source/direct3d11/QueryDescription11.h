@@ -62,14 +62,14 @@ namespace SlimDX
 			}
 			
 			/// <summary>
-			/// Constructs a new QueryDescription object.
+			/// Initializes a new instance of the <see cref="QueryDescription"/> struct.
 			/// </summary>
 			/// <param name="type">The query type.</param>
 			/// <param name="flags">Query options.</param>
 			QueryDescription( QueryType type, QueryFlags flags );
 		
 			/// <summary>
-			/// Tests for equality between two QueryDescriptions.
+			/// Tests for equality between two objects.
 			/// </summary>
 			/// <param name="left">The first value to compare.</param>
 			/// <param name="right">The second value to compare.</param>
@@ -77,7 +77,7 @@ namespace SlimDX
 			static bool operator == ( QueryDescription left, QueryDescription right );
 			
 			/// <summary>
-			/// Tests for inequality between two QueryDescriptions.
+			/// Tests for inequality between two objects.
 			/// </summary>
 			/// <param name="left">The first value to compare.</param>
 			/// <param name="right">The second value to compare.</param>
@@ -105,7 +105,7 @@ namespace SlimDX
 			virtual bool Equals( QueryDescription other );
 
 			/// <summary>
-			/// Returns a value indicating whether the two BufferDescriptions are equivalent.
+			/// Returns a value indicating whether the two objects are equivalent.
 			/// </summary>
 			/// <param name="value1">The first value to compare.</param>
 			/// <param name="value2">The second value to compare.</param>

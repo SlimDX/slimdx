@@ -37,9 +37,15 @@ namespace SlimDX
 			COMOBJECT_BASE(ID3D11Asynchronous);
 
 		protected:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="Asynchronous"/> class.
+			/// </summary>
 			Asynchronous() { }
 		
 		public:
+			/// <summary>
+			/// Gets the size of the data, in bytes, of the output of the asynchronous operation.
+			/// </summary>
 			property int DataSize
 			{
 				int get();

@@ -43,7 +43,7 @@ namespace SlimDX
 				Direct3D11::CounterKind get();
 			}
 			
-			/// <summary>Creates a counter object for measuring GPU performance.</summary>
+			/// <summary>Initializes a new instance of the <see cref="Counter"/> class.</summary>
 			/// <param name="device">The device to use when creating the counter.</param>
 			/// <param name="counterKind">The kind of counter to create.</param>
 			/// <unmanaged>ID3D11Device::CreateCounter</unmanaged>

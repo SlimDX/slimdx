@@ -26,7 +26,11 @@
 namespace SlimDX
 {
 	namespace Direct3D11
-	{	
+	{
+		/// <summary>
+		/// Specifies stencil operations that can be performed based on the results of the stencil test.
+		/// </summary>
+		/// <unmanaged>D3D11_DEPTH_STENCILOP_DESC</unmanaged>
 		public value class DepthStencilOperationDescription : System::IEquatable<DepthStencilOperationDescription>
 		{
 		private:		
@@ -41,36 +45,85 @@ namespace SlimDX
 			D3D11_DEPTH_STENCILOP_DESC CreateNativeVersion();
 			
 		public:
+			/// <summary>
+			/// Gets or sets the stencil operation to perform when stencil testing fails.
+			/// </summary>
 			property StencilOperation FailOperation
 			{
 				StencilOperation get();
 				void set( StencilOperation value );
 			}
 
+			/// <summary>
+			/// Gets or sets the stencil operation to perform when stencil testing passes and depth testing fails.
+			/// </summary>
 			property StencilOperation DepthFailOperation
 			{
 				StencilOperation get();
 				void set( StencilOperation value );
 			}
 
+			/// <summary>
+			/// Gets or sets the stencil operation to perform when stencil testing and depth testing both pass.
+			/// </summary>
 			property StencilOperation PassOperation
 			{
 				StencilOperation get();
 				void set( StencilOperation value );
 			}
 
+			/// <summary>
+			/// A function that compares stencil data against existing data in the buffer.
+			/// </summary>
 			property Direct3D11::Comparison Comparison
 			{
 				Direct3D11::Comparison get();
 				void set( Direct3D11::Comparison value );
 			}
 
+			/// <summary>
+			/// Tests for equality between two objects.
+			/// </summary>
+			/// <param name="left">The first value to compare.</param>
+			/// <param name="right">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 			static bool operator == ( DepthStencilOperationDescription left, DepthStencilOperationDescription right );
+
+			/// <summary>
+			/// Tests for inequality between two objects.
+			/// </summary>
+			/// <param name="left">The first value to compare.</param>
+			/// <param name="right">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 			static bool operator != ( DepthStencilOperationDescription left, DepthStencilOperationDescription right );
 
+			/// <summary>
+			/// Returns the hash code for this instance.
+			/// </summary>
+			/// <returns>A 32-bit signed integer hash code.</returns>
 			virtual int GetHashCode() override;
+
+			/// <summary>
+			/// Returns a value that indicates whether the current instance is equal to a specified object. 
+			/// </summary>
+			/// <param name="obj">Object to make the comparison with.</param>
+			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
 			virtual bool Equals( System::Object^ obj ) override;
+
+			/// <summary>
+			/// Returns a value that indicates whether the current instance is equal to the specified object. 
+			/// </summary>
+			/// <param name="other">Object to make the comparison with.</param>
+			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
 			virtual bool Equals( DepthStencilOperationDescription other );
+
+			/// <summary>
+			/// Determines whether the specified object instances are considered equal. 
+			/// </summary>
+			/// <param name="value1">The first value to compare.</param>
+			/// <param name="value2">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="value1"/> is the same instance as <paramref name="value2"/> or 
+			/// if both are <c>null</c> references or if <c>value1.Equals(value2)</c> returns <c>true</c>; otherwise, <c>false</c>.</returns>
 			static bool Equals( DepthStencilOperationDescription% value1, DepthStencilOperationDescription% value2 );
 		};
 	}

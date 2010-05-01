@@ -27,11 +27,18 @@ namespace SlimDX
 {
 	namespace Direct3D11
 	{
+		/// <summary>
+		/// Encapsulates a list of graphics commands for future play back.
+		/// </summary>
+		/// <unmanaged>ID3D11CommandList</unmanaged>
 		public ref class CommandList : ComObject
 		{
 			COMOBJECT(ID3D11CommandList, CommandList);
 			
 		public:
+			/// <summary>
+			/// Gets the initialization flags used to create the associated device context.
+			/// </summary>
 			property int ContextFlags
 			{
 				int get();
