@@ -40,12 +40,12 @@ namespace XACT3
 		{
 			results.lookAheadTime = LookAheadTime;
 
-			if (!String::IsNullOrEmpty(RendererID))
+			if (!String::IsNullOrEmpty(RendererId))
 			{
-				pin_ptr<const wchar_t> pinnedID = PtrToStringChars(RendererID);
-				results.pRendererID = new WCHAR[RendererID->Length];
+				pin_ptr<const wchar_t> pinnedId = PtrToStringChars(RendererId);
+				results.pRendererID = new WCHAR[RendererId->Length];
 				
-				memcpy(results.pRendererID, pinnedID, sizeof(wchar_t) * RendererID->Length);
+				memcpy(results.pRendererID, pinnedId, sizeof(wchar_t) * RendererId->Length);
 			}
 
 			if (AudioDevice != nullptr)

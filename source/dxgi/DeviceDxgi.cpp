@@ -52,24 +52,21 @@ namespace DXGI
 	{
 		int result = 0;
 		RECORD_DXGI( InternalPointer->GetGPUThreadPriority( &result ) );
-		if( Result::Last.IsSuccess )
-			return result;
-		
-		throw gcnew DXGIException( Result::Last );
+
+		return result;
 	}
 	
 	void Device::GpuThreadPriority::set( int value )
 	{
-		if( RECORD_DXGI( InternalPointer->SetGPUThreadPriority( value ) ).IsFailure )
-			throw gcnew DXGIException( Result::Last );
+		RECORD_DXGI( InternalPointer->SetGPUThreadPriority( value ) );
 	}
 
 	Adapter^ Device::Adapter::get()
 	{
 		IDXGIAdapter* adapter = 0;
-		RECORD_DXGI( InternalPointer->GetAdapter( &adapter ) );
-		if( Result::Last.IsFailure )
+		if (RECORD_DXGI( InternalPointer->GetAdapter( &adapter ) ).IsFailure)
 			return nullptr;
+
 		return DXGI::Adapter::FromPointer( adapter );
 	}
 
@@ -87,6 +84,7 @@ namespace DXGI
 		List< Residency >^ result = gcnew List<Residency>( static_cast<int>( nativeResidency.size() ) );
 		for( size_t resourceIndex = 0; resourceIndex < nativeResidency.size(); ++resourceIndex )
 			result->Add( static_cast<Residency>( nativeResidency[ resourceIndex ] ) );
+
 		return gcnew ReadOnlyCollection<Residency>( result );
 	}
 }

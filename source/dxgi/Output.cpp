@@ -46,31 +46,28 @@ namespace DXGI
 	OutputDescription Output::Description::get()
 	{
 		DXGI_OUTPUT_DESC nativeDescription;
-		RECORD_DXGI( InternalPointer->GetDesc( &nativeDescription ) );
-		if( Result::Last.IsSuccess )
-			return OutputDescription( nativeDescription );
-		
-		throw gcnew DXGIException( Result::Last );
+		if (RECORD_DXGI( InternalPointer->GetDesc( &nativeDescription ) ).IsFailure)
+			return OutputDescription();
+
+		return OutputDescription( nativeDescription );
 	}
 	
 	DXGI::FrameStatistics Output::FrameStatistics::get()
 	{
 		DXGI_FRAME_STATISTICS stats;
-		RECORD_DXGI( InternalPointer->GetFrameStatistics( &stats ) );
-		if( Result::Last.IsSuccess )
-			return DXGI::FrameStatistics( stats );
-		
-		throw gcnew DXGIException( Result::Last );
+		if (RECORD_DXGI( InternalPointer->GetFrameStatistics( &stats ) ).IsFailure)
+			return DXGI::FrameStatistics();
+
+		return DXGI::FrameStatistics( stats );
 	}
 	
 	DXGI::GammaControlCapabilities Output::GammaControlCapabilities::get()
 	{
 		DXGI_GAMMA_CONTROL_CAPABILITIES caps;
-		RECORD_DXGI( InternalPointer->GetGammaControlCapabilities( &caps ) );
-		if( Result::Last.IsSuccess )
-			return DXGI::GammaControlCapabilities( caps );
-		
-		throw gcnew DXGIException( Result::Last );
+		if (RECORD_DXGI( InternalPointer->GetGammaControlCapabilities( &caps ) ).IsFailure)
+			return DXGI::GammaControlCapabilities();
+
+		return DXGI::GammaControlCapabilities( caps );
 	}
 	
 	ReadOnlyCollection<ModeDescription>^ Output::GetDisplayModeList( Format format, DisplayModeEnumerationFlags flags )
@@ -115,6 +112,7 @@ namespace DXGI
 	{
 		if( surface == nullptr )
 			throw gcnew System::ArgumentNullException( "surface" );
+
 		return RECORD_DXGI( InternalPointer->SetDisplaySurface( surface->InternalPointer ) );
 	}
 	
@@ -122,6 +120,7 @@ namespace DXGI
 	{
 		if( surface == nullptr )
 			throw gcnew System::ArgumentNullException( "surface" );
+
 		return RECORD_DXGI( InternalPointer->GetDisplaySurfaceData( surface->InternalPointer ) );
 	}
 	
@@ -129,6 +128,7 @@ namespace DXGI
 	{
 		if( device == nullptr )
 			throw gcnew System::ArgumentNullException( "device" );
+
 		return RECORD_DXGI( InternalPointer->TakeOwnership( device->UnknownPointer, exclusive ) );
 	}
 	
@@ -142,7 +142,8 @@ namespace DXGI
 		return RECORD_DXGI( InternalPointer->WaitForVBlank() );
 	}
 	
-	String^ Output::ToString() {
+	String^ Output::ToString()
+	{
 		return Description.Name;
 	}
 }

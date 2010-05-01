@@ -62,11 +62,10 @@ namespace Direct3D11
 	EffectVariableDescription EffectVariable::Description::get()
 	{
 		D3DX11_EFFECT_VARIABLE_DESC nativeDescription;
-		RECORD_D3D11( m_Pointer->GetDesc( &nativeDescription ) );
-		if( Result::Last.IsSuccess )
-			return EffectVariableDescription( nativeDescription );
-		
-		throw gcnew Direct3D11Exception( Result::Last );
+		if (RECORD_D3D11( m_Pointer->GetDesc( &nativeDescription ) ).IsFailure)
+			return EffectVariableDescription();
+
+		return EffectVariableDescription( nativeDescription );
 	}
 
 	bool EffectVariable::IsValid::get()
@@ -79,6 +78,7 @@ namespace Direct3D11
 		ID3DX11EffectVariable* variable = m_Pointer->GetAnnotationByIndex( index );
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -89,6 +89,7 @@ namespace Direct3D11
 		ID3DX11EffectVariable* variable = m_Pointer->GetAnnotationByName( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -97,6 +98,7 @@ namespace Direct3D11
 		ID3DX11EffectVariable* variable = m_Pointer->GetElement( index );
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -105,6 +107,7 @@ namespace Direct3D11
 		ID3DX11EffectVariable* variable = m_Pointer->GetMemberByIndex( index );
 		if( variable == 0 )
 			return nullptr;
+
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -115,6 +118,7 @@ namespace Direct3D11
 		ID3DX11EffectVariable* variable = m_Pointer->GetMemberByName( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( variable == 0 )
 			return nullptr;
+
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -125,6 +129,7 @@ namespace Direct3D11
 		ID3DX11EffectVariable* variable = m_Pointer->GetMemberBySemantic( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( variable == 0 )
 			return nullptr;
+
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -133,6 +138,7 @@ namespace Direct3D11
 		ID3DX11EffectConstantBuffer* variable = m_Pointer->AsConstantBuffer();
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectConstantBuffer( variable );
 	}
 	
@@ -141,6 +147,7 @@ namespace Direct3D11
 		ID3DX11EffectMatrixVariable* variable = m_Pointer->AsMatrix();
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectMatrixVariable( variable );
 	}
 	
@@ -149,6 +156,7 @@ namespace Direct3D11
 		ID3DX11EffectShaderResourceVariable* variable = m_Pointer->AsShaderResource();
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectResourceVariable( variable );
 	}
 	
@@ -157,6 +165,7 @@ namespace Direct3D11
 		ID3DX11EffectShaderVariable* variable = m_Pointer->AsShader();
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectShaderVariable( variable );
 	}
 	
@@ -165,6 +174,7 @@ namespace Direct3D11
 		ID3DX11EffectScalarVariable* variable = m_Pointer->AsScalar();
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectScalarVariable( variable );
 	}
 	
@@ -173,6 +183,7 @@ namespace Direct3D11
 		ID3DX11EffectVectorVariable* variable = m_Pointer->AsVector();
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectVectorVariable( variable );
 	}
 
@@ -181,6 +192,7 @@ namespace Direct3D11
 		ID3DX11EffectStringVariable* variable = m_Pointer->AsString();
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectStringVariable( variable );
 	}
 	
@@ -189,6 +201,7 @@ namespace Direct3D11
 		ID3DX11EffectUnorderedAccessViewVariable* variable = m_Pointer->AsUnorderedAccessView();
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectUnorderedAccessViewVariable( variable );
 	}
 
@@ -197,6 +210,7 @@ namespace Direct3D11
 		ID3DX11EffectType* type = m_Pointer->GetType();
 		if( type == 0 || !type->IsValid() )
 			return nullptr;
+
 		return gcnew EffectType( type );
 	}
 }

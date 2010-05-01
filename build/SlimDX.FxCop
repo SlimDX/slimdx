@@ -1880,7 +1880,7 @@
            </Member>
            <Member Name="#ConstructFromPointer&lt;SlimDX::Direct3D11::ShaderReflection,ID3D11ShaderReflection&gt;(ID3D11ShaderReflection*,SlimDX.ComObject,SlimDX.ComObjectFlags)">
             <Messages>
-             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2010-05-01 19:11:59Z">
+             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="MemberAbbreviation">
                <Item>ID</Item>
                <Item>'ComObject::ConstructFromPointer&lt;SlimDX::Direct3D11::ShaderReflection,ID3D11ShaderReflection&gt;(ID3D11ShaderReflection*, ComObject^, ComObjectFlags)'</Item>
@@ -2977,7 +2977,7 @@
            </Member>
            <Member Name="#ConstructFromPointer&lt;SlimDX::DirectWrite::BitmapRenderTarget,IDWriteBitmapRenderTarget&gt;(IDWriteBitmapRenderTarget*,SlimDX.ComObject,SlimDX.ComObjectFlags)">
             <Messages>
-             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2010-05-01 19:11:59Z">
+             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="MemberAbbreviation">
                <Item>ID</Item>
                <Item>'ComObject::ConstructFromPointer&lt;SlimDX::DirectWrite::BitmapRenderTarget,IDWriteBitmapRenderTarget&gt;(IDWriteBitmapRenderTarget*, ComObject^, ComObjectFlags)'</Item>
@@ -13249,20 +13249,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#ViewTransform">
-            <Accessors>
-             <Accessor Name="#get_ViewTransform()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2009-11-20 20:57:15Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'Sprite::ViewTransform::get(void)'</Item>
-                 <Item>'Direct3D10Exception'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="SpriteFlags">
@@ -15588,20 +15574,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#Description">
-            <Accessors>
-             <Accessor Name="#get_Description()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2009-11-20 20:57:15Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'EffectPass::Description::get(void)'</Item>
-                 <Item>'Direct3D11Exception'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="EffectResourceVariable">
@@ -15710,20 +15682,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="EffectShaderDescription">
-          <Members>
-           <Member Name="#RasterizedStream">
-            <Messages>
-             <Message Id="Rasterized" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
-              <Issue Name="Member">
-               <Item>Rasterized</Item>
-               <Item>'EffectShaderDescription::RasterizedStream'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="EffectShaderVariable">
           <Members>
            <Member Name="#.ctor(System.IntPtr)">
@@ -15776,20 +15734,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#Description">
-            <Accessors>
-             <Accessor Name="#get_Description()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2009-11-20 20:57:15Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'EffectTechnique::Description::get(void)'</Item>
-                 <Item>'Direct3D11Exception'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="EffectType">
@@ -15804,20 +15748,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#Description">
-            <Accessors>
-             <Accessor Name="#get_Description()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2010-05-01 19:11:59Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'EffectType::Description::get(void)'</Item>
-                 <Item>'Direct3D11Exception'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -15883,20 +15813,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#Description">
-            <Accessors>
-             <Accessor Name="#get_Description()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2009-11-20 20:57:15Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'EffectVariable::Description::get(void)'</Item>
-                 <Item>'Direct3D11Exception'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
            <Member Name="#GetVariableType()">
             <Messages>
@@ -17066,7 +16982,7 @@
          </Type>
          <Type Name="ResourceReturnType">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2010-05-01 19:11:59Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2010-05-01 19:11:59Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'ResourceReturnType'</Item>
             </Issue>
@@ -17615,19 +17531,9 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#TessellatorDomain">
-            <Messages>
-             <Message Id="Tessellator" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
-              <Issue Name="Member">
-               <Item>Tessellator</Item>
-               <Item>'ShaderDescription::TessellatorDomain'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#UintInstructionCount">
             <Messages>
-             <Message Id="Uint" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
+             <Message Id="Uint" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Uint</Item>
                <Item>'ShaderDescription::UintInstructionCount'</Item>
@@ -17961,14 +17867,6 @@
           </Messages>
          </Type>
          <Type Name="TessellatorDomain">
-          <Messages>
-           <Message Id="Tessellator" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
-            <Issue Name="Type">
-             <Item>Tessellator</Item>
-             <Item>'TessellatorDomain'</Item>
-            </Issue>
-           </Message>
-          </Messages>
           <Members>
            <Member Name="#Isoline">
             <Messages>
@@ -17981,26 +17879,6 @@
             </Messages>
            </Member>
           </Members>
-         </Type>
-         <Type Name="TessellatorOutputPrimitive">
-          <Messages>
-           <Message Id="Tessellator" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
-            <Issue Name="Type">
-             <Item>Tessellator</Item>
-             <Item>'TessellatorOutputPrimitive'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="TessellatorPartitioning">
-          <Messages>
-           <Message Id="Tessellator" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
-            <Issue Name="Type">
-             <Item>Tessellator</Item>
-             <Item>'TessellatorPartitioning'</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
          <Type Name="Texture1D">
           <Members>
@@ -29265,7 +29143,14 @@
            </Member>
            <Member Name="#CreateGdiCompatibleTextLayout(System.String,SlimDX.DirectWrite.TextFormat,System.Single,System.Single,System.Single,SlimDX.Direct2D.Matrix3x2,System.Boolean)">
             <Messages>
-             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
+             <Message Id="string" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2010-05-01 19:11:59Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'Factory::CreateGdiCompatibleTextLayout(String^, TextFormat^, float, float, float, Matrix3x2, bool)'</Item>
+               <Item>string</Item>
+               <Item>'string'</Item>
+              </Issue>
+             </Message>
+             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Gdi</Item>
                <Item>'Factory::CreateGdiCompatibleTextLayout(String^, TextFormat^, float, float, float, Matrix3x2, bool)'</Item>
@@ -29274,20 +29159,20 @@
                <Item>'Factory::CreateGdiCompatibleTextLayout(String^, TextFormat^, float, float, float, Matrix3x2, bool)'</Item>
                <Item>Gdi</Item>
                <Item>'useGdiNatural'</Item>
-              </Issue>
-             </Message>
-             <Message Id="string" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2010-05-01 19:11:59Z">
-              <Issue Name="LanguageIndependentMemberParameter">
-               <Item>'Factory::CreateGdiCompatibleTextLayout(String^, TextFormat^, float, float, float, Matrix3x2, bool)'</Item>
-               <Item>string</Item>
-               <Item>'string'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
            <Member Name="#CreateGdiCompatibleTextLayout(System.String,SlimDX.DirectWrite.TextFormat,System.Single,System.Single,System.Single,System.Boolean)">
             <Messages>
-             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
+             <Message Id="string" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2010-05-01 19:11:59Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'Factory::CreateGdiCompatibleTextLayout(String^, TextFormat^, float, float, float, bool)'</Item>
+               <Item>string</Item>
+               <Item>'string'</Item>
+              </Issue>
+             </Message>
+             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Gdi</Item>
                <Item>'Factory::CreateGdiCompatibleTextLayout(String^, TextFormat^, float, float, float, bool)'</Item>
@@ -29296,13 +29181,6 @@
                <Item>'Factory::CreateGdiCompatibleTextLayout(String^, TextFormat^, float, float, float, bool)'</Item>
                <Item>Gdi</Item>
                <Item>'useGdiNatural'</Item>
-              </Issue>
-             </Message>
-             <Message Id="string" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2010-05-01 19:11:59Z">
-              <Issue Name="LanguageIndependentMemberParameter">
-               <Item>'Factory::CreateGdiCompatibleTextLayout(String^, TextFormat^, float, float, float, bool)'</Item>
-               <Item>string</Item>
-               <Item>'string'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -29372,14 +29250,14 @@
            </Member>
            <Member Name="#GetGdiInterop()">
             <Messages>
-             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
-              <Issue Name="Member">
-               <Item>Gdi</Item>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2010-05-01 19:11:59Z">
+              <Issue Certainty="50">
                <Item>'Factory::GetGdiInterop(void)'</Item>
               </Issue>
              </Message>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2010-05-01 19:11:59Z">
-              <Issue Certainty="50">
+             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
+              <Issue Name="Member">
+               <Item>Gdi</Item>
                <Item>'Factory::GetGdiInterop(void)'</Item>
               </Issue>
              </Message>
@@ -29532,7 +29410,7 @@
            </Member>
            <Member Name="#GetGdiCompatibleGlyphMetrics(System.Single,System.Single,System.Boolean,System.Boolean,System.Int16[])">
             <Messages>
-             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
+             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Gdi</Item>
                <Item>'FontFace::GetGdiCompatibleGlyphMetrics(float, float, bool, bool, array&lt;short&gt;^)'</Item>
@@ -29555,7 +29433,7 @@
            </Member>
            <Member Name="#GetGdiCompatibleGlyphMetrics(System.Single,System.Single,System.Boolean,System.Boolean,System.Int16[],SlimDX.Direct2D.Matrix3x2)">
             <Messages>
-             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
+             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Gdi</Item>
                <Item>'FontFace::GetGdiCompatibleGlyphMetrics(float, float, bool, bool, array&lt;short&gt;^, Matrix3x2)'</Item>
@@ -29578,7 +29456,7 @@
            </Member>
            <Member Name="#GetGdiCompatibleMetrics(System.Single,System.Single)">
             <Messages>
-             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
+             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Gdi</Item>
                <Item>'FontFace::GetGdiCompatibleMetrics(float, float)'</Item>
@@ -29588,7 +29466,7 @@
            </Member>
            <Member Name="#GetGdiCompatibleMetrics(System.Single,System.Single,SlimDX.Direct2D.Matrix3x2)">
             <Messages>
-             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
+             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Gdi</Item>
                <Item>'FontFace::GetGdiCompatibleMetrics(float, float, Matrix3x2)'</Item>
@@ -30049,7 +29927,7 @@
           <Members>
            <Member Name="#DemiBold">
             <Messages>
-             <Message Id="Demi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
+             <Message Id="Demi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Demi</Item>
                <Item>'FontWeight::DemiBold'</Item>
@@ -30169,7 +30047,7 @@
           <Members>
            <Member Name="#BidiLevel">
             <Messages>
-             <Message Id="Bidi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
+             <Message Id="Bidi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Bidi</Item>
                <Item>'GlyphRun::BidiLevel'</Item>
@@ -30265,7 +30143,7 @@
           <Members>
            <Member Name="#.ctor(System.Int32,System.Int32,System.Single,System.Single,System.Single,System.Single,System.Int32,System.Boolean,System.Boolean)">
             <Messages>
-             <Message Id="bidi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
+             <Message Id="bidi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="MemberParameter">
                <Item>'HitTestMetrics::HitTestMetrics(int, int, float, float, float, float, int, bool, bool)'</Item>
                <Item>bidi</Item>
@@ -30276,7 +30154,7 @@
            </Member>
            <Member Name="#BidiLevel">
             <Messages>
-             <Message Id="Bidi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
+             <Message Id="Bidi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Bidi</Item>
                <Item>'HitTestMetrics::BidiLevel'</Item>
@@ -30431,34 +30309,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#LocaleName[System.Int32]">
-            <Accessors>
-             <Accessor Name="#get_LocaleName(System.Int32)">
-              <Messages>
-               <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Created="2009-11-20 20:57:15Z">
-                <Issue Name="Reserved">
-                 <Item>'LocalizedStrings::LocaleName::get(int)'</Item>
-                 <Item>'IndexOutOfRangeException'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#String[System.Int32]">
-            <Accessors>
-             <Accessor Name="#get_String(System.Int32)">
-              <Messages>
-               <Message TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201" Created="2009-11-20 20:57:15Z">
-                <Issue Name="Reserved">
-                 <Item>'LocalizedStrings::String::get(int)'</Item>
-                 <Item>'IndexOutOfRangeException'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
           </Members>
          </Type>
          <Type Name="MeasuringMethod">
@@ -30489,7 +30339,7 @@
           <Members>
            <Member Name="#GdiClassic">
             <Messages>
-             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
+             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Gdi</Item>
                <Item>'MeasuringMode::GdiClassic'</Item>
@@ -30499,7 +30349,7 @@
            </Member>
            <Member Name="#GdiNatural">
             <Messages>
-             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
+             <Message Id="Gdi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Gdi</Item>
                <Item>'MeasuringMode::GdiNatural'</Item>
@@ -30723,12 +30573,6 @@
            </Member>
            <Member Name="#AnalyzeBidi(SlimDX.DirectWrite.TextAnalysisSource,System.Int32,System.Int32,SlimDX.DirectWrite.TextAnalysisSink)">
             <Messages>
-             <Message Id="Bidi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
-              <Issue Name="Member">
-               <Item>Bidi</Item>
-               <Item>'TextAnalyzer::AnalyzeBidi(TextAnalysisSource^, int, int, TextAnalysisSink^)'</Item>
-              </Issue>
-             </Message>
              <Message TypeName="ConsiderPassingBaseTypesAsParameters" Category="Microsoft.Design" CheckId="CA1011" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue>
                <Item>'analysisSink'</Item>
@@ -30741,6 +30585,12 @@
                <Item>'TextAnalyzer::AnalyzeBidi(TextAnalysisSource^, int, int, TextAnalysisSink^)'</Item>
                <Item>'TextAnalysisSource'</Item>
                <Item>'ComObject'</Item>
+              </Issue>
+             </Message>
+             <Message Id="Bidi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
+              <Issue Name="Member">
+               <Item>Bidi</Item>
+               <Item>'TextAnalyzer::AnalyzeBidi(TextAnalysisSource^, int, int, TextAnalysisSink^)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -30934,13 +30784,6 @@
           <Members>
            <Member Name="#.ctor(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Int32,System.Int32)">
             <Messages>
-             <Message Id="Bidi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
-              <Issue Name="MemberParameter">
-               <Item>'TextMetrics::TextMetrics(float, float, float, float, float, float, float, int, int)'</Item>
-               <Item>Bidi</Item>
-               <Item>'maximumBidiReorderingDepth'</Item>
-              </Issue>
-             </Message>
              <Message Id="Whitespace" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="MemberParameterShouldBeCompoundWord">
                <Item>'TextMetrics::TextMetrics(float, float, float, float, float, float, float, int, int)'</Item>
@@ -30949,11 +30792,18 @@
                <Item>WhiteSpace</Item>
               </Issue>
              </Message>
+             <Message Id="Bidi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
+              <Issue Name="MemberParameter">
+               <Item>'TextMetrics::TextMetrics(float, float, float, float, float, float, float, int, int)'</Item>
+               <Item>Bidi</Item>
+               <Item>'maximumBidiReorderingDepth'</Item>
+              </Issue>
+             </Message>
             </Messages>
            </Member>
            <Member Name="#MaximumBidiReorderingDepth">
             <Messages>
-             <Message Id="Bidi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
+             <Message Id="Bidi" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Bidi</Item>
                <Item>'TextMetrics::MaximumBidiReorderingDepth'</Item>
@@ -31101,20 +30951,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#Description">
-            <Accessors>
-             <Accessor Name="#get_Description()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2009-11-20 20:57:15Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'Adapter::Description::get(void)'</Item>
-                 <Item>'DXGIException'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
              <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-11-20 20:57:15Z">
@@ -31184,18 +31020,6 @@
               </Issue>
              </Message>
             </Messages>
-            <Accessors>
-             <Accessor Name="#get_GpuThreadPriority()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2009-11-20 20:57:15Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'Device::GpuThreadPriority::get(void)'</Item>
-                 <Item>'DXGIException'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -32329,34 +32153,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#Description">
-            <Accessors>
-             <Accessor Name="#get_Description()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2009-11-20 20:57:15Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'Output::Description::get(void)'</Item>
-                 <Item>'DXGIException'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#FrameStatistics">
-            <Accessors>
-             <Accessor Name="#get_FrameStatistics()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2009-11-20 20:57:15Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'Output::FrameStatistics::get(void)'</Item>
-                 <Item>'DXGIException'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
              <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-11-20 20:57:15Z">
@@ -32367,20 +32163,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#GammaControlCapabilities">
-            <Accessors>
-             <Accessor Name="#get_GammaControlCapabilities()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2009-11-20 20:57:15Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'Output::GammaControlCapabilities::get(void)'</Item>
-                 <Item>'DXGIException'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
            <Member Name="#GetDisplayModeList(SlimDX.DXGI.Format,SlimDX.DXGI.DisplayModeEnumerationFlags)">
             <Messages>
@@ -32439,20 +32221,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#EvictionPriority">
-            <Accessors>
-             <Accessor Name="#get_EvictionPriority()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2009-11-20 20:57:15Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'Resource::EvictionPriority::get(void)'</Item>
-                 <Item>'DXGIException'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
              <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-11-20 20:57:15Z">
@@ -32463,20 +32231,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#Usage">
-            <Accessors>
-             <Accessor Name="#get_Usage()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2009-11-20 20:57:15Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'Resource::Usage::get(void)'</Item>
-                 <Item>'DXGIException'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -32501,20 +32255,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#Description">
-            <Accessors>
-             <Accessor Name="#get_Description()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2009-11-20 20:57:15Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'Surface::Description::get(void)'</Item>
-                 <Item>'DXGIException'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
@@ -32565,34 +32305,6 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#Description">
-            <Accessors>
-             <Accessor Name="#get_Description()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2009-11-20 20:57:15Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'SwapChain::Description::get(void)'</Item>
-                 <Item>'DXGIException'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-           <Member Name="#FrameStatistics">
-            <Accessors>
-             <Accessor Name="#get_FrameStatistics()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2009-11-20 20:57:15Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'SwapChain::FrameStatistics::get(void)'</Item>
-                 <Item>'DXGIException'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
            <Member Name="#FromPointer(System.IntPtr)">
             <Messages>
              <Message Id="pointer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Status="Excluded" Created="2009-11-20 20:57:15Z">
@@ -32614,20 +32326,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-           <Member Name="#PresentCount">
-            <Accessors>
-             <Accessor Name="#get_PresentCount()">
-              <Messages>
-               <Message TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065" Created="2009-11-20 20:57:15Z" FixCategory="Breaking">
-                <Issue Name="PropertyGetter" Level="Warning">
-                 <Item>'SwapChain::PresentCount::get(void)'</Item>
-                 <Item>'DXGIException'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
            <Member Name="#ResizeBuffers(System.Int32,System.Int32,System.Int32,SlimDX.DXGI.Format,SlimDX.DXGI.SwapChainFlags)">
             <Messages>
@@ -33618,17 +33316,6 @@
            </Message>
           </Messages>
           <Members>
-           <Member Name="#RendererID">
-            <Messages>
-             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2010-05-01 19:11:59Z">
-              <Issue Name="MemberAbbreviation">
-               <Item>ID</Item>
-               <Item>'RuntimeParameters::RendererID'</Item>
-               <Item>Id</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#ToUnmanaged(XACT_RUNTIME_PARAMETERS*)">
             <Messages>
              <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2010-05-01 19:11:59Z">
@@ -33714,7 +33401,7 @@
          </Type>
          <Type Name="StopFlags">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2010-05-01 19:11:59Z" FixCategory="Breaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2010-05-01 19:11:59Z" FixCategory="Breaking">
             <Issue Name="FlagsRename">
              <Item>'StopFlags'</Item>
              <Item>'StopFlags::Release'</Item>
@@ -33817,7 +33504,7 @@
           <Members>
            <Member Name="#Adpcm">
             <Messages>
-             <Message Id="Adpcm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
+             <Message Id="Adpcm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Adpcm</Item>
                <Item>'WaveBankMiniFormatTag::Adpcm'</Item>
@@ -33827,7 +33514,7 @@
            </Member>
            <Member Name="#Pcm">
             <Messages>
-             <Message Id="Pcm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
+             <Message Id="Pcm" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Pcm</Item>
                <Item>'WaveBankMiniFormatTag::Pcm'</Item>
@@ -33837,7 +33524,7 @@
            </Member>
            <Member Name="#Xma">
             <Messages>
-             <Message Id="Xma" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Created="2010-05-01 19:11:59Z">
+             <Message Id="Xma" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2010-05-01 19:11:59Z">
               <Issue Name="Member">
                <Item>Xma</Item>
                <Item>'WaveBankMiniFormatTag::Xma'</Item>
@@ -33906,7 +33593,7 @@
          </Type>
          <Type Name="WaveState">
           <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2010-05-01 19:49:25Z" FixCategory="NonBreaking">
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Status="Excluded" Created="2010-05-01 19:49:25Z" FixCategory="NonBreaking">
             <Issue Name="NotFlagsNoZeroValue">
              <Item>'WaveState'</Item>
             </Issue>
@@ -34740,9 +34427,6 @@
    </Rule>
    <Rule TypeName="DoNotNameEnumValuesReserved" Category="Microsoft.Naming" CheckId="CA1700">
     <Resolution Name="Default">If {0} is not used in the current implementation, remove it. Otherwise give it a meaningful name.</Resolution>
-   </Rule>
-   <Rule TypeName="DoNotRaiseExceptionsInUnexpectedLocations" Category="Microsoft.Design" CheckId="CA1065">
-    <Resolution Name="PropertyGetter">{0} creates an exception of type {1}, an exception type that should not be raised in a property. If this exception instance might be raised, use a different exception type, convert this property into a method, or change this property's logic so that it no longer raises an exception.</Resolution>
    </Rule>
    <Rule TypeName="DoNotRaiseReservedExceptionTypes" Category="Microsoft.Usage" CheckId="CA2201">
     <Resolution Name="Reserved">{0} creates an exception of type {1}, an exception type that is reserved by the runtime and should never be raised by managed code. If this exception instance might be thrown, use a different exception type.</Resolution>
