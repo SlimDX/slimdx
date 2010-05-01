@@ -72,12 +72,13 @@
       <Word>Resettable</Word>
       <Word>Polyline</Word>
       <Word>Multiselect</Word>
-	<Word>Submix</Word>
-	<Word>Subresource</Word>
-	<Word>Unpruned</Word>
-	<Word>Flanger</Word>
-	<Word>Rolloff</Word>
-	<Word>Resampler</Word>
+      <Word>Submix</Word>
+      <Word>Subresource</Word>
+      <Word>Unpruned</Word>
+      <Word>Flanger</Word>
+      <Word>Rolloff</Word>
+      <Word>Resampler</Word>
+      <Word>Renderer</Word>
     </Recognized>
   </Words>
 </Dictionary>

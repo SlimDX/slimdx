@@ -169,7 +169,6 @@ namespace SlimDX
 		/// <summary>
 		/// Flags that indicate the state of a wave.
 		/// </summary>
-		[System::Flags]
 		public enum class WaveState : System::Int32
 		{
 			/// <summary>

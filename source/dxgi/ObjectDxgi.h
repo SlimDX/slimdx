@@ -36,6 +36,9 @@ namespace SlimDX
 		{
 			COMOBJECT_BASE(IDXGIObject);
 
+		protected:
+			DXGIObject() { }
+
 		public:
 			/// <summary>
 			/// Gets the parent of the object.

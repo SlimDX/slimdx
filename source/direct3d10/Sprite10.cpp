@@ -56,23 +56,21 @@ namespace Direct3D10
 
 	void Sprite::ViewTransform::set( Matrix value )
 	{
-		if( RECORD_D3D10( InternalPointer->SetViewTransform( reinterpret_cast<D3DXMATRIX*>( &value ) ) ).IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last );
+		RECORD_D3D10( InternalPointer->SetViewTransform( reinterpret_cast<D3DXMATRIX*>( &value ) ) );
 	}
 
 	Matrix Sprite::ProjectionTransform::get()
 	{
 		D3DXMATRIX matrix;
 		if( RECORD_D3D10( InternalPointer->GetProjectionTransform( &matrix ) ).IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last );
+			return Matrix::Identity;
 			
 		return Matrix::FromD3DXMATRIX( matrix );
 	}
 
 	void Sprite::ProjectionTransform::set( Matrix value )
 	{
-		if( RECORD_D3D10( InternalPointer->SetProjectionTransform( reinterpret_cast<D3DXMATRIX*>( &value ) ) ).IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last );
+		RECORD_D3D10( InternalPointer->SetProjectionTransform( reinterpret_cast<D3DXMATRIX*>( &value ) ) );
 	}
 
 	SlimDX::Direct3D10::Device^ Sprite::Device::get()

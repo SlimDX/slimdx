@@ -42,7 +42,7 @@ namespace SlimDX
 			ShaderDescription^ description;
 			
 		public:
-			ShaderReflection( ShaderBytecode^ byteCode );
+			ShaderReflection( ShaderBytecode^ bytecode );
 
 			ConstantBuffer^ GetConstantBuffer( int index );
 			ConstantBuffer^ GetConstantBuffer( System::String^ name );

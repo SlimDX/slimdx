@@ -60,11 +60,10 @@ namespace Direct3D10
 	EffectVariableDescription EffectVariable::Description::get()
 	{
 		D3D10_EFFECT_VARIABLE_DESC nativeDescription;
-		RECORD_D3D10( m_Pointer->GetDesc( &nativeDescription ) );
-		if( Result::Last.IsSuccess )
-			return EffectVariableDescription( nativeDescription );
-		
-		throw gcnew Direct3D10Exception( Result::Last );
+		if ( RECORD_D3D10( m_Pointer->GetDesc( &nativeDescription ) ).IsFailure )
+			return EffectVariableDescription();
+
+		return EffectVariableDescription( nativeDescription );
 	}
 
 	bool EffectVariable::IsValid::get()
@@ -77,6 +76,7 @@ namespace Direct3D10
 		ID3D10EffectVariable* variable = m_Pointer->GetAnnotationByIndex( index );
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -87,6 +87,7 @@ namespace Direct3D10
 		ID3D10EffectVariable* variable = m_Pointer->GetAnnotationByName( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -95,6 +96,7 @@ namespace Direct3D10
 		ID3D10EffectVariable* variable = m_Pointer->GetElement( index );
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -103,6 +105,7 @@ namespace Direct3D10
 		ID3D10EffectVariable* variable = m_Pointer->GetMemberByIndex( index );
 		if( variable == 0 )
 			return nullptr;
+
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -113,6 +116,7 @@ namespace Direct3D10
 		ID3D10EffectVariable* variable = m_Pointer->GetMemberByName( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( variable == 0 )
 			return nullptr;
+
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -123,6 +127,7 @@ namespace Direct3D10
 		ID3D10EffectVariable* variable = m_Pointer->GetMemberBySemantic( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( variable == 0 )
 			return nullptr;
+
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -131,6 +136,7 @@ namespace Direct3D10
 		ID3D10EffectConstantBuffer* variable = m_Pointer->AsConstantBuffer();
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectConstantBuffer( variable );
 	}
 	
@@ -139,6 +145,7 @@ namespace Direct3D10
 		ID3D10EffectMatrixVariable* variable = m_Pointer->AsMatrix();
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectMatrixVariable( variable );
 	}
 	
@@ -147,6 +154,7 @@ namespace Direct3D10
 		ID3D10EffectShaderResourceVariable* variable = m_Pointer->AsShaderResource();
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectResourceVariable( variable );
 	}
 	
@@ -155,6 +163,7 @@ namespace Direct3D10
 		ID3D10EffectShaderVariable* variable = m_Pointer->AsShader();
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectShaderVariable( variable );
 	}
 	
@@ -163,6 +172,7 @@ namespace Direct3D10
 		ID3D10EffectScalarVariable* variable = m_Pointer->AsScalar();
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectScalarVariable( variable );
 	}
 	
@@ -171,6 +181,7 @@ namespace Direct3D10
 		ID3D10EffectVectorVariable* variable = m_Pointer->AsVector();
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectVectorVariable( variable );
 	}
 
@@ -179,6 +190,7 @@ namespace Direct3D10
 		ID3D10EffectStringVariable* variable = m_Pointer->AsString();
 		if( variable == 0 || !variable->IsValid() )
 			return nullptr;
+
 		return gcnew EffectStringVariable( variable );
 	}
 }

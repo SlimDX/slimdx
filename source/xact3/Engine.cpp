@@ -178,7 +178,7 @@ namespace XACT3
 		return RECORD_XACT3(hr);
 	}
 
-	Result Engine::ShutDown()
+	Result Engine::Shutdown()
 	{
 		HRESULT hr = InternalPointer->ShutDown();
 		return RECORD_XACT3(hr);

@@ -79,7 +79,6 @@ namespace Direct3D9
 		BackBufferCount = 1;
 
 		Multisample = MultisampleType::None;
-		MultisampleQuality = 0;
 
 		SwapEffect = SlimDX::Direct3D9::SwapEffect::Discard;
 		DeviceWindowHandle = IntPtr::Zero;
@@ -88,7 +87,6 @@ namespace Direct3D9
 		AutoDepthStencilFormat = Format::D24X8;
 		PresentFlags = SlimDX::Direct3D9::PresentFlags::None;
 
-		FullScreenRefreshRateInHertz = 0;
 		PresentationInterval = PresentInterval::Immediate;
 	}
 

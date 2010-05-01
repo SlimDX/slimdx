@@ -55,8 +55,7 @@ namespace Direct3D10
 	
 	void Debug::FeatureFlags::set( DebugFeatureFlags value )
 	{
-		if( RECORD_D3D10( InternalPointer->SetFeatureMask( static_cast<UINT>( value ) ) ).IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last );
+		RECORD_D3D10( InternalPointer->SetFeatureMask( static_cast<UINT>( value ) ) );
 	}
 	
 	int Debug::PresentDelay::get()
@@ -66,23 +65,21 @@ namespace Direct3D10
 	
 	void Debug::PresentDelay::set( int value )
 	{
-		if( RECORD_D3D10( InternalPointer->SetPresentPerRenderOpDelay( value ) ).IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last );
+		RECORD_D3D10( InternalPointer->SetPresentPerRenderOpDelay( value ) );
 	}
 	
 	DXGI::SwapChain^ Debug::SwapChain::get()
 	{
 		IDXGISwapChain* swapChain = 0;
 		if( RECORD_D3D10( InternalPointer->GetSwapChain( &swapChain ) ).IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last );
+			return nullptr;
 		
 		return DXGI::SwapChain::FromPointer( swapChain );
 	}
 	
 	void Debug::SwapChain::set( DXGI::SwapChain^ value )
 	{
-		if( RECORD_D3D10( InternalPointer->SetSwapChain( value->InternalPointer ) ).IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last );
+		RECORD_D3D10( InternalPointer->SetSwapChain( value->InternalPointer ) );
 	}
 	
 	Result Debug::ValidatePipelineState()

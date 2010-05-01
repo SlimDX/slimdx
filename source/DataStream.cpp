@@ -69,10 +69,7 @@ namespace SlimDX
 		m_Size = sizeInBytes;
 		
 		m_CanRead = canRead;
-		m_CanWrite = false;
 		m_OwnsBuffer = makeCopy;
-		
-		m_ID3DXBuffer = 0;
 
 		if( !m_OwnsBuffer )
 			GC::SuppressFinalize( this );
@@ -100,8 +97,6 @@ namespace SlimDX
 		m_CanRead = canRead;
 		m_CanWrite = canWrite;
 		m_OwnsBuffer = makeCopy;
-		
-		m_ID3DXBuffer = 0;
 
 		if( !m_OwnsBuffer )
 			GC::SuppressFinalize( this );
@@ -129,8 +124,6 @@ namespace SlimDX
 		
 		m_CanRead = canRead;
 		m_CanWrite = canWrite;
-		
-		m_ID3DXBuffer = 0;
 	}
 
 	DataStream::DataStream( IntPtr userBuffer, Int64 sizeInBytes, bool canRead, bool canWrite )
@@ -145,8 +138,7 @@ namespace SlimDX
 
 		m_CanRead = canRead;
 		m_CanWrite = canWrite;
-		
-		m_ID3DXBuffer = 0;
+
 		GC::SuppressFinalize( this );
 	}
 	
@@ -162,8 +154,7 @@ namespace SlimDX
 
 		m_CanRead = canRead;
 		m_CanWrite = canWrite;
-		
-		m_ID3DXBuffer = 0;
+
 		GC::SuppressFinalize( this );
 	}
 

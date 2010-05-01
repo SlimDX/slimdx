@@ -114,7 +114,7 @@ namespace SlimDX
 			/// <summary>
 			/// Shut down the XACT engine and free any resources in use.
 			/// </summary>
-			Result ShutDown();
+			Result Shutdown();
 
 			/// <summary>
 			/// Stop a sound category.

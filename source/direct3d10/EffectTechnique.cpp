@@ -51,11 +51,10 @@ namespace Direct3D10
 	EffectTechniqueDescription EffectTechnique::Description::get()
 	{
 		D3D10_TECHNIQUE_DESC nativeDescription;
-		RECORD_D3D10( m_Pointer->GetDesc( &nativeDescription ) );
-		if( Result::Last.IsSuccess )
-			return EffectTechniqueDescription( nativeDescription );
-		
-		throw gcnew Direct3D10Exception( Result::Last );
+		if (RECORD_D3D10( m_Pointer->GetDesc( &nativeDescription ) ).IsFailure )
+			return EffectTechniqueDescription();
+
+		return EffectTechniqueDescription( nativeDescription );
 	}
 	
 	bool EffectTechnique::IsValid::get()
@@ -68,6 +67,7 @@ namespace Direct3D10
 		ID3D10EffectVariable* variable = m_Pointer->GetAnnotationByIndex( index );
 		if( variable == 0 )
 			return nullptr;
+
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -78,6 +78,7 @@ namespace Direct3D10
 		ID3D10EffectVariable* variable = m_Pointer->GetAnnotationByName( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( variable == 0 )
 			return nullptr;
+
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -86,6 +87,7 @@ namespace Direct3D10
 		ID3D10EffectPass* pass = m_Pointer->GetPassByIndex( index );
 		if( pass == 0 )
 			return nullptr;
+
 		return gcnew EffectPass( pass );
 	}
 	
@@ -96,6 +98,7 @@ namespace Direct3D10
 		ID3D10EffectPass* pass = m_Pointer->GetPassByName( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( pass == 0 )
 			return nullptr;
+
 		return gcnew EffectPass( pass );
 	}
 }

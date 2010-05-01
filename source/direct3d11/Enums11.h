@@ -2005,7 +2005,7 @@ namespace SlimDX
 			Point = D3D11_TESSELLATOR_OUTPUT_POINT,
 			Line = D3D11_TESSELLATOR_OUTPUT_LINE,
 			TriangleClockwise = D3D11_TESSELLATOR_OUTPUT_TRIANGLE_CW,
-			TriangleCounterClockwise = D3D11_TESSELLATOR_OUTPUT_TRIANGLE_CCW
+			TriangleCounterclockwise = D3D11_TESSELLATOR_OUTPUT_TRIANGLE_CCW
 		};
 
 		public enum class TessellatorPartitioning : System::Int32
