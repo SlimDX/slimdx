@@ -30,6 +30,9 @@ namespace SlimDX
 		generic<typename T>
 		static CompilationException^ Check(HRESULT hr, System::String^ errors);
 
+	protected:
+		CompilationException( System::Runtime::Serialization::SerializationInfo^ info, System::Runtime::Serialization::StreamingContext context );
+
 	public:		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="CompilationException"/> class.

@@ -39,7 +39,7 @@ namespace Direct3D11
 	DomainShaderWrapper::DomainShaderWrapper( ID3D11DeviceContext* device )
 	{
 		if( device == 0 )
-			throw gcnew ArgumentNullException( "device" );
+			throw gcnew ArgumentNullException( "deviceContext" );
 		deviceContext = device;
 	}
 
