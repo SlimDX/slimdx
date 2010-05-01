@@ -218,29 +218,7 @@ namespace Direct3D9
 
 	int Capabilities::GetHashCode()
 	{
-		return DeviceType.GetHashCode() + AdapterOrdinal.GetHashCode() + Caps.GetHashCode()
-			 + Caps2.GetHashCode() + Caps3.GetHashCode() + PresentationIntervals.GetHashCode()
-			 + CursorCaps.GetHashCode() + DeviceCaps.GetHashCode() + PrimitiveMiscCaps.GetHashCode()
-			 + RasterCaps.GetHashCode() + DepthCompareCaps.GetHashCode() + SourceBlendCaps.GetHashCode()
-			 + DestinationBlendCaps.GetHashCode() + AlphaCompareCaps.GetHashCode() + ShadeCaps.GetHashCode()
-			 + TextureCaps.GetHashCode() + TextureFilterCaps.GetHashCode() + CubeTextureFilterCaps.GetHashCode()
-			 + VolumeTextureFilterCaps.GetHashCode() + TextureAddressCaps.GetHashCode() + VolumeTextureAddressCaps.GetHashCode()
-			 + LineCaps.GetHashCode() + MaxTextureWidth.GetHashCode() + MaxTextureHeight.GetHashCode()
-			 + MaxVolumeExtent.GetHashCode() + MaxTextureRepeat.GetHashCode() + MaxTextureAspectRatio.GetHashCode()
-			 + MaxAnisotropy.GetHashCode() + MaxVertexW.GetHashCode() + GuardBandLeft.GetHashCode()
-			 + GuardBandTop.GetHashCode() + GuardBandRight.GetHashCode() + GuardBandBottom.GetHashCode()
-			 + ExtentsAdjust.GetHashCode() + StencilCaps.GetHashCode() + FVFCaps.GetHashCode()
-			 + TextureOperationCaps.GetHashCode() + MaxTextureBlendStages.GetHashCode() + MaxSimultaneousTextures.GetHashCode()
-			 + VertexProcessingCaps.GetHashCode() + MaxActiveLights.GetHashCode() + MaxUserClipPlanes.GetHashCode()
-			 + MaxVertexBlendMatrices.GetHashCode() + MaxVertexBlendMatrixIndex.GetHashCode() + MaxPointSize.GetHashCode()
-			 + MaxPrimitiveCount.GetHashCode() + MaxVertexIndex.GetHashCode() + MaxStreams.GetHashCode()
-			 + MaxStreamStride.GetHashCode() + VertexShaderVersion->GetHashCode() + MaxVertexShaderConstants.GetHashCode()
-			 + PixelShaderVersion->GetHashCode() + PixelShader1xMaxValue.GetHashCode() + DeviceCaps2.GetHashCode()
-			 + MaxNPatchTessellationLevel.GetHashCode() + MasterAdapterOrdinal.GetHashCode() + AdapterOrdinalInGroup.GetHashCode()
-			 + NumberOfAdaptersInGroup.GetHashCode() + DeclarationTypes.GetHashCode() + SimultaneousRTCount.GetHashCode()
-			 + StretchRectFilterCaps.GetHashCode() + VS20Caps.GetHashCode() + PS20Caps.GetHashCode()
-			 + VertexTextureFilterCaps.GetHashCode() + MaxVShaderInstructionsExecuted.GetHashCode() + MaxPShaderInstructionsExecuted.GetHashCode()
-			 + MaxVertexShader30InstructionSlots.GetHashCode() + MaxPixelShader30InstructionSlots.GetHashCode();
+		return DeviceType.GetHashCode() + AdapterOrdinal.GetHashCode();
 	}
 
 	bool Capabilities::Equals( Object^ value )

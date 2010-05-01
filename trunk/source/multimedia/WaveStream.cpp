@@ -185,6 +185,12 @@ namespace Multimedia
 			delete internalMemory;
 			internalMemory = nullptr;
 		}
+
+		if( publicMemory != nullptr )
+		{
+			delete publicMemory;
+			publicMemory = nullptr;
+		}
 	}
 
 	Int64 WaveStream::Seek( Int64 offset, SeekOrigin origin )

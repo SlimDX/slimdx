@@ -113,9 +113,7 @@ namespace DirectInput
 
 	Joystick::Joystick( DirectInput^ directInput, Guid subsystem ) : Device( directInput, subsystem )
 	{
-		IDirectInputDevice8* pointer = static_cast<IDirectInputDevice8*>( ComPointer.ToPointer() );
-
-		HRESULT hr = pointer->SetDataFormat( &c_dfDIJoystick2 );
+		HRESULT hr = InternalPointer->SetDataFormat( &c_dfDIJoystick2 );
 		if( RECORD_DINPUT( hr ).IsFailure )
 			throw gcnew DirectInputException( Result::Last );
 	}

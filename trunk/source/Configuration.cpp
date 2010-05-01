@@ -27,9 +27,7 @@ namespace SlimDX
 {
 	static Configuration::Configuration()
 	{
-		EnableObjectTracking = false;
 		ThrowOnError = true;
-		DetectDoubleDispose = false;
 
 		m_Watches = gcnew System::Collections::Generic::Dictionary<Result,ResultWatchFlags>();
 		Timer = System::Diagnostics::Stopwatch::StartNew();

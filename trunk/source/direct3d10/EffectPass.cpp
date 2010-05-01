@@ -58,11 +58,10 @@ namespace Direct3D10
 	EffectPassDescription EffectPass::Description::get()
 	{
 		D3D10_PASS_DESC nativeDescription;
-		RECORD_D3D10( m_Pointer->GetDesc( &nativeDescription ) );
-		if( Result::Last.IsSuccess )
-			return EffectPassDescription( nativeDescription );
-		
-		throw gcnew Direct3D10Exception( Result::Last );
+		if ( RECORD_D3D10( m_Pointer->GetDesc( &nativeDescription ) ).IsFailure )
+			return EffectPassDescription();
+
+		return EffectPassDescription( nativeDescription );
 	}
 	
 	bool EffectPass::IsValid::get()

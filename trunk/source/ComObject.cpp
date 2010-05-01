@@ -28,15 +28,14 @@ using namespace System;
 
 namespace SlimDX
 {
-	ComObject::ComObject() : m_Unknown( 0 )
+	ComObject::ComObject()
 	{
-		IsDefaultPool = false;
 	}
 
 	ComObject::~ComObject()
 	{
 		if( m_Owner != nullptr )
-			throw gcnew InvalidOperationException("It is not legal to call Dispose() on this object.");
+			return;
 
 		Destruct();
 	}

@@ -1395,11 +1395,6 @@ namespace SlimDX
 			ShaderSampleComparisonIntrinsic = D3D10_FORMAT_SUPPORT_SHADER_SAMPLE_COMPARISON,
 			
 			/// <summary>
-			/// Reserved. Do not use.
-			/// </summary>
-			Reserved = D3D10_FORMAT_SUPPORT_SHADER_SAMPLE_MONO_TEXT,
-			
-			/// <summary>
 			/// Mipmaps are supported.
 			/// </summary>
 			MipMap = D3D10_FORMAT_SUPPORT_MIP,

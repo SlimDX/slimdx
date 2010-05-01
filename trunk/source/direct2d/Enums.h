@@ -115,7 +115,7 @@ namespace SlimDX
 		public enum class FactoryType : System::Int32
 		{
 			SingleThreaded = D2D1_FACTORY_TYPE_SINGLE_THREADED,
-			MultiThreaded = D2D1_FACTORY_TYPE_MULTI_THREADED
+			Multithreaded = D2D1_FACTORY_TYPE_MULTI_THREADED
 		};
 
 		public enum class FeatureLevel : System::Int32
@@ -225,7 +225,7 @@ namespace SlimDX
 
 		public enum class SweepDirection : System::Int32
 		{
-			CounterClockwise =  D2D1_SWEEP_DIRECTION_COUNTER_CLOCKWISE,
+			Counterclockwise =  D2D1_SWEEP_DIRECTION_COUNTER_CLOCKWISE,
 			Clockwise =  D2D1_SWEEP_DIRECTION_CLOCKWISE
 		};
 
@@ -233,7 +233,7 @@ namespace SlimDX
 		{
 			Default = D2D1_TEXT_ANTIALIAS_MODE_DEFAULT,
 			ClearType = D2D1_TEXT_ANTIALIAS_MODE_CLEARTYPE,
-			GrayScale = D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE,
+			Grayscale = D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE,
 			Aliased = D2D1_TEXT_ANTIALIAS_MODE_ALIASED
 		};
 	}

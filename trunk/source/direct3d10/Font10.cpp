@@ -66,7 +66,7 @@ namespace Direct3D10
 	{
 		D3DX10_FONT_DESC nativeDescription;
 		if( RECORD_D3D10( InternalPointer->GetDesc( &nativeDescription ) ).IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last );
+			return FontDescription();
 			
 		return FontDescription( nativeDescription );
 	}

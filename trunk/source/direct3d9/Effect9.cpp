@@ -42,13 +42,11 @@ namespace Direct3D9
 {
 	Effect::Effect( ID3DXEffect* pointer, ComObject^ owner )
 	{
-		shim = 0;
 		Construct( pointer, owner );
 	}
 
 	Effect::Effect( IntPtr pointer )
 	{
-		shim = 0;
 		Construct( pointer, NativeInterface );
 	}
 	
