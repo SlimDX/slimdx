@@ -35,7 +35,7 @@ namespace SlimDX
 			
 		public:
 			property int LookAheadTime;
-			property System::String^ RendererID;
+			property System::String^ RendererId;
 			property SlimDX::XAudio2::XAudio2^ AudioDevice;
 			property SlimDX::XAudio2::MasteringVoice^ MasteringVoice;
 			property System::IO::Stream^ SettingsBuffer;

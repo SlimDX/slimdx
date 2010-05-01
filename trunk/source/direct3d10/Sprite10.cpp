@@ -49,7 +49,7 @@ namespace Direct3D10
 	{
 		D3DXMATRIX matrix;
 		if( RECORD_D3D10( InternalPointer->GetViewTransform( &matrix ) ).IsFailure )
-			throw gcnew Direct3D10Exception( Result::Last );
+			return Matrix::Identity;
 			
 		return Matrix::FromD3DXMATRIX( matrix );
 	}

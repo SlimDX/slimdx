@@ -56,28 +56,25 @@ namespace DXGI
 	SwapChainDescription SwapChain::Description::get()
 	{
 		DXGI_SWAP_CHAIN_DESC description;
-		RECORD_DXGI( InternalPointer->GetDesc( &description ) );
-		if( Result::Last.IsSuccess )
-			return SwapChainDescription( description );
-		
-		throw gcnew DXGIException( Result::Last );
+		if (RECORD_DXGI( InternalPointer->GetDesc( &description ) ).IsFailure)
+			return SwapChainDescription();
+
+		return SwapChainDescription( description );
 	}
 	
 	DXGI::FrameStatistics SwapChain::FrameStatistics::get()
 	{
 		DXGI_FRAME_STATISTICS stats;
-		RECORD_DXGI( InternalPointer->GetFrameStatistics( &stats ) );
-		if( Result::Last.IsSuccess )
-			return DXGI::FrameStatistics( stats );
-		
-		throw gcnew DXGIException( Result::Last );
+		if (RECORD_DXGI( InternalPointer->GetFrameStatistics( &stats ) ).IsFailure)
+			return DXGI::FrameStatistics();
+
+		return DXGI::FrameStatistics( stats );
 	}
 	
 	int SwapChain::PresentCount::get()
 	{
 		UINT result = 0;
-		if( RECORD_DXGI( InternalPointer->GetLastPresentCount( &result ) ).IsFailure )
-			throw gcnew DXGIException( Result::Last );
+		RECORD_DXGI( InternalPointer->GetLastPresentCount( &result ) );
 		
 		return result;
 	}

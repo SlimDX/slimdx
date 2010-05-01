@@ -41,7 +41,7 @@ namespace DirectWrite
 	System::String^ LocalizedStrings::LocaleName::get(int index)
 	{
 		if(index >= Count)
-			throw gcnew IndexOutOfRangeException("index");
+			throw gcnew ArgumentOutOfRangeException("index");
 
 		UINT32 length = 0;
 		HRESULT hr = InternalPointer->GetLocaleNameLength(index, &length);
@@ -63,7 +63,7 @@ namespace DirectWrite
 	System::String^ LocalizedStrings::String::get(int index)
 	{
 		if(index >= Count)
-			throw gcnew IndexOutOfRangeException("index");
+			throw gcnew ArgumentOutOfRangeException("index");
 
 		UINT32 length = 0;
 		HRESULT hr = InternalPointer->GetStringLength(index, &length);

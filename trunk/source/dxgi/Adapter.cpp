@@ -35,11 +35,10 @@ namespace DXGI
 	AdapterDescription Adapter::Description::get()
 	{
 		DXGI_ADAPTER_DESC nativeDescription;
-		RECORD_DXGI( InternalPointer->GetDesc( &nativeDescription ) );
-		if( Result::Last.IsSuccess )
-			return AdapterDescription( nativeDescription );
-		
-		throw gcnew DXGIException( Result::Last );
+		if (RECORD_DXGI( InternalPointer->GetDesc( &nativeDescription ) ).IsFailure)
+			return AdapterDescription();
+
+		return AdapterDescription( nativeDescription );
 	}
 		
 	int Adapter::GetOutputCount()
@@ -89,7 +88,8 @@ namespace DXGI
 		return true;
 	}
 	
-	String^ Adapter::ToString() {
+	String^ Adapter::ToString()
+	{
 		return Description.Description;
 	}
 }

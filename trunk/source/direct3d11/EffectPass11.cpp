@@ -59,11 +59,10 @@ namespace Direct3D11
 	EffectPassDescription EffectPass::Description::get()
 	{
 		D3DX11_PASS_DESC nativeDescription;
-		RECORD_D3D11( m_Pointer->GetDesc( &nativeDescription ) );
-		if( Result::Last.IsSuccess )
-			return EffectPassDescription( nativeDescription );
-		
-		throw gcnew Direct3D11Exception( Result::Last );
+		if (RECORD_D3D11( m_Pointer->GetDesc( &nativeDescription ) ).IsFailure)
+			return EffectPassDescription();
+
+		return EffectPassDescription( nativeDescription );
 	}
 	
 	bool EffectPass::IsValid::get()
@@ -106,6 +105,7 @@ namespace Direct3D11
 		ID3DX11EffectVariable* variable = m_Pointer->GetAnnotationByIndex( index );
 		if( variable == 0 )
 			return nullptr;
+
 		return gcnew EffectVariable( variable );
 	}
 	
@@ -116,6 +116,7 @@ namespace Direct3D11
 		ID3DX11EffectVariable* variable = m_Pointer->GetAnnotationByName( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( variable == 0 )
 			return nullptr;
+
 		return gcnew EffectVariable( variable );
 	}
 	

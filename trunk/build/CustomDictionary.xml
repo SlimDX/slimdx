@@ -79,6 +79,8 @@
       <Word>Rolloff</Word>
       <Word>Resampler</Word>
       <Word>Renderer</Word>
+      <Word>Rasterized</Word>
+      <Word>Tessellator</Word>
     </Recognized>
   </Words>
 </Dictionary>

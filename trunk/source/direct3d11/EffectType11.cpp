@@ -53,11 +53,10 @@ namespace Direct3D11
 	EffectTypeDescription EffectType::Description::get()
 	{
 		D3DX11_EFFECT_TYPE_DESC nativeDescription;
-		RECORD_D3D11( m_Pointer->GetDesc( &nativeDescription ) );
-		if( Result::Last.IsSuccess )
-			return EffectTypeDescription( nativeDescription );
-		
-		throw gcnew Direct3D11Exception( Result::Last );
+		if (RECORD_D3D11( m_Pointer->GetDesc( &nativeDescription ) ).IsFailure)
+			return EffectTypeDescription();
+
+		return EffectTypeDescription( nativeDescription );
 	}
 
 	bool EffectType::IsValid::get()
@@ -70,6 +69,7 @@ namespace Direct3D11
 		LPCSTR result = m_Pointer->GetMemberName( index );
 		if ( result == 0 )
 			return nullptr;
+
 		return gcnew String(result);
 	}
 
@@ -78,6 +78,7 @@ namespace Direct3D11
 		LPCSTR result = m_Pointer->GetMemberSemantic( index );
 		if ( result == 0 )
 			return nullptr;
+
 		return gcnew String(result);
 	}
 
@@ -86,6 +87,7 @@ namespace Direct3D11
 		ID3DX11EffectType* type = m_Pointer->GetMemberTypeByIndex( index );
 		if( type == 0 )
 			return nullptr;
+
 		return gcnew EffectType( type );
 	}
 	
@@ -96,6 +98,7 @@ namespace Direct3D11
 		ID3DX11EffectType* type = m_Pointer->GetMemberTypeByName( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( type == 0 )
 			return nullptr;
+
 		return gcnew EffectType( type );
 	}
 	
@@ -106,6 +109,7 @@ namespace Direct3D11
 		ID3DX11EffectType* type = m_Pointer->GetMemberTypeBySemantic( reinterpret_cast<LPCSTR>( pinnedName ) );
 		if( type == 0 )
 			return nullptr;
+
 		return gcnew EffectType( type );
 	}
 }

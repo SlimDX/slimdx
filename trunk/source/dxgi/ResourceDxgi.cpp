@@ -37,22 +37,21 @@ namespace DXGI
 	{
 		UINT priority = 0;
 		if( RECORD_DXGI( InternalPointer->GetEvictionPriority( &priority ) ).IsFailure )
-			throw gcnew DXGIException( Result::Last );
+			return static_cast<ResourcePriority>( 0 );
 		
 		return static_cast<ResourcePriority>( priority );
 	}
 	
 	void Resource::EvictionPriority::set( ResourcePriority value )
 	{
-		if( RECORD_DXGI( InternalPointer->SetEvictionPriority( static_cast<UINT>( value ) ) ).IsFailure )
-			throw gcnew DXGIException( Result::Last );
+		RECORD_DXGI( InternalPointer->SetEvictionPriority( static_cast<UINT>( value ) ) );
 	}
 	
 	DXGI::Usage Resource::Usage::get()
 	{
 		DXGI_USAGE usage = 0;
 		if( RECORD_DXGI( InternalPointer->GetUsage( &usage ) ).IsFailure )
-			throw gcnew DXGIException( Result::Last );
+			return static_cast<DXGI::Usage>( 0 );
 		
 		return static_cast<DXGI::Usage>( usage );
 	}

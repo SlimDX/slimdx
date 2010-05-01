@@ -41,11 +41,10 @@ namespace DXGI
 	SurfaceDescription Surface::Description::get()
 	{
 		DXGI_SURFACE_DESC nativeDescription;
-		RECORD_DXGI( InternalPointer->GetDesc( &nativeDescription ) );
-		if( Result::Last.IsSuccess )
-			return SurfaceDescription( nativeDescription );
-		
-		throw gcnew DXGIException( Result::Last );
+		if (RECORD_DXGI( InternalPointer->GetDesc( &nativeDescription ) ).IsFailure)
+			return SurfaceDescription();
+
+		return SurfaceDescription( nativeDescription );
 	}
 	
 	DataRectangle^ Surface::Map( MapFlags flags )
@@ -69,11 +68,11 @@ namespace DXGI
 	{
 		IDXGISurface *buffer;
 		GUID guid = Utilities::GetNativeGuidForType( Surface::typeid );
-		RECORD_DXGI( swapChain->InternalPointer->GetBuffer(index, guid, reinterpret_cast<void**>(&buffer)) );
-		if( Result::Last.IsSuccess )
-			return Surface::FromPointer( buffer );
-	
-		throw gcnew DXGIException( Result::Last );
+		
+		if (RECORD_DXGI( swapChain->InternalPointer->GetBuffer(index, guid, reinterpret_cast<void**>(&buffer)) ).IsFailure)
+			return nullptr;
+
+		return Surface::FromPointer( buffer );
 	}
 }
 }
