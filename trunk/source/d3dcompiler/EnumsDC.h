@@ -29,7 +29,7 @@ namespace SlimDX
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
 
-		/// <summary>Specifies compile- or run-time options during <see cref="SlimDX::Direct3D11::Effect">Effect</see> creation.</summary>
+		/// <summary>Specifies compile- or run-time options during effect creation.</summary>
 		/// <unmanaged>D3D10_EFFECT</unmanaged>
 		[System::Flags]
 		public enum class EffectFlags : System::Int32

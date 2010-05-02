@@ -25,7 +25,8 @@ using SlimDX;
 using SlimDX.Direct3D10;
 using SlimDX.DXGI;
 using SlimDX.Windows;
-using Device=SlimDX.Direct3D10.Device;
+using SlimDX.D3DCompiler;
+using Device = SlimDX.Direct3D10.Device;
 
 namespace MiniTri
 {
@@ -46,16 +47,16 @@ namespace MiniTri
                 Usage = Usage.RenderTargetOutput
             };
 
-        	Device device;
-        	SwapChain swapChain;
+            Device device;
+            SwapChain swapChain;
             Device.CreateWithSwapChain(null, DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
 
-			//Stops Alt+enter from causing fullscreen skrewiness.
-        	Factory factory = swapChain.GetParent<Factory>();
-			factory.SetWindowAssociation(form.Handle, WindowAssociationFlags.IgnoreAll);
+            //Stops Alt+enter from causing fullscreen skrewiness.
+            Factory factory = swapChain.GetParent<Factory>();
+            factory.SetWindowAssociation(form.Handle, WindowAssociationFlags.IgnoreAll);
 
-        	Texture2D backBuffer = Texture2D.FromSwapChain<Texture2D>(swapChain, 0);
-        	var renderView = new RenderTargetView(device, backBuffer);
+            Texture2D backBuffer = Texture2D.FromSwapChain<Texture2D>(swapChain, 0);
+            var renderView = new RenderTargetView(device, backBuffer);
             var effect = Effect.FromFile(device, "MiniTri.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null);
             var technique = effect.GetTechniqueByIndex(0);
             var pass = technique.GetPassByIndex(0);
@@ -102,13 +103,13 @@ namespace MiniTri
                 swapChain.Present(0, PresentFlags.None);
             });
 
-			vertices.Dispose();
-			layout.Dispose();
-			effect.Dispose();
-			renderView.Dispose();
-			backBuffer.Dispose();
-			device.Dispose();
-			swapChain.Dispose();
+            vertices.Dispose();
+            layout.Dispose();
+            effect.Dispose();
+            renderView.Dispose();
+            backBuffer.Dispose();
+            device.Dispose();
+            swapChain.Dispose();
             //foreach (var item in ObjectTable.Objects)
             //    item.Dispose();
         }
