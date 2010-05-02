@@ -56,5 +56,50 @@ namespace Direct3D11
 
 		Construct( shader );
 	}
+
+	GeometryShader::GeometryShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, array<StreamOutputElement>^ elements, array<int>^ bufferedStrides, int rasterizedStream )
+	{
+		ID3D11GeometryShader *shader;
+
+		stack_array<D3D11_SO_DECLARATION_ENTRY> nativeElements = stackalloc(D3D11_SO_DECLARATION_ENTRY, elements->Length);
+		for( int i = 0; i < elements->Length; ++i )
+			nativeElements[i] = elements[i].CreateNativeVersion();
+
+		pin_ptr<int> pinnedStrides = &bufferedStrides[0];
+
+		HRESULT hr = device->InternalPointer->CreateGeometryShaderWithStreamOutput( shaderBytecode->InternalPointer->GetBufferPointer(), shaderBytecode->InternalPointer->GetBufferSize(), 
+			&nativeElements[0], elements->Length, reinterpret_cast<UINT*>(pinnedStrides), bufferedStrides->Length, rasterizedStream, NULL, &shader );
+
+		for( int i = 0; i < elements->Length; i++ )
+			Utilities::FreeNativeString( nativeElements[i].SemanticName );
+
+		if( RECORD_D3D11( hr ).IsFailure )
+			throw gcnew Direct3D11Exception( Result::Last );
+
+		Construct( shader );
+	}
+
+	GeometryShader::GeometryShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, array<StreamOutputElement>^ elements, array<int>^ bufferedStrides, int rasterizedStream, ClassLinkage^ linkage )
+	{
+		ID3D11GeometryShader *shader;
+		ID3D11ClassLinkage *nativeLinkage = linkage == nullptr ? NULL : linkage->InternalPointer;
+
+		stack_array<D3D11_SO_DECLARATION_ENTRY> nativeElements = stackalloc(D3D11_SO_DECLARATION_ENTRY, elements->Length);
+		for( int i = 0; i < elements->Length; ++i )
+			nativeElements[i] = elements[i].CreateNativeVersion();
+
+		pin_ptr<int> pinnedStrides = &bufferedStrides[0];
+
+		HRESULT hr = device->InternalPointer->CreateGeometryShaderWithStreamOutput( shaderBytecode->InternalPointer->GetBufferPointer(), shaderBytecode->InternalPointer->GetBufferSize(), 
+			&nativeElements[0], elements->Length, reinterpret_cast<UINT*>(pinnedStrides), bufferedStrides->Length, rasterizedStream, nativeLinkage, &shader );
+
+		for( int i = 0; i < elements->Length; i++ )
+			Utilities::FreeNativeString( nativeElements[i].SemanticName );
+
+		if( RECORD_D3D11( hr ).IsFailure )
+			throw gcnew Direct3D11Exception( Result::Last );
+
+		Construct( shader );
+	}
 }
 }

@@ -23,6 +23,7 @@
 
 #include "DeviceChild11.h"
 #include "ShaderBytecode11.h"
+#include "StreamOutputElement11.h"
 
 namespace SlimDX
 {
@@ -37,6 +38,9 @@ namespace SlimDX
 		public:
 			GeometryShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode );
 			GeometryShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage );
+
+			GeometryShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, array<StreamOutputElement>^ elements, array<int>^ bufferedStrides, int rasterizedStream );
+			GeometryShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, array<StreamOutputElement>^ elements, array<int>^ bufferedStrides, int rasterizedStream, ClassLinkage^ linkage );
 		};
 	}
 };

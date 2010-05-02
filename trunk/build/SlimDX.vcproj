@@ -6387,6 +6387,14 @@
 					RelativePath="..\source\direct3d11\StreamOutputBufferBinding11.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d11\StreamOutputElement11.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d11\StreamOutputElement11.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Texture"
