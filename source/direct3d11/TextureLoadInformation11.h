@@ -28,18 +28,61 @@ namespace SlimDX
 {
 	namespace Direct3D11
 	{
+		/// <summary>
+		/// Describes parameters used to load a texture from another texture.
+		/// </summary>
+		/// <unmanaged>D3DX11_TEXTURE_LOAD_INFO</unmanaged>
 		public value class TextureLoadInformation
 		{
 		public:
+			/// <summary>
+			/// Source texture region. 
+			/// </summary>
 			property ResourceRegion SourceRegion;
+
+			/// <summary>
+			/// Destination texture region.
+			/// </summary>
 			property ResourceRegion DestinationRegion;
+
+			/// <summary>
+			/// Source texture mipmap level.
+			/// </summary>
 			property int FirstSourceMip;
+
+			/// <summary>
+			/// Destination texture mipmap level.
+			/// </summary>
 			property int FirstDestinationMip;
+
+			/// <summary>
+			/// Number of mipmap levels in the source texture.
+			/// </summary>
 			property int MipCount;
+
+			/// <summary>
+			/// First element of the source texture.
+			/// </summary>
 			property int FirstSourceElement;
+
+			/// <summary>
+			/// First element of the destination texture.
+			/// </summary>
 			property int FirstDestinationElement;
+
+			/// <summary>
+			/// Number of elements to load.
+			/// </summary>
 			property int ElementCount;
+
+			/// <summary>
+			/// Filtering options during resampling.
+			/// </summary>
 			property FilterFlags Filter;
+
+			/// <summary>
+			/// Filtering options when generating mip levels.
+			/// </summary>
 			property FilterFlags MipFilter;
 		};
 	}

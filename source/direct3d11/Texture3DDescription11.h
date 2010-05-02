@@ -28,7 +28,11 @@
 namespace SlimDX
 {
 	namespace Direct3D11
-	{	
+	{
+		/// <summary>
+		/// Describes a three-dimensional texture.
+		/// </summary>
+		/// <unmanaged>D3D11_TEXTURE3D_DESC</unmanaged>
 		public value class Texture3DDescription : System::IEquatable<Texture3DDescription>
 		{
 		private:
@@ -48,66 +52,130 @@ namespace SlimDX
 			D3D11_TEXTURE3D_DESC CreateNativeVersion();
 			
 		public:
+			/// <summary>
+			/// Texture width (in texels).
+			/// </summary>
 			property int Width
 			{
 				int get();
 				void set( int value );
 			}
 			
+			/// <summary>
+			/// Texture height (in texels).
+			/// </summary>
 			property int Height
 			{
 				int get();
 				void set( int value );
 			}
 			
+			/// <summary>
+			/// Texture depth (in texels).
+			/// </summary>
 			property int Depth
 			{
 				int get();
 				void set( int value );
 			}
 			
+			/// <summary>
+			/// The maximum number of mipmap levels in the texture. Use 1 for a multisampled texture; or 0 to generate a full set of subtextures.
+			/// </summary>
 			property int MipLevels
 			{
 				int get();
 				void set( int value );
 			}
 			
+			/// <summary>
+			/// Format of the data in the texture.
+			/// </summary>
 			property DXGI::Format Format
 			{
 				DXGI::Format get();
 				void set( DXGI::Format value );
 			}
 			
+			/// <summary>
+			/// Value that identifies how the texture is to be read from and written to.
+			/// </summary>
 			property ResourceUsage Usage
 			{
 				ResourceUsage get();
 				void set( ResourceUsage value );
 			}
 			
+			/// <summary>
+			/// Flags that describe how the texture can be bound to the pipeline.
+			/// </summary>
 			property Direct3D11::BindFlags BindFlags
 			{
 				Direct3D11::BindFlags get();
 				void set( Direct3D11::BindFlags value );
 			}
 			
+			/// <summary>
+			/// Flags that specify how the CPU may access the texture.
+			/// </summary>
 			property Direct3D11::CpuAccessFlags CpuAccessFlags
 			{
 				Direct3D11::CpuAccessFlags get();
 				void set( Direct3D11::CpuAccessFlags value );
 			}
 			
+			/// <summary>
+			/// Flags that identifies other, less common resource options.
+			/// </summary>
 			property ResourceOptionFlags OptionFlags
 			{
 				ResourceOptionFlags get();
 				void set( ResourceOptionFlags value );
 			}
 
+			/// <summary>
+			/// Tests for equality between two objects.
+			/// </summary>
+			/// <param name="left">The first value to compare.</param>
+			/// <param name="right">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 			static bool operator == ( Texture3DDescription left, Texture3DDescription right );
+
+			/// <summary>
+			/// Tests for inequality between two objects.
+			/// </summary>
+			/// <param name="left">The first value to compare.</param>
+			/// <param name="right">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 			static bool operator != ( Texture3DDescription left, Texture3DDescription right );
 
+			/// <summary>
+			/// Returns the hash code for this instance.
+			/// </summary>
+			/// <returns>A 32-bit signed integer hash code.</returns>
 			virtual int GetHashCode() override;
+
+			/// <summary>
+			/// Returns a value that indicates whether the current instance is equal to a specified object. 
+			/// </summary>
+			/// <param name="obj">Object to make the comparison with.</param>
+			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
 			virtual bool Equals( System::Object^ obj ) override;
+
+			/// <summary>
+			/// Returns a value that indicates whether the current instance is equal to the specified object. 
+			/// </summary>
+			/// <param name="other">Object to make the comparison with.</param>
+			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
 			virtual bool Equals( Texture3DDescription other );
+
+			/// <summary>
+			/// Determines whether the specified object instances are considered equal. 
+			/// </summary>
+			/// <param name="value1">The first value to compare.</param>
+			/// <param name="value2">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="value1"/> is the same instance as <paramref name="value2"/> or 
+			/// if both are <c>null</c> references or if <c>value1.Equals(value2)</c> returns <c>true</c>; otherwise, <c>false</c>.</returns>
 			static bool Equals( Texture3DDescription% value1, Texture3DDescription% value2 );
 		};
 	}

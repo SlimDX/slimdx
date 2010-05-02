@@ -32,6 +32,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains the description of the contents of an image file.
 		/// </summary>
+		/// <unmanaged>D3DX11_IMAGE_LOAD_INFO</unmanaged>
 		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class ImageLoadInformation : System::IEquatable<ImageLoadInformation>
 		{
@@ -55,8 +56,15 @@ namespace SlimDX
 			D3DX11_IMAGE_LOAD_INFO CreateNativeVersion();
 
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="ImageLoadInformation"/> struct using default values.
+			/// </summary>
+			/// <returns>The default image load information.</returns>
 			static ImageLoadInformation FromDefaults();
 
+			/// <summary>
+			/// The default value for load options.
+			/// </summary>
 			property static int FileDefaultValue
 			{
 				int get();

@@ -34,7 +34,7 @@ namespace SlimDX
 	namespace Direct3D11
 	{
 		/// <summary>
-		/// A resource object.
+		/// A base class for all resource objects.
 		/// </summary>
 		/// <unmanaged>ID3D11Resource</unmanaged>
 		public ref class Resource abstract : public DeviceChild
@@ -50,7 +50,7 @@ namespace SlimDX
 		
 			static Resource^ FromPointer( ID3D11Resource* pointer );
 
-		protected:
+		private protected:
 			Resource() { }
 
 		public:
@@ -70,6 +70,12 @@ namespace SlimDX
 			generic< class T > where T : Resource, ref class
 			static T FromSwapChain( SlimDX::DXGI::SwapChain^ swapChain, int index );
 
+			/// <summary>
+			/// Constructs a new instance of the <see cref="Resource"/> class using the specified pointer to a
+			/// previously constructed unmanaged object.
+			/// </summary>
+			/// <param name="pointer">The unmanaged resource pointer.</param>
+			/// <returns>The newly constructed object.</returns>
 			static Resource^ FromPointer( System::IntPtr pointer );
 
 			/// <summary>
@@ -98,7 +104,24 @@ namespace SlimDX
 			/// <returns>The subresource index (equivalent to mipSlice + (arraySlice * mipLevels)).</returns>
 			static int CalculateSubresourceIndex( int mipSlice, int arraySlice, int mipLevels );
 
+			/// <summary>
+			/// Loads a texture from a texture.
+			/// </summary>
+			/// <param name="context">The device context used to load the texture.</param>
+			/// <param name="source">The source texture.</param>
+			/// <param name="destination">The destination texture.</param>
+			/// <param name="loadInformation">Texture loading parameters.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			static Result LoadTextureFromTexture(DeviceContext^ context, Resource^ source, Resource^ destination, TextureLoadInformation loadInformation);
+
+			/// <summary>
+			/// Generates a mipmap chain using a particular texture filter.
+			/// </summary>
+			/// <param name="context">The device context used to generate the mipmaps.</param>
+			/// <param name="texture">The texture to be filtered.</param>
+			/// <param name="sourceLevel">The mipmap level whose data is used to generate the rest of the mipmap chain.</param>
+			/// <param name="mipFilter">Flags controlling how each miplevel is filtered.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			static Result FilterTexture(DeviceContext^ context, Resource^ texture, int sourceLevel, FilterFlags mipFilter);
 		};
 	}

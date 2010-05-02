@@ -100,6 +100,17 @@ namespace SlimDX
 			}
 
 			/// <summary>
+			/// Initializes a new instance of the <see cref="ResourceRegion"/> struct.
+			/// </summary>
+			/// <param name="left">The left boundary of the region.</param>
+			/// <param name="top">The top boundary of the region.</param>
+			/// <param name="front">The front boundary of the region.</param>
+			/// <param name="right">The right boundary of the region.</param>
+			/// <param name="bottom">The bottom boundary of the region.</param>
+			/// <param name="back">The back boundary of the region.</param>
+			ResourceRegion(int left, int top, int front, int right, int bottom, int back);
+
+			/// <summary>
 			/// Tests for equality between two ResourceRegions.
 			/// </summary>
 			/// <param name="left">The first value to compare.</param>
