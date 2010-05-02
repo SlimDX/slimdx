@@ -624,7 +624,7 @@ namespace SlimDX
 			/// </summary>
 			PreventThreadingOptimizations = D3D11_CREATE_DEVICE_PREVENT_INTERNAL_THREADING_OPTIMIZATIONS,
 
-			BgraSupport = D3D10_CREATE_DEVICE_BGRA_SUPPORT
+			BgraSupport = D3D11_CREATE_DEVICE_BGRA_SUPPORT
 		};
 	
 		/// <summary>Specifies possible driver types.</summary>
@@ -670,34 +670,6 @@ namespace SlimDX
 			/// (level 9.1 through level 10.1) with a high performance software implementation when hardware is not available.
 			/// </summary>
 			Warp = D3D_DRIVER_TYPE_WARP
-		};
-
-		/// <summary>Specifies compile- or run-time options during <see cref="SlimDX::Direct3D11::Effect">Effect</see> creation.</summary>
-		/// <unmanaged>D3D10_EFFECT</unmanaged>
-		[System::Flags]
-		public enum class EffectFlags : System::Int32
-		{
-			/// <summary>
-			/// Standard compile- and run-time behavior.
-			/// </summary>
-			None = 0,
-			
-			/// <summary>
-			/// Compile the .fx file to a child effect. Child effects do not initialize shared values
-			/// (as those values are instead initialized by the effect pool).
-			/// </summary>
-			ChildEffect = D3D10_EFFECT_COMPILE_CHILD_EFFECT,
-			
-			/// <summary>
-			/// Allow mutable state objects (non-literal expressions may appear in state object definitions). This
-			/// has a negative impact on run-time performance.
-			/// </summary>
-			AllowSlowOperations = D3D10_EFFECT_COMPILE_ALLOW_SLOW_OPS,
-			
-			/// <summary>
-			/// Do not attempt to synchronize with other threads loading effects into the same pool.
-			/// </summary>
-			SingleThreaded = D3D10_EFFECT_SINGLE_THREADED,
 		};
 
 		[System::Flags]
@@ -1143,24 +1115,6 @@ namespace SlimDX
 			/// Windows Media Player format (WMP).
 			/// </summary>
 			Wmp = D3DX11_IFF_WMP
-		};
-
-		/// <summary>
-		/// Flags that indicate the location of an include file.
-		/// </summary>
-		/// <unmanaged>D3D10_INCLUDE_TYPE</unmanaged>
-		[System::Flags]
-		public enum class IncludeType : System::Int32
-		{
-			/// <summary>
-			/// Indicates that the include is in the local path (or paths).
-			/// </summary>
-			Local = D3D10_INCLUDE_LOCAL,
-			
-			/// <summary>
-			/// Indicates that the include is in the system path (or paths).
-			/// </summary>
-			System = D3D10_INCLUDE_SYSTEM
 		};
 		
 		/// <summary>Specifies possible types of data contained in an input slot.</summary>
@@ -1858,32 +1812,6 @@ namespace SlimDX
 			/// The operation is XOR.
 			/// </summary>
 			XOR = D3DX11_SCAN_OPCODE_XOR
-		};
-
-		/// <summary></summary>
-		/// <unmanaged>D3D10_SHADER</unmanaged>
-		[System::Flags]
-		public enum class ShaderFlags : System::Int32
-		{
-			None = 0,
-			Debug = D3D10_SHADER_DEBUG,
-			SkipValidation = D3D10_SHADER_SKIP_VALIDATION,
-			SkipOptimization = D3D10_SHADER_SKIP_OPTIMIZATION,
-			PackMatrixRowMajor = D3D10_SHADER_PACK_MATRIX_ROW_MAJOR,
-			PackMatrixColumnMajor = D3D10_SHADER_PACK_MATRIX_COLUMN_MAJOR,
-			PartialPrecision = D3D10_SHADER_PARTIAL_PRECISION,
-			ForceSoftwareVertexShader = D3D10_SHADER_FORCE_VS_SOFTWARE_NO_OPT,
-			ForceSoftwarePixelShader = D3D10_SHADER_FORCE_PS_SOFTWARE_NO_OPT,
-			NoPreshader = D3D10_SHADER_NO_PRESHADER,
-			AvoidFlowControl = D3D10_SHADER_AVOID_FLOW_CONTROL,
-			PreferFlowControl = D3D10_SHADER_PREFER_FLOW_CONTROL,
-			EnableStrictness = D3D10_SHADER_ENABLE_STRICTNESS,
-			EnableBackwardsCompatibility = D3D10_SHADER_ENABLE_BACKWARDS_COMPATIBILITY,
-			EnableIEEEStrictness = D3D10_SHADER_IEEE_STRICTNESS,
-			OptimizationLevel0 = D3D10_SHADER_OPTIMIZATION_LEVEL0,
-			OptimizationLevel1 = D3D10_SHADER_OPTIMIZATION_LEVEL1,
-			OptimizationLevel2 = D3D10_SHADER_OPTIMIZATION_LEVEL2,
-			OptimizationLevel3 = D3D10_SHADER_OPTIMIZATION_LEVEL3
 		};
 		
 		/// <summary>Identifies the type of the resource that will be viewed.</summary>

@@ -22,6 +22,7 @@
 #pragma once
 
 #include "Enums11.h"
+#include "../d3dcompiler/EnumsDC.h"
 
 namespace SlimDX
 {
@@ -35,7 +36,7 @@ namespace SlimDX
 		public:
 			property int Version;
 			property System::String^ Creator;
-			property ShaderFlags Flags;
+			property D3DCompiler::ShaderFlags Flags;
 			property int ConstantBuffers;
 			property int BoundResources;
 			property int InputParameters;

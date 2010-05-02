@@ -32,7 +32,7 @@
 #include "Direct3D11Exception.h"
 
 #include "Device11.h"
-#include "ShaderBytecode11.h"
+#include "../d3dcompiler/ShaderBytecodeDC.h"
 #include "ClassLinkage11.h"
 #include "EffectConstantBuffer11.h"
 #include "EffectDescription11.h"
@@ -48,7 +48,7 @@ namespace SlimDX
 {
 namespace Direct3D11
 {
-	Effect::Effect( SlimDX::Direct3D11::Device^ device, ShaderBytecode^ data, EffectFlags effectFlags )
+	Effect::Effect( SlimDX::Direct3D11::Device^ device, D3DCompiler::ShaderBytecode^ data, D3DCompiler::EffectFlags effectFlags )
 	{
 		ID3DX11Effect *effect;
 

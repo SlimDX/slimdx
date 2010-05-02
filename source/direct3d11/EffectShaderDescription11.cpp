@@ -31,9 +31,9 @@ namespace Direct3D11
 { 
 	EffectShaderDescription::EffectShaderDescription( const D3DX11_EFFECT_SHADER_DESC& native )
 	{
-		m_InputSignature = gcnew ShaderSignature( gcnew DataStream( native.pInputSignature, native.BytecodeLength - (native.pInputSignature - native.pBytecode), true, false ) );
+		m_InputSignature = gcnew D3DCompiler::ShaderSignature( gcnew DataStream( native.pInputSignature, native.BytecodeLength - (native.pInputSignature - native.pBytecode), true, false ) );
 		m_IsInline = native.IsInline ? true : false;
-		m_Bytecode = gcnew ShaderBytecode( native.pBytecode, native.BytecodeLength );
+		m_Bytecode = gcnew D3DCompiler::ShaderBytecode( native.pBytecode, native.BytecodeLength );
 		m_SODecl = gcnew array<System::String^>( D3D11_SO_STREAM_COUNT );
 		for( int i = 0; i < D3D11_SO_STREAM_COUNT; ++i )
 		{
@@ -43,7 +43,7 @@ namespace Direct3D11
 		m_NumOutputSignatureEntries = native.NumOutputSignatureEntries;
 	}
 	
-	ShaderSignature^ EffectShaderDescription::Signature::get()
+	D3DCompiler::ShaderSignature^ EffectShaderDescription::Signature::get()
 	{
 		return m_InputSignature;
 	}
@@ -53,7 +53,7 @@ namespace Direct3D11
 		return m_IsInline;
 	}
 	
-	ShaderBytecode^ EffectShaderDescription::Bytecode::get()
+	D3DCompiler::ShaderBytecode^ EffectShaderDescription::Bytecode::get()
 	{
 		return m_Bytecode;
 	}

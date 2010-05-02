@@ -24,7 +24,7 @@
 #include "Direct3D11Exception.h"
 
 #include "ShaderReflection11.h"
-#include "ShaderBytecode11.h"
+#include "../d3dcompiler/ShaderBytecodeDC.h"
 
 using namespace System;
 
@@ -32,7 +32,7 @@ namespace SlimDX
 {
 namespace Direct3D11
 {
-	ShaderReflection::ShaderReflection( ShaderBytecode^ byteCode )
+	ShaderReflection::ShaderReflection( D3DCompiler::ShaderBytecode^ byteCode )
 	{
 		ID3D11ShaderReflection* result = 0;
 		HRESULT hr = D3DReflect( byteCode->InternalPointer->GetBufferPointer(), byteCode->InternalPointer->GetBufferSize(), IID_ID3D11ShaderReflection, reinterpret_cast<void**>( &result ) );

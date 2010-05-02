@@ -22,6 +22,7 @@
 #pragma once
 
 #include "../ComObject.h"
+#include "../d3dcompiler/ShaderBytecodeDC.h"
 
 #include "Enums11.h"
 
@@ -44,7 +45,7 @@ namespace SlimDX
 			COMOBJECT(ID3DX11Effect, Effect);
 
 		public:
-			Effect( SlimDX::Direct3D11::Device^ device, ShaderBytecode^ data, EffectFlags effectFlags );
+			Effect( SlimDX::Direct3D11::Device^ device, D3DCompiler::ShaderBytecode^ data, D3DCompiler::EffectFlags effectFlags );
 
 			property EffectDescription Description
 			{

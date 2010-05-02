@@ -34,7 +34,7 @@ namespace SlimDX
 {
 namespace Direct3D11
 {
-	GeometryShader::GeometryShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode )
+	GeometryShader::GeometryShader( Direct3D11::Device^ device, D3DCompiler::ShaderBytecode^ shaderBytecode )
 	{
 		ID3D11GeometryShader *shader;
 
@@ -45,7 +45,7 @@ namespace Direct3D11
 		Construct( shader );
 	}
 
-	GeometryShader::GeometryShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage )
+	GeometryShader::GeometryShader( Direct3D11::Device^ device, D3DCompiler::ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage )
 	{
 		ID3D11GeometryShader *shader;
 		ID3D11ClassLinkage *nativeLinkage = linkage == nullptr ? NULL : linkage->InternalPointer;
@@ -57,7 +57,7 @@ namespace Direct3D11
 		Construct( shader );
 	}
 
-	GeometryShader::GeometryShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, array<StreamOutputElement>^ elements, array<int>^ bufferedStrides, int rasterizedStream )
+	GeometryShader::GeometryShader( Direct3D11::Device^ device, D3DCompiler::ShaderBytecode^ shaderBytecode, array<StreamOutputElement>^ elements, array<int>^ bufferedStrides, int rasterizedStream )
 	{
 		ID3D11GeometryShader *shader;
 
@@ -79,7 +79,7 @@ namespace Direct3D11
 		Construct( shader );
 	}
 
-	GeometryShader::GeometryShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, array<StreamOutputElement>^ elements, array<int>^ bufferedStrides, int rasterizedStream, ClassLinkage^ linkage )
+	GeometryShader::GeometryShader( Direct3D11::Device^ device, D3DCompiler::ShaderBytecode^ shaderBytecode, array<StreamOutputElement>^ elements, array<int>^ bufferedStrides, int rasterizedStream, ClassLinkage^ linkage )
 	{
 		ID3D11GeometryShader *shader;
 		ID3D11ClassLinkage *nativeLinkage = linkage == nullptr ? NULL : linkage->InternalPointer;
