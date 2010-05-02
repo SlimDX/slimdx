@@ -24,7 +24,7 @@
 #include "../DataStream.h"
 
 #include "EffectPassDescription.h"
-#include "ShaderSignature10.h"
+#include "../d3dcompiler/ShaderSignatureDC.h"
 
 using namespace System;
 
@@ -36,7 +36,7 @@ namespace Direct3D10
 	{
 		m_Name = gcnew String( native.Name );
 		m_Annotations = native.Annotations;
-		m_Signature = gcnew ShaderSignature( gcnew DataStream( native.pIAInputSignature, native.IAInputSignatureSize, true, false ) );
+		m_Signature = gcnew D3DCompiler::ShaderSignature( gcnew DataStream( native.pIAInputSignature, native.IAInputSignatureSize, true, false ) );
 		m_StencilRef = native.StencilRef;
 		m_SampleMask = native.SampleMask;
 		m_BlendFactor = Color4( native.BlendFactor[ 3 ], native.BlendFactor[ 0 ], native.BlendFactor[ 1 ], native.BlendFactor[ 2 ] );
@@ -52,7 +52,7 @@ namespace Direct3D10
 		return m_Annotations;
 	}
 	
-	ShaderSignature^ EffectPassDescription::Signature::get()
+	D3DCompiler::ShaderSignature^ EffectPassDescription::Signature::get()
 	{
 		return m_Signature;
 	}

@@ -23,6 +23,9 @@
 
 #include "../ComObject.h"
 
+#include "../d3dcompiler/ShaderSignatureDC.h"
+#include "../d3dcompiler/ShaderBytecodeDC.h"
+
 #include "DeviceChild10.h"
 #include "InputElement.h"
 
@@ -43,16 +46,16 @@ namespace SlimDX
 		
 		public:
 			[System::Obsolete("Use the constructor overload taking a ShaderSignature as the second argument instead.")]
-			InputLayout( SlimDX::Direct3D10::Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature );
+			InputLayout( SlimDX::Direct3D10::Device^ device, array<InputElement>^ elements, D3DCompiler::ShaderSignature^ shaderSignature );
 
 			/// <summary>
 			/// Initializes a new instance of the <see cref="InputLayout" /> object to describe the
 			/// input-buffer data for the input-assembler stage.
 			/// </summary>
 			/// <unmanaged>ID3D10Device::CreateInputLayout</unmanaged>
-			InputLayout( SlimDX::Direct3D10::Device^ device, ShaderSignature^ shaderSignature, array<InputElement>^ elements );
+			InputLayout( SlimDX::Direct3D10::Device^ device, D3DCompiler::ShaderSignature^ shaderSignature, array<InputElement>^ elements );
 
-			InputLayout( SlimDX::Direct3D10::Device^ device, ShaderBytecode^ shaderBytecode, array<InputElement>^ elements );
+			InputLayout( SlimDX::Direct3D10::Device^ device, D3DCompiler::ShaderBytecode^ shaderBytecode, array<InputElement>^ elements );
 		};
 	}
 };

@@ -22,7 +22,7 @@
 #pragma once
 
 #include "DeviceChild10.h"
-#include "ShaderBytecode10.h"
+#include "../d3dcompiler/ShaderBytecodeDC.h"
 
 namespace SlimDX
 {
@@ -33,7 +33,7 @@ namespace SlimDX
 			COMOBJECT(ID3D10GeometryShader, GeometryShader);
 
 		public:
-			GeometryShader( Direct3D10::Device^ device, ShaderBytecode^ shaderBytecode );
+			GeometryShader( Direct3D10::Device^ device, D3DCompiler::ShaderBytecode^ shaderBytecode );
 		};
 	}
 };

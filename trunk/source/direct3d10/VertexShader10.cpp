@@ -33,7 +33,7 @@ namespace SlimDX
 {
 namespace Direct3D10
 {
-	VertexShader::VertexShader( Direct3D10::Device^ device, ShaderBytecode^ shaderBytecode )
+	VertexShader::VertexShader( Direct3D10::Device^ device, D3DCompiler::ShaderBytecode^ shaderBytecode )
 	{
 		ID3D10VertexShader *shader;
 

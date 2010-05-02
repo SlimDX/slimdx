@@ -866,22 +866,6 @@
 				Name="Shader"
 				>
 				<File
-					RelativePath="..\source\direct3d10\Include10.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\Include10.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\ShaderBytecode10.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\ShaderBytecode10.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\direct3d10\ShaderDescription.cpp"
 					>
 				</File>
@@ -890,27 +874,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d10\ShaderMacro10.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\ShaderMacro10.h"
-					>
-				</File>
-				<File
 					RelativePath="..\source\direct3d10\ShaderParameterDescription.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\source\direct3d10\ShaderParameterDescription.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\ShaderSignature10.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d10\ShaderSignature10.h"
 					>
 				</File>
 				<Filter
@@ -6860,38 +6828,50 @@
 				RelativePath="..\source\d3dcompiler\EnumsDC.h"
 				>
 			</File>
-			<File
-				RelativePath="..\source\d3dcompiler\IncludeDC.cpp"
+			<Filter
+				Name="Include"
 				>
-			</File>
-			<File
-				RelativePath="..\source\d3dcompiler\IncludeDC.h"
+				<File
+					RelativePath="..\source\d3dcompiler\IncludeDC.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\d3dcompiler\IncludeDC.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="ShaderMacro"
 				>
-			</File>
-			<File
-				RelativePath="..\source\d3dcompiler\ShaderBytecodeDC.cpp"
+				<File
+					RelativePath="..\source\d3dcompiler\ShaderMacroDC.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\d3dcompiler\ShaderMacroDC.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Shader Data"
 				>
-			</File>
-			<File
-				RelativePath="..\source\d3dcompiler\ShaderBytecodeDC.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\d3dcompiler\ShaderMacroDC.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\d3dcompiler\ShaderMacroDC.h"
-				>
-			</File>
-			<File
-				RelativePath="..\source\d3dcompiler\ShaderSignatureDC.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\d3dcompiler\ShaderSignatureDC.h"
-				>
-			</File>
+				<File
+					RelativePath="..\source\d3dcompiler\ShaderBytecodeDC.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\d3dcompiler\ShaderBytecodeDC.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\d3dcompiler\ShaderSignatureDC.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\d3dcompiler\ShaderSignatureDC.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath="..\source\AssemblyInfo.cpp"
