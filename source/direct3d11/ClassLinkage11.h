@@ -35,6 +35,10 @@ namespace SlimDX
 			COMOBJECT(ID3D11ClassLinkage, ClassLinkage);
 			
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="ClassLinkage"/> class.
+			/// </summary>
+			/// <param name="device">The device used to create the class linkage object.</param>
 			ClassLinkage( Device^ device );
 		
 			ClassInstance^ GetInstance( System::String^ name, int index );
