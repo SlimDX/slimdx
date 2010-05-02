@@ -35,7 +35,7 @@ namespace Direct3D11
 	{
 		m_Name = gcnew String( native.Name );
 		m_Annotations = native.Annotations;
-		m_Signature = gcnew SlimDX::Direct3D11::ShaderSignature( gcnew DataStream( native.pIAInputSignature, native.IAInputSignatureSize, true, false, false ) );
+		m_Signature = gcnew SlimDX::D3DCompiler::ShaderSignature( gcnew DataStream( native.pIAInputSignature, native.IAInputSignatureSize, true, false, false ) );
 		m_StencilRef = native.StencilRef;
 		m_SampleMask = native.SampleMask;
 		m_BlendFactor = Color4( native.BlendFactor[ 3 ], native.BlendFactor[ 0 ], native.BlendFactor[ 1 ], native.BlendFactor[ 2 ] );
@@ -51,7 +51,7 @@ namespace Direct3D11
 		return m_Annotations;
 	}
 	
-	SlimDX::Direct3D11::ShaderSignature^ EffectPassDescription::Signature::get()
+	SlimDX::D3DCompiler::ShaderSignature^ EffectPassDescription::Signature::get()
 	{
 		return m_Signature;
 	}

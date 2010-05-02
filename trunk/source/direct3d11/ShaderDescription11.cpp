@@ -33,7 +33,7 @@ namespace Direct3D11
 	{
 		Version = desc.Version;
 		Creator = gcnew String(desc.Creator);
-		Flags = static_cast<ShaderFlags>(desc.Flags);
+		Flags = static_cast<D3DCompiler::ShaderFlags>(desc.Flags);
 		ConstantBuffers = desc.ConstantBuffers;
 		BoundResources = desc.BoundResources;
 		InputParameters = desc.InputParameters;

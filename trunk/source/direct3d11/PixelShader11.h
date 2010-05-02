@@ -22,7 +22,7 @@
 #pragma once
 
 #include "DeviceChild11.h"
-#include "ShaderBytecode11.h"
+#include "../d3dcompiler/ShaderBytecodeDC.h"
 
 namespace SlimDX
 {
@@ -44,7 +44,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="device">The device used to create the shader.</param>
 			/// <param name="shaderBytecode">The compiled shader bytecode.</param>
-			PixelShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode );
+			PixelShader( Direct3D11::Device^ device, D3DCompiler::ShaderBytecode^ shaderBytecode );
 
 			/// <summary>
 			/// Initializes a new instance of the <see cref="PixelShader"/> class.
@@ -52,7 +52,7 @@ namespace SlimDX
 			/// <param name="device">The device used to create the shader.</param>
 			/// <param name="shaderBytecode">The compiled shader bytecode.</param>
 			/// <param name="linkage">A dynamic class linkage interface.</param>
-			PixelShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage );
+			PixelShader( Direct3D11::Device^ device, D3DCompiler::ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage );
 		};
 	}
 };

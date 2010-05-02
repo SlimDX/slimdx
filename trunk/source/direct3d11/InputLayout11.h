@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "ShaderSignature11.h"
+#include "../d3dcompiler/ShaderSignatureDC.h"
 
 #include "DeviceChild11.h"
 #include "InputElement11.h"
@@ -53,7 +53,7 @@ namespace SlimDX
 			/// <param name="elements">An array of input elements describing the layout of the input data.</param>
 			/// <param name="shaderSignature">The shader signature used to validate the input elements.</param>
 			[System::Obsolete("Use the constructor overload taking a ShaderSignature as the second argument instead.")]
-			InputLayout( SlimDX::Direct3D11::Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature );
+			InputLayout( SlimDX::Direct3D11::Device^ device, array<InputElement>^ elements, D3DCompiler::ShaderSignature^ shaderSignature );
 			
 			/// <summary>
 			/// Initializes a new instance of the <see cref="InputLayout" /> object to describe the
@@ -63,7 +63,7 @@ namespace SlimDX
 			/// <param name="device">The device used to create the layout.</param>
 			/// <param name="elements">An array of input elements describing the layout of the input data.</param>
 			/// <param name="shaderSignature">The shader signature used to validate the input elements.</param>
-			InputLayout( SlimDX::Direct3D11::Device^ device, ShaderSignature^ shaderSignature, array<InputElement>^ elements );
+			InputLayout( SlimDX::Direct3D11::Device^ device, D3DCompiler::ShaderSignature^ shaderSignature, array<InputElement>^ elements );
 
 			/// <summary>
 			/// Initializes a new instance of the <see cref="InputLayout" /> object to describe the
@@ -73,7 +73,7 @@ namespace SlimDX
 			/// <param name="device">The device used to create the layout.</param>
 			/// <param name="elements">An array of input elements describing the layout of the input data.</param>
 			/// <param name="shaderBytecode">The compiled shader used to validate the input elements.</param>
-			InputLayout( SlimDX::Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, array<InputElement>^ elements );
+			InputLayout( SlimDX::Direct3D11::Device^ device, D3DCompiler::ShaderBytecode^ shaderBytecode, array<InputElement>^ elements );
 		};
 	}
 };

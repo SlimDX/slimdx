@@ -22,6 +22,7 @@
 #pragma once
 
 #include "../ComObject.h"
+#include "../d3dcompiler/ShaderBytecodeDC.h"
 
 #include "ConstantBuffer11.h"
 #include "ShaderDescription11.h"
@@ -42,7 +43,7 @@ namespace SlimDX
 			ShaderDescription^ description;
 			
 		public:
-			ShaderReflection( ShaderBytecode^ bytecode );
+			ShaderReflection( D3DCompiler::ShaderBytecode^ bytecode );
 
 			ConstantBuffer^ GetConstantBuffer( int index );
 			ConstantBuffer^ GetConstantBuffer( System::String^ name );

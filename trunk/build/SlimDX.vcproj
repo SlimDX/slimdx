@@ -5968,109 +5968,53 @@
 				Name="Shader"
 				>
 				<File
-					RelativePath="..\source\direct3d11\Include11.cpp"
+					RelativePath="..\source\direct3d11\ComputeShader11.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\Include11.h"
+					RelativePath="..\source\direct3d11\ComputeShader11.h"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\ShaderBytecode11.cpp"
+					RelativePath="..\source\direct3d11\DomainShader11.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\ShaderBytecode11.h"
+					RelativePath="..\source\direct3d11\DomainShader11.h"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\ShaderMacro11.cpp"
+					RelativePath="..\source\direct3d11\GeometryShader11.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\ShaderMacro11.h"
+					RelativePath="..\source\direct3d11\GeometryShader11.h"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\ShaderSignature11.cpp"
+					RelativePath="..\source\direct3d11\HullShader11.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\ShaderSignature11.h"
+					RelativePath="..\source\direct3d11\HullShader11.h"
 					>
 				</File>
-				<Filter
-					Name="ComputeShader"
+				<File
+					RelativePath="..\source\direct3d11\PixelShader11.cpp"
 					>
-					<File
-						RelativePath="..\source\direct3d11\ComputeShader11.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\ComputeShader11.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="DomainShader"
+				</File>
+				<File
+					RelativePath="..\source\direct3d11\PixelShader11.h"
 					>
-					<File
-						RelativePath="..\source\direct3d11\DomainShader11.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\DomainShader11.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="HullShader"
+				</File>
+				<File
+					RelativePath="..\source\direct3d11\VertexShader11.cpp"
 					>
-					<File
-						RelativePath="..\source\direct3d11\HullShader11.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\HullShader11.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="GeometryShader"
+				</File>
+				<File
+					RelativePath="..\source\direct3d11\VertexShader11.h"
 					>
-					<File
-						RelativePath="..\source\direct3d11\GeometryShader11.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\GeometryShader11.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="VertexShader"
-					>
-					<File
-						RelativePath="..\source\direct3d11\VertexShader11.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\VertexShader11.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="PixelShader"
-					>
-					<File
-						RelativePath="..\source\direct3d11\PixelShader11.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\PixelShader11.h"
-						>
-					</File>
-				</Filter>
+				</File>
 				<Filter
 					Name="ClassInstance"
 					>
