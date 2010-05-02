@@ -6688,27 +6688,43 @@
 				Name="Compute"
 				>
 				<File
-					RelativePath="..\source\direct3d11\FFT.cpp"
+					RelativePath="..\source\direct3d11\FastFourierTransform11.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\FFT.h"
+					RelativePath="..\source\direct3d11\FastFourierTransform11.h"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\Scan.cpp"
+					RelativePath="..\source\direct3d11\FastFourierTransformBufferRequirements11.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\Scan.h"
+					RelativePath="..\source\direct3d11\FastFourierTransformBufferRequirements11.h"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\SegmentedScan.cpp"
+					RelativePath="..\source\direct3d11\FastFourierTransformDescription11.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\source\direct3d11\SegmentedScan.h"
+					RelativePath="..\source\direct3d11\FastFourierTransformDescription11.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d11\Scan11.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d11\Scan11.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d11\SegmentedScan11.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d11\SegmentedScan11.h"
 					>
 				</File>
 			</Filter>

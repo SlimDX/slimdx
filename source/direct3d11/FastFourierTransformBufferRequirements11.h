@@ -21,59 +21,41 @@
 */
 #pragma once
 
-#include "../ComObject.h"
-
-#include "../dxgi/Enums.h"
-
-#include "../ComObject.h"
-
 #include "Enums11.h"
 
 namespace SlimDX
 {
 	namespace Direct3D11
 	{
-		ref class Device;
-		ref class UnorderedAccessView;
-
 		/// <summary>
-		/// An object that encapsulates forward and inverse FFTs.
+		/// Contains buffer requirements for an FFT.
 		/// </summary>
-		/// <unmanaged>ID3DX11FFT</unmanaged>
-		public ref class FFT : public ComObject 
+		/// <unmanaged>D3DX11_FFT_BUFFER_INFO</unmanaged>
+		public value class FastFourierTransformBufferRequirements
 		{
-			COMOBJECT(ID3DX11FFT, FFT);
+		internal:
+			FastFourierTransformBufferRequirements( const D3DX11_FFT_BUFFER_INFO &bufferInfo );
 
-		protected:
-			FFT() { }
-			
 		public:
+			/// <summary>
+			/// Number of temporary buffers needed.
+			/// </summary>
+			property int TemporaryBufferCount;
 
 			/// <summary>
-			/// Gets or sets the forward scale of the FFT.
+			/// Minimum sizes (in floats) of temporary buffers.
 			/// </summary>
-			property float ForwardScale
-			{
-				float get();
-				void set(float value);
-			}
+			property array<int>^ TemporaryBufferSizes;
 
 			/// <summary>
-			/// Gets or sets the inverse scale of the FFT.
+			/// Number of precompute buffers required.
 			/// </summary>
-			property float InverseScale
-			{
-				float get();
-				void set(float value);
-			}
+			property int PrecomputeBufferCount;
 
-			void AttachBuffersAndPrecompute( array<UnorderedAccessView^>^ tempBuffers, array<UnorderedAccessView^>^ precomputeBuffers );
-
-			void ForwardTransform( UnorderedAccessView^ input, UnorderedAccessView^ output );
-			UnorderedAccessView^  ForwardTransform( UnorderedAccessView^ input );
-
-			void InverseTransform( UnorderedAccessView^ input, UnorderedAccessView^ output );
-			UnorderedAccessView^  InverseTransform( UnorderedAccessView^ input );
+			/// <summary>
+			/// Minimum sizes (in floats) for precompute buffers.
+			/// </summary>
+			property array<int>^ PrecomputeBufferSizes;
 		};
 	}
 };

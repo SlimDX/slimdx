@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,14 +19,13 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#include <d3d11.h>
-#include <d3dx11.h>
-
+#include "Direct3D11Exception.h"
 #include "DeviceContext11.h"
 #include "UnorderedAccessView11.h"
 
-#include "SegmentedScan.h"
+#include "Scan11.h"
 
 using namespace System;
 
@@ -35,29 +33,41 @@ namespace SlimDX
 {
 namespace Direct3D11
 {
-	SegmentedScan::SegmentedScan( DeviceContext^ deviceContext, int maxElementScanSize )
+	Scan::Scan( DeviceContext^ deviceContext, int maxElementScanSize, int maxScanCount )
 	{
 		if (deviceContext == nullptr)
 			throw gcnew System::ArgumentNullException( "deviceContext" );
 
-		ID3DX11SegmentedScan* nativeScan;
-		D3DX11CreateSegmentedScan( deviceContext->InternalPointer, maxElementScanSize, &nativeScan );
+		ID3DX11Scan* nativeScan;
+		HRESULT hr = D3DX11CreateScan( deviceContext->InternalPointer, maxElementScanSize, maxScanCount, &nativeScan );
+		if (RECORD_D3D11( hr ).IsFailure)
+			throw gcnew Direct3D11Exception( Result::Last );
 
 		Construct( nativeScan );
 	}
 
-	void SegmentedScan::Direction::set( ScanDirection value )
+	Result Scan::SetScanDirection( ScanDirection value )
 	{
-		InternalPointer->SetScanDirection( static_cast<D3DX11_SCAN_DIRECTION>( value ) );
+		HRESULT hr = InternalPointer->SetScanDirection( static_cast<D3DX11_SCAN_DIRECTION>( value ) );
+		return RECORD_D3D11( hr );
 	}
 
-	void SegmentedScan::PerformSegmentedScan( ScanDataType elementType, ScanOpCode operation, int numberOfElements, UnorderedAccessView^ src, UnorderedAccessView^ srcElementFlags, UnorderedAccessView^ dest )
+	Result Scan::PerformScan( ScanDataType elementType, ScanOpCode operation, int numberOfElements, UnorderedAccessView^ src, UnorderedAccessView^ dest )
 	{
 		ID3D11UnorderedAccessView* nativeSrc = src == nullptr ? NULL : src->InternalPointer;
-		ID3D11UnorderedAccessView* nativeSrcElementFlags = srcElementFlags == nullptr ? NULL : srcElementFlags->InternalPointer;
 		ID3D11UnorderedAccessView* nativeDest = dest == nullptr ? NULL : dest->InternalPointer;
 
-		InternalPointer->SegScan( static_cast<D3DX11_SCAN_DATA_TYPE>( elementType ), static_cast<D3DX11_SCAN_OPCODE>( operation ), numberOfElements, nativeSrc, nativeSrcElementFlags, nativeDest );
+		HRESULT hr = InternalPointer->Scan( static_cast<D3DX11_SCAN_DATA_TYPE>( elementType ), static_cast<D3DX11_SCAN_OPCODE>( operation ), numberOfElements, nativeSrc, nativeDest );
+		return RECORD_D3D11( hr );
+	}
+
+	Result Scan::PerformMultiscan( ScanDataType elementType, ScanOpCode operation, int numberOfElements, int scanPitchInElements, int scanCount, UnorderedAccessView^ src, UnorderedAccessView^ dest )
+	{
+		ID3D11UnorderedAccessView* nativeSrc = src == nullptr ? NULL : src->InternalPointer;
+		ID3D11UnorderedAccessView* nativeDest = dest == nullptr ? NULL : dest->InternalPointer;
+
+		HRESULT hr = InternalPointer->Multiscan( static_cast<D3DX11_SCAN_DATA_TYPE>( elementType ), static_cast<D3DX11_SCAN_OPCODE>( operation ), numberOfElements, scanPitchInElements, scanCount, nativeSrc, nativeDest );
+		return RECORD_D3D11( hr );
 	}
 }
 }

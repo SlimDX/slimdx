@@ -700,6 +700,27 @@ namespace SlimDX
 			SingleThreaded = D3D10_EFFECT_SINGLE_THREADED,
 		};
 
+		[System::Flags]
+		public enum class FastFourierTransformCreationFlags : System::Int32
+		{
+			None = 0,
+			DoNotPrecomputeBuffers = D3DX11_FFT_CREATE_FLAG_NO_PRECOMPUTE_BUFFERS
+		};
+
+		public enum class FastFourierTransformDataType : System::Int32
+		{
+			Real = D3DX11_FFT_DATA_TYPE_REAL,
+			Complex = D3DX11_FFT_DATA_TYPE_COMPLEX
+		};
+
+		[System::Flags]
+		public enum class FastFourierTransformDimensions : System::Int32
+		{
+			Dimension1D = D3DX11_FFT_DIM_MASK_1D,
+			Dimension2D = D3DX11_FFT_DIM_MASK_2D,
+			Dimension3D = D3DX11_FFT_DIM_MASK_3D
+		};
+
 		/// <summary>Identifies device features that can be queried for support.</summary>
 		/// <unmanaged>D3D11_FEATURE</unmanaged>
 		public enum class Feature : System::Int32
