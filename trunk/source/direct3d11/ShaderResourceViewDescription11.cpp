@@ -84,6 +84,13 @@ namespace Direct3D11
 				MostDetailedMip = native.TextureCube.MostDetailedMip;
 				break;
 
+			case ShaderResourceViewDimension::TextureCubeArray:
+				MostDetailedMip = native.TextureCubeArray.MostDetailedMip;
+				MipLevels = native.TextureCubeArray.MipLevels;
+				First2DArrayFace = native.TextureCubeArray.First2DArrayFace;
+				CubeCount = native.TextureCubeArray.NumCubes;
+				break;
+
 			case ShaderResourceViewDimension::ExtendedBuffer:
 				FirstElement = native.BufferEx.FirstElement;
 				ElementCount = native.BufferEx.NumElements;
@@ -151,6 +158,13 @@ namespace Direct3D11
 				native.TextureCube.MostDetailedMip = MostDetailedMip;
 				break;
 
+			case ShaderResourceViewDimension::TextureCubeArray:
+				native.TextureCubeArray.MostDetailedMip = MostDetailedMip;
+				native.TextureCubeArray.MipLevels = MipLevels;
+				native.TextureCubeArray.First2DArrayFace = First2DArrayFace;
+				native.TextureCubeArray.NumCubes = CubeCount;
+				break;
+
 			case ShaderResourceViewDimension::ExtendedBuffer:
 				native.BufferEx.FirstElement = FirstElement;
 				native.BufferEx.NumElements = ElementCount;
@@ -179,7 +193,7 @@ namespace Direct3D11
 		return Format.GetHashCode() + Dimension.GetHashCode() + ElementOffset.GetHashCode()
 			 + ElementWidth.GetHashCode() + MostDetailedMip.GetHashCode() + MipLevels.GetHashCode()
 			 + FirstArraySlice.GetHashCode() + ArraySize.GetHashCode() + FirstElement.GetHashCode()
-			 + ElementCount.GetHashCode() + Flags.GetHashCode();
+			 + ElementCount.GetHashCode() + Flags.GetHashCode() + CubeCount.GetHashCode() + First2DArrayFace.GetHashCode();
 	}
 
 	bool ShaderResourceViewDescription::Equals( Object^ value )
@@ -197,7 +211,7 @@ namespace Direct3D11
 	{
 		return ( Format == value.Format && Dimension == value.Dimension && ElementOffset == value.ElementOffset && FirstElement == value.FirstElement && Flags == value.Flags
 			 && ElementCount == value.ElementCount && ElementWidth == value.ElementWidth && MostDetailedMip == value.MostDetailedMip && MipLevels == value.MipLevels
-			 && FirstArraySlice == value.FirstArraySlice && ArraySize == value.ArraySize );
+			 && FirstArraySlice == value.FirstArraySlice && ArraySize == value.ArraySize && CubeCount == value.CubeCount && First2DArrayFace == value.First2DArrayFace );
 	}
 
 	bool ShaderResourceViewDescription::Equals( ShaderResourceViewDescription% value1, ShaderResourceViewDescription% value2 )
@@ -205,7 +219,8 @@ namespace Direct3D11
 		return ( value1.Format == value2.Format && value1.Dimension == value2.Dimension && value1.ElementOffset == value2.ElementOffset
 			 && value1.FirstElement == value2.FirstElement && value1.Flags == value2.Flags && value1.ElementCount == value2.ElementCount 
 			 && value1.ElementWidth == value2.ElementWidth && value1.MostDetailedMip == value2.MostDetailedMip && value1.MipLevels == value2.MipLevels
-			 && value1.FirstArraySlice == value2.FirstArraySlice && value1.ArraySize == value2.ArraySize );
+			 && value1.FirstArraySlice == value2.FirstArraySlice && value1.ArraySize == value2.ArraySize
+			 && value1.CubeCount == value2.CubeCount && value1.First2DArrayFace == value2.First2DArrayFace );
 	}
 }
 }

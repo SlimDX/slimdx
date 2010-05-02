@@ -68,6 +68,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="device">The device that will own the resource.</param>
 			/// <param name="fileName">The name of the file that contains the shader resource view.</param>
+			/// <returns>The created resource view.</returns>
 			static ShaderResourceView^ FromFile( SlimDX::Direct3D11::Device^ device, System::String^ fileName );
 
 			/// <summary>
@@ -75,11 +76,44 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="device">The device that will own the resource.</param>
 			/// <param name="fileName">The name of the file that contains the shader resource view.</param>
+			/// <param name="loadInformation">Identifies characteristics of the texture to be loaded.</param>
+			/// <returns>The created resource view.</returns>
 			static ShaderResourceView^ FromFile( SlimDX::Direct3D11::Device^ device, System::String^ fileName, ImageLoadInformation loadInformation );
 
+			/// <summary>
+			/// Creates a shader resource view from memory.
+			/// </summary>
+			/// <param name="device">The device that will own the resource.</param>
+			/// <param name="memory">The block of memory that contains the shader resource view.</param>
+			/// <returns>The created resource view.</returns>
 			static ShaderResourceView^ FromMemory( SlimDX::Direct3D11::Device^ device, array<System::Byte>^ memory );
+
+			/// <summary>
+			/// Creates a shader resource view from memory.
+			/// </summary>
+			/// <param name="device">The device that will own the resource.</param>
+			/// <param name="memory">The block of memory that contains the shader resource view.</param>
+			/// <param name="loadInfo">Identifies characteristics of the texture to be loaded.</param>
+			/// <returns>The created resource view.</returns>
 			static ShaderResourceView^ FromMemory( SlimDX::Direct3D11::Device^ device, array<System::Byte>^ memory, ImageLoadInformation loadInfo );
+
+			/// <summary>
+			/// Creates a shader resource view from a stream.
+			/// </summary>
+			/// <param name="device">The device that will own the resource.</param>
+			/// <param name="stream">The stream that contains the shader resource view.</param>
+			/// <param name="sizeInBytes">Size of the shader resource, in bytes.</param>
+			/// <returns>The created resource view.</returns>
 			static ShaderResourceView^ FromStream( SlimDX::Direct3D11::Device^ device, System::IO::Stream^ stream, int sizeInBytes );
+
+			/// <summary>
+			/// Creates a shader resource view from a stream.
+			/// </summary>
+			/// <param name="device">The device that will own the resource.</param>
+			/// <param name="stream">The stream that contains the shader resource view.</param>
+			/// <param name="sizeInBytes">Size of the shader resource, in bytes.</param>
+			/// <param name="loadInfo">Identifies characteristics of the texture to be loaded.</param>
+			/// <returns>The created resource view.</returns>
 			static ShaderResourceView^ FromStream( SlimDX::Direct3D11::Device^ device, System::IO::Stream^ stream, int sizeInBytes, ImageLoadInformation loadInfo );
 		};
 	}
