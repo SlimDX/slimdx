@@ -31,15 +31,51 @@ namespace SlimDX
 	{
 		ref class ClassLinkage;
 
+		/// <summary>
+		/// Represents a geometry shader.
+		/// </summary>
+		/// <unmanaged>ID3D11GeometryShader</unmanaged>
 		public ref class GeometryShader : public DeviceChild
 		{
 			COMOBJECT(ID3D11GeometryShader, GeometryShader);
 
 		public:
+			static initonly int NoRasterizedStream = D3D11_SO_NO_RASTERIZED_STREAM;
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="GeometryShader"/> class.
+			/// </summary>
+			/// <param name="device">The device used to create the shader.</param>
+			/// <param name="shaderBytecode">The compiled shader bytecode.</param>
 			GeometryShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode );
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="GeometryShader"/> class.
+			/// </summary>
+			/// <param name="device">The device used to create the shader.</param>
+			/// <param name="shaderBytecode">The compiled shader bytecode.</param>
+			/// <param name="linkage">A dynamic class linkage interface.</param>
 			GeometryShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage );
 
+			/// <summary>
+			/// Initializes a new instance of the <see cref="GeometryShader"/> class.
+			/// </summary>
+			/// <param name="device">The device used to create the shader.</param>
+			/// <param name="shaderBytecode">The compiled shader bytecode.</param>
+			/// <param name="elements">An array of <see cref="StreamOutputElement"/> instances describing the layout of the output buffers.</param>
+			/// <param name="bufferedStrides">An array of buffer strides; each stride is the size of an element for that buffer.</param>
+			/// <param name="rasterizedStream">The index number of the stream to be sent to the rasterizer stage. Set to NoRasterizedStream if no stream is to be rasterized.</param>
 			GeometryShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, array<StreamOutputElement>^ elements, array<int>^ bufferedStrides, int rasterizedStream );
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="GeometryShader"/> class.
+			/// </summary>
+			/// <param name="device">The device used to create the shader.</param>
+			/// <param name="shaderBytecode">The compiled shader bytecode.</param>
+			/// <param name="elements">An array of <see cref="StreamOutputElement"/> instances describing the layout of the output buffers.</param>
+			/// <param name="bufferedStrides">An array of buffer strides; each stride is the size of an element for that buffer.</param>
+			/// <param name="rasterizedStream">The index number of the stream to be sent to the rasterizer stage. Set to NoRasterizedStream if no stream is to be rasterized.</param>
+			/// <param name="linkage">A dynamic class linkage interface.</param>
 			GeometryShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, array<StreamOutputElement>^ elements, array<int>^ bufferedStrides, int rasterizedStream, ClassLinkage^ linkage );
 		};
 	}

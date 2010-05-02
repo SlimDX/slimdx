@@ -30,6 +30,10 @@ namespace SlimDX
 		ref class ClassInstance;
 		ref class Device;
 
+		/// <summary>
+		/// Encapsulates HLSL dynamic class linkage.
+		/// </summary>
+		/// <unmanaged>ID3D11ClassLinkage</unmanaged>
 		public ref class ClassLinkage : ComObject
 		{
 			COMOBJECT(ID3D11ClassLinkage, ClassLinkage);
@@ -40,7 +44,13 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="device">The device used to create the class linkage object.</param>
 			ClassLinkage( Device^ device );
-		
+
+			/// <summary>
+			/// Gets the class-instance object that represents the specified HLSL class.
+			/// </summary>
+			/// <param name="name">The name of a class for which to get the class instance.</param>
+			/// <param name="index">The index of the class instance.</param>
+			/// <returns>The specified class instance.</returns>
 			ClassInstance^ GetInstance( System::String^ name, int index );
 		};
 	}

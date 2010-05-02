@@ -30,12 +30,28 @@ namespace SlimDX
 	{
 		ref class ClassLinkage;
 
+		/// <summary>
+		/// Represents a hull shader.
+		/// </summary>
+		/// <unmanaged>ID3D11HullShader</unmanaged>
 		public ref class HullShader : public DeviceChild
 		{
 			COMOBJECT(ID3D11HullShader, HullShader);
 
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="HullShader"/> class.
+			/// </summary>
+			/// <param name="device">The device used to create the shader.</param>
+			/// <param name="shaderBytecode">The compiled shader bytecode.</param>
 			HullShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode );
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="HullShader"/> class.
+			/// </summary>
+			/// <param name="device">The device used to create the shader.</param>
+			/// <param name="shaderBytecode">The compiled shader bytecode.</param>
+			/// <param name="linkage">A dynamic class linkage interface.</param>
 			HullShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage );
 		};
 	}
