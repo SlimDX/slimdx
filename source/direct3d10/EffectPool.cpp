@@ -35,6 +35,8 @@
 using namespace System;
 using namespace System::IO;
 
+using namespace SlimDX::D3DCompiler;
+
 namespace SlimDX
 {
 namespace Direct3D10

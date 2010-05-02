@@ -33,7 +33,7 @@ namespace SlimDX
 {
 namespace Direct3D10
 {
-	PixelShader::PixelShader( Direct3D10::Device^ device, ShaderBytecode^ shaderBytecode )
+	PixelShader::PixelShader( Direct3D10::Device^ device, D3DCompiler::ShaderBytecode^ shaderBytecode )
 	{
 		ID3D10PixelShader *shader;
 

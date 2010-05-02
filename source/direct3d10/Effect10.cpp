@@ -37,12 +37,14 @@
 #include "EffectTechnique.h"
 #include "EffectVariable.h"
 #include "EffectPool.h"
-#include "Include10.h"
+#include "../d3dcompiler/IncludeDC.h"
 
 using namespace System;
 using namespace System::IO;
 using namespace System::Globalization;
 using namespace System::Runtime::InteropServices;
+
+using namespace SlimDX::D3DCompiler;
 
 namespace SlimDX
 {
@@ -156,13 +158,13 @@ namespace Direct3D10
 		return RECORD_D3D10( InternalPointer->Optimize() );
 	}
 
-	Effect^ Effect::FromFile( SlimDX::Direct3D10::Device^ device, String ^fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include )
+	Effect^ Effect::FromFile( SlimDX::Direct3D10::Device^ device, String ^fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, D3DCompiler::Include^ include )
 	{
 		String^ compilationErrors;
 		return FromFile( device, fileName, profile, shaderFlags, effectFlags, pool, include, compilationErrors );
 	}
 	
-	Effect^ Effect::FromFile( SlimDX::Direct3D10::Device^ device, String ^fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] String^ %compilationErrors  )
+	Effect^ Effect::FromFile( SlimDX::Direct3D10::Device^ device, String ^fileName, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, D3DCompiler::Include^ include, [Out] String^ %compilationErrors  )
 	{
 		pin_ptr<const wchar_t> pinnedFileName = PtrToStringChars( fileName );
 		array<unsigned char>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
@@ -173,9 +175,8 @@ namespace Direct3D10
 		ID3D10Include* nativeInclude = 0;
 		IncludeShim shim = IncludeShim( include );
 
-		if( include != nullptr ) {
+		if( include != nullptr )
 			nativeInclude = &shim;
-		}
 		
 		HRESULT hr = D3DX10CreateEffectFromFile(
 			pinnedFileName,
@@ -200,7 +201,7 @@ namespace Direct3D10
 		return gcnew Effect( effect, nullptr );
 	}
 	
-	Effect^ Effect::FromMemory_Internal( SlimDX::Direct3D10::Device^ device, const void* memory, SIZE_T size, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, String^* compilationErrors )
+	Effect^ Effect::FromMemory_Internal( SlimDX::Direct3D10::Device^ device, const void* memory, SIZE_T size, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, D3DCompiler::Include^ include, String^* compilationErrors )
 	{
 		array<unsigned char>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
 		pin_ptr<unsigned char> pinnedProfile = &profileBytes[ 0 ];
@@ -239,7 +240,7 @@ namespace Direct3D10
 		return gcnew Effect( effect, nullptr );
 	}
 
-	Effect^ Effect::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] String^ %compilationErrors  )
+	Effect^ Effect::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, D3DCompiler::Include^ include, [Out] String^ %compilationErrors  )
 	{
 		String^ compilationErrorsLocal;
 		pin_ptr<unsigned char> pinnedMemory = &memory[ 0 ];
@@ -249,19 +250,19 @@ namespace Direct3D10
 		return effect;
 	}	
 	
-	Effect^ Effect::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include )
+	Effect^ Effect::FromMemory( SlimDX::Direct3D10::Device^ device, array<Byte>^ memory, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, D3DCompiler::Include^ include )
 	{
 		String^ compilationErrors;
 		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, pool, include, compilationErrors ) );
 	}
 
-	Effect^ Effect::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include )
+	Effect^ Effect::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, D3DCompiler::Include^ include )
 	{
 		String^ compilationErrors;
 		return (FromStream( device, stream, profile, shaderFlags, effectFlags, pool, include, compilationErrors ) );
 	}
 	
-	Effect^ Effect::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] String^ %compilationErrors )
+	Effect^ Effect::FromStream( SlimDX::Direct3D10::Device^ device, Stream^ stream, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, D3DCompiler::Include^ include, [Out] String^ %compilationErrors )
 	{
 		DataStream^ ds = nullptr;
 		array<Byte>^ memory = Utilities::ReadStream( stream, &ds );
@@ -278,13 +279,13 @@ namespace Direct3D10
 		return (FromMemory( device, memory, profile, shaderFlags, effectFlags, pool, include, compilationErrors ) );
 	}
 	
-	Effect^ Effect::FromString( SlimDX::Direct3D10::Device^ device, String^ code, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include )
+	Effect^ Effect::FromString( SlimDX::Direct3D10::Device^ device, String^ code, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, D3DCompiler::Include^ include )
 	{
 		String^ compilationErrors;
 		return (FromString( device, code, profile, shaderFlags, effectFlags, pool, include, compilationErrors ));
 	}
 	
-	Effect^ Effect::FromString( SlimDX::Direct3D10::Device^ device, String^ code, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, Include^ include, [Out] String^ %compilationErrors  )
+	Effect^ Effect::FromString( SlimDX::Direct3D10::Device^ device, String^ code, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, EffectPool^ pool, D3DCompiler::Include^ include, [Out] String^ %compilationErrors  )
 	{
 		array<unsigned char>^ codeBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( code );
 		pin_ptr<unsigned char> pinnedCode = &codeBytes[ 0 ];

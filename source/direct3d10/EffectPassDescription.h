@@ -23,6 +23,8 @@
 
 #include "../math/Color4.h"
 
+#include "../d3dcompiler/ShaderSignatureDC.h"
+
 namespace SlimDX
 {
 	namespace Direct3D10
@@ -34,7 +36,7 @@ namespace SlimDX
 		private:
 			System::String^ m_Name;
 			int m_Annotations;
-			ShaderSignature^ m_Signature;
+			D3DCompiler::ShaderSignature^ m_Signature;
 			int m_StencilRef;
 			int m_SampleMask;
 			Color4 m_BlendFactor;
@@ -53,9 +55,9 @@ namespace SlimDX
 				int get();
 			}
 			
-			property ShaderSignature^ Signature
+			property D3DCompiler::ShaderSignature^ Signature
 			{
-				ShaderSignature^ get();
+				D3DCompiler::ShaderSignature^ get();
 			}
 			
 			property int StencilReference

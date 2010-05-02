@@ -27,8 +27,8 @@
 
 #include "Device10.h"
 #include "InputLayout.h"
-#include "ShaderBytecode10.h"
-#include "ShaderSignature10.h"
+#include "../d3dcompiler/ShaderBytecodeDC.h"
+#include "../d3dcompiler/ShaderSignatureDC.h"
 
 using namespace System;
 
@@ -36,7 +36,7 @@ namespace SlimDX
 {
 namespace Direct3D10
 {
-	InputLayout::InputLayout( SlimDX::Direct3D10::Device^ device, array<InputElement>^ elements, ShaderSignature^ shaderSignature )
+	InputLayout::InputLayout( SlimDX::Direct3D10::Device^ device, array<InputElement>^ elements, D3DCompiler::ShaderSignature^ shaderSignature )
 	{
 		if( shaderSignature == nullptr )
 			throw gcnew ArgumentNullException( "shaderSignature" );
@@ -44,7 +44,7 @@ namespace Direct3D10
 		Init( device, shaderSignature->Data->RawPointer, static_cast<int>(shaderSignature->Data->Length), elements );
 	}
 
-	InputLayout::InputLayout( SlimDX::Direct3D10::Device^ device, ShaderSignature^ shaderSignature, array<InputElement>^ elements )
+	InputLayout::InputLayout( SlimDX::Direct3D10::Device^ device, D3DCompiler::ShaderSignature^ shaderSignature, array<InputElement>^ elements )
 	{
 		if( shaderSignature == nullptr )
 			throw gcnew ArgumentNullException( "shaderSignature" );
@@ -52,7 +52,7 @@ namespace Direct3D10
 		Init( device, shaderSignature->Data->RawPointer, static_cast<int>(shaderSignature->Data->Length), elements );
 	}
 
-	InputLayout::InputLayout( SlimDX::Direct3D10::Device^ device, ShaderBytecode^ shaderBytecode, array<InputElement>^ elements )
+	InputLayout::InputLayout( SlimDX::Direct3D10::Device^ device, D3DCompiler::ShaderBytecode^ shaderBytecode, array<InputElement>^ elements )
 	{
 		if( shaderBytecode == nullptr )
 			throw gcnew ArgumentNullException( "shaderBytecode" );

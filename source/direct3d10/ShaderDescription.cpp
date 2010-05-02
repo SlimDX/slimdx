@@ -31,15 +31,15 @@ namespace Direct3D10
 { 
 	ShaderDescription::ShaderDescription( const D3D10_EFFECT_SHADER_DESC& native )
 	{
-		m_InputSignature = gcnew ShaderSignature( gcnew DataStream( native.pInputSignature, native.BytecodeLength - (native.pInputSignature - native.pBytecode), true, false ) );
+		m_InputSignature = gcnew D3DCompiler::ShaderSignature( gcnew DataStream( native.pInputSignature, native.BytecodeLength - (native.pInputSignature - native.pBytecode), true, false ) );
 		m_IsInline = native.IsInline ? true : false;
-		m_Bytecode = gcnew ShaderBytecode( native.pBytecode, native.BytecodeLength );
+		m_Bytecode = gcnew D3DCompiler::ShaderBytecode( native.pBytecode, native.BytecodeLength );
 		m_SODecl = gcnew System::String( native.SODecl );
 		m_NumInputSignatureEntries = native.NumInputSignatureEntries;
 		m_NumOutputSignatureEntries = native.NumOutputSignatureEntries;
 	}
 	
-	ShaderSignature^ ShaderDescription::Signature::get()
+	D3DCompiler::ShaderSignature^ ShaderDescription::Signature::get()
 	{
 		return m_InputSignature;
 	}
@@ -49,7 +49,7 @@ namespace Direct3D10
 		return m_IsInline;
 	}
 	
-	ShaderBytecode^ ShaderDescription::Bytecode::get()
+	D3DCompiler::ShaderBytecode^ ShaderDescription::Bytecode::get()
 	{
 		return m_Bytecode;
 	}

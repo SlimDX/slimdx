@@ -33,7 +33,7 @@ namespace SlimDX
 {
 namespace Direct3D10
 {
-	GeometryShader::GeometryShader( Direct3D10::Device^ device, ShaderBytecode^ shaderBytecode )
+	GeometryShader::GeometryShader( Direct3D10::Device^ device, D3DCompiler::ShaderBytecode^ shaderBytecode )
 	{
 		ID3D10GeometryShader *shader;
 

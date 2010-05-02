@@ -22,8 +22,8 @@
 #pragma once
 
 #include "Enums.h"
-#include "ShaderBytecode10.h"
-#include "ShaderSignature10.h"
+#include "../d3dcompiler/ShaderBytecodeDC.h"
+#include "../d3dcompiler/ShaderSignatureDC.h"
 
 namespace SlimDX
 {
@@ -32,9 +32,9 @@ namespace SlimDX
 		public value class ShaderDescription : System::IEquatable<ShaderDescription>
 		{
 		private:
-			ShaderSignature^ m_InputSignature;
+			D3DCompiler::ShaderSignature^ m_InputSignature;
 			bool m_IsInline;
-			ShaderBytecode^ m_Bytecode;
+			D3DCompiler::ShaderBytecode^ m_Bytecode;
 			System::String^ m_SODecl;
 			int m_NumInputSignatureEntries;
 			int m_NumOutputSignatureEntries;
@@ -43,9 +43,9 @@ namespace SlimDX
 			ShaderDescription( const D3D10_EFFECT_SHADER_DESC& native );
 		
 		public:
-			property ShaderSignature^ Signature
+			property D3DCompiler::ShaderSignature^ Signature
 			{
-				ShaderSignature^ get();
+				D3DCompiler::ShaderSignature^ get();
 			}
 			
 			property bool IsInline
@@ -53,9 +53,9 @@ namespace SlimDX
 				bool get();
 			}
 			
-			property ShaderBytecode^ Bytecode
+			property D3DCompiler::ShaderBytecode^ Bytecode
 			{
-				ShaderBytecode^ get();
+				D3DCompiler::ShaderBytecode^ get();
 			}
 			
 			property System::String^ StreamOutputDeclaration
