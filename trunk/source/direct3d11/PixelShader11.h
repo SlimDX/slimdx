@@ -30,12 +30,28 @@ namespace SlimDX
 	{
 		ref class ClassLinkage;
 
+		/// <summary>
+		/// Represents a pixel shader.
+		/// </summary>
+		/// <unmanaged>ID3D11PixelShader</unmanaged>
 		public ref class PixelShader : public DeviceChild
 		{
 			COMOBJECT(ID3D11PixelShader, PixelShader);
 
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="PixelShader"/> class.
+			/// </summary>
+			/// <param name="device">The device used to create the shader.</param>
+			/// <param name="shaderBytecode">The compiled shader bytecode.</param>
 			PixelShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode );
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="PixelShader"/> class.
+			/// </summary>
+			/// <param name="device">The device used to create the shader.</param>
+			/// <param name="shaderBytecode">The compiled shader bytecode.</param>
+			/// <param name="linkage">A dynamic class linkage interface.</param>
 			PixelShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage );
 		};
 	}

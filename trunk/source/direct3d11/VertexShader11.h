@@ -30,12 +30,28 @@ namespace SlimDX
 	{
 		ref class ClassLinkage;
 
+		/// <summary>
+		/// Represents a vertex shader.
+		/// </summary>
+		/// <unmanaged>ID3D11VertexShader</unmanaged>
 		public ref class VertexShader : public DeviceChild
 		{
 			COMOBJECT(ID3D11VertexShader, VertexShader);
 
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="VertexShader"/> class.
+			/// </summary>
+			/// <param name="device">The device used to create the shader.</param>
+			/// <param name="shaderBytecode">The compiled shader bytecode.</param>
 			VertexShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode );
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="VertexShader"/> class.
+			/// </summary>
+			/// <param name="device">The device used to create the shader.</param>
+			/// <param name="shaderBytecode">The compiled shader bytecode.</param>
+			/// <param name="linkage">A dynamic class linkage interface.</param>
 			VertexShader( Direct3D11::Device^ device, ShaderBytecode^ shaderBytecode, ClassLinkage^ linkage );
 		};
 	}
