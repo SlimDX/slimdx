@@ -49,6 +49,7 @@
 #include "Device11.h"
 
 using namespace System;
+using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
@@ -273,6 +274,29 @@ namespace Direct3D11
 			return nullptr;
 		return result;
 	}
+
+// disables bogus warning: 
+// SlimDX::Direct3D11::DeviceContext::GetData<T>' : recursive on
+// all control paths, function will cause runtime stack overflow
+#pragma warning(disable:4717)
+	generic<typename T> where T : value class
+	T DeviceContext::GetData( Asynchronous^ data )
+	{
+		return GetData<T>( data, AsynchronousFlags::None );
+	}
+
+	generic<typename T> where T : value class
+	T DeviceContext::GetData( Asynchronous^ data, AsynchronousFlags flags )
+	{
+		int size = Marshal::SizeOf(T::typeid);
+		T result;
+
+		if( RECORD_D3D11( InternalPointer->GetData( data->InternalPointer, &result, size, static_cast<UINT>( flags ) ) ).IsFailure )
+			return T();
+
+		return result;
+	}
+#pragma warning(default:4717)
 
 	void DeviceContext::GetPredication( [Out] Predicate^ %predicate, bool %predicateValue )
 	{

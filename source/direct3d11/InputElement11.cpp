@@ -34,7 +34,18 @@ using namespace System::Runtime::InteropServices;
 namespace SlimDX
 {
 namespace Direct3D11
-{ 
+{
+	InputElement::InputElement( System::String^ name, int index, DXGI::Format format, int slot )
+	{
+		m_SemanticName = name;
+		m_SemanticIndex = index;
+		m_Format = format;
+		m_InputSlot = slot;
+		m_AlignedByteOffset = AppendAligned;
+		m_InputSlotClass = InputClassification::PerVertexData;
+		m_InstanceDataStepRate = 0;
+	}
+
 	InputElement::InputElement( System::String^ name, int index, DXGI::Format format, int offset, int slot )
 	{
 		m_SemanticName = name;

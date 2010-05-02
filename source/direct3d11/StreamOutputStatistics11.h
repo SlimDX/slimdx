@@ -25,6 +25,10 @@ namespace SlimDX
 {
 	namespace Direct3D11
 	{
+		/// <summary>
+		/// Contains query information about the the amount of data streamed out to the stream-output buffers.
+		/// </summary>
+		/// <unmanaged>D3D11_QUERY_DATA_SO_STATISTICS</unmanaged>
 		public value class StreamOutputStatistics : System::IEquatable<StreamOutputStatistics>
 		{
 		internal:
@@ -33,7 +37,14 @@ namespace SlimDX
 			D3D11_QUERY_DATA_SO_STATISTICS CreateNativeVersion();
 			
 		public:
+			/// <summary>
+			/// Number of primitives (that is, points, lines, and triangles) written to the stream-output buffers.
+			/// </summary>
 			property long PrimitivesWritten;
+
+			/// <summary>
+			/// Number of primitives that would have been written to the stream-output buffers if there had been enough space for them all.
+			/// </summary>
 			property long StorageNeeded;
 		
 			/// <summary>

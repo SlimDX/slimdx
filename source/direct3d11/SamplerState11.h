@@ -30,16 +30,31 @@ namespace SlimDX
 	{
 		ref class Device;
 		
+		/// <summary>
+		/// A state object defining the behavior of texture sampling. 
+		/// </summary>
+		/// <unmanaged>ID3D11SamplerState</unmanaged>
 		public ref class SamplerState : public DeviceChild
 		{
 			COMOBJECT(ID3D11SamplerState, SamplerState);
 
 		public:
+			/// <summary>
+			/// Gets the state's description.
+			/// </summary>
 			property SamplerDescription Description
 			{
 				SamplerDescription get();
 			}
 
+			/// <summary>
+			/// Constructs a new sampler state based on the specified description. If the description
+			/// is identical to that of an existing SamplerState object, the existing SamplerState object
+			/// is returned instead of a new instance.
+			/// </summary>
+			/// <param name="device">The device used to create the state.</param>
+			/// <param name="description">The state description.</param>
+			/// <returns>The SamplerState object.</returns>
 			static SamplerState^ FromDescription( Direct3D11::Device^ device, SamplerDescription description );
 		};
 	}

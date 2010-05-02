@@ -25,6 +25,10 @@ namespace SlimDX
 {
 	namespace Direct3D11
 	{
+		/// <summary>
+		/// Contains query information about the reliability of a timestamp query.
+		/// </summary>
+		/// <unmanaged>D3D11_QUERY_DATA_TIMESTAMP_DISJOINT</unmanaged>
 		public value class TimestampQueryData : System::IEquatable<TimestampQueryData>
 		{
 		internal:
@@ -33,7 +37,16 @@ namespace SlimDX
 			D3D11_QUERY_DATA_TIMESTAMP_DISJOINT CreateNativeVersion();
 			
 		public:
+			/// <summary>
+			/// How frequently the GPU counter increments in Hz.
+			/// </summary>
 			property long Frequency;
+
+			/// <summary>
+			/// If this is <c>true</c>, something occurred in between the query's Begin and End calls that caused the 
+			/// timestamp counter to become discontinuous or disjoint, such as unplugging the AC chord on a laptop, overheating, or throttling up/down due to laptop savings events. 
+			/// The timestamp returned by GetData for a timestamp query is only reliable if IsDisjointed is <c>false</c>.
+			/// </summary>
 			property bool IsDisjointed;
 		
 			/// <summary>

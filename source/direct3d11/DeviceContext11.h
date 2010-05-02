@@ -311,6 +311,23 @@ namespace SlimDX
 			DataStream^ GetData( Asynchronous^ data, AsynchronousFlags flags );
 
 			/// <summary>
+			/// Gets data from the GPU asynchronously.
+			/// </summary>
+			/// <param name="data">The asynchronous data provider.</param>
+			/// <returns>The data retrieved from the GPU.</returns>
+			generic<typename T> where T : value class
+			T GetData( Asynchronous^ data );
+
+			/// <summary>
+			/// Gets data from the GPU asynchronously.
+			/// </summary>
+			/// <param name="data">The asynchronous data provider.</param>
+			/// <param name="flags">Flags specifying how the command should operate.</param>
+			/// <returns>The data retrieved from the GPU.</returns>
+			generic<typename T> where T : value class
+			T GetData( Asynchronous^ data, AsynchronousFlags flags );
+
+			/// <summary>
 			/// Gets the rendering predicate state.
 			/// </summary>
 			/// <param name="predicate">When the method completes, contains the predicate interface currently in use.</param>

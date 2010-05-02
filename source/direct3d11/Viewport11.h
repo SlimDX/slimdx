@@ -26,8 +26,7 @@ namespace SlimDX
 	namespace Direct3D11
 	{
 		/// <summary>
-		/// Defines a rectangular region of a render-target surface onto which 
-		/// a 3D rendering is projected.
+		/// Defines a rectangular region of a render-target surface onto which 3D rendering is projected.
 		/// </summary>
 		/// <unmanaged>D3D11_VIEWPORT</unmanaged>
 		public value class Viewport : System::IEquatable<Viewport>
