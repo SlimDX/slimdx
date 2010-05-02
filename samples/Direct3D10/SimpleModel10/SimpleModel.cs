@@ -3,20 +3,25 @@ using SlimDX;
 using SlimDX.Direct3D10;
 using SlimDX.DXGI;
 using SlimDX.SampleFramework;
-using Buffer=SlimDX.Direct3D10.Buffer;
-using Device=SlimDX.Direct3D10.Device;
-using PrimitiveTopology=SlimDX.Direct3D10.PrimitiveTopology;
+using SlimDX.D3DCompiler;
+using Buffer = SlimDX.Direct3D10.Buffer;
+using Device = SlimDX.Direct3D10.Device;
+using PrimitiveTopology = SlimDX.Direct3D10.PrimitiveTopology;
 
-namespace SimpleModel10 {
-    class SimpleModel : IDisposable {
-        public SimpleModel(Device device, string effectName, string meshName, string textureName) {
+namespace SimpleModel10
+{
+    class SimpleModel : IDisposable
+    {
+        public SimpleModel(Device device, string effectName, string meshName, string textureName)
+        {
             this.device = device;
             effect = Effect.FromFile(device, effectName, "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null); ;
 
             texture = Texture2D.FromFile(device, textureName);
-            
 
-            var rt = new Texture2D(device, new Texture2DDescription {
+
+            var rt = new Texture2D(device, new Texture2DDescription
+            {
                 ArraySize = 1,
                 BindFlags = BindFlags.RenderTarget | BindFlags.ShaderResource,
                 CpuAccessFlags = CpuAccessFlags.None,
@@ -52,26 +57,32 @@ namespace SimpleModel10 {
             };
         }
 
-        private void LoadMesh(string meshName) {
+        private void LoadMesh(string meshName)
+        {
             var meshData = Smd.FromFile(meshName);
-            using (var data = new DataStream(meshData.Indices.ToArray(), true, false)) {
+            using (var data = new DataStream(meshData.Indices.ToArray(), true, false))
+            {
                 indices = new Buffer(device, data, new BufferDescription(meshData.Indices.Count * 4, ResourceUsage.Default, BindFlags.IndexBuffer, CpuAccessFlags.None, ResourceOptionFlags.None));
                 indexCount = meshData.Indices.Count;
             }
 
-            using (var data = new DataStream(meshData.Positions.ToArray(), true, false)) {
+            using (var data = new DataStream(meshData.Positions.ToArray(), true, false))
+            {
                 vertices = new Buffer(device, data, new BufferDescription(meshData.Positions.Count * 4 * 3, ResourceUsage.Default, BindFlags.VertexBuffer, CpuAccessFlags.None, ResourceOptionFlags.None));
             }
-            using (var data = new DataStream(meshData.Normals.ToArray(), true, false)) {
+            using (var data = new DataStream(meshData.Normals.ToArray(), true, false))
+            {
                 normals = new Buffer(device, data, new BufferDescription(meshData.Normals.Count * 4 * 3, ResourceUsage.Default, BindFlags.VertexBuffer, CpuAccessFlags.None, ResourceOptionFlags.None));
             }
 
-            using (var data = new DataStream(meshData.TextureCoordinates.ToArray(), true, false)) {
+            using (var data = new DataStream(meshData.TextureCoordinates.ToArray(), true, false))
+            {
                 texCoords = new Buffer(device, data, new BufferDescription(meshData.TextureCoordinates.Count * 4 * 2, ResourceUsage.Default, BindFlags.VertexBuffer, CpuAccessFlags.None, ResourceOptionFlags.None));
             }
         }
 
-        public void Draw() {
+        public void Draw()
+        {
             effect.GetVariableByName("model_texture").AsResource().SetResource(textureView);
             device.InputAssembler.SetInputLayout(layout);
             device.InputAssembler.SetPrimitiveTopology(PrimitiveTopology.TriangleList);
@@ -85,7 +96,8 @@ namespace SimpleModel10 {
             device.InputAssembler.SetVertexBuffers(0, nullBinding);
         }
 
-        public void Dispose() {
+        public void Dispose()
+        {
             indices.Dispose();
             normals.Dispose();
             vertices.Dispose();
