@@ -145,6 +145,11 @@ namespace Direct3D11
 	{
 		InternalPointer->CopyResource( destination->InternalPointer, source->InternalPointer );
 	}
+
+	void DeviceContext::CopyStructureCount( UnorderedAccessView^ unorderedAccessView, Buffer^ destinationBuffer, int destinationOffset )
+	{
+		InternalPointer->CopyStructureCount( destinationBuffer->InternalPointer, destinationOffset, unorderedAccessView->InternalPointer );
+	}
 	
 	void DeviceContext::CopySubresourceRegion( Resource^ source, int sourceSubresource, ResourceRegion region, Resource^ destination, int destinationSubresource, int x, int y, int z )
 	{

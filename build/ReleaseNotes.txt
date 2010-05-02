@@ -37,6 +37,7 @@ Direct3D 11
 	* Fixed the Device.GetSupportedFeatureLevel functions.
 	* Fixed ShaderSignature Get*Signature methods.
 	* Added overloads to EffectVectorVariable.Set to take color inputs.
+	* Documented a large portion of the D3D11 types.
 	
 Windows
 	* Added several overloads to MessagePump.Run to allow access to corresponding Application.Run overloads.
