@@ -32,10 +32,10 @@ namespace Direct3D11
 	InputBindingDescription::InputBindingDescription( const D3D11_SHADER_INPUT_BIND_DESC &desc )
 	{
 		Name = gcnew String(desc.Name);
-		Type = static_cast<SlimDX::Direct3D10::ShaderInputType>(desc.Type);
+		Type = static_cast<D3DCompiler::ShaderInputType>(desc.Type);
 		BindPoint = desc.BindPoint;
 		BindCount = desc.BindCount;
-		Flags = static_cast<SlimDX::Direct3D10::ShaderInputFlags>(desc.uFlags);
+		Flags = static_cast<D3DCompiler::ShaderInputFlags>(desc.uFlags);
 		ReturnType = static_cast<ResourceReturnType>(desc.ReturnType);
 		Dimension = static_cast<ShaderResourceViewDimension>(desc.Dimension);
 		SampleCount = desc.NumSamples;

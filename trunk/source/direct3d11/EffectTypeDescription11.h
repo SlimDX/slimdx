@@ -22,7 +22,7 @@
 #pragma once
 
 #include "Enums11.h"
-#include "../direct3d10/Enums.h"
+#include "../d3dcompiler/EnumsDC.h"
 
 namespace SlimDX
 {
@@ -32,8 +32,8 @@ namespace SlimDX
 		{
 		private:
 			System::String^ m_TypeName;
-			SlimDX::Direct3D10::ShaderVariableClass m_Class;
-			SlimDX::Direct3D10::ShaderVariableType m_Type;
+			D3DCompiler::ShaderVariableClass m_Class;
+			D3DCompiler::ShaderVariableType m_Type;
 			int m_Elements;
 			int m_Members;
 			int m_Rows;
@@ -51,14 +51,14 @@ namespace SlimDX
 				System::String^ get();
 			}
 			
-			property SlimDX::Direct3D10::ShaderVariableClass Class
+			property D3DCompiler::ShaderVariableClass Class
 			{
-				SlimDX::Direct3D10::ShaderVariableClass get();
+				D3DCompiler::ShaderVariableClass get();
 			}
 			
-			property SlimDX::Direct3D10::ShaderVariableType Type
+			property D3DCompiler::ShaderVariableType Type
 			{
-				SlimDX::Direct3D10::ShaderVariableType get();
+				D3DCompiler::ShaderVariableType get();
 			}
 			
 			property int Elements

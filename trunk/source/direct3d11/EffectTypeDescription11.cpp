@@ -35,8 +35,8 @@ namespace Direct3D11
 	EffectTypeDescription::EffectTypeDescription( const D3DX11_EFFECT_TYPE_DESC& native )
 	{
 		m_TypeName = gcnew String( native.TypeName );
-		m_Class = static_cast<SlimDX::Direct3D10::ShaderVariableClass>( native.Class );
-		m_Type = static_cast<SlimDX::Direct3D10::ShaderVariableType>( native.Type );
+		m_Class = static_cast<D3DCompiler::ShaderVariableClass>( native.Class );
+		m_Type = static_cast<D3DCompiler::ShaderVariableType>( native.Type );
 		m_Elements = native.Elements;
 		m_Members = native.Members;
 		m_Rows = native.Rows;
@@ -51,12 +51,12 @@ namespace Direct3D11
 		return m_TypeName;
 	}
 	
-	SlimDX::Direct3D10::ShaderVariableClass EffectTypeDescription::Class::get()
+	D3DCompiler::ShaderVariableClass EffectTypeDescription::Class::get()
 	{
 		return m_Class;
 	}
 	
-	SlimDX::Direct3D10::ShaderVariableType EffectTypeDescription::Type::get()
+	D3DCompiler::ShaderVariableType EffectTypeDescription::Type::get()
 	{
 		return m_Type;
 	}

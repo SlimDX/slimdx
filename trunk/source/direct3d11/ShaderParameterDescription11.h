@@ -22,8 +22,8 @@
 #pragma once
 
 #include "Enums11.h"
-//yeah don't ask
-#include "../direct3d10/Enums.h"
+
+#include "../d3dcompiler/EnumsDC.h"
 
 namespace SlimDX
 {
@@ -35,10 +35,10 @@ namespace SlimDX
 			System::String^ m_SemanticName;
 			System::UInt32 m_SemanticIndex;
 			System::UInt32 m_Register;
-			SlimDX::Direct3D10::SystemValueType m_SystemValueType;
-			SlimDX::Direct3D10::RegisterComponentType m_ComponentType;
-			SlimDX::Direct3D10::RegisterComponentMaskFlags m_Mask;
-			SlimDX::Direct3D10::RegisterComponentMaskFlags m_ReadWriteMask;
+			D3DCompiler::SystemValueType m_SystemValueType;
+			D3DCompiler::RegisterComponentType m_ComponentType;
+			D3DCompiler::RegisterComponentMaskFlags m_Mask;
+			D3DCompiler::RegisterComponentMaskFlags m_ReadWriteMask;
 			int m_Stream;
 		
 		internal:
@@ -60,24 +60,24 @@ namespace SlimDX
 				System::UInt32 get();
 			}
 			
-			property SlimDX::Direct3D10::SystemValueType SystemType
+			property D3DCompiler::SystemValueType SystemType
 			{
-				SlimDX::Direct3D10::SystemValueType get();
+				D3DCompiler::SystemValueType get();
 			}
 			
-			property SlimDX::Direct3D10::RegisterComponentType ComponentType
+			property D3DCompiler::RegisterComponentType ComponentType
 			{
-				SlimDX::Direct3D10::RegisterComponentType get();
+				D3DCompiler::RegisterComponentType get();
 			}
 			
-			property SlimDX::Direct3D10::RegisterComponentMaskFlags UsageMask
+			property D3DCompiler::RegisterComponentMaskFlags UsageMask
 			{
-				SlimDX::Direct3D10::RegisterComponentMaskFlags get();
+				D3DCompiler::RegisterComponentMaskFlags get();
 			}
 			
-			property SlimDX::Direct3D10::RegisterComponentMaskFlags ReadWriteMask
+			property D3DCompiler::RegisterComponentMaskFlags ReadWriteMask
 			{
-				SlimDX::Direct3D10::RegisterComponentMaskFlags get();
+				D3DCompiler::RegisterComponentMaskFlags get();
 			}
 
 			property int Stream

@@ -1,5 +1,8 @@
 General
 	* Added a .NET 4.0 build via Visual Studio 2010.
+	
+D3DCompiler
+	* Refactored shared shader and effect flags and interfaces into a new namespace.
 
 Direct3D 9
 	* Changed the shared handle parameter for texture creation to be a ref parameter.

@@ -38,7 +38,7 @@ namespace Direct3D11
 		m_Type = static_cast<ConstantBufferType>( description.Type );
 		m_Variables = static_cast<int>( description.Variables );
 		m_Size = static_cast<int>( description.Size );
-		m_Flags = static_cast<SlimDX::Direct3D10::ShaderVariableFlags>( description.uFlags );
+		m_Flags = static_cast<D3DCompiler::ShaderVariableFlags>( description.uFlags );
 	}
 	
 	System::String^ ConstantBufferDescription::Name::get()
@@ -61,7 +61,7 @@ namespace Direct3D11
 		return m_Size;
 	}
 
-	SlimDX::Direct3D10::ShaderVariableFlags ConstantBufferDescription::Flags::get()
+	D3DCompiler::ShaderVariableFlags ConstantBufferDescription::Flags::get()
 	{
 		return m_Flags;
 	}

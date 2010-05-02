@@ -37,10 +37,10 @@ namespace Direct3D11
 		m_SemanticName = gcnew System::String( description.SemanticName );
 		m_SemanticIndex = description.SemanticIndex;
 		m_Register = description.Register;
-		m_SystemValueType = static_cast<SlimDX::Direct3D10::SystemValueType>( description.SystemValueType );
-		m_ComponentType = static_cast<SlimDX::Direct3D10::RegisterComponentType>( description.ComponentType );
-		m_Mask = static_cast<SlimDX::Direct3D10::RegisterComponentMaskFlags>( description.Mask );
-		m_ReadWriteMask = static_cast<SlimDX::Direct3D10::RegisterComponentMaskFlags>( description.ReadWriteMask );
+		m_SystemValueType = static_cast<D3DCompiler::SystemValueType>( description.SystemValueType );
+		m_ComponentType = static_cast<D3DCompiler::RegisterComponentType>( description.ComponentType );
+		m_Mask = static_cast<D3DCompiler::RegisterComponentMaskFlags>( description.Mask );
+		m_ReadWriteMask = static_cast<D3DCompiler::RegisterComponentMaskFlags>( description.ReadWriteMask );
 		m_Stream = static_cast<int>( description.Stream );
 	}
 	
@@ -59,22 +59,22 @@ namespace Direct3D11
 		return m_Register;
 	}
 
-	SlimDX::Direct3D10::SystemValueType ShaderParameterDescription::SystemType::get()
+	D3DCompiler::SystemValueType ShaderParameterDescription::SystemType::get()
 	{
 		return m_SystemValueType;
 	}
 
-	SlimDX::Direct3D10::RegisterComponentType ShaderParameterDescription::ComponentType::get()
+	D3DCompiler::RegisterComponentType ShaderParameterDescription::ComponentType::get()
 	{
 		return m_ComponentType;
 	}
 
-	SlimDX::Direct3D10::RegisterComponentMaskFlags ShaderParameterDescription::UsageMask::get()
+	D3DCompiler::RegisterComponentMaskFlags ShaderParameterDescription::UsageMask::get()
 	{
 		return m_Mask;
 	}
 
-	SlimDX::Direct3D10::RegisterComponentMaskFlags ShaderParameterDescription::ReadWriteMask::get()
+	D3DCompiler::RegisterComponentMaskFlags ShaderParameterDescription::ReadWriteMask::get()
 	{
 		return m_ReadWriteMask;
 	}

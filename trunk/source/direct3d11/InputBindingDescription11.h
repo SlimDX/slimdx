@@ -22,8 +22,8 @@
 #pragma once
 
 #include "Enums11.h"
-//yeah don't ask
-#include "../direct3d10/Enums.h"
+
+#include "../d3dcompiler/EnumsDC.h"
 
 namespace SlimDX
 {
@@ -36,10 +36,10 @@ namespace SlimDX
 
 		public:
 			property System::String^ Name;
-			property SlimDX::Direct3D10::ShaderInputType Type;
+			property D3DCompiler::ShaderInputType Type;
 			property int BindPoint;
 			property int BindCount;
-			property SlimDX::Direct3D10::ShaderInputFlags Flags;
+			property D3DCompiler::ShaderInputFlags Flags;
 			property ResourceReturnType ReturnType;
 			property ShaderResourceViewDimension Dimension;
 			property int SampleCount;
