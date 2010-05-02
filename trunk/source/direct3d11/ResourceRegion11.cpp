@@ -28,7 +28,17 @@
 namespace SlimDX
 {
 namespace Direct3D11
-{ 	
+{
+	ResourceRegion::ResourceRegion(int left, int top, int front, int right, int bottom, int back)
+	{
+		Left = left;
+		Top = top;
+		Front = front;
+		Right = right;
+		Bottom = bottom;
+		Back = back;
+	}
+
 	ResourceRegion::ResourceRegion( const D3D11_BOX& native )
 	{
 		m_Left = native.left;

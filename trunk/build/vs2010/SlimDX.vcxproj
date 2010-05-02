@@ -67,8 +67,7 @@
     <CLRSupport>true</CLRSupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionSettings"></ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Public|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -131,16 +130,12 @@
       <DelayLoadDLLs>d3d9.dll;d3dx9_42.dll;d3dx10_42.dll;d3dx11_42.dll;d3dcompiler_42.dll;d3dcsx_42.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>true</AssemblyDebug>
-      <LinkTimeCodeGeneration>
-      </LinkTimeCodeGeneration>
+      <LinkTimeCodeGeneration></LinkTimeCodeGeneration>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention>
-      </DataExecutionPrevention>
+      <DataExecutionPrevention></DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
-      <KeyFile>
-      </KeyFile>
-      <KeyContainer>
-      </KeyContainer>
+      <KeyFile></KeyFile>
+      <KeyContainer></KeyContainer>
       <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
     </Link>
   </ItemDefinitionGroup>
@@ -167,16 +162,12 @@
       <DelayLoadDLLs>d3d9.dll;d3dx9_42.dll;d3dx10_42.dll;d3dx11_42.dll;d3dcompiler_42.dll;d3dcsx_42.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>true</AssemblyDebug>
-      <LinkTimeCodeGeneration>
-      </LinkTimeCodeGeneration>
+      <LinkTimeCodeGeneration></LinkTimeCodeGeneration>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention>
-      </DataExecutionPrevention>
+      <DataExecutionPrevention></DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
-      <KeyFile>
-      </KeyFile>
-      <KeyContainer>
-      </KeyContainer>
+      <KeyFile></KeyFile>
+      <KeyContainer></KeyContainer>
       <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
     </Link>
   </ItemDefinitionGroup>
@@ -204,11 +195,9 @@
       <DelayLoadDLLs>d3d9.dll;d3dx9_42.dll;d3dx10_42.dll;d3dx11_42.dll;d3dcompiler_42.dll;d3dcsx_42.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention>
-      </DataExecutionPrevention>
+      <DataExecutionPrevention></DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
-      <KeyFile>
-      </KeyFile>
+      <KeyFile></KeyFile>
       <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
     </Link>
   </ItemDefinitionGroup>
@@ -238,11 +227,9 @@
       <DelayLoadDLLs>d3d9.dll;d3dx9_42.dll;d3dx10_42.dll;d3dx11_42.dll;d3dcompiler_42.dll;d3dcsx_42.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention>
-      </DataExecutionPrevention>
+      <DataExecutionPrevention></DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
-      <KeyFile>
-      </KeyFile>
+      <KeyFile></KeyFile>
       <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
     </Link>
   </ItemDefinitionGroup>
@@ -268,8 +255,7 @@
       <DelayLoadDLLs>d3d9.dll;d3dx9_42.dll;d3dx10_42.dll;d3dx11_42.dll;d3dcompiler_42.dll;d3dcsx_42.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention>
-      </DataExecutionPrevention>
+      <DataExecutionPrevention></DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
       <KeyFile>D:\slimdxKey.snk</KeyFile>
       <DelaySign>false</DelaySign>
@@ -307,8 +293,7 @@ sn -R $(TargetPath) D:\slimdxKey.snk
       <DelayLoadDLLs>d3d9.dll;d3dx9_42.dll;d3dx10_42.dll;d3dx11_42.dll;d3dcompiler_42.dll;d3dcsx_42.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention>
-      </DataExecutionPrevention>
+      <DataExecutionPrevention></DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
       <KeyFile>D:\slimdxKey.snk</KeyFile>
       <DelaySign>false</DelaySign>
@@ -904,6 +889,7 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClCompile Include="..\..\source\direct3d11\InputElement11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\InputLayout11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\StreamOutputBufferBinding11.cpp" />
+    <ClCompile Include="..\..\source\direct3d11\StreamOutputElement11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\ImageInformation11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\ImageLoadInformation11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\Texture1D11.cpp" />
@@ -1603,6 +1589,7 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClInclude Include="..\..\source\direct3d11\InputElement11.h" />
     <ClInclude Include="..\..\source\direct3d11\InputLayout11.h" />
     <ClInclude Include="..\..\source\direct3d11\StreamOutputBufferBinding11.h" />
+    <ClInclude Include="..\..\source\direct3d11\StreamOutputElement11.h" />
     <ClInclude Include="..\..\source\direct3d11\ImageInformation11.h" />
     <ClInclude Include="..\..\source\direct3d11\ImageLoadInformation11.h" />
     <ClInclude Include="..\..\source\direct3d11\Texture1D11.h" />
@@ -1670,6 +1657,5 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <None Include="..\.\ReleaseNotes.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets"></ImportGroup>
 </Project>

@@ -2481,6 +2481,9 @@
     <ClCompile Include="..\..\source\direct3d11\StreamOutputBufferBinding11.cpp">
       <Filter>Direct3D11\Stream Output</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\StreamOutputElement11.cpp">
+      <Filter>Direct3D11\Stream Output</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\ImageInformation11.cpp">
       <Filter>Direct3D11\Texture</Filter>
     </ClCompile>
@@ -4531,6 +4534,9 @@
       <Filter>Direct3D11\Stream Input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\StreamOutputBufferBinding11.h">
+      <Filter>Direct3D11\Stream Output</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\StreamOutputElement11.h">
       <Filter>Direct3D11\Stream Output</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\ImageInformation11.h">

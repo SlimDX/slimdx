@@ -32,6 +32,7 @@ namespace SlimDX
 		/// <summary>
 		/// Contains the description of the contents of an image file.
 		/// </summary>
+		/// <unmanaged>D3DX11_IMAGE_INFO</unmanaged>
 		[System::Runtime::InteropServices::StructLayout( System::Runtime::InteropServices::LayoutKind::Sequential )]
 		public value class ImageInformation : System::IEquatable<ImageInformation>
 		{
@@ -97,6 +98,9 @@ namespace SlimDX
 				void set( int value );
 			}
 			
+			/// <summary>
+			/// Flags that identifies other, less common resource options.
+			/// </summary>
 			property ResourceOptionFlags OptionFlags
 			{
 				ResourceOptionFlags get();
@@ -130,7 +134,18 @@ namespace SlimDX
 				void set( ImageFileFormat value );
 			}
 
+			/// <summary>
+			/// Loads information about the given image file.
+			/// </summary>
+			/// <param name="fileName">Name of the image file.</param>
+			/// <returns>An <see cref="ImageInformation" /> instance containing information about the image file, or <c>null</c> if the file cannot be loaded.</returns>
 			static System::Nullable<ImageInformation> FromFile( System::String^ fileName );
+
+			/// <summary>
+			/// Loads information about the given image file in memory.
+			/// </summary>
+			/// <param name="memory">An array of memory containing the image file.</param>
+			/// <returns>An <see cref="ImageInformation" /> instance containing information about the image file, or <c>null</c> if the file cannot be loaded.</returns>
 			static System::Nullable<ImageInformation> FromMemory( array<System::Byte>^ memory );
 
 			/// <summary>
