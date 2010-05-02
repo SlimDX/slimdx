@@ -40,6 +40,8 @@ Direct3D 11
 	* Added stream-output support to geometry shaders.
 	* Documented a large portion of the D3D11 types.
 	* Added missing TextureCube members to ShaderResourceViewDescription.
+	* Cleaned up the DirectCompute interfaces.
+	* Added creation methods for the FastFourierTransform type.
 	
 Windows
 	* Added several overloads to MessagePump.Run to allow access to corresponding Application.Run overloads.

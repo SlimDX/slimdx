@@ -21,47 +21,41 @@
 */
 #pragma once
 
-#include "../ComObject.h"
-
-#include "../dxgi/Enums.h"
-
-#include "../ComObject.h"
-
 #include "Enums11.h"
 
 namespace SlimDX
 {
 	namespace Direct3D11
 	{
-		ref class DeviceContext;
-		ref class UnorderedAccessView;
-
 		/// <summary>
-		/// A scan context.
+		/// Contains a description for an FFT.
 		/// </summary>
-		/// <unmanaged>ID3DX11Scan</unmanaged>
-		public ref class Scan : public ComObject 
+		/// <unmanaged>D3DX11_FFT_DESC</unmanaged>
+		public value class FastFourierTransformDescription
 		{
-			COMOBJECT(ID3DX11Scan, Scan);
+		internal:
+			D3DX11_FFT_DESC ToUnmanaged();
 
-		protected:
-			Scan() { }
-			
 		public:
-
-			Scan( DeviceContext^ deviceContext, int maxElementScanSize, int maxScanCount );
+			/// <summary>
+			/// Number of dimension in the FFT.
+			/// </summary>
+			property int DimensionCount;
 
 			/// <summary>
-			/// Sets the scan direction.
+			/// Length of each dimension in the FFT.
 			/// </summary>
-			property ScanDirection Direction
-			{
-				void set( ScanDirection value );
-			}
+			property array<int>^ ElementLengths;
 
-			void PerformScan( ScanDataType elementType, ScanOpCode operation, int numberOfElements, UnorderedAccessView^ src, UnorderedAccessView^ dest );
+			/// <summary>
+			/// Combination of flags indicating the the dimensions to transform.
+			/// </summary>
+			property FastFourierTransformDimensions Dimensions;
 
-			void PerformMultiscan( ScanDataType elementType, ScanOpCode operation, int numberOfElements, int scanPitchInElements, int scanCount, UnorderedAccessView^ src, UnorderedAccessView^ dest );
+			/// <summary>
+			/// Flag indicating the type of data being transformed.
+			/// </summary>
+			property FastFourierTransformDataType DataType;
 		};
 	}
 };

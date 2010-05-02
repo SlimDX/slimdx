@@ -2574,13 +2574,19 @@
     <ClCompile Include="..\..\source\direct3d11\EffectTypeDescription11.cpp">
       <Filter>Direct3D11\Effects\Type</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\FFT.cpp">
+    <ClCompile Include="..\..\source\direct3d11\FastFourierTransform11.cpp">
       <Filter>Direct3D11\Compute</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\Scan.cpp">
+    <ClCompile Include="..\..\source\direct3d11\FastFourierTransformBufferRequirements11.cpp">
       <Filter>Direct3D11\Compute</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\SegmentedScan.cpp">
+    <ClCompile Include="..\..\source\direct3d11\FastFourierTransformDescription11.cpp">
+      <Filter>Direct3D11\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\Scan11.cpp">
+      <Filter>Direct3D11\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\SegmentedScan11.cpp">
       <Filter>Direct3D11\Compute</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\xact3\XACT3Exception.cpp">
@@ -4629,13 +4635,19 @@
     <ClInclude Include="..\..\source\direct3d11\EffectTypeDescription11.h">
       <Filter>Direct3D11\Effects\Type</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\FFT.h">
+    <ClInclude Include="..\..\source\direct3d11\FastFourierTransform11.h">
       <Filter>Direct3D11\Compute</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\Scan.h">
+    <ClInclude Include="..\..\source\direct3d11\FastFourierTransformBufferRequirements11.h">
       <Filter>Direct3D11\Compute</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\SegmentedScan.h">
+    <ClInclude Include="..\..\source\direct3d11\FastFourierTransformDescription11.h">
+      <Filter>Direct3D11\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\Scan11.h">
+      <Filter>Direct3D11\Compute</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\SegmentedScan11.h">
       <Filter>Direct3D11\Compute</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\xact3\Enums.h">

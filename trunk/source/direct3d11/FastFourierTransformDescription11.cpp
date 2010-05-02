@@ -19,47 +19,28 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include "stdafx.h"
 
-#include "../ComObject.h"
+#include "FastFourierTransformDescription11.h"
 
-#include "../dxgi/Enums.h"
-
-#include "../ComObject.h"
-
-#include "Enums11.h"
+using namespace System;
 
 namespace SlimDX
 {
-	namespace Direct3D11
+namespace Direct3D11
+{
+	D3DX11_FFT_DESC FastFourierTransformDescription::ToUnmanaged()
 	{
-		ref class DeviceContext;
-		ref class UnorderedAccessView;
+		D3DX11_FFT_DESC native;
 
-		/// <summary>
-		/// A segmented scan context.
-		/// </summary>
-		/// <unmanaged>ID3DX11SegmentedScan</unmanaged>
-		public ref class SegmentedScan : public ComObject 
-		{
-			COMOBJECT(ID3DX11SegmentedScan, SegmentedScan);
+		native.NumDimensions = DimensionCount;
+		native.DimensionMask = static_cast<UINT>(Dimensions);
+		native.Type = static_cast<D3DX11_FFT_DATA_TYPE>(DataType);
+		
+		for (int i = 0; i < ElementLengths->Length && i < D3DX11_FFT_MAX_DIMENSIONS; i++)
+			native.ElementLengths[i] = ElementLengths[i];
 
-		protected:
-			SegmentedScan() { }
-			
-		public:
-
-			SegmentedScan( DeviceContext^ deviceContext, int maxElementScanSize );
-
-			/// <summary>
-			/// Sets the scan direction.
-			/// </summary>
-			property ScanDirection Direction
-			{
-				void set( ScanDirection value );
-			}
-
-			void PerformSegmentedScan( ScanDataType elementType, ScanOpCode operation, int numberOfElements, UnorderedAccessView^ src, UnorderedAccessView^ srcElementFlags, UnorderedAccessView^ dest );
-		};
+		return native;
 	}
-};
+}
+}
