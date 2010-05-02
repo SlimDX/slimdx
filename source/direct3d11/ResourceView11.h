@@ -35,7 +35,7 @@ namespace SlimDX
 		{
 			COMOBJECT_BASE(ID3D11View);
 
-		protected:
+		private protected:
 			ResourceView() { }
 
 		public:

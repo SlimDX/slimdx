@@ -39,6 +39,7 @@ Direct3D 11
 	* Added overloads to EffectVectorVariable.Set to take color inputs.
 	* Added stream-output support to geometry shaders.
 	* Documented a large portion of the D3D11 types.
+	* Added missing TextureCube members to ShaderResourceViewDescription.
 	
 Windows
 	* Added several overloads to MessagePump.Run to allow access to corresponding Application.Run overloads.
