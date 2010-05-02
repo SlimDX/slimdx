@@ -27,6 +27,9 @@ namespace SlimDX
 {
 	namespace Direct3D11
 	{
+		/// <summary>
+		/// Defines a wrapper for stream-output related commands on the device.
+		/// </summary>
 		public ref class StreamOutputWrapper
 		{
 		private:
@@ -36,7 +39,17 @@ namespace SlimDX
 			StreamOutputWrapper( ID3D11DeviceContext* device );
 			
 		public:
+			/// <summary>
+			/// Sets the target output buffers for the stream-output stage of the pipeline.
+			/// </summary>
+			/// <param name="bufferBindings">A set of stream output buffer bindings to set.</param>
 			void SetTargets( ... array<StreamOutputBufferBinding>^ bufferBindings );
+
+			/// <summary>
+			/// Gets the target output buffers currently set for the stream-output stage.
+			/// </summary>
+			/// <param name="count">The number of targets to retrieve.</param>
+			/// <returns>An array of stream output target buffers.</returns>
 			array<Buffer^>^ GetTargets( int count );
 		};
 	}

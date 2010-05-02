@@ -80,8 +80,16 @@ namespace SlimDX
 			void InitializeSubclasses();
 
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="DeviceContext"/> class. This instance will be a deferred rendering context.
+			/// </summary>
+			/// <param name="device">The device used to create the context.</param>
 			DeviceContext( SlimDX::Direct3D11::Device^ device );
 
+			/// <summary>
+			/// Marks the beginning of a series of asynchronous commands.
+			/// </summary>
+			/// <param name="data">An asynchronous data provider.</param>
 			void Begin( Asynchronous^ data );
 
 			/// <summary>
@@ -105,7 +113,18 @@ namespace SlimDX
 			/// </summary>
 			void ClearState();
 
+			/// <summary>
+			/// Clears an unordered access resource with the given values.
+			/// </summary>
+			/// <param name="unorderedAccessView">The view of the resource to clear.</param>
+			/// <param name="values">Values that will be copied to corresponding channels on the resource.</param>
 			void ClearUnorderedAccessView( UnorderedAccessView^ unorderedAccessView, array<int>^ values );
+
+			/// <summary>
+			/// Clears an unordered access resource with the given values.
+			/// </summary>
+			/// <param name="unorderedAccessView">The view of the resource to clear.</param>
+			/// <param name="values">Values that will be copied to corresponding channels on the resource.</param>
 			void ClearUnorderedAccessView( UnorderedAccessView^ unorderedAccessView, array<float>^ values );
 			
 			/// <summary>
@@ -114,6 +133,14 @@ namespace SlimDX
 			/// <param name="source">The source resource.</param>
 			/// <param name="destination">The destination resource.</param>
 			void CopyResource( Resource^ source, Resource^ destination );
+
+			/// <summary>
+			/// Copies data from a buffer holding variable length data.
+			/// </summary>
+			/// <param name="unorderedAccessView">The view of the source resource.</param>
+			/// <param name="destinationBuffer">The destination buffer.</param>
+			/// <param name="destinationOffset">Aligned byte offset from the start of the destination buffer to which data will be copied.</param>
+			void CopyStructureCount( UnorderedAccessView^ unorderedAccessView, Buffer^ destinationBuffer, int destinationOffset );
 
 			/// <summary>
 			/// Copies a portion of a resource's data using the GPU.
@@ -155,7 +182,19 @@ namespace SlimDX
 			/// <param name="region">The destination region within the resource.</param>
 			void UpdateSubresource( DataBox^ source, Resource^ resource, int subresource, ResourceRegion region );
 
+			/// <summary>
+			/// Executes a command list from a thread group.
+			/// </summary>
+			/// <param name="threadGroupCountX">The number of groups dispatched in the x direction.</param>
+			/// <param name="threadGroupCountY">The number of groups dispatched in the y direction.</param>
+			/// <param name="threadGroupCountZ">The number of groups dispatched in the z direction.</param>
 			void Dispatch( int threadGroupCountX, int threadGroupCountY, int threadGroupCountZ );
+
+			/// <summary>
+			/// Execute a command list to draw GPU-generated primitives over one of more thread groups.
+			/// </summary>
+			/// <param name="arguments">A buffer containing arguments for the thread groups.</param>
+			/// <param name="alignedOffset">A byte-aligned offset between the start of the buffer and the arguments.</param>
 			void DispatchIndirect( Buffer^ arguments, int alignedOffset );
 
 			/// <summary>
@@ -168,12 +207,17 @@ namespace SlimDX
 			/// <summary>
 			/// Renders non-indexed, instanced primitive data.
 			/// </summary>
-			/// <param name="vertexCountPerInstance">The number of vertices to use per index.</param>
+			/// <param name="vertexCountPerInstance">The number of vertices to use per instance.</param>
 			/// <param name="instanceCount">The number of instances to render.</param>
 			/// <param name="startVertexLocation">The index of the first vertex.</param>
 			/// <param name="startInstanceLocation">The index of the first instance.</param>
 			void DrawInstanced( int vertexCountPerInstance, int instanceCount, int startVertexLocation, int startInstanceLocation );
 
+			/// <summary>
+			/// Renders non-indexed, instanced, GPU-generated primitive data.
+			/// </summary>
+			/// <param name="arguments">A buffer containing arguments for the draw call.</param>
+			/// <param name="alignedOffset">A byte-aligned offset between the start of the buffer and the arguments.</param>
 			void DrawInstancedIndirect( Buffer^ arguments, int alignedOffset );
 			
 			/// <summary>
@@ -187,13 +231,18 @@ namespace SlimDX
 			/// <summary>
 			/// Renders indexed, instanced primitive data.
 			/// </summary>
-			/// <param name="indexCountPerInstance">The number of indices to use per index.</param>
+			/// <param name="indexCountPerInstance">The number of indices to use per instance.</param>
 			/// <param name="instanceCount">The number of instances to render.</param>
 			/// <param name="startIndexLocation">The index of the first index.</param>
 			/// <param name="baseVertexLocation">The index of the first vertex.</param>
 			/// <param name="startInstanceLocation">The index of the first instance.</param>
 			void DrawIndexedInstanced( int indexCountPerInstance, int instanceCount, int startIndexLocation, int baseVertexLocation, int startInstanceLocation );
 			
+			/// <summary>
+			/// Renders indexed, instanced, GPU-generated primitive data.
+			/// </summary>
+			/// <param name="arguments">A buffer containing arguments for the draw call.</param>
+			/// <param name="alignedOffset">A byte-aligned offset between the start of the buffer and the arguments.</param>
 			void DrawIndexedInstancedIndirect( Buffer^ arguments, int alignedOffset );
 
 			/// <summary>
@@ -201,9 +250,24 @@ namespace SlimDX
 			/// </summary>
 			void DrawAuto();
 
+			/// <summary>
+			/// Marks the end of a series of asynchronous commands.
+			/// </summary>
+			/// <param name="data">An asynchronous data provider.</param>
 			void End( Asynchronous^ data );
 
+			/// <summary>
+			/// Queues commands from a command list onto a device.
+			/// </summary>
+			/// <param name="commands">The list of commands to execute.</param>
+			/// <param name="restoreState">A flag indicating whether the immediate context state is saved (prior) and restored (after) the execution of a command list.</param>
 			void ExecuteCommandList( CommandList^ commands, bool restoreState );
+
+			/// <summary>
+			/// Create a command list and record graphics commands into it.
+			/// </summary>
+			/// <param name="restoreState">A flag indicating whether the immediate context state is saved (prior) and restored (after) the execution of a command list.</param>
+			/// <returns>The created command list containing the queued rendering commands.</returns>
 			CommandList^ FinishCommandList( bool restoreState );
 
 			/// <summary>
@@ -214,18 +278,61 @@ namespace SlimDX
 			/// <summary>
 			/// Generates mipmaps for the specified shader resource.
 			/// </summary>
-			/// <param name="view">A view of the resource to generate mipmaps for.</param>
+			/// <param name="view">A view of the resource for which to generate mipmaps.</param>
 			void GenerateMips( ShaderResourceView^ view );
 
+			/// <summary>
+			/// Gets the minimum level-of-detail for a resource.
+			/// </summary>
+			/// <param name="resource">The resource for which level-of-detail information is to be retrieved.</param>
+			/// <returns>The minimum level-of-detail for the specified resource.</returns>
 			float GetMinimumLod( Resource^ resource );
+
+			/// <summary>
+			/// Sets the minimum level-of-detail for a resource.
+			/// </summary>
+			/// <param name="resource">The resource for which level-of-detail information is to be set.</param>
+			/// <param name="minimumLod">The level-of-detail for the resource.</param>
 			void SetMinimumLod( Resource^ resource, float minimumLod );
 
+			/// <summary>
+			/// Gets data from the GPU asynchronously.
+			/// </summary>
+			/// <param name="data">The asynchronous data provider.</param>
+			/// <returns>The data retrieved from the GPU.</returns>
 			DataStream^ GetData( Asynchronous^ data );
+
+			/// <summary>
+			/// Gets data from the GPU asynchronously.
+			/// </summary>
+			/// <param name="data">The asynchronous data provider.</param>
+			/// <param name="flags">Flags specifying how the command should operate.</param>
+			/// <returns>The data retrieved from the GPU.</returns>
 			DataStream^ GetData( Asynchronous^ data, AsynchronousFlags flags );
 
+			/// <summary>
+			/// Gets the rendering predicate state.
+			/// </summary>
+			/// <param name="predicate">When the method completes, contains the predicate interface currently in use.</param>
+			/// <param name="predicateValue">When the method completes, contains the predicate comparison value.</param>
 			void GetPredication( [Out] Predicate^ %predicate, [Out] bool %predicateValue );
 
+			/// <summary>
+			/// Maps a GPU resource into CPU-accessible memory.
+			/// </summary>
+			/// <param name="resource">The resource to map.</param>
+			/// <param name="subresource">Index of the subresource to map.</param>
+			/// <param name="sizeInBytes">Size, in bytes, of the data to retrieve.</param>
+			/// <param name="mode">Specifies the CPU's read and write permissions for the resource. </param>
+			/// <param name="flags">Flags that specify what the CPU should do when the GPU is busy.</param>
+			/// <returns>The mapped resource data.</returns>
 			DataBox^ MapSubresource( Resource^ resource, int subresource, int sizeInBytes, MapMode mode, MapFlags flags );
+
+			/// <summary>
+			/// Releases a previously mapped resource.
+			/// </summary>
+			/// <param name="resource">The resource to unmap.</param>
+			/// <param name="subresource">Index of the subresource to unmap.</param>
 			void UnmapSubresource( Resource^ resource, int subresource );
 			
 			/// <summary>
@@ -236,6 +343,9 @@ namespace SlimDX
 			/// rendering will be affected when the predicate's conditions are not met.</param>
 			void SetPredication( Predicate^ predicate, bool predicateValue );
 
+			/// <summary>
+			/// Gets the type of the device context.
+			/// </summary>
 			property DeviceContextType Type
 			{
 				DeviceContextType get();
