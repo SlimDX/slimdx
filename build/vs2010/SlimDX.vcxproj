@@ -351,12 +351,8 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClCompile Include="..\..\source\direct3d10\Mesh10.cpp" />
     <ClCompile Include="..\..\source\direct3d10\MeshAttributeRange.cpp" />
     <ClCompile Include="..\..\source\direct3d10\MeshBuffer.cpp" />
-    <ClCompile Include="..\..\source\direct3d10\Include10.cpp" />
-    <ClCompile Include="..\..\source\direct3d10\ShaderBytecode10.cpp" />
     <ClCompile Include="..\..\source\direct3d10\ShaderDescription.cpp" />
-    <ClCompile Include="..\..\source\direct3d10\ShaderMacro10.cpp" />
     <ClCompile Include="..\..\source\direct3d10\ShaderParameterDescription.cpp" />
-    <ClCompile Include="..\..\source\direct3d10\ShaderSignature10.cpp" />
     <ClCompile Include="..\..\source\direct3d10\GeometryShader.cpp" />
     <ClCompile Include="..\..\source\direct3d10\VertexShader10.cpp" />
     <ClCompile Include="..\..\source\direct3d10\PixelShader10.cpp" />
@@ -847,16 +843,12 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClCompile Include="..\..\source\direct3d11\ShaderResourceViewDescription11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\UnorderedAccessView11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\UnorderedAccessViewDescription11.cpp" />
-    <ClCompile Include="..\..\source\direct3d11\Include11.cpp" />
-    <ClCompile Include="..\..\source\direct3d11\ShaderBytecode11.cpp" />
-    <ClCompile Include="..\..\source\direct3d11\ShaderMacro11.cpp" />
-    <ClCompile Include="..\..\source\direct3d11\ShaderSignature11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\ComputeShader11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\DomainShader11.cpp" />
-    <ClCompile Include="..\..\source\direct3d11\HullShader11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\GeometryShader11.cpp" />
-    <ClCompile Include="..\..\source\direct3d11\VertexShader11.cpp" />
+    <ClCompile Include="..\..\source\direct3d11\HullShader11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\PixelShader11.cpp" />
+    <ClCompile Include="..\..\source\direct3d11\VertexShader11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\ClassInstance11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\ClassInstanceDescription11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\ClassLinkage11.cpp" />
@@ -943,6 +935,11 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClCompile Include="..\..\source\xact3\TrackProperties.cpp" />
     <ClCompile Include="..\..\source\xact3\VariationProperties.cpp" />
     <ClCompile Include="..\..\source\xact3\SoundBank.cpp" />
+    <ClCompile Include="..\..\source\d3dcompiler\D3DCompilerException.cpp" />
+    <ClCompile Include="..\..\source\d3dcompiler\IncludeDC.cpp" />
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderMacroDC.cpp" />
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderBytecodeDC.cpp" />
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderSignatureDC.cpp" />
     <ClCompile Include="..\..\source\AssemblyInfo.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h</PrecompiledHeaderFile>
@@ -991,12 +988,8 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClInclude Include="..\..\source\direct3d10\Mesh10.h" />
     <ClInclude Include="..\..\source\direct3d10\MeshAttributeRange.h" />
     <ClInclude Include="..\..\source\direct3d10\MeshBuffer.h" />
-    <ClInclude Include="..\..\source\direct3d10\Include10.h" />
-    <ClInclude Include="..\..\source\direct3d10\ShaderBytecode10.h" />
     <ClInclude Include="..\..\source\direct3d10\ShaderDescription.h" />
-    <ClInclude Include="..\..\source\direct3d10\ShaderMacro10.h" />
     <ClInclude Include="..\..\source\direct3d10\ShaderParameterDescription.h" />
-    <ClInclude Include="..\..\source\direct3d10\ShaderSignature10.h" />
     <ClInclude Include="..\..\source\direct3d10\GeometryShader.h" />
     <ClInclude Include="..\..\source\direct3d10\VertexShader10.h" />
     <ClInclude Include="..\..\source\direct3d10\PixelShader10.h" />
@@ -1549,16 +1542,12 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClInclude Include="..\..\source\direct3d11\ShaderResourceViewDescription11.h" />
     <ClInclude Include="..\..\source\direct3d11\UnorderedAccessView11.h" />
     <ClInclude Include="..\..\source\direct3d11\UnorderedAccessViewDescription11.h" />
-    <ClInclude Include="..\..\source\direct3d11\Include11.h" />
-    <ClInclude Include="..\..\source\direct3d11\ShaderBytecode11.h" />
-    <ClInclude Include="..\..\source\direct3d11\ShaderMacro11.h" />
-    <ClInclude Include="..\..\source\direct3d11\ShaderSignature11.h" />
     <ClInclude Include="..\..\source\direct3d11\ComputeShader11.h" />
     <ClInclude Include="..\..\source\direct3d11\DomainShader11.h" />
-    <ClInclude Include="..\..\source\direct3d11\HullShader11.h" />
     <ClInclude Include="..\..\source\direct3d11\GeometryShader11.h" />
-    <ClInclude Include="..\..\source\direct3d11\VertexShader11.h" />
+    <ClInclude Include="..\..\source\direct3d11\HullShader11.h" />
     <ClInclude Include="..\..\source\direct3d11\PixelShader11.h" />
+    <ClInclude Include="..\..\source\direct3d11\VertexShader11.h" />
     <ClInclude Include="..\..\source\direct3d11\ClassInstance11.h" />
     <ClInclude Include="..\..\source\direct3d11\ClassInstanceDescription11.h" />
     <ClInclude Include="..\..\source\direct3d11\ClassLinkage11.h" />
@@ -1646,6 +1635,12 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClInclude Include="..\..\source\xact3\TrackProperties.h" />
     <ClInclude Include="..\..\source\xact3\VariationProperties.h" />
     <ClInclude Include="..\..\source\xact3\SoundBank.h" />
+    <ClInclude Include="..\..\source\d3dcompiler\D3DCompilerException.h" />
+    <ClInclude Include="..\..\source\d3dcompiler\EnumsDC.h" />
+    <ClInclude Include="..\..\source\d3dcompiler\IncludeDC.h" />
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderMacroDC.h" />
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderBytecodeDC.h" />
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderSignatureDC.h" />
     <ClInclude Include="..\..\source\stdafx.h" />
   </ItemGroup>
   <ItemGroup>

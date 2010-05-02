@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "Enums.h"
+#include "../d3dcompiler/EnumsDC.h"
 
 namespace SlimDX
 {
@@ -33,10 +33,10 @@ namespace SlimDX
 			System::String^ m_SemanticName;
 			System::UInt32 m_SemanticIndex;
 			System::UInt32 m_Register;
-			SystemValueType m_SystemValueType;
-			RegisterComponentType m_ComponentType;
-			RegisterComponentMaskFlags m_Mask;
-			RegisterComponentMaskFlags m_ReadWriteMask;
+			D3DCompiler::SystemValueType m_SystemValueType;
+			D3DCompiler::RegisterComponentType m_ComponentType;
+			D3DCompiler::RegisterComponentMaskFlags m_Mask;
+			D3DCompiler::RegisterComponentMaskFlags m_ReadWriteMask;
 		
 		internal:
 			ShaderParameterDescription( const D3D10_SIGNATURE_PARAMETER_DESC& native );
@@ -57,24 +57,24 @@ namespace SlimDX
 				System::UInt32 get();
 			}
 			
-			property SystemValueType SystemType
+			property D3DCompiler::SystemValueType SystemType
 			{
-				SystemValueType get();
+				D3DCompiler::SystemValueType get();
 			}
 			
-			property RegisterComponentType ComponentType
+			property D3DCompiler::RegisterComponentType ComponentType
 			{
-				RegisterComponentType get();
+				D3DCompiler::RegisterComponentType get();
 			}
 			
-			property RegisterComponentMaskFlags UsageMask
+			property D3DCompiler::RegisterComponentMaskFlags UsageMask
 			{
-				RegisterComponentMaskFlags get();
+				D3DCompiler::RegisterComponentMaskFlags get();
 			}
 			
-			property RegisterComponentMaskFlags ReadWriteMask
+			property D3DCompiler::RegisterComponentMaskFlags ReadWriteMask
 			{
-				RegisterComponentMaskFlags get();
+				D3DCompiler::RegisterComponentMaskFlags get();
 			}
 
 			static bool operator == ( ShaderParameterDescription left, ShaderParameterDescription right );

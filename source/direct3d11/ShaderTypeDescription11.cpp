@@ -34,8 +34,8 @@ namespace Direct3D11
 { 	
 	ShaderTypeDescription::ShaderTypeDescription( const D3D11_SHADER_TYPE_DESC& native )
 	{
-		m_Class = static_cast<SlimDX::Direct3D10::ShaderVariableClass>( native.Class );
-		m_Type = static_cast<SlimDX::Direct3D10::ShaderVariableType>( native.Type );
+		m_Class = static_cast<D3DCompiler::ShaderVariableClass>( native.Class );
+		m_Type = static_cast<D3DCompiler::ShaderVariableType>( native.Type );
 		m_Rows = native.Rows;
 		m_Columns = native.Columns;
 		m_Elements = native.Elements;
@@ -43,12 +43,12 @@ namespace Direct3D11
 		m_Offset = native.Offset;
 	}
 
-	SlimDX::Direct3D10::ShaderVariableClass ShaderTypeDescription::Class::get()
+	D3DCompiler::ShaderVariableClass ShaderTypeDescription::Class::get()
 	{
 		return m_Class;
 	}
 	
-	SlimDX::Direct3D10::ShaderVariableType ShaderTypeDescription::Type::get()
+	D3DCompiler::ShaderVariableType ShaderTypeDescription::Type::get()
 	{
 		return m_Type;
 	}

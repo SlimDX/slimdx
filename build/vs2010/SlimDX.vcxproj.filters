@@ -652,24 +652,6 @@
     <Filter Include="Direct3D11\Shader">
       <UniqueIdentifier>{4cb61449-e9d2-4ebe-925e-e4803aae483d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Direct3D11\Shader\ComputeShader">
-      <UniqueIdentifier>{2239bbd9-dcbd-418a-ba57-b499bbf17c9c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Shader\DomainShader">
-      <UniqueIdentifier>{26dc051e-9cd9-442e-80f2-80eb4c8acee5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Shader\HullShader">
-      <UniqueIdentifier>{3e0997b3-65ce-4898-baf1-610ac01b7372}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Shader\GeometryShader">
-      <UniqueIdentifier>{d0f7b2b6-3877-4069-ac1e-0f54f4c76397}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Shader\VertexShader">
-      <UniqueIdentifier>{31e8c8f7-0bdc-44cb-bcfb-150e23005c8b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Shader\PixelShader">
-      <UniqueIdentifier>{a9c04e79-fd56-491e-b940-97ada7bb39d9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Direct3D11\Shader\ClassInstance">
       <UniqueIdentifier>{10db5bcb-a827-4435-84fc-9664cae6b100}</UniqueIdentifier>
     </Filter>
@@ -772,6 +754,21 @@
     <Filter Include="XACT3\SoundBank">
       <UniqueIdentifier>{5112df4e-e6b5-4126-bf27-5db37b29e1f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="D3DCompiler">
+      <UniqueIdentifier>{929321bb-3d29-4f15-b994-6dede9e74d32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3DCompiler\Include">
+      <UniqueIdentifier>{3d9cf53c-4d26-447a-a8ee-db17e3dc2189}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3DCompiler\ShaderMacro">
+      <UniqueIdentifier>{3679b88b-720b-43ac-bb9e-439239c6c55f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3DCompiler\ShaderBytecode">
+      <UniqueIdentifier>{3fffcdad-377d-4a01-9c73-73415b8c5be0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3DCompiler\ShaderSignature">
+      <UniqueIdentifier>{35bca85e-72af-4cd3-8fc2-3809f5c00f2a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\direct3d10\Direct3D10Exception.cpp">
@@ -867,22 +864,10 @@
     <ClCompile Include="..\..\source\direct3d10\MeshBuffer.cpp">
       <Filter>Direct3D10\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\direct3d10\Include10.cpp">
-      <Filter>Direct3D10\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d10\ShaderBytecode10.cpp">
-      <Filter>Direct3D10\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\direct3d10\ShaderDescription.cpp">
       <Filter>Direct3D10\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\direct3d10\ShaderMacro10.cpp">
-      <Filter>Direct3D10\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\direct3d10\ShaderParameterDescription.cpp">
-      <Filter>Direct3D10\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d10\ShaderSignature10.cpp">
       <Filter>Direct3D10\Shader</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d10\GeometryShader.cpp">
@@ -2355,35 +2340,23 @@
     <ClCompile Include="..\..\source\direct3d11\UnorderedAccessViewDescription11.cpp">
       <Filter>Direct3D11\Resource Views\UnorderedAccessView</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\Include11.cpp">
-      <Filter>Direct3D11\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\ShaderBytecode11.cpp">
-      <Filter>Direct3D11\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\ShaderMacro11.cpp">
-      <Filter>Direct3D11\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\ShaderSignature11.cpp">
-      <Filter>Direct3D11\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\ComputeShader11.cpp">
-      <Filter>Direct3D11\Shader\ComputeShader</Filter>
+      <Filter>Direct3D11\Shader</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\DomainShader11.cpp">
-      <Filter>Direct3D11\Shader\DomainShader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\HullShader11.cpp">
-      <Filter>Direct3D11\Shader\HullShader</Filter>
+      <Filter>Direct3D11\Shader</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\GeometryShader11.cpp">
-      <Filter>Direct3D11\Shader\GeometryShader</Filter>
+      <Filter>Direct3D11\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\VertexShader11.cpp">
-      <Filter>Direct3D11\Shader\VertexShader</Filter>
+    <ClCompile Include="..\..\source\direct3d11\HullShader11.cpp">
+      <Filter>Direct3D11\Shader</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\PixelShader11.cpp">
-      <Filter>Direct3D11\Shader\PixelShader</Filter>
+      <Filter>Direct3D11\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\VertexShader11.cpp">
+      <Filter>Direct3D11\Shader</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\ClassInstance11.cpp">
       <Filter>Direct3D11\Shader\ClassInstance</Filter>
@@ -2643,6 +2616,21 @@
     <ClCompile Include="..\..\source\xact3\SoundBank.cpp">
       <Filter>XACT3\SoundBank</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\d3dcompiler\D3DCompilerException.cpp">
+      <Filter>D3DCompiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\d3dcompiler\IncludeDC.cpp">
+      <Filter>D3DCompiler\Include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderMacroDC.cpp">
+      <Filter>D3DCompiler\ShaderMacro</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderBytecodeDC.cpp">
+      <Filter>D3DCompiler\ShaderBytecode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderSignatureDC.cpp">
+      <Filter>D3DCompiler\ShaderSignature</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\AssemblyInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -2742,22 +2730,10 @@
     <ClInclude Include="..\..\source\direct3d10\MeshBuffer.h">
       <Filter>Direct3D10\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\direct3d10\Include10.h">
-      <Filter>Direct3D10\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d10\ShaderBytecode10.h">
-      <Filter>Direct3D10\Shader</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\direct3d10\ShaderDescription.h">
       <Filter>Direct3D10\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\direct3d10\ShaderMacro10.h">
-      <Filter>Direct3D10\Shader</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\direct3d10\ShaderParameterDescription.h">
-      <Filter>Direct3D10\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d10\ShaderSignature10.h">
       <Filter>Direct3D10\Shader</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d10\GeometryShader.h">
@@ -4416,35 +4392,23 @@
     <ClInclude Include="..\..\source\direct3d11\UnorderedAccessViewDescription11.h">
       <Filter>Direct3D11\Resource Views\UnorderedAccessView</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\Include11.h">
-      <Filter>Direct3D11\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\ShaderBytecode11.h">
-      <Filter>Direct3D11\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\ShaderMacro11.h">
-      <Filter>Direct3D11\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\ShaderSignature11.h">
-      <Filter>Direct3D11\Shader</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\ComputeShader11.h">
-      <Filter>Direct3D11\Shader\ComputeShader</Filter>
+      <Filter>Direct3D11\Shader</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\DomainShader11.h">
-      <Filter>Direct3D11\Shader\DomainShader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\HullShader11.h">
-      <Filter>Direct3D11\Shader\HullShader</Filter>
+      <Filter>Direct3D11\Shader</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\GeometryShader11.h">
-      <Filter>Direct3D11\Shader\GeometryShader</Filter>
+      <Filter>Direct3D11\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\VertexShader11.h">
-      <Filter>Direct3D11\Shader\VertexShader</Filter>
+    <ClInclude Include="..\..\source\direct3d11\HullShader11.h">
+      <Filter>Direct3D11\Shader</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\PixelShader11.h">
-      <Filter>Direct3D11\Shader\PixelShader</Filter>
+      <Filter>Direct3D11\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\VertexShader11.h">
+      <Filter>Direct3D11\Shader</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\ClassInstance11.h">
       <Filter>Direct3D11\Shader\ClassInstance</Filter>
@@ -4706,6 +4670,24 @@
     </ClInclude>
     <ClInclude Include="..\..\source\xact3\SoundBank.h">
       <Filter>XACT3\SoundBank</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\d3dcompiler\D3DCompilerException.h">
+      <Filter>D3DCompiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\d3dcompiler\EnumsDC.h">
+      <Filter>D3DCompiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\d3dcompiler\IncludeDC.h">
+      <Filter>D3DCompiler\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderMacroDC.h">
+      <Filter>D3DCompiler\ShaderMacro</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderBytecodeDC.h">
+      <Filter>D3DCompiler\ShaderBytecode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderSignatureDC.h">
+      <Filter>D3DCompiler\ShaderSignature</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\stdafx.h" />
   </ItemGroup>

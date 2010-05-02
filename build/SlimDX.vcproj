@@ -6853,7 +6853,7 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Shader Data"
+				Name="ShaderBytecode"
 				>
 				<File
 					RelativePath="..\source\d3dcompiler\ShaderBytecodeDC.cpp"
@@ -6863,6 +6863,10 @@
 					RelativePath="..\source\d3dcompiler\ShaderBytecodeDC.h"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="ShaderSignature"
+				>
 				<File
 					RelativePath="..\source\d3dcompiler\ShaderSignatureDC.cpp"
 					>

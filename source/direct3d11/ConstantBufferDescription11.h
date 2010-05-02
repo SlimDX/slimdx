@@ -22,8 +22,8 @@
 #pragma once
 
 #include "Enums11.h"
-//yeah don't ask
-#include "../direct3d10/Enums.h"
+
+#include "../d3dcompiler/EnumsDC.h"
 
 namespace SlimDX
 {
@@ -36,7 +36,7 @@ namespace SlimDX
 			ConstantBufferType m_Type;
 			int m_Variables;
 			int m_Size;
-			SlimDX::Direct3D10::ShaderVariableFlags m_Flags;
+			D3DCompiler::ShaderVariableFlags m_Flags;
 		
 		internal:
 			ConstantBufferDescription( const D3D11_SHADER_BUFFER_DESC& description );
@@ -62,9 +62,9 @@ namespace SlimDX
 				int get();
 			}
 
-			property SlimDX::Direct3D10::ShaderVariableFlags Flags
+			property D3DCompiler::ShaderVariableFlags Flags
 			{
-				SlimDX::Direct3D10::ShaderVariableFlags get();
+				D3DCompiler::ShaderVariableFlags get();
 			}
 
 			static bool operator == ( ConstantBufferDescription left, ConstantBufferDescription right );
