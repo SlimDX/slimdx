@@ -6901,6 +6901,54 @@
 				</File>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="D3DCompiler"
+			>
+			<File
+				RelativePath="..\source\d3dcompiler\D3DCompilerException.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\d3dcompiler\D3DCompilerException.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\d3dcompiler\EnumsDC.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\d3dcompiler\IncludeDC.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\d3dcompiler\IncludeDC.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\d3dcompiler\ShaderBytecodeDC.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\d3dcompiler\ShaderBytecodeDC.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\d3dcompiler\ShaderMacroDC.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\d3dcompiler\ShaderMacroDC.h"
+				>
+			</File>
+			<File
+				RelativePath="..\source\d3dcompiler\ShaderSignatureDC.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\d3dcompiler\ShaderSignatureDC.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\source\AssemblyInfo.cpp"
 			>
