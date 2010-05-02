@@ -49,11 +49,11 @@ namespace SlimDX
 			}
 
 			/// <summary>
-			/// Constructs a new RasterizerState based on the specified description. If the description
+			/// Constructs a new rasterizer state based on the specified description. If the description
 			/// is identical to that of an existing RasterizerState object, the existing RasterizerState object
 			/// is returned instead of a new instance.
 			/// </summary>
-			/// <param name="device">The device to associate the state object with</param>
+			/// <param name="device">The device used to create the state.</param>
 			/// <param name="description">The state description.</param>
 			/// <returns>The RasterizerState object.</returns>
 			static RasterizerState^ FromDescription( SlimDX::Direct3D11::Device^ device, RasterizerStateDescription description );

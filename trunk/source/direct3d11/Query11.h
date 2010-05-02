@@ -32,11 +32,15 @@ namespace SlimDX
 	{
 		ref class Device;
 
+		/// <summary>
+		/// Defines an interface for querying information from the GPU.
+		/// </summary>
+		/// <unmanaged>ID3D11Query</unmanaged>
 		public ref class Query : public Asynchronous
 		{
 			COMOBJECT(ID3D11Query, Query);
 
-		protected:
+		private protected:
 			Query();
 
 		public:
@@ -49,9 +53,9 @@ namespace SlimDX
 			}
 			
 			/// <summary>
-			/// Constructs a new Query object.
+			/// Initializes a new instance of the <see cref="Query"/> class.
 			/// </summary>
-			/// <param name="device">The device to associate the query with.</param>
+			/// <param name="device">The device used to create the query.</param>
 			/// <param name="description">The query description.</param>
 			Query( SlimDX::Direct3D11::Device^ device, QueryDescription description );
 		};
