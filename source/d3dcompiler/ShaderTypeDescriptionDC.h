@@ -21,19 +21,17 @@
 */
 #pragma once
 
-#include "Enums11.h"
-
-#include "../d3dcompiler/EnumsDC.h"
+#include "EnumsDC.h"
 
 namespace SlimDX
 {
-	namespace Direct3D11
+	namespace D3DCompiler
 	{	
 		public value class ShaderTypeDescription : System::IEquatable<ShaderTypeDescription>
 		{
 		private:
-			D3DCompiler::ShaderVariableClass m_Class;
-			D3DCompiler::ShaderVariableType m_Type;
+			ShaderVariableClass m_Class;
+			ShaderVariableType m_Type;
 			int m_Rows;
 			int m_Columns;
 			int m_Elements;
@@ -44,14 +42,14 @@ namespace SlimDX
 			ShaderTypeDescription( const D3D11_SHADER_TYPE_DESC& native );
 			
 		public:
-			property D3DCompiler::ShaderVariableClass Class
+			property ShaderVariableClass Class
 			{
-				D3DCompiler::ShaderVariableClass get();
+				ShaderVariableClass get();
 			}
 			
-			property D3DCompiler::ShaderVariableType Type
+			property ShaderVariableType Type
 			{
-				D3DCompiler::ShaderVariableType get();
+				ShaderVariableType get();
 			}
 			
 			property int Rows

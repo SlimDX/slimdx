@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,57 +19,62 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#include <d3d11.h>
-#include <vcclr.h>
+#include "D3DCompilerException.h"
 
-#include "Direct3D11Exception.h"
-
-#include "ShaderReflectionVariable11.h"
-#include "ShaderVariableDescription11.h"
-#include "ShaderReflectionType11.h"
+#include "ConstantBufferDC.h"
+#include "ConstantBufferDescriptionDC.h"
+#include "ShaderReflectionVariableDC.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D11
+namespace D3DCompiler
 { 
-	ShaderReflectionVariable::ShaderReflectionVariable( ID3D11ShaderReflectionVariable* pointer )
+	ConstantBuffer::ConstantBuffer( ID3D11ShaderReflectionConstantBuffer* pointer )
 	{
 		if( pointer == 0 )
 			throw gcnew ArgumentNullException( "pointer" );
 		m_Pointer = pointer;
 	}
 	
-	ShaderReflectionVariable::ShaderReflectionVariable( System::IntPtr pointer )
+	ConstantBuffer::ConstantBuffer( System::IntPtr pointer )
 	{
 		if( pointer == IntPtr::Zero )
 			throw gcnew ArgumentNullException( "pointer" );
-		m_Pointer = reinterpret_cast<ID3D11ShaderReflectionVariable*>( pointer.ToPointer() );
+		m_Pointer = reinterpret_cast<ID3D11ShaderReflectionConstantBuffer*>( pointer.ToPointer() );
 	}
 
-	ShaderVariableDescription ShaderReflectionVariable::Description::get()
+	ConstantBufferDescription ConstantBuffer::Description::get()
 	{
-		D3D11_SHADER_VARIABLE_DESC nativeDescription;
+		D3D11_SHADER_BUFFER_DESC nativeDescription;
 		HRESULT hr = m_Pointer->GetDesc( &nativeDescription );
-		RECORD_D3D11( hr );
+		RECORD_D3DC( hr );
 
-		return ShaderVariableDescription( nativeDescription );
+		return ConstantBufferDescription( nativeDescription );
 	}
 
-	int ShaderReflectionVariable::GetInterfaceSlot( int arrayIndex )
+	ShaderReflectionVariable^ ConstantBuffer::GetVariable( int index )
 	{
-		return m_Pointer->GetInterfaceSlot( arrayIndex );
-	}
-
-	ShaderReflectionType^ ShaderReflectionVariable::GetVariableType()
-	{
-		ID3D11ShaderReflectionType* type = m_Pointer->GetType();
-		if( type == 0 )
+		ID3D11ShaderReflectionVariable* variable = m_Pointer->GetVariableByIndex( index );
+		if( variable == 0 )
 			return nullptr;
 
-		return gcnew ShaderReflectionType( type );
+		return gcnew ShaderReflectionVariable( variable );
+	}
+	
+	ShaderReflectionVariable^ ConstantBuffer::GetVariable( String^ name )
+	{
+		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
+		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
+
+		ID3D11ShaderReflectionVariable* variable = m_Pointer->GetVariableByName( reinterpret_cast<LPCSTR>( pinnedName ) );
+		if( variable == 0 )
+			return nullptr;
+
+		return gcnew ShaderReflectionVariable( variable );
 	}
 }
 }

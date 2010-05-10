@@ -21,13 +21,11 @@
 */
 #pragma once
 
-#include "Enums11.h"
-
-#include "../d3dcompiler/EnumsDC.h"
+#include "EnumsDC.h"
 
 namespace SlimDX
 {
-	namespace Direct3D11
+	namespace D3DCompiler
 	{	
 		public value class ShaderVariableDescription : System::IEquatable<ShaderVariableDescription>
 		{
@@ -35,7 +33,7 @@ namespace SlimDX
 			System::String^ m_Name;
 			int m_StartOffset;
 			int m_Size;
-			D3DCompiler::ShaderVariableFlags m_Flags;
+			ShaderVariableFlags m_Flags;
 			System::IntPtr defaultValue;
 		
 		internal:
@@ -57,9 +55,9 @@ namespace SlimDX
 				int get();
 			}
 
-			property D3DCompiler::ShaderVariableFlags Flags
+			property ShaderVariableFlags Flags
 			{
-				D3DCompiler::ShaderVariableFlags get();
+				ShaderVariableFlags get();
 			}
 
 			property System::IntPtr DefaultValue

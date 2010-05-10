@@ -21,28 +21,33 @@
 */
 #pragma once
 
-#include "Enums11.h"
-
-#include "../d3dcompiler/EnumsDC.h"
+#include "../ComObject.h"
 
 namespace SlimDX
 {
-	namespace Direct3D11
+	namespace D3DCompiler
 	{
-		public value class InputBindingDescription
+		value class ShaderVariableDescription;
+		ref class ShaderReflectionType;
+
+		public ref class ShaderReflectionVariable
 		{
+		private:
+			ID3D11ShaderReflectionVariable* m_Pointer;
+			
 		internal:
-			InputBindingDescription( const D3D11_SHADER_INPUT_BIND_DESC &desc );
+			ShaderReflectionVariable( ID3D11ShaderReflectionVariable* pointer );
 
 		public:
-			property System::String^ Name;
-			property D3DCompiler::ShaderInputType Type;
-			property int BindPoint;
-			property int BindCount;
-			property D3DCompiler::ShaderInputFlags Flags;
-			property ResourceReturnType ReturnType;
-			property ShaderResourceViewDimension Dimension;
-			property int SampleCount;
+			ShaderReflectionVariable( System::IntPtr pointer );
+			
+			property ShaderVariableDescription Description
+			{
+				ShaderVariableDescription get();
+			}
+
+			int GetInterfaceSlot( int arrayIndex );
+			ShaderReflectionType^ GetVariableType();
 		};
 	}
 }

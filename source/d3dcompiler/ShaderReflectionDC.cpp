@@ -21,23 +21,23 @@
 */
 #include "stdafx.h"
 
-#include "Direct3D11Exception.h"
+#include "D3DCompilerException.h"
 
-#include "ShaderReflection11.h"
-#include "../d3dcompiler/ShaderBytecodeDC.h"
+#include "ShaderReflectionDC.h"
+#include "ShaderBytecodeDC.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D11
+namespace D3DCompiler
 {
-	ShaderReflection::ShaderReflection( D3DCompiler::ShaderBytecode^ byteCode )
+	ShaderReflection::ShaderReflection( ShaderBytecode^ byteCode )
 	{
 		ID3D11ShaderReflection* result = 0;
 		HRESULT hr = D3DReflect( byteCode->InternalPointer->GetBufferPointer(), byteCode->InternalPointer->GetBufferSize(), IID_ID3D11ShaderReflection, reinterpret_cast<void**>( &result ) );
-		if( RECORD_D3D11( hr ).IsFailure )
-			throw gcnew Direct3D11Exception( Result::Last );
+		if( RECORD_D3DC( hr ).IsFailure )
+			throw gcnew D3DCompilerException( Result::Last );
 
 		Construct( result );
 
@@ -64,7 +64,7 @@ namespace Direct3D11
 		D3D11_SIGNATURE_PARAMETER_DESC desc;
 
 		HRESULT hr = InternalPointer->GetInputParameterDesc( index, &desc );
-		RECORD_D3D11( hr );
+		RECORD_D3DC( hr );
 
 		return ShaderParameterDescription( desc );
 	}
@@ -74,7 +74,7 @@ namespace Direct3D11
 		D3D11_SIGNATURE_PARAMETER_DESC desc;
 
 		HRESULT hr = InternalPointer->GetOutputParameterDesc( index, &desc );
-		RECORD_D3D11( hr );
+		RECORD_D3DC( hr );
 
 		return ShaderParameterDescription( desc );
 	}
@@ -84,7 +84,7 @@ namespace Direct3D11
 		D3D11_SIGNATURE_PARAMETER_DESC desc;
 
 		HRESULT hr = InternalPointer->GetPatchConstantParameterDesc( index, &desc );
-		RECORD_D3D11( hr );
+		RECORD_D3DC( hr );
 
 		return ShaderParameterDescription( desc );
 	}
@@ -94,7 +94,7 @@ namespace Direct3D11
 		D3D11_SHADER_INPUT_BIND_DESC desc;
 
 		HRESULT hr = InternalPointer->GetResourceBindingDesc( index, &desc );
-		RECORD_D3D11( hr );
+		RECORD_D3DC( hr );
 
 		return InputBindingDescription( desc );
 	}
@@ -106,17 +106,17 @@ namespace Direct3D11
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
 		HRESULT hr = InternalPointer->GetResourceBindingDescByName( reinterpret_cast<LPCSTR>(pinnedName), &desc );
-		RECORD_D3D11( hr );
+		RECORD_D3DC( hr );
 
 		return InputBindingDescription( desc );
 	}
 
-	FeatureLevel ShaderReflection::MinimumFeatureLevel::get()
+	Direct3D11::FeatureLevel ShaderReflection::MinimumFeatureLevel::get()
 	{
 		D3D_FEATURE_LEVEL fl;
 		InternalPointer->GetMinFeatureLevel( &fl );
 
-		return static_cast<FeatureLevel>( fl );
+		return static_cast<Direct3D11::FeatureLevel>( fl );
 	}
 
 	InputPrimitive ShaderReflection::GeometryShaderInputPrimitive::get()

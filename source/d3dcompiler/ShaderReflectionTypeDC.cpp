@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,20 +19,18 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#include <d3d11.h>
-#include <vcclr.h>
+#include "D3DCompilerException.h"
 
-#include "Direct3D11Exception.h"
-
-#include "ShaderReflectionType11.h"
-#include "ShaderTypeDescription11.h"
+#include "ShaderReflectionTypeDC.h"
+#include "ShaderTypeDescriptionDC.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D11
+namespace D3DCompiler
 { 
 	ShaderReflectionType::ShaderReflectionType( ID3D11ShaderReflectionType* pointer )
 	{
@@ -68,7 +65,7 @@ namespace Direct3D11
 	{
 		D3D11_SHADER_TYPE_DESC nativeDescription;
 		HRESULT hr = m_Pointer->GetDesc( &nativeDescription );
-		RECORD_D3D11( hr );
+		RECORD_D3DC( hr );
 
 		return ShaderTypeDescription( nativeDescription );
 	}
