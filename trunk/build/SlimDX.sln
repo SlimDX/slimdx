@@ -57,6 +57,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MouseRI", "..\samples\RawInput\MouseRI\MouseRI.csproj", "{43347176-9ED3-4F80-9C12-357014B19F6A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{BACFBDAA-6AA1-491C-AF03-2045AA09402D}"
+	ProjectSection(SolutionItems) = preProject
+		..\external\D3DCSX.h = ..\external\D3DCSX.h
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Effects11_2008", "..\external\Effects11\Effects11.vcproj", "{DF460EAB-570D-4B50-9089-2E2FC801BF38}"
 EndProject

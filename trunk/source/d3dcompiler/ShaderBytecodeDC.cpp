@@ -28,8 +28,10 @@
 #include "ShaderBytecodeDC.h"
 
 using namespace System;
+using namespace System::IO;
 using namespace System::Text;
 using namespace System::Runtime::InteropServices;
+using namespace Microsoft::Win32::SafeHandles;
 
 namespace SlimDX
 {
@@ -53,11 +55,11 @@ namespace D3DCompiler
 			throw gcnew ArgumentNullException( "data" );
 
 		ID3D10Blob *blob;
-		HRESULT hr = D3D10CreateBlob( data->Length, &blob );
+		HRESULT hr = D3D10CreateBlob( static_cast<SIZE_T>(data->Length), &blob );
 		if( RECORD_D3DC( hr ).IsFailure )
 			throw gcnew D3DCompilerException( Result::Last );
 
-		memcpy( blob->GetBufferPointer(), data->RawPointer, data->Length );
+		memcpy( blob->GetBufferPointer(), data->RawPointer, static_cast<size_t>(data->Length) );
 
 		Construct( blob );
 	}
@@ -65,34 +67,37 @@ namespace D3DCompiler
 	ShaderBytecode^ ShaderBytecode::Compile( String^ shaderSource, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags )
 	{
 		String^ compilationErrors;
-		return Compile( Encoding::ASCII->GetBytes( shaderSource ), nullptr, profile, shaderFlags, effectFlags, nullptr, nullptr, compilationErrors );
+		return Compile( shaderSource, nullptr, profile, shaderFlags, effectFlags, nullptr, nullptr, compilationErrors );
 	}
 
 	ShaderBytecode^ ShaderBytecode::Compile( String^ shaderSource, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include )
 	{
 		String^ compilationErrors;
-		return Compile( Encoding::ASCII->GetBytes( shaderSource ), nullptr, profile, shaderFlags, effectFlags, defines, include, compilationErrors );
+		return Compile( shaderSource, nullptr, profile, shaderFlags, effectFlags, defines, include, compilationErrors );
 	}
 	
 	ShaderBytecode^ ShaderBytecode::Compile( String^ shaderSource, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] String^ %compilationErrors )
 	{
-		return Compile( Encoding::ASCII->GetBytes( shaderSource ), nullptr, profile, shaderFlags, effectFlags, defines, include, compilationErrors );
+		return Compile( shaderSource, nullptr, profile, shaderFlags, effectFlags, defines, include, compilationErrors );
 	}
 
 	ShaderBytecode^ ShaderBytecode::Compile( String^ shaderSource, String^ entryPoint, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags )
 	{
 		String^ compilationErrors;
-		return Compile( Encoding::ASCII->GetBytes( shaderSource ), entryPoint, profile, shaderFlags, effectFlags, nullptr, nullptr, compilationErrors );
+		return Compile( shaderSource, entryPoint, profile, shaderFlags, effectFlags, nullptr, nullptr, compilationErrors );
 	}
 
 	ShaderBytecode^ ShaderBytecode::Compile( String^ shaderSource, String^ entryPoint, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include )
 	{
 		String^ compilationErrors;
-		return Compile( Encoding::ASCII->GetBytes( shaderSource ), entryPoint, profile, shaderFlags, effectFlags, defines, include, compilationErrors );
+		return Compile( shaderSource, entryPoint, profile, shaderFlags, effectFlags, defines, include, compilationErrors );
 	}
 	
 	ShaderBytecode^ ShaderBytecode::Compile( String^ shaderSource, String^ entryPoint, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] String^ %compilationErrors )
 	{
+		if (String::IsNullOrEmpty(shaderSource))
+			throw gcnew ArgumentNullException("shaderSource");
+
 		return Compile( Encoding::ASCII->GetBytes( shaderSource ), entryPoint, profile, shaderFlags, effectFlags, defines, include, compilationErrors );
 	}
 
@@ -130,6 +135,13 @@ namespace D3DCompiler
 		ID3D10Blob *code;
 		ID3D10Blob *errors;
 
+		if (shaderSource == nullptr)
+			throw gcnew ArgumentNullException("shaderSource");
+		if (profile == nullptr)
+			throw gcnew ArgumentNullException("profile");
+		if (shaderSource->Length == 0)
+			throw gcnew ArgumentException("Empty shader source provided.", "shaderSource");
+
 		pin_ptr<Byte> pinnedSource = &shaderSource[0];
 		array<Byte>^ functionBytes = entryPoint == nullptr ? nullptr : System::Text::ASCIIEncoding::ASCII->GetBytes( entryPoint );
 		pin_ptr<Byte> pinnedFunction = functionBytes == nullptr ? nullptr : &functionBytes[0];
@@ -145,9 +157,8 @@ namespace D3DCompiler
 		stack_array<D3D10_SHADER_MACRO> macros = ShaderMacro::Marshal( defines, handles );
 		D3D10_SHADER_MACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
 		
-		LPCSTR function = pinnedFunction == nullptr ? 0 : reinterpret_cast<LPCSTR>( pinnedFunction );
 		HRESULT hr = D3DCompile( reinterpret_cast<LPCSTR>( pinnedSource ), shaderSource->Length, NULL, macrosPtr, includePtr,
-			function, reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), &code, &errors );
+			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ), static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), &code, &errors );
 
 		ShaderMacro::Unmarshal( handles );
 
@@ -190,34 +201,15 @@ namespace D3DCompiler
 
 	ShaderBytecode^ ShaderBytecode::CompileFromFile( String^ fileName, String^ entryPoint, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] String^ %compilationErrors )
 	{
-		ID3D10Blob *code;
-		ID3D10Blob *errors;
+		if (fileName == nullptr)
+			throw gcnew ArgumentNullException("fileName");
+		if (profile == nullptr)
+			throw gcnew ArgumentNullException("profile");
 
-		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
-		array<Byte>^ functionBytes = entryPoint == nullptr ? nullptr : System::Text::ASCIIEncoding::ASCII->GetBytes( entryPoint );
-		pin_ptr<Byte> pinnedFunction = functionBytes == nullptr ? nullptr : &functionBytes[0];
-		array<Byte>^ profileBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( profile );
-		pin_ptr<Byte> pinnedProfile = &profileBytes[0];
+		if (!File::Exists(fileName))
+			throw gcnew FileNotFoundException("Could not open the shader or effect file.", fileName);
 
-		IncludeShim includeShim = IncludeShim( include );
-		ID3D10Include* includePtr = NULL;
-		if( include != nullptr )
-			includePtr = &includeShim;
-
-		array<GCHandle>^ handles;
-		stack_array<D3D10_SHADER_MACRO> macros = ShaderMacro::Marshal( defines, handles );
-		D3D10_SHADER_MACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
-
-		HRESULT hr = D3DX11CompileFromFile( reinterpret_cast<LPCWSTR>( pinnedName ), macrosPtr, includePtr,
-			reinterpret_cast<LPCSTR>( pinnedFunction ), reinterpret_cast<LPCSTR>( pinnedProfile ),
-			static_cast<UINT>( shaderFlags ), static_cast<UINT>( effectFlags ), NULL, &code, &errors, NULL );
-
-		compilationErrors = Utilities::BlobToString( errors );
-		Exception^ e = CompilationException::Check<D3DCompilerException^>(hr, compilationErrors);
-		if (e != nullptr)
-			throw e;
-
-		return ShaderBytecode::FromPointer( code );
+		return Compile(File::ReadAllText(fileName), entryPoint, profile, shaderFlags, effectFlags, defines, include, compilationErrors);
 	}
 
 	DataStream^ ShaderBytecode::Data::get()

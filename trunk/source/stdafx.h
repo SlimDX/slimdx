@@ -39,7 +39,8 @@
 #include <d3d11shader.h>
 #include <d3dx11effect.h>
 #include <d3dx11.h>
-#include <d3dcsx.h>
+//#include <d3dcsx.h>	// current DXSDK header is broken
+#include "d3dcsx.h"
 #include <d2d1.h>
 #include <d2d1helper.h>
 #include <dwrite.h>
