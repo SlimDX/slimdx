@@ -29,6 +29,10 @@ namespace SlimDX
 {
 	namespace D3DCompiler
 	{
+		/// <summary>
+		/// Defines a shader macro.
+		/// </summary>
+		/// <unmanaged>D3D10_SHADER_MACRO</unmanaged>
 		public value class ShaderMacro : System::IEquatable<ShaderMacro>
 		{
 		internal:
@@ -36,15 +40,72 @@ namespace SlimDX
 			static void Unmarshal( array<System::Runtime::InteropServices::GCHandle>^ handles );
 			
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="ShaderMacro"/> struct.
+			/// </summary>
+			/// <param name="name">The macro name.</param>
+			ShaderMacro( System::String^ name );
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="ShaderMacro"/> struct.
+			/// </summary>
+			/// <param name="name">The macro name.</param>
+			/// <param name="value">The macro definition value.</param>
+			ShaderMacro( System::String^ name, System::String^ value );
+
+			/// <summary>
+			/// The macro name.
+			/// </summary>
 			property System::String^ Name;
+
+			/// <summary>
+			/// The macro definition value.
+			/// </summary>
 			property System::String^ Value;
 
+			/// <summary>
+			/// Tests for equality between two objects.
+			/// </summary>
+			/// <param name="left">The first value to compare.</param>
+			/// <param name="right">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 			static bool operator == ( ShaderMacro left, ShaderMacro right );
+
+			/// <summary>
+			/// Tests for inequality between two objects.
+			/// </summary>
+			/// <param name="left">The first value to compare.</param>
+			/// <param name="right">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 			static bool operator != ( ShaderMacro left, ShaderMacro right );
 
+			/// <summary>
+			/// Returns the hash code for this instance.
+			/// </summary>
+			/// <returns>A 32-bit signed integer hash code.</returns>
 			virtual int GetHashCode() override;
+
+			/// <summary>
+			/// Returns a value that indicates whether the current instance is equal to a specified object. 
+			/// </summary>
+			/// <param name="obj">Object to make the comparison with.</param>
+			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
 			virtual bool Equals( System::Object^ obj ) override;
+
+			/// <summary>
+			/// Returns a value that indicates whether the current instance is equal to the specified object. 
+			/// </summary>
+			/// <param name="other">Object to make the comparison with.</param>
+			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
 			virtual bool Equals( ShaderMacro other );
+
+			/// <summary>
+			/// Determines whether the specified object instances are considered equal. 
+			/// </summary>
+			/// <param name="value1">The first value to compare.</param>
+			/// <param name="value2">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="value1"/> is the same instance as <paramref name="value2"/> or 
+			/// if both are <c>null</c> references or if <c>value1.Equals(value2)</c> returns <c>true</c>; otherwise, <c>false</c>.</returns>
 			static bool Equals( ShaderMacro% value1, ShaderMacro% value2 );
 		};
 	}

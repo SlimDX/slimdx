@@ -69,6 +69,18 @@ namespace D3DCompiler
 		}
 	}
 
+	ShaderMacro::ShaderMacro( String^ name )
+	{
+		Name = name;
+		Value = "";
+	}
+
+	ShaderMacro::ShaderMacro( String^ name, String^ value )
+	{
+		Name = name;
+		Value = value;
+	}
+
 	bool ShaderMacro::operator == ( ShaderMacro left, ShaderMacro right )
 	{
 		return ShaderMacro::Equals( left, right );
