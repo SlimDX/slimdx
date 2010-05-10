@@ -122,30 +122,114 @@ namespace SlimDX
 			Float32 = D3D10_REGISTER_COMPONENT_FLOAT32
 		};
 
-		/// <summary></summary>
+		/// <summary>Provides various shader compilation flags.</summary>
 		/// <unmanaged>D3D10_SHADER</unmanaged>
 		[System::Flags]
 		public enum class ShaderFlags : System::Int32
 		{
+			/// <summary>
+			/// No specific compilation options.
+			/// </summary>
 			None = 0,
+
+			/// <summary>
+			/// Insert debug file/line/type/symbol information into the resulting shader.
+			/// </summary>
 			Debug = D3D10_SHADER_DEBUG,
+
+			/// <summary>
+			/// Do not validate the generated code against known capabilities and constraints. Only use this with shaders that have been successfully
+			/// compiled in the past. Shaders are always validated by DirectX before they are set to the device.
+			/// </summary>
 			SkipValidation = D3D10_SHADER_SKIP_VALIDATION,
+
+			/// <summary>
+			/// Skip optimization during code generation; generally recommended for debug only.
+			/// </summary>
 			SkipOptimization = D3D10_SHADER_SKIP_OPTIMIZATION,
+
+			/// <summary>
+			/// Unless explicitly specified, matrices will be packed in row-major order on input and output from the shader.
+			/// </summary>
 			PackMatrixRowMajor = D3D10_SHADER_PACK_MATRIX_ROW_MAJOR,
+			
+			/// <summary>
+			/// Unless explicitly specified, matrices will be packed in column-major order on input and output from the shader. This is generally
+			/// more efficient, since it allows vector-matrix multiplication to be performed using a series of dot-products.
+			/// </summary>
 			PackMatrixColumnMajor = D3D10_SHADER_PACK_MATRIX_COLUMN_MAJOR,
+			
+			/// <summary>
+			/// Force all computations to be done with partial precision; this may run faster on some hardware.
+			/// </summary>
 			PartialPrecision = D3D10_SHADER_PARTIAL_PRECISION,
+
+			/// <summary>
+			/// Compile a vertex shader for the next highest shader profile. This option turns debugging on (and optimizations off).
+			/// </summary>
 			ForceSoftwareVertexShader = D3D10_SHADER_FORCE_VS_SOFTWARE_NO_OPT,
+			
+			/// <summary>
+			/// Compile a pixel shader for the next highest shader profile. This option turns debugging on (and optimizations off).
+			/// </summary>
 			ForceSoftwarePixelShader = D3D10_SHADER_FORCE_PS_SOFTWARE_NO_OPT,
+			
+			/// <summary>
+			/// Disables Preshaders. Using this flag will cause the compiler to not pull out static expression for evaluation.
+			/// </summary>
 			NoPreshader = D3D10_SHADER_NO_PRESHADER,
+			
+			/// <summary>
+			/// Tells the compiler to not allow flow-control (when possible).
+			/// </summary>
 			AvoidFlowControl = D3D10_SHADER_AVOID_FLOW_CONTROL,
+			
+			/// <summary>
+			/// Tells the compiler to use flow-control (when possible).
+			/// </summary>
 			PreferFlowControl = D3D10_SHADER_PREFER_FLOW_CONTROL,
+			
+			/// <summary>
+			/// By default, the HLSL compiler disables strictness on deprecated syntax. Specifying this flag enables strictness which may not allow for legacy syntax.
+			/// </summary>
 			EnableStrictness = D3D10_SHADER_ENABLE_STRICTNESS,
+			
+			/// <summary>
+			/// This enables older shaders to compile to 4_0 targets.
+			/// </summary>
 			EnableBackwardsCompatibility = D3D10_SHADER_ENABLE_BACKWARDS_COMPATIBILITY,
+			
+			/// <summary>
+			/// Enables IEEE floating point strictness.
+			/// </summary>
 			EnableIEEEStrictness = D3D10_SHADER_IEEE_STRICTNESS,
+			
+			/// <summary>
+			/// Lowest optimization level. May produce slower code but will do so more quickly. This may be useful in a highly iterative shader development cycle.
+			/// </summary>
 			OptimizationLevel0 = D3D10_SHADER_OPTIMIZATION_LEVEL0,
+			
+			/// <summary>
+			/// Second lowest optimization level.
+			/// </summary>
 			OptimizationLevel1 = D3D10_SHADER_OPTIMIZATION_LEVEL1,
+			
+			/// <summary>
+			/// Second highest optimization level.
+			/// </summary>
 			OptimizationLevel2 = D3D10_SHADER_OPTIMIZATION_LEVEL2,
-			OptimizationLevel3 = D3D10_SHADER_OPTIMIZATION_LEVEL3
+			
+			/// <summary>
+			/// Highest optimization level. Will produce best possible code but may take significantly longer to do so. This will be useful for
+			/// final builds of an application where performance is the most important factor.
+			/// </summary>
+			OptimizationLevel3 = D3D10_SHADER_OPTIMIZATION_LEVEL3,
+
+			/// <summary>
+			/// Inform the HLSL compiler to treat all warnings as errors when compiling the shader code. For new shader code, you should use this
+			/// option so you can resolve all warnings and ensure the fewest possible hard-to-find code defects.
+			/// </summary>
+			WarningsAreErrors = D3D10_SHADER_WARNINGS_ARE_ERRORS
 		};
 
 		[System::Flags]

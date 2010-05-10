@@ -32,6 +32,9 @@ namespace SlimDX
 	generic<typename T>
 	CompilationException^ CompilationException::Check(HRESULT hr, String^ errors)
 	{
+		if (!Configuration::ThrowOnShaderCompileError)
+			return nullptr;
+
 		try
 		{
 			Result::Record<T>(hr, "CompilationErrors", errors);

@@ -1,8 +1,13 @@
 General
 	* Added a .NET 4.0 build via Visual Studio 2010.
+	* Added an option to disable throwing exceptions on compilation errors. See Configuration.ThrowOnShaderCompileError.
 	
 D3DCompiler
 	* Refactored shared shader and effect flags and interfaces into a new namespace.
+	* Documented everything in the namespace.
+	* Added overloads to the compiler methods to avoid having to pass a shader entry point.
+	* Changed the ShaderBytecode.Compile methods to use D3DCompiler instead of D3DX.
+	* Added a missing enum from ShaderFlags.
 
 Direct3D 9
 	* Changed the shared handle parameter for texture creation to be a ref parameter.

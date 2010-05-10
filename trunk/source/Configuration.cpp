@@ -28,6 +28,7 @@ namespace SlimDX
 	static Configuration::Configuration()
 	{
 		ThrowOnError = true;
+		ThrowOnShaderCompileError = true;
 
 		m_Watches = gcnew System::Collections::Generic::Dictionary<Result,ResultWatchFlags>();
 		Timer = System::Diagnostics::Stopwatch::StartNew();

@@ -30,6 +30,10 @@ namespace SlimDX
 {
 	namespace D3DCompiler
 	{
+		/// <summary>
+		/// Represents the compiled bytecode of a shader or effect.
+		/// </summary>
+		/// <unmanaged>ID3D10Blob</unmanaged>
 		public ref class ShaderBytecode : ComObject
 		{
 			COMOBJECT(ID3D10Blob, ShaderBytecode);
@@ -38,20 +42,234 @@ namespace SlimDX
 			ShaderBytecode( const BYTE* data, UINT length );
 
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="ShaderBytecode"/> class.
+			/// </summary>
+			/// <param name="data">A <see cref="DataStream"/> containing the compiled bytecode.</param>
 			ShaderBytecode( DataStream^ data );
 
+			/// <summary>
+			/// Compiles the provided shader or effect source.
+			/// </summary>
+			/// <param name="shaderSource">A string containing the source of the shader or effect to compile.</param>
+			/// <param name="profile">The shader target or set of shader features to compile against.</param>
+			/// <param name="shaderFlags">Shader compilation options.</param>
+			/// <param name="effectFlags">Effect compilation options.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
+			static ShaderBytecode^ Compile( System::String^ shaderSource, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
+			
+			/// <summary>
+			/// Compiles the provided shader or effect source.
+			/// </summary>
+			/// <param name="shaderSource">A string containing the source of the shader or effect to compile.</param>
+			/// <param name="profile">The shader target or set of shader features to compile against.</param>
+			/// <param name="shaderFlags">Shader compilation options.</param>
+			/// <param name="effectFlags">Effect compilation options.</param>
+			/// <param name="defines">A set of macros to define during compilation.</param>
+			/// <param name="include">An interface for handling include files.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
+			static ShaderBytecode^ Compile( System::String^ shaderSource, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include );
+
+			/// <summary>
+			/// Compiles the provided shader or effect source.
+			/// </summary>
+			/// <param name="shaderSource">A string containing the source of the shader or effect to compile.</param>
+			/// <param name="profile">The shader target or set of shader features to compile against.</param>
+			/// <param name="shaderFlags">Shader compilation options.</param>
+			/// <param name="effectFlags">Effect compilation options.</param>
+			/// <param name="defines">A set of macros to define during compilation.</param>
+			/// <param name="include">An interface for handling include files.</param>
+			/// <param name="compilationErrors">When the method completes, contains a string of compilation errors, or an empty string if compilation succeeded.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
+			static ShaderBytecode^ Compile( System::String^ shaderSource, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
+
+			/// <summary>
+			/// Compiles the provided shader or effect source.
+			/// </summary>
+			/// <param name="shaderSource">A string containing the source of the shader or effect to compile.</param>
+			/// <param name="entryPoint">The name of the shader entry-point function, or <c>null</c> for an effect file.</param>
+			/// <param name="profile">The shader target or set of shader features to compile against.</param>
+			/// <param name="shaderFlags">Shader compilation options.</param>
+			/// <param name="effectFlags">Effect compilation options.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
 			static ShaderBytecode^ Compile( System::String^ shaderSource, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
+			
+			/// <summary>
+			/// Compiles the provided shader or effect source.
+			/// </summary>
+			/// <param name="shaderSource">A string containing the source of the shader or effect to compile.</param>
+			/// <param name="entryPoint">The name of the shader entry-point function, or <c>null</c> for an effect file.</param>
+			/// <param name="profile">The shader target or set of shader features to compile against.</param>
+			/// <param name="shaderFlags">Shader compilation options.</param>
+			/// <param name="effectFlags">Effect compilation options.</param>
+			/// <param name="defines">A set of macros to define during compilation.</param>
+			/// <param name="include">An interface for handling include files.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
 			static ShaderBytecode^ Compile( System::String^ shaderSource, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include );
+
+			/// <summary>
+			/// Compiles the provided shader or effect source.
+			/// </summary>
+			/// <param name="shaderSource">A string containing the source of the shader or effect to compile.</param>
+			/// <param name="entryPoint">The name of the shader entry-point function, or <c>null</c> for an effect file.</param>
+			/// <param name="profile">The shader target or set of shader features to compile against.</param>
+			/// <param name="shaderFlags">Shader compilation options.</param>
+			/// <param name="effectFlags">Effect compilation options.</param>
+			/// <param name="defines">A set of macros to define during compilation.</param>
+			/// <param name="include">An interface for handling include files.</param>
+			/// <param name="compilationErrors">When the method completes, contains a string of compilation errors, or an empty string if compilation succeeded.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
 			static ShaderBytecode^ Compile( System::String^ shaderSource, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
 
+			/// <summary>
+			/// Compiles the provided shader or effect source.
+			/// </summary>
+			/// <param name="shaderSource">An array of bytes containing the raw source of the shader or effect to compile.</param>
+			/// <param name="profile">The shader target or set of shader features to compile against.</param>
+			/// <param name="shaderFlags">Shader compilation options.</param>
+			/// <param name="effectFlags">Effect compilation options.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
+			static ShaderBytecode^ Compile( array<System::Byte>^ shaderSource, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
+			
+			/// <summary>
+			/// Compiles the provided shader or effect source.
+			/// </summary>
+			/// <param name="shaderSource">An array of bytes containing the raw source of the shader or effect to compile.</param>
+			/// <param name="profile">The shader target or set of shader features to compile against.</param>
+			/// <param name="shaderFlags">Shader compilation options.</param>
+			/// <param name="effectFlags">Effect compilation options.</param>
+			/// <param name="defines">A set of macros to define during compilation.</param>
+			/// <param name="include">An interface for handling include files.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
+			static ShaderBytecode^ Compile( array<System::Byte>^ shaderSource, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include );
+			
+			/// <summary>
+			/// Compiles the provided shader or effect source.
+			/// </summary>
+			/// <param name="shaderSource">An array of bytes containing the raw source of the shader or effect to compile.</param>
+			/// <param name="profile">The shader target or set of shader features to compile against.</param>
+			/// <param name="shaderFlags">Shader compilation options.</param>
+			/// <param name="effectFlags">Effect compilation options.</param>
+			/// <param name="defines">A set of macros to define during compilation.</param>
+			/// <param name="include">An interface for handling include files.</param>
+			/// <param name="compilationErrors">When the method completes, contains a string of compilation errors, or an empty string if compilation succeeded.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
+			static ShaderBytecode^ Compile( array<System::Byte>^ shaderSource, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
+
+			/// <summary>
+			/// Compiles the provided shader or effect source.
+			/// </summary>
+			/// <param name="shaderSource">An array of bytes containing the raw source of the shader or effect to compile.</param>
+			/// <param name="entryPoint">The name of the shader entry-point function, or <c>null</c> for an effect file.</param>
+			/// <param name="profile">The shader target or set of shader features to compile against.</param>
+			/// <param name="shaderFlags">Shader compilation options.</param>
+			/// <param name="effectFlags">Effect compilation options.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
 			static ShaderBytecode^ Compile( array<System::Byte>^ shaderSource, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
+			
+			/// <summary>
+			/// Compiles the provided shader or effect source.
+			/// </summary>
+			/// <param name="shaderSource">An array of bytes containing the raw source of the shader or effect to compile.</param>
+			/// <param name="entryPoint">The name of the shader entry-point function, or <c>null</c> for an effect file.</param>
+			/// <param name="profile">The shader target or set of shader features to compile against.</param>
+			/// <param name="shaderFlags">Shader compilation options.</param>
+			/// <param name="effectFlags">Effect compilation options.</param>
+			/// <param name="defines">A set of macros to define during compilation.</param>
+			/// <param name="include">An interface for handling include files.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
 			static ShaderBytecode^ Compile( array<System::Byte>^ shaderSource, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include );
+			
+			/// <summary>
+			/// Compiles the provided shader or effect source.
+			/// </summary>
+			/// <param name="shaderSource">An array of bytes containing the raw source of the shader or effect to compile.</param>
+			/// <param name="entryPoint">The name of the shader entry-point function, or <c>null</c> for an effect file.</param>
+			/// <param name="profile">The shader target or set of shader features to compile against.</param>
+			/// <param name="shaderFlags">Shader compilation options.</param>
+			/// <param name="effectFlags">Effect compilation options.</param>
+			/// <param name="defines">A set of macros to define during compilation.</param>
+			/// <param name="include">An interface for handling include files.</param>
+			/// <param name="compilationErrors">When the method completes, contains a string of compilation errors, or an empty string if compilation succeeded.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
 			static ShaderBytecode^ Compile( array<System::Byte>^ shaderSource, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
 
+			/// <summary>
+			/// Compiles the a shader or effect from a file on disk.
+			/// </summary>
+			/// <param name="fileName">The name of the source file to compile.</param>
+			/// <param name="profile">The shader target or set of shader features to compile against.</param>
+			/// <param name="shaderFlags">Shader compilation options.</param>
+			/// <param name="effectFlags">Effect compilation options.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
+			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
+			
+			/// <summary>
+			/// Compiles the a shader or effect from a file on disk.
+			/// </summary>
+			/// <param name="fileName">The name of the source file to compile.</param>
+			/// <param name="profile">The shader target or set of shader features to compile against.</param>
+			/// <param name="shaderFlags">Shader compilation options.</param>
+			/// <param name="effectFlags">Effect compilation options.</param>
+			/// <param name="defines">A set of macros to define during compilation.</param>
+			/// <param name="include">An interface for handling include files.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
+			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include );
+			
+			/// <summary>
+			/// Compiles the a shader or effect from a file on disk.
+			/// </summary>
+			/// <param name="fileName">The name of the source file to compile.</param>
+			/// <param name="profile">The shader target or set of shader features to compile against.</param>
+			/// <param name="shaderFlags">Shader compilation options.</param>
+			/// <param name="effectFlags">Effect compilation options.</param>
+			/// <param name="defines">A set of macros to define during compilation.</param>
+			/// <param name="include">An interface for handling include files.</param>
+			/// <param name="compilationErrors">When the method completes, contains a string of compilation errors, or an empty string if compilation succeeded.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
+			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
+
+			/// <summary>
+			/// Compiles the a shader or effect from a file on disk.
+			/// </summary>
+			/// <param name="fileName">The name of the source file to compile.</param>
+			/// <param name="entryPoint">The name of the shader entry-point function, or <c>null</c> for an effect file.</param>
+			/// <param name="profile">The shader target or set of shader features to compile against.</param>
+			/// <param name="shaderFlags">Shader compilation options.</param>
+			/// <param name="effectFlags">Effect compilation options.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
 			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
+			
+			/// <summary>
+			/// Compiles the a shader or effect from a file on disk.
+			/// </summary>
+			/// <param name="fileName">The name of the source file to compile.</param>
+			/// <param name="entryPoint">The name of the shader entry-point function, or <c>null</c> for an effect file.</param>
+			/// <param name="profile">The shader target or set of shader features to compile against.</param>
+			/// <param name="shaderFlags">Shader compilation options.</param>
+			/// <param name="effectFlags">Effect compilation options.</param>
+			/// <param name="defines">A set of macros to define during compilation.</param>
+			/// <param name="include">An interface for handling include files.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
 			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include );
+			
+			/// <summary>
+			/// Compiles the a shader or effect from a file on disk.
+			/// </summary>
+			/// <param name="fileName">The name of the source file to compile.</param>
+			/// <param name="entryPoint">The name of the shader entry-point function, or <c>null</c> for an effect file.</param>
+			/// <param name="profile">The shader target or set of shader features to compile against.</param>
+			/// <param name="shaderFlags">Shader compilation options.</param>
+			/// <param name="effectFlags">Effect compilation options.</param>
+			/// <param name="defines">A set of macros to define during compilation.</param>
+			/// <param name="include">An interface for handling include files.</param>
+			/// <param name="compilationErrors">When the method completes, contains a string of compilation errors, or an empty string if compilation succeeded.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
 			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
 
+			/// <summary>
+			/// Gets the raw data of the compiled bytecode.
+			/// </summary>
 			property DataStream^ Data
 			{
 				DataStream^ get();
