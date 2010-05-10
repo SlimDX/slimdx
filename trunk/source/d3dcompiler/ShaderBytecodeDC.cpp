@@ -212,6 +212,128 @@ namespace D3DCompiler
 		return Compile(File::ReadAllText(fileName), entryPoint, profile, shaderFlags, effectFlags, defines, include, compilationErrors);
 	}
 
+	String^ ShaderBytecode::Preprocess( String^ shaderSource )
+	{
+		String^ errors;
+		return Preprocess( shaderSource, nullptr, nullptr, errors );
+	}
+
+	String^ ShaderBytecode::Preprocess( String^ shaderSource, array<ShaderMacro>^ defines, Include^ include )
+	{
+		String^ errors;
+		return Preprocess( shaderSource, defines, include, errors );
+	}
+
+	String^ ShaderBytecode::Preprocess( String^ shaderSource, array<ShaderMacro>^ defines, Include^ include, [Out] String^ %compilationErrors )
+	{
+		if (String::IsNullOrEmpty(shaderSource))
+			throw gcnew ArgumentNullException("shaderSource");
+
+		return Preprocess( Encoding::ASCII->GetBytes( shaderSource ), defines, include, compilationErrors );
+	}
+
+	String^ ShaderBytecode::Preprocess( array<Byte>^ shaderSource )
+	{
+		String^ errors;
+		return Preprocess( shaderSource, nullptr, nullptr, errors );
+	}
+
+	String^ ShaderBytecode::Preprocess( array<Byte>^ shaderSource, array<ShaderMacro>^ defines, Include^ include )
+	{
+		String^ errors;
+		return Preprocess( shaderSource, defines, include, errors );
+	}
+
+	String^ ShaderBytecode::Preprocess( array<Byte>^ shaderSource, array<ShaderMacro>^ defines, Include^ include, [Out] String^ %compilationErrors )
+	{
+		ID3D10Blob *code;
+		ID3D10Blob *errors;
+
+		if (shaderSource == nullptr)
+			throw gcnew ArgumentNullException("shaderSource");
+		if (shaderSource->Length == 0)
+			throw gcnew ArgumentException("Empty shader source provided.", "shaderSource");
+
+		pin_ptr<Byte> pinnedSource = &shaderSource[0];
+
+		IncludeShim includeShim = IncludeShim( include );
+		ID3D10Include* includePtr = NULL;
+		if( include != nullptr )
+			includePtr = &includeShim;
+
+		array<GCHandle>^ handles;
+		stack_array<D3D10_SHADER_MACRO> macros = ShaderMacro::Marshal( defines, handles );
+		D3D10_SHADER_MACRO* macrosPtr = macros.size() > 0 ? &macros[0] : NULL;
+		
+		HRESULT hr = D3DPreprocess( reinterpret_cast<LPCSTR>( pinnedSource ), shaderSource->Length, NULL, macrosPtr, includePtr, &code, &errors );
+		ShaderMacro::Unmarshal( handles );
+
+		compilationErrors = Utilities::BlobToString( errors );
+		Exception^ e = CompilationException::Check<D3DCompilerException^>(hr, compilationErrors);
+		if (e != nullptr)
+			throw e;
+
+		return Utilities::BlobToString( code );
+	}
+
+	String^ ShaderBytecode::PreprocessFromFile( String^ fileName )
+	{
+		String^ errors;
+		return PreprocessFromFile( fileName, nullptr, nullptr, errors );
+	}
+
+	String^ ShaderBytecode::PreprocessFromFile( String^ fileName, array<ShaderMacro>^ defines, Include^ include )
+	{
+		String^ errors;
+		return PreprocessFromFile( fileName, defines, include, errors );
+	}
+
+	String^ ShaderBytecode::PreprocessFromFile( String^ fileName, array<ShaderMacro>^ defines, Include^ include, [Out] String^ %compilationErrors )
+	{
+		if (fileName == nullptr)
+			throw gcnew ArgumentNullException("fileName");
+
+		if (!File::Exists(fileName))
+			throw gcnew FileNotFoundException("Could not open the shader or effect file.", fileName);
+
+		return Preprocess(File::ReadAllText(fileName), defines, include, compilationErrors);
+	}
+
+	String^ ShaderBytecode::Disassemble()
+	{
+		return Disassemble(DisassemblyFlags::None, nullptr);
+	}
+
+	String^ ShaderBytecode::Disassemble(DisassemblyFlags flags)
+	{
+		return Disassemble(flags, nullptr);
+	}
+
+	String^ ShaderBytecode::Disassemble(DisassemblyFlags flags, String^ comments)
+	{
+		ID3D10Blob *output = NULL;
+
+		array<unsigned char>^ bytes = comments == nullptr ? nullptr : Encoding::ASCII->GetBytes(comments);
+		pin_ptr<unsigned char> pinnedBytes = bytes == nullptr ? nullptr : &bytes[0];
+
+		HRESULT hr = D3DDisassemble(InternalPointer->GetBufferPointer(), InternalPointer->GetBufferSize(), static_cast<UINT>(flags), reinterpret_cast<LPCSTR>(pinnedBytes), &output);
+		if (RECORD_D3DC(hr).IsFailure)
+			return nullptr;
+
+		return Utilities::BlobToString(output);
+	}
+
+	String^ ShaderBytecode::Strip(StripFlags flags)
+	{
+		ID3D10Blob *output = NULL;
+
+		HRESULT hr = D3DStripShader(InternalPointer->GetBufferPointer(), InternalPointer->GetBufferSize(), static_cast<UINT>(flags), &output);
+		if (RECORD_D3DC(hr).IsFailure)
+			return nullptr;
+
+		return Utilities::BlobToString(output);
+	}
+
 	DataStream^ ShaderBytecode::Data::get()
 	{
 		return gcnew DataStream( InternalPointer->GetBufferPointer(), InternalPointer->GetBufferSize(), true, true, false );
