@@ -9,6 +9,7 @@ D3DCompiler
 	* Changed the ShaderBytecode.Compile methods to use D3DCompiler instead of D3DX.
 	* Added a missing enum from ShaderFlags.
 	* Changed the ShaderBytecode.CompileFromFile methods to read the file manually and use D3DCompiler. This should solve the Unicode issue as well.
+	* Added Preprocess, Disassemble, and Strip to ShaderBytecode.
 
 Direct3D 9
 	* Changed the shared handle parameter for texture creation to be a ref parameter.

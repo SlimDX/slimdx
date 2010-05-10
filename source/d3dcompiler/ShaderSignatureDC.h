@@ -27,19 +27,50 @@ namespace SlimDX
 {
 	namespace D3DCompiler
 	{
+		/// <summary>
+		/// Represents a shader signature.
+		/// </summary>
 		public ref class ShaderSignature
 		{
 		private:
 			DataStream^ data;
 			
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="ShaderSignature"/> class.
+			/// </summary>
+			/// <param name="data">A <see cref="DataStream"/> containing the raw bytes of the shader signature.</param>
 			ShaderSignature( DataStream^ data );
+
+			/// <summary>
+			/// Releases all resources used by the <see cref="ShaderSignature"/>.
+			/// </summary>
 			~ShaderSignature();
 
+			/// <summary>
+			/// Extracts the input signature from a compiled shader or effect.
+			/// </summary>
+			/// <param name="shaderBytecode">The bytecode of the compiled shader or effect.</param>
+			/// <returns>The input signature of the shader or effect.</returns>
 			static ShaderSignature^ GetInputSignature( ShaderBytecode^ shaderBytecode );
+
+			/// <summary>
+			/// Extracts the output signature from a compiled shader or effect.
+			/// </summary>
+			/// <param name="shaderBytecode">The bytecode of the compiled shader or effect.</param>
+			/// <returns>The output signature of the shader or effect.</returns>
 			static ShaderSignature^ GetOutputSignature( ShaderBytecode^ shaderBytecode );
+
+			/// <summary>
+			/// Extracts the input and output signatures from a compiled shader or effect.
+			/// </summary>
+			/// <param name="shaderBytecode">The bytecode of the compiled shader or effect.</param>
+			/// <returns>The input and output signatures of the shader or effect.</returns>
 			static ShaderSignature^ GetInputOutputSignature( ShaderBytecode^ shaderBytecode );
 
+			/// <summary>
+			/// Gets the raw data of the shader signature.
+			/// </summary>
 			property DataStream^ Data
 			{
 				DataStream^ get() { return data; }

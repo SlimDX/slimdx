@@ -195,7 +195,7 @@ namespace SlimDX
 			static ShaderBytecode^ Compile( array<System::Byte>^ shaderSource, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
 
 			/// <summary>
-			/// Compiles the a shader or effect from a file on disk.
+			/// Compiles a shader or effect from a file on disk.
 			/// </summary>
 			/// <param name="fileName">The name of the source file to compile.</param>
 			/// <param name="profile">The shader target or set of shader features to compile against.</param>
@@ -205,7 +205,7 @@ namespace SlimDX
 			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
 			
 			/// <summary>
-			/// Compiles the a shader or effect from a file on disk.
+			/// Compiles a shader or effect from a file on disk.
 			/// </summary>
 			/// <param name="fileName">The name of the source file to compile.</param>
 			/// <param name="profile">The shader target or set of shader features to compile against.</param>
@@ -217,7 +217,7 @@ namespace SlimDX
 			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include );
 			
 			/// <summary>
-			/// Compiles the a shader or effect from a file on disk.
+			/// Compiles a shader or effect from a file on disk.
 			/// </summary>
 			/// <param name="fileName">The name of the source file to compile.</param>
 			/// <param name="profile">The shader target or set of shader features to compile against.</param>
@@ -230,7 +230,7 @@ namespace SlimDX
 			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
 
 			/// <summary>
-			/// Compiles the a shader or effect from a file on disk.
+			/// Compiles a shader or effect from a file on disk.
 			/// </summary>
 			/// <param name="fileName">The name of the source file to compile.</param>
 			/// <param name="entryPoint">The name of the shader entry-point function, or <c>null</c> for an effect file.</param>
@@ -241,7 +241,7 @@ namespace SlimDX
 			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags );
 			
 			/// <summary>
-			/// Compiles the a shader or effect from a file on disk.
+			/// Compiles a shader or effect from a file on disk.
 			/// </summary>
 			/// <param name="fileName">The name of the source file to compile.</param>
 			/// <param name="entryPoint">The name of the shader entry-point function, or <c>null</c> for an effect file.</param>
@@ -254,7 +254,7 @@ namespace SlimDX
 			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include );
 			
 			/// <summary>
-			/// Compiles the a shader or effect from a file on disk.
+			/// Compiles a shader or effect from a file on disk.
 			/// </summary>
 			/// <param name="fileName">The name of the source file to compile.</param>
 			/// <param name="entryPoint">The name of the shader entry-point function, or <c>null</c> for an effect file.</param>
@@ -268,12 +268,118 @@ namespace SlimDX
 			static ShaderBytecode^ CompileFromFile( System::String^ fileName, System::String^ entryPoint, System::String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
 
 			/// <summary>
+			/// Preprocesses the provided shader or effect source.
+			/// </summary>
+			/// <param name="shaderSource">A string containing the source of the shader or effect to preprocess.</param>
+			/// <returns>The preprocessed shader source.</returns>
+			static System::String^ Preprocess( System::String^ shaderSource );
+
+			/// <summary>
+			/// Preprocesses the provided shader or effect source.
+			/// </summary>
+			/// <param name="shaderSource">A string containing the source of the shader or effect to preprocess.</param>
+			/// <param name="defines">A set of macros to define during preprocessing.</param>
+			/// <param name="include">An interface for handling include files.</param>
+			/// <returns>The preprocessed shader source.</returns>
+			static System::String^ Preprocess( System::String^ shaderSource, array<ShaderMacro>^ defines, Include^ include );
+
+			/// <summary>
+			/// Preprocesses the provided shader or effect source.
+			/// </summary>
+			/// <param name="shaderSource">A string containing the source of the shader or effect to preprocess.</param>
+			/// <param name="defines">A set of macros to define during preprocessing.</param>
+			/// <param name="include">An interface for handling include files.</param>
+			/// <param name="compilationErrors">When the method completes, contains a string of compilation errors, or an empty string if preprocessing succeeded.</param>
+			/// <returns>The preprocessed shader source.</returns>
+			static System::String^ Preprocess( System::String^ shaderSource, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
+
+			/// <summary>
+			/// Preprocesses the provided shader or effect source.
+			/// </summary>
+			/// <param name="shaderSource">An array of bytes containing the raw source of the shader or effect to preprocess.</param>
+			/// <returns>The preprocessed shader source.</returns>
+			static System::String^ Preprocess( array<System::Byte>^ shaderSource );
+
+			/// <summary>
+			/// Preprocesses the provided shader or effect source.
+			/// </summary>
+			/// <param name="shaderSource">An array of bytes containing the raw source of the shader or effect to preprocess.</param>
+			/// <param name="defines">A set of macros to define during preprocessing.</param>
+			/// <param name="include">An interface for handling include files.</param>
+			/// <returns>The preprocessed shader source.</returns>
+			static System::String^ Preprocess( array<System::Byte>^ shaderSource, array<ShaderMacro>^ defines, Include^ include );
+
+			/// <summary>
+			/// Preprocesses the provided shader or effect source.
+			/// </summary>
+			/// <param name="shaderSource">An array of bytes containing the raw source of the shader or effect to preprocess.</param>
+			/// <param name="defines">A set of macros to define during preprocessing.</param>
+			/// <param name="include">An interface for handling include files.</param>
+			/// <param name="compilationErrors">When the method completes, contains a string of compilation errors, or an empty string if preprocessing succeeded.</param>
+			/// <returns>The preprocessed shader source.</returns>
+			static System::String^ Preprocess( array<System::Byte>^ shaderSource, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
+
+			/// <summary>
+			/// Preprocesses a shader or effect from a file on disk.
+			/// </summary>
+			/// <param name="fileName">The name of the source file to compile.</param>
+			/// <returns>The preprocessed shader source.</returns>
+			static System::String^ PreprocessFromFile( System::String^ fileName );
+
+			/// <summary>
+			/// Preprocesses a shader or effect from a file on disk.
+			/// </summary>
+			/// <param name="fileName">The name of the source file to compile.</param>
+			/// <param name="defines">A set of macros to define during preprocessing.</param>
+			/// <param name="include">An interface for handling include files.</param>
+			/// <returns>The preprocessed shader source.</returns>
+			static System::String^ PreprocessFromFile( System::String^ fileName, array<ShaderMacro>^ defines, Include^ include );
+
+			/// <summary>
+			/// Preprocesses a shader or effect from a file on disk.
+			/// </summary>
+			/// <param name="fileName">The name of the source file to compile.</param>
+			/// <param name="defines">A set of macros to define during preprocessing.</param>
+			/// <param name="include">An interface for handling include files.</param>
+			/// <param name="compilationErrors">When the method completes, contains a string of compilation errors, or an empty string if preprocessing succeeded.</param>
+			/// <returns>The preprocessed shader source.</returns>
+			static System::String^ PreprocessFromFile( System::String^ fileName, array<ShaderMacro>^ defines, Include^ include, [Out] System::String^ %compilationErrors );
+
+			/// <summary>
 			/// Gets the raw data of the compiled bytecode.
 			/// </summary>
 			property DataStream^ Data
 			{
 				DataStream^ get();
 			}
+
+			/// <summary>
+			/// Disassembles compiled HLSL code back into textual source.
+			/// </summary>
+			/// <returns>The textual source of the shader or effect.</returns>
+			System::String^ Disassemble();
+
+			/// <summary>
+			/// Disassembles compiled HLSL code back into textual source.
+			/// </summary>
+			/// <param name="flags">Flags affecting the output of the disassembly.</param>
+			/// <returns>The textual source of the shader or effect.</returns>
+			System::String^ Disassemble(DisassemblyFlags flags);
+
+			/// <summary>
+			/// Disassembles compiled HLSL code back into textual source.
+			/// </summary>
+			/// <param name="flags">Flags affecting the output of the disassembly.</param>
+			/// <param name="comments">Commenting information to embed in the disassembly.</param>
+			/// <returns>The textual source of the shader or effect.</returns>
+			System::String^ Disassemble(DisassemblyFlags flags, System::String^ comments);
+
+			/// <summary>
+			/// Strips extraneous information from a compiled shader or effect.
+			/// </summary>
+			/// <param name="flags">Options specifying what to remove from the shader.</param>
+			/// <returns>A string containing any errors that may have occurred.</returns>
+			System::String^ Strip(StripFlags flags);
 
 			/// <summary>
 			/// Returns the hash code for this instance.

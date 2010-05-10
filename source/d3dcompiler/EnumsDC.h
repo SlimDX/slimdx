@@ -29,6 +29,33 @@ namespace SlimDX
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
 
+		/// <summary>
+		/// Specifies flags that affect the output of shader disassembly.
+		/// </summary>
+		[System::Flags]
+		public enum class DisassemblyFlags : System::Int32
+		{
+			/// <summary>
+			/// No specific flags specified.
+			/// </summary>
+			None = 0,
+
+			/// <summary>
+			/// Enable the output of color codes.
+			/// </summary>
+			EnableColorCodes = D3D_DISASM_ENABLE_COLOR_CODE,
+
+			/// <summary>
+			/// Enable the output of default values.
+			/// </summary>
+			EnableDefaultValues = D3D_DISASM_ENABLE_DEFAULT_VALUE_PRINTS,
+
+			/// <summary>
+			/// Enable instruction numbering.
+			/// </summary>
+			EnableInstructionNumbering = D3D_DISASM_ENABLE_INSTRUCTION_NUMBERING
+		};
+
 		/// <summary>Specifies compile- or run-time options during effect creation.</summary>
 		/// <unmanaged>D3D10_EFFECT</unmanaged>
 		[System::Flags]
@@ -324,6 +351,34 @@ namespace SlimDX
 			RWStructuredBuffer = D3D11_SVT_RWSTRUCTURED_BUFFER,
 			AppendStructuredBuffer = D3D11_SVT_APPEND_STRUCTURED_BUFFER,
 			ConsumeStructuredBuffer = D3D11_SVT_CONSUME_STRUCTURED_BUFFER,
+		};
+
+		/// <summary>
+		/// Specifies options for stripping data from a shader or effect.
+		/// </summary>
+		/// <unmanaged>D3DCOMPILER_STRIP_FLAGS</unmanaged>
+		[System::Flags]
+		public enum class StripFlags : System::Int32
+		{
+			/// <summary>
+			/// No extra stripping options.
+			/// </summary>
+			None = 0,
+
+			/// <summary>
+			/// Remove reflection data.
+			/// </summary>
+			StripReflectionData = D3DCOMPILER_STRIP_REFLECTION_DATA,
+
+			/// <summary>
+			/// Remove debug information.
+			/// </summary>
+			StripDebugInformation = D3DCOMPILER_STRIP_DEBUG_INFO,
+
+			/// <summary>
+			/// Remove test blob data.
+			/// </summary>
+			StripTestBlobs = D3DCOMPILER_STRIP_TEST_BLOBS
 		};
 
 		/// <summary>These flags identify shader parameters that use system-value semantics.</summary>
