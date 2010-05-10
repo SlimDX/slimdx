@@ -22,16 +22,16 @@
 #pragma once
 
 #include "../ComObject.h"
-#include "../d3dcompiler/ShaderBytecodeDC.h"
+#include "ShaderBytecodeDC.h"
 
-#include "ConstantBuffer11.h"
-#include "ShaderDescription11.h"
-#include "ShaderParameterDescription11.h"
-#include "InputBindingDescription11.h"
+#include "ConstantBufferDC.h"
+#include "ShaderDescriptionDC.h"
+#include "ShaderParameterDescriptionDC.h"
+#include "InputBindingDescriptionDC.h"
 
 namespace SlimDX
 {
-	namespace Direct3D11
+	namespace D3DCompiler
 	{
 		ref class ShaderBytecode;
 
@@ -43,7 +43,7 @@ namespace SlimDX
 			ShaderDescription^ description;
 			
 		public:
-			ShaderReflection( D3DCompiler::ShaderBytecode^ bytecode );
+			ShaderReflection( ShaderBytecode^ bytecode );
 
 			ConstantBuffer^ GetConstantBuffer( int index );
 			ConstantBuffer^ GetConstantBuffer( System::String^ name );
@@ -55,9 +55,9 @@ namespace SlimDX
 			InputBindingDescription GetResourceBindingDescription( int index );
 			InputBindingDescription GetResourceBindingDescription( System::String^ name );
 
-			property FeatureLevel MinimumFeatureLevel
+			property Direct3D11::FeatureLevel MinimumFeatureLevel
 			{
-				FeatureLevel get();
+				Direct3D11::FeatureLevel get();
 			}
 
 			property InputPrimitive GeometryShaderInputPrimitive

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,22 +19,20 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#include <d3d11.h>
-#include <d3dx11effect.h>
-
-#include "ShaderTypeDescription11.h"
+#include "ShaderTypeDescriptionDC.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D11
+namespace D3DCompiler
 { 	
 	ShaderTypeDescription::ShaderTypeDescription( const D3D11_SHADER_TYPE_DESC& native )
 	{
-		m_Class = static_cast<D3DCompiler::ShaderVariableClass>( native.Class );
-		m_Type = static_cast<D3DCompiler::ShaderVariableType>( native.Type );
+		m_Class = static_cast<ShaderVariableClass>( native.Class );
+		m_Type = static_cast<ShaderVariableType>( native.Type );
 		m_Rows = native.Rows;
 		m_Columns = native.Columns;
 		m_Elements = native.Elements;
@@ -43,12 +40,12 @@ namespace Direct3D11
 		m_Offset = native.Offset;
 	}
 
-	D3DCompiler::ShaderVariableClass ShaderTypeDescription::Class::get()
+	ShaderVariableClass ShaderTypeDescription::Class::get()
 	{
 		return m_Class;
 	}
 	
-	D3DCompiler::ShaderVariableType ShaderTypeDescription::Type::get()
+	ShaderVariableType ShaderTypeDescription::Type::get()
 	{
 		return m_Type;
 	}

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,24 +19,22 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#include <d3d11.h>
-#include <d3dx11effect.h>
-
-#include "ShaderVariableDescription11.h"
+#include "ShaderVariableDescriptionDC.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D11
+namespace D3DCompiler
 { 
 	ShaderVariableDescription::ShaderVariableDescription( const D3D11_SHADER_VARIABLE_DESC& description )
 	{
 		m_Name = gcnew System::String( description.Name );
 		m_StartOffset = static_cast<int>( description.StartOffset );
 		m_Size = static_cast<int>( description.Size );
-		m_Flags = static_cast<D3DCompiler::ShaderVariableFlags>( description.uFlags );
+		m_Flags = static_cast<ShaderVariableFlags>( description.uFlags );
 		defaultValue = IntPtr( description.DefaultValue );
 	}
 	
@@ -61,7 +58,7 @@ namespace Direct3D11
 		return defaultValue;
 	}
 
-	D3DCompiler::ShaderVariableFlags ShaderVariableDescription::Flags::get()
+	ShaderVariableFlags ShaderVariableDescription::Flags::get()
 	{
 		return m_Flags;
 	}

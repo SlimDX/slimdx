@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,17 +19,15 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#include <d3d11.h>
-#include <d3dx11effect.h>
-
-#include "ConstantBufferDescription11.h"
+#include "ConstantBufferDescriptionDC.h"
 
 using namespace System;
 
 namespace SlimDX
 {
-namespace Direct3D11
+namespace D3DCompiler
 { 
 	ConstantBufferDescription::ConstantBufferDescription( const D3D11_SHADER_BUFFER_DESC& description )
 	{
@@ -38,7 +35,7 @@ namespace Direct3D11
 		m_Type = static_cast<ConstantBufferType>( description.Type );
 		m_Variables = static_cast<int>( description.Variables );
 		m_Size = static_cast<int>( description.Size );
-		m_Flags = static_cast<D3DCompiler::ShaderVariableFlags>( description.uFlags );
+		m_Flags = static_cast<ShaderVariableFlags>( description.uFlags );
 	}
 	
 	System::String^ ConstantBufferDescription::Name::get()
@@ -61,7 +58,7 @@ namespace Direct3D11
 		return m_Size;
 	}
 
-	D3DCompiler::ShaderVariableFlags ConstantBufferDescription::Flags::get()
+	ShaderVariableFlags ConstantBufferDescription::Flags::get()
 	{
 		return m_Flags;
 	}

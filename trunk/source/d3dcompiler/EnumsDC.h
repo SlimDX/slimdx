@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "../direct3d11/Enums11.h"
+
 namespace SlimDX
 {
 	namespace D3DCompiler
@@ -28,6 +30,14 @@ namespace SlimDX
 		// NOTE: The enumerations defined in this file are in alphabetical order. When
 		//       adding new enumerations or renaming existing ones, please make sure
 		//       the ordering is maintained.
+
+		public enum class ConstantBufferType : System::Int32
+		{
+			ConstantBuffer = D3D11_CT_CBUFFER,
+			TextureBuffer = D3D11_CT_TBUFFER,
+			InterfacePointers = D3D11_CT_INTERFACE_POINTERS,
+			ResourceBinding = D3D11_CT_RESOURCE_BIND_INFO,
+		};
 
 		/// <summary>
 		/// Specifies flags that affect the output of shader disassembly.
@@ -102,6 +112,48 @@ namespace SlimDX
 			System = D3D10_INCLUDE_SYSTEM
 		};
 
+		public enum class InputPrimitive : System::Int32
+		{
+			Undefined = D3D11_PRIMITIVE_UNDEFINED,
+			Point = D3D11_PRIMITIVE_POINT,
+			Line = D3D11_PRIMITIVE_LINE,
+			Triangle = D3D11_PRIMITIVE_TRIANGLE,
+			LineWithAdjacency = D3D11_PRIMITIVE_LINE_ADJ,
+			TriangleWithAdjacency = D3D11_PRIMITIVE_TRIANGLE_ADJ,
+			PatchWith1ControlPoint = D3D11_PRIMITIVE_1_CONTROL_POINT_PATCH,
+			PatchWith2ControlPoints = D3D11_PRIMITIVE_2_CONTROL_POINT_PATCH,
+			PatchWith3ControlPoints = D3D11_PRIMITIVE_3_CONTROL_POINT_PATCH,
+			PatchWith4ControlPoints = D3D11_PRIMITIVE_4_CONTROL_POINT_PATCH,
+			PatchWith5ControlPoints = D3D11_PRIMITIVE_5_CONTROL_POINT_PATCH,
+			PatchWith6ControlPoints = D3D11_PRIMITIVE_6_CONTROL_POINT_PATCH,
+			PatchWith7ControlPoints = D3D11_PRIMITIVE_7_CONTROL_POINT_PATCH,
+			PatchWith8ControlPoints = D3D11_PRIMITIVE_8_CONTROL_POINT_PATCH,
+			PatchWith9ControlPoints = D3D11_PRIMITIVE_9_CONTROL_POINT_PATCH,
+			PatchWith10ControlPoints = D3D11_PRIMITIVE_10_CONTROL_POINT_PATCH,
+			PatchWith11ControlPoints = D3D11_PRIMITIVE_11_CONTROL_POINT_PATCH,
+			PatchWith12ControlPoints = D3D11_PRIMITIVE_12_CONTROL_POINT_PATCH,
+			PatchWith13ControlPoints = D3D11_PRIMITIVE_13_CONTROL_POINT_PATCH,
+			PatchWith14ControlPoints = D3D11_PRIMITIVE_14_CONTROL_POINT_PATCH,
+			PatchWith15ControlPoints = D3D11_PRIMITIVE_15_CONTROL_POINT_PATCH,
+			PatchWith16ControlPoints = D3D11_PRIMITIVE_16_CONTROL_POINT_PATCH,
+			PatchWith17ControlPoints = D3D11_PRIMITIVE_17_CONTROL_POINT_PATCH,
+			PatchWith18ControlPoints = D3D11_PRIMITIVE_18_CONTROL_POINT_PATCH,
+			PatchWith19ControlPoints = D3D11_PRIMITIVE_19_CONTROL_POINT_PATCH,
+			PatchWith20ControlPoints = D3D11_PRIMITIVE_20_CONTROL_POINT_PATCH,
+			PatchWith21ControlPoints = D3D11_PRIMITIVE_21_CONTROL_POINT_PATCH,
+			PatchWith22ControlPoints = D3D11_PRIMITIVE_22_CONTROL_POINT_PATCH,
+			PatchWith23ControlPoints = D3D11_PRIMITIVE_23_CONTROL_POINT_PATCH,
+			PatchWith24ControlPoints = D3D11_PRIMITIVE_24_CONTROL_POINT_PATCH,
+			PatchWith25ControlPoints = D3D11_PRIMITIVE_25_CONTROL_POINT_PATCH,
+			PatchWith26ControlPoints = D3D11_PRIMITIVE_26_CONTROL_POINT_PATCH,
+			PatchWith27ControlPoints = D3D11_PRIMITIVE_27_CONTROL_POINT_PATCH,
+			PatchWith28ControlPoints = D3D11_PRIMITIVE_28_CONTROL_POINT_PATCH,
+			PatchWith29ControlPoints = D3D11_PRIMITIVE_29_CONTROL_POINT_PATCH,
+			PatchWith30ControlPoints = D3D11_PRIMITIVE_30_CONTROL_POINT_PATCH,
+			PatchWith31ControlPoints = D3D11_PRIMITIVE_31_CONTROL_POINT_PATCH,
+			PatchWith32ControlPoints = D3D11_PRIMITIVE_32_CONTROL_POINT_PATCH
+		};
+
 		/// <summary>
 		/// Flags that indicate which components of a value are valid.
 		/// </summary>
@@ -147,6 +199,18 @@ namespace SlimDX
 			UInt32 = D3D10_REGISTER_COMPONENT_UINT32,
 			SInt32 = D3D10_REGISTER_COMPONENT_SINT32,
 			Float32 = D3D10_REGISTER_COMPONENT_FLOAT32
+		};
+
+		public enum class ResourceReturnType : System::Int32
+		{
+			UNorm = D3D11_RETURN_TYPE_UNORM,
+			SNorm = D3D11_RETURN_TYPE_SNORM,
+			SInt = D3D11_RETURN_TYPE_SINT,
+			UInt = D3D11_RETURN_TYPE_UINT,
+			Float = D3D11_RETURN_TYPE_FLOAT,
+			Mixed = D3D11_RETURN_TYPE_MIXED,
+			Double = D3D11_RETURN_TYPE_DOUBLE,
+			Continued = D3D11_RETURN_TYPE_CONTINUED
 		};
 
 		/// <summary>Provides various shader compilation flags.</summary>
@@ -398,6 +462,32 @@ namespace SlimDX
 			SampleIndex =D3D10_NAME_SAMPLE_INDEX,
 			Target = D3D10_NAME_TARGET,
 			Depth = D3D10_NAME_DEPTH
+		};
+
+		public enum class TessellatorDomain : System::Int32
+		{
+			Undefined = D3D11_TESSELLATOR_DOMAIN_UNDEFINED,
+			Isoline = D3D11_TESSELLATOR_DOMAIN_ISOLINE,
+			Triangle = D3D11_TESSELLATOR_DOMAIN_TRI,
+			Quad = D3D11_TESSELLATOR_DOMAIN_QUAD
+		};
+
+		public enum class TessellatorOutputPrimitive : System::Int32
+		{
+			Undefined = D3D11_TESSELLATOR_OUTPUT_UNDEFINED,
+			Point = D3D11_TESSELLATOR_OUTPUT_POINT,
+			Line = D3D11_TESSELLATOR_OUTPUT_LINE,
+			TriangleClockwise = D3D11_TESSELLATOR_OUTPUT_TRIANGLE_CW,
+			TriangleCounterclockwise = D3D11_TESSELLATOR_OUTPUT_TRIANGLE_CCW
+		};
+
+		public enum class TessellatorPartitioning : System::Int32
+		{
+			Undefined = D3D11_TESSELLATOR_PARTITIONING_UNDEFINED,
+			Integer = D3D11_TESSELLATOR_PARTITIONING_INTEGER,
+			PowerOfTwo = D3D11_TESSELLATOR_PARTITIONING_POW2,
+			FractionalOdd = D3D11_TESSELLATOR_PARTITIONING_FRACTIONAL_ODD,
+			FractionalEven = D3D11_TESSELLATOR_PARTITIONING_FRACTIONAL_EVEN
 		};
 	}
 }

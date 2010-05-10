@@ -21,51 +21,26 @@
 */
 #pragma once
 
-#include "../ComObject.h"
+#include "EnumsDC.h"
 
 namespace SlimDX
 {
-	namespace Direct3D11
+	namespace D3DCompiler
 	{
-		value class ShaderTypeDescription;
-
-		public ref class ShaderReflectionType
+		public value class InputBindingDescription
 		{
-		private:
-			ID3D11ShaderReflectionType* m_Pointer;
-			ShaderReflectionType^ baseClass;
-			ShaderReflectionType^ subType;
-
-			void Init();
-			
 		internal:
-			ShaderReflectionType( ID3D11ShaderReflectionType* pointer );
+			InputBindingDescription( const D3D11_SHADER_INPUT_BIND_DESC &desc );
 
 		public:
-			ShaderReflectionType( System::IntPtr pointer );
-
-			property ShaderTypeDescription Description
-			{
-				ShaderTypeDescription get();
-			}
-
-			property ShaderReflectionType^ BaseClass
-			{
-				ShaderReflectionType^ get() { return baseClass; }
-			}
-			
-			property ShaderReflectionType^ SubType
-			{
-				ShaderReflectionType^ get() { return subType; }
-			}
-
-			ShaderReflectionType^ GetInterface( int index );
-			ShaderReflectionType^ GetMemberType( int index );
-			ShaderReflectionType^ GetMemberType( System::String^ name );
-			System::String^ GetMemberTypeName( int index );
-			bool ImplementsInterface( ShaderReflectionType^ base );
-			bool IsOfType( ShaderReflectionType^ type );
-			bool IsEqual( ShaderReflectionType^ type );
+			property System::String^ Name;
+			property ShaderInputType Type;
+			property int BindPoint;
+			property int BindCount;
+			property ShaderInputFlags Flags;
+			property ResourceReturnType ReturnType;
+			property Direct3D11::ShaderResourceViewDimension Dimension;
+			property int SampleCount;
 		};
 	}
 }

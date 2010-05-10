@@ -27,13 +27,17 @@ using System::Runtime::InteropServices::OutAttribute;
 
 namespace SlimDX
 {
+	namespace D3DCompiler
+	{
+		value class ShaderParameterDescription;
+	}
+
 	namespace Direct3D11
 	{
 		ref class PixelShader;
 		ref class VertexShader;
 		ref class GeometryShader;
 		value class EffectShaderDescription;
-		value class ShaderParameterDescription;
 		
 		public ref class EffectShaderVariable : public EffectVariable
 		{	
@@ -50,8 +54,8 @@ namespace SlimDX
 			VertexShader^ GetVertexShader( int index );
 			GeometryShader^ GetGeometryShader( int index );
 			
-			Result GetInputParameterDescription( int shaderIndex, int parameterIndex, [Out] ShaderParameterDescription% result );
-			Result GetOutputParameterDescription( int shaderIndex, int parameterIndex, [Out] ShaderParameterDescription% result );
+			Result GetInputParameterDescription( int shaderIndex, int parameterIndex, [Out] D3DCompiler::ShaderParameterDescription% result );
+			Result GetOutputParameterDescription( int shaderIndex, int parameterIndex, [Out] D3DCompiler::ShaderParameterDescription% result );
 			
 			Result GetShaderDescription( int shaderIndex, [Out] EffectShaderDescription% result );
 		};

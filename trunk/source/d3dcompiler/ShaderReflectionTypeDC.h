@@ -25,29 +25,47 @@
 
 namespace SlimDX
 {
-	namespace Direct3D11
+	namespace D3DCompiler
 	{
-		value class ShaderVariableDescription;
-		ref class ShaderReflectionType;
+		value class ShaderTypeDescription;
 
-		public ref class ShaderReflectionVariable
+		public ref class ShaderReflectionType
 		{
 		private:
-			ID3D11ShaderReflectionVariable* m_Pointer;
+			ID3D11ShaderReflectionType* m_Pointer;
+			ShaderReflectionType^ baseClass;
+			ShaderReflectionType^ subType;
+
+			void Init();
 			
 		internal:
-			ShaderReflectionVariable( ID3D11ShaderReflectionVariable* pointer );
+			ShaderReflectionType( ID3D11ShaderReflectionType* pointer );
 
 		public:
-			ShaderReflectionVariable( System::IntPtr pointer );
-			
-			property ShaderVariableDescription Description
+			ShaderReflectionType( System::IntPtr pointer );
+
+			property ShaderTypeDescription Description
 			{
-				ShaderVariableDescription get();
+				ShaderTypeDescription get();
 			}
 
-			int GetInterfaceSlot( int arrayIndex );
-			ShaderReflectionType^ GetVariableType();
+			property ShaderReflectionType^ BaseClass
+			{
+				ShaderReflectionType^ get() { return baseClass; }
+			}
+			
+			property ShaderReflectionType^ SubType
+			{
+				ShaderReflectionType^ get() { return subType; }
+			}
+
+			ShaderReflectionType^ GetInterface( int index );
+			ShaderReflectionType^ GetMemberType( int index );
+			ShaderReflectionType^ GetMemberType( System::String^ name );
+			System::String^ GetMemberTypeName( int index );
+			bool ImplementsInterface( ShaderReflectionType^ base );
+			bool IsOfType( ShaderReflectionType^ type );
+			bool IsEqual( ShaderReflectionType^ type );
 		};
 	}
 }

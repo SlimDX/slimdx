@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,9 +19,9 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#include <d3d11.h>
-#include <d3dx11effect.h>
+#include "../d3dcompiler/ShaderParameterDescriptionDC.h"
 
 #include "Direct3D11Exception.h"
 
@@ -30,7 +29,6 @@
 #include "GeometryShader11.h"
 #include "PixelShader11.h"
 #include "EffectShaderDescription11.h"
-#include "ShaderParameterDescription11.h"
 #include "VertexShader11.h"
 
 using namespace System;
@@ -78,20 +76,20 @@ namespace Direct3D11
 		return GeometryShader::FromPointer( shader );
 	}
 	
-	Result EffectShaderVariable::GetInputParameterDescription( int shaderIndex, int parameterIndex, ShaderParameterDescription% result )
+	Result EffectShaderVariable::GetInputParameterDescription( int shaderIndex, int parameterIndex, D3DCompiler::ShaderParameterDescription% result )
 	{
 		D3D11_SIGNATURE_PARAMETER_DESC description;
 		if( RECORD_D3D11( m_Pointer->GetInputSignatureElementDesc( shaderIndex, parameterIndex, &description ) ).IsSuccess )
-			result = ShaderParameterDescription( description );
+			result = D3DCompiler::ShaderParameterDescription( description );
 			
 		return Result::Last;
 	}
 	
-	Result EffectShaderVariable::GetOutputParameterDescription( int shaderIndex, int parameterIndex, ShaderParameterDescription% result )
+	Result EffectShaderVariable::GetOutputParameterDescription( int shaderIndex, int parameterIndex, D3DCompiler::ShaderParameterDescription% result )
 	{
 		D3D11_SIGNATURE_PARAMETER_DESC description;
 		if( RECORD_D3D11( m_Pointer->GetOutputSignatureElementDesc( shaderIndex, parameterIndex, &description ) ).IsSuccess )
-			result = ShaderParameterDescription( description );
+			result = D3DCompiler::ShaderParameterDescription( description );
 		
 		return Result::Last;
 	}
