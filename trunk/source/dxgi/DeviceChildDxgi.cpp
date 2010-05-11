@@ -43,6 +43,7 @@ namespace DXGI
 		RECORD_DXGI( InternalPointer->GetDevice( __uuidof( device ), reinterpret_cast<void**>( &device ) ) );
 		if( Result::Last.IsFailure )
 			return nullptr;
+
 		return DXGI::Device::FromPointer( device );
 	}
 }

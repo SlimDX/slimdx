@@ -37,12 +37,12 @@ namespace SlimDX
 		{
 			COMOBJECT(IDXGIDeviceSubObject, DeviceChild);
 
-		protected:
+		private protected:
 			DeviceChild();
 
 		public:
 			/// <summary>
-			/// Gets the device the object is bound to.
+			/// Gets the device to which the object is bound.
 			/// </summary>
 			property DXGI::Device^ Device
 			{

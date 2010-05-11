@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -19,58 +20,26 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "../math/Color3.h"
+#include "DXGIException.h"
+
+#include "Adapter1.h"
+#include "AdapterDescription1.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace DXGI
+namespace DXGI
+{
+	AdapterDescription1 Adapter1::Description1::get()
 	{
-		/// <summary>
-		/// Describes gamma control settings.
-		/// </summary>
-		/// <unmanaged>DXGI_GAMMA_CONTROL</unmanaged>
-		public ref class GammaControl
-		{
-			Color3 m_Scale;
-			Color3 m_Offset;
-			array<Color3>^ m_GammaCurve;
+		DXGI_ADAPTER_DESC1 nativeDescription;
+		HRESULT hr = InternalPointer->GetDesc1( &nativeDescription );
+		if (RECORD_DXGI(hr).IsFailure)
+			return AdapterDescription1();
 
-		internal:			
-			DXGI_GAMMA_CONTROL CreateNativeVersion();
-			
-		public:
-			/// <summary>
-			/// Initializes a new instance of the <see cref="GammaControl"/> class.
-			/// </summary>
-			GammaControl();
-
-			/// <summary>
-			/// Gets or sets a scaling factor applied to gamma RGB values.
-			/// </summary>
-			property Color3 Scale
-			{
-				Color3 get();
-				void set( Color3 value );
-			}
-			
-			/// <summary>
-			/// Gets or sets an offset applied to gamma RGB values.
-			/// </summary>
-			property Color3 Offset
-			{
-				Color3 get();
-				void set( Color3 value );
-			}
-			
-			/// <summary>
-			/// Gets the list of RGB control points defining the gamma curve.
-			/// </summary>
-			property array<Color3>^ ControlPoints
-			{
-				array<Color3>^ get();
-			}
-		};
+		return AdapterDescription1( nativeDescription );
 	}
-};
+}
+}

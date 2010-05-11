@@ -37,7 +37,11 @@ using namespace System::Collections::ObjectModel;
 namespace SlimDX
 {
 namespace DXGI
-{ 
+{
+	Device::Device()
+	{
+	}
+
 	Device::Device( IComObject^ device ) 
 	{
 		IDXGIDevice* result = 0;
@@ -70,20 +74,21 @@ namespace DXGI
 		return DXGI::Adapter::FromPointer( adapter );
 	}
 
-	ReadOnlyCollection<Residency>^ Device::QueryResourceResidency( IList<ComObject^>^ resources )
+	ReadOnlyCollection<Residency>^ Device::QueryResourceResidency( IList<IComObject^>^ resources )
 	{
 		stack_array<DXGI_RESIDENCY> nativeResidency = stackalloc( DXGI_RESIDENCY, resources->Count );
 		stack_array<IUnknown*> nativeResources = stackalloc( IUnknown*, resources->Count );
+		
 		for( int resourceIndex = 0; resourceIndex < resources->Count; ++resourceIndex )
-			nativeResources[ resourceIndex ] = resources[ resourceIndex ]->UnknownPointer;
+			nativeResources[resourceIndex] = reinterpret_cast<IUnknown*>(resources[resourceIndex]->ComPointer.ToPointer());
 		
 		RECORD_DXGI( InternalPointer->QueryResourceResidency( &nativeResources[0], &nativeResidency[0], resources->Count ) );
 		if( Result::Last.IsFailure )
 			return nullptr;
 		
-		List< Residency >^ result = gcnew List<Residency>( static_cast<int>( nativeResidency.size() ) );
+		List<Residency>^ result = gcnew List<Residency>( static_cast<int>( nativeResidency.size() ) );
 		for( size_t resourceIndex = 0; resourceIndex < nativeResidency.size(); ++resourceIndex )
-			result->Add( static_cast<Residency>( nativeResidency[ resourceIndex ] ) );
+			result->Add( static_cast<Residency>( nativeResidency[resourceIndex] ) );
 
 		return gcnew ReadOnlyCollection<Residency>( result );
 	}

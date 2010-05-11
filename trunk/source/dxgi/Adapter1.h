@@ -21,56 +21,30 @@
 */
 #pragma once
 
-#include "../math/Color3.h"
+#include "Adapter.h"
 
 namespace SlimDX
 {
 	namespace DXGI
 	{
-		/// <summary>
-		/// Describes gamma control settings.
-		/// </summary>
-		/// <unmanaged>DXGI_GAMMA_CONTROL</unmanaged>
-		public ref class GammaControl
-		{
-			Color3 m_Scale;
-			Color3 m_Offset;
-			array<Color3>^ m_GammaCurve;
+		value class AdapterDescription1;
 
-		internal:			
-			DXGI_GAMMA_CONTROL CreateNativeVersion();
-			
+		/// <summary>
+		/// Represents a display subsystem (one or more GPUs, DACs, and video memory).
+		/// </summary>
+		/// <unmanaged>IDXGIAdapter1</unmanaged>
+		public ref class Adapter1 : Adapter
+		{
+			COMOBJECT(IDXGIAdapter1, Adapter1);
+
 		public:
 			/// <summary>
-			/// Initializes a new instance of the <see cref="GammaControl"/> class.
+			/// Gets the adapter's extended description.
 			/// </summary>
-			GammaControl();
-
-			/// <summary>
-			/// Gets or sets a scaling factor applied to gamma RGB values.
-			/// </summary>
-			property Color3 Scale
+			property AdapterDescription1 Description1
 			{
-				Color3 get();
-				void set( Color3 value );
-			}
-			
-			/// <summary>
-			/// Gets or sets an offset applied to gamma RGB values.
-			/// </summary>
-			property Color3 Offset
-			{
-				Color3 get();
-				void set( Color3 value );
-			}
-			
-			/// <summary>
-			/// Gets the list of RGB control points defining the gamma curve.
-			/// </summary>
-			property array<Color3>^ ControlPoints
-			{
-				array<Color3>^ get();
+				AdapterDescription1 get();
 			}
 		};
 	}
-};
+}

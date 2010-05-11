@@ -19,58 +19,38 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
+#include "stdafx.h"
 
-#include "../math/Color3.h"
+#include "DXGIException.h"
+
+#include "KeyedMutex.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace DXGI
+namespace DXGI
+{
+	KeyedMutex::KeyedMutex( IComObject^ resource )
 	{
-		/// <summary>
-		/// Describes gamma control settings.
-		/// </summary>
-		/// <unmanaged>DXGI_GAMMA_CONTROL</unmanaged>
-		public ref class GammaControl
-		{
-			Color3 m_Scale;
-			Color3 m_Offset;
-			array<Color3>^ m_GammaCurve;
+		IDXGIKeyedMutex* result = 0;
 
-		internal:			
-			DXGI_GAMMA_CONTROL CreateNativeVersion();
-			
-		public:
-			/// <summary>
-			/// Initializes a new instance of the <see cref="GammaControl"/> class.
-			/// </summary>
-			GammaControl();
-
-			/// <summary>
-			/// Gets or sets a scaling factor applied to gamma RGB values.
-			/// </summary>
-			property Color3 Scale
-			{
-				Color3 get();
-				void set( Color3 value );
-			}
-			
-			/// <summary>
-			/// Gets or sets an offset applied to gamma RGB values.
-			/// </summary>
-			property Color3 Offset
-			{
-				Color3 get();
-				void set( Color3 value );
-			}
-			
-			/// <summary>
-			/// Gets the list of RGB control points defining the gamma curve.
-			/// </summary>
-			property array<Color3>^ ControlPoints
-			{
-				array<Color3>^ get();
-			}
-		};
+		IUnknown *ptr = reinterpret_cast<IUnknown*>(resource->ComPointer.ToPointer());
+		if( RECORD_DXGI( ptr->QueryInterface( IID_IDXGIKeyedMutex, reinterpret_cast<void**>( &result ) ) ).IsFailure )
+			throw gcnew DXGIException( Result::Last );
+		Construct( result );
 	}
-};
+
+	Result KeyedMutex::Acquire(System::Int64 key, int milliseconds)
+	{
+		HRESULT hr = InternalPointer->AcquireSync(key, milliseconds);
+		return RECORD_DXGI(hr);
+	}
+
+	Result KeyedMutex::Release(System::Int64 key)
+	{
+		HRESULT hr = InternalPointer->ReleaseSync(key);
+		return RECORD_DXGI(hr);
+	}
+}
+}

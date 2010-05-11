@@ -28,11 +28,21 @@ namespace SlimDX
 {
 	namespace DXGI
 	{
+		/// <summary>
+		/// Implements a base interface that allows resource sharing and identifies the memory that a resource resides in.
+		/// </summary>
+		/// <unmanaged></unmanaged>
 		public ref class Resource : DeviceChild
 		{
 			COMOBJECT(IDXGIResource, Resource);
 
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="Resource"/> class.
+			/// </summary>
+			/// <param name="device">The COM object implementing the IDXGIResource interface.</param>
+			Resource( IComObject^ object );
+
 			/// <summary>
 			/// Gets or sets the eviction priority for the resource.
 			/// </summary>
@@ -48,6 +58,14 @@ namespace SlimDX
 			property DXGI::Usage Usage
 			{
 				DXGI::Usage get();
+			}
+
+			/// <summary>
+			/// Get the handle to a shared resource. The returned handle can be used to open the resource using different Direct3D devices.
+			/// </summary>
+			property System::IntPtr SharedHandle
+			{
+				System::IntPtr get();
 			}
 		};
 	}
