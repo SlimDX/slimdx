@@ -30,10 +30,18 @@ namespace SlimDX
 	{
 		ref class Adapter;
 
+		/// <summary>
+		/// Implements methods for generating DXGI objects.
+		/// </summary>
+		/// <unmanaged>IDXGIFactory</unmanaged>
 		public ref class Factory : DXGIObject
 		{
 			COMOBJECT(IDXGIFactory, Factory);
 			
+		private protected:
+			// Terrible no-op constructor hack for Factory1.
+			Factory( bool /*hack*/ ) { }
+
 		public:
 			/// <summary>
 			/// Initializes a new instance of the <see cref="Factory"/> class.
@@ -54,7 +62,7 @@ namespace SlimDX
 			Adapter^ GetAdapter( int index );
 		
 			/// <summary>
-			/// Creates a software adapater interface.
+			/// Creates a software adapter interface.
 			/// </summary>
 			/// <param name="softwareModule">The unmanaged HMODULE for the software adapter DLL.</param>
 			/// <returns>The specified adapter, or <c>null</c> on failure.</returns>
@@ -70,15 +78,13 @@ namespace SlimDX
 			Adapter^ CreateSoftwareAdapter( System::Reflection::Module^ softwareModule );
 			
 			/// <summary>
-			/// Gets the window handle associated with the factory (the window through which the user signals fullscreen
-			/// transitions).
+			/// Gets the window handle associated with the factory (the window through which the user signals fullscreen transitions).
 			/// </summary>
 			/// <returns>The window handle.</returns>
 			System::IntPtr GetWindowAssociation();
 			
 			/// <summary>
-			/// Sets the window handle associated with the factory (the window through which the user signals fullscreen
-			/// transitions).
+			/// Sets the window handle associated with the factory (the window through which the user signals fullscreen transitions).
 			/// </summary>
 			/// <param name="handle">The window handle.</param>
 			/// <param name="flags">Flags controlling window association behavior.</param>

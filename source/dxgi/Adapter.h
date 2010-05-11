@@ -31,12 +31,15 @@ namespace SlimDX
 		value class AdapterDescription;
 
 		/// <summary>
-		/// A display subsystem (one or more GPUs, DACs, and video memory).
+		/// Represents a display subsystem (one or more GPUs, DACs, and video memory).
 		/// </summary>
 		/// <unmanaged>IDXGIAdapter</unmanaged>
 		public ref class Adapter : DXGIObject
 		{
 			COMOBJECT(IDXGIAdapter, Adapter);
+
+		private protected:
+			Adapter() { }
 
 		public:
 			/// <summary>

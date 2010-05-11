@@ -37,7 +37,7 @@ using namespace System;
 namespace SlimDX
 {
 namespace DXGI
-{ 	
+{
 	SurfaceDescription Surface::Description::get()
 	{
 		DXGI_SURFACE_DESC nativeDescription;

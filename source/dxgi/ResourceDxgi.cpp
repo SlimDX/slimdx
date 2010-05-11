@@ -33,6 +33,17 @@ namespace SlimDX
 {
 namespace DXGI
 {
+	Resource::Resource( IComObject^ object )
+	{
+		IDXGIResource* result = 0;
+
+		IUnknown *ptr = reinterpret_cast<IUnknown*>(object->ComPointer.ToPointer());
+		if( RECORD_DXGI( ptr->QueryInterface( IID_IDXGIResource, reinterpret_cast<void**>( &result ) ) ).IsFailure )
+			throw gcnew DXGIException( Result::Last );
+
+		Construct( result );
+	}
+
 	ResourcePriority Resource::EvictionPriority::get()
 	{
 		UINT priority = 0;
@@ -54,6 +65,17 @@ namespace DXGI
 			return static_cast<DXGI::Usage>( 0 );
 		
 		return static_cast<DXGI::Usage>( usage );
+	}
+
+	IntPtr Resource::SharedHandle::get()
+	{
+		HANDLE handle;
+
+		HRESULT hr = InternalPointer->GetSharedHandle(&handle);
+		if (RECORD_DXGI(hr).IsFailure)
+			return IntPtr::Zero;
+
+		return IntPtr(handle);
 	}
 }
 }

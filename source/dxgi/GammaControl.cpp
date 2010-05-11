@@ -30,17 +30,7 @@ using namespace System::Collections::ObjectModel;
 namespace SlimDX
 {
 namespace DXGI
-{ 	
-	/*GammaControl::GammaControl( const DXGI_GAMMA_CONTROL& native )
-	{
-		m_Scale = Color3( native.Scale.Red, native.Scale.Green, native.Scale.Blue );
-		m_Offset = Color3( native.Offset.Red, native.Offset.Green, native.Offset.Blue );
-		
-		// 1025 is hard-coded by the DXGI API, there doesn't seem to be a constant for it.
-		for( int controlPointIndex = 0; controlPointIndex < 1025; ++controlPointIndex )
-			m_GammaCurve->Add( Color3( native.GammaCurve[ controlPointIndex ].Red, native.GammaCurve[ controlPointIndex ].Green, native.GammaCurve[ controlPointIndex ].Blue ) );
-	}*/
-	
+{	
 	DXGI_GAMMA_CONTROL GammaControl::CreateNativeVersion()
 	{
 		DXGI_GAMMA_CONTROL native;
@@ -54,12 +44,17 @@ namespace DXGI
 		// 1025 is hard-coded by the DXGI API, there doesn't seem to be a constant for it.
 		for( int controlPointIndex = 0; controlPointIndex < 1025; ++controlPointIndex )
 		{
-			native.GammaCurve[ controlPointIndex ].Red = m_GammaCurve[ controlPointIndex ].Red;
-			native.GammaCurve[ controlPointIndex ].Green = m_GammaCurve[ controlPointIndex ].Green;
-			native.GammaCurve[ controlPointIndex ].Blue = m_GammaCurve[ controlPointIndex ].Blue;
+			native.GammaCurve[controlPointIndex].Red = m_GammaCurve[controlPointIndex].Red;
+			native.GammaCurve[controlPointIndex].Green = m_GammaCurve[controlPointIndex].Green;
+			native.GammaCurve[controlPointIndex].Blue = m_GammaCurve[controlPointIndex].Blue;
 		}
 		
 		return native;	
+	}
+
+	GammaControl::GammaControl()
+	{
+		m_GammaCurve = gcnew array<Color3>(1025);
 	}
 	
 	Color3 GammaControl::Scale::get()
@@ -82,45 +77,9 @@ namespace DXGI
 		m_Offset = value;
 	}
 
-	ReadOnlyCollection<Color3>^ GammaControl::ControlPoints::get()
+	array<Color3>^ GammaControl::ControlPoints::get()
 	{
-		return gcnew ReadOnlyCollection<Color3>( m_GammaCurve );
-	}
-
-	bool GammaControl::operator == ( GammaControl left, GammaControl right )
-	{
-		return GammaControl::Equals( left, right );
-	}
-
-	bool GammaControl::operator != ( GammaControl left, GammaControl right )
-	{
-		return !GammaControl::Equals( left, right );
-	}
-
-	int GammaControl::GetHashCode()
-	{
-		return m_Scale.GetHashCode() + m_Offset.GetHashCode() + m_GammaCurve->GetHashCode();
-	}
-
-	bool GammaControl::Equals( Object^ value )
-	{
-		if( value == nullptr )
-			return false;
-
-		if( value->GetType() != GetType() )
-			return false;
-
-		return Equals( safe_cast<GammaControl>( value ) );
-	}
-
-	bool GammaControl::Equals( GammaControl value )
-	{
-		return ( m_Scale == value.m_Scale && m_Offset == value.m_Offset && m_GammaCurve == value.m_GammaCurve );
-	}
-
-	bool GammaControl::Equals( GammaControl% value1, GammaControl% value2 )
-	{
-		return ( value1.m_Scale == value2.m_Scale && value1.m_Offset == value2.m_Offset && value1.m_GammaCurve == value2.m_GammaCurve );
+		return m_GammaCurve;
 	}
 }
 }

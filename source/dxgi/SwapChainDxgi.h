@@ -53,7 +53,7 @@ namespace SlimDX
 			}
 			
 			/// <summary>
-			/// Gets statistics about recent frames.
+			/// Get performance statistics about the last render frame.
 			/// </summary>
 			property DXGI::FrameStatistics FrameStatistics
 			{
@@ -69,7 +69,7 @@ namespace SlimDX
 			}
 			
 			/// <summary>
-			/// Gets the output containing the swap chain target.
+			/// Gets the output (the display monitor) that contains the majority of the client area of the target window.
 			/// </summary>
 			property Output^ ContainingOutput
 			{
@@ -88,7 +88,7 @@ namespace SlimDX
 			/// Gets the full screen state.
 			/// </summary>
 			/// <param name="isFullScreen">Receives a value indicating if the swap chain is running in full screen mode.</param>
-			/// <param name="target">Receives the full screen ouput if the swap chain is in full screen mode. Otherwise ignored.</param>
+			/// <param name="target">Receives the full screen output if the swap chain is in full screen mode. Otherwise ignored.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result GetFullScreenState( [Out] bool% isFullScreen, [Out] Output^% target );
 			

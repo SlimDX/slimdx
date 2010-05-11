@@ -102,9 +102,9 @@ namespace DXGI
 		return Result::Last;
 	}
 	
-	Result Output::SetGammaControl( GammaControl control )
+	Result Output::SetGammaControl( GammaControl^ control )
 	{
-		DXGI_GAMMA_CONTROL nativeControl = control.CreateNativeVersion();
+		DXGI_GAMMA_CONTROL nativeControl = control->CreateNativeVersion();
 		return RECORD_DXGI( InternalPointer->SetGammaControl( &nativeControl ) );
 	}
 	

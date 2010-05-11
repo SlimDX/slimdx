@@ -32,6 +32,13 @@ namespace SlimDX
 		//       the ordering is maintained.
 		
 		[System::Flags]
+		public enum class AdapterFlags : System::Int32
+		{
+			None = DXGI_ADAPTER_FLAG_NONE,
+			Remote = DXGI_ADAPTER_FLAG_REMOTE
+		};
+
+		[System::Flags]
 		public enum class DisplayModeEnumerationFlags : System::Int32
 		{
 			Interlaced = DXGI_ENUM_MODES_INTERLACED,

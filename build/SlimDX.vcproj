@@ -3923,6 +3923,50 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="1.1"
+				>
+				<File
+					RelativePath="..\source\dxgi\Adapter1.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\Adapter1.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\AdapterDescription1.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\AdapterDescription1.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\Device1.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\Device1.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\Factory1.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\Factory1.h"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\KeyedMutex.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\KeyedMutex.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Design"

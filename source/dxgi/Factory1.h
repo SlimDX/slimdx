@@ -21,56 +21,45 @@
 */
 #pragma once
 
-#include "Enums.h"
-#include "ObjectDxgi.h"
+#include "Factory.h"
 
 namespace SlimDX
 {
 	namespace DXGI
 	{
-		ref class Adapter;
-		
-		/// <summary>
-		/// Represents a base for objects that produces image data.
-		/// </summary>
-		/// <unmanaged>IDXGIDevice</unmanaged>
-		public ref class Device : DXGIObject
-		{
-			COMOBJECT(IDXGIDevice, Device);
+		ref class Adapter1;
 
-		private protected:
-			Device();
+		/// <summary>
+		/// Implements methods for generating DXGI objects.
+		/// </summary>
+		/// <unmanaged>IDXGIFactory1</unmanaged>
+		public ref class Factory1 : Factory
+		{
+			COMOBJECT_CUSTOM(IDXGIFactory1, Factory1);
 
 		public:
 			/// <summary>
-			/// Gets or sets the device's GPU thread priority. Values range from -7 to 7, inclusive, with 0 being normal priority.
+			/// Initializes a new instance of the <see cref="Factory1"/> class.
 			/// </summary>
-			property int GpuThreadPriority
-			{
-				int get();
-				void set( int value );
-			}
-			
-			/// <summary>
-			/// Gets the adapter associated with the device.
-			/// </summary>
-			property SlimDX::DXGI::Adapter^ Adapter
-			{
-				SlimDX::DXGI::Adapter^ get();
-			}
-			
-			/// <summary>
-			/// Initializes a new instance of the <see cref="Device"/> class.
-			/// </summary>
-			/// <param name="device">The COM object implementing the IDXGIDevice interface.</param>
-			Device( IComObject^ device );
+			Factory1();
 
 			/// <summary>
-			/// Gets the residency status of a list of resources.
+			/// Gets the number of available adapters, including remote adapters and those without visible outputs.
 			/// </summary>
-			/// <param name="resources">The resources to query.</param>
-			/// <returns>A list of residency status values, one for each entry in the input resources list.</returns>
-			System::Collections::ObjectModel::ReadOnlyCollection<Residency>^ QueryResourceResidency( System::Collections::Generic::IList<IComObject^>^ resources );
+			/// <returns>The total number of available adapters.</returns>
+			int GetAdapterCount1();
+
+			/// <summary>
+			/// Gets the adapter at the specified index.
+			/// </summary>
+			/// <param name="index">The index of the desired adapter.</param>
+			/// <returns>The specified adapter, or <c>null</c> on failure.</returns>
+			Adapter1^ GetAdapter1(int index);
+
+			/// <summary>
+			/// Gets a value indicating the possible need to re-enumerate adapters -- new adapter(s) have become available, current adapter(s) have become unavailable.
+			/// </summary>
+			property bool IsCurrent { bool get(); }
 		};
 	}
 }

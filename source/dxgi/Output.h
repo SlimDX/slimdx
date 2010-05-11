@@ -30,7 +30,7 @@ namespace SlimDX
 	{
 		ref class Surface;
 		value class FrameStatistics;
-		value class GammaControl;
+		ref class GammaControl;
 		value class GammaControlCapabilities;
 		value class ModeDescription;
 		value class OutputDescription;
@@ -53,7 +53,7 @@ namespace SlimDX
 			}
 			
 			/// <summary>
-			/// Gets statistics about recent frames.
+			/// Gets statistics about recently rendered frames.
 			/// </summary>
 			property DXGI::FrameStatistics FrameStatistics
 			{
@@ -92,7 +92,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="control">The gamma control information.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result SetGammaControl( GammaControl control );
+			Result SetGammaControl( GammaControl^ control );
 			
 			/// <summary>
 			/// Changes the current display surface to the specified surface.

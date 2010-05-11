@@ -21,66 +21,111 @@
 */
 #pragma once
 
-#include "../ComObject.h"
+#include "Enums.h"
 
 namespace SlimDX
 {
 	namespace DXGI
 	{
 		/// <summary>
-		/// Provides basic rendering statistics. All counts are relative to machine boot. 
+		/// Describes various properties of an Adapter1.
 		/// </summary>
-		/// <unmanaged href="bb173060">DXGI_FRAME_STATISTICS</unmanaged>
-		public value class FrameStatistics : System::IEquatable<FrameStatistics>
+		/// <unmanaged>DXGI_ADAPTER_DESC1</unmanaged>
+		public value class AdapterDescription1 : System::IEquatable<AdapterDescription1>
 		{
-			int m_PresentCount;
-			int m_PresentRefreshCount;
-			int m_SyncRefreshCount;
-			System::Int64 m_SyncQPCTime;
-			System::Int64 m_SyncGPUTime;
-		
+			System::String^ m_Description;
+			int m_VendorId;
+			int m_DeviceId;
+			int m_SubSysId;
+			int m_Revision;
+			SIZE_T m_DedicatedVideoMemory;
+			SIZE_T m_DedicatedSystemMemory;
+			SIZE_T m_SharedSystemMemory;
+			System::Int64 m_Luid;
+			AdapterFlags m_Flags;
+
 		internal:
-			FrameStatistics( const DXGI_FRAME_STATISTICS& native );
+			AdapterDescription1( const DXGI_ADAPTER_DESC1& native );
 
 		public:
 			/// <summary>
-			/// Gets the number of times an image has been presented to an output.
+			/// Gets the adapter's description.
 			/// </summary>
-			property int PresentCount
+			property System::String^ Description
+			{
+				System::String^ get();
+			}
+			
+			/// <summary>
+			/// Gets the adapter's vendor ID.
+			/// </summary>
+			property int VendorId
 			{
 				int get();
 			}
 
 			/// <summary>
-			/// Gets the number of times a vertical blank has occured.
+			/// Gets the adapter's device ID.
 			/// </summary>
-			property int PresentRefreshCount
+			property int DeviceId
 			{
 				int get();
 			}
 
 			/// <summary>
-			/// Gets the number of times a vertical blank has occured.
+			/// Gets the adapter's subsystem ID.
 			/// </summary>
-			property int SyncRefreshCount
+			property int SubsystemId
 			{
 				int get();
 			}
 
 			/// <summary>
-			/// Gets a value equivalent to that returned by the unmanaged function QueryPerformanceCounter.
+			/// Gets the adapter's revision number.
 			/// </summary>
-			property System::Int64 SyncQPCTime
+			property int Revision
+			{
+				int get();
+			}
+
+			/// <summary>
+			/// Gets the number of bytes of video memory not shared with the CPU.
+			/// </summary>
+			property System::Int64 DedicatedVideoMemory
 			{
 				System::Int64 get();
 			}
 
 			/// <summary>
-			/// Reserved. Always returns 0.
+			/// Gets the number of bytes of system memory not shared with the CPU.
 			/// </summary>
-			property System::Int64 SyncGPUTime
+			property System::Int64 DedicatedSystemMemory
 			{
 				System::Int64 get();
+			}
+
+			/// <summary>
+			/// Gets the number of bytes of system memory shared with the CPU.
+			/// </summary>
+			property System::Int64 SharedSystemMemory
+			{
+				System::Int64 get();
+			}
+
+			/// <summary>
+			/// Gets the adapter's unique identifier.
+			/// </summary>
+			property System::Int64 Luid
+			{
+				System::Int64 get();
+			}
+
+			/// <summary>
+			/// Gets the adapter's flags, describing the adapter type.
+			/// </summary>
+			property AdapterFlags Flags
+			{
+				AdapterFlags get();
 			}
 
 			/// <summary>
@@ -89,7 +134,7 @@ namespace SlimDX
 			/// <param name="left">The first value to compare.</param>
 			/// <param name="right">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-			static bool operator == ( FrameStatistics left, FrameStatistics right );
+			static bool operator == ( AdapterDescription1 left, AdapterDescription1 right );
 
 			/// <summary>
 			/// Tests for inequality between two objects.
@@ -97,7 +142,7 @@ namespace SlimDX
 			/// <param name="left">The first value to compare.</param>
 			/// <param name="right">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-			static bool operator != ( FrameStatistics left, FrameStatistics right );
+			static bool operator != ( AdapterDescription1 left, AdapterDescription1 right );
 
 			/// <summary>
 			/// Returns the hash code for this instance.
@@ -117,7 +162,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="other">Object to make the comparison with.</param>
 			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
-			virtual bool Equals( FrameStatistics other );
+			virtual bool Equals( AdapterDescription1 other );
 
 			/// <summary>
 			/// Determines whether the specified object instances are considered equal. 
@@ -126,7 +171,7 @@ namespace SlimDX
 			/// <param name="value2">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="value1"/> is the same instance as <paramref name="value2"/> or 
 			/// if both are <c>null</c> references or if <c>value1.Equals(value2)</c> returns <c>true</c>; otherwise, <c>false</c>.</returns>
-			static bool Equals( FrameStatistics% value1, FrameStatistics% value2 );
+			static bool Equals( AdapterDescription1% value1, AdapterDescription1% value2 );
 		};
 	}
 };

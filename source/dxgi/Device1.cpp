@@ -1,3 +1,4 @@
+#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -19,58 +20,41 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#pragma once
 
-#include "../math/Color3.h"
+#include "DXGIException.h"
+
+#include "Device1.h"
+
+using namespace System;
 
 namespace SlimDX
 {
-	namespace DXGI
+namespace DXGI
+{
+	Device1::Device1( IComObject^ device )
 	{
-		/// <summary>
-		/// Describes gamma control settings.
-		/// </summary>
-		/// <unmanaged>DXGI_GAMMA_CONTROL</unmanaged>
-		public ref class GammaControl
-		{
-			Color3 m_Scale;
-			Color3 m_Offset;
-			array<Color3>^ m_GammaCurve;
+		IDXGIDevice1* result = 0;
 
-		internal:			
-			DXGI_GAMMA_CONTROL CreateNativeVersion();
-			
-		public:
-			/// <summary>
-			/// Initializes a new instance of the <see cref="GammaControl"/> class.
-			/// </summary>
-			GammaControl();
+		IUnknown *ptr = reinterpret_cast<IUnknown*>(device->ComPointer.ToPointer());
+		if( RECORD_DXGI( ptr->QueryInterface( IID_IDXGIDevice1, reinterpret_cast<void**>( &result ) ) ).IsFailure )
+			throw gcnew DXGIException( Result::Last );
 
-			/// <summary>
-			/// Gets or sets a scaling factor applied to gamma RGB values.
-			/// </summary>
-			property Color3 Scale
-			{
-				Color3 get();
-				void set( Color3 value );
-			}
-			
-			/// <summary>
-			/// Gets or sets an offset applied to gamma RGB values.
-			/// </summary>
-			property Color3 Offset
-			{
-				Color3 get();
-				void set( Color3 value );
-			}
-			
-			/// <summary>
-			/// Gets the list of RGB control points defining the gamma curve.
-			/// </summary>
-			property array<Color3>^ ControlPoints
-			{
-				array<Color3>^ get();
-			}
-		};
+		Construct( result );
 	}
-};
+
+	int Device1::MaximumFrameLatency::get()
+	{
+		UINT latency = 0;
+
+		HRESULT hr = InternalPointer->GetMaximumFrameLatency(&latency);
+		RECORD_DXGI(hr);
+
+		return latency;
+	}
+
+	void Device1::MaximumFrameLatency::set(int value)
+	{
+		RECORD_DXGI(InternalPointer->SetMaximumFrameLatency(value));
+	}
+}
+}
