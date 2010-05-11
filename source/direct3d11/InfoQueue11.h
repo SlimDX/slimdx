@@ -24,7 +24,8 @@
 #include "../ComObject.h"
 
 #include "Enums11.h"
-#include "MessageID11.h"
+#include "DebugMessageID11.h"
+#include "InfoQueueFilter11.h"
 
 namespace SlimDX
 {
@@ -38,6 +39,86 @@ namespace SlimDX
 
 		public:
 			InfoQueue(Device^ device);
+
+			/*Result AddApplicationMessage(MessageSeverity severity, System::String^ description);
+			Result AddMessage(MessageCategory category, MessageSeverity severity, DebugMessageID messageId, System::String^ description);
+			Result AddMessage(DebugMessage message);
+			Result AddRetrievalFilters(... array<InfoQueueFilter>^ filters);
+			Result AddStorageFilters(... array<InfoQueueFilter>^ filters);
+
+			void ClearRetrievalFilters();
+			void ClearStorageFilters();
+			void ClearStoredMessages();
+
+			bool IsBreakingOn(MessageCategory category);
+			bool IsBreakingOn(DebugMessageID messageId);
+			bool IsBreakingOn(MessageSeverity severity);
+
+			DebugMessage GetMessage(int index);
+			InfoQueueFilter PeekRetrievalFilter();
+			InfoQueueFilter PeekStorageFilter();
+
+			void PopRetrievalFilter();
+			void PopStorageFilter();
+
+			void PushCopyOfRetrievalFilter();
+			void PushCopyOfStorageFilter();
+			void PushEmptyRetrievalFilter();
+			void PushEmptyStorageFilter();
+
+			void PushRetrievalFilter(InfoQueueFilter filter);
+			void PushStorageFilter(InfoQueueFilter filter);
+
+			Result BreakOn(MessageCategory category, bool enable);
+			Result BreakOn(DebugMessageID messageId, bool enable);
+			Result BreakOn(MessageSeverity severity, bool enable);
+
+			property bool MuteOutput
+			{
+				bool get();
+				void set(bool value);
+			}
+
+			property System::Int64 MessageCountLimit
+			{
+				System::Int64 get();
+				void set(System::Int64 value);
+			}
+
+			property System::Int64 NumberOfMessagesAllowedByStorageFilter
+			{
+				System::Int64 get();
+			}
+
+			property System::Int64 NumberOfMessagesDeniedByStorageFilter
+			{
+				System::Int64 get();
+			}
+
+			property System::Int64 NumberOfMessagesDiscaredByMessageCountLimit
+			{
+				System::Int64 get();
+			}
+
+			property System::Int64 NumberOfStoredMessages
+			{
+				System::Int64 get();
+			}
+
+			property System::Int64 NumberOfStoredMessagesAllowedByRetrievalFilter
+			{
+				System::Int64 get();
+			}
+
+			property int RetrievalFilterStackSize
+			{
+				int get();
+			}
+
+			property int StorageFilterStackSize
+			{
+				int get();
+			}*/
 		};
 	}
 }

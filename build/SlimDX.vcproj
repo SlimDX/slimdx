@@ -5819,18 +5819,46 @@
 					RelativePath="..\source\direct3d11\Debug11.h"
 					>
 				</File>
-				<File
-					RelativePath="..\source\direct3d11\InfoQueue11.cpp"
+				<Filter
+					Name="InfoQueue"
 					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d11\InfoQueue11.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d11\MessageID11.h"
-					>
-				</File>
+					<File
+						RelativePath="..\source\direct3d11\DebugMessage11.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\DebugMessage11.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\DebugMessageID11.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\InfoQueue11.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\InfoQueue11.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\InfoQueueFilter11.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\InfoQueueFilter11.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\InfoQueueFilterDescription11.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\InfoQueueFilterDescription11.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Resource"
