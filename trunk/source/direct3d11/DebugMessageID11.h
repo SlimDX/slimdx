@@ -1,14 +1,14 @@
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
-* Permission is hereby granted, Free of chArgumente, to any person obtaining a copy
-* of this software And associated documentation files (the "Software"), to deal
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, And/or sell
-* copies of the Software, And to permit persons to whom the Software is
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
 * 
-* The above copyright notice And this permission notice shall be included in
+* The above copyright notice and this permission notice shall be included in
 * all copies or substantial portions of the Software.
 * 
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -21,11 +21,11 @@
 */
 #pragma once
 
-Namespace SlimDX
+namespace SlimDX
 {
-	Namespace Direct3D11
+	namespace Direct3D11
 	{
-		public enum Class DebugMessageID : System::Int32
+		public enum class DebugMessageID : System::Int32
 		{
 			///<summary>Unknown message.</summary>
 			Unknown = D3D11_MESSAGE_ID_UNKNOWN,
@@ -2093,9 +2093,6 @@ Namespace SlimDX
 
 			///<summary>CreateUnorderedAccessViewInvalidFlags message.</summary>
 			CreateUnorderedAccessViewInvalidFlags = D3D11_MESSAGE_ID_CREATEUNORDEREDACCESSVIEW_INVALIDFLAGS,
-
-			///<summary>CreateShaderResourceViewTooManyObjects message.</summary>
-			CreateShaderResourceViewTooManyObjects = D3D11_MESSAGE_ID_CREATESHADERRESESOURCEVIEW_TOOMANYOBJECTS,
 
 			///<summary>DeviceDispatchIndirectInvalidArgBuffer message.</summary>
 			DeviceDispatchIndirectInvalidArgBuffer = D3D11_MESSAGE_ID_DEVICE_DISPATCHINDIRECT_INVALID_ARG_BUFFER,
