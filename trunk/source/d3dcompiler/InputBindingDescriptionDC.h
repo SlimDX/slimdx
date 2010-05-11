@@ -27,19 +27,54 @@ namespace SlimDX
 {
 	namespace D3DCompiler
 	{
+		/// <summary>
+		/// Describes how a shader resource is bound to a shader input.
+		/// </summary>
+		/// <unmanaged>D3D11_SHADER_INPUT_BIND_DESC</unmanaged>
 		public value class InputBindingDescription
 		{
 		internal:
 			InputBindingDescription( const D3D11_SHADER_INPUT_BIND_DESC &desc );
 
 		public:
+			/// <summary>
+			/// Name of the shader resource.
+			/// </summary>
 			property System::String^ Name;
+
+			/// <summary>
+			/// Identifies the type of data in the resource.
+			/// </summary>
 			property ShaderInputType Type;
+
+			/// <summary>
+			/// Starting bind point.
+			/// </summary>
 			property int BindPoint;
+
+			/// <summary>
+			/// Number of contiguous bind points for arrays.
+			/// </summary>
 			property int BindCount;
+
+			/// <summary>
+			/// Shader input-parameter options.
+			/// </summary>
 			property ShaderInputFlags Flags;
+
+			/// <summary>
+			/// If the input is a texture, the return type.
+			/// </summary>
 			property ResourceReturnType ReturnType;
+
+			/// <summary>
+			/// Identifies the amount of data in the resource.
+			/// </summary>
 			property Direct3D11::ShaderResourceViewDimension Dimension;
+
+			/// <summary>
+			/// The number of samples for a multisampled texture; otherwise 0.
+			/// </summary>
 			property int SampleCount;
 		};
 	}

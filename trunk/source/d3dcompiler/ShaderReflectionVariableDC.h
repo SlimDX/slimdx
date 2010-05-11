@@ -30,6 +30,10 @@ namespace SlimDX
 		value class ShaderVariableDescription;
 		ref class ShaderReflectionType;
 
+		/// <summary>
+		/// Defines an interface that provides access to the reflection data for a shader variable.
+		/// </summary>
+		/// <unmanaged>ID3D11ShaderReflectionVariable</unmanaged>
 		public ref class ShaderReflectionVariable
 		{
 		private:
@@ -39,14 +43,31 @@ namespace SlimDX
 			ShaderReflectionVariable( ID3D11ShaderReflectionVariable* pointer );
 
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="ShaderReflectionVariable"/> class.
+			/// </summary>
+			//// <param name="pointer">The unmanaged ID3D11ShaderReflectionVariable pointer.</param>
 			ShaderReflectionVariable( System::IntPtr pointer );
 			
+			/// <summary>
+			/// Gets the shader variable's description.
+			/// </summary>
 			property ShaderVariableDescription Description
 			{
 				ShaderVariableDescription get();
 			}
 
+			/// <summary>
+			/// Gets the corresponding interface slot for a variable that represents an interface pointer.
+			/// </summary>
+			/// <param name="arrayIndex">Index of the array element to get the slot number for. For a non-array variable this value will be zero.</param>
+			/// <returns>The index of the interface in the interface array.</returns>
 			int GetInterfaceSlot( int arrayIndex );
+
+			/// <summary>
+			/// Gets the reflected type of the shader variable.
+			/// </summary>
+			/// <returns>The reflected type of the shader variable.</returns>
 			ShaderReflectionType^ GetVariableType();
 		};
 	}

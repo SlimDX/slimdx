@@ -26,7 +26,11 @@
 namespace SlimDX
 {
 	namespace D3DCompiler
-	{	
+	{
+		/// <summary>
+		/// Describes a shader-variable type.
+		/// </summary>
+		/// <unmanaged>D3D11_SHADER_TYPE_DESC</unmanaged>
 		public value class ShaderTypeDescription : System::IEquatable<ShaderTypeDescription>
 		{
 		private:
@@ -42,47 +46,105 @@ namespace SlimDX
 			ShaderTypeDescription( const D3D11_SHADER_TYPE_DESC& native );
 			
 		public:
+			/// <summary>
+			/// Identifies the variable class as one of scalar, vector, matrix or object.
+			/// </summary>
 			property ShaderVariableClass Class
 			{
 				ShaderVariableClass get();
 			}
 			
+			/// <summary>
+			/// The variable type.
+			/// </summary>
 			property ShaderVariableType Type
 			{
 				ShaderVariableType get();
 			}
 			
+			/// <summary>
+			/// Number of rows in a matrix. Otherwise a numeric type returns 1, any other type returns 0.
+			/// </summary>
 			property int Rows
 			{
 				int get();
 			}
 			
+			/// <summary>
+			/// Number of columns in a matrix. Otherwise a numeric type returns 1, any other type returns 0.
+			/// </summary>
 			property int Columns
 			{
 				int get();
 			}
 
+			/// <summary>
+			/// Number of elements in an array; otherwise 0.
+			/// </summary>
 			property int Elements
 			{
 				int get();
 			}
 			
+			/// <summary>
+			/// Number of members in the structure; otherwise 0.
+			/// </summary>
 			property int Members
 			{
 				int get();
 			}
 			
+			/// <summary>
+			/// Offset, in bytes, between the start of the parent structure and this variable.
+			/// </summary>
 			property int Offset
 			{
 				int get();
 			}
 
+			/// <summary>
+			/// Tests for equality between two objects.
+			/// </summary>
+			/// <param name="left">The first value to compare.</param>
+			/// <param name="right">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 			static bool operator == ( ShaderTypeDescription left, ShaderTypeDescription right );
+
+			/// <summary>
+			/// Tests for inequality between two objects.
+			/// </summary>
+			/// <param name="left">The first value to compare.</param>
+			/// <param name="right">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
 			static bool operator != ( ShaderTypeDescription left, ShaderTypeDescription right );
 
+			/// <summary>
+			/// Returns the hash code for this instance.
+			/// </summary>
+			/// <returns>A 32-bit signed integer hash code.</returns>
 			virtual int GetHashCode() override;
+
+			/// <summary>
+			/// Returns a value that indicates whether the current instance is equal to a specified object. 
+			/// </summary>
+			/// <param name="obj">Object to make the comparison with.</param>
+			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
 			virtual bool Equals( System::Object^ obj ) override;
+
+			/// <summary>
+			/// Returns a value that indicates whether the current instance is equal to the specified object. 
+			/// </summary>
+			/// <param name="other">Object to make the comparison with.</param>
+			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
 			virtual bool Equals( ShaderTypeDescription other );
+
+			/// <summary>
+			/// Determines whether the specified object instances are considered equal. 
+			/// </summary>
+			/// <param name="value1">The first value to compare.</param>
+			/// <param name="value2">The second value to compare.</param>
+			/// <returns><c>true</c> if <paramref name="value1"/> is the same instance as <paramref name="value2"/> or 
+			/// if both are <c>null</c> references or if <c>value1.Equals(value2)</c> returns <c>true</c>; otherwise, <c>false</c>.</returns>
 			static bool Equals( ShaderTypeDescription% value1, ShaderTypeDescription% value2 );
 		};
 	}

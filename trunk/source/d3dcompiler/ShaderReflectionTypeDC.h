@@ -29,6 +29,10 @@ namespace SlimDX
 	{
 		value class ShaderTypeDescription;
 
+		/// <summary>
+		/// Defines an interface that provides access to types of shader variables.
+		/// </summary>
+		/// <unmanaged>ID3D11ShaderReflectionType</unmanaged>
 		public ref class ShaderReflectionType
 		{
 		private:
@@ -42,30 +46,84 @@ namespace SlimDX
 			ShaderReflectionType( ID3D11ShaderReflectionType* pointer );
 
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="ShaderReflectionType"/> class.
+			/// </summary>
+			//// <param name="pointer">The unmanaged ID3D11ShaderReflectionType pointer.</param>
 			ShaderReflectionType( System::IntPtr pointer );
 
+			/// <summary>
+			/// Gets the variable's description.
+			/// </summary>
 			property ShaderTypeDescription Description
 			{
 				ShaderTypeDescription get();
 			}
 
+			/// <summary>
+			/// Gets the type of this variable's base class.
+			/// </summary>
 			property ShaderReflectionType^ BaseClass
 			{
 				ShaderReflectionType^ get() { return baseClass; }
 			}
 			
+			/// <summary>
+			/// Gets the variable's sub type.
+			/// </summary>
 			property ShaderReflectionType^ SubType
 			{
 				ShaderReflectionType^ get() { return subType; }
 			}
 
+			/// <summary>
+			/// Gets an interface by index.
+			/// </summary>
+			/// <param name="index">The zero-based index of the interface to retrieve.</param>
+			/// <returns>The interface at the given index.</returns>
 			ShaderReflectionType^ GetInterface( int index );
+
+			/// <summary>
+			/// Gets a member variable type by index.
+			/// </summary>
+			/// <param name="index">The zero-based index of the member variable to retrieve.</param>
+			/// <returns>The member variable type at the given index.</returns>
 			ShaderReflectionType^ GetMemberType( int index );
+
+			/// <summary>
+			/// Gets a member variable type by name.
+			/// </summary>
+			/// <param name="name">The name of the member variable to retrieve.</param>
+			/// <returns>The member variable type with the given name.</returns>
 			ShaderReflectionType^ GetMemberType( System::String^ name );
+
+			/// <summary>
+			/// Gets the name of a member variable type.
+			/// </summary>
+			/// <param name="index">The zero-based index of the member variable to retrieve.</param>
+			/// <returns>The name of the given member variable type.</returns>
 			System::String^ GetMemberTypeName( int index );
+
+			/// <summary>
+			/// Determines whether the class type implements the given interface.
+			/// </summary>
+			/// <param name="base">The potential parent type.</param>
+			/// <returns><c>true</c> if the class type implements the given interface; otherwise, <c>false</c>.</returns>
 			bool ImplementsInterface( ShaderReflectionType^ base );
+
+			/// <summary>
+			/// Determines whether the variable type is equivalent to or inherits from the given type.
+			/// </summary>
+			/// <param name="type">The potential parent type.</param>
+			/// <returns><c>true</c> if the class type is equivalent to or inherits from the given type; otherwise, <c>false</c>.</returns>
 			bool IsOfType( ShaderReflectionType^ type );
-			bool IsEqual( ShaderReflectionType^ type );
+
+			/// <summary>
+			/// Determines whether the underlying variable type is equivalent to that of the specified type.
+			/// </summary>
+			/// <param name="type">The type to test for equivalence.</param>
+			/// <returns><c>true</c> if the underlying class type is equivalent to that of the specified type; otherwise, <c>false</c>.</returns>
+			bool IsTypeEqual( ShaderReflectionType^ type );
 		};
 	}
 }
