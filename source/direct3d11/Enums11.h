@@ -474,11 +474,27 @@ namespace SlimDX
 			Back = D3D11_CULL_BACK
 		};
 
+		/// <summary>
+		/// Contains debug features that can be enabled and disabled.
+		/// </summary>
+		/// <unmanaged>D3D11_DEBUG_FEATURE</unmanaged>
 		[System::Flags]
 		public enum class DebugFeatureFlags : System::Int32
 		{
+			/// <summary>
+			/// Application will wait for the GPU to finish processing the rendering operation before continuing.
+			/// </summary>
 			FinishPerRender = D3D11_DEBUG_FEATURE_FINISH_PER_RENDER_OP,
+
+			/// <summary>
+			/// Runtime will additionally call DeviceContext.Flush.
+			/// </summary>
 			FlushPerRender = D3D11_DEBUG_FEATURE_FLUSH_PER_RENDER_OP,
+
+			/// <summary>
+			/// Runtime will call SwapChain.Present. Presentation of render buffers will occur according to the settings established by prior calls
+			/// to Debug.SwapChain and Debug.PresentDelay.
+			/// </summary>
 			PresentPerRender = D3D11_DEBUG_FEATURE_PRESENT_PER_RENDER_OP
 		};
 		
@@ -1552,6 +1568,23 @@ namespace SlimDX
 			/// The resource will be accessed as a 3D texture.
 			/// </summary>
 			Texture3D = D3D11_RTV_DIMENSION_TEXTURE3D
+		};
+
+		/// <summary>
+		/// Options for the amount of information returned about live device objects.
+		/// </summary>
+		/// <unmanaged>D3D11_RLDO_FLAGS</unmanaged>
+		public enum class ReportingLevel : System::Int32
+		{
+			/// <summary>
+			/// Reports only a summary of the device information.
+			/// </summary>
+			Summary = D3D11_RLDO_SUMMARY,
+
+			/// <summary>
+			/// Gives a detailed report of the device information.
+			/// </summary>
+			Detail = D3D11_RLDO_DETAIL
 		};
 		
 		/// <summary>Identifies the type of resource being used.</summary>
