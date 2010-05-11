@@ -1184,6 +1184,90 @@ namespace SlimDX
 		};
 
 		/// <summary>
+		/// Specifies various categories of debug messages.
+		/// </summary>
+		/// <unmanaged>D3D11_MESSAGE_CATEGORY</unmanaged>
+		public enum class MessageCategory : System::Int32
+		{
+			/// <summary>
+			/// The message is a custom application-defined message.
+			/// </summary>
+			ApplicationDefined = D3D11_MESSAGE_CATEGORY_APPLICATION_DEFINED,
+
+			/// <summary>
+			/// The message is contains miscellaneous information.
+			/// </summary>
+			Miscellaneous = D3D11_MESSAGE_CATEGORY_MISCELLANEOUS,
+
+			/// <summary>
+			/// The message pertains to initialization.
+			/// </summary>
+			Initialization = D3D11_MESSAGE_CATEGORY_INITIALIZATION,
+
+			/// <summary>
+			/// The message pertains to cleanup.
+			/// </summary>
+			Cleanup = D3D11_MESSAGE_CATEGORY_CLEANUP,
+
+			/// <summary>
+			/// The message pertains to compilation.
+			/// </summary>
+			Compilation = D3D11_MESSAGE_CATEGORY_COMPILATION,
+
+			/// <summary>
+			/// The message pertains to state creation.
+			/// </summary>
+			StateCreation = D3D11_MESSAGE_CATEGORY_STATE_CREATION,
+
+			/// <summary>
+			/// The message pertains to the setting of state.
+			/// </summary>
+			StateSetting = D3D11_MESSAGE_CATEGORY_STATE_SETTING,
+
+			/// <summary>
+			/// The message pertains to the getting of state.
+			/// </summary>
+			StateGetting = D3D11_MESSAGE_CATEGORY_STATE_GETTING,
+
+			/// <summary>
+			/// The message pertains to resource manipulation.
+			/// </summary>
+			ResourceManipulation = D3D11_MESSAGE_CATEGORY_RESOURCE_MANIPULATION,
+
+			/// <summary>
+			/// The message pertains to application execution.
+			/// </summary>
+			Execution = D3D11_MESSAGE_CATEGORY_EXECUTION
+		};
+
+		/// <summary>
+		/// Specifies debug message severity levels for an information queue.
+		/// </summary>
+		/// <unmanaged>D3D11_MESSAGE_SEVERITY</unmanaged>
+		public enum class MessageSeverity : System::Int32
+		{
+			/// <summary>
+			/// The message indicates that some type of corruption has occured.
+			/// </summary>
+			Corruption = D3D11_MESSAGE_SEVERITY_CORRUPTION,
+
+			/// <summary>
+			/// The message indicates that an error has occurred.
+			/// </summary>
+			Error = D3D11_MESSAGE_SEVERITY_ERROR,
+
+			/// <summary>
+			/// The message indicates that a warning has occurred.
+			/// </summary>
+			Warning = D3D11_MESSAGE_SEVERITY_WARNING,
+
+			/// <summary>
+			/// The message contains generic debug information.
+			/// </summary>
+			Info = D3D11_MESSAGE_SEVERITY_INFO
+		};
+
+		/// <summary>
 		/// Normal maps generation constants.
 		/// </summary>
 		/// <unmanaged>D3DX11_NORMALMAP_FLAG</unmanaged>
