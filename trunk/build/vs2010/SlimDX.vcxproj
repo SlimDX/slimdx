@@ -67,7 +67,8 @@
     <CLRSupport>true</CLRSupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings"></ImportGroup>
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Public|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -113,7 +114,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\Effects11\Inc;$(DXSDK_DIR)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\;$(ProjectDir)..\..\external\Effects11\Inc;$(DXSDK_DIR)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;D3D_DEBUG_INFO;WINVER=0x501;_WIN32_WINNT=0x501;DIRECTINPUT_VERSION=0x0800;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -130,12 +131,16 @@
       <DelayLoadDLLs>d3d9.dll;d3dx9_42.dll;d3dx10_42.dll;d3dx11_42.dll;d3dcompiler_42.dll;d3dcsx_42.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>true</AssemblyDebug>
-      <LinkTimeCodeGeneration></LinkTimeCodeGeneration>
+      <LinkTimeCodeGeneration>
+      </LinkTimeCodeGeneration>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention></DataExecutionPrevention>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
-      <KeyFile></KeyFile>
-      <KeyContainer></KeyContainer>
+      <KeyFile>
+      </KeyFile>
+      <KeyContainer>
+      </KeyContainer>
       <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
     </Link>
   </ItemDefinitionGroup>
@@ -145,7 +150,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\Effects11\Inc;$(DXSDK_DIR)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\;$(ProjectDir)..\..\external\Effects11\Inc;$(DXSDK_DIR)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;D3D_DEBUG_INFO;WINVER=0x501;_WIN32_WINNT=0x501;DIRECTINPUT_VERSION=0x0800;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -162,12 +167,16 @@
       <DelayLoadDLLs>d3d9.dll;d3dx9_42.dll;d3dx10_42.dll;d3dx11_42.dll;d3dcompiler_42.dll;d3dcsx_42.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>true</AssemblyDebug>
-      <LinkTimeCodeGeneration></LinkTimeCodeGeneration>
+      <LinkTimeCodeGeneration>
+      </LinkTimeCodeGeneration>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention></DataExecutionPrevention>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
-      <KeyFile></KeyFile>
-      <KeyContainer></KeyContainer>
+      <KeyFile>
+      </KeyFile>
+      <KeyContainer>
+      </KeyContainer>
       <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
     </Link>
   </ItemDefinitionGroup>
@@ -176,7 +185,7 @@
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\Effects11\Inc;$(DXSDK_DIR)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\;$(ProjectDir)..\..\external\Effects11\Inc;$(DXSDK_DIR)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;D3D_DEBUG_INFO;WINVER=0x501;_WIN32_WINNT=0x501;DIRECTINPUT_VERSION=0x0800;XMLDOCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FloatingPointModel>Precise</FloatingPointModel>
@@ -195,9 +204,11 @@
       <DelayLoadDLLs>d3d9.dll;d3dx9_42.dll;d3dx10_42.dll;d3dx11_42.dll;d3dcompiler_42.dll;d3dcsx_42.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention></DataExecutionPrevention>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
-      <KeyFile></KeyFile>
+      <KeyFile>
+      </KeyFile>
       <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
     </Link>
   </ItemDefinitionGroup>
@@ -209,7 +220,7 @@
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\Effects11\Inc;$(DXSDK_DIR)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\;$(ProjectDir)..\..\external\Effects11\Inc;$(DXSDK_DIR)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;D3D_DEBUG_INFO;WINVER=0x501;_WIN32_WINNT=0x501;DIRECTINPUT_VERSION=0x0800;XMLDOCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -227,9 +238,11 @@
       <DelayLoadDLLs>d3d9.dll;d3dx9_42.dll;d3dx10_42.dll;d3dx11_42.dll;d3dcompiler_42.dll;d3dcsx_42.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention></DataExecutionPrevention>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
-      <KeyFile></KeyFile>
+      <KeyFile>
+      </KeyFile>
       <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
     </Link>
   </ItemDefinitionGroup>
@@ -238,7 +251,7 @@
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\Effects11\Inc;$(DXSDK_DIR)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\;$(ProjectDir)..\..\external\Effects11\Inc;$(DXSDK_DIR)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;D3D_DEBUG_INFO;WINVER=0x501;_WIN32_WINNT=0x501;DIRECTINPUT_VERSION=0x0800;XMLDOCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -255,7 +268,8 @@
       <DelayLoadDLLs>d3d9.dll;d3dx9_42.dll;d3dx10_42.dll;d3dx11_42.dll;d3dcompiler_42.dll;d3dcsx_42.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention></DataExecutionPrevention>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
       <KeyFile>D:\slimdxKey.snk</KeyFile>
       <DelaySign>false</DelaySign>
@@ -276,7 +290,7 @@ sn -R $(TargetPath) D:\slimdxKey.snk
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\Effects11\Inc;$(DXSDK_DIR)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external\;$(ProjectDir)..\..\external\Effects11\Inc;$(DXSDK_DIR)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;D3D_DEBUG_INFO;WINVER=0x501;_WIN32_WINNT=0x501;DIRECTINPUT_VERSION=0x0800;XMLDOCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -293,7 +307,8 @@ sn -R $(TargetPath) D:\slimdxKey.snk
       <DelayLoadDLLs>d3d9.dll;d3dx9_42.dll;d3dx10_42.dll;d3dx11_42.dll;d3dcompiler_42.dll;d3dcsx_42.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention></DataExecutionPrevention>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
       <KeyFile>D:\slimdxKey.snk</KeyFile>
       <DelaySign>false</DelaySign>
@@ -852,16 +867,6 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClCompile Include="..\..\source\direct3d11\ClassInstance11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\ClassInstanceDescription11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\ClassLinkage11.cpp" />
-    <ClCompile Include="..\..\source\direct3d11\InputBindingDescription11.cpp" />
-    <ClCompile Include="..\..\source\direct3d11\ShaderDescription11.cpp" />
-    <ClCompile Include="..\..\source\direct3d11\ShaderParameterDescription11.cpp" />
-    <ClCompile Include="..\..\source\direct3d11\ShaderReflection11.cpp" />
-    <ClCompile Include="..\..\source\direct3d11\ConstantBuffer11.cpp" />
-    <ClCompile Include="..\..\source\direct3d11\ConstantBufferDescription11.cpp" />
-    <ClCompile Include="..\..\source\direct3d11\ShaderReflectionType11.cpp" />
-    <ClCompile Include="..\..\source\direct3d11\ShaderTypeDescription11.cpp" />
-    <ClCompile Include="..\..\source\direct3d11\ShaderReflectionVariable11.cpp" />
-    <ClCompile Include="..\..\source\direct3d11\ShaderVariableDescription11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\BlendState11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\BlendStateDescription11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\RenderTargetBlendDescription11.cpp" />
@@ -940,6 +945,16 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClCompile Include="..\..\source\d3dcompiler\ShaderMacroDC.cpp" />
     <ClCompile Include="..\..\source\d3dcompiler\ShaderBytecodeDC.cpp" />
     <ClCompile Include="..\..\source\d3dcompiler\ShaderSignatureDC.cpp" />
+    <ClCompile Include="..\..\source\d3dcompiler\InputBindingDescriptionDC.cpp" />
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderDescriptionDC.cpp" />
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderParameterDescriptionDC.cpp" />
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderReflectionDC.cpp" />
+    <ClCompile Include="..\..\source\d3dcompiler\ConstantBufferDC.cpp" />
+    <ClCompile Include="..\..\source\d3dcompiler\ConstantBufferDescriptionDC.cpp" />
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderReflectionTypeDC.cpp" />
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderTypeDescriptionDC.cpp" />
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderReflectionVariableDC.cpp" />
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderVariableDescriptionDC.cpp" />
     <ClCompile Include="..\..\source\AssemblyInfo.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h</PrecompiledHeaderFile>
@@ -1551,16 +1566,6 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClInclude Include="..\..\source\direct3d11\ClassInstance11.h" />
     <ClInclude Include="..\..\source\direct3d11\ClassInstanceDescription11.h" />
     <ClInclude Include="..\..\source\direct3d11\ClassLinkage11.h" />
-    <ClInclude Include="..\..\source\direct3d11\InputBindingDescription11.h" />
-    <ClInclude Include="..\..\source\direct3d11\ShaderDescription11.h" />
-    <ClInclude Include="..\..\source\direct3d11\ShaderParameterDescription11.h" />
-    <ClInclude Include="..\..\source\direct3d11\ShaderReflection11.h" />
-    <ClInclude Include="..\..\source\direct3d11\ConstantBuffer11.h" />
-    <ClInclude Include="..\..\source\direct3d11\ConstantBufferDescription11.h" />
-    <ClInclude Include="..\..\source\direct3d11\ShaderReflectionType11.h" />
-    <ClInclude Include="..\..\source\direct3d11\ShaderTypeDescription11.h" />
-    <ClInclude Include="..\..\source\direct3d11\ShaderReflectionVariable11.h" />
-    <ClInclude Include="..\..\source\direct3d11\ShaderVariableDescription11.h" />
     <ClInclude Include="..\..\source\direct3d11\BlendState11.h" />
     <ClInclude Include="..\..\source\direct3d11\BlendStateDescription11.h" />
     <ClInclude Include="..\..\source\direct3d11\RenderTargetBlendDescription11.h" />
@@ -1641,6 +1646,16 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClInclude Include="..\..\source\d3dcompiler\ShaderMacroDC.h" />
     <ClInclude Include="..\..\source\d3dcompiler\ShaderBytecodeDC.h" />
     <ClInclude Include="..\..\source\d3dcompiler\ShaderSignatureDC.h" />
+    <ClInclude Include="..\..\source\d3dcompiler\InputBindingDescriptionDC.h" />
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderDescriptionDC.h" />
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderParameterDescriptionDC.h" />
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderReflectionDC.h" />
+    <ClInclude Include="..\..\source\d3dcompiler\ConstantBufferDC.h" />
+    <ClInclude Include="..\..\source\d3dcompiler\ConstantBufferDescriptionDC.h" />
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderReflectionTypeDC.h" />
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderTypeDescriptionDC.h" />
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderReflectionVariableDC.h" />
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderVariableDescriptionDC.h" />
     <ClInclude Include="..\..\source\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
@@ -1656,5 +1671,6 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <None Include="..\.\ReleaseNotes.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets"></ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
 </Project>

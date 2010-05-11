@@ -658,18 +658,6 @@
     <Filter Include="Direct3D11\Shader\ClassLinkage">
       <UniqueIdentifier>{dfeae1fe-5ec7-4b55-91a4-dce6b6ab04ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Direct3D11\Shader\Reflection">
-      <UniqueIdentifier>{38055c0a-ff1d-49fd-ab01-0ae615b602be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Shader\Reflection\ConstantBuffer">
-      <UniqueIdentifier>{2cfd8630-5a26-4952-8cbc-9b09b01149ad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Shader\Reflection\Type">
-      <UniqueIdentifier>{75ccbf24-c523-4141-ba36-5b23655db45b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Shader\Reflection\Variable">
-      <UniqueIdentifier>{49a332ba-eed6-44d4-b378-3b2be4521987}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Direct3D11\State">
       <UniqueIdentifier>{3c3c5f9b-ef9f-4ce0-b238-bd48a6111089}</UniqueIdentifier>
     </Filter>
@@ -768,6 +756,18 @@
     </Filter>
     <Filter Include="D3DCompiler\ShaderSignature">
       <UniqueIdentifier>{35bca85e-72af-4cd3-8fc2-3809f5c00f2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3DCompiler\Reflection">
+      <UniqueIdentifier>{55d79d93-3fa3-43a3-a90c-d9760e3411c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3DCompiler\Reflection\ConstantBuffer">
+      <UniqueIdentifier>{714fa6b1-170d-42da-bbe8-b4353b3afad1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3DCompiler\Reflection\Type">
+      <UniqueIdentifier>{e49e0aaa-8ff8-46de-b8a5-e93c719004d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3DCompiler\Reflection\Variable">
+      <UniqueIdentifier>{1774cff5-e35b-4585-9c60-2e7a86dfbef0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2367,36 +2367,6 @@
     <ClCompile Include="..\..\source\direct3d11\ClassLinkage11.cpp">
       <Filter>Direct3D11\Shader\ClassLinkage</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\InputBindingDescription11.cpp">
-      <Filter>Direct3D11\Shader\Reflection</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\ShaderDescription11.cpp">
-      <Filter>Direct3D11\Shader\Reflection</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\ShaderParameterDescription11.cpp">
-      <Filter>Direct3D11\Shader\Reflection</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\ShaderReflection11.cpp">
-      <Filter>Direct3D11\Shader\Reflection</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\ConstantBuffer11.cpp">
-      <Filter>Direct3D11\Shader\Reflection\ConstantBuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\ConstantBufferDescription11.cpp">
-      <Filter>Direct3D11\Shader\Reflection\ConstantBuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\ShaderReflectionType11.cpp">
-      <Filter>Direct3D11\Shader\Reflection\Type</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\ShaderTypeDescription11.cpp">
-      <Filter>Direct3D11\Shader\Reflection\Type</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\ShaderReflectionVariable11.cpp">
-      <Filter>Direct3D11\Shader\Reflection\Variable</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\ShaderVariableDescription11.cpp">
-      <Filter>Direct3D11\Shader\Reflection\Variable</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\BlendState11.cpp">
       <Filter>Direct3D11\State\BlendState</Filter>
     </ClCompile>
@@ -2630,6 +2600,36 @@
     </ClCompile>
     <ClCompile Include="..\..\source\d3dcompiler\ShaderSignatureDC.cpp">
       <Filter>D3DCompiler\ShaderSignature</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\d3dcompiler\InputBindingDescriptionDC.cpp">
+      <Filter>D3DCompiler\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderDescriptionDC.cpp">
+      <Filter>D3DCompiler\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderParameterDescriptionDC.cpp">
+      <Filter>D3DCompiler\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderReflectionDC.cpp">
+      <Filter>D3DCompiler\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\d3dcompiler\ConstantBufferDC.cpp">
+      <Filter>D3DCompiler\Reflection\ConstantBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\d3dcompiler\ConstantBufferDescriptionDC.cpp">
+      <Filter>D3DCompiler\Reflection\ConstantBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderReflectionTypeDC.cpp">
+      <Filter>D3DCompiler\Reflection\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderTypeDescriptionDC.cpp">
+      <Filter>D3DCompiler\Reflection\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderReflectionVariableDC.cpp">
+      <Filter>D3DCompiler\Reflection\Variable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\d3dcompiler\ShaderVariableDescriptionDC.cpp">
+      <Filter>D3DCompiler\Reflection\Variable</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\AssemblyInfo.cpp" />
   </ItemGroup>
@@ -4419,36 +4419,6 @@
     <ClInclude Include="..\..\source\direct3d11\ClassLinkage11.h">
       <Filter>Direct3D11\Shader\ClassLinkage</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\InputBindingDescription11.h">
-      <Filter>Direct3D11\Shader\Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\ShaderDescription11.h">
-      <Filter>Direct3D11\Shader\Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\ShaderParameterDescription11.h">
-      <Filter>Direct3D11\Shader\Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\ShaderReflection11.h">
-      <Filter>Direct3D11\Shader\Reflection</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\ConstantBuffer11.h">
-      <Filter>Direct3D11\Shader\Reflection\ConstantBuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\ConstantBufferDescription11.h">
-      <Filter>Direct3D11\Shader\Reflection\ConstantBuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\ShaderReflectionType11.h">
-      <Filter>Direct3D11\Shader\Reflection\Type</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\ShaderTypeDescription11.h">
-      <Filter>Direct3D11\Shader\Reflection\Type</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\ShaderReflectionVariable11.h">
-      <Filter>Direct3D11\Shader\Reflection\Variable</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\ShaderVariableDescription11.h">
-      <Filter>Direct3D11\Shader\Reflection\Variable</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\BlendState11.h">
       <Filter>Direct3D11\State\BlendState</Filter>
     </ClInclude>
@@ -4688,6 +4658,36 @@
     </ClInclude>
     <ClInclude Include="..\..\source\d3dcompiler\ShaderSignatureDC.h">
       <Filter>D3DCompiler\ShaderSignature</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\d3dcompiler\InputBindingDescriptionDC.h">
+      <Filter>D3DCompiler\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderDescriptionDC.h">
+      <Filter>D3DCompiler\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderParameterDescriptionDC.h">
+      <Filter>D3DCompiler\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderReflectionDC.h">
+      <Filter>D3DCompiler\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\d3dcompiler\ConstantBufferDC.h">
+      <Filter>D3DCompiler\Reflection\ConstantBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\d3dcompiler\ConstantBufferDescriptionDC.h">
+      <Filter>D3DCompiler\Reflection\ConstantBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderReflectionTypeDC.h">
+      <Filter>D3DCompiler\Reflection\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderTypeDescriptionDC.h">
+      <Filter>D3DCompiler\Reflection\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderReflectionVariableDC.h">
+      <Filter>D3DCompiler\Reflection\Variable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\d3dcompiler\ShaderVariableDescriptionDC.h">
+      <Filter>D3DCompiler\Reflection\Variable</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\stdafx.h" />
   </ItemGroup>
