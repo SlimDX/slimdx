@@ -2304,6 +2304,9 @@
     <ClCompile Include="..\..\source\direct3d11\CounterMetadata11.cpp">
       <Filter>Direct3D11\Diagnostics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\Debug11.cpp">
+      <Filter>Direct3D11\Diagnostics</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\Resource11.cpp">
       <Filter>Direct3D11\Resource</Filter>
     </ClCompile>
@@ -4354,6 +4357,9 @@
       <Filter>Direct3D11\Diagnostics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\CounterMetadata11.h">
+      <Filter>Direct3D11\Diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\Debug11.h">
       <Filter>Direct3D11\Diagnostics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\Resource11.h">

@@ -5811,6 +5811,14 @@
 					RelativePath="..\source\direct3d11\CounterMetadata11.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\direct3d11\Debug11.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d11\Debug11.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Resource"

@@ -91,6 +91,14 @@ namespace SlimDX
 			}
 
 			/// <summary>
+			/// Gets a value indicating whether the current device is using the reference rasterizer.
+			/// </summary>
+			property bool IsReferenceDevice
+			{
+				bool get();
+			}
+
+			/// <summary>
 			/// Initializes a new instance of the <see cref="Device"/> class using the highest supported feature level.
 			/// </summary>
 			/// <param name="adapter">The video adapter on which the device should be created.</param>
@@ -189,6 +197,12 @@ namespace SlimDX
 			/// <returns>The new reference to the shared resource.</returns>
 			generic<typename T> where T : ComObject
 			T OpenSharedResource(System::IntPtr handle);
+
+			/// <summary>
+			/// Switches between the reference rasterizer and a hardware accelerated device.
+			/// </summary>
+			/// <param name="useReferenceRasterizer"><c>true</c> to use the reference rasterizer; <c>false</c> to switch back to a hardware accelerated device.</param>
+			void SwitchToReference(bool useReferenceRasterizer);
 
 			/// <summary>
 			/// Gets the highest supported hardware feature level of the primary adapter.

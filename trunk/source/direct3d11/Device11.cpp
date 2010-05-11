@@ -118,6 +118,20 @@ namespace Direct3D11
 		return DeviceContext::FromPointer( context, this );
 	}
 	
+	bool Device::IsReferenceDevice::get()
+	{
+		ID3D11SwitchToRef *switcher;
+
+		HRESULT hr = InternalPointer->QueryInterface(IID_ID3D11SwitchToRef, reinterpret_cast<void**>(&switcher));
+		if (FAILED(hr))
+			return false;
+
+		bool result = switcher->GetUseRef() != 0;
+		switcher->Release();
+
+		return result;
+	}
+
 	CounterCapabilities Device::GetCounterCapabilities()
 	{
 		D3D11_COUNTER_INFO info;
@@ -217,6 +231,18 @@ namespace Direct3D11
 		UINT result = 0;
 		InternalPointer->CheckMultisampleQualityLevels( static_cast<DXGI_FORMAT>( format ), sampleCount, &result );
 		return result;
+	}
+
+	void Device::SwitchToReference(bool useReferenceRasterizer)
+	{
+		ID3D11SwitchToRef *switcher;
+
+		HRESULT hr = InternalPointer->QueryInterface(IID_ID3D11SwitchToRef, reinterpret_cast<void**>(&switcher));
+		if (FAILED(hr))
+			throw gcnew InvalidOperationException("The device must have been created with the DeviceCreationFlags.SwitchToRef option in order to switch between the reference rasterizer and a hardware accelerated device.");
+
+		switcher->SetUseRef(useReferenceRasterizer);
+		switcher->Release();
 	}
 
 	Direct3D11::FeatureLevel Device::GetSupportedFeatureLevel()
