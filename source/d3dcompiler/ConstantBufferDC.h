@@ -30,6 +30,10 @@ namespace SlimDX
 		value class ConstantBufferDescription;
 		ref class ShaderReflectionVariable;
 
+		/// <summary>
+		/// Defines an interface that provides access to a shader constant buffer.
+		/// </summary>
+		/// <unmanaged>ID3D11ShaderReflectionConstantBuffer</unmanaged>
 		public ref class ConstantBuffer
 		{
 		private:
@@ -39,14 +43,32 @@ namespace SlimDX
 			ConstantBuffer( ID3D11ShaderReflectionConstantBuffer* pointer );
 
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="ConstantBuffer"/> class.
+			/// </summary>
+			//// <param name="pointer">The unmanaged ID3D11ShaderReflectionConstantBuffer pointer.</param>
 			ConstantBuffer( System::IntPtr pointer );
 			
+			/// <summary>
+			/// Gets the constant buffer's description.
+			/// </summary>
 			property ConstantBufferDescription Description
 			{
 				ConstantBufferDescription get();
 			}
 
+			/// <summary>
+			/// Gets the shader reflection variable at the given index.
+			/// </summary>
+			/// <param name="index">The zero-based index of the shader variable to retrieve.</param>
+			/// <returns>The shader reflection variable at the given index.</returns>
 			ShaderReflectionVariable^ GetVariable( int index );
+
+			/// <summary>
+			/// Gets the shader reflection variable with the given name.
+			/// </summary>
+			/// <param name="name">The name of the shader variable to retrieve.</param>
+			/// <returns>The shader reflection variable with the given name.</returns>
 			ShaderReflectionVariable^ GetVariable( System::String^ name );
 		};
 	}

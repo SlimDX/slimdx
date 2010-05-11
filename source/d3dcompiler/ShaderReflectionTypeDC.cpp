@@ -118,7 +118,7 @@ namespace D3DCompiler
 		return m_Pointer->IsOfType( type->m_Pointer ) != S_FALSE;
 	}
 
-	bool ShaderReflectionType::IsEqual( ShaderReflectionType^ type )
+	bool ShaderReflectionType::IsTypeEqual( ShaderReflectionType^ type )
 	{
 		return m_Pointer->IsEqual( type->m_Pointer ) != S_FALSE;
 	}
