@@ -31,7 +31,7 @@ namespace D3DCompiler
 {
 	ShaderDescription::ShaderDescription( const D3D11_SHADER_DESC &desc )
 	{
-		Version = desc.Version;
+		Version = static_cast<ShaderVersion>(desc.Version);
 		Creator = gcnew String(desc.Creator);
 		Flags = static_cast<ShaderFlags>(desc.Flags);
 		ConstantBuffers = desc.ConstantBuffers;

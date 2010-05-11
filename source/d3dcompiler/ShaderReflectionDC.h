@@ -33,8 +33,10 @@ namespace SlimDX
 {
 	namespace D3DCompiler
 	{
-		ref class ShaderBytecode;
-
+		/// <summary>
+		/// Defines an interface for reflecting on shader information and metadata.
+		/// </summary>
+		/// <unmanaged>ID3D11ShaderReflection</unmanaged>
 		public ref class ShaderReflection : ComObject
 		{
 			COMOBJECT(ID3D11ShaderReflection, ShaderReflection);
@@ -43,28 +45,80 @@ namespace SlimDX
 			ShaderDescription^ description;
 			
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="ShaderReflection"/> class.
+			/// </summary>
+			/// <param name="bytecode">The compiled shader or effect to reflect upon.</param>
 			ShaderReflection( ShaderBytecode^ bytecode );
 
+			/// <summary>
+			/// Gets a constant buffer by index.
+			/// </summary>
+			/// <param name="index">The zero-based index of the constant buffer to retrieve.</param>
+			/// <returns>The constant buffer at the given index.</returns>
 			ConstantBuffer^ GetConstantBuffer( int index );
+
+			/// <summary>
+			/// Gets a constant buffer by name.
+			/// </summary>
+			/// <param name="name">The name of the constant buffer to retrieve.</param>
+			/// <returns>The constant buffer with the given name.</returns>
 			ConstantBuffer^ GetConstantBuffer( System::String^ name );
 
+			/// <summary>
+			/// Gets the description of an input parameter.
+			/// </summary>
+			/// <param name="index">The zero-based index of the input parameter whose description is to be retrieved.</param>
+			/// <returns>The description of the input parameter at the given index.</returns>
 			ShaderParameterDescription GetInputParameterDescription( int index );
+
+			/// <summary>
+			/// Gets the description of an output parameter.
+			/// </summary>
+			/// <param name="index">The zero-based index of the output parameter whose description is to be retrieved.</param>
+			/// <returns>The description of the output parameter at the given index.</returns>
 			ShaderParameterDescription GetOutputParameterDescription( int index );
+
+			/// <summary>
+			/// Gets the description of a patch-constant parameter.
+			/// </summary>
+			/// <param name="index">The zero-based index of the patch-constant parameter whose description is to be retrieved.</param>
+			/// <returns>The description of the patch-constant parameter at the given index.</returns>
 			ShaderParameterDescription GetPatchConstantParameterDescription( int index );
 
+			/// <summary>
+			/// Gets a description of the resources bound to a shader.
+			/// </summary>
+			/// <param name="index">Zero-based index of the bound resource.</param>
+			/// <returns>A description of the resource bound at the given index.</returns>
 			InputBindingDescription GetResourceBindingDescription( int index );
+
+			/// <summary>
+			/// Gets a description of the resources bound to a shader.
+			/// </summary>
+			/// <param name="name">The name of the bound resource.</param>
+			/// <returns>A description of the resource bound with the given name.</returns>
 			InputBindingDescription GetResourceBindingDescription( System::String^ name );
 
+			/// <summary>
+			/// Gets the minimum feature level required to use the shader.
+			/// </summary>
 			property Direct3D11::FeatureLevel MinimumFeatureLevel
 			{
 				Direct3D11::FeatureLevel get();
 			}
 
+			/// <summary>
+			/// Gets the input primitive used by the geometry shader.
+			/// </summary>
 			property InputPrimitive GeometryShaderInputPrimitive
 			{
 				InputPrimitive get();
 			}
 
+			/// <summary>
+			/// Gets the shader's description.
+			/// </summary>
 			property ShaderDescription^ Description
 			{
 				ShaderDescription^ get() { return description; }
