@@ -39,7 +39,7 @@ namespace SlimDX
 			/// <summary>
 			/// Initializes a new instance of the <see cref="KeyedMutex"/> class.
 			/// </summary>
-			/// <param name="device">The COM object implementing the IDXGIKeyedMutex interface.</param>
+			/// <param name="resource">The COM object implementing the IDXGIKeyedMutex interface.</param>
 			KeyedMutex( IComObject^ resource );
 
 			/// <summary>
@@ -56,7 +56,7 @@ namespace SlimDX
 			/// <summary>
 			/// Using a key, releases exclusive rendering access to a shared resource.
 			/// </summary>
-			/// <param name="">A value that indicates which device to give access to. This method will succeed when the device that currently owns the surface
+			/// <param name="key">A value that indicates which device to give access to. This method will succeed when the device that currently owns the surface
 			/// calls the KeyedMutex.ReleaseSync method using the same value. This key can be any arbitrary value.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Release(System::Int64 key);

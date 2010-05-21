@@ -40,7 +40,7 @@ namespace SlimDX
 			/// <summary>
 			/// Initializes a new instance of the <see cref="Resource"/> class.
 			/// </summary>
-			/// <param name="device">The COM object implementing the IDXGIResource interface.</param>
+			/// <param name="object">The COM object implementing the IDXGIResource interface.</param>
 			Resource( IComObject^ object );
 
 			/// <summary>

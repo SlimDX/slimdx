@@ -179,23 +179,11 @@ namespace SlimDX
 			/// <unmanaged>IDirect3DDevice9Ex::GetDisplayModeEx</unmanaged>
 			DisplayModeEx GetDisplayModeEx( int swapChain, [Out] DisplayRotation% rotation );
 
-			/// <summary>
-			/// Swap the swapchain's next buffer with the front buffer.
-			/// </summary>
-			/// <param name="flags">Flags used to specify how the swap chain should be presented.</param>
-			/// <returns>A <see cref="SlimDX::Result"/>Object describing the result of the operation.</returns>
-			/// <unmanaged>IDirect3DDevice9Ex::PresentEx</unmanaged>
 			Result PresentEx( SlimDX::Direct3D9::Present flags );
+			Result PresentEx( SlimDX::Direct3D9::Present flags, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle );
+			Result PresentEx( SlimDX::Direct3D9::Present flags, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, System::IntPtr windowOverride );
+			Result PresentEx( SlimDX::Direct3D9::Present flags, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, System::IntPtr windowOverride, System::Drawing::Region^ region );
 
-			/// <summary>
-			/// Swap the swapchain's next buffer with the front buffer.
-			/// </summary>
-			/// <param name="windowOverride">The destination window whose client area is taken as the target for this presentation.</param>
-			/// <param name="flags">Flags used to specify how the swap chain should be presented.</param>
-			/// <returns>A <see cref="SlimDX::Result"/>Object describing the result of the operation.</returns>
-			/// <unmanaged>IDirect3DDevice9Ex::PresentEx</unmanaged>
-			Result PresentEx( System::IntPtr windowOverride, SlimDX::Direct3D9::Present flags );
-			
 			/// <summary>
 			/// Resets the device.
 			/// </summary>
@@ -219,6 +207,12 @@ namespace SlimDX
 			/// <param name="swapChain">Zero based swap chain index to specify the target chain on a multihead card.</param>
 			/// <unmanaged>IDirect3DDevice9Ex::WaitForVBlank</unmanaged>
 			void WaitForVBlank( int swapChain );
+
+			Result SetConvolutionMonoKernel(int width, int height, array<float>^ rowWeights, array<float>^ columnWeights);
+			Result ComposeRects(Surface^ source, Surface^ destination, int rectangleCount, VertexBuffer^ sourceRectangleDescriptors, VertexBuffer^ destinationRectangleDescriptors, ComposeRectOperation operation, int xOffset, int yOffset);
+
+			literal int ConvolutionMaxWidth = D3DCONVOLUTIONMONO_MAXWIDTH;
+			literal int ConvolutionMaxHeight = D3DCONVOLUTIONMONO_MAXHEIGHT;
 		};
 	}
 }
