@@ -403,6 +403,9 @@
     <Filter Include="DXGI\Object">
       <UniqueIdentifier>{8d90057c-c216-4510-98c2-180fb50fee30}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DXGI\1.1">
+      <UniqueIdentifier>{7a547ae3-b5f3-4201-a4d3-dac30ff62309}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Design">
       <UniqueIdentifier>{e9fd3d11-2054-47ce-807f-f69f047d4a15}</UniqueIdentifier>
     </Filter>
@@ -630,6 +633,9 @@
     </Filter>
     <Filter Include="Direct3D11\Diagnostics">
       <UniqueIdentifier>{86314cac-5e7f-433d-a450-4d57f92c8cc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Diagnostics\InfoQueue">
+      <UniqueIdentifier>{d1ce1318-98c3-4e08-89ce-5fe2e410a72b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Direct3D11\Resource">
       <UniqueIdentifier>{526db4b5-acbf-4ef2-b490-50436338d253}</UniqueIdentifier>
@@ -1770,6 +1776,21 @@
     <ClCompile Include="..\..\source\dxgi\ObjectDxgi.cpp">
       <Filter>DXGI\Object</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\dxgi\Adapter1.cpp">
+      <Filter>DXGI\1.1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\dxgi\AdapterDescription1.cpp">
+      <Filter>DXGI\1.1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\dxgi\Device1.cpp">
+      <Filter>DXGI\1.1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\dxgi\Factory1.cpp">
+      <Filter>DXGI\1.1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\dxgi\KeyedMutex.cpp">
+      <Filter>DXGI\1.1</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\design\BoundingBoxConverter.cpp">
       <Filter>Design</Filter>
     </ClCompile>
@@ -2306,6 +2327,18 @@
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\Debug11.cpp">
       <Filter>Direct3D11\Diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\DebugMessage11.cpp">
+      <Filter>Direct3D11\Diagnostics\InfoQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\InfoQueue11.cpp">
+      <Filter>Direct3D11\Diagnostics\InfoQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\InfoQueueFilter11.cpp">
+      <Filter>Direct3D11\Diagnostics\InfoQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\InfoQueueFilterDescription11.cpp">
+      <Filter>Direct3D11\Diagnostics\InfoQueue</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\Resource11.cpp">
       <Filter>Direct3D11\Resource</Filter>
@@ -3741,6 +3774,21 @@
     <ClInclude Include="..\..\source\dxgi\ObjectDxgi.h">
       <Filter>DXGI\Object</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\dxgi\Adapter1.h">
+      <Filter>DXGI\1.1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\dxgi\AdapterDescription1.h">
+      <Filter>DXGI\1.1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\dxgi\Device1.h">
+      <Filter>DXGI\1.1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\dxgi\Factory1.h">
+      <Filter>DXGI\1.1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\dxgi\KeyedMutex.h">
+      <Filter>DXGI\1.1</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\source\design\BoundingBoxConverter.h">
       <Filter>Design</Filter>
     </ClInclude>
@@ -4361,6 +4409,21 @@
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\Debug11.h">
       <Filter>Direct3D11\Diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\DebugMessage11.h">
+      <Filter>Direct3D11\Diagnostics\InfoQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\DebugMessageID11.h">
+      <Filter>Direct3D11\Diagnostics\InfoQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\InfoQueue11.h">
+      <Filter>Direct3D11\Diagnostics\InfoQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\InfoQueueFilter11.h">
+      <Filter>Direct3D11\Diagnostics\InfoQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\InfoQueueFilterDescription11.h">
+      <Filter>Direct3D11\Diagnostics\InfoQueue</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\Resource11.h">
       <Filter>Direct3D11\Resource</Filter>

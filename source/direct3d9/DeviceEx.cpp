@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,9 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <windows.h>
-#include <d3d9.h>
-#include <d3dx9.h>
+#include "stdafx.h"
 
 #include "../stack_array.h"
 #include "../ComObject.h"
@@ -32,8 +29,11 @@
 #include "DeviceEx.h"
 #include "PresentParameters.h"
 #include "Resource.h"
+#include "Surface.h"
+#include "VertexBuffer.h"
 
 using namespace System;
+using namespace System::Drawing;
 
 namespace SlimDX
 {
@@ -184,12 +184,64 @@ namespace Direct3D9
 		return Result::Last;
 	}
 
-	Result DeviceEx::PresentEx( System::IntPtr windowOverride, SlimDX::Direct3D9::Present flags )
+	Result DeviceEx::PresentEx( SlimDX::Direct3D9::Present flags, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle )
 	{
-		HRESULT hr = InternalPointer->PresentEx( 0, 0, static_cast<HWND>( windowOverride.ToPointer() ), 0, static_cast<DWORD>( flags ) );
-		RECORD_D3D9( hr );
+		RECT nativeSourceRect = { sourceRectangle.Left, sourceRectangle.Top, sourceRectangle.Right, sourceRectangle.Bottom };
+		RECT nativeDestRect = { destinationRectangle.Left, destinationRectangle.Top, destinationRectangle.Right, destinationRectangle.Bottom };
+	
+		RECT *sourcePtr = NULL;
+		RECT *destPtr = NULL;
 
-		return Result::Last;
+		if( sourceRectangle != Rectangle::Empty )
+			sourcePtr = &nativeSourceRect;
+		if( destinationRectangle != Rectangle::Empty )
+			destPtr = &nativeDestRect;
+	
+		HRESULT hr = InternalPointer->PresentEx( sourcePtr, destPtr, NULL, NULL, static_cast<DWORD>( flags ) );
+
+		return RECORD_D3D9( hr );
+	}
+
+	Result DeviceEx::PresentEx( SlimDX::Direct3D9::Present flags, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, System::IntPtr windowOverride )
+	{
+		RECT nativeSourceRect = { sourceRectangle.Left, sourceRectangle.Top, sourceRectangle.Right, sourceRectangle.Bottom };
+		RECT nativeDestRect = { destinationRectangle.Left, destinationRectangle.Top, destinationRectangle.Right, destinationRectangle.Bottom };
+	
+		RECT *sourcePtr = NULL;
+		RECT *destPtr = NULL;
+
+		if( sourceRectangle != Rectangle::Empty )
+			sourcePtr = &nativeSourceRect;
+		if( destinationRectangle != Rectangle::Empty )
+			destPtr = &nativeDestRect;
+	
+		HRESULT hr = InternalPointer->PresentEx( sourcePtr, destPtr, static_cast<HWND>( windowOverride.ToPointer() ), NULL, static_cast<DWORD>( flags ) );
+
+		return RECORD_D3D9( hr );
+	}
+
+	Result DeviceEx::PresentEx( SlimDX::Direct3D9::Present flags, System::Drawing::Rectangle sourceRectangle, System::Drawing::Rectangle destinationRectangle, System::IntPtr windowOverride, System::Drawing::Region^ region )
+	{
+		RECT nativeSourceRect = { sourceRectangle.Left, sourceRectangle.Top, sourceRectangle.Right, sourceRectangle.Bottom };
+		RECT nativeDestRect = { destinationRectangle.Left, destinationRectangle.Top, destinationRectangle.Right, destinationRectangle.Bottom };
+
+		RGNDATA nativeRegion;
+		Graphics^ graphics = Graphics::FromHwnd( windowOverride );
+		int count = GetRegionData( static_cast<HRGN>( region->GetHrgn(graphics).ToPointer() ), 0, NULL );
+		GetRegionData( static_cast<HRGN>( region->GetHrgn(graphics).ToPointer() ), count, &nativeRegion );
+		delete graphics;
+	
+		RECT *sourcePtr = NULL;
+		RECT *destPtr = NULL;
+
+		if( sourceRectangle != Rectangle::Empty )
+			sourcePtr = &nativeSourceRect;
+		if( destinationRectangle != Rectangle::Empty )
+			destPtr = &nativeDestRect;
+	
+		HRESULT hr = InternalPointer->PresentEx( sourcePtr, destPtr, static_cast<HWND>( windowOverride.ToPointer() ), &nativeRegion, static_cast<DWORD>( flags ) );
+
+		return RECORD_D3D9( hr );
 	}
 	
 	Result DeviceEx::ResetEx( PresentParameters^ presentParameters )
@@ -227,6 +279,23 @@ namespace Direct3D9
 	{
 		//This method will always return D3D_OK.
 		InternalPointer->WaitForVBlank( swapChain );
+	}
+
+	Result DeviceEx::SetConvolutionMonoKernel(int width, int height, array<float>^ rowWeights, array<float>^ columnWeights)
+	{
+		pin_ptr<float> pinnedRows = rowWeights == nullptr ? nullptr : &rowWeights[0];
+		pin_ptr<float> pinnedColumns = columnWeights == nullptr ? nullptr : &columnWeights[0];
+
+		HRESULT hr = InternalPointer->SetConvolutionMonoKernel(width, height, pinnedRows, pinnedColumns);
+		return RECORD_D3D9(hr);
+	}
+
+	Result DeviceEx::ComposeRects(Surface^ source, Surface^ destination, int rectangleCount, VertexBuffer^ sourceRectangleDescriptors, VertexBuffer^ destinationRectangleDescriptors, ComposeRectOperation operation, int xOffset, int yOffset)
+	{
+		HRESULT hr = InternalPointer->ComposeRects(source->InternalPointer, destination->InternalPointer, sourceRectangleDescriptors->InternalPointer,
+			rectangleCount, destinationRectangleDescriptors->InternalPointer, static_cast<D3DCOMPOSERECTSOP>(operation), xOffset, yOffset);
+
+		return RECORD_D3D9(hr);
 	}
 }
 }

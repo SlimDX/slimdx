@@ -653,6 +653,11 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClCompile Include="..\..\source\dxgi\SurfaceDescription.cpp" />
     <ClCompile Include="..\..\source\dxgi\SurfaceDxgi.cpp" />
     <ClCompile Include="..\..\source\dxgi\ObjectDxgi.cpp" />
+    <ClCompile Include="..\..\source\dxgi\Adapter1.cpp" />
+    <ClCompile Include="..\..\source\dxgi\AdapterDescription1.cpp" />
+    <ClCompile Include="..\..\source\dxgi\Device1.cpp" />
+    <ClCompile Include="..\..\source\dxgi\Factory1.cpp" />
+    <ClCompile Include="..\..\source\dxgi\KeyedMutex.cpp" />
     <ClCompile Include="..\..\source\design\BoundingBoxConverter.cpp" />
     <ClCompile Include="..\..\source\design\BoundingSphereConverter.cpp" />
     <ClCompile Include="..\..\source\design\Color3Converter.cpp" />
@@ -832,6 +837,10 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClCompile Include="..\..\source\direct3d11\CounterCapabilities11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\CounterMetadata11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\Debug11.cpp" />
+    <ClCompile Include="..\..\source\direct3d11\DebugMessage11.cpp" />
+    <ClCompile Include="..\..\source\direct3d11\InfoQueue11.cpp" />
+    <ClCompile Include="..\..\source\direct3d11\InfoQueueFilter11.cpp" />
+    <ClCompile Include="..\..\source\direct3d11\InfoQueueFilterDescription11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\Resource11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\ResourceRegion11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\TextureLoadInformation11.cpp" />
@@ -1325,6 +1334,11 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClInclude Include="..\..\source\dxgi\SurfaceDescription.h" />
     <ClInclude Include="..\..\source\dxgi\SurfaceDxgi.h" />
     <ClInclude Include="..\..\source\dxgi\ObjectDxgi.h" />
+    <ClInclude Include="..\..\source\dxgi\Adapter1.h" />
+    <ClInclude Include="..\..\source\dxgi\AdapterDescription1.h" />
+    <ClInclude Include="..\..\source\dxgi\Device1.h" />
+    <ClInclude Include="..\..\source\dxgi\Factory1.h" />
+    <ClInclude Include="..\..\source\dxgi\KeyedMutex.h" />
     <ClInclude Include="..\..\source\design\BoundingBoxConverter.h" />
     <ClInclude Include="..\..\source\design\BoundingSphereConverter.h" />
     <ClInclude Include="..\..\source\design\Color3Converter.h" />
@@ -1532,6 +1546,11 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClInclude Include="..\..\source\direct3d11\CounterCapabilities11.h" />
     <ClInclude Include="..\..\source\direct3d11\CounterMetadata11.h" />
     <ClInclude Include="..\..\source\direct3d11\Debug11.h" />
+    <ClInclude Include="..\..\source\direct3d11\DebugMessage11.h" />
+    <ClInclude Include="..\..\source\direct3d11\DebugMessageID11.h" />
+    <ClInclude Include="..\..\source\direct3d11\InfoQueue11.h" />
+    <ClInclude Include="..\..\source\direct3d11\InfoQueueFilter11.h" />
+    <ClInclude Include="..\..\source\direct3d11\InfoQueueFilterDescription11.h" />
     <ClInclude Include="..\..\source\direct3d11\Resource11.h" />
     <ClInclude Include="..\..\source\direct3d11\ResourceRegion11.h" />
     <ClInclude Include="..\..\source\direct3d11\TextureLoadInformation11.h" />

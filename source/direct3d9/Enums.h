@@ -164,6 +164,22 @@ namespace SlimDX
 			/// Copies the data between back buffers.
 			/// </summary>
 			Copy = D3DSWAPEFFECT_COPY,
+
+			/// <summary>
+			/// Use a dedicated area of video memory that can be overlayed on the primary surface. No copy is performed
+			/// when the overlay is displayed. The overlay operation is performed in hardware, without modifying
+			/// the data in the primary surface. Available in Direct3D 9Ex on Windows 7 only.
+			/// </summary>
+			Overlay = D3DSWAPEFFECT_OVERLAY,
+
+			/// <summary>
+			/// Designates when an application is adopting flip mode, during which time an application's frame
+			/// is passed instead of copied to the Desktop Window Manager(DWM) for composition when the application
+			/// is presenting in windowed mode. Flip mode allows an application to more efficiently use memory
+			/// bandwidth as well as enabling an application to take advantage of full-screen-present statistics.
+			/// Flip mode does not affect full-screen behavior. Available in Direct3D 9Ex on Windows 7 only.
+			/// </summary>
+			FlipEx = D3DSWAPEFFECT_FLIPEX
 		};
 
 		/// <summary>
@@ -2281,6 +2297,8 @@ namespace SlimDX
 		[System::Flags]
 		public enum class FilterCaps : System::Int32
 		{
+			ConvolutionMono = D3DPTFILTERCAPS_CONVOLUTIONMONO,
+
 			/// <summary>
 			/// Device supports per-stage point-sample filtering for minifying textures.
 			/// </summary>
@@ -3306,7 +3324,34 @@ namespace SlimDX
 			/// <summary>
 			/// The content of the backbuffer to be presented is in linear color space.
 			/// </summary>
-			LinearContent = D3DPRESENT_LINEAR_CONTENT
+			LinearContent = D3DPRESENT_LINEAR_CONTENT,
+
+			/// <summary>
+			/// PresentInterval.Immediate is enforced on this Present call. This flag can only be specified when
+			/// using SwapEffect.FlipEx. Windowed and fullscreen presentation behaviors are the same. This is
+			/// especially useful for media apps that want to discard frames that have been detected as late and
+			/// present subsequent frames at composition time. An invalid parameter error will be returned if this
+			/// flag is improperly specified. When multiple consecutive frames with Present.ForceImmediate are
+			/// queued, only the last frame is displayed, for both windowed and fullscreen presentation.
+			/// Available in Direct3D9Ex on Windows 7 only
+			/// </summary>
+			ForceImmediate = D3DPRESENT_FORCEIMMEDIATE,
+
+			/// <summary>
+			/// Updates the overlay position or the colorkey data without causing an actual flip and without
+			/// changing the duration with which the image is displayed. Available in Direct3D9Ex only.
+			/// </summary>
+			UpdateOverlayOnly = D3DPRESENT_UPDATEOVERLAYONLY,
+
+			/// <summary>
+			/// Turns off the overlay hardware. Available in Direct3D9Ex only.
+			/// </summary>
+			HideOverlay = D3DPRESENT_HIDEOVERLAY,
+
+			/// <summary>
+			/// Redraws the colorkey data. Available in Direct3D9Ex only.
+			/// </summary>
+			UpdateColorKey = D3DPRESENT_UPDATECOLORKEY
 		};
 		
 		/// <summary>
@@ -3349,7 +3394,38 @@ namespace SlimDX
 			/// <summary>
 			/// This is a hint to the driver that the back buffers will contain video data.
 			/// </summary>
-			Video = D3DPRESENTFLAG_VIDEO
+			Video = D3DPRESENTFLAG_VIDEO,
+
+			/// <summary>
+			/// Indicates limited range RGB. In limited range RGB, the RGB range is compressed such that
+			/// 16:16:16 is black and 235:235:235 is white. Available in Direct3D9Ex only.
+			/// </summary>
+			OverlayLimitedRgb = D3DPRESENTFLAG_OVERLAY_LIMITEDRGB,
+
+			/// <summary>
+			/// Indicates that the overlay is BT.709, for high-definition TV (HDTV). Available in Direct3D9Ex only.
+			/// </summary>
+			OverlayYCbCr_BT709 = D3DPRESENTFLAG_OVERLAY_YCbCr_BT709,
+
+			/// <summary>
+			/// Indicates that the overlay is extended YCbCr (xvYCC). Available in Direct3D9Ex only.
+			/// </summary>
+			OverlayYCbCr_xvYCC = D3DPRESENTFLAG_OVERLAY_YCbCr_xvYCC,
+
+			/// <summary>
+			/// Indicates that the swapchain contains protected content and automatically causes
+			/// the runtime to restrict access to the swapchain so that only the Desktop Windows Manager
+			/// (DWM) can use the swapchain. Available in Direct3D9Ex only.
+			/// </summary>
+			RestrictedContent = D3DPRESENTFLAG_RESTRICTED_CONTENT,
+
+			/// <summary>
+			/// Indicates that the driver should restrict access to any shared
+			/// resources that are created for DWM interaction. The caller must create an authenticated
+			/// channel with the driver. The driver should then allow access to processes that attempt to
+			/// open those shared resources. Available in Direct3D9Ex only.
+			/// </summary>
+			RestrictSharedResourceDriver = D3DPRESENTFLAG_RESTRICT_SHARED_RESOURCE_DRIVER
 		};
 
 		/// <summary>
