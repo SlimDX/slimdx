@@ -21,6 +21,8 @@
 */
 #include "stdafx.h"
 
+#include "../stack_array.h"
+
 #include "DirectWriteException.h"
 
 #include "LocalizedStrings.h"
@@ -45,19 +47,15 @@ namespace DirectWrite
 
 		UINT32 length = 0;
 		HRESULT hr = InternalPointer->GetLocaleNameLength(index, &length);
-		RECORD_DW(hr);
-		if(FAILED(hr))
+		if(RECORD_DW(hr).IsFailure)
 			return nullptr;
 
-		wchar_t* buffer = (wchar_t*) _malloca(length);
-		hr = InternalPointer->GetLocaleName(index, buffer, length);
-		RECORD_DW(hr);
-		if(FAILED(hr))
+		stack_array<wchar_t> buffer = stackalloc(wchar_t, length);
+		hr = InternalPointer->GetLocaleName(index, &buffer[0], length);
+		if(RECORD_DW(hr).IsFailure)
 			return nullptr;
 
-		System::String^ str = gcnew System::String(buffer);
-		_freea(buffer);
-		return str;
+		return gcnew System::String(&buffer[0]);
 	}
 
 	System::String^ LocalizedStrings::String::get(int index)
@@ -67,19 +65,15 @@ namespace DirectWrite
 
 		UINT32 length = 0;
 		HRESULT hr = InternalPointer->GetStringLength(index, &length);
-		RECORD_DW(hr);
-		if(FAILED(hr))
+		if(RECORD_DW(hr).IsFailure)
 			return nullptr;
 
-		wchar_t* buffer = (wchar_t*) _malloca(length);
-		hr = InternalPointer->GetString(index, buffer, length);
-		RECORD_DW(hr);
-		if(FAILED(hr))
+		stack_array<wchar_t> buffer = stackalloc(wchar_t, length);
+		hr = InternalPointer->GetString(index, &buffer[0], length);
+		if(RECORD_DW(hr).IsFailure)
 			return nullptr;
 
-		System::String^ str = gcnew System::String(buffer);
-		_freea(buffer);
-		return str;
+		return gcnew System::String(&buffer[0]);
 	}
 
 	int LocalizedStrings::FindLocaleName( System::String^ localeName, [Out] bool% exists )
