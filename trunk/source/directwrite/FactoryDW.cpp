@@ -36,7 +36,6 @@
 #include "IFontCollectionLoader.h"
 #include "IFontFileLoader.h"
 #include "InlineObject.h"
-#include "NativeUnicodeString.h"
 #include "NumberSubstitution.h"
 #include "RenderingParameters.h"
 #include "TextAnalyzer.h"
@@ -125,8 +124,10 @@ namespace DirectWrite
 		float layoutWidth, float layoutHeight, float pixelsPerDip,
 		DWRITE_MATRIX *transform, bool useGdiNatural)
 	{
+		pin_ptr<const wchar_t> pinnedText = PtrToStringChars(text);
+
 		IDWriteTextLayout *layout = 0;
-		if (RECORD_DW(factory->CreateGdiCompatibleTextLayout(NativeUnicodeString(text), text->Length,
+		if (RECORD_DW(factory->CreateGdiCompatibleTextLayout(pinnedText, text->Length,
 			textFormat->InternalPointer, layoutWidth, layoutHeight, pixelsPerDip,
 			transform, useGdiNatural ? TRUE : FALSE, &layout)).IsFailure)
 		{
@@ -180,11 +181,12 @@ namespace DirectWrite
 
 	static FontFile ^CreateFontFileReferenceInternal(IDWriteFactory *factory, String ^filePath, ::FILETIME const *fileTime)
 	{
+		pin_ptr<const wchar_t> pinnedText = PtrToStringChars(filePath);
+
 		IDWriteFontFile *fontFile = 0;
-		if (RECORD_DW(factory->CreateFontFileReference(NativeUnicodeString(filePath), fileTime, &fontFile)).IsFailure)
-		{
+		if (RECORD_DW(factory->CreateFontFileReference(pinnedText, fileTime, &fontFile)).IsFailure)
 			return nullptr;
-		}
+
 		return FontFile::FromPointer(fontFile);
 	}
 
@@ -249,9 +251,11 @@ namespace DirectWrite
 
 	NumberSubstitution ^Factory::CreateNumberSubstitution(NumberSubstitutionMethod method, String ^localeName, bool ignoreUserOverride)
 	{
+		pin_ptr<const wchar_t> pinnedText = PtrToStringChars(localeName);
+
 		IDWriteNumberSubstitution *sub = 0;
 		if (RECORD_DW(InternalPointer->CreateNumberSubstitution(
-			static_cast<DWRITE_NUMBER_SUBSTITUTION_METHOD>(method), NativeUnicodeString(localeName),
+			static_cast<DWRITE_NUMBER_SUBSTITUTION_METHOD>(method), pinnedText,
 			ignoreUserOverride ? TRUE : FALSE, &sub)).IsFailure)
 		{
 			return nullptr;
@@ -283,12 +287,15 @@ namespace DirectWrite
 		String ^fontFamilyName, IDWriteFontCollection *fontCollection,
 		FontWeight fontWeight, FontStyle fontStyle, FontStretch fontStretch, float fontSize, String ^localeName)
 	{
+		pin_ptr<const wchar_t> pinnedText = PtrToStringChars(localeName);
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(fontFamilyName);
+
 		IDWriteTextFormat *format = 0;
-		if (RECORD_DW(factory->CreateTextFormat(NativeUnicodeString(fontFamilyName),
+		if (RECORD_DW(factory->CreateTextFormat(pinnedName,
 			fontCollection, static_cast<DWRITE_FONT_WEIGHT>(fontWeight),
 			static_cast<DWRITE_FONT_STYLE>(fontStyle),
 			static_cast<DWRITE_FONT_STRETCH>(fontStretch),
-			fontSize, NativeUnicodeString(localeName), &format)).IsFailure)
+			fontSize, pinnedText, &format)).IsFailure)
 		{
 			return nullptr;
 		}
@@ -314,8 +321,10 @@ namespace DirectWrite
 
 	TextLayout ^Factory::CreateTextLayout(String ^text, TextFormat ^textFormat, float maxWidth, float maxHeight)
 	{
+		pin_ptr<const wchar_t> pinnedText = PtrToStringChars(text);
+
 		IDWriteTextLayout *layout = 0;
-		if (RECORD_DW(InternalPointer->CreateTextLayout(NativeUnicodeString(text), text->Length,
+		if (RECORD_DW(InternalPointer->CreateTextLayout(pinnedText, text->Length,
 			textFormat->InternalPointer, maxWidth, maxHeight, &layout)).IsFailure)
 		{
 			return nullptr;

@@ -5301,10 +5301,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\source\directwrite\NativeUnicodeString.h"
-				>
-			</File>
-			<File
 				RelativePath="..\source\directwrite\NumberSubstitution.cpp"
 				>
 			</File>
