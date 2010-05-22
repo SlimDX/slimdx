@@ -30,7 +30,6 @@
 #include "TextLayout.h"
 #include "TextMetrics.h"
 #include "TextRenderer.h"
-#include "NativeUnicodeString.h"
 
 const IID IID_IDWriteTextLayout = __uuidof(IDWriteTextLayout);
 
@@ -552,7 +551,8 @@ namespace DirectWrite
 
 	Result TextLayout::SetFontFamilyName(String ^name, TextRange range)
 	{
-		return RECORD_DW(InternalPointer->SetFontFamilyName( NativeUnicodeString(name), TextRangeFromManaged(range)));
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(name);
+		return RECORD_DW(InternalPointer->SetFontFamilyName(pinnedName, TextRangeFromManaged(range)));
 	}
 
 	Result TextLayout::SetFontSize( float size, TextRange range )
@@ -582,7 +582,8 @@ namespace DirectWrite
 
 	Result TextLayout::SetLocaleName(String ^name, TextRange range)
 	{
-		return RECORD_DW(InternalPointer->SetLocaleName(NativeUnicodeString(name), TextRangeFromManaged(range)));
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars(name);
+		return RECORD_DW(InternalPointer->SetLocaleName(pinnedName, TextRangeFromManaged(range)));
 	}
 
 	Result TextLayout::SetStrikethrough(bool strikethrough, TextRange range)
