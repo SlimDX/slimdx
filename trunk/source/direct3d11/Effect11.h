@@ -81,6 +81,9 @@ namespace SlimDX
 			EffectVariable^ GetVariableByIndex( int index );
 			EffectVariable^ GetVariableByName( System::String^ name );
 			EffectVariable^ GetVariableBySemantic( System::String^ name );
+
+			Effect^ Clone();
+			Effect^ Clone(bool forceNonSingle);
 			
 			Result Optimize();
 		};

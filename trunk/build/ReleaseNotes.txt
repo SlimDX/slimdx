@@ -23,6 +23,10 @@ Direct3D 9
 	* Vertex declarations no longer require VertexElementEnd at the end of the input array.
 	* Added RegisterSoftwareDevice to support software renderers.
 	
+Direct3D 9Ex
+	* Added missing enumerations throughout D3D9.
+	* Added support for new Windows 7 FlipEx functionality.
+	
 Direct3D 10
 	* Dropped stream size checks in texture ToStream functions.
 	* Added a constructor to InputLayout to take shader bytecode.
@@ -59,6 +63,7 @@ Windows
 	
 DXGI
 	* Added missing member to Usage enumeration.
+	* Added DXGI 1.1 interfaces.
 
 DirectWrite
 	* Added a bunch of missing functionality.
