@@ -55,8 +55,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="device">The device used to create the effect.</param>
 			/// <param name="data">The compiled effect source.</param>
-			/// <param name="effectFlags">Compilation flags pertaining to Effect compilation, honored by the Effect compiler.</param>
-			Effect( SlimDX::Direct3D11::Device^ device, D3DCompiler::ShaderBytecode^ data, D3DCompiler::EffectFlags effectFlags );
+			Effect(SlimDX::Direct3D11::Device^ device, D3DCompiler::ShaderBytecode^ data);
 
 			/// <summary>
 			/// Gets the effect's description.

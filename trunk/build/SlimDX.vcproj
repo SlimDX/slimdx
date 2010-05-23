@@ -6452,68 +6452,8 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="ConstantBuffer"
-					>
-					<File
-						RelativePath="..\source\direct3d11\EffectConstantBuffer11.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\EffectConstantBuffer11.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="Variables"
 					>
-					<File
-						RelativePath="..\source\direct3d11\EffectMatrixVariable11.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\EffectMatrixVariable11.h"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\EffectResourceVariable11.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\EffectResourceVariable11.h"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\EffectScalarVariable11.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\EffectScalarVariable11.h"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\EffectShaderVariable11.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\EffectShaderVariable11.h"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\EffectStringVariable11.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\EffectStringVariable11.h"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\EffectUnorderedAccessViewVariable11.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\EffectUnorderedAccessViewVariable11.h"
-						>
-					</File>
 					<File
 						RelativePath="..\source\direct3d11\EffectVariable11.cpp"
 						>
@@ -6530,14 +6470,90 @@
 						RelativePath="..\source\direct3d11\EffectVariableDescription11.h"
 						>
 					</File>
-					<File
-						RelativePath="..\source\direct3d11\EffectVectorVariable11.cpp"
+					<Filter
+						Name="Matrix"
 						>
-					</File>
-					<File
-						RelativePath="..\source\direct3d11\EffectVectorVariable11.h"
+						<File
+							RelativePath="..\source\direct3d11\EffectMatrixVariable11.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d11\EffectMatrixVariable11.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="Resource"
 						>
-					</File>
+						<File
+							RelativePath="..\source\direct3d11\EffectResourceVariable11.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d11\EffectResourceVariable11.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="Scalar"
+						>
+						<File
+							RelativePath="..\source\direct3d11\EffectScalarVariable11.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d11\EffectScalarVariable11.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="Vector"
+						>
+						<File
+							RelativePath="..\source\direct3d11\EffectVectorVariable11.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d11\EffectVectorVariable11.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="String"
+						>
+						<File
+							RelativePath="..\source\direct3d11\EffectStringVariable11.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d11\EffectStringVariable11.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="UnorderedAccessView"
+						>
+						<File
+							RelativePath="..\source\direct3d11\EffectUnorderedAccessViewVariable11.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d11\EffectUnorderedAccessViewVariable11.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="Shader"
+						>
+						<File
+							RelativePath="..\source\direct3d11\EffectShaderVariable11.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d11\EffectShaderVariable11.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="Pass"
@@ -6604,6 +6620,18 @@
 					</File>
 					<File
 						RelativePath="..\source\direct3d11\EffectGroupDescription11.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="ConstantBuffer"
+					>
+					<File
+						RelativePath="..\source\direct3d11\EffectConstantBuffer11.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\EffectConstantBuffer11.h"
 						>
 					</File>
 				</Filter>

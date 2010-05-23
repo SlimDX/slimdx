@@ -36,7 +36,7 @@ namespace Direct3D11
 	{
 		m_Name = gcnew String( native.Name );
 		m_Semantic = gcnew String( native.Semantic );
-		m_Flags = static_cast<int>( native.Flags );
+		m_Flags = static_cast<EffectVariableFlags>( native.Flags );
 		m_Annotations = native.Annotations;
 		m_BufferOffset = native.BufferOffset;
 		m_ExplicitBindPoint = native.ExplicitBindPoint;
@@ -52,7 +52,7 @@ namespace Direct3D11
 		return m_Semantic;
 	}
 
-	int EffectVariableDescription::Flags::get()
+	EffectVariableFlags EffectVariableDescription::Flags::get()
 	{
 		return m_Flags;
 	}

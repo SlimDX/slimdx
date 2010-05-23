@@ -40,6 +40,10 @@ namespace SlimDX
 		value class EffectVariableDescription;
 		ref class EffectType;
 		
+		/// <summary>
+		/// Defines a base class for all effect variables.
+		/// </summary>
+		/// <unmanaged>ID3DX11EffectVariable</unmanaged>
 		public ref class EffectVariable
 		{
 		private:
@@ -49,25 +53,76 @@ namespace SlimDX
 			EffectVariable( ID3DX11EffectVariable* pointer );
 
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="EffectVariable"/> class.
+			/// </summary>
+			/// <param name="pointer">A pointer to the unmanaged interface.</param>
+			EffectVariable( System::IntPtr pointer );
+
+			/// <summary>
+			/// Gets the effect variable's description.
+			/// </summary>
 			property EffectVariableDescription Description
 			{
 				EffectVariableDescription get();
 			}
 			
+			/// <summary>
+			/// Indicates whether the data type matches the data stored after casting to a specific interface.
+			/// </summary>
 			property bool IsValid
 			{
 				bool get();
 			}
-			
-			EffectVariable( System::IntPtr pointer );
-			
+
+			/// <summary>
+			/// Gets the parent constant buffer for this variable.
+			/// </summary>
+			property EffectConstantBuffer^ ParentConstantBuffer
+			{
+				EffectConstantBuffer^ get();
+			}
+
+			/// <summary>
+			/// Get an annotation by index.
+			/// </summary>
+			/// <param name="index">The zero-based index of the annotation to retrieve.</param>
+			/// <returns>The annotation at the specified index.</returns>
 			EffectVariable^ GetAnnotationByIndex( int index );
+
+			/// <summary>
+			/// Get an annotation by name.
+			/// </summary>
+			/// <param name="name">The name of the annotation to retrieve.</param>
+			/// <returns>The annotation with the given name.</returns>
 			EffectVariable^ GetAnnotationByName( System::String^ name );
 			
+			/// <summary>
+			/// Gets an element of an array variable.
+			/// </summary>
+			/// <param name="index">The zero-based index of the element to retrieve.</param>
+			/// <returns>The element at the specified index in the array.</returns>
 			EffectVariable^ GetElement( int index );
 			
+			/// <summary>
+			/// Get a structure member by index.
+			/// </summary>
+			/// <param name="index">The zero-based index of the structure member to retrieve.</param>
+			/// <returns>The structure member at the specified index.</returns>
 			EffectVariable^ GetMemberByIndex( int index );
+
+			/// <summary>
+			/// Get a structure member by name.
+			/// </summary>
+			/// <param name="name">The name of the structure member to retrieve.</param>
+			/// <returns>The structure member with the given name.</returns>
 			EffectVariable^ GetMemberByName( System::String^ name );
+
+			/// <summary>
+			/// Get a structure member by semantic.
+			/// </summary>
+			/// <param name="name">The semantic of the structure member to retrieve.</param>
+			/// <returns>The structure member with the given semantic.</returns>
 			EffectVariable^ GetMemberBySemantic( System::String^ name );
 			
 			EffectConstantBuffer^ AsConstantBuffer();
@@ -79,7 +134,25 @@ namespace SlimDX
 			EffectStringVariable^ AsString();
 			EffectUnorderedAccessViewVariable^ AsUnorderedAccessView();
 
+			/// <summary>
+			/// Gets information about the variable type.
+			/// </summary>
+			/// <returns>A type descriptor containing information about the variable type.</returns>
 			EffectType^ GetVariableType();
+
+			/// <summary>
+			/// Sets the value of the variable using raw bytes.
+			/// </summary>
+			/// <param name="count">The number of bytes to set.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result SetRawValue(DataStream^ data, int count);
+
+			/// <summary>
+			/// Gets the value of the variable in raw bytes.
+			/// </summary>
+			/// <param name="count">The number of bytes to retrieve.</param>
+			/// <returns>The raw data representing the value of the variable.</returns>
+			DataStream^ GetRawValue(int count);
 		};
 	}
 };

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,10 +19,10 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#include <d3d11.h>
-#include <d3dx11effect.h>
-#include <vcclr.h>
+#include "../DataStream.h"
+#include "../stack_array.h"
 
 #include "Direct3D11Exception.h"
 
@@ -66,6 +65,15 @@ namespace Direct3D11
 			return EffectVariableDescription();
 
 		return EffectVariableDescription( nativeDescription );
+	}
+
+	EffectConstantBuffer^ EffectVariable::ParentConstantBuffer::get()
+	{
+		ID3DX11EffectConstantBuffer* variable = m_Pointer->GetParentConstantBuffer();
+		if( variable == 0 || !variable->IsValid() )
+			return nullptr;
+
+		return gcnew EffectConstantBuffer( variable );
 	}
 
 	bool EffectVariable::IsValid::get()
@@ -212,6 +220,23 @@ namespace Direct3D11
 			return nullptr;
 
 		return gcnew EffectType( type );
+	}
+
+	Result EffectVariable::SetRawValue(DataStream^ data, int count)
+	{
+		HRESULT hr = m_Pointer->SetRawValue(data->PositionPointer, 0, count);
+		return RECORD_D3D11(hr);
+	}
+
+	DataStream^ EffectVariable::GetRawValue(int count)
+	{
+		stack_array<char> data = stackalloc(char, count);
+
+		HRESULT hr = m_Pointer->GetRawValue(&data[0], 0, count);
+		if (RECORD_D3D11(hr).IsFailure)
+			return nullptr;
+
+		return gcnew DataStream(&data[0], count, true, true, true);
 	}
 }
 }
