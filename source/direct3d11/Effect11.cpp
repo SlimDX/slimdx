@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,24 +19,20 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <d3d11.h>
-#include <d3dx11.h>
-#include <d3dx11effect.h>
-#include <vcclr.h>
+#include "stdafx.h"
 
 #include "../DataStream.h"
-#include "Effect11.h"
+#include "../d3dcompiler/ShaderBytecodeDC.h"
 
 #include "Direct3D11Exception.h"
 
 #include "Device11.h"
-#include "../d3dcompiler/ShaderBytecodeDC.h"
 #include "ClassLinkage11.h"
 #include "EffectConstantBuffer11.h"
 #include "EffectDescription11.h"
 #include "EffectTechnique11.h"
 #include "EffectVariable11.h"
+#include "Effect11.h"
 
 using namespace System;
 using namespace System::IO;
@@ -166,6 +161,22 @@ namespace Direct3D11
 			return nullptr;
 		
 		return gcnew EffectVariable( variable );
+	}
+
+	Effect^ Effect::Clone()
+	{
+		return Clone(false);
+	}
+
+	Effect^ Effect::Clone(bool forceNonSingle)
+	{
+		ID3DX11Effect *result;
+
+		HRESULT hr = InternalPointer->CloneEffect(forceNonSingle ? D3DX11_EFFECT_CLONE_FORCE_NONSINGLE : 0, &result);
+		if (RECORD_D3D11(hr).IsFailure)
+			return nullptr;
+
+		return Effect::FromPointer(result);
 	}
 	
 	Result Effect::Optimize()
