@@ -21,65 +21,32 @@
 */
 #pragma once
 
-#include "Enums11.h"
-#include "../d3dcompiler/ShaderSignatureDC.h"
-
 namespace SlimDX
 {
 	namespace Direct3D11
 	{	
-		public value class EffectShaderDescription : System::IEquatable<EffectShaderDescription>
+		public value class EffectGroupDescription : System::IEquatable<EffectGroupDescription>
 		{
 		private:
-			D3DCompiler::ShaderSignature^ m_InputSignature;
-			bool m_IsInline;
-			D3DCompiler::ShaderBytecode^ m_Bytecode;
-			array<System::String^>^ m_SODecl;
-			int m_RasterizedStream;
-			int m_NumInputSignatureEntries;
-			int m_NumOutputSignatureEntries;
-			int m_NumPatchConstantSignatureEntries;
+			System::String^ m_Name;
+			int m_Techniques;
+			int m_Annotations;
 
 		internal:
-			EffectShaderDescription( const D3DX11_EFFECT_SHADER_DESC& native );
-		
+			EffectGroupDescription( const D3DX11_GROUP_DESC& native );
+			
 		public:
-			property D3DCompiler::ShaderSignature^ Signature
+			property System::String^ Name
 			{
-				D3DCompiler::ShaderSignature^ get();
+				System::String^ get();
 			}
 			
-			property bool IsInline
-			{
-				bool get();
-			}
-			
-			property D3DCompiler::ShaderBytecode^ Bytecode
-			{
-				D3DCompiler::ShaderBytecode^ get();
-			}
-			
-			property System::String^ StreamOutputDeclaration[int]
-			{
-				System::String^ get(int index);
-			}
-			
-			property int RasterizedStream
-			{
-				int get();
-			}
-
-			property int InputParameterCount
+			property int TechniqueCount
 			{
 				int get();
 			}
 			
-			property int OutputParameterCount
-			{
-				int get();
-			}
-
-			property int PatchConstantCount
+			property int AnnotationCount
 			{
 				int get();
 			}
@@ -90,7 +57,7 @@ namespace SlimDX
 			/// <param name="left">The first value to compare.</param>
 			/// <param name="right">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-			static bool operator == ( EffectShaderDescription left, EffectShaderDescription right );
+			static bool operator == ( EffectGroupDescription left, EffectGroupDescription right );
 
 			/// <summary>
 			/// Tests for inequality between two objects.
@@ -98,7 +65,7 @@ namespace SlimDX
 			/// <param name="left">The first value to compare.</param>
 			/// <param name="right">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-			static bool operator != ( EffectShaderDescription left, EffectShaderDescription right );
+			static bool operator != ( EffectGroupDescription left, EffectGroupDescription right );
 
 			/// <summary>
 			/// Returns the hash code for this instance.
@@ -118,7 +85,7 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="other">Object to make the comparison with.</param>
 			/// <returns><c>true</c> if the current instance is equal to the specified object; <c>false</c> otherwise.</returns>
-			virtual bool Equals( EffectShaderDescription other );
+			virtual bool Equals( EffectGroupDescription other );
 
 			/// <summary>
 			/// Determines whether the specified object instances are considered equal. 
@@ -127,7 +94,7 @@ namespace SlimDX
 			/// <param name="value2">The second value to compare.</param>
 			/// <returns><c>true</c> if <paramref name="value1"/> is the same instance as <paramref name="value2"/> or 
 			/// if both are <c>null</c> references or if <c>value1.Equals(value2)</c> returns <c>true</c>; otherwise, <c>false</c>.</returns>
-			static bool Equals( EffectShaderDescription% value1, EffectShaderDescription% value2 );
+			static bool Equals( EffectGroupDescription% value1, EffectGroupDescription% value2 );
 		};
 	}
 };

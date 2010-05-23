@@ -6587,6 +6587,26 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="Group"
+					>
+					<File
+						RelativePath="..\source\direct3d11\EffectGroup11.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\EffectGroup11.h"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\EffectGroupDescription11.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\source\direct3d11\EffectGroupDescription11.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Compute"

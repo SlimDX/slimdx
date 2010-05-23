@@ -57,6 +57,7 @@ Direct3D 11
 	* Cleaned up the DirectCompute interfaces.
 	* Added creation methods for the FastFourierTransform type.
 	* Added support for the Debug and SwitchToRef interfaces.
+	* Added support for effect groups.
 	
 Windows
 	* Added several overloads to MessagePump.Run to allow access to corresponding Application.Run overloads.

@@ -32,6 +32,7 @@
 #include "EffectDescription11.h"
 #include "EffectTechnique11.h"
 #include "EffectVariable11.h"
+#include "EffectGroup11.h"
 #include "Effect11.h"
 
 using namespace System;
@@ -130,6 +131,26 @@ namespace Direct3D11
 			return nullptr;
 			
 		return gcnew EffectTechnique( technique );
+	}
+
+	EffectGroup^ Effect::GetGroupByIndex( int index )
+	{
+		ID3DX11EffectGroup* technique = InternalPointer->GetGroupByIndex( index );
+		if( technique == 0 )
+			return nullptr;
+			
+		return gcnew EffectGroup( technique );
+	}
+
+	EffectGroup^ Effect::GetGroupByName( System::String^ name )
+	{
+		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
+		pin_ptr<unsigned char> pinnedName = &nameBytes[ 0 ];
+		ID3DX11EffectGroup* technique = InternalPointer->GetGroupByName( reinterpret_cast<LPCSTR>( pinnedName ) );
+		if( technique == 0 )
+			return nullptr;
+			
+		return gcnew EffectGroup( technique );
 	}
 	
 	EffectVariable^ Effect::GetVariableByIndex( int index )
