@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,9 +19,10 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#include <d3d11.h>
-#include <d3dx11effect.h>
+#include "../Utilities.h"
+#include "../stack_array.h"
 
 #include "Direct3D11Exception.h"
 
@@ -53,6 +53,26 @@ namespace Direct3D11
 			return nullptr;
 		
 		return gcnew String( result );
+	}
+
+	Result EffectStringVariable::GetStringArray(array<System::String^>^ strings)
+	{
+		return GetStringArray(strings, 0, strings->Length);
+	}
+
+	Result EffectStringVariable::GetStringArray(array<System::String^>^ strings, int offset, int count)
+	{
+		Utilities::CheckArrayBounds(strings, offset, count);
+
+		stack_array<LPCSTR> native = stackalloc(LPCSTR, count);
+		HRESULT hr = m_Pointer->GetStringArray(&native[0], 0, count);
+		if (RECORD_D3D11(hr).IsFailure)
+			return Result::Last;
+
+		for (int i = 0; i < count; i++)
+			strings[i + offset] = gcnew String(native[i]);
+
+		return Result::Last;
 	}
 }
 }

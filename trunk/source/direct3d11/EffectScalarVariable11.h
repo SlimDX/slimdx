@@ -27,6 +27,10 @@ namespace SlimDX
 {
 	namespace Direct3D11
 	{
+		/// <summary>
+		/// Represents a scalar effect variable.
+		/// </summary>
+		/// <unmanaged>ID3DX11EffectScalarVariable</unmanaged>
 		public ref class EffectScalarVariable : public EffectVariable
 		{	
 		private:
@@ -36,20 +40,88 @@ namespace SlimDX
 			EffectScalarVariable( ID3DX11EffectScalarVariable* pointer );
 			
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="EffectScalarVariable"/> class.
+			/// </summary>
+			/// <param name="pointer">A pointer to the unmanaged interface.</param>
 			EffectScalarVariable( System::IntPtr pointer );
 			
+			/// <summary>
+			/// Sets the value of the scalar variable.
+			/// </summary>
+			/// <param name="value">The boolean value to set.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Set( bool value );
-			Result Set( array<bool>^ values );
-			Result Set( float value );
-			Result Set( array<float>^ values );
+
+			/// <summary>
+			/// Sets the value of the scalar variable.
+			/// </summary>
+			/// <param name="value">The integer value to set.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Set( int value );
+
+			/// <summary>
+			/// Sets the value of the scalar variable.
+			/// </summary>
+			/// <param name="value">The floating point value to set.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result Set( float value );
+
+			/// <summary>
+			/// Sets the value of the scalar variable.
+			/// </summary>
+			/// <param name="values">The array of boolean values to set.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result Set( array<bool>^ values );
+
+			/// <summary>
+			/// Sets the value of the scalar variable.
+			/// </summary>
+			/// <param name="values">The array of integer values to set.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Set( array<int>^ values );
 
+			/// <summary>
+			/// Sets the value of the scalar variable.
+			/// </summary>
+			/// <param name="values">The array of floating point values to set.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result Set( array<float>^ values );
+			
+			/// <summary>
+			/// Gets the value of the variable as a boolean.
+			/// </summary>
+			/// <returns>The boolean value of the scalar.</returns>
 			bool GetBool();
-			array<bool>^ GetBoolArray( int count );
+
+			/// <summary>
+			/// Gets the value of the variable as an integer.
+			/// </summary>
+			/// <returns>The integer value of the scalar.</returns>
 			int GetInt();
-			array<int>^ GetIntArray( int count );
+
+			/// <summary>
+			/// Gets the value of the variable as a floating point.
+			/// </summary>
+			/// <returns>The floating point value of the scalar.</returns>
 			float GetFloat();
+
+			/// <summary>
+			/// Gets the value of the variable as an array of booleans.
+			/// </summary>
+			/// <returns>The array of boolean values of the variable.</returns>
+			array<bool>^ GetBoolArray( int count );
+
+			/// <summary>
+			/// Gets the value of the variable as an array of integers.
+			/// </summary>
+			/// <returns>The array of integer values of the variable.</returns>
+			array<int>^ GetIntArray( int count );
+
+			/// <summary>
+			/// Gets the value of the variable as an array of floating points.
+			/// </summary>
+			/// <returns>The array of floating point values of the variable.</returns>
 			array<float>^ GetFloatArray( int count );
 		};
 	}

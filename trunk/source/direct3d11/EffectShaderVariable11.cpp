@@ -25,11 +25,15 @@
 
 #include "Direct3D11Exception.h"
 
-#include "EffectShaderVariable11.h"
+#include "EffectShaderDescription11.h"
 #include "GeometryShader11.h"
 #include "PixelShader11.h"
-#include "EffectShaderDescription11.h"
 #include "VertexShader11.h"
+#include "HullShader11.h"
+#include "DomainShader11.h"
+#include "ComputeShader11.h"
+
+#include "EffectShaderVariable11.h"
 
 using namespace System;
 
@@ -75,32 +79,68 @@ namespace Direct3D11
 			
 		return GeometryShader::FromPointer( shader );
 	}
-	
-	Result EffectShaderVariable::GetInputParameterDescription( int shaderIndex, int parameterIndex, D3DCompiler::ShaderParameterDescription% result )
+
+	HullShader^ EffectShaderVariable::GetHullShader( int index )
 	{
-		D3D11_SIGNATURE_PARAMETER_DESC description;
-		if( RECORD_D3D11( m_Pointer->GetInputSignatureElementDesc( shaderIndex, parameterIndex, &description ) ).IsSuccess )
-			result = D3DCompiler::ShaderParameterDescription( description );
+		ID3D11HullShader* shader = 0;
+		if( RECORD_D3D11( m_Pointer->GetHullShader( index, &shader ) ).IsFailure )
+			return nullptr;
 			
-		return Result::Last;
+		return HullShader::FromPointer( shader );
+	}
+
+	DomainShader^ EffectShaderVariable::GetDomainShader( int index )
+	{
+		ID3D11DomainShader* shader = 0;
+		if( RECORD_D3D11( m_Pointer->GetDomainShader( index, &shader ) ).IsFailure )
+			return nullptr;
+			
+		return DomainShader::FromPointer( shader );
+	}
+
+	ComputeShader^ EffectShaderVariable::GetComputeShader( int index )
+	{
+		ID3D11ComputeShader* shader = 0;
+		if( RECORD_D3D11( m_Pointer->GetComputeShader( index, &shader ) ).IsFailure )
+			return nullptr;
+			
+		return ComputeShader::FromPointer( shader );
 	}
 	
-	Result EffectShaderVariable::GetOutputParameterDescription( int shaderIndex, int parameterIndex, D3DCompiler::ShaderParameterDescription% result )
+	D3DCompiler::ShaderParameterDescription EffectShaderVariable::GetInputParameterDescription( int shaderIndex, int parameterIndex )
 	{
 		D3D11_SIGNATURE_PARAMETER_DESC description;
-		if( RECORD_D3D11( m_Pointer->GetOutputSignatureElementDesc( shaderIndex, parameterIndex, &description ) ).IsSuccess )
-			result = D3DCompiler::ShaderParameterDescription( description );
-		
-		return Result::Last;
+		if( RECORD_D3D11( m_Pointer->GetInputSignatureElementDesc( shaderIndex, parameterIndex, &description ) ).IsFailure )
+			return D3DCompiler::ShaderParameterDescription();
+			
+		return D3DCompiler::ShaderParameterDescription( description );
 	}
 	
-	Result EffectShaderVariable::GetShaderDescription( int shaderIndex, EffectShaderDescription% result )
+	D3DCompiler::ShaderParameterDescription EffectShaderVariable::GetOutputParameterDescription( int shaderIndex, int parameterIndex )
+	{
+		D3D11_SIGNATURE_PARAMETER_DESC description;
+		if( RECORD_D3D11( m_Pointer->GetOutputSignatureElementDesc( shaderIndex, parameterIndex, &description ) ).IsFailure )
+			return D3DCompiler::ShaderParameterDescription();
+			
+		return D3DCompiler::ShaderParameterDescription( description );
+	}
+
+	D3DCompiler::ShaderParameterDescription EffectShaderVariable::GetPatchConstantDescription( int shaderIndex, int parameterIndex )
+	{
+		D3D11_SIGNATURE_PARAMETER_DESC description;
+		if( RECORD_D3D11( m_Pointer->GetPatchConstantSignatureElementDesc( shaderIndex, parameterIndex, &description ) ).IsFailure )
+			return D3DCompiler::ShaderParameterDescription();
+			
+		return D3DCompiler::ShaderParameterDescription( description );
+	}
+	
+	EffectShaderDescription EffectShaderVariable::GetShaderDescription( int shaderIndex )
 	{
 		D3DX11_EFFECT_SHADER_DESC description;
-		if( RECORD_D3D11( m_Pointer->GetShaderDesc( shaderIndex, &description ) ).IsSuccess )
-			result = EffectShaderDescription( description );
-	
-		return Result::Last;
+		if( RECORD_D3D11( m_Pointer->GetShaderDesc( shaderIndex, &description ) ).IsFailure )
+			return EffectShaderDescription();
+
+		return EffectShaderDescription( description );
 	}
 }
 }

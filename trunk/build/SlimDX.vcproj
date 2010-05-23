@@ -6423,14 +6423,6 @@
 					RelativePath="..\source\direct3d11\EffectDescription11.h"
 					>
 				</File>
-				<File
-					RelativePath="..\source\direct3d11\EffectShaderDescription11.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct3d11\EffectShaderDescription11.h"
-					>
-				</File>
 				<Filter
 					Name="Technique"
 					>
@@ -6545,6 +6537,14 @@
 					<Filter
 						Name="Shader"
 						>
+						<File
+							RelativePath="..\source\direct3d11\EffectShaderDescription11.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\source\direct3d11\EffectShaderDescription11.h"
+							>
+						</File>
 						<File
 							RelativePath="..\source\direct3d11\EffectShaderVariable11.cpp"
 							>
