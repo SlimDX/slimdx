@@ -58,9 +58,9 @@ namespace Direct3D11
 		return m_Bytecode;
 	}
 	
-	System::String^ EffectShaderDescription::StreamOutputDeclaration::get(int index)
+	array<System::String^>^ EffectShaderDescription::StreamOutputDeclaration::get()
 	{
-		return m_SODecl[index];
+		return m_SODecl;
 	}
 
 	int EffectShaderDescription::RasterizedStream::get()

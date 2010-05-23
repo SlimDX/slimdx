@@ -27,7 +27,11 @@
 namespace SlimDX
 {
 	namespace Direct3D11
-	{	
+	{
+		/// <summary>
+		/// Provides a description for an effect shader variable.
+		/// </summary>
+		/// <unmanaged></unmanaged>
 		public value class EffectShaderDescription : System::IEquatable<EffectShaderDescription>
 		{
 		private:
@@ -44,41 +48,65 @@ namespace SlimDX
 			EffectShaderDescription( const D3DX11_EFFECT_SHADER_DESC& native );
 		
 		public:
+			/// <summary>
+			/// The shader input signature. Only valid on a vertex shader or geometry shader.
+			/// </summary>
 			property D3DCompiler::ShaderSignature^ Signature
 			{
 				D3DCompiler::ShaderSignature^ get();
 			}
 			
+			/// <summary>
+			/// Indicates whether the shader is defined inline.
+			/// </summary>
 			property bool IsInline
 			{
 				bool get();
 			}
 			
+			/// <summary>
+			/// The compiled shader bytecode.
+			/// </summary>
 			property D3DCompiler::ShaderBytecode^ Bytecode
 			{
 				D3DCompiler::ShaderBytecode^ get();
 			}
 			
-			property System::String^ StreamOutputDeclaration[int]
+			/// <summary>
+			/// Stream out declarations.
+			/// </summary>
+			property array<System::String^>^ StreamOutputDeclaration
 			{
-				System::String^ get(int index);
+				array<System::String^>^ get();
 			}
 			
+			/// <summary>
+			/// Indicates which stream is rasterized. D3D11 geometry shaders can output up to four streams of data, one of which can be rasterized.
+			/// </summary>
 			property int RasterizedStream
 			{
 				int get();
 			}
 
+			/// <summary>
+			/// Number of entries in the input signature.
+			/// </summary>
 			property int InputParameterCount
 			{
 				int get();
 			}
 			
+			/// <summary>
+			/// Number of entries in the output signature.
+			/// </summary>
 			property int OutputParameterCount
 			{
 				int get();
 			}
 
+			/// <summary>
+			/// Number of entries in the patch constant signature.
+			/// </summary>
 			property int PatchConstantCount
 			{
 				int get();

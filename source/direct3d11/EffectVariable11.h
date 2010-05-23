@@ -128,10 +128,10 @@ namespace SlimDX
 			EffectConstantBuffer^ AsConstantBuffer();
 			EffectMatrixVariable^ AsMatrix();
 			EffectResourceVariable^ AsResource();
-			EffectShaderVariable^ AsShader();
 			EffectScalarVariable^ AsScalar();
-			EffectVectorVariable^ AsVector();
+			EffectShaderVariable^ AsShader();
 			EffectStringVariable^ AsString();
+			EffectVectorVariable^ AsVector();
 			EffectUnorderedAccessViewVariable^ AsUnorderedAccessView();
 
 			/// <summary>
