@@ -30,6 +30,10 @@ namespace SlimDX
 		ref class Buffer;
 		ref class ShaderResourceView;
 		
+		/// <summary>
+		/// Represents a constant buffer or texture buffer inside an effect.
+		/// </summary>
+		/// <unmanaged>ID3DX11EffectConstantBuffer</unmanaged>
 		public ref class EffectConstantBuffer : public EffectVariable
 		{	
 		private:
@@ -39,13 +43,41 @@ namespace SlimDX
 			EffectConstantBuffer( ID3DX11EffectConstantBuffer* pointer );
 
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="EffectConstantBuffer"/> class.
+			/// </summary>
+			/// <param name="pointer">A pointer to the unmanaged interface.</param>
 			EffectConstantBuffer( System::IntPtr pointer );
-			
-			Buffer^ GetConstantBuffer();
-			Result SetConstantBuffer( Buffer^ buffer );
-			
-			ShaderResourceView^ GetTextureBuffer();
-			Result SetTextureBuffer( ShaderResourceView^ buffer );
+
+			/// <summary>
+			/// Gets or sets the constant buffer represented by this interface.
+			/// </summary>
+			property Buffer^ ConstantBuffer
+			{
+				Buffer^ get();
+				void set(Buffer^ value);
+			}
+
+			/// <summary>
+			/// Gets or sets the texture buffer represented by this interface.
+			/// </summary>
+			property ShaderResourceView^ TextureBuffer
+			{
+				ShaderResourceView^ get();
+				void set(ShaderResourceView^ value);
+			}
+
+			/// <summary>
+			/// Reverts a previously set constant buffer.
+			/// </summary>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result UndoSetConstantBuffer();
+
+			/// <summary>
+			/// Reverts a previously set texture buffer.
+			/// </summary>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result UndoSetTextureBuffer();
 		};
 	}
 };

@@ -675,6 +675,27 @@ namespace SlimDX
 			Warp = D3D_DRIVER_TYPE_WARP
 		};
 
+		/// <summary>Specifies detailed information about effect variables.</summary>
+		/// <unmanaged>D3DX11_EFFECT_VARIABLE</unmanaged>
+		[System::Flags]
+		public enum class EffectVariableFlags : System::Int32
+		{
+			/// <summary>
+			/// Standard effect variable.
+			/// </summary>
+			None = 0,
+			
+			/// <summary>
+			/// Indicates that the variable is an annotation or global.
+			/// </summary>
+			Annotation = D3DX11_EFFECT_VARIABLE_ANNOTATION,
+			
+			/// <summary>
+			/// Indicates the variable has been explicitly bound using the register keyword in the effect code.
+			/// </summary>
+			ExplicitBindPoint = D3DX11_EFFECT_VARIABLE_EXPLICIT_BIND_POINT,
+		};
+
 		[System::Flags]
 		public enum class FastFourierTransformCreationFlags : System::Int32
 		{

@@ -27,17 +27,39 @@ namespace SlimDX
 {
 	namespace Direct3D11
 	{
-		//NOTE: With 11, this has actually become blittable...
+		/// <summary>
+		/// Provides a description for effect objects.
+		/// </summary>
+		/// <unmanaged>D3DX11_EFFECT_DESC</unmanaged>
 		public value class EffectDescription : System::IEquatable<EffectDescription>
 		{
 		internal:
 			EffectDescription( const D3DX11_EFFECT_DESC& native );
 			
 		public:
+			/// <summary>
+			/// Number of constant buffers in this effect.
+			/// </summary>
 			property int ConstantBufferCount;
+
+			/// <summary>
+			/// Number of global variables in this effect.
+			/// </summary>
 			property int GlobalVariableCount;
+
+			/// <summary>
+			/// Number of global interfaces in this effect.
+			/// </summary>
 			property int InterfaceVariableCount;
+
+			/// <summary>
+			/// Number of techniques in this effect.
+			/// </summary>
 			property int TechniqueCount;
+
+			/// <summary>
+			/// Number of groups in this effect.
+			/// </summary>
 			property int GroupCount;
 
 			/// <summary>

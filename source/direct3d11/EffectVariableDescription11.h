@@ -26,13 +26,17 @@
 namespace SlimDX
 {
 	namespace Direct3D11
-	{	
+	{
+		/// <summary>
+		/// Provides a description for effect variables.
+		/// </summary>
+		/// <unmanaged>D3DX11_EFFECT_VARIABLE_DESC</unmanaged>
 		public value class EffectVariableDescription : System::IEquatable<EffectVariableDescription>
 		{
 		private:
 			System::String^ m_Name;
 			System::String^ m_Semantic;
-			int m_Flags;
+			EffectVariableFlags m_Flags;
 			int m_Annotations;
 			int m_BufferOffset;
 			int m_ExplicitBindPoint;
@@ -41,31 +45,49 @@ namespace SlimDX
 			EffectVariableDescription( const D3DX11_EFFECT_VARIABLE_DESC& native );
 			
 		public:
+			/// <summary>
+			/// Name of this variable, annotation, or structure member.
+			/// </summary>
 			property System::String^ Name
 			{
 				System::String^ get();
 			}
 			
+			/// <summary>
+			/// Semantic string of this variable or structure member.
+			/// </summary>
 			property System::String^ Semantic
 			{
 				System::String^ get();
 			}
 			
-			property int Flags
+			/// <summary>
+			/// Optional flags for effect variables.
+			/// </summary>
+			property EffectVariableFlags Flags
 			{
-				int get();
+				EffectVariableFlags get();
 			}
 			
+			/// <summary>
+			/// Number of annotations on this variable.
+			/// </summary>
 			property int AnnotationCount
 			{
 				int get();
 			}
 			
+			/// <summary>
+			/// Offset into containing cbuffer or tbuffer (always 0 for annotations or variables not in constant buffers).
+			/// </summary>
 			property int ConstantBufferOffset
 			{
 				int get();
 			}
 			
+			/// <summary>
+			/// Used if the variable has been explicitly bound using the register keyword.
+			/// </summary>
 			property int ExplicitBindPoint
 			{
 				int get();

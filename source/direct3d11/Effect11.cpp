@@ -44,13 +44,11 @@ namespace SlimDX
 {
 namespace Direct3D11
 {
-	Effect::Effect( SlimDX::Direct3D11::Device^ device, D3DCompiler::ShaderBytecode^ data, D3DCompiler::EffectFlags effectFlags )
+	Effect::Effect( SlimDX::Direct3D11::Device^ device, D3DCompiler::ShaderBytecode^ data )
 	{
 		ID3DX11Effect *effect;
 
-		HRESULT hr = D3DX11CreateEffectFromMemory( data->InternalPointer->GetBufferPointer(), data->InternalPointer->GetBufferSize(), 
-			static_cast<UINT>( effectFlags ), device->InternalPointer, &effect);
-
+		HRESULT hr = D3DX11CreateEffectFromMemory( data->InternalPointer->GetBufferPointer(), data->InternalPointer->GetBufferSize(), 0, device->InternalPointer, &effect);
 		if( RECORD_D3D11( hr ).IsFailure )
 			throw gcnew Direct3D11Exception( Result::Last );
 

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,9 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <d3d11.h>
-#include <d3dx11effect.h>
+#include "stdafx.h"
 
 #include "Direct3D11Exception.h"
 
@@ -48,7 +45,7 @@ namespace Direct3D11
 		m_Pointer = reinterpret_cast<ID3DX11EffectConstantBuffer*>( pointer.ToPointer() );
 	}
 	
-	Buffer^ EffectConstantBuffer::GetConstantBuffer()
+	Buffer^ EffectConstantBuffer::ConstantBuffer::get()
 	{
 		ID3D11Buffer* buffer = 0;
 		if( RECORD_D3D11( m_Pointer->GetConstantBuffer( &buffer ) ).IsFailure )
@@ -57,19 +54,15 @@ namespace Direct3D11
 		return Buffer::FromPointer( buffer );
 	}
 
-	Result EffectConstantBuffer::SetConstantBuffer( Buffer^ buffer )
+	void EffectConstantBuffer::ConstantBuffer::set( Buffer^ buffer )
 	{
 		if( buffer == nullptr )
-		{
-			return RECORD_D3D11( m_Pointer->SetConstantBuffer( 0 ) );
-		}
+			RECORD_D3D11( m_Pointer->SetConstantBuffer(0) );
 		else
-		{
-			return RECORD_D3D11( m_Pointer->SetConstantBuffer( static_cast<ID3D11Buffer*>( buffer->InternalPointer ) ) );
-		}
+			RECORD_D3D11( m_Pointer->SetConstantBuffer( static_cast<ID3D11Buffer*>( buffer->InternalPointer ) ) );
 	}
 	
-	ShaderResourceView^ EffectConstantBuffer::GetTextureBuffer()
+	ShaderResourceView^ EffectConstantBuffer::TextureBuffer::get()
 	{
 		ID3D11ShaderResourceView* buffer = 0;
 		if( RECORD_D3D11( m_Pointer->GetTextureBuffer( &buffer ) ).IsFailure )
@@ -78,16 +71,24 @@ namespace Direct3D11
 		return ShaderResourceView::FromPointer( buffer );
 	}
 
-	Result EffectConstantBuffer::SetTextureBuffer( ShaderResourceView^ buffer )
+	void EffectConstantBuffer::TextureBuffer::set( ShaderResourceView^ buffer )
 	{
 		if( buffer == nullptr )
-		{
-			return RECORD_D3D11( m_Pointer->SetTextureBuffer( 0 ) );
-		}
+			RECORD_D3D11( m_Pointer->SetTextureBuffer(0) );
 		else
-		{
-			return RECORD_D3D11( m_Pointer->SetTextureBuffer( static_cast<ID3D11ShaderResourceView*>( buffer->InternalPointer ) ) );
-		}
+			RECORD_D3D11( m_Pointer->SetTextureBuffer( static_cast<ID3D11ShaderResourceView*>( buffer->InternalPointer ) ) );
+	}
+
+	Result EffectConstantBuffer::UndoSetConstantBuffer()
+	{
+		HRESULT hr = m_Pointer->UndoSetConstantBuffer();
+		return RECORD_D3D11(hr);
+	}
+
+	Result EffectConstantBuffer::UndoSetTextureBuffer()
+	{
+		HRESULT hr = m_Pointer->UndoSetTextureBuffer();
+		return RECORD_D3D11(hr);
 	}
 }
 }
