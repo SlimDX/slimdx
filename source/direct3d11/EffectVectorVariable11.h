@@ -32,6 +32,10 @@ namespace SlimDX
 {
 	namespace Direct3D11
 	{
+		/// <summary>
+		/// Represents a vector effect variable.
+		/// </summary>
+		/// <unmanaged>ID3DX11EffectVectorVariable</unmanaged>
 		public ref class EffectVectorVariable : public EffectVariable
 		{
 		private:
@@ -41,16 +45,107 @@ namespace SlimDX
 			EffectVectorVariable( ID3DX11EffectVectorVariable* pointer );
 			
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="EffectVectorVariable"/> class.
+			/// </summary>
+			/// <param name="pointer">A pointer to the unmanaged interface.</param>
 			EffectVectorVariable( System::IntPtr pointer );
 			
+			/// <summary>
+			/// Sets the value of the vector variable.
+			/// </summary>
+			/// <param name="value">The floating point vector value to set.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Set( Vector2 value );
+
+			/// <summary>
+			/// Sets the value of the vector variable.
+			/// </summary>
+			/// <param name="value">The floating point vector value to set.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Set( Vector3 value );
+
+			/// <summary>
+			/// Sets the value of the vector variable.
+			/// </summary>
+			/// <param name="value">The floating point vector value to set.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Set( Vector4 value );
+
+			/// <summary>
+			/// Sets the value of the vector variable.
+			/// </summary>
+			/// <param name="value">The color value to set.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Set( Color4 value );
+
+			/// <summary>
+			/// Sets the value of the vector variable.
+			/// </summary>
+			/// <param name="value">The array of floating point vectors to set.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Set( array<Vector4>^ value );
+
+			/// <summary>
+			/// Sets the value of the vector variable.
+			/// </summary>
+			/// <param name="value">The array of color values to set.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Set( array<Color4>^ value );
+
+			/// <summary>
+			/// Sets the value of the vector variable.
+			/// </summary>
+			/// <param name="value">The array of four-element integer vectors to set.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Set( array<int>^ value );
+
+			/// <summary>
+			/// Sets the value of the vector variable.
+			/// </summary>
+			/// <param name="value">The array of four-element boolean vectors to set.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Set( array<bool>^ value );
+
+			/// <summary>
+			/// Gets the value of the variable as a floating point vector.
+			/// </summary>
+			/// <returns>The floating point vector value of the variable.</returns>
+			Vector4 GetVector();
+
+			/// <summary>
+			/// Gets the value of the variable as a color value.
+			/// </summary>
+			/// <returns>The color value of the variable.</returns>
+			Color4 GetColor();
+
+			/// <summary>
+			/// Gets the value of the variable as an array of floating point vectors.
+			/// </summary>
+			/// <param name="count">The number of values to get.</param>
+			/// <returns>The floating point vector values of the variable.</returns>
+			array<Vector4>^ GetVectorArray(int count);
+
+			/// <summary>
+			/// Gets the value of the variable as an array of color values.
+			/// </summary>
+			/// <param name="count">The number of values to get.</param>
+			/// <returns>The color values of the variable.</returns>
+			array<Color4>^ GetColorArray(int count);
+
+			/// <summary>
+			/// Gets the value of the variable as an array of boolean vectors.
+			/// </summary>
+			/// <param name="count">The number of 4-element vectors to get.</param>
+			/// <returns>The boolean vector values of the variable.</returns>
+			array<bool>^ GetBoolVectorArray(int count);
+
+			/// <summary>
+			/// Gets the value of the variable as an array of integer vectors.
+			/// </summary>
+			/// <param name="count">The number of 4-element vectors to get.</param>
+			/// <returns>The integer vector values of the variable.</returns>
+			array<int>^ GetIntVectorArray(int count);
 		};
 	}
 };

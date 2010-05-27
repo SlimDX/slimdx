@@ -22,66 +22,66 @@
 #pragma once
 
 #include "EffectVariable11.h"
-#include "UnorderedAccessView11.h"
+#include "RenderTargetView11.h"
 
 namespace SlimDX
 {
 	namespace Direct3D11
 	{
 		/// <summary>
-		/// Represents an unordered access buffer effect variable.
+		/// Represents a render target view effect variable.
 		/// </summary>
-		/// <unmanaged>ID3DX11EffectUnorderedAccessViewVariable</unmanaged>
-		public ref class EffectUnorderedAccessViewVariable : public EffectVariable
+		/// <unmanaged>ID3DX11EffectRenderTargetViewVariable</unmanaged>
+		public ref class EffectRenderTargetViewVariable : public EffectVariable
 		{
 		private:
-			ID3DX11EffectUnorderedAccessViewVariable* m_Pointer;
+			ID3DX11EffectRenderTargetViewVariable* m_Pointer;
 			
 		internal:
-			EffectUnorderedAccessViewVariable( ID3DX11EffectUnorderedAccessViewVariable* pointer );
+			EffectRenderTargetViewVariable( ID3DX11EffectRenderTargetViewVariable* pointer );
 			
 		public:
 			/// <summary>
-			/// Initializes a new instance of the <see cref="EffectUnorderedAccessViewVariable"/> class.
+			/// Initializes a new instance of the <see cref="EffectRenderTargetViewVariable"/> class.
 			/// </summary>
 			/// <param name="pointer">A pointer to the unmanaged interface.</param>
-			EffectUnorderedAccessViewVariable( System::IntPtr pointer );
+			EffectRenderTargetViewVariable( System::IntPtr pointer );
 
 			/// <summary>
 			/// Gets the value of the variable.
 			/// </summary>
-			/// <returns>The view of the unordered access variable.</returns>
-			UnorderedAccessView^ GetView();
+			/// <returns>The view of the render target variable.</returns>
+			RenderTargetView^ GetView();
 
 			/// <summary>
-			/// Gets an array of views of unordered access buffers from the variable.
+			/// Gets an array of views of render target surfaces from the variable.
 			/// </summary>
 			/// <param name="views">An array of views to hold the retrieved values.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result GetViewArray(array<UnorderedAccessView^>^ views);
+			Result GetViewArray(array<RenderTargetView^>^ views);
 
 			/// <summary>
-			/// Gets an array of views of unordered access buffers from the variable.
+			/// Gets an array of views of render target surfaces from the variable.
 			/// </summary>
 			/// <param name="views">An array of views to hold the retrieved values.</param>
 			/// <param name="offset">The offset into the array to begin storing values.</param>
 			/// <param name="count">The number of values to get.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result GetViewArray(array<UnorderedAccessView^>^ views, int offset, int count);
+			Result GetViewArray(array<RenderTargetView^>^ views, int offset, int count);
 			
 			/// <summary>
 			/// Sets the value of the variable.
 			/// </summary>
-			/// <param name="view">The view of the unordered access resource to set.</param>
+			/// <param name="view">The view of the render target surface to set.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result SetView( UnorderedAccessView^ view );
+			Result SetView( RenderTargetView^ view );
 
 			/// <summary>
 			/// Sets the value of the variable.
 			/// </summary>
 			/// <param name="views">An array of views to set.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result SetViewArray(array<UnorderedAccessView^>^ views);
+			Result SetViewArray(array<RenderTargetView^>^ views);
 
 			/// <summary>
 			/// Sets the value of the variable.
@@ -90,7 +90,7 @@ namespace SlimDX
 			/// <param name="offset">The offset into the array to begin setting values.</param>
 			/// <param name="count">The number of values to set.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result SetViewArray(array<UnorderedAccessView^>^ views, int offset, int count);
+			Result SetViewArray(array<RenderTargetView^>^ views, int offset, int count);
 		};
 	}
 };

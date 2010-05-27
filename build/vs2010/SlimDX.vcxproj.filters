@@ -715,17 +715,65 @@
     <Filter Include="Direct3D11\Effects\Technique">
       <UniqueIdentifier>{2986c320-630d-4088-8cda-46d7cfc843e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Direct3D11\Effects\ConstantBuffer">
-      <UniqueIdentifier>{06d96ec8-851a-4774-b5d2-729179ce5937}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Direct3D11\Effects\Variables">
       <UniqueIdentifier>{c2226d26-37f5-4352-ac33-726615c01f63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Effects\Variables\Matrix">
+      <UniqueIdentifier>{75bcc5a3-aed8-4e18-8699-e8f4e48ac20f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Effects\Variables\Resource">
+      <UniqueIdentifier>{e922b3f9-31d6-4896-b97f-5f70e4dbc135}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Effects\Variables\Scalar">
+      <UniqueIdentifier>{eb92c149-6a06-423f-8e0e-3051dad2f2eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Effects\Variables\Vector">
+      <UniqueIdentifier>{e1e40769-cd42-4d1b-ac9a-a4e93515cdd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Effects\Variables\String">
+      <UniqueIdentifier>{b4fc69f3-35c2-41e8-9dce-c8d9a3f5715b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Effects\Variables\UnorderedAccessView">
+      <UniqueIdentifier>{c1397ba6-476a-479e-87b0-77dc832cc021}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Effects\Variables\Shader">
+      <UniqueIdentifier>{65b282fc-0317-4794-921d-2bc8ac1932ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Effects\Variables\Blend">
+      <UniqueIdentifier>{07e4df44-3f3e-474c-bb11-cd706bb67506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Effects\Variables\ClassInstance">
+      <UniqueIdentifier>{16965b7b-342e-4f56-a328-970f7ff08c44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Effects\Variables\DepthStencil">
+      <UniqueIdentifier>{60b6de7d-2f80-44c0-b63b-07dbd3906629}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Effects\Variables\DepthStencilView">
+      <UniqueIdentifier>{1836b238-9a39-4a00-bd2a-0baa1db2217b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Effects\Variables\Interface">
+      <UniqueIdentifier>{3cd12648-93b9-470b-bc55-9431066497ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Effects\Variables\Rasterizer">
+      <UniqueIdentifier>{bc204b88-a5e9-4b9f-91a4-dbc1719a265e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Effects\Variables\RenderTargetView">
+      <UniqueIdentifier>{1d77c26e-5871-4e82-bd28-3c4d769f2039}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Effects\Variables\Sampler">
+      <UniqueIdentifier>{fba36ef9-61f3-46ee-ab9a-2ac3cd7a9d94}</UniqueIdentifier>
     </Filter>
     <Filter Include="Direct3D11\Effects\Pass">
       <UniqueIdentifier>{fa511f82-2619-489c-8017-2c7ff8dfad30}</UniqueIdentifier>
     </Filter>
     <Filter Include="Direct3D11\Effects\Type">
       <UniqueIdentifier>{aad0dc71-0315-4533-8d4e-d4c7db33fabd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Effects\Group">
+      <UniqueIdentifier>{e42fac70-9208-4f81-ae4f-015fedc2933d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Direct3D11\Effects\ConstantBuffer">
+      <UniqueIdentifier>{06d96ec8-851a-4774-b5d2-729179ce5937}</UniqueIdentifier>
     </Filter>
     <Filter Include="Direct3D11\Compute">
       <UniqueIdentifier>{e1ffb9ee-22dd-4a7f-8309-2cf43ae5e824}</UniqueIdentifier>
@@ -2499,35 +2547,11 @@
     <ClCompile Include="..\..\source\direct3d11\EffectDescription11.cpp">
       <Filter>Direct3D11\Effects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\EffectShaderDescription11.cpp">
-      <Filter>Direct3D11\Effects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\EffectTechnique11.cpp">
       <Filter>Direct3D11\Effects\Technique</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\EffectTechniqueDescription11.cpp">
       <Filter>Direct3D11\Effects\Technique</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\EffectConstantBuffer11.cpp">
-      <Filter>Direct3D11\Effects\ConstantBuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\EffectMatrixVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\EffectResourceVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\EffectScalarVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\EffectShaderVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\EffectStringVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\direct3d11\EffectUnorderedAccessViewVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\EffectVariable11.cpp">
       <Filter>Direct3D11\Effects\Variables</Filter>
@@ -2535,8 +2559,53 @@
     <ClCompile Include="..\..\source\direct3d11\EffectVariableDescription11.cpp">
       <Filter>Direct3D11\Effects\Variables</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectMatrixVariable11.cpp">
+      <Filter>Direct3D11\Effects\Variables\Matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectResourceVariable11.cpp">
+      <Filter>Direct3D11\Effects\Variables\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectScalarVariable11.cpp">
+      <Filter>Direct3D11\Effects\Variables\Scalar</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\EffectVectorVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables</Filter>
+      <Filter>Direct3D11\Effects\Variables\Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectStringVariable11.cpp">
+      <Filter>Direct3D11\Effects\Variables\String</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectUnorderedAccessViewVariable11.cpp">
+      <Filter>Direct3D11\Effects\Variables\UnorderedAccessView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectShaderDescription11.cpp">
+      <Filter>Direct3D11\Effects\Variables\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectShaderVariable11.cpp">
+      <Filter>Direct3D11\Effects\Variables\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectBlendVariable11.cpp">
+      <Filter>Direct3D11\Effects\Variables\Blend</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectClassInstanceVariable11.cpp">
+      <Filter>Direct3D11\Effects\Variables\ClassInstance</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectDepthStencilVariable11.cpp">
+      <Filter>Direct3D11\Effects\Variables\DepthStencil</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectDepthStencilViewVariable11.cpp">
+      <Filter>Direct3D11\Effects\Variables\DepthStencilView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectInterfaceVariable11.cpp">
+      <Filter>Direct3D11\Effects\Variables\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectRasterizerVariable11.cpp">
+      <Filter>Direct3D11\Effects\Variables\Rasterizer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectRenderTargetViewVariable11.cpp">
+      <Filter>Direct3D11\Effects\Variables\RenderTargetView</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectSamplerVariable11.cpp">
+      <Filter>Direct3D11\Effects\Variables\Sampler</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\EffectPass11.cpp">
       <Filter>Direct3D11\Effects\Pass</Filter>
@@ -2552,6 +2621,15 @@
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\EffectTypeDescription11.cpp">
       <Filter>Direct3D11\Effects\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectGroup11.cpp">
+      <Filter>Direct3D11\Effects\Group</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectGroupDescription11.cpp">
+      <Filter>Direct3D11\Effects\Group</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\EffectConstantBuffer11.cpp">
+      <Filter>Direct3D11\Effects\ConstantBuffer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\FastFourierTransform11.cpp">
       <Filter>Direct3D11\Compute</Filter>
@@ -4212,9 +4290,6 @@
     <ClInclude Include="..\..\source\directwrite\InlineObjectMetrics.h">
       <Filter>DirectWrite</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\directwrite\NativeUnicodeString.h">
-      <Filter>DirectWrite</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\directwrite\NumberSubstitution.h">
       <Filter>DirectWrite</Filter>
     </ClInclude>
@@ -4584,35 +4659,11 @@
     <ClInclude Include="..\..\source\direct3d11\EffectDescription11.h">
       <Filter>Direct3D11\Effects</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\EffectShaderDescription11.h">
-      <Filter>Direct3D11\Effects</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\EffectTechnique11.h">
       <Filter>Direct3D11\Effects\Technique</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\EffectTechniqueDescription11.h">
       <Filter>Direct3D11\Effects\Technique</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\EffectConstantBuffer11.h">
-      <Filter>Direct3D11\Effects\ConstantBuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\EffectMatrixVariable11.h">
-      <Filter>Direct3D11\Effects\Variables</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\EffectResourceVariable11.h">
-      <Filter>Direct3D11\Effects\Variables</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\EffectScalarVariable11.h">
-      <Filter>Direct3D11\Effects\Variables</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\EffectShaderVariable11.h">
-      <Filter>Direct3D11\Effects\Variables</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\EffectStringVariable11.h">
-      <Filter>Direct3D11\Effects\Variables</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\EffectUnorderedAccessViewVariable11.h">
-      <Filter>Direct3D11\Effects\Variables</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\EffectVariable11.h">
       <Filter>Direct3D11\Effects\Variables</Filter>
@@ -4620,8 +4671,53 @@
     <ClInclude Include="..\..\source\direct3d11\EffectVariableDescription11.h">
       <Filter>Direct3D11\Effects\Variables</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectMatrixVariable11.h">
+      <Filter>Direct3D11\Effects\Variables\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectResourceVariable11.h">
+      <Filter>Direct3D11\Effects\Variables\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectScalarVariable11.h">
+      <Filter>Direct3D11\Effects\Variables\Scalar</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\EffectVectorVariable11.h">
-      <Filter>Direct3D11\Effects\Variables</Filter>
+      <Filter>Direct3D11\Effects\Variables\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectStringVariable11.h">
+      <Filter>Direct3D11\Effects\Variables\String</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectUnorderedAccessViewVariable11.h">
+      <Filter>Direct3D11\Effects\Variables\UnorderedAccessView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectShaderDescription11.h">
+      <Filter>Direct3D11\Effects\Variables\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectShaderVariable11.h">
+      <Filter>Direct3D11\Effects\Variables\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectBlendVariable11.h">
+      <Filter>Direct3D11\Effects\Variables\Blend</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectClassInstanceVariable11.h">
+      <Filter>Direct3D11\Effects\Variables\ClassInstance</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectDepthStencilVariable11.h">
+      <Filter>Direct3D11\Effects\Variables\DepthStencil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectDepthStencilViewVariable11.h">
+      <Filter>Direct3D11\Effects\Variables\DepthStencilView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectInterfaceVariable11.h">
+      <Filter>Direct3D11\Effects\Variables\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectRasterizerVariable11.h">
+      <Filter>Direct3D11\Effects\Variables\Rasterizer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectRenderTargetViewVariable11.h">
+      <Filter>Direct3D11\Effects\Variables\RenderTargetView</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectSamplerVariable11.h">
+      <Filter>Direct3D11\Effects\Variables\Sampler</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\EffectPass11.h">
       <Filter>Direct3D11\Effects\Pass</Filter>
@@ -4637,6 +4733,15 @@
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\EffectTypeDescription11.h">
       <Filter>Direct3D11\Effects\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectGroup11.h">
+      <Filter>Direct3D11\Effects\Group</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectGroupDescription11.h">
+      <Filter>Direct3D11\Effects\Group</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\EffectConstantBuffer11.h">
+      <Filter>Direct3D11\Effects\ConstantBuffer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\FastFourierTransform11.h">
       <Filter>Direct3D11\Compute</Filter>

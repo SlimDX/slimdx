@@ -1,6 +1,7 @@
 General
 	* Added a .NET 4.0 build via Visual Studio 2010.
 	* Added an option to disable throwing exceptions on compilation errors. See Configuration.ThrowOnShaderCompileError.
+	* Added the PIXPlug tool to allow x64 application to run in PIX.
 	
 D3DCompiler
 	* Refactored shared shader and effect flags and interfaces into a new namespace.
@@ -58,6 +59,7 @@ Direct3D 11
 	* Added creation methods for the FastFourierTransform type.
 	* Added support for the Debug and SwitchToRef interfaces.
 	* Added support for effect groups.
+	* Added missing effect variable types.
 	
 Windows
 	* Added several overloads to MessagePump.Run to allow access to corresponding Application.Run overloads.

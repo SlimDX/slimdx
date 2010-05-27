@@ -37,6 +37,14 @@ namespace SlimDX
 		ref class EffectVectorVariable;
 		ref class EffectStringVariable;
 		ref class EffectUnorderedAccessViewVariable;
+		ref class EffectBlendVariable;
+		ref class EffectClassInstanceVariable;
+		ref class EffectDepthStencilVariable;
+		ref class EffectDepthStencilViewVariable;
+		ref class EffectInterfaceVariable;
+		ref class EffectRasterizerVariable;
+		ref class EffectRenderTargetViewVariable;
+		ref class EffectSamplerVariable;
 		value class EffectVariableDescription;
 		ref class EffectType;
 		
@@ -125,14 +133,101 @@ namespace SlimDX
 			/// <returns>The structure member with the given semantic.</returns>
 			EffectVariable^ GetMemberBySemantic( System::String^ name );
 			
+			/// <summary>
+			/// Reinterprets the effect variable as a more specialized blend-state variable.
+			/// </summary>
+			/// <returns>The specialized effect variable.</returns>
+			EffectBlendVariable^ AsBlend();
+
+			/// <summary>
+			/// Reinterprets the effect variable as a more specialized class instance variable.
+			/// </summary>
+			/// <returns>The specialized effect variable.</returns>
+			EffectClassInstanceVariable^ AsClassInstance();
+
+			/// <summary>
+			/// Reinterprets the effect variable as a more specialized constant buffer variable.
+			/// </summary>
+			/// <returns>The specialized effect variable.</returns>
 			EffectConstantBuffer^ AsConstantBuffer();
+
+			/// <summary>
+			/// Reinterprets the effect variable as a more specialized depth-stencil-state variable.
+			/// </summary>
+			/// <returns>The specialized effect variable.</returns>
+			EffectDepthStencilVariable^ AsDepthStencil();
+
+			/// <summary>
+			/// Reinterprets the effect variable as a more specialized depth-stencil view variable.
+			/// </summary>
+			/// <returns>The specialized effect variable.</returns>
+			EffectDepthStencilViewVariable^ AsDepthStencilView();
+
+			/// <summary>
+			/// Reinterprets the effect variable as a more specialized interface variable.
+			/// </summary>
+			/// <returns>The specialized effect variable.</returns>
+			EffectInterfaceVariable^ AsInterface();
+
+			/// <summary>
+			/// Reinterprets the effect variable as a more specialized matrix variable.
+			/// </summary>
+			/// <returns>The specialized effect variable.</returns>
 			EffectMatrixVariable^ AsMatrix();
+
+			/// <summary>
+			/// Reinterprets the effect variable as a more specialized rasterizer-state variable.
+			/// </summary>
+			/// <returns>The specialized effect variable.</returns>
+			EffectRasterizerVariable^ AsRasterizer();
+
+			/// <summary>
+			/// Reinterprets the effect variable as a more specialized render target view variable.
+			/// </summary>
+			/// <returns>The specialized effect variable.</returns>
+			EffectRenderTargetViewVariable^ AsRenderTargetView();
+
+			/// <summary>
+			/// Reinterprets the effect variable as a more specialized sampler state variable.
+			/// </summary>
+			/// <returns>The specialized effect variable.</returns>
+			EffectSamplerVariable^ AsSampler();
+
+			/// <summary>
+			/// Reinterprets the effect variable as a more specialized shader resource variable.
+			/// </summary>
+			/// <returns>The specialized effect variable.</returns>
 			EffectResourceVariable^ AsResource();
+
+			/// <summary>
+			/// Reinterprets the effect variable as a more specialized scalar variable.
+			/// </summary>
+			/// <returns>The specialized effect variable.</returns>
 			EffectScalarVariable^ AsScalar();
+
+			/// <summary>
+			/// Reinterprets the effect variable as a more specialized shader variable.
+			/// </summary>
+			/// <returns>The specialized effect variable.</returns>
 			EffectShaderVariable^ AsShader();
+
+			/// <summary>
+			/// Reinterprets the effect variable as a more specialized string variable.
+			/// </summary>
+			/// <returns>The specialized effect variable.</returns>
 			EffectStringVariable^ AsString();
-			EffectVectorVariable^ AsVector();
+
+			/// <summary>
+			/// Reinterprets the effect variable as a more specialized unordered access view variable.
+			/// </summary>
+			/// <returns>The specialized effect variable.</returns>
 			EffectUnorderedAccessViewVariable^ AsUnorderedAccessView();
+
+			/// <summary>
+			/// Reinterprets the effect variable as a more specialized vector variable.
+			/// </summary>
+			/// <returns>The specialized effect variable.</returns>
+			EffectVectorVariable^ AsVector();
 
 			/// <summary>
 			/// Gets information about the variable type.

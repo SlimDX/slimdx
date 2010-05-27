@@ -32,10 +32,18 @@
 #include "EffectScalarVariable11.h"
 #include "EffectShaderVariable11.h"
 #include "EffectStringVariable11.h"
+#include "EffectBlendVariable11.h"
+#include "EffectClassInstanceVariable11.h"
+#include "EffectDepthStencilVariable11.h"
+#include "EffectDepthStencilViewVariable11.h"
+#include "EffectInterfaceVariable11.h"
 #include "EffectVariable11.h"
 #include "EffectVariableDescription11.h"
 #include "EffectVectorVariable11.h"
 #include "EffectUnorderedAccessViewVariable11.h"
+#include "EffectRasterizerVariable11.h"
+#include "EffectRenderTargetViewVariable11.h"
+#include "EffectSamplerVariable11.h"
 #include "EffectType11.h"
 
 using namespace System;
@@ -140,6 +148,24 @@ namespace Direct3D11
 
 		return gcnew EffectVariable( variable );
 	}
+
+	EffectBlendVariable^ EffectVariable::AsBlend()
+	{
+		ID3DX11EffectBlendVariable* variable = m_Pointer->AsBlend();
+		if( variable == 0 || !variable->IsValid() )
+			return nullptr;
+
+		return gcnew EffectBlendVariable( variable );
+	}
+
+	EffectClassInstanceVariable^ EffectVariable::AsClassInstance()
+	{
+		ID3DX11EffectClassInstanceVariable* variable = m_Pointer->AsClassInstance();
+		if( variable == 0 || !variable->IsValid() )
+			return nullptr;
+
+		return gcnew EffectClassInstanceVariable( variable );
+	}
 	
 	EffectConstantBuffer^ EffectVariable::AsConstantBuffer()
 	{
@@ -149,6 +175,33 @@ namespace Direct3D11
 
 		return gcnew EffectConstantBuffer( variable );
 	}
+
+	EffectDepthStencilVariable^ EffectVariable::AsDepthStencil()
+	{
+		ID3DX11EffectDepthStencilVariable* variable = m_Pointer->AsDepthStencil();
+		if( variable == 0 || !variable->IsValid() )
+			return nullptr;
+
+		return gcnew EffectDepthStencilVariable( variable );
+	}
+
+	EffectDepthStencilViewVariable^ EffectVariable::AsDepthStencilView()
+	{
+		ID3DX11EffectDepthStencilViewVariable* variable = m_Pointer->AsDepthStencilView();
+		if( variable == 0 || !variable->IsValid() )
+			return nullptr;
+
+		return gcnew EffectDepthStencilViewVariable( variable );
+	}
+
+	EffectInterfaceVariable^ EffectVariable::AsInterface()
+	{
+		ID3DX11EffectInterfaceVariable* variable = m_Pointer->AsInterface();
+		if( variable == 0 || !variable->IsValid() )
+			return nullptr;
+
+		return gcnew EffectInterfaceVariable( variable );
+	}
 	
 	EffectMatrixVariable^ EffectVariable::AsMatrix()
 	{
@@ -157,6 +210,33 @@ namespace Direct3D11
 			return nullptr;
 
 		return gcnew EffectMatrixVariable( variable );
+	}
+
+	EffectRasterizerVariable^ EffectVariable::AsRasterizer()
+	{
+		ID3DX11EffectRasterizerVariable* variable = m_Pointer->AsRasterizer();
+		if( variable == 0 || !variable->IsValid() )
+			return nullptr;
+
+		return gcnew EffectRasterizerVariable( variable );
+	}
+
+	EffectRenderTargetViewVariable^ EffectVariable::AsRenderTargetView()
+	{
+		ID3DX11EffectRenderTargetViewVariable* variable = m_Pointer->AsRenderTargetView();
+		if( variable == 0 || !variable->IsValid() )
+			return nullptr;
+
+		return gcnew EffectRenderTargetViewVariable( variable );
+	}
+
+	EffectSamplerVariable^ EffectVariable::AsSampler()
+	{
+		ID3DX11EffectSamplerVariable* variable = m_Pointer->AsSampler();
+		if( variable == 0 || !variable->IsValid() )
+			return nullptr;
+
+		return gcnew EffectSamplerVariable( variable );
 	}
 	
 	EffectResourceVariable^ EffectVariable::AsResource()
