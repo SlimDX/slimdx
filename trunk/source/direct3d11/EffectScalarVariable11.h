@@ -109,18 +109,21 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the value of the variable as an array of booleans.
 			/// </summary>
+			/// <param name="count">The number of values to get.</param>
 			/// <returns>The array of boolean values of the variable.</returns>
 			array<bool>^ GetBoolArray( int count );
 
 			/// <summary>
 			/// Gets the value of the variable as an array of integers.
 			/// </summary>
+			/// <param name="count">The number of values to get.</param>
 			/// <returns>The array of integer values of the variable.</returns>
 			array<int>^ GetIntArray( int count );
 
 			/// <summary>
 			/// Gets the value of the variable as an array of floating points.
 			/// </summary>
+			/// <param name="count">The number of values to get.</param>
 			/// <returns>The array of floating point values of the variable.</returns>
 			array<float>^ GetFloatArray( int count );
 		};

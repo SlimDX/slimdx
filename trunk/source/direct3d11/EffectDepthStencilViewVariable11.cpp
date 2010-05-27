@@ -26,8 +26,8 @@
 
 #include "Direct3D11Exception.h"
 
-#include "EffectUnorderedAccessViewVariable11.h"
-#include "UnorderedAccessView11.h"
+#include "EffectDepthStencilViewVariable11.h"
+#include "DepthStencilView11.h"
 
 using namespace System;
 
@@ -35,69 +35,69 @@ namespace SlimDX
 {
 namespace Direct3D11
 { 
-	EffectUnorderedAccessViewVariable::EffectUnorderedAccessViewVariable( ID3DX11EffectUnorderedAccessViewVariable* pointer )
+	EffectDepthStencilViewVariable::EffectDepthStencilViewVariable( ID3DX11EffectDepthStencilViewVariable* pointer )
 	: EffectVariable( pointer )
 	{
 		m_Pointer = pointer;
 	}
 	
-	EffectUnorderedAccessViewVariable::EffectUnorderedAccessViewVariable( IntPtr pointer )
+	EffectDepthStencilViewVariable::EffectDepthStencilViewVariable( IntPtr pointer )
 	: EffectVariable( pointer )
 	{
-		m_Pointer = reinterpret_cast<ID3DX11EffectUnorderedAccessViewVariable*>( pointer.ToPointer() );
+		m_Pointer = reinterpret_cast<ID3DX11EffectDepthStencilViewVariable*>( pointer.ToPointer() );
 	}
 
-	UnorderedAccessView^ EffectUnorderedAccessViewVariable::GetView()
+	DepthStencilView^ EffectDepthStencilViewVariable::GetView()
 	{
-		ID3D11UnorderedAccessView* view = 0;
-		if( RECORD_D3D11( m_Pointer->GetUnorderedAccessView( &view ) ).IsFailure )
+		ID3D11DepthStencilView* view = 0;
+		if( RECORD_D3D11( m_Pointer->GetDepthStencil( &view ) ).IsFailure )
 			return nullptr;
 			
-		return UnorderedAccessView::FromPointer( view );
+		return DepthStencilView::FromPointer( view );
 	}
 
-	Result EffectUnorderedAccessViewVariable::GetViewArray(array<UnorderedAccessView^>^ views)
+	Result EffectDepthStencilViewVariable::GetViewArray(array<DepthStencilView^>^ views)
 	{
 		return GetViewArray(views, 0, views->Length);
 	}
 
-	Result EffectUnorderedAccessViewVariable::GetViewArray(array<UnorderedAccessView^>^ views, int offset, int count)
+	Result EffectDepthStencilViewVariable::GetViewArray(array<DepthStencilView^>^ views, int offset, int count)
 	{
 		Utilities::CheckArrayBounds(views, offset, count);
 
-		stack_array<ID3D11UnorderedAccessView*> nativeViews = stackalloc(ID3D11UnorderedAccessView*, count);
-		HRESULT hr = m_Pointer->GetUnorderedAccessViewArray(&nativeViews[0], 0, count);
+		stack_array<ID3D11DepthStencilView*> nativeViews = stackalloc(ID3D11DepthStencilView*, count);
+		HRESULT hr = m_Pointer->GetDepthStencilArray(&nativeViews[0], 0, count);
 		if (RECORD_D3D11(hr).IsFailure)
 			return Result::Last;
 
 		for (int i = 0; i < count; i++)
-			views[i + offset] = UnorderedAccessView::FromPointer(nativeViews[i]);
+			views[i + offset] = DepthStencilView::FromPointer(nativeViews[i]);
 
 		return Result::Last;
 	}
 	
-	Result EffectUnorderedAccessViewVariable::SetView( UnorderedAccessView^ view )
+	Result EffectDepthStencilViewVariable::SetView( DepthStencilView^ view )
 	{
 		if( view == nullptr )
-			return RECORD_D3D11( m_Pointer->SetUnorderedAccessView( 0 ) );
+			return RECORD_D3D11( m_Pointer->SetDepthStencil( 0 ) );
 		else
-			return RECORD_D3D11( m_Pointer->SetUnorderedAccessView( static_cast<ID3D11UnorderedAccessView*>( view->InternalPointer ) ) );
+			return RECORD_D3D11( m_Pointer->SetDepthStencil( static_cast<ID3D11DepthStencilView*>( view->InternalPointer ) ) );
 	}
 
-	Result EffectUnorderedAccessViewVariable::SetViewArray( array<UnorderedAccessView^>^ views )
+	Result EffectDepthStencilViewVariable::SetViewArray( array<DepthStencilView^>^ views )
 	{
 		return SetViewArray(views, 0, views->Length);
 	}
 
-	Result EffectUnorderedAccessViewVariable::SetViewArray( array<UnorderedAccessView^>^ views, int offset, int count )
+	Result EffectDepthStencilViewVariable::SetViewArray( array<DepthStencilView^>^ views, int offset, int count )
 	{
 		Utilities::CheckArrayBounds(views, offset, count);
 
-		stack_array<ID3D11UnorderedAccessView*> nativeViews = stackalloc(ID3D11UnorderedAccessView*, count);
+		stack_array<ID3D11DepthStencilView*> nativeViews = stackalloc(ID3D11DepthStencilView*, count);
 		for (int i = 0; i < count; i++)
 			nativeViews[i] = views[i + offset]->InternalPointer;
 
-		HRESULT hr = m_Pointer->SetUnorderedAccessViewArray(&nativeViews[0], 0, count);
+		HRESULT hr = m_Pointer->SetDepthStencilArray(&nativeViews[0], 0, count);
 		return RECORD_D3D11(hr);
 	}
 }

@@ -22,66 +22,66 @@
 #pragma once
 
 #include "EffectVariable11.h"
-#include "UnorderedAccessView11.h"
+#include "DepthStencilView11.h"
 
 namespace SlimDX
 {
 	namespace Direct3D11
 	{
 		/// <summary>
-		/// Represents an unordered access buffer effect variable.
+		/// Represents a depth-stencil view effect variable.
 		/// </summary>
-		/// <unmanaged>ID3DX11EffectUnorderedAccessViewVariable</unmanaged>
-		public ref class EffectUnorderedAccessViewVariable : public EffectVariable
+		/// <unmanaged>ID3DX11EffectDepthStencilViewVariable</unmanaged>
+		public ref class EffectDepthStencilViewVariable : public EffectVariable
 		{
 		private:
-			ID3DX11EffectUnorderedAccessViewVariable* m_Pointer;
+			ID3DX11EffectDepthStencilViewVariable* m_Pointer;
 			
 		internal:
-			EffectUnorderedAccessViewVariable( ID3DX11EffectUnorderedAccessViewVariable* pointer );
+			EffectDepthStencilViewVariable( ID3DX11EffectDepthStencilViewVariable* pointer );
 			
 		public:
 			/// <summary>
-			/// Initializes a new instance of the <see cref="EffectUnorderedAccessViewVariable"/> class.
+			/// Initializes a new instance of the <see cref="EffectDepthStencilViewVariable"/> class.
 			/// </summary>
 			/// <param name="pointer">A pointer to the unmanaged interface.</param>
-			EffectUnorderedAccessViewVariable( System::IntPtr pointer );
+			EffectDepthStencilViewVariable( System::IntPtr pointer );
 
 			/// <summary>
 			/// Gets the value of the variable.
 			/// </summary>
-			/// <returns>The view of the unordered access variable.</returns>
-			UnorderedAccessView^ GetView();
+			/// <returns>The view of the depth-stencil variable.</returns>
+			DepthStencilView^ GetView();
 
 			/// <summary>
-			/// Gets an array of views of unordered access buffers from the variable.
+			/// Gets an array of views of depth-stencil surfaces from the variable.
 			/// </summary>
 			/// <param name="views">An array of views to hold the retrieved values.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result GetViewArray(array<UnorderedAccessView^>^ views);
+			Result GetViewArray(array<DepthStencilView^>^ views);
 
 			/// <summary>
-			/// Gets an array of views of unordered access buffers from the variable.
+			/// Gets an array of views of depth-stencil surfaces from the variable.
 			/// </summary>
 			/// <param name="views">An array of views to hold the retrieved values.</param>
 			/// <param name="offset">The offset into the array to begin storing values.</param>
 			/// <param name="count">The number of values to get.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result GetViewArray(array<UnorderedAccessView^>^ views, int offset, int count);
+			Result GetViewArray(array<DepthStencilView^>^ views, int offset, int count);
 			
 			/// <summary>
 			/// Sets the value of the variable.
 			/// </summary>
-			/// <param name="view">The view of the unordered access resource to set.</param>
+			/// <param name="view">The view of the depth-stencil surface to set.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result SetView( UnorderedAccessView^ view );
+			Result SetView( DepthStencilView^ view );
 
 			/// <summary>
 			/// Sets the value of the variable.
 			/// </summary>
 			/// <param name="views">An array of views to set.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result SetViewArray(array<UnorderedAccessView^>^ views);
+			Result SetViewArray(array<DepthStencilView^>^ views);
 
 			/// <summary>
 			/// Sets the value of the variable.
@@ -90,7 +90,7 @@ namespace SlimDX
 			/// <param name="offset">The offset into the array to begin setting values.</param>
 			/// <param name="count">The number of values to set.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result SetViewArray(array<UnorderedAccessView^>^ views, int offset, int count);
+			Result SetViewArray(array<DepthStencilView^>^ views, int offset, int count);
 		};
 	}
 };

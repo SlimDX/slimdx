@@ -26,8 +26,8 @@
 
 #include "Direct3D11Exception.h"
 
-#include "EffectUnorderedAccessViewVariable11.h"
-#include "UnorderedAccessView11.h"
+#include "EffectRenderTargetViewVariable11.h"
+#include "RenderTargetView11.h"
 
 using namespace System;
 
@@ -35,69 +35,69 @@ namespace SlimDX
 {
 namespace Direct3D11
 { 
-	EffectUnorderedAccessViewVariable::EffectUnorderedAccessViewVariable( ID3DX11EffectUnorderedAccessViewVariable* pointer )
+	EffectRenderTargetViewVariable::EffectRenderTargetViewVariable( ID3DX11EffectRenderTargetViewVariable* pointer )
 	: EffectVariable( pointer )
 	{
 		m_Pointer = pointer;
 	}
 	
-	EffectUnorderedAccessViewVariable::EffectUnorderedAccessViewVariable( IntPtr pointer )
+	EffectRenderTargetViewVariable::EffectRenderTargetViewVariable( IntPtr pointer )
 	: EffectVariable( pointer )
 	{
-		m_Pointer = reinterpret_cast<ID3DX11EffectUnorderedAccessViewVariable*>( pointer.ToPointer() );
+		m_Pointer = reinterpret_cast<ID3DX11EffectRenderTargetViewVariable*>( pointer.ToPointer() );
 	}
 
-	UnorderedAccessView^ EffectUnorderedAccessViewVariable::GetView()
+	RenderTargetView^ EffectRenderTargetViewVariable::GetView()
 	{
-		ID3D11UnorderedAccessView* view = 0;
-		if( RECORD_D3D11( m_Pointer->GetUnorderedAccessView( &view ) ).IsFailure )
+		ID3D11RenderTargetView* view = 0;
+		if( RECORD_D3D11( m_Pointer->GetRenderTarget( &view ) ).IsFailure )
 			return nullptr;
 			
-		return UnorderedAccessView::FromPointer( view );
+		return RenderTargetView::FromPointer( view );
 	}
 
-	Result EffectUnorderedAccessViewVariable::GetViewArray(array<UnorderedAccessView^>^ views)
+	Result EffectRenderTargetViewVariable::GetViewArray(array<RenderTargetView^>^ views)
 	{
 		return GetViewArray(views, 0, views->Length);
 	}
 
-	Result EffectUnorderedAccessViewVariable::GetViewArray(array<UnorderedAccessView^>^ views, int offset, int count)
+	Result EffectRenderTargetViewVariable::GetViewArray(array<RenderTargetView^>^ views, int offset, int count)
 	{
 		Utilities::CheckArrayBounds(views, offset, count);
 
-		stack_array<ID3D11UnorderedAccessView*> nativeViews = stackalloc(ID3D11UnorderedAccessView*, count);
-		HRESULT hr = m_Pointer->GetUnorderedAccessViewArray(&nativeViews[0], 0, count);
+		stack_array<ID3D11RenderTargetView*> nativeViews = stackalloc(ID3D11RenderTargetView*, count);
+		HRESULT hr = m_Pointer->GetRenderTargetArray(&nativeViews[0], 0, count);
 		if (RECORD_D3D11(hr).IsFailure)
 			return Result::Last;
 
 		for (int i = 0; i < count; i++)
-			views[i + offset] = UnorderedAccessView::FromPointer(nativeViews[i]);
+			views[i + offset] = RenderTargetView::FromPointer(nativeViews[i]);
 
 		return Result::Last;
 	}
 	
-	Result EffectUnorderedAccessViewVariable::SetView( UnorderedAccessView^ view )
+	Result EffectRenderTargetViewVariable::SetView( RenderTargetView^ view )
 	{
 		if( view == nullptr )
-			return RECORD_D3D11( m_Pointer->SetUnorderedAccessView( 0 ) );
+			return RECORD_D3D11( m_Pointer->SetRenderTarget( 0 ) );
 		else
-			return RECORD_D3D11( m_Pointer->SetUnorderedAccessView( static_cast<ID3D11UnorderedAccessView*>( view->InternalPointer ) ) );
+			return RECORD_D3D11( m_Pointer->SetRenderTarget( static_cast<ID3D11RenderTargetView*>( view->InternalPointer ) ) );
 	}
 
-	Result EffectUnorderedAccessViewVariable::SetViewArray( array<UnorderedAccessView^>^ views )
+	Result EffectRenderTargetViewVariable::SetViewArray( array<RenderTargetView^>^ views )
 	{
 		return SetViewArray(views, 0, views->Length);
 	}
 
-	Result EffectUnorderedAccessViewVariable::SetViewArray( array<UnorderedAccessView^>^ views, int offset, int count )
+	Result EffectRenderTargetViewVariable::SetViewArray( array<RenderTargetView^>^ views, int offset, int count )
 	{
 		Utilities::CheckArrayBounds(views, offset, count);
 
-		stack_array<ID3D11UnorderedAccessView*> nativeViews = stackalloc(ID3D11UnorderedAccessView*, count);
+		stack_array<ID3D11RenderTargetView*> nativeViews = stackalloc(ID3D11RenderTargetView*, count);
 		for (int i = 0; i < count; i++)
 			nativeViews[i] = views[i + offset]->InternalPointer;
 
-		HRESULT hr = m_Pointer->SetUnorderedAccessViewArray(&nativeViews[0], 0, count);
+		HRESULT hr = m_Pointer->SetRenderTargetArray(&nativeViews[0], 0, count);
 		return RECORD_D3D11(hr);
 	}
 }

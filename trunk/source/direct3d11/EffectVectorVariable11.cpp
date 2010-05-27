@@ -95,5 +95,75 @@ namespace Direct3D11
 		pin_ptr<bool> pinnedValue = &value[0];
 		return RECORD_D3D11( m_Pointer->SetBoolVectorArray( reinterpret_cast<BOOL*>( pinnedValue ), 0, value->Length / 4 ) );
 	}
+
+	Vector4 EffectVectorVariable::GetVector()
+	{
+		Vector4 result;
+
+		HRESULT hr = m_Pointer->GetFloatVector(reinterpret_cast<float*>(&result));
+		if (RECORD_D3D11(hr).IsFailure)
+			return Vector4::Zero;
+
+		return result;
+	}
+
+	Color4 EffectVectorVariable::GetColor()
+	{
+		Color4 result;
+
+		HRESULT hr = m_Pointer->GetFloatVector(reinterpret_cast<float*>(&result));
+		if (RECORD_D3D11(hr).IsFailure)
+			return Color4(0, 0, 0, 0);
+
+		return result;
+	}
+
+	array<Vector4>^ EffectVectorVariable::GetVectorArray(int count)
+	{
+		array<Vector4>^ result = gcnew array<Vector4>(count);
+		pin_ptr<Vector4> pinnedResult = &result[0];
+
+		HRESULT hr = m_Pointer->GetFloatVectorArray(reinterpret_cast<float*>(pinnedResult), 0, count);
+		if (RECORD_D3D11(hr).IsFailure)
+			return nullptr;
+
+		return result;
+	}
+
+	array<Color4>^ EffectVectorVariable::GetColorArray(int count)
+	{
+		array<Color4>^ result = gcnew array<Color4>(count);
+		pin_ptr<Color4> pinnedResult = &result[0];
+
+		HRESULT hr = m_Pointer->GetFloatVectorArray(reinterpret_cast<float*>(pinnedResult), 0, count);
+		if (RECORD_D3D11(hr).IsFailure)
+			return nullptr;
+
+		return result;
+	}
+
+	array<bool>^ EffectVectorVariable::GetBoolVectorArray(int count)
+	{
+		array<int>^ result = gcnew array<int>(count * 4);
+		pin_ptr<int> pinnedResult = &result[0];
+
+		HRESULT hr = m_Pointer->GetBoolVectorArray(reinterpret_cast<BOOL*>(pinnedResult), 0, count);
+		if (RECORD_D3D11(hr).IsFailure)
+			return nullptr;
+
+		return Array::ConvertAll<int, bool>(result, gcnew Converter<int, bool>(Convert::ToBoolean));
+	}
+
+	array<int>^ EffectVectorVariable::GetIntVectorArray(int count)
+	{
+		array<int>^ result = gcnew array<int>(count * 4);
+		pin_ptr<int> pinnedResult = &result[0];
+
+		HRESULT hr = m_Pointer->GetIntVectorArray(reinterpret_cast<BOOL*>(pinnedResult), 0, count);
+		if (RECORD_D3D11(hr).IsFailure)
+			return nullptr;
+
+		return result;
+	}
 }
 }
