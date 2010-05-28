@@ -30,7 +30,11 @@ namespace SlimDX
 	namespace Direct3D11
 	{
 		value class EffectTypeDescription;
-		
+
+		/// <summary>
+		/// Represents the type of an effect variable.
+		/// </summary>
+		/// <unmanaged>ID3DX11EffectType</unmanaged>
 		public ref class EffectType
 		{
 		private:
@@ -40,23 +44,61 @@ namespace SlimDX
 			EffectType( ID3DX11EffectType* pointer );
 
 		public:
+			/// <summary>
+			/// Gets the effect type's description.
+			/// </summary>
 			property EffectTypeDescription Description
 			{
 				EffectTypeDescription get();
 			}
 			
+			/// <summary>
+			/// Indicates whether the type represents a valid interface.
+			/// </summary>
 			property bool IsValid
 			{
 				bool get();
 			}
 			
+			/// <summary>
+			/// Initializes a new instance of the <see cref="EffectType"/> class.
+			/// </summary>
+			/// <param name="pointer">A pointer to the unmanaged interface.</param>
 			EffectType( System::IntPtr pointer );
 
+			/// <summary>
+			/// Get the name of a type member.
+			/// </summary>
+			/// <param name="index">The zero-based index of the structure member type to retrieve.</param>
+			/// <returns>The name of the specified member.</returns>
 			System::String^ GetMemberName( int index );
+
+			/// <summary>
+			/// Get the semantic of a type member.
+			/// </summary>
+			/// <param name="index">The zero-based index of the structure member type to retrieve.</param>
+			/// <returns>The semantic of the specified member.</returns>
 			System::String^ GetMemberSemantic( int index );
 			
+			/// <summary>
+			/// Get a structure member type by index.
+			/// </summary>
+			/// <param name="index">The zero-based index of the structure member type to retrieve.</param>
+			/// <returns>The structure member type at the specified index.</returns>
 			EffectType^ GetMemberTypeByIndex( int index );
+
+			/// <summary>
+			/// Get a structure member type by name.
+			/// </summary>
+			/// <param name="name">The name of the structure member type to retrieve.</param>
+			/// <returns>The structure member type with the given name.</returns>
 			EffectType^ GetMemberTypeByName( System::String^ name );
+
+			/// <summary>
+			/// Get a structure member type by semantic.
+			/// </summary>
+			/// <param name="name">The semantic of the structure member type to retrieve.</param>
+			/// <returns>The structure member type with the given semantic.</returns>
 			EffectType^ GetMemberTypeBySemantic( System::String^ name );
 		};
 	}

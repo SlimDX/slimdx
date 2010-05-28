@@ -27,8 +27,13 @@ namespace SlimDX
 	{
 		ref class EffectPass;
 		ref class EffectVariable;
+		ref class StateBlockMask;
 		value class EffectTechniqueDescription;
 		
+		/// <summary>
+		/// Represents an effect technique, which is a collection of rendering passes.
+		/// </summary>
+		/// <unmanaged>ID3DX11EffectTechnique</unmanaged>
 		public ref class EffectTechnique
 		{
 			ID3DX11EffectTechnique *m_Pointer;
@@ -37,23 +42,61 @@ namespace SlimDX
 			EffectTechnique( ID3DX11EffectTechnique* pointer );
 			
 		public:
+			/// <summary>
+			/// Gets the effect techniques's description.
+			/// </summary>
 			property EffectTechniqueDescription Description
 			{
 				EffectTechniqueDescription get();
 			}
 			
+			/// <summary>
+			/// Indicates whether the technique represents a valid interface.
+			/// </summary>
 			property bool IsValid
 			{
 				bool get();
 			}
 			
+			/// <summary>
+			/// Initializes a new instance of the <see cref="EffectTechnique"/> class.
+			/// </summary>
+			/// <param name="pointer">A pointer to the unmanaged interface.</param>
 			EffectTechnique( System::IntPtr pointer );
 			
+			/// <summary>
+			/// Get an annotation by index.
+			/// </summary>
+			/// <param name="index">The zero-based index of the annotation to retrieve.</param>
+			/// <returns>The annotation at the specified index.</returns>
 			EffectVariable^ GetAnnotationByIndex( int index );
+
+			/// <summary>
+			/// Get an annotation by name.
+			/// </summary>
+			/// <param name="name">The name of the annotation to retrieve.</param>
+			/// <returns>The annotation with the given name.</returns>
 			EffectVariable^ GetAnnotationByName( System::String^ name );
 			
+			/// <summary>
+			/// Get a pass by index.
+			/// </summary>
+			/// <param name="index">The zero-based index of the pass to retrieve.</param>
+			/// <returns>The pass at the specified index.</returns>
 			EffectPass^ GetPassByIndex( int index );
+
+			/// <summary>
+			/// Get a pass by name.
+			/// </summary>
+			/// <param name="name">The name of the pass to retrieve.</param>
+			/// <returns>The pass with the given name.</returns>
 			EffectPass^ GetPassByName( System::String^ name );
+
+			/// <summary>
+			/// Generate a mask for state changes during the technique.
+			/// </summary>
+			/// <returns>The created state block mask.</returns>
+			StateBlockMask^ ComputeStateBlockMask();
 		};
 	}
 };

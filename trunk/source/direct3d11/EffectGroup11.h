@@ -29,6 +29,10 @@ namespace SlimDX
 	{
 		value class EffectGroupDescription;
 
+		/// <summary>
+		/// Represents an effect group.
+		/// </summary>
+		/// <unmanaged>ID3DX11EffectGroup</unmanaged>
 		public ref class EffectGroup
 		{
 		private:
@@ -38,19 +42,51 @@ namespace SlimDX
 			EffectGroup(ID3DX11EffectGroup *pointer);
 
 		public:
+			/// <summary>
+			/// Initializes a new instance of the <see cref="EffectGroup"/> class.
+			/// </summary>
+			/// <param name="pointer">A pointer to the unmanaged interface.</param>
 			EffectGroup( System::IntPtr pointer );
 
+			/// <summary>
+			/// Get an annotation by index.
+			/// </summary>
+			/// <param name="index">The zero-based index of the annotation to retrieve.</param>
+			/// <returns>The annotation at the specified index.</returns>
 			EffectVariable^ GetAnnotationByIndex( int index );
+
+			/// <summary>
+			/// Get an annotation by name.
+			/// </summary>
+			/// <param name="name">The name of the annotation to retrieve.</param>
+			/// <returns>The annotation with the given name.</returns>
 			EffectVariable^ GetAnnotationByName( System::String^ name );
 
+			/// <summary>
+			/// Get a technique by index.
+			/// </summary>
+			/// <param name="index">The zero-based index of the technique to retrieve.</param>
+			/// <returns>The technique at the specified index.</returns>
 			EffectTechnique^ GetTechniqueByIndex( int index );
+
+			/// <summary>
+			/// Get a technique by name.
+			/// </summary>
+			/// <param name="name">The name of the technique to retrieve.</param>
+			/// <returns>The technique with the given name.</returns>
 			EffectTechnique^ GetTechniqueByName( System::String^ name );
 
+			/// <summary>
+			/// Indicates whether the effect group represents a valid interface.
+			/// </summary>
 			property bool IsValid
 			{
 				bool get();
 			}
 
+			/// <summary>
+			/// Gets the effect group's description.
+			/// </summary>
 			property EffectGroupDescription Description
 			{
 				EffectGroupDescription get();

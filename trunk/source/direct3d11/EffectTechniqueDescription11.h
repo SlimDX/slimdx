@@ -24,7 +24,11 @@
 namespace SlimDX
 {
 	namespace Direct3D11
-	{	
+	{
+		/// <summary>
+		/// Provides a description for effect techniques.
+		/// </summary>
+		/// <unmanaged>D3DX11_TECHNIQUE_DESC</unmanaged>
 		public value class EffectTechniqueDescription : System::IEquatable<EffectTechniqueDescription>
 		{
 		private:
@@ -36,16 +40,25 @@ namespace SlimDX
 			EffectTechniqueDescription( const D3DX11_TECHNIQUE_DESC& native );
 			
 		public:
+			/// <summary>
+			/// Name of this technique.
+			/// </summary>
 			property System::String^ Name
 			{
 				System::String^ get();
 			}
 			
+			/// <summary>
+			/// Number of passes contained in the technique.
+			/// </summary>
 			property int PassCount
 			{
 				int get();
 			}
 			
+			/// <summary>
+			/// Number of annotations on this technique.
+			/// </summary>
 			property int AnnotationCount
 			{
 				int get();

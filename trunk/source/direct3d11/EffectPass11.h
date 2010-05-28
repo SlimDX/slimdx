@@ -29,9 +29,14 @@ namespace SlimDX
 	{
 		ref class DeviceContext;
 		ref class EffectVariable;
+		ref class StateBlockMask;
 		value class EffectPassDescription;
 		value class EffectPassShaderDescription;
-		
+
+		/// <summary>
+		/// Encapsulates state assignments within a technique.
+		/// </summary>
+		/// <unmanaged>ID3DX11EffectPass</unmanaged>
 		public ref class EffectPass
 		{
 		private:
@@ -41,36 +46,102 @@ namespace SlimDX
 			EffectPass( ID3DX11EffectPass* pointer );
 			
 		public:
+			/// <summary>
+			/// Gets the effect pass's description.
+			/// </summary>
 			property EffectPassDescription Description
 			{
 				EffectPassDescription get();
 			}
 			
+			/// <summary>
+			/// Indicates whether the pass represents a valid interface.
+			/// </summary>
 			property bool IsValid
 			{
 				bool get();
 			}
 			
+			/// <summary>
+			/// Gets a description for the pass's geometry shader.
+			/// </summary>
 			property EffectPassShaderDescription GeometryShaderDescription
 			{
 				EffectPassShaderDescription get();
 			}
 			
+			/// <summary>
+			/// Gets a description for the pass's vertex shader.
+			/// </summary>
 			property EffectPassShaderDescription VertexShaderDescription
 			{
 				EffectPassShaderDescription get();
 			}
+
+			/// <summary>
+			/// Gets a description for the pass's pixel shader.
+			/// </summary>
 			property EffectPassShaderDescription PixelShaderDescription
 			{
 				EffectPassShaderDescription get();
 			}
+
+			/// <summary>
+			/// Gets a description for the pass's hull shader.
+			/// </summary>
+			property EffectPassShaderDescription HullShaderDescription
+			{
+				EffectPassShaderDescription get();
+			}
+
+			/// <summary>
+			/// Gets a description for the pass's domain shader.
+			/// </summary>
+			property EffectPassShaderDescription DomainShaderDescription
+			{
+				EffectPassShaderDescription get();
+			}
+
+			/// <summary>
+			/// Gets a description for the pass's compute shader.
+			/// </summary>
+			property EffectPassShaderDescription ComputeShaderDescription
+			{
+				EffectPassShaderDescription get();
+			}
 			
+			/// <summary>
+			/// Initializes a new instance of the <see cref="EffectPass"/> class.
+			/// </summary>
+			/// <param name="pointer">A pointer to the unmanaged interface.</param>
 			EffectPass( System::IntPtr pointer );
 			
+			/// <summary>
+			/// Get an annotation by index.
+			/// </summary>
+			/// <param name="index">The zero-based index of the annotation to retrieve.</param>
+			/// <returns>The annotation at the specified index.</returns>
 			EffectVariable^ GetAnnotationByIndex( int index );
+
+			/// <summary>
+			/// Get an annotation by name.
+			/// </summary>
+			/// <param name="name">The name of the annotation to retrieve.</param>
+			/// <returns>The annotation with the given name.</returns>
 			EffectVariable^ GetAnnotationByName( System::String^ name );
 			
+			/// <summary>
+			/// Set the state contained in a pass to the device.
+			/// </summary>
+			/// <param name="context">The device context to use to set the state.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Apply( DeviceContext^ context );
+
+			/// <summary>
+			/// Generate a mask for state changes during the pass.
+			/// </summary>
+			/// <returns>The created state block mask.</returns>
+			StateBlockMask^ ComputeStateBlockMask();
 		};
 	}
 };

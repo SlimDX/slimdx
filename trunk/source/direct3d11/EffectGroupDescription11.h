@@ -24,7 +24,11 @@
 namespace SlimDX
 {
 	namespace Direct3D11
-	{	
+	{
+		/// <summary>
+		/// Defines a description for effect groups.
+		/// </summary>
+		/// <unmanaged>D3DX11_GROUP_DESC</unmanaged>
 		public value class EffectGroupDescription : System::IEquatable<EffectGroupDescription>
 		{
 		private:
@@ -36,16 +40,25 @@ namespace SlimDX
 			EffectGroupDescription( const D3DX11_GROUP_DESC& native );
 			
 		public:
+			/// <summary>
+			/// Name of the group.
+			/// </summary>
 			property System::String^ Name
 			{
 				System::String^ get();
 			}
 			
+			/// <summary>
+			/// Number of techniques in the group.
+			/// </summary>
 			property int TechniqueCount
 			{
 				int get();
 			}
 			
+			/// <summary>
+			/// Number of annotations in the group.
+			/// </summary>
 			property int AnnotationCount
 			{
 				int get();
