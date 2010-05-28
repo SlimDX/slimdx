@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,10 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <d3d11.h>
-#include <d3dx11effect.h>
-#include <vcclr.h>
+#include "stdafx.h"
 
 #include "Direct3D11Exception.h"
 
@@ -31,6 +27,7 @@
 #include "EffectPass11.h"
 #include "EffectPassDescription11.h"
 #include "EffectPassShaderDescription11.h"
+#include "StateBlockMask11.h"
 #include "EffectVariable11.h"
 
 using namespace System;
@@ -99,6 +96,36 @@ namespace Direct3D11
 		else
 			return EffectPassShaderDescription( description );
 	}
+
+	EffectPassShaderDescription EffectPass::HullShaderDescription::get()
+	{
+		D3DX11_PASS_SHADER_DESC description;
+		
+		if( RECORD_D3D11( m_Pointer->GetHullShaderDesc( &description ) ).IsFailure )
+			return EffectPassShaderDescription();
+		else
+			return EffectPassShaderDescription( description );
+	}
+
+	EffectPassShaderDescription EffectPass::DomainShaderDescription::get()
+	{
+		D3DX11_PASS_SHADER_DESC description;
+		
+		if( RECORD_D3D11( m_Pointer->GetDomainShaderDesc( &description ) ).IsFailure )
+			return EffectPassShaderDescription();
+		else
+			return EffectPassShaderDescription( description );
+	}
+
+	EffectPassShaderDescription EffectPass::ComputeShaderDescription::get()
+	{
+		D3DX11_PASS_SHADER_DESC description;
+		
+		if( RECORD_D3D11( m_Pointer->GetComputeShaderDesc( &description ) ).IsFailure )
+			return EffectPassShaderDescription();
+		else
+			return EffectPassShaderDescription( description );
+	}
 	
 	EffectVariable^ EffectPass::GetAnnotationByIndex( int index )
 	{
@@ -123,6 +150,17 @@ namespace Direct3D11
 	Result EffectPass::Apply( DeviceContext^ context )
 	{
 		return RECORD_D3D11( m_Pointer->Apply( 0, context->InternalPointer ) );
+	}
+
+	StateBlockMask^ EffectPass::ComputeStateBlockMask()
+	{
+		D3DX11_STATE_BLOCK_MASK mask;
+
+		HRESULT hr = m_Pointer->ComputeStateBlockMask(&mask);
+		if (RECORD_D3D11(hr).IsFailure)
+			return nullptr;
+
+		return gcnew StateBlockMask(mask);
 	}
 }
 }

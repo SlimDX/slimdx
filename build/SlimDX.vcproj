@@ -6107,6 +6107,14 @@
 			<Filter
 				Name="State"
 				>
+				<File
+					RelativePath="..\source\direct3d11\StateBlockMask11.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\direct3d11\StateBlockMask11.h"
+					>
+				</File>
 				<Filter
 					Name="BlendState"
 					>

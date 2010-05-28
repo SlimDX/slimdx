@@ -27,7 +27,11 @@
 namespace SlimDX
 {
 	namespace Direct3D11
-	{	
+	{
+		/// <summary>
+		/// Provides a description for effect types.
+		/// </summary>
+		/// <unmanaged>D3DX11_EFFECT_TYPE_DESC</unmanaged>
 		public value class EffectTypeDescription : System::IEquatable<EffectTypeDescription>
 		{
 		private:
@@ -46,51 +50,81 @@ namespace SlimDX
 			EffectTypeDescription( const D3DX11_EFFECT_TYPE_DESC& native );
 			
 		public:
+			/// <summary>
+			/// Name of the type, for example "float4" or "MyStruct".
+			/// </summary>
 			property System::String^ TypeName
 			{
 				System::String^ get();
 			}
 			
+			/// <summary>
+			/// The variable class.
+			/// </summary>
 			property D3DCompiler::ShaderVariableClass Class
 			{
 				D3DCompiler::ShaderVariableClass get();
 			}
 			
+			/// <summary>
+			/// The variable type.
+			/// </summary>
 			property D3DCompiler::ShaderVariableType Type
 			{
 				D3DCompiler::ShaderVariableType get();
 			}
 			
+			/// <summary>
+			/// Number of elements in this type (0 if not an array).
+			/// </summary>
 			property int Elements
 			{
 				int get();
 			}
 			
+			/// <summary>
+			/// Number of members (0 if not a structure).
+			/// </summary>
 			property int Members
 			{
 				int get();
 			}
 			
+			/// <summary>
+			/// Number of rows in this type (0 if not a numeric primitive).
+			/// </summary>
 			property int Rows
 			{
 				int get();
 			}
 			
+			/// <summary>
+			/// Number of columns in this type (0 if not a numeric primitive).
+			/// </summary>
 			property int Columns
 			{
 				int get();
 			}
 			
+			/// <summary>
+			/// Number of bytes required to represent this data type, when tightly packed.
+			/// </summary>
 			property int PackedSize
 			{
 				int get();
 			}
 			
+			/// <summary>
+			/// Number of bytes occupied by this data type, when laid out in a constant buffer.
+			/// </summary>
 			property int UnpackedSize
 			{
 				int get();
 			}
 			
+			/// <summary>
+			/// Number of bytes to seek between elements, when laid out in a constant buffer.
+			/// </summary>
 			property int Stride
 			{
 				int get();

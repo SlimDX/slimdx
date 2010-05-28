@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,15 +19,14 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <d3d11.h>
-#include <d3dx11effect.h>
+#include "stdafx.h"
 
 #include "Direct3D11Exception.h"
 
 #include "EffectPass11.h"
 #include "EffectTechnique11.h"
 #include "EffectTechniqueDescription11.h"
+#include "StateBlockMask11.h"
 #include "EffectVariable11.h"
 
 using namespace System;
@@ -100,6 +98,17 @@ namespace Direct3D11
 			return nullptr;
 
 		return gcnew EffectPass( pass );
+	}
+
+	StateBlockMask^ EffectTechnique::ComputeStateBlockMask()
+	{
+		D3DX11_STATE_BLOCK_MASK mask;
+
+		HRESULT hr = m_Pointer->ComputeStateBlockMask(&mask);
+		if (RECORD_D3D11(hr).IsFailure)
+			return nullptr;
+
+		return gcnew StateBlockMask(mask);
 	}
 }
 }

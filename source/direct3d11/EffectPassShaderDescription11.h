@@ -27,6 +27,10 @@ namespace SlimDX
 	{	
 		ref class EffectShaderVariable;
 		
+		/// <summary>
+		/// Provides a description for an effect pass shader.
+		/// </summary>
+		/// <unmanaged>D3DX11_PASS_SHADER_DESC</unmanaged>
 		public value class EffectPassShaderDescription : System::IEquatable<EffectPassShaderDescription>
 		{
 			EffectShaderVariable^ m_ShaderVariable;
@@ -36,11 +40,17 @@ namespace SlimDX
 			EffectPassShaderDescription( const D3DX11_PASS_SHADER_DESC& native );
 			
 		public:
+			/// <summary>
+			/// The variable that this shader came from.
+			/// </summary>
 			property EffectShaderVariable^ Variable
 			{
 				EffectShaderVariable^ get();
 			}
 			
+			/// <summary>
+			/// The element of Variable (if an array) or 0 if not applicable.
+			/// </summary>
 			property int Index
 			{
 				int get();

@@ -28,7 +28,11 @@
 namespace SlimDX
 {
 	namespace Direct3D11
-	{	
+	{
+		/// <summary>
+		/// Provides a description for effect passes.
+		/// </summary>
+		/// <unmanaged>D3DX11_PASS_DESC</unmanaged>
 		public value class EffectPassDescription : System::IEquatable<EffectPassDescription>
 		{
 		private:
@@ -43,31 +47,49 @@ namespace SlimDX
 			EffectPassDescription( const D3DX11_PASS_DESC& native );
 			
 		public:
+			/// <summary>
+			/// The name of the pass.
+			/// </summary>
 			property System::String^ Name
 			{
 				System::String^ get();
 			}
 			
+			/// <summary>
+			/// Number of annotations on this pass.
+			/// </summary>
 			property int AnnotationCount
 			{
 				int get();
 			}
 			
+			/// <summary>
+			/// Signature from the vertex shader or geometry shader (if there is no vertex shader) or null if neither exists.
+			/// </summary>
 			property SlimDX::D3DCompiler::ShaderSignature^ Signature
 			{
 				SlimDX::D3DCompiler::ShaderSignature^ get();
 			}
 			
+			/// <summary>
+			/// The stencil-reference value used in the depth-stencil state.
+			/// </summary>
 			property int StencilReference
 			{
 				int get();
 			}
 			
+			/// <summary>
+			/// The sample mask for the blend state.
+			/// </summary>
 			property int SampleMask
 			{
 				int get();
 			}
 			
+			/// <summary>
+			/// The per-component blend factors (RGBA) for the blend state.
+			/// </summary>
 			property Color4 BlendFactor
 			{
 				Color4 get();
