@@ -3,6 +3,9 @@ General
 	* Added an option to disable throwing exceptions on compilation errors. See Configuration.ThrowOnShaderCompileError.
 	* Added the PIXPlug tool to allow x64 application to run in PIX.
 
+Samples
+	* Added a WPF D3D10 sample to demonstrate interop between 10.1, 10, 9Ex, and WPF.
+
 Math
 	* Reverted changes to quaternion multiplication. We previously updated this to match XNA, but this broke compatibility with D3DX.
 	
@@ -42,6 +45,7 @@ Direct3D 10
 	* Fixed shader compilation to allow null entry points.
 	* Fixed ShaderSignature Get*Signature methods.
 	* Added overloads to EffectVectorVariable.Set to take color inputs.
+	* Added missing Device.OpenSharedResource method.
 	
 Direct3D 11
 	* Dropped stream size checks in texture ToStream functions.
