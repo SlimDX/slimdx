@@ -206,6 +206,15 @@ namespace SlimDX
 			/// <returns>The number of quality levels supported. 0 if an error occured
 			/// or if the format/samplecount pair is not supported.</returns>
 			int CheckMultisampleQualityLevels( DXGI::Format format, int sampleCount );
+
+			/// <summary>
+			/// Gives the device access to a shared resource created on a different device.
+			/// </summary>
+			/// <typeparam name="T">The type of the resource.</typeparam>
+			/// <param name="handle">A handle to the shared resource.</param>
+			/// <returns>The new reference to the shared resource.</returns>
+			generic<typename T> where T : ComObject
+			T OpenSharedResource(System::IntPtr handle);
 			
 			/// <summary>
 			/// Clears the specified depth-stencil resource.

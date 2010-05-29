@@ -49,6 +49,7 @@
 #include "GeometryShaderWrapper.h"
 
 using namespace System;
+using namespace System::Reflection;
 
 namespace SlimDX
 {
@@ -223,6 +224,20 @@ namespace Direct3D10
 		UINT result = 0;
 		InternalPointer->CheckMultisampleQualityLevels( static_cast<DXGI_FORMAT>( format ), sampleCount, &result );
 		return result;
+	}
+
+	generic<typename T> where T : ComObject
+	T Device::OpenSharedResource(System::IntPtr handle)
+	{
+		GUID guid = Utilities::GetNativeGuidForType( T::typeid );
+		void *resultPointer;
+
+		HRESULT hr = InternalPointer->OpenSharedResource( handle.ToPointer(), guid, &resultPointer );
+		if( RECORD_D3D10( hr ).IsFailure )
+			return T();
+
+		MethodInfo^ method = T::typeid->GetMethod( "FromPointer", BindingFlags::Public | BindingFlags::Static );
+		return safe_cast<T>( method->Invoke( nullptr, gcnew array<Object^> { IntPtr( resultPointer ) } ) );
 	}
 	
 	void Device::ClearDepthStencilView( DepthStencilView^ view, DepthStencilClearFlags flags, float depth, Byte stencil )
