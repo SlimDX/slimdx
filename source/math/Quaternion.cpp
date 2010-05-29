@@ -320,18 +320,18 @@ namespace SlimDX
 	{
 		Quaternion quaternion;
 		float lx = left.X;
-		float ly = left.Y;
-		float lz = left.Z;
-		float lw = left.W;
-		float rx = right.X;
-		float ry = right.Y;
-		float rz = right.Z;
-		float rw = right.W;
+        float ly = left.Y;
+        float lz = left.Z;
+        float lw = left.W;
+        float rx = right.X;
+        float ry = right.Y;
+        float rz = right.Z;
+        float rw = right.W;
 
-		quaternion.X = (lx * rw + rx * lw) + (ly * rz) - (lz * ry);
-		quaternion.Y = (ly * rw + ry * lw) + (lz * rx) - (lx * rz);
-		quaternion.Z = (lz * rw + rz * lw) + (lx * ry) - (ly * rx);
-		quaternion.W = (lw * rw) - (lx * rx + ly * ry + lz * rz);
+        quaternion.X = (rx * lw + lx * rw + ry * lz) - (rz * ly);
+        quaternion.Y = (ry * lw + ly * rw + rz * lx) - (rx * lz);
+        quaternion.Z = (rz * lw + lz * rw + rx * ly) - (ry * lx);
+        quaternion.W = (rw * lw) - (rx * lx + ry * ly + rz * lz);
 
 		return quaternion;
 	}
@@ -339,18 +339,18 @@ namespace SlimDX
 	void Quaternion::Multiply( Quaternion% left, Quaternion% right, [Out] Quaternion% result )
 	{
 		float lx = left.X;
-		float ly = left.Y;
-		float lz = left.Z;
-		float lw = left.W;
-		float rx = right.X;
-		float ry = right.Y;
-		float rz = right.Z;
-		float rw = right.W;
+        float ly = left.Y;
+        float lz = left.Z;
+        float lw = left.W;
+        float rx = right.X;
+        float ry = right.Y;
+        float rz = right.Z;
+        float rw = right.W;
 
-		result.X = (lx * rw + rx * lw) + (ly * rz) - (lz * ry);
-		result.Y = (ly * rw + ry * lw) + (lz * rx) - (lx * rz);
-		result.Z = (lz * rw + rz * lw) + (lx * ry) - (ly * rx);
-		result.W = (lw * rw) - (lx * rx + ly * ry + lz * rz);
+        result.X = (rx * lw + lx * rw + ry * lz) - (rz * ly);
+        result.Y = (ry * lw + ly * rw + rz * lx) - (rx * lz);
+        result.Z = (rz * lw + lz * rw + rx * ly) - (ry * lx);
+        result.W = (rw * lw) - (rx * lx + ry * ly + rz * lz);
 	}
 
 	Quaternion Quaternion::Multiply( Quaternion quaternion, float scale )
@@ -712,18 +712,18 @@ namespace SlimDX
 	{
 		Quaternion quaternion;
 		float lx = left.X;
-		float ly = left.Y;
-		float lz = left.Z;
-		float lw = left.W;
-		float rx = right.X;
-		float ry = right.Y;
-		float rz = right.Z;
-		float rw = right.W;
+        float ly = left.Y;
+        float lz = left.Z;
+        float lw = left.W;
+        float rx = right.X;
+        float ry = right.Y;
+        float rz = right.Z;
+        float rw = right.W;
 
-		quaternion.X = (lx * rw + rx * lw) + (ly * rz) - (lz * ry);
-		quaternion.Y = (ly * rw + ry * lw) + (lz * rx) - (lx * rz);
-		quaternion.Z = (lz * rw + rz * lw) + (lx * ry) - (ly * rx);
-		quaternion.W = (lw * rw) - (lx * rx + ly * ry + lz * rz);
+        quaternion.X = (rx * lw + lx * rw + ry * lz) - (rz * ly);
+        quaternion.Y = (ry * lw + ly * rw + rz * lx) - (rx * lz);
+        quaternion.Z = (rz * lw + lz * rw + rx * ly) - (ry * lx);
+        quaternion.W = (rw * lw) - (rx * lx + ry * ly + rz * lz);
 
 		return quaternion;
 	}
