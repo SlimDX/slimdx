@@ -2,6 +2,9 @@ General
 	* Added a .NET 4.0 build via Visual Studio 2010.
 	* Added an option to disable throwing exceptions on compilation errors. See Configuration.ThrowOnShaderCompileError.
 	* Added the PIXPlug tool to allow x64 application to run in PIX.
+
+Math
+	* Reverted changes to quaternion multiplication. We previously updated this to match XNA, but this broke compatibility with D3DX.
 	
 D3DCompiler
 	* Refactored shared shader and effect flags and interfaces into a new namespace.
@@ -63,6 +66,7 @@ Direct3D 11
 	
 Windows
 	* Added several overloads to MessagePump.Run to allow access to corresponding Application.Run overloads.
+	* Added DisplayMonitor class to retrieve system monitor information.
 	
 DXGI
 	* Added missing member to Usage enumeration.
