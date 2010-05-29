@@ -726,6 +726,7 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClCompile Include="..\..\source\multimedia\WaveStream.cpp" />
     <ClCompile Include="..\..\source\windows\MessagePump.cpp" />
     <ClCompile Include="..\..\source\windows\RenderForm.cpp" />
+    <ClCompile Include="..\..\source\windows\DisplayMonitor.cpp" />
     <ClCompile Include="..\..\source\direct2d\Direct2DException.cpp" />
     <ClCompile Include="..\..\source\direct2d\ResultCodeD2D.cpp" />
     <ClCompile Include="..\..\source\direct2d\Bitmap.cpp" />
@@ -862,6 +863,7 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClCompile Include="..\..\source\direct3d11\ClassInstance11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\ClassInstanceDescription11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\ClassLinkage11.cpp" />
+    <ClCompile Include="..\..\source\direct3d11\StateBlockMask11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\BlendState11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\BlendStateDescription11.cpp" />
     <ClCompile Include="..\..\source\direct3d11\RenderTargetBlendDescription11.cpp" />
@@ -1433,6 +1435,7 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClInclude Include="..\..\source\multimedia\WaveStream.h" />
     <ClInclude Include="..\..\source\windows\MessagePump.h" />
     <ClInclude Include="..\..\source\windows\RenderForm.h" />
+    <ClInclude Include="..\..\source\windows\DisplayMonitor.h" />
     <ClInclude Include="..\..\source\direct2d\Direct2DException.h" />
     <ClInclude Include="..\..\source\direct2d\Enums.h" />
     <ClInclude Include="..\..\source\direct2d\ResultCodeD2D.h" />
@@ -1556,7 +1559,7 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClInclude Include="..\..\source\direct3d11\CounterMetadata11.h" />
     <ClInclude Include="..\..\source\direct3d11\Debug11.h" />
     <ClInclude Include="..\..\source\direct3d11\DebugMessage11.h" />
-    <ClInclude Include="..\..\source\direct3d11\DebugMessageID11.h" />
+    <ClInclude Include="..\..\source\direct3d11\DebugMessageId11.h" />
     <ClInclude Include="..\..\source\direct3d11\InfoQueue11.h" />
     <ClInclude Include="..\..\source\direct3d11\InfoQueueFilter11.h" />
     <ClInclude Include="..\..\source\direct3d11\InfoQueueFilterDescription11.h" />
@@ -1581,6 +1584,7 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClInclude Include="..\..\source\direct3d11\ClassInstance11.h" />
     <ClInclude Include="..\..\source\direct3d11\ClassInstanceDescription11.h" />
     <ClInclude Include="..\..\source\direct3d11\ClassLinkage11.h" />
+    <ClInclude Include="..\..\source\direct3d11\StateBlockMask11.h" />
     <ClInclude Include="..\..\source\direct3d11\BlendState11.h" />
     <ClInclude Include="..\..\source\direct3d11\BlendStateDescription11.h" />
     <ClInclude Include="..\..\source\direct3d11\RenderTargetBlendDescription11.h" />

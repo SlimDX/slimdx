@@ -71,7 +71,7 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the variable's sub type.
 			/// </summary>
-			property ShaderReflectionType^ SubType
+			property ShaderReflectionType^ Subtype
 			{
 				ShaderReflectionType^ get() { return subType; }
 			}

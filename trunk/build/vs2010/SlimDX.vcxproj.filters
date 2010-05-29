@@ -520,6 +520,9 @@
     <Filter Include="Windows">
       <UniqueIdentifier>{6d19233b-8e17-4795-9d07-fb9cd160c9c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Windows\DisplayMonitor">
+      <UniqueIdentifier>{d6d9f224-bfd5-4663-9ba1-e101302b8797}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Direct2D">
       <UniqueIdentifier>{7b550291-5e1c-42d5-a988-c3305c62f6a7}</UniqueIdentifier>
     </Filter>
@@ -2043,6 +2046,9 @@
     <ClCompile Include="..\..\source\windows\RenderForm.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\windows\DisplayMonitor.cpp">
+      <Filter>Windows\DisplayMonitor</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\direct2d\Direct2DException.cpp">
       <Filter>Direct2D</Filter>
     </ClCompile>
@@ -2450,6 +2456,9 @@
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\ClassLinkage11.cpp">
       <Filter>Direct3D11\Shader\ClassLinkage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\direct3d11\StateBlockMask11.cpp">
+      <Filter>Direct3D11\State</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\direct3d11\BlendState11.cpp">
       <Filter>Direct3D11\State\BlendState</Filter>
@@ -4119,6 +4128,9 @@
     <ClInclude Include="..\..\source\windows\RenderForm.h">
       <Filter>Windows</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\windows\DisplayMonitor.h">
+      <Filter>Windows\DisplayMonitor</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\source\direct2d\Direct2DException.h">
       <Filter>Direct2D</Filter>
     </ClInclude>
@@ -4488,7 +4500,7 @@
     <ClInclude Include="..\..\source\direct3d11\DebugMessage11.h">
       <Filter>Direct3D11\Diagnostics\InfoQueue</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\direct3d11\DebugMessageID11.h">
+    <ClInclude Include="..\..\source\direct3d11\DebugMessageId11.h">
       <Filter>Direct3D11\Diagnostics\InfoQueue</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\InfoQueue11.h">
@@ -4562,6 +4574,9 @@
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\ClassLinkage11.h">
       <Filter>Direct3D11\Shader\ClassLinkage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\direct3d11\StateBlockMask11.h">
+      <Filter>Direct3D11\State</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\direct3d11\BlendState11.h">
       <Filter>Direct3D11\State\BlendState</Filter>

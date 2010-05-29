@@ -90,5 +90,6 @@ XACT3
 	
 XAudio2
 	* Fixed an issue in WaveStream that caused popping noises when loading data from an existing stream.
+	* Fixed a bug in WaveStream.Read; the offset parameter wasn't being used.
 	* Changed OnVoiceProcessingPassStart to only perform an allocation if an event handler is hooked up.
 	* Hooked up the effect chain portions to XAPO.

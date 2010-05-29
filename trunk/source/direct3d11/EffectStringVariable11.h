@@ -57,18 +57,18 @@ namespace SlimDX
 			/// <summary>
 			/// Gets an array of string values from the variable.
 			/// </summary>
-			/// <param name="strings">An array of strings to hold the retrieved values.</param>
+			/// <param name="values">An array of strings to hold the retrieved values.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result GetStringArray(array<System::String^>^ strings);
+			Result GetStringArray(array<System::String^>^ values);
 
 			/// <summary>
 			/// Gets an array of string values from the variable.
 			/// </summary>
-			/// <param name="strings">An array of strings to hold the retrieved values.</param>
+			/// <param name="values">An array of strings to hold the retrieved values.</param>
 			/// <param name="offset">The offset into the array to begin storing values.</param>
 			/// <param name="count">The number of values to get.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			Result GetStringArray(array<System::String^>^ strings, int offset, int count);
+			Result GetStringArray(array<System::String^>^ values, int offset, int count);
 		};
 	}
 };

@@ -81,6 +81,11 @@
       <Word>Renderer</Word>
       <Word>Rasterized</Word>
       <Word>Tessellator</Word>
+      <Word>Indexable</Word>
+      <Word>Denormalize</Word>
+      <Word>Lod</Word>
+      <Word>Unparseable</Word>
+      <Word>Precompute</Word>
     </Recognized>
   </Words>
 </Dictionary>
