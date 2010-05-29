@@ -69,5 +69,18 @@ namespace msclr
 		{
 			return System::Drawing::Point( from.x, from.y );
 		}
+
+		template<class _To_Type>
+		inline _To_Type marshal_as(System::Drawing::Point _from_object);
+
+		template<>
+		inline POINT marshal_as<POINT>(System::Drawing::Point from)
+		{
+			POINT p;
+			p.x = from.X;
+			p.y = from.Y;
+
+			return p;
+		}
 	}
 }

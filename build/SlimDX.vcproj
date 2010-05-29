@@ -4772,6 +4772,18 @@
 				RelativePath="..\source\windows\RenderForm.h"
 				>
 			</File>
+			<Filter
+				Name="DisplayMonitor"
+				>
+				<File
+					RelativePath="..\source\windows\DisplayMonitor.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\windows\DisplayMonitor.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Direct2D"
