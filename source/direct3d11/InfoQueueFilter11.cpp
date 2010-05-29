@@ -36,15 +36,15 @@ namespace Direct3D11
 			categories += AllowList.CategoryList->Length;
 		if (AllowList.SeverityList != nullptr)
 			severities += AllowList.SeverityList->Length;
-		if (AllowList.MessageIDs != nullptr)
-			ids += AllowList.MessageIDs->Length;
+		if (AllowList.MessageIds != nullptr)
+			ids += AllowList.MessageIds->Length;
 
 		if (DenyList.CategoryList != nullptr)
 			categories += DenyList.CategoryList->Length;
 		if (DenyList.SeverityList != nullptr)
 			severities += DenyList.SeverityList->Length;
-		if (DenyList.MessageIDs != nullptr)
-			ids += DenyList.MessageIDs->Length;
+		if (DenyList.MessageIds != nullptr)
+			ids += DenyList.MessageIds->Length;
 	}
 }
 }

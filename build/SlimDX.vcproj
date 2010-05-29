@@ -5883,7 +5883,7 @@
 						>
 					</File>
 					<File
-						RelativePath="..\source\direct3d11\DebugMessageID11.h"
+						RelativePath="..\source\direct3d11\DebugMessageId11.h"
 						>
 					</File>
 					<File

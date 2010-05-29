@@ -32,7 +32,7 @@ namespace SlimDX
 		public:
 			property array<MessageCategory>^ CategoryList;
 			property array<MessageSeverity>^ SeverityList;
-			property array<DebugMessageID>^ MessageIDs;
+			property array<DebugMessageId>^ MessageIds;
 		};
 	}
 }

@@ -40,8 +40,8 @@ namespace SlimDX
 			/// <summary>
 			/// Initializes a new instance of the <see cref="Resource"/> class.
 			/// </summary>
-			/// <param name="object">The COM object implementing the IDXGIResource interface.</param>
-			Resource( IComObject^ object );
+			/// <param name="resource">The COM object implementing the IDXGIResource interface.</param>
+			Resource( IComObject^ resource );
 
 			/// <summary>
 			/// Gets or sets the eviction priority for the resource.

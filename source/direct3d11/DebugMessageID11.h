@@ -25,7 +25,7 @@ namespace SlimDX
 {
 	namespace Direct3D11
 	{
-		public enum class DebugMessageID : System::Int32
+		public enum class DebugMessageId : System::Int32
 		{
 			///<summary>Unknown message.</summary>
 			Unknown = D3D11_MESSAGE_ID_UNKNOWN,
@@ -495,8 +495,8 @@ namespace SlimDX
 			///<summary>CreateInputLayoutInvalidInputSlotClass message.</summary>
 			CreateInputLayoutInvalidInputSlotClass = D3D11_MESSAGE_ID_CREATEINPUTLAYOUT_INVALIDINPUTSLOTCLASS,
 
-			///<summary>CreateInputLayoutSteprateSlotClassMismatch message.</summary>
-			CreateInputLayoutSteprateSlotClassMismatch = D3D11_MESSAGE_ID_CREATEINPUTLAYOUT_STEPRATESLOTCLASSMISMATCH,
+			///<summary>CreateInputLayoutStepRateSlotClassMismatch message.</summary>
+			CreateInputLayoutStepRateSlotClassMismatch = D3D11_MESSAGE_ID_CREATEINPUTLAYOUT_STEPRATESLOTCLASSMISMATCH,
 
 			///<summary>CreateInputLayoutInvalidSlotClassChange message.</summary>
 			CreateInputLayoutInvalidSlotClassChange = D3D11_MESSAGE_ID_CREATEINPUTLAYOUT_INVALIDSLOTCLASSCHANGE,
@@ -633,29 +633,29 @@ namespace SlimDX
 			///<summary>CreateDepthStencilStateInvalidDepthFunction message.</summary>
 			CreateDepthStencilStateInvalidDepthFunction = D3D11_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_INVALIDDEPTHFUNC,
 
-			///<summary>CreateDepthStencilStateInvalidFrontfaceStencilFailOp message.</summary>
-			CreateDepthStencilStateInvalidFrontfaceStencilFailOp = D3D11_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_INVALIDFRONTFACESTENCILFAILOP,
+			///<summary>CreateDepthStencilStateInvalidFrontFaceStencilFailOp message.</summary>
+			CreateDepthStencilStateInvalidFrontFaceStencilFailOp = D3D11_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_INVALIDFRONTFACESTENCILFAILOP,
 
-			///<summary>CreateDepthStencilStateInvalidFrontfaceStencilzFailOp message.</summary>
-			CreateDepthStencilStateInvalidFrontfaceStencilzFailOp = D3D11_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_INVALIDFRONTFACESTENCILZFAILOP,
+			///<summary>CreateDepthStencilStateInvalidFrontFaceStencilZFailOp message.</summary>
+			CreateDepthStencilStateInvalidFrontFaceStencilZFailOp = D3D11_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_INVALIDFRONTFACESTENCILZFAILOP,
 
-			///<summary>CreateDepthStencilStateInvalidFrontfaceStencilPassOp message.</summary>
-			CreateDepthStencilStateInvalidFrontfaceStencilPassOp = D3D11_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_INVALIDFRONTFACESTENCILPASSOP,
+			///<summary>CreateDepthStencilStateInvalidFrontFaceStencilPassOp message.</summary>
+			CreateDepthStencilStateInvalidFrontFaceStencilPassOp = D3D11_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_INVALIDFRONTFACESTENCILPASSOP,
 
-			///<summary>CreateDepthStencilStateInvalidFrontfaceStencilFunction message.</summary>
-			CreateDepthStencilStateInvalidFrontfaceStencilFunction = D3D11_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_INVALIDFRONTFACESTENCILFUNC,
+			///<summary>CreateDepthStencilStateInvalidFrontFaceStencilFunction message.</summary>
+			CreateDepthStencilStateInvalidFrontFaceStencilFunction = D3D11_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_INVALIDFRONTFACESTENCILFUNC,
 
-			///<summary>CreateDepthStencilStateInvalidBackfaceStencilFailOp message.</summary>
-			CreateDepthStencilStateInvalidBackfaceStencilFailOp = D3D11_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_INVALIDBACKFACESTENCILFAILOP,
+			///<summary>CreateDepthStencilStateInvalidBackFaceStencilFailOp message.</summary>
+			CreateDepthStencilStateInvalidBackFaceStencilFailOp = D3D11_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_INVALIDBACKFACESTENCILFAILOP,
 
-			///<summary>CreateDepthStencilStateInvalidBackfaceStencilzFailOp message.</summary>
-			CreateDepthStencilStateInvalidBackfaceStencilzFailOp = D3D11_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_INVALIDBACKFACESTENCILZFAILOP,
+			///<summary>CreateDepthStencilStateInvalidBackFaceStencilZFailOp message.</summary>
+			CreateDepthStencilStateInvalidBackFaceStencilZFailOp = D3D11_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_INVALIDBACKFACESTENCILZFAILOP,
 
-			///<summary>CreateDepthStencilStateInvalidBackfaceStencilPassOp message.</summary>
-			CreateDepthStencilStateInvalidBackfaceStencilPassOp = D3D11_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_INVALIDBACKFACESTENCILPASSOP,
+			///<summary>CreateDepthStencilStateInvalidBackFaceStencilPassOp message.</summary>
+			CreateDepthStencilStateInvalidBackFaceStencilPassOp = D3D11_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_INVALIDBACKFACESTENCILPASSOP,
 
-			///<summary>CreateDepthStencilStateInvalidBackfaceStencilFunction message.</summary>
-			CreateDepthStencilStateInvalidBackfaceStencilFunction = D3D11_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_INVALIDBACKFACESTENCILFUNC,
+			///<summary>CreateDepthStencilStateInvalidBackFaceStencilFunction message.</summary>
+			CreateDepthStencilStateInvalidBackFaceStencilFunction = D3D11_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_INVALIDBACKFACESTENCILFUNC,
 
 			///<summary>CreateDepthStencilStateTooManyObjects message.</summary>
 			CreateDepthStencilStateTooManyObjects = D3D11_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_TOOMANYOBJECTS,
@@ -900,14 +900,14 @@ namespace SlimDX
 			///<summary>DeviceResolveSubresourceDestinationInvalid message.</summary>
 			DeviceResolveSubresourceDestinationInvalid = D3D11_MESSAGE_ID_DEVICE_RESOLVESUBRESOURCE_DESTINATION_INVALID,
 
-			///<summary>DeviceResolveSubresourceDestinationSubResourceInvalid message.</summary>
-			DeviceResolveSubresourceDestinationSubResourceInvalid = D3D11_MESSAGE_ID_DEVICE_RESOLVESUBRESOURCE_DESTINATION_SUBRESOURCE_INVALID,
+			///<summary>DeviceResolveSubresourceDestinationSubresourceInvalid message.</summary>
+			DeviceResolveSubresourceDestinationSubresourceInvalid = D3D11_MESSAGE_ID_DEVICE_RESOLVESUBRESOURCE_DESTINATION_SUBRESOURCE_INVALID,
 
 			///<summary>DeviceResolveSubresourceSourceInvalid message.</summary>
 			DeviceResolveSubresourceSourceInvalid = D3D11_MESSAGE_ID_DEVICE_RESOLVESUBRESOURCE_SOURCE_INVALID,
 
-			///<summary>DeviceResolveSubresourceSourceSubResourceInvalid message.</summary>
-			DeviceResolveSubresourceSourceSubResourceInvalid = D3D11_MESSAGE_ID_DEVICE_RESOLVESUBRESOURCE_SOURCE_SUBRESOURCE_INVALID,
+			///<summary>DeviceResolveSubresourceSourceSubresourceInvalid message.</summary>
+			DeviceResolveSubresourceSourceSubresourceInvalid = D3D11_MESSAGE_ID_DEVICE_RESOLVESUBRESOURCE_SOURCE_SUBRESOURCE_INVALID,
 
 			///<summary>DeviceResolveSubresourceFormatInvalid message.</summary>
 			DeviceResolveSubresourceFormatInvalid = D3D11_MESSAGE_ID_DEVICE_RESOLVESUBRESOURCE_FORMAT_INVALID,
@@ -1194,8 +1194,8 @@ namespace SlimDX
 			///<summary>OMSetRenderTargetsInvalidView message.</summary>
 			OMSetRenderTargetsInvalidView = D3D11_MESSAGE_ID_OMSETRENDERTARGETS_INVALIDVIEW,
 
-			///<summary>DeviceSettextFilterSizeInvalidDimensions message.</summary>
-			DeviceSettextFilterSizeInvalidDimensions = D3D11_MESSAGE_ID_DEVICE_SETTEXTFILTERSIZE_INVALIDDIMENSIONS,
+			///<summary>DeviceSetTextFilterSizeInvalidDimensions message.</summary>
+			DeviceSetTextFilterSizeInvalidDimensions = D3D11_MESSAGE_ID_DEVICE_SETTEXTFILTERSIZE_INVALIDDIMENSIONS,
 
 			///<summary>DeviceDrawSamplerMismatch message.</summary>
 			DeviceDrawSamplerMismatch = D3D11_MESSAGE_ID_DEVICE_DRAW_SAMPLER_MISMATCH,
@@ -1221,8 +1221,8 @@ namespace SlimDX
 			///<summary>CreateCounterSimultaneousActiveCountersExhausted message.</summary>
 			CreateCounterSimultaneousActiveCountersExhausted = D3D11_MESSAGE_ID_CREATECOUNTER_SIMULTANEOUS_ACTIVE_COUNTERS_EXHAUSTED,
 
-			///<summary>CreateCounterUnsupportedWellknownCounter message.</summary>
-			CreateCounterUnsupportedWellknownCounter = D3D11_MESSAGE_ID_CREATECOUNTER_UNSUPPORTED_WELLKNOWN_COUNTER,
+			///<summary>CreateCounterUnsupportedWellKnownCounter message.</summary>
+			CreateCounterUnsupportedWellKnownCounter = D3D11_MESSAGE_ID_CREATECOUNTER_UNSUPPORTED_WELLKNOWN_COUNTER,
 
 			///<summary>CreateCounterOutOfMemoryReturn message.</summary>
 			CreateCounterOutOfMemoryReturn = D3D11_MESSAGE_ID_CREATECOUNTER_OUTOFMEMORY_RETURN,
@@ -1236,8 +1236,8 @@ namespace SlimDX
 			///<summary>CheckCounterOutOfRangeCounter message.</summary>
 			CheckCounterOutOfRangeCounter = D3D11_MESSAGE_ID_CHECKCOUNTER_OUTOFRANGE_COUNTER,
 
-			///<summary>CheckCounterUnsupportedWellknownCounter message.</summary>
-			CheckCounterUnsupportedWellknownCounter = D3D11_MESSAGE_ID_CHECKCOUNTER_UNSUPPORTED_WELLKNOWN_COUNTER,
+			///<summary>CheckCounterUnsupportedWellKnownCounter message.</summary>
+			CheckCounterUnsupportedWellKnownCounter = D3D11_MESSAGE_ID_CHECKCOUNTER_UNSUPPORTED_WELLKNOWN_COUNTER,
 
 			///<summary>SetPredicationInvalidPredicateState message.</summary>
 			SetPredicationInvalidPredicateState = D3D11_MESSAGE_ID_SETPREDICATION_INVALID_PREDICATE_STATE,
@@ -1500,8 +1500,8 @@ namespace SlimDX
 			///<summary>CreateDeferredContextInvalidCommandListFlags message.</summary>
 			CreateDeferredContextInvalidCommandListFlags = D3D11_MESSAGE_ID_CREATEDEFERREDCONTEXT_INVALID_COMMANDLISTFLAGS,
 
-			///<summary>CreateDeferredContextSinglethreaded message.</summary>
-			CreateDeferredContextSinglethreaded = D3D11_MESSAGE_ID_CREATEDEFERREDCONTEXT_SINGLETHREADED,
+			///<summary>CreateDeferredContextSingleThreaded message.</summary>
+			CreateDeferredContextSingleThreaded = D3D11_MESSAGE_ID_CREATEDEFERREDCONTEXT_SINGLETHREADED,
 
 			///<summary>CreateDeferredContextInvalidArgumentReturn message.</summary>
 			CreateDeferredContextInvalidArgumentReturn = D3D11_MESSAGE_ID_CREATEDEFERREDCONTEXT_INVALIDARG_RETURN,
@@ -1929,8 +1929,8 @@ namespace SlimDX
 			///<summary>DestroyUnorderedAccessView message.</summary>
 			DestroyUnorderedAccessView = D3D11_MESSAGE_ID_DESTROY_UNORDEREDACCESSVIEW,
 
-			///<summary>DeviceSetShaderInterfacesFeaturelevel message.</summary>
-			DeviceSetShaderInterfacesFeaturelevel = D3D11_MESSAGE_ID_DEVICE_SETSHADER_INTERFACES_FEATURELEVEL,
+			///<summary>DeviceSetShaderInterfacesFeatureLevel message.</summary>
+			DeviceSetShaderInterfacesFeatureLevel = D3D11_MESSAGE_ID_DEVICE_SETSHADER_INTERFACES_FEATURELEVEL,
 
 			///<summary>DeviceSetShaderInterfaceCountMismatch message.</summary>
 			DeviceSetShaderInterfaceCountMismatch = D3D11_MESSAGE_ID_DEVICE_SETSHADER_INTERFACE_COUNT_MISMATCH,
@@ -1977,20 +1977,20 @@ namespace SlimDX
 			///<summary>CSSetConstantBuffersUnbindDeletingObject message.</summary>
 			CSSetConstantBuffersUnbindDeletingObject = D3D11_MESSAGE_ID_CSSETCONSTANTBUFFERS_UNBINDDELETINGOBJECT,
 
-			///<summary>CreatecomputeShaderInvalidCall message.</summary>
-			CreatecomputeShaderInvalidCall = D3D11_MESSAGE_ID_CREATECOMPUTESHADER_INVALIDCALL,
+			///<summary>CreateComputeShaderInvalidCall message.</summary>
+			CreateComputeShaderInvalidCall = D3D11_MESSAGE_ID_CREATECOMPUTESHADER_INVALIDCALL,
 
-			///<summary>CreatecomputeShaderOutOfMemory message.</summary>
-			CreatecomputeShaderOutOfMemory = D3D11_MESSAGE_ID_CREATECOMPUTESHADER_OUTOFMEMORY,
+			///<summary>CreateComputeShaderOutOfMemory message.</summary>
+			CreateComputeShaderOutOfMemory = D3D11_MESSAGE_ID_CREATECOMPUTESHADER_OUTOFMEMORY,
 
-			///<summary>CreatecomputeShaderInvalidShaderBytecode message.</summary>
-			CreatecomputeShaderInvalidShaderBytecode = D3D11_MESSAGE_ID_CREATECOMPUTESHADER_INVALIDSHADERBYTECODE,
+			///<summary>CreateComputeShaderInvalidShaderBytecode message.</summary>
+			CreateComputeShaderInvalidShaderBytecode = D3D11_MESSAGE_ID_CREATECOMPUTESHADER_INVALIDSHADERBYTECODE,
 
-			///<summary>CreatecomputeShaderInvalidShaderType message.</summary>
-			CreatecomputeShaderInvalidShaderType = D3D11_MESSAGE_ID_CREATECOMPUTESHADER_INVALIDSHADERTYPE,
+			///<summary>CreateComputeShaderInvalidShaderType message.</summary>
+			CreateComputeShaderInvalidShaderType = D3D11_MESSAGE_ID_CREATECOMPUTESHADER_INVALIDSHADERTYPE,
 
-			///<summary>CreatecomputeShaderInvalidClassLinkage message.</summary>
-			CreatecomputeShaderInvalidClassLinkage = D3D11_MESSAGE_ID_CREATECOMPUTESHADER_INVALIDCLASSLINKAGE,
+			///<summary>CreateComputeShaderInvalidClassLinkage message.</summary>
+			CreateComputeShaderInvalidClassLinkage = D3D11_MESSAGE_ID_CREATECOMPUTESHADER_INVALIDCLASSLINKAGE,
 
 			///<summary>DeviceCSSetShaderResourcesViewsEmpty message.</summary>
 			DeviceCSSetShaderResourcesViewsEmpty = D3D11_MESSAGE_ID_DEVICE_CSSETSHADERRESOURCES_VIEWS_EMPTY,
@@ -2031,8 +2031,8 @@ namespace SlimDX
 			///<summary>DeviceCreatePixelShaderDoubleFloatOpsNotSupported message.</summary>
 			DeviceCreatePixelShaderDoubleFloatOpsNotSupported = D3D11_MESSAGE_ID_DEVICE_CREATEPIXELSHADER_DOUBLEFLOATOPSNOTSUPPORTED,
 
-			///<summary>DeviceCreatecomputeShaderDoubleFloatOpsNotSupported message.</summary>
-			DeviceCreatecomputeShaderDoubleFloatOpsNotSupported = D3D11_MESSAGE_ID_DEVICE_CREATECOMPUTESHADER_DOUBLEFLOATOPSNOTSUPPORTED,
+			///<summary>DeviceCreateComputeShaderDoubleFloatOpsNotSupported message.</summary>
+			DeviceCreateComputeShaderDoubleFloatOpsNotSupported = D3D11_MESSAGE_ID_DEVICE_CREATECOMPUTESHADER_DOUBLEFLOATOPSNOTSUPPORTED,
 
 			///<summary>CreateBufferInvalidStructureStride message.</summary>
 			CreateBufferInvalidStructureStride = D3D11_MESSAGE_ID_CREATEBUFFER_INVALIDSTRUCTURESTRIDE,
@@ -2085,11 +2085,11 @@ namespace SlimDX
 			///<summary>ClearUnorderedAccessViewDenormalizeFlush message.</summary>
 			ClearUnorderedAccessViewDenormalizeFlush = D3D11_MESSAGE_ID_CLEARUNORDEREDACCESSVIEW_DENORMFLUSH,
 
-			///<summary>DeviceCSSetUnorderedAccesssViewsEmpty message.</summary>
-			DeviceCSSetUnorderedAccesssViewsEmpty = D3D11_MESSAGE_ID_DEVICE_CSSETUNORDEREDACCESSS_VIEWS_EMPTY,
+			///<summary>DeviceCSSetUnorderedAccessViewsEmpty message.</summary>
+			DeviceCSSetUnorderedAccessViewsEmpty = D3D11_MESSAGE_ID_DEVICE_CSSETUNORDEREDACCESSS_VIEWS_EMPTY,
 
-			///<summary>DeviceCSGetUnorderedAccesssViewsEmpty message.</summary>
-			DeviceCSGetUnorderedAccesssViewsEmpty = D3D11_MESSAGE_ID_DEVICE_CSGETUNORDEREDACCESSS_VIEWS_EMPTY,
+			///<summary>DeviceCSGetUnorderedAccessViewsEmpty message.</summary>
+			DeviceCSGetUnorderedAccessViewsEmpty = D3D11_MESSAGE_ID_DEVICE_CSGETUNORDEREDACCESSS_VIEWS_EMPTY,
 
 			///<summary>CreateUnorderedAccessViewInvalidFlags message.</summary>
 			CreateUnorderedAccessViewInvalidFlags = D3D11_MESSAGE_ID_CREATEUNORDEREDACCESSVIEW_INVALIDFLAGS,
@@ -2121,11 +2121,11 @@ namespace SlimDX
 			///<summary>OMSetDepthStencilUnbindDeletingObject message.</summary>
 			OMSetDepthStencilUnbindDeletingObject = D3D11_MESSAGE_ID_OMSETDEPTHSTENCIL_UNBINDDELETINGOBJECT,
 
-			///<summary>ClearDepthStencilViewDepthReadonly message.</summary>
-			ClearDepthStencilViewDepthReadonly = D3D11_MESSAGE_ID_CLEARDEPTHSTENCILVIEW_DEPTH_READONLY,
+			///<summary>ClearDepthStencilViewDepthReadOnly message.</summary>
+			ClearDepthStencilViewDepthReadOnly = D3D11_MESSAGE_ID_CLEARDEPTHSTENCILVIEW_DEPTH_READONLY,
 
-			///<summary>ClearDepthStencilViewStencilReadonly message.</summary>
-			ClearDepthStencilViewStencilReadonly = D3D11_MESSAGE_ID_CLEARDEPTHSTENCILVIEW_STENCIL_READONLY,
+			///<summary>ClearDepthStencilViewStencilReadOnly message.</summary>
+			ClearDepthStencilViewStencilReadOnly = D3D11_MESSAGE_ID_CLEARDEPTHSTENCILVIEW_STENCIL_READONLY,
 
 			///<summary>CheckFeatureSupportFormatDeprecated message.</summary>
 			CheckFeatureSupportFormatDeprecated = D3D11_MESSAGE_ID_CHECKFEATURESUPPORT_FORMAT_DEPRECATED,
@@ -2169,8 +2169,8 @@ namespace SlimDX
 			///<summary>DeviceUnorderedAccessViewAtomicBitwiseOpsUnsupported message.</summary>
 			DeviceUnorderedAccessViewAtomicBitwiseOpsUnsupported = D3D11_MESSAGE_ID_DEVICE_UNORDEREDACCESSVIEW_ATOMIC_BITWISE_OPS_UNSUPPORTED,
 
-			///<summary>DeviceUnorderedAccessViewAtomicCmpSotreCmpExchangeUnsupported message.</summary>
-			DeviceUnorderedAccessViewAtomicCmpSotreCmpExchangeUnsupported = D3D11_MESSAGE_ID_DEVICE_UNORDEREDACCESSVIEW_ATOMIC_CMPSTORE_CMPEXCHANGE_UNSUPPORTED,
+			///<summary>DeviceUnorderedAccessViewAtomicCmpStoreCmpExchangeUnsupported message.</summary>
+			DeviceUnorderedAccessViewAtomicCmpStoreCmpExchangeUnsupported = D3D11_MESSAGE_ID_DEVICE_UNORDEREDACCESSVIEW_ATOMIC_CMPSTORE_CMPEXCHANGE_UNSUPPORTED,
 
 			///<summary>DeviceUnorderedAccessViewAtomicExchangeUnsupported message.</summary>
 			DeviceUnorderedAccessViewAtomicExchangeUnsupported = D3D11_MESSAGE_ID_DEVICE_UNORDEREDACCESSVIEW_ATOMIC_EXCHANGE_UNSUPPORTED,
@@ -2229,8 +2229,8 @@ namespace SlimDX
 			///<summary>DeviceCSSetUnorderedAccessViewsTooManyViews message.</summary>
 			DeviceCSSetUnorderedAccessViewsTooManyViews = D3D11_MESSAGE_ID_DEVICE_CSSETUNORDEREDACCESSVIEWS_TOOMANYVIEWS,
 
-			///<summary>ClearUnorderedAccessViewfloatInvalidFormat message.</summary>
-			ClearUnorderedAccessViewfloatInvalidFormat = D3D11_MESSAGE_ID_CLEARUNORDEREDACCESSVIEWFLOAT_INVALIDFORMAT,
+			///<summary>ClearUnorderedAccessViewFloatInvalidFormat message.</summary>
+			ClearUnorderedAccessViewFloatInvalidFormat = D3D11_MESSAGE_ID_CLEARUNORDEREDACCESSVIEWFLOAT_INVALIDFORMAT,
 
 			///<summary>DeviceUnorderedAccessViewCounterUnsupported message.</summary>
 			DeviceUnorderedAccessViewCounterUnsupported = D3D11_MESSAGE_ID_DEVICE_UNORDEREDACCESSVIEW_COUNTER_UNSUPPORTED,

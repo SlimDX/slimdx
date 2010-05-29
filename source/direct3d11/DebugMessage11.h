@@ -33,7 +33,7 @@ namespace SlimDX
 		public:
 			property MessageCategory Category;
 			property MessageSeverity Severity;
-			property DebugMessageID MessageID;
+			property DebugMessageId MessageId;
 			property System::String^ Description;
 		};
 	}
