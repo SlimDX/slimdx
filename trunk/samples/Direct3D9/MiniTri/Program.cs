@@ -54,13 +54,21 @@ namespace MiniTri
             });
             vertices.Unlock();
 
+        	var vertexElems = new[] {
+        		new VertexElement(0, 0, DeclarationType.Float4, DeclarationMethod.Default, DeclarationUsage.PositionTransformed, 0),
+        		new VertexElement(0, 16, DeclarationType.Color, DeclarationMethod.Default, DeclarationUsage.Color, 0),
+				VertexElement.VertexDeclarationEnd
+        	};
+
+        	var vertexDecl = new VertexDeclaration(device, vertexElems);
+
             MessagePump.Run(form, () =>
             {
                 device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
                 device.BeginScene();
 
                 device.SetStreamSource(0, vertices, 0, 20);
-                device.VertexFormat = VertexFormat.PositionRhw | VertexFormat.Diffuse;
+                device.VertexDeclaration = vertexDecl;
                 device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
 
                 device.EndScene();
