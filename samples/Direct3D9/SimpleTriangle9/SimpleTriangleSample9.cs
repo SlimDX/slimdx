@@ -34,7 +34,7 @@ namespace SimpleTriangle9 {
     /// </summary>
     class SimpleTriangle9Sample : Sample {
         protected override void OnInitialize() {
-            DeviceSettings9 settings = new DeviceSettings9 {
+            var settings = new DeviceSettings9 {
                 AdapterOrdinal = 0,
                 CreationFlags = CreateFlags.HardwareVertexProcessing,
                 Width = WindowWidth,
@@ -53,7 +53,7 @@ namespace SimpleTriangle9 {
                 Pool.Managed
             );
 
-            DataStream stream = vertexBuffer.Lock( 0, 0, LockFlags.None );
+            var stream = vertexBuffer.Lock( 0, 0, LockFlags.None );
             stream.WriteRange( new[] {
 				new ColoredVertex( new Vector3(0.0f, 0.5f, 0.5f), Color.Red.ToArgb() ),
 				new ColoredVertex( new Vector3(0.5f, -0.5f, 0.5f), Color.Blue.ToArgb() ),
@@ -65,10 +65,17 @@ namespace SimpleTriangle9 {
             // Since this sample does not use any lights, disable lighting (otherwise the
             // triangle will appear flat black).
             Context9.Device.SetRenderState( RenderState.Lighting, false );
+
+        	vertexDecl = new VertexDeclaration(Context9.Device, new[] {
+				new VertexElement(0, 0, DeclarationType.Float3, DeclarationMethod.Default, DeclarationUsage.Position, 0), 
+				new VertexElement(0, 12, DeclarationType.Color, DeclarationMethod.Default, DeclarationUsage.Color, 0), 
+				VertexElement.VertexDeclarationEnd
+        	});
         }
 
         protected override void OnResourceUnload() {
             vertexBuffer.Dispose();    
+			vertexDecl.Dispose();
         }
 
         protected override void OnRenderBegin() {
@@ -78,7 +85,7 @@ namespace SimpleTriangle9 {
 
         protected override void OnRender() {
             Context9.Device.SetStreamSource( 0, vertexBuffer, 0, Marshal.SizeOf( typeof( ColoredVertex ) ) );
-            Context9.Device.VertexFormat = VertexFormat.Position | VertexFormat.Diffuse;
+        	Context9.Device.VertexDeclaration = vertexDecl;
             Context9.Device.DrawPrimitives( PrimitiveType.TriangleList, 0, 1 );
         }
 
@@ -90,7 +97,7 @@ namespace SimpleTriangle9 {
         #region Implementation Detail
 
         VertexBuffer vertexBuffer;
-
+    	VertexDeclaration vertexDecl;
         #endregion
     }
 }
