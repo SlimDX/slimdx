@@ -27,9 +27,9 @@
 			>
 			<Tool
 				Name="VCNMakeTool"
-				BuildCommandLine="&quot;$(ProjectDir)..\..\External\SlimBuild\sb.exe&quot; build"
-				ReBuildCommandLine="&quot;$(ProjectDir)..\..\External\SlimBuild\sb.exe&quot; clean &amp;&amp; &quot;$(ProjectDir)..\..\External\SlimBuild\sb.exe&quot; build"
-				CleanCommandLine="&quot;$(ProjectDir)..\..\External\SlimBuild\sb.exe&quot; clean"
+				BuildCommandLine="&quot;$(ProjectDir)..\..\External\SlimBuild\sb.exe&quot;"
+				ReBuildCommandLine="&quot;$(ProjectDir)..\..\External\SlimBuild\sb.exe&quot; -c &amp;&amp; &quot;$(ProjectDir)..\..\External\SlimBuild\sb.exe&quot;"
+				CleanCommandLine="&quot;$(ProjectDir)..\..\External\SlimBuild\sb.exe&quot; -c"
 				Output=""
 				PreprocessorDefinitions=""
 				IncludeSearchPath=""
