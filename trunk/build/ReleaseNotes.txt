@@ -44,6 +44,7 @@ Direct3D 10
 	* Added missing WARP device type.
 	* Fixed shader compilation to allow null entry points.
 	* Fixed ShaderSignature Get*Signature methods.
+	* Fixed a crash bug in BlendStateDescription.GetHashCode.
 	* Added overloads to EffectVectorVariable.Set to take color inputs.
 	* Added missing Device.OpenSharedResource method.
 	
@@ -77,7 +78,7 @@ DXGI
 	* Added DXGI 1.1 interfaces.
 
 DirectWrite
-	* Added a bunch of missing functionality.
+	* Added several missing interfaces.
 
 RawInput
 	* Fixed the data type of the mouse wheel delta.
