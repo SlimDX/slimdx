@@ -194,6 +194,7 @@ namespace Direct3D10
 
 	int BlendStateDescription::GetHashCode()
 	{
+		ConstructLazyProperties();
 		return (
 			m_AlphaToCoverageEnable.GetHashCode() +
 			m_BlendEnable->GetHashCode() +
@@ -220,6 +221,7 @@ namespace Direct3D10
 
 	bool BlendStateDescription::Equals( BlendStateDescription value )
 	{
+		ConstructLazyProperties();
 		return (
 			m_AlphaToCoverageEnable == value.m_AlphaToCoverageEnable &&
 			Utilities::CheckElementEquality( m_BlendEnable, value.m_BlendEnable ) &&
@@ -235,6 +237,7 @@ namespace Direct3D10
 
 	bool BlendStateDescription::Equals( BlendStateDescription% value1, BlendStateDescription% value2 )
 	{
+		ConstructLazyProperties();
 		return (
 			value1.m_AlphaToCoverageEnable == value2.m_AlphaToCoverageEnable &&
 			Utilities::CheckElementEquality( value1.m_BlendEnable, value2.m_BlendEnable ) &&
