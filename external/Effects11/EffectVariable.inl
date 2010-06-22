@@ -1,7 +1,6 @@
-
 //////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (C) 2009 Microsoft Corporation.  All Rights Reserved.
+//  Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //  File:       EffectVariable.inl
 //  Content:    D3DX11 Effects Variable reflection template
@@ -111,7 +110,7 @@ public:
     STDMETHOD_(ID3DX11EffectRasterizerVariable*, AsRasterizer)() { return &g_InvalidRasterizerVariable; }
     STDMETHOD_(ID3DX11EffectSamplerVariable*, AsSampler)() { return &g_InvalidSamplerVariable; }
 
-    STDMETHOD(SetRawValue)(void *pData, UINT  Offset, UINT  Count) { return E_FAIL; }
+    STDMETHOD(SetRawValue)(CONST void *pData, UINT  Offset, UINT  Count) { return E_FAIL; }
     STDMETHOD(GetRawValue)(void *pData, UINT  Offset, UINT  Count) { return E_FAIL; }
 };
 
@@ -119,22 +118,22 @@ struct SEffectInvalidScalarVariable : public TEffectInvalidVariable<ID3DX11Effec
 {
 public:
 
-    STDMETHOD(SetFloat)(float Value) { return E_FAIL; }
+    STDMETHOD(SetFloat)(CONST float Value) { return E_FAIL; }
     STDMETHOD(GetFloat)(float *pValue) { return E_FAIL; }
 
-    STDMETHOD(SetFloatArray)(float *pData, UINT  Offset, UINT  Count) { return E_FAIL; }
+    STDMETHOD(SetFloatArray)(CONST float *pData, UINT  Offset, UINT  Count) { return E_FAIL; }
     STDMETHOD(GetFloatArray)(float *pData, UINT  Offset, UINT  Count) { return E_FAIL; }
 
-    STDMETHOD(SetInt)(int Value) { return E_FAIL; }
+    STDMETHOD(SetInt)(CONST int Value) { return E_FAIL; }
     STDMETHOD(GetInt)(int *pValue) { return E_FAIL; }
 
-    STDMETHOD(SetIntArray)(int *pData, UINT  Offset, UINT  Count) { return E_FAIL; }
+    STDMETHOD(SetIntArray)(CONST int *pData, UINT  Offset, UINT  Count) { return E_FAIL; }
     STDMETHOD(GetIntArray)(int *pData, UINT  Offset, UINT  Count) { return E_FAIL; }
 
-    STDMETHOD(SetBool)(BOOL Value) { return E_FAIL; }
+    STDMETHOD(SetBool)(CONST BOOL Value) { return E_FAIL; }
     STDMETHOD(GetBool)(BOOL *pValue) { return E_FAIL; }
 
-    STDMETHOD(SetBoolArray)(BOOL *pData, UINT  Offset, UINT  Count) { return E_FAIL; }
+    STDMETHOD(SetBoolArray)(CONST BOOL *pData, UINT  Offset, UINT  Count) { return E_FAIL; }
     STDMETHOD(GetBoolArray)(BOOL *pData, UINT  Offset, UINT  Count) { return E_FAIL; }
 };
 
@@ -142,17 +141,17 @@ public:
 struct SEffectInvalidVectorVariable : public TEffectInvalidVariable<ID3DX11EffectVectorVariable>
 {
 public:
-    STDMETHOD(SetFloatVector)(float *pData) { return E_FAIL; };
-    STDMETHOD(SetIntVector)(int *pData) { return E_FAIL; };
-    STDMETHOD(SetBoolVector)(BOOL *pData) { return E_FAIL; };
+    STDMETHOD(SetFloatVector)(CONST float *pData) { return E_FAIL; };
+    STDMETHOD(SetIntVector)(CONST int *pData) { return E_FAIL; };
+    STDMETHOD(SetBoolVector)(CONST BOOL *pData) { return E_FAIL; };
 
     STDMETHOD(GetFloatVector)(float *pData) { return E_FAIL; };
     STDMETHOD(GetIntVector)(int *pData) { return E_FAIL; };
     STDMETHOD(GetBoolVector)(BOOL *pData) { return E_FAIL; };
 
-    STDMETHOD(SetBoolVectorArray) (BOOL *pData, UINT Offset, UINT Count) { return E_FAIL; };
-    STDMETHOD(SetIntVectorArray)  (int *pData, UINT Offset, UINT Count) { return E_FAIL; };
-    STDMETHOD(SetFloatVectorArray)(float *pData, UINT Offset, UINT Count) { return E_FAIL; };
+    STDMETHOD(SetBoolVectorArray) (CONST BOOL *pData, UINT Offset, UINT Count) { return E_FAIL; };
+    STDMETHOD(SetIntVectorArray)  (CONST int *pData, UINT Offset, UINT Count) { return E_FAIL; };
+    STDMETHOD(SetFloatVectorArray)(CONST float *pData, UINT Offset, UINT Count) { return E_FAIL; };
 
     STDMETHOD(GetBoolVectorArray) (BOOL *pData, UINT Offset, UINT Count) { return E_FAIL; };
     STDMETHOD(GetIntVectorArray)  (int *pData, UINT Offset, UINT Count) { return E_FAIL; };
@@ -164,22 +163,22 @@ struct SEffectInvalidMatrixVariable : public TEffectInvalidVariable<ID3DX11Effec
 {
 public:
 
-    STDMETHOD(SetMatrix)(float *pData) { return E_FAIL; }
+    STDMETHOD(SetMatrix)(CONST float *pData) { return E_FAIL; }
     STDMETHOD(GetMatrix)(float *pData) { return E_FAIL; }
 
-    STDMETHOD(SetMatrixArray)(float *pData, UINT  Offset, UINT  Count) { return E_FAIL; }
+    STDMETHOD(SetMatrixArray)(CONST float *pData, UINT  Offset, UINT  Count) { return E_FAIL; }
     STDMETHOD(GetMatrixArray)(float *pData, UINT  Offset, UINT  Count) { return E_FAIL; }
 
-    STDMETHOD(SetMatrixPointerArray)(float **ppData, UINT  Offset, UINT  Count) { return E_FAIL; }
+    STDMETHOD(SetMatrixPointerArray)(CONST float **ppData, UINT  Offset, UINT  Count) { return E_FAIL; }
     STDMETHOD(GetMatrixPointerArray)(float **ppData, UINT  Offset, UINT  Count) { return E_FAIL; }
 
-    STDMETHOD(SetMatrixTranspose)(float *pData) { return E_FAIL; }
+    STDMETHOD(SetMatrixTranspose)(CONST float *pData) { return E_FAIL; }
     STDMETHOD(GetMatrixTranspose)(float *pData) { return E_FAIL; }
 
-    STDMETHOD(SetMatrixTransposeArray)(float *pData, UINT  Offset, UINT  Count) { return E_FAIL; }
+    STDMETHOD(SetMatrixTransposeArray)(CONST float *pData, UINT  Offset, UINT  Count) { return E_FAIL; }
     STDMETHOD(GetMatrixTransposeArray)(float *pData, UINT  Offset, UINT  Count) { return E_FAIL; }
 
-    STDMETHOD(SetMatrixTransposePointerArray)(float **ppData, UINT  Offset, UINT  Count) { return E_FAIL; }
+    STDMETHOD(SetMatrixTransposePointerArray)(CONST float **ppData, UINT  Offset, UINT  Count) { return E_FAIL; }
     STDMETHOD(GetMatrixTransposePointerArray)(float **ppData, UINT  Offset, UINT  Count) { return E_FAIL; }
 };
 
@@ -509,7 +508,7 @@ BOOL GetVariableBySemanticHelper(LPCSTR Semantic, UINT  VariableCount, SVarType 
     return FALSE;
 }
 
-D3DX11INLINE BOOL AreBoundsValid(UINT  Offset, UINT  Count, void *pData, SType *pType, UINT  TotalUnpackedSize)
+D3DX11INLINE BOOL AreBoundsValid(UINT  Offset, UINT  Count, CONST void *pData, CONST SType *pType, UINT  TotalUnpackedSize)
 {
     if (Count == 0) return TRUE;
     UINT  singleElementSize = pType->GetTotalUnpackedSize(TRUE);
@@ -603,7 +602,7 @@ lExit:
 }
 
 template<ETemplateVarType SourceType, ETemplateVarType DestType, typename SRC_TYPE, typename DEST_TYPE>
-D3DX11INLINE HRESULT SetScalarArray(SRC_TYPE *pSrcValues, DEST_TYPE *pDestValues, UINT  Offset, UINT  Count, 
+D3DX11INLINE HRESULT SetScalarArray(CONST SRC_TYPE *pSrcValues, DEST_TYPE *pDestValues, UINT  Offset, UINT  Count, 
                                     SType *pType, UINT  TotalUnpackedSize, const char *pFuncName)
 {
     HRESULT hr = S_OK;
@@ -627,7 +626,7 @@ D3DX11INLINE HRESULT SetScalarArray(SRC_TYPE *pSrcValues, DEST_TYPE *pDestValues
     }
 
 lExit:
-    return S_OK;
+    return hr;
 }
 
 template<ETemplateVarType SourceType, ETemplateVarType DestType, typename SRC_TYPE, typename DEST_TYPE>
@@ -655,7 +654,7 @@ D3DX11INLINE HRESULT GetScalarArray(SRC_TYPE *pSrcValues, DEST_TYPE *pDestValues
     }
 
 lExit:
-    return S_OK;
+    return hr;
 }
 
 
@@ -1007,7 +1006,7 @@ struct TVariable : public IBaseInterface
     }
 
     // Numeric variables should override this
-    STDMETHOD(SetRawValue)(void *pData, UINT  Offset, UINT  Count) { return ObjectSetRawValue(); }
+    STDMETHOD(SetRawValue)(CONST void *pData, UINT  Offset, UINT  Count) { return ObjectSetRawValue(); }
     STDMETHOD(GetRawValue)(void *pData, UINT  Offset, UINT  Count) { return ObjectGetRawValue(); }
 };
 
@@ -1331,7 +1330,7 @@ lExit:
 template<typename IBaseInterface, BOOL IsAnnotation>
 struct TNumericVariable : public IBaseInterface
 {
-    STDMETHOD(SetRawValue)(void *pData, UINT  ByteOffset, UINT  ByteCount) 
+    STDMETHOD(SetRawValue)(CONST void *pData, UINT  ByteOffset, UINT  ByteCount) 
     {
         if (IsAnnotation)
         {
@@ -1397,22 +1396,22 @@ lExit:
 template<typename IBaseInterface, BOOL IsAnnotation>
 struct TFloatScalarVariable : public TNumericVariable<IBaseInterface, IsAnnotation>
 {
-    STDMETHOD(SetFloat)(float Value);
+    STDMETHOD(SetFloat)(CONST float Value);
     STDMETHOD(GetFloat)(float *pValue);
 
-    STDMETHOD(SetFloatArray)(float *pData, UINT  Offset, UINT  Count);
+    STDMETHOD(SetFloatArray)(CONST float *pData, UINT  Offset, UINT  Count);
     STDMETHOD(GetFloatArray)(float *pData, UINT  Offset, UINT  Count);
 
-    STDMETHOD(SetInt)(int Value);
+    STDMETHOD(SetInt)(CONST int Value);
     STDMETHOD(GetInt)(int *pValue);
 
-    STDMETHOD(SetIntArray)(int *pData, UINT  Offset, UINT  Count);
+    STDMETHOD(SetIntArray)(CONST int *pData, UINT  Offset, UINT  Count);
     STDMETHOD(GetIntArray)(int *pData, UINT  Offset, UINT  Count);
 
-    STDMETHOD(SetBool)(BOOL Value);
+    STDMETHOD(SetBool)(CONST BOOL Value);
     STDMETHOD(GetBool)(BOOL *pValue);
 
-    STDMETHOD(SetBoolArray)(BOOL *pData, UINT  Offset, UINT  Count);
+    STDMETHOD(SetBoolArray)(CONST BOOL *pData, UINT  Offset, UINT  Count);
     STDMETHOD(GetBoolArray)(BOOL *pData, UINT  Offset, UINT  Count);
 };
 
@@ -1432,7 +1431,7 @@ HRESULT TFloatScalarVariable<IBaseInterface, IsAnnotation>::GetFloat(float *pVal
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TFloatScalarVariable<IBaseInterface, IsAnnotation>::SetFloatArray(float *pData, UINT  Offset, UINT  Count)
+HRESULT TFloatScalarVariable<IBaseInterface, IsAnnotation>::SetFloatArray(CONST float *pData, UINT  Offset, UINT  Count)
 {
     LPCSTR pFuncName = "ID3DX11EffectScalarVariable::SetFloatArray";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
@@ -1449,7 +1448,7 @@ HRESULT TFloatScalarVariable<IBaseInterface, IsAnnotation>::GetFloatArray(float 
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TFloatScalarVariable<IBaseInterface, IsAnnotation>::SetInt(int Value)
+HRESULT TFloatScalarVariable<IBaseInterface, IsAnnotation>::SetInt(CONST int Value)
 {
     LPCSTR pFuncName = "ID3DX11EffectScalarVariable::SetInt";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
@@ -1464,7 +1463,7 @@ HRESULT TFloatScalarVariable<IBaseInterface, IsAnnotation>::GetInt(int *pValue)
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TFloatScalarVariable<IBaseInterface, IsAnnotation>::SetIntArray(int *pData, UINT  Offset, UINT  Count)
+HRESULT TFloatScalarVariable<IBaseInterface, IsAnnotation>::SetIntArray(CONST int *pData, UINT  Offset, UINT  Count)
 {
     LPCSTR pFuncName = "ID3DX11EffectScalarVariable::SetIntArray";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
@@ -1481,7 +1480,7 @@ HRESULT TFloatScalarVariable<IBaseInterface, IsAnnotation>::GetIntArray(int *pDa
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TFloatScalarVariable<IBaseInterface, IsAnnotation>::SetBool(BOOL Value)
+HRESULT TFloatScalarVariable<IBaseInterface, IsAnnotation>::SetBool(CONST BOOL Value)
 {
     LPCSTR pFuncName = "ID3DX11EffectScalarVariable::SetBool";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
@@ -1496,7 +1495,7 @@ HRESULT TFloatScalarVariable<IBaseInterface, IsAnnotation>::GetBool(BOOL *pValue
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TFloatScalarVariable<IBaseInterface, IsAnnotation>::SetBoolArray(BOOL *pData, UINT  Offset, UINT  Count)
+HRESULT TFloatScalarVariable<IBaseInterface, IsAnnotation>::SetBoolArray(CONST BOOL *pData, UINT  Offset, UINT  Count)
 {
     LPCSTR pFuncName = "ID3DX11EffectScalarVariable::SetBoolArray";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
@@ -1519,22 +1518,22 @@ HRESULT TFloatScalarVariable<IBaseInterface, IsAnnotation>::GetBoolArray(BOOL *p
 template<typename IBaseInterface, BOOL IsAnnotation>
 struct TIntScalarVariable : public TNumericVariable<IBaseInterface, IsAnnotation>
 {
-    STDMETHOD(SetFloat)(float Value);
+    STDMETHOD(SetFloat)(CONST float Value);
     STDMETHOD(GetFloat)(float *pValue);
 
-    STDMETHOD(SetFloatArray)(float *pData, UINT  Offset, UINT  Count);
+    STDMETHOD(SetFloatArray)(CONST float *pData, UINT  Offset, UINT  Count);
     STDMETHOD(GetFloatArray)(float *pData, UINT  Offset, UINT  Count);
 
-    STDMETHOD(SetInt)(int Value);
+    STDMETHOD(SetInt)(CONST int Value);
     STDMETHOD(GetInt)(int *pValue);
 
-    STDMETHOD(SetIntArray)(int *pData, UINT  Offset, UINT  Count);
+    STDMETHOD(SetIntArray)(CONST int *pData, UINT  Offset, UINT  Count);
     STDMETHOD(GetIntArray)(int *pData, UINT  Offset, UINT  Count);
 
-    STDMETHOD(SetBool)(BOOL Value);
+    STDMETHOD(SetBool)(CONST BOOL Value);
     STDMETHOD(GetBool)(BOOL *pValue);
 
-    STDMETHOD(SetBoolArray)(BOOL *pData, UINT  Offset, UINT  Count);
+    STDMETHOD(SetBoolArray)(CONST BOOL *pData, UINT  Offset, UINT  Count);
     STDMETHOD(GetBoolArray)(BOOL *pData, UINT  Offset, UINT  Count);
 };
 
@@ -1554,7 +1553,7 @@ HRESULT TIntScalarVariable<IBaseInterface, IsAnnotation>::GetFloat(float *pValue
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TIntScalarVariable<IBaseInterface, IsAnnotation>::SetFloatArray(float *pData, UINT  Offset, UINT  Count)
+HRESULT TIntScalarVariable<IBaseInterface, IsAnnotation>::SetFloatArray(CONST float *pData, UINT  Offset, UINT  Count)
 {
     LPCSTR pFuncName = "ID3DX11EffectScalarVariable::SetFloatArray";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
@@ -1571,7 +1570,7 @@ HRESULT TIntScalarVariable<IBaseInterface, IsAnnotation>::GetFloatArray(float *p
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TIntScalarVariable<IBaseInterface, IsAnnotation>::SetInt(int Value)
+HRESULT TIntScalarVariable<IBaseInterface, IsAnnotation>::SetInt(CONST int Value)
 {
     LPCSTR pFuncName = "ID3DX11EffectScalarVariable::SetInt";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
@@ -1586,7 +1585,7 @@ HRESULT TIntScalarVariable<IBaseInterface, IsAnnotation>::GetInt(int *pValue)
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TIntScalarVariable<IBaseInterface, IsAnnotation>::SetIntArray(int *pData, UINT  Offset, UINT  Count)
+HRESULT TIntScalarVariable<IBaseInterface, IsAnnotation>::SetIntArray(CONST int *pData, UINT  Offset, UINT  Count)
 {
     LPCSTR pFuncName = "ID3DX11EffectScalarVariable::SetIntArray";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
@@ -1603,7 +1602,7 @@ HRESULT TIntScalarVariable<IBaseInterface, IsAnnotation>::GetIntArray(int *pData
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TIntScalarVariable<IBaseInterface, IsAnnotation>::SetBool(BOOL Value)
+HRESULT TIntScalarVariable<IBaseInterface, IsAnnotation>::SetBool(CONST BOOL Value)
 {
     LPCSTR pFuncName = "ID3DX11EffectScalarVariable::SetBool";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
@@ -1618,7 +1617,7 @@ HRESULT TIntScalarVariable<IBaseInterface, IsAnnotation>::GetBool(BOOL *pValue)
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TIntScalarVariable<IBaseInterface, IsAnnotation>::SetBoolArray(BOOL *pData, UINT  Offset, UINT  Count)
+HRESULT TIntScalarVariable<IBaseInterface, IsAnnotation>::SetBoolArray(CONST BOOL *pData, UINT  Offset, UINT  Count)
 {
     LPCSTR pFuncName = "ID3DX11EffectScalarVariable::SetBoolArray";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
@@ -1641,22 +1640,22 @@ HRESULT TIntScalarVariable<IBaseInterface, IsAnnotation>::GetBoolArray(BOOL *pDa
 template<typename IBaseInterface, BOOL IsAnnotation>
 struct TBoolScalarVariable : public TNumericVariable<IBaseInterface, IsAnnotation>
 {
-    STDMETHOD(SetFloat)(float Value);
+    STDMETHOD(SetFloat)(CONST float Value);
     STDMETHOD(GetFloat)(float *pValue);
 
-    STDMETHOD(SetFloatArray)(float *pData, UINT  Offset, UINT  Count);
+    STDMETHOD(SetFloatArray)(CONST float *pData, UINT  Offset, UINT  Count);
     STDMETHOD(GetFloatArray)(float *pData, UINT  Offset, UINT  Count);
 
-    STDMETHOD(SetInt)(int Value);
+    STDMETHOD(SetInt)(CONST int Value);
     STDMETHOD(GetInt)(int *pValue);
 
-    STDMETHOD(SetIntArray)(int *pData, UINT  Offset, UINT  Count);
+    STDMETHOD(SetIntArray)(CONST int *pData, UINT  Offset, UINT  Count);
     STDMETHOD(GetIntArray)(int *pData, UINT  Offset, UINT  Count);
 
-    STDMETHOD(SetBool)(BOOL Value);
+    STDMETHOD(SetBool)(CONST BOOL Value);
     STDMETHOD(GetBool)(BOOL *pValue);
 
-    STDMETHOD(SetBoolArray)(BOOL *pData, UINT  Offset, UINT  Count);
+    STDMETHOD(SetBoolArray)(CONST BOOL *pData, UINT  Offset, UINT  Count);
     STDMETHOD(GetBoolArray)(BOOL *pData, UINT  Offset, UINT  Count);
 };
 
@@ -1676,7 +1675,7 @@ HRESULT TBoolScalarVariable<IBaseInterface, IsAnnotation>::GetFloat(float *pValu
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TBoolScalarVariable<IBaseInterface, IsAnnotation>::SetFloatArray(float *pData, UINT  Offset, UINT  Count)
+HRESULT TBoolScalarVariable<IBaseInterface, IsAnnotation>::SetFloatArray(CONST float *pData, UINT  Offset, UINT  Count)
 {
     LPCSTR pFuncName = "ID3DX11EffectScalarVariable::SetFloatArray";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
@@ -1693,7 +1692,7 @@ HRESULT TBoolScalarVariable<IBaseInterface, IsAnnotation>::GetFloatArray(float *
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TBoolScalarVariable<IBaseInterface, IsAnnotation>::SetInt(int Value)
+HRESULT TBoolScalarVariable<IBaseInterface, IsAnnotation>::SetInt(CONST int Value)
 {
     LPCSTR pFuncName = "ID3DX11EffectScalarVariable::SetInt";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
@@ -1708,7 +1707,7 @@ HRESULT TBoolScalarVariable<IBaseInterface, IsAnnotation>::GetInt(int *pValue)
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TBoolScalarVariable<IBaseInterface, IsAnnotation>::SetIntArray(int *pData, UINT  Offset, UINT  Count)
+HRESULT TBoolScalarVariable<IBaseInterface, IsAnnotation>::SetIntArray(CONST int *pData, UINT  Offset, UINT  Count)
 {
     LPCSTR pFuncName = "ID3DX11EffectScalarVariable::SetIntArray";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
@@ -1725,7 +1724,7 @@ HRESULT TBoolScalarVariable<IBaseInterface, IsAnnotation>::GetIntArray(int *pDat
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TBoolScalarVariable<IBaseInterface, IsAnnotation>::SetBool(BOOL Value)
+HRESULT TBoolScalarVariable<IBaseInterface, IsAnnotation>::SetBool(CONST BOOL Value)
 {
     LPCSTR pFuncName = "ID3DX11EffectScalarVariable::SetBool";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
@@ -1740,7 +1739,7 @@ HRESULT TBoolScalarVariable<IBaseInterface, IsAnnotation>::GetBool(BOOL *pValue)
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TBoolScalarVariable<IBaseInterface, IsAnnotation>::SetBoolArray(BOOL *pData, UINT  Offset, UINT  Count)
+HRESULT TBoolScalarVariable<IBaseInterface, IsAnnotation>::SetBoolArray(CONST BOOL *pData, UINT  Offset, UINT  Count)
 {
     LPCSTR pFuncName = "ID3DX11EffectScalarVariable::SetBoolArray";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
@@ -1763,18 +1762,18 @@ HRESULT TBoolScalarVariable<IBaseInterface, IsAnnotation>::GetBoolArray(BOOL *pD
 template<typename IBaseInterface, BOOL IsAnnotation, ETemplateVarType BaseType >
 struct TVectorVariable : public TNumericVariable<IBaseInterface, IsAnnotation>
 {
-    STDMETHOD(SetBoolVector) (BOOL *pData); 
-    STDMETHOD(SetIntVector)  (int *pData);
-    STDMETHOD(SetFloatVector)(float *pData);
+    STDMETHOD(SetBoolVector) (CONST BOOL *pData); 
+    STDMETHOD(SetIntVector)  (CONST int *pData);
+    STDMETHOD(SetFloatVector)(CONST float *pData);
 
     STDMETHOD(GetBoolVector) (BOOL *pData); 
     STDMETHOD(GetIntVector)  (int *pData);
     STDMETHOD(GetFloatVector)(float *pData);
 
 
-    STDMETHOD(SetBoolVectorArray) (BOOL *pData, UINT Offset, UINT Count); 
-    STDMETHOD(SetIntVectorArray)  (int *pData, UINT Offset, UINT Count);
-    STDMETHOD(SetFloatVectorArray)(float *pData, UINT Offset, UINT Count);
+    STDMETHOD(SetBoolVectorArray) (CONST BOOL *pData, UINT Offset, UINT Count); 
+    STDMETHOD(SetIntVectorArray)  (CONST int *pData, UINT Offset, UINT Count);
+    STDMETHOD(SetFloatVectorArray)(CONST float *pData, UINT Offset, UINT Count);
 
     STDMETHOD(GetBoolVectorArray) (BOOL *pData, UINT Offset, UINT Count); 
     STDMETHOD(GetIntVectorArray)  (int *pData, UINT Offset, UINT Count);
@@ -1783,7 +1782,7 @@ struct TVectorVariable : public TNumericVariable<IBaseInterface, IsAnnotation>
 
 // Note that branches in this code is based on template parameters and will be compiled out
 template <ETemplateVarType DestType, ETemplateVarType SourceType>
-void __forceinline CopyDataWithTypeConversion(__out_bcount(vecCount * dstVecSize * sizeof(UINT)) void *pDest, void *pSource, UINT dstVecSize, UINT srcVecSize, UINT elementCount, UINT vecCount)
+void __forceinline CopyDataWithTypeConversion(__out_bcount(vecCount * dstVecSize * sizeof(UINT)) void *pDest, CONST void *pSource, UINT dstVecSize, UINT srcVecSize, UINT elementCount, UINT vecCount)
 {
     UINT i, j;
 
@@ -1918,7 +1917,7 @@ void __forceinline CopyDataWithTypeConversion(__out_bcount(vecCount * dstVecSize
 // Float Vector
 
 template<typename IBaseInterface, BOOL IsAnnotation, ETemplateVarType BaseType>
-HRESULT TVectorVariable<IBaseInterface, IsAnnotation, BaseType >::SetFloatVector(float *pData)
+HRESULT TVectorVariable<IBaseInterface, IsAnnotation, BaseType >::SetFloatVector(CONST float *pData)
 {
     HRESULT hr = S_OK;
     LPCSTR pFuncName = "ID3DX11EffectVectorVariable::SetFloatVector";
@@ -1954,7 +1953,7 @@ lExit:
 // Int Vector
 
 template<typename IBaseInterface, BOOL IsAnnotation, ETemplateVarType BaseType>
-HRESULT TVectorVariable<IBaseInterface, IsAnnotation, BaseType >::SetIntVector(int *pData)
+HRESULT TVectorVariable<IBaseInterface, IsAnnotation, BaseType >::SetIntVector(CONST int *pData)
 {
     HRESULT hr = S_OK;
     LPCSTR pFuncName = "ID3DX11EffectVectorVariable::SetIntVector";
@@ -1990,7 +1989,7 @@ lExit:
 // Bool Vector
 
 template<typename IBaseInterface, BOOL IsAnnotation, ETemplateVarType BaseType>
-HRESULT TVectorVariable<IBaseInterface, IsAnnotation, BaseType >::SetBoolVector(BOOL *pData)
+HRESULT TVectorVariable<IBaseInterface, IsAnnotation, BaseType >::SetBoolVector(CONST BOOL *pData)
 {
     HRESULT hr = S_OK;
     LPCSTR pFuncName = "ID3DX11EffectVectorVariable::SetBoolVector";
@@ -2026,7 +2025,7 @@ lExit:
 // Vector Arrays /////////////////////////////////////////////////////////
 
 template<typename IBaseInterface, BOOL IsAnnotation, ETemplateVarType BaseType>
-HRESULT TVectorVariable<IBaseInterface, IsAnnotation, BaseType>::SetFloatVectorArray(float *pData, UINT  Offset, UINT  Count)
+HRESULT TVectorVariable<IBaseInterface, IsAnnotation, BaseType>::SetFloatVectorArray(CONST float *pData, UINT  Offset, UINT  Count)
 {
     HRESULT hr = S_OK;
     LPCSTR pFuncName = "ID3DX11EffectVectorVariable::SetFloatVectorArray";
@@ -2072,7 +2071,7 @@ lExit:
 // int
 
 template<typename IBaseInterface, BOOL IsAnnotation, ETemplateVarType BaseType>
-HRESULT TVectorVariable<IBaseInterface, IsAnnotation, BaseType>::SetIntVectorArray(int *pData, UINT  Offset, UINT  Count)
+HRESULT TVectorVariable<IBaseInterface, IsAnnotation, BaseType>::SetIntVectorArray(CONST int *pData, UINT  Offset, UINT  Count)
 {
     HRESULT hr = S_OK;
     LPCSTR pFuncName = "ID3DX11EffectVectorVariable::SetIntVectorArray";
@@ -2118,7 +2117,7 @@ lExit:
 // bool
 
 template<typename IBaseInterface, BOOL IsAnnotation, ETemplateVarType BaseType>
-HRESULT TVectorVariable<IBaseInterface, IsAnnotation, BaseType>::SetBoolVectorArray(BOOL *pData, UINT  Offset, UINT  Count)
+HRESULT TVectorVariable<IBaseInterface, IsAnnotation, BaseType>::SetBoolVectorArray(CONST BOOL *pData, UINT  Offset, UINT  Count)
 {
     HRESULT hr = S_OK;
     LPCSTR pFuncName = "ID3DX11EffectVectorVariable::SetBoolVectorArray";
@@ -2168,15 +2167,15 @@ lExit:
 template<typename IBaseInterface>
 struct TVector4Variable : public TVectorVariable<IBaseInterface, FALSE, ETVT_Float>
 {
-    STDMETHOD(SetFloatVector)(float *pData);
+    STDMETHOD(SetFloatVector)(CONST float *pData);
     STDMETHOD(GetFloatVector)(float *pData);
 
-    STDMETHOD(SetFloatVectorArray)(float *pData, UINT Offset, UINT  Count);
+    STDMETHOD(SetFloatVectorArray)(CONST float *pData, UINT Offset, UINT  Count);
     STDMETHOD(GetFloatVectorArray)(float *pData, UINT Offset, UINT  Count);
 };
 
 template<typename IBaseInterface>
-HRESULT TVector4Variable<IBaseInterface>::SetFloatVector(float *pData)
+HRESULT TVector4Variable<IBaseInterface>::SetFloatVector(CONST float *pData)
 {
     HRESULT hr = S_OK;
     LPCSTR pFuncName = "ID3DX11EffectVectorVariable::SetFloatVector";
@@ -2209,7 +2208,7 @@ lExit:
 }
 
 template<typename IBaseInterface>
-HRESULT TVector4Variable<IBaseInterface>::SetFloatVectorArray(float *pData, UINT  Offset, UINT  Count)
+HRESULT TVector4Variable<IBaseInterface>::SetFloatVectorArray(CONST float *pData, UINT  Offset, UINT  Count)
 {
     HRESULT hr = S_OK;
     LPCSTR pFuncName = "ID3DX11EffectVectorVariable::SetFloatVectorArray";
@@ -2259,22 +2258,22 @@ lExit:
 template<typename IBaseInterface, BOOL IsAnnotation>
 struct TMatrixVariable : public TNumericVariable<IBaseInterface, IsAnnotation>
 {
-    STDMETHOD(SetMatrix)(float *pData);
+    STDMETHOD(SetMatrix)(CONST float *pData);
     STDMETHOD(GetMatrix)(float *pData);
 
-    STDMETHOD(SetMatrixArray)(float *pData, UINT  Offset, UINT  Count);
+    STDMETHOD(SetMatrixArray)(CONST float *pData, UINT  Offset, UINT  Count);
     STDMETHOD(GetMatrixArray)(float *pData, UINT  Offset, UINT  Count);
 
-    STDMETHOD(SetMatrixPointerArray)(float **ppData, UINT  Offset, UINT  Count);
+    STDMETHOD(SetMatrixPointerArray)(CONST float **ppData, UINT  Offset, UINT  Count);
     STDMETHOD(GetMatrixPointerArray)(float **ppData, UINT  Offset, UINT  Count);
 
-    STDMETHOD(SetMatrixTranspose)(float *pData);
+    STDMETHOD(SetMatrixTranspose)(CONST float *pData);
     STDMETHOD(GetMatrixTranspose)(float *pData);
 
-    STDMETHOD(SetMatrixTransposeArray)(float *pData, UINT  Offset, UINT  Count);
+    STDMETHOD(SetMatrixTransposeArray)(CONST float *pData, UINT  Offset, UINT  Count);
     STDMETHOD(GetMatrixTransposeArray)(float *pData, UINT  Offset, UINT  Count);
 
-    STDMETHOD(SetMatrixTransposePointerArray)(float **ppData, UINT  Offset, UINT  Count);
+    STDMETHOD(SetMatrixTransposePointerArray)(CONST float **ppData, UINT  Offset, UINT  Count);
     STDMETHOD(GetMatrixTransposePointerArray)(float **ppData, UINT  Offset, UINT  Count);
 };
 
@@ -2430,13 +2429,13 @@ lExit:
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TMatrixVariable<IBaseInterface, IsAnnotation>::SetMatrix(float *pData)
+HRESULT TMatrixVariable<IBaseInterface, IsAnnotation>::SetMatrix(CONST float *pData)
 {
     LPCSTR pFuncName = "ID3DX11EffectMatrixVariable::SetMatrix";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
     DirtyVariable();
     return DoMatrixArrayInternal<FALSE, TRUE, FALSE>(pType, GetTotalUnpackedSize(), 
-        Data.pNumeric, pData, 0, 1, pFuncName);
+        Data.pNumeric, const_cast<float*>(pData), 0, 1, pFuncName);
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
@@ -2447,13 +2446,13 @@ HRESULT TMatrixVariable<IBaseInterface, IsAnnotation>::GetMatrix(float *pData)
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TMatrixVariable<IBaseInterface, IsAnnotation>::SetMatrixArray(float *pData, UINT  Offset, UINT  Count)
+HRESULT TMatrixVariable<IBaseInterface, IsAnnotation>::SetMatrixArray(CONST float *pData, UINT  Offset, UINT  Count)
 {
     LPCSTR pFuncName = "ID3DX11EffectMatrixVariable::SetMatrixArray";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
     DirtyVariable();
     return DoMatrixArrayInternal<FALSE, TRUE, FALSE>(pType, GetTotalUnpackedSize(), 
-        Data.pNumeric, pData, Offset, Count, "ID3DX11EffectMatrixVariable::SetMatrixArray");
+        Data.pNumeric, const_cast<float*>(pData), Offset, Count, "ID3DX11EffectMatrixVariable::SetMatrixArray");
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
@@ -2464,13 +2463,13 @@ HRESULT TMatrixVariable<IBaseInterface, IsAnnotation>::GetMatrixArray(float *pDa
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TMatrixVariable<IBaseInterface, IsAnnotation>::SetMatrixPointerArray(float **ppData, UINT  Offset, UINT  Count)
+HRESULT TMatrixVariable<IBaseInterface, IsAnnotation>::SetMatrixPointerArray(CONST float **ppData, UINT  Offset, UINT  Count)
 {
     LPCSTR pFuncName = "ID3DX11EffectMatrixVariable::SetMatrixPointerArray";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
     DirtyVariable();
     return DoMatrixArrayInternal<FALSE, TRUE, TRUE>(pType, GetTotalUnpackedSize(), 
-        Data.pNumeric, ppData, Offset, Count, "ID3DX11EffectMatrixVariable::SetMatrixPointerArray");
+        Data.pNumeric, const_cast<float**>(ppData), Offset, Count, "ID3DX11EffectMatrixVariable::SetMatrixPointerArray");
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
@@ -2481,13 +2480,13 @@ HRESULT TMatrixVariable<IBaseInterface, IsAnnotation>::GetMatrixPointerArray(flo
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TMatrixVariable<IBaseInterface, IsAnnotation>::SetMatrixTranspose(float *pData)
+HRESULT TMatrixVariable<IBaseInterface, IsAnnotation>::SetMatrixTranspose(CONST float *pData)
 {
     LPCSTR pFuncName = "ID3DX11EffectMatrixVariable::SetMatrixTranspose";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
     DirtyVariable();
     return DoMatrixArrayInternal<TRUE, TRUE, FALSE>(pType, GetTotalUnpackedSize(), 
-        Data.pNumeric, pData, 0, 1, "ID3DX11EffectMatrixVariable::SetMatrixTranspose");
+        Data.pNumeric, const_cast<float*>(pData), 0, 1, "ID3DX11EffectMatrixVariable::SetMatrixTranspose");
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
@@ -2498,13 +2497,13 @@ HRESULT TMatrixVariable<IBaseInterface, IsAnnotation>::GetMatrixTranspose(float 
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TMatrixVariable<IBaseInterface, IsAnnotation>::SetMatrixTransposeArray(float *pData, UINT  Offset, UINT  Count)
+HRESULT TMatrixVariable<IBaseInterface, IsAnnotation>::SetMatrixTransposeArray(CONST float *pData, UINT  Offset, UINT  Count)
 {
     LPCSTR pFuncName = "ID3DX11EffectMatrixVariable::SetMatrixTransposeArray";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
     DirtyVariable();
     return DoMatrixArrayInternal<TRUE, TRUE, FALSE>(pType, GetTotalUnpackedSize(), 
-        Data.pNumeric, pData, Offset, Count, "ID3DX11EffectMatrixVariable::SetMatrixTransposeArray");
+        Data.pNumeric, const_cast<float*>(pData), Offset, Count, "ID3DX11EffectMatrixVariable::SetMatrixTransposeArray");
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
@@ -2515,13 +2514,13 @@ HRESULT TMatrixVariable<IBaseInterface, IsAnnotation>::GetMatrixTransposeArray(f
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
-HRESULT TMatrixVariable<IBaseInterface, IsAnnotation>::SetMatrixTransposePointerArray(float **ppData, UINT  Offset, UINT  Count)
+HRESULT TMatrixVariable<IBaseInterface, IsAnnotation>::SetMatrixTransposePointerArray(CONST float **ppData, UINT  Offset, UINT  Count)
 {
     LPCSTR pFuncName = "ID3DX11EffectMatrixVariable::SetMatrixTransposePointerArray";
     if (IsAnnotation) return AnnotationInvalidSetCall(pFuncName);
     DirtyVariable();
     return DoMatrixArrayInternal<TRUE, TRUE, TRUE>(pType, GetTotalUnpackedSize(), 
-        Data.pNumeric, ppData, Offset, Count, "ID3DX11EffectMatrixVariable::SetMatrixTransposePointerArray");
+        Data.pNumeric, const_cast<float**>(ppData), Offset, Count, "ID3DX11EffectMatrixVariable::SetMatrixTransposePointerArray");
 }
 
 template<typename IBaseInterface, BOOL IsAnnotation>
@@ -2536,20 +2535,20 @@ HRESULT TMatrixVariable<IBaseInterface, IsAnnotation>::GetMatrixTransposePointer
 template<typename IBaseInterface, BOOL IsColumnMajor>
 struct TMatrix4x4Variable : public TMatrixVariable<IBaseInterface, FALSE>
 {
-    STDMETHOD(SetMatrix)(float *pData);
+    STDMETHOD(SetMatrix)(CONST float *pData);
     STDMETHOD(GetMatrix)(float *pData);
 
-    STDMETHOD(SetMatrixArray)(float *pData, UINT  Offset, UINT  Count);
+    STDMETHOD(SetMatrixArray)(CONST float *pData, UINT  Offset, UINT  Count);
     STDMETHOD(GetMatrixArray)(float *pData, UINT  Offset, UINT  Count);
 
-    STDMETHOD(SetMatrixTranspose)(float *pData);
+    STDMETHOD(SetMatrixTranspose)(CONST float *pData);
     STDMETHOD(GetMatrixTranspose)(float *pData);
 
-    STDMETHOD(SetMatrixTransposeArray)(float *pData, UINT  Offset, UINT  Count);
+    STDMETHOD(SetMatrixTransposeArray)(CONST float *pData, UINT  Offset, UINT  Count);
     STDMETHOD(GetMatrixTransposeArray)(float *pData, UINT  Offset, UINT  Count);
 };
 
-D3DX11INLINE static void Matrix4x4TransposeHelper(void *pSrc, void *pDst)
+D3DX11INLINE static void Matrix4x4TransposeHelper(CONST void *pSrc, void *pDst)
 {
     BYTE *pDestData = (BYTE*)pDst;
     UINT *pMatrix = (UINT*)pSrc;
@@ -2575,7 +2574,7 @@ D3DX11INLINE static void Matrix4x4TransposeHelper(void *pSrc, void *pDst)
     ((UINT*)pDestData)[3 * 4 + 3] = pMatrix[3 * 4 + 3];
 }
 
-D3DX11INLINE static void Matrix4x4Copy(void *pSrc, void *pDst)
+D3DX11INLINE static void Matrix4x4Copy(CONST void *pSrc, void *pDst)
 {
 #if 1
     // In tests, this path ended up generating faster code both on x86 and x64
@@ -2687,10 +2686,10 @@ lExit:
 }
 
 template<typename IBaseInterface, BOOL IsColumnMajor>
-HRESULT TMatrix4x4Variable<IBaseInterface, IsColumnMajor>::SetMatrix(float *pData)
+HRESULT TMatrix4x4Variable<IBaseInterface, IsColumnMajor>::SetMatrix(CONST float *pData)
 {
     DirtyVariable();
-    return DoMatrix4x4ArrayInternal<IsColumnMajor, FALSE, TRUE>(Data.pNumeric, pData, 0, 1
+    return DoMatrix4x4ArrayInternal<IsColumnMajor, FALSE, TRUE>(Data.pNumeric, const_cast<float*>(pData), 0, 1
 #ifdef _DEBUG 
         , pType, GetTotalUnpackedSize(), "ID3DX11EffectMatrixVariable::SetMatrix");
 #else
@@ -2710,10 +2709,10 @@ HRESULT TMatrix4x4Variable<IBaseInterface, IsColumnMajor>::GetMatrix(float *pDat
 }
 
 template<typename IBaseInterface, BOOL IsColumnMajor>
-HRESULT TMatrix4x4Variable<IBaseInterface, IsColumnMajor>::SetMatrixArray(float *pData, UINT  Offset, UINT  Count)
+HRESULT TMatrix4x4Variable<IBaseInterface, IsColumnMajor>::SetMatrixArray(CONST float *pData, UINT  Offset, UINT  Count)
 {
     DirtyVariable();
-    return DoMatrix4x4ArrayInternal<IsColumnMajor, FALSE, TRUE>(Data.pNumeric, pData, Offset, Count
+    return DoMatrix4x4ArrayInternal<IsColumnMajor, FALSE, TRUE>(Data.pNumeric, const_cast<float*>(pData), Offset, Count
 #ifdef _DEBUG 
         , pType, GetTotalUnpackedSize(), "ID3DX11EffectMatrixVariable::SetMatrixArray");
 #else
@@ -2733,10 +2732,10 @@ HRESULT TMatrix4x4Variable<IBaseInterface, IsColumnMajor>::GetMatrixArray(float 
 }
 
 template<typename IBaseInterface, BOOL IsColumnMajor>
-HRESULT TMatrix4x4Variable<IBaseInterface, IsColumnMajor>::SetMatrixTranspose(float *pData)
+HRESULT TMatrix4x4Variable<IBaseInterface, IsColumnMajor>::SetMatrixTranspose(CONST float *pData)
 {
     DirtyVariable();
-    return DoMatrix4x4ArrayInternal<IsColumnMajor, TRUE, TRUE>(Data.pNumeric, pData, 0, 1
+    return DoMatrix4x4ArrayInternal<IsColumnMajor, TRUE, TRUE>(Data.pNumeric, const_cast<float*>(pData), 0, 1
 #ifdef _DEBUG 
         , pType, GetTotalUnpackedSize(), "ID3DX11EffectMatrixVariable::SetMatrixTranspose");
 #else
@@ -2756,10 +2755,10 @@ HRESULT TMatrix4x4Variable<IBaseInterface, IsColumnMajor>::GetMatrixTranspose(fl
 }
 
 template<typename IBaseInterface, BOOL IsColumnMajor>
-HRESULT TMatrix4x4Variable<IBaseInterface, IsColumnMajor>::SetMatrixTransposeArray(float *pData, UINT  Offset, UINT  Count)
+HRESULT TMatrix4x4Variable<IBaseInterface, IsColumnMajor>::SetMatrixTransposeArray(CONST float *pData, UINT  Offset, UINT  Count)
 {
     DirtyVariable();
-    return DoMatrix4x4ArrayInternal<IsColumnMajor, TRUE, TRUE>(Data.pNumeric, pData, Offset, Count
+    return DoMatrix4x4ArrayInternal<IsColumnMajor, TRUE, TRUE>(Data.pNumeric, const_cast<float*>(pData), Offset, Count
 #ifdef _DEBUG 
         , pType, GetTotalUnpackedSize(), "ID3DX11EffectMatrixVariable::SetMatrixTransposeArray");
 #else

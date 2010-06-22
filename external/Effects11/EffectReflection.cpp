@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (C) 2009 Microsoft Corporation.  All Rights Reserved.
+//  Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //  File:       EffectReflection.cpp
 //  Content:    D3DX11 Effects public reflection APIs
@@ -364,7 +364,7 @@ LPCSTR SType::GetMemberSemantic(UINT Index)
     return pVariable->pSemantic;
 }
 
-HRESULT SType::GetDescHelper(D3DX11_EFFECT_TYPE_DESC *pDesc, BOOL IsSingleElement)
+HRESULT SType::GetDescHelper(D3DX11_EFFECT_TYPE_DESC *pDesc, BOOL IsSingleElement) const
 {
     HRESULT hr = S_OK;
     LPCSTR pFuncName = "ID3DX11EffectType::GetDesc";
@@ -665,7 +665,7 @@ ID3DX11EffectShaderVariable * SAnonymousShader::AsShader()
     return (ID3DX11EffectShaderVariable *) this;
 }
 
-HRESULT SAnonymousShader::SetRawValue(void *pData, UINT Offset, UINT Count) 
+HRESULT SAnonymousShader::SetRawValue(CONST void *pData, UINT Offset, UINT Count) 
 { 
     return ObjectSetRawValue(); 
 }
@@ -953,7 +953,7 @@ ID3DX11EffectVariable * SConstantBuffer::GetMemberByName(LPCSTR Name)
 
     if (IsEffectOptimized)
     {
-        DPF(0, "ID3DX11EffectVariable::GetMemberByIndex: Cannot get members; effect has been Optimize()'ed");
+        DPF(0, "ID3DX11EffectVariable::GetMemberByName: Cannot get members; effect has been Optimize()'ed");
         return &g_InvalidScalarVariable;
     }
 
@@ -974,7 +974,7 @@ ID3DX11EffectVariable * SConstantBuffer::GetMemberBySemantic(LPCSTR Semantic)
 
     if (IsEffectOptimized)
     {
-        DPF(0, "ID3DX11EffectVariable::GetMemberByIndex: Cannot get members; effect has been Optimize()'ed");
+        DPF(0, "ID3DX11EffectVariable::GetMemberBySemantic: Cannot get members; effect has been Optimize()'ed");
         return &g_InvalidScalarVariable;
     }
 
@@ -1085,7 +1085,7 @@ LPCSTR SConstantBuffer::GetMemberSemantic(UINT Index)
     return pVariables[Index].pSemantic;
 }
 
-HRESULT SConstantBuffer::SetRawValue(void *pData, UINT  Offset, UINT  Count)
+HRESULT SConstantBuffer::SetRawValue(CONST void *pData, UINT  Offset, UINT  Count)
 {
     HRESULT hr = S_OK;    
 
@@ -1148,7 +1148,7 @@ lExit:
     return hr;
 }
 
-D3DX11INLINE bool SConstantBuffer::ClonedSingle()
+bool SConstantBuffer::ClonedSingle() const
 {
     return IsSingle && ( pEffect->m_Flags & D3DX11_EFFECT_CLONE );
 }
@@ -1394,8 +1394,8 @@ HRESULT SPassBlock::GetShaderDescHelper(D3DX11_PASS_SHADER_DESC *pDesc)
 {
     HRESULT hr = S_OK;
     UINT  i;
-    LPCSTR pFuncName;
-    SShaderBlock *pShaderBlock;
+    LPCSTR pFuncName = NULL;
+    SShaderBlock *pShaderBlock = NULL;
 
     ApplyPassAssignments();
 
@@ -2079,6 +2079,12 @@ ID3DX11EffectTechnique * CEffect::GetTechniqueByName(LPCSTR Name)
     char* pDelimiter = strchr( NameCopy, '|' );
     if( pDelimiter == NULL )
     {
+        if ( m_pNullGroup == NULL )
+        {
+            DPF( 0, "The effect contains no default group." );
+            return &g_InvalidTechnique;
+        }
+
         return m_pNullGroup->GetTechniqueByName( Name );
     }
 

@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (C) 2009 Microsoft Corporation.  All Rights Reserved.
+//  Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //  File:       SOParser.h
 //  Content:    D3DX11 Effects Stream Out Decl Parser
@@ -81,7 +81,7 @@ public:
         return m_pError;
     }
 
-    UINT GetDeclCount()
+    UINT GetDeclCount() const
     {
         return m_vDecls.GetSize();
     }
@@ -218,7 +218,7 @@ lExit:
                 startComponent = (UINT)( p - pFullMask2 );
             else
             {
-                StringCchPrintfA( m_pError, MAX_ERROR_SIZE, "ID3D10Effect::ParseSODecl - invalid mask declaration '%s'", pSemantic );
+                StringCchPrintfA( m_pError, MAX_ERROR_SIZE, "ID3D11Effect::ParseSODecl - invalid mask declaration '%s'", pSemantic );
                 VH( E_FAIL );
             }
 
@@ -248,7 +248,7 @@ lExit:
         if( pColon == *ppSemantic )
         {
             StringCchCopyA( m_pError, MAX_ERROR_SIZE,
-                           "ID3D10Effect::ParseSODecl - Invalid output slot" );
+                           "ID3D11Effect::ParseSODecl - Invalid output slot" );
             VH( E_FAIL );
         }
 
@@ -257,7 +257,7 @@ lExit:
         if( outputSlot < 0 || outputSlot > 255 )
         {
             StringCchCopyA( m_pError, MAX_ERROR_SIZE,
-                           "ID3D10Effect::ParseSODecl - Invalid output slot" );
+                           "ID3D11Effect::ParseSODecl - Invalid output slot" );
             VH( E_FAIL );
         }
         m_newEntry.OutputSlot = (BYTE)outputSlot;
@@ -266,7 +266,7 @@ lExit:
         {
             if( !isdigit( (unsigned char)**ppSemantic ) )
             {
-                StringCchPrintfA( m_pError, MAX_ERROR_SIZE, "ID3D10Effect::ParseSODecl - Non-digit '%c' in output slot", **ppSemantic );
+                StringCchPrintfA( m_pError, MAX_ERROR_SIZE, "ID3D11Effect::ParseSODecl - Non-digit '%c' in output slot", **ppSemantic );
                 VH( E_FAIL );
             }
             (*ppSemantic)++;

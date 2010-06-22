@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (C) 2009 Microsoft Corporation.  All Rights Reserved.
+//  Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //  File:       EffectAPI.cpp
 //  Content:    D3DX11 Effect DLL entry points
@@ -11,7 +11,7 @@
 
 using namespace D3DX11Effects;
 
-HRESULT WINAPI D3DX11CreateEffectFromMemory(void *pData, SIZE_T DataLength, UINT FXFlags, ID3D11Device *pDevice, ID3DX11Effect **ppEffect)
+HRESULT WINAPI D3DX11CreateEffectFromMemory(CONST void *pData, SIZE_T DataLength, UINT FXFlags, ID3D11Device *pDevice, ID3DX11Effect **ppEffect)
 {
     HRESULT hr = S_OK;
 

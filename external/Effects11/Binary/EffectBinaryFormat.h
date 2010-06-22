@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (C) 2009 Microsoft Corporation.  All Rights Reserved.
+//  Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //  File:       Effect.h
 //  Content:    D3DX11 Effects Binary Format
@@ -402,7 +402,7 @@ struct SBinaryHeader
     UINT        cTotalShaders;
     UINT        cInlineShaders; // of the aforementioned shaders, the number that are defined inline within pass blocks
 
-    D3DX11INLINE bool RequiresPool()
+    D3DX11INLINE bool RequiresPool() const
     {
         return (Pool.cCBs != 0) ||
                (Pool.cNumericVariables != 0) ||
