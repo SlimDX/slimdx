@@ -52,6 +52,22 @@
           </tableHeader>
 
           <row>
+            <entry>June 2010</entry>
+            <entry>43</entry>
+            <entry>2.7</entry>
+            <entry>1.7</entry>
+            <entry>3.7</entry>
+            <entry>
+              <para>d3dx9_43.dll</para>
+              <para>d3dx10_43.dll</para>
+              <para>d3dx11_43.dll</para>
+              <para>d3dcsx_43.dll</para>
+              <para>d3dcompiler_43.dll</para>
+              <para>x3daudio1_7.dll</para>
+            </entry>
+          </row>
+
+          <row>
             <entry>February 2010</entry>
             <entry>42</entry>
             <entry>2.6</entry>

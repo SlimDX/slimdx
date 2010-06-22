@@ -32,24 +32,20 @@
           <listItem><para>Direct3D10</para></listItem>
           <listItem><para>Direct3D10.1</para></listItem>
           <listItem><para>Direct3D11</para></listItem>
+          <listItem><para>D3DCompiler</para></listItem>
           <listItem><para>Direct2D</para></listItem>
           <listItem><para>DirectWrite</para></listItem>
           <listItem><para>DirectInput</para></listItem>
           <listItem><para>DirectSound</para></listItem>
           <listItem><para>DXGI</para></listItem>
+          <listItem><para>DXGI 1.1</para></listItem>
           <listItem><para>Windows Multimedia</para></listItem>
           <listItem><para>Raw Input</para></listItem>
           <listItem><para>X3DAudio</para></listItem>
           <listItem><para>XAPO</para></listItem>
+          <listItem><para>XACT3</para></listItem>
           <listItem><para>XAudio2</para></listItem>
           <listItem><para>XInput</para></listItem>
-        </list>
-        <para>
-          In addition, SlimDX plans to fully support these additional APIs in the future.
-        </para>
-        <list class="bullet">
-          <listItem><para>XACT3</para></listItem>
-          <listItem><para>XAPOFX</para></listItem>
         </list>
       </content>
     </section>
