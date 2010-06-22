@@ -47,6 +47,8 @@ namespace SlimDX
 			static Result FromMemory_Internal( Surface^ surface, const void* memory, Filter filter, int colorKey, Format sourceFormat, int sourcePitch, const RECT* sourceRectangle, const RECT* destinationRectangle, array<PaletteEntry>^ sourcePalette, array<PaletteEntry>^ destinationPalette );
 			static Result FromFileInMemory_Internal( Surface^ surface, const void* memory, UINT size, Filter filter, int colorKey, const RECT* sourceRectangle, const RECT* destinationRectangle, array<PaletteEntry>^ palette, ImageInformation* imageInformation );
 
+			int ComputeLockedSize(const D3DLOCKED_RECT& lockedRect);
+
 		public:
 			virtual ~Surface() { }
 
