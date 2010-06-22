@@ -43,6 +43,19 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	int Surface::ComputeLockedSize(const D3DLOCKED_RECT& lockedRect)
+	{
+		D3DSURFACE_DESC desc;
+		InternalPointer->GetDesc(&desc);
+
+		int height = desc.Height;
+		//compute size differently for DXT surfaces
+		if(desc.Format >= D3DFMT_DXT1 && desc.Format <= D3DFMT_DXT5 && desc.Height > 0)
+			height = (desc.Height + 3) / 4;
+
+		return lockedRect.Pitch * height;
+	}
+
 	Surface^ Surface::CreateRenderTarget( SlimDX::Direct3D9::Device^ device, int width, int height, Format format,
 		MultisampleType multiSampleType, int multiSampleQuality, bool lockable )
 	{
@@ -723,8 +736,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 		
-		int lockedSize = lockedRect.Pitch * Description.Height;
-		
+		int lockedSize = ComputeLockedSize(lockedRect);
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		DataRectangle^ outRect = gcnew DataRectangle( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );
 		return outRect;
