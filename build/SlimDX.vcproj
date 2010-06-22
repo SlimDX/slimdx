@@ -193,8 +193,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(ProjectDir)x86\$(ConfigurationName)"
-			IntermediateDirectory="$(ProjectDir)x86\$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)x86\$(ConfigurationName)"
+			IntermediateDirectory="$(SolutionDir)x86\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			ManagedExtensions="1"
