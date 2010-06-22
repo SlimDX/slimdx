@@ -33,7 +33,7 @@
         xmlns:i="clr-namespace:System.Windows.Interop;assembly=PresentationCore"
         xmlns:ii="clr-namespace:SlimDX.Wpf;assembly=SlimDX.Wpf"
         Title="WpfWindow" 
-        Height="400" Width="400" SizeChanged="Window_SizeChanged">
+        Height="400" Width="400">
     <Grid>
         <ii:SlimDXControl x:Name="m_slimDXControl" MouseDown="MouseDownHandler"/>
         <CheckBox Height="16" HorizontalAlignment="Left" Margin="22,23,0,0" Name="checkBox1" VerticalAlignment="Top" Width="120">CheckBox</CheckBox>

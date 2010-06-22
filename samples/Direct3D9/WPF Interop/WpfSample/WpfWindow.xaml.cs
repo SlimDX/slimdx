@@ -95,17 +95,5 @@ namespace WpfSample
 				m_dataModel.Color = System.Drawing.Color.Red;
 			}
 		}
-
-		private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-		{
-			// BUG: it would be nice if we didn't have to do this -- can't we make the child control
-			// (m_slimDXControl) just automatically be as large as me (its parent)?
-			if(e.HeightChanged || e.WidthChanged)
-			{
-				m_slimDXControl.Width = e.NewSize.Width;
-				m_slimDXControl.Height = e.NewSize.Height;
-			}
-			return;
-		}
 	}
 }
