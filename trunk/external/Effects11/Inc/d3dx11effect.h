@@ -1,7 +1,6 @@
-
 //////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
+//  Copyright (c) Microsoft Corporation.  All rights reserved.
 //
 //  File:       D3DX11Effect.h
 //  Content:    D3DX11 Effect Types & APIs Header
@@ -326,7 +325,7 @@ DECLARE_INTERFACE(ID3DX11EffectVariable)
     STDMETHOD_(ID3DX11EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3DX11EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ CONST void *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
 };
 
@@ -378,25 +377,25 @@ DECLARE_INTERFACE_(ID3DX11EffectScalarVariable, ID3DX11EffectVariable)
     STDMETHOD_(ID3DX11EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3DX11EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT ByteOffset, UINT ByteCount) PURE;
+    STDMETHOD(SetRawValue)(THIS_ CONST void *pData, UINT ByteOffset, UINT ByteCount) PURE;
     STDMETHOD(GetRawValue)(THIS_ void *pData, UINT ByteOffset, UINT ByteCount) PURE;
     
-    STDMETHOD(SetFloat)(THIS_ float Value) PURE;
+    STDMETHOD(SetFloat)(THIS_ CONST float Value) PURE;
     STDMETHOD(GetFloat)(THIS_ float *pValue) PURE;    
     
-    STDMETHOD(SetFloatArray)(THIS_ float *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetFloatArray)(THIS_ CONST float *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetFloatArray)(THIS_ float *pData, UINT Offset, UINT Count) PURE;
     
-    STDMETHOD(SetInt)(THIS_ int Value) PURE;
+    STDMETHOD(SetInt)(THIS_ CONST int Value) PURE;
     STDMETHOD(GetInt)(THIS_ int *pValue) PURE;
     
-    STDMETHOD(SetIntArray)(THIS_ int *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetIntArray)(THIS_ CONST int *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetIntArray)(THIS_ int *pData, UINT Offset, UINT Count) PURE;
     
-    STDMETHOD(SetBool)(THIS_ BOOL Value) PURE;
+    STDMETHOD(SetBool)(THIS_ CONST BOOL Value) PURE;
     STDMETHOD(GetBool)(THIS_ BOOL *pValue) PURE;
     
-    STDMETHOD(SetBoolArray)(THIS_ BOOL *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetBoolArray)(THIS_ CONST BOOL *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetBoolArray)(THIS_ BOOL *pData, UINT Offset, UINT Count) PURE;
 };
 
@@ -448,20 +447,20 @@ DECLARE_INTERFACE_(ID3DX11EffectVectorVariable, ID3DX11EffectVariable)
     STDMETHOD_(ID3DX11EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3DX11EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT ByteOffset, UINT ByteCount) PURE;
+    STDMETHOD(SetRawValue)(THIS_ CONST void *pData, UINT ByteOffset, UINT ByteCount) PURE;
     STDMETHOD(GetRawValue)(THIS_ void *pData, UINT ByteOffset, UINT ByteCount) PURE;
     
-    STDMETHOD(SetBoolVector) (THIS_ BOOL *pData) PURE;
-    STDMETHOD(SetIntVector)  (THIS_ int *pData) PURE;
-    STDMETHOD(SetFloatVector)(THIS_ float *pData) PURE;
+    STDMETHOD(SetBoolVector) (THIS_ CONST BOOL *pData) PURE;
+    STDMETHOD(SetIntVector)  (THIS_ CONST int *pData) PURE;
+    STDMETHOD(SetFloatVector)(THIS_ CONST float *pData) PURE;
 
     STDMETHOD(GetBoolVector) (THIS_ BOOL *pData) PURE;
     STDMETHOD(GetIntVector)  (THIS_ int *pData) PURE;
     STDMETHOD(GetFloatVector)(THIS_ float *pData) PURE;
 
-    STDMETHOD(SetBoolVectorArray) (THIS_ BOOL *pData, UINT Offset, UINT Count) PURE;
-    STDMETHOD(SetIntVectorArray)  (THIS_ int *pData, UINT Offset, UINT Count) PURE;
-    STDMETHOD(SetFloatVectorArray)(THIS_ float *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetBoolVectorArray) (THIS_ CONST BOOL *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetIntVectorArray)  (THIS_ CONST int *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetFloatVectorArray)(THIS_ CONST float *pData, UINT Offset, UINT Count) PURE;
 
     STDMETHOD(GetBoolVectorArray) (THIS_ BOOL *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetIntVectorArray)  (THIS_ int *pData, UINT Offset, UINT Count) PURE;
@@ -516,19 +515,19 @@ DECLARE_INTERFACE_(ID3DX11EffectMatrixVariable, ID3DX11EffectVariable)
     STDMETHOD_(ID3DX11EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3DX11EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT ByteOffset, UINT ByteCount) PURE;
+    STDMETHOD(SetRawValue)(THIS_ CONST void *pData, UINT ByteOffset, UINT ByteCount) PURE;
     STDMETHOD(GetRawValue)(THIS_ void *pData, UINT ByteOffset, UINT ByteCount) PURE;
     
-    STDMETHOD(SetMatrix)(THIS_ float *pData) PURE;
+    STDMETHOD(SetMatrix)(THIS_ CONST float *pData) PURE;
     STDMETHOD(GetMatrix)(THIS_ float *pData) PURE;
     
-    STDMETHOD(SetMatrixArray)(THIS_ float *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetMatrixArray)(THIS_ CONST float *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetMatrixArray)(THIS_ float *pData, UINT Offset, UINT Count) PURE;
     
-    STDMETHOD(SetMatrixTranspose)(THIS_ float *pData) PURE;
+    STDMETHOD(SetMatrixTranspose)(THIS_ CONST float *pData) PURE;
     STDMETHOD(GetMatrixTranspose)(THIS_ float *pData) PURE;
     
-    STDMETHOD(SetMatrixTransposeArray)(THIS_ float *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetMatrixTransposeArray)(THIS_ CONST float *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetMatrixTransposeArray)(THIS_ float *pData, UINT Offset, UINT Count) PURE;
 };
 
@@ -580,7 +579,7 @@ DECLARE_INTERFACE_(ID3DX11EffectStringVariable, ID3DX11EffectVariable)
     STDMETHOD_(ID3DX11EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3DX11EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ CONST void *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
     
     STDMETHOD(GetString)(THIS_ LPCSTR *ppString) PURE;
@@ -634,7 +633,7 @@ DECLARE_INTERFACE_(ID3DX11EffectClassInstanceVariable, ID3DX11EffectVariable)
     STDMETHOD_(ID3DX11EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3DX11EffectSamplerVariable*, AsSampler)(THIS) PURE;
 
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ CONST void *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
 
     STDMETHOD(GetClassInstance)(ID3D11ClassInstance** ppClassInstance) PURE;
@@ -687,7 +686,7 @@ DECLARE_INTERFACE_(ID3DX11EffectInterfaceVariable, ID3DX11EffectVariable)
     STDMETHOD_(ID3DX11EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3DX11EffectSamplerVariable*, AsSampler)(THIS) PURE;
 
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ CONST void *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
 
     STDMETHOD(SetClassInstance)(ID3DX11EffectClassInstanceVariable *pEffectClassInstance) PURE;
@@ -742,7 +741,7 @@ DECLARE_INTERFACE_(ID3DX11EffectShaderResourceVariable, ID3DX11EffectVariable)
     STDMETHOD_(ID3DX11EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3DX11EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ CONST void *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
     
     STDMETHOD(SetResource)(THIS_ ID3D11ShaderResourceView *pResource) PURE;
@@ -800,7 +799,7 @@ DECLARE_INTERFACE_(ID3DX11EffectUnorderedAccessViewVariable, ID3DX11EffectVariab
     STDMETHOD_(ID3DX11EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3DX11EffectSamplerVariable*, AsSampler)(THIS) PURE;
 
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ CONST void *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
 
     STDMETHOD(SetUnorderedAccessView)(THIS_ ID3D11UnorderedAccessView *pResource) PURE;
@@ -858,7 +857,7 @@ DECLARE_INTERFACE_(ID3DX11EffectRenderTargetViewVariable, ID3DX11EffectVariable)
     STDMETHOD_(ID3DX11EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3DX11EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ CONST void *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
     
     STDMETHOD(SetRenderTarget)(THIS_ ID3D11RenderTargetView *pResource) PURE;
@@ -916,7 +915,7 @@ DECLARE_INTERFACE_(ID3DX11EffectDepthStencilViewVariable, ID3DX11EffectVariable)
     STDMETHOD_(ID3DX11EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3DX11EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ CONST void *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
     
     STDMETHOD(SetDepthStencil)(THIS_ ID3D11DepthStencilView *pResource) PURE;
@@ -973,7 +972,7 @@ DECLARE_INTERFACE_(ID3DX11EffectConstantBuffer, ID3DX11EffectVariable)
     STDMETHOD_(ID3DX11EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3DX11EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ CONST void *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
     
     STDMETHOD(SetConstantBuffer)(THIS_ ID3D11Buffer *pConstantBuffer) PURE;
@@ -1060,7 +1059,7 @@ DECLARE_INTERFACE_(ID3DX11EffectShaderVariable, ID3DX11EffectVariable)
     STDMETHOD_(ID3DX11EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3DX11EffectSamplerVariable*, AsSampler)(THIS) PURE;
         
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ CONST void *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
     
     STDMETHOD(GetShaderDesc)(THIS_ UINT ShaderIndex, D3DX11_EFFECT_SHADER_DESC *pDesc) PURE;
@@ -1124,7 +1123,7 @@ DECLARE_INTERFACE_(ID3DX11EffectBlendVariable, ID3DX11EffectVariable)
     STDMETHOD_(ID3DX11EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3DX11EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ CONST void *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
     
     STDMETHOD(GetBlendState)(THIS_ UINT Index, ID3D11BlendState **ppBlendState) PURE;
@@ -1180,7 +1179,7 @@ DECLARE_INTERFACE_(ID3DX11EffectDepthStencilVariable, ID3DX11EffectVariable)
     STDMETHOD_(ID3DX11EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3DX11EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ CONST void *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
     
     STDMETHOD(GetDepthStencilState)(THIS_ UINT Index, ID3D11DepthStencilState **ppDepthStencilState) PURE;
@@ -1236,7 +1235,7 @@ DECLARE_INTERFACE_(ID3DX11EffectRasterizerVariable, ID3DX11EffectVariable)
     STDMETHOD_(ID3DX11EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3DX11EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ CONST void *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
     
     STDMETHOD(GetRasterizerState)(THIS_ UINT Index, ID3D11RasterizerState **ppRasterizerState) PURE;
@@ -1292,7 +1291,7 @@ DECLARE_INTERFACE_(ID3DX11EffectSamplerVariable, ID3DX11EffectVariable)
     STDMETHOD_(ID3DX11EffectRasterizerVariable*, AsRasterizer)(THIS) PURE;
     STDMETHOD_(ID3DX11EffectSamplerVariable*, AsSampler)(THIS) PURE;
     
-    STDMETHOD(SetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
+    STDMETHOD(SetRawValue)(THIS_ CONST void *pData, UINT Offset, UINT Count) PURE;
     STDMETHOD(GetRawValue)(THIS_ void *pData, UINT Offset, UINT Count) PURE;
     
     STDMETHOD(GetSampler)(THIS_ UINT Index, ID3D11SamplerState **ppSampler) PURE;
@@ -1557,7 +1556,7 @@ extern "C" {
 //
 //----------------------------------------------------------------------------
 
-HRESULT WINAPI D3DX11CreateEffectFromMemory(void *pData, SIZE_T DataLength, UINT FXFlags, ID3D11Device *pDevice, ID3DX11Effect **ppEffect);
+HRESULT WINAPI D3DX11CreateEffectFromMemory(CONST void *pData, SIZE_T DataLength, UINT FXFlags, ID3D11Device *pDevice, ID3DX11Effect **ppEffect);
 
 #ifdef __cplusplus
 }

@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (C) 2009 Microsoft Corporation.  All Rights Reserved.
+//  Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //  File:       Effect.h
 //  Content:    D3DX11 Effects Header for ID3DX11Effect Implementation
@@ -195,56 +195,56 @@ struct SType : public ID3DX11EffectType
         ZeroMemory( &StructType, sizeof(StructType) );
     }
 
-    BOOL IsEqual(SType *pOtherType);
+    BOOL IsEqual(SType *pOtherType) const;
     
-    BOOL IsObjectType(EObjectType ObjType)
+    BOOL IsObjectType(EObjectType ObjType) const
     {
         return IsObjectTypeHelper(VarType, ObjectType, ObjType);
     }
-    BOOL IsShader()
+    BOOL IsShader() const
     {
         return IsShaderHelper(VarType, ObjectType);
     }
-    BOOL BelongsInConstantBuffer()
+    BOOL BelongsInConstantBuffer() const
     {
         return (VarType == EVT_Numeric) || (VarType == EVT_Struct);
     }
-    BOOL IsStateBlockObject()
+    BOOL IsStateBlockObject() const
     {
         return IsStateBlockObjectHelper(VarType, ObjectType);
     }
-    BOOL IsClassInstance()
+    BOOL IsClassInstance() const
     {
         return (VarType == EVT_Struct) && StructType.ImplementsInterface;
     }
-    BOOL IsInterface()
+    BOOL IsInterface() const
     {
         return IsInterfaceHelper(VarType, ObjectType);
     }
-    BOOL IsShaderResource()
+    BOOL IsShaderResource() const
     {
         return IsShaderResourceHelper(VarType, ObjectType);
     }
-    BOOL IsUnorderedAccessView()
+    BOOL IsUnorderedAccessView() const
     {
         return IsUnorderedAccessViewHelper(VarType, ObjectType);
     }
-    BOOL IsSampler()
+    BOOL IsSampler() const
     {
         return IsSamplerHelper(VarType, ObjectType);
     }
-    BOOL IsRenderTargetView()
+    BOOL IsRenderTargetView() const
     {
         return IsRenderTargetViewHelper(VarType, ObjectType);
     }
-    BOOL IsDepthStencilView()
+    BOOL IsDepthStencilView() const
     {
         return IsDepthStencilViewHelper(VarType, ObjectType);
     }
 
-    UINT GetTotalUnpackedSize(BOOL IsSingleElement);
-    UINT GetTotalPackedSize(BOOL IsSingleElement);
-    HRESULT GetDescHelper(D3DX11_EFFECT_TYPE_DESC *pDesc, BOOL IsSingleElement);
+    UINT GetTotalUnpackedSize(BOOL IsSingleElement) const; 
+    UINT GetTotalPackedSize(BOOL IsSingleElement) const; 
+    HRESULT GetDescHelper(D3DX11_EFFECT_TYPE_DESC *pDesc, BOOL IsSingleElement) const;
 
     STDMETHOD_(BOOL, IsValid)() { return TRUE; }
     STDMETHOD(GetDesc)(D3DX11_EFFECT_TYPE_DESC *pDesc) { return GetDescHelper(pDesc, FALSE); }
@@ -288,7 +288,7 @@ struct SBaseBlock
 
     SBaseBlock();
 
-    D3DX11INLINE BOOL ApplyAssignments(CEffect *pEffect);
+    BOOL ApplyAssignments(CEffect *pEffect);
 
     D3DX11INLINE SSamplerBlock *AsSampler() const
     {
@@ -393,7 +393,7 @@ struct SPassBlock : SBaseBlock, public ID3DX11EffectPass
         SDepthStencilBlock      *pDepthStencilBlock;
         SRasterizerBlock        *pRasterizerBlock;
         UINT                    RenderTargetViewCount;
-        SRenderTargetView       *pRenderTargetViews[D3D10_SIMULTANEOUS_RENDER_TARGET_COUNT];
+        SRenderTargetView       *pRenderTargetViews[D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT];
         SDepthStencilView       *pDepthStencilView;
         SShaderBlock            *pVertexShaderBlock;
         SShaderBlock            *pPixelShaderBlock;
@@ -415,8 +415,8 @@ struct SPassBlock : SBaseBlock, public ID3DX11EffectPass
 
     SPassBlock();
 
-    D3DX11INLINE void ApplyPassAssignments();
-    D3DX11INLINE BOOL CheckShaderDependencies( SShaderBlock* pBlock );
+    void ApplyPassAssignments();
+    BOOL CheckShaderDependencies( SShaderBlock* pBlock );
     BOOL CheckDependencies();
 
     template<EObjectType EShaderType>
@@ -582,12 +582,12 @@ struct SShaderBlock
     {
         BYTE                        *pBytecode;
         UINT                        BytecodeLength;
-        char                        *pStreamOutDecls[4];
-        UINT                        RasterizedStream;
+        char                        *pStreamOutDecls[4];        // set with ConstructGSWithSO
+        UINT                        RasterizedStream;           // set with ConstructGSWithSO
         BOOL                        IsNullGS;
         ID3D11ShaderReflection      *pReflection;
-        UINT                        InterfaceParameterCount;
-        SInterfaceParameter         *pInterfaceParameters;
+        UINT                        InterfaceParameterCount;    // set with BindInterfaces (used for function interface parameters)
+        SInterfaceParameter         *pInterfaceParameters;      // set with BindInterfaces (used for function interface parameters)
     };
 
     BOOL                            IsValid;
@@ -616,7 +616,7 @@ struct SShaderBlock
     UINT                            TBufferDepCount;
     SConstantBuffer                 **ppTbufDeps;
 
-    ID3D10Blob                      *pInputSignatureBlob;   // The input signature is separated from the bytecode because it 
+    ID3DBlob                        *pInputSignatureBlob;   // The input signature is separated from the bytecode because it 
                                                             // is always available, even after Optimize() has been called.
 
     SShaderBlock(SD3DShaderVTable *pVirtualTable = NULL);
@@ -723,7 +723,7 @@ struct SAnonymousShader : public TUncastableVariable<ID3DX11EffectShaderVariable
     // other casts are handled by TUncastableVariable
     STDMETHOD_(ID3DX11EffectShaderVariable*, AsShader)();
 
-    STDMETHOD(SetRawValue)(void *pData, UINT Offset, UINT Count);
+    STDMETHOD(SetRawValue)(CONST void *pData, UINT Offset, UINT Count);
     STDMETHOD(GetRawValue)(__out_bcount(Count) void *pData, UINT Offset, UINT Count);
 
     STDMETHOD(GetShaderDesc)(UINT ShaderIndex, D3DX11_EFFECT_SHADER_DESC *pDesc);
@@ -811,7 +811,7 @@ struct SConstantBuffer : public TUncastableVariable<ID3DX11EffectConstantBuffer>
         pEffect = NULL;
     }
 
-    D3DX11INLINE bool ClonedSingle();
+    bool ClonedSingle() const;
 
     // ID3DX11EffectConstantBuffer interface
     STDMETHOD_(BOOL, IsValid)();
@@ -832,7 +832,7 @@ struct SConstantBuffer : public TUncastableVariable<ID3DX11EffectConstantBuffer>
     // other casts are handled by TUncastableVariable
     STDMETHOD_(ID3DX11EffectConstantBuffer*, AsConstantBuffer)();
 
-    STDMETHOD(SetRawValue)(void *pData, UINT Offset, UINT Count);
+    STDMETHOD(SetRawValue)(CONST void *pData, UINT Offset, UINT Count);
     STDMETHOD(GetRawValue)(__out_bcount(Count) void *pData, UINT Offset, UINT Count);
 
     STDMETHOD(SetConstantBuffer)(ID3D11Buffer *pConstantBuffer);
@@ -987,7 +987,7 @@ public:
 
     // AddData and AddString append existing data to the buffer - they change m_dwSize. Users are 
     //   not expected to modify the data pointed to by the return pointer
-    HRESULT AddString(const char *pString, __out_ecount_full(1) char **ppPointer);
+    HRESULT AddString(const char *pString, __deref_out_z char **ppPointer);
     HRESULT AddData(const void *pData, UINT  dwSize, void **ppPointer);
 
     // Allocate behaves like a standard new - it will allocate memory, move m_dwSize. The caller is 
@@ -996,11 +996,11 @@ public:
 
     // Move data from the general heap and optional free memory
     HRESULT MoveData(void **ppData, UINT size);
-    HRESULT MoveString(__inout_ecount(1) char **ppStringData);
+    HRESULT MoveString(__deref_inout_z char **ppStringData);
     HRESULT MoveInterfaceParameters(UINT InterfaceCount, __in_ecount(1) SShaderBlock::SInterfaceParameter **ppInterfaces);
     HRESULT MoveEmptyDataBlock(void **ppData, UINT size);
 
-    BOOL IsInHeap(void *pData)
+    BOOL IsInHeap(void *pData) const
     {
         return (pData >= m_pData && pData < (m_pData + m_dwBufferSize));
     }
@@ -1159,9 +1159,9 @@ protected:
     HRESULT RecreateCBs();
     HRESULT FixupMemberInterface( SMember* pMember, CEffect* pEffectSource, CPointerMappingTable& mappingTableStrings );
 
-    D3DX11INLINE void ValidateIndex(UINT Elements);
+    void ValidateIndex(UINT Elements);
 
-    D3DX11INLINE void IncrementTimer();    
+    void IncrementTimer();    
     void HandleLocalTimerRollover();
 
     friend struct SConstantBuffer;
@@ -1172,15 +1172,15 @@ public:
     void ReleaseShaderRefection();
 
     // Initialize must be called after the effect is created
-    HRESULT LoadEffect(void *pEffectBuffer, UINT cbEffectBuffer);
+    HRESULT LoadEffect(CONST void *pEffectBuffer, UINT cbEffectBuffer);
 
     // Once the effect is fully loaded, call BindToDevice to attach it to a device
     HRESULT BindToDevice(ID3D11Device *pDevice);
 
-    D3DX11INLINE Timer GetCurrentTime() { return m_LocalTimer; }
+    Timer GetCurrentTime() const { return m_LocalTimer; }
     
-    BOOL IsReflectionData(void *pData) { return m_pReflection->m_Heap.IsInHeap(pData); }
-    BOOL IsRuntimeData(void *pData) { return m_Heap.IsInHeap(pData); }
+    BOOL IsReflectionData(void *pData) const { return m_pReflection->m_Heap.IsInHeap(pData); }
+    BOOL IsRuntimeData(void *pData) const { return m_Heap.IsInHeap(pData); }
 
     //////////////////////////////////////////////////////////////////////////    
     // Public interface

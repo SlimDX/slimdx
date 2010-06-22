@@ -27,7 +27,7 @@
 #if D3DX_SDK_VERSION != SLIMDX_D3DX_VERSION
 #pragma message("Expected SDK version is " TO_STRING(SLIMDX_D3DX_VERSION) " (" SLIMDX_VERSION_NAME ").")
 #pragma message("Found SDK version " TO_STRING(D3DX_SDK_VERSION) ".")
-#error You are not compiling against the correct DirectX SDK. Change the linker settings to delay load the correct DLLs and update BuildConfig.h.
+#error You are not compiling against the correct DirectX SDK. Change the linker settings to delay load the correct DLLs and update VersionConfig.h.
 #endif
 
 #include "../ComObject.h"

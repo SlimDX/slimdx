@@ -125,7 +125,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;d3d9.lib;d3dx9.lib;dxgi.lib;d3d10.lib;d3dx10.lib;d3d10_1.lib;dinput8.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;xapobase.lib;winmm.lib;dsound.lib;d3dcompiler.lib;d3d11.lib;d3dx11.lib;d2d1.lib;dwrite.lib;d3dcsx.lib;D3DX11Effects.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;d3d9.lib;d3dx9.lib;dxgi.lib;d3d10.lib;d3dx10.lib;d3d10_1.lib;dinput8.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;xapobase.lib;winmm.lib;dsound.lib;d3dcompiler.lib;d3d11.lib;d3dx11.lib;d2d1.lib;dwrite.lib;d3dcsx.lib;Effects11.lib;advapi32.lib</AdditionalDependencies>
       <Version>0.0.0.0</Version>
       <AdditionalLibraryDirectories>$(OutDir);$(DXSDK_DIR)Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DelayLoadDLLs>d3d9.dll;d3dx9_43.dll;d3dx10_43.dll;d3dx11_43.dll;d3dcompiler_43.dll;d3dcsx_43.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
@@ -161,7 +161,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;d3d9.lib;d3dx9.lib;dxgi.lib;d3d10.lib;d3dx10.lib;d3d10_1.lib;dinput8.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;xapobase.lib;winmm.lib;dsound.lib;d3dcompiler.lib;d3d11.lib;d3dx11.lib;d2d1.lib;dwrite.lib;d3dcsx.lib;D3DX11Effects.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;d3d9.lib;d3dx9.lib;dxgi.lib;d3d10.lib;d3dx10.lib;d3d10_1.lib;dinput8.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;xapobase.lib;winmm.lib;dsound.lib;d3dcompiler.lib;d3d11.lib;d3dx11.lib;d2d1.lib;dwrite.lib;d3dcsx.lib;Effects11.lib;advapi32.lib</AdditionalDependencies>
       <Version>0.0.0.0</Version>
       <AdditionalLibraryDirectories>$(OutDir);$(DXSDK_DIR)Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DelayLoadDLLs>d3d9.dll;d3dx9_43.dll;d3dx10_43.dll;d3dx11_43.dll;d3dcompiler_43.dll;d3dcsx_43.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
@@ -198,7 +198,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;d3d9.lib;d3dx9.lib;dxgi.lib;d3d10.lib;d3dx10.lib;d3d10_1.lib;dinput8.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;xapobase.lib;winmm.lib;dsound.lib;d3dcompiler.lib;d3d11.lib;d3dx11.lib;d2d1.lib;dwrite.lib;d3dcsx.lib;D3DX11Effects.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;d3d9.lib;d3dx9.lib;dxgi.lib;d3d10.lib;d3dx10.lib;d3d10_1.lib;dinput8.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;xapobase.lib;winmm.lib;dsound.lib;d3dcompiler.lib;d3d11.lib;d3dx11.lib;d2d1.lib;dwrite.lib;d3dcsx.lib;Effects11.lib;advapi32.lib</AdditionalDependencies>
       <Version>0.0.0.0</Version>
       <AdditionalLibraryDirectories>$(OutDir);$(DXSDK_DIR)Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DelayLoadDLLs>d3d9.dll;d3dx9_43.dll;d3dx10_43.dll;d3dx11_43.dll;d3dcompiler_43.dll;d3dcsx_43.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
@@ -232,7 +232,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;d3d9.lib;d3dx9.lib;dxgi.lib;d3d10.lib;d3dx10.lib;d3d10_1.lib;dinput8.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;xapobase.lib;winmm.lib;dsound.lib;d3dcompiler.lib;d3d11.lib;d3dx11.lib;d2d1.lib;dwrite.lib;d3dcsx.lib;D3DX11Effects.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;d3d9.lib;d3dx9.lib;dxgi.lib;d3d10.lib;d3dx10.lib;d3d10_1.lib;dinput8.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;xapobase.lib;winmm.lib;dsound.lib;d3dcompiler.lib;d3d11.lib;d3dx11.lib;d2d1.lib;dwrite.lib;d3dcsx.lib;Effects11.lib;advapi32.lib</AdditionalDependencies>
       <Version>0.0.0.0</Version>
       <AdditionalLibraryDirectories>$(OutDir);$(DXSDK_DIR)Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DelayLoadDLLs>d3d9.dll;d3dx9_43.dll;d3dx10_43.dll;d3dx11_43.dll;d3dcompiler_43.dll;d3dcsx_43.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
@@ -262,7 +262,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;d3d9.lib;d3dx9.lib;dxgi.lib;d3d10.lib;d3dx10.lib;d3d10_1.lib;dinput8.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;xapobase.lib;winmm.lib;dsound.lib;d3dcompiler.lib;d3d11.lib;d3dx11.lib;d2d1.lib;dwrite.lib;d3dcsx.lib;D3DX11Effects.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;d3d9.lib;d3dx9.lib;dxgi.lib;d3d10.lib;d3dx10.lib;d3d10_1.lib;dinput8.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;xapobase.lib;winmm.lib;dsound.lib;d3dcompiler.lib;d3d11.lib;d3dx11.lib;d2d1.lib;dwrite.lib;d3dcsx.lib;Effects11.lib;advapi32.lib</AdditionalDependencies>
       <Version>2.0.9.42</Version>
       <AdditionalLibraryDirectories>$(OutDir);$(DXSDK_DIR)Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DelayLoadDLLs>d3d9.dll;d3dx9_43.dll;d3dx10_43.dll;d3dx11_43.dll;d3dcompiler_43.dll;d3dcsx_43.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
@@ -301,7 +301,7 @@ sn -R $(TargetPath) D:\slimdxKey.snk
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;d3d9.lib;d3dx9.lib;dxgi.lib;d3d10.lib;d3dx10.lib;d3d10_1.lib;dinput8.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;xapobase.lib;winmm.lib;dsound.lib;d3dcompiler.lib;d3d11.lib;d3dx11.lib;d2d1.lib;dwrite.lib;d3dcsx.lib;D3DX11Effects.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;d3d9.lib;d3dx9.lib;dxgi.lib;d3d10.lib;d3dx10.lib;d3d10_1.lib;dinput8.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;xapobase.lib;winmm.lib;dsound.lib;d3dcompiler.lib;d3d11.lib;d3dx11.lib;d2d1.lib;dwrite.lib;d3dcsx.lib;Effects11.lib;advapi32.lib</AdditionalDependencies>
       <Version>2.0.9.42</Version>
       <AdditionalLibraryDirectories>$(OutDir);$(DXSDK_DIR)Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DelayLoadDLLs>d3d9.dll;d3dx9_43.dll;d3dx10_43.dll;d3dx11_43.dll;d3dcompiler_43.dll;d3dcsx_43.dll;d3d10.dll;d3d10_1.dll;d3d11.dll;d2d1.dll;dwrite.dll;dxgi.dll;dinput8.dll;x3daudio1_7.dll;xinput1_3.dll;dsound.dll;%(DelayLoadDLLs)</DelayLoadDLLs>

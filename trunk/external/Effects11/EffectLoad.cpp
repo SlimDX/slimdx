@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (C) 2009 Microsoft Corporation.  All Rights Reserved.
+//  Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //  File:       EffectLoad.cpp
 //  Content:    D3DX11 Effects file loading code
@@ -214,7 +214,7 @@ lExit:
     return hr;
 }
 
-HRESULT CEffectHeap::AddString(const char *pString, __out_ecount_full(1) char **ppPointer)
+HRESULT CEffectHeap::AddString(const char *pString, __deref_out_z char **ppPointer)
 {
     size_t size = strlen(pString) + 1;
     D3DXASSERT( size <= 0xffffffff );
@@ -263,7 +263,7 @@ HRESULT CEffectHeap::AddData(const void *pData, UINT  dwSize, void **ppPointer)
 //   point to the new memory block.
 // The general heap is freed as a whole, so we don't worry about leaking the given string pointer.
 // This data is forcibly aligned, so make sure you account for that in calculating heap size
-HRESULT CEffectHeap::MoveString(__inout_ecount(1) char **ppString)
+HRESULT CEffectHeap::MoveString(__deref_inout_z char **ppString)
 {
     HRESULT hr;
     char *pNewPointer;
@@ -350,7 +350,7 @@ HRESULT CEffectHeap::MoveData(void **ppData, UINT  size)
 // Load API 
 //////////////////////////////////////////////////////////////////////////
 
-HRESULT CEffect::LoadEffect(void *pEffectBuffer, UINT  cbEffectBuffer)
+HRESULT CEffect::LoadEffect(CONST void *pEffectBuffer, UINT  cbEffectBuffer)
 {
     HRESULT hr = S_OK;
     CEffectLoader loader;
@@ -479,6 +479,7 @@ HRESULT CEffectLoader::FixupShaderPointer(SShaderBlock **ppShaderBlock)
 {
     HRESULT hr = S_OK;
     if (*ppShaderBlock != &g_NullVS && *ppShaderBlock != &g_NullGS && *ppShaderBlock != &g_NullPS &&
+        *ppShaderBlock != &g_NullHS && *ppShaderBlock != &g_NullDS && *ppShaderBlock != &g_NullCS && 
         *ppShaderBlock != NULL)
     {
         SIZE_T index = *ppShaderBlock - m_pOldShaders;
@@ -731,7 +732,7 @@ HRESULT GetEffectVersion( UINT effectFileTag, DWORD* pVersion )
     return E_FAIL;
 }
 
-HRESULT CEffectLoader::LoadEffect(CEffect *pEffect, void *pEffectBuffer, UINT  cbEffectBuffer)
+HRESULT CEffectLoader::LoadEffect(CEffect *pEffect, CONST void *pEffectBuffer, UINT  cbEffectBuffer)
 {
     HRESULT hr = S_OK;
     UINT  i, varSize, cMemberDataBlocks;
@@ -2501,7 +2502,7 @@ HRESULT CEffectLoader::GrabShaderData(SShaderBlock *pShaderBlock)
     HRESULT hr = S_OK;
     UINT  i, j;
     CEffectVector<SRange> vRanges[ER_Count], *pvRange;
-    SRange *pRange;
+    SRange *pRange = NULL;
     CEffectVector<SConstantBuffer*> vTBuffers;
     
     //////////////////////////////////////////////////////////////////////////
@@ -2781,6 +2782,7 @@ HRESULT CEffectLoader::GrabShaderData(SShaderBlock *pShaderBlock)
                 D3DXASSERT( InterfaceDesc.uFlags & D3D11_SVF_INTERFACE_POINTER );
                 if( InterfaceDesc.uFlags & D3D11_SVF_INTERFACE_PARAMETER )
                 {
+                    // This interface pointer is a parameter to the shader
                     if( pShaderBlock->pReflectionData->InterfaceParameterCount == 0 )
                     {
                         // There may be no interface parameters in this shader if it was compiled but had no interfaced bound to it.
@@ -2813,6 +2815,7 @@ HRESULT CEffectLoader::GrabShaderData(SShaderBlock *pShaderBlock)
                 }
                 else
                 {
+                    // This interface pointer is a global interface used in the shader
                     pVariable = m_pEffect->FindVariableByName(pName);
                     VBD( pVariable != NULL, "Loading error: cannot find interface variable." );
                     VariableElements = pVariable->pType->Elements;

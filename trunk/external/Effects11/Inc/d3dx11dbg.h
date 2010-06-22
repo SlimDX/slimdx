@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (C) 2009 Microsoft Corporation.  All Rights Reserved.
+//  Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //  File:       d3dx11dbg.h
 //  Content:    D3DX11 debugging functions

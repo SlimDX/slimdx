@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (C) 2009 Microsoft Corporation.  All Rights Reserved.
+//  Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //  File:       EffectNonRuntime.cpp
 //  Content:    D3DX11 Effect low-frequency utility functions
@@ -240,7 +240,7 @@ HRESULT SShaderBlock::ComputeStateBlockMask(D3DX11_STATE_BLOCK_MASK *pStateBlock
 {
     HRESULT hr = S_OK;
     UINT i, j;
-    BYTE *pSamplerMask, *pShaderResourceMask, *pConstantBufferMask, *pUnorderedAccessViewMask, *pInterfaceMask;
+    BYTE *pSamplerMask = NULL, *pShaderResourceMask = NULL, *pConstantBufferMask = NULL, *pUnorderedAccessViewMask = NULL, *pInterfaceMask = NULL;
 
     switch (GetShaderType())
     {
@@ -1516,7 +1516,7 @@ SGlobalVariable * CEffect::FindLocalVariableByName(LPCSTR pName)
 // which means that simple sub-types (numeric types) have already
 // been pooled.
 //
-BOOL SType::IsEqual(SType *pOtherType)
+BOOL SType::IsEqual(SType *pOtherType) CONST
 {
     if (VarType != pOtherType->VarType || Elements != pOtherType->Elements
         || strcmp(pTypeName, pOtherType->pTypeName) != 0)
@@ -1593,7 +1593,7 @@ BOOL SType::IsEqual(SType *pOtherType)
     return TRUE;
 }
 
-UINT SType::GetTotalUnpackedSize(BOOL IsSingleElement)
+UINT SType::GetTotalUnpackedSize(BOOL IsSingleElement) CONST
 {
     if (VarType == EVT_Object)
     {
@@ -1615,7 +1615,7 @@ UINT SType::GetTotalUnpackedSize(BOOL IsSingleElement)
     }
 }
 
-UINT SType::GetTotalPackedSize(BOOL IsSingleElement)
+UINT SType::GetTotalPackedSize(BOOL IsSingleElement) CONST
 {
     if (Elements > 0 && IsSingleElement)
     {

@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (C) 2009 Microsoft Corporation.  All Rights Reserved.
+//  Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //  File:       EffectLoad.h
 //  Content:    D3DX11 Effects header for the FX file loader 
@@ -142,7 +142,7 @@ protected:
     HRESULT GetInterfaceParametersAndAddToReflection( UINT InterfaceCount, UINT offset, __out_ecount_full(1) SShaderBlock::SInterfaceParameter **ppInterfaces );
 public:
 
-    HRESULT LoadEffect(CEffect *pEffect, void *pEffectBuffer, UINT  cbEffectBuffer);
+    HRESULT LoadEffect(CEffect *pEffect, CONST void *pEffectBuffer, UINT  cbEffectBuffer);
 };
 
 

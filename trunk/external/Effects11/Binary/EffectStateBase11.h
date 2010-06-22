@@ -1,9 +1,9 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (C) 2009 Microsoft Corporation.  All Rights Reserved.
+//  Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //  File:       EffectStateBase11.h
-//  Content:    D3D@11 Effects States Header
+//  Content:    D3DX11 Effects States Header
 //
 //////////////////////////////////////////////////////////////////////////////
 
@@ -22,8 +22,8 @@ struct RValue
     UINT        m_Value;
 };
 
-#define RVALUE_END()    { NULL, 0 }
-#define RVALUE_ENTRY(prefix, x)         { #x, prefix##x }
+#define RVALUE_END()    { NULL, 0U }
+#define RVALUE_ENTRY(prefix, x)         { #x, (UINT)prefix##x }
 
 enum ELhsType;
 

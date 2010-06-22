@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (C) 2009 Microsoft Corporation.  All Rights Reserved.
+//  Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //  File:       D3DXGlobal.h
 //  Content:    D3DX11 Effects helper defines and data structures
@@ -8,6 +8,8 @@
 //////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+
+#pragma warning(disable : 4100 4127 4189 4201 4245 4389 4505 4701 4706)
 
 namespace D3DX11Debug
 {
@@ -69,7 +71,7 @@ D3DX11INLINE void * AlignToPowerOf2(void *pValue, UINT_PTR Alignment)
 
 
 // Fast memcpy
-D3DX11INLINE void dwordMemcpy( __out_bcount(uByteCount) void * __restrict pDest, __in_bcount(uByteCount) void * __restrict pSource, UINT uByteCount)
+D3DX11INLINE void dwordMemcpy( __out_bcount(uByteCount) void * __restrict pDest, __in_bcount(uByteCount) CONST void * __restrict pSource, UINT uByteCount)
 {
     UINT i;
     D3DXASSERT(uByteCount % 4 == 0);
@@ -97,7 +99,7 @@ D3DX11INLINE void dwordMemcpy( __out_bcount(uByteCount) void * __restrict pDest,
     }
 
     ANALYSIS_ASSUME( dst64 - static_cast< __int64* >(pDest) <= uByteCount - 4 );
-    ANALYSIS_ASSUME( src64 - static_cast< __int64* >(pSource) <= uByteCount - 4 );
+    ANALYSIS_ASSUME( src64 - static_cast< const __int64* >(pSource) <= uByteCount - 4 );
     if( uByteCount & 0x4 )
     {
         *((UINT*)dst64) = *((UINT*)src64);
@@ -1333,6 +1335,3 @@ lExit:
         return hr;
     }
 };
-
-
-

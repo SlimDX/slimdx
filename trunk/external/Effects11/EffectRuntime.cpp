@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////
 //
-//  Copyright (C) 2009 Microsoft Corporation.  All Rights Reserved.
+//  Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //  File:       EffectRuntime.cpp
 //  Content:    D3DX11 Effect runtime routines (performance critical)
@@ -18,7 +18,7 @@ namespace D3DX11Effects
                                 D3D11_KEEP_UNORDERED_ACCESS_VIEWS, D3D11_KEEP_UNORDERED_ACCESS_VIEWS, D3D11_KEEP_UNORDERED_ACCESS_VIEWS,
                                 D3D11_KEEP_UNORDERED_ACCESS_VIEWS, D3D11_KEEP_UNORDERED_ACCESS_VIEWS };
 
-D3DX11INLINE BOOL SBaseBlock::ApplyAssignments(CEffect *pEffect)
+BOOL SBaseBlock::ApplyAssignments(CEffect *pEffect)
 {
     SAssignment *pAssignment = pAssignments;
     SAssignment *pLastAssn = pAssignments + AssignmentCount;
@@ -32,7 +32,7 @@ D3DX11INLINE BOOL SBaseBlock::ApplyAssignments(CEffect *pEffect)
     return bRecreate;
 }
 
-D3DX11INLINE void SPassBlock::ApplyPassAssignments()
+void SPassBlock::ApplyPassAssignments()
 {
     SAssignment *pAssignment = pAssignments;
     SAssignment *pLastAssn = pAssignments + AssignmentCount;
@@ -46,7 +46,7 @@ D3DX11INLINE void SPassBlock::ApplyPassAssignments()
 }
 
 // Returns TRUE if the shader uses global interfaces (since these interfaces can be updated through SetClassInstance)
-D3DX11INLINE BOOL SPassBlock::CheckShaderDependencies( SShaderBlock* pBlock )
+BOOL SPassBlock::CheckShaderDependencies( SShaderBlock* pBlock )
 {
     if( pBlock->InterfaceDepCount > 0 )
     {
@@ -182,6 +182,30 @@ void CEffect::ApplyShaderBlock(SShaderBlock *pBlock)
         (m_pContext->*(pVT->pSetSamplers))(pSampDep->StartIndex, pSampDep->Count, pSampDep->ppD3DObjects);
     }
  
+    // Set the UAVs
+    // UAV ranges were combined in EffectLoad.  This code remains unchanged, however, so that ranges can be easily split
+    D3DXASSERT( pBlock->UAVDepCount < 2 );
+    if( pBlock->UAVDepCount > 0 )
+    {
+        SUnorderedAccessViewDependency *pUAVDep = pBlock->pUAVDeps;
+        D3DXASSERT(pUAVDep->ppFXPointers);
+
+        for (i=0; i<pUAVDep->Count; i++)
+        {
+            pUAVDep->ppD3DObjects[i] = pUAVDep->ppFXPointers[i]->pUnorderedAccessView;
+        }
+
+        if( EOT_ComputeShader5 == pBlock->GetShaderType() )
+        {
+            m_pContext->CSSetUnorderedAccessViews( pUAVDep->StartIndex, pUAVDep->Count, pUAVDep->ppD3DObjects, g_pNegativeOnes );
+        }
+        else
+        {
+            // This call could be combined with the call to set render targets if both exist in the pass
+            m_pContext->OMSetRenderTargetsAndUnorderedAccessViews( D3D11_KEEP_RENDER_TARGETS_AND_DEPTH_STENCIL, NULL, NULL, pUAVDep->StartIndex, pUAVDep->Count, pUAVDep->ppD3DObjects, g_pNegativeOnes );
+        }
+    }
+
     // TBuffers are funny:
     // We keep two references to them. One is in as a standard texture dep, and that gets used for all sets
     // The other is as a part of the TBufferDeps array, which tells us to rebuild the matching CBs.
@@ -208,30 +232,6 @@ void CEffect::ApplyShaderBlock(SShaderBlock *pBlock)
         }
 
         (m_pContext->*(pVT->pSetShaderResources))(pResourceDep->StartIndex, pResourceDep->Count, pResourceDep->ppD3DObjects);
-    }
-
-    // Set the UAVs
-    // UAV ranges were combined in EffectLoad.  This code remains unchanged, however, so that ranges can be easily split
-    D3DXASSERT( pBlock->UAVDepCount < 2 );
-    if( pBlock->UAVDepCount > 0 )
-    {
-        SUnorderedAccessViewDependency *pUAVDep = pBlock->pUAVDeps;
-        D3DXASSERT(pUAVDep->ppFXPointers);
-
-        for (i=0; i<pUAVDep->Count; i++)
-        {
-            pUAVDep->ppD3DObjects[i] = pUAVDep->ppFXPointers[i]->pUnorderedAccessView;
-        }
-
-        if( EOT_ComputeShader5 == pBlock->GetShaderType() )
-        {
-            m_pContext->CSSetUnorderedAccessViews( pUAVDep->StartIndex, pUAVDep->Count, pUAVDep->ppD3DObjects, g_pNegativeOnes );
-        }
-        else
-        {
-            // This call could be combined with the call to set render targets if both exist in the pass
-            m_pContext->OMSetRenderTargetsAndUnorderedAccessViews( D3D11_KEEP_RENDER_TARGETS_AND_DEPTH_STENCIL, NULL, NULL, pUAVDep->StartIndex, pUAVDep->Count, pUAVDep->ppD3DObjects, g_pNegativeOnes );
-        }
     }
 
     // Update Interface dependencies
@@ -338,7 +338,7 @@ BOOL CEffect::ApplyRenderStateBlock(SBaseBlock *pBlock)
     return bRecreate;
 }
 
-D3DX11INLINE void CEffect::ValidateIndex(UINT  Elements)
+void CEffect::ValidateIndex(UINT  Elements)
 {
     if (m_FXLIndex >= Elements)
     {
@@ -422,7 +422,7 @@ BOOL CEffect::EvaluateAssignment(SAssignment *pAssignment)
 }
 
 // Returns FALSE if this shader has interface dependencies which are NULL (SetShader will fail).
-D3DX11INLINE BOOL CEffect::ValidateShaderBlock( SShaderBlock* pBlock )
+BOOL CEffect::ValidateShaderBlock( SShaderBlock* pBlock )
 {
     if( !pBlock->IsValid )
         return FALSE;
@@ -611,7 +611,7 @@ void CEffect::ApplyPassBlock(SPassBlock *pBlock)
     }
 }
 
-D3DX11INLINE void CEffect::IncrementTimer()
+void CEffect::IncrementTimer()
 {
     m_LocalTimer++;
 
