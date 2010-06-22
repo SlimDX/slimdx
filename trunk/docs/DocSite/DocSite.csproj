@@ -492,6 +492,10 @@
     <None Include="Help\Topics\DirectX Versions.cmp">
       <DependentUpon>DirectX Versions.aml</DependentUpon>
     </None>
+    <None Include="Help\Topics\February 2010.aml" />
+    <None Include="Help\Topics\February 2010.cmp">
+      <DependentUpon>February 2010.aml</DependentUpon>
+    </None>
     <None Include="Help\Topics\Getting Started.aml" />
     <None Include="Help\Topics\Getting Started.cmp">
       <DependentUpon>Getting Started.aml</DependentUpon>
@@ -627,7 +631,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties DefaultApplyToAll="True" DoNotAskIncludeOutputInProject="True" Sandcastle_UseFriendlyHtmlFileNames="True" Sandcastle_DocumentationSetName="SlimDX" ExternalSources="" Sandcastle_ProduceHelp1x="True" Sandcastle_PresentationName="Sandcastle Prototype" Sandcastle_Version="2.4.10520.1" BuildEngineProviderName="Sandcastle" DocProjectVersion="1.11.0.0" ProcessComponentTypeName="DocSite.BuildProcess" IsDocProject="true" />
+      <UserProperties IsDocProject="true" ProcessComponentTypeName="DocSite.BuildProcess" DocProjectVersion="1.11.0.0" BuildEngineProviderName="Sandcastle" Sandcastle_Version="2.4.10520.1" Sandcastle_PresentationName="Sandcastle Prototype" Sandcastle_ProduceHelp1x="True" ExternalSources="" Sandcastle_DocumentationSetName="SlimDX" Sandcastle_UseFriendlyHtmlFileNames="True" DoNotAskIncludeOutputInProject="True" DefaultApplyToAll="True" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

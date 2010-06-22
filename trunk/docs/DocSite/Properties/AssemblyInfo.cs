@@ -9,8 +9,8 @@ using System.Resources;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SlimDX Documentation (February 2010)")]
-[assembly: AssemblyDescription("SlimDX Documentation February 2010")]
+[assembly: AssemblyTitle("SlimDX Documentation (June 2010)")]
+[assembly: AssemblyDescription("SlimDX Documentation June 2010")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SlimDX Group")]
 [assembly: AssemblyProduct("SlimDX Documentation")]
