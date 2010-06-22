@@ -199,7 +199,6 @@ namespace SlimDX.Wpf
 			if(sizeInfo.HeightChanged || sizeInfo.WidthChanged)
 				_sizeChanged = true;
 
-			return;
 		}
 
 		/// <summary>
@@ -308,8 +307,8 @@ namespace SlimDX.Wpf
 			_presentParameters.SwapEffect = SwapEffect.Copy;
 			_presentParameters.DeviceWindowHandle = hwnd.Handle;
 			_presentParameters.Windowed = true;
-			_presentParameters.BackBufferWidth = ((int) Width < 0) ? 1 : (int) Width;
-			_presentParameters.BackBufferHeight = ((int) Height < 0) ? 1 : (int) Height;
+			_presentParameters.BackBufferWidth = ((int) ActualWidth < 0) ? 1 : (int) ActualWidth;
+			_presentParameters.BackBufferHeight = ((int) ActualHeight < 0) ? 1 : (int) ActualHeight;
 			_presentParameters.BackBufferFormat = _backbufferFormat;
 			_presentParameters.AutoDepthStencilFormat = _depthStencilFormat;
 
@@ -466,8 +465,8 @@ namespace SlimDX.Wpf
 
 				if(_sizeChanged)
 				{
-					_presentParameters.BackBufferWidth = (int) Width;
-					_presentParameters.BackBufferHeight = (int) Height;
+					_presentParameters.BackBufferWidth = (int) ActualWidth;
+					_presentParameters.BackBufferHeight = (int) ActualHeight;
 					ReleaseBackBuffer();
 					OnDeviceLost(EventArgs.Empty);
 					Device.Reset(_presentParameters);
@@ -606,15 +605,6 @@ namespace SlimDX.Wpf
 			}
 		}
 		#endregion
-
-		private void ContentControl_SizeChanged(object sender, SizeChangedEventArgs e)
-		{
-			if(e.HeightChanged || e.WidthChanged)
-			{
-				Width = e.NewSize.Width;
-				Height = e.NewSize.Height;
-			}
-		}
 
 		#region DLL imports
 		// can't figure out how to access remote session status through .NET
