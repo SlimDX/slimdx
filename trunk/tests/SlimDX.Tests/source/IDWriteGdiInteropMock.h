@@ -21,29 +21,17 @@
 */
 #pragma once
 
-extern const IID IID_IDWriteGdiInterop;
+#include "CommonMocks.h"
+#include <dwrite.h>
 
-#include "../ComObject.h"
-
-namespace SlimDX
+class IDWriteGdiInteropMock : public IDWriteGdiInterop
 {
-	namespace DirectWrite
-	{
-		ref class Font;
-		ref class FontFace;
-		ref class BitmapRenderTarget;
+public:
+	MOCK_IUNKNOWN;
 
-		public ref class GdiInterop : public ComObject
-		{
-			COMOBJECT(IDWriteGdiInterop, GdiInterop);
-
-		public:
-			Result ToLogFont(FontFace^ fontFace, System::Object^ logFont);
-			Result ToLogFont(Font^ font, System::Object^ logFont);
-
-			FontFace^ FromHdc(System::IntPtr hdc);
-			Font^ FromLogFont(System::Object^ logFont);
-			BitmapRenderTarget ^CreateBitmapRenderTarget(System::IntPtr hdc, int width, int height);
-		};
-	}
-}
+	STDMETHOD(CreateFontFromLOGFONT)(LOGFONTW const* logFont, IDWriteFont** font) { return E_NOTIMPL; }
+	STDMETHOD(ConvertFontToLOGFONT)(IDWriteFont* font, LOGFONTW* logFont, BOOL* isSystemFont) { return E_NOTIMPL; }
+    STDMETHOD(ConvertFontFaceToLOGFONT)(IDWriteFontFace* font, LOGFONTW* logFont) { return E_NOTIMPL; }
+    STDMETHOD(CreateFontFaceFromHdc)(HDC hdc, IDWriteFontFace** fontFace) { return E_NOTIMPL; }
+    MOCK_METHOD4_WITH_CALLTYPE( STDMETHODCALLTYPE, CreateBitmapRenderTarget, HRESULT(HDC hdc, UINT32 width, UINT32 height, IDWriteBitmapRenderTarget** renderTarget));
+};

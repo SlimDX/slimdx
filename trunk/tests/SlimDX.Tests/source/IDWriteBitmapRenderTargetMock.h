@@ -21,29 +21,38 @@
 */
 #pragma once
 
-extern const IID IID_IDWriteGdiInterop;
+#include "CommonMocks.h"
+#include <dwrite.h>
 
-#include "../ComObject.h"
-
-namespace SlimDX
+struct IDWriteBitmapRenderTargetMock : public IDWriteBitmapRenderTarget
 {
-	namespace DirectWrite
-	{
-		ref class Font;
-		ref class FontFace;
-		ref class BitmapRenderTarget;
+	MOCK_IUNKNOWN;
 
-		public ref class GdiInterop : public ComObject
-		{
-			COMOBJECT(IDWriteGdiInterop, GdiInterop);
-
-		public:
-			Result ToLogFont(FontFace^ fontFace, System::Object^ logFont);
-			Result ToLogFont(Font^ font, System::Object^ logFont);
-
-			FontFace^ FromHdc(System::IntPtr hdc);
-			Font^ FromLogFont(System::Object^ logFont);
-			BitmapRenderTarget ^CreateBitmapRenderTarget(System::IntPtr hdc, int width, int height);
-		};
-	}
-}
+    STDMETHOD(DrawGlyphRun)(
+        FLOAT baselineOriginX,
+        FLOAT baselineOriginY,
+        DWRITE_MEASURING_MODE measuringMode,
+        __in DWRITE_GLYPH_RUN const* glyphRun,
+        IDWriteRenderingParams* renderingParams,
+        COLORREF textColor,
+        __out_opt RECT* blackBoxRect = NULL
+        ) { return E_NOTIMPL; }
+    STDMETHOD_(HDC, GetMemoryDC)() { return static_cast<HDC>(0); }
+    STDMETHOD_(FLOAT, GetPixelsPerDip)() { return -1.0f; }
+    STDMETHOD(SetPixelsPerDip)(
+        FLOAT pixelsPerDip
+        ) { return E_NOTIMPL; }
+    STDMETHOD(GetCurrentTransform)(
+        __out DWRITE_MATRIX* transform
+        ) { return E_NOTIMPL; }
+    STDMETHOD(SetCurrentTransform)(
+        __in_opt DWRITE_MATRIX const* transform
+        ) { return E_NOTIMPL; }
+    STDMETHOD(GetSize)(
+        __out SIZE* size
+        ) { return E_NOTIMPL; }
+    STDMETHOD(Resize)(
+        UINT32 width,
+        UINT32 height
+        ) { return E_NOTIMPL; }
+};

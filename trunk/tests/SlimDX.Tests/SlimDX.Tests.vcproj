@@ -365,6 +365,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\IDWriteBitmapRenderTargetMock.h"
+				>
+			</File>
+			<File
 				RelativePath=".\source\IDWriteFontCollectionMock.h"
 				>
 			</File>
@@ -374,6 +378,10 @@
 			</File>
 			<File
 				RelativePath=".\source\IDWriteFontMock.h"
+				>
+			</File>
+			<File
+				RelativePath=".\source\IDWriteGdiInteropMock.h"
 				>
 			</File>
 			<File
@@ -474,6 +482,10 @@
 			</File>
 			<File
 				RelativePath=".\source\DirectWrite.Font.Tests.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\DirectWrite.GdiInterop.Tests.cpp"
 				>
 			</File>
 			<File
