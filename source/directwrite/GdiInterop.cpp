@@ -23,6 +23,9 @@
 
 #include "DirectWriteException.h"
 
+#include "BitmapRenderTargetDW.h"
+#include "Font.h"
+#include "FontFace.h"
 #include "GdiInterop.h"
 
 const IID IID_IDWriteGdiInterop = __uuidof(IDWriteGdiInterop);
@@ -71,6 +74,17 @@ namespace DirectWrite
 			return nullptr;
 
 		return Font::FromPointer(font);
+	}
+
+	BitmapRenderTarget ^GdiInterop::CreateBitmapRenderTarget(System::IntPtr hdc, int width, int height)
+	{
+		IDWriteBitmapRenderTarget *target = 0;
+		HRESULT hr = InternalPointer->CreateBitmapRenderTarget(static_cast<HDC>(hdc.ToPointer()), width, height, &target);
+		if (RECORD_DW(hr).IsFailure)
+		{
+			return nullptr;
+		}
+		return BitmapRenderTarget::FromPointer(target);
 	}
 }
 }
