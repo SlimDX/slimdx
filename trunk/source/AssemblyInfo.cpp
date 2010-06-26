@@ -53,7 +53,11 @@ using namespace System::Security::Permissions;
 // You can specify all the value or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
 
-[assembly:AssemblyVersionAttribute("2.0.9.42")];
+#if _MSC_VER < 1600
+[assembly:AssemblyVersionAttribute("2.0.10.43")];
+#else
+[assembly:AssemblyVersionAttribute("4.0.10.43")];
+#endif
 
 [assembly:ComVisible(false)];
 
