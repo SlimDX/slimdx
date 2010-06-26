@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<?define Version="2.0.9.42" ?>
-<?define ReleaseName="February 2010" ?>
-<?define ShortName="Feb2010" ?>
+<?define Version="2.0.10.43" ?>
+<?define ReleaseName="June 2010" ?>
+<?define ShortName="Jun2010" ?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
   <Product Id="*" Language="1033" Manufacturer="SlimDX Group" Name="SlimDX SDK ($(var.ReleaseName))" Version="$(var.Version)">
@@ -15,6 +15,7 @@
     <WixVariable Id="WixUILicenseRtf" Value="..\ExtraFiles\License.rtf" />
     <WixVariable Id="WixUIDialogBmp" Value="..\ExtraFiles\SdxSideLogo.jpg" />
     <WixVariable Id="WixUIBannerBmp" Value="..\ExtraFiles\SdxLogo.jpg" />
+    <WixVariable Id="WixUICostingPopupOptOut" Value="1" Overridable="yes" />
 
     <Media Id="1" Cabinet="SlimDX_$(var.ShortName).cab" EmbedCab="yes" />
 
@@ -93,50 +94,121 @@
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
+        <!-- Root application folder contents -->
         <Directory Id="APPLICATIONFOLDER" Name="SlimDX SDK ($(var.ReleaseName))">
+          <!-- License text files nobody ever reads-->
           <Component Id="Licenses" DiskId="1" Guid="01CB4F3C-E3BE-48B9-84B1-3A9CCCBF7A63">
             <File Id="CodeLicense.txt" Name="CodeLicense.txt" Source="..\..\publish\CodeLicense.txt" />
             <File Id="MediaLicense.txt" Name="MediaLicense.txt" Source="..\..\publish\MediaLicense.txt" />
           </Component>
+          <!-- SlimDX core binaries -->
           <Directory Id="Bin" Name="Bin">
-            <Directory Id="bin_x64" Name="x64">
-              <Component Id="x64" DiskId="1" Guid="C93946B6-13DF-4F13-B125-DAC9F278FAC5">
-                <File Id="SlimDX.dll_x64" Name="SlimDX.dll" Source="..\..\publish\Bin\x64\SlimDX.dll" />
-                <File Id="SlimDX.pdb_x64" Name="SlimDX.pdb" Source="..\..\publish\Bin\x64\SlimDX.pdb" />
-                <File Id="SlimDX.xml_x64" Name="SlimDX.xml" Source="..\..\publish\Bin\x64\SlimDX.xml" />
-              </Component>
-              <Directory Id="x64_GAC" Name="GAC">
-                <Component Id="x64_GAC" DiskId="1" Guid="49CD009B-2541-484D-BEEB-83D79E7DD9D7">
-                  <Condition>
-                    <![CDATA[Installed OR VersionNT64]]>
-                  </Condition>
-                  <File Id="SlimDX.dll_x64_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\x64\SlimDX.dll"
-                        KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x64_GAC">
-                    <netfx:NativeImage Id="SlimDX_NGEN_x64" Priority="1" Platform="64bit" />
-                    <netfx:NativeImage Id="SlimDX_NGEN_x64_debug" Priority="2" Platform="64bit" Debug="yes" />
-                    <netfx:NativeImage Id="SlimDX_NGEN_x64_profile" Priority="2" Platform="64bit" Profile="yes" />
-                  </File>
+            <!-- .NET 2.0 binaries -->
+            <Directory Id="bin_net20" Name="net20">
+              <Directory Id="bin_net20_x64" Name="x64">
+                <!-- x64 files -->
+                <Component Id="x64_net20" DiskId="1" Guid="C93946B6-13DF-4F13-B125-DAC9F278FAC5">
+                  <File Id="SlimDX.dll_x64_net20" Name="SlimDX.dll" Source="..\..\publish\Bin\net20\x64\SlimDX.dll" />
+                  <File Id="SlimDX.pdb_x64_net20" Name="SlimDX.pdb" Source="..\..\publish\Bin\net20\x64\SlimDX.pdb" />
+                  <File Id="SlimDX.xml_x64_net20" Name="SlimDX.xml" Source="..\..\publish\Bin\net20\x64\SlimDX.xml" />
                 </Component>
+
+                <!-- x64 GAC -->
+                <Directory Id="x64_net20_GAC" Name="GAC">
+                  <Component Id="x64_net20_GAC" DiskId="1" Guid="49CD009B-2541-484D-BEEB-83D79E7DD9D7">
+                    <Condition>
+                      <![CDATA[Installed OR (VersionNT64 AND NETFRAMEWORK20)]]>
+                    </Condition>
+
+                    <File Id="SlimDX.dll_x64_net20_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\net20\x64\SlimDX.dll"
+                          KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x64_net20_GAC">
+                      <netfx:NativeImage Id="SlimDX_NGEN_x64" Priority="1" Platform="64bit" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x64_debug" Priority="2" Platform="64bit" Debug="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x64_profile" Priority="2" Platform="64bit" Profile="yes" />
+                    </File>
+                  </Component>
+                </Directory>
+              </Directory>
+
+              <Directory Id="bin_net20_x86" Name="x86">
+                <!-- x86 files-->
+                <Component Id="x86_net20" DiskId="1" Guid="65A2E192-3D00-4A00-805E-642F90BAF7B2">
+                  <File Id="SlimDX.dll_x86_net20" Name="SlimDX.dll" Source="..\..\publish\Bin\net20\x86\SlimDX.dll" />
+                  <File Id="SlimDX.pdb_x86_net20" Name="SlimDX.pdb" Source="..\..\publish\Bin\net20\x86\SlimDX.pdb" />
+                  <File Id="SlimDX.xml_x86_net20" Name="SlimDX.xml" Source="..\..\publish\Bin\net20\x86\SlimDX.xml" />
+                </Component>
+                <!-- x86 GAC -->
+                <Directory Id="x86_net20_GAC" Name="GAC">
+                  <Component Id="x86_net20_GAC" DiskId="1" Guid="862BB85B-0A7A-4FB4-9942-644387DF7B8D">
+                    <Condition>
+                      <![CDATA[Installed OR NETFRAMEWORK20]]>
+                    </Condition>
+
+                    <File Id="SlimDX.dll_x86_net20_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\net20\x86\SlimDX.dll"
+                          KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x86_net20_GAC">
+                      <netfx:NativeImage Id="SlimDX_NGEN_x86" Priority="1" Platform="32bit" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x86_debug" Priority="2" Platform="32bit" Debug="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x86_profile" Priority="2" Platform="32bit" Profile="yes" />
+                    </File>
+                  </Component>
+                </Directory>
               </Directory>
             </Directory>
-            <Directory Id="x86" Name="x86">
-              <Component Id="x86" DiskId="1" Guid="65A2E192-3D00-4A00-805E-642F90BAF7B2">
-                <File Id="SlimDX.dll_x86" Name="SlimDX.dll" Source="..\..\publish\Bin\x86\SlimDX.dll" />
-                <File Id="SlimDX.pdb_x86" Name="SlimDX.pdb" Source="..\..\publish\Bin\x86\SlimDX.pdb" />
-                <File Id="SlimDX.xml_x86" Name="SlimDX.xml" Source="..\..\publish\Bin\x86\SlimDX.xml" />
-              </Component>
-              <Directory Id="x86_GAC" Name="GAC">
-                <Component Id="x86_GAC" DiskId="1" Guid="862BB85B-0A7A-4FB4-9942-644387DF7B8D">
-                  <File Id="SlimDX.dll_x86_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\x86\SlimDX.dll"
-                        KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x86_GAC">
-                    <netfx:NativeImage Id="SlimDX_NGEN_x86" Priority="1" Platform="32bit" />
-                    <netfx:NativeImage Id="SlimDX_NGEN_x86_debug" Priority="2" Platform="32bit" Debug="yes" />
-                    <netfx:NativeImage Id="SlimDX_NGEN_x86_profile" Priority="2" Platform="32bit" Profile="yes" />
-                  </File>
+
+            <!-- .NET 4.0 binaries -->
+            <Directory Id="bin_net40" Name="net20">
+              <Directory Id="bin_net40_x64" Name="x64">
+                <!-- x64 files -->
+                <Component Id="x64_net40" DiskId="1" Guid="C93946B6-13DF-4F13-B125-DAC9F278FAC5">
+                  <File Id="SlimDX.dll_x64_net40" Name="SlimDX.dll" Source="..\..\publish\Bin\net40\x64\SlimDX.dll" />
+                  <File Id="SlimDX.pdb_x64_net40" Name="SlimDX.pdb" Source="..\..\publish\Bin\net40\x64\SlimDX.pdb" />
+                  <File Id="SlimDX.xml_x64_net40" Name="SlimDX.xml" Source="..\..\publish\Bin\net40\x64\SlimDX.xml" />
                 </Component>
+
+                <!-- x64 GAC -->
+                <Directory Id="x64_net40_GAC" Name="GAC">
+                  <Component Id="x64_net40_GAC" DiskId="1" Guid="49CD009B-2541-484D-BEEB-83D79E7DD9D7">
+                    <Condition>
+                      <![CDATA[Installed OR (VersionNT64 AND (NETFRAMEWORK40FULL OR NETFRAMEWORK40CLIENT))]]>
+                    </Condition>
+
+                    <File Id="SlimDX.dll_x64_net40_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\net40\x64\SlimDX.dll"
+                          KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x64_net40_GAC">
+                      <netfx:NativeImage Id="SlimDX_NGEN_x64" Priority="1" Platform="64bit" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x64_debug" Priority="2" Platform="64bit" Debug="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x64_profile" Priority="2" Platform="64bit" Profile="yes" />
+                    </File>
+                  </Component>
+                </Directory>
+              </Directory>
+
+              <Directory Id="x86_net40" Name="x86">
+                <!-- x86 files-->
+                <Component Id="x86_net40" DiskId="1" Guid="65A2E192-3D00-4A00-805E-642F90BAF7B2">
+                  <File Id="SlimDX.dll_x86_net40" Name="SlimDX.dll" Source="..\..\publish\Bin\net40\x86\SlimDX.dll" />
+                  <File Id="SlimDX.pdb_x86_net40" Name="SlimDX.pdb" Source="..\..\publish\Bin\net40\x86\SlimDX.pdb" />
+                  <File Id="SlimDX.xml_x86_net40" Name="SlimDX.xml" Source="..\..\publish\Bin\net40\x86\SlimDX.xml" />
+                </Component>
+                <!-- x86 GAC -->
+                <Directory Id="x86_net40_GAC" Name="GAC">
+                  <Component Id="x86_net40_GAC" DiskId="1" Guid="862BB85B-0A7A-4FB4-9942-644387DF7B8D">
+                    <Condition>
+                      <![CDATA[Installed OR NETFRAMEWORK40FULL OR NETFRAMEWORK40CLIENT]]>
+                    </Condition>
+
+                    <File Id="SlimDX.dll_x86_net40_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\net40\x86\SlimDX.dll"
+                          KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x86_net40_GAC">
+                      <netfx:NativeImage Id="SlimDX_NGEN_x86" Priority="1" Platform="32bit" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x86_debug" Priority="2" Platform="32bit" Debug="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x86_profile" Priority="2" Platform="32bit" Profile="yes" />
+                    </File>
+                  </Component>
+                </Directory>
               </Directory>
             </Directory>
           </Directory>
+
+          <!-- DirectX redist components -->
           <Directory Id="DXRedist" Name="DirectX Redist">
             <Component Id="DXRedist" DiskId="1" Guid="DE294C24-BB98-4479-86AD-FA2F3736DC73">
               <File Id="DSETUP.dll" Name="DSETUP.dll" Source="..\ExtraFiles\DXRedist\DSETUP.dll" />
@@ -145,36 +217,44 @@
               <File Id="DXSETUP.exe" Name="DXSETUP.exe" Source="..\ExtraFiles\DXRedist\DXSETUP.exe" />
               <File Id="dxupdate.cab" Name="dxupdate.cab" Source="..\ExtraFiles\DXRedist\dxupdate.cab" />
             </Component>
+            <!-- x86 components -->
             <Component Id="DXRedist_x86" Guid="21E764E6-B901-44db-B24C-2CFC012C6EA9">
-              <File Id="D3DCompiler_42_x86" Name="Aug2009_D3DCompiler_42_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Aug2009_D3DCompiler_42_x86.cab" />
-              <File Id="d3dcsx_42_x86" Name="Aug2009_d3dcsx_42_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Aug2009_d3dcsx_42_x86.cab" />
-              <File Id="d3dx9_42_x86.cab" Name="Aug2009_d3dx9_42_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Aug2009_d3dx9_42_x86.cab" />
-              <File Id="d3dx10_42_x86.cab" Name="Aug2009_d3dx10_42_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Aug2009_d3dx10_42_x86.cab" />
-              <File Id="d3dx11_42_x86.cab" Name="Aug2009_d3dx11_42_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Aug2009_d3dx11_42_x86.cab" />
-              <File Id="X3DAudio_x86.cab" Name="Feb2010_X3DAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_X3DAudio_x86.cab" />
+              <File Id="D3DCompiler_43_x86" Name="$(var.ShortName)_D3DCompiler_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_D3DCompiler_43_x86.cab" />
+              <File Id="d3dcsx_43_x86" Name="$(var.ShortName)_d3dcsx_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dcsx_43_x86.cab" />
+              <File Id="d3dx9_43_x86.cab" Name="$(var.ShortName)_d3dx9_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dx9_43_x86.cab" />
+              <File Id="d3dx10_43_x86.cab" Name="$(var.ShortName)_d3dx10_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dx10_43_x86.cab" />
+              <File Id="d3dx11_43_x86.cab" Name="$(var.ShortName)_d3dx11_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dx11_43_x86.cab" />
+              <File Id="X3DAudio_x86.cab" Name="Feb2010_X3DAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Feb2010_X3DAudio_x86.cab" />
               <File Id="XAudio_x86.cab" Name="$(var.ShortName)_XAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_XAudio_x86.cab" />
               <File Id="xinput_x86.cab" Name="APR2007_xinput_x86.cab" Source="..\ExtraFiles\DXRedist\x86\APR2007_xinput_x86.cab" />
             </Component>
+            <!-- x64 components -->
             <Component Id="DXRedist_x64" Guid="93812D6F-4DE3-409c-95C0-FB4CA8E26741">
-              <File Id="D3DCompiler_42_x64" Name="Aug2009_D3DCompiler_42_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Aug2009_D3DCompiler_42_x64.cab" />
-              <File Id="d3dcsx_42_x64" Name="Aug2009_d3dcsx_42_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Aug2009_d3dcsx_42_x64.cab" />
-              <File Id="d3dx9_42_x64.cab" Name="Aug2009_d3dx9_42_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Aug2009_d3dx9_42_x64.cab" />
-              <File Id="d3dx10_42_x64.cab" Name="Aug2009_d3dx10_42_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Aug2009_d3dx10_42_x64.cab" />
-              <File Id="d3dx11_42_x64.cab" Name="Aug2009_d3dx11_42_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Aug2009_d3dx11_42_x64.cab" />
-              <File Id="X3DAudio_x64.cab" Name="$(var.ShortName)_X3DAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_X3DAudio_x64.cab" />
+              <File Id="D3DCompiler_43_x64" Name="$(var.ShortName)_D3DCompiler_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_D3DCompiler_43_x64.cab" />
+              <File Id="d3dcsx_43_x64" Name="$(var.ShortName)_d3dcsx_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dcsx_43_x64.cab" />
+              <File Id="d3dx9_43_x64.cab" Name="$(var.ShortName)_d3dx9_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dx9_43_x64.cab" />
+              <File Id="d3dx10_43_x64.cab" Name="$(var.ShortName)_d3dx10_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dx10_43_x64.cab" />
+              <File Id="d3dx11_43_x64.cab" Name="$(var.ShortName)_d3dx11_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dx11_43_x64.cab" />
+              <File Id="X3DAudio_x64.cab" Name="Feb2010_X3DAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Feb2010_X3DAudio_x64.cab" />
               <File Id="XAudio_x64.cab" Name="$(var.ShortName)_XAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_XAudio_x64.cab" />
               <File Id="xinput_x64.cab" Name="APR2007_xinput_x64.cab" Source="..\ExtraFiles\DXRedist\x64\APR2007_xinput_x64.cab" />
             </Component>
           </Directory>
+
+          <!-- Visual C++ redist components -->
           <Directory Id="VCRedist" Name="Visual C++ Redist">
             <Merge Id="VCRuntime_x86" DiskId="1" Language="1033" SourceFile="..\ExtraFiles\VCRedist\Microsoft_VC90_CRT_x86.msm" />
             <Merge Id="VCRuntime_x64" DiskId="1" Language="1033" SourceFile="..\ExtraFiles\VCRedist\Microsoft_VC90_CRT_x86_x64.msm" />
           </Directory>
+
+          <!-- SlimDX documentation -->
           <Directory Id="Documentation" Name="Documentation">
             <Component Id="Documentation" DiskId="1" Guid="7E3EBF58-8F53-4101-814F-A4B6A18DC05F">
               <File Id="SlimDX.chm" Name="SlimDX.chm" Source="..\..\publish\Documentation\SlimDX.chm" />
             </Component>
           </Directory>
+
+          <!-- SlimDX samples archive -->
           <Directory Id="Samples" Name="Samples">
             <Component Id="Samples" DiskId="1" Guid="BC8188D5-FB9C-4019-A303-C821E96207EE">
               <File Id="InstallSamples" Name="SlimDX Samples.exe" Source="..\..\publish\SlimDX Samples.exe" />
@@ -183,6 +263,7 @@
         </Directory>
       </Directory>
 
+      <!-- Start menu entries -->
       <Directory Id="ProgramMenuFolder">
         <Directory Id="ApplicationProgramsFolder" Name="SlimDX SDK ($(var.ReleaseName))">
           <Component Id="SlimDXShortcuts" Guid="13E685A4-2224-46B5-BC75-00235923583D">
@@ -206,12 +287,13 @@
         </Directory>
       </Directory>
 
+      <!-- ClickOnce support for VS 2008 -->
       <Directory Id="CLICKONCE_VS08">
         <Directory Id="PackagesVS08" Name="Packages">
           <Directory Id="SlimDXClickOnce08" Name="SlimDX$(var.ShortName)_VS08">
             <Component Id="ClickOnceProduct08" DiskId="1" Guid="0B851093-0BA6-4f2f-9781-AD4A2CF15191">
               <File Id="ProductXml08" Name="Product.xml" Source="..\ExtraFiles\ClickOnce\product.xml" />
-              <File Id="Redist08" Name="SlimDX Runtime (February 2010).msi" Source="..\SlimDX Runtime (February 2010).msi" />
+              <File Id="Redist08" Name="SlimDX Runtime Net20 ($(var.ReleaseName)).msi" Source="..\SlimDX Runtime Net20 ($(var.ReleaseName)).msi" />
             </Component>
 
             <Directory Id="ClickOnceEn08" Name="en">
@@ -224,12 +306,13 @@
         </Directory>
       </Directory>
 
+      <!-- ClickOnce support for VS 2010 (.NET 2.0) -->
       <Directory Id="CLICKONCE_VS10">
         <Directory Id="PackagesVS10" Name="Packages">
           <Directory Id="SlimDXClickOnce10" Name="SlimDX$(var.ShortName)_VS10">
             <Component Id="ClickOnceProduct10" DiskId="1" Guid="C05AD47A-CAF9-4c76-A67C-4ABA0F65C70F">
               <File Id="ProductXml10" Name="Product.xml" Source="..\ExtraFiles\ClickOnce\product.xml" />
-              <File Id="Redist10" Name="SlimDX Runtime (February 2010).msi" Source="..\SlimDX Runtime (February 2010).msi" />
+              <File Id="Redist10" Name="SlimDX Runtime Net20 ($(var.ReleaseName)).msi" Source="..\SlimDX Runtime Net20 ($(var.ReleaseName)).msi" />
             </Component>
 
             <Directory Id="ClickOnceEn10" Name="en">
@@ -243,38 +326,66 @@
       </Directory>
     </Directory>
 
+    <!-- Registry keys for VS -->
     <DirectoryRef Id="TARGETDIR">
-      <Component Id="VSRegKey32" Guid="E323B70A-6A34-4090-86F6-2139878165F1">
-        <RegistryKey Root="HKLM" Key="Software\Microsoft\.NETFramework\AssemblyFolders\SlimDX_$(var.Version)">
-          <RegistryValue Type="string" Value="[APPLICATIONFOLDER]Bin\x86" />
+      <!-- .NET 2.0 -->
+      <Component Id="VSRegKey32_net20" Guid="E323B70A-6A34-4090-86F6-2139878165F1">
+        <RegistryKey Root="HKLM" Key="Software\Microsoft\.NETFramework\v2.0.50727\AssemblyFoldersEx\SlimDX_$(var.Version)-net20">
+          <RegistryValue Type="string" Value="[APPLICATIONFOLDER]Bin\net20\x86" />
         </RegistryKey>
       </Component>
-      <Component Id="VSRegKey64" Guid="4B5A6FA8-C214-4160-B4F1-9AE8FBC162D3">
+      <Component Id="VSRegKey64_net20" Guid="4B5A6FA8-C214-4160-B4F1-9AE8FBC162D3">
         <Condition>
           <![CDATA[Installed OR VersionNT64]]>
         </Condition>
-        <RegistryKey Root="HKLM" Key="Software\Microsoft\.NETFramework\AssemblyFolders\SlimDX_$(var.Version)_x64">
-          <RegistryValue Type="string" Value="[APPLICATIONFOLDER]Bin\x64" />
+        <RegistryKey Root="HKLM" Key="Software\Microsoft\.NETFramework\v2.0.50727\AssemblyFoldersEx\SlimDX_$(var.Version)_x64-net20">
+          <RegistryValue Type="string" Value="[APPLICATIONFOLDER]Bin\net20\x64" />
+        </RegistryKey>
+      </Component>
+
+      <!-- .NET 4.0 -->
+      <Component Id="VSRegKey32_net40" Guid="6531AB5B-B027-4e9d-82E7-6C71859A7C06">
+        <Condition>
+          <![CDATA[Installed OR NETFRAMEWORK40FULL OR NETFRAMEWORK40CLIENT]]>
+        </Condition>
+        <RegistryKey Root="HKLM" Key="Software\Microsoft\.NETFramework\v4.0.30319\AssemblyFoldersEx\SlimDX_$(var.Version)-net40">
+          <RegistryValue Type="string" Value="[APPLICATIONFOLDER]Bin\net40\x86" />
+        </RegistryKey>
+      </Component>
+      <Component Id="VSRegKey64_net40" Guid="1C1C90E7-5A25-4a6d-ADD5-71CD9A8D747C">
+        <Condition>
+          <![CDATA[Installed OR (VersionNT64 AND (NETFRAMEWORK40FULL OR NETFRAMEWORK40CLIENT))]]>
+        </Condition>
+        <RegistryKey Root="HKLM" Key="Software\Microsoft\.NETFramework\v4.0.30319\AssemblyFoldersEx\SlimDX_$(var.Version)_x64-net40">
+          <RegistryValue Type="string" Value="[APPLICATIONFOLDER]Bin\net40\x64" />
         </RegistryKey>
       </Component>
     </DirectoryRef>
 
+    <!-- Feature definitions -->
     <Feature Id="Binaries" Title="SlimDX Binaries" Absent="disallow" AllowAdvertise="no" Level="1" Description="SlimDX binary assemblies.">
-      <ComponentRef Id="VSRegKey32" />
-      <ComponentRef Id="VSRegKey64" />
+      <ComponentRef Id="VSRegKey32_net20" />
+      <ComponentRef Id="VSRegKey64_net20" />
+      <ComponentRef Id="VSRegKey32_net40" />
+      <ComponentRef Id="VSRegKey64_net40" />
+
       <ComponentRef Id="SlimDXShortcuts"/>
       <Feature Id="x86" Level="1" Absent="disallow" AllowAdvertise="no"
                Title="x86" Description="SlimDX assembly for x86 targets.">
-        <ComponentRef Id="x86" />
+        <ComponentRef Id="x86_net20" />
+        <ComponentRef Id="x86_net40" />
       </Feature>
       <Feature Id="x64" Level="1" AllowAdvertise="no"
                Title="x64" Description="SlimDX assembly for x64 targets.">
-        <ComponentRef Id="x64" />
+        <ComponentRef Id="x64_net20" />
+        <ComponentRef Id="x64_net40" />
       </Feature>
       <Feature Id="GacRegister" Level="1" AllowAdvertise="no"
                Title="GAC Registration" Description="Register SlimDX in the Global Assembly Cache. Strongly recommended.">
-        <ComponentRef Id="x86_GAC" />
-        <ComponentRef Id="x64_GAC" />
+        <ComponentRef Id="x86_net20_GAC" />
+        <ComponentRef Id="x64_net20_GAC" />
+        <ComponentRef Id="x86_net40_GAC" />
+        <ComponentRef Id="x64_net40_GAC" />
       </Feature>
       <Feature Id="DirectX" Level="1" AllowAdvertise="no" Absent="disallow"
                Title="DirectX runtime" Description="DirectX runtime components for $(var.ReleaseName). Does not include XACT or older releases.">
@@ -304,7 +415,7 @@
       <ComponentRef Id="Samples" />
       <ComponentRef Id="SamplesShortcuts" />
     </Feature>
-    
+
     <Feature Id="ClickOnce" Level="1" AllowAdvertise="no"
              Title="ClickOnce Support" Description="Support for ClickOnce distribution.">
       <Feature Id="ClickOnce08" Level="0" AllowAdvertise="no"
@@ -324,17 +435,17 @@
         <ComponentRef Id="ClickOnceEn10" />
       </Feature>
     </Feature>
-    
+
     <Feature Id="Shortcuts" Level="1" AllowAdvertise="no" Display="hidden"
              Title="Start menu shortcuts" Description="Start menu shortcuts to SlimDX.">
     </Feature>
-    
+
     <Feature Id="Licenses" Level="1" Absent="disallow" AllowAdvertise="no" Display="hidden">
       <ComponentRef Id="Licenses" />
     </Feature>
 
     <Condition Message="This application requires .NET Framework 2.0 or later. Please install the .NET Framework then run this installer again.">
-      <![CDATA[Installed OR NETFRAMEWORK20 OR NETFRAMEWORK35 OR NETFRAMEWORK35_CLIENT]]>
+      <![CDATA[Installed OR NETFRAMEWORK20 OR NETFRAMEWORK35 OR NETFRAMEWORK35_CLIENT OR NETFRAMEWORK40FULL OR NETFRAMEWORK40CLIENT]]>
     </Condition>
 
     <CustomAction Id="InstallDirectX" FileKey="DXSETUP.exe" ExeCommand="/silent" Execute="deferred" Impersonate="no" Return="check" />
