@@ -23,20 +23,19 @@
           </listItem>
           <listItem>
             <para>
-              <database>DirectX Redist</database> - Contains all of the Microsoft DirectX redistrubtable files that are relevant to this release of SlimDX.
+              <database>DirectX Redist</database> - Contains all of the Microsoft DirectX redistributable files that are relevant to this release of SlimDX.
               Developers can use this folder to construct a more compact installation than what the official DirectX or SlimDX packages provide.
               It can also be used as a guide to the components necessary for a given release of SlimDX.
             </para>
           </listItem>
           <listItem>
             <para>
-              <database>Documentation</database> - Contains a Compiled Help (CHM) file with all of the SlimDX documentation available at the time of that release.
+              <database>Visual C++ Redist</database> - Contains all of the Microsoft Visual C++ redistributable files that are relevant to this release of SlimDX.
             </para>
           </listItem>
           <listItem>
             <para>
-              <database>Redist</database> - Contains the files necessary to build an installer that includes SlimDX components.
-              Includes a WiX installer script to be used as a guide, along with relevant logos and licenses.
+              <database>Documentation</database> - Contains a Compiled Help (CHM) file with all of the SlimDX documentation available at the time of that release.
             </para>
           </listItem>
           <listItem>
