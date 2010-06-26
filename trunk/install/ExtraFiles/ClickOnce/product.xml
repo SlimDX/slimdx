@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Product xmlns="http://schemas.microsoft.com/developer/2004/01/bootstrapper" ProductCode="SlimDX.2.0.9.42">
+<Product xmlns="http://schemas.microsoft.com/developer/2004/01/bootstrapper" ProductCode="SlimDX.2.0.10.43">
   
   <PackageFiles>
-    <PackageFile Name="SlimDX Runtime (February 2010).msi" />
+    <PackageFile Name="SlimDX Runtime Net20 (June 2010).msi" />
   </PackageFiles>
   
   <InstallChecks>
-    <MsiProductCheck Property="IsInstalled" Product="7748F5D9-4725-44f4-B1E8-3CB9BB843418"/>
+    <MsiProductCheck Property="IsInstalled" Product="354D00E0-C7C9-4bc1-BC12-08C4977AA827"/>
   </InstallChecks>
   
   <Commands Reboot="Defer">
-    <Command PackageFile="SlimDX Runtime (February 2010).msi"
+    <Command PackageFile="SlimDX Runtime Net20 (June 2010).msi"
              Arguments="/passive"
              EstimatedInstalledBytes="20000000"
              EstimatedInstallSeconds="35"
