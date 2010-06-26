@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <OutputName>SlimDXSDK</OutputName>
     <OutputType>Package</OutputType>
-    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.0\Wix.targets</WixTargetsPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.5\Wix.targets</WixTargetsPath>
     <Name>SlimDXSDK</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
@@ -20,9 +20,11 @@
   <ItemGroup>
     <WixExtension Include="WixUIExtension">
       <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
     </WixExtension>
     <WixExtension Include="WixNetFxExtension">
       <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
+      <Name>WixNetFxExtension</Name>
     </WixExtension>
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />

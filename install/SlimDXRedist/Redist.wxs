@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<?define Version="2.0.9.42" ?>
-<?define ReleaseName="February 2010" ?>
-<?define ShortName="Feb2010" ?>
+<?define Version="2.0.10.43" ?>
+<?define ReleaseName="June 2010" ?>
+<?define ShortName="Jun2010" ?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
-  <Product Id="7748F5D9-4725-44f4-B1E8-3CB9BB843418" Language="1033" Manufacturer="SlimDX Group" Name="SlimDX Redistributable ($(var.ReleaseName))" Version="$(var.Version)">
+  <Product Id="354D00E0-C7C9-4bc1-BC12-08C4977AA827" Language="1033" Manufacturer="SlimDX Group" Name="SlimDX Redistributable ($(var.ReleaseName))" Version="$(var.Version)">
     <Package Id="*" InstallerVersion="300" Compressed="yes" />
 
     <PropertyRef Id="NETFRAMEWORK20" />
@@ -33,7 +33,7 @@
           <Condition>
             <![CDATA[Installed OR VersionNT64]]>
           </Condition>
-          <File Id="SlimDX.dll_x64_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\x64\SlimDX.dll"
+          <File Id="SlimDX.dll_x64_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\net20\x64\SlimDX.dll"
                 KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x64_GAC">
             <netfx:NativeImage Id="SlimDX_NGEN_x64" Priority="1" Platform="64bit" />
           </File>
@@ -41,7 +41,7 @@
       </Directory>
       <Directory Id="x86_GAC" Name="x86_GAC">
         <Component Id="x86_GAC" DiskId="1" Guid="862BB85B-0A7A-4FB4-9942-644387DF7B8D">
-          <File Id="SlimDX.dll_x86_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\x86\SlimDX.dll"
+          <File Id="SlimDX.dll_x86_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\net20\x86\SlimDX.dll"
                 KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x86_GAC">
             <netfx:NativeImage Id="SlimDX_NGEN_x86" Priority="1" Platform="32bit" />
           </File>
@@ -57,12 +57,12 @@
             <File Id="dxupdate.cab" Name="dxupdate.cab" Source="..\ExtraFiles\DXRedist\dxupdate.cab" />
           </Component>
           <Component Id="DXRedist_x86" Guid="21E764E6-B901-44db-B24C-2CFC012C6EA9">
-            <File Id="D3DCompiler_42_x86" Name="Aug2009_D3DCompiler_42_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Aug2009_D3DCompiler_42_x86.cab" />
-            <File Id="d3dcsx_42_x86" Name="Aug2009_d3dcsx_42_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Aug2009_d3dcsx_42_x86.cab" />
-            <File Id="d3dx9_42_x86.cab" Name="Aug2009_d3dx9_42_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Aug2009_d3dx9_42_x86.cab" />
-            <File Id="d3dx10_42_x86.cab" Name="Aug2009_d3dx10_42_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Aug2009_d3dx10_42_x86.cab" />
-            <File Id="d3dx11_42_x86.cab" Name="Aug2009_d3dx11_42_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Aug2009_d3dx11_42_x86.cab" />
-            <File Id="X3DAudio_x86.cab" Name="Feb2010_X3DAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_X3DAudio_x86.cab" />
+            <File Id="D3DCompiler_43_x86" Name="$(var.ShortName)_D3DCompiler_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_D3DCompiler_43_x86.cab" />
+            <File Id="d3dcsx_43_x86" Name="$(var.ShortName)_d3dcsx_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dcsx_43_x86.cab" />
+            <File Id="d3dx9_43_x86.cab" Name="$(var.ShortName)_d3dx9_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dx9_43_x86.cab" />
+            <File Id="d3dx10_43_x86.cab" Name="$(var.ShortName)_d3dx10_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dx10_43_x86.cab" />
+            <File Id="d3dx11_43_x86.cab" Name="$(var.ShortName)_d3dx11_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dx11_43_x86.cab" />
+            <File Id="X3DAudio_x86.cab" Name="Feb2010_X3DAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Feb2010_X3DAudio_x86.cab" />
             <File Id="XAudio_x86.cab" Name="$(var.ShortName)_XAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_XAudio_x86.cab" />
             <File Id="xinput_x86.cab" Name="APR2007_xinput_x86.cab" Source="..\ExtraFiles\DXRedist\x86\APR2007_xinput_x86.cab" />
           </Component>
@@ -70,12 +70,12 @@
             <Condition>
               <![CDATA[Installed OR VersionNT64]]>
             </Condition>
-            <File Id="D3DCompiler_42_x64" Name="Aug2009_D3DCompiler_42_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Aug2009_D3DCompiler_42_x64.cab" />
-            <File Id="d3dcsx_42_x64" Name="Aug2009_d3dcsx_42_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Aug2009_d3dcsx_42_x64.cab" />
-            <File Id="d3dx9_42_x64.cab" Name="Aug2009_d3dx9_42_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Aug2009_d3dx9_42_x64.cab" />
-            <File Id="d3dx10_42_x64.cab" Name="Aug2009_d3dx10_42_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Aug2009_d3dx10_42_x64.cab" />
-            <File Id="d3dx11_42_x64.cab" Name="Aug2009_d3dx11_42_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Aug2009_d3dx11_42_x64.cab" />
-            <File Id="X3DAudio_x64.cab" Name="$(var.ShortName)_X3DAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_X3DAudio_x64.cab" />
+            <File Id="D3DCompiler_43_x64" Name="$(var.ShortName)_D3DCompiler_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_D3DCompiler_43_x64.cab" />
+            <File Id="d3dcsx_43_x64" Name="$(var.ShortName)_d3dcsx_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dcsx_43_x64.cab" />
+            <File Id="d3dx9_43_x64.cab" Name="$(var.ShortName)_d3dx9_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dx9_43_x64.cab" />
+            <File Id="d3dx10_43_x64.cab" Name="$(var.ShortName)_d3dx10_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dx10_43_x64.cab" />
+            <File Id="d3dx11_43_x64.cab" Name="$(var.ShortName)_d3dx11_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dx11_43_x64.cab" />
+            <File Id="X3DAudio_x64.cab" Name="Feb2010_X3DAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Feb2010_X3DAudio_x64.cab" />
             <File Id="XAudio_x64.cab" Name="$(var.ShortName)_XAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_XAudio_x64.cab" />
             <File Id="xinput_x64.cab" Name="APR2007_xinput_x64.cab" Source="..\ExtraFiles\DXRedist\x64\APR2007_xinput_x64.cab" />
           </Component>
