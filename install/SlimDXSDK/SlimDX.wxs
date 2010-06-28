@@ -122,9 +122,9 @@
 
                     <File Id="SlimDX.dll_x64_net20_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\net20\x64\SlimDX.dll"
                           KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x64_net20_GAC">
-                      <netfx:NativeImage Id="SlimDX_NGEN_x64" Priority="1" Platform="64bit" />
-                      <netfx:NativeImage Id="SlimDX_NGEN_x64_debug" Priority="2" Platform="64bit" Debug="yes" />
-                      <netfx:NativeImage Id="SlimDX_NGEN_x64_profile" Priority="2" Platform="64bit" Profile="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x64_20" Priority="1" Platform="64bit" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x64_20_debug" Priority="2" Platform="64bit" Debug="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x64_20_profile" Priority="2" Platform="64bit" Profile="yes" />
                     </File>
                   </Component>
                 </Directory>
@@ -146,9 +146,9 @@
 
                     <File Id="SlimDX.dll_x86_net20_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\net20\x86\SlimDX.dll"
                           KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x86_net20_GAC">
-                      <netfx:NativeImage Id="SlimDX_NGEN_x86" Priority="1" Platform="32bit" />
-                      <netfx:NativeImage Id="SlimDX_NGEN_x86_debug" Priority="2" Platform="32bit" Debug="yes" />
-                      <netfx:NativeImage Id="SlimDX_NGEN_x86_profile" Priority="2" Platform="32bit" Profile="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x86_20" Priority="1" Platform="32bit" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x86_20_debug" Priority="2" Platform="32bit" Debug="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x86_20_profile" Priority="2" Platform="32bit" Profile="yes" />
                     </File>
                   </Component>
                 </Directory>
@@ -156,10 +156,10 @@
             </Directory>
 
             <!-- .NET 4.0 binaries -->
-            <Directory Id="bin_net40" Name="net20">
+            <Directory Id="bin_net40" Name="net40">
               <Directory Id="bin_net40_x64" Name="x64">
                 <!-- x64 files -->
-                <Component Id="x64_net40" DiskId="1" Guid="C93946B6-13DF-4F13-B125-DAC9F278FAC5">
+                <Component Id="x64_net40" DiskId="1" Guid="7C8BB70D-A139-44B6-BFE4-7E152A722B29">
                   <File Id="SlimDX.dll_x64_net40" Name="SlimDX.dll" Source="..\..\publish\Bin\net40\x64\SlimDX.dll" />
                   <File Id="SlimDX.pdb_x64_net40" Name="SlimDX.pdb" Source="..\..\publish\Bin\net40\x64\SlimDX.pdb" />
                   <File Id="SlimDX.xml_x64_net40" Name="SlimDX.xml" Source="..\..\publish\Bin\net40\x64\SlimDX.xml" />
@@ -167,16 +167,16 @@
 
                 <!-- x64 GAC -->
                 <Directory Id="x64_net40_GAC" Name="GAC">
-                  <Component Id="x64_net40_GAC" DiskId="1" Guid="49CD009B-2541-484D-BEEB-83D79E7DD9D7">
+                  <Component Id="x64_net40_GAC" DiskId="1" Guid="43E915E1-3E6D-41EA-97C3-9D21FBACCC5A">
                     <Condition>
                       <![CDATA[Installed OR (VersionNT64 AND (NETFRAMEWORK40FULL OR NETFRAMEWORK40CLIENT))]]>
                     </Condition>
 
                     <File Id="SlimDX.dll_x64_net40_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\net40\x64\SlimDX.dll"
                           KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x64_net40_GAC">
-                      <netfx:NativeImage Id="SlimDX_NGEN_x64" Priority="1" Platform="64bit" />
-                      <netfx:NativeImage Id="SlimDX_NGEN_x64_debug" Priority="2" Platform="64bit" Debug="yes" />
-                      <netfx:NativeImage Id="SlimDX_NGEN_x64_profile" Priority="2" Platform="64bit" Profile="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x64_40" Priority="1" Platform="64bit" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x64_40_debug" Priority="2" Platform="64bit" Debug="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x64_40_profile" Priority="2" Platform="64bit" Profile="yes" />
                     </File>
                   </Component>
                 </Directory>
@@ -184,23 +184,23 @@
 
               <Directory Id="x86_net40" Name="x86">
                 <!-- x86 files-->
-                <Component Id="x86_net40" DiskId="1" Guid="65A2E192-3D00-4A00-805E-642F90BAF7B2">
+                <Component Id="x86_net40" DiskId="1" Guid="83DB9C58-C5BE-4B30-AE41-975FC4E56401">
                   <File Id="SlimDX.dll_x86_net40" Name="SlimDX.dll" Source="..\..\publish\Bin\net40\x86\SlimDX.dll" />
                   <File Id="SlimDX.pdb_x86_net40" Name="SlimDX.pdb" Source="..\..\publish\Bin\net40\x86\SlimDX.pdb" />
                   <File Id="SlimDX.xml_x86_net40" Name="SlimDX.xml" Source="..\..\publish\Bin\net40\x86\SlimDX.xml" />
                 </Component>
                 <!-- x86 GAC -->
                 <Directory Id="x86_net40_GAC" Name="GAC">
-                  <Component Id="x86_net40_GAC" DiskId="1" Guid="862BB85B-0A7A-4FB4-9942-644387DF7B8D">
+                  <Component Id="x86_net40_GAC" DiskId="1" Guid="E64ED669-6C26-4897-8AD0-EAF79BD8E3FF">
                     <Condition>
                       <![CDATA[Installed OR NETFRAMEWORK40FULL OR NETFRAMEWORK40CLIENT]]>
                     </Condition>
 
                     <File Id="SlimDX.dll_x86_net40_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\net40\x86\SlimDX.dll"
                           KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x86_net40_GAC">
-                      <netfx:NativeImage Id="SlimDX_NGEN_x86" Priority="1" Platform="32bit" />
-                      <netfx:NativeImage Id="SlimDX_NGEN_x86_debug" Priority="2" Platform="32bit" Debug="yes" />
-                      <netfx:NativeImage Id="SlimDX_NGEN_x86_profile" Priority="2" Platform="32bit" Profile="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x86_40" Priority="1" Platform="32bit" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x86_40_debug" Priority="2" Platform="32bit" Debug="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x86_40_profile" Priority="2" Platform="32bit" Profile="yes" />
                     </File>
                   </Component>
                 </Directory>
