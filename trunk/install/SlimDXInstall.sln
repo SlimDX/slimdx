@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "SlimDXSDK", "SlimDXSDK\SlimDXSDK.wixproj", "{8D77F897-0D99-4261-A76B-B079AFE414FE}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "SlimDXRedist", "SlimDXRedist\SlimDXRedist.wixproj", "{EE5E55A4-2DB1-452F-9AB9-02E87790F8CC}"
