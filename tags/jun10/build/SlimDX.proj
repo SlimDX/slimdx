@@ -1,0 +1,211 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+
+	<UsingTask TaskName="DowngradeProject" AssemblyFile="$(RootDir)\tools\BuildTasks\BuildTasks.dll"/>
+	<UsingTask TaskName="DowngradeSolution" AssemblyFile="$(RootDir)\tools\BuildTasks\BuildTasks.dll"/>
+	<UsingTask TaskName="GetSolutionProjects" AssemblyFile="$(RootDir)\tools\BuildTasks\BuildTasks.dll"/>
+	<UsingTask TaskName="SelectByPrefix" AssemblyFile="$(RootDir)\tools\BuildTasks\BuildTasks.dll"/>
+
+	<PropertyGroup>
+		<RootDir>$(MSBuildProjectDirectory)\..</RootDir>
+		<BuildDir>$(RootDir)\build</BuildDir>
+		<SamplesDir>$(RootDir)\samples</SamplesDir>
+		<StagingDir>$(RootDir)\artifact\stage</StagingDir>
+
+		<TestsBinDir>$(RootDir)\tests\SlimDX\bin</TestsBinDir>
+		<NUnitBinDir>$(RootDir)\external\NUnit\bin</NUnitBinDir>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<SolutionsToDowngrade Include="$(RootDir)\**\*.sln" Exclude="$(RootDir)\tools\**\*.*;$(RootDir)\**\*.2005.sln"/>
+		
+		<ProjectsToDowngrade Include="$(RootDir)\**\*.vcproj" Exclude="$(RootDir)\tools\**\*.*;$(RootDir)\**\*.2005.vcproj"/>
+		<ProjectsToDowngrade Include="$(RootDir)\**\*.csproj" Exclude="$(RootDir)\tools\**\*.*;$(RootDir)\**\*.2005.csproj"/>
+	</ItemGroup>
+	
+	<Target Name="Build" DependsOnTargets="_CompileSolution">
+		<MakeDir Directories="%(LibraryOutputFiles.PathInArtifacts)"/>
+		<Copy SourceFiles="@(LibraryOutputFiles)" DestinationFiles="@(LibraryOutputFiles->'%(PathInArtifacts)%(FileName)%(Extension)')"/>
+
+		<MakeDir Directories="%(SampleOutputFiles.PathInArtifacts)"/>
+		<Copy SourceFiles="@(SampleOutputFiles)" DestinationFiles="@(SampleOutputFiles->'%(PathInArtifacts)%(FileName)%(Extension)')"/>
+	</Target>
+
+  <Target Name="Clean">
+    <RemoveDir Directories="$(BuildDir)\x86;$(BuildDir)\x64"/>
+    <RemoveDir Directories="$(RootDir)\tests\SlimDX.Tests\x86;$(RootDir)\tests\SlimDX.Tests\x64"/>
+  </Target>
+  
+	<!-- ===================================================================== 
+	     RunTests
+	       Runs SlimDX unit tests. Expects the tests to have been built.
+       ===================================================================== -->
+	<Target
+    Name="RunTests" DependsOnTargets="_CheckEnvironmentVariables"
+    Condition="'$(RunTests)'=='true'">
+		<Exec Command="$(RootDir)\tests\SlimDX.Tests\x86\Release\SlimDX.Tests.exe"/>
+	</Target>
+
+	<!-- ===================================================================== 
+	     Create2005Environment
+	       Creates a VS 2005 build environment for SlimDX. This produce 2005
+	       versions of all solution and project files next to their 2008.
+       ===================================================================== -->
+	<Target
+    Name="Create2005Environment">
+		<DowngradeSolution
+      InputSolutions="@(SolutionsToDowngrade)"
+      OutputSolutions="@(SolutionsToDowngrade->'%(RootDir)%(Directory)%(FileName).2005%(Extension)')"/>
+		<DowngradeProject
+			InputProjects="@(ProjectsToDowngrade)"
+			OutputProjects="@(ProjectsToDowngrade->'%(RootDir)%(Directory)%(FileName).2005%(Extension)')"/>
+	</Target>
+
+	<!-- ===================================================================== 
+	     _CompileSolution
+	       Builds the solution. Creates @(BuiltProjects), which contains the
+	       list of project files that were in the solution. 
+       ===================================================================== -->
+	<Target
+		Name="_CompileSolution"
+		DependsOnTargets="_CheckProperties;_SelectSolution">
+		<MsBuild
+			Properties="Configuration=$(Configuration);Platform=$(Platform)"
+			Projects="$(SolutionToBuild)"/>
+
+		<GetSolutionProjects
+			SolutionFile="$(SolutionToBuild)">
+			<Output
+				ItemName="BuiltProjects"
+				TaskParameter="ProjectFiles"/>
+		</GetSolutionProjects>
+
+		<SelectByPrefix
+			Prefix="$(SamplesDir)"
+			InputItems="@(BuiltProjects->'%(RootDir)%(Directory)')">
+			<Output
+				ItemName="SampleOutputRoots"
+				TaskParameter="OutputItems"/>
+		</SelectByPrefix>
+
+		<CreateItem
+			Include="$(BuildDir)\$(Platform)\$(Configuration)\*.dll;$(BuildDir)\$(Platform)\$(Configuration)\*.pdb"
+			Exclude="$(BuildDir)\$(Platform)\$(Configuration)\vc90.pdb"
+			AdditionalMetadata="PathInArtifacts=$(StagingDir)\$(Platform)\$(Configuration)\Library\">
+			<Output
+				ItemName="LibraryOutputFiles"
+				TaskParameter="Include"/>
+		</CreateItem>
+
+		<CreateItem
+			Include="@(SampleOutputRoots->'%(FullPath)bin\$(Platform)\$(Configuration)\*.exe');@(SampleOutputRoots->'%(FullPath)bin\$(Platform)\$(Configuration)\*.dll')"
+			Exclude="@(SampleOutputRoots->'%(FullPath)bin\$(Platform)\$(Configuration)\*.vshost.exe')"
+			AdditionalMetadata="PathInArtifacts=$(StagingDir)\$(Platform)\$(Configuration)\Samples\%(UniquePart)">
+			<Output
+				ItemName="SampleOutputFiles"
+				TaskParameter="Include"/>
+		</CreateItem>
+	</Target>
+
+	<!-- ===================================================================== 
+	     _SelectSolution
+	       Selects which solution file to build based on which version of
+	       Visual Studio is being used. If neccessary, this will generate the
+	       build environment for the 2005 build.
+       ===================================================================== -->
+	<Target
+		Name="_SelectSolution"
+		DependsOnTargets="_SelectVisualStudioVersion">
+		<CallTarget
+			Condition="'$(BuildWith2005)'=='True'"
+			Targets="Create2005Environment"/>
+		<CreateProperty
+			Condition="'$(BuildWith2005)'=='True'"
+			Value="$(BuildDir)\SlimDX.2005.sln">
+			<Output
+				PropertyName="SolutionToBuild"
+				TaskParameter="Value"/>
+		</CreateProperty>
+		<CreateProperty
+			Condition="'$(BuildWith2005)'=='False'"
+			Value="$(BuildDir)\SlimDX.sln">
+			<Output
+				PropertyName="SolutionToBuild"
+				TaskParameter="Value"/>
+		</CreateProperty>
+	</Target>
+
+	<!-- ===================================================================== 
+	     _SelectVisualStudioVersion
+	       Selects which version of Visual Studio will be used for the build.
+       ===================================================================== -->
+	<Target
+		Name="_SelectVisualStudioVersion"
+		DependsOnTargets="_CheckEnvironmentVariables">
+		<Message
+			Condition="'$(VS80COMNTOOLS)'!='' and '$(VS90COMNTOOLS)'==''"
+			Importance="high"
+			Text="Building with a VS 2005 installation."/>
+		<CreateProperty
+			Condition="'$(VS80COMNTOOLS)'!='' and '$(VS90COMNTOOLS)'==''"
+			Value="True">
+			<Output
+				PropertyName="BuildWith2005"
+				TaskParameter="Value"/>
+		</CreateProperty>
+		<Message
+			Condition="'$(VS90COMNTOOLS)'!=''"
+			Importance="high"
+			Text="Building with a VS 2008 installation."/>
+		<CreateProperty
+					Condition="'$(VS90COMNTOOLS)'!=''"
+					Value="False">
+			<Output
+				PropertyName="BuildWith2005"
+				TaskParameter="Value"/>
+		</CreateProperty>
+	</Target>
+
+	<!-- ===================================================================== 
+	     _CheckEnvironmentVariables
+	       Ensures that the required environment variables are valid.
+       ===================================================================== -->
+	<Target
+		Name="_CheckEnvironmentVariables">
+		<Error
+			Condition="'$(VS80COMNTOOLS)'=='' and '$(VS90COMNTOOLS)'==''"
+			Text="Environment variable VS80COMNTOOLS or VS90COMNTOOLS not found; have you installed Visual C++ 2005 or 2008?"/>
+		<Error
+			Condition="'$(DXSDK_DIR)'==''"
+			Text="Environment variable DXSDK_DIR not set; have you installed the DirectX SDK?"/>
+
+		<!-- This assumes that 'x86' is the only 32-bit value for PROCESSOR_ARCHITECTURE. -->
+		<CreateProperty
+			Condition="'$(PROCESSOR_ARCHITECTURE)'=='x86'"
+			Value="False">
+			<Output
+				PropertyName="MachineIs64Bit"
+				TaskParameter="Value"/>
+		</CreateProperty>
+		<CreateProperty
+			Condition="'$(PROCESSOR_ARCHITECTURE)'!='x86'"
+			Value="True">
+			<Output
+				PropertyName="MachineIs64Bit"
+				TaskParameter="Value"/>
+		</CreateProperty>
+	</Target>
+
+	<!-- ===================================================================== 
+	     _CheckProperties
+	       Ensures that the required properties are valid.
+       ===================================================================== -->
+	<Target
+		Name="_CheckProperties">
+		<Error
+			Condition="'$(Configuration)'==''"
+			Text="The Configuration property must be specified."/>
+		<Error
+			Condition="'$(Platform)'==''"
+			Text="The Platform property must be specified."/>
+	</Target>
+</Project>

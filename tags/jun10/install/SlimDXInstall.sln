@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "SlimDXSDK", "SlimDXSDK\SlimDXSDK.wixproj", "{8D77F897-0D99-4261-A76B-B079AFE414FE}"
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "SlimDXRedist", "SlimDXRedist\SlimDXRedist.wixproj", "{EE5E55A4-2DB1-452F-9AB9-02E87790F8CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WixFolderScanner", "..\tools\WixFolderScanner\WixFolderScanner.csproj", "{48633458-8272-4D61-9A1C-CB079A0F9F31}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup1", "Setup1\Setup1.vdproj", "{17153F22-13C9-42D0-96ED-6E04436C2356}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D77F897-0D99-4261-A76B-B079AFE414FE}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{8D77F897-0D99-4261-A76B-B079AFE414FE}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{8D77F897-0D99-4261-A76B-B079AFE414FE}.Debug|x86.ActiveCfg = Debug|x86
+		{8D77F897-0D99-4261-A76B-B079AFE414FE}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{8D77F897-0D99-4261-A76B-B079AFE414FE}.Release|Mixed Platforms.Build.0 = Release|x86
+		{8D77F897-0D99-4261-A76B-B079AFE414FE}.Release|x86.ActiveCfg = Release|x86
+		{8D77F897-0D99-4261-A76B-B079AFE414FE}.Release|x86.Build.0 = Release|x86
+		{EE5E55A4-2DB1-452F-9AB9-02E87790F8CC}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{EE5E55A4-2DB1-452F-9AB9-02E87790F8CC}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{EE5E55A4-2DB1-452F-9AB9-02E87790F8CC}.Debug|x86.ActiveCfg = Debug|x86
+		{EE5E55A4-2DB1-452F-9AB9-02E87790F8CC}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{EE5E55A4-2DB1-452F-9AB9-02E87790F8CC}.Release|Mixed Platforms.Build.0 = Release|x86
+		{EE5E55A4-2DB1-452F-9AB9-02E87790F8CC}.Release|x86.ActiveCfg = Release|x86
+		{EE5E55A4-2DB1-452F-9AB9-02E87790F8CC}.Release|x86.Build.0 = Release|x86
+		{48633458-8272-4D61-9A1C-CB079A0F9F31}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{48633458-8272-4D61-9A1C-CB079A0F9F31}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{48633458-8272-4D61-9A1C-CB079A0F9F31}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{48633458-8272-4D61-9A1C-CB079A0F9F31}.Debug|x86.Build.0 = Debug|Any CPU
+		{48633458-8272-4D61-9A1C-CB079A0F9F31}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{48633458-8272-4D61-9A1C-CB079A0F9F31}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{48633458-8272-4D61-9A1C-CB079A0F9F31}.Release|x86.ActiveCfg = Release|Any CPU
+		{17153F22-13C9-42D0-96ED-6E04436C2356}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{17153F22-13C9-42D0-96ED-6E04436C2356}.Debug|x86.ActiveCfg = Debug
+		{17153F22-13C9-42D0-96ED-6E04436C2356}.Release|Mixed Platforms.ActiveCfg = Release
+		{17153F22-13C9-42D0-96ED-6E04436C2356}.Release|x86.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
