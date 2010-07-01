@@ -11,6 +11,8 @@
     <PropertyRef Id="NETFRAMEWORK20" />
     <PropertyRef Id="NETFRAMEWORK35" />
     <PropertyRef Id="NETFRAMEWORK35_CLIENT" />
+    <PropertyRef Id="NETFRAMEWORK40FULL" />
+    <PropertyRef Id="NETFRAMEWORK40CLIENT" />
 
     <WixVariable Id="WixUILicenseRtf" Value="..\ExtraFiles\License.rtf" />
     <WixVariable Id="WixUIDialogBmp" Value="..\ExtraFiles\SdxSideLogo.jpg" />
@@ -38,6 +40,8 @@
 
     <UI>
       <ProgressText Action="InstallDirectX">Installing DirectX runtime components ($(var.ReleaseName))</ProgressText>
+      <ProgressText Action="InstallVC10Runtime_x86">Installing Visual C++ 2010 runtime (x86)</ProgressText>
+      <ProgressText Action="InstallVC10Runtime_x64">Installing Visual C++ 2010 runtime (x64)</ProgressText>
     </UI>
 
     <UI Id="FeatureTreePlus">
@@ -117,14 +121,13 @@
                 <Directory Id="x64_net20_GAC" Name="GAC">
                   <Component Id="x64_net20_GAC" DiskId="1" Guid="49CD009B-2541-484D-BEEB-83D79E7DD9D7">
                     <Condition>
-                      <![CDATA[Installed OR (VersionNT64 AND NETFRAMEWORK20)]]>
+                      <![CDATA[VersionNT64]]>
                     </Condition>
-
                     <File Id="SlimDX.dll_x64_net20_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\net20\x64\SlimDX.dll"
                           KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x64_net20_GAC">
-                      <netfx:NativeImage Id="SlimDX_NGEN_x64_20" Priority="1" Platform="64bit" />
-                      <netfx:NativeImage Id="SlimDX_NGEN_x64_20_debug" Priority="2" Platform="64bit" Debug="yes" />
-                      <netfx:NativeImage Id="SlimDX_NGEN_x64_20_profile" Priority="2" Platform="64bit" Profile="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x64_net20" Priority="1" Platform="64bit" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x64_net20_debug" Priority="2" Platform="64bit" Debug="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x64_net20_profile" Priority="2" Platform="64bit" Profile="yes" />
                     </File>
                   </Component>
                 </Directory>
@@ -140,15 +143,11 @@
                 <!-- x86 GAC -->
                 <Directory Id="x86_net20_GAC" Name="GAC">
                   <Component Id="x86_net20_GAC" DiskId="1" Guid="862BB85B-0A7A-4FB4-9942-644387DF7B8D">
-                    <Condition>
-                      <![CDATA[Installed OR NETFRAMEWORK20]]>
-                    </Condition>
-
                     <File Id="SlimDX.dll_x86_net20_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\net20\x86\SlimDX.dll"
                           KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x86_net20_GAC">
-                      <netfx:NativeImage Id="SlimDX_NGEN_x86_20" Priority="1" Platform="32bit" />
-                      <netfx:NativeImage Id="SlimDX_NGEN_x86_20_debug" Priority="2" Platform="32bit" Debug="yes" />
-                      <netfx:NativeImage Id="SlimDX_NGEN_x86_20_profile" Priority="2" Platform="32bit" Profile="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x86_net20" Priority="1" Platform="32bit" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x86_net20_debug" Priority="2" Platform="32bit" Debug="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x86_net20_profile" Priority="2" Platform="32bit" Profile="yes" />
                     </File>
                   </Component>
                 </Directory>
@@ -169,14 +168,14 @@
                 <Directory Id="x64_net40_GAC" Name="GAC">
                   <Component Id="x64_net40_GAC" DiskId="1" Guid="43E915E1-3E6D-41EA-97C3-9D21FBACCC5A">
                     <Condition>
-                      <![CDATA[Installed OR (VersionNT64 AND (NETFRAMEWORK40FULL OR NETFRAMEWORK40CLIENT))]]>
+                      <![CDATA[VersionNT64 AND (NETFRAMEWORK40FULL OR NETFRAMEWORK40CLIENT)]]>
                     </Condition>
 
                     <File Id="SlimDX.dll_x64_net40_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\net40\x64\SlimDX.dll"
                           KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x64_net40_GAC">
-                      <netfx:NativeImage Id="SlimDX_NGEN_x64_40" Priority="1" Platform="64bit" />
-                      <netfx:NativeImage Id="SlimDX_NGEN_x64_40_debug" Priority="2" Platform="64bit" Debug="yes" />
-                      <netfx:NativeImage Id="SlimDX_NGEN_x64_40_profile" Priority="2" Platform="64bit" Profile="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x64_net40" Priority="1" Platform="64bit" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x64_net40_debug" Priority="2" Platform="64bit" Debug="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x64_net40_profile" Priority="2" Platform="64bit" Profile="yes" />
                     </File>
                   </Component>
                 </Directory>
@@ -193,14 +192,14 @@
                 <Directory Id="x86_net40_GAC" Name="GAC">
                   <Component Id="x86_net40_GAC" DiskId="1" Guid="E64ED669-6C26-4897-8AD0-EAF79BD8E3FF">
                     <Condition>
-                      <![CDATA[Installed OR NETFRAMEWORK40FULL OR NETFRAMEWORK40CLIENT]]>
+                      <![CDATA[NETFRAMEWORK40FULL OR NETFRAMEWORK40CLIENT]]>
                     </Condition>
 
                     <File Id="SlimDX.dll_x86_net40_GAC" Name="SlimDX.dll" Source="..\..\publish\Bin\net40\x86\SlimDX.dll"
                           KeyPath="yes" Checksum="yes" Assembly=".net" AssemblyManifest="SlimDX.dll_x86_net40_GAC">
-                      <netfx:NativeImage Id="SlimDX_NGEN_x86_40" Priority="1" Platform="32bit" />
-                      <netfx:NativeImage Id="SlimDX_NGEN_x86_40_debug" Priority="2" Platform="32bit" Debug="yes" />
-                      <netfx:NativeImage Id="SlimDX_NGEN_x86_40_profile" Priority="2" Platform="32bit" Profile="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x86_net40" Priority="1" Platform="32bit" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x86_net40_debug" Priority="2" Platform="32bit" Debug="yes" />
+                      <netfx:NativeImage Id="SlimDX_NGEN_x86_net40_profile" Priority="2" Platform="32bit" Profile="yes" />
                     </File>
                   </Component>
                 </Directory>
@@ -243,8 +242,14 @@
 
           <!-- Visual C++ redist components -->
           <Directory Id="VCRedist" Name="Visual C++ Redist">
-            <Merge Id="VCRuntime_x86" DiskId="1" Language="1033" SourceFile="..\ExtraFiles\VCRedist\Microsoft_VC90_CRT_x86.msm" />
-            <Merge Id="VCRuntime_x64" DiskId="1" Language="1033" SourceFile="..\ExtraFiles\VCRedist\Microsoft_VC90_CRT_x86_x64.msm" />
+            <Merge Id="VC09Runtime_x86" DiskId="1" Language="1033" SourceFile="..\ExtraFiles\VCRedist\Microsoft_VC90_CRT_x86.msm" />
+            <Merge Id="VC09Runtime_x64" DiskId="1" Language="1033" SourceFile="..\ExtraFiles\VCRedist\Microsoft_VC90_CRT_x86_x64.msm" />
+            <!--<Component Id="VC10Runtime_x86" Guid="DBE789EE-2FDA-4411-8E35-A8771802EB95">
+              <File Id="vc10redist_x86.exe" Name="vc10redist_x86.exe" Source="..\ExtraFiles\VCRedist\vc10redist_x86.exe" />
+            </Component>
+            <Component Id="VC10Runtime_x64" Guid="285B780B-0BF0-4F73-A655-D0EAC83B6194">
+              <File Id="vc10redist_x64.exe" Name="vc10redist_x64.exe" Source="..\ExtraFiles\VCRedist\vc10redist_x64.exe" />
+            </Component>-->
           </Directory>
 
           <!-- SlimDX documentation -->
@@ -279,14 +284,14 @@
           <Directory Id="SamplesShortcuts" Name="Samples">
             <Component Id="SamplesShortcuts" Guid="AF3E6616-1C1C-11DE-BD3F-4DC756D89593">
               <Shortcut Id="InstallSamples" Name="Install Samples (VS 08)" Description="Install samples for Visual Studio 2008"
-                        Target="[APPLICATIONFOLDER]Samples\SlimDX Samples.exe" />
+                        Target="[APPLICATIONFOLDER]Samples\SlimDX Samples.exe" WorkingDirectory="PersonalFolder" />
               <RemoveFolder Id="SamplesShortcuts" On="uninstall"/>
               <RegistryValue Root="HKCU" Key="Software\SlimDX\SlimDX_$(var.ShortName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
             </Component>
           </Directory>
         </Directory>
       </Directory>
-
+      
       <!-- ClickOnce support for VS 2008 -->
       <Directory Id="CLICKONCE_VS08">
         <Directory Id="PackagesVS08" Name="Packages">
@@ -336,7 +341,7 @@
       </Component>
       <Component Id="VSRegKey64_net20" Guid="4B5A6FA8-C214-4160-B4F1-9AE8FBC162D3">
         <Condition>
-          <![CDATA[Installed OR VersionNT64]]>
+          <![CDATA[VersionNT64]]>
         </Condition>
         <RegistryKey Root="HKLM" Key="Software\Microsoft\.NETFramework\v2.0.50727\AssemblyFoldersEx\SlimDX_$(var.Version)_x64-net20">
           <RegistryValue Type="string" Value="[APPLICATIONFOLDER]Bin\net20\x64" />
@@ -346,7 +351,7 @@
       <!-- .NET 4.0 -->
       <Component Id="VSRegKey32_net40" Guid="6531AB5B-B027-4e9d-82E7-6C71859A7C06">
         <Condition>
-          <![CDATA[Installed OR NETFRAMEWORK40FULL OR NETFRAMEWORK40CLIENT]]>
+          <![CDATA[NETFRAMEWORK40FULL OR NETFRAMEWORK40CLIENT]]>
         </Condition>
         <RegistryKey Root="HKLM" Key="Software\Microsoft\.NETFramework\v4.0.30319\AssemblyFoldersEx\SlimDX_$(var.Version)-net40">
           <RegistryValue Type="string" Value="[APPLICATIONFOLDER]Bin\net40\x86" />
@@ -354,7 +359,7 @@
       </Component>
       <Component Id="VSRegKey64_net40" Guid="1C1C90E7-5A25-4a6d-ADD5-71CD9A8D747C">
         <Condition>
-          <![CDATA[Installed OR (VersionNT64 AND (NETFRAMEWORK40FULL OR NETFRAMEWORK40CLIENT))]]>
+          <![CDATA[VersionNT64 AND (NETFRAMEWORK40FULL OR NETFRAMEWORK40CLIENT)]]>
         </Condition>
         <RegistryKey Root="HKLM" Key="Software\Microsoft\.NETFramework\v4.0.30319\AssemblyFoldersEx\SlimDX_$(var.Version)_x64-net40">
           <RegistryValue Type="string" Value="[APPLICATIONFOLDER]Bin\net40\x64" />
@@ -393,17 +398,22 @@
         <ComponentRef Id="DXRedist_x86" />
         <ComponentRef Id="DXRedist_x64" />
       </Feature>
-      <Feature Id="VCRuntime_x86" Level="1" AllowAdvertise="no" Absent="disallow"
-               Title="Visual C++ runtime (x86)" Description="Visual C++ 2008 runtime components for x86.">
-        <MergeRef Id="VCRuntime_x86" />
+      <Feature Id="VC09Runtime_x86" Level="1" AllowAdvertise="no" Absent="disallow"
+               Title="Visual C++ 2008 runtime (x86)" Description="Visual C++ 2008 runtime components for x86.">
+        <MergeRef Id="VC09Runtime_x86" />
       </Feature>
-      <Feature Id="VCRuntime_x64" Level="0" AllowAdvertise="no" Absent="disallow"
-               Title="Visual C++ runtime (x64)" Description="Visual C++ 2008 runtime components for x86-64.">
-        <MergeRef Id="VCRuntime_x64" />
+      <Feature Id="VC09Runtime_x64" Level="0" AllowAdvertise="no" Absent="disallow"
+               Title="Visual C++ 2008 runtime (x64)" Description="Visual C++ 2008 runtime components for x64.">
+        <MergeRef Id="VC09Runtime_x64" />
         <Condition Level="1">
-          <![CDATA[Installed OR VersionNT64]]>
+          <![CDATA[VersionNT64]]>
         </Condition>
       </Feature>
+      <!--<Feature Id="VC10Runtime" Level="1" AllowAdvertise="no" Absent="disallow"
+               Title="Visual C++ 2010 runtime" Description="Visual C++ 2010 runtime components.">
+        <ComponentRef Id="VC10Runtime_x86" />
+        <ComponentRef Id="VC10Runtime_x64" />
+      </Feature>-->
     </Feature>
 
     <Feature Id="Documentation" Level="1" AllowAdvertise="no"
@@ -445,10 +455,10 @@
     </Feature>
 
     <Condition Message="This application requires .NET Framework 2.0 or later. Please install the .NET Framework then run this installer again.">
-      <![CDATA[Installed OR NETFRAMEWORK20 OR NETFRAMEWORK35 OR NETFRAMEWORK35_CLIENT OR NETFRAMEWORK40FULL OR NETFRAMEWORK40CLIENT]]>
+      <![CDATA[NETFRAMEWORK20 OR NETFRAMEWORK35 OR NETFRAMEWORK35_CLIENT OR NETFRAMEWORK40FULL OR NETFRAMEWORK40CLIENT]]>
     </Condition>
 
-    <CustomAction Id="InstallDirectX" FileKey="DXSETUP.exe" ExeCommand="/silent" Execute="deferred" Impersonate="no" Return="check" />
+    <CustomAction Id="InstallDirectX" FileKey="DXSETUP.exe" ExeCommand="/silent" Execute="commit" Impersonate="no" />
     <InstallExecuteSequence>
       <Custom Action="InstallDirectX" Before="InstallFinalize"><![CDATA[NOT REMOVE]]></Custom>
     </InstallExecuteSequence>
