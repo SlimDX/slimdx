@@ -90,6 +90,7 @@
     <Compile Include="DXGI\Enumerations\SwapEffect.cs" />
     <Compile Include="DXGI\Enumerations\SwapFlags.cs" />
     <Compile Include="DXGI\Enumerations\Usage.cs" />
+    <Compile Include="DXGI\Enumerations\WindowAssociationFlags.cs" />
     <Compile Include="DXGI\IDXGIApi.cs" />
     <Compile Include="DXGI\Interfaces\IAdapterDXGI.cs" />
     <Compile Include="DXGI\Interfaces\IObjectDXGI.cs" />
