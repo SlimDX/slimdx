@@ -177,6 +177,10 @@
 			Name="Common"
 			>
 			<File
+				RelativePath=".\Source\Common\ArgumentMacros.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\Common\ComObject.cpp"
 				>
 			</File>
