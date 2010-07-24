@@ -3,7 +3,7 @@
 #include "Direct3D10Api.h"
 #include "Direct3D10Recorder.h"
 
-#include "../Common/Utilities.h"
+#include "../Common/Utility.h"
 #include "../DXGI/SwapChainDXGI.h"
 
 #include <D3DX10.h>

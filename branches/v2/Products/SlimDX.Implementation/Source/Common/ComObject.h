@@ -3,7 +3,7 @@
 namespace SlimDX
 {	
 	template< typename T > 
-	ref class ComObject abstract : IComObject
+	public ref class ComObject abstract : IComObject
 	{
 		public:
 			ComObject( T* pointer )
@@ -32,6 +32,17 @@ namespace SlimDX
 			virtual void Release()
 			{
 				m_Pointer->Release();
+			}
+
+			virtual bool Equals( System::Object^ other ) override
+			{
+				if( other != nullptr )
+				{
+					ComObject<T>^ concrete = safe_cast<ComObject<T>^>( other );
+					return NativePointer == concrete->NativePointer;
+				}
+
+				return false;
 			}
 			
 		protected:

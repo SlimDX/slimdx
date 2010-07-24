@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#include "Utilities.h"
+#include "Utility.h"
 
 using namespace System;
 using namespace System::Collections::Generic;
