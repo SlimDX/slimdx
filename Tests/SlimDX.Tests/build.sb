@@ -1,3 +1,5 @@
+from sbuild import FileSet
+
 def build( b ):
 	includes = [ "Source", "../../External/HippoMocks" ]
 	assembly_references = [

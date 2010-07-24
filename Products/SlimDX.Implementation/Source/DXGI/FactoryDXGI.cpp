@@ -2,8 +2,7 @@
 
 #include "FactoryDXGI.h"
 
-#include "../Common/ArgumentMacros.h"
-#include "../Common/Utilities.h"
+#include "../Common/Utility.h"
 #include "AdapterDXGI.h"
 #include "SwapChainDXGI.h"
 

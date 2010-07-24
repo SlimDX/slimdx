@@ -3,7 +3,7 @@
 #include "Device10.h"
 #include "Direct3D10Recorder.h"
 
-#include "../Common/Utilities.h"
+#include "../Common/Utility.h"
 #include "RenderTargetView10.h"
 #include "Buffer10.h"
 #include "Inputlayout10.h"

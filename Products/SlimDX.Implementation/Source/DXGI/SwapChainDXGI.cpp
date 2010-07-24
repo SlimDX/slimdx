@@ -2,7 +2,7 @@
 
 #include "SwapChainDXGI.h"
 
-#include "../Common/Utilities.h"
+#include "../Common/Utility.h"
 
 using namespace System;
 

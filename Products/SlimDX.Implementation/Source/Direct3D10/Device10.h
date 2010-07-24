@@ -6,7 +6,7 @@ namespace SlimDX
 {
 	namespace Direct3D10
 	{
-		ref class Device : IDevice, ComObject<ID3D10Device>
+		public ref class Device : IDevice, ComObject<ID3D10Device>
 		{
 			public:
 				Device( ID3D10Device* native );

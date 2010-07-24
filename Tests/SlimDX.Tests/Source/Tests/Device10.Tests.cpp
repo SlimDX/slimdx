@@ -29,7 +29,7 @@ TEST( CreateRenderTargetView_WhenResourceNull_WillThrow )
 {
 	MockRepository mocks;
 	ID3D10Device* mockDevice = mocks.InterfaceMock<ID3D10Device>();
-	SlimDX::Direct3D10::Device10^ device = gcnew SlimDX::Direct3D10::Device10( System::IntPtr( mockDevice ) );
+	SlimDX::Direct3D10::Device^ device = gcnew SlimDX::Direct3D10::Device( System::IntPtr( mockDevice ) );
 	CHECK_CLR_THROW( device->CreateRenderTargetView( nullptr ), System::ArgumentException );
 }
 

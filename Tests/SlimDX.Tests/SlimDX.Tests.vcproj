@@ -279,6 +279,10 @@
 			Name="Tests"
 			>
 			<File
+				RelativePath=".\Source\Tests\ComObject.Tests.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\Tests\Device10.Tests.cpp"
 				>
 			</File>
