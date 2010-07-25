@@ -31,35 +31,40 @@ def execute( build, state, **kwargs ):
 		compiler = "C:/Program Files (x86)/Microsoft Visual Studio 9.0/VC/bin/cl.exe"
 		linker = "C:/Program Files (x86)/Microsoft Visual Studio 9.0/VC/bin/link.exe"
 		mt = "C:/Program Files/Microsoft SDKs/Windows/v6.0A/Bin/mt.exe"
-	
+
+	dirty_files = []	
 	object_files = []
 	for source_file in source_files:
-		object_file = FileReference( os.path.join( state.work_path, source_file.name + ".obj" ) )
-		object_files.append( object_file )
-		
 		if state.isFileDirty( source_file.identity ):
-			compileCommand = [ compiler ]
-			compileCommand.append( "/nologo" )
-		
-			if "clr" in features:
-				compileCommand.append( "/clr" )
-			compileCommand.append( "/c" )
-			
-			compileCommand.append( "/EHa" )
-			compileCommand.append( "/W3" )
-			compileCommand.append( "/Zi" )
-			compileCommand.append( "/Od" )
-			compileCommand.append( "/MDd" )
-			
-			for path in include_paths:
-				compileCommand.append( "/I{0}".format( path ) )
-			
-			for path in assemblies:
-				compileCommand.append( "/FU{0}".format( path ) )
-				
-			compileCommand.append( "/Fo{0}".format( object_file.identity ) )
-			compileCommand.append( source_file.identity )
-			build.schedule( ScheduleItem( compileCommand ) )
+			object_file = FileReference( os.path.join( state.work_path, source_file.name + ".obj" ) )
+			object_files.append( object_file )
+
+			dirty_files.append( source_file.identity )
+
+	compileCommand = [ compiler ]
+	compileCommand.append( "/nologo" )
+
+	if "clr" in features:
+		compileCommand.append( "/clr" )
+	compileCommand.append( "/c" )
+	
+	compileCommand.append( "/EHa" )
+	compileCommand.append( "/W3" )
+	compileCommand.append( "/Zi" )
+	compileCommand.append( "/Od" )
+	compileCommand.append( "/MDd" )
+	
+	for path in include_paths:
+		compileCommand.append( "/I{0}".format( path ) )
+	
+	for path in assemblies:
+		compileCommand.append( "/FU{0}".format( path ) )
+	
+	compileCommand.append( "/Fo{0}/".format( state.work_path ) )
+	for dirty_file in dirty_files:
+		compileCommand.append( dirty_file )
+
+	build.schedule( ScheduleItem( compileCommand ) )
 	
 	linkCommand = [ linker ]
 	linkCommand.append( "/NOLOGO" )
