@@ -1,4 +1,4 @@
-from sbuild import FileSet
+from sbuild import *
 
 def build( b ):
 	includes = [ "Source" ]
