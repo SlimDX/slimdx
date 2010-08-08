@@ -40,6 +40,9 @@ def execute( build, state, **kwargs ):
 			object_files.append( object_file )
 
 			dirty_files.append( source_file.identity )
+	
+	if len(dirty_files) == 0:
+		return
 
 	compileCommand = [ compiler ]
 	compileCommand.append( "/nologo" )
