@@ -45,12 +45,17 @@ namespace SlimDX
 	{
 		if( count < 0 )
 			throw gcnew ArgumentOutOfRangeException( "count" );
+
+		if (buffer == NULL)
+			return nullptr;
 			
 		size_t elementSize = sizeof(T);
 		array<T>^ result = gcnew array<T>( count );
 
 		pin_ptr<T> pinnedBuffer = &result[0];
 		memcpy( pinnedBuffer, buffer->GetBufferPointer(), count * elementSize );
+
+		buffer->Release();
 
 		return result;
 	}
