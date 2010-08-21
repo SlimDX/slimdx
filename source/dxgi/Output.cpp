@@ -91,14 +91,14 @@ namespace DXGI
 	
 	Result Output::GetClosestMatchingMode( ComObject^ device, ModeDescription modeToMatch, [Out] ModeDescription% result )
 	{
-		if( device == nullptr )
-			throw gcnew System::ArgumentNullException( "device" );
+		IUnknown *devicePtr = device == nullptr ? NULL : device->UnknownPointer;
 			
 		DXGI_MODE_DESC nativeModeToMatch = modeToMatch.CreateNativeVersion();
 		DXGI_MODE_DESC nativeResult;
-		RECORD_DXGI( InternalPointer->FindClosestMatchingMode( &nativeModeToMatch, &nativeResult, device->UnknownPointer ) );
+		RECORD_DXGI( InternalPointer->FindClosestMatchingMode( &nativeModeToMatch, &nativeResult, devicePtr ) );
 		if( Result::Last.IsSuccess )
 			result = ModeDescription( nativeResult );
+
 		return Result::Last;
 	}
 	
