@@ -135,7 +135,7 @@ namespace Direct3D9
 		TextureCaps = static_cast<SlimDX::Direct3D9::TextureCaps>( caps.TextureCaps );
 		TextureFilterCaps = static_cast<FilterCaps>( caps.TextureFilterCaps );
 		CubeTextureFilterCaps = static_cast<FilterCaps>( caps.CubeTextureFilterCaps );
-		VolumeTextureFilterCaps = static_cast<FilterCaps>( caps.VertexTextureFilterCaps );
+		VolumeTextureFilterCaps = static_cast<FilterCaps>( caps.VolumeTextureFilterCaps );
 		TextureAddressCaps = static_cast<SlimDX::Direct3D9::TextureAddressCaps>( caps.TextureAddressCaps );
 		VolumeTextureAddressCaps = static_cast<SlimDX::Direct3D9::TextureAddressCaps>( caps.VolumeTextureAddressCaps );
 
