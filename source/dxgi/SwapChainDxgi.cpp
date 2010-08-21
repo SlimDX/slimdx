@@ -52,6 +52,12 @@ namespace DXGI
 		
 		Construct( swapChain );
 	}
+
+	SwapChain::~SwapChain()
+	{
+		if (InternalPointer)
+			InternalPointer->SetFullscreenState(FALSE, NULL);
+	}
 	
 	SwapChainDescription SwapChain::Description::get()
 	{
