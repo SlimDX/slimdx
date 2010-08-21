@@ -83,6 +83,11 @@ namespace SlimDX
 			/// <param name="device">The device used to present images to the swap chain.</param>
 			/// <param name="description">Swap chain properties.</param>
 			SwapChain( Factory^ factory, ComObject^ device, SwapChainDescription description );
+
+			/// <summary>
+			/// Releases all resources used by the <see cref="SwapChain"/>.
+			/// </summary>
+			virtual ~SwapChain();
 			
 			/// <summary>
 			/// Gets the full screen state.
