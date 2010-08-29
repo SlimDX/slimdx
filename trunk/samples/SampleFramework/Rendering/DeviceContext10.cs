@@ -23,11 +23,13 @@
 using System;
 using SlimDX.DXGI;
 
-namespace SlimDX.SampleFramework {
+namespace SlimDX.SampleFramework
+{
     /// <summary>
     /// Provides creation and management functionality for a Direct3D10 rendering device and related objects.
     /// </summary>
-    public class DeviceContext10 : IDisposable {
+    public class DeviceContext10 : IDisposable
+    {
         #region Public Interface
 
         /// <summary>
@@ -35,7 +37,8 @@ namespace SlimDX.SampleFramework {
         /// </summary>
         /// <param name="handle">The window handle to associate with the device.</param>
         /// <param name="settings">The settings used to configure the device.</param>
-        internal DeviceContext10(IntPtr handle, DeviceSettings10 settings) {
+        internal DeviceContext10(IntPtr handle, DeviceSettings10 settings)
+        {
             if (handle == IntPtr.Zero)
                 throw new ArgumentException("Value must be a valid window handle.", "handle");
             if (settings == null)
@@ -46,7 +49,8 @@ namespace SlimDX.SampleFramework {
             factory = new Factory();
             device = new Direct3D10.Device(factory.GetAdapter(settings.AdapterOrdinal), Direct3D10.DriverType.Hardware, settings.CreationFlags);
 
-            swapChain = new SwapChain(factory, device, new SwapChainDescription {
+            swapChain = new SwapChain(factory, device, new SwapChainDescription
+            {
                 BufferCount = 1,
                 Flags = SwapChainFlags.None,
                 IsWindowed = true,
@@ -63,14 +67,16 @@ namespace SlimDX.SampleFramework {
         /// <summary>
         /// Performs object finalization.
         /// </summary>
-        ~DeviceContext10() {
+        ~DeviceContext10()
+        {
             Dispose(false);
         }
 
         /// <summary>
         /// Disposes of object resources.
         /// </summary>
-        public void Dispose() {
+        public void Dispose()
+        {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -80,8 +86,13 @@ namespace SlimDX.SampleFramework {
         /// </summary>
         /// <param name="disposeManagedResources">If true, managed resources should be
         /// disposed of in addition to unmanaged resources.</param>
-        protected virtual void Dispose(bool disposeManagedResources) {
-            if (disposeManagedResources) {
+        protected virtual void Dispose(bool disposeManagedResources)
+        {
+            if (disposeManagedResources)
+            {
+                if (swapChain.IsFullScreen)
+                    swapChain.IsFullScreen = false;
+
                 swapChain.Dispose();
                 device.Dispose();
                 factory.Dispose();
@@ -91,8 +102,10 @@ namespace SlimDX.SampleFramework {
         /// <summary>
         /// Gets the underlying DXGI factory.
         /// </summary>
-        public SlimDX.DXGI.Factory Factory {
-            get {
+        public SlimDX.DXGI.Factory Factory
+        {
+            get
+            {
                 return factory;
             }
         }
@@ -100,8 +113,10 @@ namespace SlimDX.SampleFramework {
         /// <summary>
         /// Gets the underlying Direct3D10 device.
         /// </summary>
-        public SlimDX.Direct3D10.Device Device {
-            get {
+        public SlimDX.Direct3D10.Device Device
+        {
+            get
+            {
                 return device;
             }
         }
@@ -109,8 +124,10 @@ namespace SlimDX.SampleFramework {
         /// <summary>
         /// Gets the underlying DXGI swap chain.
         /// </summary>
-        public SlimDX.DXGI.SwapChain SwapChain {
-            get {
+        public SlimDX.DXGI.SwapChain SwapChain
+        {
+            get
+            {
                 return swapChain;
             }
         }

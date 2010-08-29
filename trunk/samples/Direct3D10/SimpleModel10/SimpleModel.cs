@@ -19,26 +19,6 @@ namespace SimpleModel10
 
             texture = Texture2D.FromFile(device, textureName);
 
-
-            var rt = new Texture2D(device, new Texture2DDescription
-            {
-                ArraySize = 1,
-                BindFlags = BindFlags.RenderTarget | BindFlags.ShaderResource,
-                CpuAccessFlags = CpuAccessFlags.None,
-                Format = Format.R8G8B8A8_UNorm,
-                Height = 128,
-                Width = 128,
-                MipLevels = 1,
-                OptionFlags = ResourceOptionFlags.None,
-                SampleDescription = new SampleDescription(1, 0),
-                Usage = ResourceUsage.Default
-            });
-
-            var dxgiSurface = rt.AsSurface();
-
-            rt.Dispose();
-            dxgiSurface.Dispose();
-
             LoadMesh(meshName);
 
             elements = new[] {

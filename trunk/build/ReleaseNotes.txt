@@ -1,96 +1,16 @@
-General
-	* Added a .NET 4.0 build via Visual Studio 2010.
-	* Added an option to disable throwing exceptions on compilation errors. See Configuration.ThrowOnShaderCompileError.
-	* Added the PIXPlug tool to allow x64 application to run in PIX.
-
 Samples
-	* Added a WPF D3D10 sample to demonstrate interop between 10.1, 10, 9Ex, and WPF.
+	* Fixed the MiniTri10 sample to not use the console subsystem.
+	* Changed the sample framework to check for fullscreen DXGI swap chain before disposing.
+	* Removed unused testing code from SimpleModel10.
 
-Math
-	* Reverted changes to quaternion multiplication. We previously updated this to match XNA, but this broke compatibility with D3DX.
-	
-D3DCompiler
-	* Refactored shared shader and effect flags and interfaces into a new namespace.
-	* Added overloads to the compiler methods to avoid having to pass a shader entry point.
-	* Changed the ShaderBytecode.Compile methods to use D3DCompiler instead of D3DX.
-	* Added a missing enum from ShaderFlags.
-	* Changed the ShaderBytecode.CompileFromFile methods to read the file manually and use D3DCompiler. This should solve the Unicode issue as well.
-	* Added Preprocess, Disassemble, and Strip to ShaderBytecode.
-	* Added shader reflection API.
-	* Documented the entire subsystem.
+Direct3D9
+	* Fixed a memory in Utilities.ReadRange that affected many BaseMesh methods.
+	* Fixed a typo in the caps structure that filled VolumeTextureFilterCaps with the wrong value.
 
-Direct3D 9
-	* Changed the shared handle parameter for texture creation to be a ref parameter.
-	* Changed Texture shared handle parameter from out to ref.
-	* Fixed 9Ex methods that didn't properly initialize display mode parameters.
-	* Added special casing for Effect.GetValue with boolean results.
-	* Fixed a null reference issue in D3DX.OptimizeFaces and OptimizeVertices.
-	* Changed Device.AvailableTextureMemory to return an Int64 instead of Int32.
-	* Fixed Device.Set*ShaderConstant* overloads that implicitly calculate the number of items to pass.
-	* Vertex declarations no longer require VertexElementEnd at the end of the input array.
-	* Added RegisterSoftwareDevice to support software renderers.
-	
-Direct3D 9Ex
-	* Added missing enumerations throughout D3D9.
-	* Added support for new Windows 7 FlipEx functionality.
-	
-Direct3D 10
-	* Dropped stream size checks in texture ToStream functions.
-	* Added a constructor to InputLayout to take shader bytecode.
-	* Added Texture2D.ComputeNormalMap.
-	* Added ShaderResourceView.FromMemory and ShaderResourceView.FromStream.
-	* Added Resource.LoadTextureFromTexture and Resource.FilterTexture.
-	* Added Resource.AsSurface to retrieve a DXGI Surface from a resource.
-	* Added missing WARP device type.
-	* Fixed shader compilation to allow null entry points.
-	* Fixed ShaderSignature Get*Signature methods.
-	* Fixed a crash bug in BlendStateDescription.GetHashCode.
-	* Added overloads to EffectVectorVariable.Set to take color inputs.
-	* Added missing Device.OpenSharedResource method.
-	
-Direct3D 11
-	* Dropped stream size checks in texture ToStream functions.
-	* Added a constructor to InputLayout to take shader bytecode.
-	* Added Texture2D.ComputeNormalMap.
-	* Added ShaderResourceView.FromFile, ShaderResourceView.FromMemory and ShaderResourceView.FromStream.
-	* Added Resource.LoadTextureFromTexture and Resource.FilterTexture.
-	* Added Resource.AsSurface to retrieve a DXGI Surface from a resource.
-	* Fixed shader compilation to allow null entry points.
-	* Added new overloads for CreateDeviceWithSwapChain that better prevent argument errors. Old overloads have been deprecated.
-	* Fixed the Device.GetSupportedFeatureLevel functions.
-	* Fixed ShaderSignature Get*Signature methods.
-	* Added overloads to EffectVectorVariable.Set to take color inputs.
-	* Added stream-output support to geometry shaders.
-	* Documented a large portion of the D3D11 types.
-	* Added missing TextureCube members to ShaderResourceViewDescription.
-	* Cleaned up the DirectCompute interfaces.
-	* Added creation methods for the FastFourierTransform type.
-	* Added support for the Debug and SwitchToRef interfaces.
-	* Added support for effect groups.
-	* Added missing effect variable types.
-	
-Windows
-	* Added several overloads to MessagePump.Run to allow access to corresponding Application.Run overloads.
-	* Added DisplayMonitor class to retrieve system monitor information.
-	
 DXGI
-	* Added missing member to Usage enumeration.
-	* Added DXGI 1.1 interfaces.
-
+	* Changed SwapChain.Dispose to throw if the adapter is in fullscreen mode. This prevents a crash inside DXGI.
+	* Added IsFullScreen property to SwapChain as a convenient alternative to GetFullScreenState.
+	* Fixed a null reference check in Output.GetClosestMatchingMode.
+	
 DirectWrite
-	* Added several missing interfaces.
-
-RawInput
-	* Fixed the data type of the mouse wheel delta.
-	
-XAPO
-	* Finished implementing the subsystem.
-	
-XACT3
-	* Added the subsystem.
-	
-XAudio2
-	* Fixed an issue in WaveStream that caused popping noises when loading data from an existing stream.
-	* Fixed a bug in WaveStream.Read; the offset parameter wasn't being used.
-	* Changed OnVoiceProcessingPassStart to only perform an allocation if an event handler is hooked up.
-	* Hooked up the effect chain portions to XAPO.
+	* Changed TextLayout to inherit from TextFormat.
