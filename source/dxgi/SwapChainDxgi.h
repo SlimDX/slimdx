@@ -75,6 +75,15 @@ namespace SlimDX
 			{
 				Output^ get();
 			}
+
+			/// <summary>
+			/// Gets or sets a value indicating whether the swap chain is rendering in full screen mode.
+			/// </summary>
+			property bool IsFullScreen
+			{
+				bool get();
+				void set(bool value);
+			}
 			
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SwapChain"/> class.

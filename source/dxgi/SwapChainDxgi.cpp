@@ -56,7 +56,13 @@ namespace DXGI
 	SwapChain::~SwapChain()
 	{
 		if (InternalPointer)
-			InternalPointer->SetFullscreenState(FALSE, NULL);
+		{
+			BOOL fullscreen = FALSE;
+			HRESULT hr = InternalPointer->GetFullscreenState(&fullscreen, NULL);
+
+			if (SUCCEEDED(hr) && fullscreen)
+				throw gcnew InvalidOperationException("You may not release a swap chain in full-screen mode because doing so may create thread contention (which will cause DXGI to raise a non-continuable exception). Before releasing a swap chain, first switch to windowed mode.");
+		}
 	}
 	
 	SwapChainDescription SwapChain::Description::get()
@@ -92,6 +98,20 @@ namespace DXGI
 			return nullptr;
 			
 		return Output::FromPointer( output, this );
+	}
+
+	bool SwapChain::IsFullScreen::get()
+	{
+		BOOL result = FALSE;
+		if (RECORD_DXGI(InternalPointer->GetFullscreenState(&result, NULL)).IsFailure)
+			return false;
+
+		return result > 0;
+	}
+
+	void SwapChain::IsFullScreen::set(bool value)
+	{
+		RECORD_DXGI(InternalPointer->SetFullscreenState(value, NULL));
 	}
 
 	Result SwapChain::GetFullScreenState( bool% isFullScreen, Output^% target )
