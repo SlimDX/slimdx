@@ -43,7 +43,7 @@ namespace SlimDX
 		ref class TextRenderer;
 		interface struct IClientDrawingEffect;
 
-		public ref class TextLayout : public ComObject
+		public ref class TextLayout : public TextFormat
 		{
 			COMOBJECT(IDWriteTextLayout, TextLayout);
 
@@ -62,18 +62,18 @@ namespace SlimDX
 			array<ClusterMetrics>^ GetClusterMetrics();
 			IClientDrawingEffect ^GetDrawingEffect(int currentPosition);
 			IClientDrawingEffect ^GetDrawingEffect(int currentPosition, [Out] TextRange %textRange);
-			FontCollection^ GetFontCollection( int currentPosition );
-			FontCollection^ GetFontCollection( int currentPosition, [Out] TextRange% textRange );
+			SlimDX::DirectWrite::FontCollection^ GetFontCollection( int currentPosition );
+			SlimDX::DirectWrite::FontCollection^ GetFontCollection( int currentPosition, [Out] TextRange% textRange );
 			String^ GetFontFamilyName( int currentPosition );
 			String^ GetFontFamilyName( int currentPosition, [Out] TextRange% textRange );
 			float GetFontSize( int currentPosition );
 			float GetFontSize( int currentPosition, [Out] TextRange% textRange );
-			FontStretch GetFontStretch( int currentPosition );
-			FontStretch GetFontStretch(int currentPosition, [Out] TextRange %textRange);
-			FontStyle GetFontStyle(int currentPosition);
-			FontStyle GetFontStyle(int currentPosition, [Out] TextRange %textRange);
-			FontWeight GetFontWeight(int currentPosition);
-			FontWeight GetFontWeight(int currentPosition, [Out] TextRange %textRange);
+			SlimDX::DirectWrite::FontStretch GetFontStretch( int currentPosition );
+			SlimDX::DirectWrite::FontStretch GetFontStretch(int currentPosition, [Out] TextRange %textRange);
+			SlimDX::DirectWrite::FontStyle GetFontStyle(int currentPosition);
+			SlimDX::DirectWrite::FontStyle GetFontStyle(int currentPosition, [Out] TextRange %textRange);
+			SlimDX::DirectWrite::FontWeight GetFontWeight(int currentPosition);
+			SlimDX::DirectWrite::FontWeight GetFontWeight(int currentPosition, [Out] TextRange %textRange);
 			InlineObject ^GetInlineObject(int currentPosition);
 			InlineObject ^GetInlineObject(int currentPosition, [Out] TextRange %textRange);
 			array<LineMetrics> ^GetLineMetrics();
@@ -87,12 +87,12 @@ namespace SlimDX
 			bool GetUnderline(int currentPosition, [Out] TextRange %textRange);
 
 			Result SetDrawingEffect(IClientDrawingEffect ^drawingEffect, TextRange range);
-			Result SetFontCollection( FontCollection^ collection, TextRange range );
+			Result SetFontCollection( SlimDX::DirectWrite::FontCollection^ collection, TextRange range );
 			Result SetFontFamilyName( String^ name, TextRange range );
 			Result SetFontSize( float size, TextRange range );
-			Result SetFontStretch(FontStretch stretch, TextRange range);
-			Result SetFontStyle(FontStyle style, TextRange range);
-			Result SetFontWeight( FontWeight weight, TextRange range );
+			Result SetFontStretch(SlimDX::DirectWrite::FontStretch stretch, TextRange range);
+			Result SetFontStyle(SlimDX::DirectWrite::FontStyle style, TextRange range);
+			Result SetFontWeight( SlimDX::DirectWrite::FontWeight weight, TextRange range );
 			Result SetInlineObject(InlineObject ^obj, TextRange range);
 			Result SetLocaleName(String ^name, TextRange range);
 			Result SetStrikethrough(bool strikethrough, TextRange range);
