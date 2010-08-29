@@ -43,6 +43,9 @@ namespace SlimDX
 			
 			void Init( Factory^ factory, System::String^ familyName, FontWeight weight, FontStyle style, FontStretch stretch, float fontSize, System::String^ localeName, FontCollection^ fontCollection );
 
+		private protected:
+			TextFormat() { }
+
 		public:
 			TextFormat( Factory^ factory, System::String^ familyName, FontWeight weight, FontStyle style, FontStretch stretch, float fontSize, System::String^ localeName );
 			TextFormat( Factory^ factory, System::String^ familyName, FontWeight weight, FontStyle style, FontStretch stretch, float fontSize, System::String^ localeName, FontCollection^ fontCollection );

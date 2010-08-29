@@ -220,10 +220,10 @@ namespace DirectWrite
 		return GetFontCollectionInternal(InternalPointer, currentPosition, 0);
 	}
 
-	FontCollection^ TextLayout::GetFontCollection ( int currentPosition, [Out] TextRange% textRange )
+	SlimDX::DirectWrite::FontCollection^ TextLayout::GetFontCollection ( int currentPosition, [Out] TextRange% textRange )
 	{
 		DWRITE_TEXT_RANGE tr;
-		FontCollection ^collection = GetFontCollectionInternal(InternalPointer, currentPosition, &tr);
+		SlimDX::DirectWrite::FontCollection ^collection = GetFontCollectionInternal(InternalPointer, currentPosition, &tr);
 		if (Result::Last.IsSuccess)
 		{
 			textRange = TextRangeFromNative(tr);
@@ -299,15 +299,15 @@ namespace DirectWrite
 		return static_cast<FontStretch>(stretch);
 	}
 
-	FontStretch TextLayout::GetFontStretch(int currentPosition)
+	SlimDX::DirectWrite::FontStretch TextLayout::GetFontStretch(int currentPosition)
 	{
 		return GetFontStretchInternal(InternalPointer, currentPosition, 0);
 	}
 
-	FontStretch TextLayout::GetFontStretch(int currentPosition, [Out] TextRange %textRange)
+	SlimDX::DirectWrite::FontStretch TextLayout::GetFontStretch(int currentPosition, [Out] TextRange %textRange)
 	{
 		DWRITE_TEXT_RANGE range;
-		FontStretch result = GetFontStretchInternal(InternalPointer, currentPosition, &range);
+		SlimDX::DirectWrite::FontStretch result = GetFontStretchInternal(InternalPointer, currentPosition, &range);
 		if (Result::Last.IsSuccess)
 		{
 			textRange = TextRangeFromNative(range);
@@ -315,7 +315,7 @@ namespace DirectWrite
 		return result;
 	}
 
-	static FontStyle GetFontStyleInternal(IDWriteTextLayout *layout, int currentPosition, DWRITE_TEXT_RANGE *range)
+	static SlimDX::DirectWrite::FontStyle GetFontStyleInternal(IDWriteTextLayout *layout, int currentPosition, DWRITE_TEXT_RANGE *range)
 	{
 		DWRITE_FONT_STYLE style;
 		if (RECORD_DW(layout->GetFontStyle(currentPosition, &style, range)).IsFailure)
@@ -325,15 +325,15 @@ namespace DirectWrite
 		return static_cast<FontStyle>(style);
 	}
 
-	FontStyle TextLayout::GetFontStyle(int currentPosition)
+	SlimDX::DirectWrite::FontStyle TextLayout::GetFontStyle(int currentPosition)
 	{
 		return GetFontStyleInternal(InternalPointer, currentPosition, 0);
 	}
 
-	FontStyle TextLayout::GetFontStyle(int currentPosition, [Out] TextRange %textRange)
+	SlimDX::DirectWrite::FontStyle TextLayout::GetFontStyle(int currentPosition, [Out] TextRange %textRange)
 	{
 		DWRITE_TEXT_RANGE range;
-		FontStyle style = GetFontStyleInternal(InternalPointer, currentPosition, &range);
+		SlimDX::DirectWrite::FontStyle style = GetFontStyleInternal(InternalPointer, currentPosition, &range);
 		if (Result::Last.IsSuccess)
 		{
 			textRange = TextRangeFromNative(range);
@@ -351,15 +351,15 @@ namespace DirectWrite
 		return static_cast<FontWeight>(weight);
 	}
 
-	FontWeight TextLayout::GetFontWeight(int currentPosition)
+	SlimDX::DirectWrite::FontWeight TextLayout::GetFontWeight(int currentPosition)
 	{
 		return GetFontWeightInternal(InternalPointer, currentPosition, 0);
 	}
 
-	FontWeight TextLayout::GetFontWeight(int currentPosition, [Out] TextRange %textRange)
+	SlimDX::DirectWrite::FontWeight TextLayout::GetFontWeight(int currentPosition, [Out] TextRange %textRange)
 	{
 		DWRITE_TEXT_RANGE range;
-		FontWeight result = GetFontWeightInternal(InternalPointer, currentPosition, &range);
+		SlimDX::DirectWrite::FontWeight result = GetFontWeightInternal(InternalPointer, currentPosition, &range);
 		if (Result::Last.IsSuccess)
 		{
 			textRange = TextRangeFromNative(range);
@@ -544,7 +544,7 @@ namespace DirectWrite
 				TextRangeFromManaged(range)));
 	}
 
-	Result TextLayout::SetFontCollection( FontCollection^ collection, TextRange range )
+	Result TextLayout::SetFontCollection( SlimDX::DirectWrite::FontCollection^ collection, TextRange range )
 	{
 		return RECORD_DW(InternalPointer->SetFontCollection( collection->InternalPointer, TextRangeFromManaged(range)));
 	}
@@ -560,17 +560,17 @@ namespace DirectWrite
 		return RECORD_DW(InternalPointer->SetFontSize( size, TextRangeFromManaged(range)));
 	}
 
-	Result TextLayout::SetFontStretch(FontStretch stretch, TextRange range)
+	Result TextLayout::SetFontStretch(SlimDX::DirectWrite::FontStretch stretch, TextRange range)
 	{
 		return RECORD_DW(InternalPointer->SetFontStretch(static_cast<DWRITE_FONT_STRETCH>(stretch), TextRangeFromManaged(range)));
 	}
 
-	Result TextLayout::SetFontStyle(FontStyle style, TextRange range)
+	Result TextLayout::SetFontStyle(SlimDX::DirectWrite::FontStyle style, TextRange range)
 	{
 		return RECORD_DW(InternalPointer->SetFontStyle(static_cast<DWRITE_FONT_STYLE>(style), TextRangeFromManaged(range)));
 	}
 
-	Result TextLayout::SetFontWeight( FontWeight weight, TextRange range )
+	Result TextLayout::SetFontWeight( SlimDX::DirectWrite::FontWeight weight, TextRange range )
 	{
 		return RECORD_DW(InternalPointer->SetFontWeight(static_cast<DWRITE_FONT_WEIGHT>(weight), TextRangeFromManaged(range)));
 	}
