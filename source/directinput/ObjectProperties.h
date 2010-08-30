@@ -22,6 +22,7 @@
 #pragma once
 
 #include "Enums.h"
+#include "InputRange.h"
 
 namespace SlimDX
 {
@@ -105,17 +106,17 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the range of raw data returned from the object.
 			/// </summary>
-			property int LogicalRange
+			property InputRange LogicalRange
 			{
-				int get();
+				InputRange get();
 			}
 
 			/// <summary>
 			/// Gets the range of data returned from axis as suggested by the manufacturer.
 			/// </summary>
-			property int PhysicalRange
+			property InputRange PhysicalRange
 			{
-				int get();
+				InputRange get();
 			}
 		};
 	}
