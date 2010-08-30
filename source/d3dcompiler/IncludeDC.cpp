@@ -99,10 +99,14 @@ namespace D3DCompiler
 	{
 		try
 		{
-			IncludeFrame frame = m_Frames->default[IntPtr( const_cast<void*>( pData ) )];
-
-			m_Wrapped->Close( frame.Stream );
-			frame.Close();
+			IncludeFrame frame;
+			IntPtr data(const_cast<void*>(pData));
+			if (m_Frames->TryGetValue(data, frame))
+			{
+				m_Frames->Remove(data);
+				m_Wrapped->Close(frame.Stream);
+				frame.Close();
+			}
 
 			return S_OK;
 		}
