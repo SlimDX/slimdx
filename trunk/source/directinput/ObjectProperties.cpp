@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,10 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <windows.h>
-#include <dinput.h>
-#include <string>
+#include "stdafx.h"
 
 #include "DirectInputException.h"
 
@@ -235,40 +231,36 @@ namespace DirectInput
 		RECORD_DINPUT( hr );
 	}
 
-	int ObjectProperties::LogicalRange::get()
+	InputRange ObjectProperties::LogicalRange::get()
 	{
-		DIPROPDWORD dip;
+		DIPROPRANGE dip;
 		HRESULT hr;
-		dip.diph.dwSize = sizeof( DIPROPDWORD );
+		dip.diph.dwSize = sizeof( DIPROPRANGE );
 		dip.diph.dwHeaderSize = sizeof( DIPROPHEADER );
 		dip.diph.dwObj = obj;
 		dip.diph.dwHow = how;
 
 		hr = pointer->GetProperty( DIPROP_LOGICALRANGE, &dip.diph );
-		RECORD_DINPUT( hr );
+		if (RECORD_DINPUT(hr).IsFailure)
+			return InputRange();
 
-		if( FAILED( hr ) )
-			return 0;
-
-		return dip.dwData;
+		return InputRange(dip.lMin, dip.lMax);
 	}
 
-	int ObjectProperties::PhysicalRange::get()
+	InputRange ObjectProperties::PhysicalRange::get()
 	{
-		DIPROPDWORD dip;
+		DIPROPRANGE dip;
 		HRESULT hr;
-		dip.diph.dwSize = sizeof( DIPROPDWORD );
+		dip.diph.dwSize = sizeof( DIPROPRANGE );
 		dip.diph.dwHeaderSize = sizeof( DIPROPHEADER );
 		dip.diph.dwObj = obj;
 		dip.diph.dwHow = how;
 
 		hr = pointer->GetProperty( DIPROP_PHYSICALRANGE, &dip.diph );
-		RECORD_DINPUT( hr );
+		if (RECORD_DINPUT(hr).IsFailure)
+			return InputRange();
 
-		if( FAILED( hr ) )
-			return 0;
-
-		return dip.dwData;
+		return InputRange(dip.lMin, dip.lMax);
 	}
 }
 }

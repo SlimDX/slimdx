@@ -2971,6 +2971,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\source\directinput\InputRange.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\directinput\InputRange.h"
+					>
+				</File>
+				<File
 					RelativePath="..\source\directinput\ObjectProperties.cpp"
 					>
 				</File>

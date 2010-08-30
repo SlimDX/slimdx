@@ -21,3 +21,4 @@ DirectWrite
 	
 DirectInput
 	* Fixed a typo in Device.GetObjectInfoById that caused it to return info by usage instead.
+	* Changed ObjectProperties.LogicalRange and ObjectProperties.PhysicalRange to return actual ranges instead of integers.
