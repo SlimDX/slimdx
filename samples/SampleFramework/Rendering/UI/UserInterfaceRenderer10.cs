@@ -64,7 +64,7 @@ namespace SlimDX.SampleFramework
             using (Stream stream = assembly.GetManifestResourceStream("SampleFramework.Resources.UserInterface10.fx"))
             using (StreamReader reader = new StreamReader(stream))
             {
-                effect = D3D.Effect.FromString(device, reader.ReadToEnd(), "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null);
+                effect = D3D.Effect.FromString(device, reader.ReadToEnd(), "fx_4_0");
             }
 
             technique = effect.GetTechniqueByIndex(0);

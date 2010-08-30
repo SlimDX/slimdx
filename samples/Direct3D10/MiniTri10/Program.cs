@@ -57,7 +57,7 @@ namespace MiniTri
 
             Texture2D backBuffer = Texture2D.FromSwapChain<Texture2D>(swapChain, 0);
             var renderView = new RenderTargetView(device, backBuffer);
-            var effect = Effect.FromFile(device, "MiniTri.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null);
+            var effect = Effect.FromFile(device, "MiniTri.fx", "fx_4_0");
             var technique = effect.GetTechniqueByIndex(0);
             var pass = technique.GetPassByIndex(0);
             var layout = new InputLayout(device, pass.Description.Signature, new[] {
