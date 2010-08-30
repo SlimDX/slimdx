@@ -164,7 +164,7 @@ namespace DirectInput
 		DIDEVICEOBJECTINSTANCE di;
 		di.dwSize = sizeof( DIDEVICEOBJECTINSTANCE );
 
-		HRESULT hr = InternalPointer->GetObjectInfo( &di, objectId, DIPH_BYUSAGE );
+		HRESULT hr = InternalPointer->GetObjectInfo( &di, objectId, DIPH_BYID );
 		if( RECORD_DINPUT( hr ).IsFailure )
 			return DeviceObjectInstance();
 
