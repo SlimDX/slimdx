@@ -14,3 +14,6 @@ DXGI
 	
 DirectWrite
 	* Changed TextLayout to inherit from TextFormat.
+	
+DirectInput
+	* Fixed a typo in Device.GetObjectInfoById that caused it to return info by usage instead.
