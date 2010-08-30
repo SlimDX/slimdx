@@ -6,11 +6,15 @@ Samples
 Direct3D9
 	* Fixed a memory in Utilities.ReadRange that affected many BaseMesh methods.
 	* Fixed a typo in the caps structure that filled VolumeTextureFilterCaps with the wrong value.
+	* Fixed memory issue in Include interface.
 
 DXGI
 	* Changed SwapChain.Dispose to throw if the adapter is in fullscreen mode. This prevents a crash inside DXGI.
 	* Added IsFullScreen property to SwapChain as a convenient alternative to GetFullScreenState.
 	* Fixed a null reference check in Output.GetClosestMatchingMode.
+	
+D3DCompiler
+	* Fixed memory issue in Include interface.
 	
 DirectWrite
 	* Changed TextLayout to inherit from TextFormat.

@@ -22,7 +22,6 @@
 #pragma once
 
 #include "Enums.h"
-#include <vcclr.h>
 
 using System::Runtime::InteropServices::OutAttribute;
 

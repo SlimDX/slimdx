@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,8 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <d3d9.h>
-#include <d3dx9.h>
+#include "stdafx.h"
 
 #include "../Utilities.h"
 #include "../DataStream.h"
@@ -102,10 +100,14 @@ namespace Direct3D9
 	{
 		try
 		{
-			IncludeFrame frame = m_Frames->default[IntPtr( const_cast<void*>( pData ) )];
-
-			m_WrappedInterface->Close( frame.Stream );
-			frame.Close();
+			IncludeFrame frame;
+			IntPtr data(const_cast<void*>(pData));
+			if (m_Frames->TryGetValue(data, frame))
+			{
+				m_Frames->Remove(data);
+				m_WrappedInterface->Close(frame.Stream);
+				frame.Close();
+			}
 
 			return S_OK;
 		}
