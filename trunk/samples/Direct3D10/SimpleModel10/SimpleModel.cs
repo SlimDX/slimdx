@@ -15,7 +15,7 @@ namespace SimpleModel10
         public SimpleModel(Device device, string effectName, string meshName, string textureName)
         {
             this.device = device;
-            effect = Effect.FromFile(device, effectName, "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null); ;
+            effect = Effect.FromFile(device, effectName, "fx_4_0"); ;
 
             texture = Texture2D.FromFile(device, textureName);
 

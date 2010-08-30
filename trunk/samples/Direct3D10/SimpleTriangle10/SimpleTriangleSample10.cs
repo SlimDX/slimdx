@@ -58,7 +58,7 @@ namespace SimpleTriangle10
                 renderTargetView = new RenderTargetView(Context10.Device, texture);
             }
 
-            effect = Effect.FromFile(Context10.Device, "SimpleTriangle10.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null);
+            effect = Effect.FromFile(Context10.Device, "SimpleTriangle10.fx", "fx_4_0");
             technique = effect.GetTechniqueByIndex(0);
             pass = technique.GetPassByIndex(0);
 

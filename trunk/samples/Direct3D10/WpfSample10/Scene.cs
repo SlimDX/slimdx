@@ -101,7 +101,7 @@ namespace WpfSample10
             DepthTexture = new Texture2D(D3DDevice, depthdesc);
             SampleRenderView = new RenderTargetView(D3DDevice, SharedTexture);
             SampleDepthView = new DepthStencilView(D3DDevice, DepthTexture);
-            SampleEffect = Effect.FromFile(D3DDevice, "MiniTri.fx", "fx_4_0", ShaderFlags.None, EffectFlags.None, null, null);
+            SampleEffect = Effect.FromFile(D3DDevice, "MiniTri.fx", "fx_4_0");
             EffectTechnique technique = SampleEffect.GetTechniqueByIndex(0); ;
             EffectPass pass = technique.GetPassByIndex(0);
             SampleLayout = new InputLayout(D3DDevice, pass.Description.Signature, new[] {

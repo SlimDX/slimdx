@@ -3,10 +3,13 @@ Samples
 	* Changed the sample framework to check for fullscreen DXGI swap chain before disposing.
 	* Removed unused testing code from SimpleModel10.
 
-Direct3D9
+Direct3D 9
 	* Fixed a memory in Utilities.ReadRange that affected many BaseMesh methods.
 	* Fixed a typo in the caps structure that filled VolumeTextureFilterCaps with the wrong value.
 	* Fixed memory issue in Include interface.
+	
+Direct3D 10
+	* Added missing creation method overloads to Effect.
 
 DXGI
 	* Changed SwapChain.Dispose to throw if the adapter is in fullscreen mode. This prevents a crash inside DXGI.
