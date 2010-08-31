@@ -12,6 +12,7 @@ Direct3D 9
 	
 Direct3D 10
 	* Added missing creation method overloads to Effect.
+	* Added missing Get/SetRawValue methods to EffectVariable.
 
 DXGI
 	* Changed SwapChain.Dispose to throw if the adapter is in fullscreen mode. This prevents a crash inside DXGI.
