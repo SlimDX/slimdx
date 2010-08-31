@@ -42,6 +42,9 @@ namespace SlimDX
 		{
 			COMOBJECT(IDXGISurface, Surface);
 
+		private protected:
+			Surface() { }
+
 		public:
 			/// <summary>
 			/// Gets a swap chain back buffer.

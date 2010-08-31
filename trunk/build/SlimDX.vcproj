@@ -3974,6 +3974,14 @@
 					RelativePath="..\source\dxgi\KeyedMutex.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\dxgi\Surface1.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\dxgi\Surface1.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
