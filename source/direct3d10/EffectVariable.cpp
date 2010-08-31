@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,10 +19,10 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#include <d3d10.h>
-#include <d3dx10.h>
-#include <vcclr.h>
+#include "../DataStream.h"
+#include "../stack_array.h"
 
 #include "Direct3D10Exception.h"
 
@@ -192,6 +191,23 @@ namespace Direct3D10
 			return nullptr;
 
 		return gcnew EffectStringVariable( variable );
+	}
+
+	Result EffectVariable::SetRawValue(DataStream^ data, int count)
+	{
+		HRESULT hr = m_Pointer->SetRawValue(data->PositionPointer, 0, count);
+		return RECORD_D3D10(hr);
+	}
+
+	DataStream^ EffectVariable::GetRawValue(int count)
+	{
+		stack_array<char> data = stackalloc(char, count);
+
+		HRESULT hr = m_Pointer->GetRawValue(&data[0], 0, count);
+		if (RECORD_D3D10(hr).IsFailure)
+			return nullptr;
+
+		return gcnew DataStream(&data[0], count, true, true, true);
 	}
 }
 }

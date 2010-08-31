@@ -75,6 +75,20 @@ namespace SlimDX
 			EffectScalarVariable^ AsScalar();
 			EffectVectorVariable^ AsVector();
 			EffectStringVariable^ AsString();
+
+			/// <summary>
+			/// Sets the value of the variable using raw bytes.
+			/// </summary>
+			/// <param name="count">The number of bytes to set.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result SetRawValue(DataStream^ data, int count);
+
+			/// <summary>
+			/// Gets the value of the variable in raw bytes.
+			/// </summary>
+			/// <param name="count">The number of bytes to retrieve.</param>
+			/// <returns>The raw data representing the value of the variable.</returns>
+			DataStream^ GetRawValue(int count);
 		};
 	}
 };
