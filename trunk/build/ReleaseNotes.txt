@@ -7,6 +7,8 @@ Direct3D 9
 	* Fixed a memory in Utilities.ReadRange that affected many BaseMesh methods.
 	* Fixed a typo in the caps structure that filled VolumeTextureFilterCaps with the wrong value.
 	* Fixed memory issue in Include interface.
+	* Changed AnimationOutput to be a reference type, and pinned the memory to receive animation updates.
+	* Added an overload to AnimationController.RegisterAnimationOutput to take a Frame instead.
 	
 Direct3D 10
 	* Added missing creation method overloads to Effect.

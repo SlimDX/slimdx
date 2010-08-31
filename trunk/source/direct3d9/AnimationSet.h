@@ -54,7 +54,7 @@ namespace SlimDX
 			virtual int GetAnimationIndex( System::String^ name );
 			virtual System::String^ GetAnimationName( int index );
 			virtual System::IntPtr GetCallback( double position, CallbackSearchFlags flags, [Out] double% callbackPosition );
-			virtual AnimationOutput GetTransformation( double periodicPosition, int animation );
+			virtual AnimationOutput^ GetTransformation( double periodicPosition, int animation );
 			virtual double GetPeriodicPosition( double position );
 
 			virtual property System::String^ Name { System::String^ get(); }

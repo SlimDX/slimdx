@@ -28,7 +28,8 @@ namespace SlimDX
 	namespace Direct3D9
 	{
 		ref class AnimationSet;
-		value class AnimationOutput;
+		ref class AnimationOutput;
+		ref class Frame;
 
 		value class TrackDescription;
 		value class EventDescription;
@@ -41,8 +42,12 @@ namespace SlimDX
 		{
 			COMOBJECT(ID3DXAnimationController, AnimationController);
 
+		private:
+			System::Collections::Generic::List<System::Runtime::InteropServices::GCHandle>^ outputs;
+
 		public:
 			AnimationController( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents );
+			~AnimationController();
 
 			[System::Security::Permissions::SecurityPermission( System::Security::Permissions::SecurityAction::LinkDemand, Flags=System::Security::Permissions::SecurityPermissionFlag::UnmanagedCode )]
 			Result AdvanceTime( double time, AnimationCallback^ handler );
@@ -65,7 +70,8 @@ namespace SlimDX
 			int KeyTrackSpeed( int track, float newSpeed, double startTime, double duration, TransitionType transition );
 			int KeyTrackWeight( int track, float newWeight, double startTime, double duration, TransitionType transition );
 
-			Result RegisterAnimationOutput( System::String^ name, AnimationOutput output );
+			Result RegisterAnimationOutput( System::String^ name, AnimationOutput^ output );
+			Result RegisterAnimationOutput( Frame^ frame );
 			Result RegisterAnimationSet( AnimationSet^ set );
 			Result ResetTime();
 

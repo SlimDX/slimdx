@@ -21,19 +21,25 @@
 */
 #pragma once
 
-#include "IAllocateHierarchy.h"
-#include "ILoadUserData.h"
-#include "ISaveUserData.h"
+#include "XFile.h"
 
 namespace SlimDX
 {
+	value class BoundingSphere;
+
 	namespace Direct3D9
 	{
 		ref class Frame;
 		ref class AnimationController;
 		ref class MeshData;
 		ref class MeshContainer;
+		ref class Device;
+
 		class MeshContainerShim;
+
+		interface struct IAllocateHierarchy;
+		interface struct ISaveUserData;
+		interface struct ILoadUserData;
 
 		class FrameShim : public D3DXFRAME
 		{

@@ -31,7 +31,8 @@ namespace SlimDX
 {
 	namespace Direct3D9
 	{
-		public value class AnimationOutput : System::IEquatable<AnimationOutput>
+		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
+		public ref class AnimationOutput
 		{
 		public:
 			property AnimationOutputFlags Flags;
@@ -39,14 +40,6 @@ namespace SlimDX
 			property Vector3 Scaling;
 			property Vector3 Translation;
 			property Quaternion Rotation;
-
-			static bool operator == ( AnimationOutput left, AnimationOutput right );
-			static bool operator != ( AnimationOutput left, AnimationOutput right );
-
-			virtual int GetHashCode() override;
-			virtual bool Equals( System::Object^ obj ) override;
-			virtual bool Equals( AnimationOutput other );
-			static bool Equals( AnimationOutput% value1, AnimationOutput% value2 );
 		};
 	}
 }
