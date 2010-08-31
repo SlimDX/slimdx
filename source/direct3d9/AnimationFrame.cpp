@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,9 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <vcclr.h>
+#include "stdafx.h"
 
 #include "../ComObject.h"
 #include "../DataStream.h"
@@ -31,16 +28,20 @@
 #include "../math/BoundingSphere.h"
 
 #include "Direct3D9Exception.h"
+
 #include "Device.h"
 #include "Mesh.h"
 #include "SkinInfo.h"
 #include "ProgressiveMesh.h"
 #include "PatchMesh.h"
 #include "AnimationController.h"
-#include "IAllocateHierarchy.h"
 #include "AnimationFrame.h"
 #include "MeshData.h"
 #include "MeshContainer.h"
+
+#include "IAllocateHierarchy.h"
+#include "ILoadUserData.h"
+#include "ISaveUserData.h"
 
 using namespace System;
 using namespace System::IO;

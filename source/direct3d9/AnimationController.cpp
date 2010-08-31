@@ -20,9 +20,6 @@
 * THE SOFTWARE.
 */
 #include "stdafx.h"
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <vcclr.h>
 
 #include "../DataStream.h"
 #include "../ComObject.h"
@@ -32,12 +29,14 @@
 
 #include "Direct3D9Exception.h"
 
+#include "AnimationFrame.h"
 #include "AnimationSet.h"
 #include "AnimationController.h"
 #include "TrackDescription.h"
 #include "EventDescription.h"
 
 using namespace System;
+using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
@@ -48,12 +47,19 @@ namespace Direct3D9
 	{
 		ID3DXAnimationController *pointer;
 
-		HRESULT hr = D3DXCreateAnimationController( maxAnimationOutputs, maxAnimationSets, maxTracks, maxEvents, &pointer );
-		
+		HRESULT hr = D3DXCreateAnimationController( maxAnimationOutputs, maxAnimationSets, maxTracks, maxEvents, &pointer );		
 		if( RECORD_D3D9( hr ).IsFailure )
 			throw gcnew Direct3D9Exception( Result::Last );
 
+		outputs = gcnew List<GCHandle>();
+
 		Construct( pointer );
+	}
+
+	AnimationController::~AnimationController()
+	{
+		for each (GCHandle handle in outputs)
+			handle.Free();
 	}
 
 	Result AnimationController::AdvanceTime( double time, AnimationCallback^ handler )
@@ -176,7 +182,13 @@ namespace Direct3D9
 		return InternalPointer->KeyTrackWeight( track, newWeight, startTime, duration, static_cast<D3DXTRANSITION_TYPE>( transition ) );
 	}
 
-	Result AnimationController::RegisterAnimationOutput( String^ name, AnimationOutput output )
+	Result AnimationController::RegisterAnimationOutput( Frame^ frame )
+	{
+		HRESULT hr = InternalPointer->RegisterAnimationOutput( frame->Pointer->Name, &frame->Pointer->TransformationMatrix, NULL, NULL, NULL );
+		return RECORD_D3D9( hr );
+	}
+
+	Result AnimationController::RegisterAnimationOutput( String^ name, AnimationOutput^ output )
 	{
 		D3DXMATRIX *matrix = NULL;
 		D3DXVECTOR3 *scale = NULL;
@@ -184,38 +196,25 @@ namespace Direct3D9
 		D3DXQUATERNION *rotation = NULL;
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
-		pin_ptr<Matrix> pinMatrix;
-		pin_ptr<Vector3> pinScale;
-		pin_ptr<Vector3> pinTranslation;
-		pin_ptr<Quaternion> pinQuaternion;
 
-		if( (output.Flags & AnimationOutputFlags::Transformation) == AnimationOutputFlags::Transformation )
-		{
-			Matrix temp = output.Transformation;
-			pinMatrix = &temp;
-			matrix = reinterpret_cast<D3DXMATRIX*>( pinMatrix );
-		}
+		GCHandle handle = GCHandle::Alloc(output, GCHandleType::Pinned);
+		char *ptr = reinterpret_cast<char*>(handle.AddrOfPinnedObject().ToPointer()) + sizeof(AnimationOutputFlags);
+		outputs->Add(handle);
 
-		if( (output.Flags & AnimationOutputFlags::Scale) == AnimationOutputFlags::Scale )
-		{
-			Vector3 temp = output.Scaling;
-			pinScale = &temp;
-			scale = reinterpret_cast<D3DXVECTOR3*>( pinScale );
-		}
+		if( (output->Flags & AnimationOutputFlags::Transformation) == AnimationOutputFlags::Transformation )
+			matrix = reinterpret_cast<D3DXMATRIX*>(ptr);
 
-		if( (output.Flags & AnimationOutputFlags::Translation) == AnimationOutputFlags::Translation )
-		{
-			Vector3 temp = output.Translation;
-			pinTranslation = &temp;
-			translation = reinterpret_cast<D3DXVECTOR3*>( pinTranslation );
-		}
+		ptr += sizeof(D3DXMATRIX);
+		if( (output->Flags & AnimationOutputFlags::Scale) == AnimationOutputFlags::Scale )
+			scale = reinterpret_cast<D3DXVECTOR3*>(ptr);
 
-		if( (output.Flags & AnimationOutputFlags::Rotation) == AnimationOutputFlags::Rotation )
-		{
-			Quaternion temp = output.Rotation;
-			pinQuaternion = &temp;
-			rotation = reinterpret_cast<D3DXQUATERNION*>( pinQuaternion );
-		}
+		ptr += sizeof(D3DXVECTOR3);
+		if( (output->Flags & AnimationOutputFlags::Translation) == AnimationOutputFlags::Translation )
+			translation = reinterpret_cast<D3DXVECTOR3*>(ptr);
+
+		ptr += sizeof(D3DXVECTOR3);
+		if( (output->Flags & AnimationOutputFlags::Rotation) == AnimationOutputFlags::Rotation )
+			rotation = reinterpret_cast<D3DXQUATERNION*>(ptr);
 
 		HRESULT hr = InternalPointer->RegisterAnimationOutput( reinterpret_cast<LPCSTR>( pinnedName ), matrix, scale, rotation, translation );
 		return RECORD_D3D9( hr );

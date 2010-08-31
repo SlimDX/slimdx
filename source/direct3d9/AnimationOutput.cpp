@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,9 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <vcclr.h>
+#include "stdafx.h"
 
 #include "AnimationOutput.h"
 
@@ -32,43 +29,6 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
-	bool AnimationOutput::operator == ( AnimationOutput left, AnimationOutput right )
-	{
-		return AnimationOutput::Equals( left, right );
-	}
 
-	bool AnimationOutput::operator != ( AnimationOutput left, AnimationOutput right )
-	{
-		return !AnimationOutput::Equals( left, right );
-	}
-
-	int AnimationOutput::GetHashCode()
-	{
-		return Flags.GetHashCode() + Transformation.GetHashCode() + Scaling.GetHashCode()
-			 + Translation.GetHashCode() + Rotation.GetHashCode();
-	}
-
-	bool AnimationOutput::Equals( Object^ value )
-	{
-		if( value == nullptr )
-			return false;
-
-		if( value->GetType() != GetType() )
-			return false;
-
-		return Equals( safe_cast<AnimationOutput>( value ) );
-	}
-
-	bool AnimationOutput::Equals( AnimationOutput value )
-	{
-		return ( Flags == value.Flags && Transformation == value.Transformation && Scaling == value.Scaling
-			 && Translation == value.Translation && Rotation == value.Rotation );
-	}
-
-	bool AnimationOutput::Equals( AnimationOutput% value1, AnimationOutput% value2 )
-	{
-		return ( value1.Flags == value2.Flags && value1.Transformation == value2.Transformation && value1.Scaling == value2.Scaling
-			 && value1.Translation == value2.Translation && value1.Rotation == value2.Rotation );
-	}
 }
 }
