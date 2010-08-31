@@ -1563,6 +1563,9 @@
     <ClCompile Include="..\..\source\directinput\DeviceProperties.cpp">
       <Filter>DirectInput\Properties</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\directinput\InputRange.cpp">
+      <Filter>DirectInput\Properties</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\directinput\ObjectProperties.cpp">
       <Filter>DirectInput\Properties</Filter>
     </ClCompile>
@@ -1840,6 +1843,9 @@
       <Filter>DXGI\1.1</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\dxgi\KeyedMutex.cpp">
+      <Filter>DXGI\1.1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\dxgi\Surface1.cpp">
       <Filter>DXGI\1.1</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\design\BoundingBoxConverter.cpp">
@@ -3540,6 +3546,9 @@
     <ClInclude Include="..\..\source\directinput\DeviceProperties.h">
       <Filter>DirectInput\Properties</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\directinput\InputRange.h">
+      <Filter>DirectInput\Properties</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\source\directinput\ObjectProperties.h">
       <Filter>DirectInput\Properties</Filter>
     </ClInclude>
@@ -3874,6 +3883,9 @@
       <Filter>DXGI\1.1</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\dxgi\KeyedMutex.h">
+      <Filter>DXGI\1.1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\dxgi\Surface1.h">
       <Filter>DXGI\1.1</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\design\BoundingBoxConverter.h">
