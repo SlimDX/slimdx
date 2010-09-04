@@ -62,26 +62,6 @@ namespace MiniTri
 
         	var vertexDecl = new VertexDeclaration(device, vertexElems);
 
-            var texture = new VolumeTexture(device, 150, 104, 60, 1, Usage.Dynamic, Format.A8R8G8B8, Pool.Default);
-            var box = texture.LockBox(0, LockFlags.Discard);
-
-            for (int z = 0; z < 60; z++)
-            {
-                for (int y = 0; y < 104; y++)
-                {
-                    for (int x = 0; x < 150; x++)
-                        box.Data.Write(1);
-
-                    for (int x = 0; x < box.RowPitch / 4 - (150); x++)
-                        box.Data.Write(0);
-                }
-
-                for (int y = 0; y < (box.SlicePitch - (104 * box.RowPitch)) / 4; y++)
-                    box.Data.Write(0);
-            }
-
-            texture.UnlockBox(0);
-
             MessagePump.Run(form, () =>
             {
                 device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, Color.Black, 1.0f, 0);
