@@ -21,6 +21,8 @@
 */
 #pragma once
 
+#include "DisplayMonitor.h"
+
 namespace SlimDX
 {
 	namespace Windows
@@ -29,12 +31,50 @@ namespace SlimDX
 		{
 		private:
 			void Construct( System::String^ text );
+			void UpdateScreen();
+
+			DisplayMonitor^ monitor;
+			System::Drawing::Size cachedSize;
+			bool sizeMove;
+			bool minimized;
+			bool maximized;
+
+		protected:
+			virtual void OnUserResized( System::EventArgs^ e );
+			virtual void OnMonitorChanged( System::EventArgs^ e );
+			virtual void OnAppActivated( System::EventArgs^ e );
+			virtual void OnAppDeactivated( System::EventArgs^ e );
+			virtual void OnPauseRendering( System::EventArgs^ e );
+			virtual void OnResumeRendering( System::EventArgs^ e );
+			virtual void OnSystemSuspend( System::EventArgs^ e );
+			virtual void OnSystemResume( System::EventArgs^ e );
+			virtual void OnScreensaver( System::ComponentModel::CancelEventArgs^ e );
+
+			virtual void OnResizeBegin( System::EventArgs^ e ) override;
+			virtual void OnResizeEnd( System::EventArgs^ e ) override;
+			virtual void OnLoad( System::EventArgs^ e ) override;
+			virtual void OnPaintBackground( System::Windows::Forms::PaintEventArgs^ e ) override;
+
+			virtual void WndProc( System::Windows::Forms::Message% m ) override;
 
 		public:
 			RenderForm();
 			RenderForm( System::String^ text );
 
-			virtual void OnPaintBackground( System::Windows::Forms::PaintEventArgs^ e ) override;
+			event System::EventHandler^ PauseRendering;
+			event System::EventHandler^ ResumeRendering;
+			event System::EventHandler^ UserResized;
+			event System::EventHandler^ MonitorChanged;
+			event System::EventHandler^ AppActivated;
+			event System::EventHandler^ AppDeactivated;
+			event System::EventHandler^ SystemSuspend;
+			event System::EventHandler^ SystemResume;
+			event System::ComponentModel::CancelEventHandler^ Screensaver;
+
+			property DisplayMonitor^ Monitor
+			{
+				DisplayMonitor^ get() { return monitor; }
+			}
 		};
 	}
 }
