@@ -46,7 +46,8 @@ namespace SlimDX
 		[System::ThreadStatic]
 		static int m_LastCode;
 
-		generic< typename T >
+		generic<typename T>
+		[System::Diagnostics::DebuggerNonUserCode]
 		static void Throw( Object^ dataKey, Object^ dataValue );
 
 	internal:
@@ -55,13 +56,16 @@ namespace SlimDX
 		[System::Diagnostics::Conditional( "DEBUG" )]
 		static void BreakIfDebugging();
 
-		generic< typename T >
+		generic<typename T>
+		[System::Diagnostics::DebuggerNonUserCode]
 		static Result Fail( int hr, Object^ dataKey, Object^ dataValue );
 
-		generic< typename T >
+		generic<typename T>
+		[System::Diagnostics::DebuggerNonUserCode]
 		static Result Record( int hr, Object^ dataKey, Object^ dataValue );
 
-		generic< typename T >
+		generic<typename T>
+		[System::Diagnostics::DebuggerNonUserCode]
 		static Result Record( int hr, bool failed, Object^ dataKey, Object^ dataValue );
 
 	public:
