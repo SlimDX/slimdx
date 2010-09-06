@@ -13,9 +13,11 @@ body {
 	}
 
 a { text-decoration: none; color: #f56413; font-size: 12px; }
-h1 { font-size: 26px; color: #666666; margin-bottom: 10px; }
+h1 { font-size: 22px; color: #666666; margin-bottom: 10px; }
 h2 { font-size: 16px; color: #666666; margin-bottom: 5px; }
+h4 { font-size: 26px; color: #666666; margin-bottom: 12px; }
 ul { list-style: disc inside none; }
+li { margin-bottom: 4px }
 
 .wrapper {
 	margin: 0px auto;
