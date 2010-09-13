@@ -10,7 +10,8 @@ def execute( build, state, **kwargs ):
 	def delegate( log ):
 		path = kwargs["path"]
 
-		if kwargs.get( "purge", False ) == True:
+		# rmtree will fail if the path to be removed does not exist.
+		if kwargs.get( "purge", False ) == True and os.path.exists( path ):
 			log( "purging directory {0}", path )
 			shutil.rmtree( path )
 
