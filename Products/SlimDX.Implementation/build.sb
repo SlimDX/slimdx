@@ -53,3 +53,13 @@ def build( b ):
 		assemblies = assembly_references,
 		libraries = library_references
 	)
+	
+	b( "create_directory",
+		path = "..\..\Artifact",
+		purge = True
+	)
+	
+	b( "copy_files",
+		files = FileSet( "SlimDX.Implementation.x86.dll", "SlimDX.Implementation.x64.dll" ),
+		destination = "..\..\Artifact"
+	)
