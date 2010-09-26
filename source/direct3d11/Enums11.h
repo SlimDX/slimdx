@@ -617,12 +617,6 @@ namespace SlimDX
 			Debug = D3D11_CREATE_DEVICE_DEBUG,
 
 			/// <summary>
-			/// Creates both a software (REF) and hardware (HAL) version of the device simultaneously, which allows an application to 
-			/// switch to a reference device to enable debugging.
-			/// </summary>
-			SwitchToRef = D3D11_CREATE_DEVICE_SWITCH_TO_REF,
-
-			/// <summary>
 			/// Prevents multiple threads from being created. This flag is not recommended for general use.
 			/// </summary>
 			PreventThreadingOptimizations = D3D11_CREATE_DEVICE_PREVENT_INTERNAL_THREADING_OPTIMIZATIONS,
