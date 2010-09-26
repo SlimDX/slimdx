@@ -199,12 +199,6 @@ namespace SlimDX
 			T OpenSharedResource(System::IntPtr handle);
 
 			/// <summary>
-			/// Switches between the reference rasterizer and a hardware accelerated device.
-			/// </summary>
-			/// <param name="useReferenceRasterizer"><c>true</c> to use the reference rasterizer; <c>false</c> to switch back to a hardware accelerated device.</param>
-			void SwitchToReference(bool useReferenceRasterizer);
-
-			/// <summary>
 			/// Gets the highest supported hardware feature level of the primary adapter.
 			/// </summary>
 			/// <returns>The highest supported hardware feature level.</returns>
