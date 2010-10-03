@@ -20,11 +20,11 @@
  */
 
 using System;
+using System.IO;
 using System.Reflection;
 
 using SlimDX.Direct3D10;
 using SlimDX.DXGI;
-using System.IO;
 
 namespace SlimDX {
     /// <summary>
@@ -36,15 +36,7 @@ namespace SlimDX {
         /// </summary>
         /// <returns>An interface to the D3D10 API object.</returns>
         public static IDirect3D10Api LoadDirect3D10() {
-            Assembly implementation = null;
-            if( IntPtr.Size == 8 ) {
-                implementation = Assembly.LoadFrom( "SlimDX.Implementation.x64.dll" );
-            } else if( IntPtr.Size == 4 ) {
-                implementation = Assembly.LoadFrom( "SlimDX.Implementation.x86.dll" );
-            } else {
-                throw new InvalidOperationException( "Cannot determine the correct SlimDX architecture to load." );
-            }
-
+            Assembly implementation = LoadImplementation();
             return implementation.CreateInstance( "SlimDX.Direct3D10.Direct3D10Api" ) as IDirect3D10Api;
         }
 
@@ -53,16 +45,24 @@ namespace SlimDX {
         /// </summary>
         /// <returns>An interface to the DXGI API object.</returns>
         public static IDXGIApi LoadDXGI() {
-            Assembly implementation = null;
-            if( IntPtr.Size == 8 ) {
-                implementation = Assembly.LoadFrom( "SlimDX.Implementation.x64.dll" );
-            } else if( IntPtr.Size == 4 ) {
-                implementation = Assembly.LoadFrom( "SlimDX.Implementation.x86.dll" );
-            } else {
-                throw new InvalidOperationException( "Cannot determine the correct SlimDX architecture to load." );
-            }
-
+            Assembly implementation = LoadImplementation();
             return implementation.CreateInstance( "SlimDX.DXGI.DXGIApi" ) as IDXGIApi;
+        }
+
+        /// <summary>
+        /// Loads the appropriate SlimDX implementation assembly based on the active CLR.
+        /// </summary>
+        /// <returns>The implementation assembly.</returns>
+        static Assembly LoadImplementation() {
+            if (IntPtr.Size == 8) {
+                return Assembly.LoadFrom("SlimDX.Implementation.x64.dll");
+            }
+            else if (IntPtr.Size == 4) {
+                return Assembly.LoadFrom("SlimDX.Implementation.x86.dll");
+            }
+            else {
+                throw new InvalidOperationException("Cannot determine the correct SlimDX architecture to load.");
+            }
         }
     }
 }
