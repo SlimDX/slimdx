@@ -19,6 +19,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{092F64C9-1888-4D2F-A931-4F6F9A9537AB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SlimDX.Tests", "Tests\SlimDX.Tests\SlimDX.Tests.vcproj", "{30BF2BE3-6C82-4004-9CD2-0CE7CA83E4F9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3DC818C4-DA4A-4465-A814-BD817C43A5D3} = {3DC818C4-DA4A-4465-A814-BD817C43A5D3}
+		{174E62D9-D119-4D96-877F-3912F81E82C3} = {174E62D9-D119-4D96-877F-3912F81E82C3}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
