@@ -26,6 +26,9 @@ using SlimDX2.Direct3D;
 
 namespace SlimDX2
 {
+    /// <summary>
+    /// TODO: this is temporary. This class is going to be merged with Utilities and should be also internal
+    /// </summary>
     public static partial class Utilities
     {
         static Utilities()
@@ -42,7 +45,13 @@ namespace SlimDX2
             return CopyMemory(dest, src, (ulong) count);
         }
 
-        public static unsafe void memcpy(void* pDest, void* pSrc, int count)
+        /// <summary>
+        /// NOT FULLY WORKING YET. NEED ALSO MORE TEST
+        /// </summary>
+        /// <param name="pDest"></param>
+        /// <param name="pSrc"></param>
+        /// <param name="count"></param>
+        private static unsafe void memcpy(void* pDest, void* pSrc, int count)
         {
             SlimDX2.Interop.memcpy(pDest, pSrc, count);
         }

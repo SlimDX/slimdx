@@ -436,16 +436,23 @@ namespace SlimDX2
 
             MethodBuilder methodCopyStruct;
 
-            if (x64)
+            //if (x64)
                 methodCopyStruct = tb.DefineMethod("memcpy",
                                                    MethodAttributes.Public | MethodAttributes.Static |
                                                    MethodAttributes.HideBySig,
                                                    CallingConventions.Standard);
-            else
-                methodCopyStruct = tb.DefineMethod("memcpy",
-                                                   MethodAttributes.Public | MethodAttributes.Static |
-                                                   MethodAttributes.HideBySig | MethodAttributes.PinvokeImpl,
-                                                   CallingConventions.Standard);
+
+            // NEED MORE TEST : memcpy seems to be far more inefficient on x86 targets
+            // I need to perform more test with it.
+            // A possible solution is to generate :
+            // - a memcpy using cpblk for x64 architecture
+            // - a memcpy using DllImpotr memcpy from msvcrt.dll for x86 architecture
+
+            //else
+            //    methodCopyStruct = tb.DefineMethod("memcpy",
+            //                                       MethodAttributes.Public | MethodAttributes.Static |
+            //                                       MethodAttributes.HideBySig | MethodAttributes.PinvokeImpl,
+            //                                       CallingConventions.Standard);
 
             methodCopyStruct.SetReturnType(typeof (void));
             methodCopyStruct.SetParameters(new Type[] {typeof (void*), typeof (void*), typeof (int)});
