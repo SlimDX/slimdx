@@ -29,7 +29,7 @@ namespace SlimDX2
     /// <summary>
     /// TODO: this is temporary. This class is going to be merged with Utilities and should be also internal
     /// </summary>
-    public static partial class Utilities
+    internal static partial class Utilities
     {
         static Utilities()
         {

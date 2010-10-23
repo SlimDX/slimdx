@@ -24,6 +24,7 @@ using SlimDX2.Direct3D;
 using SlimDX2.Direct3D11;
 using SlimDX2.DXGI;
 using SlimDX2.Windows;
+using SlimMath;
 using Buffer = SlimDX2.Direct3D11.Buffer;
 using Device = SlimDX2.Direct3D11.Device;
 
@@ -77,26 +78,10 @@ namespace MiniTri
             var pixelShader = new PixelShader(device, pixelShaderByteCode);
 
             // Layout from VertexShader input signature
-            var layout = new InputLayout(device, ShaderSignature.GetInputSignature(vertexShaderByteCode), new[]
-                                                                                                              {
-                                                                                                                  new InputElement
-                                                                                                                      ("POSITION",
-                                                                                                                       0,
-                                                                                                                       Format
-                                                                                                                           .
-                                                                                                                           R32G32B32A32_Float,
-                                                                                                                       0,
-                                                                                                                       0)
-                                                                                                                  ,
-                                                                                                                  new InputElement
-                                                                                                                      ("COLOR",
-                                                                                                                       0,
-                                                                                                                       Format
-                                                                                                                           .
-                                                                                                                           R32G32B32A32_Float,
-                                                                                                                       16,
-                                                                                                                       0)
-                                                                                                              });
+            var layout = new InputLayout(device, ShaderSignature.GetInputSignature(vertexShaderByteCode), new[] { 
+                new InputElement("POSITION",0,Format.R32G32B32A32_Float,0,0),
+                new InputElement("COLOR",0,Format.R32G32B32A32_Float,16,0)
+            });
 
             // Write vertex data to a datastream
             var stream = new DataStream(32*3, true, true);
