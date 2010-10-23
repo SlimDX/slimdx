@@ -64,6 +64,12 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Accessibility">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Boost.Wave, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\..\Externals\Boost.Wave\Bin\Boost.Wave.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\..\Externals\HtmlAgilityPack.1.4.0\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -87,16 +93,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Boost.Wave\Boost.Wave.csproj">
-      <Project>{2477202E-1B95-4580-8019-07B8E20F9A40}</Project>
-      <Name>Boost.Wave</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SlimDX2.Tools.XIDL\SlimDX2.Tools.XIDL.csproj">
       <Project>{19435A18-0C26-4534-8987-96E555BD2EFC}</Project>
       <Name>SlimDX2.Tools.XIDL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>copy $(SolutionDir)..\Externals\Boost.Wave\Bin\BoostWaveNative.dll $(TargetDir)</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
