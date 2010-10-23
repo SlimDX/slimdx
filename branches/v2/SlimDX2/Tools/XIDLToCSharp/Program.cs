@@ -292,7 +292,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             rectType.SizeOf = 4*4;
             gen.MapCppTypeToCSharpType("RECT", rectType); //Global.Name + ".Rectangle", 4 * 4, false, true);
             var color4Type = new CSharpStruct();
-            color4Type.Name = Global.Name + ".Color4";
+            color4Type.Name = "SlimMath.Color4";
             color4Type.SizeOf = 4*4;
             gen.MapCppTypeToCSharpType("SHARPDX_COLOR4", color4Type); // Global.Name + ".Color4"
             gen.MapCppTypeToCSharpType("HRESULT", typeof (int));
@@ -657,7 +657,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.ChangeStructFieldTypeToNative("D3D11_SHADER_INPUT_BIND_DESC", "uFlags", "D3D_SHADER_INPUT_FLAGS",
                                               "Flags");
 
-            gen.MapCppTypeToCSharpType("DXGI_RGB", Global.Name + ".Color3", 3*4, false, true);
+            gen.MapCppTypeToCSharpType("DXGI_RGB", "SlimMath.Color3", 3*4, false, true);
 
             // Those interfaces are only used as callback
             gen.MakeCallbackInterface("ID3DInclude");

@@ -40,6 +40,9 @@
       <HintPath>..\SlimDX2.Interop.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="SlimMath">
+      <HintPath>..\..\Externals\SlimMath\SlimMath.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />

@@ -587,14 +587,14 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             if (arrayDimension == 3)
                             {
                                 fieldSize = 3*4;
-                                publicType = ImportTypeFromName(Global.Name + ".Vector3", 3*4, false, true);
+                                publicType = ImportTypeFromName("SlimMath.Vector3", 3*4, false, true);
                                 arrayDimension = 0;
                                 hasArray = false;
                             }
                             else if (arrayDimension == 4)
                             {
                                 fieldSize = 4*4;
-                                publicType = ImportTypeFromName(Global.Name + ".Vector4", 4*4, false, true);
+                                publicType = ImportTypeFromName("SlimMath.Vector4", 4 * 4, false, true);
                                 arrayDimension = 0;
                                 hasArray = false;
                             }
@@ -1008,13 +1008,13 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
                         if (arrayDimension == 3)
                         {
-                            publicType = ImportTypeFromName(Global.Name + ".Vector3", 3*4, false, true);
+                            publicType = ImportTypeFromName("SlimMath.Vector3", 3 * 4, false, true);
                             arrayDimension = 0;
                             hasArray = false;
                         }
                         else if (arrayDimension == 4)
                         {
-                            publicType = ImportTypeFromName(Global.Name + ".Vector4", 4*4, false, true);
+                            publicType = ImportTypeFromName("SlimMath.Vector4", 4 * 4, false, true);
                             arrayDimension = 0;
                             hasArray = false;
                         }

@@ -22,6 +22,7 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("c96cbe87-0e01-417d-a16a-1aa2a749134d")]
 
+[assembly: InternalsVisibleTo("SlimDX2.DXGI")]
 [assembly: InternalsVisibleTo("SlimDX2.D3DCompiler")]
 [assembly: InternalsVisibleTo("SlimDX2.Direct3D11")]
 

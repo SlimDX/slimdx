@@ -21,7 +21,7 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using SlimDX2.Design;
+using SlimMath;
 
 namespace SlimDX2
 {
@@ -30,7 +30,6 @@ namespace SlimDX2
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
-    [TypeConverter(typeof (Int4Converter))]
     public struct Int4 : IEquatable<Int4>, IFormattable
     {
         /// <summary>
