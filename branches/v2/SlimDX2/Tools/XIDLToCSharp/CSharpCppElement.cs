@@ -42,14 +42,13 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 _cppElement = value;
                 if (_cppElement != null && _cppElement.Tag != null)
                 {
-                    UpdateFromTag();
+                    UpdateFromTag(_cppElement.Tag as CSharpTag);
                 }
             }
         }
 
-        protected virtual void UpdateFromTag()
+        protected virtual void UpdateFromTag(CSharpTag tag)
         {
-            var tag = _cppElement.Tag as CSharpTag;
             mappingName = tag.MappingName;
 
             if (tag.Visibility.HasValue)
@@ -60,6 +59,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
         {
             get
             {
+                // Because the Name is sometimes changed after the type was instancied, with put the mapping name here.
+                // Design wise, not the best option... but temporarely ok
+                // TODO : better handling of this
                 if (mappingName != null)
                     return mappingName;
                 return base.Name;

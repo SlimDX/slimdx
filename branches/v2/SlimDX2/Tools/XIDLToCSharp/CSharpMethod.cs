@@ -47,11 +47,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
             get { return HasReturnType && ReturnType.PublicType.Name == Global.Name + ".Result"; }
         }
 
-        protected override void UpdateFromTag()
+        protected override void UpdateFromTag(CSharpTag tag)
         {
-            base.UpdateFromTag();
-
-            var tag = CppElement.Tag as CSharpTag;
+            base.UpdateFromTag(tag);
 
             if (tag.NoProperty.HasValue)
                 NoProperty = tag.NoProperty.Value;
