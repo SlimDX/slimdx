@@ -91,7 +91,7 @@ namespace SlimDX2.Tools.XIDL
                 {
                     if (_typeName != null)
                         cppType.Type = _typeName.Contains("$")
-                                           ? pathRegex.Regex.Replace(cppType.Type, _typeName)
+                                           ? pathRegex.Regex.Replace(cppElement.FullName, _typeName)
                                            : _typeName;
                     ;
                     if (_specifier != null)

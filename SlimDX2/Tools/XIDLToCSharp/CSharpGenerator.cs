@@ -518,7 +518,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 int arrayDimension = string.IsNullOrWhiteSpace(cppField.ArrayDimension)
                                          ? 0
                                          : int.Parse(cppField.ArrayDimension);
-                string fieldType = cppField.Type;
+                string fieldType = cppField.GetTypeName();
                 string fieldName = ConvertCppNameToCSharpName(cppField.Name, TypeContext.Struct);
 
                 bool hasPointer = !string.IsNullOrEmpty(cppField.Specifier) && cppField.Specifier.Contains("*");
@@ -793,7 +793,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             CSharpType marshalType = null;
 
             bool hasPointer = false;
-            switch (cpptype.Type)
+            switch (cpptype.GetTypeName())
             {
                 case "void":
                     publicType = ImportType(typeof (void));
@@ -871,9 +871,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 default:
                     // Try to get a declared struct
                     // If it fails, then this struct is unknown
-                    if (!_mapCppNameToCSharpType.TryGetValue(cpptype.Type, out publicType))
+                    if (!_mapCppNameToCSharpType.TryGetValue(cpptype.GetTypeName(), out publicType))
                     {
-                        throw new ArgumentException("Unknown return type! {0}", cpptype.Type);
+                        throw new ArgumentException("Unknown return type! {0}", cpptype.GetTypeName());
                     }
                     //if (!hasPointer)
                     //    throw new ArgumentException("Expecting pointer for param");
@@ -960,6 +960,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 int arrayDimension = string.IsNullOrWhiteSpace(cppParameter.ArrayDimension)
                                          ? 0
                                          : int.Parse(cppParameter.ArrayDimension);
+                //string paramType = cppParameter.GetTypeName(); //GetFinalCppType(cppParameter.Type);
                 string paramType = GetFinalCppType(cppParameter.Type);
                 string paramName = ConvertMethodParameterName(cppParameter);
 
@@ -1552,7 +1553,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     if (string.IsNullOrEmpty(cppTypedef.Specifier) && !cppTypedef.IsArray)
                     {
                         CSharpType type;
-                        if (_mapCppNameToCSharpType.TryGetValue(cppTypedef.Type, out type))
+                        if (_mapCppNameToCSharpType.TryGetValue(cppTypedef.GetTypeName(), out type))
                         {
                             if (!_mapCppNameToCSharpType.ContainsKey(cppTypedef.Name))
                                 _mapCppNameToCSharpType.Add(cppTypedef.Name, type);

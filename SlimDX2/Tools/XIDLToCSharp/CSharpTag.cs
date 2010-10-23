@@ -23,24 +23,90 @@ namespace SlimDX2.Tools.XIDLToCSharp
 {
     public class CSharpTag
     {
+        public CSharpTag(Visibility? visibility=null, bool? noProperty=null, string mappingName=null, bool? isEnumFlags=null)
+        {
+            Visibility = visibility;
+            NoProperty = noProperty;
+            MappingName = mappingName;
+            IsEnumFlags = isEnumFlags;
+        }
+
         public Visibility? Visibility;
         public bool? NoProperty;
         public string MappingName;
+        public string MappingType;
+        public bool? IsEnumFlags;
     }
-
 
     public static class CppElementExtensions
     {
-        public static void ModifyTag<T>(this CppElement element, string regex, Visibility? visibility,
+        /// <summary>
+        /// Tag an element with a new visibility, propery and mapping name.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="element"></param>
+        /// <param name="regex"></param>
+        /// <param name="visibility"></param>
+        /// <param name="noProperty"></param>
+        /// <param name="mappingName"></param>
+        public static void TagVisibility<T>(this CppElement element, string regex, Visibility? visibility,
                                         bool? noProperty = null, string mappingName = null) where T : CppElement
         {
-            element.Modify<T>(regex, Tag(visibility, noProperty, mappingName));
+            element.Modify<T>(regex, Tag(new CSharpTag(visibility, noProperty, mappingName)));
         }
 
-        public static void ModifyTag<T>(this CppElement element, string regex, string mappingName = null)
+        /// <summary>
+        /// Tag an element with a new mapping name.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="element"></param>
+        /// <param name="regex"></param>
+        /// <param name="mappingName"></param>
+        public static void TagName<T>(this CppElement element, string regex, string mappingName)
             where T : CppElement
         {
-            element.Modify<T>(regex, Tag(null, null, mappingName));
+            element.Modify<T>(regex, Tag(new CSharpTag(null, null, mappingName)));
+        }
+
+        /// <summary>
+        /// Tag an element with a new Cpp type name (for fields, parameters, return types...) and a new name
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="element"></param>
+        /// <param name="regex"></param>
+        /// <param name="typeName"></param>
+        public static void TagTypeName<T>(this CppElement element, string regex, string typeName, string mappingName = null)
+            where T : CppElement
+        {
+            element.Modify<T>(regex, Tag(new CSharpTag() { MappingType =  typeName, MappingName = mappingName} ));
+        }
+
+        /// <summary>
+        /// Tag an Enum and force it to be interpreted as a flag.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="regex"></param>
+        public static void TagEnumFlags(this CppElement element, string regex)         
+        {
+            element.Modify<CppEnum>(regex, Tag(new CSharpTag() { IsEnumFlags = true }));
+        }
+
+        /// <summary>
+        /// Tag an Enum and force it to be interpreted as a flag.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="regex"></param>
+        public static string GetTypeName(this CppType cppType)
+        {
+            var tag = cppType.Tag as CSharpTag;
+            if (tag != null && tag.MappingType != null)
+                return tag.MappingType;
+            return cppType.Type;
+        }
+
+        private static string RegexRename(PathRegex regex, string fromName, string replaceName)
+        {
+            return replaceName.Contains("$")? regex.Regex.Replace(fromName, replaceName) : replaceName;            
         }
 
         /// <summary>
@@ -49,7 +115,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
         /// <param name = "fromType"></param>
         /// <param name = "toType"></param>
         /// <returns></returns>
-        private static Modifiers.ProcessModifier Tag(Visibility? visibility, bool? noProperty, string mappingName)
+        private static Modifiers.ProcessModifier Tag(CSharpTag fromTag)
         {
             return (pathREgex, element) =>
                        {
@@ -59,9 +125,11 @@ namespace SlimDX2.Tools.XIDLToCSharp
                                tag = new CSharpTag();
                                element.Tag = tag;
                            }
-                           if (visibility.HasValue) tag.Visibility = visibility;
-                           if (noProperty.HasValue) tag.NoProperty = noProperty;
-                           if (mappingName != null) tag.MappingName = mappingName;
+                           if (fromTag.Visibility.HasValue) tag.Visibility = fromTag.Visibility;
+                           if (fromTag.NoProperty.HasValue) tag.NoProperty = fromTag.NoProperty;
+                           if (fromTag.MappingName != null) tag.MappingName = RegexRename(pathREgex, element.FullName, fromTag.MappingName);
+                           if (fromTag.MappingType != null) tag.MappingType = RegexRename(pathREgex, element.FullName, fromTag.MappingType);
+                           if (fromTag.IsEnumFlags != null) tag.IsEnumFlags = fromTag.IsEnumFlags;
                            return false;
                        };
         }

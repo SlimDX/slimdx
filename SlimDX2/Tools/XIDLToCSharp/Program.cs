@@ -69,6 +69,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.Modify<CppEnumItem>(@"D3D(\d+)_SRV_DIMENSION_.*", Modifiers.Remove);
             group.Modify<CppEnumItem>(@"D3D(\d+_1)_SRV_DIMENSION_.*", Modifiers.Remove);
 
+            group.TagTypeName<CppField>(@"^D3D_SHADER_DATA::pBytecode$", null, "BytecodePtr");
+
             group.ModifyAll("^D3D10_CBF_USERPACKED$", Modifiers.Remove);
 
             group.ModifyAll(@"^D3DX11_ERR$", Modifiers.Remove);
@@ -82,8 +84,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.Modify<CppParameter>(@"^D3DX(\d+).*?::Flags1$", Modifiers.Type("D3DCOMPILE_SHADER_FLAGS"));
             group.Modify<CppParameter>(@"^D3DX(\d+).*?::Flags2$", Modifiers.Type("D3DCOMPILE_EFFECT_FLAGS"));
 
-            group.Modify<CppParameter>(@"^D3DX(\d+)ComputeNormalMap::Flags$", Modifiers.Type("D3DX11_NORMALMAP_FLAG"));
-            group.Modify<CppParameter>(@"^D3DX(\d+)ComputeNormalMap::Channel$", Modifiers.Type("D3DX11_CHANNEL_FLAG"));
+            group.Modify<CppParameter>(@"^D3DX(\d+)ComputeNormalMap::Flags$", Modifiers.Type("D3DX$1_NORMALMAP_FLAG"));
+            group.Modify<CppParameter>(@"^D3DX(\d+)ComputeNormalMap::Channel$", Modifiers.Type("D3DX$1_CHANNEL_FLAG"));
 
             group.Modify<CppFunction>(@"^D3DX(\d+).*A$", Modifiers.Remove);
 
@@ -118,11 +120,11 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.Modify<CppParameter>(@"^D3DX(\d+)CreateTextureFromMemory::pLoadInfo",
                                        Modifiers.ParameterAttribute(CppAttribute.In | CppAttribute.Optional));
 
-            group.ModifyTag<CppFunction>(@"^D3DX(\d+)CreateTextureFromFileW$", Visibility.Internal);
-            group.ModifyTag<CppFunction>(@"^D3DX(\d+)CreateTextureFromResourceW$", Visibility.Internal);
-            group.ModifyTag<CppFunction>(@"^D3DX(\d+)CreateTextureFromMemory$", Visibility.Internal);
-            group.ModifyTag<CppFunction>(@"^D3DX(\d+)SaveTextureToFile$", Visibility.Internal);
-            group.ModifyTag<CppFunction>(@"^D3DX(\d+)SaveTextureToMemory$", Visibility.Internal);
+            group.TagVisibility<CppFunction>(@"^D3DX(\d+)CreateTextureFromFileW$", Visibility.Internal);
+            group.TagVisibility<CppFunction>(@"^D3DX(\d+)CreateTextureFromResourceW$", Visibility.Internal);
+            group.TagVisibility<CppFunction>(@"^D3DX(\d+)CreateTextureFromMemory$", Visibility.Internal);
+            group.TagVisibility<CppFunction>(@"^D3DX(\d+)SaveTextureToFile$", Visibility.Internal);
+            group.TagVisibility<CppFunction>(@"^D3DX(\d+)SaveTextureToMemory$", Visibility.Internal);
 
             //group.Modify<CppFunction>(@"^(D3DX(\d+)11.*)W$", Modifiers.Name("$1"));
 
@@ -147,71 +149,147 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.Modify<CppParameter>(@"^IDXGISwapChain::Present::Flags$", Modifiers.Type("DXGI_PRESENT_FLAGS"));
             group.Modify<CppParameter>(@"^IDXGIFactory::MakeWindowAssociation::Flags$", Modifiers.Type("DXGI_MWA_FLAGS"));
 
+            group.TagTypeName<CppField>(@"^DXGI_SWAP_CHAIN_DESC::Flags$", "DXGI_SWAP_CHAIN_FLAG");
+
             // Remove DXGI_DISPLAY_COLOR_SPACE type and all typedefs
             group.Modify<CppStruct>("DXGI_DISPLAY_COLOR_SPACE", Modifiers.Remove);
 
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)ClassInstance::GetInstanceName$", Visibility.Internal);
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)ClassInstance::GetTypeName$", Visibility.Internal);
+            // --------------------------------------------------------------------------------------------------------
+            // D3D(\d+) Interfaces
+            // --------------------------------------------------------------------------------------------------------
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)ClassInstance::GetInstanceName$", Visibility.Internal);
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)ClassInstance::GetTypeName$", Visibility.Internal);
 
             // Prepare For Mapping, using tag
             // Hide all Create.* methods in Device
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)Device::Create.*$", Visibility.Internal);
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)Device::Create.*$", Visibility.Internal);
             // Hide GetImmediateContext and force to no property
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)Device::GetImmediateContext$", Visibility.Internal, true);
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)Device::GetImmediateContext$", Visibility.Internal, true);
 
             // DeviceContext
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::SetVertexBuffers$", Visibility.Internal);
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::SetTargets$", Visibility.Internal);
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::SetRenderTargetsAndUnorderedAccessViews$",
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::SetVertexBuffers$", Visibility.Internal);
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::SetTargets$", Visibility.Internal);
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::SetRenderTargetsAndUnorderedAccessViews$",
                                        Visibility.Internal);
 
             // Mark all stage SetShader methods internals
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::SetViewports$", Visibility.Internal);
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::SetScissorRects$", Visibility.Internal);
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::IASetVertexBuffers$", Visibility.Internal);
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]SetShader$",
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::SetViewports$", Visibility.Internal);
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::SetScissorRects$", Visibility.Internal);
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::IASetVertexBuffers$", Visibility.Internal);
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]SetShader$",
                                        Visibility.Internal | Visibility.Override);
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]SetShaderResources$",
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]SetShaderResources$",
                                        Visibility.Public | Visibility.Override);
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]SetSamplers$",
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]SetSamplers$",
                                        Visibility.Public | Visibility.Override);
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]GetShader$",
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]GetShader$",
                                        Visibility.Internal | Visibility.Override);
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]SetConstantBuffers$",
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]SetConstantBuffers$",
                                        Visibility.Public | Visibility.Override);
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]GetShaderResources$",
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]GetShaderResources$",
                                        Visibility.Internal | Visibility.Override);
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]GetSamplers$",
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]GetSamplers$",
                                        Visibility.Internal | Visibility.Override);
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]GetConstantBuffers$",
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]GetConstantBuffers$",
                                        Visibility.Internal | Visibility.Override);
 
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::Map$", Visibility.Internal);
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::Unmap$", "UnmapSubresource");
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::UpdateSubresource$", Visibility.Internal);
-            group.Modify<CppParameter>(@"^ID3D(\d+)DeviceContext::Map::MapFlags$", Modifiers.Type("D3D11_MAP_FLAG"));
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::Map$", Visibility.Internal);
+            group.TagName<CppMethod>(@"^ID3D(\d+)DeviceContext::Unmap$", "UnmapSubresource");
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::UpdateSubresource$", Visibility.Internal);
+            group.Modify<CppParameter>(@"^ID3D(\d+)DeviceContext::Map::MapFlags$", Modifiers.Type("D3D$1_MAP_FLAG"));
 
             group.Modify<CppParameter>(@"^ID3D(\d+)DeviceContext::GetData::GetDataFlags$",
-                                       Modifiers.Type("D3D11_ASYNC_GETDATA_FLAG"));
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::GetData$", Visibility.Internal, null,
+                                       Modifiers.Type("D3D$1_ASYNC_GETDATA_FLAG"));
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::GetData$", Visibility.Internal, null,
                                        "GetDataInternal");
 
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::FinishCommandList$", Visibility.Internal, null,
+            group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::FinishCommandList$", Visibility.Internal, null,
                                        "FinishCommandListInternal");
 
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::GetResourceMinLOD$", "GetMinimumLod");
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::SetResourceMinLOD$", "SetMinimumLod");
+            group.TagName<CppMethod>(@"^ID3D(\d+)DeviceContext::GetResourceMinLOD$", "GetMinimumLod");
+            group.TagName<CppMethod>(@"^ID3D(\d+)DeviceContext::SetResourceMinLOD$", "SetMinimumLod");
 
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::ClearUnorderedAccessViewFloat$",
+            group.TagName<CppMethod>(@"^ID3D(\d+)DeviceContext::ClearUnorderedAccessViewFloat$",
                                        "ClearUnorderedAccessView");
-            group.ModifyTag<CppMethod>(@"^ID3D(\d+)DeviceContext::ClearUnorderedAccessViewUint$",
+            group.TagName<CppMethod>(@"^ID3D(\d+)DeviceContext::ClearUnorderedAccessViewUint$",
                                        "ClearUnorderedAccessView");
 
             group.Modify<CppParameter>(@"^ID3D(\d+)DeviceContext::ClearDepthStencilView::ClearFlags$",
                                        Modifiers.Type("D3D11_CLEAR_FLAG"));
 
-            group.ModifyTag<CppStruct>(@"^D3D(\d+)_SUBRESOURCE_DATA$", Visibility.Internal);
-            group.ModifyTag<CppStruct>(@"^D3D(\d+)_MAPPED_SUBRESOURCE$", Visibility.Internal);
+            // --------------------------------------------------------------------------------------------------------
+            // D3D(\d+) Structures
+            // --------------------------------------------------------------------------------------------------------
+            group.TagVisibility<CppStruct>(@"^D3D(\d+)_SUBRESOURCE_DATA$", Visibility.Internal);
+            group.TagVisibility<CppStruct>(@"^D3D(\d+)_MAPPED_SUBRESOURCE$", Visibility.Internal);
+
+            // Change Some Field type in structs (using existing enums)
+            group.TagTypeName<CppField>(@"^D3D(\d+)_BUFFER_DESC::BindFlags", "D3D$1_BIND_FLAG");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_BUFFER_DESC::CPUAccessFlags", "D3D$1_CPU_ACCESS_FLAG", "CpuAccessFlags");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_BUFFER_DESC::MiscFlags", "D3D$1_RESOURCE_MISC_FLAG", "OptionFlags");
+
+            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE1D_DESC::BindFlags", "D3D$1_BIND_FLAG");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE1D_DESC::CPUAccessFlags", "D3D$1_CPU_ACCESS_FLAG", "CpuAccessFlags");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE1D_DESC::MiscFlags", "D3D$1_RESOURCE_MISC_FLAG", "OptionFlags");
+
+            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE2D_DESC::BindFlags", "D3D$1_BIND_FLAG");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE2D_DESC::CPUAccessFlags", "D3D$1_CPU_ACCESS_FLAG", "CpuAccessFlags");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE2D_DESC::MiscFlags", "D3D$1_RESOURCE_MISC_FLAG", "OptionFlags");
+
+            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE3D_DESC::BindFlags", "D3D$1_BIND_FLAG");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE3D_DESC::CPUAccessFlags", "D3D$1_CPU_ACCESS_FLAG", "CpuAccessFlags");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE3D_DESC::MiscFlags", "D3D$1_RESOURCE_MISC_FLAG", "OptionFlags");
+
+            group.TagTypeName<CppField>(@"^D3D(\d+)_FEATURE_DATA_FORMAT_SUPPORT::OutFormatSupport$", "D3D$1_FORMAT_SUPPORT2");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_FEATURE_DATA_FORMAT_SUPPORT2::OutFormatSupport2$", "D3D$1_FORMAT_SUPPORT2");
+
+            group.TagTypeName<CppField>(@"^D3DX(\d+)_IMAGE_INFO::MiscFlags", "D3D$1_RESOURCE_MISC_FLAG");
+
+            group.TagTypeName<CppField>(@"^D3DX(\d+)_IMAGE_LOAD_INFO::BindFlags", "D3D$1_BIND_FLAG");
+            group.TagTypeName<CppField>(@"^D3DX(\d+)_IMAGE_LOAD_INFO::CpuAccessFlags", "D3D$1_CPU_ACCESS_FLAG");
+            group.TagTypeName<CppField>(@"^D3DX(\d+)_IMAGE_LOAD_INFO::MiscFlags", "D3D$1_RESOURCE_MISC_FLAG");
+            group.TagTypeName<CppField>(@"^D3DX(\d+)_IMAGE_LOAD_INFO::Filter", "D3DX$1_FILTER_FLAG");
+            group.TagTypeName<CppField>(@"^D3DX(\d+)_IMAGE_LOAD_INFO::MipFilter", "D3DX$1_FILTER_FLAG");
+
+            group.TagTypeName<CppField>(@"^D3DX(\d+)_TEXTURE_LOAD_INFO::Filter", "D3DX$1_FILTER_FLAG");
+            group.TagTypeName<CppField>(@"^D3DX(\d+)_TEXTURE_LOAD_INFO::MipFilter", "D3DX$1_FILTER_FLAG");
+
+            group.TagTypeName<CppField>(@"^D3D(\d+)_DEPTH_STENCIL_VIEW_DESC::Flags", "D3D$1_DSV_FLAG");
+
+            group.TagTypeName<CppField>(@"^DXGI_SWAP_CHAIN_DESC::Flags", "DXGI_SWAP_CHAIN_FLAG");
+
+            group.TagTypeName<CppField>(@"^D3D(\d+)_SHADER_DESC::Flags", "D3DCOMPILE_SHADER_FLAGS");
+
+            group.TagTypeName<CppField>(@"^D3D(\d+)_SHADER_DESC::Version", "D3D$1_SHADER_VERSION_TYPE");
+
+            group.TagTypeName<CppField>(@"^D3D(\d+)_BUFFER_DESC::ByteWidth", null, "SizeInBytes");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_BUFFER_DESC::MiscFlags", null, "OptionFlags");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE1D_DESC::MiscFlags", null, "OptionFlags");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE2D_DESC::MiscFlags", null, "OptionFlags");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE3D_DESC::MiscFlags", null, "OptionFlags");
+            group.TagTypeName<CppField>(@"^D3DX(\d+)_IMAGE_INFO::MiscFlags", null, "OptionFlags");
+            group.TagTypeName<CppField>(@"^D3DX(\d+)_IMAGE_LOAD_INFO::MiscFlags", null, "OptionFlags");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_BUFFER_DESC::MiscFlags", null, "OptionFlags");
+
+            group.TagTypeName<CppField>(@"^D3D(\d+)_SUBRESOURCE_DATA::pSysMem$", null, "DataPointer");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_SUBRESOURCE_DATA::SysMemPitch$", null, "Pitch");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_SUBRESOURCE_DATA::SysMemSlicePitch$", null, "SlicePitch");
+
+            group.TagTypeName<CppField>(@"^D3D(\d+)_QUERY_DESC::MiscFlags", "D3D$1_QUERY_MISC_FLAG", "QueryFlags");
+
+            group.TagTypeName<CppField>(@"^D3D(\d+)_BUFFEREX_SRV::Flags", "D3D$1_BUFFEREX_SRV_FLAG");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_BUFFER_UAV::Flags", "D3D$1_BUFFER_UAV_FLAG");
+
+            group.TagTypeName<CppField>(@"^DXGI_ADAPTER_DESC1::Flags", "DXGI_ADAPTER_FLAG");
+
+            group.TagTypeName<CppField>(@"^D3D(\d+)_SHADER_VARIABLE_DESC::uFlags", "D3D_SHADER_VARIABLE_FLAGS", "Flags");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_SHADER_INPUT_BIND_DESC::uFlags", "D3D_SHADER_INPUT_FLAGS", "Flags");
+
+            // --------------------------------------------------------------------------------------------------------
+            // D3D(\d+) Enumerations
+            // --------------------------------------------------------------------------------------------------------
+            group.TagEnumFlags(@"^D3D(\d+)_FORMAT_SUPPORT$");
+            group.TagEnumFlags(@"^D3D(\d+)_FORMAT_SUPPORT2$");
 
             CSharpGenerator gen = new CSharpGenerator(group);
 
@@ -427,6 +505,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.RenameType(@"^D3DX(\d+)_NORMALMAP_FLAG$", "NormalMapFlags");
             gen.RenameType(@"^D3DX(\d+)_NORMALMAP_(.*)", "$2");
 
+            gen.RenameType(@"^D3DX(\d+)_SAVE_TEXTURE_FLAG$", "SaveTextureFlags");
+            gen.RenameType(@"^D3DX(\d+)_STF_USEINPUTBLOB$", "UseInputBlob");
+            gen.RenameType(@"^D3DX(\d+)_STF_(.*)", "$2");
+
             gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::IA(.*)", "InputAssemblerStage", "InputAssembler", "$1");
             gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::VS(.*)", "VertexShaderStage", "VertexShader", "$1",
                                             "CommonShaderStage<VertexShader>");
@@ -581,81 +663,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.RenameTypePart("^INFO$", "Information");
             gen.RenameTypePart("^DESC1$", "Description1");
             gen.RenameTypePart("^DISASM$", "Disassembly");
-
-            // Change Some Field type in structs (using existing enums)
-            gen.ChangeStructFieldTypeToNative("D3D11_BUFFER_DESC", "BindFlags", "D3D11_BIND_FLAG");
-            gen.ChangeStructFieldTypeToNative("D3D11_BUFFER_DESC", "CPUAccessFlags", "D3D11_CPU_ACCESS_FLAG",
-                                              "CpuAccessFlags");
-            gen.ChangeStructFieldTypeToNative("D3D11_BUFFER_DESC", "MiscFlags", "D3D11_RESOURCE_MISC_FLAG",
-                                              "OptionFlags");
-
-            gen.ChangeStructFieldTypeToNative("D3D11_TEXTURE1D_DESC", "BindFlags", "D3D11_BIND_FLAG");
-            gen.ChangeStructFieldTypeToNative("D3D11_TEXTURE1D_DESC", "CPUAccessFlags", "D3D11_CPU_ACCESS_FLAG",
-                                              "CpuAccessFlags");
-            gen.ChangeStructFieldTypeToNative("D3D11_TEXTURE1D_DESC", "MiscFlags", "D3D11_RESOURCE_MISC_FLAG",
-                                              "OptionFlags");
-
-            gen.ChangeStructFieldTypeToNative("D3D11_TEXTURE2D_DESC", "BindFlags", "D3D11_BIND_FLAG");
-            gen.ChangeStructFieldTypeToNative("D3D11_TEXTURE2D_DESC", "CPUAccessFlags", "D3D11_CPU_ACCESS_FLAG",
-                                              "CpuAccessFlags");
-            gen.ChangeStructFieldTypeToNative("D3D11_TEXTURE2D_DESC", "MiscFlags", "D3D11_RESOURCE_MISC_FLAG",
-                                              "OptionFlags");
-
-            gen.ChangeStructFieldTypeToNative("D3D11_TEXTURE3D_DESC", "BindFlags", "D3D11_BIND_FLAG");
-            gen.ChangeStructFieldTypeToNative("D3D11_TEXTURE3D_DESC", "CPUAccessFlags", "D3D11_CPU_ACCESS_FLAG",
-                                              "CpuAccessFlags");
-            gen.ChangeStructFieldTypeToNative("D3D11_TEXTURE3D_DESC", "MiscFlags", "D3D11_RESOURCE_MISC_FLAG",
-                                              "OptionFlags");
-
-            gen.ChangeStructFieldTypeToNative("D3D11_FEATURE_DATA_FORMAT_SUPPORT", "OutFormatSupport",
-                                              "D3D11_FORMAT_SUPPORT2");
-            gen.ChangeStructFieldTypeToNative("D3D11_FEATURE_DATA_FORMAT_SUPPORT2", "OutFormatSupport2",
-                                              "D3D11_FORMAT_SUPPORT2");
-
-            gen.ChangeStructFieldTypeToNative("D3DX11_IMAGE_INFO", "MiscFlags", "D3D11_RESOURCE_MISC_FLAG");
-
-            gen.ChangeStructFieldTypeToNative("D3DX11_IMAGE_LOAD_INFO", "BindFlags", "D3D11_BIND_FLAG");
-            gen.ChangeStructFieldTypeToNative("D3DX11_IMAGE_LOAD_INFO", "CpuAccessFlags", "D3D11_CPU_ACCESS_FLAG");
-            gen.ChangeStructFieldTypeToNative("D3DX11_IMAGE_LOAD_INFO", "MiscFlags", "D3D11_RESOURCE_MISC_FLAG");
-            gen.ChangeStructFieldTypeToNative("D3DX11_IMAGE_LOAD_INFO", "Filter", "D3DX11_FILTER_FLAG");
-            gen.ChangeStructFieldTypeToNative("D3DX11_IMAGE_LOAD_INFO", "MipFilter", "D3DX11_FILTER_FLAG");
-
-            gen.ChangeStructFieldTypeToNative("D3DX11_TEXTURE_LOAD_INFO", "Filter", "D3DX11_FILTER_FLAG");
-            gen.ChangeStructFieldTypeToNative("D3DX11_TEXTURE_LOAD_INFO", "MipFilter", "D3DX11_FILTER_FLAG");
-
-            gen.ChangeStructFieldTypeToNative("D3D11_DEPTH_STENCIL_VIEW_DESC", "Flags", "D3D11_DSV_FLAG");
-
-            gen.ChangeStructFieldTypeToNative("DXGI_SWAP_CHAIN_DESC", "Flags", "DXGI_SWAP_CHAIN_FLAG");
-
-            gen.ChangeStructFieldTypeToNative("D3D11_SHADER_DESC", "Flags", "D3DCOMPILE_SHADER_FLAGS");
-
-            gen.ChangeStructFieldTypeToNative("D3D11_SHADER_DESC", "Version", "D3D11_SHADER_VERSION_TYPE");
-
-            gen.ChangeStructFieldName("D3D11_BUFFER_DESC", "ByteWidth", "SizeInBytes");
-            gen.ChangeStructFieldName("D3D11_BUFFER_DESC", "MiscFlags", "OptionFlags");
-            gen.ChangeStructFieldName("D3D11_TEXTURE1D_DESC", "MiscFlags", "OptionFlags");
-            gen.ChangeStructFieldName("D3D11_TEXTURE2D_DESC", "MiscFlags", "OptionFlags");
-            gen.ChangeStructFieldName("D3D11_TEXTURE3D_DESC", "MiscFlags", "OptionFlags");
-            gen.ChangeStructFieldName("D3DX11_IMAGE_INFO", "MiscFlags", "OptionFlags");
-            gen.ChangeStructFieldName("D3DX11_IMAGE_LOAD_INFO", "MiscFlags", "OptionFlags");
-            gen.ChangeStructFieldName("D3D11_BUFFER_DESC", "MiscFlags", "OptionFlags");
-
-            gen.ChangeStructFieldName("D3D_SHADER_DATA", "pBytecode", "BytecodePtr");
-            gen.ChangeStructFieldName("D3D11_SUBRESOURCE_DATA", "pSysMem", "DataPointer");
-            gen.ChangeStructFieldName("D3D11_SUBRESOURCE_DATA", "SysMemPitch", "Pitch");
-            gen.ChangeStructFieldName("D3D11_SUBRESOURCE_DATA", "SysMemSlicePitch", "SlicePitch");
-
-            gen.ChangeStructFieldTypeToNative("D3D11_QUERY_DESC", "MiscFlags", "D3D11_QUERY_MISC_FLAG", "QueryFlags");
-
-            gen.ChangeStructFieldTypeToNative("D3D11_BUFFEREX_SRV", "Flags", "D3D11_BUFFEREX_SRV_FLAG");
-            gen.ChangeStructFieldTypeToNative("D3D11_BUFFER_UAV", "Flags", "D3D11_BUFFER_UAV_FLAG");
-
-            gen.ChangeStructFieldTypeToNative("DXGI_ADAPTER_DESC1", "Flags", "DXGI_ADAPTER_FLAG");
-
-            gen.ChangeStructFieldTypeToNative("D3D11_SHADER_VARIABLE_DESC", "uFlags", "D3D_SHADER_VARIABLE_FLAGS",
-                                              "Flags");
-            gen.ChangeStructFieldTypeToNative("D3D11_SHADER_INPUT_BIND_DESC", "uFlags", "D3D_SHADER_INPUT_FLAGS",
-                                              "Flags");
 
             gen.MapCppTypeToCSharpType("DXGI_RGB", "SlimMath.Color3", 3*4, false, true);
 

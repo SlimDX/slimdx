@@ -37,6 +37,13 @@ namespace SlimDX2.Tools.XIDLToCSharp
             get { return Items.OfType<Item>(); }
         }
 
+        protected override void UpdateFromTag(CSharpTag tag)
+        {
+            base.UpdateFromTag(tag);
+            if (tag.IsEnumFlags.HasValue)
+                IsFlag = tag.IsEnumFlags.Value;
+        }
+
         public class Item : CSharpType
         {
             public Item()

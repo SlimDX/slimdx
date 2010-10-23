@@ -79,7 +79,7 @@ foreach (var sharpInterface in Namespace.Interfaces)
 #>
     <#= sharpInterface.VisibilityName #>partial class <#= sharpInterface.Name #> : <#= sharpInterface.Parent.FullName #> {
 
-		public <#= sharpInterface.Name #>(IntPtr basePtr) : base(basePtr) {
+        public <#= sharpInterface.Name #>(IntPtr basePtr) : base(basePtr) {
         }
 <#+	
 	} else { 
@@ -232,7 +232,7 @@ foreach (var sharpInterface in Namespace.Interfaces)
 <#+						} else {#>
                 <#= param.PublicType.FullName #>.__Native <#= param.TempName #> = new <#= param.PublicType.FullName #>.__Native();
 <#+							if (param.IsRefIn && param.HasNativeValueType) {#>
-				<#= param.Name #>.__MarshalTo(ref <#= param.TempName #>);
+                <#= param.Name #>.__MarshalTo(ref <#= param.TempName #>);
 <#+							}
 						}						
 					}
@@ -253,12 +253,12 @@ foreach (var sharpInterface in Namespace.Interfaces)
 						if (param.PublicType is CSharpInterface) {
 							if (param.IsIn && param.IsOptionnal) {#>
                 IntPtr* <#= param.TempName #> = (IntPtr*)0;
-				if ( <#= param.Name #> != null ) {
+                if ( <#= param.Name #> != null ) {
                     IntPtr* <#= param.TempName #>_ = stackalloc IntPtr[<#= param.Name #>.Length];
                     <#= param.TempName #> = <#= param.TempName #>_;
                     for (int i = 0; i < <#= param.Name #>.Length; i++)                        
                         <#= param.TempName #>[i] =  <#= param.Name #>[i].NativePointer;
-				}
+                }
 <#+									
 							} else {#>
                 IntPtr* <#= param.TempName #> = stackalloc IntPtr[<#= param.Name #>.Length];
@@ -296,14 +296,14 @@ foreach (var sharpInterface in Namespace.Interfaces)
 				foreach (var param in sharpInterfaceMethod.Parameters) {
 					if (param.IsArray && param.IsValueType) {
 						if (param.HasNativeValueType || param.IsOptionnal) {#>
-				fixed (void* <#= param.TempName #> = &<#= param.TempName #>_[0])
+                fixed (void* <#= param.TempName #> = &<#= param.TempName #>_[0])
 <#+	
 						} else {#>
-				fixed (void* <#= param.TempName #> = &<#= param.Name #>[0])
+                fixed (void* <#= param.TempName #> = &<#= param.Name #>[0])
 <#+						}						
 						PushIndent("    ");
 					} else if (param.IsFixed && param.IsValueType && !param.HasNativeValueType) {#>
-				fixed (void* <#= param.TempName #> = &<#= param.Name #>)
+                fixed (void* <#= param.TempName #> = &<#= param.Name #>)
 <#+	
 						PushIndent("    ");
 					} 
