@@ -41,6 +41,11 @@ namespace SlimDX2.Tools.XIDL
 
         public object Tag { get; set; }
 
+        public T GetTag<T>()
+        {
+            return (T) Tag;
+        }
+
         public virtual string Path
         {
             get
@@ -101,6 +106,11 @@ namespace SlimDX2.Tools.XIDL
                     _innerElements = new List<CppElement>();
                 return _innerElements;
             }
+        }
+
+        public T FindFirst<T>(string regex) where T : CppElement
+        {
+            return Find<T>(regex).FirstOrDefault();
         }
 
         public IEnumerable<T> Find<T>(string regex) where T : CppElement

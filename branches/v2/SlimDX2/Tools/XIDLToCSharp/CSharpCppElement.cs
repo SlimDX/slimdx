@@ -42,7 +42,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 _cppElement = value;
                 if (_cppElement != null && _cppElement.Tag != null)
                 {
-                    UpdateFromTag(_cppElement.Tag as CSharpTag);
+                    UpdateFromTag(_cppElement.GetTag<CSharpTag>());
                 }
             }
         }
