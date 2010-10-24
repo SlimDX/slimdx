@@ -20,11 +20,13 @@
 using System;
 using System.CodeDom.Compiler;
 using System.Globalization;
-using System.Reflection;
 using Microsoft.JScript;
 
 namespace SlimDX2.Tools.HeaderToXIDL
 {
+    /// <summary>
+    /// Simple expression evaluator using JScript engine
+    /// </summary>
     public class Evaluator
     {
         public static int EvalToInteger(string statement)
@@ -44,7 +46,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
             object o = statement;
             try
             {
-                o = EvalToObject(statement);
+                _evaluator.Eval(statement);
             }
             catch (Exception ex)
             {
@@ -53,39 +55,19 @@ namespace SlimDX2.Tools.HeaderToXIDL
             return o.ToString();
         }
 
-        public static object EvalToObject(string statement)
-        {
-            return _evaluatorType.InvokeMember(
-                "Eval",
-                BindingFlags.InvokeMethod,
-                null,
-                _evaluator,
-                new object[] {statement}
-                );
-        }
-
         static Evaluator()
         {
-            ICodeCompiler compiler;
-            compiler = new JScriptCodeProvider().CreateCompiler();
-
-            CompilerParameters parameters;
-            parameters = new CompilerParameters();
-            parameters.GenerateInMemory = true;
-
-            CompilerResults results;
-            results = compiler.CompileAssemblyFromSource(parameters, _jscriptSource);
-
-            Assembly assembly = results.CompiledAssembly;
-            _evaluatorType = assembly.GetType("Evaluator.Evaluator");
-
-            _evaluator = Activator.CreateInstance(_evaluatorType);
+            var compiler = new JScriptCodeProvider().CreateCompiler();
+            var parameters = new CompilerParameters {GenerateInMemory = true};
+            var results = compiler.CompileAssemblyFromSource(parameters, _jscriptSource);
+            var assembly = results.CompiledAssembly;
+            var evaluatorType = assembly.GetType("Evaluator.Evaluator");
+            _evaluator = Activator.CreateInstance(evaluatorType);
         }
 
-        private static object _evaluator = null;
-        private static Type _evaluatorType = null;
+        private static readonly dynamic _evaluator;
 
-        private static readonly string _jscriptSource =
+        private const string _jscriptSource =
             @"package Evaluator
             {
                class Evaluator

@@ -20,30 +20,45 @@
 using System;
 using System.IO;
 using System.Reflection;
-using SlimDX2.Tools.XIDL;
 
 namespace SlimDX2.Tools.HeaderToXIDL
 {
+    /// <summary>
+    /// Header To XIDL
+    /// </summary>
     internal class Program
     {
+        /// <summary>
+        /// Arguments
+        /// </summary>
         private class CommandArgs
         {
             public string IncludePath = null;
             public string Output = "directx.xidl";            
         }
 
+        /// <summary>
+        /// Print usage and exit
+        /// </summary>
+        /// <param name="exitCode">exit code to return</param>
+        /// <param name="message">error message to print</param>
+        /// <param name="messageArgs">error message arguments</param>
         private static void Usage(int exitCode, string message = null, params string[] messageArgs)
         {
             Console.WriteLine(
                 "Usage: {0} [/i:path_to_directx default = ENV($DXSDK_DIR\\Include)] [/o:output_xidl_file default = directx.xidl]",
                 Assembly.GetEntryAssembly().FullName);
             if (message != null )
-                Console.WriteLine(message);
+                Console.WriteLine(message, messageArgs);
 
             Environment.Exit(exitCode);
         }
 
-
+        /// <summary>
+        /// Parse arguments
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         private static CommandArgs ParseArgs(string[] args)
         {
             var cmdArgs = new CommandArgs();
@@ -69,15 +84,16 @@ namespace SlimDX2.Tools.HeaderToXIDL
             return cmdArgs;
         }
 
-
+        /// <summary>
+        /// Main
+        /// </summary>
+        /// <param name="args"></param>
         private static void Main(string[] args)
         {
 
             CommandArgs cmdArgs = ParseArgs(args);
 
-            CppHeaderParser cppHeaderParser = new CppHeaderParser();
-
-            cppHeaderParser.IncludePath = cmdArgs.IncludePath;
+            var cppHeaderParser = new CppHeaderParser {IncludePath = cmdArgs.IncludePath};
 
             cppHeaderParser.AddInclude("dxgi.h");
             cppHeaderParser.AddInclude("dxgiformat.h");
@@ -104,6 +120,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
 
             cppHeaderParser.Run();
 
+            // Write XIDL model to the disk
             cppHeaderParser.IncludeGroup.Write(cmdArgs.Output);
         }
     }

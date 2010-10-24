@@ -21,28 +21,15 @@ using System.Text.RegularExpressions;
 
 namespace SlimDX2.Tools.XIDL
 {
-    public class PathRegex
+    public class PathRegex : Regex
     {
-        private Regex _regex;
-
-        public PathRegex(string path)
+        public PathRegex(string path) : base(path)
         {
-            _regex = new Regex(path);
         }
 
         public static implicit operator PathRegex(string pathRegex)
         {
             return new PathRegex(pathRegex);
-        }
-
-        public Regex Regex
-        {
-            get { return _regex; }
-        }
-
-        public bool Match(string pathToMatch)
-        {
-            return _regex.Match(pathToMatch).Success;
         }
     }
 }

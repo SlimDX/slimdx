@@ -106,7 +106,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
         private static string RegexRename(PathRegex regex, string fromName, string replaceName)
         {
-            return replaceName.Contains("$")? regex.Regex.Replace(fromName, replaceName) : replaceName;            
+            return replaceName.Contains("$")? regex.Replace(fromName, replaceName) : replaceName;            
         }
 
         /// <summary>

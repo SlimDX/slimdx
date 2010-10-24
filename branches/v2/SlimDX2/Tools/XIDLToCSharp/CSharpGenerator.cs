@@ -758,7 +758,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             // Associate Parent
             CSharpType parentType;
-            if (_mapCppNameToCSharpType.TryGetValue(cppInterface.Parent, out parentType))
+            if (_mapCppNameToCSharpType.TryGetValue(cppInterface.ParentName, out parentType))
             {
                 cSharpInterface.Parent = parentType;
             }
