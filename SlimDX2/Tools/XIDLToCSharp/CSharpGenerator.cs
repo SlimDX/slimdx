@@ -47,95 +47,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
     public class CSharpGenerator
     {
-        private static readonly string[] _csharpKeywords = new[]
-                                                               {
-                                                                   "abstract",
-                                                                   "as",
-                                                                   "base",
-                                                                   "bool",
-                                                                   "break",
-                                                                   "byte",
-                                                                   "case",
-                                                                   "catch",
-                                                                   "char",
-                                                                   "checked",
-                                                                   "class",
-                                                                   "const",
-                                                                   "continue",
-                                                                   "decimal",
-                                                                   "default",
-                                                                   "delegate",
-                                                                   "do",
-                                                                   "double",
-                                                                   "else",
-                                                                   "enum",
-                                                                   "event",
-                                                                   "explicit",
-                                                                   "extern",
-                                                                   "false",
-                                                                   "finally",
-                                                                   "fixed",
-                                                                   "float",
-                                                                   "for",
-                                                                   "foreach",
-                                                                   "goto",
-                                                                   "if",
-                                                                   "implicit",
-                                                                   "in",
-                                                                   "int",
-                                                                   "interface",
-                                                                   "internal",
-                                                                   "is",
-                                                                   "lock",
-                                                                   "long",
-                                                                   "namespace",
-                                                                   "new",
-                                                                   "null",
-                                                                   "object",
-                                                                   "operator",
-                                                                   "out",
-                                                                   "override",
-                                                                   "params",
-                                                                   "private",
-                                                                   "protected",
-                                                                   "public",
-                                                                   "readonly",
-                                                                   "ref",
-                                                                   "return",
-                                                                   "sbyte",
-                                                                   "sealed",
-                                                                   "short",
-                                                                   "sizeof",
-                                                                   "stackalloc",
-                                                                   "static",
-                                                                   "string",
-                                                                   "struct",
-                                                                   "switch",
-                                                                   "this",
-                                                                   "throw",
-                                                                   "true",
-                                                                   "try",
-                                                                   "typeof",
-                                                                   "uint",
-                                                                   "ulong",
-                                                                   "unchecked",
-                                                                   "unsafe",
-                                                                   "ushort",
-                                                                   "using",
-                                                                   "virtual",
-                                                                   "volatile",
-                                                                   "void",
-                                                                   "while",
-                                                               };
-
-        private readonly Dictionary<string, List<CppEnumItem>> _enumItemToAdd =
-            new Dictionary<string, List<CppEnumItem>>();
-
         private readonly Dictionary<string, CSharpType> _mapCSharpTypeNameToCSharpType =
             new Dictionary<string, CSharpType>();
-
-        private readonly Dictionary<string, MapStructField> _mapChangeStructField =
-            new Dictionary<string, MapStructField>();
 
         private readonly Dictionary<string, CSharpType> _mapCppNameToCSharpType = new Dictionary<string, CSharpType>();
 
@@ -151,8 +64,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
         private readonly Dictionary<Regex, bool> _mapTypeToKeepUnderscore = new Dictionary<Regex, bool>();
 
-        private readonly Dictionary<Regex, CSharpNamespace> _mapTypeToNamespace =
-            new Dictionary<Regex, CSharpNamespace>();
+        private readonly Dictionary<Regex, CSharpNamespace> _mapTypeToNamespace = new Dictionary<Regex, CSharpNamespace>();
 
         private readonly Dictionary<string, CppTypedef> _mapTypedefToType = new Dictionary<string, CppTypedef>();
         private readonly InteropGenerator _registeredInteropCall = new InteropGenerator();
@@ -160,6 +72,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
         private readonly Dictionary<Regex, string> _renameTypePart = new Dictionary<Regex, string>();
         private readonly List<Regex> _typeToRemove = new List<Regex>();
         private readonly Dictionary<Regex, RenameValue> _typeToRename = new Dictionary<Regex, RenameValue>();
+        private readonly MacroParser _macroParser;
 
 //        private readonly Dictionary<string, CSharpType> _typeToRename = new Dictionary<Regex, RenameValue>();
 
@@ -167,6 +80,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
         public CSharpGenerator(CppIncludeGroup cppIncludeGroup)
         {
             CppIncludeGroup = cppIncludeGroup;
+            _macroParser = new MacroParser(cppIncludeGroup);
             Assemblies = new List<CSharpAssembly>();
             CallContext.SetData("Generator", this);
         }
@@ -383,24 +297,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
             nameSpace.Add(newEnum);
             _mapCppNameToCSharpType.Add(cppEnum.Name, newEnum);
 
-            //Console.WriteLine("Enum {0}",newEnum.Name);
-
-            // Add new EnumItems);
-            if (_enumItemToAdd.ContainsKey(cppEnum.Name))
-            {
-                foreach (CppEnumItem item in _enumItemToAdd[cppEnum.Name])
-                    cppEnum.Add(item);
-                _enumItemToAdd.Remove(cppEnum.Name);
-            }
-
-            //// Remove EnumItems that need to me removed
-            //for (int i = cppEnum.InnerElements.Count - 1; i >= 0; i--)
-            //{
-            //    CppEnumItem cppEnumItem = cppEnum.Items[i];
-            //    if (IsTypeToRemove(cppEnumItem.Name))
-            //        cppEnum.InnerElements.RemoveAt(i);
-            //}
-
             // Find Root Name 
             string rootName = cppEnum.Name;
             string rootNameFound = null;
@@ -430,10 +326,12 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 if (IsTypeToRemove(cppEnumItem.Name))
                     continue;
 
+                string enumValue = _macroParser.Parse(cppEnumItem.Value);
+
                 var csharpEnumItem =
                     new CSharpEnum.Item(
                         ConvertCppNameToCSharpName(cppEnumItem.Name, TypeContext.EnumItem, rootName),
-                        cppEnumItem.Value);
+                        enumValue);
                 csharpEnumItem.CppElement = cppEnumItem;
                 newEnum.Add(csharpEnumItem);
                 _mapCppNameToCSharpType.Add(cppEnumItem.Name, csharpEnumItem);
@@ -518,17 +416,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 int arrayDimension = string.IsNullOrWhiteSpace(cppField.ArrayDimension)
                                          ? 0
                                          : int.Parse(cppField.ArrayDimension);
-                string fieldType = cppField.GetTypeName();
+                string fieldType = cppField.GetTypeNameWithMapping();
                 string fieldName = ConvertCppNameToCSharpName(cppField.Name, TypeContext.Struct);
 
                 bool hasPointer = !string.IsNullOrEmpty(cppField.Specifier) && cppField.Specifier.Contains("*");
-
-                MapStructField mapStructField = FindMapStructField(cSharpStruct.CppElement.Name, cppField.Name);
-                if (mapStructField.FieldName != null)
-                    fieldName = mapStructField.FieldName;
-                if (mapStructField.NativeFieldType != null)
-                    fieldType = mapStructField.NativeFieldType;
-
 
                 int fieldSize = 0;
 
@@ -736,14 +627,19 @@ namespace SlimDX2.Tools.XIDLToCSharp
         {
             var cSharpFunction = new CSharpFunction(cppFunction);
 
-            var functionGroupAndDll = ResolveFunctionGroup(cppFunction.Name);
-            if (functionGroupAndDll == null)
-                throw new ArgumentException("CppFunction " + cppFunction.Name + " is not mapped to any FunctionGroup");
+            // All functions must have a tag
+            var tag = cppFunction.GetTag<CSharpTag>();
 
-            cSharpFunction.DllName = functionGroupAndDll.DllName;
+            if (tag == null || tag.FunctionGroup == null)
+                throw new ArgumentException("CppFunction " + cppFunction.Name + " is not tagged and attached to any FunctionGroup");
 
-            functionGroupAndDll.Group.Add(cSharpFunction);
+            // Set the DllName for this CSharpFunction
+            cSharpFunction.DllName = tag.FunctionDllName;         
 
+            // Add the CSharpFunction to the CSharpFunctionGroup
+            tag.FunctionGroup.Add(cSharpFunction);
+
+            // Map the C++ name to the CSharpType
             _mapCppNameToCSharpType.Add(cppFunction.Name, cSharpFunction);
 
             return cSharpFunction;
@@ -781,7 +677,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             }
             name = new string(name[0], 1).ToLower() + name.Substring(1);
 
-            if (_csharpKeywords.Contains(name))
+            if (CSharpKeywords.IsKeyword(name))
                 name = "@" + name;
             return name;
         }
@@ -793,7 +689,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             CSharpType marshalType = null;
 
             bool hasPointer = false;
-            switch (cpptype.GetTypeName())
+            switch (cpptype.GetTypeNameWithMapping())
             {
                 case "void":
                     publicType = ImportType(typeof (void));
@@ -871,9 +767,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 default:
                     // Try to get a declared struct
                     // If it fails, then this struct is unknown
-                    if (!_mapCppNameToCSharpType.TryGetValue(cpptype.GetTypeName(), out publicType))
+                    if (!_mapCppNameToCSharpType.TryGetValue(cpptype.GetTypeNameWithMapping(), out publicType))
                     {
-                        throw new ArgumentException("Unknown return type! {0}", cpptype.GetTypeName());
+                        throw new ArgumentException("Unknown return type! {0}", cpptype.GetTypeNameWithMapping());
                     }
                     //if (!hasPointer)
                     //    throw new ArgumentException("Expecting pointer for param");
@@ -937,31 +833,12 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 CSharpType publicType = null;
                 CSharpType marshalType = null;
 
-                foreach (KeyValuePair<PathRegex, CppAttribute> changeCppAtribute in _mapMethodParamAttribute)
-                {
-                    if (changeCppAtribute.Key.Match(cppPathContext + "::" + cppParameter.Name))
-                    {
-                        cppParameter.Attribute = changeCppAtribute.Value;
-                        break;
-                    }
-                }
-
-                foreach (KeyValuePair<PathRegex, string> changeCppTypeParam in _mapMethodParamTypeToCppType)
-                {
-                    if (changeCppTypeParam.Key.Match(cppPathContext + "::" + cppParameter.Name))
-                    {
-                        cppParameter.Type = changeCppTypeParam.Value;
-                        break;
-                    }
-                }
-
-
                 bool hasArray = cppParameter.IsArray || ((cppParameter.Attribute & CppAttribute.Buffer) != 0);
                 int arrayDimension = string.IsNullOrWhiteSpace(cppParameter.ArrayDimension)
                                          ? 0
                                          : int.Parse(cppParameter.ArrayDimension);
                 //string paramType = cppParameter.GetTypeName(); //GetFinalCppType(cppParameter.Type);
-                string paramType = GetFinalCppType(cppParameter.Type);
+                string paramType = cppParameter.GetTypeNameWithMapping();
                 string paramName = ConvertMethodParameterName(cppParameter);
 
                 bool hasPointer = !string.IsNullOrEmpty(cppParameter.Specifier) &&
@@ -1110,16 +987,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
                         //if (!hasPointer)
                         //    throw new ArgumentException("Expecting pointer for param");
                         break;
-                }
-
-                // Change parameter type
-                foreach (KeyValuePair<PathRegex, CSharpType> changeCSharpTypeParam in _mapMethodParamTypeToCSharpType)
-                {
-                    if (changeCSharpTypeParam.Key.Match(cppPathContext + "::" + cppParameter.Name))
-                    {
-                        publicType = changeCSharpTypeParam.Value;
-                        break;
-                    }
                 }
 
                 if (hasPointer)
@@ -1553,14 +1420,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     if (string.IsNullOrEmpty(cppTypedef.Specifier) && !cppTypedef.IsArray)
                     {
                         CSharpType type;
-                        if (_mapCppNameToCSharpType.TryGetValue(cppTypedef.GetTypeName(), out type))
+                        if (_mapCppNameToCSharpType.TryGetValue(cppTypedef.GetTypeNameWithMapping(), out type))
                         {
                             if (!_mapCppNameToCSharpType.ContainsKey(cppTypedef.Name))
                                 _mapCppNameToCSharpType.Add(cppTypedef.Name, type);
-                        }
-                        else
-                        {
-                            throw new ArgumentException("Invalid type");
                         }
                     }
                 }
@@ -1625,26 +1488,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
         //    ImportTypeFromName(csharpTypeName);
 
 
-        private Dictionary<PathRegex, string> _mapCppNameToCppName = new Dictionary<PathRegex, string>();
-
-        public void MapCppTypeToCppType(string cppTypeName, string newCppTypeName)
-        {
-            _mapCppNameToCppName.Add(new PathRegex(cppTypeName), newCppTypeName);
-        }
-
-        private string GetFinalCppType(string cppTypeName)
-        {
-            foreach (KeyValuePair<PathRegex, string> keyValuePair in _mapCppNameToCppName)
-            {
-                if (keyValuePair.Key.Match(cppTypeName))
-                {
-                    return keyValuePair.Value;
-                }
-            }
-            return cppTypeName;
-        }
-
-
         public void MapCppTypeToCSharpType(string cppTypeName, CSharpType csharpType)
         {
             _mapCppNameToCSharpType.Add(cppTypeName, csharpType);
@@ -1660,124 +1503,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
         {
             _mapCppNameToCSharpType.Add(cppTypeName, ImportType(csharpType, isReference));
         }
-
-        private MapStructField FindMapStructField(string cppStructName, string fieldName, bool createIfNotExist = true)
-        {
-            MapStructField mapStructField;
-            string fullPathName = cppStructName + "." + fieldName;
-            if (!_mapChangeStructField.TryGetValue(fullPathName, out mapStructField) && createIfNotExist)
-            {
-                mapStructField = new MapStructField();
-                _mapChangeStructField.Add(fullPathName, mapStructField);
-            }
-            return mapStructField;
-        }
-
-        public void ChangeStructFieldTypeToNative(string cppStructName, string fieldName, string newNativeTypeName,
-                                                  string newFieldName = null)
-        {
-            var mapStructField = FindMapStructField(cppStructName, fieldName);
-            mapStructField.NativeFieldType = newNativeTypeName;
-            if (newFieldName != null)
-                mapStructField.FieldName = newFieldName;
-        }
-
-        public void ChangeStructFieldTypeTo(string cppStructName, string fieldName, string newTypeName)
-        {
-            FindMapStructField(cppStructName, fieldName).FieldType = newTypeName;
-        }
-
-        public void ChangeStructFieldName(string cppStructName, string fieldName, string newFieldName)
-        {
-            FindMapStructField(cppStructName, fieldName).FieldName = newFieldName;
-        }
-
-        private class PathRegex
-        {
-            private static Regex splitPath = new Regex(@"\:\:");
-
-            public PathRegex(string path)
-            {
-                string[] subRegx = splitPath.Split(path);
-                regex = new Regex[subRegx.Length];
-                for (int i = 0; i < subRegx.Length; i++)
-                    regex[i] = new Regex(subRegx[i]);
-            }
-
-            private Regex[] regex;
-
-            //public bool Match(CppType cppType)
-            //{
-            //    if (regex.Length > 0 && !regex[0].Match(cppType.Name).Success)
-            //        return false;
-            //    return true;
-            //}
-
-            //public bool Match(CppInterface cppInterface)
-            //{
-            //    if (regex.Length > 0 && !regex[0].Match(cppInterface.Name).Success)
-            //        return false;
-            //    return true;
-            //}
-
-            //public bool Match(CppInterface cppInterface, CppMethod cppMethod)
-            //{
-            //    if (!Match(cppInterface))
-            //        return false;
-            //    if (regex.Length > 1 && !regex[1].Match(cppMethod.Name).Success)
-            //        return false;
-            //    return true;
-            //}
-
-            //public bool Match(CppInterface cppInterface, CppMethod cppMethod, CppParameter cppParameter)
-            //{
-            //    if (!Match(cppInterface, cppMethod))
-            //        return false;
-            //    if (regex.Length > 2 && !regex[2].Match(cppParameter.Name).Success)
-            //        return false;
-            //    return true;
-            //}
-
-            public bool Match(string pathToMatch)
-            {
-                string[] subPath = splitPath.Split(pathToMatch);
-                if (subPath.Length != regex.Length)
-                    return false;
-
-                for (int i = 0; i < regex.Length; i++)
-                {
-                    if (!regex[i].Match(subPath[i]).Success)
-                        return false;
-                }
-
-                return true;
-            }
-        }
-
-
-        private Dictionary<PathRegex, CppAttribute> _mapMethodParamAttribute = new Dictionary<PathRegex, CppAttribute>();
-
-        private Dictionary<PathRegex, string> _mapMethodParamTypeToCppType = new Dictionary<PathRegex, string>();
-
-        private Dictionary<PathRegex, CSharpType> _mapMethodParamTypeToCSharpType =
-            new Dictionary<PathRegex, CSharpType>();
-
-        public void ChangeMethodParamTypeToCppType(string regexMethodPath, string cppType)
-        {
-            _mapMethodParamTypeToCppType.Add(new PathRegex(regexMethodPath), cppType);
-        }
-
-        public void ChangeMethodParamTypeToCSharpType(string regexMethodPath, CSharpType cSharpType)
-        {
-            _mapMethodParamTypeToCSharpType.Add(new PathRegex(regexMethodPath), cSharpType);
-        }
-
-
-        public void ChangeMethodParamAttribute(string fullPath, CppAttribute attribute)
-        {
-            _mapMethodParamAttribute.Add(new PathRegex(fullPath), attribute);
-        }
-
+     
         private CSharpNamespace GetNamespace(string assemblyName, string nameSpace)
         {
             if (assemblyName == null)
@@ -1804,29 +1530,11 @@ namespace SlimDX2.Tools.XIDLToCSharp
             return selectedNamespace;
         }
 
-
-        private class FunctionGroupAndDll
-        {
-            public CSharpFunctionGroup Group;
-            public string DllName;
-        }
-
-        private Dictionary<Regex, FunctionGroupAndDll> _mapCppFunctionNameToFunctionGroup =
-            new Dictionary<Regex, FunctionGroupAndDll>();
-
-
-        private FunctionGroupAndDll ResolveFunctionGroup(string functionName)
-        {
-            return (from functionGroupAndDll in _mapCppFunctionNameToFunctionGroup
-                    where functionGroupAndDll.Key.Match(functionName).Success
-                    select functionGroupAndDll.Value).FirstOrDefault();
-        }
-
-        private CSharpFunctionGroup GetOrCreateFunctionGroup(string assembly, string nameSpace, string functionGroupName)
+        public CSharpFunctionGroup CreateFunctionGroup(string assembly, string nameSpace, string functionGroupName)
         {
             CSharpNamespace cSharpNameSpace = GetNamespace(assembly, nameSpace);
 
-            foreach (var cSharpFunctionGroup in  cSharpNameSpace.FunctionGroups)
+            foreach (var cSharpFunctionGroup in cSharpNameSpace.FunctionGroups)
             {
                 if (cSharpFunctionGroup.Name == functionGroupName)
                 {
@@ -1839,11 +1547,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
             cSharpNameSpace.Add(group);
 
             return group;
-        }
-
-        public CSharpFunctionGroup CreateFunctionGroup(string assembly, string nameSpace, string functionGroupName)
-        {
-            return GetOrCreateFunctionGroup(assembly, nameSpace, functionGroupName);
         }
 
         private class ConstantDefinition
@@ -1859,8 +1562,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
         }
 
 
-        private Dictionary<string, ConstantDefinition> _mapMacroToConstantInCSharpType =
-            new Dictionary<string, ConstantDefinition>();
+        private Dictionary<string, ConstantDefinition> _mapMacroToConstantInCSharpType = new Dictionary<string, ConstantDefinition>();
 
         public void AddConstantFromMacroToCSharpType(string regexpMacro, string fullNameCSharpType, string type)
         {
@@ -1878,18 +1580,12 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     {
                         CSharpConstant constant = new CSharpConstant(cppMacroDefinition);
                         constant.Name = ConvertCppNameToCSharpName(cppMacroDefinition.Name, TypeContext.All);
-                        constant.Value = ParseMacroValue(cppMacroDefinition.Value);
+                        constant.Value = _macroParser.Parse(cppMacroDefinition.Value);
                         constant.TypeName = keyValuePair.Value.Type;
                         cSharpContainer.Add(constant);
                     }
                 }
             }
-        }
-
-        public void MapFunctionToFunctionGroup(string regexFunction, string dllName, CSharpFunctionGroup group)
-        {
-            _mapCppFunctionNameToFunctionGroup.Add(new Regex(regexFunction),
-                                                   new FunctionGroupAndDll() {Group = group, DllName = dllName});
         }
 
         public void MapIncludeToNamespace(string includeName, string nameSpace, string assemblyName = null)
@@ -1902,99 +1598,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
             _mapTypeToNamespace.Add(new Regex(typeNameRegex), GetNamespace(assemblyName, nameSpace));
         }
 
-        public void AddNoteEnumItem(string enumName)
-        {
-            AddEnumItem(enumName, "None", "0");
-        }
-
-        public void CreateEnumFromMacros(string macroRegexpStr, string enumName)
-        {
-            var cppEnum = new CppEnum {Name = enumName};
-            var regexMacro = new Regex(macroRegexpStr);
-            CppInclude includeToAddTo = null;
-            foreach (CppInclude cppInclude in CppIncludeGroup.Includes)
-            {
-                foreach (CppMacroDefinition macroDef in cppInclude.Macros)
-                {
-                    if (regexMacro.Match(macroDef.Name).Success)
-                    {
-                        bool isAlreadyAdded = false;
-                        foreach (CppEnumItem cppEnumItem in cppEnum.Items)
-                        {
-                            if (cppEnumItem.Name == macroDef.Name)
-                            {
-                                isAlreadyAdded = true;
-                                break;
-                            }
-                        }
-                        if (!isAlreadyAdded)
-                        {
-                            includeToAddTo = cppInclude;
-                            string value = ParseMacroValue(macroDef.Value);
-                            cppEnum.Add(new CppEnumItem {Name = macroDef.Name, Value = value});
-                        }
-                    }
-                }
-            }
-            includeToAddTo.Add(cppEnum);
-        }
-
-
-        private static Regex regexRemoveIntLitteral = new Regex("([0-9]U?)L");
-        private static Regex regexMakeDXGIResult = new Regex(@"MAKE_DXGI_HRESULT\(([0-9]+)\)");
-        private static Regex regexMakeDXGIStatus = new Regex(@"MAKE_DXGI_STATUS\(([0-9]+)\)");
-
-
-        private static string _FACDXGIMacroValue = null;
-
-
-        private string MakeHResult(string sev, string fac, string code)
-        {
-            return string.Format("((({0})<<31) | (({1})<<16) | ({2}))", sev, fac, code);
-        }
-
-
-        private void InitDXGIEnum()
-        {
-            if (_FACDXGIMacroValue == null)
-                _FACDXGIMacroValue = CppIncludeGroup.Find<CppMacroDefinition>("_FACDXGI").FirstOrDefault().Value;
-        }
-
-
-        private string MakeDXGIResult(Match match)
-        {
-            InitDXGIEnum();
-            return MakeHResult("" + 1, _FACDXGIMacroValue, match.Groups[1].Value);
-        }
-
-        private string MakeDXGIStatus(Match match)
-        {
-            InitDXGIEnum();
-            return MakeHResult("" + 0, _FACDXGIMacroValue, match.Groups[1].Value);
-        }
-
-        private string ParseMacroValue(string value)
-        {
-            value = regexRemoveIntLitteral.Replace(value, "$1");
-            value = regexMakeDXGIResult.Replace(value, MakeDXGIResult);
-            value = regexMakeDXGIStatus.Replace(value, MakeDXGIStatus);
-            return value;
-        }
 
         public void RenameTypePart(string partName, string replaceString)
         {
             _renameTypePart.Add(new Regex(partName), replaceString);
-        }
-
-        public void AddEnumItem(string enumName, string itemName, string value)
-        {
-            List<CppEnumItem> items;
-            if (!_enumItemToAdd.TryGetValue(enumName, out items))
-            {
-                items = new List<CppEnumItem>();
-                _enumItemToAdd.Add(enumName, items);
-            }
-            items.Add(new CppEnumItem {Name = itemName, Value = value});
         }
 
         public void RenameType(string regexTypeName, string newTypeName, bool isFinalRename = false,
@@ -2177,16 +1784,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
         #endregion
 
-        #region Nested type: MapStructField
-
-        internal class MapStructField
-        {
-            public string FieldName;
-            public string FieldType;
-            public string NativeFieldType;
-        }
-
-        #endregion
 
         #region Nested type: RenameValue
 

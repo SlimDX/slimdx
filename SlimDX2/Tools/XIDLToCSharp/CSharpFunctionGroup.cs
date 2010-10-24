@@ -24,6 +24,11 @@ namespace SlimDX2.Tools.XIDLToCSharp
 {
     public class CSharpFunctionGroup : CSharpContainer
     {
+        public CSharpFunctionGroup()
+        {
+            Visibility = Visibility.PublicProtected;
+        }
+
         public IEnumerable<CSharpFunction> Functions
         {
             get { return Items.OfType<CSharpFunction>(); }

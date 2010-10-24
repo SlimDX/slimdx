@@ -31,11 +31,40 @@ namespace SlimDX2.Tools.XIDLToCSharp
             IsEnumFlags = isEnumFlags;
         }
 
+        /// <summary>
+        /// General visibility for Methods
+        /// </summary>
         public Visibility? Visibility;
+
+        /// <summary>
+        /// Used for methods, to force a method to not be translated to a property
+        /// </summary>
         public bool? NoProperty;
+
+        /// <summary>
+        /// Mapping name
+        /// </summary>
         public string MappingName;
+
+        /// <summary>
+        /// Mapping type name
+        /// </summary>
         public string MappingType;
+
+        /// <summary>
+        /// Used for enums, to tag enums that are used as flags
+        /// </summary>
         public bool? IsEnumFlags;
+
+        /// <summary>
+        /// DLL name attached to a function
+        /// </summary>
+        public string FunctionDllName;
+
+        /// <summary>
+        /// CSharpFunctionGroup attached to a function
+        /// </summary>
+        public CSharpFunctionGroup FunctionGroup;
     }
 
     public static class CppElementExtensions
@@ -92,13 +121,23 @@ namespace SlimDX2.Tools.XIDLToCSharp
         }
 
         /// <summary>
+        /// Tag a function and associate it with a dllName and a function group
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="regex"></param>
+        public static void TagFunction(this CppElement element, string regex, string dllName, CSharpFunctionGroup group)
+        {
+            element.Modify<CppFunction>(regex, Tag(new CSharpTag() { FunctionDllName = dllName, FunctionGroup = group}));
+        }
+
+        /// <summary>
         /// Tag an Enum and force it to be interpreted as a flag.
         /// </summary>
         /// <param name="element"></param>
         /// <param name="regex"></param>
-        public static string GetTypeName(this CppType cppType)
+        public static string GetTypeNameWithMapping(this CppType cppType)
         {
-            var tag = cppType.Tag as CSharpTag;
+            var tag = cppType.GetTag<CSharpTag>();
             if (tag != null && tag.MappingType != null)
                 return tag.MappingType;
             return cppType.Type;
@@ -119,7 +158,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
         {
             return (pathREgex, element) =>
                        {
-                           CSharpTag tag = element.Tag as CSharpTag;
+                           CSharpTag tag = element.GetTag<CSharpTag>();
                            if (tag == null)
                            {
                                tag = new CSharpTag();
@@ -130,6 +169,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
                            if (fromTag.MappingName != null) tag.MappingName = RegexRename(pathREgex, element.FullName, fromTag.MappingName);
                            if (fromTag.MappingType != null) tag.MappingType = RegexRename(pathREgex, element.FullName, fromTag.MappingType);
                            if (fromTag.IsEnumFlags != null) tag.IsEnumFlags = fromTag.IsEnumFlags;
+                           if (fromTag.FunctionDllName != null) tag.FunctionDllName = RegexRename(pathREgex, element.FullName, fromTag.FunctionDllName);
+                           if (fromTag.FunctionGroup != null) tag.FunctionGroup = fromTag.FunctionGroup;
                            return false;
                        };
         }

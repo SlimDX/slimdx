@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace SlimDX2.Tools.XIDL
@@ -86,6 +87,35 @@ namespace SlimDX2.Tools.XIDL
             {
                 ds.WriteObject(w, this);
             }
+        }
+
+        public void CreateEnumFromMacros(string macroRegexpStr, string enumName)
+        {
+            var cppEnum = new CppEnum { Name = enumName };
+
+            CppInclude includeToAddTo = null;
+
+            foreach (CppMacroDefinition macroDef in Find<CppMacroDefinition>(macroRegexpStr))
+            {
+                CppInclude cppInclude = macroDef.Parent as CppInclude;
+                bool isEnumToAdd = true;
+                foreach (CppEnumItem cppEnumItem in cppEnum.Items)
+                {
+                    if (cppEnumItem.Name == macroDef.Name)
+                    {
+                        isEnumToAdd = false;
+                        break;
+                    }
+                }
+                if (isEnumToAdd)
+                {
+                    if (includeToAddTo == null)
+                        includeToAddTo = cppInclude;
+                    cppEnum.Add(new CppEnumItem { Name = macroDef.Name, Value = macroDef.Value });
+                }
+            }
+
+            includeToAddTo.Add(cppEnum);
         }
     }
 }

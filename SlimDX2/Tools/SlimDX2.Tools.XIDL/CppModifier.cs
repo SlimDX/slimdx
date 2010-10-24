@@ -180,5 +180,22 @@ namespace SlimDX2.Tools.XIDL
                 return false;
             }
         }
+
+        /// <summary>
+        /// Modifier to add an enum item to an existing enum
+        /// </summary>
+        /// <param name="enumItem"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static ProcessModifier EnumAdd(string enumItem, string value)
+        {
+            //return new EnumModifier(enumItem, value).Process;
+            return (pathREgex, element) =>
+                       {
+                           if (element is CppEnum)
+                               element.Add(new CppEnumItem() {Name = enumItem, Value = value});
+                           return false;
+                       };
+        }
     }
 }
