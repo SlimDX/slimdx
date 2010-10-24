@@ -28,11 +28,19 @@ using ICSharpCode.SharpZipLib.Zip;
 
 namespace SlimDX2.Tools.HeaderToXIDL
 {
+    /// <summary>
+    /// MSDN Documentation query class
+    /// </summary>
     public class MsdnDoc
     {
+        private static Regex stripSpace = new Regex(@"[\r\n]+\s+", RegexOptions.Multiline);
+        private static Regex beginWithSpace = new Regex(@"^\s+");
         private ZipFile _zipFile;
         private bool isZipUpdated;
 
+        /// <summary>
+        /// Documentation item
+        /// </summary>
         public class Item
         {
             public Item()
@@ -55,12 +63,24 @@ namespace SlimDX2.Tools.HeaderToXIDL
             UseArchive = true;
         }
 
+        /// <summary>
+        /// Archive to use to save the documentation
+        /// </summary>
         public string ArchiveName { get; set; }
 
+        /// <summary>
+        /// Output path for the archive / Directory
+        /// </summary>
         public string OutputPath { get; set; }
 
+        /// <summary>
+        /// Set to true to use a zip for cacing documentation
+        /// </summary>
         public bool UseArchive { get; set; }
 
+        /// <summary>
+        /// Begin to request MSDN
+        /// </summary>
         public void Begin()
         {
             string fullPath = (OutputPath ?? ".") + Path.DirectorySeparatorChar + ArchiveName;
@@ -83,6 +103,9 @@ namespace SlimDX2.Tools.HeaderToXIDL
             }
         }
 
+        /// <summary>
+        /// End request to MSDN. Archive is saved if any updated occured between Begin/End.
+        /// </summary>
         public void End()
         {
             if (UseArchive)
@@ -93,7 +116,13 @@ namespace SlimDX2.Tools.HeaderToXIDL
             }
         }
 
-        public MsdnDoc.Item GetDocumentation(string prefixName, string name)
+        /// <summary>
+        /// Get the documentation for a particular prefix (include name) and a full name item
+        /// </summary>
+        /// <param name="prefixName"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public Item GetDocumentation(string prefixName, string name)
         {
             // Handle name with ends A or W
             if (name.EndsWith("A") || name.EndsWith("W"))
@@ -109,7 +138,9 @@ namespace SlimDX2.Tools.HeaderToXIDL
             return MsdnDoc.ParseDocumentation(doc);
         }
 
-
+        /// <summary>
+        /// Internal ZipEntryStreamSource in order to add a string to a zip
+        /// </summary>
         internal class ZipEntryStreamSource : IStaticDataSource
         {
             private Stream stream;
@@ -125,6 +156,12 @@ namespace SlimDX2.Tools.HeaderToXIDL
             }
         }
 
+        /// <summary>
+        /// Handles documentation from zip/directory
+        /// </summary>
+        /// <param name="prefixName"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         private string GetDocumentationFromCacheOrMsdn(string prefixName, string name)
         {
             string fileName = prefixName + "-" + name.Replace("::", "-") + ".html";
@@ -170,9 +207,12 @@ namespace SlimDX2.Tools.HeaderToXIDL
             return doc;
         }
 
-        private static Regex stripSpace = new Regex(@"[\r\n]+\s+", RegexOptions.Multiline);
-        private static Regex beginWithSpace = new Regex(@"^\s+");
-
+        /// <summary>
+        /// Parse HtmlNode to extract a string from it. Replace anchors href with {{ }} 
+        /// and code with [[ ]]
+        /// </summary>
+        /// <param name="htmlNode"></param>
+        /// <returns></returns>
         private static string ParseNode(HtmlNode htmlNode)
         {
             StringBuilder documentation = new StringBuilder();
@@ -232,7 +272,12 @@ namespace SlimDX2.Tools.HeaderToXIDL
             return builder.ToString();
         }
 
-        public static Item ParseDocumentation(string documentationToParse)
+        /// <summary>
+        /// Parse a MSDN documentation file
+        /// </summary>
+        /// <param name="documentationToParse"></param>
+        /// <returns></returns>
+        private static Item ParseDocumentation(string documentationToParse)
         {
             HtmlDocument htmlDocument = new HtmlDocument();
             //            htmlDocument.Load("Documentation\\d3d11-ID3D11Device-CheckCounter.html");
@@ -290,7 +335,12 @@ namespace SlimDX2.Tools.HeaderToXIDL
             return item;
         }
 
-        public static string GetDocumentationFromMsdn(string name)
+        /// <summary>
+        /// Get MSDN documentation using an http query
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private static string GetDocumentationFromMsdn(string name)
         {
             try
             {
@@ -307,33 +357,20 @@ namespace SlimDX2.Tools.HeaderToXIDL
                 // Set value for request headers
 
                 request.Method = "GET";
-
                 request.ProtocolVersion = HttpVersion.Version11;
-
                 request.AllowAutoRedirect = true;
-
                 request.Accept = "*/*";
-
                 request.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)";
-
                 request.Headers.Add("Accept-Language", "en-us");
-
                 request.KeepAlive = true;
 
                 StreamReader responseStream = null;
-
                 HttpWebResponse webResponse = null;
-
                 string webResponseStream = string.Empty;
 
                 // Get response for http web request
-
                 webResponse = (HttpWebResponse) request.GetResponse();
-
                 responseStream = new StreamReader(webResponse.GetResponseStream());
-
-                // Read web response into string
-
                 webResponseStream = responseStream.ReadToEnd();
 
                 return webResponseStream;

@@ -131,7 +131,7 @@ namespace SlimDX2.Tools.XIDL
             bool isToRemove = false;
             string path = FullName;
 
-            if ((this is T) && path != null && regex.Match(path))
+            if ((this is T) && path != null && regex.Match(path).Success)
             {
                 if (toAdd != null)
                     toAdd.Add((T) this);
