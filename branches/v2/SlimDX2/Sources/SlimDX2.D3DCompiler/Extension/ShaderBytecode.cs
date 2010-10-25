@@ -323,8 +323,14 @@ namespace SlimDX2.D3DCompiler
 
                 try
                 {
+                    IncludeCallback includeCallback = null;
+                    if (include != null)
+                        includeCallback = new IncludeCallback(include);
+                    IntPtr includeCallbackPtr = includeCallback == null ? IntPtr.Zero : includeCallback.NativePointer;
+
+
                     fixed (void* pData = &shaderSource[0])
-                        D3D.Compile((IntPtr) pData, shaderSource.Length, "", PrepareMacros(defines), include, entryPoint,
+                        D3D.Compile((IntPtr)pData, shaderSource.Length, "", PrepareMacros(defines), includeCallbackPtr, entryPoint,
                                     profile, shaderFlags,
                                     effectFlags, out blobForCode, out blobForErrors);
                 }
@@ -602,8 +608,13 @@ namespace SlimDX2.D3DCompiler
 
                 try
                 {
+                    IncludeCallback includeCallback = null;
+                    if (include != null)
+                        includeCallback = new IncludeCallback(include);
+                    IntPtr includeCallbackPtr = includeCallback == null ? IntPtr.Zero : includeCallback.NativePointer;
+
                     fixed (void* pData = &shaderSource[0])
-                        D3D.Preprocess((IntPtr) pData, shaderSource.Length, "", PrepareMacros(defines), include,
+                        D3D.Preprocess((IntPtr)pData, shaderSource.Length, "", PrepareMacros(defines), includeCallbackPtr,
                                        out blobForText, out blobForErrors);
                 }
                 catch (SlimDX2Exception ex)

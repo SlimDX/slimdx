@@ -54,7 +54,7 @@ namespace SlimDX2.Direct3D11
                          typeof (T) == typeof (Texture3D));
 
             Resource temp;
-            D3DX11.CreateTextureFromFile(device, fileName, null, null, out temp, 0);
+            D3DX11.CreateTextureFromFile(device, fileName, null, IntPtr.Zero, out temp, 0);
             return temp == null ? null : (T) Activator.CreateInstance(typeof (T), temp.NativePointer);
         }
 
@@ -71,7 +71,7 @@ namespace SlimDX2.Direct3D11
                          typeof (T) == typeof (Texture3D));
 
             Resource temp;
-            D3DX11.CreateTextureFromFile(device, fileName, loadInfo, null, out temp, 0);
+            D3DX11.CreateTextureFromFile(device, fileName, loadInfo, IntPtr.Zero, out temp, 0);
             return temp == null ? null : (T) Activator.CreateInstance(typeof (T), temp.NativePointer);
         }
 
@@ -92,7 +92,7 @@ namespace SlimDX2.Direct3D11
                 Debug.Assert(memory.Length > 0);
                 Resource temp;
                 fixed (void* pBuffer = &memory[0])
-                    D3DX11.CreateTextureFromMemory(device, (IntPtr) pBuffer, memory.Length, null, null,
+                    D3DX11.CreateTextureFromMemory(device, (IntPtr) pBuffer, memory.Length, null, IntPtr.Zero,
                                                    out temp, 0);
                 return temp == null ? null : (T) Activator.CreateInstance(typeof (T), temp.NativePointer);
             }
@@ -116,7 +116,7 @@ namespace SlimDX2.Direct3D11
                 Debug.Assert(memory.Length > 0);
                 Resource temp;
                 fixed (void* pBuffer = &memory[0])
-                    D3DX11.CreateTextureFromMemory(device, (IntPtr) pBuffer, memory.Length, loadInfo, null,
+                    D3DX11.CreateTextureFromMemory(device, (IntPtr) pBuffer, memory.Length, loadInfo, IntPtr.Zero,
                                                    out temp, 0);
                 return temp == null ? null : (T) Activator.CreateInstance(typeof (T), temp.NativePointer);
             }

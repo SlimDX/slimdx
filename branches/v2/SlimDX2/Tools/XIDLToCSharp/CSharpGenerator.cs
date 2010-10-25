@@ -998,6 +998,13 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             {
                                 isOptional = true;
                             }
+
+                            // If Interface is a callback, use IntPtr as a public marshalling type
+                            CSharpInterface publicInterface = (CSharpInterface)publicType;
+                            if (publicInterface.IsCallback)
+                            {
+                                publicType = ImportType(typeof(IntPtr));
+                            }                            
                         }
                         else if ((cppParameter.Attribute & CppAttribute.InOut) != 0)
                             parameterAttribute = CSharpMethod.ParameterAttribute.Ref;

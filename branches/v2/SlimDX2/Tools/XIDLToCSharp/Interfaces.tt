@@ -73,7 +73,7 @@ foreach (var sharpInterface in Namespace.Interfaces)
 	}
 	if (sharpInterface.IsCallback) {
 #>
-    <#= sharpInterface.VisibilityName #>abstract partial class <#= sharpInterface.Name #> : SlimDX2.CppObject {
+    <#= sharpInterface.VisibilityName #>partial interface <#= sharpInterface.Name #> {
 <#+	
 	} else if (sharpInterface.Parent != null) {
 #>
@@ -188,8 +188,8 @@ foreach (var sharpInterface in Namespace.Interfaces)
 #>
         /// <unmanaged><#= sharpInterfaceMethod.CppSignature #></unmanaged>
 <#+ 
-		if (sharpInterface.IsCallback) {#>
-        <#= sharpInterfaceMethod.VisibilityName #>abstract <#= sharpInterfaceMethod.ReturnType.PublicType.FullName #> <#= sharpInterfaceMethod.Name #>(<#+
+		if (sharpInterface.IsCallback) {
+        	continue;
 		} else {#>        <#= sharpInterfaceMethod.VisibilityName #><#= sharpInterfaceMethod.ReturnType.PublicType.FullName #> <#= sharpInterfaceMethod.Name #>(<#+
 		}
 
@@ -201,12 +201,6 @@ foreach (var sharpInterface in Namespace.Interfaces)
 			i++;
 		}
 #>)<#+
-		if (sharpInterface.IsCallback) {
-#>;
-<#+			
-			continue;			
-		}
-
 		// Else Open Body
 #> {
             unsafe {

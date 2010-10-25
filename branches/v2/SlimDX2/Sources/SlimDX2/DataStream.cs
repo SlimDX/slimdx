@@ -492,6 +492,15 @@ namespace SlimDX2
             set { this.Seek(value, SeekOrigin.Begin); }
         }
 
+
+        internal unsafe IntPtr PositionPointer
+        {
+            get
+            {
+                return (IntPtr) (this._buffer + this._position);
+            }
+        }
+
         internal long RemainingLength
         {
             get { return (this._size - this._position); }
