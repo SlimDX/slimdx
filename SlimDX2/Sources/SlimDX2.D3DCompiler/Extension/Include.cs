@@ -36,6 +36,8 @@ namespace SlimDX2.D3DCompiler
     {
         private Include _callback;
         private Dictionary<IntPtr, Frame> _frames;
+        private OpenCallBack _openCallBack;
+        private CloseCallBack _closeCallBack;
 
         struct Frame
         {
@@ -57,19 +59,26 @@ namespace SlimDX2.D3DCompiler
         public IncludeCallback(Include callback)
         {
             _callback = callback;
+            // Allocate object layout in memory 
+            // - 1 pointer to VTBL table
+            // - following that the VTBL itself - with 2 function pointers for Open and Close methods
             NativePointer = Marshal.AllocHGlobal(IntPtr.Size * 3);
 
             // Write pointer to vtbl
             IntPtr vtblPtr = IntPtr.Add(NativePointer, IntPtr.Size);
             Marshal.WriteIntPtr(NativePointer, vtblPtr);
-            Marshal.WriteIntPtr(vtblPtr, Marshal.GetFunctionPointerForDelegate(new OpenCallBack(Open)));
-            Marshal.WriteIntPtr(IntPtr.Add(vtblPtr, IntPtr.Size), Marshal.GetFunctionPointerForDelegate(new CloseCallBack(Close)));
+            _openCallBack = new OpenCallBack(Open);
+            Marshal.WriteIntPtr(vtblPtr, Marshal.GetFunctionPointerForDelegate(_openCallBack));
+            _closeCallBack = new CloseCallBack(Close);
+            Marshal.WriteIntPtr(IntPtr.Add(vtblPtr, IntPtr.Size), Marshal.GetFunctionPointerForDelegate(_closeCallBack));
 
             _frames = new Dictionary<IntPtr, Frame>();
         }
 
         ~IncludeCallback()
         {
+            _openCallBack = null;
+            _closeCallBack = null;
             Marshal.FreeHGlobal(NativePointer);            
         }
 
