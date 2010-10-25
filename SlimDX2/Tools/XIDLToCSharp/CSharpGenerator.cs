@@ -70,7 +70,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
         private readonly InteropGenerator _registeredInteropCall = new InteropGenerator();
 
         private readonly Dictionary<Regex, string> _renameTypePart = new Dictionary<Regex, string>();
-        private readonly List<Regex> _typeToRemove = new List<Regex>();
         private readonly Dictionary<Regex, RenameValue> _typeToRename = new Dictionary<Regex, RenameValue>();
         private readonly MacroParser _macroParser;
 
@@ -285,9 +284,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
         private void MapCppEnumToCSharpEnum(CppInclude cppInclude, CppEnum cppEnum)
         {
-            if (IsTypeToRemove(cppEnum.Name))
-                return;
-
             CSharpNamespace nameSpace = ResolveNamespace(cppInclude, cppEnum);
 
             var newEnum = new CSharpEnum();
@@ -323,9 +319,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             foreach (CppEnumItem cppEnumItem in cppEnum.Items)
             {
-                if (IsTypeToRemove(cppEnumItem.Name))
-                    continue;
-
                 string enumValue = _macroParser.Parse(cppEnumItem.Value);
 
                 var csharpEnumItem =
@@ -1362,8 +1355,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
             {
                 foreach (CppEnum cppEnum in cppInclude.Enums)
                 {
-                    if (IsTypeToRemove(cppEnum.Name))
-                        continue;
                     MapCppEnumToCSharpEnum(cppInclude, cppEnum);
                 }
             }
@@ -1376,8 +1367,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 // Iterate on structs
                 foreach (CppStruct cppStruct in cppInclude.Structs)
                 {
-                    if (IsTypeToRemove(cppStruct.Name))
-                        continue;
                     CSharpStruct csharpStruct = PrepareStructForMap(cppInclude, cppStruct);
                     if (csharpStruct != null)
                         selectedCSharpType.Add(csharpStruct);
@@ -1386,8 +1375,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 // Iterate on interfaces
                 foreach (CppInterface cppInterface in cppInclude.Interfaces)
                 {
-                    if (IsTypeToRemove(cppInterface.Name))
-                        continue;
                     CSharpInterface csharpInterface = PrepareInterfaceForMap(cppInclude, cppInterface);
                     if (csharpInterface != null)
                         selectedCSharpType.Add(csharpInterface);
@@ -1403,8 +1390,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 // Iterate on interfaces
                 foreach (CppFunction cppFunction in cppInclude.Functions)
                 {
-                    if (IsTypeToRemove(cppFunction.Name))
-                        continue;
                     CSharpFunction cSharpFunction = PrepareFunctionForMap(cppInclude, cppFunction);
                     if (cSharpFunction != null)
                         selectedCSharpType.Add(cSharpFunction);
@@ -1479,14 +1464,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
         {
             _mapTypeToKeepUnderscore.Add(new Regex(typeName), true);
         }
-
-        //public void MapCppTypeToCSharpType(string cppTypeName, string csharpTypeName)
-        //{
-        //    if (!_mapCppNameToCSharpType.ContainsKey(cppTypeName)
-
-
-        //    ImportTypeFromName(csharpTypeName);
-
 
         public void MapCppTypeToCSharpType(string cppTypeName, CSharpType csharpType)
         {
@@ -1608,23 +1585,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
                                TypeContext context = TypeContext.All)
         {
             _typeToRename.Add(new Regex(regexTypeName), new RenameValue(newTypeName, context, isFinalRename));
-        }
-
-        //public void RemoveType(string regexTypeName)
-        //{
-        //    _typeToRemove.Add(new Regex(regexTypeName));
-        //}
-
-        private bool IsTypeToRemove(string name)
-        {
-            foreach (Regex regex in _typeToRemove)
-            {
-                if (regex.Match(name).Success)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
         private string ConvertCppNameToCSharpName(string name, TypeContext context, string rootName = null)
