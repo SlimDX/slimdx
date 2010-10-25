@@ -72,7 +72,7 @@
     <Compile Include="Result.cs" />
     <Compile Include="SlimDX2Exception.cs" />
     <Compile Include="Size.cs" />
-    <Compile Include="Util.cs" />
+    <Compile Include="Utilities.cs" />
     <Compile Include="Windows\MessagePump.cs" />
     <Compile Include="Windows\RenderForm.cs">
       <SubType>Form</SubType>
