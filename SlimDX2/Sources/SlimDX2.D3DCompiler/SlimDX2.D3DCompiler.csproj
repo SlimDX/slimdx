@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enumerations.cs" />
+    <Compile Include="Extension\Include.cs" />
     <Compile Include="Extension\ShaderReflection.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="Interfaces.cs" />

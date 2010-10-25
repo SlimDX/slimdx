@@ -294,7 +294,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     //if (PublicType.Type == typeof(byte))
                     //    return "(int)" + Name;
                     if (PublicType is CSharpInterface && Attribute == ParameterAttribute.In && !IsArray)
+                    {
                         return "(" + Name + " == null)?IntPtr.Zero:" + Name + ".NativePointer";
+                    }
 
                     if (IsRefIn && IsOptionnal && IsValueType && !IsArray)
                         return "(" + Name + ".HasValue)?new IntPtr(&" + TempName + "):IntPtr.Zero";

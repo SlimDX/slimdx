@@ -316,6 +316,13 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             group.TagTypeName<CppParameter>(@"^ID3D(\d+)DeviceContext::ClearDepthStencilView::ClearFlags$", "D3D11_CLEAR_FLAG");
 
+            // Remove TheadPump interfaces as they don't make sense in .NET
+            group.Modify<CppInterface>(@"^ID3DX(\d+)ThreadPump$", Modifiers.Remove);
+            group.Modify<CppInterface>(@"^ID3DX(\d+)DataLoader$", Modifiers.Remove);
+            group.Modify<CppInterface>(@"^ID3DX(\d+)DataProcessor$", Modifiers.Remove);
+            // Replace all existing reference to ID3DX11ThreadPump type to void (making all pointers to be void*)
+            group.ModifyAll(".*", Modifiers.RenameType("ID3DX11ThreadPump", "void"));
+
             // --------------------------------------------------------------------------------------------------------
             // D3D10/D3DX10 / D3D11/D3DX11 Functions
             // --------------------------------------------------------------------------------------------------------
@@ -687,9 +694,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             // Those interfaces are only used as callback
             gen.MakeCallbackInterface("ID3DInclude");
-            gen.MakeCallbackInterface("ID3DX11DataLoader");
-            gen.MakeCallbackInterface("ID3DX11DataProcessor");
-
+ 
             // Add constant from macro definitions
             gen.AddConstantFromMacroToCSharpType("D3D11_SDK_VERSION", Global.Name + ".Direct3D11.D3D11", "int");
 

@@ -17,12 +17,13 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using System;
 using System.Runtime.InteropServices;
 
 namespace SlimDX2
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct Result
+    public struct Result : IEquatable<Result>
     {
         private int _code;
 
@@ -51,6 +52,11 @@ namespace SlimDX2
             return new Result(result);
         }
 
+        public bool Equals(Result other)
+        {
+            return this.Code == other.Code;
+        }
+
         public override string ToString()
         {
             return string.Format("DirectX Exception (HRESULT = 0x{0:X})", _code);
@@ -60,5 +66,17 @@ namespace SlimDX2
         {
             if (_code < 0) throw new SlimDX2Exception(this);
         }
+
+        public static Result Ok = new Result(unchecked((int)0x00000000));
+        public static Result Abord = new Result(unchecked((int)0x80004004));
+        public static Result AccessDenied = new Result(unchecked((int)0x80070005));
+        public static Result Fail = new Result(unchecked((int)0x80004005));
+        public static Result Handle = new Result(unchecked((int)0x80070006));
+        public static Result InvalidArg = new Result(unchecked((int)0x80070057));
+        public static Result NoInterface = new Result(unchecked((int)0x80004002));
+        public static Result NotImplemented = new Result(unchecked((int)0x80004001));
+        public static Result OutOfMemory = new Result(unchecked((int)0x8007000E));
+        public static Result InvalidPointer = new Result(unchecked((int)0x80004003));
+        public static Result UnexpectedFailure = new Result(unchecked((int)0x8000FFFF));
     }
 }
