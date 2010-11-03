@@ -38,10 +38,6 @@ namespace MiniTri
         [STAThread]
         private static void Main()
         {
-            int x = (int)StandardMultisampleQualityLevels.StandardMultisamplePattern;
-
-
-
             var form = new RenderForm("SlimDX2 - MiniTri Direct3D 11 Sample");
 
             // SwapChain description

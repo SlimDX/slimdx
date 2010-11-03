@@ -25,6 +25,7 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("SlimDX2.DXGI")]
 [assembly: InternalsVisibleTo("SlimDX2.D3DCompiler")]
 [assembly: InternalsVisibleTo("SlimDX2.Direct3D11")]
+[assembly: InternalsVisibleTo("SlimDX2.Direct3D10")]
 
 // Version information for an assembly consists of the following four values:
 //

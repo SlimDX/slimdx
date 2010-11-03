@@ -753,7 +753,7 @@ namespace SlimDX2.D3DCompiler
             return new ShaderBytecode(File.ReadAllBytes(fileName));
         }
 
-        private static ShaderMacro[] PrepareMacros(ShaderMacro[] macros)
+        internal static ShaderMacro[] PrepareMacros(ShaderMacro[] macros)
         {
             if (macros == null)
                 return null;

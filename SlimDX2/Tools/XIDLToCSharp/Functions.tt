@@ -108,7 +108,8 @@ foreach (var sharpFunctionGroup in Namespace.FunctionGroups)
 							}
 						}
 					} else if (param.IsIn || param.IsRefIn) {
-						if (param.HasNativeValueType && param.IsArray) {
+						if (param.HasNativeValueType ) {
+							if (param.IsArray) {
 #>                <#= param.PublicType.FullName #>.__Native[] <#= param.TempName #> = ( <#= param.Name #> == null)? null : new <#= param.PublicType.FullName #>.__Native[<#= param.Name #>.Length];
                 if ( <#= param.Name #> != null) 
                     for(int i = 0; i < <#= param.Name #>.Length; i++) {
@@ -116,6 +117,10 @@ foreach (var sharpFunctionGroup in Namespace.FunctionGroups)
                    	    <#= param.Name #>[i].__MarshalTo(ref <#= param.TempName #>[i]);					
                     }
 <#
+							} else {
+#>                <#= param.PublicType.FullName #>.__Native <#= param.TempName #> = new <#= param.PublicType.FullName #>.__Native();
+                <#= param.Name #>.__MarshalTo(ref <#= param.TempName #>);
+<#							}
 						} else if (param.IsRefIn && param.IsOptionnal && !param.IsArray) {#>							
                 <#= param.PublicType.FullName #> <#= param.TempName #> = new <#= param.PublicType.FullName #>();
                 if (<#= param.Name #>.HasValue)

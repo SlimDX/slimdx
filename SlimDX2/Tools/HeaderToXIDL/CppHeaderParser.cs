@@ -56,7 +56,10 @@ namespace SlimDX2.Tools.HeaderToXIDL
             // And remove duplicated methods
             var iUnknownInterface = new CppInterface();
             iUnknownInterface.Name = "IUnknown";
-            iUnknownInterface.Add(new CppMethod {Name = "QueryInterface"});
+            var queryMethod = new CppMethod {Name = "QueryInterface"};
+            queryMethod.Add(new CppParameter());
+            queryMethod.Add(new CppParameter());
+            iUnknownInterface.Add(queryMethod);
             iUnknownInterface.Add(new CppMethod {Name = "AddRef"});
             iUnknownInterface.Add(new CppMethod {Name = "Release"});
             declaredInterface.Add(iUnknownInterface.Name, iUnknownInterface);
@@ -106,9 +109,11 @@ namespace SlimDX2.Tools.HeaderToXIDL
             preProcessor.AddIncludePath(IncludePath);
 
             // Predefines macros
+            preProcessor.DefineMacro("LF_FACESIZE=32", true);
             preProcessor.DefineMacro("D3D11_NO_HELPERS=1", true);
             preProcessor.DefineMacro("D3D10_NO_HELPERS=1", true);
             preProcessor.DefineMacro("CONST=const", true);
+            preProcessor.DefineMacro("LPRECT=RECT *", true);
             preProcessor.DefineMacro("__RPCNDR_H_VERSION__=1", true);
             preProcessor.DefineMacro("__REQUIRED_RPCNDR_H_VERSION__=475", true);
             preProcessor.DefineMacro("__REQUIRED_RPCSAL_H_VERSION__=100", true);
@@ -634,7 +639,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
                                                  : arrayDimension + "," + localDimension;
                         }
                         if (cppType.IsArray)
-                            cppType.ArrayDimension = arrayDimension;
+                            cppType.ArrayDimension = Evaluator.EvalToString(arrayDimension);
                     }
                     break;
                 }
@@ -1105,22 +1110,21 @@ namespace SlimDX2.Tools.HeaderToXIDL
                 }
 
                 // Else, try to match duplicated methods
-                bool isDuplicatingInheritedMethods = true;
                 for (int i = 0; i < cppInterface.InnerElements.Count; i++)
                 {
                     var inheritedMethod = (CppMethod)cppInterface.InnerElements[i];
-                    var derivedMethod = (CppMethod)rootInterface.InnerElements[i];
-                    if (inheritedMethod.Name != derivedMethod.Name)
+                    var inheritedMethodCountParam = inheritedMethod.Parameters.Count();
+                    for(int j = rootInterface.InnerElements.Count-1; j >= 0; j--)
                     {
-                        isDuplicatingInheritedMethods = false;
-                        break;
+                        var derivedMethod = (CppMethod) rootInterface.InnerElements[j];
+                        var derivedMethodCountParam = derivedMethod.Parameters.Count();
+                        // TODO : better check the whole signature
+                        if (inheritedMethod.Name == derivedMethod.Name && inheritedMethodCountParam == derivedMethodCountParam)
+                        {
+                            rootInterface.InnerElements.RemoveAt(j);
+                            break;
+                        }
                     }
-                }
-
-                // If duplicated then remove methods
-                if (isDuplicatingInheritedMethods)
-                {
-                    rootInterface.InnerElements.RemoveRange(0, cppInterface.InnerElements.Count);
                 }
             }
 

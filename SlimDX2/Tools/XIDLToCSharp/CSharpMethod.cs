@@ -271,6 +271,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             {
                 get
                 {
+                    string typeName = Name; 
+                    
                     if (IsOut)
                     {
                         if (PublicType is CSharpInterface)
@@ -301,7 +303,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     if (IsRefIn && IsOptionnal && IsValueType && !IsArray)
                         return "(" + Name + ".HasValue)?new IntPtr(&" + TempName + "):IntPtr.Zero";
 
-                    if (IsArray && (IsIn || IsRefIn) && HasNativeValueType)
+                    if (HasNativeValueType)
+                        typeName = TempName;
+                    else if (IsArray && (IsIn || IsRefIn) && HasNativeValueType)
                         return TempName;
 
                     StringBuilder builder = new StringBuilder();
@@ -313,7 +317,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     //    builder.Append("ref ");
 
                     builder.Append(" ");
-                    builder.Append(Name);
+                    builder.Append(typeName);
                     return builder.ToString();
                 }
             }
