@@ -215,11 +215,15 @@ foreach (var sharpStruct in Namespace.Structs)
 				} else {
 					if (sharpStructItem.MarshalType.FullName == "char") {
 #>
-			    fixed (char* __ptr = @ref.<#= sharpStructItem.Name #>) this.<#= sharpStructItem.Name #> = new string(__ptr, 0, <#= sharpStructItem.ArrayDimension #>);
+            fixed (char* __ptr = @ref.<#= sharpStructItem.Name #>) this.<#= sharpStructItem.Name #> = new string(__ptr, 0, <#= sharpStructItem.ArrayDimension #>);
+<#+
+					} else if (sharpStructItem.PublicType.FullName == "string" && sharpStructItem.MarshalType.FullName == "byte") {
+#>
+            fixed (void* __ptr = @ref.<#= sharpStructItem.Name #>) this.<#= sharpStructItem.Name #> = new string((sbyte*)__ptr, 0, <#= sharpStructItem.ArrayDimension #>);
 <#+
 					} else {
 #>
-                fixed (void* __to = &this.<#= sharpStructItem.Name #>[0]) fixed (void* __from = @ref.<#= sharpStructItem.Name #>) SlimDX2.Utilities.CopyMemory((IntPtr) __to, (IntPtr) __from, <#= sharpStructItem.ArrayDimension #>*sizeof ( <#= sharpStructItem.MarshalType.FullName #>));
+            fixed (void* __to = &this.<#= sharpStructItem.Name #>[0]) fixed (void* __from = @ref.<#= sharpStructItem.Name #>) SlimDX2.Utilities.CopyMemory((IntPtr) __to, (IntPtr) __from, <#= sharpStructItem.ArrayDimension #>*sizeof ( <#= sharpStructItem.MarshalType.FullName #>));
 <#+
 					}
 				}
@@ -262,6 +266,12 @@ foreach (var sharpStruct in Namespace.Structs)
 					if (sharpStructItem.MarshalType.FullName == "char") {
 #>
             fixed (char* __psrc = this.<#= sharpStructItem.Name #>) fixed (char* __ptr = @ref.<#= sharpStructItem.Name #>) Utilities.CopyMemory((IntPtr)__ptr, (IntPtr)__psrc, <#= sharpStructItem.ArrayDimension #>);
+<#+
+					} else if (sharpStructItem.PublicType.FullName == "string" && sharpStructItem.MarshalType.FullName == "byte") {
+#>
+            IntPtr <#= sharpStructItem.Name #>_ = Marshal.StringToHGlobalAnsi(this.<#= sharpStructItem.Name #>);
+            fixed (void* __ptr = @ref.<#= sharpStructItem.Name #>) Utilities.CopyMemory((IntPtr)__ptr, <#= sharpStructItem.Name #>_, this.<#= sharpStructItem.Name #>.Length);
+            Marshal.FreeHGlobal( <#= sharpStructItem.Name #>_);
 <#+
 					} else {
 #>

@@ -150,7 +150,7 @@ namespace SlimDX2.Tools.XIDL
             }
 
             List<CppElement> elementsToRemove = new List<CppElement>();
-            foreach (var innerElement in InnerElements)
+            foreach (var innerElement in AllInnerElements)
             {
                 if (innerElement.Find(regex, toAdd, modifier))
                     elementsToRemove.Add(innerElement);
@@ -160,6 +160,14 @@ namespace SlimDX2.Tools.XIDL
                 Remove(innerElementToRemove);
 
             return isToRemove;
+        }
+
+        protected virtual IEnumerable<CppElement> AllInnerElements
+        {
+            get
+            {
+                return InnerElements;
+            }
         }
 
         public override string ToString()

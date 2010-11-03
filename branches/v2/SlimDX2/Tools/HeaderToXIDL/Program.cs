@@ -99,17 +99,19 @@ namespace SlimDX2.Tools.HeaderToXIDL
             cppHeaderParser.AddInclude("dxgiformat.h");
             cppHeaderParser.AddInclude("dxgitype.h");
             cppHeaderParser.AddInclude("d3dcommon.h");
-            //cppHeaderParser.AddInclude("d3d10.h");
-            //cppHeaderParser.AddInclude("d3d10_1.h");
-            //cppHeaderParser.AddInclude("d3d10_1shader.h");
-            //cppHeaderParser.AddInclude("d3d10effect.h");
-            //cppHeaderParser.AddInclude("d3d10misc.h");
-            //cppHeaderParser.AddInclude("d3d10sdklayers.h");
-            //cppHeaderParser.AddInclude("d3d10shader.h");
-            //cppHeaderParser.AddInclude("d3dx10.h");
-            //cppHeaderParser.AddInclude("d3dx10core.h");
-            //cppHeaderParser.AddInclude("d3dx10tex.h");
-            //cppHeaderParser.AddInclude("d3dx10async.h");
+            cppHeaderParser.AddInclude("d3d10.h");
+
+            cppHeaderParser.AddInclude("d3d10_1.h");
+            cppHeaderParser.AddInclude("d3d10shader.h");
+            cppHeaderParser.AddInclude("d3d10_1shader.h");
+            cppHeaderParser.AddInclude("d3d10effect.h");
+            cppHeaderParser.AddInclude("d3d10misc.h");
+            cppHeaderParser.AddInclude("d3d10sdklayers.h");
+            cppHeaderParser.AddInclude("d3dx10.h");
+            cppHeaderParser.AddInclude("d3dx10core.h");
+            cppHeaderParser.AddInclude("d3dx10tex.h");
+            cppHeaderParser.AddInclude("d3dx10async.h");
+
             cppHeaderParser.AddInclude("d3d11.h");
             cppHeaderParser.AddInclude("d3d11shader.h");
             cppHeaderParser.AddInclude("d3dx11.h");

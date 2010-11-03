@@ -53,6 +53,17 @@ namespace SlimDX2.Tools.XIDL
             get { return InnerElements.OfType<CppParameter>(); }
         }
 
+        protected override IEnumerable<CppElement> AllInnerElements
+        {
+            get
+            {
+                List<CppElement> allElements = new List<CppElement>(InnerElements);
+                allElements.Add(ReturnType);
+                return allElements;
+            }            
+        }
+
+
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();

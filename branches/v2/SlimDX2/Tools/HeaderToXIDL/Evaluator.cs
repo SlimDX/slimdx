@@ -46,7 +46,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
             object o = statement;
             try
             {
-                _evaluator.Eval(statement);
+                o = _evaluator.Evaluate(statement);
             }
             catch (Exception ex)
             {
@@ -72,7 +72,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
             {
                class Evaluator
                {
-                  public function Eval(expr : String) : String 
+                  public function Evaluate(expr : String) : String 
                   { 
                      return eval(expr); 
                   }

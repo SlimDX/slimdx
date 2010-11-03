@@ -20,6 +20,7 @@
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -327,7 +328,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
                         enumValue);
                 csharpEnumItem.CppElement = cppEnumItem;
                 newEnum.Add(csharpEnumItem);
-                _mapCppNameToCSharpType.Add(cppEnumItem.Name, csharpEnumItem);
+                if (cppEnumItem.Name != "None")
+                    _mapCppNameToCSharpType.Add(cppEnumItem.Name, csharpEnumItem);
 
                 //Console.WriteLine("{0},{1},{2},{3},{4},{5}", nameSpace, newEnum.Name, csharpEnumItem.Name,
                 //                  csharpEnumItem.Value, cppEnumItem.Name, cppInclude.Name);
@@ -377,7 +379,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             {
                 if (keyValuePair.Key.Match(cSharpStruct.CppElementName).Success)
                 {
-                    var destSharpStruct = _mapCppNameToCSharpType[keyValuePair.Value] as CSharpStruct;
+                    string cppName = keyValuePair.Key.Replace(cSharpStruct.CppElementName, keyValuePair.Value);
+                    var destSharpStruct = _mapCppNameToCSharpType[cppName] as CSharpStruct;
                     // Remove the struct from his container
                     cSharpStruct.ParentContainer.Remove(cSharpStruct);
                     // Add this struct to the new container struct
@@ -408,7 +411,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 bool hasArray = cppField.IsArray;
                 int arrayDimension = string.IsNullOrWhiteSpace(cppField.ArrayDimension)
                                          ? 0
-                                         : int.Parse(cppField.ArrayDimension);
+                                         : (int)float.Parse(cppField.ArrayDimension, CultureInfo.InvariantCulture);
                 string fieldType = cppField.GetTypeNameWithMapping();
                 string fieldName = ConvertCppNameToCSharpName(cppField.Name, TypeContext.Struct);
 
@@ -553,7 +556,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                         default:
                             // Try to get a declared struct
                             // If it fails, then this struct is unknown
-                            if (!_mapCppNameToCSharpType.TryGetValue(fieldType, out publicType))
+                            if (!FindType(fieldType, out publicType, ref hasPointer ))
                             {
                                 throw new ArgumentException("Unknown Structure!");
                             }
@@ -647,7 +650,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             // Associate Parent
             CSharpType parentType;
-            if (_mapCppNameToCSharpType.TryGetValue(cppInterface.ParentName, out parentType))
+            bool hasPointer = false;
+            if (FindType(cppInterface.ParentName, out parentType, ref hasPointer))
             {
                 cSharpInterface.Parent = parentType;
             }
@@ -760,7 +764,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 default:
                     // Try to get a declared struct
                     // If it fails, then this struct is unknown
-                    if (!_mapCppNameToCSharpType.TryGetValue(cpptype.GetTypeNameWithMapping(), out publicType))
+                    if (!FindType(cpptype.GetTypeNameWithMapping(), out publicType, ref hasPointer))
                     {
                         throw new ArgumentException("Unknown return type! {0}", cpptype.GetTypeNameWithMapping());
                     }
@@ -964,7 +968,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                         break;
                     case "LPD3D10INCLUDE":
                         hasPointer = true;
-                        if (!_mapCppNameToCSharpType.TryGetValue("ID3DInclude", out publicType))
+                        if (!FindType("ID3DInclude", out publicType, ref hasPointer))
                             throw new ArgumentException("Unknown type : " + paramType);
                         break;
                     case "ID3D10Effect":
@@ -973,7 +977,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     default:
                         // Try to get a declared struct
                         // If it fails, then this struct is unknown
-                        if (!_mapCppNameToCSharpType.TryGetValue(paramType, out publicType))
+                        if (!FindType(paramType, out publicType, ref hasPointer))
                         {
                             throw new ArgumentException("Unknown type : " + paramType);
                         }
@@ -1078,6 +1082,23 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 cSharpMethod.Add(paramMethod);
             }
             return marshalMethodTypes;
+        }
+
+        private bool FindType(string cppTypeName, out CSharpType publicType, ref bool hasPointer)
+        {
+            CppTypedef typedef;
+
+            string newTypeName = cppTypeName;
+            while (_mapTypedefToType.TryGetValue(newTypeName, out typedef))
+            {
+                if (newTypeName == typedef.Type)
+                    break;
+                newTypeName = typedef.Type;
+                if (typedef.Specifier != null && typedef.Specifier.Contains("*"))
+                    hasPointer = true;
+            }
+
+            return _mapCppNameToCSharpType.TryGetValue(newTypeName, out publicType);
         }
 
         private void MapCppInterfaceToCSharpInterface(CSharpInterface cSharpInterface)
@@ -1201,11 +1222,12 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             foreach (var cSharpMethod in methods)
             {
-                bool isGet = cSharpMethod.Name.StartsWith("Get");
+                bool isIs = cSharpMethod.Name.StartsWith("Is");
+                bool isGet = cSharpMethod.Name.StartsWith("Get") || isIs;
                 bool isSet = cSharpMethod.Name.StartsWith("Set");
                 if (!(isGet || isSet))
                     continue;
-                string propertyName = cSharpMethod.Name.Substring("Get".Length);
+                string propertyName = isIs?cSharpMethod.Name:cSharpMethod.Name.Substring("Get".Length);
 
                 int parameterCount = cSharpMethod.ParameterCount;
                 var parameterList = cSharpMethod.Parameters.ToList();
@@ -1330,6 +1352,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 }
                 // Update visibility for getter and setter (set to internal)
                 property.Getter.Visibility = Visibility.Internal;
+
+                if (property.Name.StartsWith("Is"))
+                    property.Getter.Name = property.Getter.Name + "_";
 
                 parent.Add(property);
             }
