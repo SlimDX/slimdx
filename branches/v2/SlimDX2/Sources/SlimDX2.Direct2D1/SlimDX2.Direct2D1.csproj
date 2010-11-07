@@ -56,6 +56,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DirectWrite\Enumerations.cs" />
+    <Compile Include="DirectWrite\Extension\InlineObject.cs" />
+    <Compile Include="DirectWrite\Extension\PixelSnapping.cs" />
+    <Compile Include="DirectWrite\Extension\TextLayout.cs" />
+    <Compile Include="DirectWrite\Extension\TextRenderer.cs" />
     <Compile Include="DirectWrite\Functions.cs" />
     <Compile Include="DirectWrite\Interfaces.cs" />
     <Compile Include="DirectWrite\Structures.cs" />
