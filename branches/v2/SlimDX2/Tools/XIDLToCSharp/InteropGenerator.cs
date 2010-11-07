@@ -31,17 +31,21 @@ namespace SlimDX2.Tools.XIDLToCSharp
             _methods = new List<CSharpInteropCalliSignature>();
         }
 
-        public class CalliSignature
-        {
-            public string Name;
-            public Type ReturnType;
-            public Type[] Parameters;
-        }
-
-
         public List<CSharpInteropCalliSignature> Methods
         {
             get { return _methods; }
+        }
+
+
+        public CSharpInteropCalliSignature Add(CSharpInteropCalliSignature method)
+        {
+            method.Index = Methods.Count;
+            int indexOf = Methods.IndexOf(method);
+            if (indexOf>=0)
+                return Methods[indexOf];
+
+            Methods.Add(method);
+            return method;
         }
 
         public void Generate(string relativePath)

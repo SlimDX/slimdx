@@ -24,7 +24,7 @@ using System.Reflection;
 namespace SlimDX2
 {
     /// <summary>
-    ///   Root class for all Cpp interop object.
+    /// Root class for all Cpp interop object.
     /// </summary>
     public partial class CppObject
     {
@@ -38,6 +38,7 @@ namespace SlimDX2
         {
             // Generate Interop Assembly
             interopAssembly = DynamicInterop.Generate(_interopCalliSignatures, false, null);
+//            interopAssembly = DynamicInterop.Generate(_interopCalliSignatures, true, ".");
             // Bind AppDomain AssemblyResolve to return Interop Assembly
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         }

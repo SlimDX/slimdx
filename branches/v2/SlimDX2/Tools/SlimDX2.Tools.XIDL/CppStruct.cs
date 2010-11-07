@@ -33,6 +33,9 @@ namespace SlimDX2.Tools.XIDL
             set { Add(value); }
         }
 
+        [DataMember(Order = 1)]
+        public bool IsBitfield { get; set; }
+
         public IEnumerable<CppField> Fields
         {
             get { return InnerElements.OfType<CppField>(); }

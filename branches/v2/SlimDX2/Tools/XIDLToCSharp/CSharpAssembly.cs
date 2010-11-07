@@ -27,11 +27,18 @@ namespace SlimDX2.Tools.XIDLToCSharp
         public CSharpAssembly(string assemblyName)
         {
             Name = assemblyName;
+            Interop = new InteropGenerator();
         }
 
         public IEnumerable<CSharpNamespace> Namespaces
         {
             get { return Items.OfType<CSharpNamespace>(); }
+        }
+
+        public InteropGenerator Interop
+        {
+            get;
+            private set;
         }
     }
 }

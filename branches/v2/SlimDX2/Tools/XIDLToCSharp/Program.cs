@@ -20,12 +20,13 @@
 using System;
 using System.IO;
 using SlimDX2.Tools.XIDL;
+using System.Linq;
 
 namespace SlimDX2.Tools.XIDLToCSharp
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        private unsafe static void Main(string[] args)
         {
             string fileNameXIDL = "directx.xidl";
 
@@ -47,6 +48,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             CSharpFunctionGroup d3dx11FunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct3D11", Global.Name + ".Direct3D11", "D3DX11");           
             CSharpFunctionGroup d3d10FunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct3D10", Global.Name + ".Direct3D10", "D3D10");
             CSharpFunctionGroup d3dx10FunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct3D10", Global.Name + ".Direct3D10", "D3DX10");
+            CSharpFunctionGroup d2d1FunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct2D1", Global.Name + ".Direct2D1", "D2D1");
+            CSharpFunctionGroup dwriteFunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct2D1", Global.Name + ".DirectWrite", "DWrite");
 
 
             string d3dx11DLLName = group.FindFirst<CppMacroDefinition>("D3DX11_DLL_A").StripStringValue;
@@ -56,6 +59,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // Remove all enums ending with _FORCE_DWORD, FORCE_UINT
             group.Modify<CppEnumItem>("^.*_FORCE_DWORD$", Modifiers.Remove);
             group.Modify<CppEnumItem>("^.*_FORCE_UINT$", Modifiers.Remove);
+
+            group.TagVisibility<CppStruct>("^Win32$", Visibility.Internal);
 
             // ********************************************************************************************************
             // --------------------------------------------------------------------------------------------------------
@@ -79,8 +84,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.Modify<CppEnumItem>(@"^D3D(\d+)_REGISTER_COMPONENT_.*", Modifiers.Remove);
 
             // --------------------------------------------------------------------------------------------------------
-            // D3DCommon Functions
+            // D3DCommon Interfaces
             // --------------------------------------------------------------------------------------------------------
+            // Those interfaces are only used as callback
+            group.TagCallback(@"^ID3DInclude$");
 
             // see override for D3DCreateBlob in D3DCompiler tag section
 
@@ -392,12 +399,15 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)EffectPass::Apply$", Visibility.Internal);
 
+            group.TagVisibility<CppMethod>(@"^ID3DX10Font::GetTextMetrics.*$", Visibility.Internal);            
+
             // --------------------------------------------------------------------------------------------------------
             // D3D10/D3DX10 / D3D11/D3DX11 Functions
             // --------------------------------------------------------------------------------------------------------
             // Map All D3D11 functions to D3D11 Function Group
             group.TagFunction(@"^D3D11.*", "d3d11.dll", d3d11FunctionGroup);
             group.TagFunction(@"^D3D10.*", "d3d10.dll", d3d10FunctionGroup);
+            group.TagFunction(@"^D3D10.*1", "d3d10_1.dll", d3d10FunctionGroup);
 
             // Map All D3DX11 functions to D3DX11 Function Group
             group.TagFunction(@"^D3DX11.*", d3dx11DLLName, d3dx11FunctionGroup);
@@ -467,6 +477,81 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             // ********************************************************************************************************
 
+            // ********************************************************************************************************
+            // --------------------------------------------------------------------------------------------------------
+            #region // D2D1 Tag
+
+            // --------------------------------------------------------------------------------------------------------
+            // D2D1 Enumerations
+            // --------------------------------------------------------------------------------------------------------
+
+
+
+            // --------------------------------------------------------------------------------------------------------
+            // D2D1 Structures
+            // --------------------------------------------------------------------------------------------------------
+
+
+            // --------------------------------------------------------------------------------------------------------
+            // D2D1 Interfaces
+            // --------------------------------------------------------------------------------------------------------
+            // Remove methods using WIC
+            group.Modify<CppMethod>(@"^ID2D(\d+)RenderTarget::CreateBitmapFromWicBitmap$", Modifiers.Remove);
+            group.Modify<CppMethod>(@"^ID2D(\d+)Factory::CreateWicBitmapRenderTarget$", Modifiers.Remove);
+
+            // Tag Internal for all Create methods
+            group.TagVisibility<CppMethod>(@"^ID2D(\d+)Factory::Create.*$", Visibility.Internal);
+            group.TagVisibility<CppMethod>(@"^ID2D(\d+)RenderTarget::Create.*$", Visibility.Internal);
+
+            group.TagVisibility<CppMethod>(@"^ID2D(\d+)Mesh::Open$", Visibility.Internal, null, "Open_");
+
+            // Set parameter as pure "In"
+            group.Modify<CppParameter>(@"^ID2D(\d+)RenderTarget::CreateSharedBitmap::data$", Modifiers.ParameterAttribute(CppAttribute.In));
+
+            // Tag D2D1 Sink interface as dual-callback interfaces
+            group.TagCallback(@"ID2D(\d+).*Sink$", true);
+
+            // --------------------------------------------------------------------------------------------------------
+            // D2D1 Functions
+            // --------------------------------------------------------------------------------------------------------
+            group.TagFunction("^D2D1.*", "d2d1.dll", d2d1FunctionGroup);
+
+            #endregion
+            // --------------------------------------------------------------------------------------------------------
+            // ********************************************************************************************************
+
+
+            // ********************************************************************************************************
+            // --------------------------------------------------------------------------------------------------------
+            #region // DirectWrite Tag
+
+            // --------------------------------------------------------------------------------------------------------
+            // DirectWrite Enumerations
+            // --------------------------------------------------------------------------------------------------------
+
+
+
+            // --------------------------------------------------------------------------------------------------------
+            // DirectWrite Structures
+            // --------------------------------------------------------------------------------------------------------
+
+
+            // --------------------------------------------------------------------------------------------------------
+            // DirectWrite Interfaces
+            // --------------------------------------------------------------------------------------------------------
+            group.TagVisibility<CppMethod>(@"^IDWriteGdiInterop::.*?LOGFONT$", Visibility.Internal);
+
+
+            // --------------------------------------------------------------------------------------------------------
+            // DirectWrite Functions
+            // --------------------------------------------------------------------------------------------------------
+            group.TagFunction("^DWriteCreateFactory", "dwrite.dll", dwriteFunctionGroup);
+
+            #endregion
+            // --------------------------------------------------------------------------------------------------------
+            // ********************************************************************************************************
+
+
             // Create IUnknown object
             var comObject = new CSharpInterface(new CppInterface {Name = "IUnknown"});
             comObject.Name = Global.Name + ".ComObject";
@@ -478,10 +563,12 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.MapCppTypeToCSharpType(comObject.CppElement.Name, comObject);
 
             // Namespace mapping
+            gen.MapIncludeToNamespace("win32_ext", Global.Name + ".Windows", Global.Name, "Windows");
+
             gen.MapIncludeToNamespace("dxgi", Global.Name + ".DXGI");
             gen.MapIncludeToNamespace("dxgiformat", Global.Name + ".DXGI");
             gen.MapIncludeToNamespace("dxgitype", Global.Name + ".DXGI");
-            gen.MapIncludeToNamespace("d3dcommon", Global.Name + ".Direct3D", Global.Name);
+            gen.MapIncludeToNamespace("d3dcommon", Global.Name + ".Direct3D", Global.Name, "Direct3D");
 
             gen.MapIncludeToNamespace("d3d10", Global.Name + ".Direct3D10");
             gen.MapIncludeToNamespace("d3d10_1", Global.Name + ".Direct3D10");
@@ -503,6 +590,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.MapIncludeToNamespace("d3d11shader", Global.Name + ".D3DCompiler");
             gen.MapIncludeToNamespace("d3dcompiler", Global.Name + ".D3DCompiler");
 
+            gen.MapIncludeToNamespace("d2d1", Global.Name + ".Direct2D1");
+            gen.MapIncludeToNamespace("dcommon", Global.Name + ".DirectWrite", Global.Name + ".Direct2D1", "DirectWrite");
+            gen.MapIncludeToNamespace("dwrite", Global.Name + ".DirectWrite", Global.Name + ".Direct2D1", "DirectWrite");
+            
             // Move some D3DCommon types to D3DCompiler
             gen.MapTypeToNamespace("^D3D_PRIMITIVE$", Global.Name + ".D3DCompiler");
             gen.MapTypeToNamespace("^D3D_CBUFFER_TYPE$", Global.Name + ".D3DCompiler");
@@ -522,39 +613,84 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.MapTypeToNamespace("^ID3DInclude$", Global.Name + ".D3DCompiler");
             gen.MapTypeToNamespace("^D3D_INCLUDE_TYPE$", Global.Name + ".D3DCompiler");
 
+            gen.MapCppTypeToCSharpType("UINT64", typeof (long));
+            gen.MapCppTypeToCSharpType("FILETIME", typeof(long));
+            gen.MapCppTypeToCSharpType("COLORREF", typeof(int));  // TODO: use real ColorRGBA8
+
+            // Use System.Drawing.SizeF struct
+            var sizeFType = new CSharpStruct();
+            sizeFType.Type = typeof(System.Drawing.SizeF);
+            sizeFType.Name = sizeFType.Type.FullName;
+            sizeFType.SizeOf = sizeof(System.Drawing.SizeF);
+            gen.MapCppTypeToCSharpType("D2D_SIZE_F", sizeFType);
+
+            // Use System.Drawing.Size struct
+            var sizeType = new CSharpStruct();
+            sizeType.Type = typeof(System.Drawing.Size);
+            sizeType.Name = sizeType.Type.FullName;
+            sizeType.SizeOf = sizeof(System.Drawing.Size);
+            gen.MapCppTypeToCSharpType("D2D_SIZE_U", sizeType);
+            gen.MapCppTypeToCSharpType("SIZE", sizeType);
+
+            // Use Direct2D1.Matrix3x2 struct
+            var matrix3x2Type = new CSharpStruct();
+            matrix3x2Type.Name = Global.Name + ".Direct2D1.Matrix3x2";
+            matrix3x2Type.SizeOf = 6 * 4;
+            gen.MapCppTypeToCSharpType("D2D_MATRIX_3X2_F", matrix3x2Type);
+
+            // Use SlimDX.Rectangle struct
             var rectType = new CSharpStruct();
             rectType.Name = Global.Name + ".Rectangle";
-            rectType.SizeOf = 4*4;
-            gen.MapCppTypeToCSharpType("RECT", rectType); //Global.Name + ".Rectangle", 4 * 4, false, true);
-            var color4Type = new CSharpStruct();
-            color4Type.Name = "SlimMath.Color4";
-            color4Type.SizeOf = 4*4;
-            gen.MapCppTypeToCSharpType("SLIMDX_COLOR4", color4Type); // Global.Name + ".Color4"
+            rectType.SizeOf = 4 * 4;
+            gen.MapCppTypeToCSharpType("D2D_RECT_U", rectType); //Global.Name + ".Rectangle", 4 * 4, false, true);
 
+            // Use SlimDX.RectangleF struct
+            var rectFType = new CSharpStruct();
+            rectFType.Name = Global.Name + ".RectangleF";
+            rectFType.SizeOf = 4 * 4;
+            gen.MapCppTypeToCSharpType("RECT", rectFType); //Global.Name + ".Rectangle", 4 * 4, false, true);
+            gen.MapCppTypeToCSharpType("D2D_RECT_F", rectFType); //Global.Name + ".Rectangle", 4 * 4, false, true);
+
+            // Use System.Drawing.PointF struct
+            var pointFType = new CSharpStruct();
+            pointFType.Type = typeof (System.Drawing.PointF);
+            pointFType.Name = pointFType.Type.FullName;
+            pointFType.SizeOf = sizeof(System.Drawing.PointF);
+            gen.MapCppTypeToCSharpType("D2D_POINT_2F", pointFType);
+
+            // Use System.Drawing.Point struct
+            var pointType = new CSharpStruct();
+            pointType.Type = typeof(System.Drawing.Point);
+            pointType.Name = pointType.Type.FullName;
+            pointType.SizeOf = sizeof(System.Drawing.Point);
+            gen.MapCppTypeToCSharpType("D2D_POINT_2U", pointType);
+            gen.MapCppTypeToCSharpType("POINT", pointType);
+
+            var color4Type = new CSharpStruct();
+            color4Type.Type = typeof(SlimMath.Color4);
+            color4Type.Name = color4Type.Type.FullName;
+            color4Type.SizeOf = sizeof(SlimMath.Color4);
+            gen.MapCppTypeToCSharpType("SLIMDX_COLOR4", color4Type); 
+            gen.MapCppTypeToCSharpType("D3DCOLORVALUE", color4Type);        
+            gen.MapCppTypeToCSharpType("D2D_COLOR_F", color4Type);
+            
             var matrixType = new CSharpStruct();
-            matrixType.Name = "SlimMath.Matrix";
-            matrixType.SizeOf = 4 * 4 * 4;
-            gen.MapCppTypeToCSharpType("D3DXMATRIX", matrixType); // Global.Name + ".Color4"
+            matrixType.Type = typeof(SlimMath.Matrix);
+            matrixType.Name = matrixType.Type.FullName;
+            matrixType.SizeOf = sizeof(SlimMath.Matrix);
+            gen.MapCppTypeToCSharpType("D3DXMATRIX", matrixType);
 
             var vector2Type = new CSharpStruct();
-            vector2Type.Name = "SlimMath.Vector2";
-            vector2Type.SizeOf = 2 * 4;
-            gen.MapCppTypeToCSharpType("D3DXVECTOR2", vector2Type); // Global.Name + ".Color4"           
-
-            gen.MapCppTypeToCSharpType("D3DXCOLOR", typeof(int)); // Global.Name + ".Color4"           
-
-            gen.MapCppTypeToCSharpType("POINT", vector2Type); // Global.Name + ".Color4"           
-
-
-            gen.MapCppTypeToCSharpType("TEXTMETRICA", typeof(int));
-            gen.MapCppTypeToCSharpType("TEXTMETRICW", typeof(int));
-
+            vector2Type.Type = typeof(SlimMath.Vector2);
+            vector2Type.Name = vector2Type.Type.FullName;
+            vector2Type.SizeOf = sizeof(SlimMath.Vector2);
+            gen.MapCppTypeToCSharpType("D3DXVECTOR2", vector2Type);
+            gen.MapCppTypeToCSharpType("D3DXCOLOR", typeof(int));   // TODO: use real ColorRGBA8
 
             gen.MapCppTypeToCSharpType("HRESULT", typeof(int));
 
-            // General 
-            //gen.RemoveType(@"^.*_FORCE_DWORD$");      // Remove all enums ending with _FORCE_DWORD, FORCE_UINT
-            //gen.RemoveType(@"^.*_FORCE_UINT$");      
+            gen.MoveStructToInner(@"^TEXTMETRIC\w$", "Win32");
+            gen.MoveStructToInner(@"^LOGFONTW$", "Win32");
 
             // DXGI
             gen.KeepUnderscoreForType(@"^DXGI_FORMAT_.*");
@@ -710,6 +846,12 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             gen.RenameType(@"^D3DX\d+(.*)W", "$1");
 
+            // d2d1
+            gen.RenameType(@"^D2D1_FEATURE_LEVEL_(.*)", @"Level_$1", true);
+
+            gen.RenameType(@"^D2D1_GAMMA_2_2", @"StandardRgb");
+            gen.RenameType(@"^D2D1_GAMMA_1_0", @"Linear");
+
             // d3dcommon
             gen.RenameType(@"^D3D_PRIMITIVE$", @"InputPrimitive");
             gen.RenameType(@"^D3D_FEATURE_LEVEL_(.*)", @"Level_$1", true);
@@ -747,6 +889,11 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             // Global
 
+            gen.RenameType(@"^ID2D1(.+)", "$1", false, TypeContext.Root);
+            gen.RenameType(@"^D2D1(.+)", "$1", false, TypeContext.Root);
+            gen.RenameType(@"^IDWrite(.+)", "$1", false, TypeContext.Root);
+            gen.RenameType(@"^DWrite(.+)", "$1", false, TypeContext.Root);
+            gen.RenameType(@"^DWRITE(.+)", "$1", false, TypeContext.Root);
             gen.RenameType(@"^IDXGI(.+)", "$1", false, TypeContext.Root);
             gen.RenameType(@"^DXGI(.+)", "$1", false, TypeContext.Root);
             gen.RenameType(@"^ID3D11(.+)", "$1", false, TypeContext.Root);
@@ -844,12 +991,12 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             gen.MapCppTypeToCSharpType("DXGI_RGB", "SlimMath.Color3", 3*4, false, true);
 
-            // Those interfaces are only used as callback
-            gen.MakeCallbackInterface("ID3DInclude");
  
             // Add constant from macro definitions
             gen.AddConstantFromMacroToCSharpType("D3D11_SDK_VERSION", Global.Name + ".Direct3D11.D3D11", "int");
             gen.AddConstantFromMacroToCSharpType("D3D10_SDK_VERSION", Global.Name + ".Direct3D10.D3D10", "int");
+            gen.AddConstantFromMacroToCSharpType("D3D10_1_SDK_VERSION", Global.Name + ".Direct3D10.D3D10", "int", "SdkVersion1");
+
 
             gen.GeneratedPath = @"..\..\..\Sources\";
 

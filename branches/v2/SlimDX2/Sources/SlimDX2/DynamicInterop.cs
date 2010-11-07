@@ -18,6 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -26,16 +27,168 @@ using System.Runtime.InteropServices;
 namespace SlimDX2
 {
     /// <summary>
+    /// Type used for template
+    /// </summary>
+#if XIDLToCSharp
+    public class TypeWrapper
+#else
+    internal class TypeWrapper
+#endif
+    {
+        private Type _type;
+        private string _typeName;
+
+        public TypeWrapper(Type type)
+        {
+            _type = type;
+        }
+
+        public TypeWrapper(string typeName)
+        {
+            _typeName = typeName;
+        }
+
+        public Type Type
+        {
+            get { return _type; }
+        }
+
+        public static implicit operator TypeWrapper(Type input)
+        {
+            return new TypeWrapper(input);
+        }
+
+        public static implicit operator TypeWrapper(string input)
+        {
+            return new TypeWrapper(input);
+        }
+
+        public string TypeName
+        {
+            get
+            {
+                Type type = Type;
+
+                if (type != null)
+                {
+                    if (type == typeof(int))
+                        return "int";
+                    if (type == typeof(short))
+                        return "short";
+                    if (type == typeof(void*) || type == typeof(IntPtr))
+                        return "void*";
+                    if (type == typeof(void))
+                        return "void";
+                    if (type == typeof(float))
+                        return "float";
+                    if (type == typeof(long))
+                        return "long";
+
+                    return type.FullName;
+                }
+                return _typeName;
+            }
+        }
+
+        public string ParamTypeOfName
+        {
+            get
+            {
+                return "typeof(" + TypeName + ")";
+            }
+        }
+
+
+        public bool IsPrimitive
+        {
+            get
+            {
+                if (Type != null)
+                    return Type.IsPrimitive;
+                return false;
+            }
+        }
+
+        public bool IsValueType
+        {
+            get
+            {
+                if (Type != null)
+                    return Type.IsValueType;
+                // If typename != null is necessary a ValueType
+                return true;
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            TypeWrapper against = obj as TypeWrapper;
+            if (against == null)
+                return false;
+            return Type == against.Type && _typeName == against._typeName;
+        }
+
+        public static bool operator ==(TypeWrapper a, Type b)
+        {
+            // If both are null, or both are same instance, return true.
+            if (System.Object.ReferenceEquals(a, b))
+            {
+                return true;
+            }
+
+            // If one is null, but not both, return false.
+            if (((object)a == null) || ((object)b == null))
+            {
+                return false;
+            }
+
+            return a.Type == b;
+        }
+
+        public static bool operator !=(TypeWrapper a, Type b)
+        {
+            return !(a == b);
+        }
+
+        public static bool operator ==(TypeWrapper a, TypeWrapper b)
+        {
+            // If both are null, or both are same instance, return true.
+            if (System.Object.ReferenceEquals(a, b))
+            {
+                return true;
+            }
+
+            // If one is null, but not both, return false.
+            if (((object)a == null) || ((object)b == null))
+            {
+                return false;
+            }
+
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(TypeWrapper a, TypeWrapper b)
+        {
+            return !(a == b);
+        }
+    }
+
+#if XIDLToCSharp
+    public class DynamicInterop
+#else
+    /// <summary>
     ///   Helper class to dynamically generate the interop assembly.
     /// </summary>
     internal class DynamicInterop
+#endif
     {
+
         /// <summary>
         ///   Internal simple interop signature description.
         /// </summary>
         public class CalliSignature
         {
-            public CalliSignature(string name, Type returnType, Type[] parameterTypes)
+            public CalliSignature(string name, TypeWrapper returnType, params TypeWrapper[] parameterTypes)
             {
                 Name = name;
                 ReturnType = returnType;
@@ -43,8 +196,8 @@ namespace SlimDX2
             }
 
             public string Name;
-            public Type ReturnType;
-            public Type[] ParameterTypes;
+            public TypeWrapper ReturnType;
+            public TypeWrapper[] ParameterTypes;
         }
 
         /// <summary>
@@ -76,7 +229,7 @@ namespace SlimDX2
             // Default constructor private
             Type[] ctorParams = new Type[0] {};
             ConstructorBuilder pointCtor = tb.DefineConstructor(
-                MethodAttributes.Private,
+                MethodAttributes.Public,
                 CallingConventions.Standard,
                 ctorParams);
             ILGenerator ctorIL = pointCtor.GetILGenerator();
@@ -84,74 +237,9 @@ namespace SlimDX2
             ctorIL.Emit(OpCodes.Call, objCtor);
             ctorIL.Emit(OpCodes.Ret);
 
-            // Determine 32/64bit mode
-            bool isx64 = IntPtr.Size == 8;
-
             // Iterate on each method and generate interop code
-            for (int i = 0; i < methods.Length; i++)
-            {
-                var method = methods[i];
-
-                Type[] calliParameterTypes = new Type[method.ParameterTypes.Length + 1];
-                Type[] publicParameterTypes = new Type[method.ParameterTypes.Length + 2];
-                publicParameterTypes[0] = typeof (void*);
-                publicParameterTypes[1] = typeof (int);
-                calliParameterTypes[0] = typeof (void*);
-                for (int j = 0; j < method.ParameterTypes.Length; j++)
-                {
-                    publicParameterTypes[2 + j] = method.ParameterTypes[j];
-                    calliParameterTypes[1 + j] = method.ParameterTypes[j];
-                }
-
-
-                MethodBuilder mb1 = tb.DefineMethod(method.Name,
-                                                    MethodAttributes.Public | MethodAttributes.Static |
-                                                    MethodAttributes.HideBySig,
-                                                    CallingConventions.Standard,
-                                                    method.ReturnType,
-                                                    publicParameterTypes);
-
-                for (int j = 0; j < publicParameterTypes.Length; j++)
-                {
-                    mb1.DefineParameter(j + 1, ParameterAttributes.None, "arg" + j); // Assign name 
-                }
-
-
-                ILGenerator il1 = mb1.GetILGenerator();
-
-
-                il1.Emit(OpCodes.Ldarg_0); // first parameter this object
-
-                // Push all parameters
-                for (int j = 1; j < calliParameterTypes.Length; j++)
-                {
-                    if (j == 1)
-                        il1.Emit(OpCodes.Ldarg_2);
-                    else if (j == 2)
-                        il1.Emit(OpCodes.Ldarg_3);
-                    else
-                        il1.Emit(OpCodes.Ldarg_S, (byte) (j + 1));
-                }
-
-                il1.Emit(OpCodes.Ldarg_1); // virtual table offset
-                il1.Emit(OpCodes.Conv_I); // convert to native int
-
-                if (isx64)
-                {
-                    // If x64
-                    il1.Emit(OpCodes.Dup); // convert to native int
-                    il1.Emit(OpCodes.Add);
-                }
-
-                il1.Emit(OpCodes.Ldarg_0); // this
-                il1.Emit(OpCodes.Ldind_I); // vtbl
-                il1.Emit(OpCodes.Add); // vtbl + offset
-                il1.Emit(OpCodes.Ldind_I); // vtbl
-
-                // Call native unmanaged method
-                il1.EmitCalli(OpCodes.Calli, CallingConvention.StdCall, method.ReturnType, calliParameterTypes);
-                il1.Emit(OpCodes.Ret);
-            }
+            foreach (CalliSignature t in methods)
+                Create(tb, t, null);
 
             // Create generic CopyMethod Param
             CreateReadMethod(tb);
@@ -168,12 +256,146 @@ namespace SlimDX2
             {
                 string fileName = name + ".dll";
                 asmBldr.Save(fileName);
-                // Copy file to output
-                File.Copy(fileName, relativePath + Path.DirectorySeparatorChar + fileName, true);
-                File.Delete(fileName);
+                if (relativePath != null && relativePath != ".")
+                {
+                    // Copy file to output
+                    File.Copy(fileName, relativePath + Path.DirectorySeparatorChar + fileName, true);
+                    File.Delete(fileName);
+                }
             }
 
             return type.Assembly;
+        }
+
+
+        public static void InitDelegates(Type interopType)
+        {
+            var fields = interopType.GetFields();
+            foreach (var fieldInfo in fields)
+            {
+                if (fieldInfo.FieldType.IsSubclassOf(typeof(System.MulticastDelegate)))
+                {
+                    var calliDelegate = CreateDelegate(fieldInfo.FieldType);
+                    fieldInfo.SetValue(null, calliDelegate);
+                }
+            }
+        }
+
+        private static Delegate CreateDelegate(Type typeOfDelegate)
+        {
+            var methodInfo = typeOfDelegate.GetMethod("Invoke");
+            var parametersInfo = methodInfo.GetParameters();
+            var parametersSignature = new List<TypeWrapper>();
+            for (int i = 2; i < parametersInfo.Length; i++)
+                parametersSignature.Add(parametersInfo[i].ParameterType);
+
+            var signature = new CalliSignature("none", methodInfo.ReturnType, parametersSignature.ToArray());
+
+            return Create(null, signature, typeOfDelegate);
+        }
+
+        private static Delegate CreateDelegate(CalliSignature method, Type typeOfDelegate)
+        {
+            return Create(null, method, typeOfDelegate);
+        }
+
+        private static Delegate Create(TypeBuilder tb, CalliSignature method, Type delegateType)
+        {
+            Type[] calliParameterTypes = new Type[method.ParameterTypes.Length + 1];
+            Type[] publicParameterTypes = new Type[method.ParameterTypes.Length + 2];
+            publicParameterTypes[0] = typeof(void*);
+            publicParameterTypes[1] = typeof(int);
+            calliParameterTypes[0] = typeof(void*);
+
+            // Construct methods parameters type
+            for (int j = 0; j < method.ParameterTypes.Length; j++)
+            {
+                var typeWrap = method.ParameterTypes[j];
+                Type paramType = typeWrap.Type;
+                publicParameterTypes[2 + j] = paramType;
+                calliParameterTypes[1 + j] = paramType;
+            }
+
+            Type returnType = method.ReturnType.Type;
+
+
+            ILGenerator il1;
+            Delegate methodDelegate = null;
+            DynamicMethod builder = null;
+
+            if (tb != null )
+            {
+                MethodBuilder mb1 = tb.DefineMethod(method.Name,
+                                                    MethodAttributes.Public | MethodAttributes.Static |
+                                                    MethodAttributes.HideBySig,
+                                                    CallingConventions.Standard);
+
+                // Set Return type and parameters type
+                mb1.SetParameters(publicParameterTypes);
+                mb1.SetReturnType(returnType);
+
+                for (int j = 0; j < publicParameterTypes.Length; j++)
+                {
+                    mb1.DefineParameter(j + 1, ParameterAttributes.None, "arg" + j); // Assign name 
+                }
+
+                il1 = mb1.GetILGenerator();
+            }
+            else 
+            {
+                builder = new DynamicMethod(method.Name, returnType, publicParameterTypes, typeof(DynamicInterop).Module);
+
+                for (int j = 0; j < publicParameterTypes.Length; j++)
+                {
+                    builder.DefineParameter(j + 1, ParameterAttributes.None, "arg" + j); // Assign name 
+                }
+                il1 = builder.GetILGenerator();
+            }
+
+
+            il1.Emit(OpCodes.Ldarg_0); // first parameter this object
+
+            // Push all parameters
+            for (int j = 1; j < calliParameterTypes.Length; j++)
+            {
+                if (j == 1)
+                    il1.Emit(OpCodes.Ldarg_2);
+                else if (j == 2)
+                    il1.Emit(OpCodes.Ldarg_3);
+                else
+                    il1.Emit(OpCodes.Ldarg_S, (byte)(j + 1));
+
+                //if (tb == null && calliParameterTypes[j].IsValueType)
+                //{
+                //    il1.Emit(OpCodes.Unbox, calliParameterTypes[j]);
+                //}
+            }
+
+            il1.Emit(OpCodes.Ldarg_1); // virtual table offset
+            il1.Emit(OpCodes.Conv_I); // convert to native int
+
+            if (IntPtr.Size == 8)
+            {
+                // If x64
+                il1.Emit(OpCodes.Dup); // convert to native int
+                il1.Emit(OpCodes.Add);
+            }
+
+            il1.Emit(OpCodes.Ldarg_0); // this
+            il1.Emit(OpCodes.Ldind_I); // vtbl
+            il1.Emit(OpCodes.Add); // vtbl + offset
+            il1.Emit(OpCodes.Ldind_I); // vtbl
+
+            // Call native unmanaged method
+            il1.EmitCalli(OpCodes.Calli, CallingConvention.StdCall, returnType, calliParameterTypes);
+            il1.Emit(OpCodes.Ret);
+
+
+            if (tb == null)
+            {
+                methodDelegate = builder.CreateDelegate(delegateType);
+            }
+            return methodDelegate;
         }
 
         private static void CreateWriteRangeMethod(TypeBuilder tb)
@@ -190,7 +412,6 @@ namespace SlimDX2
             var paramTArray = paramT.MakeArrayType();
             methodCopyStruct.SetReturnType(typeof (void*));
             methodCopyStruct.SetParameters(new Type[] {typeof (void*), paramTArray, typeof (int), typeof (int)});
-
 
             ParameterBuilder pDest = methodCopyStruct.DefineParameter(1, ParameterAttributes.None, "pDest");
             // Parameter data

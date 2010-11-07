@@ -71,25 +71,33 @@ foreach (var sharpInterface in Namespace.Interfaces)
     [Guid("<#= sharpInterface.Guid #>")]
 <#+	
 	}
+	
+	// If Callback, then declare as interface
 	if (sharpInterface.IsCallback) {
-#>
-    <#= sharpInterface.VisibilityName #>partial interface <#= sharpInterface.Name #> {
-<#+	
-	} else if (sharpInterface.Parent != null) {
-#>
-    <#= sharpInterface.VisibilityName #>partial class <#= sharpInterface.Name #> : <#= sharpInterface.Parent.FullName #> {
-
+#>    <#= sharpInterface.VisibilityName #>partial interface <#= sharpInterface.Name #><#+	
+	} else {
+#>    <#= sharpInterface.VisibilityName #>partial class <#= sharpInterface.Name #><#+	
+	}
+	
+	// Is there any Parent?
+	if (sharpInterface.Parent != null || sharpInterface.IParent != null) {
+#> : <#+	
+		string separator = "";
+		if (sharpInterface.Parent != null) {
+#><#= sharpInterface.Parent.FullName #><#+
+			separator = ", ";
+		}		
+		if (sharpInterface.IParent != null) {
+#><#= separator #><#= sharpInterface.IParent.FullName #><#+
+		}
+	}
+#> {
+<#+
+	if (!sharpInterface.IsCallback) {#>
         public <#= sharpInterface.Name #>(IntPtr basePtr) : base(basePtr) {
         }
-<#+	
-	} else { 
-#>
-    <#= sharpInterface.VisibilityName #>partial class <#= sharpInterface.Name #> : SlimDX2.CppObject {	
-
-		public <#= sharpInterface.Name #>(IntPtr basePtr) : base(basePtr) {
-        }
-<#+	
-	} 
+<#+
+	}
 #>
         
 <#+
@@ -189,10 +197,11 @@ foreach (var sharpInterface in Namespace.Interfaces)
         /// <unmanaged><#= sharpInterfaceMethod.CppSignature #></unmanaged>
 <#+ 
 		if (sharpInterface.IsCallback) {
-        	continue;
-		} else {#>        <#= sharpInterfaceMethod.VisibilityName #><#= sharpInterfaceMethod.ReturnType.PublicType.FullName #> <#= sharpInterfaceMethod.Name #>(<#+
+        	#>        /* <#+
+		} else {
+        	#>        <#+
 		}
-
+		#><#= sharpInterfaceMethod.VisibilityName #><#= sharpInterfaceMethod.ReturnType.PublicType.FullName #> <#= sharpInterfaceMethod.Name #>(<#+
 		int i = 0;
 		int maxParam = sharpInterfaceMethod.ParameterCount;
 		foreach (var param in sharpInterfaceMethod.Parameters) {
@@ -201,6 +210,12 @@ foreach (var sharpInterface in Namespace.Interfaces)
 			i++;
 		}
 #>)<#+
+		if (sharpInterface.IsCallback) {
+			#> */
+
+<#+
+        	continue;
+		}
 		// Else Open Body
 #> {
             unsafe {
@@ -264,9 +279,12 @@ foreach (var sharpInterface in Namespace.Interfaces)
 							}
 						}
 					// Handle Input String 
-					} else if (param.IsString) {#>
+					} else if (param.IsString) {
+						if (param.IsWideChar) {#>
+                IntPtr <#= param.TempName #> = Marshal.StringToHGlobalUni(<#= param.Name #>);
+<#+						} else {#>
                 IntPtr <#= param.TempName #> = Marshal.StringToHGlobalAnsi(<#= param.Name #>);
-<#+						
+<#+						}						
 					} else if ( param.IsRefIn && param.IsValueType && param.IsOptionnal) {#>
                 <#= param.PublicType.FullName #> <#= param.TempName #>;
                 if (<#= param.Name #>.HasValue)
@@ -307,12 +325,13 @@ foreach (var sharpInterface in Namespace.Interfaces)
 				// ---------------------------------------------------------------------------------------------------
 				// Perform method call to Interop.Calli*
 				// ---------------------------------------------------------------------------------------------------
-				if (sharpInterfaceMethod.HasReturnType) {#>
+				if (sharpInterfaceMethod.HasReturnType && !sharpInterfaceMethod.IsReturnStruct) {#>
                 __result__= (<#= sharpInterfaceMethod.ReturnType.PublicType.FullName #>)<#+
 				} else {
 #>                <#+
 				}
-#><#= sharpInterfaceMethod.CastStart #>SlimDX2.Interop.<#= sharpInterfaceMethod.Interop.Name #>(_nativePointer, <#= sharpInterfaceMethod.Offset #> * 4<#+						
+#><#= sharpInterfaceMethod.CastStart #><#= sharpInterfaceMethod.Assembly.FullName #>.LocalInterop.<#= sharpInterfaceMethod.Interop.Name #>(_nativePointer, <#= sharpInterfaceMethod.Offset #> * 4<#+
+				if (sharpInterfaceMethod.IsReturnStruct) {#>,(void*)&__result__<#+}				
 				i = 0;
 				maxParam = sharpInterfaceMethod.ParameterCount;
 				if (maxParam > 0) {#>, <#+}
@@ -345,13 +364,14 @@ foreach (var sharpInterface in Namespace.Interfaces)
                 <#= param.Name #> = new <#= param.PublicType.FullName #>();
                 <#= param.Name #>.__MarshalFrom(ref <#= param.TempName #>);
 <#+								}
-						} else if (param.PublicType is CSharpInterface ) {							
+						} else if (param.PublicType is CSharpInterface ) {
+							var paramInterface = param.PublicType as CSharpInterface;
 							if (param.IsArray) {#>
                 for (int i = 0; i < <#= param.Name #>.Length; i++)
-                    <#= param.Name #>[i] = (<#= param.TempName #>[i] == IntPtr.Zero)?null:new <#= param.PublicType.FullName #>(<#= param.TempName #>[i]);	
+                    <#= param.Name #>[i] = (<#= param.TempName #>[i] == IntPtr.Zero)?null:new <#= paramInterface.DefaultImplem.FullName #>(<#= param.TempName #>[i]);	
 <#+	
 							} else {#>
-                <#= param.Name #> = (<#= param.TempName #> == IntPtr.Zero)?null:new <#= param.PublicType.FullName #>(<#= param.TempName #>);	
+                <#= param.Name #> = (<#= param.TempName #> == IntPtr.Zero)?null:new <#= paramInterface.DefaultImplem.FullName #>(<#= param.TempName #>);	
 <#+
 							}
 						}

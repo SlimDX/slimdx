@@ -17,6 +17,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
 {
     public class CSharpContainer
     {
-        private readonly List<CSharpContainer> _items;
+        private List<CSharpContainer> _items;
 
         public CSharpContainer()
         {
@@ -39,6 +40,19 @@ namespace SlimDX2.Tools.XIDLToCSharp
         internal CSharpGenerator Generator { get; private set; }
 
         public CSharpContainer ParentContainer { get; set; }
+
+        protected void ClearItems()
+        {
+            _items = new List<CSharpContainer>();
+        }
+
+        public T GetParent<T>() where T : CSharpContainer
+        {
+            CSharpContainer parent = ParentContainer;
+            while (parent != null && !(parent is T))
+                parent = parent.ParentContainer;
+            return (T) parent;
+        }
 
         public ReadOnlyCollection<CSharpContainer> Items
         {

@@ -99,6 +99,11 @@
       <Name>SlimDX2.Tools.XIDL</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="win32_ext.h">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>copy $(SolutionDir)..\Externals\Boost.Wave\Bin\BoostWaveNative.dll $(TargetDir)</PreBuildEvent>

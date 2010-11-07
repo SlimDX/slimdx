@@ -22,6 +22,9 @@ using System.Runtime.InteropServices;
 
 namespace SlimDX2
 {
+    /// <summary>
+    /// Root IUnknown class to interop with COM object
+    /// </summary>
     public class ComObject : CppObject
     {
         public ComObject(IntPtr pointer) : base(pointer)
@@ -32,15 +35,27 @@ namespace SlimDX2
         {
         }
 
-
         /// <summary>
         ///   Query Interface for a particular GUID.
         /// </summary>
         /// <param name = "guid">GUID query interface</param>
         /// <param name = "outPtr">output object associated with this GUID, IntPtr.Zero in interface is not supported</param>
-        public void QueryInterface(ref Guid guid, out IntPtr outPtr)
+        public void QueryInterface(Guid guid, out IntPtr outPtr)
         {
-            Marshal.QueryInterface(NativePointer, ref guid, out outPtr);
+            Result result = Marshal.QueryInterface(NativePointer, ref guid, out outPtr);
+            result.CheckError();
+        }
+
+        ///<summary>
+        /// Query Interface for a particular interface support.
+        ///</summary>
+        ///<typeparam name="T"></typeparam>
+        ///<returns></returns>
+        public T QueryInterface<T>() where T : ComObject
+        {
+            IntPtr parentPtr;
+            this.QueryInterface(typeof (T).GUID, out parentPtr);
+            return (T)Activator.CreateInstance(typeof(T), parentPtr);
         }
 
         /// <summary>

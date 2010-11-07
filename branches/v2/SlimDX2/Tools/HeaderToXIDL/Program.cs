@@ -93,7 +93,12 @@ namespace SlimDX2.Tools.HeaderToXIDL
 
             CommandArgs cmdArgs = ParseArgs(args);
 
-            var cppHeaderParser = new CppHeaderParser {IncludePath = cmdArgs.IncludePath};
+            var cppHeaderParser = new CppHeaderParser();
+
+            cppHeaderParser.IncludePath.Add(cmdArgs.IncludePath);
+            cppHeaderParser.IncludePath.Add(".");
+
+            cppHeaderParser.AddInclude("win32_ext.h");
 
             cppHeaderParser.AddInclude("dxgi.h");
             cppHeaderParser.AddInclude("dxgiformat.h");
@@ -119,6 +124,10 @@ namespace SlimDX2.Tools.HeaderToXIDL
             cppHeaderParser.AddInclude("d3dx11tex.h");
             cppHeaderParser.AddInclude("d3dx11async.h");
             cppHeaderParser.AddInclude("d3dcompiler.h");
+
+            cppHeaderParser.AddInclude("dcommon.h");
+            cppHeaderParser.AddInclude("dwrite.h");
+            cppHeaderParser.AddInclude("d2d1.h");
 
             cppHeaderParser.Run();
 

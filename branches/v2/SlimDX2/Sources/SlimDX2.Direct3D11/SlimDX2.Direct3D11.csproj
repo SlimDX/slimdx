@@ -87,6 +87,7 @@
     <Compile Include="Extension\Viewport.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="Interfaces.cs" />
+    <Compile Include="LocalInterop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Structures.cs" />
     <Compile Include="Extension\VertexBufferBinding.cs" />

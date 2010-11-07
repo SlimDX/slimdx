@@ -27,9 +27,12 @@ namespace SlimDX2.Tools.XIDL
     public class CppInterface : CppElement
     {
         [DataMember(Order = 0)]
+        public string Guid { get; set; }
+
+        [DataMember(Order = 1)]
         public string ParentName { get; set; }
 
-        [DataMember(Order = 1, Name = "Methods")]
+        [DataMember(Order = 2, Name = "Methods")]
         private List<CppMethod> _Methods
         {
             get { return Methods.ToList(); }

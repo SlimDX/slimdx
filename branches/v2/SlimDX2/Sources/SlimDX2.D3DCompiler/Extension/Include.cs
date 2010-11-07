@@ -1,4 +1,23 @@
-﻿using System;
+﻿// Copyright (c) 2007-2010 SlimDX Group
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -32,12 +51,9 @@ namespace SlimDX2.D3DCompiler
     /// <summary>
     /// Internal Include Callback
     /// </summary>
-    internal class IncludeCallback : SlimDX2.CppObject
+    internal class IncludeCallback : SlimDX2.CppObjectCallback<Include>
     {
-        private Include _callback;
         private Dictionary<IntPtr, Frame> _frames;
-        private OpenCallBack _openCallBack;
-        private CloseCallBack _closeCallBack;
 
         struct Frame
         {
@@ -56,37 +72,12 @@ namespace SlimDX2.D3DCompiler
             }
         }
 
-        public IncludeCallback(Include callback)
+        public IncludeCallback(Include callback) : base(callback, 2)
         {
-            _callback = callback;
-            // Allocate object layout in memory 
-            // - 1 pointer to VTBL table
-            // - following that the VTBL itself - with 2 function pointers for Open and Close methods
-            NativePointer = Marshal.AllocHGlobal(IntPtr.Size * 3);
-
-            // Write pointer to vtbl
-            IntPtr vtblPtr = IntPtr.Add(NativePointer, IntPtr.Size);
-            Marshal.WriteIntPtr(NativePointer, vtblPtr);
-            _openCallBack = new OpenCallBack(Open);
-            Marshal.WriteIntPtr(vtblPtr, Marshal.GetFunctionPointerForDelegate(_openCallBack));
-            _closeCallBack = new CloseCallBack(Close);
-            Marshal.WriteIntPtr(IntPtr.Add(vtblPtr, IntPtr.Size), Marshal.GetFunctionPointerForDelegate(_closeCallBack));
-
+            AddMethod(new OpenDelegate(OpenImpl));
+            AddMethod(new CloseDelegate(CloseImpl));
             _frames = new Dictionary<IntPtr, Frame>();
         }
-
-        ~IncludeCallback()
-        {
-            _openCallBack = null;
-            _closeCallBack = null;
-            Marshal.FreeHGlobal(NativePointer);            
-        }
-
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate SlimDX2.Result OpenCallBack(IntPtr thisPtr, SlimDX2.D3DCompiler.IncludeType includeType, IntPtr fileNameRef, IntPtr pParentData, ref IntPtr dataRef, ref int bytesRef);
-
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate SlimDX2.Result CloseCallBack(IntPtr thisPtr, IntPtr pData);
 
         /// <summary>	
         /// A user-implemented method for opening and reading the contents of a shader #include file.	
@@ -98,7 +89,9 @@ namespace SlimDX2.D3DCompiler
         /// <param name="bytesRef">Pointer to the number of bytes that Open returns in ppData.</param>
         /// <returns>The user-implemented method should return S_OK. If Open fails when reading the #include file, the application programming interface (API) that caused Open to be called fails. This failure can occur in one of the following situations:The high-level shader language (HLSL) shader fails one of the D3D10CompileShader*** functions.The effect fails one of the D3D10CreateEffect*** functions.</returns>
         /// <unmanaged>HRESULT Open([None] D3D_INCLUDE_TYPE IncludeType,[None] const char* pFileName,[None] LPCVOID pParentData,[None] LPCVOID* ppData,[None] UINT* pBytes)</unmanaged>
-        public SlimDX2.Result Open(IntPtr thisPtr, SlimDX2.D3DCompiler.IncludeType includeType, IntPtr fileNameRef, IntPtr pParentData, ref IntPtr dataRef, ref int bytesRef)
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        private delegate SlimDX2.Result OpenDelegate(IntPtr thisPtr, SlimDX2.D3DCompiler.IncludeType includeType, IntPtr fileNameRef, IntPtr pParentData, ref IntPtr dataRef, ref int bytesRef);
+        private SlimDX2.Result OpenImpl(IntPtr thisPtr, SlimDX2.D3DCompiler.IncludeType includeType, IntPtr fileNameRef, IntPtr pParentData, ref IntPtr dataRef, ref int bytesRef)
         {
             unsafe
             {
@@ -110,7 +103,7 @@ namespace SlimDX2.D3DCompiler
                     if (_frames.ContainsKey(pParentData))
                         parentStream = _frames[pParentData].Stream;
 
-                    _callback.Open(includeType, new String((sbyte*)fileNameRef), parentStream, out stream);
+                    Callback.Open(includeType, new String((sbyte*)fileNameRef), parentStream, out stream);
                     if (stream == null)
                         return Result.Fail;
 
@@ -157,7 +150,9 @@ namespace SlimDX2.D3DCompiler
         /// <param name="pData">Pointer to the buffer that contains the include directives. This is the pointer that was returned by the corresponding <see cref="SlimDX2.D3DCompiler.Include.Open"/> call.</param>
         /// <returns>The user-implemented Close method should return S_OK. If Close fails when it closes the #include file, the application programming interface (API) that caused Close to be called fails. This failure can occur in one of the following situations:The high-level shader language (HLSL) shader fails one of the D3D10CompileShader*** functions.The effect fails one of the D3D10CreateEffect*** functions.</returns>
         /// <unmanaged>HRESULT Close([None] LPCVOID pData)</unmanaged>
-        public SlimDX2.Result Close(IntPtr thisPtr, IntPtr pData)
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        private delegate SlimDX2.Result CloseDelegate(IntPtr thisPtr, IntPtr pData);
+        private SlimDX2.Result CloseImpl(IntPtr thisPtr, IntPtr pData)
         {
             try
             {
@@ -165,7 +160,7 @@ namespace SlimDX2.D3DCompiler
                 if (_frames.TryGetValue(pData, out frame))
                 {
                     _frames.Remove(pData);
-                    _callback.Close(frame.Stream);
+                    Callback.Close(frame.Stream);
                     frame.Close();
                 }
                 return Result.Ok;

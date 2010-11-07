@@ -28,6 +28,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
         public CSharpInterface(CppInterface cppInterface)
         {
             CppElement = cppInterface;
+            if (cppInterface != null)
+                Guid = cppInterface.Guid;
+            DefaultImplem = this;
         }
 
         public IEnumerable<CSharpMethod> Methods
@@ -40,7 +43,24 @@ namespace SlimDX2.Tools.XIDLToCSharp
             get { return Items.OfType<CSharpProperty>(); }
         }
 
+        protected override void UpdateFromTag(CSharpTag tag)
+        {
+            base.UpdateFromTag(tag);
+            IsCallback = tag.IsCallbackInterface.HasValue?tag.IsCallbackInterface.Value:false;
+            IsDualCallback = tag.IsDualCallbackInterface.HasValue ? tag.IsDualCallbackInterface.Value : false;
+        }
+
+        /// <summary>
+        /// Class Parent inheritance
+        /// </summary>
         public CSharpType Parent { get; set; }
+
+        /// <summary>
+        /// Interface Parent inheritance
+        /// </summary>
+        public CSharpType IParent { get; set; }
+
+        public CSharpInterface DefaultImplem { get; set; }
 
         public string Guid { get; set; }
 
@@ -53,6 +73,11 @@ namespace SlimDX2.Tools.XIDLToCSharp
         ///   True if this interface is used as a callback to a C# object
         /// </summary>
         public bool IsCallback { get; set; }
+
+        /// <summary>
+        ///   True if this interface is used as a dual-callback to a C# object
+        /// </summary>
+        public bool IsDualCallback { get; set; }
 
         /// <summary>
         ///   List of declared inner structs

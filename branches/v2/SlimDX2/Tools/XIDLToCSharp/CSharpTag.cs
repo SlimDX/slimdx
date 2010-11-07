@@ -57,6 +57,16 @@ namespace SlimDX2.Tools.XIDLToCSharp
         public bool? IsEnumFlags;
 
         /// <summary>
+        /// Used for interface to mark them as callback interface
+        /// </summary>
+        public bool? IsCallbackInterface;
+
+        /// <summary>
+        /// Used for interface to mark them as dual-callback interface
+        /// </summary>
+        public bool? IsDualCallbackInterface;
+
+        /// <summary>
         /// DLL name attached to a function
         /// </summary>
         public string FunctionDllName;
@@ -131,6 +141,16 @@ namespace SlimDX2.Tools.XIDLToCSharp
         }
 
         /// <summary>
+        /// Tag an interface as callback or dualcallback
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="regex"></param>
+        public static void TagCallback(this CppElement element, string regex, bool isDual = false)
+        {
+            element.Modify<CppInterface>(regex, Tag(new CSharpTag() { IsCallbackInterface = true, IsDualCallbackInterface = isDual}));
+        }
+
+        /// <summary>
         /// Tag an Enum and force it to be interpreted as a flag.
         /// </summary>
         /// <param name="element"></param>
@@ -169,6 +189,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
                            if (fromTag.MappingName != null) tag.MappingName = RegexRename(pathREgex, element.FullName, fromTag.MappingName);
                            if (fromTag.MappingType != null) tag.MappingType = RegexRename(pathREgex, element.FullName, fromTag.MappingType);
                            if (fromTag.IsEnumFlags != null) tag.IsEnumFlags = fromTag.IsEnumFlags;
+                           if (fromTag.IsCallbackInterface != null) tag.IsCallbackInterface = fromTag.IsCallbackInterface;
+                           if (fromTag.IsDualCallbackInterface != null) tag.IsDualCallbackInterface = fromTag.IsDualCallbackInterface;
                            if (fromTag.FunctionDllName != null) tag.FunctionDllName = RegexRename(pathREgex, element.FullName, fromTag.FunctionDllName);
                            if (fromTag.FunctionGroup != null) tag.FunctionGroup = fromTag.FunctionGroup;
                            return false;
