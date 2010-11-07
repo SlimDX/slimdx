@@ -46,6 +46,13 @@ namespace SlimDX2.Tools.XIDL
             get { return InnerElements.OfType<CppInclude>(); }
         }
 
+        public CppInclude FindInclude(string includeName)
+        {
+            return (from cppElement in InnerElements
+                    where cppElement is CppInclude && cppElement.Name == includeName
+                    select cppElement as CppInclude).FirstOrDefault();
+        }
+
         public IEnumerable<CppGuid> Guids
         {
             get { return Includes.SelectMany(cppInclude => cppInclude.Guids); }

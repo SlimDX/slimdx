@@ -56,8 +56,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
         private readonly Dictionary<string, CSharpNamespace> _mapIncludeToNamespace =
             new Dictionary<string, CSharpNamespace>();
 
-        private readonly List<Regex> _mapMakeCallbackInterface = new List<Regex>();
-
         private readonly Dictionary<Regex, InnerInterfaceMethod> _mapMoveMethodToInnerInterface =
             new Dictionary<Regex, InnerInterfaceMethod>();
 
@@ -73,6 +71,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
         private readonly Dictionary<Regex, string> _renameTypePart = new Dictionary<Regex, string>();
         private readonly Dictionary<Regex, RenameValue> _typeToRename = new Dictionary<Regex, RenameValue>();
         private readonly MacroParser _macroParser;
+        private readonly CSharpType DefaultInterfaceCppObject;
 
 //        private readonly Dictionary<string, CSharpType> _typeToRename = new Dictionary<Regex, RenameValue>();
 
@@ -83,6 +82,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
             _macroParser = new MacroParser(cppIncludeGroup);
             Assemblies = new List<CSharpAssembly>();
             CallContext.SetData("Generator", this);
+
+            // Create IUnknown object
+            DefaultInterfaceCppObject = new CSharpType();
+            DefaultInterfaceCppObject.Name = Global.Name + ".CppObject";
         }
 
         public CppIncludeGroup CppIncludeGroup { get; private set; }
@@ -169,30 +172,32 @@ namespace SlimDX2.Tools.XIDLToCSharp
             else
             {
                 sizeOf = Marshal.SizeOf(type);
-                if (type == typeof (bool))
+                if (type == typeof(bool))
                     typeName = "bool";
-                else if (type == typeof (byte))
+                else if (type == typeof(byte))
                     typeName = "byte";
-                else if (type == typeof (char))
+                else if (type == typeof(char))
                     typeName = "char";
-                else if (type == typeof (int))
+                else if (type == typeof(int))
                     typeName = "int";
-                else if (type == typeof (uint))
+                else if (type == typeof(uint))
                     typeName = "uint";
-                else if (type == typeof (long))
+                else if (type == typeof(long))
                     typeName = "long";
-                else if (type == typeof (ulong))
+                else if (type == typeof(ulong))
                     typeName = "ulong";
-                else if (type == typeof (float))
+                else if (type == typeof(float))
                     typeName = "float";
-                else if (type == typeof (IntPtr))
+                else if (type == typeof(IntPtr))
                     typeName = "IntPtr";
-                else if (type == typeof (Guid))
+                else if (type == typeof(Guid))
                     typeName = "Guid";
-                else if (type == typeof (void))
+                else if (type == typeof(void))
                     typeName = "void";
-                else if (type == typeof (void*))
+                else if (type == typeof(void*))
                     typeName = "void*";
+                else if (type == typeof(short))
+                    typeName = "short";
                 else
                     throw new ArgumentException(string.Format("Unsupported type {0}", type));
             }
@@ -227,7 +232,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             CallContext.LogicalSetData("Generator", this);
 
-            foreach (string generatedType in new[] {"Enumerations", "Structures", "Interfaces", "Functions"})
+            foreach (string generatedType in new[] {"Enumerations", "Structures", "Interfaces", "Functions", "LocalInterop"})
             {
                 Console.WriteLine();
                 Console.WriteLine("Generate {0}", generatedType);
@@ -238,6 +243,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
                 foreach (CSharpAssembly assembly in Assemblies)
                 {
+                    CallContext.LogicalSetData("Assembly", assembly);
+
                     string assemblyDirectory = relativePath + assembly.Name;
 
                     if (!Directory.Exists(assemblyDirectory))
@@ -245,27 +252,15 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
                     Console.WriteLine("Process Assembly {0} => {1}", assembly.Name, assemblyDirectory);
 
-                    foreach (CSharpNamespace cSharpNamespace in assembly.Namespaces)
+                    if (generatedType == "LocalInterop")
                     {
-                        string subDirectory = cSharpNamespace.Name.Substring(assembly.Name.Length);
-                        if (subDirectory.StartsWith("."))
-                            subDirectory = subDirectory.Substring(1);
-
-                        string nameSpaceDirectory = assemblyDirectory + "\\" + subDirectory;
-                        if (!Directory.Exists(nameSpaceDirectory))
-                            Directory.CreateDirectory(nameSpaceDirectory);
-
-                        Console.WriteLine("\tProcess Namespace {0} => {1}", cSharpNamespace.Name, nameSpaceDirectory);
-
-                        CallContext.LogicalSetData("Namespace", cSharpNamespace);
-                        ////host.Session = new TextTemplatingSession();
-                        //host.Session = host.CreateSession();
+                        Console.WriteLine("\tProcess Interop {0} => {1}", assembly.Name, assemblyDirectory);
 
                         //Transform the text template.
                         string output = engine.ProcessTemplate(input, host);
                         string outputFileName = Path.GetFileNameWithoutExtension(templateFileName);
 
-                        outputFileName = Path.Combine(nameSpaceDirectory, outputFileName);
+                        outputFileName = Path.Combine(assemblyDirectory, outputFileName);
                         outputFileName = outputFileName + host.FileExtension;
                         File.WriteAllText(outputFileName, output, host.FileEncoding);
 
@@ -274,13 +269,48 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             Console.WriteLine(error.ToString());
                         }
                     }
+                    else
+                    {
+
+                        foreach (CSharpNamespace cSharpNamespace in assembly.Namespaces)
+                        {
+                            string subDirectory = cSharpNamespace.OutputDirectory ?? ".";
+
+                            string nameSpaceDirectory = assemblyDirectory + "\\" + subDirectory;
+                            if (!Directory.Exists(nameSpaceDirectory))
+                                Directory.CreateDirectory(nameSpaceDirectory);
+
+                            Console.WriteLine("\tProcess Namespace {0} => {1}", cSharpNamespace.Name, nameSpaceDirectory);
+
+                            CallContext.LogicalSetData("Namespace", cSharpNamespace);
+                            ////host.Session = new TextTemplatingSession();
+                            //host.Session = host.CreateSession();
+
+                            //Transform the text template.
+                            string output = engine.ProcessTemplate(input, host);
+                            string outputFileName = Path.GetFileNameWithoutExtension(templateFileName);
+
+                            outputFileName = Path.Combine(nameSpaceDirectory, outputFileName);
+                            outputFileName = outputFileName + host.FileExtension;
+                            File.WriteAllText(outputFileName, output, host.FileEncoding);
+
+                            foreach (CompilerError error in host.Errors)
+                            {
+                                Console.WriteLine(error.ToString());
+                            }
+                        }
+                    }
                 }
             }
 
-            host.TemplateFileValue = "Interop.tt";
-            // Write Dynamic Interop
-            File.WriteAllText(relativePath + @"\SlimDX2\CppObjectInterop.cs",
-                              engine.ProcessTemplate(Utilities.GetResource(host.TemplateFileValue), host));
+            //host.TemplateFileValue = "Interop.tt";
+            //// Write Dynamic Interop
+            //File.WriteAllText(relativePath + @"\SlimDX2\CppObjectInterop.cs",
+            //                  engine.ProcessTemplate(Utilities.GetResource(host.TemplateFileValue), host));
+            //foreach (CompilerError error in host.Errors)
+            //{
+            //    Console.WriteLine(error.ToString());
+            //}
         }
 
         private void MapCppEnumToCSharpEnum(CppInclude cppInclude, CppEnum cppEnum)
@@ -466,6 +496,11 @@ namespace SlimDX2.Tools.XIDLToCSharp
                                 hasArray = false;
                             }
                             break;
+                        case "UINT16":
+                        case "INT16":
+                            fieldSize = 2;
+                            publicType = ImportType(typeof (short));
+                            break;
                         case "FLOAT":
                         case "float":
                             fieldSize = 4;
@@ -503,7 +538,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             break;
                         case "SIZE_T":
                             fieldSize = 4;
-                            publicType = ImportTypeFromName(Global.Name + ".Size", 4, false, true);
+                            publicType = ImportTypeFromName(Global.Name + ".Size", 4, false, false);
+                            publicType.Type = typeof (IntPtr);
                             break;
                         case "LPCSTR":
                         case "LPSTR":
@@ -578,6 +614,13 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     hasMarshalType = true;
                 }
                 var fieldStruct = new CSharpStruct.Field(cSharpStruct, cppField, publicType, marshalType, fieldName);
+
+                // TODO: temporary handling bitfield
+                if (cppStruct.IsBitfield)
+                {
+                    cppField.Offset = 0;
+                }
+
 
                 // If last field has same offset, then it's a union
                 // CurrentOffset is not moved
@@ -655,6 +698,11 @@ namespace SlimDX2.Tools.XIDLToCSharp
             {
                 cSharpInterface.Parent = parentType;
             }
+            else
+            {
+                if (!cSharpInterface.IsCallback)
+                    cSharpInterface.Parent = DefaultInterfaceCppObject;                
+            }
 
             _mapCppNameToCSharpType.Add(cppInterface.Name, cSharpInterface);
             return cSharpInterface;
@@ -702,6 +750,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 case "DWORD":
                     publicType = ImportType(typeof (int));
                     break;
+                case "UINT16":
+                case "INT16":
+                    publicType = ImportType(typeof(short));
+                    break;
                 case "FLOAT":
                 case "float":
                     publicType = ImportType(typeof (float));
@@ -720,8 +772,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     publicType = ImportType(typeof (long));
                     break;
                 case "SIZE_T":
-                    publicType = ImportTypeFromName(Global.Name + ".Size", 4, false, true);
-                    marshalType = ImportType(typeof (void*));
+                    publicType = ImportTypeFromName(Global.Name + ".Size", 4, false, false);
+                    publicType.Type = typeof (IntPtr);
                     break;
                 case "LPCSTR":
                 case "LPSTR":
@@ -758,7 +810,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     hasPointer = true;
                     break;
                 case "HRESULT":
-                    publicType = ImportTypeFromName(Global.Name + ".Result", 4, false, true);
+                    publicType = ImportTypeFromName(Global.Name + ".Result", 4, false, false);
                     marshalType = ImportType(typeof (int));
                     break;
                 default:
@@ -782,30 +834,80 @@ namespace SlimDX2.Tools.XIDLToCSharp
             }
 
             if (hasPointer)
-                marshalType = ImportType(typeof (void*));
-            if (marshalType == null && publicType.Type == typeof (uint))
-                marshalType = ImportType(typeof (int));
+                marshalType = ImportType(typeof (IntPtr));
+
+            if (marshalType == null && publicType is CSharpStruct && !hasPointer)
+            {
+                marshalType = publicType;
+            }
 
             return new CSharpMapType(null, method.ReturnType, publicType, marshalType, "");
         }
 
 
-        private CSharpInteropCalliSignature RegisterNativeInterop(Type returnType, Type[] paramType)
+        private void RegisterNativeInterop(CSharpMethod method)
         {
-            var cSharpInteropCalliSignature = new CSharpInteropCalliSignature {ReturnType = returnType};
-            cSharpInteropCalliSignature.ParameterTypes.AddRange(paramType);
+            var cSharpInteropCalliSignature = new CSharpInteropCalliSignature();
 
-            if (!_registeredInteropCall.Methods.Contains(cSharpInteropCalliSignature))
+            // Handle Return Type parameter
+            // MarshalType.Type == null, then check that it is a structure
+            if (method.ReturnType.PublicType is CSharpStruct) {
+                // Return type and 1st parameter are implicitly a pointer to the structure to fill 
+                cSharpInteropCalliSignature.ReturnType = typeof(void*);
+                cSharpInteropCalliSignature.ParameterTypes.Add(typeof(void*));               
+            }
+            else if (method.ReturnType.MarshalType.Type != null)
             {
-                _registeredInteropCall.Methods.Add(cSharpInteropCalliSignature);
-                cSharpInteropCalliSignature.Index = _registeredInteropCall.Methods.Count;
+                Type type = method.ReturnType.MarshalType.Type;
+                if (type == typeof(IntPtr))
+                    type = typeof(void*);
+                cSharpInteropCalliSignature.ReturnType = type;
+            }
+            else
+            {
+                throw new ArgumentException(string.Format("Invalid return type {0} for method {1}", method.ReturnType.PublicType.FullName, method.CppElement));                
             }
 
-            return cSharpInteropCalliSignature;
+            // Handle Parameters
+            foreach (var param in method.Parameters)
+            {
+                if (param.MarshalType.Type == null)
+                {
+                    if (param.PublicType is CSharpStruct)
+                    {
+                        // If parameter is a struct, then a LocalInterop is needed
+                        cSharpInteropCalliSignature.ParameterTypes.Add(param.PublicType.FullName);
+                        cSharpInteropCalliSignature.IsLocal = true;
+                    }
+                    else
+                    {
+                        throw new ArgumentException(string.Format("Invalid parameter {0} for method {1}", param.PublicType.FullName, method.CppElement));
+                    }
+                }
+                else
+                {
+                    Type type = param.MarshalType.Type;
+                    if (type == typeof(IntPtr))
+                        type = typeof (void*);
+                    cSharpInteropCalliSignature.ParameterTypes.Add(type);
+                }
+            }
+
+            if (cSharpInteropCalliSignature.IsLocal)
+            {
+                var assembly = method.GetParent<CSharpAssembly>();
+                cSharpInteropCalliSignature = assembly.Interop.Add(cSharpInteropCalliSignature);
+            }
+            else
+            {
+                cSharpInteropCalliSignature = _registeredInteropCall.Add(cSharpInteropCalliSignature);
+            }
+
+            method.Interop = cSharpInteropCalliSignature;
         }
 
 
-        private List<Type> BuildCSharpMethodFromCppMethod(string cppPathContext, CSharpMethod cSharpMethod)
+        private void BuildCSharpMethodFromCppMethod(string cppPathContext, CSharpMethod cSharpMethod)
         {
             CppMethod cppMethod = (CppMethod) cSharpMethod.CppElement;
 
@@ -823,7 +925,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             bool hasMarshalType = false;
 
-            var marshalMethodTypes = new List<Type>();
+            var marshalMethodTypes = new List<TypeWrapper>();
 
             foreach (CppParameter cppParameter in cppMethod.Parameters)
             {
@@ -877,6 +979,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             hasArray = false;
                         }
                         break;
+                    case "UINT16":
+                    case "INT16":
+                        publicType = ImportType(typeof(short));
+                        break;
                     case "FLOAT":
                     case "float":
                         publicType = ImportType(typeof (float));
@@ -908,8 +1014,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
                         publicType = ImportType(typeof (long));
                         break;
                     case "SIZE_T":
-                        publicType = ImportTypeFromName(Global.Name + ".Size", 4, false, true);
-                        marshalType = ImportType(typeof (void*));
+                        publicType = ImportTypeFromName(Global.Name + ".Size", 4, false, false);
+                        publicType.Type = typeof (IntPtr);
                         break;
                     case "LPCSTR":
                     case "LPSTR":
@@ -949,6 +1055,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
                         {
                             publicType = ImportType(typeof (string));
                             marshalType = ImportType(typeof (char));
+                            // Then this is more likely a plain string
+                            hasArray = false;
                         }
                         break;
                     case "LUID":
@@ -988,12 +1096,12 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
                 if (hasPointer)
                 {
-                    marshalType = ImportType(typeof (void*));
+                    marshalType = ImportType(typeof (IntPtr));
 
                     if (publicType is CSharpInterface)
                     {
                         if (cppParameter.Attribute == CppAttribute.None ||
-                            (cppParameter.Attribute & CppAttribute.In) != 0)
+                            (cppParameter.Attribute & CppAttribute.In) != 0 || (cppParameter.Attribute & CppAttribute.InOut) != 0)
                         {
                             parameterAttribute = CSharpMethod.ParameterAttribute.In;
 
@@ -1008,10 +1116,18 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             if (publicInterface.IsCallback)
                             {
                                 publicType = ImportType(typeof(IntPtr));
+                                // By default, set the Visibility to internal for methods using callbacks
+                                // as we need to provide user method. Don't do this on functions as they
+                                // are already hidden by the container
+                                if (!(cSharpMethod is CSharpFunction))
+                                {
+                                    cSharpMethod.Visibility = Visibility.Internal;
+                                    cSharpMethod.Name = cSharpMethod.Name + "_";
+                                }
                             }                            
                         }
-                        else if ((cppParameter.Attribute & CppAttribute.InOut) != 0)
-                            parameterAttribute = CSharpMethod.ParameterAttribute.Ref;
+                        //else if ((cppParameter.Attribute & CppAttribute.InOut) != 0)
+                        //    parameterAttribute = CSharpMethod.ParameterAttribute.Ref;
                         else if ((cppParameter.Attribute & CppAttribute.Out) != 0)
                             parameterAttribute = CSharpMethod.ParameterAttribute.Out;
                     }
@@ -1044,7 +1160,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             hasArray = false;
                         }
                         else if (publicType is CSharpStruct &&
-                                 (parameterAttribute == CSharpMethod.ParameterAttribute.Out || hasArray))
+                                 (parameterAttribute == CSharpMethod.ParameterAttribute.Out || hasArray || parameterAttribute == CSharpMethod.ParameterAttribute.RefIn))
                         {
                             // Set IsOut on structure to generate proper marshalling
                             (publicType as CSharpStruct).IsOut = true;
@@ -1065,23 +1181,28 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 paramMethod.Attribute = parameterAttribute;
                 paramMethod.IsOptionnal = isOptional;
                 paramMethod.IsWideChar = isWideChar;
+                paramMethod.HasPointer = hasPointer;
 
-                if (marshalType.Type == typeof (uint))
-                {
-                    marshalMethodTypes.Add(typeof (int));
-                }
-                else if (marshalType.Type == typeof (IntPtr))
-                {
-                    marshalMethodTypes.Add(typeof (void*));
-                }
-                else
-                {
-                    marshalMethodTypes.Add(marshalType.Type);
-                }
+                //if (marshalType.Type == typeof (IntPtr))
+                //{
+                //    marshalMethodTypes.Add(typeof (void*));
+                //}
+                //else
+                //{
+                //    if (publicType is CSharpStruct && !hasPointer && marshalType.Type == null)
+                //    {
+                //        CSharpStruct cSharpStruct = publicType as CSharpStruct;
+                //        foreach (var field in cSharpStruct.Fields)
+                //            marshalMethodTypes.Add(field.MarshalType.Type);
+                //    }
+                //    else
+                //    {
+                //        marshalMethodTypes.Add(marshalType.Type);
+                //    }
+                //}
 
                 cSharpMethod.Add(paramMethod);
             }
-            return marshalMethodTypes;
         }
 
         private bool FindType(string cppTypeName, out CSharpType publicType, ref bool hasPointer)
@@ -1105,48 +1226,31 @@ namespace SlimDX2.Tools.XIDLToCSharp
         {
             var cppInterface = cSharpInterface.CppElement as CppInterface;
 
-            // Check if the interface is a callback
-            foreach (Regex regexInterfaceName in _mapMakeCallbackInterface)
-            {
-                if (regexInterfaceName.Match(cppInterface.Name).Success)
-                {
-                    cSharpInterface.IsCallback = true;
-                    break;
-                }
-            }
-
-            int virtualMethodOffset = 0;
-
+            // Setup GUID from CppGuid if any
             string guidName = "IID_" + cppInterface.Name;
-
-
             CppGuid cppGuid = (from guid in CppIncludeGroup.Find<CppGuid>(".*")
                                where guid.Name == guidName
                                select guid).FirstOrDefault();
-
-            if (cppGuid != null)
-            {
+            if (cppGuid != null && cSharpInterface.Guid == null)
                 cSharpInterface.Guid = cppGuid.Guid.ToString();
-            }
 
+            // Handle Methods
             List<CSharpMethod> generatedMethods = new List<CSharpMethod>();
-
             foreach (CppMethod cppMethod in cppInterface.Methods)
             {
                 var cSharpMethod = new CSharpMethod(cppMethod);
                 generatedMethods.Add(cSharpMethod);
                 cSharpInterface.Add(cSharpMethod);
 
-                var marshalMethodTypes = BuildCSharpMethodFromCppMethod(cppInterface.Name, cSharpMethod);
+                BuildCSharpMethodFromCppMethod(cppInterface.Name, cSharpMethod);
 
-                cSharpMethod.Interop = RegisterNativeInterop(cSharpMethod.ReturnType.MarshalType.Type,
-                                                             marshalMethodTypes.ToArray());
+                RegisterNativeInterop(cSharpMethod);
 
                 _mapCppNameToCSharpType.Add(cppInterface.Name + "::" + cppMethod.Name, cSharpMethod);
             }
 
-            var mapInnerInterface = new Dictionary<string, CSharpInterface>();
             // Dispatch method to inner interface if any
+            var mapInnerInterface = new Dictionary<string, CSharpInterface>();
             foreach (var keyValuePair in _mapMoveMethodToInnerInterface)
             {
                 foreach (CppMethod cppMethod in cppInterface.Methods)
@@ -1192,7 +1296,13 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             innerInterface.PropertyAccesName = keyValuePair.Value.PropertyAccessName;
 
                             if (parentInterface != null)
+                            {
                                 innerInterface.Parent = parentInterface;
+                            }
+                            else
+                            {
+                                innerInterface.Parent = DefaultInterfaceCppObject;
+                            }
 
                             // Add inner interface to root interface
                             cSharpInterface.Add(innerInterface);
@@ -1214,6 +1324,56 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             // Refactor Properties
             CreateProperties(generatedMethods);
+
+
+            // If CSharpInterface is DualCallback, then need to generate a default implem
+            if (cSharpInterface.IsDualCallback)
+            {
+                CSharpInterface defaultCallback = new CSharpInterface(cSharpInterface.CppElement as CppInterface);
+                defaultCallback.Name = "Default" + cSharpInterface.Name;
+                defaultCallback.Visibility = Visibility.Internal;
+
+                defaultCallback.Parent = cSharpInterface.Parent;
+
+                // If Parent is a DualInterface, then inherit from Default Callback
+                if (cSharpInterface.Parent is CSharpInterface)
+                {
+                    var parentInterface = cSharpInterface.Parent as CSharpInterface;
+                    if (parentInterface.IsDualCallback)
+                        defaultCallback.Parent = parentInterface.DefaultImplem;
+                }
+
+                defaultCallback.IParent = cSharpInterface;
+                cSharpInterface.DefaultImplem = defaultCallback;
+
+                foreach (var innerElement in cSharpInterface.Items)
+                {
+                    if (innerElement is CSharpMethod)
+                    {
+                        var method = (CSharpMethod)innerElement;
+                        CSharpMethod newMethod = (CSharpMethod)method.Clone();
+                        newMethod.Visibility = Visibility.Internal;
+                        newMethod.Name = newMethod.Name + "_";
+                        defaultCallback.Add(newMethod);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Unhandled innerElement {0} for DualCallbackInterface {1}", innerElement, cSharpInterface.Name);
+                    }
+                }
+                defaultCallback.IsCallback = false;
+                defaultCallback.IsDualCallback = true;
+                cSharpInterface.ParentContainer.Add(defaultCallback);
+            }
+
+            // If interface is a callback and parent is ComObject, then remove it
+            if (cSharpInterface.IsCallback && cSharpInterface.Parent is CSharpInterface)
+            {
+                if ((cSharpInterface.Parent as CSharpInterface).FullName == Global.Name + ".ComObject")
+                {
+                    cSharpInterface.Parent = null;
+                }
+            }
         }
 
         private void CreateProperties(List<CSharpMethod> methods)
@@ -1374,11 +1534,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
             _mapMoveStructToInner.Add(new Regex(fromStruct), toStruct);
         }
 
-
-        public void MakeCallbackInterface(string regexInterfaceName)
-        {
-            _mapMakeCallbackInterface.Add(new Regex(regexInterfaceName));
-        }
 
         private void MapAll()
         {
@@ -1560,22 +1715,24 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
         private class ConstantDefinition
         {
-            public ConstantDefinition(string cSharpTypeName, string type)
+            public ConstantDefinition(string cSharpTypeName, string type, string fieldName)
             {
                 CSharpTypeName = cSharpTypeName;
                 Type = type;
+                FieldName = fieldName;
             }
 
             public string CSharpTypeName;
             public string Type;
+            public string FieldName;
         }
 
 
         private Dictionary<string, ConstantDefinition> _mapMacroToConstantInCSharpType = new Dictionary<string, ConstantDefinition>();
 
-        public void AddConstantFromMacroToCSharpType(string regexpMacro, string fullNameCSharpType, string type)
+        public void AddConstantFromMacroToCSharpType(string regexpMacro, string fullNameCSharpType, string type, string fieldName = null)
         {
-            _mapMacroToConstantInCSharpType.Add(regexpMacro, new ConstantDefinition(fullNameCSharpType, type));
+            _mapMacroToConstantInCSharpType.Add(regexpMacro, new ConstantDefinition(fullNameCSharpType, type, fieldName));
         }
 
         private void AddConstantFromMacros(CSharpContainer cSharpContainer)
@@ -1588,7 +1745,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     foreach (CppMacroDefinition cppMacroDefinition in macroDefinitions)
                     {
                         CSharpConstant constant = new CSharpConstant(cppMacroDefinition);
-                        constant.Name = ConvertCppNameToCSharpName(cppMacroDefinition.Name, TypeContext.All);
+                        constant.Name = keyValuePair.Value.FieldName ?? ConvertCppNameToCSharpName(cppMacroDefinition.Name, TypeContext.All);
                         constant.Value = _macroParser.Parse(cppMacroDefinition.Value);
                         constant.TypeName = keyValuePair.Value.Type;
                         cSharpContainer.Add(constant);
@@ -1597,14 +1754,18 @@ namespace SlimDX2.Tools.XIDLToCSharp
             }
         }
 
-        public void MapIncludeToNamespace(string includeName, string nameSpace, string assemblyName = null)
+        public void MapIncludeToNamespace(string includeName, string nameSpace, string assemblyName = null, string outputDirectory = null)
         {
-            _mapIncludeToNamespace.Add(includeName, GetNamespace(assemblyName, nameSpace));
+            var cSharpNamespace = GetNamespace(assemblyName, nameSpace);
+            cSharpNamespace.OutputDirectory = outputDirectory;
+            _mapIncludeToNamespace.Add(includeName, cSharpNamespace );
         }
 
-        public void MapTypeToNamespace(string typeNameRegex, string nameSpace, string assemblyName = null)
+        public void MapTypeToNamespace(string typeNameRegex, string nameSpace, string assemblyName = null, string outputDirectory = null)
         {
-            _mapTypeToNamespace.Add(new Regex(typeNameRegex), GetNamespace(assemblyName, nameSpace));
+            var cSharpNamespace = GetNamespace(assemblyName, nameSpace);
+            cSharpNamespace.OutputDirectory = outputDirectory;
+            _mapTypeToNamespace.Add(new Regex(typeNameRegex), cSharpNamespace);
         }
 
 

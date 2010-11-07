@@ -25,7 +25,7 @@ using SlimDX2.Tools.XIDL;
 
 namespace SlimDX2.Tools.XIDLToCSharp
 {
-    public class CSharpMethod : CSharpType
+    public class CSharpMethod : CSharpType, ICloneable
     {
         public CSharpMethod(CppMethod cppMethod)
         {
@@ -45,6 +45,14 @@ namespace SlimDX2.Tools.XIDLToCSharp
         public bool IsHResult
         {
             get { return HasReturnType && ReturnType.PublicType.Name == Global.Name + ".Result"; }
+        }
+
+        public bool IsReturnStruct
+        {
+            get
+            {
+                return HasReturnType && ReturnType.PublicType is CSharpStruct;
+            }
         }
 
         protected override void UpdateFromTag(CSharpTag tag)
@@ -112,7 +120,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             RefIn
         }
 
-        public class Parameter : CSharpMapType
+        public class Parameter : CSharpMapType, ICloneable
         {
             public Parameter(CSharpMethod method, CppParameter cppParameter, CSharpType publicType,
                              CSharpType marshalType, string name)
@@ -123,6 +131,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             }
 
             public ParameterAttribute Attribute { get; set; }
+
+            public bool HasPointer { get; set; }
 
             public bool IsOptionnal { get; set; }
 
@@ -178,7 +188,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             public bool IsValueType
             {
-                get { return PublicType is CSharpStruct || (PublicType.Type != null && PublicType.Type.IsValueType); }
+                get { return PublicType is CSharpStruct || (PublicType.Type != null && (PublicType.Type.IsValueType || PublicType.Type.IsPrimitive)); }
             }
 
             public bool HasNativeValueType
@@ -411,6 +421,23 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     return Name;
                 }
             }
+
+            public object Clone()
+            {
+                var parameter = (Parameter)MemberwiseClone();
+                parameter.ParentContainer = null;
+                return parameter;
+            }
+        }
+
+        public object Clone()
+        {
+            var  method = (CSharpMethod)MemberwiseClone();
+            method.ClearItems();
+            foreach (var parameter in Parameters)
+                method.Add((Parameter) parameter.Clone());
+            method.ParentContainer = null;
+            return method;
         }
     }
 }

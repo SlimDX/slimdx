@@ -170,7 +170,7 @@ namespace SlimDX2.Direct3D10
         /// </summary>
         internal static Result CreateWithSwapChain(Adapter adapter, DriverType driverType, DeviceCreationFlags flags, SwapChainDescription swapChainDescription, FeatureLevel featureLevel, out Device1 device, out SwapChain swapChain)
         {
-            Result result = D3D10.CreateDeviceAndSwapChain1(adapter, driverType, IntPtr.Zero, flags, featureLevel, D3D10.SdkVersion,
+            Result result = D3D10.CreateDeviceAndSwapChain1(adapter, driverType, IntPtr.Zero, flags, featureLevel, D3D10.SdkVersion1,
                                                            ref swapChainDescription, out swapChain, out device);
 
             return result;

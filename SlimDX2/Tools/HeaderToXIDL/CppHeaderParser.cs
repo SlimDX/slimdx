@@ -42,6 +42,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
         private readonly CppInclude rootInclude;
         private int currentIndex;
         private List<Token> tokens;
+        private Guid currentInterfaceGuid;
 
         public CppHeaderParser()
         {
@@ -51,6 +52,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
             IncludesToProcess = new List<string>();
             includeStack = new Stack<CppInclude>();
             tokens = new List<Token>();
+            IncludePath = new List<string>();
 
             // Register IUnknown in order to find inheritance
             // And remove duplicated methods
@@ -76,7 +78,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
         /// <summary>
         /// Include path used to search DirectX headers
         /// </summary>
-        public string IncludePath { get; set; }
+        public List<string> IncludePath { get; set; }
 
         /// <summary>
         /// Add an include to process (without any path)
@@ -84,10 +86,19 @@ namespace SlimDX2.Tools.HeaderToXIDL
         /// <param name="include">an include filename to process</param>
         public void AddInclude(string include)
         {
-            string fullPath = IncludePath + Path.DirectorySeparatorChar + include;
-            if (!File.Exists(fullPath))
+            bool isFileExist = false;
+            foreach (var includeDir in IncludePath)
+            {
+                string fullPath = includeDir + Path.DirectorySeparatorChar + include;
+                if (File.Exists(fullPath))
+                {
+                    isFileExist = true;
+                    break;
+                }                
+            }
+            if (!isFileExist)
                 throw new ArgumentException(string.Format("include [{0}] cannot be found from include path [{1}]",
-                                                          include, fullPath));
+                                                          include, IncludePath));
 
             IncludesToProcess.Add(Path.GetFileName(include).ToLower());
         }
@@ -106,7 +117,10 @@ namespace SlimDX2.Tools.HeaderToXIDL
             var preProcessor = new PreProcessor(header, "root.h", this);
 
             // Add an include path to Boost.Wave
-            preProcessor.AddIncludePath(IncludePath);
+            foreach (var includeDir in IncludePath)
+            {
+                preProcessor.AddIncludePath(includeDir);
+            }
 
             // Predefines macros
             preProcessor.DefineMacro("LF_FACESIZE=32", true);
@@ -125,19 +139,34 @@ namespace SlimDX2.Tools.HeaderToXIDL
             preProcessor.DefineMacro("WCHAR=wchar", true);
             preProcessor.DefineMacro("STDMETHOD(method)=virtual HRESULT STDMETHODCALLTYPE method", true);
             preProcessor.DefineMacro("STDMETHOD_(type,method)=virtual type STDMETHODCALLTYPE method", true);
+
+            preProcessor.DefineMacro("__DEFINE_GUID__(value)=", true);
+
+            // Interface declaration
+            // MIDL_INTERFACE("9B7E4C00-342C-4106-A19F-4F2704F689F0") ID3D10DeviceChild : public IUnknown
+            preProcessor.DefineMacro("MIDL_INTERFACE(guid)=interface __DEFINE_GUID__(guid)", true);
+            preProcessor.DefineMacro("DECLARE_INTERFACE(name)=interface name ", true);
+            preProcessor.DefineMacro("DECLARE_INTERFACE_(name,parent)=interface name : public parent ", true);
+            preProcessor.DefineMacro("D2D1_DECLARE_INTERFACE(guid)=__DEFINE_GUID__(guid)", true);
+            preProcessor.DefineMacro("DWRITE_DECLARE_INTERFACE(guid)=__DEFINE_GUID__(guid)", true);
+            preProcessor.DefineMacro("DECLSPEC_UUID(guid)=__DEFINE_GUID__(guid)", true);
+            preProcessor.DefineMacro("DECLSPEC_NOVTABLE=", true);
+
             // Macro to transform a old COM interface declaration (DECLARE_INTERFACE) to the new format (MIDL_INTERFACE)
-            preProcessor.DefineMacro("DECLARE_INTERFACE(name)=MIDL_INTERFACE(\"\") name ", true);
-            preProcessor.DefineMacro("DECLARE_INTERFACE_(name,parent)=MIDL_INTERFACE(\"\") name : public parent ", true);
             preProcessor.DefineMacro("PURE==0", true);
             preProcessor.DefineMacro("THIS_=", true);
             preProcessor.DefineMacro("THIS=void", true);
             preProcessor.DefineMacro("__field_ecount_opt(x)=", true);
             preProcessor.DefineMacro("DEFINE_ENUM_FLAG_OPERATORS(x)=", true);
-            preProcessor.DefineMacro("D2D1_DECLARE_INTERFACE(name)=MIDL_INTERFACE(\"name\")", true);
             // Hook the DEFINE_GUID to catch the OnDefineMacro event
             preProcessor.DefineMacro( "DEFINE_GUID(name, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11)=", true);
             // Make possible to parse HRESULT macros
             preProcessor.DefineMacro("MAKE_HRESULT(sev,fac,code)=( ((sev)<<31) | ((fac)<<16) | (code) )", true);
+
+            // DWrite macros
+            preProcessor.DefineMacro("DWRITE_EXPORT=WINAPI", true);
+            preProcessor.DefineMacro("DEFINE_ENUM_FLAG_OPERATORS(x)=", true);
+            preProcessor.DefineMacro("EXTERN_C=", true);            
             preProcessor.Run();
 
             // Remove all empty includes
@@ -163,7 +192,12 @@ namespace SlimDX2.Tools.HeaderToXIDL
             // Filter Space token
             if (!IsTokenSpace(token))
             {
-                mapIncludeToTokens[CurrentInclude.Name].Add(token);
+                List<Token> tokenList = mapIncludeToTokens[CurrentInclude.Name];
+
+                if (tokenList.Count > 0 && tokenList[tokenList.Count-1].Id == TokenId.Special1 && token.Value == "interface")
+                    mapIncludeToTokens[CurrentInclude.Name].Insert(tokenList.Count-1, token);
+                else
+                    mapIncludeToTokens[CurrentInclude.Name].Add(token);
             }
         }
 
@@ -193,9 +227,17 @@ namespace SlimDX2.Tools.HeaderToXIDL
         /// <returns>the include file as a sttring</returns>
         public override string OnIncludeLoad(string name)
         {
-            // Process only files that needs to be processed
-            if (IncludesToProcess.Contains(Path.GetFileName(name)))
-                return File.ReadAllText(name);
+            try
+            {
+
+                // Process only files that needs to be processed
+                if (IncludesToProcess.Contains(Path.GetFileName(name)))
+                    return File.ReadAllText(name);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
             return "";
         }
 
@@ -213,7 +255,14 @@ namespace SlimDX2.Tools.HeaderToXIDL
             // If there are any tokens, start parsing
             if (!IsEndOfToken)
             {
-                Parse();
+                try
+                {
+                    Parse();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
                 isParsed = true;
             }
             Console.Out.WriteLine("End Process Include {0}", CurrentInclude.Name);
@@ -284,6 +333,14 @@ namespace SlimDX2.Tools.HeaderToXIDL
                 cppGuid.Name = macroFunctionCall.Arguments[0].RawValue.Trim();
 
                 CurrentInclude.Add(cppGuid);
+            }
+            else if (macroFunctionCall.Name == "__DEFINE_GUID__")
+            {
+                Token token = new Token();
+                token.Id = TokenId.Special1;
+                token.Value = macroFunctionCall.Arguments[0].RawValue;
+
+                mapIncludeToTokens[CurrentInclude.Name].Add(token);
             }
         }
 
@@ -623,7 +680,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
                     if (withDeclaration)
                     {
                         if (CurrentToken.Id != TokenId.Identifier)
-                            throw new ArgumentException("Expecting identifier followed in type ");
+                            throw new ArgumentException("Expecting identifier followed in type [" + CurrentToken.Value + "]");
 
                         cppType.Name = CurrentToken.Value;
 
@@ -687,9 +744,30 @@ namespace SlimDX2.Tools.HeaderToXIDL
         /// </summary>
         /// <param name="fieldOffset"></param>
         /// <returns></returns>
-        private CppField ReadStructField(int fieldOffset)
+        private CppField ReadStructField(CppStruct cppStruct, int fieldOffset)
         {
+            CppAttribute attribute = ReadAnnotation();
             var field = ReadType<CppField>(true);
+
+            // If colon, then this is a bitfield
+            if (PreviewNextToken().Id == TokenId.Colon)
+            {
+                // Set bitfield for struct
+                cppStruct.IsBitfield = true;
+
+                ReadNextToken();    // Skip ":"
+                ReadNextToken();    // => CurrentToken is bitoffset
+                TokenId nextId = CurrentToken.Id;
+                int bitOffset;
+                if (int.TryParse(CurrentToken.Value, out bitOffset))
+                {
+                    fieldOffset = bitOffset;
+                }
+                else
+                {
+                    throw new ArgumentException(string.Format("Expecting integer literal for field {0}",field.Name));
+                }
+            }
             field.Offset = fieldOffset;
             NextStatement();
             return field;
@@ -735,11 +813,12 @@ namespace SlimDX2.Tools.HeaderToXIDL
                         if (type.Id == TokenId.Rightbrace)
                             break;
 
-                        cppStruct.Add(ReadStructField(fieldOffset));
+
+                        cppStruct.Add(ReadStructField(cppStruct, fieldOffset));
                     } while (true);
                     NextStatement();
                 }
-                else if (PreviewNextToken().Id == TokenId.Leftparen)
+                else if (PreviewNextToken().Id == TokenId.Leftparen && !CurrentToken.Value.StartsWith("__"))
                 {
                     // Skip Constructor
                     SkipUntilTokenId(TokenId.Rightbrace);
@@ -747,7 +826,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
                 else
                 {
                     // Else Read Struct Field declaration
-                    cppStruct.Add(ReadStructField(fieldOffset));
+                    cppStruct.Add(ReadStructField(cppStruct, fieldOffset));
                 }
                 fieldOffset++;
             } while (true);
@@ -994,14 +1073,15 @@ namespace SlimDX2.Tools.HeaderToXIDL
                     return;
                 }
             }
-
-
-            SkipUntilTokenId(TokenId.Rightparen);
+            var cppInterface = new CppInterface();
 
             // Read Interface Name
             ReadNextToken();
-
-            var cppInterface = new CppInterface();
+            if (CurrentToken.Id == TokenId.Special1)
+            {
+                cppInterface.Guid = CurrentToken.RawValue;
+                ReadNextToken();
+            }
             CurrentInclude.Add(cppInterface);
 
             cppInterface.Name = CurrentToken.Value;

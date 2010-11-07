@@ -27,16 +27,23 @@ namespace SlimDX2.Tools.XIDLToCSharp
     {
         public CSharpInteropCalliSignature()
         {
-            ParameterTypes = new List<Type>();
+            ParameterTypes = new List<TypeWrapper>();
         }
 
         public int Index;
-        public Type ReturnType;
-        public List<Type> ParameterTypes;
+        public TypeWrapper ReturnType;
+        public List<TypeWrapper> ParameterTypes;
+        public bool IsLocal;
 
         public string Name
         {
-            get { return "Calli" + GetMethodName(ReturnType); }
+            get
+            {
+                string returnTypeName = ReturnType.TypeName;
+                returnTypeName = returnTypeName.Replace("*", "Ptr");
+                returnTypeName = returnTypeName.Replace(".", "");
+                return "Calli" + returnTypeName + ((IsLocal) ? ""+ Index : "");
+            }
         }
 
         public override bool Equals(object obj)
@@ -50,6 +57,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 return false;
             if (this.ParameterTypes.Count != against.ParameterTypes.Count)
                 return false;
+            if (this.IsLocal != against.IsLocal)
+                return false;
 
             for (int i = 0; i < ParameterTypes.Count; i++)
             {
@@ -59,45 +68,15 @@ namespace SlimDX2.Tools.XIDLToCSharp
             return true;
         }
 
-        private static string GetMethodName(Type type)
-        {
-            if (type == typeof (int))
-                return "Int";
-            if (type == typeof (void*))
-                return "Ptr";
-            if (type == typeof (void))
-                return "Void";
-            if (type == typeof (float))
-                return "Float";
-            if (type == typeof (long))
-                return "Long";
-            return type.Name;
-        }
-
-
-        public static string GetTypeName(Type type)
-        {
-            if (type == typeof (int))
-                return "int";
-            if (type == typeof (void*))
-                return "void*";
-            if (type == typeof (void))
-                return "void";
-            if (type == typeof (float))
-                return "float";
-            if (type == typeof (long))
-                return "long";
-            return type.Name;
-        }
 
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
-            builder.Append(GetTypeName(ReturnType));
-            builder.Append(" Calli" + GetMethodName(ReturnType) + "(");
+            builder.Append(ReturnType.TypeName);
+            builder.Append(" Calli" + ReturnType.TypeName + "(");
             for (int i = 0; i < ParameterTypes.Count; i++)
             {
-                builder.Append(GetTypeName(ParameterTypes[i]));
+                builder.Append(ParameterTypes[i].TypeName);
                 if ((i + 1) < ParameterTypes.Count)
                     builder.Append(",");
             }

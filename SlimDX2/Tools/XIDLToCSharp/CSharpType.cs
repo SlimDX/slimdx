@@ -31,5 +31,18 @@ namespace SlimDX2.Tools.XIDLToCSharp
         {
             get { return (this is CSharpStruct || this is CSharpEnum || Type.IsValueType); }
         }
+
+
+        private CSharpAssembly _assembly;
+        public CSharpAssembly Assembly
+        {
+            get
+            {
+                if (_assembly == null)
+                    _assembly = GetParent<CSharpAssembly>();
+                return _assembly;
+            }
+        }
+
     }
 }

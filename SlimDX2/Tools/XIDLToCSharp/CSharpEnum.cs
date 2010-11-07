@@ -26,7 +26,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
     {
         public CSharpEnum()
         {
-            Type = typeof (uint);
+            Type = typeof (int);
             SizeOf = 4;
         }
 

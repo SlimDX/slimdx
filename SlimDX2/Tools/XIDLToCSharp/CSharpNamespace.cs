@@ -41,6 +41,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             }
         }
 
+        public string OutputDirectory { get; set;}
+
         public IEnumerable<CSharpType> Types
         {
             get { return Items.OfType<CSharpType>(); }
