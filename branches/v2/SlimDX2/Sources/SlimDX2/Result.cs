@@ -22,6 +22,9 @@ using System.Runtime.InteropServices;
 
 namespace SlimDX2
 {
+    /// <summary>
+    /// Result structure for COM methods.
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Result : IEquatable<Result>
     {

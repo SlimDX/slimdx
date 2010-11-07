@@ -113,7 +113,7 @@ namespace MiniTri
             MessagePump.Run(form, () =>
                                       {
                                           device.ClearRenderTargetView(renderView, new Color4(1.0f, 0.0f, 0.0f, 0.0f));
-                                          for (int i = 0; i < technique.Description.Passes; ++i)
+                                          for (int i = 0; i < technique.Description.PasseCount; ++i)
                                           {
                                               pass.Apply();
                                               device.Draw(3, 0);
