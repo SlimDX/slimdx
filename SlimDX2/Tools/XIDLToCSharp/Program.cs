@@ -277,6 +277,19 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagTypeName<CppField>(@"^D3D(\d+)_SHADER_VARIABLE_DESC::uFlags", "D3D_SHADER_VARIABLE_FLAGS", "Flags");
             group.TagTypeName<CppField>(@"^D3D(\d+)_SHADER_INPUT_BIND_DESC::uFlags", "D3D_SHADER_INPUT_FLAGS", "Flags");
 
+            group.TagName<CppField>(@"^D3D(\d+)_QUERY_DATA_PIPELINE_STATISTICS::(.*)s", "$2Count");
+            group.TagName<CppField>(@"^D3D(\d+)_SHADER_DESC::(.*[^g])s$", "$2Count");            
+            group.TagName<CppField>(@"^D3D(\d+)_SHADER_BUFFER_DESC::Variables$", "VariableCount");
+            group.TagTypeName<CppField>(@"^D3D(\d+)_SHADER_BUFFER_DESC::uFlags$", "D3D_SHADER_CBUFFER_FLAGS", "Flags");            
+            group.TagName<CppField>(@"^D3D(\d+)_SHADER_TYPE_DESC::(.*[^g])s$", "$2Count");            
+            group.TagName<CppField>(@"^D3D(\d+)_EFFECT_DESC::(.*[^g])s$", "$2Count");
+            group.TagName<CppField>(@"^D3D(\d+)_TECHNIQUE_DESC::(.*[^g])s$", "$2Count");
+            group.TagName<CppField>(@"^D3D(\d+)_PASS_DESC::(.*[^g])s$", "$2Count");            
+
+            // Rename all Num(Elmenent)s by ElementCount
+            group.TagName<CppField>(@"^D3DX?(\d+).*::Num(.*)s$", "$2Count");            
+
+
             // D3D10
 
             group.Modify<CppStruct>(@"^D3D10_SHADER_DEBUG_SCOPE_INFO$", Modifiers.Remove);
@@ -394,12 +407,27 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.Modify<CppParameter>(@"^ID3D(\d+)EffectTechnique::GetDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
             group.Modify<CppParameter>(@"^ID3D(\d+)EffectTechnique::ComputeStateBlockMask::pStateBlockMask", Modifiers.ParameterAttribute(CppAttribute.Out));
             group.Modify<CppParameter>(@"^ID3D(\d+)Effect::GetDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3DX(\d+)Font::GetDescA::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
             group.Modify<CppParameter>(@"^ID3DX(\d+)Font::GetDescW::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
+            group.Modify<CppParameter>(@"^ID3DX?(\d+).*::GetDevice::ppDevice$", Modifiers.ParameterAttribute(CppAttribute.Out));
+
+            group.TagTypeName<CppParameter>(@"^ID3DX(\d+)Sprite::Begin::flags", "D3DX$1_SPRITE_FLAG");
+
+            group.TagTypeName<CppParameter>(@"^ID3D(\d+).*::Map::MapFlags", "D3D$1_MAP_FLAG");            
 
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)EffectPass::Apply$", Visibility.Internal);
 
-            group.TagVisibility<CppMethod>(@"^ID3DX10Font::GetTextMetrics.*$", Visibility.Internal);            
+            group.TagVisibility<CppMethod>(@"^ID3DX10Font::GetTextMetrics.*$", Visibility.Internal);
+
+            // Remove all methods using ASCII encoding
+            group.Modify<CppMethod>(@"^ID3DX10Font::.*A$", Modifiers.Remove);
+            group.Modify<CppStruct>(@"^D3DX10_FONT_DESCA$", Modifiers.Remove);
+
+            // Rename all methods using WideChar encoding
+            group.TagName<CppMethod>(@"^ID3DX10Font::GetTextMetricsW$", "GetTextMetrics");
+            group.TagName<CppMethod>(@"^ID3DX10Font::PreloadTextW$", "PreloadText");
+            group.TagName<CppMethod>(@"^ID3DX10Font::DrawTextW$", "DrawText");            
+            //group.TagName<CppMethod>(@"^ID3DX10Font::GetDC$", "GetDeviceContext");
+
 
             // --------------------------------------------------------------------------------------------------------
             // D3D10/D3DX10 / D3D11/D3DX11 Functions
@@ -540,7 +568,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // DirectWrite Interfaces
             // --------------------------------------------------------------------------------------------------------
             group.TagVisibility<CppMethod>(@"^IDWriteGdiInterop::.*?LOGFONT$", Visibility.Internal);
-
+            group.TagCallback(@"^IDWritePixelSnapping$");
+            group.TagCallback(@"^IDWriteTextRenderer$");
 
             // --------------------------------------------------------------------------------------------------------
             // DirectWrite Functions
@@ -781,6 +810,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.RenameType(@"^D3D(\d+)_(.*)_SRV$", "$2_Resource");
             gen.MoveStructToInner(@"^D3D(\d+)_(.*)_SRV$", "D3D$1_SHADER_RESOURCE_VIEW_DESC");
 
+            gen.RenameType(@"^D3D(\d+)_(.*)_SRV1$", "$2_Resource1");
+            gen.MoveStructToInner(@"^D3D(\d+)_(.*)_SRV1$", "D3D$1_SHADER_RESOURCE_VIEW_DESC1");
+
             gen.RenameType(@"^D3D(\d+)_(.*)_RTV$", "$2_Resource");
             gen.MoveStructToInner(@"^D3D(\d+)_(.*)_RTV$", "D3D$1_RENDER_TARGET_VIEW_DESC");
 
@@ -886,6 +918,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.RenameType(@"^D3D_REGISTER_COMPONENT_TYPE$", "RegisterComponentType");
             gen.RenameType(@"^D3D_REGISTER_COMPONENT_(.*)", "$1");
 
+            gen.RenameType(@"^GetDC$", "GetDisplayDeviceContext");
 
             // Global
 
@@ -909,8 +942,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.RenameType(@"^D3D(.+)", "$1", false, TypeContext.Root);
 
             // Rename all types (interface, methods..) that are ending with Desc, Desc1
-            gen.RenameType(@"^(.*)Desc$", "$1Description");
+            gen.RenameType(@"^(.*)DescW?$", "$1Description");
             gen.RenameType(@"^(.*)Desc1$", "$1Description1");
+            gen.RenameType(@"^GetType$", "GetTypeInfo", true);
             gen.RenameType(@"^GetType$", "GetTypeInfo", true);
 
             // Global Prefix Rename
