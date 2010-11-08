@@ -54,5 +54,20 @@ namespace SlimDX2.Direct2D1
             }
             return this.Stream_(ptr);
         }
+
+        /// <summary>	
+        /// Retrieves the geometry sink that is used to populate the path geometry with figures and segments. 	
+        /// </summary>	
+        /// <remarks>	
+        /// Because path geometries are immutable and can only be populated once, it is an error to call Open on a path geometry more than once.Note that the fill mode defaults to <see cref="SlimDX2.Direct2D1.FillMode.Alternate"/>. To set the fill mode, call {{SetFillMode}} before the first call to {{BeginFigure}}. Failure to do so will put the geometry sink in an error state. 	
+        /// </remarks>	
+        /// <returns>the geometry sink that is used to populate the path geometry with figures and segments.</returns>
+        /// <unmanaged>HRESULT Open([Out] ID2D1GeometrySink** geometrySink)</unmanaged>
+        public GeometrySink Open()
+        {
+            GeometrySink sink;
+            this.Open(out sink);
+            return sink;
+        }
     }
 }

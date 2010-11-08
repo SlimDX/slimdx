@@ -26,21 +26,17 @@ namespace SlimDX2
     /// <summary>
     /// An Interface Callback
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    internal class CppObjectCallback<T> : CppObject
+    internal class CppObjectCallback : CppObject
     {
         private readonly List<Delegate> _methods;
         private readonly IntPtr _vtblPtr;
-        protected T Callback;
 
         /// <summary>
         /// Default Constructor.
         /// </summary>
-        /// <param name="callback">the client callback</param>
         /// <param name="numberOfCallbackMethods">number of methods to allocate in the VTBL</param>
-        internal CppObjectCallback(T callback, int numberOfCallbackMethods)
+        internal CppObjectCallback(int numberOfCallbackMethods)
         {
-            Callback = callback;
             // Allocate ptr to vtbl + vtbl together
             NativePointer = Marshal.AllocHGlobal(IntPtr.Size * (numberOfCallbackMethods + 1));
             _vtblPtr = IntPtr.Add(NativePointer, IntPtr.Size);

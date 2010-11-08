@@ -73,6 +73,12 @@ namespace SlimDX2.Direct2D1
 
     internal partial class DefaultGeometrySink
     {
+
+        ~DefaultGeometrySink()
+        {
+            Release();
+        }
+
         public void AddLine(PointF point)
         {
             AddLine_(point);
@@ -107,10 +113,13 @@ namespace SlimDX2.Direct2D1
     /// <summary>
     /// Internal GeometrySink Callback
     /// </summary>
-    internal partial class GeometrySinkCallback : SimplifiedGeometrySinkCallback<GeometrySink>
+    internal partial class GeometrySinkCallback : SimplifiedGeometrySinkCallback
     {
+        GeometrySink Callback { get; set; }
+
         public GeometrySinkCallback(GeometrySink callback) : base(callback, 5)
         {
+            Callback = callback;
             AddMethod(new AddLineDelegate(AddLineImpl));
             AddMethod(new AddBezierDelegate(AddBezierImpl));
             AddMethod(new AddQuadraticBezierDelegate(AddQuadraticBezierImpl));

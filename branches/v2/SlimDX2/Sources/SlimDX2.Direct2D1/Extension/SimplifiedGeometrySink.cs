@@ -126,7 +126,7 @@ namespace SlimDX2.Direct2D1
 
         public void EndFigure(FigureEnd figureEnd)
         {
-            EndFigure(figureEnd);
+            EndFigure_(figureEnd);
         }
 
         public void Close()
@@ -138,10 +138,13 @@ namespace SlimDX2.Direct2D1
     /// <summary>
     /// Internal SimplifiedGeometrySink Callback
     /// </summary>
-    internal class SimplifiedGeometrySinkCallback<T> : SlimDX2.ComObjectCallback<T> where T : SimplifiedGeometrySink
+    internal class SimplifiedGeometrySinkCallback : SlimDX2.ComObjectCallback
     {
-        public SimplifiedGeometrySinkCallback(T callback, int nbMethods) : base(callback, nbMethods + 7)
+        private SimplifiedGeometrySink Callback { get; set; }
+
+        public SimplifiedGeometrySinkCallback(SimplifiedGeometrySink callback, int nbMethods) : base(callback, nbMethods + 7)
         {
+            Callback = callback;
             AddMethod(new SetFillModeDelegate(SetFillModeImpl));
             AddMethod(new SetSegmentFlagsDelegate(SetSegmentFlagsImpl));
             AddMethod(new BeginFigureDelegate(BeginFigureImpl));
@@ -152,29 +155,29 @@ namespace SlimDX2.Direct2D1
         }
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate void SetFillModeDelegate(SlimDX2.Direct2D1.FillMode fillMode);
-        private void SetFillModeImpl(SlimDX2.Direct2D1.FillMode fillMode)
+        private delegate void SetFillModeDelegate(IntPtr thisPtr, SlimDX2.Direct2D1.FillMode fillMode);
+        private void SetFillModeImpl(IntPtr thisPtr, SlimDX2.Direct2D1.FillMode fillMode)
         {
             Callback.SetFillMode(fillMode);
         }
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate void SetSegmentFlagsDelegate(SlimDX2.Direct2D1.PathSegment vertexFlags);
-        private void SetSegmentFlagsImpl(SlimDX2.Direct2D1.PathSegment vertexFlags)
+        private delegate void SetSegmentFlagsDelegate(IntPtr thisPtr, SlimDX2.Direct2D1.PathSegment vertexFlags);
+        private void SetSegmentFlagsImpl(IntPtr thisPtr, SlimDX2.Direct2D1.PathSegment vertexFlags)
         {
             Callback.SetSegmentFlags(vertexFlags);
         }
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate void BeginFigureDelegate(System.Drawing.PointF startPoint, SlimDX2.Direct2D1.FigureBegin figureBegin);
-        private void BeginFigureImpl(System.Drawing.PointF startPoint, SlimDX2.Direct2D1.FigureBegin figureBegin)
+        private delegate void BeginFigureDelegate(IntPtr thisPtr, System.Drawing.PointF startPoint, SlimDX2.Direct2D1.FigureBegin figureBegin);
+        private void BeginFigureImpl(IntPtr thisPtr, System.Drawing.PointF startPoint, SlimDX2.Direct2D1.FigureBegin figureBegin)
         {
             Callback.BeginFigure(startPoint,figureBegin);
         }
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate void AddLinesDelegate(IntPtr points, int pointsCount);
-        private void AddLinesImpl(IntPtr points, int pointsCount)
+        private delegate void AddLinesDelegate(IntPtr thisPtr, IntPtr points, int pointsCount);
+        private void AddLinesImpl(IntPtr thisPtr, IntPtr points, int pointsCount)
         {
             unsafe
             {
@@ -185,8 +188,8 @@ namespace SlimDX2.Direct2D1
         }
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate void AddBeziersDelegate(IntPtr beziers, int beziersCount);
-        private void AddBeziersImpl(IntPtr beziers, int beziersCount)
+        private delegate void AddBeziersDelegate(IntPtr thisPtr, IntPtr beziers, int beziersCount);
+        private void AddBeziersImpl(IntPtr thisPtr, IntPtr beziers, int beziersCount)
         {
             unsafe
             {
@@ -197,15 +200,15 @@ namespace SlimDX2.Direct2D1
         }
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate void EndFigureDelegate(SlimDX2.Direct2D1.FigureEnd figureEnd);
-        private void EndFigureImpl(SlimDX2.Direct2D1.FigureEnd figureEnd)
+        private delegate void EndFigureDelegate(IntPtr thisPtr, SlimDX2.Direct2D1.FigureEnd figureEnd);
+        private void EndFigureImpl(IntPtr thisPtr, SlimDX2.Direct2D1.FigureEnd figureEnd)
         {
             Callback.EndFigure(figureEnd);
         }
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate int CloseDelegate();
-        private int CloseImpl()
+        private delegate int CloseDelegate(IntPtr thisPtr);
+        private int CloseImpl(IntPtr thisPtr)
         {
             try
             {

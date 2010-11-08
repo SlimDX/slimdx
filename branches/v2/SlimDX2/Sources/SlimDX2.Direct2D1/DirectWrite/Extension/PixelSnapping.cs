@@ -56,10 +56,14 @@ namespace SlimDX2.DirectWrite
     /// <summary>
     /// Internal TessellationSink Callback
     /// </summary>
-    internal class PixelSnappingCallback<T> : SlimDX2.ComObjectCallback<T> where T : PixelSnapping
+    internal class PixelSnappingCallback : SlimDX2.ComObjectCallback
     {
-        public PixelSnappingCallback(T callback, int nbMethods) : base(callback, nbMethods + 3)
+        PixelSnapping Callback { get; set; }
+
+        public PixelSnappingCallback(PixelSnapping callback, int nbMethods)
+            : base(callback, nbMethods + 3)
         {
+            Callback = callback;
             AddMethod(new IsPixelSnappingDisabledDelegate(IsPixelSnappingDisabledImpl));
             AddMethod(new GetCurrentTransformDelegate(GetCurrentTransformImpl));
             AddMethod(new GetPixelsPerDipDelegate(GetPixelsPerDipImpl));
@@ -72,8 +76,8 @@ namespace SlimDX2.DirectWrite
         /// <param name="clientDrawingContext">The context passed to IDWriteTextLayout::Draw.</param>
         /// <returns>Receives TRUE if pixel snapping is disabled or FALSE if it not. </returns>
         /// <unmanaged>HRESULT IsPixelSnappingDisabled([None] void* clientDrawingContext,[Out] BOOL* isDisabled)</unmanaged>
-        private delegate int IsPixelSnappingDisabledDelegate(IntPtr clientDrawingContext, out int isDisabled);
-        private int IsPixelSnappingDisabledImpl(IntPtr clientDrawingContext, out int isDisabled)
+        private delegate int IsPixelSnappingDisabledDelegate(IntPtr thisPtr, IntPtr clientDrawingContext, out int isDisabled);
+        private int IsPixelSnappingDisabledImpl(IntPtr thisPtr, IntPtr clientDrawingContext, out int isDisabled)
         {
             isDisabled = 0;
             try
@@ -97,8 +101,8 @@ namespace SlimDX2.DirectWrite
         /// <param name="clientDrawingContext">The drawing context passed to <see cref="SlimDX2.DirectWrite.TextLayout.Draw_"/>.</param>
         /// <returns>a structure which has transform information for  pixel snapping.</returns>
         /// <unmanaged>HRESULT GetCurrentTransform([None] void* clientDrawingContext,[Out] DWRITE_MATRIX* transform)</unmanaged>
-        private delegate int GetCurrentTransformDelegate(IntPtr clientDrawingContext, IntPtr transform);
-        private int GetCurrentTransformImpl(IntPtr clientDrawingContext, IntPtr transform)
+        private delegate int GetCurrentTransformDelegate(IntPtr thisPtr, IntPtr clientDrawingContext, IntPtr transform);
+        private int GetCurrentTransformImpl(IntPtr thisPtr, IntPtr clientDrawingContext, IntPtr transform)
         {
             unsafe
             {
@@ -130,8 +134,8 @@ namespace SlimDX2.DirectWrite
         /// <param name="clientDrawingContext">The drawing context passed to <see cref="SlimDX2.DirectWrite.TextLayout.Draw_"/>.</param>
         /// <returns>the number of physical pixels per DIP</returns>
         /// <unmanaged>HRESULT GetPixelsPerDip([None] void* clientDrawingContext,[Out] FLOAT* pixelsPerDip)</unmanaged>
-        private delegate int GetPixelsPerDipDelegate(IntPtr clientDrawingContext, out float pixelPerDip);
-        private int GetPixelsPerDipImpl(IntPtr clientDrawingContext, out float pixelPerDip)
+        private delegate int GetPixelsPerDipDelegate(IntPtr thisPtr, IntPtr clientDrawingContext, out float pixelPerDip);
+        private int GetPixelsPerDipImpl(IntPtr thisPtr, IntPtr clientDrawingContext, out float pixelPerDip)
         {
             pixelPerDip = 0;
             try

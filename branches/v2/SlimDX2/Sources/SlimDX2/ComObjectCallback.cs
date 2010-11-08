@@ -26,10 +26,10 @@ namespace SlimDX2
     /// A COM Interface Callback
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    internal class ComObjectCallback<T> : ComObject
+    internal class ComObjectCallback : ComObject
     {
-        private readonly CppObjectCallback<T> cppCallback;
-        protected T Callback;
+        private readonly CppObjectCallback cppCallback;
+        private object _callback;
         private int _count;
 
         /// <summary>
@@ -37,10 +37,10 @@ namespace SlimDX2
         /// </summary>
         /// <param name="callback">the client callback</param>
         /// <param name="numberOfCallbackMethods">number of methods to allocate in the VTBL</param>
-        protected ComObjectCallback(T callback, int numberOfCallbackMethods)
+        protected ComObjectCallback(object callback, int numberOfCallbackMethods)
         {
-            Callback = callback;
-            cppCallback = new CppObjectCallback<T>(callback, numberOfCallbackMethods + 3);
+            _callback = callback;
+            cppCallback = new CppObjectCallback(numberOfCallbackMethods + 3);
             NativePointer = cppCallback.NativePointer;
 
             AddMethod(new QueryInterfaceDelegate(QueryInterfaceImpl));
@@ -58,17 +58,17 @@ namespace SlimDX2
         }
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate int QueryInterfaceDelegate(ref Guid guid, out IntPtr output);
+        public delegate int QueryInterfaceDelegate(ref Guid guid, out IntPtr output);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate int AddRefDelegate();
+        public  delegate int AddRefDelegate();
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate int ReleaseDelegate();
+        public  delegate int ReleaseDelegate();
 
         private int QueryInterfaceImpl(ref Guid guid, out IntPtr output)
         {
-            if (guid == typeof(T).GUID)
+            if (guid == _callback.GetType().GUID)
             {
                 output = NativePointer;
                 return Result.Ok.Code;
