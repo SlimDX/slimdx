@@ -54,5 +54,21 @@ namespace SlimDX2.Direct2D1
             long tag2;
             return EndDraw(out tag1, out tag2);
         }
+
+        /// <summary>	
+        /// Paints the interior of the specified geometry. 	
+        /// </summary>	
+        /// <remarks>	
+        /// If the opacityBrush parameter is not NULL, the alpha value of each pixel of the mapped opacityBrush is used to determine the resulting opacity of each corresponding pixel of the geometry. Only the alpha value of each color in the brush is used for this processing; all other color information is ignored.  The alpha value specified by the brush is multiplied by the alpha value of the geometry after the geometry has been painted by brush.  	
+        /// When this method fails, it does not return an error code. To determine whether a drawing operation (such as FillGeometry) failed, check the result returned by the <see cref="SlimDX2.Direct2D1.RenderTarget.EndDraw"/> or <see cref="SlimDX2.Direct2D1.RenderTarget.Flush"/> method. 	
+        /// </remarks>	
+        /// <param name="geometry">The geometry to paint.</param>
+        /// <param name="brush">The brush used to paint the geometry's interior.</param>
+        /// <unmanaged>void FillGeometry([In] ID2D1Geometry* geometry,[In] ID2D1Brush* brush,[In, Optional] ID2D1Brush* opacityBrush)</unmanaged>
+        public void FillGeometry(SlimDX2.Direct2D1.Geometry geometry, SlimDX2.Direct2D1.Brush brush)
+        {
+            FillGeometry(geometry, brush, null);
+        }
+
     }
 }

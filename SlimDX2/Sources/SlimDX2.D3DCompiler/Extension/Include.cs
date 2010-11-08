@@ -51,9 +51,11 @@ namespace SlimDX2.D3DCompiler
     /// <summary>
     /// Internal Include Callback
     /// </summary>
-    internal class IncludeCallback : SlimDX2.CppObjectCallback<Include>
+    internal class IncludeCallback : SlimDX2.CppObjectCallback
     {
         private Dictionary<IntPtr, Frame> _frames;
+
+        private Include Callback { get; set;}
 
         struct Frame
         {
@@ -72,8 +74,9 @@ namespace SlimDX2.D3DCompiler
             }
         }
 
-        public IncludeCallback(Include callback) : base(callback, 2)
+        public IncludeCallback(Include callback) : base(2)
         {
+            Callback = callback;
             AddMethod(new OpenDelegate(OpenImpl));
             AddMethod(new CloseDelegate(CloseImpl));
             _frames = new Dictionary<IntPtr, Frame>();

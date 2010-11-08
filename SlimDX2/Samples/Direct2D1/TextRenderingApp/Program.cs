@@ -28,7 +28,7 @@ namespace TextRenderingApp
     public class Program : Direct2D1DemoApp
     {        
         public TextFormat TextFormat { get; private set; }
-        public TextLayout TextLayout1 { get; private set; }
+        public TextLayout TextLayout { get; private set; }
 
         protected override void Initialize(DemoConfiguration demoConfiguration)
         {
@@ -38,7 +38,7 @@ namespace TextRenderingApp
             TextFormat = new TextFormat(FactoryDWrite, "Calibri", 128) {TextAlignment = TextAlignment.Center, ParagraphAlignment = ParagraphAlignment.Center};
 
             // Initialize a TextLayout
-            TextLayout1 = new TextLayout(FactoryDWrite, "SlimDX2 D2D1 - DWrite", TextFormat, demoConfiguration.Width, demoConfiguration.Height);
+            TextLayout = new TextLayout(FactoryDWrite, "SlimDX2 D2D1 - DWrite", TextFormat, demoConfiguration.Width, demoConfiguration.Height);
         }
 
 
@@ -47,7 +47,7 @@ namespace TextRenderingApp
             base.Draw(time);
 
             // Draw the TextLayout
-            RenderTarget2D.DrawTextLayout(new PointF(0,0), TextLayout1, SceneColorBrush, DrawTextOptions.None );
+            RenderTarget2D.DrawTextLayout(new PointF(0,0), TextLayout, SceneColorBrush, DrawTextOptions.None );
         }
 
 

@@ -141,10 +141,12 @@ namespace SlimDX2.DirectWrite
     /// <summary>
     /// Internal TessellationSink Callback
     /// </summary>
-    internal class TextRendererCallback : PixelSnappingCallback<TextRenderer>
+    internal class TextRendererCallback : PixelSnappingCallback
     {
+        TextRenderer Callback { get; set; }
         public TextRendererCallback(TextRenderer callback) : base(callback, 4)
         {
+            Callback = callback;
             AddMethod(new DrawGlyphRunDelegate(DrawGlyphRunImpl));
             AddMethod(new DrawUnderlineDelegate(DrawUnderlineImpl));
             AddMethod(new DrawStrikethroughDelegate(DrawStrikethroughImpl));

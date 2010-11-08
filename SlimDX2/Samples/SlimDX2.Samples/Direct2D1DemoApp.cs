@@ -24,6 +24,9 @@ using Factory = SlimDX2.Direct2D1.Factory;
 
 namespace SlimDX2.Samples
 {
+    /// <summary>
+    /// Root class for Direct2D and DirectWrite Demo App.
+    /// </summary>
     public class Direct2D1DemoApp : Direct3D10DemoApp
     {
         public Factory Factory2D { get; private set; }
@@ -39,6 +42,8 @@ namespace SlimDX2.Samples
             RenderTarget2D = new RenderTarget(Factory2D, surface,
                                                             new RenderTargetProperties(new PixelFormat(Format.Unknown, AlphaMode.Premultiplied)));
 
+            RenderTarget2D.AntialiasMode = AntialiasMode.Aliased;
+
             FactoryDWrite = new SlimDX2.DirectWrite.Factory();
 
             surface.Release();
@@ -53,8 +58,8 @@ namespace SlimDX2.Samples
 
         protected override void EndDraw()
         {
-            base.EndDraw();
             RenderTarget2D.EndDraw();
+            base.EndDraw();
         }
     }
 }

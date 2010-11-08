@@ -55,17 +55,20 @@ namespace SlimDX2.Direct2D1
     /// <summary>
     /// Internal TessellationSink Callback
     /// </summary>
-    internal class TessellationSinkCallback : SlimDX2.ComObjectCallback<TessellationSink>
+    internal class TessellationSinkCallback : SlimDX2.ComObjectCallback
     {
+        TessellationSink Callback { get; set; }
+
         public TessellationSinkCallback(TessellationSink callback) : base(callback, 2)
         {
+            Callback = callback;
             AddMethod(new AddTrianglesDelegate(AddTrianglesImpl));
             AddMethod(new CloseDelegate(CloseImpl));
         }
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate void AddTrianglesDelegate(IntPtr triangles, int trianglesCount);
-        private void AddTrianglesImpl(IntPtr triangles, int trianglesCount)
+        private delegate void AddTrianglesDelegate(IntPtr thisPtr, IntPtr triangles, int trianglesCount);
+        private void AddTrianglesImpl(IntPtr thisPtr, IntPtr triangles, int trianglesCount)
         {
             unsafe
             {
@@ -77,8 +80,8 @@ namespace SlimDX2.Direct2D1
 
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate int CloseDelegate();
-        private int CloseImpl()
+        private delegate int CloseDelegate(IntPtr thisPtr);
+        private int CloseImpl(IntPtr thisPtr)
         {
             try
             {
