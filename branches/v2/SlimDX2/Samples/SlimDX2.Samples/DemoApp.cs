@@ -261,7 +261,7 @@ namespace SlimDX2.Samples
             {
                 FramePerSecond = _frameCount / _frameAccumulator;
 
-                _form.Text = _demoConfiguration.Title + " FPS: " + FramePerSecond;
+                _form.Text = _demoConfiguration.Title + " - FPS: " + FramePerSecond;
                 _frameAccumulator = 0.0f;
                 _frameCount = 0;
             }
