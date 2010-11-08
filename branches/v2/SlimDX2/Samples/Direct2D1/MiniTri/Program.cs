@@ -30,7 +30,7 @@ using DriverType = SlimDX2.Direct3D10.DriverType;
 using Factory = SlimDX2.DXGI.Factory;
 using FeatureLevel = SlimDX2.Direct3D.FeatureLevel;
 
-namespace MiniTri
+namespace MiniRect
 {
     /// <summary>
     ///   SlimDX2 port of SlimDX-MiniTri Direct3D 10 Sample
