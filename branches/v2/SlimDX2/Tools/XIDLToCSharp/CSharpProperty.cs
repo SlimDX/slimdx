@@ -31,13 +31,22 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
         public CSharpMethod Setter { get; set; }
 
+        public string CppSignature
+        {
+            get
+            {
+                if (Getter != null) return Getter.CppSignature;
+                return Setter.CppSignature;
+            }
+        }
+
         public bool IsPropertyParam { get; set; }
 
         public string PrefixSetterParam
         {
             get
             {
-                if (IsPropertyParam && Setter != null)
+                if (Setter != null)
                 {
                     var parameter = Setter.Parameters.First();
                     if (parameter.ParamName.StartsWith("ref"))

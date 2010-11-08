@@ -1322,10 +1322,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     cppInterface.Remove(method.CppElement);
             }
 
-            // Refactor Properties
-            CreateProperties(generatedMethods);
-
-
             // If CSharpInterface is DualCallback, then need to generate a default implem
             if (cSharpInterface.IsDualCallback)
             {
@@ -1364,6 +1360,11 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 defaultCallback.IsCallback = false;
                 defaultCallback.IsDualCallback = true;
                 cSharpInterface.ParentContainer.Add(defaultCallback);
+            }
+            else
+            {
+                // Refactor Properties
+                CreateProperties(generatedMethods);                
             }
 
             // If interface is a callback and parent is ComObject, then remove it
@@ -1439,10 +1440,12 @@ namespace SlimDX2.Tools.XIDLToCSharp
                         (parameterList[0].IsRefIn || parameterList[0].IsIn))
                     {
                         property.Setter = cSharpMethod;
+                        property.PublicType = parameterList[0].PublicType;
                     }
                     else if (parameterCount == 1 && !cSharpMethod.HasReturnType)
                     {
                         property.Setter = cSharpMethod;
+                        property.PublicType = property.Setter.ReturnType.PublicType;
                     }
                     else
                     {
@@ -1491,29 +1494,25 @@ namespace SlimDX2.Tools.XIDLToCSharp
             foreach (var cSharpProperty in cSharpProperties)
             {
                 var property = cSharpProperty.Value;
-                if (property.Getter == null)
-                    continue;
+
+                CSharpMethod getterOrSetter = property.Getter ?? property.Setter;
 
                 // Associate the property with the Getter element
-                property.CppElement = property.Getter.CppElement;
-                var parent = property.Getter.ParentContainer;
+                property.CppElement = getterOrSetter.CppElement;
+                var parent = getterOrSetter.ParentContainer;
 
                 // If Getter has no propery, 
-                if (property.Getter.NoProperty)
+                if ( (property.Getter != null && property.Getter.NoProperty) || (property.Setter != null && property.Setter.NoProperty))
                     continue;
 
-                if (property.Setter != null)
-                {
-                    // If Getter has no propery, 
-                    if (property.Setter.NoProperty)
-                        continue;
-
-                    property.Setter.Visibility = Visibility.Internal;
-                }
                 // Update visibility for getter and setter (set to internal)
-                property.Getter.Visibility = Visibility.Internal;
+                if (property.Getter != null)
+                    property.Getter.Visibility = Visibility.Internal;
 
-                if (property.Name.StartsWith("Is"))
+                if (property.Setter != null)
+                    property.Setter.Visibility = Visibility.Internal;
+
+                if (property.Getter != null && property.Name.StartsWith("Is"))
                     property.Getter.Name = property.Getter.Name + "_";
 
                 parent.Add(property);
