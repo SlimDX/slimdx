@@ -146,24 +146,28 @@ foreach (var sharpInterface in Namespace.Interfaces)
 <#+			
 		}		
 #>
-        /// <unmanaged><#= sharpProperty.Getter.CppSignature #></unmanaged>
+        /// <unmanaged><#= sharpProperty.CppSignature #></unmanaged>
         <#= sharpProperty.VisibilityName #><#= sharpProperty.PublicType.FullName #> <#= sharpProperty.Name #> {
 <#+		if (sharpProperty.IsPropertyParam) {
+			if (sharpProperty.Getter != null) {
 #>
                 get { <#= sharpProperty.PublicType.FullName #> __output__; <#= sharpProperty.Getter.Name #>(out __output__); return __output__; }
 <#+		
+			}
 			if (sharpProperty.Setter != null) {
 #>
                 set { <#= sharpProperty.Setter.Name #>(<#= sharpProperty.PrefixSetterParam #>value); }
 <#+		
 			}
 		} else {
+			if (sharpProperty.Getter != null) {			
 #>
                 get { return <#= sharpProperty.Getter.Name #>(); }
 <#+		
+			}
 			if (sharpProperty.Setter != null) {
 #>
-                set { <#= sharpProperty.Setter.Name #>(value); }
+                set { <#= sharpProperty.Setter.Name #>(<#= sharpProperty.PrefixSetterParam #>value); }
 <#+		
 			}
 		}
