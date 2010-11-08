@@ -24,11 +24,14 @@ namespace SlimDX2.Samples
         /// <summary>
         /// Initializes a new instance of the <see cref="DemoConfiguration"/> class.
         /// </summary>
-        public DemoConfiguration()
+        public DemoConfiguration() : this("SlimDX2 Demo") {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DemoConfiguration"/> class.
+        /// </summary>
+        public DemoConfiguration(string title) : this(title, 800, 600)
         {
-            Title = "SlimDX2 Demo";
-            Width = 800;
-            Height = 600;
         }
 
         public DemoConfiguration(string title, int width, int height)

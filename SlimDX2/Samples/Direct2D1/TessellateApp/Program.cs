@@ -84,7 +84,7 @@ namespace TessellateApp
         static void Main(string[] args)
         {
             Program program = new Program();
-            program.Run();
+            program.Run(new DemoConfiguration("SlimDX2 Direct2D1 Tessellate Demo"));
         }
     }
 }
