@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SlimDX2")]
+[assembly: AssemblyTitle("SlimDX2.Direct3D9")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("SlimDX2")]
+[assembly: AssemblyProduct("SlimDX2.Direct3D9")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,14 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c96cbe87-0e01-417d-a16a-1aa2a749134d")]
-
-[assembly: InternalsVisibleTo("SlimDX2.DXGI")]
-[assembly: InternalsVisibleTo("SlimDX2.D3DCompiler")]
-[assembly: InternalsVisibleTo("SlimDX2.Direct3D9")]
-[assembly: InternalsVisibleTo("SlimDX2.Direct3D10")]
-[assembly: InternalsVisibleTo("SlimDX2.Direct3D11")]
-[assembly: InternalsVisibleTo("SlimDX2.Direct2D1")]
+[assembly: Guid("1ebed0d6-5890-4293-8ff1-b60d71890c2c")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -54,7 +54,8 @@ namespace SlimDX2.Direct3D10
                          typeof (T) == typeof (Texture3D));
 
             Resource temp;
-            D3DX10.CreateTextureFromFile(device, fileName, null, IntPtr.Zero, out temp, 0);
+            int resultOut = 0;
+            D3DX10.CreateTextureFromFile(device, fileName, null, IntPtr.Zero, out temp, ref resultOut);
             return temp == null ? null : (T) Activator.CreateInstance(typeof (T), temp.NativePointer);
         }
 
@@ -71,7 +72,8 @@ namespace SlimDX2.Direct3D10
                          typeof (T) == typeof (Texture3D));
 
             Resource temp;
-            D3DX10.CreateTextureFromFile(device, fileName, loadInfo, IntPtr.Zero, out temp, 0);
+            int resultOut = 0;
+            D3DX10.CreateTextureFromFile(device, fileName, loadInfo, IntPtr.Zero, out temp, ref resultOut);
             return temp == null ? null : (T) Activator.CreateInstance(typeof (T), temp.NativePointer);
         }
 
@@ -91,9 +93,10 @@ namespace SlimDX2.Direct3D10
                 Debug.Assert(memory != null);
                 Debug.Assert(memory.Length > 0);
                 Resource temp;
+                int resultOut = 0;
                 fixed (void* pBuffer = &memory[0])
                     D3DX10.CreateTextureFromMemory(device, (IntPtr)pBuffer, memory.Length, null, IntPtr.Zero,
-                                                   out temp, 0);
+                                                   out temp, ref resultOut);
                 return temp == null ? null : (T) Activator.CreateInstance(typeof (T), temp.NativePointer);
             }
         }
@@ -115,9 +118,10 @@ namespace SlimDX2.Direct3D10
                 Debug.Assert(memory != null);
                 Debug.Assert(memory.Length > 0);
                 Resource temp;
+                int resultOut = 0;
                 fixed (void* pBuffer = &memory[0])
                     D3DX10.CreateTextureFromMemory(device, (IntPtr)pBuffer, memory.Length, loadInfo, IntPtr.Zero,
-                                                   out temp, 0);
+                                                   out temp, ref resultOut);
                 return temp == null ? null : (T) Activator.CreateInstance(typeof (T), temp.NativePointer);
             }
         }
