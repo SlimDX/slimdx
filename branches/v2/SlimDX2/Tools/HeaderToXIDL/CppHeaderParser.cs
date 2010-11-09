@@ -128,6 +128,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
             preProcessor.DefineMacro("D3D10_NO_HELPERS=1", true);
             preProcessor.DefineMacro("CONST=const", true);
             preProcessor.DefineMacro("LPRECT=RECT *", true);
+            preProcessor.DefineMacro("LPCSTR=const char *", true);
             preProcessor.DefineMacro("__RPCNDR_H_VERSION__=1", true);
             preProcessor.DefineMacro("__REQUIRED_RPCNDR_H_VERSION__=475", true);
             preProcessor.DefineMacro("__REQUIRED_RPCSAL_H_VERSION__=100", true);
@@ -135,6 +136,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
             preProcessor.DefineMacro("LPVOID=void*", true);
             preProcessor.DefineMacro("LPCSTR=const char*", true);
             preProcessor.DefineMacro("LPCWSTR=const wchar*", true);
+            preProcessor.DefineMacro("DECLARE_HANDLE(name)=", true);
             preProcessor.DefineMacro("__reserved=", true);
             preProcessor.DefineMacro("WCHAR=wchar", true);
             preProcessor.DefineMacro("STDMETHOD(method)=virtual HRESULT STDMETHODCALLTYPE method", true);
@@ -162,6 +164,16 @@ namespace SlimDX2.Tools.HeaderToXIDL
             preProcessor.DefineMacro( "DEFINE_GUID(name, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11)=", true);
             // Make possible to parse HRESULT macros
             preProcessor.DefineMacro("MAKE_HRESULT(sev,fac,code)=( ((sev)<<31) | ((fac)<<16) | (code) )", true);
+
+            // D3D9
+            preProcessor.DefineMacro("D3DVECTOR_DEFINED=", true);
+            preProcessor.DefineMacro("D3DCOLORVALUE_DEFINED=", true);
+            preProcessor.DefineMacro("D3DRECT_DEFINED=", true);
+            preProcessor.DefineMacro("D3DMATRIX_DEFINED=", true);
+            preProcessor.DefineMacro("D3DVECTOR_DEFINED=", true);
+            preProcessor.DefineMacro("MAX_FVF_DECL_SIZE=65",true);
+            preProcessor.DefineMacro("WOW64_ENUM_WORKAROUND=", true);
+            preProcessor.DefineMacro("STDAPI=HRESULT WINAPI", true);
 
             // DWrite macros
             preProcessor.DefineMacro("DWRITE_EXPORT=WINAPI", true);
@@ -499,6 +511,38 @@ namespace SlimDX2.Tools.HeaderToXIDL
         }
 
         /// <summary>
+        /// Return true if next statements are probably a function
+        /// </summary>
+        /// <returns></returns>
+        private bool IsProbablyFunction()
+        {
+            int position = 0;
+            int count = 0;
+            do
+            {
+                Token token = GetTokenFrom(position);
+                if (token == null)
+                    break;
+                if (token.Id == TokenId.Leftparen)
+                    count++;
+                else if (token.Id == TokenId.Rightparen)
+                    count--;
+                else if (token.Id == TokenId.Leftbrace)
+                    break;
+                else if (token.Id == TokenId.Semicolon)
+                {
+                    if (GetTokenFrom(position - 1).Id == TokenId.Rightparen)
+                    {
+                        return true;
+                    }
+                }
+                position++;
+            } while (true);
+            return false;
+        }
+
+
+        /// <summary>
         /// Go to next Cpp statement
         /// </summary>
         /// <param name="rightBraceFollowedByNoSemiColon">if true, this will stop after a rightbrace } with 
@@ -583,12 +627,12 @@ namespace SlimDX2.Tools.HeaderToXIDL
         /// <summary>
         /// Parse an enum from the current token
         /// </summary>
-        private void ParseEnum()
+        private CppEnum ParseEnum()
         {
             ReadNextToken();
 
             var cppEnum = new CppEnum();
-            cppEnum.Name = StripLeadingUnderscore(CurrentToken.Value);
+            cppEnum.Name = CurrentToken.Value; // StripLeadingUnderscore(CurrentToken.Value);
             CurrentInclude.Add(cppEnum);
 
             SkipUntilTokenId(TokenId.Leftbrace);
@@ -622,7 +666,8 @@ namespace SlimDX2.Tools.HeaderToXIDL
             } while (true);
 
             // Parse Tokens
-            NextStatement();
+            // NextStatement();
+            return cppEnum;
         }
 
         /// <summary>
@@ -776,14 +821,20 @@ namespace SlimDX2.Tools.HeaderToXIDL
         /// <summary>
         /// Parse a struct from current token stream
         /// </summary>
-        private void ParseStruct()
+        private CppStruct ParseStruct(bool isAnonymousStruct = false, CppStruct parentStruct = null)
         {
-            ReadNextToken();
-
             var cppStruct = new CppStruct();
-            cppStruct.Name = StripLeadingUnderscore(CurrentToken.Value);
-            CurrentInclude.Add(cppStruct);
 
+            if (!isAnonymousStruct)
+            {
+                ReadNextToken();
+                cppStruct.Name = CurrentToken.Value; // StripLeadingUnderscore(CurrentToken.Value);
+            }
+            else
+            {
+                cppStruct.Name = parentStruct.Name + "Inner";
+            }
+            CurrentInclude.Add(cppStruct);
 
             // Skip to structure fields declaration
             SkipUntilTokenId(TokenId.Leftbrace);
@@ -800,9 +851,26 @@ namespace SlimDX2.Tools.HeaderToXIDL
                 if (type.Id == TokenId.Rightbrace)
                     break;
 
-                // Handle union
-                if (type.Id == TokenId.Union)
+                // Handle anonymous struct
+                if (type.Id == TokenId.Struct)
                 {
+                    CppField cppField;
+                    if (PreviewNextToken().Value == cppStruct.Name)
+                    {
+                        ReadNextToken();
+                        cppField = ReadStructField(cppStruct, fieldOffset);
+                    }
+                    else
+                    {
+                        CppStruct innerStruct = ParseStruct(true, cppStruct);
+                        NextStatement();
+                        cppField = new CppField {Type = innerStruct.Name, Name = "_anonymous_field_", Offset = fieldOffset};
+                    }
+                    cppStruct.Add(cppField);
+                }
+                else if (type.Id == TokenId.Union)
+                {
+                    // Handle union
                     SkipUntilTokenId(TokenId.Leftbrace);
 
                     do
@@ -810,11 +878,27 @@ namespace SlimDX2.Tools.HeaderToXIDL
                         ReadNextToken();
                         type = CurrentToken;
 
-                        if (type.Id == TokenId.Rightbrace)
+                        // Handle inner struct inside union (!)
+                        if (type.Id == TokenId.Struct)
+                        {
+                            CppField cppField;
+                            if (PreviewNextToken().Value == cppStruct.Name)
+                            {
+                                ReadNextToken();
+                                cppField = ReadStructField(cppStruct, fieldOffset);
+                            }
+                            else
+                            {
+                                CppStruct innerStruct = ParseStruct(true, cppStruct);
+                                NextStatement();
+                                cppField = new CppField { Type = innerStruct.Name, Name = "_anonymous_field_", Offset = fieldOffset };
+                            }
+                            cppStruct.Add(cppField);
+                        }
+                        else if (type.Id == TokenId.Rightbrace)
                             break;
-
-
-                        cppStruct.Add(ReadStructField(cppStruct, fieldOffset));
+                        else                     
+                            cppStruct.Add(ReadStructField(cppStruct, fieldOffset));
                     } while (true);
                     NextStatement();
                 }
@@ -831,30 +915,31 @@ namespace SlimDX2.Tools.HeaderToXIDL
                 fieldOffset++;
             } while (true);
 
-            NextStatement();
+            //NextStatement();
 
-            var newTypeDef = new CppTypedef();
+            //var newTypeDef = new CppTypedef();
 
-            // Create default "LP and LPC" typedefs
-            // This is just in case we did not catch them 
-            // from a typedef struct declaration
+            //// Create default "LP and LPC" typedefs
+            //// This is just in case we did not catch them 
+            //// from a typedef struct declaration
 
-            // Add default pointer to struct
-            newTypeDef.Name = "LP" + cppStruct.Name;
-            newTypeDef.Specifier = "*";
-            newTypeDef.IsArray = false;
-            newTypeDef.Const = false;
-            newTypeDef.Type = cppStruct.Name;
-            AddTypeDef(newTypeDef);
+            //// Add default pointer to struct
+            //newTypeDef.Name = "LP" + cppStruct.Name;
+            //newTypeDef.Specifier = "*";
+            //newTypeDef.IsArray = false;
+            //newTypeDef.Const = false;
+            //newTypeDef.Type = cppStruct.Name;
+            //AddTypeDef(newTypeDef);
 
-            newTypeDef = new CppTypedef();
-            // Add default const pointer to struct
-            newTypeDef.Name = "LPC" + cppStruct.Name;
-            newTypeDef.Specifier = "*";
-            newTypeDef.IsArray = false;
-            newTypeDef.Const = true;
-            newTypeDef.Type = cppStruct.Name;
-            AddTypeDef(newTypeDef);
+            //newTypeDef = new CppTypedef();
+            //// Add default const pointer to struct
+            //newTypeDef.Name = "LPC" + cppStruct.Name;
+            //newTypeDef.Specifier = "*";
+            //newTypeDef.IsArray = false;
+            //newTypeDef.Const = true;
+            //newTypeDef.Type = cppStruct.Name;
+            //AddTypeDef(newTypeDef);
+            return cppStruct;
         }
 
         /// <summary>
@@ -995,11 +1080,20 @@ namespace SlimDX2.Tools.HeaderToXIDL
 
             method.ReturnType = ReadType<CppType>(false);
 
-            // Parse Calling Convention
-            method.CallingConvention = ParseCallingConvention(CurrentToken.Value);
+            if (PreviewNextToken().Id != TokenId.Leftparen)
+            {
+                // Parse Calling Convention
+                method.CallingConvention = ParseCallingConvention(CurrentToken.Value);
 
-            // Skip STDMETHODCALLTYPE
-            ReadNextToken();
+                // Skip STDMETHODCALLTYPE
+                ReadNextToken();
+
+                if (PreviewNextToken().Id != TokenId.Leftparen)
+                {
+                    Console.WriteLine("Unexpected token");
+                }
+            }
+
 
             // MethodName
             method.Name = CurrentToken.Value;
@@ -1024,7 +1118,11 @@ namespace SlimDX2.Tools.HeaderToXIDL
                     ReadNextToken();
 
                 CppParameter arg = ParseMethodParameter();
-
+                // Parameter lest name
+                if (arg.Name == null)
+                {
+                    arg.Name = "arg" + method.InnerElements.Count;                    
+                }
                 method.Add(arg);
             } while (true);
 
@@ -1073,19 +1171,32 @@ namespace SlimDX2.Tools.HeaderToXIDL
                     return;
                 }
             }
-            var cppInterface = new CppInterface();
+
+            string guid = null;
 
             // Read Interface Name
             ReadNextToken();
             if (CurrentToken.Id == TokenId.Special1)
             {
-                cppInterface.Guid = CurrentToken.RawValue;
+                guid = CurrentToken.RawValue;
                 ReadNextToken();
             }
-            CurrentInclude.Add(cppInterface);
 
-            cppInterface.Name = CurrentToken.Value;
-            declaredInterface.Add(cppInterface.Name, cppInterface);
+            string interfaceName = CurrentToken.Value;
+
+            // Retreive any previously declared interface
+            var cppInterface = CurrentInclude.FindFirst<CppInterface>("^" + interfaceName + "$");
+            if (cppInterface == null)
+            {
+                cppInterface = new CppInterface();
+                cppInterface.Name = interfaceName;
+                CurrentInclude.Add(cppInterface);
+                declaredInterface.Add(cppInterface.Name, cppInterface);
+            }
+
+            if (guid != null)
+                cppInterface.Guid = guid;
+            
 
             cppInterface.ParentName = "";
 
@@ -1094,63 +1205,69 @@ namespace SlimDX2.Tools.HeaderToXIDL
             if (CurrentToken.Id == TokenId.Colon)
             {
                 ReadNextToken(); // public
+                if (CurrentToken.Id != TokenId.Public)
+                {
+                    throw new ArgumentException("Exception public in interface parent " + cppInterface.Name);
+                }
 
                 ReadNextToken(); // inherited name
                 cppInterface.ParentName = CurrentToken.Value;
             }
 
-            // Until {
-            SkipUntilTokenId(TokenId.Leftbrace);
-
-            do
+            if (CurrentToken.Id != TokenId.Semicolon)
             {
-                ReadNextToken();
-                if (CurrentToken.Id == TokenId.Rightbrace)
-                    break;
-                if (CurrentToken.Id == TokenId.Public)
+                // Until {
+                SkipUntilTokenId(TokenId.Leftbrace);
+
+                do
                 {
-                    // Consume public
                     ReadNextToken();
-                    continue;
-                }
+                    if (CurrentToken.Id == TokenId.Rightbrace)
+                        break;
+                    if (CurrentToken.Id == TokenId.Public)
+                    {
+                        // Consume public
+                        ReadNextToken();
+                        continue;
+                    }
 
-                CppMethod method = ParseVirtualMethod();
+                    CppMethod method = ParseVirtualMethod();
 
-                // Method could be null if it has a body
-                if (method != null)
-                    cppInterface.Add(method);
-            } while (true);
+                    // Method could be null if it has a body
+                    if (method != null)
+                        cppInterface.Add(method);
+                } while (true);
 
-            // Remove duplicate inheritance for old COM declaration
-            RemoveDuplicateInheritance(cppInterface);
-
+                // Remove duplicate inheritance for old COM declaration
+                RemoveDuplicateInheritance(cppInterface);
+            }
             // Go to next statement
             NextStatement();
 
-            // Add pointer to interface
-            var newTypeDef = new CppTypedef();
+            //// Add pointer to interface
+            //var newTypeDef = new CppTypedef();
 
 
-            string interfaceNameWithoutI = cppInterface.Name.StartsWith("I")
-                                               ? cppInterface.Name.Substring(1)
-                                               : cppInterface.Name;
+            //string interfaceNameWithoutI = cppInterface.Name.StartsWith("I")
+            //                                   ? cppInterface.Name.Substring(1)
+            //                                   : cppInterface.Name;
 
-            // Add default pointer to struct
-            newTypeDef.Name = "LP" + interfaceNameWithoutI;
-            newTypeDef.Specifier = "*";
-            newTypeDef.IsArray = false;
-            newTypeDef.Const = false;
-            newTypeDef.Type = cppInterface.Name;
-            AddTypeDef(newTypeDef);
+            //// Add default pointer to struct
+            //newTypeDef.Name = "LP" + interfaceNameWithoutI;
+            //newTypeDef.Specifier = "*";
+            //newTypeDef.IsArray = false;
+            //newTypeDef.Const = false;
+            //newTypeDef.Type = cppInterface.Name;
+            //AddTypeDef(newTypeDef);
 
-            newTypeDef = new CppTypedef();
-            // Add default const pointer to struct
-            newTypeDef.Name = "LPC" + interfaceNameWithoutI;
-            newTypeDef.Specifier = "*";
-            newTypeDef.IsArray = false;
-            newTypeDef.Const = true;
-            newTypeDef.Type = cppInterface.Name;
-            AddTypeDef(newTypeDef);
+            //newTypeDef = new CppTypedef();
+            //// Add default const pointer to struct
+            //newTypeDef.Name = "LPC" + interfaceNameWithoutI;
+            //newTypeDef.Specifier = "*";
+            //newTypeDef.IsArray = false;
+            //newTypeDef.Const = true;
+            //newTypeDef.Type = cppInterface.Name;
+            //AddTypeDef(newTypeDef);
         }
 
         /// <summary>
@@ -1251,18 +1368,38 @@ namespace SlimDX2.Tools.HeaderToXIDL
             // Skip typedef token
             ReadNextToken();
 
+            string typeName = null;
+
             // If typedef contains a body then parse it
             if (CheckBody())
             {
+                CppElement cppTypeDefDeclare;
                 if (CurrentToken.Id == TokenId.Struct)
                 {
-                    ParseStruct();
+                    cppTypeDefDeclare = ParseStruct();
                 }
                 else if (CurrentToken.Id == TokenId.Enum)
-                    ParseEnum();
+                    cppTypeDefDeclare = ParseEnum();
                 else
                     throw new ArgumentException(string.Format("Unexpected token {0} after typedef",
                                                               CurrentToken));
+
+                ReadNextToken();
+                string newStructName = CurrentToken.Value;
+
+                // Special case where a field in a struct is referencing the struct itself
+                // We need to reflect the new struct name to the field type
+                if (cppTypeDefDeclare is CppStruct)
+                {
+                    CppStruct cppStruct = cppTypeDefDeclare as CppStruct;
+                    foreach (var cppField in cppStruct.Fields)
+                    {
+                        if (cppField.Type == cppStruct.Name)
+                            cppField.Type = newStructName;
+                    }
+                }
+                cppTypeDefDeclare.Name = newStructName;
+                typeName = cppTypeDefDeclare.Name;
             }
             else
             {
@@ -1284,9 +1421,53 @@ namespace SlimDX2.Tools.HeaderToXIDL
                         cppTypedef.Type = StripLeadingUnderscore(cppTypedef.Type);
 
                     AddTypeDef(cppTypedef);
+                    typeName = cppTypedef.Name;
                 }
-                NextStatement();
             }
+
+            // If we found a typename, then continue, else It is more likely to be 
+            // a typedef for a function that we don't parse
+            if (typeName != null)
+            {
+                do
+                {
+                    ReadNextToken();
+                    if (CurrentToken.Id == TokenId.Semicolon)
+                        break;
+                    if (CurrentToken.Id == TokenId.Comma)
+                    {
+                        CppTypedef newTypeDef = new CppTypedef();
+                        newTypeDef.Type = typeName;
+                        do
+                        {
+                            TokenId previewTokenId = PreviewNextToken().Id;
+                            if (previewTokenId == TokenId.Comma || previewTokenId == TokenId.Semicolon)
+                                break;
+
+                            ReadNextToken();
+                            // Handle pointer specifiers
+                            if (CurrentToken.Id == TokenId.Star || CurrentToken.Id == TokenId.And)
+                            {
+                                newTypeDef.Specifier += "*";
+                            }
+                            else if (CurrentToken.Id == TokenId.Const)
+                            {
+                                newTypeDef.Const = true;
+                            }
+                            else if (CurrentToken.Id == TokenId.Identifier)
+                            {
+                                newTypeDef.Name = CurrentToken.Value;
+                            }
+                            else
+                            {
+                                throw new ArgumentException(string.Format("Invalid token found in typedef {0} {1}", CurrentToken.Id, CurrentToken.Value));
+                            }
+                        } while (true);
+                        AddTypeDef(newTypeDef);
+                    }
+                } while (true);
+            }
+            NextStatement();
         }
 
         /// <summary>
@@ -1325,17 +1506,20 @@ namespace SlimDX2.Tools.HeaderToXIDL
                 else if (CurrentToken.Id == TokenId.Struct)
                 {
                     ParseStruct();
+                    NextStatement();
                 }
                 else if (CurrentToken.Id == TokenId.Enum)
                 {
                     ParseEnum();
+                    NextStatement();
                 }
                 else if (CurrentToken.Id == TokenId.Identifier || PreviewNextTokenValue() == "WINAPI")
                 {
-                    if (CurrentToken.Value == "interface" || CurrentToken.Value == "MIDL_INTERFACE")
+                    if (CurrentToken.Value == "interface")
                         ParseInterface();
-                    else if (CurrentToken.Value == "HRESULT" || PreviewNextTokenValue() == "WINAPI")
-                    {
+                    else if (IsProbablyFunction())
+                    {                        
+                        //CurrentToken.Value == "HRESULT" || PreviewNextTokenValue() == "WINAPI"
                         ParseFunction();
                     }
                     else

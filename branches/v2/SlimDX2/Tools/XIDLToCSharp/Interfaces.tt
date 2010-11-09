@@ -246,7 +246,7 @@ foreach (var sharpInterface in Namespace.Interfaces)
 <#+							}
 						} else {#>
                 <#= param.PublicType.FullName #>.__Native <#= param.TempName #> = new <#= param.PublicType.FullName #>.__Native();
-<#+							if (param.IsRefIn && param.HasNativeValueType) {#>
+<#+							if ((param.IsRefIn || param.IsRef) && param.HasNativeValueType) {#>
                 <#= param.Name #>.__MarshalTo(ref <#= param.TempName #>);
 <#+							}
 						}						
@@ -388,6 +388,9 @@ foreach (var sharpInterface in Namespace.Interfaces)
                 for (int i = 0; i < <#= param.Name #>.Length; i++)
                     <#= param.TempName #>_[i].__MarshalFree();				
 <#+						} else {
+							if (param.IsRef) {
+#>                <#= param.Name #>.__MarshalFrom(ref <#= param.TempName #>);
+<#+						}
 #>                <#= param.TempName #>.__MarshalFree();
 <#+						}
 					}

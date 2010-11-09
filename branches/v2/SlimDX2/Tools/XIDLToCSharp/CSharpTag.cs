@@ -18,6 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using SlimDX2.Tools.XIDL;
+using System.Linq;
 
 namespace SlimDX2.Tools.XIDLToCSharp
 {
@@ -79,6 +80,39 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
     public static class CppElementExtensions
     {
+
+        /// <summary>
+        /// Modify all Get methods that are outputing a parameter but don't specify Out.
+        /// Replace "None" attribute to "Out" for those methods
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="regex"></param>
+        public static void ModifyToGetMethods(this CppElement element, string regex)
+        {
+            element.Modify<CppMethod>(regex, (pathREgex, elementArg) =>
+                                                 {
+                                                     CppMethod method = elementArg as CppMethod;
+                                                     if (method.Name.StartsWith("Get") || method.Name.StartsWith("Is"))
+                                                     {
+                                                         int paramCount = method.Parameters.Count();
+                                                         foreach (var cppParameter in method.Parameters)
+                                                         {
+                                                             var specifier = cppParameter.Specifier ?? "";
+                                                             if (cppParameter.Attribute == CppAttribute.None && specifier.Contains("*"))
+                                                             {
+                                                                 if ( (paramCount == 1 && cppParameter.Type == "char") || cppParameter.Type == "void")
+                                                                     continue;
+                                                                 cppParameter.Attribute = CppAttribute.Out;
+                                                             }
+                                                         }
+                                                     }
+                                                     return false;
+                                                 });
+        }
+
+
+
+
         /// <summary>
         /// Tag an element with a new visibility, propery and mapping name.
         /// </summary>

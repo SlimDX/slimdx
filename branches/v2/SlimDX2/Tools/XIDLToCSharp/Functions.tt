@@ -107,7 +107,7 @@ foreach (var sharpFunctionGroup in Namespace.FunctionGroups)
 <#
 							}
 						}
-					} else if (param.IsIn || param.IsRefIn) {
+					} else if (param.IsIn || param.IsRefIn || param.IsRef) {
 						if (param.HasNativeValueType ) {
 							if (param.IsArray) {
 #>                <#= param.PublicType.FullName #>.__Native[] <#= param.TempName #> = ( <#= param.Name #> == null)? null : new <#= param.PublicType.FullName #>.__Native[<#= param.Name #>.Length];
@@ -170,7 +170,7 @@ foreach (var sharpFunctionGroup in Namespace.FunctionGroups)
 #>                <#= param.Name #> = (<#= param.TempName #> == IntPtr.Zero)?null:new <#= param.PublicType.FullName #>(<#= param.TempName #>);
 <#							}
 						}
-					} else if (param.IsIn || param.IsRefIn) {
+					} else if (param.IsIn || param.IsRefIn || param.IsRef) {
 						if (param.HasNativeValueType && param.IsArray) {
 #>                    if ( <#= param.Name #> != null)
                     for(int i = 0; i < <#= param.Name #>.Length; i++) {

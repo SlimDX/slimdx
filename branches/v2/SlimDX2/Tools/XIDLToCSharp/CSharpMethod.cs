@@ -161,6 +161,11 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 get { return Name + "_"; }
             }
 
+            public bool IsRef
+            {
+                get { return Attribute == ParameterAttribute.Ref; }
+            }
+
             public bool IsRefIn
             {
                 get { return Attribute == ParameterAttribute.RefIn; }
@@ -201,9 +206,19 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 get { return IsRefIn && IsValueType && !IsArray && IsOptionnal; }
             }
 
-            public bool IsRefInValueTypeByValue
+            public bool IsRefInValueTypeSmall
             {
                 get { return IsRefIn && IsValueType && !IsArray && PublicType.SizeOf <= SizeOfLimit && !HasNativeValueType; }
+            }
+
+            public bool IsRefInValueTypeByPointer
+            {
+                get { return IsRefInValueTypeSmall && HasPointer; }
+            }
+
+            public bool IsRefInValueTypeByValue
+            {
+                get { return IsRefInValueTypeSmall; }
             }
 
             public string ParamName
@@ -379,7 +394,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     }
                     if (IsRefInValueTypeOptional)
                         return "(" + Name + ".HasValue)?&" + TempName + ":(void*)IntPtr.Zero";
-                    if (IsRefInValueTypeByValue)
+                    if (IsRefInValueTypeSmall)
                         return "&" + Name;
                     if (PublicType is CSharpEnum || PublicType.Type == typeof (uint))
                         return "unchecked((int)" + Name + ")";

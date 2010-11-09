@@ -1,0 +1,99 @@
+﻿// Copyright (c) 2007-2010 SlimDX Group
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+using System;
+using SlimDX2.Tools.XIDL;
+
+namespace SlimDX2.Tools.XIDLToCSharp
+{
+    internal partial class Program
+    {
+
+        public unsafe void MapD3DCompiler()
+        {
+            gen.RenameTypePart("^D3DCOMPILE", "");
+
+            // Move some D3DCommon types to D3DCompiler
+            gen.MapTypeToNamespace("^D3D_PRIMITIVE$", Global.Name + ".D3DCompiler");
+            gen.MapTypeToNamespace("^D3D_CBUFFER_TYPE$", Global.Name + ".D3DCompiler");
+            gen.MapTypeToNamespace("^D3D_RESOURCE_RETURN_TYPE$", Global.Name + ".D3DCompiler");
+            gen.MapTypeToNamespace("^D3D_SHADER_CBUFFER_FLAGS$", Global.Name + ".D3DCompiler");
+            gen.MapTypeToNamespace("^D3D_SHADER_INPUT_TYPE$", Global.Name + ".D3DCompiler");
+            gen.MapTypeToNamespace("^D3D_SHADER_VARIABLE_FLAGS$", Global.Name + ".D3DCompiler");
+            gen.MapTypeToNamespace("^D3D_SHADER_VARIABLE_CLASS$", Global.Name + ".D3DCompiler");
+            gen.MapTypeToNamespace("^D3D_SHADER_VARIABLE_FLAG$S", Global.Name + ".D3DCompiler");
+            gen.MapTypeToNamespace("^D3D_SHADER_VARIABLE_TYPE$", Global.Name + ".D3DCompiler");
+            gen.MapTypeToNamespace("^D3D_TESSELLATOR_DOMAIN$", Global.Name + ".D3DCompiler");
+            gen.MapTypeToNamespace("^D3D_TESSELLATOR_PARTITIONING$", Global.Name + ".D3DCompiler");
+            gen.MapTypeToNamespace("^D3D_TESSELLATOR_OUTPUT_PRIMITIVE$", Global.Name + ".D3DCompiler");
+            gen.MapTypeToNamespace("^D3D_SHADER_INPUT_FLAGS$", Global.Name + ".D3DCompiler");
+            gen.MapTypeToNamespace("^D3D_NAME$", Global.Name + ".D3DCompiler");
+            gen.MapTypeToNamespace("^D3D_REGISTER_COMPONENT_TYPE$", Global.Name + ".D3DCompiler");
+            gen.MapTypeToNamespace("^ID3DInclude$", Global.Name + ".D3DCompiler");
+            gen.MapTypeToNamespace("^D3D_INCLUDE_TYPE$", Global.Name + ".D3DCompiler");
+
+            gen.RenameType(@"^D3DCOMPILE(.+)", "$1", false, TypeContext.Root);
+
+            // --------------------------------------------------------------------------------------------------------
+            // D3DCompiler Enumerations
+            // --------------------------------------------------------------------------------------------------------
+            group.Modify<CppEnumItem>(@"D3D(\d+)_PRIMITIVE_TOPOLOGY_.*", Modifiers.Remove);
+            group.Modify<CppEnumItem>(@"D3D(\d+)_PRIMITIVE_.*", Modifiers.Remove);
+            group.ModifyAll(".*", Modifiers.RenameType("D3D11_PRIMITIVE_TOPOLOGY", "D3D_PRIMITIVE_TOPOLOGY"));
+            group.ModifyAll(".*", Modifiers.RenameType("D3D10_SHADER_MACRO", "D3D_SHADER_MACRO"));
+
+            group.Modify<CppEnumItem>(@"D3D(\d+)_SRV_DIMENSION_.*", Modifiers.Remove);
+            group.Modify<CppEnumItem>(@"D3D(\d+_1)_SRV_DIMENSION_.*", Modifiers.Remove);
+
+            // Create enums from macros
+            group.CreateEnumFromMacros(@"^D3DCOMPILE_[^E][^F].*", "D3DCOMPILE_SHADER_FLAGS");
+            group.CreateEnumFromMacros(@"^D3DCOMPILE_EFFECT_.*", "D3DCOMPILE_EFFECT_FLAGS");
+            group.CreateEnumFromMacros(@"^D3D_DISASM_.*", "D3DCOMPILE_DISASM_FLAGS");
+
+            // --------------------------------------------------------------------------------------------------------
+            // D3DCompiler Interfaces
+            // --------------------------------------------------------------------------------------------------------
+            group.Modify<CppParameter>(@"^ID3D(\d+)ShaderReflectionConstantBuffer::GetDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
+
+            // --------------------------------------------------------------------------------------------------------
+            // D3DCompiler Structures
+            // --------------------------------------------------------------------------------------------------------
+            group.TagTypeName<CppField>(@"^D3D_SHADER_DATA::pBytecode$", null, "BytecodePtr");
+
+            // --------------------------------------------------------------------------------------------------------
+            // D3DCompiler Functions
+            // --------------------------------------------------------------------------------------------------------
+            CSharpFunctionGroup d3dFunctionGroup = gen.CreateFunctionGroup(Global.Name + ".D3DCompiler", Global.Name + ".D3DCompiler", "D3D");
+
+            // Map All D3D(Compiler) functions to D3D Function Group
+            group.TagFunction(@"^D3D[^1].*", D3DCompilerDLLName, d3dFunctionGroup);
+            // Override last Tag to move D3DCreateBlob to D3DCommon
+            group.TagFunction(@"^D3DCreateBlob$", D3DCompilerDLLName, D3DCommonFunctionGroup);
+
+            group.TagTypeName<CppParameter>(@"^D3DCompile.*?::Flags1$", "D3DCOMPILE_SHADER_FLAGS");
+            group.TagTypeName<CppParameter>(@"^D3DCompile.*?::Flags2$", "D3DCOMPILE_EFFECT_FLAGS");
+            group.TagTypeName<CppParameter>(@"^D3DDisassemble::Flags$", "D3DCOMPILE_DISASM_FLAGS");
+            group.TagTypeName<CppParameter>(@"^D3DStripShader::uStripFlags$", "D3DCOMPILER_STRIP_FLAGS");
+
+            // pDefines is an array of Macro (and not just In)
+            group.Modify<CppParameter>("^D3DCompile::pDefines", Modifiers.ParameterAttribute(CppAttribute.In | CppAttribute.Buffer | CppAttribute.Optional));
+            group.Modify<CppParameter>("^D3DPreprocess::pDefines", Modifiers.ParameterAttribute(CppAttribute.In | CppAttribute.Buffer | CppAttribute.Optional));
+        }
+    }
+}

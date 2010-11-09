@@ -2,6 +2,33 @@
 struct Win32 {
 };
 
+#define DWORD int
+#define BYTE byte
+#define PDWORD DWORD *
+#define IStream void
+
+// Used by D3D9
+typedef struct _RGNDATAHEADER {
+  DWORD dwSize;
+  DWORD iType;
+  DWORD nCount;
+  DWORD nRgnSize;
+  RECT  rcBound;
+} RGNDATAHEADER, *PRGNDATAHEADER;
+
+typedef struct tagPALETTEENTRY {
+  BYTE peRed;
+  BYTE peGreen;
+  BYTE peBlue;
+  BYTE peFlags;
+} PALETTEENTRY;
+
+// Used by D3D9
+typedef struct _RGNDATA {
+  RGNDATAHEADER rdh;
+  char          Buffer[1];
+} RGNDATA, *PRGNDATA;
+
 
 // Used by D3D9/D3D10 Font
 typedef struct TEXTMETRICW {
