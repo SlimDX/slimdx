@@ -91,13 +91,6 @@ foreach (var sharpStruct in Namespace.Structs)
 #>
         /// <unmanaged><#= sharpStructItem.CppElement.ToString() #></unmanaged>
 <#+
-		if (!sharpStruct.HasMarshalType) {
-			if (sharpStruct.ExplicitLayout) {
-#>
-        [FieldOffset(<#= sharpStructItem.Offset #>)]
-<#+
-			}
-		}		
 		if (sharpStructItem.PublicType.FullName == "bool") {
 #>
         <#= sharpStructItem.VisibilityName #>bool <#= sharpStructItem.Name #> { 
@@ -108,8 +101,16 @@ foreach (var sharpStruct in Namespace.Structs)
                 _<#= sharpStructItem.Name #> = value?1:0;
             }
         }
-        internal int _<#= sharpStructItem.Name #>;
 <#+
+			if (!sharpStruct.HasMarshalType  && sharpStruct.ExplicitLayout) {
+#>
+        [FieldOffset(<#= sharpStructItem.Offset #>)]
+<#+			
+			}		
+#>        internal int _<#= sharpStructItem.Name #>;
+<#+
+
+			
 		} else if (sharpStructItem.IsArray && sharpStructItem.PublicType.FullName != "string") {
 #>
         <#= sharpStructItem.VisibilityName #><#= sharpStructItem.PublicType.FullName #>[] <#= sharpStructItem.Name #> { 
@@ -120,9 +121,19 @@ foreach (var sharpStruct in Namespace.Structs)
                 return _<#= sharpStructItem.Name #>; 
             }
         }
-        internal <#= sharpStructItem.PublicType.FullName #>[] _<#= sharpStructItem.Name #>;
+<#+			if (!sharpStruct.HasMarshalType  && sharpStruct.ExplicitLayout) {
+#>
+        [FieldOffset(<#= sharpStructItem.Offset #>)]
+<#+			
+			}		
+#>        internal <#= sharpStructItem.PublicType.FullName #>[] _<#= sharpStructItem.Name #>;
 <#+
 		} else {
+			if (!sharpStruct.HasMarshalType  && sharpStruct.ExplicitLayout) {
+#>
+        [FieldOffset(<#= sharpStructItem.Offset #>)]
+<#+			
+			}		
 #>
         <#= sharpStructItem.VisibilityName #><#= sharpStructItem.PublicType.FullName #> <#= sharpStructItem.Name #>;
 <#+

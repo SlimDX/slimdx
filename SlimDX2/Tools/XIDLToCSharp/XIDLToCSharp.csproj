@@ -115,6 +115,14 @@
     <Compile Include="InteropGenerator.cs" />
     <Compile Include="MacroParser.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProgramD3DCompiler.cs" />
+    <Compile Include="ProgramDirect2D1.cs" />
+    <Compile Include="ProgramDirect3D1x.cs" />
+    <Compile Include="ProgramDirect3D9.cs" />
+    <Compile Include="ProgramDirect3DCommon.cs" />
+    <Compile Include="ProgramDirectWrite.cs" />
+    <Compile Include="ProgramDXGI.cs" />
+    <Compile Include="ProgramWin32.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Visibility.cs" />

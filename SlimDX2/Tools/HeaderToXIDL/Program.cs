@@ -100,12 +100,30 @@ namespace SlimDX2.Tools.HeaderToXIDL
 
             cppHeaderParser.AddInclude("win32_ext.h");
 
+            // DXGI
             cppHeaderParser.AddInclude("dxgi.h");
             cppHeaderParser.AddInclude("dxgiformat.h");
             cppHeaderParser.AddInclude("dxgitype.h");
-            cppHeaderParser.AddInclude("d3dcommon.h");
-            cppHeaderParser.AddInclude("d3d10.h");
 
+            // Direct3D9
+            cppHeaderParser.AddInclude("d3d9.h");
+            cppHeaderParser.AddInclude("d3d9caps.h");
+            cppHeaderParser.AddInclude("d3d9types.h");
+            cppHeaderParser.AddInclude("d3dx9.h");
+            cppHeaderParser.AddInclude("d3dx9anim.h");
+            cppHeaderParser.AddInclude("d3dx9core.h");
+            cppHeaderParser.AddInclude("d3dx9effect.h");
+            cppHeaderParser.AddInclude("d3dx9mesh.h");
+            cppHeaderParser.AddInclude("d3dx9shader.h");
+            cppHeaderParser.AddInclude("d3dx9shape.h");
+            cppHeaderParser.AddInclude("d3dx9tex.h");
+            cppHeaderParser.AddInclude("d3dx9xof.h");
+
+            // Direct3D Common
+            cppHeaderParser.AddInclude("d3dcommon.h");
+
+            // Direct3D10 and Direct3D10.1
+            cppHeaderParser.AddInclude("d3d10.h");
             cppHeaderParser.AddInclude("d3d10_1.h");
             cppHeaderParser.AddInclude("d3d10shader.h");
             cppHeaderParser.AddInclude("d3d10_1shader.h");
@@ -117,6 +135,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
             cppHeaderParser.AddInclude("d3dx10tex.h");
             cppHeaderParser.AddInclude("d3dx10async.h");
 
+            // Direct3D 11
             cppHeaderParser.AddInclude("d3d11.h");
             cppHeaderParser.AddInclude("d3d11shader.h");
             cppHeaderParser.AddInclude("d3dx11.h");
@@ -125,6 +144,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
             cppHeaderParser.AddInclude("d3dx11async.h");
             cppHeaderParser.AddInclude("d3dcompiler.h");
 
+            // Direct2D1 and DirectWrite
             cppHeaderParser.AddInclude("dcommon.h");
             cppHeaderParser.AddInclude("dwrite.h");
             cppHeaderParser.AddInclude("d2d1.h");

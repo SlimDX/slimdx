@@ -188,6 +188,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     typeName = "ulong";
                 else if (type == typeof(float))
                     typeName = "float";
+                else if (type == typeof(double))
+                    typeName = "double";
                 else if (type == typeof(IntPtr))
                     typeName = "IntPtr";
                 else if (type == typeof(Guid))
@@ -445,9 +447,15 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 string fieldType = cppField.GetTypeNameWithMapping();
                 string fieldName = ConvertCppNameToCSharpName(cppField.Name, TypeContext.Struct);
 
-                bool hasPointer = !string.IsNullOrEmpty(cppField.Specifier) && cppField.Specifier.Contains("*");
+                string fieldSpecifier = string.IsNullOrEmpty(cppField.Specifier) ? "" : cppField.Specifier;
+                // Resolve from typedef
+                TypedefResolve(fieldType, out fieldType, ref fieldSpecifier);
+
+                bool hasPointer = !string.IsNullOrEmpty(fieldSpecifier) && fieldSpecifier.Contains("*");
 
                 int fieldSize = 0;
+
+
 
                 // Default IntPtr type for pointer, unless modified by specialized type (like char* map to string)
                 if (hasPointer)
@@ -496,6 +504,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
                                 hasArray = false;
                             }
                             break;
+                        case "short":
+                        case "USHORT":
+                        case "SHORT":
+                        case "WORD":
                         case "UINT16":
                         case "INT16":
                             fieldSize = 2;
@@ -521,16 +533,39 @@ namespace SlimDX2.Tools.XIDLToCSharp
                                 hasArray = false;
                             }
                             break;
+                        case "DOUBLE":
+                        case "double":
+                            fieldSize = 8;
+                            publicType = ImportType(typeof(double));
+
+                            //if (arrayDimension == 3)
+                            //{
+                            //    fieldSize = 3 * 4;
+                            //    publicType = ImportTypeFromName("SlimMath.Vector3", 3 * 4, false, true);
+                            //    arrayDimension = 0;
+                            //    hasArray = false;
+                            //}
+                            //else if (arrayDimension == 4)
+                            //{
+                            //    fieldSize = 4 * 4;
+                            //    publicType = ImportTypeFromName("SlimMath.Vector4", 4 * 4, false, true);
+                            //    arrayDimension = 0;
+                            //    hasArray = false;
+                            //}
+                            break;
                         case "BOOL":
                             fieldSize = 4;
                             publicType = ImportType(typeof (bool));
                             marshalType = ImportType(typeof (int));
                             break;
+                        case "byte":
                         case "BYTE":
                         case "UINT8":
                             fieldSize = 1;
                             publicType = ImportType(typeof (byte));
                             break;
+                        case "LONGLONG":
+                        case "ULONGLONG":
                         case "UINT64":
                         case "LARGE_INTEGER":
                             fieldSize = 8;
@@ -557,6 +592,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             fieldSize = 4;
                             publicType = ImportType(typeof (IntPtr));
                             break;
+                        case "UCHAR":
                         case "CHAR":
                         case "char":
                             fieldSize = 1;
@@ -720,6 +756,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 else if (name.StartsWith("p"))
                     name = name.Substring(1) + "Ref";
             }
+            if (char.IsDigit(name[0]))
+                name = "arg" + name;
             name = new string(name[0], 1).ToLower() + name.Substring(1);
 
             if (CSharpKeywords.IsKeyword(name))
@@ -733,8 +771,14 @@ namespace SlimDX2.Tools.XIDLToCSharp
             CSharpType publicType = null;
             CSharpType marshalType = null;
 
-            bool hasPointer = false;
-            switch (cpptype.GetTypeNameWithMapping())
+            string paramType = cpptype.GetTypeNameWithMapping();
+            string paramSpecifier = string.IsNullOrEmpty(cpptype.Specifier) ? "" : cpptype.Specifier;
+            // Resolve from typedef
+            TypedefResolve(paramType, out paramType, ref paramSpecifier);
+
+            bool hasPointer = paramSpecifier.Contains("*");
+
+            switch (paramType)
             {
                 case "void":
                     publicType = ImportType(typeof (void));
@@ -750,6 +794,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 case "DWORD":
                     publicType = ImportType(typeof (int));
                     break;
+                case "USHORT":
+                case "SHORT":
                 case "UINT16":
                 case "INT16":
                     publicType = ImportType(typeof(short));
@@ -758,10 +804,15 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 case "float":
                     publicType = ImportType(typeof (float));
                     break;
+                case "DOUBLE":
+                case "double":
+                    publicType = ImportType(typeof(double));
+                    break;
                 case "BOOL":
                     publicType = ImportType(typeof (bool));
                     marshalType = ImportType(typeof (int));
                     break;
+                case "byte":
                 case "BYTE":
                 case "UINT8":
                     publicType = ImportType(typeof (byte));
@@ -816,9 +867,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 default:
                     // Try to get a declared struct
                     // If it fails, then this struct is unknown
-                    if (!FindType(cpptype.GetTypeNameWithMapping(), out publicType, ref hasPointer))
+                    if (!FindType(paramType, out publicType, ref hasPointer))
                     {
-                        throw new ArgumentException("Unknown return type! {0}", cpptype.GetTypeNameWithMapping());
+                        throw new ArgumentException(string.Format("Unknown return type! {0}", paramType));
                     }
                     //if (!hasPointer)
                     //    throw new ArgumentException("Expecting pointer for param");
@@ -932,7 +983,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 CSharpType publicType = null;
                 CSharpType marshalType = null;
 
-                bool hasArray = cppParameter.IsArray || ((cppParameter.Attribute & CppAttribute.Buffer) != 0);
+                var cppAttribute = cppParameter.Attribute;
+
+                bool hasArray = cppParameter.IsArray || ((cppAttribute & CppAttribute.Buffer) != 0);
                 int arrayDimension = string.IsNullOrWhiteSpace(cppParameter.ArrayDimension)
                                          ? 0
                                          : int.Parse(cppParameter.ArrayDimension);
@@ -940,10 +993,13 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 string paramType = cppParameter.GetTypeNameWithMapping();
                 string paramName = ConvertMethodParameterName(cppParameter);
 
-                bool hasPointer = !string.IsNullOrEmpty(cppParameter.Specifier) &&
-                                  (cppParameter.Specifier.Contains("*") || cppParameter.Specifier.Contains("&"));
-                bool isOptional = (cppParameter.Attribute & CppAttribute.Optional) != 0;
 
+                var paramSpecifier = !string.IsNullOrEmpty(cppParameter.Specifier) ? cppParameter.Specifier : "";
+                // Resolve from typedef
+                TypedefResolve(paramType, out paramType, ref paramSpecifier);
+                
+                bool hasPointer = paramSpecifier.Contains("*") || paramSpecifier.Contains("&");
+                bool isOptional = (cppAttribute & CppAttribute.Optional) != 0;
 
                 if (hasArray)
                     hasPointer = true;
@@ -955,9 +1011,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 //    paramType = mapInterfaceField.NativeFieldType;
 
 
+
                 CSharpMethod.ParameterAttribute parameterAttribute = CSharpMethod.ParameterAttribute.In;
 
-                if (paramType == "void" && !hasPointer)
+                if (paramType.ToLower() == "void" && !hasPointer)
                     continue;
 
                 switch (paramType)
@@ -979,6 +1036,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             hasArray = false;
                         }
                         break;
+                    case "SHORT":
+                    case "USHORT":
                     case "UINT16":
                     case "INT16":
                         publicType = ImportType(typeof(short));
@@ -1000,10 +1059,27 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             hasArray = false;
                         }
                         break;
+                    case "DOUBLE":
+                    case "double":
+                        publicType = ImportType(typeof(double));
+                        //if (arrayDimension == 3)
+                        //{
+                        //    publicType = ImportTypeFromName("SlimMath.Vector3", 3 * 4, false, true);
+                        //    arrayDimension = 0;
+                        //    hasArray = false;
+                        //}
+                        //else if (arrayDimension == 4)
+                        //{
+                        //    publicType = ImportTypeFromName("SlimMath.Vector4", 4 * 4, false, true);
+                        //    arrayDimension = 0;
+                        //    hasArray = false;
+                        //}
+                        break;
                     case "BOOL":
                         publicType = ImportType(typeof (bool));
                         marshalType = ImportType(typeof (int));
                         break;
+                    case "byte":
                     case "BYTE":
                     case "UINT8":
                         publicType = ImportType(typeof (byte));
@@ -1029,9 +1105,12 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     case "HMONITOR":
                         publicType = ImportType(typeof (IntPtr));
                         break;
+                    case "LPGUID":
                     case "REFIID":
                     case "REFGUID":
                         publicType = ImportType(typeof (Guid));
+                        if (cppAttribute == CppAttribute.None)
+                            cppAttribute = CppAttribute.In;
                         hasPointer = true;
                         break;
                     case "CHAR":
@@ -1062,15 +1141,17 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     case "LUID":
                         publicType = ImportType(typeof (long));
                         break;
+                    case "PVOID":
                     case "LPCVOID":
                         publicType = ImportType(typeof (IntPtr));
-                        if ((cppParameter.Attribute & CppAttribute.Buffer) != 0)
+                        if ((cppAttribute & CppAttribute.Buffer) != 0)
                         {
                             hasArray = false;
-                            cppParameter.Attribute = cppParameter.Attribute & ~CppAttribute.Buffer;
+                            cppAttribute = cppAttribute & ~CppAttribute.Buffer;
                         }
                         hasPointer = true;
                         break;
+                    case "VOID":
                     case "void":
                         publicType = ImportType(typeof (IntPtr));
                         break;
@@ -1100,8 +1181,15 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
                     if (publicType is CSharpInterface)
                     {
-                        if (cppParameter.Attribute == CppAttribute.None ||
-                            (cppParameter.Attribute & CppAttribute.In) != 0 || (cppParameter.Attribute & CppAttribute.InOut) != 0)
+                        // Force Interface** to be CppAttribute.Out when None
+                        if (cppAttribute == CppAttribute.None)
+                        {
+                            if (paramSpecifier == "**" )
+                                cppAttribute = CppAttribute.Out;
+                        }
+
+                        if ((cppAttribute == CppAttribute.None ||
+                            (cppAttribute & CppAttribute.In) != 0 ) || (cppAttribute & CppAttribute.InOut) != 0)
                         {
                             parameterAttribute = CSharpMethod.ParameterAttribute.In;
 
@@ -1128,39 +1216,41 @@ namespace SlimDX2.Tools.XIDLToCSharp
                         }
                         //else if ((cppParameter.Attribute & CppAttribute.InOut) != 0)
                         //    parameterAttribute = CSharpMethod.ParameterAttribute.Ref;
-                        else if ((cppParameter.Attribute & CppAttribute.Out) != 0)
+                        else if ((cppAttribute & CppAttribute.Out) != 0)
                             parameterAttribute = CSharpMethod.ParameterAttribute.Out;
                     }
                     else
                     {
-                        if (cppParameter.Attribute == CppAttribute.None ||
-                            (cppParameter.Attribute & CppAttribute.In) != 0)
+
+                        if (cppAttribute == CppAttribute.None ||
+                            (cppAttribute & CppAttribute.In) != 0)
                         {
                             parameterAttribute = publicType.Type == typeof (IntPtr) ||
                                                  publicType.Type == typeof (string)
                                                      ? CSharpMethod.ParameterAttribute.In
-                                                     : CSharpMethod.ParameterAttribute.RefIn;
+                                                     : ((cppAttribute & CppAttribute.In) != 0? CSharpMethod.ParameterAttribute.RefIn:CSharpMethod.ParameterAttribute.Ref);
+                            //parameterAttribute = CSharpMethod.ParameterAttribute.Ref;
                         }
-                        else if ((cppParameter.Attribute & CppAttribute.InOut) != 0)
+                        else if ((cppAttribute & CppAttribute.InOut) != 0)
                             parameterAttribute = CSharpMethod.ParameterAttribute.Ref;
-                        else if ((cppParameter.Attribute & CppAttribute.Out) != 0)
+                        else if ((cppAttribute & CppAttribute.Out) != 0)
                             parameterAttribute = CSharpMethod.ParameterAttribute.Out;
 
                         // Handle void* with Buffer attribute
-                        if (paramType == "void" && (cppParameter.Attribute & CppAttribute.Buffer) != 0)
+                        if (paramType == "void" && (cppAttribute & CppAttribute.Buffer) != 0)
                         {
                             hasArray = false;
                             arrayDimension = 0;
                             parameterAttribute = CSharpMethod.ParameterAttribute.In;
                         }
-                        else if (publicType.Type == typeof (string) && (cppParameter.Attribute & CppAttribute.Out) != 0)
+                        else if (publicType.Type == typeof (string) && (cppAttribute & CppAttribute.Out) != 0)
                         {
                             publicType = ImportType(typeof (IntPtr));
                             parameterAttribute = CSharpMethod.ParameterAttribute.In;
                             hasArray = false;
                         }
                         else if (publicType is CSharpStruct &&
-                                 (parameterAttribute == CSharpMethod.ParameterAttribute.Out || hasArray || parameterAttribute == CSharpMethod.ParameterAttribute.RefIn))
+                                 (parameterAttribute == CSharpMethod.ParameterAttribute.Out || hasArray || parameterAttribute == CSharpMethod.ParameterAttribute.RefIn || parameterAttribute == CSharpMethod.ParameterAttribute.Ref))
                         {
                             // Set IsOut on structure to generate proper marshalling
                             (publicType as CSharpStruct).IsOut = true;
@@ -1205,21 +1295,33 @@ namespace SlimDX2.Tools.XIDLToCSharp
             }
         }
 
-        private bool FindType(string cppTypeName, out CSharpType publicType, ref bool hasPointer)
+        private void TypedefResolve(string cppTypeName, out string newTypeName, ref string pointerSpecifier)
         {
             CppTypedef typedef;
 
-            string newTypeName = cppTypeName;
+            newTypeName = cppTypeName;
             while (_mapTypedefToType.TryGetValue(newTypeName, out typedef))
             {
                 if (newTypeName == typedef.Type)
                     break;
                 newTypeName = typedef.Type;
                 if (typedef.Specifier != null && typedef.Specifier.Contains("*"))
-                    hasPointer = true;
+                    pointerSpecifier += typedef.Specifier;
             }
+        }
 
-            return _mapCppNameToCSharpType.TryGetValue(newTypeName, out publicType);
+        private bool FindType(string cppTypeName, out CSharpType publicType, ref bool hasPointer)
+        {
+            bool isFound = _mapCppNameToCSharpType.TryGetValue(cppTypeName, out publicType);
+
+            // Handle special case where LPXXX is not registered, but with have XXX type
+            // Assume that it is a XXX*
+            if (!isFound && cppTypeName.StartsWith("LP"))
+            {
+                isFound = _mapCppNameToCSharpType.TryGetValue(cppTypeName.Substring(2), out publicType);
+                hasPointer = true;
+            }
+            return isFound;
         }
 
         private void MapCppInterfaceToCSharpInterface(CSharpInterface cSharpInterface)
@@ -1437,7 +1539,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 {
                     // Check Setter
                     if ((cSharpMethod.IsHResult || !cSharpMethod.HasReturnType) && parameterCount == 1 &&
-                        (parameterList[0].IsRefIn || parameterList[0].IsIn))
+                        (parameterList[0].IsRefIn || parameterList[0].IsIn || parameterList[0].IsRef))
                     {
                         property.Setter = cSharpMethod;
                         property.PublicType = parameterList[0].PublicType;
