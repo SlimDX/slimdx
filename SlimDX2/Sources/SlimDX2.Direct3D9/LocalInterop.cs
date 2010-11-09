@@ -30,7 +30,7 @@
 //------------------------------------------------------------------------------
 using System;
 	
-namespace SlimDX2.D3DCompiler
+namespace SlimDX2.Direct3D9
 {
     public partial class LocalInterop : SlimDX2.Interop
     {

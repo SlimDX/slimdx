@@ -27,16 +27,16 @@ namespace SlimDX2.Direct3D10
             ///   Binds a single scissor rectangle to the rasterizer stage.
             /// </summary>
             /// <param name = "scissorRectangle">The scissor rectangle to bind.</param>
-            public void SetScissorRectangles(RectangleF scissorRectangle)
+            public void SetScissorRectangles(Rectangle scissorRectangle)
             {
-                SetScissorRectangles(new RectangleF[] {scissorRectangle});
+                SetScissorRectangles(new Rectangle[] {scissorRectangle});
             }
 
             /// <summary>
             ///   Binds a set of scissor rectangles to the rasterizer stage.
             /// </summary>
             /// <param name = "scissorRectangles">The set of scissor rectangles to bind.</param>
-            public void SetScissorRectangles(params RectangleF[] scissorRectangles)
+            public void SetScissorRectangles(params Rectangle[] scissorRectangles)
             {
                 SetScissorRects(scissorRectangles.Length, scissorRectangles);
             }
