@@ -22,7 +22,7 @@ using System.CodeDom.Compiler;
 using System.Globalization;
 using Microsoft.JScript;
 
-namespace SlimDX2.Tools.HeaderToXIDL
+namespace SlimDX2.Tools.XIDL
 {
     /// <summary>
     /// Simple expression evaluator using JScript engine
