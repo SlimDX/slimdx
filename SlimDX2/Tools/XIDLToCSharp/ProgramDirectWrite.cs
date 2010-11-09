@@ -24,13 +24,19 @@ namespace SlimDX2.Tools.XIDLToCSharp
 {
     internal partial class Program
     {
-
-
+        /// <summary>
+        /// Map DirectWrite API
+        /// </summary>
         public unsafe void MapDirectWrite()
         {
 
             gen.MapIncludeToNamespace("dcommon", Global.Name + ".DirectWrite", Global.Name + ".Direct2D1", "DirectWrite");
             gen.MapIncludeToNamespace("dwrite", Global.Name + ".DirectWrite", Global.Name + ".Direct2D1", "DirectWrite");
+
+            // Global Rename
+            group.TagName<CppEnum>(@"^DWRITE(.+)", "$1", false);
+            group.TagName<CppStruct>(@"^DWRITE(.+)", "$1", false);
+            
             // --------------------------------------------------------------------------------------------------------
             // DirectWrite Enumerations
             // --------------------------------------------------------------------------------------------------------
@@ -38,12 +44,11 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             // DirectWrite Structures
             // --------------------------------------------------------------------------------------------------------
-            gen.RenameType(@"^DWRITE(.+)", "$1", false, TypeContext.Root);
 
             // --------------------------------------------------------------------------------------------------------
             // DirectWrite Interfaces
             // --------------------------------------------------------------------------------------------------------
-            gen.RenameType(@"^IDWrite(.+)", "$1", false, TypeContext.Root);
+            group.TagName<CppInterface>(@"^IDWrite(.+)", "$1", false);
 
             group.TagVisibility<CppMethod>(@"^IDWriteGdiInterop::.*?LOGFONT$", Visibility.Internal);
             group.TagCallback(@"^IDWritePixelSnapping$");
@@ -52,11 +57,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             // DirectWrite Functions
             // --------------------------------------------------------------------------------------------------------
-            gen.RenameType(@"^DWrite(.+)", "$1", false, TypeContext.Root);
+            group.TagName<CppFunction>(@"^DWrite(.+)", "$1", false);
             CSharpFunctionGroup dwriteFunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct2D1", Global.Name + ".DirectWrite", "DWrite");
             group.TagFunction("^DWriteCreateFactory", "dwrite.dll", dwriteFunctionGroup);
         }
-
-
     }
 }

@@ -49,7 +49,17 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // For all methods "GetXXX", convert parameters with [None] attribute and pointer to [Out] attribute
             // TODO remove this and apply one-to-one mapping
             group.ModifyToGetMethods(".*");
-            
+
+            //  Global Rename
+            group.TagName<CppEnum>(@"^D3D\d?\d?(.+)", "$1", false);
+            group.TagName<CppEnum>(@"^D3DX\d?\d?(.+)", "$1", false);
+            group.TagName<CppStruct>(@"^D3D\d?\d?(.+)", "$1", false);
+            group.TagName<CppStruct>(@"^D3DX\d?\d?(.+)", "$1", false);
+            group.TagName<CppFunction>(@"^D3D\d?\d?(.+)", "$1", false);
+            group.TagName<CppFunction>(@"^D3DX\d?\d?(.+)", "$1", false);
+            group.TagName<CppInterface>(@"^ID3D\d?\d?(.+)", "$1", false);
+            group.TagName<CppInterface>(@"^ID3DX\d?\d?(.+)", "$1", false);
+
             // -----------------------------------------------------------------------
             // Mapping order is important!!!
             // -----------------------------------------------------------------------
@@ -65,20 +75,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
             
             MapDirect2D1();
             MapDirectWrite();
-
-            // -----------------------------------------------------------------------
-            // Garbage collector on prefix
-            // -----------------------------------------------------------------------
-            // Last Global Rename on 
-            gen.RenameType(@"^ID3DX(.+)", "$1", false, TypeContext.Root);
-            gen.RenameType(@"^ID3D(.+)", "$1", false, TypeContext.Root);
-            gen.RenameType(@"^D3DX(.+)", "$1", false, TypeContext.Root);
-            gen.RenameType(@"^D3D(.+)", "$1", false, TypeContext.Root);
-
-            // Rename all types (interface, methods..) that are ending with Desc, Desc1
-
-            // Global Prefix Rename
-            gen.RenameTypePart("^D3D", "");
 
             gen.GeneratedPath = @"..\..\..\Sources\";
 

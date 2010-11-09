@@ -47,36 +47,36 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.Modify<CppEnumItem>(@"^D3D(\d+)_TESSELLATOR_PARTITIONING_.*", Modifiers.Remove);
             group.Modify<CppEnumItem>(@"^D3D(\d+)_REGISTER_COMPONENT_.*", Modifiers.Remove);
 
-            gen.RenameType(@"^D3D_PRIMITIVE$", @"InputPrimitive");
-            gen.RenameType(@"^D3D_FEATURE_LEVEL_(.*)", @"Level_$1", true);
-            gen.RenameType(@"^D3D_PRIMITIVE_TOPOLOGY_(\d+)_CONTROL_POINT_PATCHLIST", "PatchListWith$1ControlPoints");
-            gen.RenameType(@"^D3D_PRIMITIVE_(\d+)_CONTROL_POINT_PATCH", "PatchWith$1ControlPoints");
+            group.TagName<CppEnum>(@"^D3D_PRIMITIVE$", @"InputPrimitive");
+            group.TagName<CppEnumItem>(@"^D3D_FEATURE_LEVEL_(.*)", @"Level_$1", true);
+            group.TagName<CppEnumItem>(@"^D3D_PRIMITIVE_TOPOLOGY_(\d+)_CONTROL_POINT_PATCHLIST", "PatchListWith$1ControlPoints");
+            group.TagName<CppEnumItem>(@"^D3D_PRIMITIVE_(\d+)_CONTROL_POINT_PATCH", "PatchWith$1ControlPoints");
 
-            gen.RenameType(@"^D3D_SVC_(.*)", "$1");
-            gen.RenameType(@"^D3D_SVF_(.*)", "$1");
-            gen.RenameType(@"^D3D_SVT_(.*)", "$1");
-            gen.RenameType(@"^D3D_SIF_(.*)", "$1");
-            gen.RenameType(@"^D3D_SIT_(.*)", "$1");
-            gen.RenameType(@"^D3D_CT_(.*)", "$1");
+            group.TagName<CppEnumItem>(@"^D3D_SVC_(.*)", "$1", false);
+            group.TagName<CppEnumItem>(@"^D3D_SVF_(.*)", "$1", false);
+            group.TagName<CppEnumItem>(@"^D3D_SVT_(.*)", "$1", false);
+            group.TagName<CppEnumItem>(@"^D3D_SIF_(.*)", "$1", false);
+            group.TagName<CppEnumItem>(@"^D3D_SIT_(.*)", "$1", false);
+            group.TagName<CppEnumItem>(@"^D3D_CT_(.*)", "$1", false);
 
-            gen.RenameType(@"^D3D_NAME$", "ParameterName");
-            gen.RenameType(@"^D3D_NAME_(.*)", "$1");
+            group.TagName<CppEnum>(@"^D3D_NAME$", "ParameterName");
+            group.TagName<CppEnum>(@"^D3D_NAME_(.*)", "$1", false);
 
-            gen.RenameType(@"^D3DCOMPILER_STRIP_FLAGS$", "StripFlags");
+            group.TagName<CppEnum>(@"^D3DCOMPILER_STRIP_FLAGS$", "StripFlags");
 
-            gen.RenameType(@"^D3D_INCLUDE_TYPE$", "IncludeType");
-            gen.RenameType(@"^D3D_INCLUDE_(.*)", "$1");
+            group.TagName<CppEnum>(@"^D3D_INCLUDE_TYPE$", "IncludeType");
+            group.TagName<CppEnumItem>(@"^D3D_INCLUDE_(.*)", "$1", false);
 
-            gen.RenameType(@"^D3D_RETURN_TYPE_(.*)", "$1");
+            group.TagName<CppEnumItem>(@"^D3D_RETURN_TYPE_(.*)", "$1", false);
 
-            gen.RenameType(@"^D3D_TESSELLATOR_OUTPUT_(.*)", "$1");
+            group.TagName<CppEnumItem>(@"^D3D_TESSELLATOR_OUTPUT_(.*)", "$1", false);
 
-            gen.RenameType(@"^D3D_TESSELLATOR_DOMAIN_(.*)", "$1");
+            group.TagName<CppEnumItem>(@"^D3D_TESSELLATOR_DOMAIN_(.*)", "$1", false);
 
-            gen.RenameType(@"^D3D_TESSELLATOR_PARTITIONING_(.*)", "$1");
+            group.TagName<CppEnumItem>(@"^D3D_TESSELLATOR_PARTITIONING_(.*)", "$1", false);
 
-            gen.RenameType(@"^D3D_REGISTER_COMPONENT_TYPE$", "RegisterComponentType");
-            gen.RenameType(@"^D3D_REGISTER_COMPONENT_(.*)", "$1");
+            group.TagName<CppEnum>(@"^D3D_REGISTER_COMPONENT_TYPE$", "RegisterComponentType");
+            group.TagName<CppEnumItem>(@"^D3D_REGISTER_COMPONENT_(.*)", "$1", false);
 
             // --------------------------------------------------------------------------------------------------------
             // D3DCommon Interfaces

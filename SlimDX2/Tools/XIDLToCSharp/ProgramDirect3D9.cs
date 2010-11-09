@@ -43,31 +43,34 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.MapIncludeToNamespace("d3dx9tex", Global.Name + ".Direct3D9");
             gen.MapIncludeToNamespace("d3dx9xof", Global.Name + ".Direct3D9");
 
+            // Remove Video & AuthenticatedChannel. Not part of SlimDX, Is it still used?
+            group.ModifyAll(@"^_?D3DAUTHENTICATEDCHANNEL.*", Modifiers.Remove);
+            group.Modify<CppInterface>(@"^IDirect3DDevice9Video$", Modifiers.Remove);
+            group.Modify<CppInterface>(@"^IDirect3DAuthenticatedChannel9$", Modifiers.Remove);
+
             // --------------------------------------------------------------------------------------------------------
             // Direct3D9 Enumerations
             // --------------------------------------------------------------------------------------------------------
             group.Modify<CppEnum>(@"^_MAX_FVF_DECL_SIZE$", Modifiers.Remove);
 
-            gen.RenameType(@"^D3DMULTISAMPLE_NONE$", "None");
-            gen.RenameType(@"^D3DMULTISAMPLE_NONMASKABLE$", "NonMaskable");
-            gen.RenameType(@"^D3DMULTISAMPLE_2_SAMPLES$", "TwoSamples");
-            gen.RenameType(@"^D3DMULTISAMPLE_3_SAMPLES$", "ThreeSamples");
-            gen.RenameType(@"^D3DMULTISAMPLE_4_SAMPLES$", "FourSamples");
-            gen.RenameType(@"^D3DMULTISAMPLE_5_SAMPLES$", "FiveSamples");
-            gen.RenameType(@"^D3DMULTISAMPLE_6_SAMPLES$", "SixSamples");
-            gen.RenameType(@"^D3DMULTISAMPLE_7_SAMPLES$", "SevenSamples");
-            gen.RenameType(@"^D3DMULTISAMPLE_8_SAMPLES$", "EightSamples");
-            gen.RenameType(@"^D3DMULTISAMPLE_9_SAMPLES$", "NineSamples");
-            gen.RenameType(@"^D3DMULTISAMPLE_10_SAMPLES$", "TenSamples");
-            gen.RenameType(@"^D3DMULTISAMPLE_11_SAMPLES$", "ElevenSamples");
-            gen.RenameType(@"^D3DMULTISAMPLE_12_SAMPLES$", "TwelveSamples");
-            gen.RenameType(@"^D3DMULTISAMPLE_13_SAMPLES$", "ThirteenSamples");
-            gen.RenameType(@"^D3DMULTISAMPLE_14_SAMPLES$", "FourteenSamples");
-            gen.RenameType(@"^D3DMULTISAMPLE_15_SAMPLES$", "FifteenSamples");
-            gen.RenameType(@"^D3DMULTISAMPLE_16_SAMPLES$", "SixteenSamples");
-
-            gen.RenameType(@"^D3DAUTHENTICATEDCHANNEL_D3D9$", "Direct3D9", true);
-            gen.RenameType(@"^D3DDISPLAYROTATION_(.*)$", "ROTATION_$1");
+            group.TagName<CppEnumItem>(@"^D3DMULTISAMPLE_NONE$", "None");
+            group.TagName<CppEnumItem>(@"^D3DMULTISAMPLE_NONMASKABLE$", "NonMaskable");
+            group.TagName<CppEnumItem>(@"^D3DMULTISAMPLE_2_SAMPLES$", "TwoSamples");
+            group.TagName<CppEnumItem>(@"^D3DMULTISAMPLE_3_SAMPLES$", "ThreeSamples");
+            group.TagName<CppEnumItem>(@"^D3DMULTISAMPLE_4_SAMPLES$", "FourSamples");
+            group.TagName<CppEnumItem>(@"^D3DMULTISAMPLE_5_SAMPLES$", "FiveSamples");
+            group.TagName<CppEnumItem>(@"^D3DMULTISAMPLE_6_SAMPLES$", "SixSamples");
+            group.TagName<CppEnumItem>(@"^D3DMULTISAMPLE_7_SAMPLES$", "SevenSamples");
+            group.TagName<CppEnumItem>(@"^D3DMULTISAMPLE_8_SAMPLES$", "EightSamples");
+            group.TagName<CppEnumItem>(@"^D3DMULTISAMPLE_9_SAMPLES$", "NineSamples");
+            group.TagName<CppEnumItem>(@"^D3DMULTISAMPLE_10_SAMPLES$", "TenSamples");
+            group.TagName<CppEnumItem>(@"^D3DMULTISAMPLE_11_SAMPLES$", "ElevenSamples");
+            group.TagName<CppEnumItem>(@"^D3DMULTISAMPLE_12_SAMPLES$", "TwelveSamples");
+            group.TagName<CppEnumItem>(@"^D3DMULTISAMPLE_13_SAMPLES$", "ThirteenSamples");
+            group.TagName<CppEnumItem>(@"^D3DMULTISAMPLE_14_SAMPLES$", "FourteenSamples");
+            group.TagName<CppEnumItem>(@"^D3DMULTISAMPLE_15_SAMPLES$", "FifteenSamples");
+            group.TagName<CppEnumItem>(@"^D3DMULTISAMPLE_16_SAMPLES$", "SixteenSamples");
+            group.TagName<CppEnumItem>(@"^D3DDISPLAYROTATION_(.*)$", "Rotation$1");
 
             // --------------------------------------------------------------------------------------------------------
             // Direct3D9 Structures
@@ -89,8 +92,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.MapCppTypeToCSharpType("D3DXVECTOR3_16F", typeof(int)); // TODO TEMP!!!!!!
             gen.MapCppTypeToCSharpType("D3DXVECTOR4_16F", typeof(int)); // TODO TEMP!!!!!!
 
-
-
             group.Modify<CppStruct>(@"^D3D_OMAC$", Modifiers.Remove);
 
             gen.MapCppTypeToCSharpType("LPD3DXSHPRTSIMCB", typeof(IntPtr));
@@ -105,14 +106,12 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             // Direct3D9 Interfaces
             // --------------------------------------------------------------------------------------------------------
-            gen.RenameType(@"^GetDC$", "GetDisplayDeviceContext");
-            gen.RenameType(@"^IDirect3D9$", "Direct3D9", true);
-            gen.RenameType(@"^IDirect3D9Ex$", "Direct3D9Ex", true);
-            gen.RenameType(@"^IDirect3D9Ex(.+)", "$1");
-            gen.RenameType(@"^IDirect3D(.+)9$", "$1");
-            gen.RenameType(@"^IDirect3D(.+)9$", "$1");
-            gen.RenameType(@"^IDirect3D(.+)", "$1", false, TypeContext.Root);
-
+            group.TagName<CppInterface>(@"^IDirect3D(.+)", "$1", false);
+            group.TagName<CppInterface>(@"^IDirect3D(.+)9$", "$1", false);
+            group.TagName<CppInterface>(@"^IDirect3D9Ex(.+)", "$1", false);
+            group.TagName<CppInterface>(@"^IDirect3D9$", "Direct3D9");
+            group.TagName<CppInterface>(@"^IDirect3D9Ex$", "Direct3D9Ex");
+            group.TagName<CppMethod>(@"^GetDC$", "GetDisplayDeviceContext");
 
             // --------------------------------------------------------------------------------------------------------
             // Direct3D9 Functions
@@ -124,12 +123,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagFunction("^D3DX[^0-9].*", d3dx9DLLName, d3dx9FunctionGroup);
             group.TagFunction("^D3DPERF.*", d3dx9DLLName, d3dx9FunctionGroup);
             
-
             // Add constant from macro definitions
             gen.AddConstantFromMacroToCSharpType("D3D_SDK_VERSION", Global.Name + ".Direct3D9.D3D9", "int");
-
-
-
         }
     }
 }

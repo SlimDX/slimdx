@@ -29,12 +29,15 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             gen.MapIncludeToNamespace("d2d1", Global.Name + ".Direct2D1");
 
+            group.TagName<CppEnum>(@"^D2D1(.*)","$1",false);
+            group.TagName<CppStruct>(@"^D2D1(.*)", "$1", false);
+
             // --------------------------------------------------------------------------------------------------------
             // D2D1 Enumerations
             // --------------------------------------------------------------------------------------------------------
-            gen.RenameType(@"^D2D1_FEATURE_LEVEL_(.*)", @"Level_$1", true);
-            gen.RenameType(@"^D2D1_GAMMA_2_2", @"StandardRgb");
-            gen.RenameType(@"^D2D1_GAMMA_1_0", @"Linear");
+            group.TagName<CppEnumItem>(@"^D2D1_FEATURE_LEVEL_(.*)", @"Level_$1");
+            group.TagName<CppEnumItem>(@"^D2D1_GAMMA_2_2", @"StandardRgb");
+            group.TagName<CppEnumItem>(@"^D2D1_GAMMA_1_0", @"Linear");
 
             // --------------------------------------------------------------------------------------------------------
             // D2D1 Structures
@@ -56,7 +59,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             // D2D1 Interfaces
             // --------------------------------------------------------------------------------------------------------
-            gen.RenameType(@"^ID2D1(.+)", "$1", false, TypeContext.Root);
+            group.TagName<CppInterface>(@"^ID2D1(.+)", "$1", false);
 
             // Remove methods using WIC
             group.Modify<CppMethod>(@"^ID2D(\d+)RenderTarget::CreateBitmapFromWicBitmap$", Modifiers.Remove);
@@ -77,7 +80,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             // D2D1 Functions
             // --------------------------------------------------------------------------------------------------------
-            gen.RenameType(@"^D2D1(.+)", "$1", false, TypeContext.Root);
+            group.TagName<CppFunction>(@"^D2D1(.+)", "$1", false);
             CSharpFunctionGroup d2d1FunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct2D1", Global.Name + ".Direct2D1", "D2D1");
             group.TagFunction("^D2D1.*", "d2d1.dll", d2d1FunctionGroup);
         }
