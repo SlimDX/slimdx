@@ -88,7 +88,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CppHeaderParser.cs" />
-    <Compile Include="Evaluator.cs" />
     <Compile Include="MSDNDoc.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

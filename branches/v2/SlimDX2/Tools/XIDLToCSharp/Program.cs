@@ -18,7 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Globalization;
 using System.IO;
+using System.Text;
 using SlimDX2.Tools.XIDL;
 
 namespace SlimDX2.Tools.XIDLToCSharp
@@ -79,7 +81,59 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.GeneratedPath = @"..\..\..\Sources\";
 
             gen.Generate();
+
+            gen.Dump("slimdx2.csv");
+
+            //DumpEnumItems("direct3D9_enums.txt");
         }
+
+        //public void DumpEnumItems(string fileName)
+        //{
+        //    StreamWriter log = new StreamWriter(fileName, false, Encoding.ASCII);
+
+        //    var assemblySlimDX = typeof(SlimDX.Direct3D11.Device).Assembly;
+
+        //    foreach (var assembly in gen.Assemblies)
+        //    {
+        //        foreach (var ns in assembly.Namespaces)
+        //        {
+        //            if (ns.Name == "SlimDX2.Direct3D9")
+        //            {
+        //                foreach (var cSharpEnum in ns.Enums)
+        //                {
+        //                    Type slimdxType = assemblySlimDX.GetType("SlimDX.Direct3D9." + cSharpEnum.Name);
+
+        //                    if (slimdxType != null)
+        //                    {
+        //                        int i = 0;
+        //                        foreach (var enumItem in cSharpEnum.EnumItems)
+        //                        {
+        //                            try
+        //                            {
+        //                                int value = Evaluator.EvalToInteger(string.IsNullOrEmpty(enumItem.Value) ? "" + i : enumItem.Value);
+
+        //                                string name = slimdxType.GetEnumName(value);
+        //                                log.WriteLine("group.Tag<CppEnumItem>(@\"^{0}$\",\"{1}\");", enumItem.CppElementName, name);
+        //                            } catch (Exception ex)
+        //                            {
+        //                                Console.WriteLine(ex);
+        //                            }
+        //                            i++;
+        //                        }
+        //                    }
+        //                    else
+        //                    {
+        //                        Console.WriteLine("Enum not found {0}", "SlimDX.Direct3D9." + cSharpEnum.Name);
+        //                    }
+
+        //                }
+        //            }
+        //        }
+        //    }
+        //    log.Close();
+        //}
+
+
 
         /// <summary>
         /// Main XIDLToCSharp

@@ -82,6 +82,29 @@ namespace SlimDX2.Tools.XIDLToCSharp
             get { return _registeredInteropCall; }
         }
 
+        public void Dump(string fileName)
+        {
+            StreamWriter log = new StreamWriter(fileName, false, Encoding.ASCII);
+
+            string csv = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+            string format = "{1}{0}{2}{0}{3}{0}{4}";
+
+            foreach (var assembly in Assemblies)
+            {
+                foreach (var ns in assembly.Namespaces)
+                {
+                    foreach (var element in ns.Enums)
+                        log.WriteLine(format, csv, "enum", ns.Name, element.Name, element.CppElementName);
+                    foreach (var element in ns.Structs)
+                        log.WriteLine(format, csv, "struct", ns.Name, element.Name, element.CppElementName);
+                    foreach (var element in ns.Interfaces)
+                        log.WriteLine(format, csv, "interface", ns.Name, element.Name, element.CppElementName);
+                }
+            }
+            log.Close();
+        }
+
+
         public CSharpType ImportTypeFromName(string typeName, int sizeOf, bool isReference = false,
                                              bool isStruct = false)
         {
@@ -744,9 +767,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
                               (cppParameter.Specifier.Contains("*") || cppParameter.Specifier.Contains("&"));
             if (hasPointer)
             {
-                if (name.StartsWith("pp"))
+                if (name.ToLower().StartsWith("pp"))
                     name = name.Substring(2) + "Ref";
-                else if (name.StartsWith("p"))
+                else if (name.ToLower().StartsWith("p"))
                     name = name.Substring(1) + "Ref";
             }
             if (char.IsDigit(name[0]))
