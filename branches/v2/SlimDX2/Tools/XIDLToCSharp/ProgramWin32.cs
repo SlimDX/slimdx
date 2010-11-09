@@ -169,10 +169,11 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             // Global Rename
             // --------------------------------------------------------------------------------------------------------
-            gen.RenameType(@"^(.*)DescW?$", "$1Description");
-            gen.RenameType(@"^(.*)Desc1$", "$1Description1");
-            gen.RenameType(@"^GetType$", "GetTypeInfo", true);
-            gen.RenameType(@"^GetType$", "GetTypeInfo", true);
+            group.TagName<CppField>(@"^.*::(.*)DescW?$", "$1Description");
+            group.TagName<CppField>(@"^.*::(.*)Desc1$", "$1Description1");
+            group.TagName<CppMethod>(@"^.*::(.*)DescW?$", "$1Description");
+            group.TagName<CppMethod>(@"^.*::(.*)Desc1$", "$1Description1");
+            group.TagName<CppMethod>(@"^.*GetType$", "GetTypeInfo");
 
             // Expand sub part between underscore
             gen.RenameTypePart("^DESC$", "Description");

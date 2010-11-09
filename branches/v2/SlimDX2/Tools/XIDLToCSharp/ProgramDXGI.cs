@@ -34,12 +34,13 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.MapIncludeToNamespace("dxgitype", Global.Name + ".DXGI");
             gen.MapIncludeToNamespace("d3dcommon", Global.Name + ".Direct3D", Global.Name, "Direct3D");
 
+
             // --------------------------------------------------------------------------------------------------------
             // DXGI Enumerations
             // --------------------------------------------------------------------------------------------------------
             // ReCreate enums from macro definitions
 
-            group.Modify<CppTypedef>(@"^DXGI_USAGE", Modifiers.Remove);
+            group.Modify<CppTypedef>(@"^DXGI_USAGE$", Modifiers.Remove);
 
             group.CreateEnumFromMacros(@"^DXGI_PRESENT_.*", "DXGI_PRESENT_FLAGS");
             group.CreateEnumFromMacros(@"^DXGI_USAGE_.*", "DXGI_USAGE");
@@ -50,20 +51,24 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.CreateEnumFromMacros(@"^DXGI_ERROR_.*", "DXGI_ERROR");
             group.CreateEnumFromMacros(@"^DXGI_STATUS_.*", "DXGI_STATUS");
 
+            // Global rename
+            group.TagName<CppEnum>(@"^DXGI(.+)", "$1", false);
+            group.TagName<CppStruct>(@"^DXGI(.+)", "$1", false);
+
+            // Special case, we need to keep underscore for DXGI_FORMAT
             gen.KeepUnderscoreForType(@"^DXGI_FORMAT_.*");
-            gen.RenameType(@"^DXGI_MODE_ROTATION$", "DisplayModeRotation");
-            gen.RenameType(@"^DXGI_MODE_SCALING$", "DisplayModeScaling");
-            gen.RenameType(@"^DXGI_MODE_SCANLINE_ORDER$", "DisplayModeScanlineOrder");
+            group.TagName<CppEnum>(@"^DXGI_MODE_ROTATION$", "DisplayModeRotation");
+            group.TagName<CppEnum>(@"^DXGI_MODE_SCALING$", "DisplayModeScaling");
+            group.TagName<CppEnum>(@"^DXGI_MODE_SCANLINE_ORDER$", "DisplayModeScanlineOrder");
 
-            gen.RenameType("^DXGI_ERROR$", "DXGIError", true, TypeContext.Root);
-            gen.RenameType("^DXGI_STATUS$", "DXGIStatus", true, TypeContext.Root);
+            group.TagName<CppEnum>("^DXGI_ERROR$", "DXGIError", true);
+            group.TagName<CppEnum>("^DXGI_STATUS$", "DXGIStatus", true);
 
-
-            gen.RenameType(@"^DXGI_ENUM_MODES_FLAGS$", "DisplayModeEnumerationFlags");
-            gen.RenameType(@"^DXGI_MWA_FLAGS$", "WindowAssociationFlags");
-            gen.RenameType(@"^DXGI_MWA_NO_WINDOW_CHANGES$", "IgnoreAll");
-            gen.RenameType(@"^DXGI_MWA_NO_ALT_ENTER$", "IgnoreAltEnter");
-            gen.RenameType(@"^DXGI_MWA_NO_PRINT_SCREEN$", "IgnorePrintScreen");
+            group.TagName<CppEnum>(@"^DXGI_ENUM_MODES_FLAGS$", "DisplayModeEnumerationFlags");
+            group.TagName<CppEnum>(@"^DXGI_MWA_FLAGS$", "WindowAssociationFlags");
+            group.TagName<CppEnumItem>(@"^DXGI_MWA_NO_WINDOW_CHANGES$", "IgnoreAll");
+            group.TagName<CppEnumItem>(@"^DXGI_MWA_NO_ALT_ENTER$", "IgnoreAltEnter");
+            group.TagName<CppEnumItem>(@"^DXGI_MWA_NO_PRINT_SCREEN$", "IgnorePrintScreen");
 
             // For DXGI Format
             gen.RenameTypePart(@"^(R(\d).*)", "$1");
@@ -81,18 +86,20 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.Modify<CppStruct>("DXGI_DISPLAY_COLOR_SPACE", Modifiers.Remove);
 
             // Update usage of enums
-            group.TagTypeName<CppField>(@"^DXGI_SWAP_CHAIN_DESC::Flags", "DXGI_SWAP_CHAIN_FLAG");
-            group.TagTypeName<CppField>(@"^DXGI_ADAPTER_DESC1::Flags", "DXGI_ADAPTER_FLAG");
+            group.TagTypeAndName<CppField>(@"^DXGI_SWAP_CHAIN_DESC::Flags", "DXGI_SWAP_CHAIN_FLAG");
+            group.TagTypeAndName<CppField>(@"^DXGI_ADAPTER_DESC1::Flags", "DXGI_ADAPTER_FLAG");
 
             gen.MapCppTypeToCSharpType("DXGI_RGB", "SlimMath.Color3", 3 * 4, false, true);
 
             // --------------------------------------------------------------------------------------------------------
             // DXGI Interfaces
             // --------------------------------------------------------------------------------------------------------
-            group.TagTypeName<CppParameter>(@"^IDXGISwapChain::Present::Flags$", "DXGI_PRESENT_FLAGS");
-            group.TagTypeName<CppParameter>(@"^IDXGIFactory::MakeWindowAssociation::Flags$", "DXGI_MWA_FLAGS");
+            group.TagTypeAndName<CppParameter>(@"^IDXGISwapChain::Present::Flags$", "DXGI_PRESENT_FLAGS");
+            group.TagTypeAndName<CppParameter>(@"^IDXGIFactory::MakeWindowAssociation::Flags$", "DXGI_MWA_FLAGS");
 
-            gen.RenameType(@"^IDXGIObject$", "DXGIObject", true);
+            group.TagName<CppInterface>(@"^IDXGI(.+)", "$1", false);
+            group.TagName<CppInterface>(@"^IDXGIObject$", "DXGIObject");
+            group.TagName<CppInterface>(@"^IDXGIObject$", "DXGIObject");
 
             // --------------------------------------------------------------------------------------------------------
             // DXGI Functions
@@ -100,12 +107,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagFunction("^CreateDXGIFactory.*", "dxgi.dll", dxgiFunctionGroup);
             group.Modify<CppParameter>("^CreateDXGIFactory.*?::ppFactory$", Modifiers.ParameterAttribute(CppAttribute.Out));
 
-
-            gen.RenameType(@"^IDXGI(.+)", "$1", false, TypeContext.Root);
-            gen.RenameType(@"^DXGI(.+)", "$1", false, TypeContext.Root);
-            gen.RenameTypePart("^DXGI", "");
-
-
+            // gen.RenameTypePart("^DXGI", "");
         }
     }
 }

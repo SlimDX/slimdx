@@ -29,7 +29,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             Visibility = visibility;
             NoProperty = noProperty;
             MappingName = mappingName;
-            IsEnumFlags = isEnumFlags;
+            IsEnumFlags = isEnumFlags;            
         }
 
         /// <summary>
@@ -46,6 +46,11 @@ namespace SlimDX2.Tools.XIDLToCSharp
         /// Mapping name
         /// </summary>
         public string MappingName;
+
+        /// <summary>
+        /// True if the MappingName doesn't need any further rename processing
+        /// </summary>
+        public bool? IsFinalMappingName;
 
         /// <summary>
         /// Mapping type name
@@ -123,9 +128,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
         /// <param name="noProperty"></param>
         /// <param name="mappingName"></param>
         public static void TagVisibility<T>(this CppElement element, string regex, Visibility? visibility,
-                                        bool? noProperty = null, string mappingName = null) where T : CppElement
+                                        bool? noProperty = null, string mappingName = null, bool? isFinalRename = true) where T : CppElement
         {
-            element.Modify<T>(regex, Tag(new CSharpTag(visibility, noProperty, mappingName)));
+            element.Modify<T>(regex, Tag(new CSharpTag(visibility, noProperty, mappingName) { IsFinalMappingName = ((mappingName == null)?null:isFinalRename) }));
         }
 
         /// <summary>
@@ -135,10 +140,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
         /// <param name="element"></param>
         /// <param name="regex"></param>
         /// <param name="mappingName"></param>
-        public static void TagName<T>(this CppElement element, string regex, string mappingName)
+        public static void TagName<T>(this CppElement element, string regex, string mappingName, bool? isFinalRename = true)
             where T : CppElement
         {
-            element.Modify<T>(regex, Tag(new CSharpTag(null, null, mappingName)));
+            element.Modify<T>(regex, Tag(new CSharpTag() { MappingName = mappingName, IsFinalMappingName = isFinalRename}));
         }
 
         /// <summary>
@@ -148,10 +153,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
         /// <param name="element"></param>
         /// <param name="regex"></param>
         /// <param name="typeName"></param>
-        public static void TagTypeName<T>(this CppElement element, string regex, string typeName, string mappingName = null)
+        public static void TagTypeAndName<T>(this CppElement element, string regex, string typeName, string mappingName = null, bool? isFinalRename = true)
             where T : CppElement
         {
-            element.Modify<T>(regex, Tag(new CSharpTag() { MappingType =  typeName, MappingName = mappingName} ));
+            element.Modify<T>(regex, Tag(new CSharpTag() { MappingType = typeName, MappingName = mappingName, IsFinalMappingName = ((mappingName == null) ? null : isFinalRename) }));
         }
 
         /// <summary>
@@ -220,7 +225,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
                            }
                            if (fromTag.Visibility.HasValue) tag.Visibility = fromTag.Visibility;
                            if (fromTag.NoProperty.HasValue) tag.NoProperty = fromTag.NoProperty;
-                           if (fromTag.MappingName != null) tag.MappingName = RegexRename(pathREgex, element.FullName, fromTag.MappingName);
+                           if (fromTag.MappingName != null) 
+                               tag.MappingName = RegexRename(pathREgex, element.FullName, fromTag.MappingName);
+                           if (fromTag.IsFinalMappingName != null) tag.IsFinalMappingName = fromTag.IsFinalMappingName;
                            if (fromTag.MappingType != null) tag.MappingType = RegexRename(pathREgex, element.FullName, fromTag.MappingType);
                            if (fromTag.IsEnumFlags != null) tag.IsEnumFlags = fromTag.IsEnumFlags;
                            if (fromTag.IsCallbackInterface != null) tag.IsCallbackInterface = fromTag.IsCallbackInterface;

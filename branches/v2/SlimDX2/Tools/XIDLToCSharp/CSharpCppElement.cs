@@ -28,7 +28,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
     public class CSharpCppElement : CSharpContainer
     {
         private CppElement _cppElement;
-        private string mappingName;
 
         protected CSharpCppElement()
         {
@@ -49,25 +48,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
         protected virtual void UpdateFromTag(CSharpTag tag)
         {
-            mappingName = tag.MappingName;
-
             if (tag.Visibility.HasValue)
                 Visibility = tag.Visibility.Value;
         }
 
-        public override string Name
-        {
-            get
-            {
-                // Because the Name is sometimes changed after the type was instancied, with put the mapping name here.
-                // Design wise, not the best option... but temporarely ok
-                // TODO : better handling of this
-                if (mappingName != null)
-                    return mappingName;
-                return base.Name;
-            }
-            set { base.Name = value; }
-        }
 
         public string CppElementName
         {

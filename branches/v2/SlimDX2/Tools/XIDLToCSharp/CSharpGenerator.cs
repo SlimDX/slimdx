@@ -32,20 +32,6 @@ using SlimDX2.Tools.XIDL;
 
 namespace SlimDX2.Tools.XIDLToCSharp
 {
-    [Flags]
-    public enum TypeContext
-    {
-        Enum = 1,
-        Type = 2,
-        Function = 4,
-        Struct = 8,
-        EnumItem = 0x10,
-        Interface = 0x20,
-        All = Interface | EnumItem | Struct | Function | Type | Enum,
-        Root = Interface | Struct | Function | Type | Enum,
-    }
-
-
     public class CSharpGenerator
     {
         private readonly Dictionary<string, CSharpType> _mapCSharpTypeNameToCSharpType =
@@ -69,7 +55,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
         private readonly InteropGenerator _registeredInteropCall = new InteropGenerator();
 
         private readonly Dictionary<Regex, string> _renameTypePart = new Dictionary<Regex, string>();
-        private readonly Dictionary<Regex, RenameValue> _typeToRename = new Dictionary<Regex, RenameValue>();
         private readonly MacroParser _macroParser;
         private readonly CSharpType DefaultInterfaceCppObject;
 
@@ -320,7 +305,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             CSharpNamespace nameSpace = ResolveNamespace(cppInclude, cppEnum);
 
             var newEnum = new CSharpEnum();
-            newEnum.Name = ConvertCppNameToCSharpName(cppEnum.Name, TypeContext.Enum);
+            newEnum.Name = ConvertCppNameToCSharpName(cppEnum);
             newEnum.CppElement = cppEnum;
             newEnum.SizeOf = 4;
             nameSpace.Add(newEnum);
@@ -356,7 +341,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
                 var csharpEnumItem =
                     new CSharpEnum.Item(
-                        ConvertCppNameToCSharpName(cppEnumItem.Name, TypeContext.EnumItem, rootName),
+                        ConvertCppNameToCSharpName(cppEnumItem, rootName),
                         enumValue);
                 csharpEnumItem.CppElement = cppEnumItem;
                 newEnum.Add(csharpEnumItem);
@@ -399,7 +384,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             }
             var cSharpStruct = new CSharpStruct(cppStruct);
             CSharpNamespace nameSpace = ResolveNamespace(cppInclude, cppStruct);
-            cSharpStruct.Name = ConvertCppNameToCSharpName(cppStruct.Name, TypeContext.Struct);
+            cSharpStruct.Name = ConvertCppNameToCSharpName(cppStruct);
             nameSpace.Add(cSharpStruct);
             _mapCppNameToCSharpType.Add(cppStruct.Name, cSharpStruct);
             return cSharpStruct;
@@ -445,7 +430,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                                          ? 0
                                          : (int)float.Parse(cppField.ArrayDimension, CultureInfo.InvariantCulture);
                 string fieldType = cppField.GetTypeNameWithMapping();
-                string fieldName = ConvertCppNameToCSharpName(cppField.Name, TypeContext.Struct);
+                string fieldName = ConvertFieldName(cppField);
 
                 string fieldSpecifier = string.IsNullOrEmpty(cppField.Specifier) ? "" : cppField.Specifier;
                 // Resolve from typedef
@@ -724,7 +709,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
         {
             var cSharpInterface = new CSharpInterface(cppInterface);
             CSharpNamespace nameSpace = ResolveNamespace(cppInclude, cppInterface);
-            cSharpInterface.Name = ConvertCppNameToCSharpName(cppInterface.Name, TypeContext.Interface);
+            cSharpInterface.Name = ConvertCppNameToCSharpName(cppInterface);
             nameSpace.Add(cSharpInterface);
 
             // Associate Parent
@@ -744,9 +729,17 @@ namespace SlimDX2.Tools.XIDLToCSharp
             return cSharpInterface;
         }
 
-        private static string ConvertMethodParameterName(CppParameter cppParameter)
+        private string ConvertFieldName(CppField cppField)
         {
-            string name = cppParameter.Name;
+            string name = ConvertCppNameToCSharpName(cppField);
+            if (CSharpKeywords.IsKeyword(name))
+                name = "@" + name;
+            return name;
+        }
+
+        private string ConvertMethodParameterName(CppParameter cppParameter)
+        {
+            string name = ConvertCppNameToCSharpName(cppParameter);
             bool hasPointer = !string.IsNullOrEmpty(cppParameter.Specifier) &&
                               (cppParameter.Specifier.Contains("*") || cppParameter.Specifier.Contains("&"));
             if (hasPointer)
@@ -967,7 +960,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             cppPathContext += cppMethod.Name;
 
-            cSharpMethod.Name = ConvertCppNameToCSharpName(cppMethod.Name, TypeContext.Interface);
+            cSharpMethod.Name = ConvertCppNameToCSharpName(cppMethod);
             cSharpMethod.Offset = cppMethod.Offset;
 
             bool isWideChar = false;
@@ -1374,8 +1367,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     {
                         string innerInterfaceName = keyValuePair.Value.InnerInterface;
                         string parentInterfaceName = keyValuePair.Value.InheritedInterfaceName;
-                        string newMethodName = keyValuePair.Key.Replace(cppName, keyValuePair.Value.NewMethodName);
-                        cSharpMethod.Name = newMethodName;
 
                         CSharpInterface innerInterface;
                         CSharpInterface parentInterface = null;
@@ -1623,10 +1614,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
 
         public void MoveMethodsToInnerInterface(string methodNameRegExp, string innerInterface, string propertyAccess,
-                                                string newMethodName, string inheritedInterfaceName = null)
+                                                 string inheritedInterfaceName = null)
         {
             _mapMoveMethodToInnerInterface.Add(new Regex(methodNameRegExp),
-                                               new InnerInterfaceMethod(innerInterface, propertyAccess, newMethodName,
+                                               new InnerInterfaceMethod(innerInterface, propertyAccess, 
                                                                         inheritedInterfaceName));
         }
 
@@ -1846,7 +1837,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     foreach (CppMacroDefinition cppMacroDefinition in macroDefinitions)
                     {
                         CSharpConstant constant = new CSharpConstant(cppMacroDefinition);
-                        constant.Name = keyValuePair.Value.FieldName ?? ConvertCppNameToCSharpName(cppMacroDefinition.Name, TypeContext.All);
+                        constant.Name = keyValuePair.Value.FieldName ?? ConvertCppNameToCSharpName(cppMacroDefinition);
                         constant.Value = _macroParser.Parse(cppMacroDefinition.Value);
                         constant.TypeName = keyValuePair.Value.Type;
                         cSharpContainer.Add(constant);
@@ -1875,58 +1866,43 @@ namespace SlimDX2.Tools.XIDLToCSharp
             _renameTypePart.Add(new Regex(partName), replaceString);
         }
 
-        public void RenameType(string regexTypeName, string newTypeName, bool isFinalRename = false,
-                               TypeContext context = TypeContext.All)
+        private string ConvertCppNameToCSharpName(CppElement cppElement, string rootName = null)
         {
-            _typeToRename.Add(new Regex(regexTypeName), new RenameValue(newTypeName, context, isFinalRename));
-        }
+            string originalName = cppElement.Name;
+            string name = cppElement.Name;
 
-        private string ConvertCppNameToCSharpName(string name, TypeContext context, string rootName = null)
-        {
-            string newName = name;
+            bool nameModifiedByTag = false;
 
+            // Handle Tag
+            var tag = cppElement.GetTag<CSharpTag>();
+            if (tag != null && !string.IsNullOrEmpty(tag.MappingName))
+            {
+                nameModifiedByTag = true;
+                name = tag.MappingName;
+                // If Final Mapping name then don't proceed further
+                if (tag.IsFinalMappingName.HasValue && tag.IsFinalMappingName.Value)
+                    return name;
+            }
 
             // Keep underscore for some types
             bool keepUnderscore = false;
             foreach (var keyValuePair in _mapTypeToKeepUnderscore)
             {
-                if (keyValuePair.Key.Match(name).Success)
+                if (keyValuePair.Key.Match(originalName).Success)
                 {
                     keepUnderscore = true;
                     break;
                 }
             }
 
-            // Process Rename by regexp
-            bool containsUnderscoreBeforeReplace = newName.Contains("_");
-            bool isFinalRename = false;
-            foreach (var regExp in _typeToRename)
-            {
-                if (regExp.Key.Match(newName).Success)
-                {
-                    if ((regExp.Value.Context & context) != 0)
-                    {
-                        newName = regExp.Key.Replace(newName, regExp.Value.Name);
-                        if (regExp.Value.FinalRename)
-                        {
-                            isFinalRename = true;
-                            break;
-                        }
-                    }
-                }
-            }
-
             // Rename is tagged as final, then return the string
             // If the string still contains some "_" then continue while processing
-            if (isFinalRename ||
-                (containsUnderscoreBeforeReplace && !newName.Contains("_") && newName.ToUpper() != newName))
-                return newName;
+            if (!name.Contains("_") && name.ToUpper() != name && char.IsUpper(name[0]))
+                return name;
 
             // Remove Prefix (for enums)
-            if (rootName != null && newName.StartsWith(rootName))
-                newName = newName.Substring(rootName.Length, newName.Length - rootName.Length);
-
-            name = newName;
+            if (!nameModifiedByTag && rootName != null && originalName.StartsWith(rootName))
+                name = originalName.Substring(rootName.Length, originalName.Length - rootName.Length);
 
             // Remove leading "_"
             while (name.StartsWith("_"))
@@ -2023,38 +1999,17 @@ namespace SlimDX2.Tools.XIDLToCSharp
         {
             public readonly string InnerInterface;
             public readonly string PropertyAccessName;
-            public readonly string NewMethodName;
             public readonly string InheritedInterfaceName;
 
-            public InnerInterfaceMethod(string innerInterface, string propertyAccess, string newMethodName,
-                                        string inheritedInterfaceName)
+            public InnerInterfaceMethod(string innerInterface, string propertyAccess, string inheritedInterfaceName)
             {
                 InnerInterface = innerInterface;
                 PropertyAccessName = propertyAccess;
-                NewMethodName = newMethodName;
                 InheritedInterfaceName = inheritedInterfaceName;
             }
         }
 
         #endregion
 
-
-        #region Nested type: RenameValue
-
-        private class RenameValue
-        {
-            public readonly TypeContext Context;
-            public readonly bool FinalRename;
-            public readonly string Name;
-
-            public RenameValue(string name, TypeContext context, bool isFinalRename)
-            {
-                Name = name;
-                Context = context;
-                FinalRename = isFinalRename;
-            }
-        }
-
-        #endregion
     }
 }

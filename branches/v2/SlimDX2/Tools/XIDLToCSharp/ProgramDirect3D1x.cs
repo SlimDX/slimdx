@@ -32,6 +32,12 @@ namespace SlimDX2.Tools.XIDLToCSharp
         {
             // The following part is not common to Direct3D10 and Direct3D11
 
+            // Global Rename
+            group.TagName<CppEnum>(@"^D3D(\d+)(.*)", "$2", false);
+            group.TagName<CppEnum>(@"^D3DX(\d+)(.*)", "$2", false);
+            group.TagName<CppStruct>(@"^D3D(\d+)(.*)", "$2", false);
+            group.TagName<CppStruct>(@"^D3DX(\d+)(.*)", "$2", false);
+
             // --------------------------------------------------------------------------------------------------------
             // Direct3D10 / Direct3D11 Enumerations
             // --------------------------------------------------------------------------------------------------------
@@ -47,171 +53,162 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.Modify<CppEnum>(@"^D3D(\d+)_COLOR_WRITE_ENABLE$", Modifiers.EnumAdd("None", "0"));
             group.TagEnumFlags(@"^D3D(\d+)_COLOR_WRITE_ENABLE$");
 
-
             // D3D10/D3D11
-            gen.RenameType(@"^D3D(\d+)_CREATE_DEVICE_FLAG$", "DeviceCreationFlags");
-            gen.RenameType(@"^D3D(\d+)_CREATE_DEVICE_(.*)$", "$2");
+            group.TagName<CppEnum>(@"^D3D(\d+)_CREATE_DEVICE_FLAG$", "DeviceCreationFlags");
+            group.TagName<CppEnumItem>(@"^D3D(\d+)_CREATE_DEVICE_(.*)$", "$2", false);
 
-            gen.RenameType(@"^D3D(\d+)_QUERY_MISC_FLAG$", "QueryFlags");
-            gen.RenameType(@"^D3D(\d+)_QUERY$", "QueryType");
-            gen.RenameType(@"^D3D(\d+)_COUNTER$", "CounterKind");
-            gen.RenameType(@"^D3D(\d+)_BLEND$", "BlendOption");
-            gen.RenameType(@"^D3D(\d+)_ASYNC_GETDATA_FLAG$", "AsynchronousFlags");
-            gen.RenameType(@"^D3D(\d+)_ASYNC_GETDATA_DONOTFLUSH$", "DoNotFlush");
+            group.TagName<CppEnum>(@"^D3D(\d+)_QUERY_MISC_FLAG$", "QueryFlags");
+            group.TagName<CppEnum>(@"^D3D(\d+)_QUERY$", "QueryType");
+            group.TagName<CppEnum>(@"^D3D(\d+)_COUNTER$", "CounterKind");
+            group.TagName<CppEnum>(@"^D3D(\d+)_BLEND$", "BlendOption");
+            group.TagName<CppEnum>(@"^D3D(\d+)_ASYNC_GETDATA_FLAG$", "AsynchronousFlags");
+            group.TagName<CppEnum>(@"^D3D(\d+)_ASYNC_GETDATA_DONOTFLUSH$", "DoNotFlush");
 
-            gen.RenameType(@"^D3D(\d+)_BLEND_DESC$", "BlendStateDescription");
-            gen.RenameType(@"^D3D(\d+)_DEPTH_STENCIL_DESC$", "DepthStencilStateDescription");
-            gen.RenameType(@"^D3D(\d+)_RASTERIZER_DESC$", "RasterizerStateDescription");
-            gen.RenameType(@"^D3D(\d+)_SAMPLER_DESC$", "SamplerStateDescription");
+            group.TagName<CppEnum>(@"^D3D(\d+)_MAP$", "MapMode");
+            group.TagName<CppEnumItem>(@"^D3D(\d+)_MAP_FLAG$", "MapFlags");
 
-            gen.RenameType(@"^D3D(\d+)_QUERY_DATA_SO_STATISTICS$", "StreamOutputStatistics");
-            gen.RenameType(@"^D3D(\d+)_SO_DECLARATION_ENTRY$", "StreamOutputElement");
-            gen.RenameType(@"^D3D(\d+)_INPUT_ELEMENT_DESC", "InputElement");
+            group.TagName<CppEnum>(@"^D3D(\d+)_BIND_FLAG$", "BindFlags");
+            group.TagName<CppEnumItem>(@"^D3D(\d+)_BIND_(.*)", "$2", false);
 
-            gen.RenameType(@"^D3D(\d+)_MAP$", "MapMode");
+            group.TagName<CppEnum>(@"^D3D(\d+)_MAP_FLAG_(.*)", "$2", false);
+            group.TagName<CppEnumItem>(@"^D3D(\d+)_MAP_(.*)", "$2", false);
 
-            gen.RenameType(@"^D3D11_FORMAT_SUPPORT2$", "ComputeShaderFormatSupport");
-            gen.RenameType(@"^D3D11_FORMAT_SUPPORT2_UAV_(.*)$", "$1");
+            group.TagName<CppEnum>(@"^D3D(\d+)_BUFFER_UAV_FLAG$", "UnorderedAccessViewBufferFlags");
+            group.TagName<CppEnumItem>(@"^D3D(\d+)_BUFFER_UAV_FLAG_(.*)$", "$2", false);
 
-            gen.RenameType(@"^D3D(\d+)_BIND_FLAG$", "BindFlags");
-            gen.RenameType(@"^D3D(\d+)_BIND_(.*)", "$2");
+            group.TagName<CppEnum>(@"^D3D(\d+)_COLOR_WRITE_ENABLE$", "ColorWriteMaskFlags");
+            group.TagName<CppEnumItem>(@"^D3D(\d+)_COLOR_WRITE_ENABLE_(.*)$", "$2", false);
 
-            gen.RenameType(@"^D3D(\d+)_MAP$", "MapMode");
-            gen.RenameType(@"^D3D(\d+)_MAP_FLAG$", "MapFlags");
+            group.TagName<CppEnum>(@"^D3D(\d+)_CPU_ACCESS_FLAG$", "CpuAccessFlags");
+            group.TagName<CppEnumItem>(@"^D3D(\d+)_CPU_ACCESS_(.*)$", "$2", false);
 
-            gen.RenameType(@"^D3D(\d+)_MAP_FLAG_(.*)", "$2");
-            gen.RenameType(@"^D3D(\d+)_MAP_(.*)", "$2");
+            group.TagName<CppEnum>(@"^D3D(\d+)_USAGE$", "ResourceUsage");
+            group.TagName<CppEnumItem>(@"^D3D(\d+)_USAGE_(.*)$", "$2", false);
 
-            gen.RenameType(@"^D3D(\d+)_BUFFER_UAV_FLAG$", "UnorderedAccessViewBufferFlags");
-            gen.RenameType(@"^D3D(\d+)_BUFFER_UAV_FLAG_(.*)$", "$2");
+            group.TagName<CppEnum>(@"^D3D(\d+)_RESOURCE_MISC_FLAG$", "ResourceOptionFlags");
+            group.TagName<CppEnumItem>(@"^D3D(\d+)_RESOURCE_MISC_(.*)", "$2", false);
 
-            gen.RenameType(@"^D3D(\d+)_COLOR_WRITE_ENABLE$", "ColorWriteMaskFlags");
-            gen.RenameType(@"^D3D(\d+)_COLOR_WRITE_ENABLE_(.*)$", "$2");
+            group.TagName<CppEnum>(@"^D3D(\d+)_CLEAR_FLAG$", "DepthStencilClearFlags");
+            group.TagName<CppEnumItem>(@"^D3D(\d+)_CLEAR_(.*)", "$2", false);
 
-            gen.RenameType(@"^D3D(\d+)_CPU_ACCESS_FLAG$", "CpuAccessFlags");
-            gen.RenameType(@"^D3D(\d+)_CPU_ACCESS_(.*)$", "$2");
-
-            gen.RenameType(@"^D3D(\d+)_USAGE$", "ResourceUsage");
-            gen.RenameType(@"^D3D(\d+)_USAGE_(.*)$", "$2");
-
-            gen.RenameType(@"^D3D(\d+)_RESOURCE_MISC_FLAG$", "ResourceOptionFlags");
-            gen.RenameType(@"^D3D(\d+)_RESOURCE_MISC_(.*)", "$2");
-
-            gen.RenameType(@"^D3D(\d+)_CLEAR_FLAG", "DepthStencilClearFlags");
-            gen.RenameType(@"^D3D(\d+)_CLEAR_(.*)", "$2");
-
-            gen.RenameType(@"^D3D(\d+)_DSV_FLAG$", "DepthStencilViewFlags");
-            gen.RenameType(@"^D3D(\d+)_DSV_(.*)", "$2");
-
-            gen.RenameType(@"^D3D11_FEATURE_FORMAT_SUPPORT2$", "ComputeShaders");
-            gen.RenameType(@"^D3D11_FEATURE_DOUBLES$", "ShaderDoubles");
-
-            gen.RenameType(@"^D3D(\d+)_BOX$", "ResourceRegion");
-
-            // Move structure inner type (SRV,RTV,DSV,UAV)
-            gen.RenameType(@"^D3D(\d+)_(.*)_SRV$", "$2_Resource");
-            gen.MoveStructToInner(@"^D3D(\d+)_(.*)_SRV$", "D3D$1_SHADER_RESOURCE_VIEW_DESC");
-
-            gen.RenameType(@"^D3D(\d+)_(.*)_SRV1$", "$2_Resource1");
-            gen.MoveStructToInner(@"^D3D(\d+)_(.*)_SRV1$", "D3D$1_SHADER_RESOURCE_VIEW_DESC1");
-
-            gen.RenameType(@"^D3D(\d+)_(.*)_RTV$", "$2_Resource");
-            gen.MoveStructToInner(@"^D3D(\d+)_(.*)_RTV$", "D3D$1_RENDER_TARGET_VIEW_DESC");
-
-            gen.RenameType(@"^D3D(\d+)_(.*)_DSV$", "$2_Resource");
-            gen.MoveStructToInner(@"^D3D(\d+)_(.*)_DSV$", "D3D$1_DEPTH_STENCIL_VIEW_DESC");
-
-            gen.RenameType(@"^D3D(\d+)_(.*)_UAV$", "$2_Resource");
-            gen.MoveStructToInner(@"^D3D(\d+)_(.*)_UAV$", "D3D$1_UNORDERED_ACCESS_VIEW_DESC");
-
-            gen.RenameType(@"^D3D(\d+)_PASS_DESC$", "EffectPassDescription");
-            gen.RenameType(@"^D3D(\d+)_PASS_SHADER_DESC$", "EffectPassShaderDescription");
-            gen.RenameType(@"^D3D(\d+)_TECHNIQUE_DESC$", "EffectTechniqueDescription");
+            group.TagName<CppEnum>(@"^D3D(\d+)_DSV_FLAG$", "DepthStencilViewFlags");
+            group.TagName<CppEnumItem>(@"^D3D(\d+)_DSV_(.*)", "$2", false);
 
             // D3DX10/D3DX11
-            gen.RenameType(@"^D3DX(\d+)_CHANNEL_FLAG$", "ChannelFlags");
-            gen.RenameType(@"^D3DX(\d+)_CHANNEL_(.*)$", "$2");
+            group.TagName<CppEnum>(@"^D3DX(\d+)_CHANNEL_FLAG$", "ChannelFlags");
+            group.TagName<CppEnumItem>(@"^D3DX(\d+)_CHANNEL_(.*)$", "$2", false);
 
-            gen.RenameType(@"^D3DX(\d+)_FILTER_FLAG$", "FilterFlags");
-            gen.RenameType(@"^D3DX(\d+)_FILTER_(.*)$", "$2");
+            group.TagName<CppEnum>(@"^D3DX(\d+)_FILTER_FLAG$", "FilterFlags");
+            group.TagName<CppEnumItem>(@"^D3DX(\d+)_FILTER_(.*)$", "$2", false);
+            group.TagName<CppEnumItem>(@"^D3DX(\d+)_IFF_(.*)$", "$2", false);
 
-            gen.RenameType(@"^D3DX(\d+)_IFF_(.*)$", "$2");
+            group.TagName<CppEnum>(@"^D3DX(\d+)_NORMALMAP_FLAG$", "NormalMapFlags");
+            group.TagName<CppEnumItem>(@"^D3DX(\d+)_NORMALMAP_(.*)", "$2", false);
 
-            gen.RenameType(@"^D3DX(\d+)_NORMALMAP_FLAG$", "NormalMapFlags");
-            gen.RenameType(@"^D3DX(\d+)_NORMALMAP_(.*)", "$2");
+            group.TagName<CppEnum>(@"^D3DX(\d+)_SAVE_TEXTURE_FLAG$", "SaveTextureFlags");
+            group.TagName<CppEnum>(@"^D3DX(\d+)_STF_USEINPUTBLOB$", "UseInputBlob");
+            group.TagName<CppEnumItem>(@"^D3DX(\d+)_STF_(.*)", "$2", false);
 
-            gen.RenameType(@"^D3DX(\d+)_SAVE_TEXTURE_FLAG$", "SaveTextureFlags");
-            gen.RenameType(@"^D3DX(\d+)_STF_USEINPUTBLOB$", "UseInputBlob");
-            gen.RenameType(@"^D3DX(\d+)_STF_(.*)", "$2");
+            group.TagName<CppEnum>(@"^D3D(\d+)_SHADER_DEBUG_REGTYPE$", "ShaderDebugRegisterType");
+            group.TagName<CppEnumItem>(@"^D3D(\d+)_SHADER_DEBUG_REG_(.+)$", "$2", false);
 
-            gen.RenameType(@"^D3D(\d+)_SHADER_DEBUG_REGTYPE$", "ShaderDebugRegisterType");
-            gen.RenameType(@"^D3D(\d+)_SHADER_DEBUG_REG_(.+)$", "$2");
             // --------------------------------------------------------------------------------------------------------
             // Direct3D10 / Direct3D11 Structures
             // --------------------------------------------------------------------------------------------------------
+            group.TagName<CppStruct>(@"^D3D(\d+)_BOX$", "ResourceRegion");
+
+            group.TagName<CppStruct>(@"^D3D(\d+)_BLEND_DESC$", "BlendStateDescription");
+            group.TagName<CppStruct>(@"^D3D(\d+)_DEPTH_STENCIL_DESC$", "DepthStencilStateDescription");
+            group.TagName<CppStruct>(@"^D3D(\d+)_RASTERIZER_DESC$", "RasterizerStateDescription");
+            group.TagName<CppStruct>(@"^D3D(\d+)_SAMPLER_DESC$", "SamplerStateDescription");
+
+            group.TagName<CppStruct>(@"^D3D(\d+)_QUERY_DATA_SO_STATISTICS$", "StreamOutputStatistics");
+            group.TagName<CppStruct>(@"^D3D(\d+)_SO_DECLARATION_ENTRY$", "StreamOutputElement");
+            group.TagName<CppStruct>(@"^D3D(\d+)_INPUT_ELEMENT_DESC", "InputElement"); 
+            
             group.TagVisibility<CppStruct>(@"^D3D(\d+)_SUBRESOURCE_DATA$", Visibility.Internal);
             group.TagVisibility<CppStruct>(@"^D3D(\d+)_MAPPED_SUBRESOURCE$", Visibility.Internal);
 
+            // Move structure inner type (SRV,RTV,DSV,UAV)
+            group.TagName<CppStruct>(@"^D3D(\d+)_(.*)_SRV$", "$2_Resource");
+            gen.MoveStructToInner(@"^D3D(\d+)_(.*)_SRV$", "D3D$1_SHADER_RESOURCE_VIEW_DESC");
+
+            group.TagName<CppStruct>(@"^D3D(\d+)_(.*)_SRV1$", "$2_Resource1");
+            gen.MoveStructToInner(@"^D3D(\d+)_(.*)_SRV1$", "D3D$1_SHADER_RESOURCE_VIEW_DESC1");
+
+            group.TagName<CppStruct>(@"^D3D(\d+)_(.*)_RTV$", "$2_Resource");
+            gen.MoveStructToInner(@"^D3D(\d+)_(.*)_RTV$", "D3D$1_RENDER_TARGET_VIEW_DESC");
+
+            group.TagName<CppStruct>(@"^D3D(\d+)_(.*)_DSV$", "$2_Resource");
+            gen.MoveStructToInner(@"^D3D(\d+)_(.*)_DSV$", "D3D$1_DEPTH_STENCIL_VIEW_DESC");
+
+            group.TagName<CppStruct>(@"^D3D(\d+)_(.*)_UAV$", "$2_Resource");
+            gen.MoveStructToInner(@"^D3D(\d+)_(.*)_UAV$", "D3D$1_UNORDERED_ACCESS_VIEW_DESC");
+
+            group.TagName<CppStruct>(@"^D3D(\d+)_PASS_DESC$", "EffectPassDescription");
+            group.TagName<CppStruct>(@"^D3D(\d+)_PASS_SHADER_DESC$", "EffectPassShaderDescription");
+            group.TagName<CppStruct>(@"^D3D(\d+)_TECHNIQUE_DESC$", "EffectTechniqueDescription");
+
             // Change Some Field type in structs (using existing enums)
-            group.TagTypeName<CppField>(@"^D3D(\d+)_BUFFER_DESC::BindFlags", "D3D$1_BIND_FLAG");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_BUFFER_DESC::CPUAccessFlags", "D3D$1_CPU_ACCESS_FLAG", "CpuAccessFlags");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_BUFFER_DESC::MiscFlags", "D3D$1_RESOURCE_MISC_FLAG", "OptionFlags");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_BUFFER_DESC::BindFlags", "D3D$1_BIND_FLAG");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_BUFFER_DESC::CPUAccessFlags", "D3D$1_CPU_ACCESS_FLAG", "CpuAccessFlags");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_BUFFER_DESC::MiscFlags", "D3D$1_RESOURCE_MISC_FLAG", "OptionFlags");
 
-            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE1D_DESC::BindFlags", "D3D$1_BIND_FLAG");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE1D_DESC::CPUAccessFlags", "D3D$1_CPU_ACCESS_FLAG", "CpuAccessFlags");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE1D_DESC::MiscFlags", "D3D$1_RESOURCE_MISC_FLAG", "OptionFlags");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_TEXTURE1D_DESC::BindFlags", "D3D$1_BIND_FLAG");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_TEXTURE1D_DESC::CPUAccessFlags", "D3D$1_CPU_ACCESS_FLAG", "CpuAccessFlags");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_TEXTURE1D_DESC::MiscFlags", "D3D$1_RESOURCE_MISC_FLAG", "OptionFlags");
 
-            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE2D_DESC::BindFlags", "D3D$1_BIND_FLAG");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE2D_DESC::CPUAccessFlags", "D3D$1_CPU_ACCESS_FLAG", "CpuAccessFlags");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE2D_DESC::MiscFlags", "D3D$1_RESOURCE_MISC_FLAG", "OptionFlags");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_TEXTURE2D_DESC::BindFlags", "D3D$1_BIND_FLAG");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_TEXTURE2D_DESC::CPUAccessFlags", "D3D$1_CPU_ACCESS_FLAG", "CpuAccessFlags");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_TEXTURE2D_DESC::MiscFlags", "D3D$1_RESOURCE_MISC_FLAG", "OptionFlags");
 
-            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE3D_DESC::BindFlags", "D3D$1_BIND_FLAG");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE3D_DESC::CPUAccessFlags", "D3D$1_CPU_ACCESS_FLAG", "CpuAccessFlags");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE3D_DESC::MiscFlags", "D3D$1_RESOURCE_MISC_FLAG", "OptionFlags");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_TEXTURE3D_DESC::BindFlags", "D3D$1_BIND_FLAG");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_TEXTURE3D_DESC::CPUAccessFlags", "D3D$1_CPU_ACCESS_FLAG", "CpuAccessFlags");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_TEXTURE3D_DESC::MiscFlags", "D3D$1_RESOURCE_MISC_FLAG", "OptionFlags");
 
-            group.TagTypeName<CppField>(@"^D3D(\d+)_FEATURE_DATA_FORMAT_SUPPORT::OutFormatSupport$", "D3D$1_FORMAT_SUPPORT2");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_FEATURE_DATA_FORMAT_SUPPORT2::OutFormatSupport2$", "D3D$1_FORMAT_SUPPORT2");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_FEATURE_DATA_FORMAT_SUPPORT::OutFormatSupport$", "D3D$1_FORMAT_SUPPORT2");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_FEATURE_DATA_FORMAT_SUPPORT2::OutFormatSupport2$", "D3D$1_FORMAT_SUPPORT2");
 
-            group.TagTypeName<CppField>(@"^D3DX(\d+)_IMAGE_INFO::MiscFlags", "D3D$1_RESOURCE_MISC_FLAG");
+            group.TagTypeAndName<CppField>(@"^D3DX(\d+)_IMAGE_INFO::MiscFlags", "D3D$1_RESOURCE_MISC_FLAG");
 
-            group.TagTypeName<CppField>(@"^D3DX(\d+)_IMAGE_LOAD_INFO::BindFlags", "D3D$1_BIND_FLAG");
-            group.TagTypeName<CppField>(@"^D3DX(\d+)_IMAGE_LOAD_INFO::CpuAccessFlags", "D3D$1_CPU_ACCESS_FLAG");
-            group.TagTypeName<CppField>(@"^D3DX(\d+)_IMAGE_LOAD_INFO::MiscFlags", "D3D$1_RESOURCE_MISC_FLAG");
-            group.TagTypeName<CppField>(@"^D3DX(\d+)_IMAGE_LOAD_INFO::Filter", "D3DX$1_FILTER_FLAG");
-            group.TagTypeName<CppField>(@"^D3DX(\d+)_IMAGE_LOAD_INFO::MipFilter", "D3DX$1_FILTER_FLAG");
+            group.TagTypeAndName<CppField>(@"^D3DX(\d+)_IMAGE_LOAD_INFO::BindFlags", "D3D$1_BIND_FLAG");
+            group.TagTypeAndName<CppField>(@"^D3DX(\d+)_IMAGE_LOAD_INFO::CpuAccessFlags", "D3D$1_CPU_ACCESS_FLAG");
+            group.TagTypeAndName<CppField>(@"^D3DX(\d+)_IMAGE_LOAD_INFO::MiscFlags", "D3D$1_RESOURCE_MISC_FLAG");
+            group.TagTypeAndName<CppField>(@"^D3DX(\d+)_IMAGE_LOAD_INFO::Filter", "D3DX$1_FILTER_FLAG");
+            group.TagTypeAndName<CppField>(@"^D3DX(\d+)_IMAGE_LOAD_INFO::MipFilter", "D3DX$1_FILTER_FLAG");
 
-            group.TagTypeName<CppField>(@"^D3DX(\d+)_TEXTURE_LOAD_INFO::Filter", "D3DX$1_FILTER_FLAG");
-            group.TagTypeName<CppField>(@"^D3DX(\d+)_TEXTURE_LOAD_INFO::MipFilter", "D3DX$1_FILTER_FLAG");
+            group.TagTypeAndName<CppField>(@"^D3DX(\d+)_TEXTURE_LOAD_INFO::Filter", "D3DX$1_FILTER_FLAG");
+            group.TagTypeAndName<CppField>(@"^D3DX(\d+)_TEXTURE_LOAD_INFO::MipFilter", "D3DX$1_FILTER_FLAG");
 
-            group.TagTypeName<CppField>(@"^D3D(\d+)_DEPTH_STENCIL_VIEW_DESC::Flags", "D3D$1_DSV_FLAG");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_DEPTH_STENCIL_VIEW_DESC::Flags", "D3D$1_DSV_FLAG");
 
-            group.TagTypeName<CppField>(@"^D3D(\d+)_SHADER_DESC::Flags", "D3DCOMPILE_SHADER_FLAGS");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_SHADER_DESC::Flags", "D3DCOMPILE_SHADER_FLAGS");
 
-            group.TagTypeName<CppField>(@"^D3D(\d+)_BUFFER_DESC::ByteWidth", null, "SizeInBytes");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_BUFFER_DESC::MiscFlags", null, "OptionFlags");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE1D_DESC::MiscFlags", null, "OptionFlags");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE2D_DESC::MiscFlags", null, "OptionFlags");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_TEXTURE3D_DESC::MiscFlags", null, "OptionFlags");
-            group.TagTypeName<CppField>(@"^D3DX(\d+)_IMAGE_INFO::MiscFlags", null, "OptionFlags");
-            group.TagTypeName<CppField>(@"^D3DX(\d+)_IMAGE_LOAD_INFO::MiscFlags", null, "OptionFlags");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_BUFFER_DESC::MiscFlags", null, "OptionFlags");
+            group.TagName<CppField>(@"^D3D(\d+)_BUFFER_DESC::ByteWidth", "SizeInBytes");
+            group.TagName<CppField>(@"^D3D(\d+)_BUFFER_DESC::MiscFlags", "OptionFlags");
+            group.TagName<CppField>(@"^D3D(\d+)_TEXTURE1D_DESC::MiscFlags", "OptionFlags");
+            group.TagName<CppField>(@"^D3D(\d+)_TEXTURE2D_DESC::MiscFlags", "OptionFlags");
+            group.TagName<CppField>(@"^D3D(\d+)_TEXTURE3D_DESC::MiscFlags", "OptionFlags");
+            group.TagName<CppField>(@"^D3DX(\d+)_IMAGE_INFO::MiscFlags", "OptionFlags");
+            group.TagName<CppField>(@"^D3DX(\d+)_IMAGE_LOAD_INFO::MiscFlags", "OptionFlags");
+            group.TagName<CppField>(@"^D3D(\d+)_BUFFER_DESC::MiscFlags", "OptionFlags");
 
-            group.TagTypeName<CppField>(@"^D3D(\d+)_SUBRESOURCE_DATA::pSysMem$", null, "DataPointer");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_SUBRESOURCE_DATA::SysMemPitch$", null, "Pitch");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_SUBRESOURCE_DATA::SysMemSlicePitch$", null, "SlicePitch");
+            group.TagName<CppField>(@"^D3D(\d+)_SUBRESOURCE_DATA::pSysMem$", "DataPointer");
+            group.TagName<CppField>(@"^D3D(\d+)_SUBRESOURCE_DATA::SysMemPitch$", "Pitch");
+            group.TagName<CppField>(@"^D3D(\d+)_SUBRESOURCE_DATA::SysMemSlicePitch$", "SlicePitch");
 
-            group.TagTypeName<CppField>(@"^D3D(\d+)_QUERY_DESC::MiscFlags", "D3D$1_QUERY_MISC_FLAG", "QueryFlags");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_QUERY_DESC::MiscFlags", "D3D$1_QUERY_MISC_FLAG", "QueryFlags");
 
-            group.TagTypeName<CppField>(@"^D3D(\d+)_BUFFEREX_SRV::Flags", "D3D$1_BUFFEREX_SRV_FLAG");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_BUFFER_UAV::Flags", "D3D$1_BUFFER_UAV_FLAG");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_BUFFEREX_SRV::Flags", "D3D$1_BUFFEREX_SRV_FLAG");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_BUFFER_UAV::Flags", "D3D$1_BUFFER_UAV_FLAG");
 
-            group.TagTypeName<CppField>(@"^D3D(\d+)_SHADER_VARIABLE_DESC::uFlags", "D3D_SHADER_VARIABLE_FLAGS", "Flags");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_SHADER_INPUT_BIND_DESC::uFlags", "D3D_SHADER_INPUT_FLAGS", "Flags");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_SHADER_VARIABLE_DESC::uFlags", "D3D_SHADER_VARIABLE_FLAGS", "Flags");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_SHADER_INPUT_BIND_DESC::uFlags", "D3D_SHADER_INPUT_FLAGS", "Flags");
 
             group.TagName<CppField>(@"^D3D(\d+)_QUERY_DATA_PIPELINE_STATISTICS::(.*)s", "$2Count");
             group.TagName<CppField>(@"^D3D(\d+)_SHADER_DESC::(.*[^g])s$", "$2Count");
             group.TagName<CppField>(@"^D3D(\d+)_SHADER_BUFFER_DESC::Variables$", "VariableCount");
-            group.TagTypeName<CppField>(@"^D3D(\d+)_SHADER_BUFFER_DESC::uFlags$", "D3D_SHADER_CBUFFER_FLAGS", "Flags");
+            group.TagTypeAndName<CppField>(@"^D3D(\d+)_SHADER_BUFFER_DESC::uFlags$", "D3D_SHADER_CBUFFER_FLAGS", "Flags");
             group.TagName<CppField>(@"^D3D(\d+)_SHADER_TYPE_DESC::(.*[^g])s$", "$2Count");
             group.TagName<CppField>(@"^D3D(\d+)_EFFECT_DESC::(.*[^g])s$", "$2Count");
             group.TagName<CppField>(@"^D3D(\d+)_TECHNIQUE_DESC::(.*[^g])s$", "$2Count");
@@ -246,6 +243,17 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             group.Modify<CppParameter>(@"^ID3D(\d+)DeviceContext::ClearRenderTargetView::ColorRGBA$", Modifiers.Type("SLIMDX_COLOR4", "*", false, null));
 
+            group.TagName<CppMethod>(@"^ID3D\d+DeviceContext::IA(.*)$", "$1");
+            group.TagName<CppMethod>(@"^ID3D\d+DeviceContext::VS(.*)$", "$1");
+            group.TagName<CppMethod>(@"^ID3D\d+DeviceContext::PS(.*)$", "$1");
+            group.TagName<CppMethod>(@"^ID3D\d+DeviceContext::GS(.*)$", "$1");
+            group.TagName<CppMethod>(@"^ID3D\d+DeviceContext::SO(.*)$", "$1");
+            group.TagName<CppMethod>(@"^ID3D\d+DeviceContext::DS(.*)$", "$1");
+            group.TagName<CppMethod>(@"^ID3D\d+DeviceContext::HS(.*)$", "$1");
+            group.TagName<CppMethod>(@"^ID3D\d+DeviceContext::RS(.*)$", "$1");
+            group.TagName<CppMethod>(@"^ID3D\d+DeviceContext::OM(.*)$", "$1");
+            group.TagName<CppMethod>(@"^ID3D\d+DeviceContext::CS(.*)$", "$1");
+
             // Mark all stage SetShader methods internals
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::SetViewports$", Visibility.Internal);
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::SetScissorRects$", Visibility.Internal);
@@ -264,9 +272,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::UpdateSubresource$", Visibility.Internal);
 
             //group.Modify<CppParameter>(@"^ID3D(\d+)DeviceContext::Map::MapFlags$", Modifiers.Type("D3D$1_MAP_FLAG"));
-            group.TagTypeName<CppParameter>(@"^ID3D(\d+)DeviceContext::Map::MapFlags$", "D3D$1_MAP_FLAG");
+            group.TagTypeAndName<CppParameter>(@"^ID3D(\d+)DeviceContext::Map::MapFlags$", "D3D$1_MAP_FLAG");
 
-            group.TagTypeName<CppParameter>(@"^ID3D(\d+)DeviceContext::GetData::GetDataFlags$", "D3D$1_ASYNC_GETDATA_FLAG");
+            group.TagTypeAndName<CppParameter>(@"^ID3D(\d+)DeviceContext::GetData::GetDataFlags$", "D3D$1_ASYNC_GETDATA_FLAG");
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::GetData$", Visibility.Internal, null, "GetDataInternal");
 
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::FinishCommandList$", Visibility.Internal, null, "FinishCommandListInternal");
@@ -277,7 +285,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagName<CppMethod>(@"^ID3D(\d+)DeviceContext::ClearUnorderedAccessViewFloat$", "ClearUnorderedAccessView");
             group.TagName<CppMethod>(@"^ID3D(\d+)DeviceContext::ClearUnorderedAccessViewUint$", "ClearUnorderedAccessView");
 
-            group.TagTypeName<CppParameter>(@"^ID3D(\d+)DeviceContext::ClearDepthStencilView::ClearFlags$", "D3D11_CLEAR_FLAG");
+            group.TagTypeAndName<CppParameter>(@"^ID3D(\d+)DeviceContext::ClearDepthStencilView::ClearFlags$", "D3D11_CLEAR_FLAG");
 
             // Remove TheadPump interfaces as they don't make sense in .NET
             group.Modify<CppInterface>(@"^ID3DX(\d+)ThreadPump$", Modifiers.Remove);
@@ -309,9 +317,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.Modify<CppParameter>(@"^ID3DX(\d+)Font::GetDescW::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
             group.Modify<CppParameter>(@"^ID3DX?(\d*).*::GetDevice::ppDevice$", Modifiers.ParameterAttribute(CppAttribute.Out));
 
-            group.TagTypeName<CppParameter>(@"^ID3DX(\d*)Sprite::Begin::flags", "D3DX$1_SPRITE_FLAG");
+            group.TagTypeAndName<CppParameter>(@"^ID3DX(\d*)Sprite::Begin::flags", "D3DX$1_SPRITE_FLAG");
 
-            group.TagTypeName<CppParameter>(@"^ID3D(\d+).*::Map::MapFlags", "D3D$1_MAP_FLAG");
+            group.TagTypeAndName<CppParameter>(@"^ID3D(\d+).*::Map::MapFlags", "D3D$1_MAP_FLAG");
 
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)EffectPass::Apply$", Visibility.Internal);
 
@@ -321,13 +329,13 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             // Direct3D10 / Direct3D11 Functions
             // --------------------------------------------------------------------------------------------------------
-            gen.RenameType(@"^D3DX\d+(.*)W", "$1");
+            group.TagName<CppFunction>(@"^D3DX\d+(.*)W", "$1", false);
 
-            group.TagTypeName<CppParameter>(@"^D3D(\d+)CreateDevice.*?::Flags$", "D3D$1_CREATE_DEVICE_FLAG");
-            group.TagTypeName<CppParameter>(@"^D3DX(\d+).*?::Flags1$", "D3DCOMPILE_SHADER_FLAGS");
-            group.TagTypeName<CppParameter>(@"^D3DX(\d+).*?::Flags2$", "D3DCOMPILE_EFFECT_FLAGS");
-            group.TagTypeName<CppParameter>(@"^D3DX(\d+)ComputeNormalMap::Flags$", "D3DX$1_NORMALMAP_FLAG");
-            group.TagTypeName<CppParameter>(@"^D3DX(\d+)ComputeNormalMap::Channel$", "D3DX$1_CHANNEL_FLAG");
+            group.TagTypeAndName<CppParameter>(@"^D3D(\d+)CreateDevice.*?::Flags$", "D3D$1_CREATE_DEVICE_FLAG");
+            group.TagTypeAndName<CppParameter>(@"^D3DX(\d+).*?::Flags1$", "D3DCOMPILE_SHADER_FLAGS");
+            group.TagTypeAndName<CppParameter>(@"^D3DX(\d+).*?::Flags2$", "D3DCOMPILE_EFFECT_FLAGS");
+            group.TagTypeAndName<CppParameter>(@"^D3DX(\d+)ComputeNormalMap::Flags$", "D3DX$1_NORMALMAP_FLAG");
+            group.TagTypeAndName<CppParameter>(@"^D3DX(\d+)ComputeNormalMap::Channel$", "D3DX$1_CHANNEL_FLAG");
 
             group.Modify<CppParameter>(@"^D3DX(\d+)CreateTextureFromFileW::ppTexture", Modifiers.ParameterAttribute(CppAttribute.Out));
             group.Modify<CppParameter>(@"^D3DX(\d+)CreateTextureFromResourceW::ppTexture", Modifiers.ParameterAttribute(CppAttribute.Out));
@@ -346,6 +354,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             // Remove all functions unsing ASCII strings
             group.Modify<CppFunction>(@"^D3DX(\d+).*A$", Modifiers.Remove);
+            group.TagName<CppFunction>(@"^D3DX(\d+)(.+)W$", "$2", false);
 
             // Remove duplicate D3DX function to D3DCompiler
             group.Modify<CppFunction>(@"^D3DX(\d+)Compile.*$", Modifiers.Remove);
@@ -354,7 +363,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // Remove all async functions as they would be much more easier to implement in C#
             group.Modify<CppFunction>(@"^D3DX(\d+)CreateAsync.*$", Modifiers.Remove);
             group.Modify<CppFunction>(@"^D3DX(\d+)CreateThreadPump.*$", Modifiers.Remove);
-
 
             // Map specific part
             MapDirect3D10();
@@ -382,11 +390,11 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             // Direct3D10 Enumerations
             // --------------------------------------------------------------------------------------------------------
-            gen.RenameType(@"^D3DX10_SPRITE", "SpriteType");
 
             // --------------------------------------------------------------------------------------------------------
             // Direct3D10 Structures
             // --------------------------------------------------------------------------------------------------------
+            group.TagName<CppStruct>(@"^D3DX10_SPRITE", "SpriteType");
             group.Modify<CppStruct>(@"^D3D10_SHADER_DEBUG_SCOPE_INFO$", Modifiers.Remove);
             group.Modify<CppStruct>(@"^D3D10_SHADER_DEBUG_SCOPEVAR_INFO$", Modifiers.Remove);
             group.Modify<CppStruct>(@"^D3D10_SHADER_DEBUG_INPUT_INFO$", Modifiers.Remove);
@@ -401,19 +409,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             // Direct3D10 Interfaces
             // --------------------------------------------------------------------------------------------------------
-            gen.RenameType(@"^ID3D10(.+)", "$1", false, TypeContext.Root);
-            gen.RenameType(@"^ID3DX10(.+)", "$1", false, TypeContext.Root);
-
-            gen.MoveMethodsToInnerInterface("ID3D10Device::IA(.*)", "InputAssemblerStage", "InputAssembler", "$1");
-            gen.MoveMethodsToInnerInterface("ID3D10Device::VS(.*)", "VertexShaderStage", "VertexShader", "$1",
-                                            "CommonShaderStage<VertexShader>");
-            gen.MoveMethodsToInnerInterface("ID3D10Device::PS(.*)", "PixelShaderStage", "PixelShader", "$1",
-                                            "CommonShaderStage<PixelShader>");
-            gen.MoveMethodsToInnerInterface("ID3D10Device::GS(.*)", "GeometryShaderStage", "GeometryShader", "$1",
-                                            "CommonShaderStage<GeometryShader>");
-            gen.MoveMethodsToInnerInterface("ID3D10Device::SO(.*)", "StreamOutputStage", "StreamOutput", "$1");
-            gen.MoveMethodsToInnerInterface("ID3D10Device::RS(.*)", "RasterizerStage", "Rasterizer", "$1");
-            gen.MoveMethodsToInnerInterface("ID3D10Device::OM(.*)", "OutputMergerStage", "OutputMerger", "$1");
+            group.TagName<CppInterface>(@"^ID3D10(.+)", "$1", false);
+            group.TagName<CppInterface>(@"^ID3DX10(.+)", "$1", false);
 
             // Remove all methods using ASCII encoding
             group.Modify<CppMethod>(@"^ID3DX10Font::.*A$", Modifiers.Remove);
@@ -424,6 +421,23 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagName<CppMethod>(@"^ID3DX10Font::PreloadTextW$", "PreloadText");
             group.TagName<CppMethod>(@"^ID3DX10Font::DrawTextW$", "DrawText");
             //group.TagName<CppMethod>(@"^ID3DX10Font::GetDC$", "GetDeviceContext");
+
+            group.TagName<CppMethod>(@"^ID3D10Device::IA(.*)$", "$1");
+            group.TagName<CppMethod>(@"^ID3D10Device::VS(.*)$", "$1");
+            group.TagName<CppMethod>(@"^ID3D10Device::PS(.*)$", "$1");
+            group.TagName<CppMethod>(@"^ID3D10Device::GS(.*)$", "$1");
+            group.TagName<CppMethod>(@"^ID3D10Device::SO(.*)$", "$1");
+            group.TagName<CppMethod>(@"^ID3D10Device::RS(.*)$", "$1");
+            group.TagName<CppMethod>(@"^ID3D10Device::OM(.*)$", "$1");
+
+            gen.MoveMethodsToInnerInterface("ID3D10Device::IA(.*)", "InputAssemblerStage", "InputAssembler");
+            gen.MoveMethodsToInnerInterface("ID3D10Device::VS(.*)", "VertexShaderStage", "VertexShader", "CommonShaderStage<VertexShader>");
+            gen.MoveMethodsToInnerInterface("ID3D10Device::PS(.*)", "PixelShaderStage", "PixelShader", "CommonShaderStage<PixelShader>");
+            gen.MoveMethodsToInnerInterface("ID3D10Device::GS(.*)", "GeometryShaderStage", "GeometryShader", "CommonShaderStage<GeometryShader>");
+            gen.MoveMethodsToInnerInterface("ID3D10Device::SO(.*)", "StreamOutputStage", "StreamOutput");
+            gen.MoveMethodsToInnerInterface("ID3D10Device::RS(.*)", "RasterizerStage", "Rasterizer");
+            gen.MoveMethodsToInnerInterface("ID3D10Device::OM(.*)", "OutputMergerStage", "OutputMerger");
+
 
             // Mark all stage methods internals
             group.Modify<CppParameter>(@"^ID3D10Device::ClearRenderTargetView::ColorRGBA$", Modifiers.Type("SLIMDX_COLOR4", "*", false, null));
@@ -446,8 +460,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             // Direct3D10 Functions
             // --------------------------------------------------------------------------------------------------------
-            gen.RenameType(@"^D3D10(.+)", "$1", false, TypeContext.Root);
-            gen.RenameType(@"^D3DX10(.+)", "$1", false, TypeContext.Root);
+            group.TagName<CppFunction>(@"^D3D10(.+)", "$1", false);
+            group.TagName<CppFunction>(@"^D3DX10(.+)$", "$1", false);
+            group.TagName<CppFunction>(@"^D3DX10(.+)W$", "$1", false);
 
             group.Modify<CppParameter>(@"^D3D10CreateDevice1?::ppDevice", Modifiers.ParameterAttribute(CppAttribute.Out));
             group.Modify<CppParameter>(@"^D3D10CreateDeviceAndSwapChain1?::ppDevice", Modifiers.ParameterAttribute(CppAttribute.Out));
@@ -488,11 +503,11 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // Map All D3DX11 functions to D3DX11 Function Group
             group.TagFunction(@"^D3DX10.*", d3dx10DLLName, d3dx10FunctionGroup);
 
-            gen.AddConstantFromMacroToCSharpType("D3D10_SDK_VERSION", Global.Name + ".Direct3D10.D3D10", "int");
+            gen.AddConstantFromMacroToCSharpType("D3D10_SDK_VERSION", Global.Name + ".Direct3D10.D3D10", "int", "SdkVersion");
             gen.AddConstantFromMacroToCSharpType("D3D10_1_SDK_VERSION", Global.Name + ".Direct3D10.D3D10", "int", "SdkVersion1");
 
             // SubPart renaming
-            gen.RenameTypePart("^D3D10", "");        
+            // gen.RenameTypePart("^D3D10", "");        
         }
 
         /// <summary>
@@ -508,42 +523,35 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.MapIncludeToNamespace("d3d11shader", Global.Name + ".D3DCompiler");
             gen.MapIncludeToNamespace("d3dcompiler", Global.Name + ".D3DCompiler");
 
-
             // --------------------------------------------------------------------------------------------------------
             // Direct3D11 Enumerations
             // --------------------------------------------------------------------------------------------------------
-            gen.RenameType(@"^D3DCOMPILE_EFFECT_ALLOW_SLOW_OPS$", "AllowSlowOperations");
-            gen.RenameType(@"^D3D11_SHADER_BUFFER_DESC$", "ConstantBufferDescription");
+            group.TagName<CppEnumItem>(@"^D3D11_FEATURE_FORMAT_SUPPORT2$", "ComputeShaders");
+            group.TagName<CppEnumItem>(@"^D3D11_FEATURE_DOUBLES$", "ShaderDoubles");
 
             // --------------------------------------------------------------------------------------------------------
             // Direct3D11 Structures
             // --------------------------------------------------------------------------------------------------------
-            group.TagTypeName<CppField>(@"^D3D11_SHADER_DESC::Version", "D3D11_SHADER_VERSION_TYPE");
-
+            group.TagName<CppStruct>(@"^D3D11_SHADER_BUFFER_DESC$", "ConstantBufferDescription");
+            group.TagTypeAndName<CppField>(@"^D3D11_SHADER_DESC::Version", "D3D11_SHADER_VERSION_TYPE");
 
             // --------------------------------------------------------------------------------------------------------
             // Direct3D11 Interfaces
             // --------------------------------------------------------------------------------------------------------
-            gen.RenameType(@"^ID3D11(.+)", "$1", false, TypeContext.Root);
-            gen.RenameType(@"^ID3DX11(.+)", "$1", false, TypeContext.Root);        
+            group.TagName<CppInterface>(@"^ID3D11(.+)", "$1", false);
+            group.TagName<CppInterface>(@"^ID3DX11(.+)", "$1", false);
 
-            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::IA(.*)", "InputAssemblerStage", "InputAssembler", "$1");
-            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::VS(.*)", "VertexShaderStage", "VertexShader", "$1",
-                                            "CommonShaderStage<VertexShader>");
-            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::PS(.*)", "PixelShaderStage", "PixelShader", "$1",
-                                            "CommonShaderStage<PixelShader>");
-            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::GS(.*)", "GeometryShaderStage", "GeometryShader", "$1",
-                                            "CommonShaderStage<GeometryShader>");
-            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::SO(.*)", "StreamOutputStage", "StreamOutput", "$1");
-            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::DS(.*)", "DomainShaderStage", "DomainShader", "$1",
-                                            "CommonShaderStage<DomainShader>");
+            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::IA(.*)", "InputAssemblerStage", "InputAssembler");
+            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::VS(.*)", "VertexShaderStage", "VertexShader","CommonShaderStage<VertexShader>");
+            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::PS(.*)", "PixelShaderStage", "PixelShader","CommonShaderStage<PixelShader>");
+            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::GS(.*)", "GeometryShaderStage", "GeometryShader", "CommonShaderStage<GeometryShader>");
+            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::SO(.*)", "StreamOutputStage", "StreamOutput");
+            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::DS(.*)", "DomainShaderStage", "DomainShader", "CommonShaderStage<DomainShader>");
             ;
-            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::HS(.*)", "HullShaderStage", "HullShader", "$1",
-                                            "CommonShaderStage<HullShader>");
-            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::RS(.*)", "RasterizerStage", "Rasterizer", "$1");
-            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::OM(.*)", "OutputMergerStage", "OutputMerger", "$1");
-            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::CS(.*)", "ComputeShaderStage", "ComputeShader", "$1",
-                                            "CommonShaderStage<ComputeShader>");
+            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::HS(.*)", "HullShaderStage", "HullShader", "CommonShaderStage<HullShader>");
+            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::RS(.*)", "RasterizerStage", "Rasterizer");
+            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::OM(.*)", "OutputMergerStage", "OutputMerger");
+            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::CS(.*)", "ComputeShaderStage", "ComputeShader", "CommonShaderStage<ComputeShader>");
 
             // Replace all existing reference to ID3DX11ThreadPump type to void (making all pointers to be void*)
             group.ModifyAll(".*", Modifiers.RenameType("ID3DX11ThreadPump", "void"));
@@ -551,9 +559,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             // Direct3D11 Functions
             // --------------------------------------------------------------------------------------------------------
-            gen.AddConstantFromMacroToCSharpType("D3D11_SDK_VERSION", Global.Name + ".Direct3D11.D3D11", "int");
-            gen.RenameType(@"^D3D11(.+)", "$1", false, TypeContext.Root);
-            gen.RenameType(@"^D3DX11(.+)", "$1", false, TypeContext.Root);
+            gen.AddConstantFromMacroToCSharpType("D3D11_SDK_VERSION", Global.Name + ".Direct3D11.D3D11", "int", "SdkVersion");
+            group.TagName<CppFunction>(@"^D3D11(.+)", "$1", false);
+            group.TagName<CppFunction>(@"^D3DX11(.+)$", "$1", false);
+            group.TagName<CppFunction>(@"^D3DX11(.+)W$", "$1", false);
 
             CSharpFunctionGroup d3d11FunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct3D11", Global.Name + ".Direct3D11", "D3D11");
             CSharpFunctionGroup d3dx11FunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct3D11", Global.Name + ".Direct3D11", "D3DX11");
@@ -562,8 +571,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagFunction(@"^D3D11.*", "d3d11.dll", d3d11FunctionGroup);
             group.TagFunction(@"^D3DX11.*", d3dx11DLLName, d3dx11FunctionGroup);
 
-            gen.RenameTypePart("^D3D11", "");
-            gen.RenameTypePart("^D3DX11", "");
+            //gen.RenameTypePart("^D3D11", "");
+            //gen.RenameTypePart("^D3DX11", "");
         }
     }
 }
