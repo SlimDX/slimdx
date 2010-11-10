@@ -671,6 +671,16 @@ namespace SlimDX2.Tools.HeaderToXIDL
         }
 
         /// <summary>
+        /// Return true if the token is a numeric (int,char,short,long)
+        /// </summary>
+        /// <param name="tokenId"></param>
+        /// <returns></returns>
+        private bool IsTokenNumeric(TokenId tokenId)
+        {
+            return (tokenId == TokenId.Char || tokenId == TokenId.Int || tokenId == TokenId.Short || tokenId == TokenId.Long);
+        }
+
+        /// <summary>
         /// Read a Type with an optional declaration
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -691,10 +701,29 @@ namespace SlimDX2.Tools.HeaderToXIDL
                 ReadNextToken();
             }
 
-            // Get Type from token
-            cppType.Type = CurrentToken.Value;
-            cppType.Specifier = "";
+            string type;
+            // Handle unsigned
+            if (CurrentToken.Id == TokenId.Unsigned)
+            {
+                ReadNextToken();
+                // If next token is not numeric, unsigned default is int type
+                if (IsTokenNumeric(CurrentToken.Id))
+                {
+                    type = CurrentToken.Value;
+                }
+                else
+                {
+                    type = "int";
+                }
+            }
+            else
+            {
+                type = CurrentToken.Value;
+            }
 
+            // Get Type from token
+            cppType.Type = type;
+            cppType.Specifier = "";
 
             // Handles specifiers (const, pointers) and declaration
             do
@@ -789,24 +818,29 @@ namespace SlimDX2.Tools.HeaderToXIDL
         /// </summary>
         /// <param name="fieldOffset"></param>
         /// <returns></returns>
-        private CppField ReadStructField(CppStruct cppStruct, int fieldOffset)
+        private CppField ReadStructField(CppStruct cppStruct, ref int fieldOffset)
         {
             CppAttribute attribute = ReadAnnotation();
             var field = ReadType<CppField>(true);
+
+            bool goToNextFieldOffset = true;
 
             // If colon, then this is a bitfield
             if (PreviewNextToken().Id == TokenId.Colon)
             {
                 // Set bitfield for struct
-                cppStruct.IsBitfield = true;
+                field.IsBitField = true;
 
                 ReadNextToken();    // Skip ":"
                 ReadNextToken();    // => CurrentToken is bitoffset
-                TokenId nextId = CurrentToken.Id;
                 int bitOffset;
+
+                // TODO handle bitoffset of 0!
                 if (int.TryParse(CurrentToken.Value, out bitOffset))
                 {
-                    fieldOffset = bitOffset;
+                    field.BitOffset = bitOffset;
+                    if (bitOffset != 0)
+                        goToNextFieldOffset = false;
                 }
                 else
                 {
@@ -814,6 +848,8 @@ namespace SlimDX2.Tools.HeaderToXIDL
                 }
             }
             field.Offset = fieldOffset;
+            if (goToNextFieldOffset)
+                fieldOffset++;
             NextStatement();
             return field;
         }
@@ -858,7 +894,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
                     if (PreviewNextToken().Value == cppStruct.Name)
                     {
                         ReadNextToken();
-                        cppField = ReadStructField(cppStruct, fieldOffset);
+                        cppField = ReadStructField(cppStruct, ref fieldOffset);
                     }
                     else
                     {
@@ -873,8 +909,11 @@ namespace SlimDX2.Tools.HeaderToXIDL
                     // Handle union
                     SkipUntilTokenId(TokenId.Leftbrace);
 
+                    int unionFieldOffset;
                     do
                     {
+                        // Force field offset for an union to be the same
+                        unionFieldOffset = fieldOffset;
                         ReadNextToken();
                         type = CurrentToken;
 
@@ -885,7 +924,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
                             if (PreviewNextToken().Value == cppStruct.Name)
                             {
                                 ReadNextToken();
-                                cppField = ReadStructField(cppStruct, fieldOffset);
+                                cppField = ReadStructField(cppStruct, ref unionFieldOffset);
                             }
                             else
                             {
@@ -897,9 +936,11 @@ namespace SlimDX2.Tools.HeaderToXIDL
                         }
                         else if (type.Id == TokenId.Rightbrace)
                             break;
-                        else                     
-                            cppStruct.Add(ReadStructField(cppStruct, fieldOffset));
+                        else
+                            cppStruct.Add(ReadStructField(cppStruct, ref unionFieldOffset));
                     } while (true);
+                    // For union, go to next field at the end of the union
+                    fieldOffset++;
                     NextStatement();
                 }
                 else if (PreviewNextToken().Id == TokenId.Leftparen && !CurrentToken.Value.StartsWith("__"))
@@ -910,9 +951,8 @@ namespace SlimDX2.Tools.HeaderToXIDL
                 else
                 {
                     // Else Read Struct Field declaration
-                    cppStruct.Add(ReadStructField(cppStruct, fieldOffset));
+                    cppStruct.Add(ReadStructField(cppStruct, ref fieldOffset));
                 }
-                fieldOffset++;
             } while (true);
 
             //NextStatement();

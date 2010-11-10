@@ -24,7 +24,22 @@ namespace SlimDX2.Tools.XIDL
     [DataContract]
     public class CppField : CppType
     {
+        /// <summary>
+        /// Index of the field mostly used to handle unions.
+        /// </summary>
         [DataMember(Order = 0)]
         public int Offset { get; set; }
+
+        /// <summary>
+        /// Used only for structure with bits
+        /// </summary>
+        [DataMember(Order = 1)]
+        public bool IsBitField { get; set; }
+
+        /// <summary>
+        /// Used only for structure with bits
+        /// </summary>
+        [DataMember(Order = 2)]
+        public int BitOffset { get; set; }
     }
 }

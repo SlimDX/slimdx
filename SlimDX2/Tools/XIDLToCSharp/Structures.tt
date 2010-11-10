@@ -129,14 +129,30 @@ foreach (var sharpStruct in Namespace.Structs)
 #>        internal <#= sharpStructItem.PublicType.FullName #>[] _<#= sharpStructItem.Name #>;
 <#+
 		} else {
-			if (!sharpStruct.HasMarshalType  && sharpStruct.ExplicitLayout) {
+			if (sharpStructItem.IsBitField) {
+#>
+        <#= sharpStructItem.VisibilityName #><#= sharpStructItem.PublicType.FullName #>  <#= sharpStructItem.Name #> { 
+            get { 
+                return (<#= sharpStructItem.PublicType.FullName #>)((_<#= sharpStructItem.Name #> >> <#= sharpStructItem.BitOffset #>) &  <#= sharpStructItem.BitMask #>);
+            }
+            set { 
+                _<#= sharpStructItem.Name #> = (<#= sharpStructItem.PublicType.FullName #>)((_<#= sharpStructItem.Name #> & ~( <#= sharpStructItem.BitMask #> << <#= sharpStructItem.BitOffset #>)) | ( (value & <#= sharpStructItem.BitMask #>) << <#= sharpStructItem.BitOffset #>));
+            }
+        }
+        [FieldOffset(<#= sharpStructItem.Offset #>)]
+        internal <#= sharpStructItem.PublicType.FullName #> _<#= sharpStructItem.Name #>;
+		
+<#+				
+			} else {
+				if (!sharpStruct.HasMarshalType  && sharpStruct.ExplicitLayout) {
 #>
         [FieldOffset(<#= sharpStructItem.Offset #>)]
 <#+			
-			}		
+				}	
 #>
         <#= sharpStructItem.VisibilityName #><#= sharpStructItem.PublicType.FullName #> <#= sharpStructItem.Name #>;
 <#+
+			}
 		}
 	}
 
