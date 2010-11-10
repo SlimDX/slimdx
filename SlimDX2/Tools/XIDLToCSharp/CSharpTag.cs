@@ -17,6 +17,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using System;
 using SlimDX2.Tools.XIDL;
 using System.Linq;
 
@@ -194,12 +195,16 @@ namespace SlimDX2.Tools.XIDLToCSharp
         /// </summary>
         /// <param name="element"></param>
         /// <param name="regex"></param>
-        public static string GetTypeNameWithMapping(this CppType cppType)
+        public static string GetTypeNameWithMapping(this CppElement cppType)
         {
             var tag = cppType.GetTag<CSharpTag>();
             if (tag != null && tag.MappingType != null)
                 return tag.MappingType;
-            return cppType.Type;
+            if (cppType is CppEnum)
+                return "int";
+            if (cppType is CppType)
+                return (cppType as CppType).Type;
+            throw new ArgumentException(string.Format("Cannot get typename from type {0}", cppType));
         }
 
         private static string RegexRename(PathRegex regex, string fromName, string replaceName)

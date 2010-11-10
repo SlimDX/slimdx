@@ -145,7 +145,7 @@ foreach (var sharpFunctionGroup in Namespace.FunctionGroups)
 				} else {
 #>                <#
 				}
-#><#= sharpFunction.CppElementName #>_(<#
+#><#= sharpFunction.CastStart #><#= sharpFunction.CppElementName #>_(<#
 				i = 0;
 				maxParam = sharpFunction.ParameterCount;
 				foreach (var param in sharpFunction.Parameters) {
@@ -153,7 +153,7 @@ foreach (var sharpFunctionGroup in Namespace.FunctionGroups)
 					if ((i+1)<maxParam) {#>, <#}
 					i++;
 				}
-				#>);
+				#>)<#= sharpFunction.CastEnd #>;
 <#
 
 				// ---------------------------------------------------------------------------------------------------
@@ -198,7 +198,7 @@ foreach (var sharpFunctionGroup in Namespace.FunctionGroups)
 		/// <summary>Native Interop Function</summary>
         /// <unmanaged><#= sharpFunction.CppSignature #></unmanaged>
 		[DllImport("<#= sharpFunction.DllName #>", EntryPoint = "<#= sharpFunction.CppElementName #>", CallingConvention = CallingConvention.StdCall, PreserveSig = true), SuppressUnmanagedCodeSecurityAttribute]
-		private extern static <#= sharpFunction.ReturnType.PublicType.FullName #> <#= sharpFunction.CppElementName #>_(<#
+		private extern static <#= sharpFunction.ReturnTypeForFunction #> <#= sharpFunction.CppElementName #>_(<#
  
 		i = 0;
 		maxParam = sharpFunction.ParameterCount;

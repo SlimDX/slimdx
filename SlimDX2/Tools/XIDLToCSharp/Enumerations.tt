@@ -55,7 +55,7 @@ foreach (var sharpEnum in Namespace.Enums)
 	if (sharpEnum.IsFlag) {#>
     [Flags]
 <#  }#>
-    <#= sharpEnum.VisibilityName #>enum <#= sharpEnum.Name #> : int {	
+    <#= sharpEnum.VisibilityName #>enum <#= sharpEnum.Name #> : <#= sharpEnum.TypeName #> {	
 <#
 	foreach (var sharpEnumItem in sharpEnum.EnumItems) {				
 #>
@@ -75,7 +75,7 @@ foreach (var sharpEnum in Namespace.Enums)
 <#		}
 		else {
 #>
-        <#= sharpEnumItem.Name #> = unchecked((int)<#= sharpEnumItem.Value#>),			
+        <#= sharpEnumItem.Name #> = unchecked((<#= sharpEnum.TypeName #>)<#= sharpEnumItem.Value#>),			
 <#
 		}
 	}	

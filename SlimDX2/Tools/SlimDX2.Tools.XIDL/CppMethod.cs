@@ -69,6 +69,11 @@ namespace SlimDX2.Tools.XIDL
             StringBuilder builder = new StringBuilder();
             builder.Append(ReturnType);
             builder.Append(" ");
+            if (Parent is CppInterface)
+            {
+                builder.Append(Parent.Name);
+                builder.Append("::");
+            }
             builder.Append(Name);
             builder.Append("(");
             int i = 0, count = Parameters.Count();

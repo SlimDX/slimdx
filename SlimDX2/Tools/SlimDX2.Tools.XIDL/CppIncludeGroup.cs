@@ -17,6 +17,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -96,8 +97,10 @@ namespace SlimDX2.Tools.XIDL
             }
         }
 
-        public void CreateEnumFromMacros(string macroRegexpStr, string enumName)
+        public CppEnum CreateEnumFromMacros(string macroRegexpStr, string enumName, Type defaultType=null)
         {
+            if (defaultType == null)
+                defaultType = typeof (int);
             var cppEnum = new CppEnum { Name = enumName };
 
             CppInclude includeToAddTo = null;
@@ -123,6 +126,7 @@ namespace SlimDX2.Tools.XIDL
             }
 
             includeToAddTo.Add(cppEnum);
+            return cppEnum;
         }
     }
 }
