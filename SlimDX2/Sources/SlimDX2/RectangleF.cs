@@ -15,6 +15,16 @@ namespace SlimDX2
         private float _right;
         private float _bottom;
 
+        /// <summary>
+        /// An empty rectangle
+        /// </summary>
+        public static readonly RectangleF Empty;
+
+        static RectangleF()
+        {
+            Empty = new RectangleF();
+        }
+
         public RectangleF(float left, float top, float right, float bottom)
         {
             _left = left;
@@ -59,6 +69,21 @@ namespace SlimDX2
             set { Top = Bottom + value; }
         }
 
+        public override bool Equals(object obj)
+        {
+            if (!(obj is RectangleF))
+            {
+                return false;
+            }
+            RectangleF rectangle = (RectangleF)obj;
+            return ((((rectangle.Left == this.Left) && (rectangle.Right == this.Right)) && (rectangle.Bottom == this.Bottom)) && (rectangle.Top == this.Top));
+        }
+
+        public override int GetHashCode()
+        {
+            return (((((int)this.Left) ^ (((int)this.Top) << 13) | (((int)this.Top) >> 0x13))) ^ ((((int)this.Bottom) << 0x1a) | (((int)this.Bottom) >> 6))) ^ ((((int)this.Right) << 7) | (((int)this.Right) >> 0x19));
+        }
+
         public static implicit operator RectangleF(System.Drawing.RectangleF input)
         {
             return new RectangleF(input.Left, input.Top, input.Right, input.Bottom);
@@ -67,6 +92,16 @@ namespace SlimDX2
         public static implicit operator System.Drawing.RectangleF(RectangleF input)
         {
             return new System.Drawing.RectangleF(input.Left, input.Top, input.Right - input.Left, input.Bottom - input.Top);
+        }
+
+        public static bool operator ==(RectangleF left, RectangleF right)
+        {
+            return ((((left.Left == right.Left) && (left.Right == right.Right)) && (left.Top == right.Top)) && (left.Bottom == right.Bottom));
+        }
+
+        public static bool operator !=(RectangleF left, RectangleF right)
+        {
+            return !(left == right);
         }
     }
 }
