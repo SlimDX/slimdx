@@ -442,6 +442,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             bool isInUnion = false;
 
+            int cumulatedBitOffset = 0;
+            int lastCumulatedBitOffset = 0;
+
             for (int fieldIndex = 0; fieldIndex < cppStruct.InnerElements.Count; fieldIndex++)
             {
                 CppField cppField = cppStruct.InnerElements[fieldIndex] as CppField;
@@ -659,13 +662,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 }
                 var fieldStruct = new CSharpStruct.Field(cSharpStruct, cppField, publicType, marshalType, fieldName);
 
-                // TODO: temporary handling bitfield
-                if (cppStruct.IsBitfield)
-                {
-                    cppField.Offset = 0;
-                }
-
-
                 // If last field has same offset, then it's a union
                 // CurrentOffset is not moved
                 if (isInUnion && lastCppFieldOffset != cppField.Offset)
@@ -681,6 +677,21 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 fieldStruct.Offset = offsetOfFields[cppField.Offset];
                 fieldStruct.SizeOf = fieldSize;
                 fieldStruct.IsArray = hasArray;
+                fieldStruct.IsBitField = cppField.IsBitField;
+
+                // Handle bit fields : calculate BitOffset and BitMask for this field
+                if (lastCppFieldOffset != cppField.Offset)
+                {
+                    cumulatedBitOffset = 0;
+                }
+                if (cppField.IsBitField)
+                {
+                    lastCumulatedBitOffset = cumulatedBitOffset;
+                    cumulatedBitOffset += cppField.BitOffset;
+                    fieldStruct.BitMask = ((1 << (cumulatedBitOffset + 1)) - 1); // &~((1 << (lastCumulatedBitOffset + 1)) - 1);
+                    fieldStruct.BitOffset = lastCumulatedBitOffset;
+                }
+
                 fieldStruct.ArrayDimension = arrayDimension;
                 cSharpStruct.Add(fieldStruct);
                 // TODO : handle packing rules here!!!!!

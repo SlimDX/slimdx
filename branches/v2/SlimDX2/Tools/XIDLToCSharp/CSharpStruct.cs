@@ -83,6 +83,12 @@ namespace SlimDX2.Tools.XIDLToCSharp
             }
 
             public int Offset { get; set; }
+
+            public bool IsBitField { get; set; }
+
+            public int BitMask { get; set; }
+
+            public int BitOffset { get; set; }
         }
     }
 }
