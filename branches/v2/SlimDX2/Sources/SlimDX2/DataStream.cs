@@ -71,7 +71,7 @@ namespace SlimDX2
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "T:SlimDX.DataStream" /> class, using a managed buffer as a backing store.
+        ///   Initializes a new instance of the <see cref = "SlimDX2.DataStream" /> class, using a managed buffer as a backing store.
         /// </summary>
         /// <param name = "userBuffer">A managed array to be used as a backing store.</param>
         /// <param name = "canRead">
@@ -107,7 +107,7 @@ namespace SlimDX2
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "T:SlimDX.DataStream" /> class, and allocates a new buffer to use as a backing store.
+        ///   Initializes a new instance of the <see cref = "SlimDX2.DataStream" /> class, and allocates a new buffer to use as a backing store.
         /// </summary>
         /// <param name = "sizeInBytes">The size of the buffer to be allocated, in bytes.</param>
         /// <param name = "canRead">
@@ -116,15 +116,18 @@ namespace SlimDX2
         ///   <c>true</c> if writing to the buffer should be allowed; otherwise, <c>false</c>.</param>
         /// <exception cref = "T:System.ArgumentOutOfRangeException">
         ///   <paramref name = "sizeInBytes" /> is less than 1.</exception>
-        public unsafe DataStream(int sizeInBytes, bool canRead, bool canWrite)
+        public DataStream(int sizeInBytes, bool canRead, bool canWrite)
         {
-            Debug.Assert(sizeInBytes > 0);
+            unsafe
+            {
+                Debug.Assert(sizeInBytes > 0);
 
-            this._buffer = (sbyte*) Marshal.AllocHGlobal(sizeInBytes);
-            this._size = sizeInBytes;
-            this._ownsBuffer = true;
-            this._canRead = canRead;
-            this._canWrite = canWrite;
+                this._buffer = (sbyte*) Marshal.AllocHGlobal(sizeInBytes);
+                this._size = sizeInBytes;
+                this._ownsBuffer = true;
+                this._canRead = canRead;
+                this._canWrite = canWrite;
+            }
         }
 
         internal unsafe DataStream(void* buffer, int sizeInBytes, bool canRead, bool makeCopy)
@@ -146,7 +149,7 @@ namespace SlimDX2
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "T:SlimDX.DataStream" /> class, using an unmanaged buffer as a backing store.
+        ///   Initializes a new instance of the <see cref = "SlimDX2.DataStream" /> class, using an unmanaged buffer as a backing store.
         /// </summary>
         /// <param name = "userBuffer">A pointer to the buffer to be used as a backing store.</param>
         /// <param name = "sizeInBytes">The size of the buffer provided, in bytes.</param>
@@ -158,14 +161,17 @@ namespace SlimDX2
         ///   <paramref name = "userBuffer" /> is a zero pointer.</exception>
         /// <exception cref = "T:System.ArgumentOutOfRangeException">
         ///   <paramref name = "sizeInBytes" /> is less than 1.</exception>
-        public unsafe DataStream(IntPtr userBuffer, long sizeInBytes, bool canRead, bool canWrite)
+        public DataStream(IntPtr userBuffer, long sizeInBytes, bool canRead, bool canWrite)
         {
-            Debug.Assert(userBuffer != IntPtr.Zero);
-            Debug.Assert(sizeInBytes > 0);
-            this._buffer = (sbyte*) userBuffer.ToPointer();
-            this._size = sizeInBytes;
-            this._canRead = canRead;
-            this._canWrite = canWrite;
+            unsafe
+            {
+                Debug.Assert(userBuffer != IntPtr.Zero);
+                Debug.Assert(sizeInBytes > 0);
+                this._buffer = (sbyte*) userBuffer.ToPointer();
+                this._size = sizeInBytes;
+                this._canRead = canRead;
+                this._canWrite = canWrite;
+            }
         }
 
         internal unsafe DataStream(void* buffer, int sizeInBytes, bool canRead, bool canWrite, bool makeCopy)
