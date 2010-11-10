@@ -787,6 +787,20 @@
             	<c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
             </returns>
         </member>
+        <member name="M:SlimMath.Vector2.op_Implicit(SlimMath.Vector2)~System.Windows.Point">
+            <summary>
+            Performs an implicit conversion from <see cref="T:SlimMath.Vector2"/> to <see cref="T:System.Windows.Point"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:SlimMath.Vector2.op_Explicit(System.Windows.Point)~SlimMath.Vector2">
+            <summary>
+            Performs an explicit conversion from <see cref="T:System.Windows.Point"/> to <see cref="T:SlimMath.Vector2"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
         <member name="P:SlimMath.Vector2.IsNormalized">
             <summary>
             Gets a value indicting whether this instance is normalized.
@@ -1368,6 +1382,20 @@
             <c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
             </returns>
         </member>
+        <member name="M:SlimMath.Quaternion.op_Implicit(SlimMath.Quaternion)~System.Windows.Media.Media3D.Quaternion">
+            <summary>
+            Performs an implicit conversion from <see cref="T:SlimMath.Quaternion"/> to <see cref="T:System.Windows.Media.Media3D.Quaternion"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:SlimMath.Quaternion.op_Explicit(System.Windows.Media.Media3D.Quaternion)~SlimMath.Quaternion">
+            <summary>
+            Performs an explicit conversion from <see cref="T:System.Windows.Media.Media3D.Quaternion"/> to <see cref="T:SlimMath.Quaternion"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
         <member name="P:SlimMath.Quaternion.IsIdentity">
             <summary>
             Gets a value indicating whether this instance is equivalent to the identity quaternion.
@@ -1872,6 +1900,34 @@
             <returns>
             <c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
             </returns>
+        </member>
+        <member name="M:SlimMath.Color4.op_Explicit(SlimMath.Color4)~System.Windows.Media.Color">
+            <summary>
+            Performs an explicit conversion from <see cref="T:SlimMath.Color4"/> to <see cref="T:System.Windows.Media.Color"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:SlimMath.Color4.op_Explicit(System.Windows.Media.Color)~SlimMath.Color4">
+            <summary>
+            Performs an explicit conversion from <see cref="T:System.Windows.Media.Color"/> to <see cref="T:SlimMath.Color4"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:SlimMath.Color4.op_Explicit(SlimMath.Color4)~System.Drawing.Color">
+            <summary>
+            Performs an explicit conversion from <see cref="T:SlimMath.Color4"/> to <see cref="T:System.Drawing.Color"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:SlimMath.Color4.op_Explicit(System.Drawing.Color)~SlimMath.Color4">
+            <summary>
+            Performs an explicit conversion from <see cref="T:System.Drawing.Color"/> to <see cref="T:SlimMath.Color4"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
         </member>
         <member name="P:SlimMath.Color4.Item(System.Int32)">
             <summary>
@@ -2433,6 +2489,34 @@
             <returns>
             <c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
             </returns>
+        </member>
+        <member name="M:SlimMath.Color3.op_Explicit(SlimMath.Color3)~System.Windows.Media.Color">
+            <summary>
+            Performs an explicit conversion from <see cref="T:SlimMath.Color3"/> to <see cref="T:System.Windows.Media.Color"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:SlimMath.Color3.op_Explicit(System.Windows.Media.Color)~SlimMath.Color3">
+            <summary>
+            Performs an explicit conversion from <see cref="T:System.Windows.Media.Color"/> to <see cref="T:SlimMath.Color3"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:SlimMath.Color3.op_Explicit(SlimMath.Color3)~System.Drawing.Color">
+            <summary>
+            Performs an explicit conversion from <see cref="T:SlimMath.Color3"/> to <see cref="T:System.Drawing.Color"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:SlimMath.Color3.op_Explicit(System.Drawing.Color)~SlimMath.Color3">
+            <summary>
+            Performs an explicit conversion from <see cref="T:System.Drawing.Color"/> to <see cref="T:SlimMath.Color3"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
         </member>
         <member name="P:SlimMath.Color3.Item(System.Int32)">
             <summary>
@@ -4491,6 +4575,20 @@
             <c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
             </returns>
         </member>
+        <member name="M:SlimMath.Matrix.op_Implicit(SlimMath.Matrix)~System.Windows.Media.Media3D.Matrix3D">
+            <summary>
+            Performs an implicit conversion from <see cref="T:SlimMath.Matrix"/> to <see cref="T:System.Windows.Media.Media3D.Matrix3D"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:SlimMath.Matrix.op_Explicit(System.Windows.Media.Media3D.Matrix3D)~SlimMath.Matrix">
+            <summary>
+            Performs an explicit conversion from <see cref="T:System.Windows.Media.Media3D.Matrix3D"/> to <see cref="T:SlimMath.Matrix"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
         <member name="P:SlimMath.Matrix.Row1">
             <summary>
             Gets or sets the first row in the matrix; that is M11, M12, M13, and M14.
@@ -5742,6 +5840,20 @@
             <returns>
             <c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
             </returns>
+        </member>
+        <member name="M:SlimMath.Vector4.op_Implicit(SlimMath.Vector4)~System.Windows.Media.Media3D.Point4D">
+            <summary>
+            Performs an implicit conversion from <see cref="T:SlimMath.Vector4"/> to <see cref="T:System.Windows.Media.Media3D.Point4D"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:SlimMath.Vector4.op_Explicit(System.Windows.Media.Media3D.Point4D)~SlimMath.Vector4">
+            <summary>
+            Performs an explicit conversion from <see cref="T:System.Windows.Media.Media3D.Point4D"/> to <see cref="T:SlimMath.Vector4"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
         </member>
         <member name="P:SlimMath.Vector4.IsNormalized">
             <summary>
@@ -7584,6 +7696,20 @@
             <returns>
             	<c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
             </returns>
+        </member>
+        <member name="M:SlimMath.Vector3.op_Implicit(SlimMath.Vector3)~System.Windows.Media.Media3D.Vector3D">
+            <summary>
+            Performs an implicit conversion from <see cref="T:SlimMath.Vector3"/> to <see cref="T:System.Windows.Media.Media3D.Vector3D"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:SlimMath.Vector3.op_Explicit(System.Windows.Media.Media3D.Vector3D)~SlimMath.Vector3">
+            <summary>
+            Performs an explicit conversion from <see cref="T:System.Windows.Media.Media3D.Vector3D"/> to <see cref="T:SlimMath.Vector3"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
         </member>
         <member name="P:SlimMath.Vector3.IsNormalized">
             <summary>
