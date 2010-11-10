@@ -121,21 +121,27 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     break;
                 case "byte":
                     type = typeof (byte);
+                    sizeOf = sizeof (byte);
                     break;
                 case "char":
                     type = typeof (char);
+                    sizeOf = sizeof (char);
                     break;
                 case "int":
                     type = typeof (int);
+                    sizeOf = sizeof (int);
                     break;
                 case "uint":
                     type = typeof (uint);
+                    sizeOf = sizeof (uint);
                     break;
                 case "long":
                     type = typeof (long);
+                    sizeOf = sizeof (long);
                     break;
                 case "ulong":
                     type = typeof (ulong);
+                    sizeOf = sizeof (ulong);
                     break;
                 case "float":
                     type = typeof (float);
@@ -330,7 +336,27 @@ namespace SlimDX2.Tools.XIDLToCSharp
             var newEnum = new CSharpEnum();
             newEnum.Name = ConvertCppNameToCSharpName(cppEnum);
             newEnum.CppElement = cppEnum;
-            newEnum.SizeOf = 4;
+
+            // Determine type. Default is int
+            string typeName = cppEnum.GetTypeNameWithMapping();
+            switch (typeName)
+            {
+                case "byte":
+                    newEnum.Type = typeof(byte);
+                    newEnum.SizeOf = 1;
+                    break;
+                case "short":
+                    newEnum.Type = typeof(short);
+                    newEnum.SizeOf = 1;
+                    break;
+                case "int":
+                    newEnum.Type = typeof (int);
+                    newEnum.SizeOf = 4;
+                    break;
+                default:
+                    throw new ArgumentException(string.Format("Invalid type {0} for enum {1}. Supported only int, byte, short", typeName, cppEnum));
+            }
+
             nameSpace.Add(newEnum);
             _mapCppNameToCSharpType.Add(cppEnum.Name, newEnum);
 
@@ -635,6 +661,12 @@ namespace SlimDX2.Tools.XIDLToCSharp
                         case "LPCVOID":
                             fieldSize = 4;
                             publicType = ImportType(typeof (IntPtr));
+                            break;
+                        case "D3DCOLOR":
+                            fieldSize = 4;
+                            FindType("D3DCOLOR", out publicType, ref hasPointer);
+                            marshalType = ImportType(typeof (int));
+                            hasMarshalType = true;
                             break;
                         default:
                             // Try to get a declared struct
@@ -1190,6 +1222,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     case "ID3D10Effect":
                         publicType = ImportType(typeof (IntPtr));
                         break;
+                    case "D3DCOLOR":
+                        FindType("D3DCOLOR", out publicType, ref hasPointer);
+                        marshalType = ImportType(typeof(int));
+                        break;
                     default:
                         // Try to get a declared struct
                         // If it fails, then this struct is unknown
@@ -1202,10 +1238,16 @@ namespace SlimDX2.Tools.XIDLToCSharp
                         break;
                 }
 
+                // --------------------------------------------------------------------------------
+                // Pointer - Handle special cases
+                // --------------------------------------------------------------------------------
                 if (hasPointer)
                 {
                     marshalType = ImportType(typeof (IntPtr));
 
+                    // --------------------------------------------------------------------------------
+                    // Handling Parameter Interface
+                    // --------------------------------------------------------------------------------
                     if (publicType is CSharpInterface)
                     {
                         // Force Interface** to be CppAttribute.Out when None
@@ -1248,6 +1290,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     }
                     else
                     {
+                        // --------------------------------------------------------------------------------
+                        // Handling Parameter Interface
+                        // --------------------------------------------------------------------------------
+
 
                         if (cppAttribute == CppAttribute.None ||
                             (cppAttribute & CppAttribute.In) != 0)
@@ -1259,7 +1305,18 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             //parameterAttribute = CSharpMethod.ParameterAttribute.Ref;
                         }
                         else if ((cppAttribute & CppAttribute.InOut) != 0)
-                            parameterAttribute = CSharpMethod.ParameterAttribute.Ref;
+                        {
+                            if ((cppAttribute & CppAttribute.Optional) != 0)
+                            {
+                                publicType = ImportType(typeof(IntPtr));
+                                parameterAttribute = CSharpMethod.ParameterAttribute.In;
+                            }
+                            else
+                            {
+                                parameterAttribute = CSharpMethod.ParameterAttribute.Ref;
+                            }
+
+                        }
                         else if ((cppAttribute & CppAttribute.Out) != 0)
                             parameterAttribute = CSharpMethod.ParameterAttribute.Out;
 

@@ -86,6 +86,18 @@ namespace SlimDX2.Tools.XIDLToCSharp
             get { return !(ReturnType.PublicType.Type != null && ReturnType.PublicType.Type == typeof (void)); }
         }
 
+        public string ReturnTypeForFunction
+        {
+            get
+            {
+                if (ReturnType.PublicType is CSharpInterface)
+                    return "IntPtr";
+                if (ReturnType.PublicType.Type != null && ReturnType.PublicType.Type == typeof(bool))
+                    return "int";
+                return ReturnType.PublicType.FullName;
+            }
+        }
+        
         public string CastStart
         {
             get
@@ -396,6 +408,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
                         return "(" + Name + ".HasValue)?&" + TempName + ":(void*)IntPtr.Zero";
                     if (IsRefInValueTypeSmall)
                         return "&" + Name;
+                    if (PublicType.Type == typeof(SlimMath.Color4) && MarshalType.Type == typeof(int))
+                    {
+                        return Name + ".ToArgb()";
+                    }
                     if (PublicType is CSharpEnum || PublicType.Type == typeof (uint))
                         return "unchecked((int)" + Name + ")";
                     if (PublicType.Type == typeof (string))
@@ -425,14 +441,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
                         return "&" + TempName;
                     if (PublicType.Name == Global.Name + ".Size")
                         return "(void*)" + Name;
-                    if (PublicType.Name == Global.Name + ".Color3")
-                        return string.Format("{0}.Red,{0}.Green,{0}.Blue", Name);
-                    if (PublicType.Name == Global.Name + ".Color4")
-                        return string.Format("{0}.Red,{0}.Green,{0}.Blue,{0}.Alpha", Name);
-                    if (PublicType.Name == Global.Name + ".Vector4")
-                        return string.Format("{0}.X,{0}.Y,{0}.Z,{0}.W", Name);
-                    if (PublicType.Name == Global.Name + ".Int4")
-                        return string.Format("{0}.X,{0}.Y,{0}.Z,{0}.W", Name);
                     return Name;
                 }
             }

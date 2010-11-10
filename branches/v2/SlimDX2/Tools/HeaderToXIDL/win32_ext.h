@@ -23,12 +23,13 @@ typedef struct tagPALETTEENTRY {
   BYTE peFlags;
 } PALETTEENTRY;
 
-// Used by D3D9
-typedef struct _RGNDATA {
-  RGNDATAHEADER rdh;
-  char          Buffer[1];
-} RGNDATA, *PRGNDATA;
+typedef void * RGNDATA;
 
+//// Used by D3D9
+//typedef struct _RGNDATA {
+//  RGNDATAHEADER rdh;
+//  char          Buffer[1];
+//} RGNDATA, *PRGNDATA;
 
 // Used by D3D9/D3D10 Font
 typedef struct TEXTMETRICW {

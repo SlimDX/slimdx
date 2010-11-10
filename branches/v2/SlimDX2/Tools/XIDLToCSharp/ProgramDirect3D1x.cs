@@ -267,6 +267,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]GetSamplers$", Visibility.Internal | Visibility.Override);
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]GetConstantBuffers$", Visibility.Internal | Visibility.Override);
 
+            // Force pNumClassInstance to be inout but not optional
+            group.Modify<CppParameter>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]GetShader::pNumClassInstances$", Modifiers.ParameterAttribute(CppAttribute.InOut));
+
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::Map$", Visibility.Internal);
             group.TagName<CppMethod>(@"^ID3D(\d+)DeviceContext::Unmap$", "UnmapSubresource");
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::UpdateSubresource$", Visibility.Internal);

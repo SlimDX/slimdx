@@ -32,6 +32,20 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
         public bool IsFlag { get; set; }
 
+        public string TypeName
+        {
+            get
+            {
+                if ( Type == typeof(int) )
+                    return "int";
+                if (Type == typeof(short))
+                    return "short";
+                if (Type == typeof(byte))
+                    return "byte";
+                return "UNKNOWN";
+            }
+        }
+
         public IEnumerable<Item> EnumItems
         {
             get { return Items.OfType<Item>(); }
