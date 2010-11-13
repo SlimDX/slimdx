@@ -52,8 +52,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimDX2.DirectSound", "Sour
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DirectSound", "DirectSound", "{B6DCD0A9-BB40-4102-8C38-F846FC9EE514}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaySound", "PlaySound\PlaySound.csproj", "{059F3E22-F63A-40C0-AA30-13C673BFF1B3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimDX2.Error", "Sources\SlimDX2.Error\SlimDX2.Error.csproj", "{8ECEF885-63EC-4A82-A219-4AB312D1B097}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimDX2.XAudio2", "Sources\SlimDX2.XAudio2\SlimDX2.XAudio2.csproj", "{958A2EA3-E86B-41AC-835B-5CA467C5B5A0}"
@@ -75,6 +73,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimDX2.XAPO", "Sources\Sli
 	ProjectSection(ProjectDependencies) = postProject
 		{2E4B74FE-4A58-4EC5-9CC3-08AE5660F3BD} = {2E4B74FE-4A58-4EC5-9CC3-08AE5660F3BD}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaySound", "Samples\DirectSound\PlaySound.csproj", "{059F3E22-F63A-40C0-AA30-13C673BFF1B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -346,21 +346,6 @@ Global
 		{26DBF35D-47A6-4741-B059-841C5441BCD6}.Release|Win32.ActiveCfg = Release|Any CPU
 		{26DBF35D-47A6-4741-B059-841C5441BCD6}.Release|x64.ActiveCfg = Release|Any CPU
 		{26DBF35D-47A6-4741-B059-841C5441BCD6}.Release|x86.ActiveCfg = Release|Any CPU
-		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Debug|Win32.ActiveCfg = Debug|x86
-		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Debug|x64.ActiveCfg = Debug|x86
-		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Debug|x86.ActiveCfg = Debug|x86
-		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Debug|x86.Build.0 = Debug|x86
-		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Release|Any CPU.ActiveCfg = Release|x86
-		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Release|Mixed Platforms.Build.0 = Release|x86
-		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Release|Win32.ActiveCfg = Release|x86
-		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Release|x64.ActiveCfg = Release|x86
-		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Release|x86.ActiveCfg = Release|x86
-		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Release|x86.Build.0 = Release|x86
 		{8ECEF885-63EC-4A82-A219-4AB312D1B097}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8ECEF885-63EC-4A82-A219-4AB312D1B097}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8ECEF885-63EC-4A82-A219-4AB312D1B097}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -418,6 +403,22 @@ Global
 		{3000DCA4-0973-4E39-B2AA-56751DCB04CC}.Release|Win32.ActiveCfg = Release|Any CPU
 		{3000DCA4-0973-4E39-B2AA-56751DCB04CC}.Release|x64.ActiveCfg = Release|Any CPU
 		{3000DCA4-0973-4E39-B2AA-56751DCB04CC}.Release|x86.ActiveCfg = Release|Any CPU
+		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Debug|x64.ActiveCfg = Debug|x86
+		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Debug|x86.ActiveCfg = Debug|x86
+		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Debug|x86.Build.0 = Debug|x86
+		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Release|Win32.ActiveCfg = Release|Any CPU
+		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Release|x64.ActiveCfg = Release|x86
+		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Release|x86.ActiveCfg = Release|x86
+		{059F3E22-F63A-40C0-AA30-13C673BFF1B3}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
