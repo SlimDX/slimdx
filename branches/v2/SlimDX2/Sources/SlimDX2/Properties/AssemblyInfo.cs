@@ -28,6 +28,9 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("SlimDX2.Direct3D10")]
 [assembly: InternalsVisibleTo("SlimDX2.Direct3D11")]
 [assembly: InternalsVisibleTo("SlimDX2.Direct2D1")]
+[assembly: InternalsVisibleTo("SlimDX2.DirectSound")]
+[assembly: InternalsVisibleTo("SlimDX2.XAPO")]
+[assembly: InternalsVisibleTo("SlimDX2.XAudio2")]
 
 // Version information for an assembly consists of the following four values:
 //

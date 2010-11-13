@@ -33,7 +33,7 @@ namespace SlimDX2.Direct3D9
         /// </remarks>
         public Direct3D()
         {
-            Direct3D temp = D3D9.Direct3DCreate9(D3D9.D3DSdkVersion);
+            Direct3D temp = D3D9.Direct3DCreate9(D3D9.SdkVersion);
             NativePointer = temp.NativePointer;
         }
     }

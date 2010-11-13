@@ -48,7 +48,7 @@ namespace SlimDX2.Direct3D10
         /// </summary>
         /// <param name = "driverType"></param>
         /// <param name = "flags"></param>
-        public Device1(DriverType driverType, DeviceCreationFlags flags) : this(driverType, flags, Direct3D.FeatureLevel.Level_10_1)
+        public Device1(DriverType driverType, DeviceCreationFlags flags) : this(driverType, flags, FeatureLevel.Level_10_1)
         {
         }
 
@@ -58,7 +58,7 @@ namespace SlimDX2.Direct3D10
         /// <param name = "adapter"></param>
         /// <param name = "flags"></param>
         public Device1(Adapter adapter, DeviceCreationFlags flags)
-            : this(adapter, flags, Direct3D.FeatureLevel.Level_10_1)
+            : this(adapter, flags, FeatureLevel.Level_10_1)
         {
         }
 
@@ -113,7 +113,7 @@ namespace SlimDX2.Direct3D10
                                                  SwapChainDescription swapChainDescription, out Device1 device,
                                                  out SwapChain swapChain)
         {
-            return CreateWithSwapChain(null, driverType, flags, swapChainDescription, Direct3D.FeatureLevel.Level_10_1, out device, out swapChain);
+            return CreateWithSwapChain(null, driverType, flags, swapChainDescription, FeatureLevel.Level_10_1, out device, out swapChain);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace SlimDX2.Direct3D10
                                                  SwapChainDescription swapChainDescription, out Device1 device,
                                                  out SwapChain swapChain)
         {
-            return CreateWithSwapChain(adapter, DriverType.Hardware, flags, swapChainDescription, Direct3D.FeatureLevel.Level_10_1, out device, out swapChain);
+            return CreateWithSwapChain(adapter, DriverType.Hardware, flags, swapChainDescription, FeatureLevel.Level_10_1, out device, out swapChain);
         }
 
         /// <summary>

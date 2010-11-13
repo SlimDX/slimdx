@@ -23,6 +23,7 @@ using SlimDX2.DXGI;
 using Device = SlimDX2.Direct3D10.Device;
 using Device1 = SlimDX2.Direct3D10.Device1;
 using DriverType = SlimDX2.Direct3D10.DriverType;
+using FeatureLevel = SlimDX2.Direct3D10.FeatureLevel;
 
 
 namespace SlimDX2.Samples

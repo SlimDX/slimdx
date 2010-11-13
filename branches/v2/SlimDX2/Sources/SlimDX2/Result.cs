@@ -18,6 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace SlimDX2
@@ -29,10 +30,16 @@ namespace SlimDX2
     public struct Result : IEquatable<Result>
     {
         private int _code;
+        private static MethodInfo _methodGetErrorDescription;
 
         public Result(int code)
         {
             _code = code;
+        }
+
+        public Result(uint code)
+        {
+            _code = unchecked((int)code);
         }
 
         public int Code
@@ -62,12 +69,32 @@ namespace SlimDX2
 
         public override string ToString()
         {
-            return string.Format("DirectX Exception (HRESULT = 0x{0:X})", _code);
+            if (_methodGetErrorDescription != null)
+                return _methodGetErrorDescription.Invoke(null, new object[] {_code}).ToString();
+            return string.Format("Unknown error (HRESULT = 0x{0:X})", _code);
         }
 
         public void CheckError()
         {
-            if (_code < 0) throw new SlimDX2Exception(this);
+            if (_code < 0)
+            {
+                throw new SlimDX2Exception(this);
+            }
+        }
+
+        static Result()
+        {
+            _methodGetErrorDescription = null;
+            try
+            {
+                string prefix = typeof (Result).Namespace;
+                Assembly assembly = Assembly.LoadFrom(    prefix + ".Error.dll");
+                Type type = assembly.GetType(prefix + ".ErrorManager");
+                _methodGetErrorDescription = type.GetMethod("GetErrorMessage", BindingFlags.Static | BindingFlags.Public);
+            }
+            catch (Exception ex)
+            {                
+            }
         }
 
         public static Result Ok = new Result(unchecked((int)0x00000000));
