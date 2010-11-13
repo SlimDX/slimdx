@@ -55,6 +55,25 @@ namespace SlimDX2.Tools.XIDLToCSharp
         /// </summary>
         public bool HasMarshalType { get; set; }
 
+        public bool HasCustomMarshal { get; set; }
+
+        public bool GenerateAsClass { get; set; }
+
+        public bool HasCustomNew { get; set; }
+
+        public string GetConstructor()
+        {
+            return string.Format(HasCustomNew ? "{0}.__NewNative()" : "new {0}.__Native()", FullName);
+        }
+
+        public string StructTypeName
+        {
+            get
+            {
+                return GenerateAsClass ? "class" : "struct";
+            }
+        }
+
         public bool IsIn { get; set; }
 
         public bool IsOut { get; set; }
@@ -75,10 +94,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
         /// <summary>
         ///   Struct field
         /// </summary>
-        public class Field : CSharpMapType
+        public class Field : CSharpField
         {
-            public Field(CSharpStruct cSharpStruct, CppField cppField, CSharpType publicType, CSharpType marshalType,
-                         string name) : base(cSharpStruct, cppField, publicType, marshalType, name)
+            public Field(CppField cppField, CSharpType publicType, CSharpType marshalType,
+                         string name) : base(cppField, publicType, marshalType, name)
             {
             }
 

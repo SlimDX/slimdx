@@ -97,21 +97,22 @@ namespace SlimDX2.Tools.XIDL
             }
         }
 
-        public CppEnum CreateEnumFromMacros(string macroRegexpStr, string enumName, Type defaultType=null)
+        public CppEnum CreateEnumFromMacros(string macroRegexpStr, string enumName, string enumReplaceItem = null)
         {
-            if (defaultType == null)
-                defaultType = typeof (int);
             var cppEnum = new CppEnum { Name = enumName };
 
             CppInclude includeToAddTo = null;
 
+            Regex regex = new Regex(macroRegexpStr);
             foreach (CppMacroDefinition macroDef in Find<CppMacroDefinition>(macroRegexpStr))
             {
                 CppInclude cppInclude = macroDef.Parent as CppInclude;
                 bool isEnumToAdd = true;
+                string enumItemName = enumReplaceItem == null ? macroDef.Name : regex.Replace(macroDef.Name, enumReplaceItem);
+                
                 foreach (CppEnumItem cppEnumItem in cppEnum.Items)
                 {
-                    if (cppEnumItem.Name == macroDef.Name)
+                    if (cppEnumItem.Name == enumItemName)
                     {
                         isEnumToAdd = false;
                         break;
@@ -121,10 +122,9 @@ namespace SlimDX2.Tools.XIDL
                 {
                     if (includeToAddTo == null)
                         includeToAddTo = cppInclude;
-                    cppEnum.Add(new CppEnumItem { Name = macroDef.Name, Value = macroDef.Value });
+                    cppEnum.Add(new CppEnumItem { Name = enumItemName, Value = macroDef.Value });
                 }
             }
-
             includeToAddTo.Add(cppEnum);
             return cppEnum;
         }

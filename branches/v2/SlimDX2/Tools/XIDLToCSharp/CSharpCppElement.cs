@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using SlimDX2.Tools.XIDL;
@@ -41,7 +42,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 _cppElement = value;
                 if (_cppElement != null && _cppElement.Tag != null)
                 {
-                    UpdateFromTag(_cppElement.GetTag<CSharpTag>());
+                    UpdateFromTag(_cppElement.GetTagOrDefault<CSharpTag>());
                 }
             }
         }
@@ -51,7 +52,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
             if (tag.Visibility.HasValue)
                 Visibility = tag.Visibility.Value;
         }
-
 
         public string CppElementName
         {
@@ -87,8 +87,14 @@ namespace SlimDX2.Tools.XIDLToCSharp
         {
             get
             {
-                string description = CppElement.Description ?? "No documentation.";
-                string remarks = CppElement.Remarks ?? "";
+                string description = "No documentation.";
+                string remarks = "";
+
+                if (CppElement != null)
+                {
+                    description = CppElement.Description ?? description;
+                    remarks = CppElement.Remarks ?? remarks;
+                }
 
                 description = RegexLink.Replace(description, RegexReplaceCReference);
                     // evaluator => "<see cref=\"$1\"/>");
@@ -123,7 +129,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
         {
             get
             {
-                string description = CppElement.Description ?? "No documentation.";
+                string description = "No documentation.";
+
+                if (CppElement != null)
+                    description = CppElement.Description ?? description;
 
                 // For return type, suppress Return Type in description
                 if (description.StartsWith("{{"))

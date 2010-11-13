@@ -19,9 +19,11 @@
 // THE SOFTWARE.
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Boost.Wave;
 using SlimDX2.Tools.XIDL;
 
@@ -43,6 +45,8 @@ namespace SlimDX2.Tools.HeaderToXIDL
         private int currentIndex;
         private List<Token> tokens;
         private Guid currentInterfaceGuid;
+        private MsdnDoc msdnDoc;
+
 
         public CppHeaderParser()
         {
@@ -53,6 +57,8 @@ namespace SlimDX2.Tools.HeaderToXIDL
             includeStack = new Stack<CppInclude>();
             tokens = new List<Token>();
             IncludePath = new List<string>();
+
+            msdnDoc = new MsdnDoc();
 
             // Register IUnknown in order to find inheritance
             // And remove duplicated methods
@@ -104,6 +110,17 @@ namespace SlimDX2.Tools.HeaderToXIDL
         }
 
         /// <summary>
+        /// Return the Documentation resolver
+        /// </summary>
+        public MsdnDoc Documentation
+        {
+            get
+            {
+                return msdnDoc;
+            }
+        }
+
+        /// <summary>
         /// Run the preprocessor
         /// </summary>
         public void Run()
@@ -139,8 +156,8 @@ namespace SlimDX2.Tools.HeaderToXIDL
             preProcessor.DefineMacro("DECLARE_HANDLE(name)=", true);
             preProcessor.DefineMacro("__reserved=", true);
             preProcessor.DefineMacro("WCHAR=wchar", true);
-            preProcessor.DefineMacro("STDMETHOD(method)=virtual HRESULT STDMETHODCALLTYPE method", true);
-            preProcessor.DefineMacro("STDMETHOD_(type,method)=virtual type STDMETHODCALLTYPE method", true);
+            preProcessor.DefineMacro("STDMETHOD(method)=virtual HRESULT __stdcall method", true);
+            preProcessor.DefineMacro("STDMETHOD_(type,method)=virtual type __stdcall method", true);
 
             preProcessor.DefineMacro("__DEFINE_GUID__(value)=", true);
 
@@ -161,7 +178,9 @@ namespace SlimDX2.Tools.HeaderToXIDL
             preProcessor.DefineMacro("__field_ecount_opt(x)=", true);
             preProcessor.DefineMacro("DEFINE_ENUM_FLAG_OPERATORS(x)=", true);
             // Hook the DEFINE_GUID to catch the OnDefineMacro event
-            preProcessor.DefineMacro( "DEFINE_GUID(name, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11)=", true);
+            preProcessor.DefineMacro("DEFINE_IID(name, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11)=", true);
+            preProcessor.DefineMacro("DEFINE_CLSID(name, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11)=", true);
+            preProcessor.DefineMacro("DEFINE_GUID(name, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11)=", true);
             // Make possible to parse HRESULT macros
             preProcessor.DefineMacro("MAKE_HRESULT(sev,fac,code)=( ((sev)<<31) | ((fac)<<16) | (code) )", true);
 
@@ -185,7 +204,8 @@ namespace SlimDX2.Tools.HeaderToXIDL
             IncludeGroup.InnerElements.RemoveAll( include => include.InnerElements.Count == 0);
 
             // Apply documentation final post process
-            ApplyDocumentation();
+            if (msdnDoc.IsActive)
+                ApplyDocumentation();
         }
 
         // ------------------------------------------------------------------------------------------
@@ -244,13 +264,36 @@ namespace SlimDX2.Tools.HeaderToXIDL
 
                 // Process only files that needs to be processed
                 if (IncludesToProcess.Contains(Path.GetFileName(name)))
-                    return File.ReadAllText(name);
+                    return LoadInclude(name);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
-            return "";
+            // Empty
+            return "\r\n\r\n\r\n\r\n";
+        }
+
+        private string LoadInclude(string name)
+        {
+            StreamReader reader = new StreamReader(name, true);
+            StringBuilder builder = new StringBuilder();
+
+            string line;
+
+            Regex matchPragma = new Regex(@"^\s*#(pragma\s+pack.*)");
+
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (matchPragma.Match(line).Success)
+                {
+                    // Make pragma as regular statement
+                    line = matchPragma.Replace(line, "$1") + "\n;"; // << Important : put a \n before ";" as "$1" could contains comment line // that would comment the ;
+                }
+                builder.Append(line);
+                builder.Append("\n");
+            }
+            return builder.ToString();
         }
 
         /// <summary>
@@ -274,6 +317,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex);
+                    Environment.Exit(1);
                 }
                 isParsed = true;
             }
@@ -318,31 +362,60 @@ namespace SlimDX2.Tools.HeaderToXIDL
             //Console.Out.WriteLine("OnMacroUndef {0}", name);
         }
 
+
+        private uint ConvertMacroNumber(MacroFunctionCall.MacroArgument arg)
+        {
+            string str;
+            try
+            {
+                str = arg.RawValue.Trim();
+                str = str.Replace("L", "");
+                str = str.Replace("U", "");
+                return Convert.ToUInt32(str, 16);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Unable to parse Macro {0} to unsigned int.",ex);
+                throw;
+            }
+        }
+
         /// <summary>
         /// Called when a macro is expanded. Used for parsing GUID
         /// </summary>
         /// <param name="macroFunctionCall"></param>
         public override void OnMacroFunctionExpand(MacroFunctionCall macroFunctionCall)
         {
-            if (macroFunctionCall.Name == "DEFINE_GUID")
+            if (macroFunctionCall.Name == "DEFINE_GUID" || macroFunctionCall.Name == "DEFINE_CLSID" || macroFunctionCall.Name == "DEFINE_IID" )
             {
-                uint value1 = Convert.ToUInt32(macroFunctionCall.Arguments[1].RawValue.Trim(), 16);
-                ushort value2 = Convert.ToUInt16(macroFunctionCall.Arguments[2].RawValue.Trim(), 16);
-                ushort value3 = Convert.ToUInt16(macroFunctionCall.Arguments[3].RawValue.Trim(), 16);
-                byte value4 = Convert.ToByte(macroFunctionCall.Arguments[4].RawValue.Trim(), 16);
-                byte value5 = Convert.ToByte(macroFunctionCall.Arguments[5].RawValue.Trim(), 16);
-                byte value6 = Convert.ToByte(macroFunctionCall.Arguments[6].RawValue.Trim(), 16);
-                byte value7 = Convert.ToByte(macroFunctionCall.Arguments[7].RawValue.Trim(), 16);
-                byte value8 = Convert.ToByte(macroFunctionCall.Arguments[8].RawValue.Trim(), 16);
-                byte value9 = Convert.ToByte(macroFunctionCall.Arguments[9].RawValue.Trim(), 16);
-                byte value10 = Convert.ToByte(macroFunctionCall.Arguments[10].RawValue.Trim(), 16);
-                byte value11 = Convert.ToByte(macroFunctionCall.Arguments[11].RawValue.Trim(), 16);
+                uint value1 = ConvertMacroNumber(macroFunctionCall.Arguments[1]);
+                ushort value2 = (ushort)ConvertMacroNumber(macroFunctionCall.Arguments[2]);
+                ushort value3 = (ushort)ConvertMacroNumber(macroFunctionCall.Arguments[3]);
+                byte value4 = (byte)ConvertMacroNumber(macroFunctionCall.Arguments[4]);
+                byte value5 = (byte)ConvertMacroNumber(macroFunctionCall.Arguments[5]);
+                byte value6 = (byte)ConvertMacroNumber(macroFunctionCall.Arguments[6]);
+                byte value7 = (byte)ConvertMacroNumber(macroFunctionCall.Arguments[7]);
+                byte value8 = (byte)ConvertMacroNumber(macroFunctionCall.Arguments[8]);
+                byte value9 = (byte)ConvertMacroNumber(macroFunctionCall.Arguments[9]);
+                byte value10 = (byte)ConvertMacroNumber(macroFunctionCall.Arguments[10]);
+                byte value11 = (byte)ConvertMacroNumber(macroFunctionCall.Arguments[11]);
 
                 // Add a guid to the current include
                 var cppGuid = new CppGuid();
                 cppGuid.Guid = new Guid(value1, value2, value3, value4, value5, value6, value7, value8, value9, value10,
                                         value11);
-                cppGuid.Name = macroFunctionCall.Arguments[0].RawValue.Trim();
+                switch (macroFunctionCall.Name)
+                {
+                    case "DEFINE_GUID":
+                        cppGuid.Name = macroFunctionCall.Arguments[0].RawValue.Trim();
+                        break;
+                    case "DEFINE_CLSID":
+                        cppGuid.Name = "CLSID_" + macroFunctionCall.Arguments[0].RawValue.Trim();
+                        break;
+                    case "DEFINE_IID":
+                        cppGuid.Name = "IID_" + macroFunctionCall.Arguments[0].RawValue.Trim();
+                        break;
+                }
 
                 CurrentInclude.Add(cppGuid);
             }
@@ -547,7 +620,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
         /// </summary>
         /// <param name="rightBraceFollowedByNoSemiColon">if true, this will stop after a rightbrace } with 
         /// no expected semi colon after. This is used for handling extern "C" {}</param>
-        private void NextStatement(bool rightBraceFollowedByNoSemiColon = false)
+        private void NextStatement()
         {
             int count = 0;
             bool breakOnLastBrace = false;
@@ -558,7 +631,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
                 else if (CurrentToken.Id == TokenId.Rightbrace)
                 {
                     // If orphan rightbrace, then go as next statement (need to better handle extern "C" {})
-                    if (count == 0 && rightBraceFollowedByNoSemiColon)
+                    if (count == 0)
                         break;
                     count--;
                 }
@@ -566,7 +639,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
                 {
                     if (count > 0 && !breakOnLastBrace)
                         breakOnLastBrace = true;
-                    else
+                    else if (!breakOnLastBrace)
                         break;
                 }
                 if (count == 0 && breakOnLastBrace)
@@ -601,7 +674,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
 
                 ReadNextToken();
 
-                if (nextId == TokenId.Intlit || nextId == TokenId.Int)
+                if (nextId == TokenId.Intlit)
                 {
                     string valueToParse = CurrentToken.Value;
                     // Remove L postfix if it's an integer
@@ -629,10 +702,21 @@ namespace SlimDX2.Tools.HeaderToXIDL
         /// </summary>
         private CppEnum ParseEnum()
         {
-            ReadNextToken();
+            string enumName = "";
+            // Handle anonymous enums
+            if (PreviewNextToken().Id == TokenId.Leftbrace)
+            {
+                int enumCount = CurrentInclude.Find<CppEnum>(".*").Count();
+                enumName = CurrentInclude.Name.ToUpper() + "_ENUM_" + enumCount;
+            }
+            else
+            {
+                ReadNextToken();
+                enumName = CurrentToken.Value;
+            }
 
             var cppEnum = new CppEnum();
-            cppEnum.Name = CurrentToken.Value; // StripLeadingUnderscore(CurrentToken.Value);
+            cppEnum.Name = enumName; // StripLeadingUnderscore(CurrentToken.Value);
             CurrentInclude.Add(cppEnum);
 
             SkipUntilTokenId(TokenId.Leftbrace);
@@ -689,6 +773,34 @@ namespace SlimDX2.Tools.HeaderToXIDL
         private T ReadType<T>(bool withDeclaration) where T : CppType, new()
         {
             var cppType = new T();
+
+            // if typedef XXX (api_calling_convention )  => this is more likely to be a function declaration
+            if (PreviewNextToken().Id == TokenId.Leftparen)
+            {
+                ReadNextToken(); // CurrentToken => (
+
+               do {
+                   ReadNextToken(); // Current
+                   if (CurrentToken.Id == TokenId.Rightparen)
+                   {
+                       cppType.Name = GetTokenFrom(-1).Value;
+                       break;
+                   }
+
+                   if (CurrentToken.Value == "__stdcall" || CurrentToken.Value == "__cdecl")
+                       cppType.Type = "__function" + CurrentToken.Value;
+                   else if (CurrentToken.Id == TokenId.Star)
+                        cppType.Specifier += "*";
+
+                } while (true);
+               
+                if (PreviewNextToken().Id != TokenId.Leftparen)
+                   throw new ArgumentException(string.Format("Unable to parse type {0}. Expecting a function declaration with (", cppType));
+               SkipNextParenthesis();
+
+                return cppType;
+            }
+
             if (CurrentToken.Id == TokenId.Const)
             {
                 cppType.Const = true;
@@ -805,8 +917,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
         {
             switch (value)
             {
-                case "STDMETHODCALLTYPE":
-                case "WINAPI":
+                case "__stdcall":
                     return CppCallingConvention.StdCall;
                 default:
                     return CppCallingConvention.Unknown;
@@ -871,6 +982,8 @@ namespace SlimDX2.Tools.HeaderToXIDL
                 cppStruct.Name = parentStruct.Name + "Inner";
             }
             CurrentInclude.Add(cppStruct);
+
+            cppStruct.Pack = _currentPackingValue;
 
             // Skip to structure fields declaration
             SkipUntilTokenId(TokenId.Leftbrace);
@@ -1198,12 +1311,28 @@ namespace SlimDX2.Tools.HeaderToXIDL
             return name;
         }
 
+        private bool IsInterfaceFromCurrentToken()
+        {
+            if (CurrentToken == null)
+                return false;
+            bool value1 = (CurrentToken.Value == "interface" );
+            if (PreviewNextToken() != null)
+            {
+                string name = PreviewNextToken().Value;
+                if (CurrentToken.Id == TokenId.Struct && name.StartsWith("I"))
+                    return true;
+                return value1;
+            }
+            return false;
+        }
+
+
         /// <summary>
         /// Parse an interface declaration
         /// </summary>
         private void ParseInterface()
         {
-            if (CurrentToken.Value == "interface")
+            if (IsInterfaceFromCurrentToken())
             {
                 // Pre-Declare interface
                 if (GetTokenFrom(2).Id == TokenId.Semicolon)
@@ -1425,7 +1554,12 @@ namespace SlimDX2.Tools.HeaderToXIDL
                                                               CurrentToken));
 
                 ReadNextToken();
+
                 string newStructName = CurrentToken.Value;
+
+                // Generate a fake typedef from struct to real typedef
+                if (newStructName != cppTypeDefDeclare.Name)
+                    AddTypeDef(new CppTypedef() {Name = cppTypeDefDeclare.Name, Type = newStructName});
 
                 // Special case where a field in a struct is referencing the struct itself
                 // We need to reflect the new struct name to the field type
@@ -1448,7 +1582,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
                     ReadNextToken();
                 else if (CurrentToken.Id == TokenId.Struct)
                 {
-                    stripType = true;
+                    //stripType = true;
                     ReadNextToken();
                 }
 
@@ -1456,9 +1590,9 @@ namespace SlimDX2.Tools.HeaderToXIDL
 
                 if (cppTypedef != null)
                 {
-                    // Strip leading underscore for typedef struct
-                    if (stripType)
-                        cppTypedef.Type = StripLeadingUnderscore(cppTypedef.Type);
+                    //// Strip leading underscore for typedef struct
+                    //if (stripType)
+                    //    cppTypedef.Type = StripLeadingUnderscore(cppTypedef.Type);
 
                     AddTypeDef(cppTypedef);
                     typeName = cppTypedef.Name;
@@ -1470,10 +1604,11 @@ namespace SlimDX2.Tools.HeaderToXIDL
             if (typeName != null)
             {
                 do
-                {
-                    ReadNextToken();
-                    if (CurrentToken.Id == TokenId.Semicolon)
+                {                    
+                    if (PreviewNextToken().Id == TokenId.Semicolon)
                         break;
+
+                    ReadNextToken();
                     if (CurrentToken.Id == TokenId.Comma)
                     {
                         CppTypedef newTypeDef = new CppTypedef();
@@ -1532,6 +1667,96 @@ namespace SlimDX2.Tools.HeaderToXIDL
             return leftBraceFound;
         }
 
+
+        private class PragmaStackValue
+        {
+            public string Identifier;
+            public string Value;
+        }
+
+        private string _currentPackingValue = "0";
+        private Stack<PragmaStackValue> _pragmaStack = new Stack<PragmaStackValue>();
+
+        private void ParsePragma()
+        {
+            ReadNextToken();
+            if (CurrentToken.Value != "pack")
+            {
+                throw new ArgumentException(string.Format("Invalid pragma found [{0}] Unable to handle pragma different from #pragma pack", CurrentToken.Value));
+            }
+
+            ReadNextToken(); // (
+
+            bool isShow = false;
+            bool isPush = false;
+            bool isPop = false;
+            string identifier = null;
+            string packValue = null;
+
+            do
+            {
+                ReadNextToken();
+
+                if (CurrentToken.Id == TokenId.Rightparen)
+                    break;
+                if (CurrentToken.Value == "push")
+                    isPush = true;
+                else if (CurrentToken.Value == "pop")
+                    isPop = true;
+                else if (CurrentToken.Value == "show")
+                    isShow = true;
+                else if (CurrentToken.Id == TokenId.Identifier)
+                    identifier = CurrentToken.Value;
+                else if (CurrentToken.Id == TokenId.Intlit)
+                    packValue = CurrentToken.Value;
+            } while (true);
+
+            if (isPush)
+            {
+                if (identifier == null)
+                    identifier = "";
+                _pragmaStack.Push(new PragmaStackValue() { Identifier = identifier, Value = _currentPackingValue });
+                _currentPackingValue = packValue;
+            }
+            else if (isPop)
+            {
+                PragmaStackValue popPack = null;
+                if (identifier != null)
+                {
+                    var lastPack = _pragmaStack.Peek();
+                    if (lastPack != null)
+                    {
+                        if (lastPack.Identifier == identifier)
+                        {
+                            popPack = _pragmaStack.Pop();
+                        }
+                    }
+                }
+                else
+                {
+                    popPack = _pragmaStack.Pop();
+                }
+
+                if (packValue != null)
+                {
+                    _currentPackingValue = packValue;
+                } 
+                else if (popPack != null)
+                {
+                    _currentPackingValue = popPack.Value;
+                }
+            }
+            else if (isShow)
+            {
+                Console.WriteLine("Pack Show {0}", _currentPackingValue);
+            }
+            else
+            {
+                _currentPackingValue = "0";
+            }
+            NextStatement();
+        }
+
         /// <summary>
         /// Root method for parsing tokens
         /// </summary>
@@ -1539,9 +1764,28 @@ namespace SlimDX2.Tools.HeaderToXIDL
         {
             while (CurrentToken != null)
             {
-                if (CurrentToken.Id == TokenId.Typedef)
+                if (CurrentToken.Id == TokenId.Inline || CurrentToken.Value == "__inline")
+                {
+                    NextStatement();
+                } else if (CurrentToken.Id == TokenId.Typedef)
                 {
                     ParseTypedef();
+                } else if (CurrentToken.Id == TokenId.Identifier && CurrentToken.Value == "pragma")
+                {
+                    ParsePragma();  
+                } else if (IsInterfaceFromCurrentToken() || CurrentToken.Id == TokenId.Identifier || PreviewNextTokenValue() == "__stdcall")
+                {
+                    if (IsInterfaceFromCurrentToken())
+                        ParseInterface();
+                    else if (IsProbablyFunction())
+                    {                        
+                        //CurrentToken.Value == "HRESULT" || PreviewNextTokenValue() == "WINAPI"
+                        ParseFunction();
+                    }
+                    else
+                    {
+                        NextStatement();
+                    }
                 }
                 else if (CurrentToken.Id == TokenId.Struct)
                 {
@@ -1553,45 +1797,40 @@ namespace SlimDX2.Tools.HeaderToXIDL
                     ParseEnum();
                     NextStatement();
                 }
-                else if (CurrentToken.Id == TokenId.Identifier || PreviewNextTokenValue() == "WINAPI")
+                else if (CurrentToken.Id == TokenId.Extern)
                 {
-                    if (CurrentToken.Value == "interface")
-                        ParseInterface();
-                    else if (IsProbablyFunction())
-                    {                        
-                        //CurrentToken.Value == "HRESULT" || PreviewNextTokenValue() == "WINAPI"
-                        ParseFunction();
-                    }
-                    else
+                    // Extern "C"
+                    if (PreviewNextToken().Value.ToLower() == "\"c\"")
+                        ReadNextToken();
+                    // "{"
+                    if (PreviewNextToken().Id == TokenId.Leftbrace)
                     {
-                        NextStatement(true);
+                        ReadNextToken();
+                        _externBraceCount++;
                     }
                 }
-                else if (CurrentToken.Id == TokenId.Extern && PreviewNextToken().Value.ToLower() == "\"c\"")
+                else if (CurrentToken.Id == TokenId.Rightbrace)
                 {
-                    // "C"
-                    ReadNextToken();
-                    // "{"
-                    ReadNextToken();
+                    if (_externBraceCount == 0)
+                        throw new ArgumentException("Invalid brace found not matching previous extern \"C\" brace");
+                    _externBraceCount--;
                 }
                 else
                 {
-                    NextStatement(true);
+                    NextStatement();
                 }
                 ReadNextToken();
             }
         }
+
+        private int _externBraceCount;
 
         /// <summary>
         /// Apply documentation
         /// </summary>
         private void ApplyDocumentation()
         {
-            // Use MSDN 
-            var msdnDoc = new MsdnDoc();
-
             msdnDoc.Begin();
-
 
             foreach (CppInclude cppInclude in IncludeGroup.Includes)
             {

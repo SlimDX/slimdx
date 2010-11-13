@@ -17,6 +17,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -27,6 +28,7 @@ namespace SlimDX2.Tools.XIDL
     public class CppElement
     {
         private List<CppElement> _innerElements;
+        private List<string> _findContext;
 
         [DataMember(Order = 0)]
         public string Name { get; set; }
@@ -41,9 +43,9 @@ namespace SlimDX2.Tools.XIDL
 
         public object Tag { get; set; }
 
-        public T GetTag<T>()
+        public T GetTagOrDefault<T>() where T : new()
         {
-            return (T) Tag;
+            return (T) (Tag ?? new T());
         }
 
         public virtual string Path
@@ -62,7 +64,7 @@ namespace SlimDX2.Tools.XIDL
             {
                 string path = Path;
                 string name = Name ?? "";
-                return string.IsNullOrEmpty(path) ? name : path + "::" + name;
+                return String.IsNullOrEmpty(path) ? name : path + "::" + name;
             }
         }
 
@@ -108,6 +110,16 @@ namespace SlimDX2.Tools.XIDL
             }
         }
 
+        public List<string> FindContext
+        {
+            get
+            {
+                if (_findContext == null)
+                    _findContext = new List<string>();
+                return _findContext;
+            }
+        }
+
         public T FindFirst<T>(string regex) where T : CppElement
         {
             return Find<T>(regex).FirstOrDefault();
@@ -120,7 +132,17 @@ namespace SlimDX2.Tools.XIDL
             return cppElements.OfType<T>();
         }
 
-        public void Modify<T>(string regex, Modifiers.ProcessModifier modifier) where T : CppElement
+        /// <summary>
+        /// Remove recursively elements matching the regex of type T
+        /// </summary>
+        /// <typeparam name="T">the T type to match</typeparam>
+        /// <param name="regex">the regex to match</param>
+        public void Remove<T>(string regex) where T : CppElement
+        {
+            Modify<T>(regex, (pathREgex, element) => true);
+        }
+
+        public void Modify<T>(string regex, CppElement.ProcessModifier modifier) where T : CppElement
         {
             var cppElements = new List<T>();
             Find(regex, cppElements, modifier);
@@ -131,12 +153,12 @@ namespace SlimDX2.Tools.XIDL
             return Find<CppElement>(regex);
         }
 
-        public void ModifyAll(string regex, Modifiers.ProcessModifier modifier)
-        {
-            Modify<CppElement>(regex, modifier);
-        }
+        //public void ModifyAll(string regex, Modifiers.ProcessModifier modifier)
+        //{
+        //    Modify<CppElement>(regex, modifier);
+        //}
 
-        private bool Find<T>(PathRegex regex, List<T> toAdd, Modifiers.ProcessModifier modifier) where T : CppElement
+        private bool Find<T>(PathRegex regex, List<T> toAdd, CppElement.ProcessModifier modifier) where T : CppElement
         {
             bool isToRemove = false;
             string path = FullName;
@@ -150,10 +172,28 @@ namespace SlimDX2.Tools.XIDL
             }
 
             List<CppElement> elementsToRemove = new List<CppElement>();
-            foreach (var innerElement in AllInnerElements)
+
+            // Force _findContext to reverse to null if not used anymore
+            if (_findContext != null && _findContext.Count == 0)
+                _findContext = null;
+
+            if (_findContext == null)
             {
-                if (innerElement.Find(regex, toAdd, modifier))
-                    elementsToRemove.Add(innerElement);
+                // Optimized version with findContext
+                foreach (var innerElement in AllInnerElements)
+                {
+                    if (innerElement.Find(regex, toAdd, modifier))
+                        elementsToRemove.Add(innerElement);
+                }
+            }
+            else
+            {
+                foreach (var innerElement in AllInnerElements)
+                {
+                    if (_findContext.Contains(innerElement.Name))
+                        if (innerElement.Find(regex, toAdd, modifier))
+                            elementsToRemove.Add(innerElement);
+                }
             }
 
             foreach (var innerElementToRemove in elementsToRemove)
@@ -174,5 +214,7 @@ namespace SlimDX2.Tools.XIDL
         {
             return this.GetType().Name + " [" + Name + "]";
         }
+
+        public delegate bool ProcessModifier(PathRegex pathRegex, CppElement cppElement);
     }
 }

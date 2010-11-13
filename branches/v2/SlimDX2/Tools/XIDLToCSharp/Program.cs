@@ -50,7 +50,13 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             // For all methods "GetXXX", convert parameters with [None] attribute and pointer to [Out] attribute
             // TODO remove this and apply one-to-one mapping
-            group.ModifyToGetMethods(".*");
+
+            //// Dump potential invalid "Get|Is" methods that don't have the [Out] attribute on their output paremeters
+            //// Run this and inspect the method_patched.txt file
+            //StreamWriter methodGetWithWrongSignature = new StreamWriter("method_patched.txt");
+            //group.DumpGetMethods(".*", methodGetWithWrongSignature);
+            //methodGetWithWrongSignature.Close();
+            //return;
 
             //  Global Rename
             group.TagName<CppEnum>(@"^D3D\d?\d?(.+)", "$1", false);
@@ -66,6 +72,12 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // Mapping order is important!!!
             // -----------------------------------------------------------------------
             MapWin32();
+
+            MapDirectSound();
+
+            MapXAudio2();
+
+            MapXAPO();
 
             MapDXGI();
 
@@ -84,95 +96,101 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             gen.Dump("slimdx2.csv");
 
-            // DumpEnumItems("direct3D9_enums.txt", "Direct3D9");
+            DumpEnumItems("match_enums.txt", "DirectSound");
         }
 
-        ///// <summary>
-        ///// Used to match SlimDX Enum with SlimDX2 Enum after a 1st pass in order to :
-        ///// - get the correct name for each enum items
-        ///// - get the correct type for each enum
-        ///// </summary>
-        ///// <param name="fileName"></param>
-        ///// <param name="nameSpace"></param>
-        //public void DumpEnumItems(string fileName, string nameSpace)
-        //{
-        //    StreamWriter log = new StreamWriter(fileName, false, Encoding.ASCII);
+        /// <summary>
+        /// Used to match SlimDX Enum with SlimDX2 Enum after a 1st pass in order to :
+        /// - get the correct name for each enum items
+        /// - get the correct type for each enum
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="nameSpace"></param>
+        public void DumpEnumItems(string fileName, string nameSpace)
+        {
+            StreamWriter log = new StreamWriter(fileName, false, Encoding.ASCII);
 
-        //    var assemblySlimDX = typeof(SlimDX.Direct3D9.Device).Assembly;
+            var assemblySlimDX = typeof(SlimDX.Direct3D9.Device).Assembly;
 
-        //    foreach (var assembly in gen.Assemblies)
-        //    {
-        //        foreach (var ns in assembly.Namespaces)
-        //        {
-        //            if (ns.Name == "SlimDX2." + nameSpace)
-        //            {
-        //                foreach (var cSharpEnum in ns.Enums)
-        //                {
-        //                    Type slimdxType = assemblySlimDX.GetType("SlimDX." + nameSpace + "." + cSharpEnum.Name);
+            foreach (var assembly in gen.Assemblies)
+            {
+                foreach (var ns in assembly.Namespaces)
+                {
+                    if (ns.Name == "SlimDX2." + nameSpace)
+                    {
+                        foreach (var cSharpEnum in ns.Enums)
+                        {
+                            Type slimdxType = assemblySlimDX.GetType("SlimDX." + nameSpace + "." + cSharpEnum.Name);
 
-        //                    if (slimdxType != null)
-        //                    {
-        //                        string[] slimDXEnumNames = Enum.GetNames(slimdxType);
-        //                        Array slimDXEnumValues = Enum.GetValues(slimdxType);
+                            if (slimdxType != null)
+                            {
+                                string[] slimDXEnumNames = Enum.GetNames(slimdxType);
+                                Array slimDXEnumValues = Enum.GetValues(slimdxType);
 
-        //                        Type typeInSlimDX = slimdxType.GetEnumUnderlyingType();
-        //                        if (cSharpEnum.Type != typeInSlimDX)
-        //                        {
-        //                            string typeEnumInSlimDX = "";
-        //                            if (typeInSlimDX == typeof(short))
-        //                                typeEnumInSlimDX = "short";
-        //                            else if (typeInSlimDX == typeof(byte))
-        //                                typeEnumInSlimDX = "byte";
-        //                            else if (typeInSlimDX == typeof(int))
-        //                                typeEnumInSlimDX = "int";
-        //                            else
-        //                            {
-        //                                log.WriteLine("// Unable to determine type from SlimDX for enum {0} with type {1} ", cSharpEnum.CppElement.Name, typeInSlimDX);
-        //                            } 
-                                    
-        //                            log.WriteLine("group.TagTypeName<CppEnum>(@\"^{0}$\",\"{1}\");", cSharpEnum.CppElement.Name, typeEnumInSlimDX);
-        //                        }
+                                Type typeInSlimDX = slimdxType.GetEnumUnderlyingType();
+                                if (cSharpEnum.Type != typeInSlimDX)
+                                {
+                                    string typeEnumInSlimDX = "";
+                                    if (typeInSlimDX == typeof(short))
+                                        typeEnumInSlimDX = "short";
+                                    else if (typeInSlimDX == typeof(byte))
+                                        typeEnumInSlimDX = "byte";
+                                    else if (typeInSlimDX == typeof(int))
+                                        typeEnumInSlimDX = "int";
+                                    else
+                                    {
+                                        log.WriteLine("// Unable to determine type from SlimDX for enum {0} with type {1} ", cSharpEnum.CppElement.Name, typeInSlimDX);
+                                    }
 
-                                
-        //                        int i = 0;
-        //                        foreach (var enumItem in cSharpEnum.EnumItems)
-        //                        {
-        //                            try
-        //                            {
-        //                                int value = Evaluator.EvalToInteger(string.IsNullOrEmpty(enumItem.Value) ? "" + i : enumItem.Value);
+                                    log.WriteLine("group.TagTypeName<CppEnum>(@\"^{0}$\",\"{1}\");", cSharpEnum.CppElement.Name, typeEnumInSlimDX);
+                                }
 
-        //                                bool moreThanOne = false;
-        //                                for (int j = 0; j < slimDXEnumValues.Length; j++)
-        //                                {
-        //                                    if ((int)slimDXEnumValues.GetValue(j) == value)
-        //                                    {
-        //                                        string name = slimDXEnumNames[j];
-        //                                        if (!string.IsNullOrEmpty(name) && name != enumItem.Name)
-        //                                        {
-        //                                            log.WriteLine("group.TagName<CppEnumItem>(@\"^{0}$\",\"{1}\");" + ((moreThanOne)?"// << DUPLICATE CHECK":""), enumItem.CppElementName, name);
-        //                                            moreThanOne = true;
-        //                                        }
-        //                                    }
-        //                                }
-        //                            }
-        //                            catch (Exception ex)
-        //                            {
-        //                                // Console.WriteLine(ex);
-        //                            }
-        //                            i++;
-        //                        }
-        //                    }
-        //                    else
-        //                    {
-        //                        Console.WriteLine("Enum not found {0}", "SlimDX.Direct3D9." + cSharpEnum.Name);
-        //                    }
+                                bool isSlimFlag = typeInSlimDX.GetCustomAttributes(typeof (System.FlagsAttribute), false).Length > 0;
 
-        //                }
-        //            }
-        //        }
-        //    }
-        //    log.Close();
-        //}
+                                if (cSharpEnum.IsFlag != isSlimFlag)
+                                {
+                                    log.WriteLine("// Warning Enums [{0}] have different Flags SlimDX [{1}] != SlimDX2 [{2}]", cSharpEnum.Name, isSlimFlag, cSharpEnum.IsFlag);
+                                }
+
+                                int i = 0;
+                                foreach (var enumItem in cSharpEnum.EnumItems)
+                                {
+                                    try
+                                    {
+                                        int value = Evaluator.EvalToInteger(string.IsNullOrEmpty(enumItem.Value) ? "" + i : enumItem.Value);
+
+                                        bool moreThanOne = false;
+                                        for (int j = 0; j < slimDXEnumValues.Length; j++)
+                                        {
+                                            if ((int)slimDXEnumValues.GetValue(j) == value)
+                                            {
+                                                string name = slimDXEnumNames[j];
+                                                if (!string.IsNullOrEmpty(name) && name != enumItem.Name)
+                                                {
+                                                    log.WriteLine("group.TagName<CppEnumItem>(@\"^{0}$\",\"{1}\");" + ((moreThanOne) ? "// << DUPLICATE CHECK" : ""), enumItem.CppElementName, name);
+                                                    moreThanOne = true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        // Console.WriteLine(ex);
+                                    }
+                                    i++;
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Enum not found {0}", "SlimDX.Direct3D9." + cSharpEnum.Name);
+                            }
+
+                        }
+                    }
+                }
+            }
+            log.Close();
+        }
 
         /// <summary>
         /// Main XIDLToCSharp

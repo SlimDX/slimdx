@@ -30,23 +30,32 @@ namespace SlimDX2.Tools.XIDLToCSharp
             CSharpFunctionGroup d3d9FunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct3D9", Global.Name + ".Direct3D9", "D3D9");
             CSharpFunctionGroup d3dx9FunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct3D9", Global.Name + ".Direct3D9", "D3DX9");
 
-            gen.MapIncludeToNamespace("d3d9", Global.Name + ".Direct3D9");
-            gen.MapIncludeToNamespace("d3d9caps", Global.Name + ".Direct3D9");
-            gen.MapIncludeToNamespace("d3d9types", Global.Name + ".Direct3D9");
-            gen.MapIncludeToNamespace("d3dx9", Global.Name + ".Direct3D9");
-            gen.MapIncludeToNamespace("d3dx9anim", Global.Name + ".Direct3D9");
-            gen.MapIncludeToNamespace("d3dx9core", Global.Name + ".Direct3D9");
-            gen.MapIncludeToNamespace("d3dx9effect", Global.Name + ".Direct3D9");
-            gen.MapIncludeToNamespace("d3dx9mesh", Global.Name + ".Direct3D9");
-            gen.MapIncludeToNamespace("d3dx9shader", Global.Name + ".Direct3D9");
-            gen.MapIncludeToNamespace("d3dx9shape", Global.Name + ".Direct3D9");
-            gen.MapIncludeToNamespace("d3dx9tex", Global.Name + ".Direct3D9");
-            gen.MapIncludeToNamespace("d3dx9xof", Global.Name + ".Direct3D9");
+
+            string[] includes = new string[]
+                                    {
+                                        "d3d9",
+                                        "d3d9caps",
+                                        "d3d9types",
+                                        "d3dx9",
+                                        "d3dx9anim",
+                                        "d3dx9core",
+                                        "d3dx9effect",
+                                        "d3dx9mesh",
+                                        "d3dx9shader",
+                                        "d3dx9shape",
+                                        "d3dx9tex",
+                                        "d3dx9xof",
+                                    };
+            foreach (var include in includes)
+                gen.MapIncludeToNamespace(include, Global.Name + ".Direct3D9");
+
+            // Force all grou.Find/Modify request to limit their search to the Direct3D9 includes
+            group.FindContext.AddRange(includes);
 
             // Remove Video & AuthenticatedChannel. Not part of SlimDX, Is it still used?
-            group.ModifyAll(@"^_?D3DAUTHENTICATEDCHANNEL.*", Modifiers.Remove);
-            group.Modify<CppInterface>(@"^IDirect3DDevice9Video$", Modifiers.Remove);
-            group.Modify<CppInterface>(@"^IDirect3DAuthenticatedChannel9$", Modifiers.Remove);
+            group.Remove<CppElement>(@"^_?D3DAUTHENTICATEDCHANNEL.*");
+            group.Remove<CppInterface>(@"^IDirect3DDevice9Video$");
+            group.Remove<CppInterface>(@"^IDirect3DAuthenticatedChannel9$");
 
             // --------------------------------------------------------------------------------------------------------
             // Direct3D9 Enumerations
@@ -57,36 +66,36 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.CreateEnumFromMacros(@"^D3DPRESENT_[^I][^N].*", "D3DPRESENT");
             group.CreateEnumFromMacros(@"^D3DPRESENTFLAG.*", "D3DPRESENT_FLAGS");
             group.CreateEnumFromMacros(@"^D3DCLEAR_.*", "D3DCLEAR_FLAGS");
-            group.CreateEnumFromMacros(@"^D3DLOCK_.*", "D3DLOCK").Add(new CppEnumItem() {Name = "D3DLOCK_NONE", Value = "0"});
+            group.CreateEnumFromMacros(@"^D3DLOCK_.*", "D3DLOCK").Add(new CppEnumItem() { Name = "D3DLOCK_NONE", Value = "0" });
             var d3dFVF = group.CreateEnumFromMacros(@"^D3DFVF_.*", "D3DFVF");
-            d3dFVF.Add( new CppEnumItem() {Name = "D3DFVF_NONE", Value = "0"});
-            d3dFVF.Modify<CppEnumItem>(@"^D3DFVF_TEXTUREFORMAT.*",Modifiers.Remove);
-            d3dFVF.Modify<CppEnumItem>(@"^D3DFVF_RESERVED2$", Modifiers.Remove);
-            group.CreateEnumFromMacros(@"^D3DUSAGE_.*", "D3DUSAGE");           
+            d3dFVF.Add(new CppEnumItem() { Name = "D3DFVF_NONE", Value = "0" });
+            d3dFVF.Remove<CppEnumItem>(@"^D3DFVF_TEXTUREFORMAT.*");
+            d3dFVF.Remove<CppEnumItem>(@"^D3DFVF_RESERVED2$");
+            group.CreateEnumFromMacros(@"^D3DUSAGE_.*", "D3DUSAGE");
 
-            group.Modify<CppEnum>(@"^_MAX_FVF_DECL_SIZE$", Modifiers.Remove);
-            group.Modify<CppEnum>(@"^_D3DXERR$", Modifiers.Remove);
-            group.Modify<CppEnum>(@"^_D3DXPATCHMESH$", Modifiers.Remove);
-            group.Modify<CppEnum>(@"^D3DXIMT$", Modifiers.Remove);
-            group.Modify<CppEnum>(@"^D3DXUVATLAS$", Modifiers.Remove);
-            group.Modify<CppEnum>(@"^D3DXIMT$", Modifiers.Remove);
-            group.Modify<CppEnum>(@"^D3DXIMT$", Modifiers.Remove);
-            group.Modify<CppEnum>(@"^D3DXIMT$", Modifiers.Remove);
-            group.Modify<CppEnum>(@"^D3DXIMT$", Modifiers.Remove);
-            group.Modify<CppEnum>(@"^D3DXSHGPUSIMOPT$", Modifiers.Remove);
-            group.Modify<CppEnum>(@"^D3DSHADER_COMPARISON$", Modifiers.Remove);
-            group.Modify<CppEnum>(@"^D3DSHADER_INSTRUCTION_OPCODE_TYPE$", Modifiers.Remove);
-            group.Modify<CppEnum>(@"^D3DSHADER_PARAM_REGISTER_TYPE$", Modifiers.Remove);
-            group.Modify<CppEnum>(@"^D3DVS_RASTOUT_OFFSETS$", Modifiers.Remove);
-            group.Modify<CppEnum>(@"^D3DVS_ADDRESSMODE_TYPE$", Modifiers.Remove);
-            group.Modify<CppEnum>(@"^D3DSHADER_ADDRESSMODE_TYPE$", Modifiers.Remove);
-            group.Modify<CppEnum>(@"^D3DSHADER_PARAM_SRCMOD_TYPE$", Modifiers.Remove);            
-            group.Modify<CppEnum>(@"^D3DXSHCOMPRESSQUALITYTYPE$", Modifiers.Remove);
+            group.Remove<CppEnum>(@"^_MAX_FVF_DECL_SIZE$");
+            group.Remove<CppEnum>(@"^_D3DXERR$");
+            group.Remove<CppEnum>(@"^_D3DXPATCHMESH$");
+            group.Remove<CppEnum>(@"^D3DXIMT$");
+            group.Remove<CppEnum>(@"^D3DXUVATLAS$");
+            group.Remove<CppEnum>(@"^D3DXIMT$");
+            group.Remove<CppEnum>(@"^D3DXIMT$");
+            group.Remove<CppEnum>(@"^D3DXIMT$");
+            group.Remove<CppEnum>(@"^D3DXIMT$");
+            group.Remove<CppEnum>(@"^D3DXSHGPUSIMOPT$");
+            group.Remove<CppEnum>(@"^D3DSHADER_COMPARISON$");
+            group.Remove<CppEnum>(@"^D3DSHADER_INSTRUCTION_OPCODE_TYPE$");
+            group.Remove<CppEnum>(@"^D3DSHADER_PARAM_REGISTER_TYPE$");
+            group.Remove<CppEnum>(@"^D3DVS_RASTOUT_OFFSETS$");
+            group.Remove<CppEnum>(@"^D3DVS_ADDRESSMODE_TYPE$");
+            group.Remove<CppEnum>(@"^D3DSHADER_ADDRESSMODE_TYPE$");
+            group.Remove<CppEnum>(@"^D3DSHADER_PARAM_SRCMOD_TYPE$");
+            group.Remove<CppEnum>(@"^D3DXSHCOMPRESSQUALITYTYPE$");
 
             group.TagName<CppEnum>(@"^D3DLOCK$", "LockFlags");
             group.TagEnumFlags(@"^D3DLOCK$");
             group.TagName<CppEnum>(@"^D3DUSAGE$", "Usage");
-            group.TagName<CppEnum>(@"^D3DFVF$", "VertexFormat");            
+            group.TagName<CppEnum>(@"^D3DFVF$", "VertexFormat");
             group.TagEnumFlags(@"^D3DFVF$");
             group.TagName<CppEnum>(@"^D3DPRESENT_INTERVAL$", "PresentInterval");
             group.TagName<CppEnum>(@"^D3DPRESENT$", "Present");
@@ -105,7 +114,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagName<CppEnum>(@"^D3DCOMPOSERECTSOP$", "ComposeRectOperation");
             group.TagName<CppEnum>(@"^D3DCUBEMAP_FACES$", "CubeMapFace");
             group.TagName<CppEnum>(@"^D3DDEBUGMONITORTOKENS$", "DebugMonitorTokens");
-            group.TagTypeAndName<CppEnum>(@"^D3DDECLMETHOD$", "byte","DeclarationMethod");
+            group.TagTypeAndName<CppEnum>(@"^D3DDECLMETHOD$", "byte", "DeclarationMethod");
             group.TagTypeAndName<CppEnum>(@"^D3DDECLTYPE$", "byte", "DeclarationType");
             group.TagTypeAndName<CppEnum>(@"^D3DDECLUSAGE$", "byte", "DeclarationUsage");
             group.TagName<CppEnum>(@"^D3DDEGREETYPE$", "Degree");
@@ -777,7 +786,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagName<CppEnumItem>(@"^D3DLOCK_NOSYSLOCK$", "NoSystemLock");
             group.TagName<CppEnumItem>(@"^D3DLOCK_DONOTWAIT$", "DoNotWait");
 
-            group.TagName<CppEnumItem>(@"^D3DCLEAR_ZBUFFER$", "ZBuffer");            
+            group.TagName<CppEnumItem>(@"^D3DCLEAR_ZBUFFER$", "ZBuffer");
 
             // --------------------------------------------------------------------------------------------------------
             // Direct3D9 Structures
@@ -799,37 +808,32 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.MapCppTypeToCSharpType("D3DXVECTOR3_16F", typeof(int)); // TODO TEMP!!!!!!
             gen.MapCppTypeToCSharpType("D3DXVECTOR4_16F", typeof(int)); // TODO TEMP!!!!!!
 
-            group.Modify<CppStruct>(@"^D3D_OMAC$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DDEVINFO_.*$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DAES_CTR_IV$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DENCRYPTED_BLOCK_INFO$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DRANGE$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DRESOURCESTATS$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DMEMORYPRESSURE$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DCOMPOSERECTDESC$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DCOMPOSERECTDESTINATION$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DOVERLAYCAPS$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DCONTENTPROTECTIONCAPS$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DXFONT_DESCA$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DXF_FILELOADRESOURCE$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DXF_FILELOADMEMORY$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DXINTERSECTINFO$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DXSHMATERIAL$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DXSHPRTSPLITMESHVERTDATA$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DXSHPRTSPLITMESHCLUSTERDATA$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DXSHADER_TYPEINFO$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DXSHADER_STRUCTMEMBERINFO$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DXSHCOMPRESSQUALITYTYPE$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DXSHGPUSIMOPT$", Modifiers.Remove);      
-            
+            group.Remove<CppStruct>(@"^D3D_OMAC$");
+            group.Remove<CppStruct>(@"^D3DDEVINFO_.*$");
+            group.Remove<CppStruct>(@"^D3DAES_CTR_IV$");
+            group.Remove<CppStruct>(@"^D3DENCRYPTED_BLOCK_INFO$");
+            group.Remove<CppStruct>(@"^D3DRANGE$");
+            group.Remove<CppStruct>(@"^D3DRESOURCESTATS$");
+            group.Remove<CppStruct>(@"^D3DMEMORYPRESSURE$");
+            group.Remove<CppStruct>(@"^D3DCOMPOSERECTDESC$");
+            group.Remove<CppStruct>(@"^D3DCOMPOSERECTDESTINATION$");
+            group.Remove<CppStruct>(@"^D3DOVERLAYCAPS$");
+            group.Remove<CppStruct>(@"^D3DCONTENTPROTECTIONCAPS$");
+            group.Remove<CppStruct>(@"^D3DXFONT_DESCA$");
+            group.Remove<CppStruct>(@"^D3DXF_FILELOADRESOURCE$");
+            group.Remove<CppStruct>(@"^D3DXF_FILELOADMEMORY$");
+            group.Remove<CppStruct>(@"^D3DXINTERSECTINFO$");
+            group.Remove<CppStruct>(@"^D3DXSHMATERIAL$");
+            group.Remove<CppStruct>(@"^D3DXSHPRTSPLITMESHVERTDATA$");
+            group.Remove<CppStruct>(@"^D3DXSHPRTSPLITMESHCLUSTERDATA$");
+            group.Remove<CppStruct>(@"^D3DXSHADER_TYPEINFO$");
+            group.Remove<CppStruct>(@"^D3DXSHADER_STRUCTMEMBERINFO$");
+            group.Remove<CppStruct>(@"^D3DXSHCOMPRESSQUALITYTYPE$");
+            group.Remove<CppStruct>(@"^D3DXSHGPUSIMOPT$");
+
             group.TagName<CppStruct>(@"^D3DPRESENTSTATS$", "PresentationStatistics");
             group.TagName<CppStruct>(@"^D3D(.*)9", "$1", false);
 
-            gen.MapCppTypeToCSharpType("LPD3DXSHPRTSIMCB", typeof(IntPtr));
-            gen.MapCppTypeToCSharpType("LPD3DXUVATLASCB", typeof(IntPtr));
-            gen.MapCppTypeToCSharpType("LPD3DXIMTSIGNALCALLBACK", typeof(IntPtr));
-            gen.MapCppTypeToCSharpType("LPD3DXFILL2D", typeof(IntPtr));
-            gen.MapCppTypeToCSharpType("LPD3DXFILL3D", typeof(IntPtr));
             gen.MapCppTypeToCSharpType("LPGLYPHMETRICSFLOAT", typeof(IntPtr));
             gen.MapCppTypeToCSharpType("D3D_OMAC", typeof(Guid));
             gen.MapCppTypeToCSharpType("D3DRECT", TypeSlimDX2Rectangle);
@@ -875,7 +879,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             group.TagTypeAndName<CppField>(@"^D3DVERTEXELEMENT9::Type$", "D3DDECLTYPE");
             group.TagTypeAndName<CppField>(@"^D3DVERTEXELEMENT9::Method$", "D3DDECLMETHOD");
-            group.TagTypeAndName<CppField>(@"^D3DVERTEXELEMENT9::Usage$", "D3DDECLUSAGE");     
+            group.TagTypeAndName<CppField>(@"^D3DVERTEXELEMENT9::Usage$", "D3DDECLUSAGE");
 
             // --------------------------------------------------------------------------------------------------------
             // Direct3D9 Interfaces
@@ -886,13 +890,13 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagName<CppInterface>(@"^IDirect3D9Ex$", "Direct3D9Ex");
             group.TagName<CppMethod>(@"^GetDC$", "GetDisplayDeviceContext");
 
-            group.Modify<CppInterface>(@"^IDirect3DCryptoSession9$", Modifiers.Remove);
-            group.Modify<CppInterface>(@"^IDirect3D9ExOverlayExtension$", Modifiers.Remove);
-            group.Modify<CppInterface>(@"^ID3DXPRTBuffer$", Modifiers.Remove);
-            group.Modify<CppInterface>(@"^ID3DXPRTEngine$", Modifiers.Remove);
-            group.Modify<CppInterface>(@"^ID3DXPRTCompBuffer$", Modifiers.Remove);
-            group.Modify<CppInterface>(@"^ID3DXTextureGutterHelper$", Modifiers.Remove);
-            
+            group.Remove<CppInterface>(@"^IDirect3DCryptoSession9$");
+            group.Remove<CppInterface>(@"^IDirect3D9ExOverlayExtension$");
+            group.Remove<CppInterface>(@"^ID3DXPRTBuffer$");
+            group.Remove<CppInterface>(@"^ID3DXPRTEngine$");
+            group.Remove<CppInterface>(@"^ID3DXPRTCompBuffer$");
+            group.Remove<CppInterface>(@"^ID3DXTextureGutterHelper$");
+
             group.TagName<CppInterface>(@"^ID3DXAllocateHierarchy$", "IAllocateHierarchy");
             group.TagName<CppInterface>(@"^ID3DXBuffer$", "ShaderBytecode");
             group.TagName<CppInterface>(@"^ID3DXLoadUserData$", "ILoadUserData");
@@ -900,26 +904,26 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagName<CppInterface>(@"^ID3DXSaveUserData$", "ISaveUserData");
             group.TagName<CppInterface>(@"^IDirect3D9$", "Direct3D");
             group.TagName<CppInterface>(@"^IDirect3DDevice9Ex$", "DeviceEx");
-            group.TagName<CppInterface>(@"^ID3DXSPMesh$","SimplificationMesh");
+            group.TagName<CppInterface>(@"^ID3DXSPMesh$", "SimplificationMesh");
 
-            group.Modify<CppMethod>(@"^ID3DXFont::GetDescA$", Modifiers.Remove);
+            group.Remove<CppMethod>(@"^ID3DXFont::GetDescA$");
 
             // Modify methods on IDirect3D9
             group.TagVisibility<CppMethod>(@"^IDirect3D9::CreateDevice$", Visibility.Internal);
             group.TagTypeAndName<CppParameter>(@"^IDirect3D9::CreateDevice::BehaviorFlags$", "D3DCREATE_FLAGS");
-            group.Modify<CppParameter>(@"^IDirect3D9::CreateDevice::pPresentationParameters$", Modifiers.ParameterAttribute(CppAttribute.In | CppAttribute.Buffer));
+            group.TagParameter(@"^IDirect3D9::CreateDevice::pPresentationParameters$", CppAttribute.In | CppAttribute.Buffer);
 
             // Modify methods on IDirect3DDevice9
             group.TagTypeAndName<CppParameter>(@"^IDirect3DDevice9::Clear::Flags$", "D3DCLEAR_FLAGS");
-            group.Modify<CppParameter>(@"^IDirect3DDevice9::Clear::pRects$", Modifiers.ParameterAttribute(CppAttribute.In | CppAttribute.Buffer|CppAttribute.Optional));
+            group.TagParameter(@"^IDirect3DDevice9::Clear::pRects$", CppAttribute.In | CppAttribute.Buffer | CppAttribute.Optional);
             group.TagVisibility<CppMethod>(@"^IDirect3DDevice9::Clear$", Visibility.Internal, null, "Clear_");
-            group.Modify<CppParameter>(@"^IDirect3DDevice9::ColorFill::pRect$", Modifiers.ParameterAttribute(CppAttribute.In | CppAttribute.Optional));
+            group.TagParameter(@"^IDirect3DDevice9::ColorFill::pRect$", CppAttribute.In | CppAttribute.Optional);
 
             group.TagVisibility<CppMethod>(@"^IDirect3DDevice9::Create.*$", Visibility.Internal);
 
             group.TagTypeAndName<CppParameter>(@"^IDirect3DDevice9::CreateVertexBuffer::FVF$", "D3DFVF", "vertexFormat");
             group.TagTypeAndName<CppParameter>(@"^IDirect3DDevice9::CreateVertexBuffer::Usage$", "D3DUSAGE");
-            group.Modify<CppParameter>(@"^IDirect3DDevice9::CreateVertexDeclaration::pVertexElements$", Modifiers.ParameterAttribute(CppAttribute.In | CppAttribute.Buffer));
+            group.TagParameter(@"^IDirect3DDevice9::CreateVertexDeclaration::pVertexElements$", CppAttribute.In | CppAttribute.Buffer);
 
             group.TagName<CppMethod>(@"^IDirect3DDevice9::GetFVF$", "GetVertexFormat");
             group.TagName<CppMethod>(@"^IDirect3DDevice9::SetFVF$", "SetVertexFormat");
@@ -929,40 +933,246 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagName<CppMethod>(@"^IDirect3DDevice9::DrawPrimitive$", "DrawPrimitives");
 
             /// <unmanaged>HRESULT IDirect3DDevice9::Present([None] const RECT* pSourceRect,[None] const RECT* pDestRect,[None] HWND hDestWindowOverride,[None] const RGNDATA* pDirtyRegion)</unmanaged>
-            group.Modify<CppParameter>(@"^IDirect3DDevice9::Present::pSourceRect$", Modifiers.ParameterAttribute(CppAttribute.In | CppAttribute.Optional));
-            group.Modify<CppParameter>(@"^IDirect3DDevice9::Present::pDestRect$", Modifiers.ParameterAttribute(CppAttribute.InOut | CppAttribute.Optional));
-            group.Modify<CppParameter>(@"^IDirect3DDevice9::Present::pDirtyRegion$", Modifiers.ParameterAttribute(CppAttribute.In | CppAttribute.Optional));
+            group.TagParameter(@"^IDirect3DDevice9::Present::pSourceRect$", CppAttribute.In | CppAttribute.Optional);
+            group.TagParameter(@"^IDirect3DDevice9::Present::pDestRect$", CppAttribute.InOut | CppAttribute.Optional);
+            group.TagParameter(@"^IDirect3DDevice9::Present::pDirtyRegion$", CppAttribute.In | CppAttribute.Optional);
             group.TagVisibility<CppMethod>(@"^IDirect3DDevice9::Present$", Visibility.Internal);
 
             // Modify methods on IDirect3DVertexBuffer9
             // IDirect3DVertexBuffer9::Lock([None] UINT OffsetToLock,[None] UINT SizeToLock,[None] void** ppbData,[None] int Flags)</
             group.TagVisibility<CppMethod>(@"^IDirect3DVertexBuffer9::Lock$", Visibility.Internal, null, "Lock_");
-            group.Modify<CppParameter>(@"^IDirect3DVertexBuffer9::Lock::ppbData$", Modifiers.ParameterAttribute(CppAttribute.Out));
+            group.TagParameter(@"^IDirect3DVertexBuffer9::Lock::ppbData$", CppAttribute.Out);
             group.TagTypeAndName<CppParameter>(@"^IDirect3DVertexBuffer9::Lock::Flags$", "D3DLOCK", "lockFlags");
 
             // Modify methods on ID3DXEffectStateManager
             group.TagTypeAndName<CppParameter>(@"^ID3DXEffectStateManager::SetFVF::FVF$", "D3DFVF", "vertexFormat");
             group.TagName<CppMethod>(@"^ID3DXEffectStateManager::SetFVF$", "SetVertexFormat");
 
+
+            // Patch methods (generated by group.DumpGetMethods)
+            group.TagParameter(@"^IDirect3D9::GetAdapterIdentifier::pIdentifier$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3D9::GetAdapterDisplayMode::pMode$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3D9::GetDeviceCaps::pCaps$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetDirect3D::ppD3D9$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetDeviceCaps::pCaps$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetDisplayMode::pMode$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetCreationParameters::pParameters$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetSwapChain::pSwapChain$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetBackBuffer::ppBackBuffer$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetRasterStatus::pRasterStatus$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetGammaRamp::pRamp$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetRenderTargetData::pRenderTarget$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetRenderTargetData::pDestSurface$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetFrontBufferData::pDestSurface$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetRenderTarget::ppRenderTarget$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetDepthStencilSurface::ppZStencilSurface$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetTransform::pMatrix$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetViewport::pViewport$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetMaterial::pMaterial$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetLight::arg1$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetLightEnable::pEnable$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetClipPlane::pPlane$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetRenderState::pValue$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetClipStatus::pClipStatus$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetTexture::ppTexture$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetTextureStageState::pValue$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetSamplerState::pValue$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetPaletteEntries::pEntries$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetCurrentTexturePalette::PaletteNumber$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetScissorRect::pRect$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetVertexDeclaration::ppDecl$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetFVF::pFVF$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetVertexShader::ppShader$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetVertexShaderConstantF::pConstantData$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetVertexShaderConstantI::pConstantData$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetVertexShaderConstantB::pConstantData$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetStreamSource::ppStreamData$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetStreamSource::pOffsetInBytes$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetStreamSource::pStride$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetStreamSourceFreq::pSetting$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetIndices::ppIndexData$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetPixelShader::ppShader$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetPixelShaderConstantF::pConstantData$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetPixelShaderConstantI::pConstantData$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9::GetPixelShaderConstantB::pConstantData$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DStateBlock9::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DResource9::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DResource9::GetPrivateData::pSizeOfData$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DVertexDeclaration9::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DVertexDeclaration9::GetDeclaration::pElement$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DVertexDeclaration9::GetDeclaration::pNumElements$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DVertexShader9::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DVertexShader9::GetFunction::pSizeOfData$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DPixelShader9::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DPixelShader9::GetFunction::pSizeOfData$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DTexture9::GetLevelDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DTexture9::GetSurfaceLevel::ppSurfaceLevel$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DVolumeTexture9::GetLevelDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DVolumeTexture9::GetVolumeLevel::ppVolumeLevel$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DCubeTexture9::GetLevelDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DCubeTexture9::GetCubeMapSurface::ppCubeMapSurface$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DVertexBuffer9::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DIndexBuffer9::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DSurface9::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DSurface9::GetDC::phdc$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DVolume9::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DVolume9::GetPrivateData::pSizeOfData$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DVolume9::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DSwapChain9::GetFrontBufferData::pDestSurface$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DSwapChain9::GetBackBuffer::ppBackBuffer$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DSwapChain9::GetRasterStatus::pRasterStatus$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DSwapChain9::GetDisplayMode::pMode$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DSwapChain9::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DSwapChain9::GetPresentParameters::pPresentationParameters$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DQuery9::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3D9Ex::GetAdapterModeCountEx::pFilter$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3D9Ex::GetAdapterDisplayModeEx::pMode$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3D9Ex::GetAdapterDisplayModeEx::pRotation$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3D9Ex::GetAdapterLUID::pLUID$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9Ex::GetGPUThreadPriority::pPriority$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9Ex::GetMaximumFrameLatency::pMaxLatency$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9Ex::GetDisplayModeEx::pMode$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9Ex::GetDisplayModeEx::pRotation$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DSwapChain9Ex::GetLastPresentCount::pLastPresentCount$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DSwapChain9Ex::GetPresentStats::pPresentationStatistics$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DSwapChain9Ex::GetDisplayModeEx::pMode$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DSwapChain9Ex::GetDisplayModeEx::pRotation$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9Video::GetContentProtectionCaps::pCryptoType$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9Video::GetContentProtectionCaps::pDecodeProfile$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DDevice9Video::GetContentProtectionCaps::pCaps$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DAuthenticatedChannel9::GetCertificateSize::pCertificateSize$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DAuthenticatedChannel9::GetCertificate::ppCertificate$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DCryptoSession9::GetCertificateSize::pCertificateSize$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DCryptoSession9::GetCertificate::ppCertificate$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DCryptoSession9::GetSurfacePitch::pSrcSurface$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DCryptoSession9::GetSurfacePitch::pSurfacePitch$", CppAttribute.Out);
+            group.TagParameter(@"^IDirect3DCryptoSession9::GetEncryptionBltKey::pReadbackKey$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXSprite::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXSprite::GetTransform::pTransform$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFont::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFont::GetDescA::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFont::GetDescW::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFont::GetTextMetricsA::pTextMetrics$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFont::GetTextMetricsW::pTextMetrics$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFont::GetGlyphData::ppTexture$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFont::GetGlyphData::pBlackBox$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFont::GetGlyphData::pCellInc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXRenderToSurface::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXRenderToSurface::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXRenderToEnvMap::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXRenderToEnvMap::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXLine::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFileSaveObject::GetFile::arg0$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFileSaveData::GetSave::arg0$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFileSaveData::GetName::arg1$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFileSaveData::GetType::arg0$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFileEnumObject::GetFile::arg0$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFileEnumObject::GetChildren::arg0$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFileEnumObject::GetChild::arg1$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFileData::GetEnum::arg0$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFileData::GetName::arg1$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFileData::GetType::arg0$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFileData::GetChildren::arg0$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXFileData::GetChild::arg1$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseMesh::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseMesh::GetVertexBuffer::ppVB$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseMesh::GetIndexBuffer::ppIB$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseMesh::GetAttributeTable::pAttribTable$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseMesh::GetAttributeTable::pAttribTableSize$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXPMesh::GetAdjacency::pAdjacency$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXSPMesh::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXSPMesh::GetVertexWeights::pVertexWeights$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXPatchMesh::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXPatchMesh::GetVertexBuffer::ppVB$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXPatchMesh::GetIndexBuffer::ppIB$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXPatchMesh::GetTessSize::NumTriangles$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXPatchMesh::GetTessSize::NumVertices$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXPatchMesh::GetDisplaceParam::Texture$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXPatchMesh::GetDisplaceParam::MinFilter$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXPatchMesh::GetDisplaceParam::MagFilter$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXPatchMesh::GetDisplaceParam::MipFilter$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXPatchMesh::GetDisplaceParam::Wrap$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXPatchMesh::GetDisplaceParam::dwLODBias$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXSkinInfo::GetBoneInfluence::vertices$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXSkinInfo::GetBoneInfluence::weights$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXSkinInfo::GetBoneVertexInfluence::pWeight$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXSkinInfo::GetBoneVertexInfluence::pVertexNum$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXSkinInfo::GetMaxVertexInfluences::maxVertexInfluences$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXSkinInfo::GetMaxFaceInfluences::maxFaceInfluences$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXTextureGutterHelper::GetFaceMap::pFaceData$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXTextureGutterHelper::GetBaryMap::pBaryData$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXTextureGutterHelper::GetTexelMap::pTexelData$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXTextureGutterHelper::GetGutterMap::pGutterData$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXPRTEngine::GetVertexAlbedo::pVertColors$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXPRTEngine::GetAdaptedMesh::pFaceRemap$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXPRTEngine::GetAdaptedMesh::pVertRemap$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXPRTEngine::GetAdaptedMesh::pfVertWeights$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXPRTEngine::GetAdaptedMesh::ppMesh$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXConstantTable::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXConstantTable::GetConstantDesc::pConstantDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXConstantTable::GetConstantDesc::pCount$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXTextureShader::GetFunction::ppFunction$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXTextureShader::GetConstantBuffer::ppConstantBuffer$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXTextureShader::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXTextureShader::GetConstantDesc::pConstantDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXTextureShader::GetConstantDesc::pCount$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetParameterDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetTechniqueDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetPassDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetFunctionDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetBool::pb$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetBoolArray::pb$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetInt::pn$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetIntArray::pn$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetFloat::pf$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetFloatArray::pf$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetVector::pVector$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetVectorArray::pVector$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetMatrix::pMatrix$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetMatrixArray::pMatrix$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetMatrixPointerArray::ppMatrix$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetMatrixTranspose::pMatrix$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetMatrixTransposeArray::pMatrix$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetMatrixTransposePointerArray::ppMatrix$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetString::ppString$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetTexture::ppTexture$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetPixelShader::ppPShader$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXBaseEffect::GetVertexShader::ppVShader$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXEffect::GetPool::ppPool$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXEffect::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXEffect::GetStateManager::ppManager$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXEffectCompiler::GetLiteral::pLiteral$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXAnimationSet::GetSRT::pScale$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXAnimationSet::GetSRT::pRotation$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXAnimationSet::GetSRT::pTranslation$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXAnimationSet::GetCallback::pCallbackPosition$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXCompressedAnimationSet::GetCompressedData::ppCompressedData$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXAnimationController::GetAnimationSet::ppAnimationSet$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DXAnimationController::GetTrackAnimationSet::ppAnimSet$", CppAttribute.Out);
+
             // --------------------------------------------------------------------------------------------------------
             // Direct3D9 Functions
             // --------------------------------------------------------------------------------------------------------
-            group.Modify<CppFunction>(@"^D3DX.*PRT.*$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3DXCreateFontIndirectA$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3DXSHPRTCompSplitMeshSC$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3DXCreateTextureGutterHelper$", Modifiers.Remove);
+            group.Remove<CppFunction>(@"^D3DX.*PRT.*$");
+            group.Remove<CppFunction>(@"^D3DXCreateFontIndirectA$");
+            group.Remove<CppFunction>(@"^D3DXSHPRTCompSplitMeshSC$");
+            group.Remove<CppFunction>(@"^D3DXCreateTextureGutterHelper$");
 
             group.TagName<CppFunction>(@"^D3DXCreateFontIndirectW$", "CreateFontIndirect");
-            
+
             string d3dx9DLLName = string.Format("d3dx9_{0}.dll", group.FindFirst<CppMacroDefinition>("D3DX_SDK_VERSION").StripStringValue);
             group.TagFunction("^D3D9.*", "d3d9.dll", d3d9FunctionGroup);
             group.TagFunction("^Direct3D.*", "d3d9.dll", d3d9FunctionGroup);
             group.TagFunction("^D3DX9.*", d3dx9DLLName, d3dx9FunctionGroup);
             group.TagFunction("^D3DX[^0-9].*", d3dx9DLLName, d3dx9FunctionGroup);
             group.TagFunction("^D3DPERF.*", d3dx9DLLName, d3dx9FunctionGroup);
-            
+
             // Add constant from macro definitions
-            gen.AddConstantFromMacroToCSharpType("D3D_SDK_VERSION", Global.Name + ".Direct3D9.D3D9", "int");
+            gen.AddConstantFromMacroToCSharpType("D3D_SDK_VERSION", Global.Name + ".Direct3D9.D3D9", "int", "SdkVersion");
+
+            // Clear FindContext
+            group.FindContext.Clear();
         }
     }
 }

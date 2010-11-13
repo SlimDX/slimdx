@@ -103,6 +103,16 @@ foreach (var sharpInterface in Namespace.Interfaces)
 <#+
 
 	// --------------------------------------------------------------------------------------------------
+	// Handle Inner Constants
+	// --------------------------------------------------------------------------------------------------
+	foreach (var sharpConstant in sharpInterface.Constants) {		
+#>        
+        /// <summary>Constant <#= sharpConstant.CppElementName #>.</summary>
+        <#= sharpConstant.VisibilityName #><#= sharpConstant.TypeName #> <#= sharpConstant.Name #> = <#= sharpConstant.Value #>;
+<#+
+	}
+	
+	// --------------------------------------------------------------------------------------------------
 	// Handle Inner Interfaces
 	// --------------------------------------------------------------------------------------------------
 	if (sharpInterface.HasInnerInterfaces) {
@@ -132,10 +142,10 @@ foreach (var sharpInterface in Namespace.Interfaces)
 		}
 	}
 	
-	
 	// ------------------------------------------------------------------------------------------------------------
 	// Output Properties
 	// ------------------------------------------------------------------------------------------------------------
+	if (!sharpInterface.IsCallback)
 	foreach (var sharpProperty in sharpInterface.Properties) {				
 #>
         
@@ -245,7 +255,7 @@ foreach (var sharpInterface in Namespace.Interfaces)
                     <#= param.Name #>[i].__MarshalTo(ref <#= param.TempName #>_[i]);				
 <#+							}
 						} else {#>
-                <#= param.PublicType.FullName #>.__Native <#= param.TempName #> = new <#= param.PublicType.FullName #>.__Native();
+                <#= param.PublicType.FullName #>.__Native <#= param.TempName #> = <#= ((CSharpStruct)param.PublicType).GetConstructor() #>;
 <#+							if ((param.IsRefIn || param.IsRef) && param.HasNativeValueType) {#>
                 <#= param.Name #>.__MarshalTo(ref <#= param.TempName #>);
 <#+							}

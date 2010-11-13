@@ -23,9 +23,19 @@ namespace SlimDX2.Tools.XIDLToCSharp
 {
     public class CSharpConstant : CSharpType
     {
-        public CSharpConstant(CppMacroDefinition cppMacroDefinition)
+        public CSharpConstant()
         {
-            CppElement = cppMacroDefinition;
+            CppElement = null;
+            Visibility = Visibility.Public | Visibility.Static;
+        }
+
+        public CSharpConstant(string typeName, string name, string value)
+        {
+            CppElement = null;
+            TypeName = typeName;
+            Name = name;
+            Value = value;
+            Visibility = Visibility.Public | Visibility.Static;
         }
 
         public string Value { get; set; }

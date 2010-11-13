@@ -1,10 +1,36 @@
-﻿
+
 struct Win32 {
 };
 
+
+// Define global
+#define FAR
+#define NEAR
+#define CALLBACK    __stdcall
+#define WINAPI      __stdcall
+#define WINAPIV     __cdecl
+#define APIENTRY    WINAPI
+#define APIPRIVATE  __stdcall
+#define PASCAL      __stdcall
+#define STDMETHODCALLTYPE __stdcall
+
+#define LPUNKNOWN IUnknown *
+
+// For DirectSound to avoid parsing of D3DCOLOR
+#define DX_SHARED_DEFINES
+#define LPWAVEFORMATEX WAVEFORMATEX *
+typedef float D3DVALUE, *LPD3DVALUE;
+
+// TYPE
 #define DWORD int
+#define LPDWORD DWORD *
+#define LPLONG LONG *
+#define PULONG LONG *
 #define BYTE byte
+#define LPBYTE byte *
+#define LPVOID void *
 #define PDWORD DWORD *
+#define DWORD_PTR DWORD *
 #define IStream void
 
 // Used by D3D9

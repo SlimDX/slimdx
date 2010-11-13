@@ -27,7 +27,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
         public unsafe void MapD3DCompiler()
         {
-            
+            gen.MapIncludeToNamespace("d3dcompiler", Global.Name + ".D3DCompiler");
+
             // Move some D3DCommon types to D3DCompiler
             gen.MapTypeToNamespace("^D3D_PRIMITIVE$", Global.Name + ".D3DCompiler");
             gen.MapTypeToNamespace("^D3D_CBUFFER_TYPE$", Global.Name + ".D3DCompiler");
@@ -61,20 +62,20 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             // D3DCompiler Enumerations
             // --------------------------------------------------------------------------------------------------------
-            group.Modify<CppEnumItem>(@"D3D(\d+)_PRIMITIVE_TOPOLOGY_.*", Modifiers.Remove);
-            group.Modify<CppEnumItem>(@"D3D(\d+)_PRIMITIVE_.*", Modifiers.Remove);
-            group.ModifyAll(".*", Modifiers.RenameType("D3D11_PRIMITIVE_TOPOLOGY", "D3D_PRIMITIVE_TOPOLOGY"));
-            group.ModifyAll(".*", Modifiers.RenameType("D3D10_SHADER_MACRO", "D3D_SHADER_MACRO"));
+            group.Remove<CppEnumItem>(@"D3D(\d+)_PRIMITIVE_TOPOLOGY_.*");
+            group.Remove<CppEnumItem>(@"D3D(\d+)_PRIMITIVE_.*");
+            //group.ModifyAll(".*", Modifiers.RenameType("D3D11_PRIMITIVE_TOPOLOGY", "D3D_PRIMITIVE_TOPOLOGY"));
+            //group.ModifyAll(".*", Modifiers.RenameType("D3D10_SHADER_MACRO", "D3D_SHADER_MACRO"));
 
-            group.Modify<CppEnumItem>(@"D3D(\d+)_SRV_DIMENSION_.*", Modifiers.Remove);
-            group.Modify<CppEnumItem>(@"D3D(\d+_1)_SRV_DIMENSION_.*", Modifiers.Remove);
+            group.Remove<CppEnumItem>(@"D3D(\d+)_SRV_DIMENSION_.*");
+            group.Remove<CppEnumItem>(@"D3D(\d+_1)_SRV_DIMENSION_.*");
 
             group.TagName<CppMacroDefinition>(@"^D3DCOMPILE_EFFECT_ALLOW_SLOW_OPS$", "AllowSlowOperations");
 
             // --------------------------------------------------------------------------------------------------------
             // D3DCompiler Interfaces
             // --------------------------------------------------------------------------------------------------------
-            group.Modify<CppParameter>(@"^ID3D(\d+)ShaderReflectionConstantBuffer::GetDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
+            group.TagParameter(@"^ID3D(\d+)ShaderReflectionConstantBuffer::GetDesc::pDesc", CppAttribute.Out);
 
             // --------------------------------------------------------------------------------------------------------
             // D3DCompiler Structures
@@ -97,8 +98,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagTypeAndName<CppParameter>(@"^D3DStripShader::uStripFlags$", "D3DCOMPILER_STRIP_FLAGS");
 
             // pDefines is an array of Macro (and not just In)
-            group.Modify<CppParameter>("^D3DCompile::pDefines", Modifiers.ParameterAttribute(CppAttribute.In | CppAttribute.Buffer | CppAttribute.Optional));
-            group.Modify<CppParameter>("^D3DPreprocess::pDefines", Modifiers.ParameterAttribute(CppAttribute.In | CppAttribute.Buffer | CppAttribute.Optional));
+            group.TagParameter("^D3DCompile::pDefines", CppAttribute.In | CppAttribute.Buffer | CppAttribute.Optional);
+            group.TagParameter("^D3DPreprocess::pDefines", CppAttribute.In | CppAttribute.Buffer | CppAttribute.Optional);
         }
     }
 }

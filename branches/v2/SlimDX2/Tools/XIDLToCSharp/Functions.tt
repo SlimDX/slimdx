@@ -56,7 +56,7 @@ foreach (var sharpFunctionGroup in Namespace.FunctionGroups)
 	foreach (var sharpConstant in sharpFunctionGroup.Constants) {		
 #>        
         /// <summary>Constant <#= sharpConstant.CppElementName #>.</summary>
-        <#= sharpConstant.VisibilityName #>const <#= sharpConstant.TypeName #> <#= sharpConstant.Name #> = <#= sharpConstant.Value #>;
+        <#= sharpConstant.VisibilityName #><#= sharpConstant.TypeName #> <#= sharpConstant.Name #> = <#= sharpConstant.Value #>;
 <#
 	}
 	

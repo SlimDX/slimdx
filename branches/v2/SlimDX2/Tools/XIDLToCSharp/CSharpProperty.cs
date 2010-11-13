@@ -23,7 +23,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
 {
     public class CSharpProperty : CSharpMapType
     {
-        public CSharpProperty(string name) : base(null, null, null, null, name)
+        public CSharpProperty(string name) : base(null, null, null, name)
         {
         }
 

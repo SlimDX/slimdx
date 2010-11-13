@@ -28,6 +28,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
         Internal = 0x02,
         Protected = 0x04,
         PublicProtected = 0x08,
-        Override = 0x10
+        Override = 0x10,
+        Abstract = 0x20,
+        Static = 0x40,
+        Const = 0x80
     }
 }

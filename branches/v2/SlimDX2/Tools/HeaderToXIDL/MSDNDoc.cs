@@ -30,11 +30,13 @@ namespace SlimDX2.Tools.HeaderToXIDL
 {
     /// <summary>
     /// MSDN Documentation query class
+    /// TODO: Make this MsdnDoc a generic solver of documentation to anykind of source (not only MSDN)
     /// </summary>
     public class MsdnDoc
     {
         private static Regex stripSpace = new Regex(@"[\r\n]+\s+", RegexOptions.Multiline);
         private static Regex beginWithSpace = new Regex(@"^\s+");
+        private Dictionary<Regex,string> mapReplaceName;
         private ZipFile _zipFile;
         private bool isZipUpdated;
 
@@ -61,7 +63,14 @@ namespace SlimDX2.Tools.HeaderToXIDL
         {
             ArchiveName = "MSDNDoc.zip";
             UseArchive = true;
+            mapReplaceName = new Dictionary<Regex,string>();
+            IsActive = true;
         }
+
+        /// <summary>
+        /// Get or set if the documentation resolver should be used
+        /// </summary>
+        public bool IsActive { get; set; }
 
         /// <summary>
         /// Archive to use to save the documentation
@@ -124,6 +133,17 @@ namespace SlimDX2.Tools.HeaderToXIDL
         /// <returns></returns>
         public Item GetDocumentation(string prefixName, string name)
         {
+            string oldName = name;
+            // Regex replacer
+            foreach (var keyValue in mapReplaceName)
+            {
+                if (keyValue.Key.Match(name).Success)
+                {
+                    name = keyValue.Key.Replace(name, keyValue.Value);
+                    break;
+                }
+            }
+
             // Handle name with ends A or W
             if (name.EndsWith("A") || name.EndsWith("W"))
             {
@@ -134,8 +154,17 @@ namespace SlimDX2.Tools.HeaderToXIDL
                     name = name.Substring(0, name.Length - 1);
                 }
             }
+            if (oldName != name)
+            {
+                Console.WriteLine("Documentation: Use name [{0}] instead of [{1}]",name, oldName);
+            }
             string doc = GetDocumentationFromCacheOrMsdn(prefixName, name);
             return MsdnDoc.ParseDocumentation(doc);
+        }
+
+        public void ReplaceName(string fromNameRegex, string toName)
+        {
+            mapReplaceName.Add(new Regex(fromNameRegex), toName);            
         }
 
         /// <summary>
@@ -344,7 +373,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
         {
             try
             {
-                Console.WriteLine("Get MSDN Documentation for [{0}]", name);
+                Console.WriteLine("Documentation: Get from MSDN for [{0}]", name);
                 string url_format =
                     "http://msdn.microsoft.com/query/dev10.query?appId=Dev10IDEF1&l=EN-US&k=k%28{0}%29;k%28DevLang-%22C%2B%2B%22%29;k%28TargetOS-WINDOWS%29&rd=true";
 
@@ -377,7 +406,7 @@ namespace SlimDX2.Tools.HeaderToXIDL
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Console.WriteLine("Documentation : " + ex);
             }
             return "";
         }
