@@ -45,8 +45,8 @@ namespace SlimDX2.Direct2D1
         {
             GeometrySinkCallback _callback = null;
             IntPtr ptr;
-            if (geometrySink.GetType() == typeof(DefaultGeometrySink))
-                ptr = (geometrySink as DefaultGeometrySink).NativePointer;
+            if (geometrySink is ComObject)
+                ptr = (geometrySink as ComObject).NativePointer;
             else
             {
                 _callback = new GeometrySinkCallback(geometrySink);

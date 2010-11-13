@@ -71,10 +71,10 @@ namespace SlimDX2.Direct2D1
         void AddArc(SlimDX2.Direct2D1.ArcSegment arc);
     }
 
-    internal partial class DefaultGeometrySink
+    internal partial class GeometrySinkNative
     {
 
-        ~DefaultGeometrySink()
+        ~GeometrySinkNative()
         {
             Release();
         }
@@ -152,7 +152,7 @@ namespace SlimDX2.Direct2D1
         private unsafe void AddQuadraticBeziersImpl(IntPtr beziers, int beziersCount)
         {
             SlimDX2.Direct2D1.QuadraticBezierSegment[] managedBeziers = new SlimDX2.Direct2D1.QuadraticBezierSegment[beziersCount];
-            SlimDX2.Interop.Read((void*)beziers, managedBeziers, 0, beziersCount);
+            Utilities.Read(beziers, managedBeziers, 0, beziersCount);
             Callback.AddQuadraticBeziers(managedBeziers);
         }
 

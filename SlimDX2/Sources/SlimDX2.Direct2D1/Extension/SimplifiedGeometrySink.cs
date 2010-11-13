@@ -97,7 +97,7 @@ namespace SlimDX2.Direct2D1
         void Close();
     }
 
-    internal partial class DefaultSimplifiedGeometrySink
+    internal partial class SimplifiedGeometrySinkNative
     {
         public void SetFillMode(FillMode fillMode)
         {
@@ -182,7 +182,7 @@ namespace SlimDX2.Direct2D1
             unsafe
             {
                 System.Drawing.PointF[] managedPoints = new PointF[pointsCount];
-                SlimDX2.Interop.Read((void*)points, managedPoints, 0, pointsCount);
+                Utilities.Read(points, managedPoints, 0, pointsCount);
                 Callback.AddLines(managedPoints);
             }
         }
@@ -194,7 +194,7 @@ namespace SlimDX2.Direct2D1
             unsafe
             {
                 SlimDX2.Direct2D1.BezierSegment[] managedBeziers = new SlimDX2.Direct2D1.BezierSegment[beziersCount];
-                SlimDX2.Interop.Read((void*)beziers, managedBeziers, 0, beziersCount);
+                Utilities.Read(beziers, managedBeziers, 0, beziersCount);
                 Callback.AddBeziers(managedBeziers);
             }
         }

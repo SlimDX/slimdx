@@ -113,6 +113,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DynamicInterop.cs" />
+    <Compile Include="FunctionCallback.cs" />
     <Compile Include="Int4.cs" />
     <Compile Include="LocalInterop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -127,6 +128,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\Structures.cs" />
+    <Compile Include="Windows\WaveFormat.cs" />
+    <Compile Include="Windows\WaveFormatEncoding.cs" />
+    <Compile Include="Windows\WaveFormatExtensible.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -178,8 +178,8 @@ namespace SlimDX2.DirectWrite
             {
                 GlyphRun glyphRunData = default(GlyphRun);
                 GlyphRunDescription glyphRunDescriptionData= default(GlyphRunDescription);
-                SlimDX2.Interop.Read((void*) glyphRun, ref glyphRunData);
-                SlimDX2.Interop.Read((void*) glyphRunDescription, ref glyphRunDescriptionData);
+                Utilities.Read(glyphRun, ref glyphRunData);
+                Utilities.Read(glyphRunDescription, ref glyphRunDescriptionData);
 
                 return Callback.DrawGlyphRun(clientDrawingContext, baselineOriginX, baselineOriginY, measuringMode, glyphRunData, ref glyphRunDescriptionData,
                                       new ComObject(clientDrawingEffect)).Code;
@@ -205,7 +205,7 @@ namespace SlimDX2.DirectWrite
             unsafe
             {
                 Underline underlineData = default(Underline);
-                SlimDX2.Interop.Read((void*)underline, ref underlineData);
+                Utilities.Read(underline, ref underlineData);
                 return Callback.DrawUnderline(clientDrawingContext, baselineOriginX, baselineOriginY, ref underlineData, new ComObject(clientDrawingEffect)).Code;
             }
         }
@@ -231,7 +231,7 @@ namespace SlimDX2.DirectWrite
             unsafe
             {
                 Strikethrough strikethroughData = default(Strikethrough);
-                SlimDX2.Interop.Read((void*)strikethrough, ref strikethroughData);
+                Utilities.Read(strikethrough, ref strikethroughData);
                 return Callback.DrawStrikethrough(clientDrawingContext, baselineOriginX, baselineOriginY, ref strikethroughData, new ComObject(clientDrawingEffect)).Code;
             }            
         }

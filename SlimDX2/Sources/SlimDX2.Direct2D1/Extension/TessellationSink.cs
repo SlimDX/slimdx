@@ -39,7 +39,7 @@ namespace SlimDX2.Direct2D1
         void Close();
     }
 
-    internal partial class DefaultTessellationSink
+    internal partial class TessellationSinkNative
     {
         public void AddTriangles(Triangle[] triangles)
         {
@@ -73,7 +73,7 @@ namespace SlimDX2.Direct2D1
             unsafe
             {
                 Triangle[] managedTriangles = new Triangle[trianglesCount];
-                SlimDX2.Interop.Read((void*) triangles, managedTriangles, 0, trianglesCount);
+                Utilities.Read(triangles, managedTriangles, 0, trianglesCount);
                 Callback.AddTriangles(managedTriangles);
             }
         }

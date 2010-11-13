@@ -218,7 +218,7 @@ namespace SlimDX2
 
                 sbyte* from = this._buffer + _position;
                 T result = default(T);
-                _position = (sbyte*) SlimDX2.Interop.Read(from, ref result) - this._buffer;
+                _position = (sbyte*) Utilities.Read((IntPtr)from, ref result) - this._buffer;
                 return result;
             }
         }
@@ -260,7 +260,7 @@ namespace SlimDX2
 
                 sbyte* from = this._buffer + _position;
                 T[] result = new T[count];
-                _position = (sbyte*) SlimDX2.Interop.Read(from, result, 0, count) - this._buffer;
+                _position = (sbyte*) Utilities.Read((IntPtr)from, result, 0, count) - this._buffer;
                 return result;
             }
         }
@@ -288,7 +288,7 @@ namespace SlimDX2
 
                 sbyte* from = this._buffer + _position;
                 long old_position = _position;
-                _position = (sbyte*) SlimDX2.Interop.Read(from, buffer, offset, count) - this._buffer;
+                _position = (sbyte*) Utilities.Read((IntPtr)from, buffer, offset, count) - this._buffer;
                 return (int) (_position - old_position);
             }
         }

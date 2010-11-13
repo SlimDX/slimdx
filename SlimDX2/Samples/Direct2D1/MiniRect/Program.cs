@@ -28,7 +28,7 @@ using SlimMath;
 using Device1 = SlimDX2.Direct3D10.Device1;
 using DriverType = SlimDX2.Direct3D10.DriverType;
 using Factory = SlimDX2.DXGI.Factory;
-using FeatureLevel = SlimDX2.Direct3D.FeatureLevel;
+using FeatureLevel = SlimDX2.Direct3D10.FeatureLevel;
 
 namespace MiniRect
 {

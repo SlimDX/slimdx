@@ -46,6 +46,16 @@ namespace SlimDX2
         }
 
         /// <summary>
+        /// Return the sizeof a struct from a CLR. Equivalent to sizeof operator but works on generics too.
+        /// </summary>
+        /// <typeparam name="T">a struct to evaluate</typeparam>
+        /// <returns>sizeof this struct</returns>
+        public static int SizeOf<T>() where T : struct
+        {
+            return SlimDX2.Interop.SizeOf<T>();            
+        }
+
+        /// <summary>
         /// NOT FULLY WORKING YET. NEED ALSO MORE TEST
         /// </summary>
         /// <param name="pDest"></param>
@@ -54,6 +64,38 @@ namespace SlimDX2
         private static unsafe void memcpy(void* pDest, void* pSrc, int count)
         {
             SlimDX2.Interop.memcpy(pDest, pSrc, count);
+        }
+
+        internal static IntPtr Read<T>(IntPtr pSrc, ref T data) where T : struct
+        {
+            unsafe
+            {
+                return (IntPtr)SlimDX2.Interop.Read<T>((void*) pSrc, ref data);
+            }
+        }
+
+        internal static IntPtr Read<T>(IntPtr pSrc, T[] data, int offset, int count) where T : struct
+        {
+            unsafe
+            {
+                return (IntPtr) SlimDX2.Interop.Read<T>((void*) pSrc, data, offset, count);
+            }
+        }
+
+        internal static IntPtr Write<T>(IntPtr pDest, ref T data) where T : struct
+        {
+            unsafe
+            {
+                return (IntPtr) SlimDX2.Interop.Write<T>((void*) pDest, ref data);
+            }
+        }
+
+        internal static IntPtr Write<T>(IntPtr pDest, T[] data, int offset, int count) where T : struct
+        {
+            unsafe
+            {
+                return (IntPtr) SlimDX2.Interop.Write<T>((void*) pDest, data, offset, count);
+            }
         }
 
         public static void ConvertRECTToRectangle(ref System.Drawing.Rectangle rect)
@@ -66,6 +108,34 @@ namespace SlimDX2
             rect = new System.Drawing.Rectangle(rect.X, rect.Y, rect.Width - rect.X, rect.Height - rect.Y);
         }
 
+        [Flags]
+        public enum CLSCTX : uint
+        {
+            CLSCTX_INPROC_SERVER = 0x1,
+            CLSCTX_INPROC_HANDLER = 0x2,
+            CLSCTX_LOCAL_SERVER = 0x4,
+            CLSCTX_INPROC_SERVER16 = 0x8,
+            CLSCTX_REMOTE_SERVER = 0x10,
+            CLSCTX_INPROC_HANDLER16 = 0x20,
+            CLSCTX_RESERVED1 = 0x40,
+            CLSCTX_RESERVED2 = 0x80,
+            CLSCTX_RESERVED3 = 0x100,
+            CLSCTX_RESERVED4 = 0x200,
+            CLSCTX_NO_CODE_DOWNLOAD = 0x400,
+            CLSCTX_RESERVED5 = 0x800,
+            CLSCTX_NO_CUSTOM_MARSHAL = 0x1000,
+            CLSCTX_ENABLE_CODE_DOWNLOAD = 0x2000,
+            CLSCTX_NO_FAILURE_LOG = 0x4000,
+            CLSCTX_DISABLE_AAA = 0x8000,
+            CLSCTX_ENABLE_AAA = 0x10000,
+            CLSCTX_FROM_DEFAULT_CONTEXT = 0x20000,
+            CLSCTX_INPROC = CLSCTX_INPROC_SERVER | CLSCTX_INPROC_HANDLER,
+            CLSCTX_SERVER = CLSCTX_INPROC_SERVER | CLSCTX_LOCAL_SERVER | CLSCTX_REMOTE_SERVER,
+            CLSCTX_ALL = CLSCTX_SERVER | CLSCTX_INPROC_HANDLER
+        }
+
+        [DllImport("ole32.dll", ExactSpelling = true, PreserveSig = true)]
+        static public extern Result CoCreateInstance([In, MarshalAs(UnmanagedType.LPStruct)] Guid rclsid, IntPtr pUnkOuter, CLSCTX dwClsContext, [In, MarshalAs(UnmanagedType.LPStruct)] Guid riid, out IntPtr comObject);
 
         public static string BlobToString(Blob blob)
         {
