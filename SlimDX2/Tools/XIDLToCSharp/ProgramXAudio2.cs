@@ -99,6 +99,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagVisibility<CppField>(@"^XAUDIO2FX_VOLUMEMETER_LEVELS::pRMSLevels$", Visibility.Internal);
 
             group.TagStructToNative(@"^XAUDIO2_EFFECT_DESCRIPTOR$",true, forceMarshalToToBeGenerated: true);
+
+            gen.AddConstantFromMacroToCSharpType(@"^XAUDIO2_LOOP_INFINITE$", Global.Name + ".XAudio2.AudioBuffer", "int", "LoopInfinite");
+
             
             // --------------------------------------------------------------------------------------------------------
             // XAudio2 Interfaces
@@ -129,8 +132,15 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagTypeAndName<CppParameter>(@"^IXAudio2SourceVoice::Stop::Flags$", "XAUDIO2_PLAY_FLAGS");
             group.TagVisibility<CppMethod>(@"^IXAudio2Voice::SetEffectChain$", Visibility.Internal, true);
 
+            // Add Fx contants
+            CSharpFunctionGroup xaudio2ContantGroup = gen.CreateFunctionGroup(Global.Name + ".XAudio2", Global.Name + ".XAudio2.Fx", "XAudio2FxContants");
+            var guidList = group.Find<CppGuid>(@"CLSID_Audio.*");
+            foreach (var cppGuid in guidList)
+                gen.AddConstantToCSharpType(Global.Name + ".XAudio2.Fx.XAudio2FxContants", "System.Guid", cppGuid.Name, "new System.Guid(\"" + cppGuid.Guid + "\")").
+                    Visibility = Visibility.Internal | Visibility.Static;
+
             // Add Guid to 
-            var guidList = group.Find<CppGuid>(@".*XAudio2.*");
+            guidList = group.Find<CppGuid>(@".*XAudio2.*");
             foreach (var cppGuid in guidList)
                 gen.AddConstantToCSharpType(Global.Name + ".XAudio2.XAudio2", "System.Guid", cppGuid.Name, "new System.Guid(\"" + cppGuid.Guid + "\")").
                     Visibility = Visibility.Internal | Visibility.Static;

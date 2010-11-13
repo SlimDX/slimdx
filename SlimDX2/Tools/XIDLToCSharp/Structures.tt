@@ -326,7 +326,7 @@ foreach (var sharpStruct in Namespace.Structs)
 				} else {
 					if (sharpStructItem.MarshalType.FullName == "char") {
 #>
-            fixed (char* __psrc = this.<#= sharpStructItem.Name #>) fixed (char* __ptr = @ref.<#= sharpStructItem.Name #>) Utilities.CopyMemory((IntPtr)__ptr, (IntPtr)__psrc, <#= sharpStructItem.ArrayDimension #> * 2);
+            fixed (char* __psrc = this.<#= sharpStructItem.Name #>) fixed (char* __ptr = @ref.<#= sharpStructItem.Name #>) Utilities.CopyMemory((IntPtr)__ptr, (IntPtr)__psrc, <#= sharpStructItem.Name #>.Length * 2);
 <#+
 					} else if (sharpStructItem.PublicType.FullName == "string") {
 #>

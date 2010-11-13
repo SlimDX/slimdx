@@ -44,10 +44,17 @@ namespace SlimDX2.Tools.XIDLToCSharp
             //group.CreateEnumFromMacros(@"^XAUDIO2_LOG_.*", "XAUDIO2_LOG_TYPE");
             //group.CreateEnumFromMacros(@"^XAUDIO2_END_OF_STREAM", "XAUDIO2_BUFFER_FLAGS");
 
+            group.CreateEnumFromMacros(@"^XAPO_FLAG_(.*)", "XAPO_PROPERTY_TYPE", "XAPO_PROPERTY_$1");
+            group.TagName<CppEnum>(@"^XAPO_(.*)", "$1", false);            
+            group.TagName<CppEnum>(@"^XAPO_PROPERTY_TYPE$", "PropertyFlags");
+            group.TagEnumFlags(@"^XAPO_PROPERTY_TYPE$");
+
+            group.FindFirst<CppEnum>(@"^XAPO_PROPERTY_TYPE$").Add(new CppEnumItem() { Name = "Default", Value = "ChannelsMustMatch|FramerateMustMatch|BitspersampleMustMatch|BuffercountMustMatch|InplaceSupported"});
+            group.TagName<CppEnumItem>(@"^XAPO_PROPERTY_(.*)", "$1", false);
+
             // --------------------------------------------------------------------------------------------------------
             // XAPO Structures
             // --------------------------------------------------------------------------------------------------------
-            group.TagName<CppEnum>(@"^XAPO_(.*)", "$1", false);
             group.TagName<CppStruct>(@"^XAPO_(.*)", "$1", false);
             group.TagName<CppStruct>(@"^FX(.*)","$1", false);
 
@@ -64,6 +71,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagName<CppStruct>(@"^FXMASTERINGLIMITER_PARAMETERS$", "MasteringLimiterParameters");
 
             gen.AddConstantFromMacroToCSharpType(@"^FXMASTERINGLIMITER_(.*)", Global.Name + ".XAPO.Fx.MasteringLimiterParameters", "int", "$1");
+
+
+            group.TagTypeAndName<CppField>(@"^XAPO_REGISTRATION_PROPERTIES::Flags", "XAPO_PROPERTY_TYPE");
+
 
             // --------------------------------------------------------------------------------------------------------
             // XAPO Interfaces
