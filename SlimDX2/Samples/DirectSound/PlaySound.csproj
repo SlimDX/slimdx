@@ -68,15 +68,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sources\SlimDX2.DirectSound\SlimDX2.DirectSound.csproj">
+    <ProjectReference Include="..\..\Sources\SlimDX2.DirectSound\SlimDX2.DirectSound.csproj">
       <Project>{26DBF35D-47A6-4741-B059-841C5441BCD6}</Project>
       <Name>SlimDX2.DirectSound</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sources\SlimDX2.Error\SlimDX2.Error.csproj">
+    <ProjectReference Include="..\..\Sources\SlimDX2.Error\SlimDX2.Error.csproj">
       <Project>{8ECEF885-63EC-4A82-A219-4AB312D1B097}</Project>
       <Name>SlimDX2.Error</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sources\SlimDX2\SlimDX2.csproj">
+    <ProjectReference Include="..\..\Sources\SlimDX2\SlimDX2.csproj">
       <Project>{2E4B74FE-4A58-4EC5-9CC3-08AE5660F3BD}</Project>
       <Name>SlimDX2</Name>
     </ProjectReference>
