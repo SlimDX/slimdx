@@ -23,10 +23,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
 {
     public class CSharpMapType : CSharpCppElement
     {
-        public CSharpMapType(CSharpContainer container, CppElement cppElement, CSharpType publicType,
+        public CSharpMapType(CppElement cppElement, CSharpType publicType,
                              CSharpType marshalType, string name)
         {
-            ParentContainer = container;
+            ParentContainer = null;
             PublicType = publicType;
             MarshalType = marshalType ?? publicType;
             Name = name;

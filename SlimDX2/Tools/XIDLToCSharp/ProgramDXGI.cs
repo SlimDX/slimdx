@@ -26,21 +26,18 @@ namespace SlimDX2.Tools.XIDLToCSharp
     {
         public void MapDXGI()
         {
-            CSharpFunctionGroup dxgiFunctionGroup = gen.CreateFunctionGroup(Global.Name + ".DXGI", Global.Name + ".DXGI", "DXGI");
-
             // General mapping between include and Assembly/Namespace
             gen.MapIncludeToNamespace("dxgi", Global.Name + ".DXGI");
             gen.MapIncludeToNamespace("dxgiformat", Global.Name + ".DXGI");
             gen.MapIncludeToNamespace("dxgitype", Global.Name + ".DXGI");
             gen.MapIncludeToNamespace("d3dcommon", Global.Name + ".Direct3D", Global.Name, "Direct3D");
 
-
             // --------------------------------------------------------------------------------------------------------
             // DXGI Enumerations
             // --------------------------------------------------------------------------------------------------------
             // ReCreate enums from macro definitions
 
-            group.Modify<CppTypedef>(@"^DXGI_USAGE$", Modifiers.Remove);
+            group.Remove<CppTypedef>(@"^DXGI_USAGE$");
 
             group.CreateEnumFromMacros(@"^DXGI_PRESENT_.*", "DXGI_PRESENT_FLAGS");
             group.CreateEnumFromMacros(@"^DXGI_USAGE_.*", "DXGI_USAGE");
@@ -83,7 +80,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
 
             // Remove DXGI_DISPLAY_COLOR_SPACE type and all typedefs (never used)
-            group.Modify<CppStruct>("DXGI_DISPLAY_COLOR_SPACE", Modifiers.Remove);
+            group.Remove<CppStruct>("DXGI_DISPLAY_COLOR_SPACE");
 
             // Update usage of enums
             group.TagTypeAndName<CppField>(@"^DXGI_SWAP_CHAIN_DESC::Flags", "DXGI_SWAP_CHAIN_FLAG");
@@ -104,8 +101,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             // DXGI Functions
             // --------------------------------------------------------------------------------------------------------
+            CSharpFunctionGroup dxgiFunctionGroup = gen.CreateFunctionGroup(Global.Name + ".DXGI", Global.Name + ".DXGI", "DXGI");
             group.TagFunction("^CreateDXGIFactory.*", "dxgi.dll", dxgiFunctionGroup);
-            group.Modify<CppParameter>("^CreateDXGIFactory.*?::ppFactory$", Modifiers.ParameterAttribute(CppAttribute.Out));
+            group.TagParameter("^CreateDXGIFactory.*?::ppFactory$", CppAttribute.Out);
 
             // gen.RenameTypePart("^DXGI", "");
         }

@@ -33,19 +33,19 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             // D3DCommon Enumerations
             // --------------------------------------------------------------------------------------------------------
-            group.Modify<CppEnumItem>(@"^D3D(\d+)_SVC_.*", Modifiers.Remove);
-            group.Modify<CppEnumItem>(@"^D3D(\d+)_SVF_.*", Modifiers.Remove);
-            group.Modify<CppEnumItem>(@"^D3D(\d+)_SVT_.*", Modifiers.Remove);
-            group.Modify<CppEnumItem>(@"^D3D(\d+)_SIF_.*", Modifiers.Remove);
-            group.Modify<CppEnumItem>(@"^D3D(\d+)_SIT_.*", Modifiers.Remove);
-            group.Modify<CppEnumItem>(@"^D3D(\d+)_CT_.*", Modifiers.Remove);
-            group.Modify<CppEnumItem>(@"^D3D(\d+)_NAME_.*", Modifiers.Remove);
-            group.Modify<CppEnumItem>(@"^D3D(\d+)_INCLUDE_.*", Modifiers.Remove);
-            group.Modify<CppEnumItem>(@"^D3D(\d+)_RETURN_TYPE_.*", Modifiers.Remove);
-            group.Modify<CppEnumItem>(@"^D3D(\d+)_TESSELLATOR_OUTPUT_.*", Modifiers.Remove);
-            group.Modify<CppEnumItem>(@"^D3D(\d+)_TESSELLATOR_DOMAIN_.*", Modifiers.Remove);
-            group.Modify<CppEnumItem>(@"^D3D(\d+)_TESSELLATOR_PARTITIONING_.*", Modifiers.Remove);
-            group.Modify<CppEnumItem>(@"^D3D(\d+)_REGISTER_COMPONENT_.*", Modifiers.Remove);
+            group.Remove<CppEnumItem>(@"^D3D(\d+)_SVC_.*");
+            group.Remove<CppEnumItem>(@"^D3D(\d+)_SVF_.*");
+            group.Remove<CppEnumItem>(@"^D3D(\d+)_SVT_.*");
+            group.Remove<CppEnumItem>(@"^D3D(\d+)_SIF_.*");
+            group.Remove<CppEnumItem>(@"^D3D(\d+)_SIT_.*");
+            group.Remove<CppEnumItem>(@"^D3D(\d+)_CT_.*");
+            group.Remove<CppEnumItem>(@"^D3D(\d+)_NAME_.*");
+            group.Remove<CppEnumItem>(@"^D3D(\d+)_INCLUDE_.*");
+            group.Remove<CppEnumItem>(@"^D3D(\d+)_RETURN_TYPE_.*");
+            group.Remove<CppEnumItem>(@"^D3D(\d+)_TESSELLATOR_OUTPUT_.*");
+            group.Remove<CppEnumItem>(@"^D3D(\d+)_TESSELLATOR_DOMAIN_.*");
+            group.Remove<CppEnumItem>(@"^D3D(\d+)_TESSELLATOR_PARTITIONING_.*");
+            group.Remove<CppEnumItem>(@"^D3D(\d+)_REGISTER_COMPONENT_.*");
 
             group.TagName<CppEnum>(@"^D3D_PRIMITIVE$", @"InputPrimitive");
             group.TagName<CppEnumItem>(@"^D3D_FEATURE_LEVEL_(.*)", @"Level_$1", true);

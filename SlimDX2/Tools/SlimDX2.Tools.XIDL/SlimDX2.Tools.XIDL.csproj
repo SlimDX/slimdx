@@ -86,7 +86,6 @@
     <Compile Include="CppCallingConvention.cs" />
     <Compile Include="CppDependency.cs" />
     <Compile Include="CppElement.cs" />
-    <Compile Include="CppModifier.cs" />
     <Compile Include="CppEnum.cs" />
     <Compile Include="CppEnumItem.cs" />
     <Compile Include="CppField.cs" />

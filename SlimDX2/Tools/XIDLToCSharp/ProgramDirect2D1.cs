@@ -62,8 +62,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagName<CppInterface>(@"^ID2D1(.+)", "$1", false);
 
             // Remove methods using WIC
-            group.Modify<CppMethod>(@"^ID2D(\d+)RenderTarget::CreateBitmapFromWicBitmap$", Modifiers.Remove);
-            group.Modify<CppMethod>(@"^ID2D(\d+)Factory::CreateWicBitmapRenderTarget$", Modifiers.Remove);
+            group.Remove<CppMethod>(@"^ID2D(\d+)RenderTarget::CreateBitmapFromWicBitmap$");
+            group.Remove<CppMethod>(@"^ID2D(\d+)Factory::CreateWicBitmapRenderTarget$");
 
             // Tag Internal for all Create methods
             group.TagVisibility<CppMethod>(@"^ID2D(\d+)Factory::Create.*$", Visibility.Internal);
@@ -72,7 +72,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagVisibility<CppMethod>(@"^ID2D(\d+)Mesh::Open$", Visibility.Internal, null, "Open_");
 
             // Set parameter as pure "In"
-            group.Modify<CppParameter>(@"^ID2D(\d+)RenderTarget::CreateSharedBitmap::data$", Modifiers.ParameterAttribute(CppAttribute.In));
+            group.TagParameter(@"^ID2D(\d+)RenderTarget::CreateSharedBitmap::data$", CppAttribute.In);
 
             // Tag D2D1 Sink interface as dual-callback interfaces
             group.TagCallback(@"ID2D(\d+).*Sink$", true);

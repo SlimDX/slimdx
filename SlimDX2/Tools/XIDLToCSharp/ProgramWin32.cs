@@ -38,6 +38,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
         public CSharpStruct TypeSlimMathPlane;
         public CSharpStruct TypeSlimDX2Rectangle;
         public CSharpStruct TypeSlimDX2RectangleF;
+        public CSharpStruct TypeSlimDX2FunctionCallback;
         public CSharpInterface TypeIUnknown;
 
         /// <summary>
@@ -52,8 +53,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // Global/Win32 Enumerations
             // --------------------------------------------------------------------------------------------------------
             // Remove all enums ending with _FORCE_DWORD, FORCE_UINT
-            group.Modify<CppEnumItem>("^.*_FORCE_DWORD$", Modifiers.Remove);
-            group.Modify<CppEnumItem>("^.*_FORCE_UINT$", Modifiers.Remove);
+            group.Remove<CppEnumItem>("^.*_FORCE_DWORD$");
+            group.Remove<CppEnumItem>("^.*_FORCE_UINT$");
 
             // --------------------------------------------------------------------------------------------------------
             // Global/Win32 Structures
@@ -134,6 +135,21 @@ namespace SlimDX2.Tools.XIDLToCSharp
             TypeSlimDX2RectangleF.Name = Global.Name + ".RectangleF";
             TypeSlimDX2RectangleF.SizeOf = 4 * 4;
 
+            // Use SlimDX2.Windows.WaveFormat
+            var waveFormatEx = new CSharpStruct();
+            waveFormatEx.Name = Global.Name + ".Windows.WaveFormat";
+            waveFormatEx.HasMarshalType = true;
+            waveFormatEx.SizeOf = 18;
+            gen.MapCppTypeToCSharpType("WAVEFORMATEX", waveFormatEx);
+
+            // Use SlimDX2.Windows.WaveFormat
+            var waveFormatExtensible = new CSharpStruct();
+            waveFormatExtensible.Name = Global.Name + ".Windows.WaveFormatExtensible";
+            waveFormatExtensible.HasMarshalType = true;
+            waveFormatExtensible.SizeOf = 18;
+            waveFormatExtensible.HasCustomNew = true;
+            gen.MapCppTypeToCSharpType("WAVEFORMATEXTENSIBLE", waveFormatExtensible);
+
             gen.MoveStructToInner(@"^TEXTMETRIC\w$", "Win32");
             gen.MoveStructToInner(@"^LOGFONTW$", "Win32");
 
@@ -145,7 +161,14 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.MapCppTypeToCSharpType("FILETIME", typeof(long));
             gen.MapCppTypeToCSharpType("COLORREF", typeof(int));  // TODO: use real ColorRGBA8
             gen.MapCppTypeToCSharpType("GUID", typeof(Guid));
+            gen.MapCppTypeToCSharpType("CLSID", typeof(Guid));            
             gen.MapCppTypeToCSharpType("DWORD", typeof(int));
+
+            // Setup FunctionCallback for __function__stdcall
+            TypeSlimDX2FunctionCallback = new CSharpStruct();
+            TypeSlimDX2FunctionCallback.Name = Global.Name + ".FunctionCallback";
+            TypeSlimDX2FunctionCallback.SizeOf = 8;
+            gen.MapCppTypeToCSharpType("__function__stdcall", TypeSlimDX2FunctionCallback);
 
             gen.MapCppTypeToCSharpType("SIZE", TypeSystemDrawingSize);
             group.TagVisibility<CppStruct>("^Win32$", Visibility.Internal);

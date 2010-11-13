@@ -134,9 +134,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
         public class Parameter : CSharpMapType, ICloneable
         {
-            public Parameter(CSharpMethod method, CppParameter cppParameter, CSharpType publicType,
+            public Parameter(CppParameter cppParameter, CSharpType publicType,
                              CSharpType marshalType, string name)
-                : base(method, cppParameter, publicType, marshalType, name)
+                : base(cppParameter, publicType, marshalType, name)
             {
                 // Default is In
                 Attribute = ParameterAttribute.In;

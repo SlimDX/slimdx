@@ -43,14 +43,10 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             group.TagEnumFlags(@"^D3D(\d+)_FORMAT_SUPPORT$");
             group.TagEnumFlags(@"^D3D(\d+)_FORMAT_SUPPORT2$");
-            group.ModifyAll(@"^D3DX11_ERR$", Modifiers.Remove);
-            group.ModifyAll("^D3D10_CBF_USERPACKED$", Modifiers.Remove);
-            group.Modify<CppEnum>(@"^D3D10_FEATURE_LEVEL1$", Modifiers.Remove);
-
-            group.ModifyAll(".*", Modifiers.RenameType("D3D10_FEATURE_LEVEL1", "D3D_FEATURE_LEVEL"));
 
             // Add None = 0 for enum D3D11_COLOR_WRITE_ENABLE
-            group.Modify<CppEnum>(@"^D3D(\d+)_COLOR_WRITE_ENABLE$", Modifiers.EnumAdd("None", "0"));
+            foreach (var enumToAdd in group.Find<CppEnum>(@"^D3D(\d+)_COLOR_WRITE_ENABLE$")) 
+                enumToAdd.Add(new CppEnumItem() { Name = "None", Value = "0"});
             group.TagEnumFlags(@"^D3D(\d+)_COLOR_WRITE_ENABLE$");
 
             // D3D10/D3D11
@@ -124,8 +120,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             group.TagName<CppStruct>(@"^D3D(\d+)_QUERY_DATA_SO_STATISTICS$", "StreamOutputStatistics");
             group.TagName<CppStruct>(@"^D3D(\d+)_SO_DECLARATION_ENTRY$", "StreamOutputElement");
-            group.TagName<CppStruct>(@"^D3D(\d+)_INPUT_ELEMENT_DESC", "InputElement"); 
-            
+            group.TagName<CppStruct>(@"^D3D(\d+)_INPUT_ELEMENT_DESC", "InputElement");
+
             group.TagVisibility<CppStruct>(@"^D3D(\d+)_SUBRESOURCE_DATA$", Visibility.Internal);
             group.TagVisibility<CppStruct>(@"^D3D(\d+)_MAPPED_SUBRESOURCE$", Visibility.Internal);
 
@@ -232,16 +228,19 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)Device::GetImmediateContext$", Visibility.Internal, true);
 
             // ID3DxxDevice
-            group.Modify<CppParameter>(@"^ID3D(\d+)Device::CreateTexture[0-9]D::pInitialData$",
-                                       Modifiers.ParameterAttribute(CppAttribute.In | CppAttribute.Buffer
-                                                                    | CppAttribute.Optional));
+            group.TagParameter(@"^ID3D(\d+)Device::CreateTexture[0-9]D::pInitialData$",
+                                       CppAttribute.In | CppAttribute.Buffer
+                                                                    | CppAttribute.Optional);
 
             // Device / DeviceContext
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::SetVertexBuffers$", Visibility.Internal);
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::SetTargets$", Visibility.Internal);
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::SetRenderTargetsAndUnorderedAccessViews$", Visibility.Internal);
 
-            group.Modify<CppParameter>(@"^ID3D(\d+)DeviceContext::ClearRenderTargetView::ColorRGBA$", Modifiers.Type("SLIMDX_COLOR4", "*", false, null));
+            var param = group.FindFirst<CppParameter>(@"^ID3D(\d+)DeviceContext::ClearRenderTargetView::ColorRGBA$");
+            param.Type = "SLIMDX_COLOR4";
+            param.IsArray = false;
+            param.Specifier = "*";
 
             group.TagName<CppMethod>(@"^ID3D\d+DeviceContext::IA(.*)$", "$1");
             group.TagName<CppMethod>(@"^ID3D\d+DeviceContext::VS(.*)$", "$1");
@@ -268,13 +267,13 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]GetConstantBuffers$", Visibility.Internal | Visibility.Override);
 
             // Force pNumClassInstance to be inout but not optional
-            group.Modify<CppParameter>(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]GetShader::pNumClassInstances$", Modifiers.ParameterAttribute(CppAttribute.InOut));
+            group.TagParameter(@"^ID3D(\d+)DeviceContext::[A-Z][A-Z]GetShader::pNumClassInstances$", CppAttribute.InOut);
 
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::Map$", Visibility.Internal);
             group.TagName<CppMethod>(@"^ID3D(\d+)DeviceContext::Unmap$", "UnmapSubresource");
             group.TagVisibility<CppMethod>(@"^ID3D(\d+)DeviceContext::UpdateSubresource$", Visibility.Internal);
 
-            //group.Modify<CppParameter>(@"^ID3D(\d+)DeviceContext::Map::MapFlags$", Modifiers.Type("D3D$1_MAP_FLAG"));
+            //group.TagParameter(@"^ID3D(\d+)DeviceContext::Map::MapFlags$", Modifiers.Type("D3D$1_MAP_FLAG"));
             group.TagTypeAndName<CppParameter>(@"^ID3D(\d+)DeviceContext::Map::MapFlags$", "D3D$1_MAP_FLAG");
 
             group.TagTypeAndName<CppParameter>(@"^ID3D(\d+)DeviceContext::GetData::GetDataFlags$", "D3D$1_ASYNC_GETDATA_FLAG");
@@ -291,34 +290,78 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagTypeAndName<CppParameter>(@"^ID3D(\d+)DeviceContext::ClearDepthStencilView::ClearFlags$", "D3D11_CLEAR_FLAG");
 
             // Remove TheadPump interfaces as they don't make sense in .NET
-            group.Modify<CppInterface>(@"^ID3DX(\d+)ThreadPump$", Modifiers.Remove);
-            group.Modify<CppInterface>(@"^ID3DX(\d+)DataLoader$", Modifiers.Remove);
-            group.Modify<CppInterface>(@"^ID3DX(\d+)DataProcessor$", Modifiers.Remove);
+            group.Remove<CppInterface>(@"^ID3DX(\d+)ThreadPump$");
+            group.Remove<CppInterface>(@"^ID3DX(\d+)DataLoader$");
+            group.Remove<CppInterface>(@"^ID3DX(\d+)DataProcessor$");
 
-            // Effects Interfaces
-            group.Modify<CppParameter>(@"^ID3D(\d+)ShaderReflectionVariable::GetDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)ShaderReflection1?::GetDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)ShaderReflection1?:GetResourceBindingDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)ShaderReflection1?::GetInputParameterDescription::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)ShaderReflection1?::GetOutputParameterDescription::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)ShaderReflection1?::GetResourceBindingDescByName::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)EffectType::GetDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)EffectVariable::GetDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)EffectConstantBuffer::GetDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)EffectShaderVariable::GetDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)EffectShaderVariable::GetShaderDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)EffectShaderVariable::GetInputSignatureElementDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)EffectShaderVariable::GetOutputSignatureElementDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)EffectBlendVariable::GetDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)EffectRasterizerVariable::GetDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)EffectSamplerVariable::GetDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)EffectPass::GetDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)EffectPass::ComputeStateBlockMask::pStateBlockMask", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)EffectTechnique::GetDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)EffectTechnique::ComputeStateBlockMask::pStateBlockMask", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3D(\d+)Effect::GetDesc::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3DX(\d+)Font::GetDescW::pDesc", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^ID3DX?(\d*).*::GetDevice::ppDevice$", Modifiers.ParameterAttribute(CppAttribute.Out));
+            // Patch Effects Interfaces
+            group.TagParameter(@"^ID3D(\d+)ShaderReflectionType::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)ShaderReflectionVariable::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)ShaderReflectionConstantBuffer::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)ShaderReflection::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)ShaderReflection::GetResourceBindingDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)ShaderReflection::GetInputParameterDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)ShaderReflection::GetOutputParameterDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)StateBlock::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectType::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectVariable::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectScalarVariable::GetFloat::pValue$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectScalarVariable::GetFloatArray::pData$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectScalarVariable::GetInt::pValue$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectScalarVariable::GetIntArray::pData$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectScalarVariable::GetBool::pValue$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectScalarVariable::GetBoolArray::pData$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectVectorVariable::GetBoolVector::pData$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectVectorVariable::GetIntVector::pData$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectVectorVariable::GetFloatVector::pData$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectVectorVariable::GetBoolVectorArray::pData$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectVectorVariable::GetIntVectorArray::pData$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectVectorVariable::GetFloatVectorArray::pData$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectMatrixVariable::GetMatrix::pData$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectMatrixVariable::GetMatrixArray::pData$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectMatrixVariable::GetMatrixTranspose::pData$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectMatrixVariable::GetMatrixTransposeArray::pData$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectStringVariable::GetStringArray::ppStrings$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectShaderResourceVariable::GetResource::ppResource$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectShaderResourceVariable::GetResourceArray::ppResources$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectRenderTargetViewVariable::GetRenderTarget::ppResource$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectRenderTargetViewVariable::GetRenderTargetArray::ppResources$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectDepthStencilViewVariable::GetDepthStencil::ppResource$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectDepthStencilViewVariable::GetDepthStencilArray::ppResources$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectConstantBuffer::GetConstantBuffer::ppConstantBuffer$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectConstantBuffer::GetTextureBuffer::ppTextureBuffer$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectShaderVariable::GetShaderDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectShaderVariable::GetVertexShader::ppVS$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectShaderVariable::GetGeometryShader::ppGS$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectShaderVariable::GetPixelShader::ppPS$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectShaderVariable::GetInputSignatureElementDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectShaderVariable::GetOutputSignatureElementDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectBlendVariable::GetBlendState::ppBlendState$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectBlendVariable::GetBackingStore::pBlendDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectDepthStencilVariable::GetDepthStencilState::ppDepthStencilState$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectDepthStencilVariable::GetBackingStore::pDepthStencilDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectRasterizerVariable::GetRasterizerState::ppRasterizerState$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectRasterizerVariable::GetBackingStore::pRasterizerDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectSamplerVariable::GetSampler::ppSampler$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectSamplerVariable::GetBackingStore::pSamplerDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectPass::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectPass::GetVertexShaderDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectPass::GetGeometryShaderDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectPass::GetPixelShaderDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)EffectTechnique::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)Effect::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)Effect::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)ShaderReflection1::GetDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)ShaderReflection1::GetResourceBindingDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)ShaderReflection1::GetInputParameterDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)ShaderReflection1::GetOutputParameterDesc::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)ShaderReflection1::GetMovInstructionCount::pCount$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)ShaderReflection1::GetMovcInstructionCount::pCount$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)ShaderReflection1::GetConversionInstructionCount::pCount$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)ShaderReflection1::GetBitwiseInstructionCount::pCount$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)ShaderReflection1::GetGSInputPrimitive::pPrim$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)ShaderReflection1::IsLevel9Shader::pbLevel9Shader$", CppAttribute.Out);
+            group.TagParameter(@"^ID3D(\d+)ShaderReflection1::IsSampleFrequencyShader::pbSampleFrequency$", CppAttribute.Out);
 
             group.TagTypeAndName<CppParameter>(@"^ID3DX(\d*)Sprite::Begin::flags", "D3DX$1_SPRITE_FLAG");
 
@@ -340,15 +383,15 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagTypeAndName<CppParameter>(@"^D3DX(\d+)ComputeNormalMap::Flags$", "D3DX$1_NORMALMAP_FLAG");
             group.TagTypeAndName<CppParameter>(@"^D3DX(\d+)ComputeNormalMap::Channel$", "D3DX$1_CHANNEL_FLAG");
 
-            group.Modify<CppParameter>(@"^D3DX(\d+)CreateTextureFromFileW::ppTexture", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^D3DX(\d+)CreateTextureFromResourceW::ppTexture", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^D3DX(\d+)CreateTextureFromMemory::ppTexture", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^D3DX(\d+)SaveTextureToMemory::ppDestBuf", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^D3DX(\d+)CreateTextureFromFileW::pLoadInfo", Modifiers.ParameterAttribute(CppAttribute.In | CppAttribute.Optional));
-            group.Modify<CppParameter>(@"^D3DX(\d+)CreateTextureFromResourceW::pLoadInfo", Modifiers.ParameterAttribute(CppAttribute.In | CppAttribute.Optional));
-            group.Modify<CppParameter>(@"^D3DX(\d+)CreateTextureFromMemory::pLoadInfo", Modifiers.ParameterAttribute(CppAttribute.In | CppAttribute.Optional));
-            group.Modify<CppParameter>(@"^D3DX(\d+).*?::pDefines", Modifiers.ParameterAttribute(CppAttribute.In | CppAttribute.Buffer | CppAttribute.Optional));
-            group.Modify<CppParameter>(@"^D3D(\d+)CreateDeviceAndSwapChain::pSwapChainDesc", Modifiers.ParameterAttribute(CppAttribute.In));
+            group.TagParameter(@"^D3DX(\d+)CreateTextureFromFileW::ppTexture", CppAttribute.Out);
+            group.TagParameter(@"^D3DX(\d+)CreateTextureFromResourceW::ppTexture", CppAttribute.Out);
+            group.TagParameter(@"^D3DX(\d+)CreateTextureFromMemory::ppTexture", CppAttribute.Out);
+            group.TagParameter(@"^D3DX(\d+)SaveTextureToMemory::ppDestBuf", CppAttribute.Out);
+            group.TagParameter(@"^D3DX(\d+)CreateTextureFromFileW::pLoadInfo", CppAttribute.In | CppAttribute.Optional);
+            group.TagParameter(@"^D3DX(\d+)CreateTextureFromResourceW::pLoadInfo", CppAttribute.In | CppAttribute.Optional);
+            group.TagParameter(@"^D3DX(\d+)CreateTextureFromMemory::pLoadInfo", CppAttribute.In | CppAttribute.Optional);
+            group.TagParameter(@"^D3DX(\d+).*?::pDefines", CppAttribute.In | CppAttribute.Buffer | CppAttribute.Optional);
+            group.TagParameter(@"^D3D(\d+)CreateDeviceAndSwapChain::pSwapChainDesc", CppAttribute.In);
             group.TagVisibility<CppFunction>(@"^D3DX(\d+)CreateTextureFromFileW$", Visibility.Internal);
             group.TagVisibility<CppFunction>(@"^D3DX(\d+)CreateTextureFromResourceW$", Visibility.Internal);
             group.TagVisibility<CppFunction>(@"^D3DX(\d+)CreateTextureFromMemory$", Visibility.Internal);
@@ -356,16 +399,16 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagVisibility<CppFunction>(@"^D3DX(\d+)SaveTextureToMemory$", Visibility.Internal);
 
             // Remove all functions unsing ASCII strings
-            group.Modify<CppFunction>(@"^D3DX(\d+).*A$", Modifiers.Remove);
+            group.Remove<CppFunction>(@"^D3DX(\d+).*A$");
             group.TagName<CppFunction>(@"^D3DX(\d+)(.+)W$", "$2", false);
 
             // Remove duplicate D3DX function to D3DCompiler
-            group.Modify<CppFunction>(@"^D3DX(\d+)Compile.*$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3DX(\d+)PreprocessShader.*$", Modifiers.Remove);
+            group.Remove<CppFunction>(@"^D3DX(\d+)Compile.*$");
+            group.Remove<CppFunction>(@"^D3DX(\d+)PreprocessShader.*$");
 
             // Remove all async functions as they would be much more easier to implement in C#
-            group.Modify<CppFunction>(@"^D3DX(\d+)CreateAsync.*$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3DX(\d+)CreateThreadPump.*$", Modifiers.Remove);
+            group.Remove<CppFunction>(@"^D3DX(\d+)CreateAsync.*$");
+            group.Remove<CppFunction>(@"^D3DX(\d+)CreateThreadPump.*$");
 
             // Map specific part
             MapDirect3D10();
@@ -393,21 +436,24 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             // Direct3D10 Enumerations
             // --------------------------------------------------------------------------------------------------------
+            group.Remove<CppEnumItem>(@"^D3D10_CBF_USERPACKED$");
+            group.TagName<CppEnum>(@"^D3D10_FEATURE_LEVEL1$", "FeatureLevel");
+            group.TagName<CppEnumItem>(@"^D3D10_FEATURE_LEVEL_(.*)", @"Level_$1", true);
 
             // --------------------------------------------------------------------------------------------------------
             // Direct3D10 Structures
             // --------------------------------------------------------------------------------------------------------
             group.TagName<CppStruct>(@"^D3DX10_SPRITE", "SpriteType");
-            group.Modify<CppStruct>(@"^D3D10_SHADER_DEBUG_SCOPE_INFO$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3D10_SHADER_DEBUG_SCOPEVAR_INFO$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3D10_SHADER_DEBUG_INPUT_INFO$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3D10_SHADER_DEBUG_VAR_INFO$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3D10_SHADER_DEBUG_TOKEN_INFO$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3D10_SHADER_DEBUG_OUTPUTVAR$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3D10_SHADER_DEBUG_OUTPUTREG_INFO$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3D10_SHADER_DEBUG_INST_INFO$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3D10_SHADER_DEBUG_FILE_INFO$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3D10_SHADER_DEBUG_INFO$", Modifiers.Remove);
+            group.Remove<CppStruct>(@"^D3D10_SHADER_DEBUG_SCOPE_INFO$");
+            group.Remove<CppStruct>(@"^D3D10_SHADER_DEBUG_SCOPEVAR_INFO$");
+            group.Remove<CppStruct>(@"^D3D10_SHADER_DEBUG_INPUT_INFO$");
+            group.Remove<CppStruct>(@"^D3D10_SHADER_DEBUG_VAR_INFO$");
+            group.Remove<CppStruct>(@"^D3D10_SHADER_DEBUG_TOKEN_INFO$");
+            group.Remove<CppStruct>(@"^D3D10_SHADER_DEBUG_OUTPUTVAR$");
+            group.Remove<CppStruct>(@"^D3D10_SHADER_DEBUG_OUTPUTREG_INFO$");
+            group.Remove<CppStruct>(@"^D3D10_SHADER_DEBUG_INST_INFO$");
+            group.Remove<CppStruct>(@"^D3D10_SHADER_DEBUG_FILE_INFO$");
+            group.Remove<CppStruct>(@"^D3D10_SHADER_DEBUG_INFO$");
 
             // --------------------------------------------------------------------------------------------------------
             // Direct3D10 Interfaces
@@ -416,8 +462,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagName<CppInterface>(@"^ID3DX10(.+)", "$1", false);
 
             // Remove all methods using ASCII encoding
-            group.Modify<CppMethod>(@"^ID3DX10Font::.*A$", Modifiers.Remove);
-            group.Modify<CppStruct>(@"^D3DX10_FONT_DESCA$", Modifiers.Remove);
+            group.Remove<CppMethod>(@"^ID3DX10Font::.*A$");
+            group.Remove<CppStruct>(@"^D3DX10_FONT_DESCA$");
 
             // Rename all methods using WideChar encoding
             group.TagName<CppMethod>(@"^ID3DX10Font::GetTextMetricsW$", "GetTextMetrics");
@@ -443,7 +489,11 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
 
             // Mark all stage methods internals
-            group.Modify<CppParameter>(@"^ID3D10Device::ClearRenderTargetView::ColorRGBA$", Modifiers.Type("SLIMDX_COLOR4", "*", false, null));
+            var param = group.FindFirst<CppParameter>(@"^ID3D10Device::ClearRenderTargetView::ColorRGBA$");
+            param.Type = "SLIMDX_COLOR4";
+            param.IsArray = false;
+            param.Specifier = "*";
+
             group.TagVisibility<CppMethod>(@"^ID3D10DeviceContext::SetViewports$", Visibility.Internal);
             group.TagVisibility<CppMethod>(@"^ID3D10Device::SetScissorRects$", Visibility.Internal);
             group.TagVisibility<CppMethod>(@"^ID3D10Device::IASetVertexBuffers$", Visibility.Internal);
@@ -456,9 +506,22 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagVisibility<CppMethod>(@"^ID3D10Device::[A-Z][A-Z]GetSamplers$", Visibility.Internal | Visibility.Override);
             group.TagVisibility<CppMethod>(@"^ID3D10Device::[A-Z][A-Z]GetConstantBuffers$", Visibility.Internal | Visibility.Override);
 
+            // Patch Out parameters
+            group.TagParameter(@"^ID3DX10Sprite::GetViewTransform::pViewTransform$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DX10Sprite::GetProjectionTransform::pProjectionTransform$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DX10Sprite::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DX10Font::GetDevice::ppDevice$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DX10Font::GetDescA::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DX10Font::GetDescW::pDesc$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DX10Font::GetTextMetricsA::pTextMetrics$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DX10Font::GetTextMetricsW::pTextMetrics$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DX10Font::GetGlyphData::ppTexture$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DX10Font::GetGlyphData::pBlackBox$", CppAttribute.Out);
+            group.TagParameter(@"^ID3DX10Font::GetGlyphData::pCellInc$", CppAttribute.Out);
 
             // Replace all existing reference to ID3DX11ThreadPump type to void (making all pointers to be void*)
-            group.ModifyAll(".*", Modifiers.RenameType("ID3DX10ThreadPump", "void"));
+            //group.ModifyAll(".*", Modifiers.RenameType("ID3DX10ThreadPump", "void"));
+            gen.MapCppTypeToCSharpType("ID3DX10ThreadPump", typeof(IntPtr));
 
             // --------------------------------------------------------------------------------------------------------
             // Direct3D10 Functions
@@ -467,32 +530,32 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagName<CppFunction>(@"^D3DX10(.+)$", "$1", false);
             group.TagName<CppFunction>(@"^D3DX10(.+)W$", "$1", false);
 
-            group.Modify<CppParameter>(@"^D3D10CreateDevice1?::ppDevice", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^D3D10CreateDeviceAndSwapChain1?::ppDevice", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^D3D10CreateDeviceAndSwapChain1?::ppSwapChain", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppParameter>(@"^D3D10CreateEffectFromMemory::ppEffect", Modifiers.ParameterAttribute(CppAttribute.Out));
-            group.Modify<CppFunction>(@"^D3D10CreateBlob$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10CompileShader$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10DisassembleShader$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10ReflectShader$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10PreprocessShader$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10GetInputSignatureBlob$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10GetOutputSignatureBlob$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10GetInputAndOutputSignatureBlob$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10GetShaderDebugInfo$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10StateBlockMaskUnion$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10StateBlockMaskIntersect$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10StateBlockMaskDifference$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10StateBlockMaskEnableCapture$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10StateBlockMaskDisableCapture$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10StateBlockMaskEnableAll$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10StateBlockMaskDisableAll$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10StateBlockMaskGetSetting$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10CreateStateBlock$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10CompileEffectFromMemory$", Modifiers.Remove);
-            group.Modify<CppFunction>(@"^D3D10DisassembleEffect$", Modifiers.Remove);
+            group.TagParameter(@"^D3D10CreateDevice1?::ppDevice", CppAttribute.Out);
+            group.TagParameter(@"^D3D10CreateDeviceAndSwapChain1?::ppDevice", CppAttribute.Out);
+            group.TagParameter(@"^D3D10CreateDeviceAndSwapChain1?::ppSwapChain", CppAttribute.Out);
+            group.TagParameter(@"^D3D10CreateEffectFromMemory::ppEffect", CppAttribute.Out);
+            group.Remove<CppFunction>(@"^D3D10CreateBlob$");
+            group.Remove<CppFunction>(@"^D3D10CompileShader$");
+            group.Remove<CppFunction>(@"^D3D10DisassembleShader$");
+            group.Remove<CppFunction>(@"^D3D10ReflectShader$");
+            group.Remove<CppFunction>(@"^D3D10PreprocessShader$");
+            group.Remove<CppFunction>(@"^D3D10GetInputSignatureBlob$");
+            group.Remove<CppFunction>(@"^D3D10GetOutputSignatureBlob$");
+            group.Remove<CppFunction>(@"^D3D10GetInputAndOutputSignatureBlob$");
+            group.Remove<CppFunction>(@"^D3D10GetShaderDebugInfo$");
+            group.Remove<CppFunction>(@"^D3D10StateBlockMaskUnion$");
+            group.Remove<CppFunction>(@"^D3D10StateBlockMaskIntersect$");
+            group.Remove<CppFunction>(@"^D3D10StateBlockMaskDifference$");
+            group.Remove<CppFunction>(@"^D3D10StateBlockMaskEnableCapture$");
+            group.Remove<CppFunction>(@"^D3D10StateBlockMaskDisableCapture$");
+            group.Remove<CppFunction>(@"^D3D10StateBlockMaskEnableAll$");
+            group.Remove<CppFunction>(@"^D3D10StateBlockMaskDisableAll$");
+            group.Remove<CppFunction>(@"^D3D10StateBlockMaskGetSetting$");
+            group.Remove<CppFunction>(@"^D3D10CreateStateBlock$");
+            group.Remove<CppFunction>(@"^D3D10CompileEffectFromMemory$");
+            group.Remove<CppFunction>(@"^D3D10DisassembleEffect$");
 
-            group.Modify<CppInterface>(@"^ID3D10Debug$", Modifiers.Remove);
+            group.Remove<CppInterface>(@"^ID3D10Debug$");
 
 
             CSharpFunctionGroup d3d10FunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct3D10", Global.Name + ".Direct3D10", "D3D10");
@@ -506,8 +569,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // Map All D3DX11 functions to D3DX11 Function Group
             group.TagFunction(@"^D3DX10.*", d3dx10DLLName, d3dx10FunctionGroup);
 
-            gen.AddConstantFromMacroToCSharpType("D3D10_SDK_VERSION", Global.Name + ".Direct3D10.D3D10", "int", "SdkVersion");
-            gen.AddConstantFromMacroToCSharpType("D3D10_1_SDK_VERSION", Global.Name + ".Direct3D10.D3D10", "int", "SdkVersion1");
+            gen.AddConstantFromMacroToCSharpType("^D3D10_SDK_VERSION$", Global.Name + ".Direct3D10.D3D10", "int", "SdkVersion");
+            gen.AddConstantFromMacroToCSharpType("^D3D10_1_SDK_VERSION$", Global.Name + ".Direct3D10.D3D10", "int", "SdkVersion1");
 
             // SubPart renaming
             // gen.RenameTypePart("^D3D10", "");        
@@ -524,13 +587,13 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.MapIncludeToNamespace("d3dx11tex", Global.Name + ".Direct3D11");
             gen.MapIncludeToNamespace("d3dx11async", Global.Name + ".Direct3D11");
             gen.MapIncludeToNamespace("d3d11shader", Global.Name + ".D3DCompiler");
-            gen.MapIncludeToNamespace("d3dcompiler", Global.Name + ".D3DCompiler");
 
             // --------------------------------------------------------------------------------------------------------
             // Direct3D11 Enumerations
             // --------------------------------------------------------------------------------------------------------
             group.TagName<CppEnumItem>(@"^D3D11_FEATURE_FORMAT_SUPPORT2$", "ComputeShaders");
             group.TagName<CppEnumItem>(@"^D3D11_FEATURE_DOUBLES$", "ShaderDoubles");
+            group.Remove<CppEnumItem>(@"^_D3DX11_ERR$");
 
             // --------------------------------------------------------------------------------------------------------
             // Direct3D11 Structures
@@ -545,8 +608,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagName<CppInterface>(@"^ID3DX11(.+)", "$1", false);
 
             gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::IA(.*)", "InputAssemblerStage", "InputAssembler");
-            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::VS(.*)", "VertexShaderStage", "VertexShader","CommonShaderStage<VertexShader>");
-            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::PS(.*)", "PixelShaderStage", "PixelShader","CommonShaderStage<PixelShader>");
+            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::VS(.*)", "VertexShaderStage", "VertexShader", "CommonShaderStage<VertexShader>");
+            gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::PS(.*)", "PixelShaderStage", "PixelShader", "CommonShaderStage<PixelShader>");
             gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::GS(.*)", "GeometryShaderStage", "GeometryShader", "CommonShaderStage<GeometryShader>");
             gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::SO(.*)", "StreamOutputStage", "StreamOutput");
             gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::DS(.*)", "DomainShaderStage", "DomainShader", "CommonShaderStage<DomainShader>");
@@ -557,12 +620,13 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.MoveMethodsToInnerInterface("ID3D11DeviceContext::CS(.*)", "ComputeShaderStage", "ComputeShader", "CommonShaderStage<ComputeShader>");
 
             // Replace all existing reference to ID3DX11ThreadPump type to void (making all pointers to be void*)
-            group.ModifyAll(".*", Modifiers.RenameType("ID3DX11ThreadPump", "void"));
-            
+            //            group.ModifyAll(".*", Modifiers.RenameType("ID3DX11ThreadPump", "void"));
+            gen.MapCppTypeToCSharpType("ID3DX11ThreadPump", typeof(IntPtr));
+
             // --------------------------------------------------------------------------------------------------------
             // Direct3D11 Functions
             // --------------------------------------------------------------------------------------------------------
-            gen.AddConstantFromMacroToCSharpType("D3D11_SDK_VERSION", Global.Name + ".Direct3D11.D3D11", "int", "SdkVersion");
+            gen.AddConstantFromMacroToCSharpType("^D3D11_SDK_VERSION$", Global.Name + ".Direct3D11.D3D11", "int", "SdkVersion");
             group.TagName<CppFunction>(@"^D3D11(.+)", "$1", false);
             group.TagName<CppFunction>(@"^D3DX11(.+)$", "$1", false);
             group.TagName<CppFunction>(@"^D3DX11(.+)W$", "$1", false);

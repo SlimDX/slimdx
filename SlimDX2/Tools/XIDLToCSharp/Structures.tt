@@ -70,7 +70,7 @@ foreach (var sharpStruct in Namespace.Structs)
 		} 
 	}
 #>
-    <#= sharpStruct.VisibilityName #> partial struct <#= sharpStruct.Name #> {	
+    <#= sharpStruct.VisibilityName #> partial <#= sharpStruct.StructTypeName #> <#= sharpStruct.Name #> {	
 <#+	
 	// Include Inner structure
 	foreach (var innerStruct in sharpStruct.InnerStructs) {
@@ -79,6 +79,19 @@ foreach (var sharpStruct in Namespace.Structs)
 		PopIndent();
 	}
 	
+	// --------------------------------------------------------------------------------------------------
+	// Handle Inner Constants
+	// --------------------------------------------------------------------------------------------------
+	foreach (var sharpConstant in sharpStruct.Constants) {		
+#>        
+        /// <summary>Constant <#= sharpConstant.CppElementName #>.</summary>
+        <#= sharpConstant.VisibilityName #><#= sharpConstant.TypeName #> <#= sharpConstant.Name #> = <#= sharpConstant.Value #>;
+<#+
+	}	
+	
+	// --------------------------------------------------------------------------------------------------
+	// Process fields
+	// --------------------------------------------------------------------------------------------------
 	foreach (var sharpStructItem in sharpStruct.Fields) {				
 #>
         
@@ -175,7 +188,8 @@ foreach (var sharpStruct in Namespace.Structs)
         internal unsafe partial struct __Native {	
 <#+
 	    foreach (var sharpStructItem in sharpStruct.Fields) {				
-
+			var sharpStructItemAsStruct = sharpStructItem.PublicType as CSharpStruct;
+			
 		    if (sharpStructItem.PublicType.FullName == "bool") {
 #>
             public <#= sharpStructItem.MarshalType.FullName #> _<#= sharpStructItem.Name #>;
@@ -195,6 +209,10 @@ foreach (var sharpStruct in Namespace.Structs)
             public fixed <#= sharpStructItem.MarshalType.FullName #> <#= sharpStructItem.Name #>[<#= sharpStructItem.ArrayDimension #>];
 <#+
 				}
+		    } else if ( sharpStructItemAsStruct != null && sharpStructItemAsStruct.HasMarshalType) {
+#>
+            public <#= sharpStructItem.MarshalType.FullName #>.__Native <#= sharpStructItem.Name #>;
+<#+
 		    } else {
 #>
             public <#= sharpStructItem.MarshalType.FullName #> <#= sharpStructItem.Name #>;
@@ -202,13 +220,14 @@ foreach (var sharpStruct in Namespace.Structs)
 		    }
 	    }
 
-		if (sharpStruct.IsOut) {
+		if (sharpStruct.IsOut && !sharpStruct.HasCustomMarshal) {
 #>
 		    // Method to free native struct
             internal unsafe void __MarshalFree()
             {
 <#+
 	    	foreach (var sharpStructItem in sharpStruct.Fields) {			    
+				var sharpStructItemAsStruct = sharpStructItem.PublicType as CSharpStruct;
 				if (!sharpStructItem.IsArray) {
 					if (sharpStructItem.PublicType.FullName == "string") {
 				// Copy string
@@ -216,20 +235,29 @@ foreach (var sharpStruct in Namespace.Structs)
                 if (this.<#= sharpStructItem.Name #> != IntPtr.Zero)
                     Marshal.FreeHGlobal(this.<#= sharpStructItem.Name #>);		
 <#+
-		    		}
-				}	    
+		    		} else if ( sharpStructItemAsStruct != null && sharpStructItemAsStruct.HasMarshalType) {
+#>
+                this.<#= sharpStructItem.Name #>.__MarshalFree();
+<#+
+	    			}
+				}
 			}
 #>            }
-<#+		}					
+<#+		}		
 #>
         }
-
-        // Method to marshal from native to managed struct
+<#+
+		if (!sharpStruct.HasCustomMarshal) {
+		
+#>
+		// Method to marshal from native to managed struct
         internal unsafe void __MarshalFrom(ref __Native @ref)
         {            
 <#+
 		// Write code for Marshal from native struct
-	    foreach (var sharpStructItem in sharpStruct.Fields) {				
+	    foreach (var sharpStructItem in sharpStruct.Fields) {	
+			var sharpStructItemAsStruct = sharpStructItem.PublicType as CSharpStruct;
+			
 		    if (sharpStructItem.PublicType.FullName == "bool") {
 #>
             this._<#= sharpStructItem.Name #> = @ref._<#= sharpStructItem.Name #>;
@@ -260,7 +288,12 @@ foreach (var sharpStruct in Namespace.Structs)
 #>
             this.<#= sharpStructItem.Name #> = ( @ref.<#= sharpStructItem.Name #> == IntPtr.Zero )?null:new string((sbyte*)@ref.<#= sharpStructItem.Name #>);
 <#+
-					} else {
+		    		} else if ( sharpStructItemAsStruct != null && sharpStructItemAsStruct.HasMarshalType) {
+#>
+            this.<#= sharpStructItem.Name #> = new <#= sharpStructItem.PublicType.FullName #>();
+			this.<#= sharpStructItem.Name #>.__MarshalFrom(ref @ref.<#= sharpStructItem.Name #>);
+<#+
+		    		} else {
 				// Copy Default fields
 #>
             this.<#= sharpStructItem.Name #> = @ref.<#= sharpStructItem.Name #>;
@@ -279,6 +312,7 @@ foreach (var sharpStruct in Namespace.Structs)
 <#+
 		// Write code for Marshal to native struct
 	    foreach (var sharpStructItem in sharpStruct.Fields) {				
+			var sharpStructItemAsStruct = sharpStructItem.PublicType as CSharpStruct;
 		
 		    if (sharpStructItem.PublicType.FullName == "bool") {
 #>
@@ -292,9 +326,9 @@ foreach (var sharpStruct in Namespace.Structs)
 				} else {
 					if (sharpStructItem.MarshalType.FullName == "char") {
 #>
-            fixed (char* __psrc = this.<#= sharpStructItem.Name #>) fixed (char* __ptr = @ref.<#= sharpStructItem.Name #>) Utilities.CopyMemory((IntPtr)__ptr, (IntPtr)__psrc, <#= sharpStructItem.ArrayDimension #>);
+            fixed (char* __psrc = this.<#= sharpStructItem.Name #>) fixed (char* __ptr = @ref.<#= sharpStructItem.Name #>) Utilities.CopyMemory((IntPtr)__ptr, (IntPtr)__psrc, <#= sharpStructItem.ArrayDimension #> * 2);
 <#+
-					} else if (sharpStructItem.PublicType.FullName == "string" && sharpStructItem.MarshalType.FullName == "byte") {
+					} else if (sharpStructItem.PublicType.FullName == "string") {
 #>
             IntPtr <#= sharpStructItem.Name #>_ = Marshal.StringToHGlobalAnsi(this.<#= sharpStructItem.Name #>);
             fixed (void* __ptr = @ref.<#= sharpStructItem.Name #>) Utilities.CopyMemory((IntPtr)__ptr, <#= sharpStructItem.Name #>_, this.<#= sharpStructItem.Name #>.Length);
@@ -312,18 +346,25 @@ foreach (var sharpStruct in Namespace.Structs)
 #>
             @ref.<#= sharpStructItem.Name #> = ( this.<#= sharpStructItem.Name #> == null )?IntPtr.Zero : Marshal.StringToHGlobalAnsi(this.<#= sharpStructItem.Name #>);
 <#+
-					} else {
+		    		} else if ( sharpStructItemAsStruct != null && sharpStructItemAsStruct.HasMarshalType) {
+#>
+			@ref.<#= sharpStructItem.Name #> = <#= sharpStructItemAsStruct.GetConstructor() #>;
+			if (this.<#= sharpStructItem.Name #> != null)
+                this.<#= sharpStructItem.Name #>.__MarshalTo(ref @ref.<#= sharpStructItem.Name #>);
+<#+
+		    		} else {
 				// Copy Default fields
 #>
             @ref.<#= sharpStructItem.Name #> = this.<#= sharpStructItem.Name #>;
 <#+
 					}
 		    }
-	    }
+	    } // Foreach sharpStructItem in sharpStruct.Fields
 #>		
 		}
 <#+
-		}		
+		} // Endif sharpStruct.IsOut
+		} // Endif !sharpStruct.HasCustomMarshal
     }
 #>
     }

@@ -33,6 +33,11 @@ namespace SlimDX2.Tools.XIDL
             set { Add(value); }
         }
 
+        public void AddNone()
+        {
+            Add(new CppEnumItem() { Name = "None", Value = "0"});
+        }
+
         public IEnumerable<CppEnumItem> Items
         {
             get { return InnerElements.OfType<CppEnumItem>(); }

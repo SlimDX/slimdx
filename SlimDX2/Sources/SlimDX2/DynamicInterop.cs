@@ -250,6 +250,8 @@ namespace SlimDX2
 
             CreateMemcpy(tb);
 
+            CreateSizeOfStructGeneric(tb);
+
             Type type = tb.CreateType();
 
             if (saveAssembly)
@@ -696,5 +698,27 @@ namespace SlimDX2
             // Ret
             gen.Emit(OpCodes.Ret);
         }
+
+        private static void CreateSizeOfStructGeneric(TypeBuilder tb)
+        {
+            MethodBuilder methodCopyStruct = tb.DefineMethod("SizeOf",
+                                                             MethodAttributes.Public | MethodAttributes.Static |
+                                                             MethodAttributes.HideBySig,
+                                                             CallingConventions.Standard);
+
+            GenericTypeParameterBuilder paramT = methodCopyStruct.DefineGenericParameters("T")[0];
+            paramT.SetGenericParameterAttributes(GenericParameterAttributes.NotNullableValueTypeConstraint |
+                                                 GenericParameterAttributes.DefaultConstructorConstraint);
+
+            methodCopyStruct.SetReturnType(typeof(int));
+            methodCopyStruct.SetParameters(new Type[0]);
+
+
+            ILGenerator gen = methodCopyStruct.GetILGenerator();
+            gen.Emit(OpCodes.Sizeof, paramT);
+            // Ret
+            gen.Emit(OpCodes.Ret);            
+        }
+
     }
 }

@@ -97,8 +97,17 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 else if ((Visibility & Visibility.PublicProtected) != 0)
                     builder.Append("");
 
+                if ((Visibility & Visibility.Const) != 0)
+                    builder.Append("const ");
+
+                if ((Visibility & Visibility.Static) != 0)
+                    builder.Append("static ");
+
                 if ((Visibility & Visibility.Override) != 0)
-                    builder.Append(" override ");
+                    builder.Append("override ");
+
+                if ((Visibility & Visibility.Abstract) != 0)
+                    builder.Append("abstract ");
 
                 return builder.ToString();
             }

@@ -72,7 +72,7 @@ foreach (var method in Generator.Interop.Methods) {
 } else {#>	
 namespace <#= Assembly.FullName #>
 {
-    public partial class LocalInterop : <#= Global.Name #>.Interop
+    internal partial class LocalInterop : <#= Global.Name #>.Interop
     {
         static unsafe LocalInterop()
         {

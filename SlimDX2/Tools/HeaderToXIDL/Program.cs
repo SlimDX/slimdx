@@ -98,7 +98,24 @@ namespace SlimDX2.Tools.HeaderToXIDL
             cppHeaderParser.IncludePath.Add(cmdArgs.IncludePath);
             cppHeaderParser.IncludePath.Add(".");
 
+            // cppHeaderParser.Documentation.IsActive = false;
+
+            // Map IDirectSound.* interface to use IDirectSoundXXX8 interface for msdn
+            cppHeaderParser.Documentation.ReplaceName("IDirectSound(?<name>[3A-Za-z]*)::(?<method>.*)$", @"IDirectSound${name}8::${method}");
+            cppHeaderParser.Documentation.ReplaceName("IDirectSound(?<name>[3A-Za-z]*)$", @"IDirectSound${name}8");
+
             cppHeaderParser.AddInclude("win32_ext.h");
+
+            // DirectSound
+            cppHeaderParser.AddInclude("dsound.h");
+
+            // XAudio2
+            cppHeaderParser.AddInclude("xaudio2.h");
+            cppHeaderParser.AddInclude("xaudio2fx.h");
+
+            // XAPO
+            cppHeaderParser.AddInclude("xapo.h");
+            cppHeaderParser.AddInclude("xapofx.h");
 
             // DXGI
             cppHeaderParser.AddInclude("dxgi.h");
