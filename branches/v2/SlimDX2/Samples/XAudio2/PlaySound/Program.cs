@@ -24,20 +24,20 @@ using System;
 using System.Threading;
 using SlimDX2;
 using SlimDX2.Windows;
-using SlimDX2.XAPO.Fx;
 using SlimDX2.XAudio2;
+using SlimDX2.XAudio2.Fx;
 using BufferFlags = SlimDX2.XAudio2.BufferFlags;
 
-namespace PlaySound
+namespace PlaySoundCustomXAPO
 {
     class Program
     {
         /// <summary>
         /// SlimDX2 XAudio2 sample. Plays a generated sound with some reverb.
         /// </summary>
+        [STAThread]
         static void Main(string[] args)
         {
-
             var xaudio2 = new XAudio2();
             var masteringVoice = new MasteringVoice(xaudio2);
 

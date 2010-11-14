@@ -65,8 +65,8 @@ namespace SlimDX2.XAudio2
         }
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate void OnProcessingPassStartDelegate();
-        private void OnProcessingPassStartImpl()
+        private delegate void OnProcessingPassStartDelegate(IntPtr thisObject);
+        private void OnProcessingPassStartImpl(IntPtr thisObject)
         {
             Callback.OnProcessingPassStart();
         }
@@ -76,8 +76,8 @@ namespace SlimDX2.XAudio2
         /// </summary>	
         /// <unmanaged>void IXAudio2EngineCallback::OnProcessingPassEnd()</unmanaged>
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate void OnProcessingPassEndDelegate();
-        private void OnProcessingPassEndImpl()
+        private delegate void OnProcessingPassEndDelegate(IntPtr thisObject);
+        private void OnProcessingPassEndImpl(IntPtr thisObject)
         {
             Callback.OnProcessingPassStart();
         }
@@ -88,8 +88,8 @@ namespace SlimDX2.XAudio2
         /// <param name="error"> Error code returned by XAudio2. </param>
         /// <unmanaged>void IXAudio2EngineCallback::OnCriticalError([None] HRESULT Error)</unmanaged>
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate void OnCriticalErrorDelegate(int error);
-        private void OnCriticalErrorImpl(int error)
+        private delegate void OnCriticalErrorDelegate(IntPtr thisObject, int error);
+        private void OnCriticalErrorImpl(IntPtr thisObject, int error)
         {
             Callback.OnCriticalError(new Result(error));            
         }

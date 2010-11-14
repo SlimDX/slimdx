@@ -178,7 +178,7 @@ namespace SlimDX2.XAudio2
 
         void EngineCallback.OnProcessingPassEnd()
         {
-            EventHandler handler = ProcessingPassStart;
+            EventHandler handler = ProcessingPassEnd;
             if (handler != null) handler(this, EventArgs.Empty);
         }
 

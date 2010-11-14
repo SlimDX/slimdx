@@ -7,15 +7,20 @@ namespace SlimDX2.XAPO
     /// <summary>
     /// Internal AudioProcessorCallback
     /// </summary>
+    /// IXAPO GUID
+    [Guid("a90bc001-e897-e897-55e4-9e4700000000")]
     internal class AudioProcessorCallback : ComObjectCallback
     {
         private readonly AudioProcessor Callback;
+        private readonly ParameterProviderCallback _parameterProviderCallback;
 
         internal AudioProcessorCallback(AudioProcessor callback) : base(callback, 10)        
         {
             unsafe
             {
                 Callback = callback;
+                if (Callback is ParameterProvider)
+                    _parameterProviderCallback = new ParameterProviderCallback(Callback as ParameterProvider);
                 AddMethod(new GetRegistrationPropertiesDelegate(GetRegistrationPropertiesImpl));
                 AddMethod(new IsInputFormatSupportedDelegate(IsInputFormatSupportedImpl));
                 AddMethod(new IsOutputFormatSupportedDelegate(IsOutputFormatSupportedImpl));
@@ -29,16 +34,33 @@ namespace SlimDX2.XAPO
             }
         }
 
+        protected override int QueryInterfaceImpl(IntPtr thisPointer, ref Guid guid, out IntPtr output)
+        {
+            if (guid == typeof (ParameterProvider).GUID)
+            {
+                if (_parameterProviderCallback != null)
+                {
+                    output = _parameterProviderCallback.NativePointer;
+                    return Result.Ok.Code;
+                }
+                output = IntPtr.Zero;
+                return Result.NoInterface.Code;
+            }
+            return base.QueryInterfaceImpl(thisPointer, ref guid, out output);
+        }
+
         /// <unmanaged>HRESULT IXAPO::GetRegistrationProperties([Out] XAPO_REGISTRATION_PROPERTIES** ppRegistrationProperties)</unmanaged>
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate int GetRegistrationPropertiesDelegate(out IntPtr output);
-        private int GetRegistrationPropertiesImpl(out IntPtr output)
+        private delegate int GetRegistrationPropertiesDelegate(IntPtr thisObject, out IntPtr output);
+        private int GetRegistrationPropertiesImpl(IntPtr thisObject, out IntPtr output)
         {
             output = IntPtr.Zero;
             try
             {
-                output = Marshal.AllocCoTaskMem(Utilities.SizeOf<RegistrationProperties>());
-                var temp = Callback.RegistrationProperties;
+                int sizeOfNative = Utilities.SizeOf<RegistrationProperties.__Native>();
+                output = Marshal.AllocCoTaskMem(sizeOfNative);
+                RegistrationProperties.__Native temp = default(RegistrationProperties.__Native);
+                Callback.RegistrationProperties.__MarshalTo(ref temp);
                 Utilities.Write(output, ref temp);
             }
             catch (SlimDX2Exception exception)
@@ -54,8 +76,8 @@ namespace SlimDX2.XAPO
 
         /// <unmanaged>HRESULT IXAPO::IsInputFormatSupported([None] const WAVEFORMATEX* pOutputFormat,[None] const WAVEFORMATEX* pRequestedInputFormat,[Out, Optional] WAVEFORMATEX** ppSupportedInputFormat)</unmanaged>
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate int IsInputFormatSupportedDelegate(IntPtr outputFormat, IntPtr requestedInputFormat, out IntPtr supportedInputFormat);
-        private int IsInputFormatSupportedImpl(IntPtr pOutputFormat, IntPtr pRequestedInputFormat, out IntPtr pSupportedInputFormat)
+        private delegate int IsInputFormatSupportedDelegate(IntPtr thisObject, IntPtr outputFormat, IntPtr requestedInputFormat, out IntPtr supportedInputFormat);
+        private int IsInputFormatSupportedImpl(IntPtr thisObject, IntPtr pOutputFormat, IntPtr pRequestedInputFormat, out IntPtr pSupportedInputFormat)
         {
             pSupportedInputFormat = IntPtr.Zero;
             try
@@ -86,8 +108,8 @@ namespace SlimDX2.XAPO
 
         /// <unmanaged>HRESULT IXAPO::IsOutputFormatSupported([None] const WAVEFORMATEX* pInputFormat,[None] const WAVEFORMATEX* pRequestedOutputFormat,[Out, Optional] WAVEFORMATEX** ppSupportedOutputFormat)</unmanaged>
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate int IsOutputFormatSupportedDelegate(IntPtr outputFormat, IntPtr requestedInputFormat, out IntPtr supportedInputFormat);
-        private int IsOutputFormatSupportedImpl(IntPtr pInputFormat, IntPtr pRequestedOutputFormat, out IntPtr pSupportedOutputFormat)
+        private delegate int IsOutputFormatSupportedDelegate(IntPtr thisObject, IntPtr outputFormat, IntPtr requestedInputFormat, out IntPtr supportedInputFormat);
+        private int IsOutputFormatSupportedImpl(IntPtr thisObject, IntPtr pInputFormat, IntPtr pRequestedOutputFormat, out IntPtr pSupportedOutputFormat)
         {
             pSupportedOutputFormat = IntPtr.Zero;
             try
@@ -118,8 +140,8 @@ namespace SlimDX2.XAPO
 
         /// <unmanaged>HRESULT IXAPO::Initialize([In, Buffer, Optional] const void* pData,[None] UINT32 DataByteSize)</unmanaged>
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate int InitializeDelegate(IntPtr ptr, int dataSize);
-        private int InitializeImpl(IntPtr ptr, int dataSize)
+        private delegate int InitializeDelegate(IntPtr thisObject, IntPtr ptr, int dataSize);
+        private int InitializeImpl(IntPtr thisObject, IntPtr ptr, int dataSize)
         {
             try
             {
@@ -146,9 +168,10 @@ namespace SlimDX2.XAPO
 
         /// <unmanaged>HRESULT IXAPO::LockForProcess([None] UINT32 InputLockedParameterCount,[In, Buffer, Optional] const XAPO_LOCKFORPROCESS_BUFFER_PARAMETERS* pInputLockedParameters,[None] UINT32 OutputLockedParameterCount,[In, Buffer, Optional] const XAPO_LOCKFORPROCESS_BUFFER_PARAMETERS* pOutputLockedParameters)</unmanaged>
         //void LockForProcess(SlimDX2.XAPO.LockforprocessParameters[] inputLockedParameters, SlimDX2.XAPO.LockforprocessParameters[] outputLockedParameters);
-        private unsafe delegate int LockForProcessDelegate(
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        private unsafe delegate int LockForProcessDelegate(IntPtr thisObject, 
             int inputLockedParameterCount, LockParameters.__Native* pInputLockedParameters, int outputLockedParameterCount, LockParameters.__Native* pOutputLockedParameters);
-        private unsafe int LockForProcessImpl(
+        private unsafe int LockForProcessImpl(IntPtr thisObject, 
             int inputLockedParameterCount, LockParameters.__Native* pInputLockedParameters, int outputLockedParameterCount, LockParameters.__Native* pOutputLockedParameters)
         {
             try
@@ -186,17 +209,18 @@ namespace SlimDX2.XAPO
         /// </summary>	
         /// <unmanaged>void IXAPO::UnlockForProcess()</unmanaged>
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate void UnlockForProcessDelegate();
-        private void UnlockForProcessImpl()
+        private delegate void UnlockForProcessDelegate(IntPtr thisObject);
+        private void UnlockForProcessImpl(IntPtr thisObject)
         {
             Callback.UnlockForProcess();
         }
 
         /// <unmanaged>void IXAPO::Process([None] UINT32 InputProcessParameterCount,[In, Buffer, Optional] const XAPO_PROCESS_BUFFER_PARAMETERS* pInputProcessParameters,[None] UINT32 OutputProcessParameterCount,[InOut, Buffer, Optional] XAPO_PROCESS_BUFFER_PARAMETERS* pOutputProcessParameters,[None] BOOL IsEnabled)</unmanaged>
-        private unsafe delegate void ProcessDelegate(
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        private unsafe delegate void ProcessDelegate(IntPtr thisObject,
             int inputProcessParameterCount, BufferParameters* pInputProcessParameters, int outputProcessParameterCount, BufferParameters* inputProcessParameters,
             int isEnabled);
-        private unsafe void ProcessImpl(
+        private unsafe void ProcessImpl(IntPtr thisObject,
             int inputProcessParameterCount, BufferParameters* pInputProcessParameters, int outputProcessParameterCount, BufferParameters* pOutputProcessParameters,
             int isEnabled)
         {
@@ -208,10 +232,13 @@ namespace SlimDX2.XAPO
             for (int i = 0; i < outputProcessParameters.Length; i++)
                 outputProcessParameters[i] = pOutputProcessParameters[i];
 
-            Callback.Process(inputProcessParameters, outputProcessParameters, isEnabled==1);
+            //// NOTE: because XAudio currently support only 1 input and 1 output buffer at a time, don't waste our time
+            //BufferParameters outputParameter = *pOutputProcessParameters;
 
-            // Update BufferParameters output (see doc for IXAPO::Process
-            // ValidFrameCount must be fill by the Process method. Most of the time ValidFrameCount in input == ValidFrameCount in output (effectively written)
+            Callback.Process(inputProcessParameters, outputProcessParameters, isEnabled == 1);
+
+             //Update BufferParameters output (see doc for IXAPO::Process
+             //ValidFrameCount must be fill by the Process method. Most of the time ValidFrameCount in input == ValidFrameCount in output (effectively written)
             for (int i = 0; i < outputProcessParameters.Length; i++)
                 pOutputProcessParameters[i].ValidFrameCount = outputProcessParameters[i].ValidFrameCount;
         }
@@ -222,8 +249,9 @@ namespace SlimDX2.XAPO
         /// <param name="outputFrameCount">The number of output frames desired.</param>
         /// <returns>No documentation.</returns>
         /// <unmanaged>UINT32 IXAPO::CalcInputFrames([None] UINT32 OutputFrameCount)</unmanaged>
-        private delegate int CalcInputFramesDelegate(int outputFrameCount);
-        private int CalcInputFramesImpl(int outputFrameCount)
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        private delegate int CalcInputFramesDelegate(IntPtr thisObject, int outputFrameCount);
+        private int CalcInputFramesImpl(IntPtr thisObject, int outputFrameCount)
         {
             return Callback.CalcInputFrames(outputFrameCount);
         }
@@ -234,8 +262,9 @@ namespace SlimDX2.XAPO
         /// <param name="inputFrameCount">The number of input frames.</param>
         /// <returns>No documentation.</returns>
         /// <unmanaged>UINT32 IXAPO::CalcOutputFrames([None] UINT32 InputFrameCount)</unmanaged>
-        private delegate int CalcOutputFramesDelegate(int InputFrameCount);
-        private int CalcOutputFramesImpl(int InputFrameCount)
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        private delegate int CalcOutputFramesDelegate(IntPtr thisObject, int InputFrameCount);
+        private int CalcOutputFramesImpl(IntPtr thisObject, int InputFrameCount)
         {
             return Callback.CalcOutputFrames(InputFrameCount);
         }

@@ -54,9 +54,11 @@
   <ItemGroup>
     <Compile Include="Enumerations.cs" />
     <Compile Include="Extension\AudioProcessor.cs" />
+    <Compile Include="Extension\AudioProcessorBase.cs" />
     <Compile Include="Extension\AudioProcessorCallback.cs" />
     <Compile Include="Extension\AudioProcessorNative.cs" />
     <Compile Include="Extension\AudioProcessorParamNative.cs" />
+    <Compile Include="Extension\ParameterProviderCallback.cs" />
     <Compile Include="Fx\Extension\Echo.cs" />
     <Compile Include="Fx\Extension\Equalizer.cs" />
     <Compile Include="Fx\Extension\MasteringLimiter.cs" />

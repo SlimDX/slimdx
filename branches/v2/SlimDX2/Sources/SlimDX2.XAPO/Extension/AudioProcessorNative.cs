@@ -1,4 +1,5 @@
-﻿using SlimDX2.Windows;
+﻿using System;
+using SlimDX2.Windows;
 
 namespace SlimDX2.XAPO
 {
@@ -33,6 +34,9 @@ namespace SlimDX2.XAPO
 
         public void Initialize(DataStream stream)
         {
+            if (stream == null)
+                Initialize_(IntPtr.Zero, 0);
+            else
             Initialize_(stream.DataPointer, (int)stream.Length);
         }
 

@@ -33,25 +33,57 @@ namespace SlimDX2.XAudio2
             : base(7)
         {
             Callback = callback;
-            AddMethod(new intDelegate(Callback.OnVoiceProcessingPassStart));
-            AddMethod(new voidDelegate(Callback.OnVoiceProcessingPassEnd));
-            AddMethod(new voidDelegate(Callback.OnStreamEnd));
-            AddMethod(new IntPtrDelegate(Callback.OnBufferStart));
-            AddMethod(new IntPtrDelegate(Callback.OnBufferEnd));
-            AddMethod(new IntPtrDelegate(Callback.OnLoopEnd));
+            AddMethod(new intDelegate(OnVoiceProcessingPassStartImpl));
+            AddMethod(new voidDelegate(OnVoiceProcessingPassEndImpl));
+            AddMethod(new voidDelegate(OnStreamEndImpl));
+            AddMethod(new IntPtrDelegate(OnBufferStartImpl));
+            AddMethod(new IntPtrDelegate(OnBufferEndImpl));
+            AddMethod(new IntPtrDelegate(OnLoopEndImpl));
             AddMethod(new IntPtrIntDelegate(OnVoiceErrorImpl));
         }
 
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate void voidDelegate();
+        private delegate void voidDelegate(IntPtr thisObject);
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate void intDelegate(int bytes);
+        private delegate void intDelegate(IntPtr thisObject, int bytes);
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate void IntPtrDelegate(IntPtr address);
+        private delegate void IntPtrDelegate(IntPtr thisObject, IntPtr address);
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        private delegate void IntPtrIntDelegate(IntPtr address, int error);
-        private void OnVoiceErrorImpl(IntPtr bufferContextRef, int error)
+        private delegate void IntPtrIntDelegate(IntPtr thisObject, IntPtr address, int error);
+
+        void OnVoiceProcessingPassStartImpl(IntPtr thisObject, int bytes)
+        {
+            Callback.OnVoiceProcessingPassStart(bytes);
+        }
+
+        void OnVoiceProcessingPassEndImpl(IntPtr thisObject)
+        {
+            Callback.OnVoiceProcessingPassEnd();
+        }
+
+        void OnStreamEndImpl(IntPtr thisObject)
+        {
+            Callback.OnStreamEnd();
+        }
+
+        void OnBufferStartImpl(IntPtr thisObject, IntPtr address)
+        {
+            Callback.OnBufferStart(address);
+        }
+
+        void OnBufferEndImpl(IntPtr thisObject, IntPtr address)
+        {
+            Callback.OnBufferEnd(address);
+        }
+
+
+        void OnLoopEndImpl(IntPtr thisObject, IntPtr address)
+        {
+            Callback.OnLoopEnd(address);
+        }
+
+        private void OnVoiceErrorImpl(IntPtr thisObject, IntPtr bufferContextRef, int error)
         {
             Callback.OnVoiceError(bufferContextRef, new Result(error));
         }
