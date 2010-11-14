@@ -26,7 +26,7 @@ using SlimDX2;
 using SlimDX2.DirectSound;
 using SlimDX2.Windows;
 
-namespace PlaySound
+namespace PlaySoundCustomXAPO
 {
     /// <summary>
     /// SlimDX2 DirectSound sample. Plays a generated sound.

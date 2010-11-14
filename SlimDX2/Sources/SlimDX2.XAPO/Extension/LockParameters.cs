@@ -46,7 +46,7 @@ namespace SlimDX2.XAPO
                 @ref.FormatPointer = Marshal.AllocCoTaskMem(sizeOfFormat);
                 Marshal.StructureToPtr(Format, @ref.FormatPointer, false);
             }
-            this.MaxFrameCount = @ref.MaxFrameCount;
+            @ref.MaxFrameCount = this.MaxFrameCount;
         }
 
         internal unsafe void __MarshalFrom(ref __Native @ref)

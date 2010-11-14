@@ -20,7 +20,7 @@
 using System;
 using SlimDX2.DirectSound;
 
-namespace PlaySound
+namespace PlaySoundCustomXAPO
 {
     public partial class PrimarySoundBuffer : SoundBuffer
     {

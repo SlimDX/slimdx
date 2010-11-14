@@ -58,28 +58,28 @@ namespace SlimDX2
         }
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate int QueryInterfaceDelegate(ref Guid guid, out IntPtr output);
+        public delegate int QueryInterfaceDelegate(IntPtr thisObject, ref Guid guid, out IntPtr output);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public  delegate int AddRefDelegate();
+        public  delegate int AddRefDelegate(IntPtr thisObject);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public  delegate int ReleaseDelegate();
+        public delegate int ReleaseDelegate(IntPtr thisObject);
 
         private static Guid IID_IUnknown = new Guid("00000000-0000-0000-C000-000000000046");
 
-        protected virtual int QueryInterfaceImpl(ref Guid guid, out IntPtr output)
+        protected virtual int QueryInterfaceImpl(IntPtr thisObject, ref Guid guid, out IntPtr output)
         {
-            if (guid == _callback.GetType().GUID)
+            if (guid == GetType().GUID)
             {
-                AddRefImpl();
+                AddRefImpl(thisObject);
                 output = NativePointer;
                 return Result.Ok.Code;
-            } 
+            }
 
             if (guid == IID_IUnknown)
             {
-                AddRefImpl();
+                AddRefImpl(thisObject);
                 output = NativePointer;
                 return Result.Ok.Code;
             }
@@ -87,13 +87,13 @@ namespace SlimDX2
             return Result.NoInterface.Code;
         }
 
-        protected virtual int AddRefImpl()
+        protected virtual int AddRefImpl(IntPtr thisObject)
         {
             _count++;
             return _count;
         }
 
-        protected virtual int ReleaseImpl()
+        protected virtual int ReleaseImpl(IntPtr thisObject)
         {
             _count--;
             return _count;
