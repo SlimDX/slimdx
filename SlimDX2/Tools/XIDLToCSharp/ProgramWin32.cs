@@ -46,13 +46,19 @@ namespace SlimDX2.Tools.XIDLToCSharp
         /// </summary>
         public unsafe void MapWin32()
         {
+
+            // Global namespace for XAudio2
+            string assemblyName = Global.Name;
+            string namespaceName = assemblyName + ".Windows";
+
+
             // Namespace mapping for win32_ext extension
-            gen.MapIncludeToNamespace("win32_ext", Global.Name + ".Windows", Global.Name, "Windows");
+            gen.MapIncludeToNamespace("win32_ext", assemblyName, namespaceName, "Windows");
 
             // --------------------------------------------------------------------------------------------------------
             // Global/Win32 Enumerations
             // --------------------------------------------------------------------------------------------------------
-            // Remove all enums ending with _FORCE_DWORD, FORCE_UINT
+            // Remove all enums ending with _FORCE_DWORD, FORCE_UINT in ALL includes
             group.Remove<CppEnumItem>("^.*_FORCE_DWORD$");
             group.Remove<CppEnumItem>("^.*_FORCE_UINT$");
 
@@ -137,14 +143,14 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             // Use SlimDX2.Windows.WaveFormat
             var waveFormatEx = new CSharpStruct();
-            waveFormatEx.Name = Global.Name + ".Windows.WaveFormat";
+            waveFormatEx.Name = namespaceName + ".WaveFormat";
             waveFormatEx.HasMarshalType = true;
             waveFormatEx.SizeOf = 18;
             gen.MapCppTypeToCSharpType("WAVEFORMATEX", waveFormatEx);
 
             // Use SlimDX2.Windows.WaveFormat
             var waveFormatExtensible = new CSharpStruct();
-            waveFormatExtensible.Name = Global.Name + ".Windows.WaveFormatExtensible";
+            waveFormatExtensible.Name = namespaceName + ".WaveFormatExtensible";
             waveFormatExtensible.HasMarshalType = true;
             waveFormatExtensible.SizeOf = 18;
             waveFormatExtensible.HasCustomNew = true;
@@ -161,9 +167,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             gen.MapCppTypeToCSharpType("FILETIME", typeof(long));
             gen.MapCppTypeToCSharpType("COLORREF", typeof(int));  // TODO: use real ColorRGBA8
             gen.MapCppTypeToCSharpType("GUID", typeof(Guid));
-            gen.MapCppTypeToCSharpType("CLSID", typeof(Guid));            
-            gen.MapCppTypeToCSharpType("DWORD", typeof(int));
-
+       
             // Setup FunctionCallback for __function__stdcall
             TypeSlimDX2FunctionCallback = new CSharpStruct();
             TypeSlimDX2FunctionCallback.Name = Global.Name + ".FunctionCallback";

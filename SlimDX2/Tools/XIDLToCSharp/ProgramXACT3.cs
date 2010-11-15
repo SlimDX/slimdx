@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2007-2010 SlimDX Group
+// Copyright (c) 2007-2010 SlimDX Group
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,49 +24,40 @@ namespace SlimDX2.Tools.XIDLToCSharp
 {
     internal partial class Program
     {
-        /// <summary>
-        /// Map DirectWrite API
-        /// </summary>
-        public void MapDirectWrite()
+        public void MapXACT3()
         {
-            // Global namespace for Direct2D1
-            string assemblyName = Global.Name + ".Direct2D1";
-            string namespaceName = Global.Name + ".DirectWrite";
+            // Global namespace for X3DAudio
+            string assemblyName = Global.Name + ".XACT3";
+            string namespaceName = assemblyName;
 
-            foreach (var includeName in new[] { "dcommon", "dwrite" })
-            {
-                gen.MapIncludeToNamespace(includeName, assemblyName, namespaceName, "DirectWrite");
-                group.FindContext.Add(includeName);                
-            }
-
-            // Global Rename
-            group.TagName<CppEnum>(@"^DWRITE(.+)", "$1", false);
-            group.TagName<CppStruct>(@"^DWRITE(.+)", "$1", false);
+            gen.MapIncludeToNamespace("xact3", assemblyName, namespaceName);
+            gen.MapIncludeToNamespace("xact3wb", assemblyName, namespaceName);
             
+            // Limit Find to "xact3" in this method (in order to be sure that we don't touch other includes)
+            group.FindContext.Add("xact3");
+            group.FindContext.Add("xact3wb");
+
             // --------------------------------------------------------------------------------------------------------
-            // DirectWrite Enumerations
+            // XACT Enumerations
             // --------------------------------------------------------------------------------------------------------
 
             // --------------------------------------------------------------------------------------------------------
-            // DirectWrite Structures
+            // XACT Structures
             // --------------------------------------------------------------------------------------------------------
+            group.TagName<CppStruct>(@"^XACT(.*)", "$1", false);
+        
+            // --------------------------------------------------------------------------------------------------------
+            // XACT Interfaces
+            // --------------------------------------------------------------------------------------------------------
+            group.TagName<CppInterface>(@"^IXACT3(.*)", "$1");
+           
+            // --------------------------------------------------------------------------------------------------------
+            // XACT Functions
+            // --------------------------------------------------------------------------------------------------------
+            // Remove invalid function declaration in XACT3
+            group.Remove<CppFunction>(@"^IXACT3(.*)");
 
-            // --------------------------------------------------------------------------------------------------------
-            // DirectWrite Interfaces
-            // --------------------------------------------------------------------------------------------------------
-            group.TagName<CppInterface>(@"^IDWrite(.+)", "$1", false);
-
-            group.TagVisibility<CppMethod>(@"^IDWriteGdiInterop::.*?LOGFONT$", Visibility.Internal);
-            group.TagCallback(@"^IDWritePixelSnapping$");
-            group.TagCallback(@"^IDWriteTextRenderer$");
-
-            // --------------------------------------------------------------------------------------------------------
-            // DirectWrite Functions
-            // --------------------------------------------------------------------------------------------------------
-            group.TagName<CppFunction>(@"^DWrite(.+)", "$1", false);
-            CSharpFunctionGroup dwriteFunctionGroup = gen.CreateFunctionGroup(assemblyName, namespaceName, "DWrite");
-            group.TagFunction("^DWriteCreateFactory", "dwrite.dll", dwriteFunctionGroup);
-
+            // Clear FindContext
             group.FindContext.Clear();
         }
     }

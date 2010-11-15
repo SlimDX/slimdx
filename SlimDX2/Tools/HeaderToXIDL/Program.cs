@@ -109,6 +109,13 @@ namespace SlimDX2.Tools.HeaderToXIDL
             // DirectSound
             cppHeaderParser.AddInclude("dsound.h");
 
+            // X3DAudio
+            cppHeaderParser.AddInclude("x3daudio.h");
+
+            // XAct3
+            cppHeaderParser.AddInclude("xact3wb.h");
+            cppHeaderParser.AddInclude("xact3.h");
+
             // XAudio2
             cppHeaderParser.AddInclude("xaudio2.h");
             cppHeaderParser.AddInclude("xaudio2fx.h");
@@ -116,6 +123,12 @@ namespace SlimDX2.Tools.HeaderToXIDL
             // XAPO
             cppHeaderParser.AddInclude("xapo.h");
             cppHeaderParser.AddInclude("xapofx.h");
+
+            // XInput
+            cppHeaderParser.AddInclude("xinput.h");
+
+            // DirectInput
+            cppHeaderParser.AddInclude("xinput.h");
 
             // DXGI
             cppHeaderParser.AddInclude("dxgi.h");

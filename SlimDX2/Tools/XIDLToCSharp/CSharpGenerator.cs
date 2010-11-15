@@ -432,6 +432,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 return null;
             }
             var cSharpStruct = new CSharpStruct(cppStruct);
+            cSharpStruct.IsFullyMapped = false;
             CSharpNamespace nameSpace = ResolveNamespace(cppInclude, cppStruct);
             cSharpStruct.Name = ConvertCppNameToCSharpName(cppStruct);
             nameSpace.Add(cSharpStruct);
@@ -450,8 +451,23 @@ namespace SlimDX2.Tools.XIDLToCSharp
             _mapCppNameToCSharpType.Add(cppName, type);
         }
 
+        /// <summary>
+        /// Maps the C++ struct to C# struct.
+        /// </summary>
+        /// <param name="cSharpStruct">The c sharp struct.</param>
         private void MapCppStructToCSharpStruct(CSharpStruct cSharpStruct)
         {
+            // If a struct was already mapped, then return immediatly
+            // The method MapCppStructToCSharpStruct can be called recursivelly
+            if (cSharpStruct.IsFullyMapped)
+                return;
+
+            // Get the associated CppStruct and CSharpTag
+            var cppStruct = cSharpStruct.CppElement as CppStruct;
+            var tagStruct = cppStruct.GetTagOrDefault<CSharpTag>();
+
+
+            // If this structure need to me moved to anoter container, move it now
             foreach (var keyValuePair in _mapMoveStructToInner)
             {
                 if (keyValuePair.Key.Match(cSharpStruct.CppElementName).Success)
@@ -465,10 +481,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 }
             }
 
-            var cppStruct = cSharpStruct.CppElement as CppStruct;
-            var tagStruct = cppStruct.GetTagOrDefault<CSharpTag>();
-
-            // Use tag on struct
+            // Perform general tag
             bool hasMarshalType = tagStruct.StructHasNativeValueType.HasValue ? tagStruct.StructHasNativeValueType.Value : false;
             cSharpStruct.GenerateAsClass = tagStruct.StructToClass.HasValue ? tagStruct.StructToClass.Value : false;
             cSharpStruct.HasCustomMarshal = tagStruct.StructCustomMarshall.HasValue ? tagStruct.StructCustomMarshall.Value : false;
@@ -480,19 +493,24 @@ namespace SlimDX2.Tools.XIDLToCSharp
             if (cSharpStruct.GenerateAsClass)
                 hasMarshalType = true;
 
-            int currentOffset = 0;
+            // Current offset of a field
+            int currentOffset = 0;              
+            
+            // Offset stored for each field
+            int[] offsetOfFields = new int[cppStruct.InnerElements.Count];
 
-            var offsetOfFields = new int[cppStruct.InnerElements.Count];
-
+            // Last field offset
             int lastCppFieldOffset = -1;
+
+            // Size of the last field
             int lastFieldSize = 0;
 
+            // 
             int maxSizeOfField = 0;
 
             bool isInUnion = false;
 
             int cumulatedBitOffset = 0;
-            int lastCumulatedBitOffset = 0;
 
             for (int fieldIndex = 0; fieldIndex < cppStruct.InnerElements.Count; fieldIndex++)
             {
@@ -501,9 +519,30 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 CSharpType publicType = null;
                 CSharpType marshalType = null;
                 bool hasArray = cppField.IsArray;
-                int arrayDimension = string.IsNullOrWhiteSpace(cppField.ArrayDimension)
-                                         ? 0
-                                         : (int)float.Parse(cppField.ArrayDimension, CultureInfo.InvariantCulture);
+
+
+                int arrayDimension = 0;
+
+                // Handle array dimension
+                if (!string.IsNullOrWhiteSpace(cppField.ArrayDimension))
+                {
+                    string arrayDimensionValue = cppField.ArrayDimension;
+
+                    CSharpType arrayDimensionType;
+                    bool hasArrayDimensionPtr = false;
+                    if (FindType(cppField.ArrayDimension, out arrayDimensionType, ref hasArrayDimensionPtr))
+                    {
+                        if (arrayDimensionType is CSharpEnum.Item)
+                        {
+                            arrayDimensionValue = (arrayDimensionType as CSharpEnum.Item).Value;
+                        } else
+                        {
+                            throw new ArgumentException(string.Format("Invalid array dimension {0}", arrayDimensionValue));
+                        }
+                    }
+                    arrayDimension = (int)float.Parse(arrayDimensionValue, CultureInfo.InvariantCulture);
+                }
+
                 string fieldType = cppField.GetTypeNameWithMapping();
                 string fieldName = ConvertFieldName(cppField);
 
@@ -515,26 +554,22 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
                 int fieldSize = 0;
 
-
-
                 // Default IntPtr type for pointer, unless modified by specialized type (like char* map to string)
                 if (hasPointer)
                 {
                     publicType = ImportType(typeof (IntPtr));
 
                     // Pointer has a variable size depending on x86/x64 architecture, so set field size to -1
-                    fieldSize = -1;
+                    fieldSize = 8;
 
                     switch (fieldType)
                     {
-                        case "CHAR":
                         case "char":
                             publicType = ImportType(typeof (string));
                             marshalType = ImportType(typeof (IntPtr));
                             hasMarshalType = true;
                             break;
-                        case "WCHAR":
-                        case "wchar":
+                        case "wchar_t":
                             publicType = ImportType(typeof (string));
                             marshalType = ImportType(typeof (IntPtr));
                             hasMarshalType = true;
@@ -545,15 +580,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 {
                     switch (fieldType)
                     {
-                        case "INT32":
-                        case "INT":
                         case "int":
-                        case "LONG":
                         case "long":
-                        case "UINT32":
-                        case "UINT":
-                        case "ULONG":
-                        case "DWORD":
                             fieldSize = 4;
                             publicType = ImportType(typeof (int));
                             if (arrayDimension == 4)
@@ -565,15 +593,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             }
                             break;
                         case "short":
-                        case "USHORT":
-                        case "SHORT":
-                        case "WORD":
-                        case "UINT16":
-                        case "INT16":
                             fieldSize = 2;
                             publicType = ImportType(typeof (short));
                             break;
-                        case "FLOAT":
                         case "float":
                             fieldSize = 4;
                             publicType = ImportType(typeof (float));
@@ -593,7 +615,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
                                 hasArray = false;
                             }
                             break;
-                        case "DOUBLE":
                         case "double":
                             fieldSize = 8;
                             publicType = ImportType(typeof(double));
@@ -619,73 +640,37 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             marshalType = ImportType(typeof (int));
                             break;
                         case "byte":
-                        case "BYTE":
-                        case "UINT8":
                             fieldSize = 1;
                             publicType = ImportType(typeof (byte));
                             break;
-                        case "LONGLONG":
-                        case "ULONGLONG":
-                        case "UINT64":
-                        case "LARGE_INTEGER":
+                        case "__int64":
                             fieldSize = 8;
                             publicType = ImportType(typeof (long));
                             break;
                         case "SIZE_T":
-                            fieldSize = 4;
+                            fieldSize = 8;
                             publicType = ImportTypeFromName(Global.Name + ".Size", 4, false, false);
                             publicType.Type = typeof (IntPtr);
                             break;
-                        case "LPCSTR":
-                        case "LPSTR":
-                            fieldSize = 4;
-                            publicType = ImportType(typeof (string));
-                            marshalType = ImportType(typeof (IntPtr));
-                            hasMarshalType = true;
-                            break;
-                        case "HMODULE":
-                        case "HWND":
-                        case "HANDLE":
-                        case "HMONITOR":
-                        case "LPGUID":
-                        case "REFIID":
-                        case "REFGUID":
-                        case "REFCLSID":
-                            fieldSize = 4;
-                            publicType = ImportType(typeof (IntPtr));
-                            break;
-                        case "UCHAR":
-                        case "CHAR":
                         case "char":
                             fieldSize = 1;
                             publicType = ImportType(typeof (byte));
                             if (hasArray)
                             {
-                                fieldSize = 1*arrayDimension;
                                 publicType = ImportType(typeof (string));
                                 marshalType = ImportType(typeof (byte));
                                 hasMarshalType = true;
                             }
                             break;
-                        case "WCHAR":
-                        case "wchar":
+                        case "wchar_t":
                             fieldSize = 2;
                             publicType = ImportType(typeof (char));
                             if (hasArray)
                             {
-                                fieldSize = 2*arrayDimension;
                                 publicType = ImportType(typeof (string));
                                 marshalType = ImportType(typeof (char));
                                 hasMarshalType = true;
                             }
-                            break;
-                        case "LUID":
-                            fieldSize = 8;
-                            publicType = ImportType(typeof (ulong));
-                            break;
-                        case "LPCVOID":
-                            fieldSize = 4;
-                            publicType = ImportType(typeof (IntPtr));
                             break;
                         case "D3DCOLOR":
                             fieldSize = 4;
@@ -703,6 +688,14 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             if (publicType is CSharpStruct)
                             {
                                 var referenceStruct = publicType as CSharpStruct;
+
+                                // If a structure was not already parsed, then parsed it before going further
+                                if (!referenceStruct.IsFullyMapped)
+                                {
+                                    MapCppStructToCSharpStruct(referenceStruct);
+                                }
+
+
                                 // If referenced structure has a specialized marshalling, then specify marshalling
                                 if (referenceStruct.HasMarshalType)
                                 {
@@ -713,6 +706,16 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             break;
                     }
                 }
+
+                // Force fieldSize to 8 if this is a pointer
+                if (hasPointer)
+                {
+                    fieldSize = 8;
+                }
+
+                if (arrayDimension > 1)
+                    fieldSize = fieldSize * arrayDimension;
+
                 if (hasArray)
                 {
                     hasMarshalType = true;
@@ -743,7 +746,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 }
                 if (cppField.IsBitField)
                 {
-                    lastCumulatedBitOffset = cumulatedBitOffset;
+                    int lastCumulatedBitOffset = cumulatedBitOffset;
                     cumulatedBitOffset += cppField.BitOffset;
                     fieldStruct.BitMask = ((1 << (cumulatedBitOffset + 1)) - 1); // &~((1 << (lastCumulatedBitOffset + 1)) - 1);
                     fieldStruct.BitOffset = lastCumulatedBitOffset;
@@ -770,9 +773,19 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 }
                 lastCppFieldOffset = cppField.Offset;
             }
-            cSharpStruct.SizeOf = currentOffset;
+            cSharpStruct.SizeOf = currentOffset + lastFieldSize;
             cSharpStruct.HasMarshalType = hasMarshalType;
+            cSharpStruct.IsFullyMapped = true;
+
+
+            if (sizeOfWriter == null )
+                sizeOfWriter = new StreamWriter("sizeof_test.cpp");
+
+            sizeOfWriter.WriteLine(@"if ( sizeof({1}) != {2} ) printf(""%s,%s,%d,%d\n"",""{0}"", ""{1}"",sizeof({1}), {2});", cppStruct.Parent.Name, cppStruct.Name, cSharpStruct.SizeOf);
+            sizeOfWriter.Flush();
         }
+
+        private static StreamWriter sizeOfWriter;
 
         private CSharpFunction PrepareFunctionForMap(CppInclude cppInclude, CppFunction cppFunction)
         {
@@ -867,28 +880,16 @@ namespace SlimDX2.Tools.XIDLToCSharp
                 case "void":
                     publicType = ImportType(typeof (void));
                     break;
-                case "INT32":
-                case "INT":
                 case "int":
-                case "LONG":
                 case "long":
-                case "UINT32":
-                case "UINT":
-                case "ULONG":
-                case "DWORD":
                     publicType = ImportType(typeof (int));
                     break;
-                case "USHORT":
-                case "SHORT":
-                case "UINT16":
-                case "INT16":
+                case "short":
                     publicType = ImportType(typeof(short));
                     break;
-                case "FLOAT":
                 case "float":
                     publicType = ImportType(typeof (float));
                     break;
-                case "DOUBLE":
                 case "double":
                     publicType = ImportType(typeof(double));
                     break;
@@ -897,54 +898,29 @@ namespace SlimDX2.Tools.XIDLToCSharp
                     marshalType = ImportType(typeof (int));
                     break;
                 case "byte":
-                case "BYTE":
-                case "UINT8":
                     publicType = ImportType(typeof (byte));
                     marshalType = ImportType(typeof (int));
                     break;
-                case "UINT64":
-                case "LARGE_INTEGER":
+                case "__int64":
                     publicType = ImportType(typeof (long));
                     break;
                 case "SIZE_T":
                     publicType = ImportTypeFromName(Global.Name + ".Size", 4, false, false);
                     publicType.Type = typeof (IntPtr);
                     break;
-                case "LPCSTR":
-                case "LPSTR":
-                    publicType = ImportType(typeof (string));
-                    hasPointer = true;
                     break;
-                case "HMODULE":
-                case "HWND":
-                case "HDC":
-                case "HANDLE":
-                case "HMONITOR":
-                    publicType = ImportType(typeof (IntPtr));
-                    hasPointer = true;
+                case "GUID":
+                    publicType = ImportType(typeof(Guid));
                     break;
-                case "LPGUID":
-                case "REFIID":
-                case "REFGUID":
-                case "REFCLSID":
-                    publicType = ImportType(typeof(IntPtr));
-                    hasPointer = true;
-                    break;
-                case "CHAR":
                 case "char":
                     publicType = ImportType(typeof (byte));
+                    if (hasPointer)
+                        publicType = ImportType(typeof(string));
                     break;
-                case "WCHAR":
-                case "wchar":
+                case "wchar_t":
                     publicType = ImportType(typeof (char));
-                    break;
-                case "LUID":
-                    publicType = ImportType(typeof (long));
-                    marshalType = ImportType(typeof (long));
-                    break;
-                case "LPCVOID":
-                    publicType = ImportType(typeof (IntPtr));
-                    hasPointer = true;
+                    if (hasPointer)
+                        publicType = ImportType(typeof(string));
                     break;
                 case "HRESULT":
                     publicType = ImportTypeFromName(Global.Name + ".Result", 4, false, false);
@@ -963,12 +939,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             }
 
 
-            if (!string.IsNullOrEmpty(method.ReturnType.Specifier) && method.ReturnType.Specifier.Contains("*"))
-            {
-                if (!(publicType is CSharpInterface))
-                    publicType = ImportType(typeof (IntPtr));
-                hasPointer = true;
-            }
+            if (hasPointer && !(publicType is CSharpInterface))
+                publicType = ImportType(typeof (IntPtr));
 
             if (hasPointer)
                 marshalType = ImportType(typeof (IntPtr));
@@ -1105,15 +1077,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
                 switch (paramType)
                 {
-                    case "INT32":
-                    case "INT":
                     case "int":
-                    case "LONG":
                     case "long":
-                    case "UINT32":
-                    case "UINT":
-                    case "ULONG":
-                    case "DWORD":
                         publicType = ImportType(typeof (int));
                         if (arrayDimension == 4)
                         {
@@ -1122,13 +1087,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             hasArray = false;
                         }
                         break;
-                    case "SHORT":
-                    case "USHORT":
-                    case "UINT16":
-                    case "INT16":
+                    case "short":
                         publicType = ImportType(typeof(short));
                         break;
-                    case "FLOAT":
                     case "float":
                         publicType = ImportType(typeof (float));
 
@@ -1145,7 +1106,6 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             hasArray = false;
                         }
                         break;
-                    case "DOUBLE":
                     case "double":
                         publicType = ImportType(typeof(double));
                         //if (arrayDimension == 3)
@@ -1166,42 +1126,21 @@ namespace SlimDX2.Tools.XIDLToCSharp
                         marshalType = ImportType(typeof (int));
                         break;
                     case "byte":
-                    case "BYTE":
-                    case "UINT8":
                         publicType = ImportType(typeof (byte));
                         marshalType = ImportType(typeof (int));
                         break;
-                    case "LONGLONG":
-                    case "UINT64":
-                    case "LARGE_INTEGER":
+                    case "__int64":
                         publicType = ImportType(typeof (long));
                         break;
                     case "SIZE_T":
                         publicType = ImportTypeFromName(Global.Name + ".Size", 4, false, false);
                         publicType.Type = typeof (IntPtr);
                         break;
-                    case "LPCSTR":
-                    case "LPSTR":
-                        publicType = ImportType(typeof (string));
-                        hasPointer = true;
-                        break;
-                    case "HMODULE":
-                    case "HWND":
-                    case "HDC":
-                    case "HANDLE":
-                    case "HMONITOR":
-                        publicType = ImportType(typeof (IntPtr));
-                        break;
-                    case "LPGUID":
-                    case "REFIID":
-                    case "REFGUID":
-                    case "REFCLSID":
+                    case "GUID":
                         publicType = ImportType(typeof(Guid));
                         if (cppAttribute == CppAttribute.None)
                             cppAttribute = CppAttribute.In;
-                        hasPointer = true;
                         break;
-                    case "CHAR":
                     case "char":
                         publicType = ImportType(typeof (byte));
                         if (hasPointer)
@@ -1212,8 +1151,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             marshalType = ImportType(typeof (byte));
                         }
                         break;
-                    case "WCHAR":
-                    case "wchar":
+                    case "wchar_t":
                         isWideChar = true;
                         publicType = ImportType(typeof (char));
                         if (hasPointer)
@@ -1226,23 +1164,16 @@ namespace SlimDX2.Tools.XIDLToCSharp
                             hasArray = false;
                         }
                         break;
-                    case "LUID":
-                        publicType = ImportType(typeof (long));
-                        break;
-                    case "LPVOID":
-                    case "PVOID":
-                    case "LPCVOID":
-                        publicType = ImportType(typeof (IntPtr));
-                        if ((cppAttribute & CppAttribute.Buffer) != 0)
-                        {
-                            hasArray = false;
-                            cppAttribute = cppAttribute & ~CppAttribute.Buffer;
-                        }
-                        hasPointer = true;
-                        break;
-                    case "VOID":
                     case "void":
                         publicType = ImportType(typeof (IntPtr));
+
+                        //if ((cppAttribute & CppAttribute.Buffer) != 0)
+                        //{
+                        //    hasArray = false;
+                        //    cppAttribute = cppAttribute & ~CppAttribute.Buffer;
+                        //}
+                        //hasPointer = true;
+
                         break;
                     //case "LPD3D10INCLUDE":
                     //    hasPointer = true;
@@ -1757,11 +1688,19 @@ namespace SlimDX2.Tools.XIDLToCSharp
             _mapMoveStructToInner.Add(new Regex(fromStruct), toStruct);
         }
 
+        private IEnumerable<CppInclude> IncludeToProcess
+        {
+            get
+            {
+                // Process all Enums
+                return CppIncludeGroup.Includes.Where(cppInclude => _mapIncludeToNamespace.ContainsKey(cppInclude.Name));
+            }
+        }
 
         private void MapAll()
         {
             // Process all Enums
-            foreach (CppInclude cppInclude in CppIncludeGroup.Includes)
+            foreach (CppInclude cppInclude in IncludeToProcess)
             {
                 foreach (CppEnum cppEnum in cppInclude.Enums)
                 {
@@ -1772,7 +1711,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             var selectedCSharpType = new List<CSharpCppElement>();
 
             // Predefine all structs and interfaces
-            foreach (CppInclude cppInclude in CppIncludeGroup.Includes)
+            foreach (CppInclude cppInclude in IncludeToProcess)
             {
                 // Iterate on structs
                 foreach (CppStruct cppStruct in cppInclude.Structs)
@@ -1807,7 +1746,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             }
 
             // MAp all typedef to final CSharpType
-            foreach (CppInclude cppInclude in CppIncludeGroup.Includes)
+            foreach (CppInclude cppInclude in IncludeToProcess)
             {
                 // Iterate on structs
                 foreach (CppTypedef cppTypedef in cppInclude.Typedefs)
@@ -1976,14 +1915,14 @@ namespace SlimDX2.Tools.XIDLToCSharp
             }
         }
 
-        public void MapIncludeToNamespace(string includeName, string nameSpace, string assemblyName = null, string outputDirectory = null)
+        public void MapIncludeToNamespace(string includeName, string assemblyName, string nameSpace, string outputDirectory = null)
         {
             var cSharpNamespace = GetNamespace(assemblyName, nameSpace);
             cSharpNamespace.OutputDirectory = outputDirectory;
             _mapIncludeToNamespace.Add(includeName, cSharpNamespace );
         }
 
-        public void MapTypeToNamespace(string typeNameRegex, string nameSpace, string assemblyName = null, string outputDirectory = null)
+        public void MapTypeToNamespace(string typeNameRegex, string assemblyName, string nameSpace, string outputDirectory = null)
         {
             var cSharpNamespace = GetNamespace(assemblyName, nameSpace);
             cSharpNamespace.OutputDirectory = outputDirectory;

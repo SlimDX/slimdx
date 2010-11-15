@@ -32,6 +32,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
         protected CSharpCppElement()
         {
+            // Default, must be changed when instanciating a type
+            MaximumInStructureAlign = 4;
         }
 
         public CppElement CppElement
@@ -64,6 +66,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
         }
 
         public int SizeOf { get; set; }
+
+        public int MaximumInStructureAlign { get; set; }
 
         private static readonly Regex RegexLink = new Regex(@"\{\{(.*?)}}");
         private static readonly Regex RegexCode = new Regex(@"\[\[(.*?)]]", RegexOptions.Singleline);

@@ -24,13 +24,20 @@ namespace SlimDX2.Tools.XIDLToCSharp
 {
     internal partial class Program
     {
+        /// <summary>
+        /// Map DXGI API
+        /// </summary>
         public void MapDXGI()
         {
-            // General mapping between include and Assembly/Namespace
-            gen.MapIncludeToNamespace("dxgi", Global.Name + ".DXGI");
-            gen.MapIncludeToNamespace("dxgiformat", Global.Name + ".DXGI");
-            gen.MapIncludeToNamespace("dxgitype", Global.Name + ".DXGI");
-            gen.MapIncludeToNamespace("d3dcommon", Global.Name + ".Direct3D", Global.Name, "Direct3D");
+            // Global namespace for DirectSound
+            string assemblyName = Global.Name + ".DXGI";
+            string namespaceName = assemblyName;
+
+            foreach (var includeName in new[] { "dxgi", "dxgiformat", "dxgitype" })
+            {
+                gen.MapIncludeToNamespace(includeName, assemblyName, namespaceName);
+                group.FindContext.Add(includeName);
+            }
 
             // --------------------------------------------------------------------------------------------------------
             // DXGI Enumerations
@@ -101,11 +108,13 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             // DXGI Functions
             // --------------------------------------------------------------------------------------------------------
-            CSharpFunctionGroup dxgiFunctionGroup = gen.CreateFunctionGroup(Global.Name + ".DXGI", Global.Name + ".DXGI", "DXGI");
+            CSharpFunctionGroup dxgiFunctionGroup = gen.CreateFunctionGroup(assemblyName, namespaceName, "DXGI");
             group.TagFunction("^CreateDXGIFactory.*", "dxgi.dll", dxgiFunctionGroup);
             group.TagParameter("^CreateDXGIFactory.*?::ppFactory$", CppAttribute.Out);
 
             // gen.RenameTypePart("^DXGI", "");
+
+            group.FindContext.Clear();
         }
     }
 }
