@@ -32,7 +32,7 @@ namespace SlimDX2.Direct3D10
             : base(IntPtr.Zero)
         {
             Buffer buffer;
-            device.CreateBuffer(description, null, out buffer);
+            device.CreateBuffer(ref description, null, out buffer);
             NativePointer = buffer.NativePointer;
         }
 
@@ -51,7 +51,7 @@ namespace SlimDX2.Direct3D10
             subResourceData.SlicePitch = 0;
 
             Buffer buffer;
-            device.CreateBuffer(description, subResourceData, out buffer);
+            device.CreateBuffer(ref description, subResourceData, out buffer);
             NativePointer = buffer.NativePointer;
         }
 
@@ -78,7 +78,7 @@ namespace SlimDX2.Direct3D10
                                   };
 
             Buffer buffer;
-            device.CreateBuffer(description, null, out buffer);
+            device.CreateBuffer(ref description, null, out buffer);
             NativePointer = buffer.NativePointer;
         }
 
@@ -111,7 +111,7 @@ namespace SlimDX2.Direct3D10
             subResourceData.SlicePitch = 0;
 
             Buffer buffer;
-            device.CreateBuffer(description, subResourceData, out buffer);
+            device.CreateBuffer(ref description, subResourceData, out buffer);
             NativePointer = buffer.NativePointer;
         }
     }
