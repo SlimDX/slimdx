@@ -259,14 +259,17 @@ namespace Direct3D11
 	T Device::OpenSharedResource(System::IntPtr handle)
 	{
 		GUID guid = Utilities::GetNativeGuidForType( T::typeid );
-		void *resultPointer;
+		ID3D11Resource* resultPointer;
 
-		HRESULT hr = InternalPointer->OpenSharedResource( handle.ToPointer(), guid, &resultPointer );
+		HRESULT hr = InternalPointer->OpenSharedResource( handle.ToPointer(), guid, (void**)&resultPointer );
 		if( RECORD_D3D11( hr ).IsFailure )
 			return T();
 
 		MethodInfo^ method = T::typeid->GetMethod( "FromPointer", BindingFlags::Public | BindingFlags::Static );
-		return safe_cast<T>( method->Invoke( nullptr, gcnew array<Object^> { IntPtr( resultPointer ) } ) );
+		T result = safe_cast<T>( method->Invoke( nullptr, gcnew array<Object^> { IntPtr( resultPointer ) } ) );
+
+		resultPointer->Release();
+		return result;
 	}
 
 #pragma warning(disable : 4947)
