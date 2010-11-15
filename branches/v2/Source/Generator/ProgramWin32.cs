@@ -125,7 +125,7 @@ namespace SlimDX.Generator
             TypeSlimMathPlane.Name = TypeSlimMathPlane.Type.FullName;
             TypeSlimMathPlane.SizeOf = sizeof(SlimMath.Plane);
 
-            // SlimDX2.Rectangle
+            // SlimDX.Rectangle
             TypeSlimDX2Rectangle = new CSharpStruct();
             TypeSlimDX2Rectangle.Name = Global.Name + ".Rectangle";
             TypeSlimDX2Rectangle.SizeOf = 4 * 4;
@@ -135,14 +135,14 @@ namespace SlimDX.Generator
             TypeSlimDX2RectangleF.Name = Global.Name + ".RectangleF";
             TypeSlimDX2RectangleF.SizeOf = 4 * 4;
 
-            // Use SlimDX2.Windows.WaveFormat
+            // Use SlimDX.Windows.WaveFormat
             var waveFormatEx = new CSharpStruct();
             waveFormatEx.Name = Global.Name + ".Windows.WaveFormat";
             waveFormatEx.HasMarshalType = true;
             waveFormatEx.SizeOf = 18;
             gen.MapCppTypeToCSharpType("WAVEFORMATEX", waveFormatEx);
 
-            // Use SlimDX2.Windows.WaveFormat
+            // Use SlimDX.Windows.WaveFormat
             var waveFormatExtensible = new CSharpStruct();
             waveFormatExtensible.Name = Global.Name + ".Windows.WaveFormatExtensible";
             waveFormatExtensible.HasMarshalType = true;

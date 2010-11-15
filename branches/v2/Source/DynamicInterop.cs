@@ -197,7 +197,7 @@ namespace SlimDX
         }
 
         /// <summary>
-        ///   Generate SlimDX2.Interop assembly based on signatures.
+        ///   Generate SlimDX.Interop assembly based on signatures.
         /// </summary>
         /// <param name = "methods">an array of signatures</param>
         /// <param name = "saveAssembly">true to save the generated assembly</param>
@@ -215,7 +215,7 @@ namespace SlimDX
                                                                                     AssemblyBuilderAccess.RunAndSave);
             ModuleBuilder modBldr = asmBldr.DefineDynamicModule(name + ".dll", name + ".dll");
 
-            // Create class SlimDX2.Interop
+            // Create class SlimDX.Interop
             TypeBuilder tb = modBldr.DefineType(name, TypeAttributes.Public | TypeAttributes.Class);
 
             // Inherit from System.Object

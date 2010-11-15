@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SlimDX2.Tools.CppModelExtractApp")]
+[assembly: AssemblyTitle("SlimDX.Tools.CppModelExtractApp")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("SlimDX2.Tools.CppModelExtractApp")]
+[assembly: AssemblyProduct("SlimDX.Tools.CppModelExtractApp")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

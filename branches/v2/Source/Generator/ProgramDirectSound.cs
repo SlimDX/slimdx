@@ -161,7 +161,7 @@ namespace SlimDX.Generator
             group.TagName<CppEnumItem>(@"^DSBSTATUS_LOCSOFTWARE$", "Software");
             group.TagName<CppEnumItem>(@"^DSBLOCK_FROMWRITECURSOR$", "FromWriteCursor");
             group.TagName<CppEnumItem>(@"^DSBLOCK_ENTIREBUFFER$", "EntireBuffer");
-            // Warning Enums [CooperativeLevel] have different Flags SlimDX [False] != SlimDX2 [True]
+            // Warning Enums [CooperativeLevel] have different Flags SlimDX [False] != SlimDX [True]
             group.TagName<CppEnumItem>(@"^DSSCL_WRITEPRIMARY$", "WritePrimary");
             group.TagName<CppEnumItem>(@"^DS3DMODE_HEADRELATIVE$", "HeadRelative");
 
