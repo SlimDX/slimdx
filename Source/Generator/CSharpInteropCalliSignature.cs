@@ -21,7 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SlimDX2.Tools.XIDLToCSharp
+namespace SlimDX.Generator
 {
     public class CSharpInteropCalliSignature
     {

@@ -21,7 +21,7 @@ using System;
 using SlimDX2.Tools.XIDL;
 using System.Linq;
 
-namespace SlimDX2.Tools.XIDLToCSharp
+namespace SlimDX.Generator
 {
     internal partial class Program
     {

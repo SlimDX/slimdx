@@ -20,7 +20,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SlimDX2.Tools.XIDLToCSharp
+namespace SlimDX.Generator
 {
     public class InteropGenerator
     {

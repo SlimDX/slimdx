@@ -1,10 +1,10 @@
 ﻿<#@ template debug="true" language="C#" hostspecific="True"  #>
 <#@ output encoding="ASCII" extension=".cs" #>
-<#@ assembly name="XIDLToCSharp.exe" #>
+<#@ assembly name="SlimDX.Generator.exe" #>
 <#@ assembly name="SlimDX2.Tools.XIDL.dll" #>
-<#@ import namespace="SlimDX2.Tools.XIDLToCSharp" #>
+<#@ import namespace="SlimDX.Generator" #>
 <#@ import namespace="SlimDX2.Tools.XIDL" #>
-<#@ parameter name="Namespace" type="SlimDX2.Tools.XIDLToCSharp.CSharpNamespace" #>
+<#@ parameter name="Namespace" type="SlimDX.Generator.CSharpNamespace" #>
 // Copyright (c) 2007-2010 SlimDX Group
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy

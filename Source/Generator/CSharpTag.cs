@@ -23,7 +23,7 @@ using System.IO;
 using SlimDX2.Tools.XIDL;
 using System.Linq;
 
-namespace SlimDX2.Tools.XIDLToCSharp
+namespace SlimDX.Generator
 {
     public class CSharpTag
     {

@@ -27,7 +27,7 @@ using System.Text.RegularExpressions;
 using Boost.Wave;
 using SlimDX2.Tools.XIDL;
 
-namespace SlimDX2.Tools.HeaderToXIDL
+namespace SlimDX.Parser
 {
     /// <summary>
     /// A class to parse DirectX headers.

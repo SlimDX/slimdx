@@ -8,8 +8,8 @@
     <ProjectGuid>{28A3D3D8-5BD1-4457-BB4E-540700E00AE5}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SlimDX2.Tools.XIDLToCSharp</RootNamespace>
-    <AssemblyName>XIDLToCSharp</AssemblyName>
+    <RootNamespace>SlimDX.Generator</RootNamespace>
+    <AssemblyName>SlimDX.Generator</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>

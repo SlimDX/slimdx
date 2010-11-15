@@ -23,7 +23,7 @@ using System.Linq;
 using System.Text;
 using SlimDX2.Tools.XIDL;
 
-namespace SlimDX2.Tools.XIDLToCSharp
+namespace SlimDX.Generator
 {
     public class CSharpMethod : CSharpType, ICloneable
     {

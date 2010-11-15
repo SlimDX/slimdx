@@ -23,7 +23,7 @@ using System.IO;
 using System.Text;
 using SlimDX2.Tools.XIDL;
 
-namespace SlimDX2.Tools.XIDLToCSharp
+namespace SlimDX.Generator
 {
     internal partial class Program
     {

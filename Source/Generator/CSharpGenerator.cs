@@ -30,7 +30,7 @@ using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TextTemplating;
 using SlimDX2.Tools.XIDL;
 
-namespace SlimDX2.Tools.XIDLToCSharp
+namespace SlimDX.Generator
 {
     public class CSharpGenerator
     {
