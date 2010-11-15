@@ -1,1 +1,0 @@
-External\SlimBuild\sb.exe
