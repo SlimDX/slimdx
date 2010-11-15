@@ -20,7 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using SlimDX2.Tools.XIDL;
+using SlimDX.XIDL;
 using System.Linq;
 
 namespace SlimDX.Generator

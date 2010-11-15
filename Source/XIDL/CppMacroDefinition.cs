@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 using System.Runtime.Serialization;
 
-namespace SlimDX2.Tools.XIDL
+namespace SlimDX.XIDL
 {
     [DataContract]
     public class CppMacroDefinition : CppElement

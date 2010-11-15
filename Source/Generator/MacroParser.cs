@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
-using SlimDX2.Tools.XIDL;
+using SlimDX.XIDL;
 
 namespace SlimDX.Generator
 {

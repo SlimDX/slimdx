@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 using System.Text.RegularExpressions;
 
-namespace SlimDX2.Tools.XIDL
+namespace SlimDX.XIDL
 {
     public class PathRegex : Regex
     {

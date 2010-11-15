@@ -25,7 +25,7 @@ using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using System.Xml;
 
-namespace SlimDX2.Tools.XIDL
+namespace SlimDX.XIDL
 {
     [DataContract]
     public class CppIncludeGroup : CppElement

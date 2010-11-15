@@ -20,7 +20,7 @@
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace SlimDX2.Tools.XIDL
+namespace SlimDX.XIDL
 {
     [DataContract]
     public class CppType : CppElement
