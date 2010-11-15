@@ -86,7 +86,7 @@ namespace SlimDX2.Direct2D1
 
         public void AddBezier(BezierSegment bezier)
         {
-            AddBezier_(bezier);
+            AddBezier_(ref bezier);
         }
 
         public void AddQuadraticBezier(QuadraticBezierSegment bezier)

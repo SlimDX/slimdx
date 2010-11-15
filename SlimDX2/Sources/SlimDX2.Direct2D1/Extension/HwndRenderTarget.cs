@@ -37,7 +37,7 @@ namespace SlimDX2.Direct2D1
             : base(IntPtr.Zero)
         {
             HwndRenderTarget temp;
-            factory.CreateHwndRenderTarget(ref renderTargetProperties, hwndProperties, out temp);
+            factory.CreateHwndRenderTarget(ref renderTargetProperties, ref hwndProperties, out temp);
             NativePointer = temp.NativePointer;
         }
     }
