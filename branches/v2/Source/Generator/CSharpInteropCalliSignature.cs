@@ -83,5 +83,9 @@ namespace SlimDX.Generator
             builder.Append(")");
             return builder.ToString();
         }
+
+				public override int GetHashCode() {
+					return ReturnType.GetHashCode();
+				}
     }
 }

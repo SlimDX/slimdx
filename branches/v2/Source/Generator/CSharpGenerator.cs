@@ -1060,8 +1060,6 @@ namespace SlimDX.Generator
 
             cSharpMethod.ReturnType = MapReturnParameter(cppMethod);
 
-            bool hasMarshalType = false;
-
             var marshalMethodTypes = new List<TypeWrapper>();
 
             foreach (CppParameter cppParameter in cppMethod.Parameters)

@@ -32,7 +32,6 @@ namespace SlimDX.Generator
         public CSharpStruct TypeSlimMathVector2;
         public CSharpStruct TypeSlimMathVector3;
         public CSharpStruct TypeSlimMathVector4;
-        public CSharpStruct TypeSlimMathColor3;
         public CSharpStruct TypeSlimMathColor4;
         public CSharpStruct TypeSlimMathQuaternion;
         public CSharpStruct TypeSlimMathPlane;
