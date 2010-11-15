@@ -1,6 +1,0 @@
-def build( b ):
-	b(
-		"msbuild",
-		projects = FileSet("Products/SlimDX/SlimDX.csproj"),
-		properties = ["Configuration=Debug", "Platform=AnyCpu"]
-	)
