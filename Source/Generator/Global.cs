@@ -21,6 +21,6 @@ namespace SlimDX.Generator
 {
     public class Global
     {
-        public const string Name = "SlimDX2";
+        public const string Name = "SlimDX";
     }
 }

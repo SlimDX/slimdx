@@ -321,7 +321,7 @@ namespace SlimDX.Generator
 
             //host.TemplateFileValue = "Interop.tt";
             //// Write Dynamic Interop
-            //File.WriteAllText(relativePath + @"\SlimDX2\CppObjectInterop.cs",
+            //File.WriteAllText(relativePath + @"\SlimDX\CppObjectInterop.cs",
             //                  engine.ProcessTemplate(Utilities.GetResource(host.TemplateFileValue), host));
             //foreach (CompilerError error in host.Errors)
             //{

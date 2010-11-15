@@ -360,8 +360,8 @@ namespace SlimDX.Generator
             }
 
             //IntPtr pDevice_;
-            //SlimDX2.Interop.CalliVoid(_nativePointer, 3 * 4, &pDevice_);
-            //pDevice = new SlimDX2.Direct3D11.Device(pDevice_);
+            //SlimDX.Interop.CalliVoid(_nativePointer, 3 * 4, &pDevice_);
+            //pDevice = new SlimDX.Direct3D11.Device(pDevice_);
 
             //for (int i = 0; i < pSamplers.Length; i++)
             //    pSamplers[i] = new SamplerState(pSamplers_[i]);

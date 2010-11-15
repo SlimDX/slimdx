@@ -94,13 +94,13 @@ namespace SlimDX.Generator
 
             gen.Generate();
 
-            gen.Dump("slimdx2.csv");
+            gen.Dump("SlimDX.csv");
 
             // DumpEnumItems("match_enums.txt", "DirectSound");
         }
 
         ///// <summary>
-        ///// Used to match SlimDX Enum with SlimDX2 Enum after a 1st pass in order to :
+        ///// Used to match SlimDX Enum with SlimDX Enum after a 1st pass in order to :
         ///// - get the correct name for each enum items
         ///// - get the correct type for each enum
         ///// </summary>
@@ -116,7 +116,7 @@ namespace SlimDX.Generator
         //    {
         //        foreach (var ns in assembly.Namespaces)
         //        {
-        //            if (ns.Name == "SlimDX2." + nameSpace)
+        //            if (ns.Name == "SlimDX." + nameSpace)
         //            {
         //                foreach (var cSharpEnum in ns.Enums)
         //                {
@@ -149,7 +149,7 @@ namespace SlimDX.Generator
 
         //                        if (cSharpEnum.IsFlag != isSlimFlag)
         //                        {
-        //                            log.WriteLine("// Warning Enums [{0}] have different Flags SlimDX [{1}] != SlimDX2 [{2}]", cSharpEnum.Name, isSlimFlag, cSharpEnum.IsFlag);
+        //                            log.WriteLine("// Warning Enums [{0}] have different Flags SlimDX [{1}] != SlimDX [{2}]", cSharpEnum.Name, isSlimFlag, cSharpEnum.IsFlag);
         //                        }
 
         //                        int i = 0;
