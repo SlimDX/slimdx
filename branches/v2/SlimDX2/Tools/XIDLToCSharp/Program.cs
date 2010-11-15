@@ -18,9 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Globalization;
 using System.IO;
-using System.Text;
 using SlimDX2.Tools.XIDL;
 
 namespace SlimDX2.Tools.XIDLToCSharp
@@ -59,34 +57,44 @@ namespace SlimDX2.Tools.XIDLToCSharp
             //return;
 
             //  Global Rename
-            group.TagName<CppEnum>(@"^D3D\d?\d?(.+)", "$1", false);
-            group.TagName<CppEnum>(@"^D3DX\d?\d?(.+)", "$1", false);
-            group.TagName<CppStruct>(@"^D3D\d?\d?(.+)", "$1", false);
-            group.TagName<CppStruct>(@"^D3DX\d?\d?(.+)", "$1", false);
-            group.TagName<CppFunction>(@"^D3D\d?\d?(.+)", "$1", false);
-            group.TagName<CppFunction>(@"^D3DX\d?\d?(.+)", "$1", false);
-            group.TagName<CppInterface>(@"^ID3D\d?\d?(.+)", "$1", false);
-            group.TagName<CppInterface>(@"^ID3DX\d?\d?(.+)", "$1", false);
+            //group.TagName<CppEnum>(@"^D3D\d?\d?(.+)", "$1", false);
+            //group.TagName<CppEnum>(@"^D3DX\d?\d?(.+)", "$1", false);
+            //group.TagName<CppStruct>(@"^D3D\d?\d?(.+)", "$1", false);
+            //group.TagName<CppStruct>(@"^D3DX\d?\d?(.+)", "$1", false);
+            //group.TagName<CppFunction>(@"^D3D\d?\d?(.+)", "$1", false);
+            //group.TagName<CppFunction>(@"^D3DX\d?\d?(.+)", "$1", false);
+            //group.TagName<CppInterface>(@"^ID3D\d?\d?(.+)", "$1", false);
+            //group.TagName<CppInterface>(@"^ID3DX\d?\d?(.+)", "$1", false);
 
             // -----------------------------------------------------------------------
-            // Mapping order is important!!!
+            // MapWin32 should be call before any other mapping
             // -----------------------------------------------------------------------
             MapWin32();
+
+            // Then order is not important (only for MapDirect3DCommon and MapD3DCompiler)
 
             MapDirectSound();
 
             MapXAudio2();
 
+            MapX3DAudio();
+
+            MapXInput();
+
+            MapDirectInput();
+
+            MapXACT3();
+
             MapXAPO();
 
             MapDXGI();
 
-            MapDirect3DCommon();
-            MapD3DCompiler();
+            MapDirect3DCommon();        // MapDirect3DCommon() should be called before MapD3DCompiler
+            MapD3DCompiler();           // because D3DCreateBlob from D3DCompiler is moved to D3DCommon
 
             MapDirect3D9();
             MapDirect3D10AndDirect3D11();
-            
+
             MapDirect2D1();
             MapDirectWrite();
 

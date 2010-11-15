@@ -24,14 +24,16 @@ namespace SlimDX2.Tools.XIDLToCSharp
 {
     internal partial class Program
     {
-
-        public unsafe void MapDirect3D9()
+        /// <summary>
+        /// Map Direct3D9 API
+        /// </summary>
+        public void MapDirect3D9()
         {
-            CSharpFunctionGroup d3d9FunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct3D9", Global.Name + ".Direct3D9", "D3D9");
-            CSharpFunctionGroup d3dx9FunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct3D9", Global.Name + ".Direct3D9", "D3DX9");
+            // Global namespace for Direct3D9
+            string assemblyName = Global.Name + ".Direct3D9";
+            string namespaceName = assemblyName;
 
-
-            string[] includes = new string[]
+            string[] includes = new []
                                     {
                                         "d3d9",
                                         "d3d9caps",
@@ -47,7 +49,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
                                         "d3dx9xof",
                                     };
             foreach (var include in includes)
-                gen.MapIncludeToNamespace(include, Global.Name + ".Direct3D9");
+                gen.MapIncludeToNamespace(include, namespaceName, assemblyName);
 
             // Force all grou.Find/Modify request to limit their search to the Direct3D9 includes
             group.FindContext.AddRange(includes);
@@ -91,6 +93,11 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.Remove<CppEnum>(@"^D3DSHADER_ADDRESSMODE_TYPE$");
             group.Remove<CppEnum>(@"^D3DSHADER_PARAM_SRCMOD_TYPE$");
             group.Remove<CppEnum>(@"^D3DXSHCOMPRESSQUALITYTYPE$");
+
+            group.TagName<CppEnum>(@"^D3D(.*)","$1",false);
+            group.TagName<CppEnum>(@"^D3DX(.*)", "$1", false);
+
+            group.TagName<CppEnum>(@"^_D3DXMESHOPT", "MeshOptions");
 
             group.TagName<CppEnum>(@"^D3DLOCK$", "LockFlags");
             group.TagEnumFlags(@"^D3DLOCK$");
@@ -791,6 +798,14 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // --------------------------------------------------------------------------------------------------------
             // Direct3D9 Structures
             // --------------------------------------------------------------------------------------------------------
+            group.TagName<CppStruct>(@"^D3D(.*)", "$1", false);
+            group.TagName<CppStruct>(@"^D3DX(.*)", "$1", false);            
+            
+            // Force D3DXHANDLE to be a void* instead of a UINT_PTR
+            CppTypedef d3dxHandle = group.FindFirst<CppTypedef>(@"^D3DXHANDLE$");
+            d3dxHandle.Type = "void";
+            d3dxHandle.Specifier = "*";
+
             gen.MapCppTypeToCSharpType("D3DCOLORVALUE", TypeSlimMathColor4);
             gen.MapCppTypeToCSharpType("D3DXCOLOR", TypeSlimMathColor4);
             gen.MapCppTypeToCSharpType("D3DXMATRIX", TypeSlimMathMatrix);
@@ -907,6 +922,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagName<CppInterface>(@"^ID3DXSPMesh$", "SimplificationMesh");
 
             group.Remove<CppMethod>(@"^ID3DXFont::GetDescA$");
+            group.TagVisibility<CppMethod>(@"^ID3DXFont::GetTextMetricsA$", Visibility.Internal);
+            group.TagVisibility<CppMethod>(@"^ID3DXFont::GetTextMetricsW$", Visibility.Internal);                        
 
             // Modify methods on IDirect3D9
             group.TagVisibility<CppMethod>(@"^IDirect3D9::CreateDevice$", Visibility.Internal);
@@ -1161,6 +1178,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             group.TagName<CppFunction>(@"^D3DXCreateFontIndirectW$", "CreateFontIndirect");
 
+            CSharpFunctionGroup d3d9FunctionGroup = gen.CreateFunctionGroup(assemblyName, namespaceName, "D3D9");
+            CSharpFunctionGroup d3dx9FunctionGroup = gen.CreateFunctionGroup(assemblyName, namespaceName, "D3DX9");
             string d3dx9DLLName = string.Format("d3dx9_{0}.dll", group.FindFirst<CppMacroDefinition>("D3DX_SDK_VERSION").StripStringValue);
             group.TagFunction("^D3D9.*", "d3d9.dll", d3d9FunctionGroup);
             group.TagFunction("^Direct3D.*", "d3d9.dll", d3d9FunctionGroup);
@@ -1169,7 +1188,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagFunction("^D3DPERF.*", d3dx9DLLName, d3dx9FunctionGroup);
 
             // Add constant from macro definitions
-            gen.AddConstantFromMacroToCSharpType("D3D_SDK_VERSION", Global.Name + ".Direct3D9.D3D9", "int", "SdkVersion");
+            gen.AddConstantFromMacroToCSharpType("D3D_SDK_VERSION",  namespaceName + ".D3D9", "int", "SdkVersion");
 
             // Clear FindContext
             group.FindContext.Clear();

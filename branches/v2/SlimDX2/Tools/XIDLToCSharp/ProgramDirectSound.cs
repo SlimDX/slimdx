@@ -17,16 +17,19 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
 using SlimDX2.Tools.XIDL;
 
 namespace SlimDX2.Tools.XIDLToCSharp
 {
     internal partial class Program
     {
-        public unsafe void MapDirectSound()
+        public void MapDirectSound()
         {
-            gen.MapIncludeToNamespace("dsound", Global.Name + ".DirectSound");
+            // Global namespace for DirectSound
+            string assemblyName = Global.Name + ".DirectSound";
+            string namespaceName = assemblyName;
+
+            gen.MapIncludeToNamespace("dsound", assemblyName, namespaceName);
 
             // Limit Find to "dsound" in this method (in order to be sure that we don't touch other includes)
             group.FindContext.Add("dsound");
@@ -290,10 +293,9 @@ namespace SlimDX2.Tools.XIDLToCSharp
             // DirectSound Functions
             // --------------------------------------------------------------------------------------------------------
             group.TagName<CppFunction>(@"^DirectSound(.+)", "$1", false);
-            CSharpFunctionGroup dsoundFunctionGroup = gen.CreateFunctionGroup(Global.Name + ".DirectSound", Global.Name + ".DirectSound", "DSound");
+            CSharpFunctionGroup dsoundFunctionGroup = gen.CreateFunctionGroup(assemblyName, namespaceName, "DSound");
             group.TagFunction("^DirectSound.*", "dsound.dll", dsoundFunctionGroup);
             group.TagFunction("^GetDeviceID.*", "dsound.dll", dsoundFunctionGroup);
-
 
             // Clear FindContext
             group.FindContext.Clear();

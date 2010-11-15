@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2007-2010 SlimDX Group
+// Copyright (c) 2007-2010 SlimDX Group
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,49 +25,43 @@ namespace SlimDX2.Tools.XIDLToCSharp
     internal partial class Program
     {
         /// <summary>
-        /// Map DirectWrite API
+        /// Map XInput API
         /// </summary>
-        public void MapDirectWrite()
+        public void MapXInput()
         {
-            // Global namespace for Direct2D1
-            string assemblyName = Global.Name + ".Direct2D1";
-            string namespaceName = Global.Name + ".DirectWrite";
+            // Global namespace for XAudio2
+            string assemblyName = Global.Name + ".XInput";
+            string namespaceName = assemblyName;
 
-            foreach (var includeName in new[] { "dcommon", "dwrite" })
-            {
-                gen.MapIncludeToNamespace(includeName, assemblyName, namespaceName, "DirectWrite");
-                group.FindContext.Add(includeName);                
-            }
+            gen.MapIncludeToNamespace("xinput", assemblyName, namespaceName);
 
-            // Global Rename
-            group.TagName<CppEnum>(@"^DWRITE(.+)", "$1", false);
-            group.TagName<CppStruct>(@"^DWRITE(.+)", "$1", false);
-            
+            // Limit Find to "xact3" in this method (in order to be sure that we don't touch other includes)
+            group.FindContext.Add("xinput");
+
             // --------------------------------------------------------------------------------------------------------
-            // DirectWrite Enumerations
+            // XInput Enumerations
             // --------------------------------------------------------------------------------------------------------
 
             // --------------------------------------------------------------------------------------------------------
-            // DirectWrite Structures
+            // XInput Structures
             // --------------------------------------------------------------------------------------------------------
+            group.TagName<CppStruct>(@"^XINPUT(.*)", "$1", false);
+
 
             // --------------------------------------------------------------------------------------------------------
-            // DirectWrite Interfaces
+            // XInput Interfaces
             // --------------------------------------------------------------------------------------------------------
-            group.TagName<CppInterface>(@"^IDWrite(.+)", "$1", false);
 
-            group.TagVisibility<CppMethod>(@"^IDWriteGdiInterop::.*?LOGFONT$", Visibility.Internal);
-            group.TagCallback(@"^IDWritePixelSnapping$");
-            group.TagCallback(@"^IDWriteTextRenderer$");
 
             // --------------------------------------------------------------------------------------------------------
-            // DirectWrite Functions
+            // XInput Functions
             // --------------------------------------------------------------------------------------------------------
-            group.TagName<CppFunction>(@"^DWrite(.+)", "$1", false);
-            CSharpFunctionGroup dwriteFunctionGroup = gen.CreateFunctionGroup(assemblyName, namespaceName, "DWrite");
-            group.TagFunction("^DWriteCreateFactory", "dwrite.dll", dwriteFunctionGroup);
+            CSharpFunctionGroup xinputFunctionGroup = gen.CreateFunctionGroup(assemblyName, namespaceName, "XInput");
+            group.TagFunction("^XInput.*$", group.FindFirst<CppMacroDefinition>("XINPUT_DLL_A").StripStringValue, xinputFunctionGroup);
 
+
+            // Clear FindContext
             group.FindContext.Clear();
-        }
+        }        
     }
 }

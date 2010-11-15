@@ -25,14 +25,29 @@ namespace SlimDX2.Tools.XIDLToCSharp
     internal partial class Program
     {
         public CSharpFunctionGroup D3DCommonFunctionGroup;
-        public string D3DCompilerDLLName;
 
-
-        public unsafe void MapDirect3DCommon()
+        public void MapDirect3DCommon()
         {
+            // Global namespace for Direct3D Commmon classes (Direct3D10 and Direct3D11)
+            string assemblyName = Global.Name;
+            string namespaceName = Global.Name + ".Direct3D";
+
+            gen.MapIncludeToNamespace("d3dcommon", assemblyName, namespaceName, "Direct3D");
+
+            group.FindContext.Add("d3dcommon");
+
             // --------------------------------------------------------------------------------------------------------
             // D3DCommon Enumerations
-            // --------------------------------------------------------------------------------------------------------
+            // --------------------------------------------------------------------------------------------------------              
+            group.TagName<CppEnum>(@"^D3D(.*)", "$1", false);
+            group.TagName<CppEnumItem>(@"^D3D(.*)", "$1", false);
+
+            group.Remove<CppEnumItem>(@"D3D(\d+)_PRIMITIVE_TOPOLOGY_.*");
+            group.Remove<CppEnumItem>(@"D3D(\d+)_PRIMITIVE_.*");
+
+            group.Remove<CppEnumItem>(@"D3D(\d+)_SRV_DIMENSION_.*");
+            group.Remove<CppEnumItem>(@"D3D(\d+_1)_SRV_DIMENSION_.*");
+
             group.Remove<CppEnumItem>(@"^D3D(\d+)_SVC_.*");
             group.Remove<CppEnumItem>(@"^D3D(\d+)_SVF_.*");
             group.Remove<CppEnumItem>(@"^D3D(\d+)_SVT_.*");
@@ -49,6 +64,14 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             group.TagName<CppEnum>(@"^D3D_PRIMITIVE$", @"InputPrimitive");
             group.TagName<CppEnumItem>(@"^D3D_FEATURE_LEVEL_(.*)", @"Level_$1", true);
+
+            group.TagName<CppEnum>(@"^D3D_PRIMITIVE_TOPOLOGY$", "PrimitiveTopology");
+            group.TagName<CppEnumItem>(@"^D3D_PRIMITIVE_TOPOLOGY_(.*)", "$1", false);
+
+            group.TagName<CppEnum>(@"^D3D_SRV_DIMENSION$","ShaderResourceViewDimension");
+            group.TagName<CppEnumItem>(@"^D3D_SRV_DIMENSION_(.*)$", "$1", false);
+
+
             group.TagName<CppEnumItem>(@"^D3D_PRIMITIVE_TOPOLOGY_(\d+)_CONTROL_POINT_PATCHLIST", "PatchListWith$1ControlPoints");
             group.TagName<CppEnumItem>(@"^D3D_PRIMITIVE_(\d+)_CONTROL_POINT_PATCH", "PatchWith$1ControlPoints");
 
@@ -59,8 +82,11 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagName<CppEnumItem>(@"^D3D_SIT_(.*)", "$1", false);
             group.TagName<CppEnumItem>(@"^D3D_CT_(.*)", "$1", false);
 
+            group.TagName<CppEnum>(@"^D3D_DRIVER_TYPE$", "DriverType");
+            group.TagName<CppEnumItem>(@"^D3D_DRIVER_TYPE_(.*)", "$1", false);
+
             group.TagName<CppEnum>(@"^D3D_NAME$", "ParameterName");
-            group.TagName<CppEnum>(@"^D3D_NAME_(.*)", "$1", false);
+            group.TagName<CppEnumItem>(@"^D3D_NAME_(.*)", "$1", false);
 
             group.TagName<CppEnum>(@"^D3DCOMPILER_STRIP_FLAGS$", "StripFlags");
 
@@ -79,16 +105,27 @@ namespace SlimDX2.Tools.XIDLToCSharp
             group.TagName<CppEnumItem>(@"^D3D_REGISTER_COMPONENT_(.*)", "$1", false);
 
             // --------------------------------------------------------------------------------------------------------
-            // D3DCommon Interfaces
+            // D3DCommon Structures
             // --------------------------------------------------------------------------------------------------------
             // Those interfaces are only used as callback
-            group.TagCallback(@"^ID3DInclude$");
+            group.TagName<CppStruct>(@"^D3D(.*)", "$1", false);
 
             // --------------------------------------------------------------------------------------------------------
             // D3DCommon Interfaces
             // --------------------------------------------------------------------------------------------------------
-            D3DCommonFunctionGroup = gen.CreateFunctionGroup(Global.Name, Global.Name + ".Direct3D", "D3DCommon");
-            D3DCompilerDLLName = group.FindFirst<CppMacroDefinition>("D3DCOMPILER_DLL_A").StripStringValue;
+            // Those interfaces are only used as callback
+            group.TagName<CppInterface>(@"^ID3DInclude", "Include");
+            group.TagCallback(@"^ID3DInclude$");
+
+            group.TagName<CppInterface>(@"^ID3D10Blob", "Blob");
+
+            // --------------------------------------------------------------------------------------------------------
+            // D3DCommon Functions
+            // --------------------------------------------------------------------------------------------------------
+            D3DCommonFunctionGroup = gen.CreateFunctionGroup(assemblyName, namespaceName, "D3DCommon");
+
+
+            group.FindContext.Clear();
         }
     }
 }

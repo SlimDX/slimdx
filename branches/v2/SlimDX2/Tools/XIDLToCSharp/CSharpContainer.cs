@@ -35,6 +35,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
             _items = new List<CSharpContainer>();
             Generator = CallContext.GetData("Generator") as CSharpGenerator;
             Visibility = Visibility.Public;
+            IsFullyMapped = true;
         }
 
         internal CSharpGenerator Generator { get; private set; }
@@ -79,6 +80,8 @@ namespace SlimDX2.Tools.XIDLToCSharp
         public virtual string Name { get; set; }
 
         public Visibility Visibility { get; set; }
+
+        public bool IsFullyMapped { get; set; }
 
 
         public virtual string VisibilityName
