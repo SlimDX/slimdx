@@ -21,7 +21,17 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly:AssemblyTitle("SlimDX.Parser")]
-[assembly:AssemblyDescription("SlimDX Parser Tool")]
+[assembly:AssemblyCompany("SlimDX Group")]
+[assembly:AssemblyProduct("SlimDX")]
+[assembly:AssemblyCopyright("Copyright © 2007-2010 SlimDX Group")]
 
-[assembly:Guid("b228bcc7-4279-40af-9d80-08e60a2bcf75")]
+[assembly:AssemblyVersion("2.0.0.0")]
+[assembly:AssemblyFileVersion("2.0.0.0")]
+
+#if DEBUG
+[assembly:AssemblyConfiguration("Debug")]
+#else
+[assembly:AssemblyConfiguration("Release")]
+#endif
+
+[assembly:ComVisible(false)]
