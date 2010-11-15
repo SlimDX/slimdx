@@ -8,8 +8,8 @@
     <ProjectGuid>{19435A18-0C26-4534-8987-96E555BD2EFC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SlimDX2.Tools.XIDL</RootNamespace>
-    <AssemblyName>SlimDX2.Tools.XIDL</AssemblyName>
+    <RootNamespace>SlimDX.XIDL</RootNamespace>
+    <AssemblyName>SlimDX.XIDL</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>

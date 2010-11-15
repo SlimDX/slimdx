@@ -28,7 +28,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TextTemplating;
-using SlimDX2.Tools.XIDL;
+using SlimDX.XIDL;
 
 namespace SlimDX.Generator
 {

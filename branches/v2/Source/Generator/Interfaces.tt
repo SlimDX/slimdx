@@ -1,9 +1,9 @@
 ﻿<#@ template debug="true" language="C#" hostspecific="True"  #>
 <#@ output encoding="ASCII" extension=".cs" #>
 <#@ assembly name="SlimDX.Generator.exe" #>
-<#@ assembly name="SlimDX2.Tools.XIDL.dll" #>
+<#@ assembly name="SlimDX.XIDL.dll" #>
 <#@ import namespace="SlimDX.Generator" #>
-<#@ import namespace="SlimDX2.Tools.XIDL" #>
+<#@ import namespace="SlimDX.XIDL" #>
 <#@ parameter name="Namespace" type="SlimDX.Generator.CSharpNamespace" #>
 // Copyright (c) 2007-2010 SlimDX Group
 // 

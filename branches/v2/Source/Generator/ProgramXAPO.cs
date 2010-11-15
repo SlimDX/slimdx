@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using SlimDX2.Tools.XIDL;
+using SlimDX.XIDL;
 using System.Linq;
 
 namespace SlimDX.Generator
