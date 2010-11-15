@@ -53,6 +53,9 @@
     <Compile Include="..\DynamicInterop.cs">
       <Link>DynamicInterop.cs</Link>
     </Compile>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="CSharpAssembly.cs" />
     <Compile Include="CSharpContainer.cs" />
     <Compile Include="CSharpConstant.cs" />
