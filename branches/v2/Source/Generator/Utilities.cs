@@ -20,7 +20,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace SlimDX2.Tools.XIDLToCSharp
+namespace SlimDX.Generator
 {
     public class Utilities
     {
@@ -31,7 +31,7 @@ namespace SlimDX2.Tools.XIDLToCSharp
 
             string val = "";
             //' resources are named using a fully qualified name
-            Stream strm = asm.GetManifestResourceStream("SlimDX2.Tools.XIDLToCSharp." + filename);
+						Stream strm = asm.GetManifestResourceStream( "SlimDX.Generator." + filename );
 
             //' read the contents of the embedded file
             var reader = new StreamReader(strm);

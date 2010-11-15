@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using SlimDX2.Tools.XIDL;
 
-namespace SlimDX2.Tools.XIDLToCSharp
+namespace SlimDX.Generator
 {
     public class MacroParser
     {

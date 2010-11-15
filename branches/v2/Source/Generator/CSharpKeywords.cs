@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace SlimDX2.Tools.XIDLToCSharp
+namespace SlimDX.Generator
 {
     /// <summary>
     /// A class with keywords name for C#

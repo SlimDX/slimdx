@@ -8,8 +8,8 @@
     <ProjectGuid>{AD55612F-453A-40FC-80D7-CC19528E57B5}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SlimDX2.Tools.HeaderToXIDL</RootNamespace>
-    <AssemblyName>HeaderToXIDL</AssemblyName>
+    <RootNamespace>SlimDX.Parser</RootNamespace>
+    <AssemblyName>SlimDX.Parser</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>

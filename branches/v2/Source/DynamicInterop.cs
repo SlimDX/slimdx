@@ -24,7 +24,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 
-namespace SlimDX2
+namespace SlimDX
 {
     /// <summary>
     /// Type used for template

@@ -24,7 +24,7 @@ using System.IO;
 using System.Text;
 using Microsoft.VisualStudio.TextTemplating;
 
-namespace SlimDX2.Tools.XIDLToCSharp
+namespace SlimDX.Generator
 {
     public class CustomTemplateHost : ITextTemplatingEngineHost, ITextTemplatingSessionHost
     {

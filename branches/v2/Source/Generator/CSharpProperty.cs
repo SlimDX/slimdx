@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 using System.Linq;
 
-namespace SlimDX2.Tools.XIDLToCSharp
+namespace SlimDX.Generator
 {
     public class CSharpProperty : CSharpMapType
     {

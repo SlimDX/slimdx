@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SlimDX2.Tools.XIDL;
 
-namespace SlimDX2.Tools.XIDLToCSharp
+namespace SlimDX.Generator
 {
     /// <summary>
     ///   A CSharpStruct that maps to a native struct

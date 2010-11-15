@@ -24,7 +24,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 
-namespace SlimDX2.Tools.XIDLToCSharp
+namespace SlimDX.Generator
 {
     public class CSharpContainer
     {

@@ -21,7 +21,7 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace SlimDX2.Tools.HeaderToXIDL
+namespace SlimDX.Parser
 {
     /// <summary>
     /// Header To XIDL

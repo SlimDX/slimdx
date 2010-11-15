@@ -6,9 +6,9 @@
 	</PropertyGroup>
 	<Target Name="Build">
 		<MSBuild Projects="SlimDX.sln" Properties="Configuration=$(Configuration);Platform=$(Platform)"/>
-		<Exec Command="HeaderToXIDL.exe" WorkingDirectory="Source/Parser/bin/$(Configuration)"/>
+		<Exec Command="SlimDX.Parser.exe" WorkingDirectory="Source/Parser/bin/$(Configuration)"/>
 		<Copy SourceFiles="Source/Parser/bin/$(Configuration)/directx.xidl" DestinationFolder="Source/Generator/bin/$(Configuration)"/>
-		<Exec Command="XIDLToCSharp.exe" WorkingDirectory="Source/Generator/bin/$(Configuration)"/>
+		<Exec Command="SlimDX.Generator.exe" WorkingDirectory="Source/Generator/bin/$(Configuration)"/>
   </Target>
 </Project>
 

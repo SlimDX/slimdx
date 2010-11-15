@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 using System;
 
-namespace SlimDX2.Tools.XIDLToCSharp
+namespace SlimDX.Generator
 {
     [Flags]
     public enum Visibility
