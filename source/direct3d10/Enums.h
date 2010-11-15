@@ -1774,7 +1774,9 @@ namespace SlimDX
 			None = 0,
 			GenerateMipMaps = D3D10_RESOURCE_MISC_GENERATE_MIPS,
 			Shared = D3D10_RESOURCE_MISC_SHARED,
-			TextureCube = D3D10_RESOURCE_MISC_TEXTURECUBE
+			TextureCube = D3D10_RESOURCE_MISC_TEXTURECUBE,
+			KeyedMutex = D3D10_RESOURCE_MISC_SHARED_KEYEDMUTEX,
+			GdiCompatible = D3D10_RESOURCE_MISC_GDI_COMPATIBLE
 		};
 
 		/// <summary></summary>
