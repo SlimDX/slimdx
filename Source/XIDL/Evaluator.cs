@@ -48,7 +48,7 @@ namespace SlimDX.XIDL
             {
                 o = _evaluator.Evaluate(statement);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.Out.WriteLine("Evaluator failed : unable to eval value [{0}]", statement);
             }
@@ -57,7 +57,7 @@ namespace SlimDX.XIDL
 
         static Evaluator()
         {
-            var compiler = new JScriptCodeProvider().CreateCompiler();
+            var compiler = new JScriptCodeProvider();
             var parameters = new CompilerParameters {GenerateInMemory = true};
             var results = compiler.CompileAssemblyFromSource(parameters, _jscriptSource);
             var assembly = results.CompiledAssembly;

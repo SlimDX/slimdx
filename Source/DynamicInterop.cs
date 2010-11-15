@@ -167,6 +167,10 @@ namespace SlimDX
         {
             return !(a == b);
         }
+
+				public override int GetHashCode() {
+					return _type.GetHashCode();
+				}
     }
 
 #if XIDLToCSharp

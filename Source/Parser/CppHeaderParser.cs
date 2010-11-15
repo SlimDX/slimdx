@@ -44,7 +44,6 @@ namespace SlimDX.Parser
         private readonly CppInclude rootInclude;
         private int currentIndex;
         private List<Token> tokens;
-        private Guid currentInterfaceGuid;
 
         public CppHeaderParser()
         {
@@ -1558,7 +1557,6 @@ namespace SlimDX.Parser
             }
             else
             {
-                bool stripType = false;
                 if (CurrentToken.Value == "interface")
                     ReadNextToken();
                 else if (CurrentToken.Id == TokenId.Struct)
