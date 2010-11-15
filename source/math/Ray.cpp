@@ -69,13 +69,20 @@ namespace SlimDX
 
 	bool Ray::Intersects( Ray ray, Vector3 vertex1, Vector3 vertex2, Vector3 vertex3, [Out] float% distance )
 	{
-		FLOAT u, v;
+		float u, v;
+		return Intersects( ray, vertex1, vertex2, vertex3, distance, u, v );
+	}
+
+	bool Ray::Intersects( Ray ray, Vector3 vertex1, Vector3 vertex2, Vector3 vertex3, [Out] float% distance, [Out] float% barycentricU, [Out] float% barycentricV )
+	{
 		pin_ptr<float> pinnedDist = &distance;
+		pin_ptr<float> pinnedU = &barycentricU;
+		pin_ptr<float> pinnedV = &barycentricV;
 
 		if( D3DXIntersectTri( reinterpret_cast<D3DXVECTOR3*>( &vertex1 ), 
 			reinterpret_cast<D3DXVECTOR3*>( &vertex2 ), reinterpret_cast<D3DXVECTOR3*>( &vertex3 ),
 			reinterpret_cast<D3DXVECTOR3*>( &ray.Position ), reinterpret_cast<D3DXVECTOR3*>( &ray.Direction ),
-			&u, &v, reinterpret_cast<FLOAT*>( pinnedDist ) ) )
+			reinterpret_cast<FLOAT*>( pinnedU ), reinterpret_cast<FLOAT*>( pinnedV ), reinterpret_cast<FLOAT*>( pinnedDist ) ) )
 			return true;
 		else
 			return false;

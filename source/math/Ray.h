@@ -78,6 +78,19 @@ namespace SlimDX
 		/// <param name="distance">When the method completes, contains the distance at which the ray intersected the plane.</param>
 		/// <returns><c>true</c> if the ray intersects the plane; otherwise, <c>false</c>.</returns>
 		static bool Intersects( Ray ray, Vector3 vertex1, Vector3 vertex2, Vector3 vertex3, [Out] float% distance );
+
+		/// <summary>
+		/// Determines whether a ray intersects the specified object.
+		/// </summary>
+		/// <param name="ray">The ray which will be tested for intersection.</param>
+		/// <param name="vertex1">The first vertex of a triangle that will be tested for intersection.</param>
+		/// <param name="vertex2">The second vertex of a triangle that will be tested for intersection.</param>
+		/// <param name="vertex3">The third vertex of a triangle that will be tested for intersection.</param>
+		/// <param name="distance">When the method completes, contains the distance at which the ray intersected the plane.</param>
+		/// <param name="barycentricU">When the method completes, contains the U component of the barycentric hit coordinates.</param>
+		/// <param name="barycentricV">When the method completes, contains the V component of the barycentric hit coordinates.</param>
+		/// <returns><c>true</c> if the ray intersects the plane; otherwise, <c>false</c>.</returns>
+		static bool Intersects( Ray ray, Vector3 vertex1, Vector3 vertex2, Vector3 vertex3, [Out] float% distance, [Out] float% barycentricU, [Out] float% barycentricV );
 		
 		/// <summary>
 		/// Determines whether a ray intersects the specified object.

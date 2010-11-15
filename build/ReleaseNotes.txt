@@ -3,6 +3,9 @@ Samples
 	* Changed the sample framework to check for fullscreen DXGI swap chain before disposing.
 	* Removed unused testing code from SimpleModel10.
 
+Math
+	* Added an overload of Ray.Intersects that returns the barycentric hit coordinates.
+
 Direct3D 9
 	* Fixed a memory in Utilities.ReadRange that affected many BaseMesh methods.
 	* Fixed a typo in the caps structure that filled VolumeTextureFilterCaps with the wrong value.
