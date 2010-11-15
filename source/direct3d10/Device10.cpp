@@ -230,14 +230,17 @@ namespace Direct3D10
 	T Device::OpenSharedResource(System::IntPtr handle)
 	{
 		GUID guid = Utilities::GetNativeGuidForType( T::typeid );
-		void *resultPointer;
+		ID3D10Resource* resultPointer;
 
-		HRESULT hr = InternalPointer->OpenSharedResource( handle.ToPointer(), guid, &resultPointer );
+		HRESULT hr = InternalPointer->OpenSharedResource( handle.ToPointer(), guid, (void**)&resultPointer );
 		if( RECORD_D3D10( hr ).IsFailure )
 			return T();
 
 		MethodInfo^ method = T::typeid->GetMethod( "FromPointer", BindingFlags::Public | BindingFlags::Static );
-		return safe_cast<T>( method->Invoke( nullptr, gcnew array<Object^> { IntPtr( resultPointer ) } ) );
+		T result = safe_cast<T>( method->Invoke( nullptr, gcnew array<Object^> { IntPtr( resultPointer ) } ) );
+
+		resultPointer->Release();
+		return result;
 	}
 	
 	void Device::ClearDepthStencilView( DepthStencilView^ view, DepthStencilClearFlags flags, float depth, Byte stencil )

@@ -14,6 +14,10 @@ Direct3D 10
 	* Added missing creation method overloads to Effect.
 	* Added missing Get/SetRawValue methods to EffectVariable.
 	* Added ResourceOptionFlags.GdiCompatible and ResourceOptionFlags.KeyedMutex.
+	* Fixed a COM reference leak in Device.OpenSharedResource.
+
+Direct3D 11
+	* Fixed a COM reference leak in Device.OpenSharedResource.
 
 DXGI
 	* Changed SwapChain.Dispose to throw if the adapter is in fullscreen mode. This prevents a crash inside DXGI.
