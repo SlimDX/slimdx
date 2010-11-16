@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SlimDX.Windows
+namespace SlimDX.Multimedia
 {
     /// <summary>
     /// Summary description for WaveFormatEncoding.

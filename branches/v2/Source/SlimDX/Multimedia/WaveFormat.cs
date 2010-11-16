@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace SlimDX.Windows
+namespace SlimDX.Multimedia
 {
     /// <summary>
     /// Represents a Wave file format
