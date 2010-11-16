@@ -83,6 +83,7 @@
   <ItemGroup>
     <Reference Include="SlimDX.Interop">
       <HintPath>..\SlimDX.Interop.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="SlimMath">
       <HintPath>..\..\External\SlimMath\SlimMath.dll</HintPath>
@@ -123,8 +124,9 @@
     <Compile Include="Rectangle.cs" />
     <Compile Include="RectangleF.cs" />
     <Compile Include="Result.cs" />
+    <Compile Include="ShaderMacro.cs" />
     <Compile Include="Size.cs" />
-    <Compile Include="SlimDX2Exception.cs" />
+    <Compile Include="SlimDXException.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Windows\MessagePump.cs" />
     <Compile Include="Windows\RenderForm.cs">
