@@ -46,13 +46,7 @@ namespace SlimDX.Parser
         /// <param name="messageArgs">error message arguments</param>
         private static void Usage(int exitCode, string message = null, params string[] messageArgs)
         {
-            Console.WriteLine(
-                "Usage: {0} [/i:path_to_directx default = ENV($DXSDK_DIR\\Include)] [/o:output_xidl_file default = directx.xidl]",
-                Assembly.GetEntryAssembly().FullName);
-            if (message != null )
-                Console.WriteLine(message, messageArgs);
-
-            Environment.Exit(exitCode);
+            throw new ArgumentException(message + "\n" + string.Format("Usage: {0} [/i:path_to_directx default = ENV($DXSDK_DIR\\Include)] [/o:output_xidl_file default = directx.xidl]",Assembly.GetEntryAssembly().FullName));
         }
 
         /// <summary>
