@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 using System;
 using System.IO;
+using System.Reflection;
 using SlimDX.XIDL;
 
 namespace SlimDX.Generator
@@ -34,16 +35,26 @@ namespace SlimDX.Generator
         /// </summary>
         public void Run()
         {
-            string fileNameXIDL = "directx.xidl";
+            string checkOkFile = ".slimdx_generator_ok";
+            var creationTimeForGeneratorAssembly = File.GetLastWriteTime(Assembly.GetExecutingAssembly().Location);
 
-            if (!File.Exists(fileNameXIDL))
+            string fileNameXIDL = "directx.xidl";
+            string optionParser = "/o:" + fileNameXIDL;
+
+            // Run the parser
+            Parser.Program parser = new Parser.Program();
+
+
+            if (parser.IsParserAlreadyUpToDate(optionParser) && File.Exists(checkOkFile) && File.GetLastWriteTime(checkOkFile) == creationTimeForGeneratorAssembly)
             {
-                Console.WriteLine("File {0} not found. You must run HeaderToXIDL before running SlimDX.Generator");
-                Environment.Exit(1);
+                Console.WriteLine("Don't need to generate files again. Last run was successfull");
+                return;
             }
 
-            // Instantiate main objects
-            group = CppIncludeGroup.Read(fileNameXIDL);
+            // Run the parser, only if necessary
+            group = parser.Run(optionParser);
+
+            // Instanciate the generator
             gen = new CSharpGenerator(group);
 
             // For all methods "GetXXX", convert parameters with [None] attribute and pointer to [Out] attribute
@@ -57,14 +68,6 @@ namespace SlimDX.Generator
             //return;
 
             //  Global Rename
-            //group.TagName<CppEnum>(@"^D3D\d?\d?(.+)", "$1", false);
-            //group.TagName<CppEnum>(@"^D3DX\d?\d?(.+)", "$1", false);
-            //group.TagName<CppStruct>(@"^D3D\d?\d?(.+)", "$1", false);
-            //group.TagName<CppStruct>(@"^D3DX\d?\d?(.+)", "$1", false);
-            //group.TagName<CppFunction>(@"^D3D\d?\d?(.+)", "$1", false);
-            //group.TagName<CppFunction>(@"^D3DX\d?\d?(.+)", "$1", false);
-            //group.TagName<CppInterface>(@"^ID3D\d?\d?(.+)", "$1", false);
-            //group.TagName<CppInterface>(@"^ID3DX\d?\d?(.+)", "$1", false);
 
             // -----------------------------------------------------------------------
             // MapWin32 should be call before any other mapping
@@ -102,7 +105,10 @@ namespace SlimDX.Generator
 
             gen.Generate();
 
-            gen.Dump("SlimDX.csv");
+
+            File.WriteAllText(checkOkFile,"");
+            File.SetLastWriteTime(checkOkFile, creationTimeForGeneratorAssembly);
+            // gen.Dump("SlimDX.csv");
 
             // DumpEnumItems("match_enums.txt", "DirectSound");
         }

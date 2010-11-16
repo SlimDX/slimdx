@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser", "Source\Parser\Parser.csproj", "{AD55612F-453A-40FC-80D7-CC19528E57B5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "Source\Generator\Generator.csproj", "{28A3D3D8-5BD1-4457-BB4E-540700E00AE5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AD55612F-453A-40FC-80D7-CC19528E57B5} = {AD55612F-453A-40FC-80D7-CC19528E57B5}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{0E79FEFA-5FDD-456C-9383-4859F1671CCD}"
 	ProjectSection(SolutionItems) = preProject
@@ -18,7 +21,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Products", "Products", "{05
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimDX", "Source\SlimDX\SlimDX.csproj", "{CE5194D5-30A4-43A4-BF7A-7AC0C1988224}"
 	ProjectSection(ProjectDependencies) = postProject
-		{AD55612F-453A-40FC-80D7-CC19528E57B5} = {AD55612F-453A-40FC-80D7-CC19528E57B5}
 		{28A3D3D8-5BD1-4457-BB4E-540700E00AE5} = {28A3D3D8-5BD1-4457-BB4E-540700E00AE5}
 	EndProjectSection
 EndProject
@@ -41,6 +43,7 @@ Global
 		{28A3D3D8-5BD1-4457-BB4E-540700E00AE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28A3D3D8-5BD1-4457-BB4E-540700E00AE5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CE5194D5-30A4-43A4-BF7A-7AC0C1988224}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE5194D5-30A4-43A4-BF7A-7AC0C1988224}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE5194D5-30A4-43A4-BF7A-7AC0C1988224}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

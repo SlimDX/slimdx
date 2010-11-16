@@ -20,13 +20,14 @@
 using System;
 using System.IO;
 using System.Reflection;
+using SlimDX.XIDL;
 
 namespace SlimDX.Parser
 {
     /// <summary>
     /// Header To XIDL
     /// </summary>
-    internal class Program
+    public class Program
     {
         /// <summary>
         /// Arguments
@@ -84,24 +85,29 @@ namespace SlimDX.Parser
             return cmdArgs;
         }
 
-        /// <summary>
-        /// Main
-        /// </summary>
-        /// <param name="args"></param>
-        private static void Main(string[] args)
+        private string checkOkFile = ".slimdx_parser_ok";
+        private DateTime creationTimeForGeneratorAssembly = File.GetLastWriteTime(Assembly.GetExecutingAssembly().Location);
+        
+        public bool IsParserAlreadyUpToDate(params string[] args)
         {
+            CommandArgs cmdArgs = ParseArgs(args);
+            return !(File.Exists(cmdArgs.Output) && File.Exists(checkOkFile) && File.GetLastWriteTime(checkOkFile) == creationTimeForGeneratorAssembly);
+        }
 
+        public CppIncludeGroup Run(params string[] args)
+        {
             CommandArgs cmdArgs = ParseArgs(args);
 
+            if (IsParserAlreadyUpToDate())
+            {
+                Console.WriteLine("The parser don't need to generate files again. Last run was successfull");
+                return CppIncludeGroup.Read(cmdArgs.Output);
+            }
+            
             var cppHeaderParser = new CppHeaderParser();
 
             cppHeaderParser.IncludePath.Add(cmdArgs.IncludePath);
-            cppHeaderParser.IncludePath.Add(".");
 
-            // cppHeaderParser.Documentation.IsActive = false;
-            cppHeaderParser.AddInclude("win32_ext.h");
-
-          
             // DXGI
             cppHeaderParser.AddInclude("dxgi.h");
             cppHeaderParser.AddInclude("dxgiformat.h");
@@ -150,6 +156,22 @@ namespace SlimDX.Parser
 
             // Write XIDL model to the disk
             cppHeaderParser.IncludeGroup.Write(cmdArgs.Output);
+
+            // Write check ok file
+            File.WriteAllText(checkOkFile, "");
+            File.SetLastWriteTime(checkOkFile, creationTimeForGeneratorAssembly);
+
+            return cppHeaderParser.IncludeGroup;
+        }
+
+        /// <summary>
+        /// Main
+        /// </summary>
+        /// <param name="args"></param>
+        private static void Main(string[] args)
+        {
+            Program program = new Program();
+            program.Run(args);
         }
     }
 }
