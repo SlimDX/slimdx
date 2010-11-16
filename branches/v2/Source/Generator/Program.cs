@@ -18,9 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Globalization;
 using System.IO;
-using System.Text;
 using SlimDX.XIDL;
 
 namespace SlimDX.Generator
@@ -40,7 +38,7 @@ namespace SlimDX.Generator
 
             if (!File.Exists(fileNameXIDL))
             {
-                Console.WriteLine("File {0} not found. You must run HeaderToXIDL before running XIDLToCSharp");
+                Console.WriteLine("File {0} not found. You must run HeaderToXIDL before running SlimDX.Generator");
                 Environment.Exit(1);
             }
 
@@ -59,38 +57,48 @@ namespace SlimDX.Generator
             //return;
 
             //  Global Rename
-            group.TagName<CppEnum>(@"^D3D\d?\d?(.+)", "$1", false);
-            group.TagName<CppEnum>(@"^D3DX\d?\d?(.+)", "$1", false);
-            group.TagName<CppStruct>(@"^D3D\d?\d?(.+)", "$1", false);
-            group.TagName<CppStruct>(@"^D3DX\d?\d?(.+)", "$1", false);
-            group.TagName<CppFunction>(@"^D3D\d?\d?(.+)", "$1", false);
-            group.TagName<CppFunction>(@"^D3DX\d?\d?(.+)", "$1", false);
-            group.TagName<CppInterface>(@"^ID3D\d?\d?(.+)", "$1", false);
-            group.TagName<CppInterface>(@"^ID3DX\d?\d?(.+)", "$1", false);
+            //group.TagName<CppEnum>(@"^D3D\d?\d?(.+)", "$1", false);
+            //group.TagName<CppEnum>(@"^D3DX\d?\d?(.+)", "$1", false);
+            //group.TagName<CppStruct>(@"^D3D\d?\d?(.+)", "$1", false);
+            //group.TagName<CppStruct>(@"^D3DX\d?\d?(.+)", "$1", false);
+            //group.TagName<CppFunction>(@"^D3D\d?\d?(.+)", "$1", false);
+            //group.TagName<CppFunction>(@"^D3DX\d?\d?(.+)", "$1", false);
+            //group.TagName<CppInterface>(@"^ID3D\d?\d?(.+)", "$1", false);
+            //group.TagName<CppInterface>(@"^ID3DX\d?\d?(.+)", "$1", false);
 
             // -----------------------------------------------------------------------
-            // Mapping order is important!!!
+            // MapWin32 should be call before any other mapping
             // -----------------------------------------------------------------------
             MapWin32();
 
-            MapDirectSound();
+            // Then order is not important (only for MapDirect3DCommon and MapD3DCompiler)
 
-            MapXAudio2();
+            //MapDirectSound();
 
-            MapXAPO();
+           // MapXAudio2();
+
+            /*MapX3DAudio();
+
+            MapXInput();
+
+            MapDirectInput();
+
+            MapXACT3();*/
+
+           // MapXAPO();
 
             MapDXGI();
 
-            MapDirect3DCommon();
-            MapD3DCompiler();
+            MapDirect3DCommon();        // MapDirect3DCommon() should be called before MapD3DCompiler
+            MapD3DCompiler();           // because D3DCreateBlob from D3DCompiler is moved to D3DCommon
 
             MapDirect3D9();
             MapDirect3D10AndDirect3D11();
-            
-            MapDirect2D1();
-            MapDirectWrite();
 
-						gen.GeneratedPath = @"..\..\..\";
+            //MapDirect2D1();
+            //MapDirectWrite();
+
+            gen.GeneratedPath = @"..\..\..\";
 
             gen.Generate();
 
@@ -193,7 +201,7 @@ namespace SlimDX.Generator
         //}
 
         /// <summary>
-        /// Main XIDLToCSharp
+        /// Main SlimDX.Generator
         /// </summary>
         /// <param name="args">Command line args.</param>
         private unsafe static void Main(string[] args)

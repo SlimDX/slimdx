@@ -17,24 +17,28 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-using System;
 using SlimDX.XIDL;
 
 namespace SlimDX.Generator
 {
     internal partial class Program
     {
-        public unsafe void MapDirect2D1()
+        public void MapDirect2D1()
         {
+            // Global namespace for Direct2D1
+            string assemblyName = Global.Name + ".Direct2D1";
+            string namespaceName = assemblyName;
 
-            gen.MapIncludeToNamespace("d2d1", Global.Name + ".Direct2D1");
-
-            group.TagName<CppEnum>(@"^D2D1(.*)","$1",false);
-            group.TagName<CppStruct>(@"^D2D1(.*)", "$1", false);
+            // Map include to assembly
+            gen.MapIncludeToNamespace("d2d1", assemblyName, namespaceName);
+            
+            // Limit Find to "d2d1" in this method (in order to be sure that we don't touch other includes)
+            group.FindContext.Add("d2d1");
 
             // --------------------------------------------------------------------------------------------------------
             // D2D1 Enumerations
             // --------------------------------------------------------------------------------------------------------
+            group.TagName<CppEnum>(@"^D2D1(.*)", "$1", false);
             group.TagName<CppEnumItem>(@"^D2D1_FEATURE_LEVEL_(.*)", @"Level_$1");
             group.TagName<CppEnumItem>(@"^D2D1_GAMMA_2_2", @"StandardRgb");
             group.TagName<CppEnumItem>(@"^D2D1_GAMMA_1_0", @"Linear");
@@ -42,10 +46,11 @@ namespace SlimDX.Generator
             // --------------------------------------------------------------------------------------------------------
             // D2D1 Structures
             // --------------------------------------------------------------------------------------------------------
+            group.TagName<CppStruct>(@"^D2D1(.*)", "$1", false);
             gen.MapCppTypeToCSharpType("D2D_SIZE_F", TypeSystemDrawingSizeF);
             gen.MapCppTypeToCSharpType("D2D_SIZE_U", TypeSystemDrawingSize);
-            gen.MapCppTypeToCSharpType("D2D_RECT_U", TypeSlimDX2Rectangle);
-            gen.MapCppTypeToCSharpType("D2D_RECT_F", TypeSlimDX2RectangleF);
+            gen.MapCppTypeToCSharpType("D2D_RECT_U", TypeSlimDXRectangle);
+            gen.MapCppTypeToCSharpType("D2D_RECT_F", TypeSlimDXRectangleF);
             gen.MapCppTypeToCSharpType("D2D_POINT_2F", TypeSystemDrawingPointF);
             gen.MapCppTypeToCSharpType("D2D_POINT_2U", TypeSystemDrawingPoint);
             gen.MapCppTypeToCSharpType("D2D_COLOR_F", TypeSlimMathColor4);
@@ -81,8 +86,11 @@ namespace SlimDX.Generator
             // D2D1 Functions
             // --------------------------------------------------------------------------------------------------------
             group.TagName<CppFunction>(@"^D2D1(.+)", "$1", false);
-            CSharpFunctionGroup d2d1FunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct2D1", Global.Name + ".Direct2D1", "D2D1");
+            CSharpFunctionGroup d2d1FunctionGroup = gen.CreateFunctionGroup(assemblyName, namespaceName, "D2D1");
             group.TagFunction("^D2D1.*", "d2d1.dll", d2d1FunctionGroup);
+
+            // End limiting find context
+            group.FindContext.Clear();
         }
     }
 }

@@ -25,13 +25,12 @@ namespace SlimDX.Generator
     public class Utilities
     {
         public static string GetResource(string filename)
-        {		
-
+        {
             Assembly asm = Assembly.GetExecutingAssembly();
 
             string val = "";
             //' resources are named using a fully qualified name
-						Stream strm = asm.GetManifestResourceStream( "SlimDX.Generator." + filename );
+            Stream strm = asm.GetManifestResourceStream(typeof (Utilities).Namespace + "." + filename);
 
             //' read the contents of the embedded file
             var reader = new StreamReader(strm);

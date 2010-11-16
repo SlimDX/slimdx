@@ -35,9 +35,9 @@ namespace SlimDX.Generator
         public CSharpStruct TypeSlimMathColor4;
         public CSharpStruct TypeSlimMathQuaternion;
         public CSharpStruct TypeSlimMathPlane;
-        public CSharpStruct TypeSlimDX2Rectangle;
-        public CSharpStruct TypeSlimDX2RectangleF;
-        public CSharpStruct TypeSlimDX2FunctionCallback;
+        public CSharpStruct TypeSlimDXRectangle;
+        public CSharpStruct TypeSlimDXRectangleF;
+        public CSharpStruct TypeSlimDXFunctionCallback;
         public CSharpInterface TypeIUnknown;
 
         /// <summary>
@@ -45,13 +45,19 @@ namespace SlimDX.Generator
         /// </summary>
         public unsafe void MapWin32()
         {
+
+            // Global namespace for XAudio2
+            string assemblyName = Global.Name;
+            string namespaceName = assemblyName + ".Windows";
+
+
             // Namespace mapping for win32_ext extension
-            gen.MapIncludeToNamespace("win32_ext", Global.Name + ".Windows", Global.Name, "Windows");
+            gen.MapIncludeToNamespace("win32_ext", assemblyName, namespaceName, "Windows");
 
             // --------------------------------------------------------------------------------------------------------
             // Global/Win32 Enumerations
             // --------------------------------------------------------------------------------------------------------
-            // Remove all enums ending with _FORCE_DWORD, FORCE_UINT
+            // Remove all enums ending with _FORCE_DWORD, FORCE_UINT in ALL includes
             group.Remove<CppEnumItem>("^.*_FORCE_DWORD$");
             group.Remove<CppEnumItem>("^.*_FORCE_UINT$");
 
@@ -125,25 +131,25 @@ namespace SlimDX.Generator
             TypeSlimMathPlane.SizeOf = sizeof(SlimMath.Plane);
 
             // SlimDX.Rectangle
-            TypeSlimDX2Rectangle = new CSharpStruct();
-            TypeSlimDX2Rectangle.Name = Global.Name + ".Rectangle";
-            TypeSlimDX2Rectangle.SizeOf = 4 * 4;
+            TypeSlimDXRectangle = new CSharpStruct();
+            TypeSlimDXRectangle.Name = Global.Name + ".Rectangle";
+            TypeSlimDXRectangle.SizeOf = 4 * 4;
 
             // Use SlimDX.RectangleF struct
-            TypeSlimDX2RectangleF = new CSharpStruct();
-            TypeSlimDX2RectangleF.Name = Global.Name + ".RectangleF";
-            TypeSlimDX2RectangleF.SizeOf = 4 * 4;
+            TypeSlimDXRectangleF = new CSharpStruct();
+            TypeSlimDXRectangleF.Name = Global.Name + ".RectangleF";
+            TypeSlimDXRectangleF.SizeOf = 4 * 4;
 
             // Use SlimDX.Windows.WaveFormat
             var waveFormatEx = new CSharpStruct();
-            waveFormatEx.Name = Global.Name + ".Windows.WaveFormat";
+            waveFormatEx.Name = namespaceName + ".WaveFormat";
             waveFormatEx.HasMarshalType = true;
             waveFormatEx.SizeOf = 18;
             gen.MapCppTypeToCSharpType("WAVEFORMATEX", waveFormatEx);
 
             // Use SlimDX.Windows.WaveFormat
             var waveFormatExtensible = new CSharpStruct();
-            waveFormatExtensible.Name = Global.Name + ".Windows.WaveFormatExtensible";
+            waveFormatExtensible.Name = namespaceName + ".WaveFormatExtensible";
             waveFormatExtensible.HasMarshalType = true;
             waveFormatExtensible.SizeOf = 18;
             waveFormatExtensible.HasCustomNew = true;
@@ -154,20 +160,18 @@ namespace SlimDX.Generator
 
             gen.MapCppTypeToCSharpType("SLIMDX_COLOR4", TypeSlimMathColor4);
             gen.MapCppTypeToCSharpType("POINT", TypeSystemDrawingPoint);
-            gen.MapCppTypeToCSharpType("RECT", TypeSlimDX2Rectangle); //Global.Name + ".Rectangle", 4 * 4, false, true);
+            gen.MapCppTypeToCSharpType("RECT", TypeSlimDXRectangle); //Global.Name + ".Rectangle", 4 * 4, false, true);
             gen.MapCppTypeToCSharpType("HRESULT", typeof(int));
             gen.MapCppTypeToCSharpType("UINT64", typeof(long));
             gen.MapCppTypeToCSharpType("FILETIME", typeof(long));
             gen.MapCppTypeToCSharpType("COLORREF", typeof(int));  // TODO: use real ColorRGBA8
             gen.MapCppTypeToCSharpType("GUID", typeof(Guid));
-            gen.MapCppTypeToCSharpType("CLSID", typeof(Guid));            
-            gen.MapCppTypeToCSharpType("DWORD", typeof(int));
-
+       
             // Setup FunctionCallback for __function__stdcall
-            TypeSlimDX2FunctionCallback = new CSharpStruct();
-            TypeSlimDX2FunctionCallback.Name = Global.Name + ".FunctionCallback";
-            TypeSlimDX2FunctionCallback.SizeOf = 8;
-            gen.MapCppTypeToCSharpType("__function__stdcall", TypeSlimDX2FunctionCallback);
+            TypeSlimDXFunctionCallback = new CSharpStruct();
+            TypeSlimDXFunctionCallback.Name = Global.Name + ".FunctionCallback";
+            TypeSlimDXFunctionCallback.SizeOf = 8;
+            gen.MapCppTypeToCSharpType("__function__stdcall", TypeSlimDXFunctionCallback);
 
             gen.MapCppTypeToCSharpType("SIZE", TypeSystemDrawingSize);
             group.TagVisibility<CppStruct>("^Win32$", Visibility.Internal);

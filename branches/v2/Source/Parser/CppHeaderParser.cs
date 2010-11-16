@@ -123,65 +123,6 @@ namespace SlimDX.Parser
                 preProcessor.AddIncludePath(includeDir);
             }
 
-            // Predefines macros
-            preProcessor.DefineMacro("LF_FACESIZE=32", true);
-            preProcessor.DefineMacro("D3D11_NO_HELPERS=1", true);
-            preProcessor.DefineMacro("D3D10_NO_HELPERS=1", true);
-            preProcessor.DefineMacro("CONST=const", true);
-            preProcessor.DefineMacro("LPRECT=RECT *", true);
-            preProcessor.DefineMacro("LPCSTR=const char *", true);
-            preProcessor.DefineMacro("__RPCNDR_H_VERSION__=1", true);
-            preProcessor.DefineMacro("__REQUIRED_RPCNDR_H_VERSION__=475", true);
-            preProcessor.DefineMacro("__REQUIRED_RPCSAL_H_VERSION__=100", true);
-            preProcessor.DefineMacro("__SAL_H_FULL_VER=140050727", true);
-            preProcessor.DefineMacro("LPVOID=void*", true);
-            preProcessor.DefineMacro("LPCSTR=const char*", true);
-            preProcessor.DefineMacro("LPCWSTR=const wchar*", true);
-            preProcessor.DefineMacro("DECLARE_HANDLE(name)=", true);
-            preProcessor.DefineMacro("__reserved=", true);
-            preProcessor.DefineMacro("WCHAR=wchar", true);
-            preProcessor.DefineMacro("STDMETHOD(method)=virtual HRESULT __stdcall method", true);
-            preProcessor.DefineMacro("STDMETHOD_(type,method)=virtual type __stdcall method", true);
-
-            preProcessor.DefineMacro("__DEFINE_GUID__(value)=", true);
-
-            // Interface declaration
-            // MIDL_INTERFACE("9B7E4C00-342C-4106-A19F-4F2704F689F0") ID3D10DeviceChild : public IUnknown
-            preProcessor.DefineMacro("MIDL_INTERFACE(guid)=interface __DEFINE_GUID__(guid)", true);
-            preProcessor.DefineMacro("DECLARE_INTERFACE(name)=interface name ", true);
-            preProcessor.DefineMacro("DECLARE_INTERFACE_(name,parent)=interface name : public parent ", true);
-            preProcessor.DefineMacro("D2D1_DECLARE_INTERFACE(guid)=__DEFINE_GUID__(guid)", true);
-            preProcessor.DefineMacro("DWRITE_DECLARE_INTERFACE(guid)=__DEFINE_GUID__(guid)", true);
-            preProcessor.DefineMacro("DECLSPEC_UUID(guid)=__DEFINE_GUID__(guid)", true);
-            preProcessor.DefineMacro("DECLSPEC_NOVTABLE=", true);
-
-            // Macro to transform a old COM interface declaration (DECLARE_INTERFACE) to the new format (MIDL_INTERFACE)
-            preProcessor.DefineMacro("PURE==0", true);
-            preProcessor.DefineMacro("THIS_=", true);
-            preProcessor.DefineMacro("THIS=void", true);
-            preProcessor.DefineMacro("__field_ecount_opt(x)=", true);
-            preProcessor.DefineMacro("DEFINE_ENUM_FLAG_OPERATORS(x)=", true);
-            // Hook the DEFINE_GUID to catch the OnDefineMacro event
-            preProcessor.DefineMacro("DEFINE_IID(name, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11)=", true);
-            preProcessor.DefineMacro("DEFINE_CLSID(name, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11)=", true);
-            preProcessor.DefineMacro("DEFINE_GUID(name, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11)=", true);
-            // Make possible to parse HRESULT macros
-            preProcessor.DefineMacro("MAKE_HRESULT(sev,fac,code)=( ((sev)<<31) | ((fac)<<16) | (code) )", true);
-
-            // D3D9
-            preProcessor.DefineMacro("D3DVECTOR_DEFINED=", true);
-            preProcessor.DefineMacro("D3DCOLORVALUE_DEFINED=", true);
-            preProcessor.DefineMacro("D3DRECT_DEFINED=", true);
-            preProcessor.DefineMacro("D3DMATRIX_DEFINED=", true);
-            preProcessor.DefineMacro("D3DVECTOR_DEFINED=", true);
-            preProcessor.DefineMacro("MAX_FVF_DECL_SIZE=65",true);
-            preProcessor.DefineMacro("WOW64_ENUM_WORKAROUND=", true);
-            preProcessor.DefineMacro("STDAPI=HRESULT WINAPI", true);
-
-            // DWrite macros
-            preProcessor.DefineMacro("DWRITE_EXPORT=WINAPI", true);
-            preProcessor.DefineMacro("DEFINE_ENUM_FLAG_OPERATORS(x)=", true);
-            preProcessor.DefineMacro("EXTERN_C=", true);            
             preProcessor.Run();
 
             // Remove all empty includes
@@ -584,10 +525,47 @@ namespace SlimDX.Parser
                     break;
                 else if (token.Id == TokenId.Semicolon)
                 {
-                    if (GetTokenFrom(position - 1).Id == TokenId.Rightparen)
+                    if (GetTokenFrom(position - 1).Id == TokenId.Rightparen || ( GetTokenFrom(position - 1).Id == TokenId.Const && GetTokenFrom(position - 2).Id == TokenId.Rightparen))
                     {
                         return true;
                     }
+                }
+                position++;
+            } while (true);
+            return false;
+        }
+
+
+        /// <summary>
+        /// Return true if next statements are probably a function
+        /// </summary>
+        /// <returns></returns>
+        private bool IsProbablyFunctionWithBody()
+        {
+            int position = 0;
+            int count = 0;
+            bool foundParenthesis = false;
+            do
+            {
+                Token token = GetTokenFrom(position);
+                if (token == null)
+                    break;
+                if (token.Id == TokenId.Leftparen)
+                {
+                    count++;
+                    foundParenthesis = true;
+                }
+                else if (token.Id == TokenId.Rightparen)
+                    count--;
+                else if (token.Id == TokenId.Leftbrace)
+                {
+                    if (foundParenthesis && count == 0)
+                        return true;
+                    break;
+                }
+                else if (token.Id == TokenId.Semicolon)
+                {
+                    return false;
                 }
                 position++;
             } while (true);
@@ -658,7 +636,7 @@ namespace SlimDX.Parser
                 {
                     string valueToParse = CurrentToken.Value;
                     // Remove L postfix if it's an integer
-                    // TODO: check if it's necessary, as it is done also in XIDLToCsharp
+                    // TODO: check if it's necessary, as it is done also in SlimDX.Generator
                     valueToParse = valueToParse.Replace("L", "");
                     value += valueToParse;
                 }
@@ -699,6 +677,9 @@ namespace SlimDX.Parser
             cppEnum.Name = enumName; // StripLeadingUnderscore(CurrentToken.Value);
             CurrentInclude.Add(cppEnum);
 
+            int enumValue = 0;
+            bool lastEnumValueIntValid = true;
+
             SkipUntilTokenId(TokenId.Leftbrace);
             do
             {
@@ -712,16 +693,25 @@ namespace SlimDX.Parser
 
                 ReadNextToken();
                 Token nextToken = CurrentToken;
-                enumItem.Value = "";
+                enumItem.Value = lastEnumValueIntValid ? "" + enumValue : "";
                 if (nextToken.Id == TokenId.Assign)
                 {
                     enumItem.Value = ParseEnumValue(nameToValue);
                     enumItem.Value = Evaluator.EvalToString(enumItem.Value);
-                    nameToValue.Add(enumItem.Name, enumItem.Value);
+                    int tryParseEnumValue;
+                    if (!int.TryParse(enumItem.Value, out tryParseEnumValue))
+                    {
+                        lastEnumValueIntValid = false;
+                    }
+                    else
+                    {
+                        enumValue = tryParseEnumValue;
+                    }
                 }
+                nameToValue.Add(enumItem.Name, enumItem.Value);
+                enumValue++;
 
                 //// Skip FORCE enums
-                //if (!enumItem.Name.EndsWith("FORCE_DWORD") && !enumItem.Name.EndsWith("FORCE_UINT"))
                 cppEnum.Add(enumItem);
 
                 SkipUntilTokenId(TokenId.Comma, TokenId.Rightbrace);
@@ -741,7 +731,12 @@ namespace SlimDX.Parser
         /// <returns></returns>
         private bool IsTokenNumeric(TokenId tokenId)
         {
-            return (tokenId == TokenId.Char || tokenId == TokenId.Int || tokenId == TokenId.Short || tokenId == TokenId.Long);
+            return (tokenId == TokenId.Char || tokenId == TokenId.Int || tokenId == TokenId.Short || tokenId == TokenId.Long
+                    || tokenId == TokenId.MsextInt8
+                    || tokenId == TokenId.MsextInt16
+                    || tokenId == TokenId.MsextInt32
+                    || tokenId == TokenId.MsextInt64);
+        
         }
 
         /// <summary>
@@ -787,15 +782,15 @@ namespace SlimDX.Parser
                 ReadNextToken();
             }
             // Skip token if enum or struct or interface
-            if (CurrentToken.Id == TokenId.Enum || CurrentToken.Id == TokenId.Struct ||
+            if (CurrentToken.Id == TokenId.Enum || CurrentToken.Id == TokenId.Struct || CurrentToken.Id == TokenId.Union ||
                 (CurrentToken.Value == "interface"))
             {
                 ReadNextToken();
             }
 
             string type;
-            // Handle unsigned
-            if (CurrentToken.Id == TokenId.Unsigned)
+            // Handle unsigned / signed prefix
+            if (CurrentToken.Id == TokenId.Unsigned ||  CurrentToken.Id == TokenId.Signed)
             {
                 ReadNextToken();
                 // If next token is not numeric, unsigned default is int type
@@ -862,7 +857,13 @@ namespace SlimDX.Parser
                                                  : arrayDimension + "," + localDimension;
                         }
                         if (cppType.IsArray)
-                            cppType.ArrayDimension = Evaluator.EvalToString(arrayDimension);
+                        {
+                            string valueDimension = arrayDimension;
+                            if (!nameToValue.TryGetValue(arrayDimension, out valueDimension))
+                                valueDimension = arrayDimension;
+
+                            cppType.ArrayDimension = Evaluator.EvalToString(valueDimension);
+                        }
                     }
                     break;
                 }
@@ -909,13 +910,11 @@ namespace SlimDX.Parser
         /// </summary>
         /// <param name="fieldOffset"></param>
         /// <returns></returns>
-        private CppField ReadStructField(CppStruct cppStruct, ref int fieldOffset)
+        private CppField ReadStructField(CppStruct cppStruct, ref int fieldOffset, bool goToNextFieldOffset)
         {
             CppAttribute attribute = ReadAnnotation();
             var field = ReadType<CppField>(true);
-
-            bool goToNextFieldOffset = true;
-
+           
             // If colon, then this is a bitfield
             if (PreviewNextToken().Id == TokenId.Colon)
             {
@@ -948,9 +947,15 @@ namespace SlimDX.Parser
         /// <summary>
         /// Parse a struct from current token stream
         /// </summary>
-        private CppStruct ParseStruct(bool isAnonymousStruct = false, CppStruct parentStruct = null)
+        private CppStruct ParseStructOrUnion(bool isAnonymousStruct = false, CppStruct parentStruct = null)
         {
+            int fieldOffset = 0;
+            Stack<int> unionFieldOffset = new Stack<int>();
             var cppStruct = new CppStruct();
+
+            bool IsTopUnion = (CurrentToken.Id == TokenId.Union);
+            if (IsTopUnion)
+                unionFieldOffset.Push(fieldOffset);
 
             if (!isAnonymousStruct)
             {
@@ -961,15 +966,15 @@ namespace SlimDX.Parser
             {
                 cppStruct.Name = parentStruct.Name + "Inner";
             }
+            if (PreviewNextToken().Id == TokenId.Semicolon)
+                return null;
+
             CurrentInclude.Add(cppStruct);
 
             cppStruct.Pack = _currentPackingValue;
 
             // Skip to structure fields declaration
             SkipUntilTokenId(TokenId.Leftbrace);
-
-            int fieldOffset = 0;
-
 
             // Iterate on fields
             do
@@ -978,7 +983,21 @@ namespace SlimDX.Parser
 
                 Token type = CurrentToken;
                 if (type.Id == TokenId.Rightbrace)
-                    break;
+                {
+                    if (unionFieldOffset.Count == 0 || (IsTopUnion && unionFieldOffset.Count == 1))
+                    {
+                        break;
+                    }
+                    unionFieldOffset.Pop();
+                    NextStatement();
+                    continue;
+                }
+
+                if (IsProbablyFunction() || IsProbablyFunctionWithBody())
+                {
+                    NextStatement();
+                    continue;
+                }
 
                 // Handle anonymous struct
                 if (type.Id == TokenId.Struct)
@@ -987,64 +1006,34 @@ namespace SlimDX.Parser
                     if (PreviewNextToken().Value == cppStruct.Name)
                     {
                         ReadNextToken();
-                        cppField = ReadStructField(cppStruct, ref fieldOffset);
+                        cppField = ReadStructField(cppStruct, ref fieldOffset, unionFieldOffset.Count == 0);
                     }
                     else
                     {
-                        CppStruct innerStruct = ParseStruct(true, cppStruct);
+                        CppStruct innerStruct = ParseStructOrUnion(true, cppStruct);
                         NextStatement();
                         cppField = new CppField {Type = innerStruct.Name, Name = "_anonymous_field_", Offset = fieldOffset};
+                        if (unionFieldOffset.Count == 0)
+                            fieldOffset++;
                     }
                     cppStruct.Add(cppField);
                 }
                 else if (type.Id == TokenId.Union)
                 {
-                    // Handle union
-                    SkipUntilTokenId(TokenId.Leftbrace);
+                    ReadNextToken();
+                    if (CurrentToken.Id != TokenId.Leftbrace)
+                        throw new ArgumentException(string.Format("Expecting { after union in struct {0}", cppStruct.Name));
 
-                    int unionFieldOffset;
-                    do
-                    {
-                        // Force field offset for an union to be the same
-                        unionFieldOffset = fieldOffset;
-                        ReadNextToken();
-                        type = CurrentToken;
-
-                        // Handle inner struct inside union (!)
-                        if (type.Id == TokenId.Struct)
-                        {
-                            CppField cppField;
-                            if (PreviewNextToken().Value == cppStruct.Name)
-                            {
-                                ReadNextToken();
-                                cppField = ReadStructField(cppStruct, ref unionFieldOffset);
-                            }
-                            else
-                            {
-                                CppStruct innerStruct = ParseStruct(true, cppStruct);
-                                NextStatement();
-                                cppField = new CppField { Type = innerStruct.Name, Name = "_anonymous_field_", Offset = fieldOffset };
-                            }
-                            cppStruct.Add(cppField);
-                        }
-                        else if (type.Id == TokenId.Rightbrace)
-                            break;
-                        else
-                            cppStruct.Add(ReadStructField(cppStruct, ref unionFieldOffset));
-                    } while (true);
-                    // For union, go to next field at the end of the union
-                    fieldOffset++;
-                    NextStatement();
-                }
-                else if (PreviewNextToken().Id == TokenId.Leftparen && !CurrentToken.Value.StartsWith("__"))
-                {
-                    // Skip Constructor
-                    SkipUntilTokenId(TokenId.Rightbrace);
+                    unionFieldOffset.Push(fieldOffset);
                 }
                 else
                 {
                     // Else Read Struct Field declaration
-                    cppStruct.Add(ReadStructField(cppStruct, ref fieldOffset));
+                    cppStruct.Add(ReadStructField(cppStruct, ref fieldOffset, unionFieldOffset.Count == 0));
+                }
+                if (unionFieldOffset.Count > 0)
+                {
+                    fieldOffset = unionFieldOffset.Peek();
                 }
             } while (true);
 
@@ -1126,7 +1115,7 @@ namespace SlimDX.Parser
             string annotation = CurrentToken.Value;
 
             // An annotation should start with __
-            if (!annotation.StartsWith("__"))
+            if (!annotation.StartsWith("__") || annotation == "__int64" || annotation == "__int32" || annotation == "__int16" || annotation == "__int8")
                 return CppAttribute.None;
 
             // Parse sub annotations part
@@ -1523,9 +1512,9 @@ namespace SlimDX.Parser
             if (CheckBody())
             {
                 CppElement cppTypeDefDeclare;
-                if (CurrentToken.Id == TokenId.Struct)
+                if (CurrentToken.Id == TokenId.Struct || CurrentToken.Id == TokenId.Union)
                 {
-                    cppTypeDefDeclare = ParseStruct();
+                    cppTypeDefDeclare = ParseStructOrUnion();
                 }
                 else if (CurrentToken.Id == TokenId.Enum)
                     cppTypeDefDeclare = ParseEnum();
@@ -1559,7 +1548,7 @@ namespace SlimDX.Parser
             {
                 if (CurrentToken.Value == "interface")
                     ReadNextToken();
-                else if (CurrentToken.Id == TokenId.Struct)
+                else if (CurrentToken.Id == TokenId.Struct || CurrentToken.Id == TokenId.Union)
                 {
                     //stripType = true;
                     ReadNextToken();
@@ -1766,9 +1755,9 @@ namespace SlimDX.Parser
                         NextStatement();
                     }
                 }
-                else if (CurrentToken.Id == TokenId.Struct)
+                else if (CurrentToken.Id == TokenId.Struct || CurrentToken.Id == TokenId.Union)
                 {
-                    ParseStruct();
+                    ParseStructOrUnion();
                     NextStatement();
                 }
                 else if (CurrentToken.Id == TokenId.Enum)

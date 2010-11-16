@@ -25,10 +25,18 @@ namespace SlimDX.Generator
 {
     internal partial class Program
     {
-        public unsafe void MapXAudio2()
+        /// <summary>
+        /// Map XAudio2 API
+        /// </summary>
+        public void MapXAudio2()
         {
-            gen.MapIncludeToNamespace("xaudio2", Global.Name + ".XAudio2");
-            gen.MapIncludeToNamespace("xaudio2fx", Global.Name + ".XAudio2.Fx", Global.Name + ".XAudio2", "Fx");
+            // Global namespace for XAudio2
+            string assemblyName = Global.Name + ".XAudio2";
+            string namespaceName = assemblyName;
+            string namespaceNameFx = assemblyName + ".Fx";
+
+            gen.MapIncludeToNamespace("xaudio2", assemblyName, namespaceName);
+            gen.MapIncludeToNamespace("xaudio2fx", assemblyName, namespaceNameFx, "Fx");
 
             // Limit Find to "dsound" in this method (in order to be sure that we don't touch other includes)
             group.FindContext.Add("xaudio2");
@@ -133,7 +141,7 @@ namespace SlimDX.Generator
             group.TagVisibility<CppMethod>(@"^IXAudio2Voice::SetEffectChain$", Visibility.Internal, true);
 
             // Add Fx contants
-            CSharpFunctionGroup xaudio2ContantGroup = gen.CreateFunctionGroup(Global.Name + ".XAudio2", Global.Name + ".XAudio2.Fx", "XAudio2FxContants");
+            CSharpFunctionGroup xaudio2ContantGroup = gen.CreateFunctionGroup(assemblyName, namespaceNameFx, "XAudio2FxContants");
             var guidList = group.Find<CppGuid>(@"CLSID_Audio.*");
             foreach (var cppGuid in guidList)
                 gen.AddConstantToCSharpType(Global.Name + ".XAudio2.Fx.XAudio2FxContants", "System.Guid", cppGuid.Name, "new System.Guid(\"" + cppGuid.Guid + "\")").

@@ -265,7 +265,7 @@ foreach (var sharpStruct in Namespace.Structs)
 			} else  if (sharpStructItem.IsArray) {
 				if (sharpStructItem.MarshalType is CSharpStruct) {
 #>
-            fixed (void* __to = &this.<#= sharpStructItem.Name #>[0]) fixed (void* __from = &@ref.<#= sharpStructItem.Name #>) SlimDX.Utilities.CopyMemory((IntPtr) __to, (IntPtr) __from, <#= sharpStructItem.ArrayDimension #>*sizeof ( <#= sharpStructItem.MarshalType.FullName #>));
+            fixed (void* __to = &this.<#= sharpStructItem.Name #>[0]) fixed (void* __from = &@ref.<#= sharpStructItem.Name #>) SlimDX2.Utilities.CopyMemory((IntPtr) __to, (IntPtr) __from, <#= sharpStructItem.ArrayDimension #>*sizeof ( <#= sharpStructItem.MarshalType.FullName #>));
 <#+
 				} else {
 					if (sharpStructItem.MarshalType.FullName == "char") {
@@ -278,7 +278,7 @@ foreach (var sharpStruct in Namespace.Structs)
 <#+
 					} else {
 #>
-            fixed (void* __to = &this.<#= sharpStructItem.Name #>[0]) fixed (void* __from = @ref.<#= sharpStructItem.Name #>) SlimDX.Utilities.CopyMemory((IntPtr) __to, (IntPtr) __from, <#= sharpStructItem.ArrayDimension #>*sizeof ( <#= sharpStructItem.MarshalType.FullName #>));
+            fixed (void* __to = &this.<#= sharpStructItem.Name #>[0]) fixed (void* __from = @ref.<#= sharpStructItem.Name #>) SlimDX2.Utilities.CopyMemory((IntPtr) __to, (IntPtr) __from, <#= sharpStructItem.ArrayDimension #>*sizeof ( <#= sharpStructItem.MarshalType.FullName #>));
 <#+
 					}
 				}
@@ -321,7 +321,7 @@ foreach (var sharpStruct in Namespace.Structs)
 			} else  if (sharpStructItem.IsArray) {
 				if (sharpStructItem.MarshalType is CSharpStruct) {
 #>
-            fixed (void* __to = &@ref.<#= sharpStructItem.Name #>) fixed (void* __from = &this.<#= sharpStructItem.Name #>[0]) SlimDX.Utilities.CopyMemory((IntPtr) __to, (IntPtr) __from, <#= sharpStructItem.ArrayDimension #>*sizeof ( <#= sharpStructItem.MarshalType.FullName #>));
+            fixed (void* __to = &@ref.<#= sharpStructItem.Name #>) fixed (void* __from = &this.<#= sharpStructItem.Name #>[0]) SlimDX2.Utilities.CopyMemory((IntPtr) __to, (IntPtr) __from, <#= sharpStructItem.ArrayDimension #>*sizeof ( <#= sharpStructItem.MarshalType.FullName #>));
 <#+
 				} else {
 					if (sharpStructItem.MarshalType.FullName == "char") {
@@ -336,7 +336,7 @@ foreach (var sharpStruct in Namespace.Structs)
 <#+
 					} else {
 #>
-            fixed (void* __to = @ref.<#= sharpStructItem.Name #>) fixed (void* __from = &this.<#= sharpStructItem.Name #>[0]) SlimDX.Utilities.CopyMemory((IntPtr) __to, (IntPtr) __from, <#= sharpStructItem.ArrayDimension #>*sizeof ( <#= sharpStructItem.MarshalType.FullName #>));
+            fixed (void* __to = @ref.<#= sharpStructItem.Name #>) fixed (void* __from = &this.<#= sharpStructItem.Name #>[0]) SlimDX2.Utilities.CopyMemory((IntPtr) __to, (IntPtr) __from, <#= sharpStructItem.ArrayDimension #>*sizeof ( <#= sharpStructItem.MarshalType.FullName #>));
 <#+
 					}
 				}

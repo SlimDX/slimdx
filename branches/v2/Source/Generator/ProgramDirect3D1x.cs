@@ -25,12 +25,36 @@ namespace SlimDX.Generator
     internal partial class Program
     {
 
+        private string[] d3d10Includes = new string[] {"d3d10", 
+                                                       "d3d10_1",
+                                                       "d3d10_1shader",
+                                                       "d3d10effect",
+                                                       "d3d10misc", 
+                                                       "d3d10sdklayers",
+                                                       "d3d10shader",
+                                                       "d3dx10", 
+                                                       "d3dx10core", 
+                                                       "d3dx10tex", 
+                                                       "d3dx10async"};
+
+        private string[] d3d11Includes = new string[]
+                                             {
+                                                 "d3d11",
+                                                 "d3dx11",
+                                                 "d3dx11core",
+                                                 "d3dx11tex",
+                                                 "d3dx11async"
+                                             };
+        
+        
         /// <summary>
         /// Maps the Direct3D10 and Direct3D11 API
         /// </summary>
         public void MapDirect3D10AndDirect3D11()
         {
             // The following part is not common to Direct3D10 and Direct3D11
+            group.FindContext.AddRange(d3d10Includes);
+            group.FindContext.AddRange(d3d11Includes);
 
             // Global Rename
             group.TagName<CppEnum>(@"^D3D(\d+)(.*)", "$2", false);
@@ -410,33 +434,34 @@ namespace SlimDX.Generator
             group.Remove<CppFunction>(@"^D3DX(\d+)CreateAsync.*$");
             group.Remove<CppFunction>(@"^D3DX(\d+)CreateThreadPump.*$");
 
+            group.FindContext.Clear();
+
             // Map specific part
             MapDirect3D10();
             MapDirect3D11();
         }
 
+
+
+
         /// <summary>
         /// Maps the Direct3D10 API
         /// </summary>
-        public unsafe void MapDirect3D10()
+        public void MapDirect3D10()
         {
+            // Global namespace for D3DCompiler
+            string assemblyName = Global.Name + ".Direct3D10";
+            string namespaceName = assemblyName;
+
             // Include to Assembly/Namespace assocation
-            gen.MapIncludeToNamespace("d3d10", Global.Name + ".Direct3D10");
-            gen.MapIncludeToNamespace("d3d10_1", Global.Name + ".Direct3D10");
-            gen.MapIncludeToNamespace("d3d10_1shader", Global.Name + ".Direct3D10");
-            gen.MapIncludeToNamespace("d3d10effect", Global.Name + ".Direct3D10");
-            gen.MapIncludeToNamespace("d3d10misc", Global.Name + ".Direct3D10");
-            gen.MapIncludeToNamespace("d3d10sdklayers", Global.Name + ".Direct3D10");
-            gen.MapIncludeToNamespace("d3d10shader", Global.Name + ".Direct3D10");
-            gen.MapIncludeToNamespace("d3dx10", Global.Name + ".Direct3D10");
-            gen.MapIncludeToNamespace("d3dx10core", Global.Name + ".Direct3D10");
-            gen.MapIncludeToNamespace("d3dx10tex", Global.Name + ".Direct3D10");
-            gen.MapIncludeToNamespace("d3dx10async", Global.Name + ".Direct3D10");
+            foreach (var includeName in d3d10Includes)
+                gen.MapIncludeToNamespace(includeName, assemblyName, namespaceName);
+
+            group.FindContext.AddRange(d3d10Includes);
 
             // --------------------------------------------------------------------------------------------------------
             // Direct3D10 Enumerations
             // --------------------------------------------------------------------------------------------------------
-            group.Remove<CppEnumItem>(@"^D3D10_CBF_USERPACKED$");
             group.TagName<CppEnum>(@"^D3D10_FEATURE_LEVEL1$", "FeatureLevel");
             group.TagName<CppEnumItem>(@"^D3D10_FEATURE_LEVEL_(.*)", @"Level_$1", true);
 
@@ -556,10 +581,9 @@ namespace SlimDX.Generator
             group.Remove<CppFunction>(@"^D3D10DisassembleEffect$");
 
             group.Remove<CppInterface>(@"^ID3D10Debug$");
-
-
-            CSharpFunctionGroup d3d10FunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct3D10", Global.Name + ".Direct3D10", "D3D10");
-            CSharpFunctionGroup d3dx10FunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct3D10", Global.Name + ".Direct3D10", "D3DX10");
+           
+            CSharpFunctionGroup d3d10FunctionGroup = gen.CreateFunctionGroup(assemblyName, namespaceName, "D3D10");
+            CSharpFunctionGroup d3dx10FunctionGroup = gen.CreateFunctionGroup(assemblyName, namespaceName, "D3DX10");
             string d3dx10DLLName = group.FindFirst<CppMacroDefinition>("D3DX10_DLL_A").StripStringValue;
 
             // Map All D3D11 functions to D3D11 Function Group
@@ -569,8 +593,10 @@ namespace SlimDX.Generator
             // Map All D3DX11 functions to D3DX11 Function Group
             group.TagFunction(@"^D3DX10.*", d3dx10DLLName, d3dx10FunctionGroup);
 
-            gen.AddConstantFromMacroToCSharpType("^D3D10_SDK_VERSION$", Global.Name + ".Direct3D10.D3D10", "int", "SdkVersion");
-            gen.AddConstantFromMacroToCSharpType("^D3D10_1_SDK_VERSION$", Global.Name + ".Direct3D10.D3D10", "int", "SdkVersion1");
+            gen.AddConstantFromMacroToCSharpType("^D3D10_SDK_VERSION$", namespaceName + "." + d3d10FunctionGroup.Name, "int", "SdkVersion");
+            gen.AddConstantFromMacroToCSharpType("^D3D10_1_SDK_VERSION$", namespaceName + "." + d3d10FunctionGroup.Name, "int", "SdkVersion1");
+
+            group.FindContext.Clear();
 
             // SubPart renaming
             // gen.RenameTypePart("^D3D10", "");        
@@ -581,12 +607,15 @@ namespace SlimDX.Generator
         /// </summary>
         public unsafe void MapDirect3D11()
         {
-            gen.MapIncludeToNamespace("d3d11", Global.Name + ".Direct3D11");
-            gen.MapIncludeToNamespace("d3dx11", Global.Name + ".Direct3D11");
-            gen.MapIncludeToNamespace("d3dx11core", Global.Name + ".Direct3D11");
-            gen.MapIncludeToNamespace("d3dx11tex", Global.Name + ".Direct3D11");
-            gen.MapIncludeToNamespace("d3dx11async", Global.Name + ".Direct3D11");
-            gen.MapIncludeToNamespace("d3d11shader", Global.Name + ".D3DCompiler");
+            // Global namespace for D3DCompiler
+            string assemblyName = Global.Name + ".Direct3D11";
+            string namespaceName = assemblyName;
+
+            // Include to Assembly/Namespace assocation
+            foreach (var includeName in d3d11Includes)
+                gen.MapIncludeToNamespace(includeName, assemblyName, namespaceName);
+
+            group.FindContext.AddRange(d3d11Includes);
 
             // --------------------------------------------------------------------------------------------------------
             // Direct3D11 Enumerations
@@ -626,18 +655,20 @@ namespace SlimDX.Generator
             // --------------------------------------------------------------------------------------------------------
             // Direct3D11 Functions
             // --------------------------------------------------------------------------------------------------------
-            gen.AddConstantFromMacroToCSharpType("^D3D11_SDK_VERSION$", Global.Name + ".Direct3D11.D3D11", "int", "SdkVersion");
+            CSharpFunctionGroup d3d11FunctionGroup = gen.CreateFunctionGroup(assemblyName, namespaceName, "D3D11");
+            CSharpFunctionGroup d3dx11FunctionGroup = gen.CreateFunctionGroup(assemblyName, namespaceName, "D3DX11");
+            string d3dx11DLLName = group.FindFirst<CppMacroDefinition>("D3DX11_DLL_A").StripStringValue;
+
+            gen.AddConstantFromMacroToCSharpType("^D3D11_SDK_VERSION$", namespaceName + "." + d3d11FunctionGroup.Name, "int", "SdkVersion");
             group.TagName<CppFunction>(@"^D3D11(.+)", "$1", false);
             group.TagName<CppFunction>(@"^D3DX11(.+)$", "$1", false);
             group.TagName<CppFunction>(@"^D3DX11(.+)W$", "$1", false);
 
-            CSharpFunctionGroup d3d11FunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct3D11", Global.Name + ".Direct3D11", "D3D11");
-            CSharpFunctionGroup d3dx11FunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct3D11", Global.Name + ".Direct3D11", "D3DX11");
-            string d3dx11DLLName = group.FindFirst<CppMacroDefinition>("D3DX11_DLL_A").StripStringValue;
 
             group.TagFunction(@"^D3D11.*", "d3d11.dll", d3d11FunctionGroup);
             group.TagFunction(@"^D3DX11.*", d3dx11DLLName, d3dx11FunctionGroup);
 
+            group.FindContext.Clear();
             //gen.RenameTypePart("^D3D11", "");
             //gen.RenameTypePart("^D3DX11", "");
         }
