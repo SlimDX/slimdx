@@ -340,6 +340,11 @@ namespace SlimDX.Generator
             throw new GeneratorException(message, args);
         }
 
+        private void LogError(string message, Exception ex, params object[] args)
+        {
+            throw new GeneratorException(message, ex, args);
+        }
+
         /// <summary>
         /// Maps all C++ types to C#
         /// </summary>
@@ -348,41 +353,60 @@ namespace SlimDX.Generator
             var selectedCSharpType = new List<CSharpCppElement>();
 
             // Process all Enums
-            foreach (CppEnum cppEnum in IncludeToProcess.SelectMany(cppInclude => cppInclude.Enums))
-                MapCppEnumToCSharpEnum(cppEnum);
 
             // Predefine all structs, typedefs and interfaces
             foreach (CppInclude cppInclude in IncludeToProcess)
             {
-                // Iterate on structs
-                foreach (CppStruct cppStruct in cppInclude.Structs)
+                try
                 {
-                    CSharpStruct csharpStruct = PrepareStructForMap(cppInclude, cppStruct);
-                    if (csharpStruct != null)
-                        selectedCSharpType.Add(csharpStruct);
+                    foreach (CppEnum cppEnum in cppInclude.Enums)
+                        MapCppEnumToCSharpEnum(cppEnum);
                 }
-
-                // Iterate on interfaces
-                foreach (CppInterface cppInterface in cppInclude.Interfaces)
+                catch (Exception ex)
                 {
-                    CSharpInterface csharpInterface = PrepareInterfaceForMap(cppInclude, cppInterface);
-                    if (csharpInterface != null)
-                        selectedCSharpType.Add(csharpInterface);
+                    LogError("Error in include [{0}]", ex, cppInclude.Name);
                 }
+            }
 
-                // Prebuild global map typedef
-                foreach (CppTypedef typeDef in cppInclude.Typedefs)
+            // Predefine all structs, typedefs and interfaces
+            foreach (CppInclude cppInclude in IncludeToProcess)
+            {
+                try
                 {
-                    if (!_mapTypedefToType.ContainsKey(typeDef.Name))
-                        _mapTypedefToType.Add(typeDef.Name, typeDef);
+                    // Iterate on structs
+                    foreach (CppStruct cppStruct in cppInclude.Structs)
+                    {
+                        CSharpStruct csharpStruct = PrepareStructForMap(cppInclude, cppStruct);
+                        if (csharpStruct != null)
+                            selectedCSharpType.Add(csharpStruct);
+                    }
+
+                    // Iterate on interfaces
+                    foreach (CppInterface cppInterface in cppInclude.Interfaces)
+                    {
+                        CSharpInterface csharpInterface = PrepareInterfaceForMap(cppInclude, cppInterface);
+                        if (csharpInterface != null)
+                            selectedCSharpType.Add(csharpInterface);
+                    }
+
+                    // Prebuild global map typedef
+                    foreach (CppTypedef typeDef in cppInclude.Typedefs)
+                    {
+                        if (!_mapTypedefToType.ContainsKey(typeDef.Name))
+                            _mapTypedefToType.Add(typeDef.Name, typeDef);
+                    }
+
+                    // Iterate on interfaces
+                    foreach (CppFunction cppFunction in cppInclude.Functions)
+                    {
+                        CSharpFunction cSharpFunction = PrepareFunctionForMap(cppInclude, cppFunction);
+                        if (cSharpFunction != null)
+                            selectedCSharpType.Add(cSharpFunction);
+                    }                    
                 }
-
-                // Iterate on interfaces
-                foreach (CppFunction cppFunction in cppInclude.Functions)
+                catch (Exception ex)
                 {
-                    CSharpFunction cSharpFunction = PrepareFunctionForMap(cppInclude, cppFunction);
-                    if (cSharpFunction != null)
-                        selectedCSharpType.Add(cSharpFunction);
+                    LogError("Error in include [{0}]", ex, cppInclude.Name);
                 }
             }
 
@@ -407,23 +431,46 @@ namespace SlimDX.Generator
             // Transform structures
             foreach (CSharpStruct cSharpStruct in selectedCSharpType.OfType<CSharpStruct>())
             {
-                MapCppStructToCSharpStruct(cSharpStruct);
-                // Add Constants to Struct
-                AttachConstants(cSharpStruct);
+                try
+                {
+                    MapCppStructToCSharpStruct(cSharpStruct);
+                    // Add Constants to Struct
+                    AttachConstants(cSharpStruct);
+                }
+                catch (Exception ex)
+                {
+                    CppInclude cppInclude = (cSharpStruct.CppElement != null) ? cSharpStruct.CppElement.ParentInclude : null;
+                    LogError("Error on struct [{0}] mapped to [{1}] from include [{2}]", ex, cSharpStruct.CppElementName, cSharpStruct.FullName, cppInclude);
+                }
             }
 
             // Transform interfaces
             foreach (CSharpInterface cSharpInterface in selectedCSharpType.OfType<CSharpInterface>())
             {
-                MapCppInterfaceToCSharpInterface(cSharpInterface);
-                // Add Constants to Interface
-                AttachConstants(cSharpInterface);
+                try
+                {
+                    MapCppInterfaceToCSharpInterface(cSharpInterface);
+                    // Add Constants to Interface
+                    AttachConstants(cSharpInterface);
+                }
+                catch (Exception ex)
+                {
+                    CppInclude cppInclude = (cSharpInterface.CppElement != null) ? cSharpInterface.CppElement.ParentInclude : null;
+                    LogError("Error on interface [{0}] mapped to [{1}] from include [{2}]", ex, cSharpInterface.CppElementName, cSharpInterface.FullName, cppInclude);
+                }
             }
 
             // Transform Functions
             foreach (CSharpFunction cSharpFunction in selectedCSharpType.OfType<CSharpFunction>())
             {
-                MapCppFunctionToCSharpFunction(cSharpFunction);
+                try {
+                    MapCppFunctionToCSharpFunction(cSharpFunction);
+                }
+                catch (Exception ex)
+                {
+                    CppInclude cppInclude = (cSharpFunction.CppElement != null) ? cSharpFunction.CppElement.ParentInclude : null;
+                    LogError("Error on function [{0}] mapped to [{1}] from include [{2}]", ex, cSharpFunction.CppElementName, cSharpFunction.FullName, cppInclude);
+                }
             }
 
             // Add constant to FunctionGroup
