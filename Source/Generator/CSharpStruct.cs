@@ -34,11 +34,11 @@ namespace SlimDX.Generator
         {
         }
 
-        public CSharpStruct(CppStruct cppStruct)
+        public CSharpStruct(CppStruct cppStruct) 
         {
-            CppElement = cppStruct;
             IsIn = true;
-            IsOut = false;
+            IsOut = false; 
+            CppElement = cppStruct;
             if (cppStruct != null)
                 Pack = int.Parse(cppStruct.Pack);
         }

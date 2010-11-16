@@ -108,6 +108,30 @@ namespace SlimDX.Parser
 
             cppHeaderParser.IncludePath.Add(cmdArgs.IncludePath);
 
+            // DirectSound
+            cppHeaderParser.AddInclude("dsound.h");
+
+            // X3DAudio
+            cppHeaderParser.AddInclude("x3daudio.h");
+
+            // XAct3
+            cppHeaderParser.AddInclude("xact3wb.h");
+            cppHeaderParser.AddInclude("xact3.h");
+
+            // XAudio2
+            cppHeaderParser.AddInclude("xaudio2.h");
+            cppHeaderParser.AddInclude("xaudio2fx.h");
+
+            // XAPO
+            cppHeaderParser.AddInclude("xapo.h");
+            cppHeaderParser.AddInclude("xapofx.h");
+
+            // XInput
+            cppHeaderParser.AddInclude("xinput.h");
+
+            // DirectInput
+            cppHeaderParser.AddInclude("xinput.h");
+
             // DXGI
             cppHeaderParser.AddInclude("dxgi.h");
             cppHeaderParser.AddInclude("dxgiformat.h");
@@ -151,6 +175,11 @@ namespace SlimDX.Parser
             cppHeaderParser.AddInclude("d3dx11tex.h");
             cppHeaderParser.AddInclude("d3dx11async.h");
             cppHeaderParser.AddInclude("d3dcompiler.h");
+
+            // Direct2D1 and DirectWrite
+            cppHeaderParser.AddInclude("dcommon.h");
+            cppHeaderParser.AddInclude("dwrite.h");
+            cppHeaderParser.AddInclude("d2d1.h");
 
             cppHeaderParser.Run();
 
