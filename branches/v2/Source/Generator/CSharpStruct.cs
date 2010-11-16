@@ -29,7 +29,8 @@ namespace SlimDX.Generator
     /// </summary>
     public class CSharpStruct : CSharpType
     {
-        public CSharpStruct() : this(null)
+        public CSharpStruct()
+            : this(null)
         {
         }
 
@@ -38,6 +39,23 @@ namespace SlimDX.Generator
             CppElement = cppStruct;
             IsIn = true;
             IsOut = false;
+            if (cppStruct != null)
+                Pack = int.Parse(cppStruct.Pack);
+        }
+
+        protected override void UpdateFromTag(CSharpTag tag)
+        {
+            base.UpdateFromTag(tag);
+
+            HasMarshalType = tag.StructHasNativeValueType != null ? tag.StructHasNativeValueType.Value : false;
+            GenerateAsClass = tag.StructToClass != null ? tag.StructToClass.Value : false;
+            HasCustomMarshal = tag.StructCustomMarshall != null ? tag.StructCustomMarshall.Value : false;
+            HasCustomNew = tag.StructCustomNew != null ? tag.StructCustomNew.Value : false;
+            IsOut = tag.StructForceMarshalToToBeGenerated != null ? tag.StructForceMarshalToToBeGenerated.Value : false;
+
+            // Force a marshalling if a struct need to be treated as a class)
+            if (GenerateAsClass)
+                HasMarshalType = true;
         }
 
         public IEnumerable<Field> Fields

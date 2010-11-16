@@ -177,10 +177,7 @@ namespace SlimDX.Direct3D11
         /// <summary>
         ///   This overload has been deprecated. Use one of the alternatives that does not take both an adapter and a driver type.
         /// </summary>
-        [Obsolete(
-            "This method is confusing because only one of the adapter/driverType parameters is valid during the call. Use one of the overloads that explicitly uses the parameter you wish to provide."
-            )]
-        public static Result CreateWithSwapChain(Adapter adapter, DriverType driverType, DeviceCreationFlags flags,
+        private static Result CreateWithSwapChain(Adapter adapter, DriverType driverType, DeviceCreationFlags flags,
                                                  SwapChainDescription swapChainDescription, out Device device,
                                                  out SwapChain swapChain)
         {
@@ -190,10 +187,7 @@ namespace SlimDX.Direct3D11
         /// <summary>
         ///   This overload has been deprecated. Use one of the alternatives that does not take both an adapter and a driver type.
         /// </summary>
-        [Obsolete(
-            "This method is confusing because only one of the adapter/driverType parameters is valid during the call. Use one of the overloads that explicitly uses the parameter you wish to provide."
-            )]
-        public static Result CreateWithSwapChain(Adapter adapter, DriverType driverType, DeviceCreationFlags flags,
+        private static Result CreateWithSwapChain(Adapter adapter, DriverType driverType, DeviceCreationFlags flags,
                                                  FeatureLevel[] featureLevels, SwapChainDescription swapChainDescription,
                                                  out Device device, out SwapChain swapChain)
         {

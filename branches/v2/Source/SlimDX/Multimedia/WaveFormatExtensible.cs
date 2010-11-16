@@ -67,7 +67,7 @@ namespace SlimDX.Multimedia
         }
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 2)]
-        internal struct __Native
+        internal new struct __Native
         {
             public WaveFormat.__Native waveFormat;
             public short wValidBitsPerSample; // bits of precision, or is wSamplesPerBlock if wBitsPerSample==0

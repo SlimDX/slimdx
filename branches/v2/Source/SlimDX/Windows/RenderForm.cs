@@ -42,7 +42,6 @@ namespace SlimDX.Windows
         private const int SC_SCREENSAVE = 0xF140;
         private const int MNC_CLOSE = 1;
         private System.Drawing.Size cachedSize;
-        private bool maximized;
         private bool minimized;
         //private DisplayMonitor monitor;
         private bool sizeMove;
@@ -178,7 +177,7 @@ namespace SlimDX.Windows
                     if (wparam == SIZE_MINIMIZED)
                     {
                         minimized = true;
-                        maximized = false;
+                        //maximized = false;
                         OnPauseRendering(EventArgs.Empty);
                     }
                     else
@@ -199,7 +198,7 @@ namespace SlimDX.Windows
                                 OnResumeRendering(EventArgs.Empty);
 
                             minimized = false;
-                            maximized = true;
+                            // maximized = true;
 
                             OnUserResized(EventArgs.Empty);
                             UpdateScreen();
@@ -210,7 +209,7 @@ namespace SlimDX.Windows
                                 OnResumeRendering(EventArgs.Empty);
 
                             minimized = false;
-                            maximized = false;
+                            // maximized = false;
 
                             if (!sizeMove && Size != cachedSize)
                             {

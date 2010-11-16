@@ -48,6 +48,17 @@ namespace SlimDX.XIDL
             return (T) (Tag ?? new T());
         }
 
+        public CppInclude ParentInclude
+        {
+            get
+            {
+                CppElement cppInclude = Parent;
+                while (cppInclude != null && !(cppInclude is CppInclude))
+                    cppInclude = cppInclude.Parent;
+                return cppInclude as CppInclude;
+            }
+        }
+
         public virtual string Path
         {
             get
