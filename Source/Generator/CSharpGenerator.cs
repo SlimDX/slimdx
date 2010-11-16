@@ -261,7 +261,7 @@ namespace SlimDX.Generator
                 {
                     CallContext.LogicalSetData("Assembly", assembly);
 
-                    string assemblyDirectory = relativePath + assembly.Name;
+					string assemblyDirectory = Path.Combine(relativePath + assembly.Name, "Generated");
 
                     if (!Directory.Exists(assemblyDirectory))
                         Directory.CreateDirectory(assemblyDirectory);
