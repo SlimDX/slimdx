@@ -18,8 +18,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using SlimDX.XIDL;
 
 namespace SlimDX.Generator
@@ -222,10 +224,29 @@ namespace SlimDX.Generator
                 // Print friendly error parsable by Visual Studio in order to display them in the Error List
                 StringReader reader = new StringReader(ex.ToString());
 
+                Regex regex = new Regex(@"^\s*at\s+([^\)]+)\)\s+in\s+(.*):line\s+(\d+)");
+
+                // Rewrite the exception in order to have it mapping well in VisualStudio
+
+                // Write the exception as is
+                Console.Out.WriteLine(ex);
+
+                // And write the exception parsable by Visual Studio
+                List<string> exceptionLines = new List<string>();
                 string line = null;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    Console.Out.WriteLine("Generator(1,1): error CS9999: {0}", line);
+                while ((line= reader.ReadLine()) != null) {
+                    Match match = regex.Match(line);
+                    if (match.Success)
+                    {
+                        string methodLocation = match.Groups[1].Value;
+                        string fileName = match.Groups[2].Value;
+                        string lineNumber = match.Groups[3].Value;
+                        Console.Out.WriteLine("{0}({1},1): error CS9999: at {2})", fileName, lineNumber, methodLocation );
+                    }
+                    else
+                    {
+                        Console.Out.WriteLine("Generator(1,1): error CS9999: {0}", line);
+                    }
                     Console.Out.Flush();
                 }
                 Environment.ExitCode = 1;
