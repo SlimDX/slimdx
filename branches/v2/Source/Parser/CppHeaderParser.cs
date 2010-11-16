@@ -141,7 +141,8 @@ namespace SlimDX.Parser
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                Environment.Exit(1);
+                Console.Out.Flush();
+                //Environment.Exit(1);
             }
 
             // Remove all empty includes
@@ -261,7 +262,8 @@ namespace SlimDX.Parser
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex);
-                    Environment.Exit(1);
+                    Console.Out.Flush();
+                    //Environment.Exit(1);
                 }
                 isParsed = true;
             }

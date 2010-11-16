@@ -91,7 +91,7 @@ namespace SlimDX.Parser
         public bool IsParserAlreadyUpToDate(params string[] args)
         {
             CommandArgs cmdArgs = ParseArgs(args);
-            return !(File.Exists(cmdArgs.Output) && File.Exists(checkOkFile) && File.GetLastWriteTime(checkOkFile) == creationTimeForGeneratorAssembly);
+            return File.Exists(cmdArgs.Output) && File.Exists(checkOkFile) && File.GetLastWriteTime(checkOkFile) == creationTimeForGeneratorAssembly;
         }
 
         public CppIncludeGroup Run(params string[] args)
