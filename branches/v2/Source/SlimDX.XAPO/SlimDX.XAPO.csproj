@@ -40,6 +40,7 @@
   <ItemGroup>
     <Reference Include="SlimDX.Interop">
       <HintPath>..\SlimDX.Interop.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="SlimMath">
       <HintPath>..\..\External\SlimMath\SlimMath.dll</HintPath>
