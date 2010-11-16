@@ -104,6 +104,7 @@
     <Compile Include="CSharpGenerator.cs" />
     <Compile Include="CSharpNamespace.cs" />
     <Compile Include="CustomTemplateHost.cs" />
+    <Compile Include="GeneratorException.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="InteropGenerator.cs" />
     <Compile Include="MacroParser.cs" />

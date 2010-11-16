@@ -27,12 +27,10 @@ namespace SlimDX.D3DCompiler
     /// </summary>
     public class ShaderSignature : Blob
     {
-        private DataStream data;
-
         /// <summary>
         ///   Initializes a new instance of the <see cref = "T:SlimDX.D3DCompiler.ShaderSignature" /> class.
         /// </summary>
-        /// <param name = "data">A <see cref = "T:SlimDX.DataStream" /> containing the raw bytes of the shader signature.</param>
+        /// <param name = "ptr">A pointer to a Blob object.</param>
         public ShaderSignature(IntPtr ptr)
             : base(ptr)
         {

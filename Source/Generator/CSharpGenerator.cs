@@ -58,7 +58,7 @@ namespace SlimDX.Generator
         private readonly MacroParser _macroParser;
         private readonly CSharpType DefaultInterfaceCppObject;
 
-//        private readonly Dictionary<string, CSharpType> _typeToRename = new Dictionary<Regex, RenameValue>();
+        //        private readonly Dictionary<string, CSharpType> _typeToRename = new Dictionary<Regex, RenameValue>();
 
 
         public CSharpGenerator(CppIncludeGroup cppIncludeGroup)
@@ -114,40 +114,40 @@ namespace SlimDX.Generator
             switch (typeName)
             {
                 case "string":
-                    type = typeof (string);
+                    type = typeof(string);
                     break;
                 case "bool":
-                    type = typeof (bool);
+                    type = typeof(bool);
                     break;
                 case "byte":
-                    type = typeof (byte);
-                    sizeOf = sizeof (byte);
+                    type = typeof(byte);
+                    sizeOf = sizeof(byte);
                     break;
                 case "char":
-                    type = typeof (char);
-                    sizeOf = sizeof (char);
+                    type = typeof(char);
+                    sizeOf = sizeof(char);
                     break;
                 case "int":
-                    type = typeof (int);
-                    sizeOf = sizeof (int);
+                    type = typeof(int);
+                    sizeOf = sizeof(int);
                     break;
                 case "uint":
-                    type = typeof (uint);
-                    sizeOf = sizeof (uint);
+                    type = typeof(uint);
+                    sizeOf = sizeof(uint);
                     break;
                 case "long":
-                    type = typeof (long);
-                    sizeOf = sizeof (long);
+                    type = typeof(long);
+                    sizeOf = sizeof(long);
                     break;
                 case "ulong":
-                    type = typeof (ulong);
-                    sizeOf = sizeof (ulong);
+                    type = typeof(ulong);
+                    sizeOf = sizeof(ulong);
                     break;
                 case "float":
-                    type = typeof (float);
+                    type = typeof(float);
                     break;
                 case "IntPtr":
-                    type = typeof (IntPtr);
+                    type = typeof(IntPtr);
                     break;
             }
 
@@ -179,7 +179,7 @@ namespace SlimDX.Generator
             int sizeOf = 0;
 
             string typeName = "";
-            if (type == typeof (string))
+            if (type == typeof(string))
             {
                 typeName = "string";
             }
@@ -248,7 +248,7 @@ namespace SlimDX.Generator
 
             CallContext.LogicalSetData("Generator", this);
 
-            foreach (string generatedType in new[] {"Enumerations", "Structures", "Interfaces", "Functions", "LocalInterop"})
+            foreach (string generatedType in new[] { "Enumerations", "Structures", "Interfaces", "Functions", "LocalInterop" })
             {
                 Console.WriteLine();
                 Console.WriteLine("Generate {0}", generatedType);
@@ -261,7 +261,7 @@ namespace SlimDX.Generator
                 {
                     CallContext.LogicalSetData("Assembly", assembly);
 
-					string assemblyDirectory = Path.Combine(relativePath + assembly.Name, "Generated");
+                    string assemblyDirectory = Path.Combine(relativePath + assembly.Name, "Generated");
 
                     if (!Directory.Exists(assemblyDirectory))
                         Directory.CreateDirectory(assemblyDirectory);
@@ -329,15 +329,143 @@ namespace SlimDX.Generator
             //}
         }
 
-        private void MapCppEnumToCSharpEnum(CppInclude cppInclude, CppEnum cppEnum)
-        {
-            CSharpNamespace nameSpace = ResolveNamespace(cppInclude, cppEnum);
 
+        private void Log(string message, params object[] args)
+        {
+            Console.WriteLine(message, args);
+        }
+
+        private void LogError(string message, params object[] args)
+        {
+            throw new GeneratorException(message, args);
+        }
+
+        /// <summary>
+        /// Maps all C++ types to C#
+        /// </summary>
+        private void MapAll()
+        {
+            var selectedCSharpType = new List<CSharpCppElement>();
+
+            // Process all Enums
+            foreach (CppEnum cppEnum in IncludeToProcess.SelectMany(cppInclude => cppInclude.Enums))
+                MapCppEnumToCSharpEnum(cppEnum);
+
+            // Predefine all structs, typedefs and interfaces
+            foreach (CppInclude cppInclude in IncludeToProcess)
+            {
+                // Iterate on structs
+                foreach (CppStruct cppStruct in cppInclude.Structs)
+                {
+                    CSharpStruct csharpStruct = PrepareStructForMap(cppInclude, cppStruct);
+                    if (csharpStruct != null)
+                        selectedCSharpType.Add(csharpStruct);
+                }
+
+                // Iterate on interfaces
+                foreach (CppInterface cppInterface in cppInclude.Interfaces)
+                {
+                    CSharpInterface csharpInterface = PrepareInterfaceForMap(cppInclude, cppInterface);
+                    if (csharpInterface != null)
+                        selectedCSharpType.Add(csharpInterface);
+                }
+
+                // Prebuild global map typedef
+                foreach (CppTypedef typeDef in cppInclude.Typedefs)
+                {
+                    if (!_mapTypedefToType.ContainsKey(typeDef.Name))
+                        _mapTypedefToType.Add(typeDef.Name, typeDef);
+                }
+
+                // Iterate on interfaces
+                foreach (CppFunction cppFunction in cppInclude.Functions)
+                {
+                    CSharpFunction cSharpFunction = PrepareFunctionForMap(cppInclude, cppFunction);
+                    if (cSharpFunction != null)
+                        selectedCSharpType.Add(cSharpFunction);
+                }
+            }
+
+            // MAp all typedef to final CSharpType
+            foreach (CppInclude cppInclude in IncludeToProcess)
+            {
+                // Iterate on structs
+                foreach (CppTypedef cppTypedef in cppInclude.Typedefs)
+                {
+                    if (string.IsNullOrEmpty(cppTypedef.Specifier) && !cppTypedef.IsArray)
+                    {
+                        CSharpType type;
+                        if (_mapCppNameToCSharpType.TryGetValue(cppTypedef.GetTypeNameWithMapping(), out type))
+                        {
+                            if (!_mapCppNameToCSharpType.ContainsKey(cppTypedef.Name))
+                                MapCppNameToCSharpType(cppTypedef.Name, type);
+                        }
+                    }
+                }
+            }
+
+            // Transform structures
+            foreach (CSharpStruct cSharpStruct in selectedCSharpType.OfType<CSharpStruct>())
+            {
+                MapCppStructToCSharpStruct(cSharpStruct);
+                // Add Constants to Struct
+                AttachConstants(cSharpStruct);
+            }
+
+            // Transform interfaces
+            foreach (CSharpInterface cSharpInterface in selectedCSharpType.OfType<CSharpInterface>())
+            {
+                MapCppInterfaceToCSharpInterface(cSharpInterface);
+                // Add Constants to Interface
+                AttachConstants(cSharpInterface);
+            }
+
+            // Transform Functions
+            foreach (CSharpFunction cSharpFunction in selectedCSharpType.OfType<CSharpFunction>())
+            {
+                MapCppFunctionToCSharpFunction(cSharpFunction);
+            }
+
+            // Add constant to FunctionGroup
+            foreach (CSharpAssembly cSharpAssembly in Assemblies)
+                foreach (var ns in cSharpAssembly.Namespaces)
+                    foreach (var cSharpFunctionGroup in ns.FunctionGroups)
+                        AttachConstants(cSharpFunctionGroup);
+        }
+
+
+        /// <summary>
+        /// Maps a C++ type name to a C# class
+        /// </summary>
+        /// <param name="cppName">Name of the CPP.</param>
+        /// <param name="type">The type.</param>
+        private void MapCppNameToCSharpType(string cppName, CSharpType type)
+        {
+            if (_mapCppNameToCSharpType.ContainsKey(cppName))
+            {
+                var old = _mapCppNameToCSharpType[cppName];
+                LogError("Mapping Cpp element [{0}] to CSharp type [{1}/{2}] is already mapped to [{3}/{4}]", cppName, type.CppElementName, type.FullName, old.CppElementName, old.FullName);
+            }
+            _mapCppNameToCSharpType.Add(cppName, type);
+        }
+
+        /// <summary>
+        /// Maps a C++ Enum to a C# enum.
+        /// </summary>
+        /// <param name="cppEnum">the c++ enum.</param>
+        private void MapCppEnumToCSharpEnum(CppEnum cppEnum)
+        {
+            // Get the namespace for this particular include and enum
+            CSharpNamespace nameSpace = ResolveNamespace(cppEnum);
+
+            // Create the enum
             var newEnum = new CSharpEnum();
             newEnum.Name = ConvertCppNameToCSharpName(cppEnum);
             newEnum.CppElement = cppEnum;
+            nameSpace.Add(newEnum);
+            MapCppNameToCSharpType(cppEnum.Name, newEnum);
 
-            // Determine type. Default is int
+            // Determine enum type. Default is int
             string typeName = cppEnum.GetTypeNameWithMapping();
             switch (typeName)
             {
@@ -350,21 +478,20 @@ namespace SlimDX.Generator
                     newEnum.SizeOf = 1;
                     break;
                 case "int":
-                    newEnum.Type = typeof (int);
+                    newEnum.Type = typeof(int);
                     newEnum.SizeOf = 4;
                     break;
                 default:
-                    throw new ArgumentException(string.Format("Invalid type {0} for enum {1}. Supported only int, byte, short", typeName, cppEnum));
+                    LogError("Invalid type [{0}] for enum [{1}]. Types supported are : int, byte, short", typeName, cppEnum);
+                    break;
             }
 
-            nameSpace.Add(newEnum);
-            MapCppNameToCSharpType(cppEnum.Name, newEnum);
-
-            // Find Root Name 
+            // Find Root Name of this enum
+            // All enum items should start with the same root name and the root name should be at least 4 chars
             string rootName = cppEnum.Name;
             string rootNameFound = null;
             bool isRootNameFound = false;
-            for (int i = rootName.Length; i >= 0 && !isRootNameFound; i--)
+            for (int i = rootName.Length; i >= 4 && !isRootNameFound; i--)
             {
                 rootNameFound = rootName.Substring(0, i);
 
@@ -379,77 +506,72 @@ namespace SlimDX.Generator
                 }
             }
             if (isRootNameFound)
-            {
                 rootName = rootNameFound;
-            }
 
 
+            // Create enum items for enum
             foreach (CppEnumItem cppEnumItem in cppEnum.Items)
             {
+                string enumName = ConvertCppNameToCSharpName(cppEnumItem, rootName);
                 string enumValue = _macroParser.Parse(cppEnumItem.Value);
 
-                var csharpEnumItem =
-                    new CSharpEnum.Item(
-                        ConvertCppNameToCSharpName(cppEnumItem, rootName),
-                        enumValue);
-                csharpEnumItem.CppElement = cppEnumItem;
+                // If an enum value is parsable but is using post fix (like L, or U) in lower case, then put them Upper case
+                // in order to avoid warnings
+                if ( enumValue.Length > 0 && char.IsLetter(enumValue[enumValue.Length-1]))
+                    enumValue = enumValue.ToUpper();
+
+                var csharpEnumItem = new CSharpEnum.Item(enumName, enumValue) { CppElement = cppEnumItem };
+
                 newEnum.Add(csharpEnumItem);
+
                 if (cppEnumItem.Name != "None")
                     MapCppNameToCSharpType(cppEnumItem.Name, csharpEnumItem);
-
-                //Console.WriteLine("{0},{1},{2},{3},{4},{5}", nameSpace, newEnum.Name, csharpEnumItem.Name,
-                //                  csharpEnumItem.Value, cppEnumItem.Name, cppInclude.Name);
             }
 
+            // If C++ enum name is ending with FLAG OR FLAGS
+            // Then tag this enum as flags and add None if necessary
             if (cppEnum.Name.EndsWith("FLAG") || cppEnum.Name.EndsWith("FLAGS"))
             {
                 newEnum.IsFlag = true;
 
-                bool noneIsFound = false;
-                foreach (CSharpEnum.Item item in newEnum.Items)
-                {
-                    if (item.Name == "None")
-                    {
-                        noneIsFound = true;
-                        break;
-                    }
-                }
+                bool noneIsFound = newEnum.Items.Cast<CSharpEnum.Item>().Any(item => item.Name == "None");
+
                 if (!noneIsFound)
                 {
                     var csharpEnumItem = new CSharpEnum.Item("None", "0");
-                    csharpEnumItem.CppElement = new CppElement {Description = "None."};
+                    csharpEnumItem.CppElement = new CppElement { Description = "None." };
                     newEnum.Add(csharpEnumItem);
-                    //Console.WriteLine("{0},{1},{2},{3},{4},{5}", nameSpace, newEnum.Name, csharpEnumItem.Name,
-                    //                  csharpEnumItem.Value, "", cppInclude.Name);
                 }
             }
         }
 
+        /// <summary>
+        /// Prepares C++ struct for mapping. This method is creating the associated C# struct.
+        /// </summary>
+        /// <param name="cppInclude">The CPP include.</param>
+        /// <param name="cppStruct">The CPP struct.</param>
+        /// <returns></returns>
         private CSharpStruct PrepareStructForMap(CppInclude cppInclude, CppStruct cppStruct)
         {
+            // If a struct is already mapped, it means that there is already a predefined mapping
             if (_mapCppNameToCSharpType.ContainsKey(cppStruct.Name))
-            {
                 return null;
-            }
+
+            // Create a new C# struct
+            CSharpNamespace nameSpace = ResolveNamespace(cppStruct);
             var cSharpStruct = new CSharpStruct(cppStruct);
-            cSharpStruct.IsFullyMapped = false;
-            CSharpNamespace nameSpace = ResolveNamespace(cppInclude, cppStruct);
             cSharpStruct.Name = ConvertCppNameToCSharpName(cppStruct);
+            // IsFullyMapped to false => The structure is being mapped
+            cSharpStruct.IsFullyMapped = false;
+
+            // Add the C# struct to its namepsace
             nameSpace.Add(cSharpStruct);
+
+            // Map the C++ name to the C# struct
             MapCppNameToCSharpType(cppStruct.Name, cSharpStruct);
             return cSharpStruct;
         }
 
-        private void MapCppNameToCSharpType(string cppName, CSharpType type)
-        {
-            if (_mapCppNameToCSharpType.ContainsKey(cppName))
-            {
-                var old = _mapCppNameToCSharpType[cppName];
-                Console.WriteLine("Mapping Cpp element [{0}] to CSharp type [{1}/{2}] is already mapped to [{3}/{4}]", cppName, type.CppElementName, type.FullName, old.CppElementName, old.FullName);
-                throw new ArgumentException("Error in mapping");
-            }
-            _mapCppNameToCSharpType.Add(cppName, type);
-        }
 
         /// <summary>
         /// Maps the C++ struct to C# struct.
@@ -463,9 +585,8 @@ namespace SlimDX.Generator
                 return;
 
             // Get the associated CppStruct and CSharpTag
-            var cppStruct = cSharpStruct.CppElement as CppStruct;
-            var tagStruct = cppStruct.GetTagOrDefault<CSharpTag>();
-
+            var cppStruct = (CppStruct)cSharpStruct.CppElement;
+            bool hasMarshalType = cSharpStruct.HasMarshalType;
 
             // If this structure need to me moved to anoter container, move it now
             foreach (var keyValuePair in _mapMoveStructToInner)
@@ -473,7 +594,7 @@ namespace SlimDX.Generator
                 if (keyValuePair.Key.Match(cSharpStruct.CppElementName).Success)
                 {
                     string cppName = keyValuePair.Key.Replace(cSharpStruct.CppElementName, keyValuePair.Value);
-                    var destSharpStruct = _mapCppNameToCSharpType[cppName] as CSharpStruct;
+                    var destSharpStruct = (CSharpStruct)_mapCppNameToCSharpType[cppName];
                     // Remove the struct from his container
                     cSharpStruct.ParentContainer.Remove(cSharpStruct);
                     // Add this struct to the new container struct
@@ -481,21 +602,9 @@ namespace SlimDX.Generator
                 }
             }
 
-            // Perform general tag
-            bool hasMarshalType = tagStruct.StructHasNativeValueType.HasValue ? tagStruct.StructHasNativeValueType.Value : false;
-            cSharpStruct.GenerateAsClass = tagStruct.StructToClass.HasValue ? tagStruct.StructToClass.Value : false;
-            cSharpStruct.HasCustomMarshal = tagStruct.StructCustomMarshall.HasValue ? tagStruct.StructCustomMarshall.Value : false;
-            cSharpStruct.HasCustomNew = tagStruct.StructCustomNew.HasValue ? tagStruct.StructCustomNew.Value : false;
-            cSharpStruct.IsOut = tagStruct.StructForceMarshalToToBeGenerated.HasValue ? tagStruct.StructForceMarshalToToBeGenerated.Value : false;
-            cSharpStruct.Pack = int.Parse(cppStruct.Pack);
-
-            // Force a marshalling if a struct need to be treated as a class)
-            if (cSharpStruct.GenerateAsClass)
-                hasMarshalType = true;
-
             // Current offset of a field
-            int currentOffset = 0;              
-            
+            int currentOffset = 0;
+
             // Offset stored for each field
             int[] offsetOfFields = new int[cppStruct.InnerElements.Count];
 
@@ -512,16 +621,29 @@ namespace SlimDX.Generator
 
             int cumulatedBitOffset = 0;
 
+            // -------------------------------------------------------------------------------
+            // Iterate on all fields and perform mapping
+            // -------------------------------------------------------------------------------
             for (int fieldIndex = 0; fieldIndex < cppStruct.InnerElements.Count; fieldIndex++)
             {
                 CppField cppField = cppStruct.InnerElements[fieldIndex] as CppField;
 
-                CSharpType publicType = null;
+                CSharpType publicType;
                 CSharpType marshalType = null;
                 bool hasArray = cppField.IsArray;
-
-
+                int fieldSize;
                 int arrayDimension = 0;
+
+                string fieldType = cppField.GetTypeNameWithMapping();
+                string fieldName = ConvertFieldName(cppField);
+
+                string fieldSpecifier = string.IsNullOrEmpty(cppField.Specifier) ? "" : cppField.Specifier;
+
+                // Resolve from typedef
+                TypedefResolve(fieldType, out fieldType, ref fieldSpecifier);
+
+                bool hasPointer = !string.IsNullOrEmpty(fieldSpecifier) && fieldSpecifier.Contains("*");
+
 
                 // Handle array dimension
                 if (!string.IsNullOrWhiteSpace(cppField.ArrayDimension))
@@ -535,7 +657,8 @@ namespace SlimDX.Generator
                         if (arrayDimensionType is CSharpEnum.Item)
                         {
                             arrayDimensionValue = (arrayDimensionType as CSharpEnum.Item).Value;
-                        } else
+                        }
+                        else
                         {
                             throw new ArgumentException(string.Format("Invalid array dimension {0}", arrayDimensionValue));
                         }
@@ -543,21 +666,10 @@ namespace SlimDX.Generator
                     arrayDimension = (int)float.Parse(arrayDimensionValue, CultureInfo.InvariantCulture);
                 }
 
-                string fieldType = cppField.GetTypeNameWithMapping();
-                string fieldName = ConvertFieldName(cppField);
-
-                string fieldSpecifier = string.IsNullOrEmpty(cppField.Specifier) ? "" : cppField.Specifier;
-                // Resolve from typedef
-                TypedefResolve(fieldType, out fieldType, ref fieldSpecifier);
-
-                bool hasPointer = !string.IsNullOrEmpty(fieldSpecifier) && fieldSpecifier.Contains("*");
-
-                int fieldSize = 0;
-
                 // Default IntPtr type for pointer, unless modified by specialized type (like char* map to string)
                 if (hasPointer)
                 {
-                    publicType = ImportType(typeof (IntPtr));
+                    publicType = ImportType(typeof(IntPtr));
 
                     // Pointer has a variable size depending on x86/x64 architecture, so set field size to -1
                     fieldSize = 8;
@@ -565,13 +677,13 @@ namespace SlimDX.Generator
                     switch (fieldType)
                     {
                         case "char":
-                            publicType = ImportType(typeof (string));
-                            marshalType = ImportType(typeof (IntPtr));
+                            publicType = ImportType(typeof(string));
+                            marshalType = ImportType(typeof(IntPtr));
                             hasMarshalType = true;
                             break;
                         case "wchar_t":
-                            publicType = ImportType(typeof (string));
-                            marshalType = ImportType(typeof (IntPtr));
+                            publicType = ImportType(typeof(string));
+                            marshalType = ImportType(typeof(IntPtr));
                             hasMarshalType = true;
                             break;
                     }
@@ -583,33 +695,33 @@ namespace SlimDX.Generator
                         case "int":
                         case "long":
                             fieldSize = 4;
-                            publicType = ImportType(typeof (int));
+                            publicType = ImportType(typeof(int));
                             if (arrayDimension == 4)
                             {
-                                fieldSize = 4*4;
-                                publicType = ImportTypeFromName(Global.Name + ".Int4", 4*4, false, true);
+                                fieldSize = 4 * 4;
+                                publicType = ImportTypeFromName(Global.Name + ".Int4", 4 * 4, false, true);
                                 arrayDimension = 0;
                                 hasArray = false;
                             }
                             break;
                         case "short":
                             fieldSize = 2;
-                            publicType = ImportType(typeof (short));
+                            publicType = ImportType(typeof(short));
                             break;
                         case "float":
                             fieldSize = 4;
-                            publicType = ImportType(typeof (float));
+                            publicType = ImportType(typeof(float));
 
                             if (arrayDimension == 3)
                             {
-                                fieldSize = 3*4;
-                                publicType = ImportTypeFromName("SlimMath.Vector3", 3*4, false, true);
+                                fieldSize = 3 * 4;
+                                publicType = ImportTypeFromName("SlimMath.Vector3", 3 * 4, false, true);
                                 arrayDimension = 0;
                                 hasArray = false;
                             }
                             else if (arrayDimension == 4)
                             {
-                                fieldSize = 4*4;
+                                fieldSize = 4 * 4;
                                 publicType = ImportTypeFromName("SlimMath.Vector4", 4 * 4, false, true);
                                 arrayDimension = 0;
                                 hasArray = false;
@@ -618,70 +730,55 @@ namespace SlimDX.Generator
                         case "double":
                             fieldSize = 8;
                             publicType = ImportType(typeof(double));
-
-                            //if (arrayDimension == 3)
-                            //{
-                            //    fieldSize = 3 * 4;
-                            //    publicType = ImportTypeFromName("SlimMath.Vector3", 3 * 4, false, true);
-                            //    arrayDimension = 0;
-                            //    hasArray = false;
-                            //}
-                            //else if (arrayDimension == 4)
-                            //{
-                            //    fieldSize = 4 * 4;
-                            //    publicType = ImportTypeFromName("SlimMath.Vector4", 4 * 4, false, true);
-                            //    arrayDimension = 0;
-                            //    hasArray = false;
-                            //}
                             break;
                         case "BOOL":
                             fieldSize = 4;
-                            publicType = ImportType(typeof (bool));
-                            marshalType = ImportType(typeof (int));
+                            publicType = ImportType(typeof(bool));
+                            marshalType = ImportType(typeof(int));
                             break;
                         case "byte":
                             fieldSize = 1;
-                            publicType = ImportType(typeof (byte));
+                            publicType = ImportType(typeof(byte));
                             break;
                         case "__int64":
                             fieldSize = 8;
-                            publicType = ImportType(typeof (long));
+                            publicType = ImportType(typeof(long));
                             break;
                         case "SIZE_T":
                             fieldSize = 8;
                             publicType = ImportTypeFromName(Global.Name + ".Size", 4, false, false);
-                            publicType.Type = typeof (IntPtr);
+                            publicType.Type = typeof(IntPtr);
                             break;
                         case "char":
                             fieldSize = 1;
-                            publicType = ImportType(typeof (byte));
+                            publicType = ImportType(typeof(byte));
                             if (hasArray)
                             {
-                                publicType = ImportType(typeof (string));
-                                marshalType = ImportType(typeof (byte));
+                                publicType = ImportType(typeof(string));
+                                marshalType = ImportType(typeof(byte));
                                 hasMarshalType = true;
                             }
                             break;
                         case "wchar_t":
                             fieldSize = 2;
-                            publicType = ImportType(typeof (char));
+                            publicType = ImportType(typeof(char));
                             if (hasArray)
                             {
-                                publicType = ImportType(typeof (string));
-                                marshalType = ImportType(typeof (char));
+                                publicType = ImportType(typeof(string));
+                                marshalType = ImportType(typeof(char));
                                 hasMarshalType = true;
                             }
                             break;
                         case "D3DCOLOR":
                             fieldSize = 4;
                             FindType("D3DCOLOR", out publicType, ref hasPointer);
-                            marshalType = ImportType(typeof (int));
+                            marshalType = ImportType(typeof(int));
                             hasMarshalType = true;
                             break;
                         default:
                             // Try to get a declared struct
                             // If it fails, then this struct is unknown
-                            if (!FindType(fieldType, out publicType, ref hasPointer ))
+                            if (!FindType(fieldType, out publicType, ref hasPointer))
                             {
                                 throw new ArgumentException("Unknown Structure!");
                             }
@@ -778,7 +875,7 @@ namespace SlimDX.Generator
             cSharpStruct.IsFullyMapped = true;
 
 
-            if (sizeOfWriter == null )
+            if (sizeOfWriter == null)
                 sizeOfWriter = new StreamWriter("sizeof_test.cpp");
 
             sizeOfWriter.WriteLine(@"if ( sizeof({1}) != {2} ) printf(""%s,%s,%d,%d\n"",""{0}"", ""{1}"",sizeof({1}), {2});", cppStruct.Parent.Name, cppStruct.Name, cSharpStruct.SizeOf);
@@ -798,7 +895,7 @@ namespace SlimDX.Generator
                 throw new ArgumentException("CppFunction " + cppFunction.Name + " is not tagged and attached to any FunctionGroup");
 
             // Set the DllName for this CSharpFunction
-            cSharpFunction.DllName = tag.FunctionDllName;         
+            cSharpFunction.DllName = tag.FunctionDllName;
 
             // Add the CSharpFunction to the CSharpFunctionGroup
             tag.FunctionGroup.Add(cSharpFunction);
@@ -826,7 +923,7 @@ namespace SlimDX.Generator
             else
             {
                 if (!cSharpInterface.IsCallback)
-                    cSharpInterface.Parent = DefaultInterfaceCppObject;                
+                    cSharpInterface.Parent = DefaultInterfaceCppObject;
             }
 
             MapCppNameToCSharpType(cppInterface.Name, cSharpInterface);
@@ -878,52 +975,52 @@ namespace SlimDX.Generator
             switch (paramType)
             {
                 case "void":
-                    publicType = ImportType(typeof (void));
+                    publicType = ImportType(typeof(void));
                     break;
                 case "int":
                 case "long":
-                    publicType = ImportType(typeof (int));
+                    publicType = ImportType(typeof(int));
                     break;
                 case "short":
                     publicType = ImportType(typeof(short));
                     break;
                 case "float":
-                    publicType = ImportType(typeof (float));
+                    publicType = ImportType(typeof(float));
                     break;
                 case "double":
                     publicType = ImportType(typeof(double));
                     break;
                 case "BOOL":
-                    publicType = ImportType(typeof (bool));
-                    marshalType = ImportType(typeof (int));
+                    publicType = ImportType(typeof(bool));
+                    marshalType = ImportType(typeof(int));
                     break;
                 case "byte":
-                    publicType = ImportType(typeof (byte));
-                    marshalType = ImportType(typeof (int));
+                    publicType = ImportType(typeof(byte));
+                    marshalType = ImportType(typeof(int));
                     break;
                 case "__int64":
-                    publicType = ImportType(typeof (long));
+                    publicType = ImportType(typeof(long));
                     break;
                 case "SIZE_T":
                     publicType = ImportTypeFromName(Global.Name + ".Size", 4, false, false);
-                    publicType.Type = typeof (IntPtr);
+                    publicType.Type = typeof(IntPtr);
                     break;
                 case "GUID":
                     publicType = ImportType(typeof(Guid));
                     break;
                 case "char":
-                    publicType = ImportType(typeof (byte));
+                    publicType = ImportType(typeof(byte));
                     if (hasPointer)
                         publicType = ImportType(typeof(string));
                     break;
                 case "wchar_t":
-                    publicType = ImportType(typeof (char));
+                    publicType = ImportType(typeof(char));
                     if (hasPointer)
                         publicType = ImportType(typeof(string));
                     break;
                 case "HRESULT":
                     publicType = ImportTypeFromName(Global.Name + ".Result", 4, false, false);
-                    marshalType = ImportType(typeof (int));
+                    marshalType = ImportType(typeof(int));
                     break;
                 default:
                     // Try to get a declared struct
@@ -939,10 +1036,10 @@ namespace SlimDX.Generator
 
 
             if (hasPointer && !(publicType is CSharpInterface))
-                publicType = ImportType(typeof (IntPtr));
+                publicType = ImportType(typeof(IntPtr));
 
             if (hasPointer)
-                marshalType = ImportType(typeof (IntPtr));
+                marshalType = ImportType(typeof(IntPtr));
 
             if (marshalType == null && publicType is CSharpStruct && !hasPointer)
             {
@@ -959,10 +1056,11 @@ namespace SlimDX.Generator
 
             // Handle Return Type parameter
             // MarshalType.Type == null, then check that it is a structure
-            if (method.ReturnType.PublicType is CSharpStruct) {
+            if (method.ReturnType.PublicType is CSharpStruct)
+            {
                 // Return type and 1st parameter are implicitly a pointer to the structure to fill 
                 cSharpInteropCalliSignature.ReturnType = typeof(void*);
-                cSharpInteropCalliSignature.ParameterTypes.Add(typeof(void*));               
+                cSharpInteropCalliSignature.ParameterTypes.Add(typeof(void*));
             }
             else if (method.ReturnType.MarshalType.Type != null)
             {
@@ -973,7 +1071,7 @@ namespace SlimDX.Generator
             }
             else
             {
-                throw new ArgumentException(string.Format("Invalid return type {0} for method {1}", method.ReturnType.PublicType.FullName, method.CppElement));                
+                throw new ArgumentException(string.Format("Invalid return type {0} for method {1}", method.ReturnType.PublicType.FullName, method.CppElement));
             }
 
             // Handle Parameters
@@ -996,7 +1094,7 @@ namespace SlimDX.Generator
                 {
                     Type type = param.MarshalType.Type;
                     if (type == typeof(IntPtr))
-                        type = typeof (void*);
+                        type = typeof(void*);
                     cSharpInteropCalliSignature.ParameterTypes.Add(type);
                 }
             }
@@ -1017,7 +1115,7 @@ namespace SlimDX.Generator
 
         private void BuildCSharpMethodFromCppMethod(string cppPathContext, CSharpMethod cSharpMethod)
         {
-            CppMethod cppMethod = (CppMethod) cSharpMethod.CppElement;
+            CppMethod cppMethod = (CppMethod)cSharpMethod.CppElement;
 
             if (!string.IsNullOrEmpty(cppPathContext))
                 cppPathContext = cppPathContext + "::";
@@ -1030,8 +1128,6 @@ namespace SlimDX.Generator
             bool isWideChar = false;
 
             cSharpMethod.ReturnType = MapReturnParameter(cppMethod);
-
-            var marshalMethodTypes = new List<TypeWrapper>();
 
             foreach (CppParameter cppParameter in cppMethod.Parameters)
             {
@@ -1052,7 +1148,7 @@ namespace SlimDX.Generator
                 var paramSpecifier = !string.IsNullOrEmpty(cppParameter.Specifier) ? cppParameter.Specifier : "";
                 // Resolve from typedef
                 TypedefResolve(paramType, out paramType, ref paramSpecifier);
-                
+
                 bool hasPointer = paramSpecifier.Contains("*") || paramSpecifier.Contains("&");
                 bool isOptional = (cppAttribute & CppAttribute.Optional) != 0;
 
@@ -1076,10 +1172,10 @@ namespace SlimDX.Generator
                 {
                     case "int":
                     case "long":
-                        publicType = ImportType(typeof (int));
+                        publicType = ImportType(typeof(int));
                         if (arrayDimension == 4)
                         {
-                            publicType = ImportTypeFromName(Global.Name + ".Int4", 4*4, false, true);
+                            publicType = ImportTypeFromName(Global.Name + ".Int4", 4 * 4, false, true);
                             arrayDimension = 0;
                             hasArray = false;
                         }
@@ -1088,7 +1184,7 @@ namespace SlimDX.Generator
                         publicType = ImportType(typeof(short));
                         break;
                     case "float":
-                        publicType = ImportType(typeof (float));
+                        publicType = ImportType(typeof(float));
 
                         if (arrayDimension == 3)
                         {
@@ -1119,19 +1215,19 @@ namespace SlimDX.Generator
                         //}
                         break;
                     case "BOOL":
-                        publicType = ImportType(typeof (bool));
-                        marshalType = ImportType(typeof (int));
+                        publicType = ImportType(typeof(bool));
+                        marshalType = ImportType(typeof(int));
                         break;
                     case "byte":
-                        publicType = ImportType(typeof (byte));
-                        marshalType = ImportType(typeof (int));
+                        publicType = ImportType(typeof(byte));
+                        marshalType = ImportType(typeof(int));
                         break;
                     case "__int64":
-                        publicType = ImportType(typeof (long));
+                        publicType = ImportType(typeof(long));
                         break;
                     case "SIZE_T":
                         publicType = ImportTypeFromName(Global.Name + ".Size", 4, false, false);
-                        publicType.Type = typeof (IntPtr);
+                        publicType.Type = typeof(IntPtr);
                         break;
                     case "GUID":
                         publicType = ImportType(typeof(Guid));
@@ -1139,30 +1235,30 @@ namespace SlimDX.Generator
                             cppAttribute = CppAttribute.In;
                         break;
                     case "char":
-                        publicType = ImportType(typeof (byte));
+                        publicType = ImportType(typeof(byte));
                         if (hasPointer)
-                            publicType = ImportType(typeof (string));
+                            publicType = ImportType(typeof(string));
                         if (hasArray)
                         {
-                            publicType = ImportType(typeof (string));
-                            marshalType = ImportType(typeof (byte));
+                            publicType = ImportType(typeof(string));
+                            marshalType = ImportType(typeof(byte));
                         }
                         break;
                     case "wchar_t":
                         isWideChar = true;
-                        publicType = ImportType(typeof (char));
+                        publicType = ImportType(typeof(char));
                         if (hasPointer)
-                            publicType = ImportType(typeof (string));
+                            publicType = ImportType(typeof(string));
                         if (hasArray)
                         {
-                            publicType = ImportType(typeof (string));
-                            marshalType = ImportType(typeof (char));
+                            publicType = ImportType(typeof(string));
+                            marshalType = ImportType(typeof(char));
                             // Then this is more likely a plain string
                             hasArray = false;
                         }
                         break;
                     case "void":
-                        publicType = ImportType(typeof (IntPtr));
+                        publicType = ImportType(typeof(IntPtr));
 
                         //if ((cppAttribute & CppAttribute.Buffer) != 0)
                         //{
@@ -1178,7 +1274,7 @@ namespace SlimDX.Generator
                     //        throw new ArgumentException("Unknown type : " + paramType);
                     //    break;
                     case "ID3D10Effect":
-                        publicType = ImportType(typeof (IntPtr));
+                        publicType = ImportType(typeof(IntPtr));
                         break;
                     case "D3DCOLOR":
                         FindType("D3DCOLOR", out publicType, ref hasPointer);
@@ -1201,7 +1297,7 @@ namespace SlimDX.Generator
                 // --------------------------------------------------------------------------------
                 if (hasPointer)
                 {
-                    marshalType = ImportType(typeof (IntPtr));
+                    marshalType = ImportType(typeof(IntPtr));
 
                     // --------------------------------------------------------------------------------
                     // Handling Parameter Interface
@@ -1211,12 +1307,12 @@ namespace SlimDX.Generator
                         // Force Interface** to be CppAttribute.Out when None
                         if (cppAttribute == CppAttribute.None)
                         {
-                            if (paramSpecifier == "**" )
+                            if (paramSpecifier == "**")
                                 cppAttribute = CppAttribute.Out;
                         }
 
                         if ((cppAttribute == CppAttribute.None ||
-                            (cppAttribute & CppAttribute.In) != 0 ) || (cppAttribute & CppAttribute.InOut) != 0)
+                            (cppAttribute & CppAttribute.In) != 0) || (cppAttribute & CppAttribute.InOut) != 0)
                         {
                             parameterAttribute = CSharpMethod.ParameterAttribute.In;
 
@@ -1239,7 +1335,7 @@ namespace SlimDX.Generator
                                     cSharpMethod.Visibility = Visibility.Internal;
                                     cSharpMethod.Name = cSharpMethod.Name + "_";
                                 }
-                            }                            
+                            }
                         }
                         //else if ((cppParameter.Attribute & CppAttribute.InOut) != 0)
                         //    parameterAttribute = CSharpMethod.ParameterAttribute.Ref;
@@ -1256,10 +1352,10 @@ namespace SlimDX.Generator
                         if (cppAttribute == CppAttribute.None ||
                             (cppAttribute & CppAttribute.In) != 0)
                         {
-                            parameterAttribute = publicType.Type == typeof (IntPtr) || publicType.Name == Global.Name + ".FunctionCallback" ||
-                                                 publicType.Type == typeof (string)
+                            parameterAttribute = publicType.Type == typeof(IntPtr) || publicType.Name == Global.Name + ".FunctionCallback" ||
+                                                 publicType.Type == typeof(string)
                                                      ? CSharpMethod.ParameterAttribute.In
-                                                     : ((cppAttribute & CppAttribute.In) != 0? CSharpMethod.ParameterAttribute.RefIn:CSharpMethod.ParameterAttribute.Ref);
+                                                     : ((cppAttribute & CppAttribute.In) != 0 ? CSharpMethod.ParameterAttribute.RefIn : CSharpMethod.ParameterAttribute.Ref);
                             //parameterAttribute = CSharpMethod.ParameterAttribute.Ref;
                         }
                         else if ((cppAttribute & CppAttribute.InOut) != 0)
@@ -1285,9 +1381,9 @@ namespace SlimDX.Generator
                             arrayDimension = 0;
                             parameterAttribute = CSharpMethod.ParameterAttribute.In;
                         }
-                        else if (publicType.Type == typeof (string) && (cppAttribute & CppAttribute.Out) != 0)
+                        else if (publicType.Type == typeof(string) && (cppAttribute & CppAttribute.Out) != 0)
                         {
-                            publicType = ImportType(typeof (IntPtr));
+                            publicType = ImportType(typeof(IntPtr));
                             parameterAttribute = CSharpMethod.ParameterAttribute.In;
                             hasArray = false;
                         }
@@ -1516,7 +1612,7 @@ namespace SlimDX.Generator
             else
             {
                 // Refactor Properties
-                CreateProperties(generatedMethods);                
+                CreateProperties(generatedMethods);
             }
 
             // If interface is a callback and parent is ComObject, then remove it
@@ -1540,7 +1636,7 @@ namespace SlimDX.Generator
                 bool isSet = cSharpMethod.Name.StartsWith("Set");
                 if (!(isGet || isSet))
                     continue;
-                string propertyName = isIs?cSharpMethod.Name:cSharpMethod.Name.Substring("Get".Length);
+                string propertyName = isIs ? cSharpMethod.Name : cSharpMethod.Name.Substring("Get".Length);
 
                 int parameterCount = cSharpMethod.ParameterCount;
                 var parameterList = cSharpMethod.Parameters.ToList();
@@ -1654,7 +1750,7 @@ namespace SlimDX.Generator
                 var parent = getterOrSetter.ParentContainer;
 
                 // If Getter has no propery, 
-                if ( (property.Getter != null && property.Getter.NoProperty) || (property.Setter != null && property.Setter.NoProperty))
+                if ((property.Getter != null && property.Getter.NoProperty) || (property.Setter != null && property.Setter.NoProperty))
                     continue;
 
                 // Update visibility for getter and setter (set to internal)
@@ -1676,7 +1772,7 @@ namespace SlimDX.Generator
                                                  string inheritedInterfaceName = null)
         {
             _mapMoveMethodToInnerInterface.Add(new Regex(methodNameRegExp),
-                                               new InnerInterfaceMethod(innerInterface, propertyAccess, 
+                                               new InnerInterfaceMethod(innerInterface, propertyAccess,
                                                                         inheritedInterfaceName));
         }
 
@@ -1694,104 +1790,14 @@ namespace SlimDX.Generator
             }
         }
 
-        private void MapAll()
-        {
-            // Process all Enums
-            foreach (CppInclude cppInclude in IncludeToProcess)
-            {
-                foreach (CppEnum cppEnum in cppInclude.Enums)
-                {
-                    MapCppEnumToCSharpEnum(cppInclude, cppEnum);
-                }
-            }
-
-            var selectedCSharpType = new List<CSharpCppElement>();
-
-            // Predefine all structs and interfaces
-            foreach (CppInclude cppInclude in IncludeToProcess)
-            {
-                // Iterate on structs
-                foreach (CppStruct cppStruct in cppInclude.Structs)
-                {
-                    CSharpStruct csharpStruct = PrepareStructForMap(cppInclude, cppStruct);
-                    if (csharpStruct != null)
-                        selectedCSharpType.Add(csharpStruct);
-                }
-
-                // Iterate on interfaces
-                foreach (CppInterface cppInterface in cppInclude.Interfaces)
-                {
-                    CSharpInterface csharpInterface = PrepareInterfaceForMap(cppInclude, cppInterface);
-                    if (csharpInterface != null)
-                        selectedCSharpType.Add(csharpInterface);
-                }
-
-                // Prebuild global map typedef
-                foreach (CppTypedef typeDef in cppInclude.Typedefs)
-                {
-                    if (!_mapTypedefToType.ContainsKey(typeDef.Name))
-                        _mapTypedefToType.Add(typeDef.Name, typeDef);
-                }
-
-                // Iterate on interfaces
-                foreach (CppFunction cppFunction in cppInclude.Functions)
-                {
-                    CSharpFunction cSharpFunction = PrepareFunctionForMap(cppInclude, cppFunction);
-                    if (cSharpFunction != null)
-                        selectedCSharpType.Add(cSharpFunction);
-                }
-            }
-
-            // MAp all typedef to final CSharpType
-            foreach (CppInclude cppInclude in IncludeToProcess)
-            {
-                // Iterate on structs
-                foreach (CppTypedef cppTypedef in cppInclude.Typedefs)
-                {
-                    if (string.IsNullOrEmpty(cppTypedef.Specifier) && !cppTypedef.IsArray)
-                    {
-                        CSharpType type;
-                        if (_mapCppNameToCSharpType.TryGetValue(cppTypedef.GetTypeNameWithMapping(), out type))
-                        {
-                            if (!_mapCppNameToCSharpType.ContainsKey(cppTypedef.Name))
-                                MapCppNameToCSharpType(cppTypedef.Name, type);
-                        }
-                    }
-                }
-            }
-
-            // Transform structures
-            foreach (CSharpStruct cSharpStruct in selectedCSharpType.OfType<CSharpStruct>())
-            {
-                MapCppStructToCSharpStruct(cSharpStruct);
-                // Add Constants to Struct
-                AttachConstants(cSharpStruct);
-            }
-
-            // Transform interfaces
-            foreach (CSharpInterface cSharpInterface in selectedCSharpType.OfType<CSharpInterface>())
-            {
-                MapCppInterfaceToCSharpInterface(cSharpInterface);
-                // Add Constants to Interface
-                AttachConstants(cSharpInterface);
-            }
-
-            // Transform Functions
-            foreach (CSharpFunction cSharpFunction in selectedCSharpType.OfType<CSharpFunction>())
-            {
-                MapCppFunctionToCSharpFunction(cSharpFunction);
-            }
-
-            // Add constant to FunctionGroup
-            foreach (CSharpAssembly cSharpAssembly in Assemblies)
-                foreach (var ns in cSharpAssembly.Namespaces)
-                    foreach (var cSharpFunctionGroup in ns.FunctionGroups)
-                        AttachConstants(cSharpFunctionGroup);
-        }
-
         private void MapCppFunctionToCSharpFunction(CSharpFunction cSharpFunction)
         {
             BuildCSharpMethodFromCppMethod("", cSharpFunction);
+        }
+
+        private CSharpNamespace ResolveNamespace(CppElement element)
+        {
+            return ResolveNamespace(element.ParentInclude, element);
         }
 
         private CSharpNamespace ResolveNamespace(CppInclude include, CppElement element)
@@ -1826,7 +1832,7 @@ namespace SlimDX.Generator
         {
             MapCppNameToCSharpType(cppTypeName, ImportType(csharpType, isReference));
         }
-     
+
         private CSharpNamespace GetNamespace(string assemblyName, string nameSpace)
         {
             if (assemblyName == null)
@@ -1916,7 +1922,7 @@ namespace SlimDX.Generator
         {
             var cSharpNamespace = GetNamespace(assemblyName, nameSpace);
             cSharpNamespace.OutputDirectory = outputDirectory;
-            _mapIncludeToNamespace.Add(includeName, cSharpNamespace );
+            _mapIncludeToNamespace.Add(includeName, cSharpNamespace);
         }
 
         public void MapTypeToNamespace(string typeNameRegex, string assemblyName, string nameSpace, string outputDirectory = null)
@@ -1966,7 +1972,7 @@ namespace SlimDX.Generator
             if (!name.Contains("_") && name.ToUpper() != name && char.IsUpper(name[0]))
                 return name;
 
-            // Remove Prefix (for enums)
+            // Remove Prefix (for enums). Don't modify names that are modified by tag
             if (!nameModifiedByTag && rootName != null && originalName.StartsWith(rootName))
                 name = originalName.Substring(rootName.Length, originalName.Length - rootName.Length);
 
