@@ -29,14 +29,14 @@ namespace SlimDX
     /// </summary>
     /// <unmanaged>None</unmanaged>
     [Serializable]
-    public class SlimDX2Exception : Exception
+    public class SlimDXException : Exception
     {
         private Result m_Result;
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "T:SlimDX.SlimDX2Exception" /> class.
+        ///   Initializes a new instance of the <see cref = "T:SlimDX.SlimDXException" /> class.
         /// </summary>
-        public SlimDX2Exception()
+        public SlimDXException()
             : base("A SlimDX exception occurred.")
         {
             Result result = new Result(-2147467259);
@@ -44,38 +44,38 @@ namespace SlimDX
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "T:SlimDX.SlimDX2Exception" /> class.
+        ///   Initializes a new instance of the <see cref = "T:SlimDX.SlimDXException" /> class.
         /// </summary>
         /// <param name = "result">The result code that caused this exception.</param>
-        public SlimDX2Exception(Result result)
+        public SlimDXException(Result result)
             : base(result.ToString())
         {
             this.m_Result = result;
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "T:SlimDX.SlimDX2Exception" /> class.
+        ///   Initializes a new instance of the <see cref = "T:SlimDX.SlimDXException" /> class.
         /// </summary>
         /// <param name = "message">The message describing the exception.</param>
-        public SlimDX2Exception(string message)
+        public SlimDXException(string message)
             : base(message)
         {
             Result result = new Result(-2147467259);
             this.m_Result = result;
         }
 
-        protected SlimDX2Exception(SerializationInfo info, StreamingContext context)
+        protected SlimDXException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
             this.m_Result = (Result) info.GetValue("Result", typeof (Result));
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "T:SlimDX.SlimDX2Exception" /> class.
+        ///   Initializes a new instance of the <see cref = "T:SlimDX.SlimDXException" /> class.
         /// </summary>
         /// <param name = "message">The message describing the exception.</param>
         /// <param name = "innerException">The exception that caused this exception.</param>
-        public SlimDX2Exception(string message, Exception innerException)
+        public SlimDXException(string message, Exception innerException)
             : base(message, innerException)
         {
             Result result = new Result(-2147467259);

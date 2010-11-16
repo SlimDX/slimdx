@@ -78,7 +78,7 @@ namespace SlimDX
         {
             if (_code < 0)
             {
-                throw new SlimDX2Exception(this);
+                throw new SlimDXException(this);
             }
         }
 
