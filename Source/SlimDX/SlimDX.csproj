@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,17 +30,32 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SlimDX.Interop">
+      <HintPath>..\SlimDX.Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="SlimMath">
+      <HintPath>..\..\External\SlimMath\SlimMath.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComObject.cs" />
+    <Compile Include="ComObjectCallback.cs" />
+    <Compile Include="CppObject.cs" />
+    <Compile Include="CppObjectCallback.cs" />
+    <Compile Include="DataBox.cs" />
+    <Compile Include="DataRectangle.cs" />
+    <Compile Include="DataStream.cs" />
+    <Compile Include="DynamicInterop.cs" />
+    <Compile Include="FunctionCallback.cs" />
     <Compile Include="Generated\Direct3D\Enumerations.cs" />
     <Compile Include="Generated\Direct3D\Functions.cs" />
     <Compile Include="Generated\Direct3D\Interfaces.cs" />
@@ -49,13 +65,26 @@
     <Compile Include="Generated\Windows\Functions.cs" />
     <Compile Include="Generated\Windows\Interfaces.cs" />
     <Compile Include="Generated\Windows\Structures.cs" />
+    <Compile Include="Int4.cs" />
+    <Compile Include="Multimedia\WaveFormat.cs" />
+    <Compile Include="Multimedia\WaveFormatEncoding.cs" />
+    <Compile Include="Multimedia\WaveFormatExtensible.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rectangle.cs" />
+    <Compile Include="RectangleF.cs" />
+    <Compile Include="Result.cs" />
+    <Compile Include="Size.cs" />
+    <Compile Include="SlimDX2Exception.cs" />
+    <Compile Include="Utilities.cs" />
+    <Compile Include="Windows\MessagePump.cs" />
+    <Compile Include="Windows\RenderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>$(SolutionDir)\Source\Generator\RunGenerator.bat $(ConfigurationName)</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

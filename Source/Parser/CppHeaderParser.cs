@@ -109,21 +109,40 @@ namespace SlimDX.Parser
         /// </summary>
         public void Run()
         {
-
-            // Create a fake include that contains #include directives for the include to process
-            string header = "";
-            foreach (string includeName in IncludesToProcess)
-                header += "#include \"" + includeName + "\"\n";
-
-            var preProcessor = new PreProcessor(header, "root.h", this);
-
-            // Add an include path to Boost.Wave
-            foreach (var includeDir in IncludePath)
+            try
             {
-                preProcessor.AddIncludePath(includeDir);
-            }
+                // Create a fake include that contains #include directives for the include to process
+                string header = "";
 
-            preProcessor.Run();
+                string win32_extInclude = "win32_ext.h";
+
+                Stream win32Stream = typeof(CppHeaderParser).Assembly.GetManifestResourceStream(typeof(CppHeaderParser).Namespace + "." + win32_extInclude);
+                header += LoadInclude(win32Stream);
+                win32Stream.Close();
+
+
+                foreach (string includeName in IncludesToProcess)
+                    header += "#include \"" + includeName + "\"\n";
+
+                var preProcessor = new PreProcessor(header, "root.h", this);
+
+                // Add an include path to Boost.Wave
+                foreach (var includeDir in IncludePath)
+                {
+                    preProcessor.AddIncludePath(includeDir);
+                }
+
+                OnIncludBegin(win32_extInclude);
+
+                preProcessor.Run();
+
+                OnIncludEnd();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                Environment.Exit(1);
+            }
 
             // Remove all empty includes
             IncludeGroup.InnerElements.RemoveAll( include => include.InnerElements.Count == 0);
@@ -182,10 +201,14 @@ namespace SlimDX.Parser
         {
             try
             {
-
                 // Process only files that needs to be processed
                 if (IncludesToProcess.Contains(Path.GetFileName(name)))
-                    return LoadInclude(name);
+                {
+                    FileStream inputFile = new FileStream(name, FileMode.Open);
+                    string includeText = LoadInclude(inputFile);
+                    inputFile.Close();
+                    return includeText;
+                }
             }
             catch (Exception ex)
             {
@@ -195,9 +218,9 @@ namespace SlimDX.Parser
             return "\r\n\r\n\r\n\r\n";
         }
 
-        private string LoadInclude(string name)
+        private string LoadInclude(Stream stream)
         {
-            StreamReader reader = new StreamReader(name, true);
+            StreamReader reader = new StreamReader(stream);
             StringBuilder builder = new StringBuilder();
 
             string line;
