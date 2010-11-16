@@ -48,6 +48,7 @@ namespace SlimDX.Generator
 
             // Global namespace for XAudio2
             string assemblyName = Global.Name;
+            string multimediaNamespaceName = assemblyName + ".Multimedia";
             string namespaceName = assemblyName + ".Windows";
 
 
@@ -142,14 +143,14 @@ namespace SlimDX.Generator
 
             // Use SlimDX.Windows.WaveFormat
             var waveFormatEx = new CSharpStruct();
-            waveFormatEx.Name = namespaceName + ".WaveFormat";
+            waveFormatEx.Name = multimediaNamespaceName + ".WaveFormat";
             waveFormatEx.HasMarshalType = true;
             waveFormatEx.SizeOf = 18;
             gen.MapCppTypeToCSharpType("WAVEFORMATEX", waveFormatEx);
 
             // Use SlimDX.Windows.WaveFormat
             var waveFormatExtensible = new CSharpStruct();
-            waveFormatExtensible.Name = namespaceName + ".WaveFormatExtensible";
+            waveFormatExtensible.Name = multimediaNamespaceName + ".WaveFormatExtensible";
             waveFormatExtensible.HasMarshalType = true;
             waveFormatExtensible.SizeOf = 18;
             waveFormatExtensible.HasCustomNew = true;
