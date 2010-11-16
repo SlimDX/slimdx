@@ -1,0 +1,44 @@
+#summary Coding style guidelines for the project.
+= Coding Style Guidelines =
+
+== Formatting ==
+In general, we use the code formatting options provided by Visual Studio 2010's "Visual C#" default configuration, with two exceptions:
+  * Format with tabs, not spaces. 
+  * Do not insert a space between a flow control keyword and its opening parenthesis.
+
+Additionally, we use the following rules:
+  * Each statement should get its own line.
+  * Braces should be omitted when possible.
+  * However, braces should only be omitted for complex control constructs (if/else, try/catch) if they can be omitted for all blocks in the construct.
+  * Access modifiers should be omitted when possible.
+  * Although this should be used to judiciously, calls to functions with long or complex parameter lists should be indented using K&R style for the parentheses, and this technique should be nested as appropriate:
+{{{
+PerformComplexOperation(
+  argument1,
+  someValue ? option1 : option2,
+  SomeOtherFunction(
+    a,
+    b,
+    c
+  ),
+  lastValue
+)
+}}}
+
+== Naming ==
+  # Identifiers should be named in such a way as to clearly illustrate their purpose or meaning. Abbreviations should be avoided.
+  # !PascalCase should be used for types, methods and properties. camelCase should be used for variables and fields.
+  # All letters of an acronym should be capitalized, except with the acronym is the first word of a camelCase identifier, in which case all letters should be lowercase.
+  # Boolean properties should begin with a word that suggests their boolean nature, such as "is."
+  # Do not decorate field names with prefixes (for example, with 'm').
+  # Do not decorate type names with prefixes (for example, with 'I').
+  # In declarations, the access modifier (if applicable) should precede the static/virtual/et cetera designator. 
+
+== Commenting ==
+Comment intelligently; don't comment code that is otherwise readable and self-documenting. Instead, prefer to comment only where value would be added, such as by explaining why a particular implementation was made in favor of another that might be more obvious or standard. 
+
+  # Except for the licensing header on every source file, C-style comments should be avoided.
+  # There should be a single blank line between the last line of a file header copyright and the first line of code.
+  # Comments should not be placed on the same line as code statements.
+  # Insert a space between the comment delimiter and the first character of the comment.
+  # XML documentation comments should be added to every non-private item.
