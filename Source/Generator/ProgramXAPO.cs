@@ -19,16 +19,23 @@
 // THE SOFTWARE.
 using System;
 using SlimDX.XIDL;
-using System.Linq;
 
 namespace SlimDX.Generator
 {
     internal partial class Program
     {
-        public unsafe void MapXAPO()
+        /// <summary>
+        /// Map XAPO API
+        /// </summary>
+        public void MapXAPO()
         {
-            gen.MapIncludeToNamespace("xapo", Global.Name + ".XAPO");
-            gen.MapIncludeToNamespace("xapofx", Global.Name + ".XAPO.Fx", Global.Name + ".XAPO", "Fx");
+            // Global namespace for X3DAudio
+            string assemblyName = Global.Name + ".XAPO";
+            string namespaceName = assemblyName;
+            string namespaceNameFx = assemblyName + ".Fx";
+
+            gen.MapIncludeToNamespace("xapo", assemblyName, namespaceName);
+            gen.MapIncludeToNamespace("xapofx", assemblyName, namespaceNameFx, "Fx");
 
             // Limit Find to "dsound" in this method (in order to be sure that we don't touch other includes)
             group.FindContext.Add("xapo");
@@ -96,7 +103,7 @@ namespace SlimDX.Generator
             // --------------------------------------------------------------------------------------------------------
             // XAPO Functions
             // --------------------------------------------------------------------------------------------------------
-            CSharpFunctionGroup xapoFunctionGroup = gen.CreateFunctionGroup(Global.Name + ".XAPO", Global.Name + ".XAPO.Fx", "XAPOFx");
+            CSharpFunctionGroup xapoFunctionGroup = gen.CreateFunctionGroup(assemblyName, namespaceNameFx, "XAPOFx");
             group.TagFunction("^CreateFX$", "XAPOFX1_5.dll", xapoFunctionGroup);
 
             // Add FX Guid

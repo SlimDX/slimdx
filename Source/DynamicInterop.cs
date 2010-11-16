@@ -174,7 +174,7 @@ namespace SlimDX
     }
 
 #if XIDLToCSharp
-    public class DynamicInterop
+	public class DynamicInterop
 #else
     /// <summary>
     ///   Helper class to dynamically generate the interop assembly.

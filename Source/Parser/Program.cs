@@ -99,21 +99,9 @@ namespace SlimDX.Parser
             cppHeaderParser.IncludePath.Add(".");
 
             // cppHeaderParser.Documentation.IsActive = false;
-
-            // Map IDirectSound.* interface to use IDirectSoundXXX8 interface for msdn
             cppHeaderParser.AddInclude("win32_ext.h");
 
-            // DirectSound
-            cppHeaderParser.AddInclude("dsound.h");
-
-            // XAudio2
-            cppHeaderParser.AddInclude("xaudio2.h");
-            cppHeaderParser.AddInclude("xaudio2fx.h");
-
-            // XAPO
-            cppHeaderParser.AddInclude("xapo.h");
-            cppHeaderParser.AddInclude("xapofx.h");
-
+          
             // DXGI
             cppHeaderParser.AddInclude("dxgi.h");
             cppHeaderParser.AddInclude("dxgiformat.h");
@@ -157,11 +145,6 @@ namespace SlimDX.Parser
             cppHeaderParser.AddInclude("d3dx11tex.h");
             cppHeaderParser.AddInclude("d3dx11async.h");
             cppHeaderParser.AddInclude("d3dcompiler.h");
-
-            // Direct2D1 and DirectWrite
-            cppHeaderParser.AddInclude("dcommon.h");
-            cppHeaderParser.AddInclude("dwrite.h");
-            cppHeaderParser.AddInclude("d2d1.h");
 
             cppHeaderParser.Run();
 

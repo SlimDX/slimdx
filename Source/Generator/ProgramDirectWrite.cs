@@ -27,11 +27,17 @@ namespace SlimDX.Generator
         /// <summary>
         /// Map DirectWrite API
         /// </summary>
-        public unsafe void MapDirectWrite()
+        public void MapDirectWrite()
         {
+            // Global namespace for Direct2D1
+            string assemblyName = Global.Name + ".Direct2D1";
+            string namespaceName = Global.Name + ".DirectWrite";
 
-            gen.MapIncludeToNamespace("dcommon", Global.Name + ".DirectWrite", Global.Name + ".Direct2D1", "DirectWrite");
-            gen.MapIncludeToNamespace("dwrite", Global.Name + ".DirectWrite", Global.Name + ".Direct2D1", "DirectWrite");
+            foreach (var includeName in new[] { "dcommon", "dwrite" })
+            {
+                gen.MapIncludeToNamespace(includeName, assemblyName, namespaceName, "DirectWrite");
+                group.FindContext.Add(includeName);                
+            }
 
             // Global Rename
             group.TagName<CppEnum>(@"^DWRITE(.+)", "$1", false);
@@ -58,8 +64,10 @@ namespace SlimDX.Generator
             // DirectWrite Functions
             // --------------------------------------------------------------------------------------------------------
             group.TagName<CppFunction>(@"^DWrite(.+)", "$1", false);
-            CSharpFunctionGroup dwriteFunctionGroup = gen.CreateFunctionGroup(Global.Name + ".Direct2D1", Global.Name + ".DirectWrite", "DWrite");
+            CSharpFunctionGroup dwriteFunctionGroup = gen.CreateFunctionGroup(assemblyName, namespaceName, "DWrite");
             group.TagFunction("^DWriteCreateFactory", "dwrite.dll", dwriteFunctionGroup);
+
+            group.FindContext.Clear();
         }
     }
 }
