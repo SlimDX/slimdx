@@ -23,7 +23,7 @@ using System.Collections.Generic;
 namespace SlimDX
 {
     /// <summary>
-    /// ErrorManager helper to get a description from a HRESULT/SlimDX2.Result code.
+    /// ErrorManager helper to get a description from a HRESULT/SlimDX.Result code.
     /// </summary>
     public partial class ErrorManager
     {

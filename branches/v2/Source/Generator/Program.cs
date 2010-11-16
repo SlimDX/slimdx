@@ -78,9 +78,9 @@ namespace SlimDX.Generator
 
             // Then order is not important (only for MapDirect3DCommon and MapD3DCompiler)
 
-            //MapDirectSound();
-
-           // MapXAudio2();
+            MapDirectSound();
+            MapXAPO();
+            MapXAudio2();
 
             /*MapX3DAudio();
 
@@ -89,8 +89,7 @@ namespace SlimDX.Generator
             MapDirectInput();
 
             MapXACT3();*/
-
-           // MapXAPO();
+           
 
             MapDXGI();
 
@@ -100,8 +99,8 @@ namespace SlimDX.Generator
             MapDirect3D9();
             MapDirect3D10AndDirect3D11();
 
-            //MapDirect2D1();
-            //MapDirectWrite();
+            MapDirect2D1();
+            MapDirectWrite();
 
             gen.GeneratedPath = @"..\..\..\";
 

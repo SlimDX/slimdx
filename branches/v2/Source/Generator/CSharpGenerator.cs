@@ -515,11 +515,6 @@ namespace SlimDX.Generator
                 string enumName = ConvertCppNameToCSharpName(cppEnumItem, rootName);
                 string enumValue = _macroParser.Parse(cppEnumItem.Value);
 
-                // If an enum value is parsable but is using post fix (like L, or U) in lower case, then put them Upper case
-                // in order to avoid warnings
-                if ( enumValue.Length > 0 && char.IsLetter(enumValue[enumValue.Length-1]))
-                    enumValue = enumValue.ToUpper();
-
                 var csharpEnumItem = new CSharpEnum.Item(enumName, enumValue) { CppElement = cppEnumItem };
 
                 newEnum.Add(csharpEnumItem);
