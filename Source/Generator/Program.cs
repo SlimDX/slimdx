@@ -41,6 +41,7 @@ namespace SlimDX.Generator
             string fileNameXIDL = "directx.xidl";
             string optionParser = "/o:" + fileNameXIDL;
 
+
             // Run the parser
             Parser.Program parser = new Parser.Program();
 
@@ -50,6 +51,8 @@ namespace SlimDX.Generator
                 Console.WriteLine("Don't need to generate files again. Last run was successfull");
                 return;
             }
+
+            
 
             // Run the parser, only if necessary
             group = parser.Run(optionParser);
@@ -104,7 +107,6 @@ namespace SlimDX.Generator
             gen.GeneratedPath = @"..\..\..\";
 
             gen.Generate();
-
 
             File.WriteAllText(checkOkFile,"");
             File.SetLastWriteTime(checkOkFile, creationTimeForGeneratorAssembly);
@@ -210,10 +212,26 @@ namespace SlimDX.Generator
         /// Main SlimDX.Generator
         /// </summary>
         /// <param name="args">Command line args.</param>
-        private unsafe static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Program program = new Program();
-            program.Run();
+            try
+            {
+                Program program = new Program();
+                program.Run();
+            }
+            catch (Exception ex)
+            {
+                // Print friendly error parsable by Visual Studio in order to display them in the Error List
+                StringReader reader = new StringReader(ex.ToString());
+
+                string line = null;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    Console.Out.WriteLine("Generator(1,1): error CS9999: {0}", line);
+                    Console.Out.Flush();
+                }
+                Environment.ExitCode = 1;
+            }
         }
     }
 }
