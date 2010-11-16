@@ -28,7 +28,6 @@ namespace SlimDX.Generator
     {
         public CppIncludeGroup group;
         public CSharpGenerator gen;
-
     
         /// <summary>
         /// Run the XIDL To CSharp generator

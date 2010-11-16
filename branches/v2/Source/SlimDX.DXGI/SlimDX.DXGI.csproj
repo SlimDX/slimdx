@@ -53,6 +53,11 @@
     <Compile Include="DXGIObject.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Factory1.cs" />
+    <Compile Include="Generated\Enumerations.cs" />
+    <Compile Include="Generated\Functions.cs" />
+    <Compile Include="Generated\Interfaces.cs" />
+    <Compile Include="Generated\LocalInterop.cs" />
+    <Compile Include="Generated\Structures.cs" />
     <Compile Include="ModeDescription.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rational.cs" />
@@ -64,9 +69,7 @@
       <Name>SlimDX</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Generated\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
