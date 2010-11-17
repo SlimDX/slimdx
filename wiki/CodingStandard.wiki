@@ -2,9 +2,8 @@
 = Coding Style Guidelines =
 
 == Formatting ==
-In general, we use the code formatting options provided by Visual Studio 2010's "Visual C#" default configuration, with two exceptions:
+In general, we use the code formatting options provided by Visual Studio 2010's "Visual C#" default configuration, with one exception:
   * Format with tabs, not spaces. 
-  * Do not insert a space between a flow control keyword and its opening parenthesis.
 
 Additionally, we use the following rules:
   * Each statement should get its own line.
@@ -26,6 +25,7 @@ PerformComplexOperation(
 }}}
 
 == Style ==
+  * Use the .NET guidelines unless they conflict with something on this page.
   * Use var when possible.
 
 == Naming ==
