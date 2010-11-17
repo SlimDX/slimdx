@@ -219,7 +219,7 @@ namespace SlimDX.Parser
                 // Process only files that needs to be processed
                 if (IncludesToProcess.Contains(Path.GetFileName(name)))
                 {
-                    FileStream inputFile = new FileStream(name, FileMode.Open);
+                    FileStream inputFile = new FileStream(name, FileMode.Open, FileAccess.Read);
                     string includeText = LoadInclude(inputFile);
                     inputFile.Close();
                     return includeText;
