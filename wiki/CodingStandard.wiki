@@ -27,6 +27,7 @@ PerformComplexOperation(
 == Style ==
   * Use the .NET guidelines unless they conflict with something on this page.
   * Use var when possible.
+  * Do not created nested types.
 
 == Naming ==
   # Identifiers should be named in such a way as to clearly illustrate their purpose or meaning. Abbreviations should be avoided.
