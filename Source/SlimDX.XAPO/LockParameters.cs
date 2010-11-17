@@ -23,6 +23,7 @@ using SlimDX.Multimedia;
 
 namespace SlimDX.XAPO
 {
+
     public partial struct LockParameters
     {
         public WaveFormat Format { get; set; }

@@ -218,7 +218,7 @@ namespace SlimDX.Direct2D1
             {
                 return exception.ResultCode.Code;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Result.Fail.Code;
             }
