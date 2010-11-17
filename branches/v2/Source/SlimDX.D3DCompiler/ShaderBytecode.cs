@@ -719,7 +719,7 @@ namespace SlimDX.D3DCompiler
                 D3D.StripShader(GetBufferPointer(), GetBufferSize(), flags, out blob);
                 return Utilities.BlobToString(blob);
             }
-            catch (SlimDXException ex)
+            catch (SlimDXException)
             {
                 return null;
             }

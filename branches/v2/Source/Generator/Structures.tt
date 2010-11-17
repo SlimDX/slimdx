@@ -40,6 +40,8 @@ using System.Runtime.InteropServices;
 
 namespace <#= Namespace.Name #> {
 
+#pragma warning disable 282
+
 <#
 foreach (var sharpStruct in Namespace.Structs)
 {

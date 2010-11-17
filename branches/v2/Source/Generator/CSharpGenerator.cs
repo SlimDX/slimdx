@@ -555,12 +555,16 @@ namespace SlimDX.Generator
             if (isRootNameFound)
                 rootName = rootNameFound;
 
+            Regex fixEnumValue = new Regex(@"^(\dx?\d*)\w$");
 
             // Create enum items for enum
             foreach (CppEnumItem cppEnumItem in cppEnum.Items)
             {
                 string enumName = ConvertCppNameToCSharpName(cppEnumItem, rootName);
                 string enumValue = _macroParser.Parse(cppEnumItem.Value);
+
+                if (fixEnumValue.Match(enumValue).Success)
+                    enumValue = fixEnumValue.Replace(enumValue, "$1");
 
                 var csharpEnumItem = new CSharpEnum.Item(enumName, enumValue) { CppElement = cppEnumItem };
 

@@ -49,7 +49,7 @@ namespace SlimDX.D3DCompiler
                 D3D.GetInputAndOutputSignatureBlob(shaderBytecode.GetBufferPointer(),
                                                    shaderBytecode.GetBufferSize(), out shaderSignature);
             }
-            catch (SlimDXException ex)
+            catch (SlimDXException)
             {
                 return null;
             }
@@ -69,7 +69,7 @@ namespace SlimDX.D3DCompiler
                 D3D.GetInputSignatureBlob(shaderBytecode.GetBufferPointer(),
                                           shaderBytecode.GetBufferSize(), out shaderSignature);
             }
-            catch (SlimDXException ex)
+            catch (SlimDXException)
             {
                 return null;
             }
@@ -89,7 +89,7 @@ namespace SlimDX.D3DCompiler
                 D3D.GetOutputSignatureBlob(shaderBytecode.GetBufferPointer(),
                                            shaderBytecode.GetBufferSize(), out shaderSignature);
             }
-            catch (SlimDXException ex)
+            catch (SlimDXException)
             {
                 return null;
             }

@@ -137,7 +137,7 @@ namespace SlimDX.D3DCompiler
                 {
                     return exception.ResultCode.Code;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return Result.Fail;
                 }
@@ -172,7 +172,7 @@ namespace SlimDX.D3DCompiler
             {
                 return exception.ResultCode.Code;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Result.Fail;
             }

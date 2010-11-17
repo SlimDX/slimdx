@@ -88,7 +88,7 @@ namespace SlimDX.DirectWrite
             {
                 return exception.ResultCode.Code;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Result.Fail.Code;
             }
@@ -116,7 +116,7 @@ namespace SlimDX.DirectWrite
                 {
                     return exception.ResultCode.Code;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return Result.Fail.Code;
                 }
@@ -146,7 +146,7 @@ namespace SlimDX.DirectWrite
             {
                 return exception.ResultCode.Code;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return Result.Fail.Code;
             }

@@ -33,6 +33,7 @@ namespace SlimDX.DirectSound
             unsafe
             {
                 Size = sizeof (SoundBufferDescription.__Native);
+                pFormat = IntPtr.Zero;
             }
         }
 
