@@ -25,6 +25,9 @@ PerformComplexOperation(
 )
 }}}
 
+== Style ==
+  * Use var when possible.
+
 == Naming ==
   # Identifiers should be named in such a way as to clearly illustrate their purpose or meaning. Abbreviations should be avoided.
   # !PascalCase should be used for types, methods and properties. camelCase should be used for variables and fields.
@@ -42,3 +45,4 @@ Comment intelligently; don't comment code that is otherwise readable and self-do
   # Comments should not be placed on the same line as code statements.
   # Insert a space between the comment delimiter and the first character of the comment.
   # XML documentation comments should be added to every non-private item.
+  # Prefer to avoid committing large blocks of commented-out code. That's what version control is for.
