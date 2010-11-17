@@ -34,13 +34,17 @@ namespace SlimDX.Generator
         /// <summary>
         /// Run the XIDL To CSharp generator
         /// </summary>
-        public void Run()
+        public void Run(string[] args)
         {
             string checkOkFile = ".slimdx_generator_ok";
             var creationTimeForGeneratorAssembly = File.GetLastWriteTime(Assembly.GetExecutingAssembly().Location);
 
             string fileNameXIDL = "directx.xidl";
             string optionParser = "/o:" + fileNameXIDL;
+
+            List<string> newArgs = new List<string>();
+            newArgs.Add(optionParser);
+            newArgs.AddRange(args);
 
 
             // Run the parser
@@ -52,11 +56,9 @@ namespace SlimDX.Generator
                 Console.WriteLine("Don't need to generate files again. Last run was successfull");
                 return;
             }
-
-            
-
+           
             // Run the parser, only if necessary
-            group = parser.Run(optionParser);
+            group = parser.Run(newArgs.ToArray());
 
             // Instanciate the generator
             gen = new CSharpGenerator(group);
@@ -113,6 +115,62 @@ namespace SlimDX.Generator
             // gen.Dump("SlimDX.csv");
 
             // DumpEnumItems("match_enums.txt", "DirectSound");
+
+            DumpStats();
+        }
+
+        public void DumpStats()
+        {
+            Dictionary<string,int> stats = new Dictionary<string, int>();
+            stats["interfaces"] = 0;
+            stats["methods"] = 0;
+            stats["parameters"] = 0;
+            stats["enums"] = 0;
+            stats["structs"] = 0;
+            stats["fields"] = 0;
+            stats["enumitems"] = 0;           
+            stats["functions"] = 0;
+
+            foreach (var assembly in gen.Assemblies)
+            {
+                foreach (var nameSpace in assembly.Items)
+                // Enums, Structs, Interface, FunctionGroup
+                foreach (var item in nameSpace.Items)
+                {
+                    if (item is CSharpInterface)
+                        stats["interfaces"]++;
+                    else if (item is CSharpStruct)
+                        stats["structs"]++;
+                    else if (item is CSharpEnum)
+                        stats["enums"]++;
+
+                    foreach (var subitem in item.Items)
+                    {
+                        if (subitem is CSharpFunction)
+                        {
+                            stats["functions"]++;
+                            stats["parameters"] += subitem.Items.Count;
+                        }
+                        else if (subitem is CSharpMethod)
+                        {
+                            stats["methods"]++;
+                            stats["parameters"] += subitem.Items.Count;
+                        }
+                        else if (subitem is CSharpEnum.Item)
+                        {
+                            stats["enumitems"]++;
+                        } 
+                        else if (subitem is CSharpField)
+                        {
+                            stats["fields"]++;
+                        }
+                    }                    
+                }
+            }
+
+            Console.WriteLine("Generator statistics:");
+            foreach (var stat in stats)
+                Console.WriteLine("\tNumber of {0} : {1}", stat.Key, stat.Value);
         }
 
         ///// <summary>
@@ -217,7 +275,7 @@ namespace SlimDX.Generator
             try
             {
                 Program program = new Program();
-                program.Run();
+                program.Run(args);
             }
             catch (Exception ex)
             {

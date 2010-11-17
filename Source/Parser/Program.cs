@@ -35,7 +35,8 @@ namespace SlimDX.Parser
         private class CommandArgs
         {
             public string IncludePath = null;
-            public string Output = "directx.xidl";            
+            public string Output = "directx.xidl";                    
+            public string DocProviderAssembly = null;
         }
 
         /// <summary>
@@ -46,7 +47,7 @@ namespace SlimDX.Parser
         /// <param name="messageArgs">error message arguments</param>
         private static void Usage(int exitCode, string message = null, params string[] messageArgs)
         {
-            throw new ArgumentException(message + "\n" + string.Format("Usage: {0} [/i:path_to_directx default = ENV($DXSDK_DIR\\Include)] [/o:output_xidl_file default = directx.xidl]",Assembly.GetEntryAssembly().FullName));
+            throw new ArgumentException(message + "\n" + string.Format("Usage: {0} [/i:path_to_directx default = ENV($DXSDK_DIR\\Include)] [/o:output_xidl_file default = directx.xidl] [/d:asembly_documentation_provider default  = null]",Assembly.GetEntryAssembly().FullName));
         }
 
         /// <summary>
@@ -64,6 +65,8 @@ namespace SlimDX.Parser
                     cmdArgs.IncludePath = arg.Substring("/i:".Length);
                 else if (arg.StartsWith("/o:"))
                     cmdArgs.Output = arg.Substring("/o:".Length);
+                else if (arg.StartsWith("/d:"))
+                    cmdArgs.DocProviderAssembly = arg.Substring("/d:".Length);
                 else
                     Usage(1, "Unexpected argument: {0}", arg);
             }
@@ -100,6 +103,10 @@ namespace SlimDX.Parser
             
             var cppHeaderParser = new CppHeaderParser();
 
+            // Set the doc provider assembly
+            cppHeaderParser.DocProviderAssembly = cmdArgs.DocProviderAssembly;
+
+            // Add the DXDIR SDK path
             cppHeaderParser.IncludePath.Add(cmdArgs.IncludePath);
 
             // DirectSound

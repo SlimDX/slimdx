@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using Boost.Wave;
@@ -44,6 +45,7 @@ namespace SlimDX.Parser
         private readonly CppInclude rootInclude;
         private int currentIndex;
         private List<Token> tokens;
+        private Exception _lastException;
 
         public CppHeaderParser()
         {
@@ -75,6 +77,12 @@ namespace SlimDX.Parser
         {
             get { return includeGroup; }
         }
+
+        /// <summary>
+        /// Gets or sets the doc provider assembly.
+        /// </summary>
+        /// <value>The doc provider assembly.</value>
+        public string DocProviderAssembly { get; set; }
 
         /// <summary>
         /// Include path used to search DirectX headers
@@ -136,17 +144,23 @@ namespace SlimDX.Parser
 
                 preProcessor.Run();
 
+                if (_lastException != null)
+                    throw new Exception("Exceptions occurs. ",_lastException);
+
                 OnIncludEnd();
+
+                // Remove all empty includes
+                IncludeGroup.InnerElements.RemoveAll(include => include.InnerElements.Count == 0);
+
+                ApplyDocumentation();
+                
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
                 Console.Out.Flush();
-                //Environment.Exit(1);
+                throw;
             }
-
-            // Remove all empty includes
-            IncludeGroup.InnerElements.RemoveAll( include => include.InnerElements.Count == 0);
         }
 
         // ------------------------------------------------------------------------------------------
@@ -214,6 +228,7 @@ namespace SlimDX.Parser
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+                _lastException = ex;
             }
             // Empty
             return "\r\n\r\n\r\n\r\n";
@@ -263,7 +278,7 @@ namespace SlimDX.Parser
                 {
                     Console.WriteLine(ex);
                     Console.Out.Flush();
-                    //Environment.Exit(1);
+                    _lastException = ex;
                 }
                 isParsed = true;
             }
@@ -1717,13 +1732,8 @@ namespace SlimDX.Parser
                 if (identifier != null)
                 {
                     var lastPack = _pragmaStack.Peek();
-                    if (lastPack != null)
-                    {
-                        if (lastPack.Identifier == identifier)
-                        {
-                            popPack = _pragmaStack.Pop();
-                        }
-                    }
+                    if (lastPack != null && lastPack.Identifier == identifier)
+                        popPack = _pragmaStack.Pop();
                 }
                 else
                 {
@@ -1755,7 +1765,7 @@ namespace SlimDX.Parser
         /// </summary>
         private void Parse()
         {
-            while (CurrentToken != null)
+            while (CurrentToken != null && _lastException == null)
             {
                 if (CurrentToken.Id == TokenId.Inline || CurrentToken.Value == "__inline")
                 {
@@ -1817,5 +1827,132 @@ namespace SlimDX.Parser
         }
 
         private int _externBraceCount;
+
+        /// <summary>
+        /// Apply documentation
+        /// </summary>
+        private void ApplyDocumentation()
+        {
+            if (DocProviderAssembly == null)
+                return;
+
+            DocProvider docProvider = null;
+            try
+            {
+                var assembly = Assembly.LoadFrom(DocProviderAssembly);
+
+                foreach (var type in assembly.GetTypes())
+                {
+                    if (typeof(DocProvider).IsAssignableFrom(type))
+                    {
+                        docProvider = (DocProvider)Activator.CreateInstance(type);
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Unable to load DocProvider Assembly. Reason {0}", ex);
+                return;
+            }
+
+            if (docProvider == null)
+            {
+                Console.WriteLine("DocProvider was not found from assembly [{0}]", DocProviderAssembly);
+                return;                
+            }
+            
+            docProvider.Begin();
+
+            foreach (CppInclude cppInclude in IncludeGroup.Includes)
+            {
+                foreach (CppEnum cppEnum in cppInclude.Enums)
+                {
+                    DocItem docItem = docProvider.FindDocumentation(cppEnum.Name);
+                    cppEnum.Description = docItem.Description;
+                    cppEnum.Remarks = docItem.Remarks;
+                    if (cppEnum.InnerElements.Count != docItem.Items.Count)
+                        Console.WriteLine("Warning Invalid number enum items in documentation for Enum {0}",
+                                          cppEnum.Name);
+                    int count = Math.Min(cppEnum.InnerElements.Count, docItem.Items.Count);
+                    int i = 0;
+                    foreach (CppEnumItem cppEnumItem in cppEnum.Items)
+                    {
+                        if (i < count)
+                            cppEnumItem.Description = docItem.Items[i];
+                        else break;
+                        i++;
+                    }
+                }
+
+                foreach (CppStruct cppStruct in cppInclude.Structs)
+                {
+                    DocItem docItem = docProvider.FindDocumentation(cppStruct.Name);
+                    cppStruct.Description = docItem.Description;
+                    cppStruct.Remarks = docItem.Remarks;
+                    if (cppStruct.InnerElements.Count != docItem.Items.Count)
+                        Console.WriteLine("Invalid number of fields in documentation for Struct {0}", cppStruct.Name);
+                    int count = Math.Min(cppStruct.InnerElements.Count, docItem.Items.Count);
+                    int i = 0;
+                    foreach (CppField cppEnumItem in cppStruct.Fields)
+                    {
+                        if (i < count)
+                            cppEnumItem.Description = docItem.Items[i];
+                        else break;
+                        i++;
+                    }
+                }
+
+                foreach (CppInterface cppInterface in cppInclude.Interfaces)
+                {
+                    DocItem docItem = docProvider.FindDocumentation(cppInterface.Name);
+                    cppInterface.Description = docItem.Description;
+
+                    foreach (CppMethod cppMethod in cppInterface.Methods)
+                    {
+                        string methodName = cppInterface.Name + "::" + cppMethod.Name;
+                        DocItem methodDocItem = docProvider.FindDocumentation(methodName);
+                        cppMethod.Description = methodDocItem.Description;
+                        cppMethod.Remarks = methodDocItem.Remarks;
+                        cppMethod.ReturnType.Description = methodDocItem.Return;
+                        if (cppMethod.InnerElements.Count != methodDocItem.Items.Count)
+                            Console.WriteLine("Invalid number of documentation for Parameters for method {0}",
+                                              methodName);
+                        int count = Math.Min(cppMethod.InnerElements.Count, methodDocItem.Items.Count);
+                        int i = 0;
+                        foreach (CppParameter cppParameter in cppMethod.Parameters)
+                        {
+                            if (i < count)
+                                cppParameter.Description = methodDocItem.Items[i];
+                            else break;
+                            i++;
+                        }
+                    }
+                }
+
+                foreach (CppFunction cppFunction in cppInclude.Functions)
+                {
+                    DocItem docItem = docProvider.FindDocumentation(cppFunction.Name);
+                    cppFunction.Description = docItem.Description;
+                    cppFunction.Remarks = docItem.Remarks;
+                    cppFunction.ReturnType.Description = docItem.Return;
+                    if (cppFunction.InnerElements.Count != docItem.Items.Count)
+                        Console.WriteLine("Invalid number of documentation for Parameters for Function {0}",
+                                          cppFunction.Name);
+                    int count = Math.Min(cppFunction.InnerElements.Count, docItem.Items.Count);
+                    int i = 0;
+                    foreach (CppParameter cppParameter in cppFunction.Parameters)
+                    {
+                        if (i < count)
+                            cppParameter.Description = docItem.Items[i];
+                        else break;
+                        i++;
+                    }
+                }
+            }
+            docProvider.End();
+        }
+
+
     }
 }
