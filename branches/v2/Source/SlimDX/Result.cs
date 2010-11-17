@@ -92,7 +92,7 @@ namespace SlimDX
                 Type type = assembly.GetType(prefix + ".ErrorManager");
                 _methodGetErrorDescription = type.GetMethod("GetErrorMessage", BindingFlags.Static | BindingFlags.Public);
             }
-            catch (Exception ex)
+            catch (Exception)
             {                
             }
         }
