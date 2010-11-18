@@ -12,11 +12,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "Source\Generat
 		{AD55612F-453A-40FC-80D7-CC19528E57B5} = {AD55612F-453A-40FC-80D7-CC19528E57B5}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{0E79FEFA-5FDD-456C-9383-4859F1671CCD}"
-	ProjectSection(SolutionItems) = preProject
-		build.proj = build.proj
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Products", "Products", "{0587FB5C-8B44-4552-AC1E-99EFBB33A263}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimDX", "Source\SlimDX\SlimDX.csproj", "{CE5194D5-30A4-43A4-BF7A-7AC0C1988224}"
