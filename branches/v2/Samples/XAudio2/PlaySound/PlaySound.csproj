@@ -63,18 +63,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Source\SlimDX.Error\SlimDX.Error.csproj">
-      <Project>{8ECEF885-63EC-4A82-A219-4AB312D1B097}</Project>
-      <Name>SlimDX.Error</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Source\SlimDX.XAPO\SlimDX.XAPO.csproj">
-      <Project>{3000DCA4-0973-4E39-B2AA-56751DCB04CC}</Project>
-      <Name>SlimDX.XAPO</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Source\SlimDX.XAudio2\SlimDX.XAudio2.csproj">
-      <Project>{958A2EA3-E86B-41AC-835B-5CA467C5B5A0}</Project>
-      <Name>SlimDX.XAudio2</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Source\SlimDX\SlimDX.csproj">
       <Project>{CE5194D5-30A4-43A4-BF7A-7AC0C1988224}</Project>
       <Name>SlimDX</Name>

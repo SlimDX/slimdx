@@ -69,12 +69,6 @@
     <EmbeddedResource Include="win32_ext.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XIDL\XIDL.csproj">
-      <Project>{19435A18-0C26-4534-8987-96E555BD2EFC}</Project>
-      <Name>XIDL</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="..\..\External\Wave\BoostWaveNative.dll">
       <Link>BoostWaveNative.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -91,10 +91,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Source\SlimDX.Direct3D9\SlimDX.Direct3D9.csproj">
-      <Project>{4F5A65E9-FAB7-45C6-8CA1-A76228083EF7}</Project>
-      <Name>SlimDX.Direct3D9</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Source\SlimDX\SlimDX.csproj">
       <Project>{CE5194D5-30A4-43A4-BF7A-7AC0C1988224}</Project>
       <Name>SlimDX</Name>
