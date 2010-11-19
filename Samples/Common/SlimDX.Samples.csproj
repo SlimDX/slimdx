@@ -92,14 +92,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\SlimDX.Direct2D1\SlimDX.Direct2D1.csproj">
-      <Project>{6C573B77-76D7-4DB8-93A4-DF613A5F26F8}</Project>
-      <Name>SlimDX.Direct2D1</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Source\SlimDX.Direct3D10\SlimDX.Direct3D10.csproj">
-      <Project>{C7077731-5949-43F7-940D-0F393475652C}</Project>
-      <Name>SlimDX.Direct3D10</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Source\SlimDX.DXGI\SlimDX.DXGI.csproj">
       <Project>{D4D38A41-0729-4606-A54E-EB0B0E07C836}</Project>
       <Name>SlimDX.DXGI</Name>

@@ -137,10 +137,6 @@
     <Compile Include="Viewport.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SlimDX.D3DCompiler\SlimDX.D3DCompiler.csproj">
-      <Project>{2BC0D3FF-D3B0-44F2-8ECE-37768BF3E812}</Project>
-      <Name>SlimDX.D3DCompiler</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SlimDX.DXGI\SlimDX.DXGI.csproj">
       <Project>{D4D38A41-0729-4606-A54E-EB0B0E07C836}</Project>
       <Name>SlimDX.DXGI</Name>

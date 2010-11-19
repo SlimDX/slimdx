@@ -22,7 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -82,6 +82,10 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SlimDX.DXGI.Thunk, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\SlimDX.DXGI.Thunk.dll</HintPath>
+    </Reference>
     <Reference Include="SlimDX.Interop">
       <HintPath>..\SlimDX.Interop.dll</HintPath>
       <Private>False</Private>
@@ -99,27 +103,14 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="DXGIObject.cs" />
-    <Compile Include="Factory.cs" />
-    <Compile Include="Factory1.cs" />
-    <Compile Include="Generated\Enumerations.cs" />
-    <Compile Include="Generated\Functions.cs" />
-    <Compile Include="Generated\Interfaces.cs" />
-    <Compile Include="Generated\LocalInterop.cs" />
-    <Compile Include="Generated\Structures.cs" />
-    <Compile Include="ModeDescription.cs" />
+    <Compile Include="DXGI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rational.cs" />
-    <Compile Include="SampleDescription.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SlimDX\SlimDX.csproj">
-      <Project>{CE5194D5-30A4-43A4-BF7A-7AC0C1988224}</Project>
-      <Name>SlimDX</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>$(SolutionDir)Source\Generator\Bin\Debug\SlimDX.Generator.exe</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
