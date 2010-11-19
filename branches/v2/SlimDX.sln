@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "Source\Tools\G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimDX.DXGI", "Source\Products\SlimDX.DXGI\SlimDX.DXGI.csproj", "{E3444A70-DF09-4610-9393-B5D7467DF705}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimDX", "Source\Products\SlimDX\SlimDX.csproj", "{A774A428-009F-4E4D-ABF2-F7E181DAA2E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{E3444A70-DF09-4610-9393-B5D7467DF705}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3444A70-DF09-4610-9393-B5D7467DF705}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3444A70-DF09-4610-9393-B5D7467DF705}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A774A428-009F-4E4D-ABF2-F7E181DAA2E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A774A428-009F-4E4D-ABF2-F7E181DAA2E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A774A428-009F-4E4D-ABF2-F7E181DAA2E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A774A428-009F-4E4D-ABF2-F7E181DAA2E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,5 +36,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{9523BE04-7228-413E-993D-7D741A685B4F} = {92CBFD32-5276-43E9-8F79-ABD3B1E00A88}
 		{E3444A70-DF09-4610-9393-B5D7467DF705} = {0587FB5C-8B44-4552-AC1E-99EFBB33A263}
+		{A774A428-009F-4E4D-ABF2-F7E181DAA2E3} = {0587FB5C-8B44-4552-AC1E-99EFBB33A263}
 	EndGlobalSection
 EndGlobal
