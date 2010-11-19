@@ -18,28 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
-namespace SlimDX.Generator
-{
-	class Program
-	{
-		/// <summary>
-		/// The application's entry point.
-		/// </summary>
-		/// <param name="arguments">The command-line arguments to the application.</param>
-		static void Main(string[] arguments)
-		{
-			var outputFile = "SlimDX.DXGI.Trampoline";
-			if (arguments.Length > 0)
-				outputFile = arguments[0];
-
-			var builder = new TrampolineAssemblyBuilder();
-
-			builder.Add(new Trampoline(typeof(int)));
-			builder.Add(new Trampoline(typeof(int), new TrampolineParameter(typeof(int)), new TrampolineParameter(typeof(IntPtr), TrampolineParameterFlags.Reference)));
-
-			builder.CreateAssembly(outputFile);
-		}
-	}
-}
+[assembly: AssemblyTitle("SlimDX Core Assembly")]
+[assembly: Guid("93829d68-6233-46bd-9e8c-aaca77f874b4")]

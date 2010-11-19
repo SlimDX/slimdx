@@ -54,7 +54,7 @@ namespace SlimDX.DXGI
 	}
 
 	//TODO: Temporary code below.
-	public partial interface Factory
+	public partial interface Factory : ComObject
 	{
 	}
 
@@ -66,5 +66,20 @@ namespace SlimDX.DXGI
 		}
 
 		IntPtr nativePointer;
+
+		public T QueryInterface<T>() where T : class, ComObject
+		{
+			return null;
+		}
+
+		public void AddReference()
+		{
+			//TODO: Call.Int32( IntPtr.Size * 1, nativePointer );
+		}
+
+		public void Release()
+		{
+			//TODO: Call.Int32(IntPtr.Size * 2, nativePointer);
+		}
 	}
 }

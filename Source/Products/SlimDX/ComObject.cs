@@ -18,28 +18,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-
-namespace SlimDX.Generator
+namespace SlimDX
 {
-	class Program
+	/// <summary>
+	/// A COM object.
+	/// </summary>
+	public interface ComObject
 	{
 		/// <summary>
-		/// The application's entry point.
+		/// Attempts to retrieve a reference to an interface of an object.
 		/// </summary>
-		/// <param name="arguments">The command-line arguments to the application.</param>
-		static void Main(string[] arguments)
-		{
-			var outputFile = "SlimDX.DXGI.Trampoline";
-			if (arguments.Length > 0)
-				outputFile = arguments[0];
+		/// <typeparam name="T">The interface to retrieve.</typeparam>
+		/// <returns>A reference to an interface, if the requested interface is supported by the object. Otherwise null.</returns>
+		T QueryInterface<T>() where T : class, ComObject;
 
-			var builder = new TrampolineAssemblyBuilder();
+		/// <summary>
+		/// Increments the reference count for an object. 
+		/// </summary>
+		void AddReference();
 
-			builder.Add(new Trampoline(typeof(int)));
-			builder.Add(new Trampoline(typeof(int), new TrampolineParameter(typeof(int)), new TrampolineParameter(typeof(IntPtr), TrampolineParameterFlags.Reference)));
-
-			builder.CreateAssembly(outputFile);
-		}
+		/// <summary>
+		/// Decrements the reference count for an object.
+		/// </summary>
+		void Release();
 	}
 }
