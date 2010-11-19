@@ -48,12 +48,10 @@ namespace SlimDX.Generator
 		/// <summary>
 		/// Creates a trampoline implementation assembly based on the current state of the builder.
 		/// </summary>
-		/// <param name="outputDirectory">The output directory.</param>
 		/// <param name="name">The name of the trampoline assembly.</param>
-		public void CreateAssembly(string outputDirectory, string name)
+		public void CreateAssembly(string name)
 		{
 			Contract.Assert(!string.IsNullOrEmpty(name));
-			Contract.Assert(Directory.Exists(outputDirectory));
 
 			var fileName = string.Format("{0}.dll", name);
 			var assemblyName = new AssemblyName(name);
@@ -65,7 +63,7 @@ namespace SlimDX.Generator
 				BuildTrampolineMethod(trampoline, typeBuilder);
 
 			typeBuilder.CreateType();
-			assemblyBuilder.Save(Path.Combine(outputDirectory, fileName));
+			assemblyBuilder.Save(fileName);
 		}
 
 		#endregion

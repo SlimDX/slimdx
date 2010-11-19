@@ -30,9 +30,14 @@ namespace SlimDX.Generator
 		/// <param name="arguments">The command-line arguments to the application.</param>
 		static void Main(string[] arguments)
 		{
+			var outputFile = "SlimDX.DXGI.Trampoline";
+			if (arguments.Length > 0)
+				outputFile = arguments[0];
+
 			var builder = new TrampolineAssemblyBuilder();
 			builder.Add(new Trampoline(typeof(int), new TrampolineParameter(typeof(int)), new TrampolineParameter(typeof(IntPtr), TrampolineParameterFlags.Reference)));
-			builder.CreateAssembly(".", "SlimDX.DXGI.Thunk");
+
+			builder.CreateAssembly(outputFile);
 		}
 	}
 }
