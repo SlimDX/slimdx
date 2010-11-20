@@ -1,4 +1,24 @@
-﻿using System;
+﻿// Copyright (c) 2007-2010 SlimDX Group
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +39,20 @@ namespace Generator
 			if (!File.Exists(configFile))
 				Console.WriteLine("Could not open config file \"{0}\".", configFile);
 			else
-				Run(configFile);
+			{
+#if !DEBUG
+				try
+				{
+#endif
+					Run(configFile);
+#if !DEBUG
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine("Exception occurred: " + e.ToString());
+				}
+#endif
+			}
 		}
 
 		/// <summary>
@@ -49,11 +82,7 @@ namespace Generator
 				else
 				{
 					if (string.IsNullOrWhiteSpace(section))
-					{
-						Console.WriteLine("No section defined for option on line {0}.", lineNumber);
-						return;
-					}
-
+						throw new InvalidOperationException(string.Format("No section defined for option on line {0}.", lineNumber));
 					options[section].Add(option);
 				}
 			}
@@ -61,25 +90,8 @@ namespace Generator
 			// primary source file is the one that wave is run against to produce
 			// a single preprocessed monolithic header
 			var primarySource = options.GetOption("PrimarySource");
-			if (primarySource == null)
-			{
-				Console.WriteLine("No primary source defined in config file.");
-				return;
-			}
-
 			var grammarPath = options.GetOption("Grammar");
-			if (grammarPath == null)
-			{
-				Console.WriteLine("No grammar path defined in config file.");
-				return;
-			}
-
 			var wavePath = options.GetOption("Wave");
-			if (wavePath == null)
-			{
-				Console.WriteLine("No path to wave.exe defined in config file.");
-				return;
-			}
 
 			// run boost::wave on the primary source file to get a preprocessed file and a list of macros
 			// -E indicates default naming scheme for output file (ie. input.i)
@@ -120,7 +132,10 @@ namespace Generator
 
 			// run the parse on the preprocessed file to generate a model of the file in memory
 			var parser = new HeaderParser(grammarPath);
-			parser.Parse(source);
+			var root = parser.Parse(source);
+
+			// for testing purposes, output XML of the parse tree
+			root.ToXml().Save("test.xml");
 		}
 
 		/// <summary>
