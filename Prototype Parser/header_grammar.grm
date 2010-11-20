@@ -2,7 +2,7 @@
 ! C++ Header Language
 ! -----------------------------------------------------------------------
 
-"Name"    = 'C++ Header' 
+"Name"    = 'C++ Header Grammar' 
 "Version" = '1'
 "Author"  = 'SlimDX Group' 
 "About"   = 'Implements a subset of the C++ language for parsing simple header files.'
@@ -27,7 +27,6 @@ StringLiteral    = '"'( {String Ch} | '\'{Printable} )* '"'
 
 Id               = {Id Head}{Id Tail}*
 
-
 ! ===================================================================
 ! Comments
 ! ===================================================================
@@ -41,76 +40,78 @@ Comment Line  = '//'
 ! ===================================================================
 
 <ID> ::= Id
-        | align
+       | align
 
-<Decls> ::= <Decls> <Decl>
+<Decls> ::= <Decl> <Decls> 
           |
 
-<Decl>  ::= <Func Proto>
-          | <Var Decl>    
-          | <Typedef Decl>
+<Decl>  ::= <Function>
+          | <Variable>    
+          | <Typedef>
           | <Extern>
           | <Operator>
           | <Template>
 
 <Extern> ::= extern '"C"' '{' <Decls> '}'
-            | extern '"C++"' '{' <Decls> '}'
-            | extern '"C"' <Decl>
+           | extern '"C++"' '{' <Decls> '}'
+           | extern '"C"' <Decl>
 
 <Template> ::= template '<' <Params> '>'
               
 ! ===================================================================
-! Function  Declaration
+! Functions
 ! ===================================================================
 
-<Operator> ::= <FuncModifier> <FuncModifierList> <Type> <FuncModifier> <FuncModifierList> operator <Symbol> '(' <Func Sig>
-                | <FuncModifier> <FuncModifierList> <Type> operator <Symbol> '(' <Func Sig>
-                | <Type> <FuncModifier> <FuncModifierList> operator <Symbol> '(' <Func Sig>
-                | <Type> operator <Symbol> '(' <Func Sig>
+<Operator> ::= <FuncModifierList> <Type> <FuncModifierList> operator <Symbol> '(' <Signature>
+             | <FuncModifierList> <Type> operator <Symbol> '(' <Signature>
+             | <Type> <FuncModifierList> operator <Symbol> '(' <Signature>
+             | <Type> operator <Symbol> '(' <Signature>
 
-<Func Proto> ::= <FuncModifier> <FuncModifierList> <Type> <FuncModifier> <FuncModifierList> <ID> '(' <Func Sig>
-                | <FuncModifier> <FuncModifierList> <Type> <ID> '(' <Func Sig>
-                | <Type> <FuncModifier> <FuncModifierList> <ID> '(' <Func Sig>
-                | <Type> <ID> '(' <Func Sig>
+<Function> ::= <FuncModifierList> <Type> <FuncModifierList> <ID> '(' <Signature>
+             | <FuncModifierList> <Type> <ID> '(' <Signature>
+             | <Type> <FuncModifierList> <ID> '(' <Signature>
+             | <Type> <ID> '(' <Signature>
 
-<Func Sig> ::= <Params> ')' <Throw> <Pure> ';'
-            | ')' <Throw> <Pure> ';'
-            | <Params> ')' <Throw> '{' <BlockList> '}'
-            | ')' <Throw> '{' <BlockList> '}'
+<Signature> ::= <Params> ')' <Throw> <Pure> <Body>
 
-<Throw> ::= throw '(' ')'
+<Body> ::= '{' <BlockList> '}'
+         | ';'
+
+<Throw> ::= throw '(' ')' 
+          | 
+
+<Pure> ::= '=' <Numeric> 
+         |
+
+<Params> ::= <Param> ',' <Params>
+           | <Param>
            | 
-
-<Pure> ::= '=' <Numeric>
-        |
-
-<Params>     ::= <Param> ',' <Params>
-               | <Param>
                
-<Param>      ::= <Type> <Var>
-               | <Type>
-               | '...'
-               | <FunctionPtr>
-               | <Type> '(' '&' <ID> ')' <Array>
+<Param> ::= <Type> <Var>
+          | <Type>
+          | '...'
+          | <FunctionPtr>
+          | <Type> '(' '&' <ID> ')' <Array>
 
 <Block> ::= '{' <BlockList> '}'
-        | <Anything>
+          | <Anything>
 
 <BlockList> ::= <Block> <BlockList>
-            |
+              |
 
 <Symbol> ::= '[' | ']' | '(' | ')' | ',' | ':' | ';' | '+' | '>' | '=' | '=='
-            | '-' | '*' | '/' | '%' | '&' | '|' | '^' | '!' | '~' | '<' | '?'
-            | '&&' | '||' | '<<' | '>>' | '<=' | '!=' | '>=' | '&=' | '|='
-            | '++' | '--' | '->' | '.'
+           | '-' | '*' | '/' | '%' | '&' | '|' | '^' | '!' | '~' | '<' | '?'
+           | '&&' | '||' | '<<' | '>>' | '<=' | '!=' | '>=' | '&=' | '|='
+           | '++' | '--' | '->' | '.'
 
+! Bit of a hack to just eat up anything in a function body without really looking at it properly
 <Anything> ::= <ID>
-            | StringLiteral
-            | <Symbol>
-            | <Numeric>
-            | <Mod>
-            | <FuncModifier>
-            | <Keywords>
+             | StringLiteral
+             | <Symbol>
+             | <Numeric>
+             | <Mod>
+             | <FuncModifier>
+             | <Keywords>
 
 <Keywords> ::= sizeof
              | char
@@ -131,18 +132,18 @@ Comment Line  = '//'
              | union
 
 <CallingConvention> ::= '__cdecl'
-                    | '__stdcall'
-                    | '__fastcall'
+                      | '__stdcall'
+                      | '__fastcall'
 
 <FuncModifierList> ::= <FuncModifier> <FuncModifierList>
-                    | 
+                     | <FuncModifier>
 
 <FuncModifier> ::= <CallingConvention>
-                | '__inline'
-                | '__forceinline'
-                | inline
-                | virtual
-                | <DeclspecDef>
+                 | '__inline'
+                 | '__forceinline'
+                 | inline
+                 | virtual
+                 | <DeclspecDef>
 
 <DeclspecDef> ::= '__declspec' '(' <Declspec> ')'
 
@@ -150,53 +151,50 @@ Comment Line  = '//'
                     |
 
 <StringLiteralList> ::= StringLiteral <StringLiteralList>
-                    |
+                      |
 
 <Declspec> ::= noreturn
-            | noalias
-            | novtable
-            | nothrow
-            | restrict
-            | dllimport
-            | dllexport
-            | deprecated
-            | deprecated '(' StringLiteral <StringLiteralList> ')'
-            | uuid '(' StringLiteral ')'
-            | align '(' <Numeric> ')'
+             | noalias
+             | novtable
+             | nothrow
+             | restrict
+             | dllimport
+             | dllexport
+             | deprecated
+             | deprecated '(' StringLiteral <StringLiteralList> ')'
+             | uuid '(' StringLiteral ')'
+             | align '(' <Numeric> ')'
 
 ! ===================================================================
 ! Type Declaration
 ! ===================================================================
 
-<Typedef Decl> ::= typedef <Type> <Var> <Var List> ';'
-                | typedef <Func Proto>
-                | typedef <FunctionPtr> ';'
+<Typedef> ::= typedef <Type> <Var> <VarList> ';'
+            | typedef <Function>
+            | typedef <FunctionPtr> ';'
 
 <Object> ::= struct
            | class
 
-<Struct Def>   ::= <StructMember>  <Struct Def>
-                 |
+<Struct> ::= <StructMember> <Struct>
+           |
 
-<StructMember> ::= <Var Decl>
-                | <Func Proto>
-                | <Template>
-                | <Accessibility> ':'
+<StructMember> ::= <Variable>
+                 | <Function>
+                 | <Template>
+                 | <Accessibility> ':'
 
 <FunctionPtr> ::= <Type> '(' <CallingConvention> <Pointers> <ID> ')' '(' <Params> ')'
-                | <Type> '(' <CallingConvention> <Pointers> <ID> ')' '(' ')'
                 | <Type> '(' <CallingConvention> <Pointers> ')' '(' <Params> ')'
-                | <Type> '(' <CallingConvention> <Pointers> ')' '(' ')'
                 | <Type> '(' <Pointers> <ID> ')' '(' <Params> ')'
-                | <Type> '(' <Pointers> <ID> ')' '(' ')'
 
 <Inheritance> ::= ':' <Accessibility> <ID>
                 | ':' <ID>
                 |
 
 <Accessibility> ::= public
-                | private
-                | protected
+                  | private
+                  | protected
 
 ! ===================================================================
 ! Variable Declaration
@@ -206,138 +204,136 @@ Comment Line  = '//'
             | HexLiteral
             | OctLiteral
 
-<Var Decl>     ::= <Type> <Var> <Var List>  ';'
-                | <Type> <Var> ':' <Numeric> <Var List>  ';'
-                | <Type> ';'
-                | <Type> ':' <Numeric> ';'
-                | <FunctionPtr> ';'
-                | '*' <Type> ';'
+<Variable> ::= <Type> <Var> <VarList>  ';'
+             | <Type> <Var> ':' <Numeric> <VarList>  ';'
+             | <Type> ';'
+             | <Type> ':' <Numeric> ';'
+             | <FunctionPtr> ';'
+             | '*' <Type> ';'
              
-<Var>      ::= <ID> <Array>
+<Var> ::= <ID> <Array>
 
-<Array>    ::= '[' <Expr> ']' <Array>
-             | '[' ']' <Array>
-             |
+<Array> ::= '[' <Expr> ']' <Array>
+          | '[' ']' <Array>
+          |
              
-<Var List> ::=  ',' <Var Item> <Var List>
-             | 
+<VarList> ::= ',' <VarItem> <VarList>
+            | 
 
-<Var Item> ::= <Pointers> <Var> ':' <Numeric>
+<VarItem> ::= <Pointers> <Var> ':' <Numeric>
             | <Pointers> <Var>
 
-             
-<Mod>      ::= extern 
-             | static
-             | register
-             | auto
-             | volatile
-             | const
+<Mod> ::= extern 
+        | static
+        | register
+        | auto
+        | volatile
+        | const
 
 <ModList> ::= <Mod> <ModList>
-            |
+            | <Mod>
 
 ! ===================================================================
 ! Enumerations
 ! ===================================================================
  
-<Enum Def>     ::= <Enum Val> ',' <Enum Def>
-                 | <Enum Val> ','
-                 | <Enum Val>
+<Enum> ::= <EnumVal> ',' <Enum>
+         | <EnumVal> ','
+         | <EnumVal>
 
-<Enum Val>     ::= <ID>
-                 | <ID> '=' <Op If>
-
+<EnumVal> ::= <ID>
+            | <ID> '=' <Op If>
 
 ! ===================================================================
 ! Types
 ! ===================================================================
 
-<Type>     ::= <W64> <Base> <Pointers>
-            | <Mod> <ModList> <W64> <Base> <Pointers>
-            | <DeclspecDef> <Mod> <ModList> <W64> <Base> <Pointers>
-            | <DeclspecDef> <Base> <Pointers>
+<Type> ::= <W64> <Base> <Pointers> 
+         | <ModList> <W64> <Base> <Pointers>
+         | <DeclspecDef> <ModList> <W64> <Base> <Pointers>
+         | <DeclspecDef> <Base> <Pointers>
+            
 
 <W64> ::= '__w64'
         |
 
-<Base>     ::= <Sign>
-             | <Scalar>
-             | <Sign> <Scalar>
-             | <Object> <DeclspecOrEmpty> <ID> <Inheritance>
-             | <Object> '{' <Struct Def> '}' 
-             | <Object> <DeclspecOrEmpty> <ID> <Inheritance> '{' <Struct Def> '}'
-             | union <ID>
-             | union '{' <Struct Def> '}' 
-             | union <ID> '{' <Struct Def> '}'
-             | enum <ID>
-             | enum <ID> '{' <Enum Def> '}'
-             | enum '{' <Enum Def> '}'
-             | <ID>
+<Base> ::= <Sign>
+         | <Scalar>
+         | <Sign> <Scalar>
+         | <Object> <DeclspecOrEmpty> <ID> <Inheritance>
+         | <Object> '{' <Struct> '}' 
+         | <Object> <DeclspecOrEmpty> <ID> <Inheritance> '{' <Struct> '}'
+         | union <ID>
+         | union '{' <Struct> '}' 
+         | union <ID> '{' <Struct> '}'
+         | enum <ID>
+         | enum <ID> '{' <Enum> '}'
+         | enum '{' <Enum> '}'
+         | <ID>
 
+<Sign> ::= signed 
+         | unsigned
 
-<Sign>     ::= signed 
-             | unsigned
-
-<Scalar>   ::= char
-             | int
-             | short
-             | long
-             | short int
-             | long int
-             | float
-             | double
-             | void    
-             | __int64
-             | long long
-             | long double
+<Scalar> ::= char
+           | int
+           | short
+           | long
+           | short int
+           | long int
+           | float
+           | double
+           | void    
+           | __int64
+           | long long
+           | long double
 
 <Pointers> ::= '*' <Pointers>
              | '*' <Pointers> '__ptr64'
              | '&' <Pointers>
-             | <Mod> <ModList> '*' <Pointers>
-             | <Mod> <ModList>
+             | <ModList> '*' <Pointers>
+             | <ModList>
              |
 
 ! ===================================================================
 ! Expressions
 ! ===================================================================
 
-<Expr>       ::= <Expr> ',' <Op Assign>   
-               | <Op Assign>
+<Expr> ::= <Expr> ',' <Op Assign>   
+         | <Op Assign>
 
-<Op Assign>  ::= <Op If> '='   <Op Assign>
-               | <Op If> '+='  <Op Assign>
-               | <Op If> '-='  <Op Assign>
-               | <Op If> '*='  <Op Assign>
-               | <Op If> '/='  <Op Assign>
-               | <Op If> '^='  <Op Assign>
-               | <Op If> '&='  <Op Assign>
-               | <Op If> '|='  <Op Assign>
-               | <Op If> '>>=' <Op Assign>
-               | <Op If> '<<=' <Op Assign>
-               | <Op If>
+<Op Assign> ::= <Op If> '='   <Op Assign>
+              | <Op If> '+='  <Op Assign>
+              | <Op If> '-='  <Op Assign>
+              | <Op If> '*='  <Op Assign>
+              | <Op If> '/='  <Op Assign>
+              | <Op If> '^='  <Op Assign>
+              | <Op If> '&='  <Op Assign>
+              | <Op If> '|='  <Op Assign>
+              | <Op If> '>>=' <Op Assign>
+              | <Op If> '<<=' <Op Assign>
+              | <Op If>
 
-<Op If>      ::= <Op Or> '?' <Op If> ':' <Op If>
-               | <Op Or>
+<Op If> ::= <Op Or> '?' <Op If> ':' <Op If>
+          | <Op Or>
 
-<Op Or>      ::= <Op Or> '||' <Op And>
-               | <Op And>
+<Op Or> ::= <Op Or> '||' <Op And>
+          | <Op And>
 
-<Op And>     ::= <Op And> '&&' <Op BinOR>
-               | <Op BinOR>
+<Op And> ::= <Op And> '&&' <Op BinOR>
+           | <Op BinOR>
 
-<Op BinOR>   ::= <Op BinOr> '|' <Op BinXOR>
-               | <Op BinXOR>
+<Op BinOR> ::= <Op BinOr> '|' <Op BinXOR>
+             | <Op BinXOR>
 
-<Op BinXOR>  ::= <Op BinXOR> '^' <Op BinAND>
-               | <Op BinAND>
+<Op BinXOR> ::= <Op BinXOR> '^' <Op BinAND>
+              | <Op BinAND>
 
-<Op BinAND>  ::= <Op BinAND> '&' <Op Equate>
-               | <Op Equate>
+<Op BinAND> ::= <Op BinAND> '&' <Op Equate>
+              | <Op Equate>
 
-<Op Equate>  ::= <Op Equate> '==' <Op Compare>
-               | <Op Equate> '!=' <Op Compare>
-               | <Op Compare>
+<Op Equate> ::= <Op Equate> '==' <Op Compare>
+              | <Op Equate> '!=' <Op Compare>
+              | <Op Compare>
 
 <Op Compare> ::= <Op Compare> '<'  <Op Shift>
                | <Op Compare> '>'  <Op Shift>
@@ -345,45 +341,45 @@ Comment Line  = '//'
                | <Op Compare> '>=' <Op Shift>
                | <Op Shift>
 
-<Op Shift>   ::= <Op Shift> '<<' <Op Add>
-               | <Op Shift> '>>' <Op Add>
-               | <Op Add>
+<Op Shift> ::= <Op Shift> '<<' <Op Add>
+             | <Op Shift> '>>' <Op Add>
+             | <Op Add>
 
-<Op Add>     ::= <Op Add> '+' <Op Mult>
-               | <Op Add> '-' <Op Mult>
-               | <Op Mult>
+<Op Add> ::= <Op Add> '+' <Op Mult>
+           | <Op Add> '-' <Op Mult>
+           | <Op Mult>
 
-<Op Mult>    ::= <Op Mult> '*' <Op Unary>
-               | <Op Mult> '/' <Op Unary>
-               | <Op Mult> '%' <Op Unary>
-               | <Op Unary>
+<Op Mult> ::= <Op Mult> '*' <Op Unary>
+            | <Op Mult> '/' <Op Unary>
+            | <Op Mult> '%' <Op Unary>
+            | <Op Unary>
 
-<Op Unary>   ::= '!'    <Op Unary>
-               | '~'    <Op Unary>   
-               | '-'    <Op Unary>
-               | '*'    <Op Unary>
-               | '&'    <Op Unary>               
-               | '++'   <Op Unary>
-               | '--'   <Op Unary>
-               | <Op Pointer> '++'
-               | <Op Pointer> '--'
-               | '(' <ID> ')' <Op Unary>   !CAST
-               | '(' <ID> '*' ')' <Op Unary>   !CAST
-               | '(' <Scalar> ')' <Op Unary>
-               | sizeof '(' <Type> ')'
-               | sizeof '(' <ID> <Pointers> ')'
-               | <Op Pointer>
+<Op Unary> ::= '!' <Op Unary>
+             | '~' <Op Unary>   
+             | '-' <Op Unary>
+             | '*' <Op Unary>
+             | '&' <Op Unary>               
+             | '++' <Op Unary>
+             | '--' <Op Unary>
+             | <Op Pointer> '++'
+             | <Op Pointer> '--'
+             | '(' <ID> ')' <Op Unary>   !CAST
+             | '(' <ID> '*' ')' <Op Unary>   !CAST
+             | '(' <Scalar> ')' <Op Unary>
+             | sizeof '(' <Type> ')'
+             | sizeof '(' <ID> <Pointers> ')'
+             | <Op Pointer>
 
 <Op Pointer> ::= <Op Pointer> '.' <ID>
                | <Op Pointer> '->' <ID>
                | <Op Pointer> '[' <Expr> ']'
                | <Value>
 
-<Value>      ::= OctLiteral
-               | HexLiteral
-               | DecLiteral  
-               | StringLiteral
-               | CharLiteral
-               | FloatLiteral
-               | <ID>
-               | '(' <Expr> ')'
+<Value> ::= OctLiteral
+          | HexLiteral
+          | DecLiteral  
+          | StringLiteral
+          | CharLiteral
+          | FloatLiteral
+          | <ID>
+          | '(' <Expr> ')'
