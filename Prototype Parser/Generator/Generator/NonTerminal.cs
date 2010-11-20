@@ -22,27 +22,56 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GoldParser;
+using System.Xml.Linq;
 
 namespace Generator
 {
-	static class Extensions
+	/// <summary>
+	/// Represents a non-terminal parse node.
+	/// </summary>
+	class NonTerminal : IParseNode
 	{
-		public static string GetOption(this Dictionary<string, List<string>> options, string name)
-		{
-			List<string> optionGroup;
-			if (!options.TryGetValue(name, out optionGroup) || optionGroup.Count == 0)
-				throw new InvalidOperationException("Could not find " + name + " option in config file.");
+		List<IParseNode> children = new List<IParseNode>();
 
-			return optionGroup[0];
+		public Rule Rule
+		{
+			get;
+			private set;
 		}
 
-		public static IEnumerable<string> GetOptions(this Dictionary<string, List<string>> options, string name)
+		public IEnumerable<IParseNode> Children
 		{
-			List<string> optionGroup;
-			if (!options.TryGetValue(name, out optionGroup) || optionGroup.Count == 0)
-				return Enumerable.Empty<string>();
+			get { return children; }
+		}
 
-			return optionGroup;
+		public NonTerminal(Rule rule)
+		{
+			Rule = rule;
+		}
+
+		public void Add(object node)
+		{
+			if (node != null)
+				children.Add(node as IParseNode);
+		}
+
+		public XElement ToXml()
+		{
+			return (XElement)((IParseNode)this).ToXml();
+		}
+
+		object IParseNode.ToXml()
+		{
+			var childXml = children.Select(c => c.ToXml()).Where(c => c != null).ToArray();
+			if (childXml.Length == 0)
+				return null;
+
+			var name = Rule.Name.Trim('<', '>').Replace(' ', '_');
+			if(name == "ID" || name == "Value")
+				return childXml[0];
+
+			return new XElement(name, childXml);
 		}
 	}
 }

@@ -43,7 +43,7 @@ Comment Line  = '//'
 <ID> ::= Id
         | align
 
-<Decls> ::= <Decl> <Decls>
+<Decls> ::= <Decls> <Decl>
           |
 
 <Decl>  ::= <Func Proto>
