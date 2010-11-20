@@ -1,0 +1,31 @@
+﻿[PrimarySource]
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgi.h
+
+[AncillarySources]
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgiformat.h
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h
+
+[Grammar]
+../../../../header_grammar.cgt
+
+[Wave]
+../../../../wave.exe
+
+# Include paths are checked in the order specified here
+# Be careful that you order the DXSDK path first so that it
+# gets picked up before the same files included in the Windows SDK
+
+[IncludePaths]
+C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include
+C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Include
+C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include
+
+[Symbols]
+WIN32
+WINVER=0x501
+UNICODE
+_MSC_VER=1600
+_WIN32
+_M_IX86
+_WIN32_WINNT=0x501
+_UNICODE

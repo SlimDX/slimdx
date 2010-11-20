@@ -1,3 +1,0 @@
-Remove lines with #pragma
-Remove static
-Remove lines with __countof_helper in them
