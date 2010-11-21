@@ -18,30 +18,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace Generator
+namespace Generator.Parsing
 {
-	static class Extensions
+	interface IParseNode
 	{
-		public static string GetOption(this Dictionary<string, List<string>> options, string name)
-		{
-			List<string> optionGroup;
-			if (!options.TryGetValue(name, out optionGroup) || optionGroup.Count == 0)
-				throw new InvalidOperationException("Could not find " + name + " option in config file.");
-
-			return optionGroup[0];
-		}
-
-		public static IEnumerable<string> GetOptions(this Dictionary<string, List<string>> options, string name)
-		{
-			List<string> optionGroup;
-			if (!options.TryGetValue(name, out optionGroup) || optionGroup.Count == 0)
-				return Enumerable.Empty<string>();
-
-			return optionGroup;
-		}
+		object ToXml();
 	}
 }

@@ -20,11 +20,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-using System.Diagnostics;
-using GoldParser;
+using System.Text;
+using Generator.ObjectModel;
+using Generator.Parsing;
 
 namespace Generator
 {
@@ -44,7 +43,7 @@ namespace Generator
 				try
 				{
 #endif
-					Run(configFile);
+				Run(configFile);
 #if !DEBUG
 				}
 				catch (Exception e)
@@ -107,10 +106,13 @@ namespace Generator
 
 			// run the parse on the preprocessed file to generate a model of the file in memory
 			var parser = new HeaderParser(options.GetOption("Grammar"));
-			var root = parser.Parse(source);
+			var root = parser.Parse(source).ToXml();
 
 			// for testing purposes, output XML of the parse tree
-			root.ToXml().Save("test.xml");
+			root.Save("test.xml");
+
+			// build the source model
+			var model = new SourceModel(root);
 		}
 
 		/// <summary>
