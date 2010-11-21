@@ -18,14 +18,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using GoldParser;
 using System.Xml.Linq;
+using GoldParser;
 
-namespace Generator
+namespace Generator.Parsing
 {
 	/// <summary>
 	/// Represents a non-terminal parse node.
@@ -68,7 +66,7 @@ namespace Generator
 				return null;
 
 			var name = Rule.Name.Trim('<', '>').Replace(' ', '_');
-			if(name == "ID" || name == "Value")
+			if (name == "ID" || name == "Value")
 				return childXml[0];
 
 			return new XElement(name, childXml);

@@ -18,30 +18,64 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 
-namespace Generator
+namespace Generator.ObjectModel
 {
-	static class Extensions
+	class EnumItem
 	{
-		public static string GetOption(this Dictionary<string, List<string>> options, string name)
+		public string Name
 		{
-			List<string> optionGroup;
-			if (!options.TryGetValue(name, out optionGroup) || optionGroup.Count == 0)
-				throw new InvalidOperationException("Could not find " + name + " option in config file.");
-
-			return optionGroup[0];
+			get;
+			private set;
 		}
 
-		public static IEnumerable<string> GetOptions(this Dictionary<string, List<string>> options, string name)
+		public string Value
 		{
-			List<string> optionGroup;
-			if (!options.TryGetValue(name, out optionGroup) || optionGroup.Count == 0)
-				return Enumerable.Empty<string>();
+			get;
+			private set;
+		}
 
-			return optionGroup;
+		public EnumItem(string name, string value)
+		{
+			Name = name;
+			Value = value;
+		}
+
+		public override string ToString()
+		{
+			if (string.IsNullOrEmpty(Value))
+				return Name;
+
+			return Name + " = " + Value;
+		}
+	}
+
+	class EnumElement
+	{
+		public string Name
+		{
+			get;
+			private set;
+		}
+
+		public IEnumerable<EnumItem> Items
+		{
+			get;
+			private set;
+		}
+
+		public EnumElement(string name, XElement element)
+		{
+			Name = name;
+			Items = element.Descendants("EnumVal").Select(i => new EnumItem((string)i.Attribute("Name"), (string)i.Attribute("Value"))).ToList();
+		}
+
+		public override string ToString()
+		{
+			return Name;
 		}
 	}
 }

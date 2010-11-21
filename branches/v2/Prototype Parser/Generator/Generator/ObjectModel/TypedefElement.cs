@@ -18,16 +18,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
 
-namespace Generator
+namespace Generator.ObjectModel
 {
-	interface IParseNode
+	class TypedefElement
 	{
-		object ToXml();
+		public string OriginalName
+		{
+			get;
+			private set;
+		}
+
+		public string NewName
+		{
+			get;
+			private set;
+		}
+
+		public TypedefElement(string originalName, string newName)
+		{
+			OriginalName = originalName;
+			NewName = newName;
+		}
+
+		public override string ToString()
+		{
+			return OriginalName + " " + NewName;
+		}
 	}
 }

@@ -18,12 +18,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
+using System.Text;
 
 namespace Generator
 {
@@ -45,7 +43,7 @@ namespace Generator
 			// to produce a single preprocessed monolithic header
 			primarySource = options.GetOption("PrimarySource");
 			wavePath = options.GetOption("Wave");
-			
+
 			// -E indicates default naming scheme for output file (ie. input.i)
 			// -m macros.txt creates a separate file containing a list of all found macros
 			// --variadics enables macros with empty argument lists (necessary for some win32 header)

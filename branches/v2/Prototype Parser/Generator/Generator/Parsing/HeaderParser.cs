@@ -19,13 +19,10 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using GoldParser;
 
-namespace Generator
+namespace Generator.Parsing
 {
 	/// <summary>
 	/// Implements a parser for C++ header files.

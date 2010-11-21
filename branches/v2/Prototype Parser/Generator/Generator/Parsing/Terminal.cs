@@ -18,30 +18,47 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Xml.Linq;
+using GoldParser;
 
-namespace Generator
+namespace Generator.Parsing
 {
-	static class Extensions
+	/// <summary>
+	/// Represents a terminal parse node, such as a keyword, identifier, or literal value.
+	/// </summary>
+	class Terminal : IParseNode
 	{
-		public static string GetOption(this Dictionary<string, List<string>> options, string name)
+		public Symbol Symbol
 		{
-			List<string> optionGroup;
-			if (!options.TryGetValue(name, out optionGroup) || optionGroup.Count == 0)
-				throw new InvalidOperationException("Could not find " + name + " option in config file.");
-
-			return optionGroup[0];
+			get;
+			private set;
 		}
 
-		public static IEnumerable<string> GetOptions(this Dictionary<string, List<string>> options, string name)
+		public string Text
 		{
-			List<string> optionGroup;
-			if (!options.TryGetValue(name, out optionGroup) || optionGroup.Count == 0)
-				return Enumerable.Empty<string>();
+			get;
+			private set;
+		}
 
-			return optionGroup;
+		public Terminal(Symbol symbol, string text)
+		{
+			Symbol = symbol;
+			Text = text;
+		}
+
+		public object ToXml()
+		{
+			if (Symbol.Name == "Id")
+				return new XAttribute("Name", Text);
+			else if (Symbol.Name.Contains("Literal"))
+				return new XAttribute("Value", Text);
+
+			return new XElement("Token", Text);
+		}
+
+		public override string ToString()
+		{
+			return Text;
 		}
 	}
 }

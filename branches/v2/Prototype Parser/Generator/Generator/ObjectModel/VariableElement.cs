@@ -18,51 +18,39 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using GoldParser;
 using System.Xml.Linq;
 
-namespace Generator
+namespace Generator.ObjectModel
 {
-	/// <summary>
-	/// Represents a terminal parse node, such as a keyword, identifier, or literal value.
-	/// </summary>
-	class Terminal : IParseNode
+	class VariableElement
 	{
-		public Symbol Symbol
+		public string TypeName
 		{
 			get;
 			private set;
 		}
 
-		public string Text
+		public string Name
 		{
 			get;
 			private set;
 		}
 
-		public Terminal(Symbol symbol, string text)
+		public VariableElement(XElement element)
 		{
-			Symbol = symbol;
-			Text = text;
-		}
+			var type = element.Element("Type");
+			TypeName = (string)type.Attribute("Name");
 
-		public object ToXml()
-		{
-			if (Symbol.Name == "Id")
-				return new XAttribute("Name", Text);
-			else if (Symbol.Name.Contains("Literal"))
-				return new XAttribute("Value", Text);
+			var scalar = type.Element("Scalar");
+			if (scalar != null)
+				TypeName = scalar.Element("Token").Value;
 
-			return new XElement("Token", Text);
+			Name = (string)element.Element("Var").Attribute("Name");
 		}
 
 		public override string ToString()
 		{
-			return Text;
+			return TypeName + " " + Name;
 		}
 	}
 }
