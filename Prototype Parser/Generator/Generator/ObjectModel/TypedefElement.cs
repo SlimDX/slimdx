@@ -21,7 +21,7 @@
 
 namespace Generator.ObjectModel
 {
-	class TypedefElement
+	class TypedefElement : BaseElement
 	{
 		public string OriginalName
 		{
@@ -29,21 +29,15 @@ namespace Generator.ObjectModel
 			private set;
 		}
 
-		public string NewName
-		{
-			get;
-			private set;
-		}
-
 		public TypedefElement(string originalName, string newName)
+			: base(newName)
 		{
 			OriginalName = originalName;
-			NewName = newName;
 		}
 
 		public override string ToString()
 		{
-			return OriginalName + " " + NewName;
+			return OriginalName + " " + Name;
 		}
 	}
 }

@@ -18,28 +18,35 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Xml.Linq;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Xml.Linq;
 
 namespace Generator.ObjectModel
 {
-	class VariableElement : BaseElement
+	class FunctionElement : BaseElement
 	{
-		public TypeElement DataType
+		public TypeElement ReturnType
 		{
 			get;
 			private set;
 		}
 
-		public VariableElement(XElement element)
-			: base((string)element.Element("Var").Attribute("Name"))
+		public IEnumerable<VariableElement> Parameters
 		{
-			DataType = new TypeElement(element.Element("Type"));
+			get;
+			private set;
 		}
 
-		public override string ToString()
+		public FunctionElement(XElement element)
+			: base((string)element.Attribute("Name"))
 		{
-			return DataType.ToString() + " " + Name;
+			ReturnType = new TypeElement(element.Element("Type"));
+
+			var signature = element.Element("Signature");
+			Parameters = signature.Descendants("Param").Select(d => new VariableElement(d)).ToList();
 		}
 	}
 }

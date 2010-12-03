@@ -24,43 +24,8 @@ using System.Xml.Linq;
 
 namespace Generator.ObjectModel
 {
-	class EnumItem
+	class EnumElement : BaseElement
 	{
-		public string Name
-		{
-			get;
-			private set;
-		}
-
-		public string Value
-		{
-			get;
-			private set;
-		}
-
-		public EnumItem(string name, string value)
-		{
-			Name = name;
-			Value = value;
-		}
-
-		public override string ToString()
-		{
-			if (string.IsNullOrEmpty(Value))
-				return Name;
-
-			return Name + " = " + Value;
-		}
-	}
-
-	class EnumElement
-	{
-		public string Name
-		{
-			get;
-			private set;
-		}
-
 		public IEnumerable<EnumItem> Items
 		{
 			get;
@@ -68,14 +33,9 @@ namespace Generator.ObjectModel
 		}
 
 		public EnumElement(string name, XElement element)
+			: base(name)
 		{
-			Name = name;
 			Items = element.Descendants("EnumVal").Select(i => new EnumItem((string)i.Attribute("Name"), (string)i.Attribute("Value"))).ToList();
-		}
-
-		public override string ToString()
-		{
-			return Name;
 		}
 	}
 }

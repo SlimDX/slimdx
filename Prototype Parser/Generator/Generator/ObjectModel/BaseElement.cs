@@ -18,28 +18,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Xml.Linq;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Generator.ObjectModel
 {
-	class VariableElement : BaseElement
+	abstract class BaseElement
 	{
-		public TypeElement DataType
+		public string Name
 		{
 			get;
-			private set;
+			protected set;
 		}
 
-		public VariableElement(XElement element)
-			: base((string)element.Element("Var").Attribute("Name"))
+		protected BaseElement()
 		{
-			DataType = new TypeElement(element.Element("Type"));
+		}
+
+		protected BaseElement(string name)
+		{
+			Name = name;
 		}
 
 		public override string ToString()
 		{
-			return DataType.ToString() + " " + Name;
+			return Name;
 		}
 	}
 }

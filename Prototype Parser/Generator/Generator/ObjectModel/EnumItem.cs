@@ -18,28 +18,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Xml.Linq;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Generator.ObjectModel
 {
-	class VariableElement : BaseElement
+	class EnumItem : BaseElement
 	{
-		public TypeElement DataType
+		public string Value
 		{
 			get;
 			private set;
 		}
 
-		public VariableElement(XElement element)
-			: base((string)element.Element("Var").Attribute("Name"))
+		public EnumItem(string name, string value)
+			: base(name)
 		{
-			DataType = new TypeElement(element.Element("Type"));
+			Value = value;
 		}
 
 		public override string ToString()
 		{
-			return DataType.ToString() + " " + Name;
+			if (string.IsNullOrEmpty(Value))
+				return Name;
+
+			return Name + " = " + Value;
 		}
 	}
 }

@@ -24,14 +24,8 @@ using System.Xml.Linq;
 
 namespace Generator.ObjectModel
 {
-	class StructElement
+	class StructElement : BaseElement
 	{
-		public string Name
-		{
-			get;
-			private set;
-		}
-
 		public IEnumerable<VariableElement> Variables
 		{
 			get;
@@ -39,14 +33,9 @@ namespace Generator.ObjectModel
 		}
 
 		public StructElement(string name, XElement element)
+			: base(name)
 		{
-			Name = name;
 			Variables = element.Descendants("Variable").Select(d => new VariableElement(d)).ToList();
-		}
-
-		public override string ToString()
-		{
-			return Name;
 		}
 	}
 }
