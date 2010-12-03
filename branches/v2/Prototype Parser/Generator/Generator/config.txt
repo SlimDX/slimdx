@@ -1,15 +1,12 @@
-﻿[PrimarySource]
-C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgi.h
+﻿[Options]
+PrimarySource=C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgi.h
+Grammar=..\..\..\..\header_grammar.cgt
+Wave=..\..\..\..\wave.exe
+Templates=..\..\Templates
 
 [AncillarySources]
 C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgiformat.h
 C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h
-
-[Grammar]
-../../../../header_grammar.cgt
-
-[Wave]
-../../../../wave.exe
 
 # Include paths are checked in the order specified here
 # Be careful that you order the DXSDK path first so that it

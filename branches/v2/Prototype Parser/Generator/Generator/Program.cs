@@ -24,6 +24,7 @@ using System.IO;
 using System.Text;
 using Generator.ObjectModel;
 using Generator.Parsing;
+using System.Linq;
 
 namespace Generator
 {
@@ -107,12 +108,12 @@ namespace Generator
 			// run the parse on the preprocessed file to generate a model of the file in memory
 			var parser = new HeaderParser(options.GetOption("Grammar"));
 			var root = parser.Parse(source).ToXml();
-
-			// for testing purposes, output XML of the parse tree
 			root.Save("test.xml");
 
-			// build the source model
 			var model = new SourceModel(root);
+			var templateEngine = new TemplateEngine(options.GetOption("Templates"));
+
+			string lol = templateEngine.Apply("Enum.txt", model.Enums.First());
 		}
 
 		/// <summary>
