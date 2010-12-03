@@ -64,11 +64,16 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Parsing\Terminal.cs" />
+    <Compile Include="TemplateEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="config.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Templates\Enum.txt" />
+    <Content Include="Templates\EnumItem.txt" />
+    <Content Include="Templates\Struct.txt" />
+    <Content Include="Templates\Variable.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
