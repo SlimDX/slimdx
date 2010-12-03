@@ -47,6 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions.cs" />
+    <Compile Include="ObjectModel\BaseElement.cs" />
+    <Compile Include="ObjectModel\EnumItem.cs" />
+    <Compile Include="ObjectModel\FunctionElement.cs" />
+    <Compile Include="ObjectModel\InterfaceElement.cs" />
+    <Compile Include="ObjectModel\TypeElement.cs" />
     <Compile Include="Parsing\HeaderParser.cs" />
     <Compile Include="Parsing\IParseNode.cs" />
     <Compile Include="Parsing\NonTerminal.cs" />

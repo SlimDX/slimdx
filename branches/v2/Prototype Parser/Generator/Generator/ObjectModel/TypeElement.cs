@@ -18,28 +18,37 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Xml.Linq;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Xml.Linq;
 
 namespace Generator.ObjectModel
 {
-	class VariableElement : BaseElement
+	class TypeElement : BaseElement
 	{
-		public TypeElement DataType
+		public IEnumerable<string> Modifiers
 		{
 			get;
 			private set;
 		}
 
-		public VariableElement(XElement element)
-			: base((string)element.Element("Var").Attribute("Name"))
+		public TypeElement(XElement element)
 		{
-			DataType = new TypeElement(element.Element("Type"));
-		}
+			Name = (string)element.Attribute("Name");
 
-		public override string ToString()
-		{
-			return DataType.ToString() + " " + Name;
+			var scalar = element.Element("Scalar");
+			if (scalar != null)
+				Name = scalar.Element("Token").Value;
+
+			var modifiers = new List<string>();
+			var mod = element.Element("Mod");
+			if (mod != null)
+				modifiers.Add((string)mod.Element("Token"));
+
+			modifiers.AddRange(element.Descendants("Pointers").Select(d => (string)d.Element("Token")));
+			Modifiers = modifiers;
 		}
 	}
 }

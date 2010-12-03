@@ -31,6 +31,7 @@ namespace Generator.ObjectModel
 		List<EnumElement> enums = new List<EnumElement>();
 		List<StructElement> structs = new List<StructElement>();
 		List<TypedefElement> typedefs = new List<TypedefElement>();
+		List<InterfaceElement> interfaces = new List<InterfaceElement>();
 
 		public SourceModel(XElement root)
 		{
@@ -49,6 +50,10 @@ namespace Generator.ObjectModel
 
 				case "Typedef":
 					BuildTypedef(element);
+					break;
+
+				case "Variable":
+					BuildVariable(element);
 					break;
 			}
 		}
@@ -84,6 +89,21 @@ namespace Generator.ObjectModel
 				if (newName != name)
 					typedefs.Add(new TypedefElement(name, newName));
 			}
+		}
+
+		void BuildVariable(XElement element)
+		{
+			var type = element.Element("Type");
+			var typeBase = type.Element("Base");
+			if (typeBase == null)
+				return;
+
+			var name = (string)typeBase.Attribute("Name");
+			var structElement = typeBase.Element("Struct");
+			var inheritance = typeBase.Element("Inheritance");
+			var declspec = typeBase.Element("DeclspecOrEmpty");
+			if (structElement != null)
+				interfaces.Add(new InterfaceElement(name, structElement, inheritance, declspec));
 		}
 	}
 }

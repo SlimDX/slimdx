@@ -18,28 +18,44 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Xml.Linq;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Xml.Linq;
 
 namespace Generator.ObjectModel
 {
-	class VariableElement : BaseElement
+	class InterfaceElement : StructElement
 	{
-		public TypeElement DataType
+		public string Guid
 		{
 			get;
 			private set;
 		}
 
-		public VariableElement(XElement element)
-			: base((string)element.Element("Var").Attribute("Name"))
+		public string BaseType
 		{
-			DataType = new TypeElement(element.Element("Type"));
+			get;
+			private set;
 		}
 
-		public override string ToString()
+		public IEnumerable<FunctionElement> Functions
 		{
-			return DataType.ToString() + " " + Name;
+			get;
+			private set;
+		}
+
+		public InterfaceElement(string name, XElement structElement, XElement inheritance, XElement declspec)
+			: base(name, structElement)
+		{
+			if (inheritance != null)
+				BaseType = (string)inheritance.Attribute("Name");
+
+			if (declspec != null)
+				Guid = declspec.Descendants("Declspec").FirstOrDefault(d => (string)d.Element("Token") == "uuid").Attribute("Value").Value.Trim('"');
+
+			Functions = structElement.Descendants("Function").Select(d => new FunctionElement(d)).ToList();
 		}
 	}
 }
