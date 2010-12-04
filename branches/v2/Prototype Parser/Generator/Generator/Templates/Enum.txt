@@ -1,4 +1,4 @@
-﻿public enum {Name}
+﻿public enum {NiceName}
 \{
 	{Items:EnumItem.txt ,\n\t}
 \}

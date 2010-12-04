@@ -33,13 +33,21 @@ namespace Generator.ObjectModel
 		List<TypedefElement> typedefs = new List<TypedefElement>();
 		List<InterfaceElement> interfaces = new List<InterfaceElement>();
 
+		public string Namespace
+		{
+			get;
+			private set;
+		}
+
 		public IEnumerable<EnumElement> Enums
 		{
 			get { return enums; }
 		}
 
-		public SourceModel(XElement root)
+		public SourceModel(XElement root, string rootNamespace)
 		{
+			Namespace = rootNamespace;
+
 			Build(root);
 		}
 

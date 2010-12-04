@@ -61,31 +61,8 @@ namespace Generator
 		/// <param name="configFile">The config file.</param>
 		static void Run(string configFile)
 		{
-			int lineNumber = 0;
-			string section = null;
-			var options = new Dictionary<string, List<string>>();
-
-			foreach (var line in File.ReadLines(configFile))
-			{
-				lineNumber++;
-
-				var option = line.Trim();
-				if (string.IsNullOrWhiteSpace(option) || option.StartsWith("#"))
-					continue;
-
-				// options file is .ini-style with [Section] markers
-				if (option.StartsWith("[") && option.EndsWith("]"))
-				{
-					section = option.Trim('[', ']');
-					options.Add(section, new List<string>());
-				}
-				else
-				{
-					if (string.IsNullOrWhiteSpace(section))
-						throw new InvalidOperationException(string.Format("No section defined for option on line {0}.", lineNumber));
-					options[section].Add(option);
-				}
-			}
+			var options = new ConfigFile(configFile);
+			NameTools.Rules = new ConfigFile(options.GetOption("Options", "NamingRules"));
 
 			// run boost::wave on the primary source file to get a preprocessed file and a list of macros
 			var preprocessor = new Preprocessor(options);
@@ -96,24 +73,21 @@ namespace Generator
 			// junk I was too lazy to add to the parser grammar.
 			// this includes dropping any source that is not from the given primary or ancillary
 			// sources, which is indicated in the preprocessed file by #line directives
-			List<string> relevantSources;
-			if (!options.TryGetValue("AncillarySources", out relevantSources))
-				relevantSources = new List<string>();
-
 			var source = preprocessor.Source;
-			relevantSources.Add(Path.Combine(Directory.GetCurrentDirectory(), source));
+			var relevantSources = options.GetOptions("AncillarySources").Concat(new[] { Path.Combine(Directory.GetCurrentDirectory(), source) });
 			source = Path.ChangeExtension(source, ".i");
 			PreTransform(source, new HashSet<string>(relevantSources));
 
 			// run the parse on the preprocessed file to generate a model of the file in memory
-			var parser = new HeaderParser(options.GetOption("Grammar"));
+			var parser = new HeaderParser(options.GetOption("Options", "Grammar"));
 			var root = parser.Parse(source).ToXml();
 			root.Save("test.xml");
 
-			var model = new SourceModel(root);
-			var templateEngine = new TemplateEngine(options.GetOption("Templates"));
+			var model = new SourceModel(root, options.GetOption("Options", "Namespace"));
+			var templateEngine = new TemplateEngine(options.GetOption("Options", "Templates"));
 
-			string lol = templateEngine.Apply("Enum.txt", model.Enums.First());
+			string lol = templateEngine.Apply("File.txt", model);
+			File.WriteAllText(Path.Combine(options.GetOption("Options", "OutputPath"), "Enums.cs"), lol);
 		}
 
 		/// <summary>

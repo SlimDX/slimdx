@@ -27,15 +27,18 @@ namespace Generator.ObjectModel
 {
 	class EnumItem : BaseElement
 	{
+		EnumElement parent;
+
 		public string Value
 		{
 			get;
 			private set;
 		}
 
-		public EnumItem(string name, string value)
+		public EnumItem(EnumElement parent, string name, string value)
 			: base(name)
 		{
+			this.parent = parent;
 			Value = value;
 		}
 
@@ -45,6 +48,11 @@ namespace Generator.ObjectModel
 				return Name;
 
 			return Name + " = " + Value;
+		}
+
+		protected override string BuildNiceName(string name)
+		{
+			return NameTools.RemovePrefix(base.BuildNiceName(name), parent.NiceName);
 		}
 	}
 }

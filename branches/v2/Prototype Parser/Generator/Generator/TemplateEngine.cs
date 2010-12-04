@@ -30,6 +30,8 @@ namespace Generator
 {
 	class TemplateEngine
 	{
+		// regex to grab all {foo} elements in the template
+		// \} and \{ are escaped
 		Regex regex = new Regex(@"{(\\}|.)*?}");
 
 		public string Directory
@@ -38,11 +40,21 @@ namespace Generator
 			private set;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TemplateEngine"/> class.
+		/// </summary>
+		/// <param name="directory">The directory containing text templates.</param>
 		public TemplateEngine(string directory)
 		{
 			Directory = directory;
 		}
 
+		/// <summary>
+		/// Applies the specified template to the given source object.
+		/// </summary>
+		/// <param name="template">The text template.</param>
+		/// <param name="source">The source object from which properties will be taken to insert into the template.</param>
+		/// <returns>The generated string.</returns>
 		public string Apply(string template, object source)
 		{
 			template = Path.Combine(Directory, template);
@@ -55,21 +67,30 @@ namespace Generator
 
 		string Evaluate(object source, Match match)
 		{
+			// grab the property name tag and remove the enclosing brackets
+			// {foo} -> foo
 			var capture = match.Captures[0].Value.Trim('{', '}');
 			string propertyName = capture;
+
+			// if the name has a colon, it indicates that the type has another template applied to it
 			int index = capture.IndexOf(':');
 			if (index >= 0)
 				propertyName = capture.Substring(0, index);
 
+			// get the value of the property from the source object
 			var value = source.GetType().GetProperty(propertyName).GetValue(source, null);
 			if (index >= 0)
 			{
+				// extract the new template name
+				// {Foo:lol.txt} -> lol.txt
 				var template = capture.Substring(index + 1);
 				var suffix = string.Empty;
 				
 				index = template.IndexOf(' ');
 				if (index >= 0)
 				{
+					// the suffix is a list of characters to apply after each element
+					// in the enumeration
 					suffix = Escape(template.Substring(index + 1));
 					template = template.Substring(0, index);
 				}
@@ -78,6 +99,7 @@ namespace Generator
 				if (enumerable != null)
 					return string.Join(suffix, enumerable.Cast<object>().Select(o => Apply(template, o)));
 
+				// the element is not enumerable, so just apply the new template to the value
 				return Apply(template, value);
 			}
 			else

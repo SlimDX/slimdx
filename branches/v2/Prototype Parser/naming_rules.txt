@@ -1,0 +1,5 @@
+# Specifies various naming rules to convert DirectX C++ type names
+# into proper .NET naming style.
+
+[RemovePrefix]
+DXGI_
