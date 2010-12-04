@@ -143,7 +143,7 @@ namespace Generator
 
 		static string Escape(string input)
 		{
-			return input.Replace("\\t", "\t").Replace("\\n", "\n").Replace("\\s", " ");
+			return input.Replace("\\t", "\t").Replace("\\n", "\n").Replace("\\s", " ").Replace("\\r", "\r");
 		}
 	}
 }

@@ -4,7 +4,7 @@ Grammar=..\..\..\..\header_grammar.cgt
 Wave=..\..\..\..\wave.exe
 Templates=..\..\Templates
 NamingRules=..\..\..\..\naming_rules.txt
-OutputPath=..\..\..\..\DXGI\
+OutputPath=..\..\..\..\Output\
 Namespace=DXGI
 
 [AncillarySources]
