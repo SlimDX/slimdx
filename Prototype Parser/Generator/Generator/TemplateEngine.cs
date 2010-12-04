@@ -40,13 +40,21 @@ namespace Generator
 			private set;
 		}
 
+		public string Namespace
+		{
+			get;
+			private set;
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TemplateEngine"/> class.
 		/// </summary>
 		/// <param name="directory">The directory containing text templates.</param>
-		public TemplateEngine(string directory)
+		/// <param name="rootNamespace">The root namespace.</param>
+		public TemplateEngine(string directory, string rootNamespace)
 		{
 			Directory = directory;
+			Namespace = rootNamespace;
 		}
 
 		/// <summary>
@@ -71,6 +79,9 @@ namespace Generator
 			// {foo} -> foo
 			var capture = match.Captures[0].Value.Trim('{', '}');
 			string propertyName = capture;
+
+			if (propertyName == "Namespace")
+				return Namespace;
 
 			// if the name has a colon, it indicates that the type has another template applied to it
 			int index = capture.IndexOf(':');
