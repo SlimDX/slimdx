@@ -19,6 +19,7 @@ Direct3D 9
 Direct3D 10
 	* Added missing creation method overloads to Effect.
 	* Added missing Get/SetRawValue methods to EffectVariable.
+	* Added GetInputLayout to the InputAssember device stage.
 	* Added ResourceOptionFlags.GdiCompatible and ResourceOptionFlags.KeyedMutex.
 	* Added Resource.SaveTextureToFile, which allows for saving a texture without knowing its concrete type.
 	* Fixed a COM reference leak in Device.OpenSharedResource.
