@@ -91,7 +91,8 @@ namespace SlimDX
 			{
 				ResourceDimension get();
 			}
-
+			
+			static Result SaveTextureToFile( Resource^ resource, ImageFileFormat destinationFormat, System::String^ destinationFile );
 			static Result LoadTextureFromTexture(Resource^ source, Resource^ destination, TextureLoadInformation loadInformation);
 			static Result FilterTexture(Resource^ texture, int sourceLevel, FilterFlags mipFilter);
 			

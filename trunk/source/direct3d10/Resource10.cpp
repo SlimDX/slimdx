@@ -166,6 +166,12 @@ namespace Direct3D10
 		return static_cast<ResourceDimension>( type );
 	}
 
+	Result Resource::SaveTextureToFile( Resource^ resource, ImageFileFormat destinationFormat, String^ destinationFile )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( destinationFile );
+		return RECORD_D3D10( D3DX10SaveTextureToFile( resource->InternalPointer, static_cast<D3DX10_IMAGE_FILE_FORMAT>( destinationFormat ), pinnedName ) );
+	}
+
 	Result Resource::LoadTextureFromTexture(Resource^ source, Resource^ destination, TextureLoadInformation loadInformation)
 	{
 		HRESULT hr = D3DX10LoadTextureFromTexture(source->InternalPointer, reinterpret_cast<D3DX10_TEXTURE_LOAD_INFO*>(&loadInformation), destination->InternalPointer);
