@@ -21,6 +21,7 @@ Direct3D 10
 
 Direct3D 11
 	* Fixed a COM reference leak in Device.OpenSharedResource.
+	* Added IsDataAvailable to the DeviceContext interface.
 
 DXGI
 	* Changed SwapChain.Dispose to throw if the adapter is in fullscreen mode. This prevents a crash inside DXGI.
