@@ -104,6 +104,8 @@ namespace SlimDX
 			/// <returns>The subresource index (equivalent to mipSlice + (arraySlice * mipLevels)).</returns>
 			static int CalculateSubresourceIndex( int mipSlice, int arraySlice, int mipLevels );
 
+			static Result SaveTextureToFile( DeviceContext^ context, Resource^ resource, ImageFileFormat destinationFormat, System::String^ desintationFile );
+
 			/// <summary>
 			/// Loads a texture from a texture.
 			/// </summary>

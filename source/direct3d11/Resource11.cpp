@@ -183,6 +183,12 @@ namespace Direct3D11
 		return (static_cast< int >(size));
 	}
 
+	Result Resource::SaveTextureToFile( DeviceContext^ context, Resource^ resource, ImageFileFormat destinationFormat, String^ destinationFile )
+	{
+		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( destinationFile );
+		return RECORD_D3D11( D3DX11SaveTextureToFile( context->InternalPointer, resource->InternalPointer, static_cast<D3DX11_IMAGE_FILE_FORMAT>( destinationFormat ), pinnedName ) );
+	}
+
 	Result Resource::LoadTextureFromTexture(DeviceContext^ context, Resource^ source, Resource^ destination, TextureLoadInformation loadInformation)
 	{
 		HRESULT hr = D3DX11LoadTextureFromTexture(context->InternalPointer, source->InternalPointer, reinterpret_cast<D3DX11_TEXTURE_LOAD_INFO*>(&loadInformation), destination->InternalPointer);
