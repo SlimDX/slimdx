@@ -34,7 +34,10 @@ _UNICODE
 UINT int
 SIZE_T int
 DWORD int
+INT int
+BYTE byte
 LUID long
 FLOAT float
 LARGE_INTEGER long
 BOOL bool
+WCHAR[] string

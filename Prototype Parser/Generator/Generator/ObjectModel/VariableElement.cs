@@ -20,6 +20,7 @@
 
 using System.Xml.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Generator.ObjectModel
 {
@@ -32,9 +33,12 @@ namespace Generator.ObjectModel
 		}
 
 		public VariableElement(SourceModel model, XElement element)
-			: base(model, (string)element.Element("Var").Attribute("Name"))
+			: base(model)
 		{
-			DataType = new TypeElement(model, element.Element("Type"));
+			var variable = element.Element("Var");
+			Name = (string)variable.Attribute("Name");
+
+			DataType = new TypeElement(model, element.Element("Type"), variable.Descendants("Array").Select(d => (int)d.Attribute("Value")));
 		}
 
 		public override string ToString()

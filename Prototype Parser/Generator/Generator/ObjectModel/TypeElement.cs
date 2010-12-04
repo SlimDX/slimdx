@@ -34,10 +34,27 @@ namespace Generator.ObjectModel
 			private set;
 		}
 
+		public IEnumerable<int> Arrays
+		{
+			get;
+			private set;
+		}
+
+		public string ArrayName
+		{
+			get { return Name + string.Concat(Arrays.Select(i => "[]")); }
+		}
+
 		public TypeElement(SourceModel model, XElement element)
+			: this(model, element, null)
+		{
+		}
+
+		public TypeElement(SourceModel model, XElement element, IEnumerable<int> arrays)
 			: base(model)
 		{
 			Name = (string)element.Attribute("Name");
+			Arrays = arrays;
 
 			var scalar = element.Element("Scalar");
 			if (scalar != null)
@@ -55,8 +72,13 @@ namespace Generator.ObjectModel
 		public override string ToString()
 		{
 			string name;
-			if (!Model.TypeMap.TryGetValue(Name, out name))
-				name = Name;
+			if (!Model.TypeMap.TryGetValue(ArrayName, out name))
+			{
+				if (Model.TypeMap.TryGetValue(Name, out name))
+					name += string.Concat(Arrays.Select(i => "[]"));
+				else
+					name = ArrayName;
+			}
 
 			return name;
 		}

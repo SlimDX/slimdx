@@ -27,6 +27,8 @@ namespace Generator.ObjectModel
 {
 	abstract class BaseElement
 	{
+		string name;
+
 		public SourceModel Model
 		{
 			get;
@@ -35,13 +37,18 @@ namespace Generator.ObjectModel
 
 		public string Name
 		{
-			get;
-			protected set;
+			get { return name; }
+			protected set
+			{
+				name = value;
+				RebuildName();
+			}
 		}
 
 		public string NiceName
 		{
-			get { return BuildNiceName(Name); }
+			get;
+			private set;
 		}
 
 		protected BaseElement(SourceModel model)
@@ -63,6 +70,16 @@ namespace Generator.ObjectModel
 		protected virtual string BuildNiceName(string name)
 		{
 			return Model.NameRules.PascalCaseFromUnderscores(Model.NameRules.RemovePrefixes(name));
+		}
+
+		protected void RebuildName()
+		{
+			NiceName = BuildNiceName(Name);
+		}
+
+		protected void RegisterType()
+		{
+			Model.TypeMap.Add(Name, NiceName);
 		}
 	}
 }

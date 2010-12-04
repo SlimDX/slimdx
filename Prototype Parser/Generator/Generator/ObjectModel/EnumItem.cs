@@ -40,6 +40,8 @@ namespace Generator.ObjectModel
 		{
 			this.parent = parent;
 			Value = value;
+
+			RebuildName();
 		}
 
 		public override string ToString()
@@ -52,6 +54,9 @@ namespace Generator.ObjectModel
 
 		protected override string BuildNiceName(string name)
 		{
+			if (parent == null)
+				return "";
+
 			return Model.NameRules.RemovePrefix(base.BuildNiceName(name), parent.NiceName);
 		}
 	}
