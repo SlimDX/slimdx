@@ -296,6 +296,21 @@ namespace SlimDX
 			void SetMinimumLod( Resource^ resource, float minimumLod );
 
 			/// <summary>
+			/// Determines if data is available for an asynchronous object.
+			/// </summary>
+			/// <param name="data">The asynchronous data provider.</param>
+			/// <returns>A result code indicating whether data is available or nor, or if an error occurred.</returns>
+			Result IsDataAvailable( Asynchronous^ data );
+
+			/// <summary>
+			/// Determines if data is available for an asynchronous object.
+			/// </summary>
+			/// <param name="data">The asynchronous data provider.</param>
+			/// <param name="flags">Flags specifying how the command should operate.</param>
+			/// <returns>A result code indicating whether data is available or nor, or if an error occurred.</returns>
+			Result IsDataAvailable( Asynchronous^ data, AsynchronousFlags flags );
+
+			/// <summary>
 			/// Gets data from the GPU asynchronously.
 			/// </summary>
 			/// <param name="data">The asynchronous data provider.</param>
