@@ -36,6 +36,8 @@ namespace Generator.ObjectModel
 			: base(model, name)
 		{
 			Variables = element.Descendants("Variable").Select(d => new VariableElement(model, d)).ToList();
+
+			RegisterType();
 		}
 	}
 }

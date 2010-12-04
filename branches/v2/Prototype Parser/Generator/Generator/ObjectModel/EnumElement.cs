@@ -36,6 +36,8 @@ namespace Generator.ObjectModel
 			: base(model, name)
 		{
 			Items = element.Descendants("EnumVal").Select(i => new EnumItem(model, this, (string)i.Attribute("Name"), (string)i.Attribute("Value"))).ToList();
+
+			RegisterType();
 		}
 	}
 }
