@@ -80,14 +80,14 @@ namespace Generator
 
 			// run the parse on the preprocessed file to generate a model of the file in memory
 			var parser = new HeaderParser(options.GetOption("Options", "Grammar"));
-			var root = parser.Parse(source).ToXml();
-			root.Save("test.xml");
+			var model = new SourceModel(parser.Parse(source).ToXml());
+			var templateEngine = new TemplateEngine(options.GetOption("Options", "Templates"), options.GetOption("Options", "Namespace"));
+			var outputPath = options.GetOption("Options", "OutputPath");
 
-			var model = new SourceModel(root, options.GetOption("Options", "Namespace"));
-			var templateEngine = new TemplateEngine(options.GetOption("Options", "Templates"));
-
-			string lol = templateEngine.Apply("File.txt", model);
-			File.WriteAllText(Path.Combine(options.GetOption("Options", "OutputPath"), "Enums.cs"), lol);
+			// write output files
+			File.WriteAllText(Path.Combine(outputPath, "Enums.cs"), templateEngine.Apply("EnumFile.txt", model));
+			foreach (var item in model.Structs)
+				File.WriteAllText(Path.Combine(outputPath, item.NiceName + ".cs"), templateEngine.Apply("Struct.txt", item));
 		}
 
 		/// <summary>

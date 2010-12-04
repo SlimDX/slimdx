@@ -73,7 +73,7 @@
     </Content>
     <Content Include="Templates\Enum.txt" />
     <Content Include="Templates\EnumItem.txt" />
-    <Content Include="Templates\File.txt" />
+    <Content Include="Templates\EnumFile.txt" />
     <Content Include="Templates\Struct.txt" />
     <Content Include="Templates\Variable.txt" />
   </ItemGroup>
