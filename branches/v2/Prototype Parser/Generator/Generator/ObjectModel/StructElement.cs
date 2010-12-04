@@ -32,10 +32,10 @@ namespace Generator.ObjectModel
 			private set;
 		}
 
-		public StructElement(string name, XElement element)
-			: base(name)
+		public StructElement(SourceModel model, string name, XElement element)
+			: base(model, name)
 		{
-			Variables = element.Descendants("Variable").Select(d => new VariableElement(d)).ToList();
+			Variables = element.Descendants("Variable").Select(d => new VariableElement(model, d)).ToList();
 		}
 	}
 }

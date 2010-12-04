@@ -46,8 +46,8 @@ namespace Generator.ObjectModel
 			private set;
 		}
 
-		public InterfaceElement(string name, XElement structElement, XElement inheritance, XElement declspec)
-			: base(name, structElement)
+		public InterfaceElement(SourceModel model, string name, XElement structElement, XElement inheritance, XElement declspec)
+			: base(model, name, structElement)
 		{
 			if (inheritance != null)
 				BaseType = (string)inheritance.Attribute("Name");
@@ -55,7 +55,7 @@ namespace Generator.ObjectModel
 			if (declspec != null)
 				Guid = declspec.Descendants("Declspec").FirstOrDefault(d => (string)d.Element("Token") == "uuid").Attribute("Value").Value.Trim('"');
 
-			Functions = structElement.Descendants("Function").Select(d => new FunctionElement(d)).ToList();
+			Functions = structElement.Descendants("Function").Select(d => new FunctionElement(model, d)).ToList();
 		}
 	}
 }

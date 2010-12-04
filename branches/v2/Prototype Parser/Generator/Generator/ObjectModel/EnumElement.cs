@@ -32,10 +32,10 @@ namespace Generator.ObjectModel
 			private set;
 		}
 
-		public EnumElement(string name, XElement element)
-			: base(name)
+		public EnumElement(SourceModel model, string name, XElement element)
+			: base(model, name)
 		{
-			Items = element.Descendants("EnumVal").Select(i => new EnumItem(this, (string)i.Attribute("Name"), (string)i.Attribute("Value"))).ToList();
+			Items = element.Descendants("EnumVal").Select(i => new EnumItem(model, this, (string)i.Attribute("Name"), (string)i.Attribute("Value"))).ToList();
 		}
 	}
 }

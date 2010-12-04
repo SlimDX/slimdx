@@ -29,8 +29,8 @@ namespace Generator.ObjectModel
 			private set;
 		}
 
-		public TypedefElement(string originalName, string newName)
-			: base(newName)
+		public TypedefElement(SourceModel model, string originalName, string newName)
+			: base(model, newName)
 		{
 			OriginalName = originalName;
 		}

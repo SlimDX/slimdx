@@ -6,14 +6,18 @@ using System.Text;
 namespace Generator
 {
 	/// <summary>
-	/// Contains various helper methods to transform C++ names
-	/// into proper .NET names.
+	/// Contains various helper methods to transform C++ names into proper .NET names.
 	/// </summary>
-	static class NameTools
+	class NameRules
 	{
-		public static ConfigFile Rules;
+		ConfigFile rules;
 
-		public static string PascalCaseFromUnderscores(string name)
+		public NameRules(string ruleFile)
+		{
+			rules = new ConfigFile(ruleFile);
+		}
+
+		public string PascalCaseFromUnderscores(string name)
 		{
 			if (string.IsNullOrEmpty(name))
 				return name;
@@ -21,7 +25,7 @@ namespace Generator
 			return string.Concat(name.Split('_').Select(s => PascalCaseFromWord(s)));
 		}
 
-		public static string PascalCaseFromWord(string word)
+		public string PascalCaseFromWord(string word)
 		{
 			if (string.IsNullOrEmpty(word))
 				return word;
@@ -29,12 +33,12 @@ namespace Generator
 			return char.ToUpper(word[0]) + word.Substring(1).ToLower();
 		}
 
-		public static string RemovePrefixes(string name)
+		public string RemovePrefixes(string name)
 		{
 			if (string.IsNullOrEmpty(name))
 				return name;
 
-			foreach (var prefix in Rules.GetOptions("RemovePrefix"))
+			foreach (var prefix in rules.GetOptions("RemovePrefix"))
 			{
 				if (name.StartsWith(prefix))
 					return name.Substring(prefix.Length);
@@ -43,7 +47,7 @@ namespace Generator
 			return name;
 		}
 
-		public static string RemovePrefix(string name, string prefix)
+		public string RemovePrefix(string name, string prefix)
 		{
 			return name.StartsWith(prefix) ? name.Substring(prefix.Length) : name;
 		}

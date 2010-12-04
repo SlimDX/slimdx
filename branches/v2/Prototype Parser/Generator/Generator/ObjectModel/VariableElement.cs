@@ -31,10 +31,10 @@ namespace Generator.ObjectModel
 			private set;
 		}
 
-		public VariableElement(XElement element)
-			: base((string)element.Element("Var").Attribute("Name"))
+		public VariableElement(SourceModel model, XElement element)
+			: base(model, (string)element.Element("Var").Attribute("Name"))
 		{
-			DataType = new TypeElement(element.Element("Type"));
+			DataType = new TypeElement(model, element.Element("Type"));
 		}
 
 		public override string ToString()

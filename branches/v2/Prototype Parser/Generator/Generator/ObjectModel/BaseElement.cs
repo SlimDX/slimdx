@@ -27,6 +27,12 @@ namespace Generator.ObjectModel
 {
 	abstract class BaseElement
 	{
+		public SourceModel Model
+		{
+			get;
+			private set;
+		}
+
 		public string Name
 		{
 			get;
@@ -38,11 +44,13 @@ namespace Generator.ObjectModel
 			get { return BuildNiceName(Name); }
 		}
 
-		protected BaseElement()
+		protected BaseElement(SourceModel model)
 		{
+			Model = model;
 		}
 
-		protected BaseElement(string name)
+		protected BaseElement(SourceModel model, string name)
+			: this(model)
 		{
 			Name = name;
 		}
@@ -54,7 +62,7 @@ namespace Generator.ObjectModel
 
 		protected virtual string BuildNiceName(string name)
 		{
-			return NameTools.PascalCaseFromUnderscores(NameTools.RemovePrefixes(name));
+			return Model.NameRules.PascalCaseFromUnderscores(Model.NameRules.RemovePrefixes(name));
 		}
 	}
 }

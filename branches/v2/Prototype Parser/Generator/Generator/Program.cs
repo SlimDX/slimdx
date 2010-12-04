@@ -62,7 +62,6 @@ namespace Generator
 		static void Run(string configFile)
 		{
 			var options = new ConfigFile(configFile);
-			NameTools.Rules = new ConfigFile(options.GetOption("Options", "NamingRules"));
 
 			// run boost::wave on the primary source file to get a preprocessed file and a list of macros
 			var preprocessor = new Preprocessor(options);
@@ -80,7 +79,7 @@ namespace Generator
 
 			// run the parse on the preprocessed file to generate a model of the file in memory
 			var parser = new HeaderParser(options.GetOption("Options", "Grammar"));
-			var model = new SourceModel(parser.Parse(source).ToXml());
+			var model = new SourceModel(parser.Parse(source).ToXml(), options.GetOption("Options", "NamingRules"), options.GetOptions("TypeMap"));
 			var templateEngine = new TemplateEngine(options.GetOption("Options", "Templates"), options.GetOption("Options", "Namespace"));
 			var outputPath = options.GetOption("Options", "OutputPath");
 

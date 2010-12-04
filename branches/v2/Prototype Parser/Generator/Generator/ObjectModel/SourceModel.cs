@@ -20,6 +20,7 @@
 
 using System.Collections.Generic;
 using System.Xml.Linq;
+using System.IO;
 
 namespace Generator.ObjectModel
 {
@@ -43,8 +44,32 @@ namespace Generator.ObjectModel
 			get { return structs; }
 		}
 
-		public SourceModel(XElement root)
+		public Dictionary<string, string> TypeMap
 		{
+			get;
+			private set;
+		}
+
+		public NameRules NameRules
+		{
+			get;
+			private set;
+		}
+
+		public SourceModel(XElement root, string namingRuleFile, IEnumerable<string> initialTypeMap)
+		{
+			NameRules = new NameRules(namingRuleFile);
+			TypeMap = new Dictionary<string, string>();
+
+			foreach (var item in initialTypeMap)
+			{
+				int index = item.IndexOf(' ');
+				if (index < 0)
+					throw new InvalidDataException(string.Format("One of the initial type mappings is invalid: \"{0}\"", item));
+
+				TypeMap.Add(item.Substring(0, index), item.Substring(index + 1));
+			}
+
 			Build(root);
 		}
 
@@ -80,11 +105,11 @@ namespace Generator.ObjectModel
 				name = (string)typeBase.Attribute("Name");
 				var enumElement = typeBase.Element("Enum");
 				if (enumElement != null)
-					enums.Add(new EnumElement(name, enumElement));
+					enums.Add(new EnumElement(this, name, enumElement));
 
 				var structElement = typeBase.Element("Struct");
 				if (structElement != null)
-					structs.Add(new StructElement(name, structElement));
+					structs.Add(new StructElement(this, name, structElement));
 			}
 			else if (scalar != null)
 				name = scalar.Element("Token").Value;
@@ -97,7 +122,7 @@ namespace Generator.ObjectModel
 				// don't add typedef if it's just redeclaring the type
 				var newName = (string)typedef.Attribute("Name");
 				if (newName != name)
-					typedefs.Add(new TypedefElement(name, newName));
+					typedefs.Add(new TypedefElement(this, name, newName));
 			}
 		}
 
@@ -113,7 +138,7 @@ namespace Generator.ObjectModel
 			var inheritance = typeBase.Element("Inheritance");
 			var declspec = typeBase.Element("DeclspecOrEmpty");
 			if (structElement != null)
-				interfaces.Add(new InterfaceElement(name, structElement, inheritance, declspec));
+				interfaces.Add(new InterfaceElement(this, name, structElement, inheritance, declspec));
 		}
 	}
 }

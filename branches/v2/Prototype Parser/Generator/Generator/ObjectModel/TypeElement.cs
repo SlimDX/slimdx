@@ -34,7 +34,8 @@ namespace Generator.ObjectModel
 			private set;
 		}
 
-		public TypeElement(XElement element)
+		public TypeElement(SourceModel model, XElement element)
+			: base(model)
 		{
 			Name = (string)element.Attribute("Name");
 
@@ -49,6 +50,15 @@ namespace Generator.ObjectModel
 
 			modifiers.AddRange(element.Descendants("Pointers").Select(d => (string)d.Element("Token")));
 			Modifiers = modifiers;
+		}
+
+		public override string ToString()
+		{
+			string name;
+			if (!Model.TypeMap.TryGetValue(Name, out name))
+				name = Name;
+
+			return name;
 		}
 	}
 }
