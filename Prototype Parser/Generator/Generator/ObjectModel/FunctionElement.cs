@@ -40,13 +40,13 @@ namespace Generator.ObjectModel
 			private set;
 		}
 
-		public FunctionElement(XElement element)
-			: base((string)element.Attribute("Name"))
+		public FunctionElement(SourceModel model, XElement element)
+			: base(model, (string)element.Attribute("Name"))
 		{
-			ReturnType = new TypeElement(element.Element("Type"));
+			ReturnType = new TypeElement(model, element.Element("Type"));
 
 			var signature = element.Element("Signature");
-			Parameters = signature.Descendants("Param").Select(d => new VariableElement(d)).ToList();
+			Parameters = signature.Descendants("Param").Select(d => new VariableElement(model, d)).ToList();
 		}
 	}
 }

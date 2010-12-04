@@ -29,3 +29,12 @@ _WIN32
 _M_IX86
 _WIN32_WINNT=0x501
 _UNICODE
+
+[TypeMap]
+UINT int
+SIZE_T int
+DWORD int
+LUID long
+FLOAT float
+LARGE_INTEGER long
+BOOL bool
