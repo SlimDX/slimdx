@@ -1,5 +1,5 @@
 ﻿[StructLayout(LayoutKind.Sequential)]
-public struct {Name}
+public struct {NiceName}
 \{
-	{Variables:Variable.txt}
+	{Variables:Variable.txt \n\t}
 \}

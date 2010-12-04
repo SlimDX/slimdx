@@ -33,6 +33,11 @@ namespace Generator.ObjectModel
 			protected set;
 		}
 
+		public string NiceName
+		{
+			get { return BuildNiceName(Name); }
+		}
+
 		protected BaseElement()
 		{
 		}
@@ -45,6 +50,11 @@ namespace Generator.ObjectModel
 		public override string ToString()
 		{
 			return Name;
+		}
+
+		protected virtual string BuildNiceName(string name)
+		{
+			return NameTools.PascalCaseFromUnderscores(NameTools.RemovePrefixes(name));
 		}
 	}
 }

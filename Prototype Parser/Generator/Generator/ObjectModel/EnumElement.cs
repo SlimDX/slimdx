@@ -35,7 +35,7 @@ namespace Generator.ObjectModel
 		public EnumElement(string name, XElement element)
 			: base(name)
 		{
-			Items = element.Descendants("EnumVal").Select(i => new EnumItem((string)i.Attribute("Name"), (string)i.Attribute("Value"))).ToList();
+			Items = element.Descendants("EnumVal").Select(i => new EnumItem(this, (string)i.Attribute("Name"), (string)i.Attribute("Value"))).ToList();
 		}
 	}
 }

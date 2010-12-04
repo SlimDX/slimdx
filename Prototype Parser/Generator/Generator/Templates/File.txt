@@ -20,35 +20,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System.Text;
 
-namespace Generator
+namespace SlimDX.{Namespace}
 {
-	static class Extensions
-	{
-		public static string GetOption(this Dictionary<string, List<string>> options, string name)
-		{
-			List<string> optionGroup;
-			if (!options.TryGetValue("Options", out optionGroup) || optionGroup.Count == 0)
-				throw new InvalidOperationException("Could not find " + name + " option in config file.");
-
-			foreach (var option in optionGroup)
-			{
-				int index = option.IndexOf('=');
-				if (index >= 0 && option.Substring(0, index).Trim() == name)
-					return option.Substring(index + 1).Trim();
-			}
-
-			throw new InvalidOperationException("Could not find " + name + " option in config file.");
-		}
-
-		public static IEnumerable<string> GetOptions(this Dictionary<string, List<string>> options, string name)
-		{
-			List<string> optionGroup;
-			if (!options.TryGetValue(name, out optionGroup) || optionGroup.Count == 0)
-				return Enumerable.Empty<string>();
-
-			return optionGroup;
-		}
-	}
+	{Enums:Enum.txt \n\n\t}
 }

@@ -46,7 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions.cs" />
+    <Compile Include="ConfigFile.cs" />
+    <Compile Include="NameTools.cs" />
     <Compile Include="ObjectModel\BaseElement.cs" />
     <Compile Include="ObjectModel\EnumItem.cs" />
     <Compile Include="ObjectModel\FunctionElement.cs" />
@@ -72,6 +73,7 @@
     </Content>
     <Content Include="Templates\Enum.txt" />
     <Content Include="Templates\EnumItem.txt" />
+    <Content Include="Templates\File.txt" />
     <Content Include="Templates\Struct.txt" />
     <Content Include="Templates\Variable.txt" />
   </ItemGroup>
