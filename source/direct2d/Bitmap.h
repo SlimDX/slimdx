@@ -40,6 +40,8 @@ namespace SlimDX
 			Bitmap( RenderTarget^ renderTarget, System::Drawing::Size size, DataStream^ data, int pitch, BitmapProperties properties );
 			Bitmap( RenderTarget^ renderTarget, System::Drawing::Size size );
 			Bitmap( RenderTarget^ renderTarget, System::Drawing::Size size, DataStream^ data, int pitch );
+			Bitmap( RenderTarget^ renderTarget, SlimDX::DXGI::Surface^ surface);
+			Bitmap( RenderTarget^ renderTarget, SlimDX::DXGI::Surface^ surface, BitmapProperties properties);
 
 			Result FromBitmap( Bitmap^ sourceBitmap );
 			Result FromBitmap( Bitmap^ sourceBitmap, System::Drawing::Point destinationPoint );

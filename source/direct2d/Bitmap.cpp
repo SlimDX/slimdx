@@ -88,6 +88,27 @@ namespace Direct2D
 		Construct( bitmap );
 	}
 
+	Bitmap::Bitmap(RenderTarget^ renderTarget, SlimDX::DXGI::Surface^ surface)
+	{
+		ID2D1Bitmap *bitmap = 0;
+		HRESULT hr = renderTarget->InternalPointer->CreateSharedBitmap(IID_IDXGISurface, surface->InternalPointer, NULL, &bitmap);
+
+		if( RECORD_D2D( hr ).IsFailure )
+			throw gcnew Direct2DException( Result::Last );
+		Construct( bitmap );
+	}
+
+	Bitmap::Bitmap(RenderTarget^ renderTarget, SlimDX::DXGI::Surface^ surface, BitmapProperties properties)
+	{
+		ID2D1Bitmap *bitmap = 0;
+		D2D1_BITMAP_PROPERTIES bitmapProperties = BitmapProperties::ToUnmanaged(properties);
+		HRESULT hr = renderTarget->InternalPointer->CreateSharedBitmap(IID_IDXGISurface, surface->InternalPointer, &bitmapProperties, &bitmap);
+
+		if( RECORD_D2D( hr ).IsFailure )
+			throw gcnew Direct2DException( Result::Last );
+		Construct( bitmap );
+	}
+
 	Result Bitmap::FromBitmap( Bitmap^ sourceBitmap )
 	{
 		HRESULT hr = InternalPointer->CopyFromBitmap( NULL, sourceBitmap->InternalPointer, NULL );

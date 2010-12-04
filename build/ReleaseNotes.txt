@@ -6,6 +6,9 @@ Samples
 Math
 	* Added an overload of Ray.Intersects that returns the barycentric hit coordinates.
 
+Direct2D
+	* Added constructors for Bitmap that allow construction via DXGI shared surfaces.
+
 Direct3D 9
 	* Fixed a memory in Utilities.ReadRange that affected many BaseMesh methods.
 	* Fixed a typo in the caps structure that filled VolumeTextureFilterCaps with the wrong value.
