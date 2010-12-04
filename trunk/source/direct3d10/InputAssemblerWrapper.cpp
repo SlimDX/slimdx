@@ -51,6 +51,16 @@ namespace Direct3D10
 			m_Device->IASetInputLayout( value->InternalPointer );
 		}
 	}
+
+	InputLayout^ InputAssemblerWrapper::GetInputLayout()
+	{
+		ID3D10InputLayout* result = 0;
+		m_Device->IAGetInputLayout( &result );
+		if( result == 0 )
+			return nullptr;
+		
+		return InputLayout::FromPointer( result );
+	}
 	
 	void InputAssemblerWrapper::SetPrimitiveTopology( PrimitiveTopology value)
 	{

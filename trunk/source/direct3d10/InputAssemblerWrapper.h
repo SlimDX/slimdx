@@ -43,6 +43,8 @@ namespace SlimDX
 			
 		public:
 			void SetInputLayout( InputLayout^ layout );
+			InputLayout^ GetInputLayout();
+
 			void SetPrimitiveTopology( PrimitiveTopology topology );
 			
 			void SetIndexBuffer( Buffer^ indexBuffer, DXGI::Format format, int offset );
