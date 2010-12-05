@@ -54,7 +54,7 @@ namespace SlimDX.Generator.ObjectModel
 			: base(model)
 		{
 			Name = (string)element.Attribute("Name");
-			Arrays = arrays;
+			Arrays = arrays ?? Enumerable.Empty<int>();
 
 			var scalar = element.Element("Scalar");
 			if (scalar != null)

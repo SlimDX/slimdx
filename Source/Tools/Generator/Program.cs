@@ -68,7 +68,7 @@ namespace SlimDX.Generator
 			Console.WriteLine(preprocessor.Run());
 
 			// before parsing, run some transformations on the preprocessed file to
-			// to cut down on the size needed to be examined as well as to get rid of
+			// both cut down on the size needed to be examined as well as to get rid of
 			// junk I was too lazy to add to the parser grammar.
 			// this includes dropping any source that is not from the given primary or ancillary
 			// sources, which is indicated in the preprocessed file by #line directives
@@ -77,7 +77,7 @@ namespace SlimDX.Generator
 			source = Path.ChangeExtension(source, ".i");
 			PreTransform(source, new HashSet<string>(relevantSources));
 
-			// run the parse on the preprocessed file to generate a model of the file in memory
+			// run the parser on the preprocessed file to generate a model of the file in memory
 			var parser = new HeaderParser(options.GetOption("Options", "Grammar"));
 			var model = new SourceModel(parser.Parse(source).ToXml(), options.GetOption("Options", "NamingRules"), options.GetOptions("TypeMap"));
 			var templateEngine = new TemplateEngine(options.GetOption("Options", "Templates"), options.GetOption("Options", "Namespace"));
@@ -85,11 +85,19 @@ namespace SlimDX.Generator
 
 			if (!Directory.Exists(outputPath))
 				Directory.CreateDirectory(outputPath);
+			else
+			{
+				foreach (var file in Directory.EnumerateFiles(outputPath, "*.*"))
+					File.Delete(file);
+			}
 
 			// write output files
 			File.WriteAllText(Path.Combine(outputPath, "Enums.cs"), templateEngine.Apply("EnumFile.txt", model));
 			foreach (var item in model.Structs)
 				File.WriteAllText(Path.Combine(outputPath, item.NiceName + ".cs"), templateEngine.Apply("Struct.txt", item));
+
+			foreach(var item in model.Interfaces)
+				File.WriteAllText(Path.Combine(outputPath, item.NiceName + ".cs"), templateEngine.Apply("Interface.txt", item));
 		}
 
 		/// <summary>

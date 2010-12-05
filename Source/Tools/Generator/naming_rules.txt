@@ -3,3 +3,4 @@
 
 [RemovePrefix]
 DXGI_
+IDXGI

@@ -44,6 +44,11 @@ namespace SlimDX.Generator.ObjectModel
 			get { return structs; }
 		}
 
+		public IEnumerable<InterfaceElement> Interfaces
+		{
+			get { return interfaces; }
+		}
+
 		public Dictionary<string, string> TypeMap
 		{
 			get;

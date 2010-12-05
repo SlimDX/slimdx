@@ -97,6 +97,9 @@
     <Content Include="Templates\Enum.txt" />
     <Content Include="Templates\EnumFile.txt" />
     <Content Include="Templates\EnumItem.txt" />
+    <Content Include="Templates\Function.txt" />
+    <Content Include="Templates\Interface.txt" />
+    <Content Include="Templates\Parameter.txt" />
     <Content Include="Templates\Struct.txt" />
     <Content Include="Templates\Variable.txt" />
   </ItemGroup>
