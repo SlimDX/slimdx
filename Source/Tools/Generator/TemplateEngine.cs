@@ -26,7 +26,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Collections;
 
-namespace Generator
+namespace SlimDX.Generator
 {
 	class TemplateEngine
 	{
