@@ -46,7 +46,8 @@ namespace SlimDX
 			InputLayout^ GetInputLayout();
 
 			void SetPrimitiveTopology( PrimitiveTopology topology );
-			
+			PrimitiveTopology GetPrimitiveTopology();
+
 			void SetIndexBuffer( Buffer^ indexBuffer, DXGI::Format format, int offset );
 			
 			void SetVertexBuffers( int slot, VertexBufferBinding vertexBufferBinding );
