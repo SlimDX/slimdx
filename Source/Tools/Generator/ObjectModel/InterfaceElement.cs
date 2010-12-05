@@ -24,7 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
-namespace Generator.ObjectModel
+namespace SlimDX.Generator.ObjectModel
 {
 	class InterfaceElement : StructElement
 	{

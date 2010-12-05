@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 
-namespace Generator.ObjectModel
+namespace SlimDX.Generator.ObjectModel
 {
 	class TypedefElement : BaseElement
 	{

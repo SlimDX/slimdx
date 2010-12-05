@@ -23,6 +23,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Linq;
+using SlimDX.Generator.Parsing;
+using SlimDX.Generator.ObjectModel;
 
 namespace SlimDX.Generator
 {

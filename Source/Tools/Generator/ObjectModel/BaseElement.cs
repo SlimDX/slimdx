@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Generator.ObjectModel
+namespace SlimDX.Generator.ObjectModel
 {
 	abstract class BaseElement
 	{

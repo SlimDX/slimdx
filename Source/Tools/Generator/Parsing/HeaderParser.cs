@@ -22,7 +22,7 @@ using System;
 using System.IO;
 using GoldParser;
 
-namespace Generator.Parsing
+namespace SlimDX.Generator.Parsing
 {
 	/// <summary>
 	/// Implements a parser for C++ header files.

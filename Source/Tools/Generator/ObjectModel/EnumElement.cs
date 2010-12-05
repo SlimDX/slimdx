@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace Generator.ObjectModel
+namespace SlimDX.Generator.ObjectModel
 {
 	class EnumElement : BaseElement
 	{

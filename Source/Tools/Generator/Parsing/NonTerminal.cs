@@ -23,7 +23,7 @@ using System.Linq;
 using System.Xml.Linq;
 using GoldParser;
 
-namespace Generator.Parsing
+namespace SlimDX.Generator.Parsing
 {
 	/// <summary>
 	/// Represents a non-terminal parse node.
