@@ -133,6 +133,52 @@ li { margin-bottom: 4px }
 		margin-bottom: 30px;
 		padding-bottom: 10px;
 		}
+
+/* Comparison Table */
+
+.table { text-align:left; font-size:12px; margin:10px 0 20px 0; border:solid 1px #d4d4d4; padding:0; }
+
+.table a { }
+
+.table_gradient { width:900px; }
+.table_gradient tr.table_header { font-size:14px; height:44px;
+                                       background:url(../images/table_header.png) no-repeat; }
+
+.table_plain { width:100%; background-color:#ffffff; }
+.table_plain tr.table_header { text-transform:uppercase; }
+.table_plain tr.table_header th { border-bottom:solid 1px #d4d4d4; white-space:nowrap;}
+
+.table tr.table_header th { text-align:center; padding:0 5px 0 20px; vertical-align:middle; }
+.table .table_header_cell1 { width: 200px; text-align:left !important; }
+
+.table tr.table_header th p, .table_plain tr.table_header th p, .table .table_header_cell1 p {margin:0; padding:0;font-size:10px;}
+
+.table td { background-color:#ffffff; border-bottom:solid 1px #d4d4d4; padding:7px 0 7px 5px;  text-align:center;}
+.table td.table_cell1 { padding-left:20px; }
+
+.table tr { height:25px; }
+.table .table_cell1 {text-align:left;  }
+
+.table_tally {margin-left:3px;} 
+
+.table_plus {margin-right:3px;}
+
+tr.hidden { display: none; }
+
+.child_row .table_cell1 div
+{
+    margin-left:13px;
+}
+
+/*---------MULTICOLUMN LIST------------*/
+
+.mclist ul { width: 45em; margin-left: 1em; }
+
+.mclist ul li { float: left; width: 15em; }
+
+.mclist br { clear: left; }
+
+.mclist div { margin-bottom: 1em; }
 	
 	/*---------------SIDEMENU----------------*/
 	
