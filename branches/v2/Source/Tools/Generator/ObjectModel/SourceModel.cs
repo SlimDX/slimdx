@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using System.IO;
 
-namespace Generator.ObjectModel
+namespace SlimDX.Generator.ObjectModel
 {
 	/// <summary>
 	/// Implements a model of a C++ header in memory.

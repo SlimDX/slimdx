@@ -22,7 +22,7 @@ using System.Xml.Linq;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Generator.ObjectModel
+namespace SlimDX.Generator.ObjectModel
 {
 	class VariableElement : BaseElement
 	{

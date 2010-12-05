@@ -1,4 +1,4 @@
-ï»¿// Copyright (c) 2007-2010 SlimDX Group
+// Copyright (c) 2007-2010 SlimDX Group
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,47 +18,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Xml.Linq;
-using GoldParser;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
-namespace SlimDX.Generator.Parsing
-{
-	/// <summary>
-	/// Represents a terminal parse node, such as a keyword, identifier, or literal value.
-	/// </summary>
-	class Terminal : IParseNode
-	{
-		public Symbol Symbol
-		{
-			get;
-			private set;
-		}
+[assembly: AssemblyCompany("SlimDX Group")]
+[assembly: AssemblyProduct("SlimDX")]
+[assembly: AssemblyCopyright("Copyright © 2007-2010 SlimDX Group")]
 
-		public string Text
-		{
-			get;
-			private set;
-		}
+[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.0.0")]
 
-		public Terminal(Symbol symbol, string text)
-		{
-			Symbol = symbol;
-			Text = text;
-		}
+#if DEBUG
+[assembly:AssemblyConfiguration("Debug")]
+#else
+[assembly: AssemblyConfiguration("Release")]
+#endif
 
-		public object ToXml()
-		{
-			if (Symbol.Name == "Id")
-				return new XAttribute("Name", Text);
-			else if (Symbol.Name.Contains("Literal"))
-				return new XAttribute("Value", Text);
-
-			return new XElement("Token", Text);
-		}
-
-		public override string ToString()
-		{
-			return Text;
-		}
-	}
-}
+[assembly: ComVisible(false)]
