@@ -38,14 +38,12 @@
       </div>
         
       <div id="left_column">
-			<h2>Why not use XNA Game Studio?</h2>
+			<h2>Why use SlimDX?</h2>
 			<p>
-			XNA Game Studio (XNA GS) is Microsoft's new initiative for game development in .NET, targeting Windows and the Xbox 360.
-			It is mostly source compatible between both Windows and Xbox 360 platforms.
-			Note that "XNA" is used as shorthand for the XNA Framework.
-			Although XNA and SlimDX share several goals and expose some common components, the overall intent of the two libraries is very different.
-			While XNA's main focus is to provide a comprehensive solution for producing managed games, SlimDX seeks to faithfully expose as much of the Windows multimedia architecture as possible for all kinds of applications.
-			As a result, the actual features and interfaces in each are quite different.
+        SlimDX is a highly polished, fully featured wrapper around almost all Microsoft multimedia and gaming APIs. There are however several
+        other choices for managed game development. Follow the link below to our features page to get a list of notable SlimDX
+        features, as well as comparison charts comparing the main players in the managed game development scene, both past and present:
+        SlimDX, XNA, MDX, OpenTK, and the Windows API Code Pack.
 			</p>
 			<a href="features.php" class="homea">Read More...</a>
         </div>
