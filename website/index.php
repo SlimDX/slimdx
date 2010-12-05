@@ -30,8 +30,8 @@
 			SlimDX Consulting is now up and running to serve your custom software needs.
 			Our expertise in DirectX, SlimDX, and managed/unmanaged interop of all kinds means getting things done in a fraction of the time and cost.
 			That leaves you to focus on your application, instead of fighting with unfamiliar libraries.
-			<br />Our current Featured Customer is <a href="http://www.starcounter.com/">Starcounter AB</a>:<br />
-			See <a href="support.php">the Support page</a> for more information about our services.
+			<br />Our current Featured Customer is <a href="http://www.starcounter.com/">Starcounter AB</a>;
+			see <a href="support.php">the Support page</a> for more information about our services.
 			</p><br /><br />
 
 			<p><a href="download.php"><img src="images/latest.jpg" alt="latest release" /></a></p>
@@ -51,13 +51,11 @@
         <div id="mid_column">
 			<h2>Getting Started</h2>
 			<p>
-			Getting started is easy!
-			In order to work with SlimDX, you need to have a development environment that allows you to write and run code in a .NET language.
-			We recommend Visual C# Express, but any similar tool should work just fine.
-			It's also recommended that you download the latest DirectX SDK from the Microsoft DirectX Developer Center.
-			This SDK contains a lot of Microsoft's documentation, as well as sample projects in C++ (which are easily translated to SlimDX code) showcasing many useful tricks and techniques.
-			However, this is a very large package, typically over 450 MB, and not required to build SlimDX applications.
-			If you prefer, you can simply use online documentation, tutorials, and samples. 
+			Getting started is easy! Check out our <a href="tutorials.php">tutorials</a> page for an introduction
+      to SlimDX and Direct3D 11, or follow the link below to read our documentation article on getting started
+      with SlimDX development. While SlimDX doesn't have many samples and or in-depth documentation, concepts
+      related by XNA, MDX, and DirectX tutorials on the web should translate easily to SlimDX. We recommend
+      the DirectX SDK documentation as a particularly good source of explanatory material.
 			</p>
 			<a href="http://slimdx.org/latestdocs/Default.aspx?topic=Programming+Guide/Getting+Started" class="homea">Read More...</a>
         </div>
@@ -65,13 +63,23 @@
         <div id="right_column">
 			<h2>Current Status</h2>
 			<p>
-			SlimDX was first publically revealed in beta form on June 30, 2007.
-			Since then, it has grown at a rapid pace and now covers just about every corner of multimedia provided by Microsoft.
-			As of the June 2008 release, it is no longer in beta and is considered stable.
-			Several commercial projects and companies are using SlimDX, including at least one shipped AAA game title for Windows.
-			With support for many libraries, including DirectX 9, DirectX 10, DirectX 11, DirectSound, XAudio2, and XInput, SlimDX is the most complete multimedia library for .NET you will find anywhere.
-			</p>
-			<a href="features.php" class="homea">Read More...</a>
+        SlimDX is currently rock solid, covers just about every multimedia API provided by Microsoft, and is stable enough to be used
+        by commercial projects and companies, including several AAA game studios. Several companies and products using SlimDX:<br/>
+        <ul style="margin-left: 1em">
+          <li>
+            <a href="http://seizecontrol.marvel.com/">Spiderman: Web of Shadows</a>
+          </li>
+          <li>
+            <a href="http://www.zipperint.com/">Zipper Interactive</a>
+          </li>
+          <li>
+            <a href="http://www.lizardtech.com/">LizardTech</a>
+          </li>
+          <li>
+            <a href="http://www.lucasarts.com/games/theforceunleashed/">Star Wars: The Force Unleashed</a>
+          </li>
+        </ul>
+      </p>
 			</div>
 			<div id="clear"></div>
     </div>
