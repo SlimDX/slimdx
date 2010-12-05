@@ -23,7 +23,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace Generator
+namespace SlimDX.Generator
 {
 	class Preprocessor
 	{

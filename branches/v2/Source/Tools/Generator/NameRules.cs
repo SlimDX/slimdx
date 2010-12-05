@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Generator
+namespace SlimDX.Generator
 {
 	/// <summary>
 	/// Contains various helper methods to transform C++ names into proper .NET names.

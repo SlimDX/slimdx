@@ -24,7 +24,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace Generator
+namespace SlimDX.Generator
 {
 	class ConfigFile
 	{
