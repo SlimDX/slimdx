@@ -66,6 +66,13 @@ namespace Direct3D10
 	{
 		m_Device->IASetPrimitiveTopology( static_cast<D3D10_PRIMITIVE_TOPOLOGY>( value ) );
 	}
+
+	PrimitiveTopology InputAssemblerWrapper::GetPrimitiveTopology()
+	{
+		D3D10_PRIMITIVE_TOPOLOGY result = D3D_PRIMITIVE_TOPOLOGY_UNDEFINED;
+		m_Device->IAGetPrimitiveTopology( &result );
+		return static_cast<PrimitiveTopology>( result );
+	}
 	
 	void InputAssemblerWrapper::SetIndexBuffer( Buffer^ indexBuffer, DXGI::Format format, int offset )
 	{
