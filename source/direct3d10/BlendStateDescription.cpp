@@ -197,7 +197,7 @@ namespace Direct3D10
 		ConstructLazyProperties();
 		return (
 			m_AlphaToCoverageEnable.GetHashCode() +
-			m_BlendEnable->GetHashCode() +
+			Utilities::GetElementHashCode( m_BlendEnable ) +
 			m_SrcBlend.GetHashCode() +
 			m_DestBlend.GetHashCode() +
 			m_BlendOp.GetHashCode() +

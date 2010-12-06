@@ -330,6 +330,16 @@ namespace SlimDX
 	}
 	
 	generic<typename T>
+	int Utilities::GetElementHashCode( array<T>^ a )
+	{
+		int result = 0;
+		for( int index = 0; index < a->Length; ++index )
+			result += a[index].GetHashCode();
+		
+		return result;
+	}
+
+	generic<typename T>
 	bool Utilities::CheckElementEquality( array<T>^ left, array<T>^ right )
 	{
 		if( left->Length != right->Length )
