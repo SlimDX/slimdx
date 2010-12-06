@@ -38,6 +38,13 @@ INT int
 BYTE byte
 LUID long
 FLOAT float
+UINT64 long
 LARGE_INTEGER long
 BOOL bool
 WCHAR[] string
+HRESULT Result
+IUnknown ComObject
+HWND IntPtr
+HMODULE IntPtr
+HANDLE IntPtr
+GUID Guid

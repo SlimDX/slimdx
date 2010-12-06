@@ -69,6 +69,13 @@ namespace SlimDX.Generator.ObjectModel
 			Modifiers = modifiers;
 		}
 
+		public TypeElement(SourceModel model, string name)
+			: base(model, name)
+		{
+			Arrays = Enumerable.Empty<int>();
+			Modifiers = Enumerable.Empty<string>();
+		}
+
 		public override string ToString()
 		{
 			string name;

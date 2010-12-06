@@ -34,7 +34,7 @@ namespace SlimDX.Generator.ObjectModel
 			private set;
 		}
 
-		public string BaseType
+		public TypeElement BaseType
 		{
 			get;
 			private set;
@@ -50,7 +50,7 @@ namespace SlimDX.Generator.ObjectModel
 			: base(model, name, structElement)
 		{
 			if (inheritance != null)
-				BaseType = (string)inheritance.Attribute("Name");
+				BaseType = new TypeElement(model, (string)inheritance.Attribute("Name"));
 
 			if (declspec != null)
 				Guid = declspec.Descendants("Declspec").FirstOrDefault(d => (string)d.Element("Token") == "uuid").Attribute("Value").Value.Trim('"');

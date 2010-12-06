@@ -1,1 +1,1 @@
-﻿public {DataType} {Name};
+﻿public {DataType} {NiceName};
