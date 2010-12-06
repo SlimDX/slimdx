@@ -69,7 +69,7 @@ namespace SlimDX.Generator.ObjectModel
 
 		protected virtual string BuildNiceName(string name)
 		{
-			return Model.NameRules.PascalCaseFromUnderscores(Model.NameRules.RemovePrefixes(name));
+			return Model.NameRules.Apply(name).PascalCaseFromUnderscores();
 		}
 
 		protected void RebuildName()

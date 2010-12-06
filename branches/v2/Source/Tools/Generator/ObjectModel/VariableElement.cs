@@ -32,6 +32,12 @@ namespace SlimDX.Generator.ObjectModel
 			private set;
 		}
 
+		public string CamelCaseName
+		{
+			get;
+			private set;
+		}
+
 		public VariableElement(SourceModel model, XElement element)
 			: base(model)
 		{
@@ -44,6 +50,14 @@ namespace SlimDX.Generator.ObjectModel
 		public override string ToString()
 		{
 			return DataType.ToString() + " " + Name;
+		}
+
+		protected override string BuildNiceName(string name)
+		{
+			var niceName = Model.NameRules.Apply(name);
+			CamelCaseName = niceName.CamelCase();
+
+			return niceName;
 		}
 	}
 }

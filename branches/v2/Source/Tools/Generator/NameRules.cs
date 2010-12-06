@@ -17,27 +17,16 @@ namespace SlimDX.Generator
 			rules = new ConfigFile(ruleFile);
 		}
 
-		public string PascalCaseFromUnderscores(string name)
+		public string Apply(string name)
 		{
 			if (string.IsNullOrEmpty(name))
 				return name;
 
-			return string.Concat(name.Split('_').Select(s => PascalCaseFromWord(s)));
-		}
-
-		public string PascalCaseFromWord(string word)
-		{
-			if (string.IsNullOrEmpty(word))
-				return word;
-
-			return char.ToUpper(word[0]) + word.Substring(1).ToLower();
+			return ExpandAbbreviations(RemovePrefixes(name));
 		}
 
 		public string RemovePrefixes(string name)
 		{
-			if (string.IsNullOrEmpty(name))
-				return name;
-
 			foreach (var prefix in rules.GetOptions("RemovePrefix"))
 			{
 				if (name.StartsWith(prefix))
@@ -50,6 +39,48 @@ namespace SlimDX.Generator
 		public string RemovePrefix(string name, string prefix)
 		{
 			return name.StartsWith(prefix) ? name.Substring(prefix.Length) : name;
+		}
+
+		public string ExpandAbbreviations(string name)
+		{
+			foreach (var entry in rules.GetOptions("Abbreviations").Select(e => e.Split(' ')))
+			{
+				int index = name.IndexOf(entry[0]);
+				if (index >= 0)
+				{
+					if (!name.Substring(index).StartsWith(entry[1]))
+						return name.Replace(entry[0], entry[1]);
+				}
+			}
+
+			return name;
+		}
+	}
+
+	static class NameExtensions
+	{
+		public static string PascalCaseFromUnderscores(this string name)
+		{
+			if (string.IsNullOrEmpty(name))
+				return name;
+
+			return string.Concat(name.Split('_').Select(s => PascalCaseFromWord(s)));
+		}
+
+		public static string PascalCaseFromWord(this string word)
+		{
+			if (string.IsNullOrEmpty(word))
+				return word;
+
+			return char.ToUpper(word[0]) + word.Substring(1).ToLower();
+		}
+
+		public static string CamelCase(this string name)
+		{
+			if (string.IsNullOrEmpty(name))
+				return name;
+
+			return char.ToLower(name[0]) + name.Substring(1);
 		}
 	}
 }

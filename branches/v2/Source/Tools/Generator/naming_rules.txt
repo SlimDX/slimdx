@@ -1,6 +1,16 @@
 # Specifies various naming rules to convert DirectX C++ type names
 # into proper .NET naming style.
 
+# Prefixes that will be removed from the start of a name
+# Order matters: only one prefix will get removed, starting from the top
 [RemovePrefix]
+pp
+p
 DXGI_
 IDXGI
+dw
+
+[Abbreviations]
+DESC DESCRIPTION
+SubSys Subsystem
+Desc Description
