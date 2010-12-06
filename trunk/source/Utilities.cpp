@@ -334,7 +334,7 @@ namespace SlimDX
 	{
 		int result = 0;
 		for( int index = 0; index < a->Length; ++index )
-			result += a[index].GetHashCode();
+			result += a[index]->GetHashCode();
 		
 		return result;
 	}
