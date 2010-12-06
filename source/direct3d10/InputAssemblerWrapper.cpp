@@ -85,6 +85,19 @@ namespace Direct3D10
 			m_Device->IASetIndexBuffer( static_cast<ID3D10Buffer*>( indexBuffer->InternalPointer ), static_cast<DXGI_FORMAT>( format ), offset );
 		}
 	}
+
+	void InputAssemblerWrapper::GetIndexBuffer( [Out] Buffer^ %indexBuffer, [Out] DXGI::Format %format, [Out] int %offset )
+	{
+		ID3D10Buffer *buffer;
+		DXGI_FORMAT nativeFormat;
+		UINT nativeOffset;
+
+		m_Device->IAGetIndexBuffer( &buffer, &nativeFormat, &nativeOffset );
+
+		indexBuffer = Buffer::FromPointer( buffer );
+		format = static_cast<DXGI::Format>( nativeFormat );
+		offset = nativeOffset;
+	}
 	
 	void InputAssemblerWrapper::SetVertexBuffers( int slot, VertexBufferBinding vertexBufferBinding )
 	{
@@ -109,6 +122,25 @@ namespace Direct3D10
 		}
 		
 		m_Device->IASetVertexBuffers( firstSlot, vertexBufferBinding->Length, buffers, strides, offsets );
+	}
+
+	array<VertexBufferBinding>^ InputAssemblerWrapper::GetVertexBuffers( int firstSlot, int count )
+	{
+		ID3D10Buffer* buffers[D3D10_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT];
+		UINT strides[D3D10_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT];
+		UINT offsets[D3D10_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT];
+		array<VertexBufferBinding>^ results = gcnew array<VertexBufferBinding>( count );
+		
+		m_Device->IAGetVertexBuffers( firstSlot, count, buffers, strides, offsets );
+
+		for( int i = 0; i < count; ++i )
+		{
+			results[i].Buffer = buffers[i] == NULL ? nullptr : Buffer::FromPointer( buffers[i] );
+			results[i].Stride = strides[i];
+			results[i].Offset = offsets[i];
+		}
+
+		return results;
 	}
 }
 }

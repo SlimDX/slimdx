@@ -49,9 +49,11 @@ namespace SlimDX
 			PrimitiveTopology GetPrimitiveTopology();
 
 			void SetIndexBuffer( Buffer^ indexBuffer, DXGI::Format format, int offset );
+			void GetIndexBuffer( [Out] Buffer^ %indexBuffer, [Out] DXGI::Format %format, [Out] int %offset );
 			
 			void SetVertexBuffers( int slot, VertexBufferBinding vertexBufferBinding );
 			void SetVertexBuffers( int firstSlot, ... array<VertexBufferBinding>^ vertexBufferBindings );
+			array<VertexBufferBinding>^ GetVertexBuffers( int firstSlot, int count );
 		};
 	}
 };
