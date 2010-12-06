@@ -92,7 +92,7 @@ namespace SlimDX
 		static void CheckArrayBounds( System::Array^ data, int offset, int% count );
 		
 		generic<typename T>
-        int GetElementHashCode( array<T>^ a );
+        static int GetElementHashCode( array<T>^ a );
 		
 		generic<typename T>
 		static bool CheckElementEquality( array<T>^ left, array<T>^ right );
