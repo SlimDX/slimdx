@@ -54,7 +54,7 @@ namespace SlimDX.Generator.ObjectModel
 
 		protected override string BuildNiceName(string name)
 		{
-			var niceName = Model.NameRules.Apply(name);
+			var niceName = base.BuildNiceName(name);
 			CamelCaseName = niceName.CamelCase();
 
 			return niceName;
