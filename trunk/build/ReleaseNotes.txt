@@ -21,6 +21,8 @@ Direct3D 10
 	* Added missing Get/SetRawValue methods to EffectVariable.
 	* Added GetInputLayout to the InputAssember device stage.
 	* Added GetPrimitiveTopology to the InputAssember device stage.
+	* Added GetIndexBuffer to the InputAssember device stage.
+	* Added GetVertexBuffers to the InputAssember device stage.
 	* Added ResourceOptionFlags.GdiCompatible and ResourceOptionFlags.KeyedMutex.
 	* Added Resource.SaveTextureToFile, which allows for saving a texture without knowing its concrete type.
 	* Fixed a COM reference leak in Device.OpenSharedResource.
