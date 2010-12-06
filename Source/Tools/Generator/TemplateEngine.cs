@@ -84,26 +84,38 @@ namespace SlimDX.Generator
 				return Namespace;
 
 			// if the name has a colon, it indicates that the type has another template applied to it
-			int index = capture.IndexOf(':');
-			if (index >= 0)
-				propertyName = capture.Substring(0, index);
+			int colon = capture.IndexOf(':');
+			if (colon >= 0)
+				propertyName = capture.Substring(0, colon);
+
+			// if the name has a period, it indicates a sub-property of the element
+			int period = propertyName.IndexOf('.');
+			string subName = null;
+			if (period >= 0)
+			{
+				subName = propertyName.Substring(period + 1);
+				propertyName = propertyName.Substring(0, period);
+			}
 
 			// get the value of the property from the source object
 			var value = source.GetType().GetProperty(propertyName).GetValue(source, null);
-			if (index >= 0)
+			if (subName != null)
+				value = value.GetType().GetProperty(subName).GetValue(value, null);
+
+			if (colon >= 0)
 			{
 				// extract the new template name
 				// {Foo:lol.txt} -> lol.txt
-				var template = capture.Substring(index + 1);
+				var template = capture.Substring(colon + 1);
 				var suffix = string.Empty;
 				
-				index = template.IndexOf(' ');
-				if (index >= 0)
+				int space = template.IndexOf(' ');
+				if (space >= 0)
 				{
 					// the suffix is a list of characters to apply after each element
 					// in the enumeration
-					suffix = Escape(template.Substring(index + 1));
-					template = template.Substring(0, index);
+					suffix = Escape(template.Substring(space + 1));
+					template = template.Substring(0, space);
 				}
 
 				var enumerable = GetEnumerable(value);
@@ -128,7 +140,7 @@ namespace SlimDX.Generator
 
 			var enumerable = GetEnumerable(source);
 			if (enumerable != null)
-				return string.Join(", ", enumerable.Cast<object>());
+				return string.Concat(enumerable.Cast<object>());
 
 			return source.ToString();
 		}

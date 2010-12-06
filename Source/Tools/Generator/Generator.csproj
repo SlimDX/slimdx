@@ -101,6 +101,7 @@
     <Content Include="Templates\Interface.txt" />
     <Content Include="Templates\Parameter.txt" />
     <Content Include="Templates\Struct.txt" />
+    <Content Include="Templates\Type.txt" />
     <Content Include="Templates\Variable.txt" />
   </ItemGroup>
   <ItemGroup>

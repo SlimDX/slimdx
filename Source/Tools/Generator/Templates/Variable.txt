@@ -1,1 +1,1 @@
-﻿public {DataType} {NiceName};
+﻿public {DataType:Type.txt} {NiceName};

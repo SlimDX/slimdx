@@ -1,1 +1,1 @@
-﻿{DataType} {CamelCaseName}
+﻿{DataType.ModifiedName} {CamelCaseName}
