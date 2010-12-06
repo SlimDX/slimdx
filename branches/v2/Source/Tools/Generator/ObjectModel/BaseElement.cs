@@ -85,7 +85,8 @@ namespace SlimDX.Generator.ObjectModel
 
 		protected void RegisterType()
 		{
-			Model.TypeMap.Add(Name, NiceName);
+			if (!Model.TypeMap.ContainsKey(Name))
+				Model.TypeMap.Add(Name, NiceName);
 		}
 	}
 }

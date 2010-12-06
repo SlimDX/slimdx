@@ -79,9 +79,12 @@ namespace SlimDX.Generator
 
 			// run the parser on the preprocessed file to generate a model of the file in memory
 			var parser = new HeaderParser(options.GetOption("Options", "Grammar"));
-			var model = new SourceModel(parser.Parse(source).ToXml(), options.GetOption("Options", "NamingRules"), options.GetOptions("TypeMap"));
+			var root = parser.Parse(source).ToXml();
+			var model = new SourceModel(root, options.GetOption("Options", "NamingRules"), options.GetOptions("TypeMap"));
 			var templateEngine = new TemplateEngine(options.GetOption("Options", "Templates"), options.GetOption("Options", "Namespace"));
 			var outputPath = options.GetOption("Options", "OutputPath");
+
+			root.Save("test.xml");
 
 			if (!Directory.Exists(outputPath))
 				Directory.CreateDirectory(outputPath);

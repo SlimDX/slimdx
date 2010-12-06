@@ -45,6 +45,12 @@ namespace SlimDX.Generator.ObjectModel
 			get { return Name + string.Concat(Arrays.Select(i => "[]")); }
 		}
 
+		public string ModifiedName
+		{
+			get;
+			private set;
+		}
+
 		public TypeElement(SourceModel model, XElement element)
 			: this(model, element, null)
 		{
@@ -53,8 +59,8 @@ namespace SlimDX.Generator.ObjectModel
 		public TypeElement(SourceModel model, XElement element, IEnumerable<int> arrays)
 			: base(model)
 		{
-			Name = (string)element.Attribute("Name");
 			Arrays = arrays ?? Enumerable.Empty<int>();
+			Name = (string)element.Attribute("Name");
 
 			var scalar = element.Element("Scalar");
 			if (scalar != null)
@@ -67,6 +73,8 @@ namespace SlimDX.Generator.ObjectModel
 
 			modifiers.AddRange(element.Descendants("Pointers").Select(d => (string)d.Element("Token")));
 			Modifiers = modifiers;
+
+			RebuildName();
 		}
 
 		public TypeElement(SourceModel model, string name)
@@ -74,11 +82,15 @@ namespace SlimDX.Generator.ObjectModel
 		{
 			Arrays = Enumerable.Empty<int>();
 			Modifiers = Enumerable.Empty<string>();
+
+			RebuildName();
 		}
 
-		public override string ToString()
+		protected override string BuildNiceName(string name)
 		{
-			string name;
+			if (string.IsNullOrEmpty(name) || Arrays == null)
+				return "";
+
 			if (!Model.TypeMap.TryGetValue(ArrayName, out name))
 			{
 				if (Model.TypeMap.TryGetValue(Name, out name))
@@ -87,7 +99,16 @@ namespace SlimDX.Generator.ObjectModel
 					name = ArrayName;
 			}
 
+			ModifiedName = name;
+			if (Modifiers != null && !Modifiers.Contains("const") && Modifiers.Contains("*"))
+				ModifiedName = "out " + name;
+
 			return name;
+		}
+
+		public override string ToString()
+		{
+			return NiceName;
 		}
 	}
 }

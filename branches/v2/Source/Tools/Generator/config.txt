@@ -48,3 +48,4 @@ HWND IntPtr
 HMODULE IntPtr
 HANDLE IntPtr
 GUID Guid
+DXGI_RGB Color3
