@@ -19,9 +19,6 @@ namespace SlimDX.Generator
 
 		public string Apply(string name)
 		{
-			if (string.IsNullOrEmpty(name))
-				return name;
-
 			return ExpandAbbreviations(RemovePrefixes(name));
 		}
 
@@ -61,25 +58,16 @@ namespace SlimDX.Generator
 	{
 		public static string PascalCaseFromUnderscores(this string name)
 		{
-			if (string.IsNullOrEmpty(name))
-				return name;
-
-			return string.Concat(name.Split('_').Select(s => PascalCaseFromWord(s)));
+			return string.Concat(name.Split('_').Select(PascalCase));
 		}
 
-		public static string PascalCaseFromWord(this string word)
+		public static string PascalCase(this string word)
 		{
-			if (string.IsNullOrEmpty(word))
-				return word;
-
 			return char.ToUpper(word[0]) + word.Substring(1).ToLower();
 		}
 
 		public static string CamelCase(this string name)
 		{
-			if (string.IsNullOrEmpty(name))
-				return name;
-
 			return char.ToLower(name[0]) + name.Substring(1);
 		}
 	}
