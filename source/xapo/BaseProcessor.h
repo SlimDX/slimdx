@@ -76,9 +76,11 @@ namespace SlimDX
 		{
 		private:
 			gcroot<BaseProcessor^> m_processor;
+			XAPO_REGISTRATION_PROPERTIES *pProperties;
 
 		public:
 			XAPOBaseImpl( BaseProcessor^ processor, XAPO_REGISTRATION_PROPERTIES *pRegProperties );
+			virtual ~XAPOBaseImpl() { delete pProperties; pProperties = NULL; }
 
 			const XAPO_REGISTRATION_PROPERTIES* WINAPI GetRegistrationPropertiesInternal() { return CXAPOBase::GetRegistrationPropertiesInternal(); }
 			BOOL WINAPI IsLocked() { return CXAPOBase::IsLocked(); }

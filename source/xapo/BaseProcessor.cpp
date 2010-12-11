@@ -38,9 +38,9 @@ namespace XAPO
 {
 	BaseProcessor::BaseProcessor( SlimDX::XAPO::RegistrationProperties properties )
 	{
-		XAPO_REGISTRATION_PROPERTIES props = properties.ToUnmanaged();
+		XAPO_REGISTRATION_PROPERTIES *props = properties.ToUnmanaged();
 
-		Construct( new XAPOBaseImpl( this, &props ) );
+		Construct( new XAPOBaseImpl( this, props ) );
 	}
 
 	int BaseProcessor::CalculateInputFrames( int outputFrameCount )
@@ -154,6 +154,7 @@ namespace XAPO
 	XAPOBaseImpl::XAPOBaseImpl( BaseProcessor^ processor, XAPO_REGISTRATION_PROPERTIES *pRegProperties )
 		: CXAPOBase( pRegProperties )
 	{
+		pProperties = pRegProperties;
 		m_processor = processor;
 	}
 

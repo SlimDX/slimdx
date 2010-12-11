@@ -39,9 +39,9 @@ namespace XAPO
 {
 	ParameterizedProcessor::ParameterizedProcessor( SlimDX::XAPO::RegistrationProperties properties, DataStream^ parameterBlocks, int blockSize, bool producer )
 	{
-		XAPO_REGISTRATION_PROPERTIES props = properties.ToUnmanaged();
+		XAPO_REGISTRATION_PROPERTIES *props = properties.ToUnmanaged();
 
-		Construct( static_cast<IXAPOParameters*>( new XAPOParametersImpl( this, &props, reinterpret_cast<BYTE*>( parameterBlocks->PositionPointer ), blockSize, producer ) ) );
+		Construct( static_cast<IXAPOParameters*>( new XAPOParametersImpl( this, props, reinterpret_cast<BYTE*>( parameterBlocks->PositionPointer ), blockSize, producer ) ) );
 	}
 
 	IntPtr ParameterizedProcessor::BeginProcess()
@@ -77,6 +77,7 @@ namespace XAPO
 	XAPOParametersImpl::XAPOParametersImpl( ParameterizedProcessor^ processor, XAPO_REGISTRATION_PROPERTIES *pRegProperties, BYTE *pParameterBlocks, UINT32 uParameterBlockByteSize, BOOL fProducer )
 		: CXAPOParametersBase( pRegProperties, pParameterBlocks, uParameterBlockByteSize, fProducer )
 	{
+		pProperties = pRegProperties;
 		m_processor = processor;
 	}
 

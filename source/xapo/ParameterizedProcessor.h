@@ -59,9 +59,11 @@ namespace SlimDX
 		{
 		private:
 			gcroot<ParameterizedProcessor^> m_processor;
+			XAPO_REGISTRATION_PROPERTIES *pProperties;
 
 		public:
 			XAPOParametersImpl( ParameterizedProcessor^ processor, XAPO_REGISTRATION_PROPERTIES *pRegProperties, BYTE *pParameterBlocks, UINT32 uParameterBlockByteSize, BOOL fProducer );
+			virtual ~XAPOParametersImpl() { delete pProperties; pProperties = NULL; }
 
 			virtual void OnSetParameters( const void *pParameters, UINT32 ParameterByteSize );
 
