@@ -88,7 +88,18 @@ namespace SlimDX
 			HRESULT ValidateFormatDefault( WAVEFORMATEX *pFormat, BOOL fOverwrite ) { return CXAPOBase::ValidateFormatDefault( pFormat, fOverwrite ); }
 			HRESULT ValidateFormatPair( const WAVEFORMATEX *pSupportedFormat, WAVEFORMATEX *pRequestedFormat, BOOL fOverwrite ) { return CXAPOBase::ValidateFormatPair( pSupportedFormat, pRequestedFormat, fOverwrite ); }
 
-			void WINAPI Process( UINT32 InputProcessParameterCount, const XAPO_PROCESS_BUFFER_PARAMETERS *pInputProcessParameters, UINT32 OutputProcessParameterCount, XAPO_PROCESS_BUFFER_PARAMETERS *pOutputProcessParameters, BOOL IsEnabled );
+			UINT32  WINAPI CalcInputFrames( UINT32 OutputFrameCount );
+			UINT32  WINAPI CalcOutputFrames( UINT32 InputFrameCount );
+			HRESULT WINAPI GetRegistrationProperties( XAPO_REGISTRATION_PROPERTIES **ppRegistrationProperties );
+			HRESULT WINAPI Initialize( const void *pData, UINT32 DataByteSize );
+			HRESULT WINAPI IsInputFormatSupported( const WAVEFORMATEX *pOutputFormat, const WAVEFORMATEX *pRequestedInputFormat, WAVEFORMATEX **ppSupportedInputFormat );
+			HRESULT WINAPI IsOutputFormatSupported( const WAVEFORMATEX *pInputFormat, const WAVEFORMATEX *pRequestedOutputFormat, WAVEFORMATEX **ppSupportedOutputFormat );
+			HRESULT WINAPI LockForProcess( UINT32 InputLockedParameterCount, const XAPO_LOCKFORPROCESS_BUFFER_PARAMETERS *pInputLockedParameters, UINT32 OutputLockedParameterCount, const XAPO_LOCKFORPROCESS_BUFFER_PARAMETERS *pOutputLockedParameters );
+			void	WINAPI Reset();
+			void	WINAPI UnlockForProcess();
+			void	WINAPI Process( UINT32 InputProcessParameterCount, const XAPO_PROCESS_BUFFER_PARAMETERS *pInputProcessParameters, UINT32 OutputProcessParameterCount, XAPO_PROCESS_BUFFER_PARAMETERS *pOutputProcessParameters, BOOL IsEnabled );
+		
+			bool ManagedCaller;
 		};
 	}
 }
