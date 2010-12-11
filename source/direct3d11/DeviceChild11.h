@@ -52,6 +52,16 @@ namespace SlimDX
 			{
 				SlimDX::Direct3D11::Device^ get();
 			}
+
+			/// <summary>
+			/// Gets or sets a friendly debug name for the object. This name is used in debug messages
+			/// as well as in the PIX object browser.
+			/// </summary>
+			property System::String^ DebugName
+			{
+				System::String^ get();
+				void set(System::String^ value);
+			}
 		};
 	}
 };

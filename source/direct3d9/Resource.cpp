@@ -104,5 +104,32 @@ namespace Direct3D9
 	{
 		InternalPointer->PreLoad();
 	}
+
+	System::String^ Resource::DebugName::get()
+	{
+		char name[1024];
+		DWORD size = sizeof(name) - 1;
+
+		if (FAILED(InternalPointer->GetPrivateData(WKPDID_D3DDebugObjectName, &name[0], &size)))
+			return "";
+
+		name[size] = 0;
+		return gcnew System::String(name);
+	}
+	
+	void Resource::DebugName::set(System::String^ value)
+	{
+		if (!String::IsNullOrEmpty(value))
+		{
+			array<Byte>^ valueBytes = System::Text::ASCIIEncoding::ASCII->GetBytes(value);
+			pin_ptr<Byte> pinnedValue = &valueBytes[0];
+
+			InternalPointer->SetPrivateData(WKPDID_D3DDebugObjectName, pinnedValue, value->Length, 0);
+		}
+		else
+		{
+			InternalPointer->SetPrivateData(WKPDID_D3DDebugObjectName, 0, 0, 0);
+		}
+	}
 }
 }
