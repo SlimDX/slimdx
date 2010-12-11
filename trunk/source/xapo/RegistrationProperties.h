@@ -30,7 +30,7 @@ namespace SlimDX
 		public value class RegistrationProperties : System::IEquatable<RegistrationProperties>
 		{
 		internal:
-			XAPO_REGISTRATION_PROPERTIES ToUnmanaged();
+			XAPO_REGISTRATION_PROPERTIES* ToUnmanaged();
 			static RegistrationProperties FromUnmanaged( const XAPO_REGISTRATION_PROPERTIES &properties );
 
 		public:

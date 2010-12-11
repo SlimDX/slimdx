@@ -32,22 +32,22 @@ namespace SlimDX
 {
 namespace XAPO
 {
-	XAPO_REGISTRATION_PROPERTIES RegistrationProperties::ToUnmanaged()
+	XAPO_REGISTRATION_PROPERTIES* RegistrationProperties::ToUnmanaged()
 	{
-		XAPO_REGISTRATION_PROPERTIES props = {0};
+		XAPO_REGISTRATION_PROPERTIES *props = new XAPO_REGISTRATION_PROPERTIES();
 		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( FriendlyName );
 		pin_ptr<const wchar_t> pinnedCopyright = PtrToStringChars( CopyrightInfo );
 
-		props.clsid = Utilities::ConvertManagedGuid( ClassId );
-		wcsncpy_s( props.FriendlyName, pinnedName, XAPO_REGISTRATION_STRING_LENGTH ); props.FriendlyName[XAPO_REGISTRATION_STRING_LENGTH - 1] = NULL;
-		wcsncpy_s( props.CopyrightInfo, pinnedCopyright, XAPO_REGISTRATION_STRING_LENGTH ); props.CopyrightInfo[XAPO_REGISTRATION_STRING_LENGTH - 1] = NULL;
-		props.MajorVersion = MajorVersion;
-		props.MinorVersion = MinorVersion;
-		props.Flags = static_cast<UINT>( Flags );
-		props.MinInputBufferCount = MinInputBufferCount;
-		props.MaxInputBufferCount = MaxInputBufferCount;
-		props.MinOutputBufferCount = MinOutputBufferCount;
-		props.MaxOutputBufferCount = MaxOutputBufferCount;
+		props->clsid = Utilities::ConvertManagedGuid( ClassId );
+		wcsncpy_s( props->FriendlyName, pinnedName, XAPO_REGISTRATION_STRING_LENGTH ); props->FriendlyName[XAPO_REGISTRATION_STRING_LENGTH - 1] = NULL;
+		wcsncpy_s( props->CopyrightInfo, pinnedCopyright, XAPO_REGISTRATION_STRING_LENGTH ); props->CopyrightInfo[XAPO_REGISTRATION_STRING_LENGTH - 1] = NULL;
+		props->MajorVersion = MajorVersion;
+		props->MinorVersion = MinorVersion;
+		props->Flags = static_cast<UINT>( Flags );
+		props->MinInputBufferCount = MinInputBufferCount;
+		props->MaxInputBufferCount = MaxInputBufferCount;
+		props->MinOutputBufferCount = MinOutputBufferCount;
+		props->MaxOutputBufferCount = MaxOutputBufferCount;
 
 		return props;
 	}

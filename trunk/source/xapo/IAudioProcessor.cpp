@@ -109,8 +109,8 @@ namespace XAPO
 		try
 		{
 			XAPO_REGISTRATION_PROPERTIES *ptr = reinterpret_cast<XAPO_REGISTRATION_PROPERTIES*>( XAPOAlloc( sizeof( XAPO_REGISTRATION_PROPERTIES ) ) );
-			XAPO_REGISTRATION_PROPERTIES properties = m_interface->RegistrationProperties.ToUnmanaged();
-			memcpy( ptr, &properties, sizeof( XAPO_REGISTRATION_PROPERTIES ) );
+			XAPO_REGISTRATION_PROPERTIES *properties = m_interface->RegistrationProperties.ToUnmanaged();
+			memcpy( ptr, properties, sizeof( XAPO_REGISTRATION_PROPERTIES ) );
 
 			*ppRegistrationProperties = ptr;
 		}
