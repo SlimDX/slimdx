@@ -45,16 +45,19 @@ namespace XAPO
 
 	int BaseProcessor::CalculateInputFrames( int outputFrameCount )
 	{
+		ImplPointer->ManagedCaller = true;
 		return InternalPointer->CalcInputFrames( outputFrameCount );
 	}
 
 	int BaseProcessor::CalculateOutputFrames( int inputFrameCount )
 	{
+		ImplPointer->ManagedCaller = true;
 		return InternalPointer->CalcOutputFrames( inputFrameCount );
 	}
 
 	Result BaseProcessor::Initialize( DataStream^ data )
 	{
+		ImplPointer->ManagedCaller = true;
 		HRESULT hr = InternalPointer->Initialize( data->PositionPointer, static_cast<UINT32>( data->RemainingLength ) );
 		return Result( hr );
 	}
@@ -65,6 +68,7 @@ namespace XAPO
 		auto_array<WAVEFORMATEX> input = WaveFormat::ToUnmanaged( requestedInputFormat );
 		WAVEFORMATEX *supported = NULL;
 
+		ImplPointer->ManagedCaller = true;
 		HRESULT hr = InternalPointer->IsInputFormatSupported( output.get(), input.get(), &supported );
 		supportedInputFormat = WaveFormat::FromUnmanaged( *supported );
 		return hr == S_OK;
@@ -76,6 +80,7 @@ namespace XAPO
 		auto_array<WAVEFORMATEX> output = WaveFormat::ToUnmanaged( requestedOutputFormat );
 		WAVEFORMATEX *supported = NULL;
 
+		ImplPointer->ManagedCaller = true;
 		HRESULT hr = InternalPointer->IsOutputFormatSupported( input.get(), output.get(), &supported );
 		supportedOutputFormat = WaveFormat::FromUnmanaged( *supported );
 		return hr == S_OK;
@@ -104,17 +109,20 @@ namespace XAPO
 			output[i] = p;
 		}
 
+		ImplPointer->ManagedCaller = true;
 		HRESULT hr = InternalPointer->LockForProcess( inputParameters->Length, &input[0], outputParameters->Length, &output[0] );
 		return Result( hr );
 	}
 
 	void BaseProcessor::Reset()
 	{
+		ImplPointer->ManagedCaller = true;
 		InternalPointer->Reset();
 	}
 
 	void BaseProcessor::UnlockForProcess()
 	{
+		ImplPointer->ManagedCaller = true;
 		InternalPointer->UnlockForProcess();
 	}
 
@@ -156,9 +164,220 @@ namespace XAPO
 	{
 		pProperties = pRegProperties;
 		m_processor = processor;
+		ManagedCaller = false;
 	}
 
-	void XAPOBaseImpl::Process( UINT32 InputProcessParameterCount, const XAPO_PROCESS_BUFFER_PARAMETERS *pInputProcessParameters, UINT32 OutputProcessParameterCount, XAPO_PROCESS_BUFFER_PARAMETERS *pOutputProcessParameters, BOOL IsEnabled )
+	UINT32 WINAPI XAPOBaseImpl::CalcInputFrames( UINT32 OutputFrameCount )
+	{
+		if (ManagedCaller)
+		{
+			ManagedCaller = false;
+			return CXAPOBase::CalcInputFrames(OutputFrameCount);
+		}
+		else
+		{
+			try
+			{
+				return m_processor->CalculateInputFrames( OutputFrameCount );
+			}
+			catch(...)
+			{
+			}
+
+			return 0;
+		}
+	}
+
+	UINT32 WINAPI XAPOBaseImpl::CalcOutputFrames( UINT32 InputFrameCount )
+	{
+		if (ManagedCaller)
+		{
+			ManagedCaller = false;
+			return CXAPOBase::CalcOutputFrames(InputFrameCount);
+		}
+		else
+		{
+			try
+			{
+				return m_processor->CalculateOutputFrames( InputFrameCount );
+			}
+			catch(...)
+			{
+			}
+
+			return 0;
+		}
+	}
+
+	HRESULT WINAPI XAPOBaseImpl::GetRegistrationProperties( XAPO_REGISTRATION_PROPERTIES **ppRegistrationProperties )
+	{
+		if (ManagedCaller)
+		{
+			ManagedCaller = false;
+			return CXAPOBase::GetRegistrationProperties(ppRegistrationProperties);
+		}
+		else
+		{
+			try
+			{
+				XAPO_REGISTRATION_PROPERTIES *ptr = reinterpret_cast<XAPO_REGISTRATION_PROPERTIES*>( XAPOAlloc( sizeof( XAPO_REGISTRATION_PROPERTIES ) ) );
+				XAPO_REGISTRATION_PROPERTIES *properties = m_processor->RegistrationProperties.ToUnmanaged();
+				memcpy( ptr, properties, sizeof( XAPO_REGISTRATION_PROPERTIES ) );
+
+				*ppRegistrationProperties = ptr;
+			}
+			catch( SlimDXException^ ex )
+			{
+				return ex->ResultCode.Code;
+			}
+			catch( Exception^ )
+			{
+				return E_FAIL;
+			}
+
+			return S_OK;
+		}
+	}
+
+	HRESULT WINAPI XAPOBaseImpl::Initialize( const void *pData, UINT32 DataByteSize )
+	{
+		if (ManagedCaller)
+		{
+			ManagedCaller = false;
+			return CXAPOBase::Initialize(pData, DataByteSize);
+		}
+		else
+		{
+			try
+			{
+				DataStream^ data = gcnew DataStream( pData, DataByteSize, true, false );
+				
+				return m_processor->Initialize( data ).Code;
+			}
+			catch( SlimDXException^ ex )
+			{
+				return ex->ResultCode.Code;
+			}
+			catch( Exception^ )
+			{
+				return E_FAIL;
+			}
+
+			return S_OK;
+		}
+	}
+
+	HRESULT WINAPI XAPOBaseImpl::IsInputFormatSupported( const WAVEFORMATEX *pOutputFormat, const WAVEFORMATEX *pRequestedInputFormat, WAVEFORMATEX **ppSupportedInputFormat )
+	{
+		if (ManagedCaller)
+		{
+			ManagedCaller = false;
+			return CXAPOBase::IsInputFormatSupported(pOutputFormat, pRequestedInputFormat, ppSupportedInputFormat);
+		}
+		else
+		{
+			try
+			{
+				WaveFormat^ format;
+				bool result = m_processor->IsInputFormatSupported( WaveFormat::FromUnmanaged( *pOutputFormat ), WaveFormat::FromUnmanaged( *pRequestedInputFormat ), format );
+
+				auto_array<WAVEFORMATEX> native = WaveFormat::ToUnmanaged( format );
+				*ppSupportedInputFormat = native.release();
+
+				return result ? S_OK : XAPO_E_FORMAT_UNSUPPORTED;
+			}
+			catch( SlimDXException^ ex )
+			{
+				return ex->ResultCode.Code;
+			}
+			catch( Exception^ )
+			{
+				return E_FAIL;
+			}
+
+			return S_OK;
+		}
+	}
+
+	HRESULT WINAPI XAPOBaseImpl::IsOutputFormatSupported( const WAVEFORMATEX *pInputFormat, const WAVEFORMATEX *pRequestedOutputFormat, WAVEFORMATEX **ppSupportedOutputFormat )
+	{
+		if (ManagedCaller)
+		{
+			ManagedCaller = false;
+			return CXAPOBase::IsOutputFormatSupported(pInputFormat, pRequestedOutputFormat, ppSupportedOutputFormat);
+		}
+		else
+		{
+			try
+			{
+				WaveFormat^ format;
+				bool result = m_processor->IsOutputFormatSupported( WaveFormat::FromUnmanaged( *pInputFormat ), WaveFormat::FromUnmanaged( *pRequestedOutputFormat ), format );
+
+				auto_array<WAVEFORMATEX> native = WaveFormat::ToUnmanaged( format );
+				*ppSupportedOutputFormat = native.release();
+
+				return result ? S_OK : XAPO_E_FORMAT_UNSUPPORTED;
+			}
+			catch( SlimDXException^ ex )
+			{
+				return ex->ResultCode.Code;
+			}
+			catch( Exception^ )
+			{
+				return E_FAIL;
+			}
+
+			return S_OK;
+		}
+	}
+
+	HRESULT WINAPI XAPOBaseImpl::LockForProcess( UINT32 InputLockedParameterCount, const XAPO_LOCKFORPROCESS_BUFFER_PARAMETERS *pInputLockedParameters, UINT32 OutputLockedParameterCount, const XAPO_LOCKFORPROCESS_BUFFER_PARAMETERS *pOutputLockedParameters )
+	{
+		if (ManagedCaller)
+		{
+			ManagedCaller = false;
+			return CXAPOBase::LockForProcess(InputLockedParameterCount, pInputLockedParameters, OutputLockedParameterCount, pOutputLockedParameters);
+		}
+		else
+		{
+			try
+			{
+				array<LockParameter>^ input = gcnew array<LockParameter>( InputLockedParameterCount );
+				for( int i = 0; i < input->Length; i++ )
+				{
+					LockParameter p;
+					p.Format = WaveFormat::FromUnmanaged( *pInputLockedParameters[i].pFormat );
+					p.MaxFrameCount = pInputLockedParameters[i].MaxFrameCount;
+
+					input[i] = p;
+				}
+
+				array<LockParameter>^ output = gcnew array<LockParameter>( OutputLockedParameterCount );
+				for( int i = 0; i < output->Length; i++ )
+				{
+					LockParameter p;
+					p.Format = WaveFormat::FromUnmanaged( *pOutputLockedParameters[i].pFormat );
+					p.MaxFrameCount = pOutputLockedParameters[i].MaxFrameCount;
+
+					output[i] = p;
+				}
+
+				return m_processor->LockForProcess( input, output ).Code;
+			}
+			catch( SlimDXException^ ex )
+			{
+				return ex->ResultCode.Code;
+			}
+			catch( Exception^ )
+			{
+				return E_FAIL;
+			}
+
+			return S_OK;
+		}
+	}
+
+	void WINAPI XAPOBaseImpl::Process( UINT32 InputProcessParameterCount, const XAPO_PROCESS_BUFFER_PARAMETERS *pInputProcessParameters, UINT32 OutputProcessParameterCount, XAPO_PROCESS_BUFFER_PARAMETERS *pOutputProcessParameters, BOOL IsEnabled )
 	{
 		try
 		{
@@ -188,6 +407,44 @@ namespace XAPO
 		}
 		catch(...)
 		{
+		}
+	}
+
+	void WINAPI XAPOBaseImpl::Reset()
+	{
+		if (ManagedCaller)
+		{
+			ManagedCaller = false;
+			CXAPOBase::Reset();
+		}
+		else
+		{
+			try
+			{
+				m_processor->Reset();
+			}
+			catch(...)
+			{
+			}
+		}
+	}
+
+	void WINAPI XAPOBaseImpl::UnlockForProcess()
+	{
+		if (ManagedCaller)
+		{
+			ManagedCaller = false;
+			CXAPOBase::UnlockForProcess();
+		}
+		else
+		{
+			try
+			{
+				m_processor->UnlockForProcess();
+			}
+			catch(...)
+			{
+			}
 		}
 	}
 }
