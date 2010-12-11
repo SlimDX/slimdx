@@ -183,6 +183,33 @@ namespace Direct3D10
 	{
 		return Result( InternalPointer->GetDeviceRemovedReason() );
 	}
+
+	System::String^ Device::DebugName::get()
+	{
+		char name[1024];
+		UINT size = sizeof(name) - 1;
+
+		if (FAILED(InternalPointer->GetPrivateData(WKPDID_D3DDebugObjectName, &size, name)))
+			return "";
+
+		name[size] = 0;
+		return gcnew System::String(name);
+	}
+	
+	void Device::DebugName::set(System::String^ value)
+	{
+		if (!String::IsNullOrEmpty(value))
+		{
+			array<Byte>^ valueBytes = System::Text::ASCIIEncoding::ASCII->GetBytes(value);
+			pin_ptr<Byte> pinnedValue = &valueBytes[0];
+
+			InternalPointer->SetPrivateData(WKPDID_D3DDebugObjectName, value->Length, pinnedValue);
+		}
+		else
+		{
+			InternalPointer->SetPrivateData(WKPDID_D3DDebugObjectName, 0, 0);
+		}
+	}
 	
 	CounterCapabilities Device::GetCounterCapabilities()
 	{

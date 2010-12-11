@@ -100,6 +100,16 @@ namespace SlimDX
 			{
 				SlimDX::Direct3D9::ResourceType get() { return ( SlimDX::Direct3D9::ResourceType ) InternalPointer->GetType(); }
 			}
+
+			/// <summary>
+			/// Gets or sets a friendly debug name for the object. This name is used in debug messages
+			/// as well as in the PIX object browser.
+			/// </summary>
+			property System::String^ DebugName
+			{
+				System::String^ get();
+				void set(System::String^ value);
+			}
 		};
 	}
 }

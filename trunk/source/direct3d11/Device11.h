@@ -99,6 +99,16 @@ namespace SlimDX
 			}
 
 			/// <summary>
+			/// Gets or sets a friendly debug name for the object. This name is used in debug messages
+			/// as well as in the PIX object browser.
+			/// </summary>
+			property System::String^ DebugName
+			{
+				System::String^ get();
+				void set(System::String^ value);
+			}
+
+			/// <summary>
 			/// Initializes a new instance of the <see cref="Device"/> class using the highest supported feature level.
 			/// </summary>
 			/// <param name="adapter">The video adapter on which the device should be created.</param>
