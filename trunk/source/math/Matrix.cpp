@@ -674,13 +674,13 @@ namespace SlimDX
 		crossed.Normalize();
 		Vector3::Cross( difference, crossed, final );
 
-		result.M11 = final.X;
-		result.M12 = final.Y;
-		result.M13 = final.Z;
+		result.M11 = crossed.X;
+		result.M12 = crossed.Y;
+		result.M13 = crossed.Z;
 		result.M14 = 0.0f;
-		result.M21 = crossed.X;
-		result.M22 = crossed.Y;
-		result.M23 = crossed.Z;
+		result.M21 = final.X;
+		result.M22 = final.Y;
+		result.M23 = final.Z;
 		result.M24 = 0.0f;
 		result.M31 = difference.X;
 		result.M32 = difference.Y;
@@ -710,13 +710,13 @@ namespace SlimDX
 		crossed.Normalize();
 		Vector3::Cross( difference, crossed, final );
 
-		result.M11 = final.X;
-		result.M12 = final.Y;
-		result.M13 = final.Z;
+		result.M11 = crossed.X;
+		result.M12 = crossed.Y;
+		result.M13 = crossed.Z;
 		result.M14 = 0.0f;
-		result.M21 = crossed.X;
-		result.M22 = crossed.Y;
-		result.M23 = crossed.Z;
+		result.M21 = final.X;
+		result.M22 = final.Y;
+		result.M23 = final.Z;
 		result.M24 = 0.0f;
 		result.M31 = difference.X;
 		result.M32 = difference.Y;
