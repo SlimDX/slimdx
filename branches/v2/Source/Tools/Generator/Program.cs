@@ -84,6 +84,8 @@ namespace SlimDX.Generator
 			var templateEngine = new TemplateEngine(options.GetOption("Options", "Templates"), options.GetOption("Options", "Namespace"));
 			var outputPath = options.GetOption("Options", "OutputPath");
 
+			templateEngine.RegisterCallback("GenerateFunctionBody", GenerateFunctionBody);
+
 			root.Save("test.xml");
 
 			if (!Directory.Exists(outputPath))
@@ -121,6 +123,11 @@ namespace SlimDX.Generator
 
 			foreach (var item in model.Interfaces)
 				File.WriteAllText(Path.Combine(outputPath, item.NiceName + ".cs"), templateEngine.Apply("Interface.txt", item));
+		}
+
+		static string GenerateFunctionBody(object o)
+		{
+			return "// Trampoline invocation will go here eventually.";
 		}
 
 		/// <summary>
