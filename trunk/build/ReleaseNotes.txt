@@ -1,3 +1,7 @@
+General
+	* Added DebugName properties to appropriate D3D9, 10, 11, and DXGI objects. This property allows a friendly name to be attached to the object, 
+		which can be used in debug messages and in the PIX object table.
+
 Samples
 	* Fixed the MiniTri10 sample to not use the console subsystem.
 	* Changed the sample framework to check for fullscreen DXGI swap chain before disposing.
@@ -5,6 +9,8 @@ Samples
 
 Math
 	* Added an overload of Ray.Intersects that returns the barycentric hit coordinates.
+	* Moved the Direct2D Matrix3x2 type into the main math library.
+	* Added several helper methods to the Matrix3x2 type.
 
 Direct2D
 	* Added constructors for Bitmap that allow construction via DXGI shared surfaces.
@@ -47,6 +53,10 @@ DirectWrite
 DirectInput
 	* Fixed a typo in Device.GetObjectInfoById that caused it to return info by usage instead.
 	* Changed ObjectProperties.LogicalRange and ObjectProperties.PhysicalRange to return actual ranges instead of integers.
+	
+XAPO
+	* Fixed the flow of calls to the XAPO interfaces and their implementations.
+	* Fixed a memory bug in the XAPO base class constructors.
 
 Windows
 	* Added functionality to the RenderForm class to add sizing and monitor change events.

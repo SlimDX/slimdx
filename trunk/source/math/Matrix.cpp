@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2010 SlimDX Group
 * 
@@ -20,8 +19,8 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
 
-#include <d3dx9.h>
 #include "../Utilities.h"
 
 #include "Matrix.h"

@@ -25,7 +25,7 @@ extern const IID IID_IDWriteBitmapRenderTarget;
 
 #include "../ComObject.h"
 #include "../math/Color4.h"
-#include "../direct2d/Matrix3x2.h"
+#include "../math/Matrix3x2.h"
 
 #include "Enums.h"
 #include "GlyphRunDW.h"
@@ -49,10 +49,10 @@ namespace SlimDX
 			Result DrawGlyphRun(float baselineOriginX, float baselineOriginY, MeasuringMode measuringMode, GlyphRun^ glyphRun, RenderingParameters^ renderingParameters, Color4 color, [Out] System::Drawing::Rectangle% blackBoxBounds);
 			Result Resize(int width, int height);
 
-			property SlimDX::Direct2D::Matrix3x2 Transform
+			property Matrix3x2 Transform
 			{
-				SlimDX::Direct2D::Matrix3x2 get();
-				void set(SlimDX::Direct2D::Matrix3x2 value);
+				Matrix3x2 get();
+				void set(Matrix3x2 value);
 			}
 
 			property float PixelsPerDip

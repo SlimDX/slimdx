@@ -23,7 +23,7 @@
 #include <vector>
 
 #include "DirectWriteException.h"
-#include "../direct2d/Matrix3x2.h"
+#include "../math/Matrix3x2.h"
 #include "../stack_array.h"
 
 #include "FactoryDW.h"
@@ -144,7 +144,7 @@ namespace DirectWrite
 	}
 	TextLayout ^Factory::CreateGdiCompatibleTextLayout(String ^text, TextFormat ^textFormat,
 		float layoutWidth, float layoutHeight, float pixelsPerDip,
-		SlimDX::Direct2D::Matrix3x2 transform, bool useGdiNatural)
+		Matrix3x2 transform, bool useGdiNatural)
 	{
 		return CreateGdiCompatibleTextLayoutInternal(InternalPointer, text, textFormat,
 			layoutWidth, layoutHeight, pixelsPerDip,

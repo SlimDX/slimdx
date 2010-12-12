@@ -27,7 +27,6 @@
 
 const IID IID_IDWritePixelSnapping = __uuidof(IDWritePixelSnapping);
 
-using namespace SlimDX::Direct2D;
 using namespace System;
 
 namespace SlimDX

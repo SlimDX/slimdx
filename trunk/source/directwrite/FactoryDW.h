@@ -29,10 +29,6 @@ extern const IID IID_IDWriteFactory;
 
 namespace SlimDX
 {
-	namespace Direct2D
-	{
-		value class Matrix3x2;
-	}
 	namespace DirectWrite
 	{
 		using namespace SlimDX::Direct2D;

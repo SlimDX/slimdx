@@ -23,11 +23,11 @@
 
 #include "../dxgi/SurfaceDxgi.h"
 #include "../math/Color4.h"
+#include "../math/Matrix3x2.h"
 #include "../directwrite/TextLayout.h"
 #include "../directwrite/RenderingParameters.h"
 
 #include "ResourceD2D.h"
-#include "Matrix3x2.h"
 #include "StrokeStyle.h"
 #include "Brush.h"
 #include "PixelFormat.h"

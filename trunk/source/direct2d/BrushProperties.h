@@ -21,7 +21,7 @@
 */
 #pragma once
 
-#include "Matrix3x2.h"
+#include "../math/Matrix3x2.h"
 
 namespace SlimDX
 {

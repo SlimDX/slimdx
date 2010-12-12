@@ -22,12 +22,12 @@
 #pragma once
 
 #include "../math/Vector2.h"
+#include "../math/Matrix3x2.h"
 
 #include "ResourceD2D.h"
 #include "SimplifiedGeometrySink.h"
 #include "TessellationSink.h"
 #include "Enums.h"
-#include "Matrix3x2.h"
 #include "StrokeStyle.h"
 
 using System::Runtime::InteropServices::OutAttribute;

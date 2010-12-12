@@ -21,9 +21,10 @@
 */
 #pragma once
 
+#include "../math/Matrix3x2.h"
+
 #include "Enums.h"
 #include "Geometry.h"
-#include "Matrix3x2.h"
 #include "Brush.h"
 
 namespace SlimDX
