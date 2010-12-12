@@ -24,7 +24,7 @@
 extern const IID IID_IDWriteFontFace;
 
 #include "../ComObject.h"
-#include "../direct2d/Matrix3x2.h"
+#include "../math/Matrix3x2.h"
 #include "../direct2d/SimplifiedGeometrySink.h"
 
 #include "Enums.h"
@@ -46,12 +46,12 @@ namespace SlimDX
 		public:
 			array<GlyphMetrics>^ GetDesignGlyphMetrics(array<short>^ indices, bool isSideways);
 			array<GlyphMetrics>^ GetGdiCompatibleGlyphMetrics(float size, float pixelsPerDip, bool useGdiNatural, bool isSideways, array<short>^ indices);
-			array<GlyphMetrics>^ GetGdiCompatibleGlyphMetrics(float size, float pixelsPerDip, bool useGdiNatural, bool isSideways, array<short>^ indices, SlimDX::Direct2D::Matrix3x2 transform);
+			array<GlyphMetrics>^ GetGdiCompatibleGlyphMetrics(float size, float pixelsPerDip, bool useGdiNatural, bool isSideways, array<short>^ indices, Matrix3x2 transform);
 			array<short>^ GetGlyphIndices(array<int>^ codePoints);
 			array<FontFile^>^ GetFiles();
 
 			FontMetrics GetGdiCompatibleMetrics(float size, float pixelsPerDip);
-			FontMetrics GetGdiCompatibleMetrics(float size, float pixelsPerDip, SlimDX::Direct2D::Matrix3x2 transform);
+			FontMetrics GetGdiCompatibleMetrics(float size, float pixelsPerDip, Matrix3x2 transform);
 
 			Result GetGlyphRunOutline(float size, array<short>^ glyphIndices, array<float>^ glyphAdvances, array<GlyphOffset>^ glyphOffsets, bool isSideways, bool isRightToLeft, SlimDX::Direct2D::SimplifiedGeometrySink^ geometrySink);
 			RenderingMode GetRecommendedRenderingMode(float size, float pixelsPerDip, MeasuringMode measuringMode, RenderingParameters^ renderingParameters);

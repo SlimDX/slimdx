@@ -24,7 +24,7 @@
 extern const IID IID_IDWritePixelSnapping;
 
 #include "../ComObject.h"
-#include "../direct2d/Matrix3x2.h"
+#include "../math/Matrix3x2.h"
 
 namespace SlimDX
 {
@@ -38,7 +38,7 @@ namespace SlimDX
 
 		public:
 			bool IsPixelSnappingDisabled(IntPtr clientDrawingContext);
-			SlimDX::Direct2D::Matrix3x2 GetCurrentTransform(IntPtr clientDrawingContext);
+			Matrix3x2 GetCurrentTransform(IntPtr clientDrawingContext);
 			float GetPixelsPerDip(IntPtr clientDrawingContext);
 		};
 	}

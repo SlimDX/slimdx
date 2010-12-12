@@ -3342,6 +3342,14 @@
 					RelativePath="..\source\math\Matrix.h"
 					>
 				</File>
+				<File
+					RelativePath="..\source\math\Matrix3x2.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\source\math\Matrix3x2.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Quaternion"
@@ -5277,14 +5285,6 @@
 				</File>
 				<File
 					RelativePath="..\source\direct2d\ConversionMethods.h"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct2d\Matrix3x2.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\source\direct2d\Matrix3x2.h"
 					>
 				</File>
 			</Filter>

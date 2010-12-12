@@ -49,10 +49,10 @@ namespace DirectWrite
 
 	FontMetrics FontFace::GetGdiCompatibleMetrics(float size, float pixelsPerDip)
 	{
-		return GetGdiCompatibleMetrics(size, pixelsPerDip, SlimDX::Direct2D::Matrix3x2::Identity);
+		return GetGdiCompatibleMetrics(size, pixelsPerDip, Matrix3x2::Identity);
 	}
 
-	FontMetrics FontFace::GetGdiCompatibleMetrics(float size, float pixelsPerDip, SlimDX::Direct2D::Matrix3x2 transform)
+	FontMetrics FontFace::GetGdiCompatibleMetrics(float size, float pixelsPerDip, Matrix3x2 transform)
 	{
 		FontMetrics metrics;
 
@@ -64,10 +64,10 @@ namespace DirectWrite
 
 	array<GlyphMetrics>^ FontFace::GetGdiCompatibleGlyphMetrics(float size, float pixelsPerDip, bool useGdiNatural, bool isSideways, array<short>^ indices)
 	{
-		return GetGdiCompatibleGlyphMetrics(size, pixelsPerDip, useGdiNatural, isSideways, indices, SlimDX::Direct2D::Matrix3x2::Identity);
+		return GetGdiCompatibleGlyphMetrics(size, pixelsPerDip, useGdiNatural, isSideways, indices, Matrix3x2::Identity);
 	}
 
-	array<GlyphMetrics>^ FontFace::GetGdiCompatibleGlyphMetrics(float size, float pixelsPerDip, bool useGdiNatural, bool isSideways, array<short>^ indices, SlimDX::Direct2D::Matrix3x2 transform)
+	array<GlyphMetrics>^ FontFace::GetGdiCompatibleGlyphMetrics(float size, float pixelsPerDip, bool useGdiNatural, bool isSideways, array<short>^ indices, Matrix3x2 transform)
 	{
 		array<GlyphMetrics>^ metrics = gcnew array<GlyphMetrics>(indices->Length);
 		pin_ptr<GlyphMetrics> pinnedMetrics = &metrics[0];
