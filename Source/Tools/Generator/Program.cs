@@ -125,9 +125,28 @@ namespace SlimDX.Generator
 				File.WriteAllText(Path.Combine(outputPath, item.NiceName + ".cs"), templateEngine.Apply("Interface.txt", item));
 		}
 
-		static string GenerateFunctionBody(object o)
+		static string GenerateFunctionBody(object source)
 		{
-			return "// Trampoline invocation will go here eventually.";
+			var function = (FunctionElement)source;
+			var model = function.Model;
+			var returnType = model.TypeMap[function.ReturnType.Name];
+			var builder = new StringBuilder();
+
+			// Prefixing local variables with an underscore prevents clashes with parameter names.
+			builder.AppendFormat("return SlimDX.Trampoline.Call.{0}(", returnType.Name);
+			builder.AppendLine();
+
+			for (int index = 0; index < function.Parameters.Count; ++index)
+			{
+				var parameter = function.Parameters[index];
+				builder.AppendFormat("{0}", parameter.CamelCaseName);
+				if (index < function.Parameters.Count - 1)
+					builder.Append(",");
+				builder.AppendLine();
+			}
+
+			builder.AppendLine(");");
+			return builder.ToString();
 		}
 
 		/// <summary>
