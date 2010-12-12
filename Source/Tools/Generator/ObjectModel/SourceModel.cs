@@ -66,6 +66,7 @@ namespace SlimDX.Generator.ObjectModel
 		{
 			NameRules = new NameRules(namingRuleFile);
 			TypeMap = new Dictionary<string, Type>();
+			TypeMap["void"] = typeof(void);
 
 			foreach (var item in initialTypeMap)
 			{
