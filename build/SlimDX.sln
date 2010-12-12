@@ -87,6 +87,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTri11", "..\samples\Dir
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Effects11", "..\external\Effects11\Effects11_2008.vcproj", "{DF460EAB-570D-4B50-9089-2E2FC801BF38}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicComputeShader", "..\samples\Direct3D11\BasicComputeShader\BasicComputeShader.csproj", "{33F00306-765E-4B2D-B96F-D513342E4AF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -401,6 +403,15 @@ Global
 		{DF460EAB-570D-4B50-9089-2E2FC801BF38}.Release|x64.Build.0 = Release|x64
 		{DF460EAB-570D-4B50-9089-2E2FC801BF38}.Release|x86.ActiveCfg = Release|Win32
 		{DF460EAB-570D-4B50-9089-2E2FC801BF38}.Release|x86.Build.0 = Release|Win32
+		{33F00306-765E-4B2D-B96F-D513342E4AF8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{33F00306-765E-4B2D-B96F-D513342E4AF8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{33F00306-765E-4B2D-B96F-D513342E4AF8}.Debug|x86.Build.0 = Debug|Any CPU
+		{33F00306-765E-4B2D-B96F-D513342E4AF8}.Profile|x64.ActiveCfg = Release|Any CPU
+		{33F00306-765E-4B2D-B96F-D513342E4AF8}.Profile|x86.ActiveCfg = Release|Any CPU
+		{33F00306-765E-4B2D-B96F-D513342E4AF8}.Public|x64.ActiveCfg = Release|Any CPU
+		{33F00306-765E-4B2D-B96F-D513342E4AF8}.Public|x86.ActiveCfg = Release|Any CPU
+		{33F00306-765E-4B2D-B96F-D513342E4AF8}.Release|x64.ActiveCfg = Release|Any CPU
+		{33F00306-765E-4B2D-B96F-D513342E4AF8}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -436,5 +447,6 @@ Global
 		{EAFA9427-D9FC-45AC-908C-30CE59DCB957} = {FEE30CED-4BB6-4B9E-A8B7-A353EA279883}
 		{BFE4C08B-3768-4DD6-87DD-2DB7725C808C} = {A3416D80-5159-41B2-B4F7-F0D535B0F21C}
 		{C19EF7DF-2F9D-4D4C-965D-AD714DCBB323} = {F4062CA2-72A0-477F-9982-4D108743D639}
+		{33F00306-765E-4B2D-B96F-D513342E4AF8} = {F4062CA2-72A0-477F-9982-4D108743D639}
 	EndGlobalSection
 EndGlobal

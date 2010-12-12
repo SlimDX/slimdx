@@ -50,3 +50,6 @@ DirectInput
 
 Windows
 	* Added functionality to the RenderForm class to add sizing and monitor change events.
+
+Samples
+	* Added BasicComputeShader sample for D3D11.
