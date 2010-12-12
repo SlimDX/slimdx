@@ -85,8 +85,10 @@ namespace SlimDX.Generator.ObjectModel
 
 		protected void RegisterType()
 		{
-			if (!Model.TypeMap.ContainsKey(Name))
-				Model.TypeMap.Add(Name, NiceName);
+			//TODO: Not sure what to do here in light of TypeMap now being <string,Type>. Commenting
+			//      this out for now doesn't seem to have any adverse impact.
+			//if (!Model.TypeMap.ContainsKey(Name))
+			//	Model.TypeMap.Add(Name, NiceName);
 		}
 	}
 }

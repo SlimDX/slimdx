@@ -91,12 +91,17 @@ namespace SlimDX.Generator.ObjectModel
 			if (string.IsNullOrEmpty(name) || Arrays == null)
 				return "";
 
-			if (!Model.TypeMap.TryGetValue(ArrayName, out name))
+			Type type;
+			if (!Model.TypeMap.TryGetValue(ArrayName, out type))
 			{
-				if (Model.TypeMap.TryGetValue(Name, out name))
+				if (Model.TypeMap.TryGetValue(Name, out type))
 					name += string.Concat(Arrays.Select(i => "[]"));
 				else
 					name = ArrayName;
+			}
+			else
+			{
+				name = type.Name;
 			}
 
 			ModifiedName = name;

@@ -31,21 +31,21 @@ _WIN32_WINNT=0x501
 _UNICODE
 
 [TypeMap]
-UINT int
-SIZE_T int
-DWORD int
-INT int
-BYTE byte
-LUID long
-FLOAT float
-UINT64 long
-LARGE_INTEGER long
-BOOL bool
-WCHAR[] string
-HRESULT Result
-IUnknown ComObject
-HWND IntPtr
-HMODULE IntPtr
-HANDLE IntPtr
-GUID Guid
-DXGI_RGB Color3
+UINT System.UInt32
+SIZE_T System.Int32
+DWORD System.Int32
+INT System.Int32
+BYTE System.Byte
+LUID System.Int64
+FLOAT System.Single
+float System.Single
+LARGE_INTEGER System.Int64
+BOOL System.Boolean
+WCHAR[] System.String
+HRESULT SlimDX.Result, SlimDX
+IUnknown SlimDX.ComObject, SlimDX
+HWND System.IntPtr
+HMODULE System.IntPtr
+HANDLE System.IntPtr
+GUID System.Guid
+DXGI_RGB SlimDX.Color3, SlimDX

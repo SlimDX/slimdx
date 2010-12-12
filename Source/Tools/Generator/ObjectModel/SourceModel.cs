@@ -18,9 +18,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections.Generic;
-using System.Xml.Linq;
 using System.IO;
+using System.Xml.Linq;
 
 namespace SlimDX.Generator.ObjectModel
 {
@@ -49,7 +50,7 @@ namespace SlimDX.Generator.ObjectModel
 			get { return interfaces; }
 		}
 
-		public Dictionary<string, string> TypeMap
+		public Dictionary<string, Type> TypeMap
 		{
 			get;
 			private set;
@@ -64,7 +65,7 @@ namespace SlimDX.Generator.ObjectModel
 		public SourceModel(XElement root, string namingRuleFile, IEnumerable<string> initialTypeMap)
 		{
 			NameRules = new NameRules(namingRuleFile);
-			TypeMap = new Dictionary<string, string>();
+			TypeMap = new Dictionary<string, Type>();
 
 			foreach (var item in initialTypeMap)
 			{
@@ -72,7 +73,8 @@ namespace SlimDX.Generator.ObjectModel
 				if (index < 0)
 					throw new InvalidDataException(string.Format("One of the initial type mappings is invalid: \"{0}\"", item));
 
-				TypeMap.Add(item.Substring(0, index), item.Substring(index + 1));
+				var type = Type.GetType(item.Substring(index + 1));
+				TypeMap.Add(item.Substring(0, index), type);
 			}
 
 			Build(root);

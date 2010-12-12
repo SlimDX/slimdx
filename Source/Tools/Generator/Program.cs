@@ -99,7 +99,7 @@ namespace SlimDX.Generator
 			foreach (var item in model.Structs)
 				File.WriteAllText(Path.Combine(outputPath, item.NiceName + ".cs"), templateEngine.Apply("Struct.txt", item));
 
-			foreach(var item in model.Interfaces)
+			foreach (var item in model.Interfaces)
 				File.WriteAllText(Path.Combine(outputPath, item.NiceName + ".cs"), templateEngine.Apply("Interface.txt", item));
 		}
 
