@@ -16,9 +16,9 @@ C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgitype.h
 # gets picked up before the same files included in the Windows SDK
 
 [IncludePaths]
-C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include
+%DXSDK_DIR%Include
 C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Include
-C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include
+%VSINSTALLDIR%include
 
 [Symbols]
 WIN32
