@@ -1,3 +1,4 @@
 ﻿public {ReturnType:Type.txt} {NiceName}({Parameters:Parameter.txt ,\s})
 		{
+			{@GenerateFunctionBody}
 		}
