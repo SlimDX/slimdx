@@ -94,6 +94,26 @@ namespace SlimDX.Generator
 					File.Delete(file);
 			}
 
+			var trampolineBuilder = new TrampolineAssemblyBuilder();
+			foreach (var item in model.Interfaces)
+			{
+				foreach (var function in item.Functions)
+				{
+					var returnType = model.TypeMap[function.ReturnType.Name];
+					var parameterTypes = new List<TrampolineParameter>();
+					foreach (var parameterElement in function.Parameters)
+					{
+						//TODO: Instead of ignoring unmappable types like this, we should error out.
+						Type type = null;
+						if (model.TypeMap.TryGetValue(parameterElement.DataType.Name, out type))
+							parameterTypes.Add(new TrampolineParameter(type));
+					}
+					trampolineBuilder.Add(new Trampoline(returnType, parameterTypes.ToArray()));
+				}
+			}
+
+			trampolineBuilder.CreateAssembly("SlimDX.Trampoline");
+
 			// write output files
 			File.WriteAllText(Path.Combine(outputPath, "Enums.cs"), templateEngine.Apply("EnumFile.txt", model));
 			foreach (var item in model.Structs)
