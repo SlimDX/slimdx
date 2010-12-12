@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections.Generic;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -41,7 +41,7 @@ namespace SlimDX.Generator
 		{
 			// primary source file is the one that wave is run against 
 			// to produce a single preprocessed monolithic header
-			primarySource = options.GetOption("Options", "PrimarySource");
+			primarySource = Environment.ExpandEnvironmentVariables(options.GetOption("Options", "PrimarySource"));
 			wavePath = options.GetOption("Options", "Wave");
 
 			// -E indicates default naming scheme for output file (ie. input.i)
@@ -53,7 +53,7 @@ namespace SlimDX.Generator
 			var builder = new StringBuilder("-E -m macros.txt --variadics ");
 
 			foreach (var path in options.GetOptions("IncludePaths"))
-				builder.Append("-S \"").Append(path).Append("\" ");
+				builder.Append("-S \"").Append(Environment.ExpandEnvironmentVariables(path)).Append("\" ");
 
 			foreach (var symbol in options.GetOptions("Symbols"))
 				builder.Append("-D ").Append(symbol).Append(" ");
