@@ -11,6 +11,7 @@ Math
 	* Added an overload of Ray.Intersects that returns the barycentric hit coordinates.
 	* Moved the Direct2D Matrix3x2 type into the main math library.
 	* Added several helper methods to the Matrix3x2 type.
+	* Fixed a bug in the Matrix.Billboard methods.
 
 Direct2D
 	* Added constructors for Bitmap that allow construction via DXGI shared surfaces.
