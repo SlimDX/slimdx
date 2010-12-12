@@ -55,6 +55,8 @@ namespace SlimDX.Generator
 		{
 			Directory = directory;
 			Namespace = rootNamespace;
+
+			keywords["Namespace"] = GetNamespaceKeywordValue;
 		}
 
 		/// <summary>
@@ -88,9 +90,11 @@ namespace SlimDX.Generator
 			callbacks[token] = callback;
 		}
 
+		const string keywordGlyph = "#";
 		const string callbackGlyph = "@";
 		const string recursionGlyph = ":";
 
+		Dictionary<string, Func<object, string>> keywords = new Dictionary<string, Func<object, string>>();
 		Dictionary<string, Func<object, string>> callbacks = new Dictionary<string, Func<object, string>>();
 
 		string Evaluate(object source, Match match)
@@ -100,7 +104,12 @@ namespace SlimDX.Generator
 
 			// Brackets are stripped from the token for easier processing.
 			var capture = match.Captures[0].Value.Trim('{', '}');
-			if (capture.StartsWith(callbackGlyph))
+			if (capture.StartsWith(keywordGlyph))
+			{
+				var keywordName = capture.Substring(keywordGlyph.Length);
+				return EvaluateKeyword(keywordName, source);
+			}
+			else if (capture.StartsWith(callbackGlyph))
 			{
 				var callbackName = capture.Substring(callbackGlyph.Length);
 				return EvaluateCallback(callbackName, source);
@@ -108,9 +117,6 @@ namespace SlimDX.Generator
 			else
 			{
 				string propertyName = capture;
-
-				if (propertyName == "Namespace")
-					return Namespace;
 
 				// if the name has a colon, it indicates that the type has another template applied to it
 				int colon = capture.IndexOf(':');
@@ -157,6 +163,19 @@ namespace SlimDX.Generator
 				else
 					return Format(value);
 			}
+		}
+
+		/// <summary>
+		/// Processes a keyword token within a template during evalution.
+		/// </summary>
+		/// <param name="keywordName">The name of the keyword.</param>
+		/// <param name="source">The object used as a data source during evaluation.</param>
+		string EvaluateKeyword(string keywordName, object source)
+		{
+			Func<object, string> callback = null;
+			if (!keywords.TryGetValue(keywordName, out callback))
+				throw new InvalidOperationException(string.Format("No keyword '{0}.'", keywordName));
+			return callback(source);
 		}
 
 		/// <summary>
@@ -210,6 +229,16 @@ namespace SlimDX.Generator
 		static string Escape(string input)
 		{
 			return input.Replace("\\t", "\t").Replace("\\n", "\n").Replace("\\s", " ").Replace("\\r", "\r");
+		}
+
+		/// <summary>
+		/// Gets the value for the {#Namespace} token.
+		/// </summary>
+		/// <param name="source">The object used as a data source during evaluation.</param>
+		/// <returns>The value for the {#Namespace} token.</returns>
+		string GetNamespaceKeywordValue(object source)
+		{
+			return Namespace;
 		}
 	}
 }
