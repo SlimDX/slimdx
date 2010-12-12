@@ -18,10 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 
 namespace SlimDX.Generator.ObjectModel
@@ -34,7 +32,7 @@ namespace SlimDX.Generator.ObjectModel
 			private set;
 		}
 
-		public IEnumerable<VariableElement> Parameters
+		public ReadOnlyCollection<VariableElement> Parameters
 		{
 			get;
 			private set;
@@ -46,7 +44,7 @@ namespace SlimDX.Generator.ObjectModel
 			ReturnType = new TypeElement(model, element.Element("Type"));
 
 			var signature = element.Element("Signature");
-			Parameters = signature.Descendants("Param").Select(d => new VariableElement(model, d)).ToList();
+			Parameters = new ReadOnlyCollection<VariableElement>(signature.Descendants("Param").Select(d => new VariableElement(model, d)).ToList());
 		}
 	}
 }
