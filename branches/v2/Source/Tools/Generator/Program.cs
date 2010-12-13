@@ -102,14 +102,23 @@ namespace SlimDX.Generator
 			{
 				foreach (var function in item.Functions)
 				{
+					if (function.NativeName == "EnumAdapters")
+					{
+						Console.Write("!");
+					}
 					var parameterTypes = new List<TrampolineParameter>();
 					foreach (var parameter in function.Parameters)
 					{
 						var type = model.FindTypeByName(parameter.Type.NativeName);
 						if (type == null)
 							throw new InvalidOperationException(string.Format("No element found for native type '{0}.'", parameter.Type.NativeName));
-						parameterTypes.Add(new TrampolineParameter(type.IntermediateType));
 
+						// The IntPtr type has a level of indirection built in.
+						var effectiveIndirectionLevel = parameter.IndirectionLevel;
+						if (type.IntermediateType == typeof(IntPtr))
+							--effectiveIndirectionLevel;
+						var parameterFlags = effectiveIndirectionLevel > 0 ? TrampolineParameterFlags.Reference : TrampolineParameterFlags.Default;
+						parameterTypes.Add(new TrampolineParameter(type.IntermediateType, parameterFlags));
 					}
 					trampolineBuilder.Add(new Trampoline(function.ReturnType.IntermediateType, parameterTypes.ToArray()));
 				}

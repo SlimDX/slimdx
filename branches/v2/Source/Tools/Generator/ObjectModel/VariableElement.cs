@@ -35,18 +35,31 @@ namespace SlimDX.Generator.ObjectModel
 		/// </summary>
 		/// <param name="nativeName">The variable's native name.</param>
 		/// <param name="type">The variable's type.</param>
-		public VariableElement(string nativeName, TypeElement type)
+		/// <param name="indirectionLevel">The indirection level of the variable.</param>
+		public VariableElement(string nativeName, TypeElement type, int indirectionLevel)
 			: base(nativeName)
 		{
 			if (type == null)
 				throw new ArgumentNullException("type");
+			if (indirectionLevel < 0)
+				throw new ArgumentOutOfRangeException("Value must be non-negative.", "indirectionLevel");
 			Type = type;
+			IndirectionLevel = indirectionLevel;
 		}
 
 		/// <summary>
 		/// Gets the type of the variable.
 		/// </summary>
 		public TypeElement Type
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Gets the indirection level of the variable.
+		/// </summary>
+		public int IndirectionLevel
 		{
 			get;
 			private set;

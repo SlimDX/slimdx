@@ -48,6 +48,7 @@ HRESULT SlimDX.Result, SlimDX
 IUnknown SlimDX.ComObject, SlimDX
 HWND System.IntPtr
 HMODULE System.IntPtr
+HDC System.IntPtr
 HANDLE System.IntPtr
 GUID System.Guid
 IID System.Guid
