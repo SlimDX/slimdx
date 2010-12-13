@@ -85,6 +85,7 @@ namespace SlimDX.Generator
 			var templateEngine = new TemplateEngine(options.GetOption("Options", "Templates"), options.GetOption("Options", "Namespace"));
 			var outputPath = options.GetOption("Options", "OutputPath");
 
+			templateEngine.RegisterCallback("GenerateManagedParameterType", GenerateManagedParameterType);
 			templateEngine.RegisterCallback("GenerateFunctionBody", GenerateFunctionBody);
 
 			root.Save("test.xml");
@@ -122,6 +123,15 @@ namespace SlimDX.Generator
 
 			foreach (var item in model.Interfaces)
 				File.WriteAllText(Path.Combine(outputPath, item.ManagedName + ".cs"), templateEngine.Apply("Interface.txt", item));
+		}
+
+		static string GenerateManagedParameterType(object source)
+		{
+			var parameter = (VariableElement)source;
+			var effectiveIndirectionLevel = GetEffectiveIndirectionLevel(parameter);
+			if (effectiveIndirectionLevel > 0)
+				return string.Format("out {0}", parameter.Type.ManagedName);
+			return parameter.Type.ManagedName;
 		}
 
 		static string GenerateFunctionBody(object source)
