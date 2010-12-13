@@ -1,1 +1,1 @@
-﻿{Type.ManagedName} {ManagedName}
+﻿{@GenerateManagedParameterType} {ManagedName}
