@@ -33,9 +33,11 @@ namespace SlimDX.Generator.ObjectModel
 		/// Initializes a new instance of the <see cref="EnumerationElement"/> class.
 		/// </summary>
 		/// <param name="nativeName">The enumeration's native name.</param>
-		public EnumerationElement(string nativeName)
-			: base(nativeName, nativeName)
+		/// <param name="managedName">The enumeration's managed name.</param>
+		public EnumerationElement(string nativeName, string managedName)
+			: base(nativeName, managedName)
 		{
+			IntermediateType = typeof(int);
 		}
 
 		/// <summary>

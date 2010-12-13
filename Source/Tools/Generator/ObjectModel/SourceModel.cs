@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace SlimDX.Generator.ObjectModel
@@ -146,13 +147,12 @@ namespace SlimDX.Generator.ObjectModel
 				if (baseData == null)
 					continue;
 
-				var structureData = baseData.Element("Struct");
-				if (structureData == null)
-					continue;
-
 				TypeElement typeElement = null;
 				var typeName = baseData.Attribute("Name").Value;
 				var declarationData = baseData.Element("DeclspecOrEmpty");
+				var structureData = baseData.Element("Struct");
+				var enumerationData = baseData.Element("Enum");
+
 				if (declarationData != null)
 				{
 					var guidData = declarationData.Element("DeclspecDef").Element("Declspec");
@@ -163,9 +163,17 @@ namespace SlimDX.Generator.ObjectModel
 
 					typeElement = new InterfaceElement(typeName, nameService.Apply(typeName, NameCasingStyle.Pascal), parentType, new Guid(guidValue));
 				}
-				else
+				else if (structureData != null)
 				{
 					typeElement = new StructureElement(typeName, nameService.Apply(typeName, NameCasingStyle.Pascal));
+				}
+				else if (enumerationData != null)
+				{
+					typeElement = new EnumerationElement(typeName, nameService.Apply(typeName, NameCasingStyle.Pascal));
+				}
+				else
+				{
+					continue;
 				}
 
 				AddType(typeElement);
@@ -187,34 +195,13 @@ namespace SlimDX.Generator.ObjectModel
 		{
 			foreach (var functionData in data.Descendants("Function"))
 			{
-				// Extracting the return type is not straightforward; simple scalar
-				// types such as "void" are not named via attribute, but rather in
-				// nested elements.
-				var returnTypeData = functionData.Element("Type");
-				var returnTypeNameAttribute = returnTypeData.Attribute("Name");
-				var returnTypeName = string.Empty;
-				if (returnTypeNameAttribute != null)
-				{
-					returnTypeName = returnTypeNameAttribute.Value;
-				}
-				else
-				{
-					var scalarData = returnTypeData.Element("Scalar");
-					var tokenData = scalarData.Element("Token");
-					returnTypeName = scalarData.Value;
-				}
-
+				var returnTypeName = ExtractTypeName(functionData.Element("Type"));
 				var returnType = FindTypeByName(returnTypeName);
+
 				List<VariableElement> parameterElements = new List<VariableElement>();
 				var signatureData = functionData.Element("Signature");
-				foreach (var parameterData in signatureData.Elements("Param"))
-				{
-					var parameterTypeName = parameterData.Element("Type").Attribute("Name").Value;
-					var parameterName = parameterData.Element("Var").Attribute("Name").Value;
-					var parameterType = FindTypeByName(parameterTypeName);
-
-					parameterElements.Add(new VariableElement(parameterName, parameterType));
-				}
+				foreach (var parameterData in signatureData.Descendants("Param"))
+					parameterElements.Add(ExtractParameter(parameterData));
 
 				element.AddFunction(new FunctionElement(functionData.Attribute("Name").Value, returnType, parameterElements.ToArray()));
 			}
@@ -222,6 +209,39 @@ namespace SlimDX.Generator.ObjectModel
 
 		void BuildStructure(StructureElement element, XElement data)
 		{
+		}
+
+		/// <summary>
+		/// Extracts a variable element from parameter XML.
+		/// </summary>
+		/// <param name="typeData">The XML element.</param>
+		/// <returns>The type name.</returns>
+		VariableElement ExtractParameter(XElement parameterData)
+		{
+			var parameterTypeData = parameterData.Element("Type");
+			var parameterTypeName = ExtractTypeName(parameterTypeData);
+			var parameterType = FindTypeByName(parameterTypeName);
+			var indirectionLevel = parameterTypeData.Descendants("Pointers").Count();
+
+			return new VariableElement(parameterData.Element("Var").Attribute("Name").Value, parameterType, indirectionLevel);
+		}
+
+		/// <summary>
+		/// Extracts a type name from type XML.
+		/// </summary>
+		/// <param name="typeData">The XML element.</param>
+		/// <returns>The type name.</returns>
+		string ExtractTypeName(XElement typeData)
+		{
+			var attribute = typeData.Attribute("Name");
+			if (attribute != null)
+				return attribute.Value;
+
+			// Only complex types use the attribute to hold the name; simple scalar
+			// types like "void" and "float" store it in nested elements.
+			var scalarData = typeData.Element("Scalar");
+			var tokenData = scalarData.Element("Token");
+			return tokenData.Value;
 		}
 	}
 }
