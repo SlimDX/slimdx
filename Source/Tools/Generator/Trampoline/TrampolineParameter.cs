@@ -19,7 +19,6 @@
 // THE SOFTWARE.
 
 using System;
-using System.Diagnostics.Contracts;
 
 namespace SlimDX.Generator
 {
@@ -44,7 +43,8 @@ namespace SlimDX.Generator
 		/// <param name="flags">Flags specifying the behavior of the parameter.</param>
 		public TrampolineParameter(Type type, TrampolineParameterFlags flags)
 		{
-			Contract.Assert(type != null, "Parameter type must not be null.");
+			if (type == null)
+				throw new ArgumentNullException("type");
 
 			if (flags.HasFlag(TrampolineParameterFlags.Reference))
 				Type = type.MakeByRefType();
