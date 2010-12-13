@@ -102,23 +102,12 @@ namespace SlimDX.Generator
 			{
 				foreach (var function in item.Functions)
 				{
-					if (function.NativeName == "EnumAdapters")
-					{
-						Console.Write("!");
-					}
 					var parameterTypes = new List<TrampolineParameter>();
 					foreach (var parameter in function.Parameters)
 					{
-						var type = model.FindTypeByName(parameter.Type.NativeName);
-						if (type == null)
-							throw new InvalidOperationException(string.Format("No element found for native type '{0}.'", parameter.Type.NativeName));
-
-						// The IntPtr type has a level of indirection built in.
-						var effectiveIndirectionLevel = parameter.IndirectionLevel;
-						if (type.IntermediateType == typeof(IntPtr))
-							--effectiveIndirectionLevel;
+						var effectiveIndirectionLevel = GetEffectiveIndirectionLevel(parameter);
 						var parameterFlags = effectiveIndirectionLevel > 0 ? TrampolineParameterFlags.Reference : TrampolineParameterFlags.Default;
-						parameterTypes.Add(new TrampolineParameter(type.IntermediateType, parameterFlags));
+						parameterTypes.Add(new TrampolineParameter(parameter.Type.IntermediateType, parameterFlags));
 					}
 					trampolineBuilder.Add(new Trampoline(function.ReturnType.IntermediateType, parameterTypes.ToArray()));
 				}
@@ -137,27 +126,35 @@ namespace SlimDX.Generator
 
 		static string GenerateFunctionBody(object source)
 		{
-			/*var function = (FunctionElement)source;
-			var model = function.Model;
+			var function = (FunctionElement)source;
 			var builder = new StringBuilder();
+			var ordinal = 0;
 
-			builder.AppendFormat("return SlimDX.Trampoline.Call.{0}(", function.ReturnType.ManagedName);
-			builder.AppendLine();
-
+			builder.AppendFormat("return SlimDX.Trampoline.Call.{0}({1} * System.IntPtr.Size, nativePointer, ", function.ReturnType.ManagedName, ordinal);
 			for (int index = 0; index < function.Parameters.Count; ++index)
 			{
 				var parameter = function.Parameters[index];
-				builder.AppendFormat("{0}", parameter.CamelCaseName);
+				var effectiveIndirectionLevel = GetEffectiveIndirectionLevel(parameter);
+				if (effectiveIndirectionLevel > 0)
+					builder.Append("ref ");
+				builder.Append(parameter.ManagedName);
 				if (index < function.Parameters.Count - 1)
-					builder.Append(",");
-				builder.AppendLine();
+					builder.Append(", ");
 			}
 
-			builder.AppendLine(");");
-			return builder.ToString();*
-			 * /
-			 */
-			return string.Empty;
+			builder.Append(");");
+			return builder.ToString();
+		}
+
+		static int GetEffectiveIndirectionLevel(VariableElement parameter)
+		{
+			var effectiveIndirectionLevel = parameter.IndirectionLevel;
+
+			// The IntPtr type has a level of indirection built in.
+			if (parameter.Type.IntermediateType == typeof(IntPtr))
+				--effectiveIndirectionLevel;
+
+			return effectiveIndirectionLevel;
 		}
 
 		/// <summary>
