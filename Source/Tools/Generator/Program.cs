@@ -101,14 +101,18 @@ namespace SlimDX.Generator
 			{
 				foreach (var function in item.Functions)
 				{
-					var returnType = model.TypeMap[function.ReturnType.Name];
+					var returnType = model.TypeMap[function.ReturnType.NativeName];
 					var parameterTypes = new List<TrampolineParameter>();
 					foreach (var parameterElement in function.Parameters)
 					{
-						//TODO: Instead of ignoring unmappable types like this, we should error out.
+						//TODO: Assuming unmapped types are ref IntPtr objects isn't much better than
+						//      quietly failing, but at least it provides the trampoline methods that
+						//      are required.
 						Type type = null;
-						if (model.TypeMap.TryGetValue(parameterElement.DataType.Name, out type))
+						if (model.TypeMap.TryGetValue(parameterElement.DataType.NativeName, out type))
 							parameterTypes.Add(new TrampolineParameter(type));
+						else
+							parameterTypes.Add(new TrampolineParameter(typeof(IntPtr), TrampolineParameterFlags.Reference));
 					}
 					trampolineBuilder.Add(new Trampoline(returnType, parameterTypes.ToArray()));
 				}
@@ -119,20 +123,19 @@ namespace SlimDX.Generator
 			// write output files
 			File.WriteAllText(Path.Combine(outputPath, "Enums.cs"), templateEngine.Apply("EnumFile.txt", model));
 			foreach (var item in model.Structs)
-				File.WriteAllText(Path.Combine(outputPath, item.NiceName + ".cs"), templateEngine.Apply("Struct.txt", item));
+				File.WriteAllText(Path.Combine(outputPath, item.ManagedName + ".cs"), templateEngine.Apply("Struct.txt", item));
 
 			foreach (var item in model.Interfaces)
-				File.WriteAllText(Path.Combine(outputPath, item.NiceName + ".cs"), templateEngine.Apply("Interface.txt", item));
+				File.WriteAllText(Path.Combine(outputPath, item.ManagedName + ".cs"), templateEngine.Apply("Interface.txt", item));
 		}
 
 		static string GenerateFunctionBody(object source)
 		{
 			var function = (FunctionElement)source;
 			var model = function.Model;
-			var returnType = model.TypeMap[function.ReturnType.Name];
+			var returnType = model.TypeMap[function.ReturnType.NativeName];
 			var builder = new StringBuilder();
 
-			// Prefixing local variables with an underscore prevents clashes with parameter names.
 			builder.AppendFormat("return SlimDX.Trampoline.Call.{0}(", returnType.Name);
 			builder.AppendLine();
 

@@ -35,7 +35,7 @@ namespace SlimDX.DXGI
 		/// Creates a new <see cref="Factory"/> object.
 		/// </summary>
 		/// <returns>A new <see cref="Factory"/> object.</returns>
-		static Factory CreateFactory()
+		public static Factory CreateFactory()
 		{
 			IntPtr nativePointer = IntPtr.Zero;
 			CreateDXGIFactory(ref factoryGuid, out nativePointer);
@@ -56,6 +56,11 @@ namespace SlimDX.DXGI
 	//TODO: Temporary code below.
 	public partial interface Factory : ComObject
 	{
+		Adapter EnumerateAdapters(int adapter);
+	}
+
+	public partial interface Adapter : ComObject
+	{
 	}
 
 	class FactoryImplementation : Factory
@@ -69,7 +74,39 @@ namespace SlimDX.DXGI
 
 		public T QueryInterface<T>() where T : class, ComObject
 		{
-			return null;
+			return null;// index 0 in vtable
+		}
+
+		public void AddReference()
+		{
+			//TODO: Call.Int32( IntPtr.Size * 1, nativePointer );
+		}
+
+		public void Release()
+		{
+			//TODO: Call.Int32(IntPtr.Size * 2, nativePointer);
+		}
+
+		public Adapter EnumerateAdapters(int adapter)
+		{
+			IntPtr result = IntPtr.Zero;
+			Call.Result(7 * IntPtr.Size, nativePointer, adapter, ref result);
+			return new AdapterImplementation(result);
+		}
+	}
+
+	class AdapterImplementation : Adapter
+	{
+		public AdapterImplementation(IntPtr nativePointer)
+		{
+			this.nativePointer = nativePointer;
+		}
+
+		IntPtr nativePointer;
+
+		public T QueryInterface<T>() where T : class, ComObject
+		{
+			return null;// index 0 in vtable
 		}
 
 		public void AddReference()

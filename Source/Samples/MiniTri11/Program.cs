@@ -18,26 +18,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
+using SlimDX.DXGI;
 
-namespace SlimDX.Generator.ObjectModel
+namespace MiniTri11
 {
-	class TypedefElement : BaseElement
+	static class Program
 	{
-		public string OriginalName
+		static void Main()
 		{
-			get;
-			private set;
-		}
-
-		public TypedefElement(SourceModel model, string originalName, string newName)
-			: base(model, newName)
-		{
-			OriginalName = originalName;
-		}
-
-		public override string ToString()
-		{
-			return OriginalName + " " + NativeName;
+			Factory factory = DGXI.CreateFactory();
+			Adapter adapter = factory.EnumerateAdapters(0);
+			adapter.Release();
+			factory.Release();
 		}
 	}
 }

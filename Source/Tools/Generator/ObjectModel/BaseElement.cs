@@ -35,17 +35,29 @@ namespace SlimDX.Generator.ObjectModel
 			private set;
 		}
 
-		public string Name
+		/// <summary>
+		/// Gets the element's native name.
+		/// </summary>
+		public string NativeName
 		{
-			get { return name; }
+			get
+			{
+				return name;
+			}
 			protected set
 			{
-				name = value;
-				RebuildName();
+				if (name != value)
+				{
+					name = value;
+					RebuildName();
+				}
 			}
 		}
 
-		public string NiceName
+		/// <summary>
+		/// Gets the element's managed name.
+		/// </summary>
+		public string ManagedName
 		{
 			get;
 			private set;
@@ -59,15 +71,15 @@ namespace SlimDX.Generator.ObjectModel
 		protected BaseElement(SourceModel model, string name)
 			: this(model)
 		{
-			Name = name;
+			NativeName = name;
 		}
 
 		public override string ToString()
 		{
-			return Name;
+			return NativeName;
 		}
 
-		protected virtual string BuildNiceName(string name)
+		protected virtual string BuildManagedName(string name)
 		{
 			if (string.IsNullOrEmpty(name))
 				return "";
@@ -80,7 +92,7 @@ namespace SlimDX.Generator.ObjectModel
 
 		protected void RebuildName()
 		{
-			NiceName = BuildNiceName(Name);
+			ManagedName = BuildManagedName(NativeName);
 		}
 
 		protected void RegisterType()

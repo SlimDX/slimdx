@@ -42,19 +42,19 @@ namespace SlimDX.Generator.ObjectModel
 			: base(model)
 		{
 			var variable = element.Element("Var");
-			Name = (string)variable.Attribute("Name");
+			NativeName = (string)variable.Attribute("Name");
 
 			DataType = new TypeElement(model, element.Element("Type"), variable.Descendants("Array").Select(d => (int)d.Attribute("Value")));
 		}
 
 		public override string ToString()
 		{
-			return DataType.ToString() + " " + Name;
+			return DataType.ToString() + " " + NativeName;
 		}
 
-		protected override string BuildNiceName(string name)
+		protected override string BuildManagedName(string name)
 		{
-			var niceName = base.BuildNiceName(name);
+			var niceName = base.BuildManagedName(name);
 			CamelCaseName = niceName.CamelCase();
 
 			return niceName;
