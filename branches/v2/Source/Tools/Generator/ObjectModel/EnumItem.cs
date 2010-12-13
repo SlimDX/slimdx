@@ -19,45 +19,35 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SlimDX.Generator.ObjectModel
 {
-	class EnumItem : BaseElement
+	/// <summary>
+	/// Represents an enumeration value within a source code model.
+	/// </summary>
+	class EnumerationItemElement : BaseElement
 	{
-		EnumElement parent;
+		/// <summary>
+		/// Initializes a new instance of the <see cref="EnumerationItemElement"/> class.
+		/// </summary>
+		/// <param name="nativeName">The item's native name.</param>
+		/// <param name="value">The item's value.</param>
+		public EnumerationItemElement(string nativeName, string value)
+			: base(nativeName)
+		{
+			if (string.IsNullOrEmpty(value))
+				throw new ArgumentException("Value may not be null or empty.", "value");
 
+			Value = value;
+		}
+
+		/// <summary>
+		/// Gets the item's value.
+		/// </summary>
 		public string Value
 		{
 			get;
 			private set;
-		}
-
-		public EnumItem(SourceModel model, EnumElement parent, string name, string value)
-			: base(model, name)
-		{
-			this.parent = parent;
-			Value = value;
-
-			RebuildName();
-		}
-
-		public override string ToString()
-		{
-			if (string.IsNullOrEmpty(Value))
-				return NativeName;
-
-			return NativeName + " = " + Value;
-		}
-
-		protected override string BuildManagedName(string name)
-		{
-			if (parent == null)
-				return "";
-
-			return Model.NameRules.RemovePrefix(base.BuildManagedName(name), parent.ManagedName);
 		}
 	}
 }

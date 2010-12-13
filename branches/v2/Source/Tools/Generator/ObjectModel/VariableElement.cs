@@ -18,46 +18,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Xml.Linq;
-using System.Collections.Generic;
-using System.Linq;
+using System;
 
 namespace SlimDX.Generator.ObjectModel
 {
+	/// <summary>
+	/// Represents a variable within a source code model.
+	/// 
+	/// A variable is a named instance of a type. Thus, variable elements are
+	/// used to represent function parameters as well.
+	/// </summary>
 	class VariableElement : BaseElement
 	{
-		public TypeElement DataType
+		/// <summary>
+		/// Initializes a new instance of the <see cref="VariableElement"/> class.
+		/// </summary>
+		/// <param name="nativeName">The variable's native name.</param>
+		/// <param name="type">The variable's type.</param>
+		public VariableElement(string nativeName, TypeElement type)
+			: base(nativeName)
+		{
+			if (type == null)
+				throw new ArgumentNullException("type");
+			Type = type;
+		}
+
+		/// <summary>
+		/// Gets the type of the variable.
+		/// </summary>
+		public TypeElement Type
 		{
 			get;
 			private set;
-		}
-
-		public string CamelCaseName
-		{
-			get;
-			private set;
-		}
-
-		public VariableElement(SourceModel model, XElement element)
-			: base(model)
-		{
-			var variable = element.Element("Var");
-			NativeName = (string)variable.Attribute("Name");
-
-			DataType = new TypeElement(model, element.Element("Type"), variable.Descendants("Array").Select(d => (int)d.Attribute("Value")));
-		}
-
-		public override string ToString()
-		{
-			return DataType.ToString() + " " + NativeName;
-		}
-
-		protected override string BuildManagedName(string name)
-		{
-			var niceName = base.BuildManagedName(name);
-			CamelCaseName = niceName.CamelCase();
-
-			return niceName;
 		}
 	}
 }

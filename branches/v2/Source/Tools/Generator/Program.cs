@@ -80,7 +80,8 @@ namespace SlimDX.Generator
 			// run the parser on the preprocessed file to generate a model of the file in memory
 			var parser = new HeaderParser(options.GetOption("Options", "Grammar"));
 			var root = parser.Parse(source).ToXml();
-			var model = new SourceModel(root, options.GetOption("Options", "NamingRules"), options.GetOptions("TypeMap"));
+			var nameService = new NameRules(options.GetOption("Options", "NamingRules"));
+			var model = new SourceModel(root, nameService, options.GetOptions("TypeMap"));
 			var templateEngine = new TemplateEngine(options.GetOption("Options", "Templates"), options.GetOption("Options", "Namespace"));
 			var outputPath = options.GetOption("Options", "OutputPath");
 
@@ -101,20 +102,16 @@ namespace SlimDX.Generator
 			{
 				foreach (var function in item.Functions)
 				{
-					var returnType = model.TypeMap[function.ReturnType.NativeName];
 					var parameterTypes = new List<TrampolineParameter>();
-					foreach (var parameterElement in function.Parameters)
+					foreach (var parameter in function.Parameters)
 					{
-						//TODO: Assuming unmapped types are ref IntPtr objects isn't much better than
-						//      quietly failing, but at least it provides the trampoline methods that
-						//      are required.
-						Type type = null;
-						if (model.TypeMap.TryGetValue(parameterElement.DataType.NativeName, out type))
-							parameterTypes.Add(new TrampolineParameter(type));
-						else
-							parameterTypes.Add(new TrampolineParameter(typeof(IntPtr), TrampolineParameterFlags.Reference));
+						var type = model.FindTypeByName(parameter.Type.NativeName);
+						if (type == null)
+							throw new InvalidOperationException(string.Format("No element found for native type '{0}.'", parameter.Type.NativeName));
+						parameterTypes.Add(new TrampolineParameter(type.IntermediateType));
+
 					}
-					trampolineBuilder.Add(new Trampoline(returnType, parameterTypes.ToArray()));
+					trampolineBuilder.Add(new Trampoline(function.ReturnType.IntermediateType, parameterTypes.ToArray()));
 				}
 			}
 
@@ -122,7 +119,7 @@ namespace SlimDX.Generator
 
 			// write output files
 			File.WriteAllText(Path.Combine(outputPath, "Enums.cs"), templateEngine.Apply("EnumFile.txt", model));
-			foreach (var item in model.Structs)
+			foreach (var item in model.Structures)
 				File.WriteAllText(Path.Combine(outputPath, item.ManagedName + ".cs"), templateEngine.Apply("Struct.txt", item));
 
 			foreach (var item in model.Interfaces)
@@ -131,12 +128,11 @@ namespace SlimDX.Generator
 
 		static string GenerateFunctionBody(object source)
 		{
-			var function = (FunctionElement)source;
+			/*var function = (FunctionElement)source;
 			var model = function.Model;
-			var returnType = model.TypeMap[function.ReturnType.NativeName];
 			var builder = new StringBuilder();
 
-			builder.AppendFormat("return SlimDX.Trampoline.Call.{0}(", returnType.Name);
+			builder.AppendFormat("return SlimDX.Trampoline.Call.{0}(", function.ReturnType.ManagedName);
 			builder.AppendLine();
 
 			for (int index = 0; index < function.Parameters.Count; ++index)
@@ -149,7 +145,10 @@ namespace SlimDX.Generator
 			}
 
 			builder.AppendLine(");");
-			return builder.ToString();
+			return builder.ToString();*
+			 * /
+			 */
+			return string.Empty;
 		}
 
 		/// <summary>

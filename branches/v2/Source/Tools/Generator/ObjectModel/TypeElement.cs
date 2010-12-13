@@ -19,101 +19,53 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
 
 namespace SlimDX.Generator.ObjectModel
 {
+	/// <summary>
+	/// Represents a type within a source code model.
+	/// 
+	/// Type elements encapsulate three different kinds of data about a type. The 
+	/// 'native' data is that which came from the original header files, the 'managed' 
+	/// data corresponds to the high-level C# view of the type, and the 'intermediate'
+	/// data refers to how instances of the type are marshalled across the 
+	/// native/managed barrier.
+	/// 
+	/// A given type element will always have native and intermediate data available,
+	/// but not all elements will have complete managed data.
+	/// </summary>
 	class TypeElement : BaseElement
 	{
-		public IEnumerable<string> Modifiers
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TypeElement"/> class.
+		/// </summary>
+		/// <param name="nativeName">The type's native name.</param>
+		/// /// <param name="managedName">The type's managed name.</param>
+		protected TypeElement(string nativeName, string managedName)
+			: base(nativeName, managedName)
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TypeElement"/> class.
+		/// </summary>
+		/// <param name="nativeName">The type's native name.</param>
+		/// <param name="managedType">The type's managed name.</param>
+		public TypeElement(string nativeName, Type managedType)
+			: base(nativeName, managedType.Name)
+		{
+			// When the managed type already exists, it can be directly used 
+			// as the intermediate type.
+			IntermediateType = managedType;
+		}
+
+		/// <summary>
+		/// Gets the element's intermediate type.
+		/// </summary>
+		public Type IntermediateType
 		{
 			get;
-			private set;
-		}
-
-		public IEnumerable<int> Arrays
-		{
-			get;
-			private set;
-		}
-
-		public string ArrayName
-		{
-			get { return NativeName + string.Concat(Arrays.Select(i => "[]")); }
-		}
-
-		public string ModifiedName
-		{
-			get;
-			private set;
-		}
-
-		public TypeElement(SourceModel model, XElement element)
-			: this(model, element, null)
-		{
-		}
-
-		public TypeElement(SourceModel model, XElement element, IEnumerable<int> arrays)
-			: base(model)
-		{
-			Arrays = arrays ?? Enumerable.Empty<int>();
-			NativeName = (string)element.Attribute("Name");
-
-			var scalar = element.Element("Scalar");
-			if (scalar != null)
-				NativeName = scalar.Element("Token").Value;
-
-			var modifiers = new List<string>();
-			var mod = element.Element("Mod");
-			if (mod != null)
-				modifiers.Add((string)mod.Element("Token"));
-
-			modifiers.AddRange(element.Descendants("Pointers").Select(d => (string)d.Element("Token")));
-			Modifiers = modifiers;
-
-			RebuildName();
-		}
-
-		public TypeElement(SourceModel model, string name)
-			: base(model, name)
-		{
-			Arrays = Enumerable.Empty<int>();
-			Modifiers = Enumerable.Empty<string>();
-
-			RebuildName();
-		}
-
-		protected override string BuildManagedName(string name)
-		{
-			if (string.IsNullOrEmpty(name) || Arrays == null)
-				return "";
-
-			Type type;
-			if (!Model.TypeMap.TryGetValue(ArrayName, out type))
-			{
-				if (Model.TypeMap.TryGetValue(NativeName, out type))
-					name += string.Concat(Arrays.Select(i => "[]"));
-				else
-					name = ArrayName;
-			}
-			else
-			{
-				name = type.Name;
-			}
-
-			ModifiedName = name;
-			if (Modifiers != null && !Modifiers.Contains("const") && Modifiers.Contains("*"))
-				ModifiedName = "out " + name;
-
-			return name;
-		}
-
-		public override string ToString()
-		{
-			return ManagedName;
+			protected set;
 		}
 	}
 }
