@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Xml.Linq;
 
@@ -30,123 +31,197 @@ namespace SlimDX.Generator.ObjectModel
 	/// </summary>
 	class SourceModel
 	{
-		List<EnumElement> enums = new List<EnumElement>();
-		List<StructElement> structs = new List<StructElement>();
-		List<TypedefElement> typedefs = new List<TypedefElement>();
-		List<InterfaceElement> interfaces = new List<InterfaceElement>();
-
-		public IEnumerable<EnumElement> Enums
+		public SourceModel(XElement root, NameRules nameService, IEnumerable<string> initialTypeMap)
 		{
-			get { return enums; }
-		}
-
-		public IEnumerable<StructElement> Structs
-		{
-			get { return structs; }
-		}
-
-		public IEnumerable<InterfaceElement> Interfaces
-		{
-			get { return interfaces; }
-		}
-
-		public Dictionary<string, Type> TypeMap
-		{
-			get;
-			private set;
-		}
-
-		public NameRules NameRules
-		{
-			get;
-			private set;
-		}
-
-		public SourceModel(XElement root, string namingRuleFile, IEnumerable<string> initialTypeMap)
-		{
-			NameRules = new NameRules(namingRuleFile);
-			TypeMap = new Dictionary<string, Type>();
-			TypeMap["void"] = typeof(void);
-
 			foreach (var item in initialTypeMap)
 			{
 				int index = item.IndexOf(' ');
 				if (index < 0)
 					throw new InvalidDataException(string.Format("One of the initial type mappings is invalid: \"{0}\"", item));
 
-				var type = Type.GetType(item.Substring(index + 1));
-				TypeMap.Add(item.Substring(0, index), type);
+				var nativeName = item.Substring(0, index);
+				var managedName = item.Substring(index + 1);
+				var managedType = Type.GetType(managedName);
+				if (managedType == null)
+					throw new InvalidDataException(string.Format("One of the initial type mappings is invalid: \"{0}\"", item));
+
+				AddType(new TypeElement(nativeName, managedType));
 			}
 
-			Build(root);
+			Build(root, nameService);
 		}
 
-		void Build(XElement element)
+		/// <summary>
+		/// Gets the interfaces in the model.
+		/// </summary>
+		public ReadOnlyCollection<InterfaceElement> Interfaces
 		{
-			switch (element.Name.LocalName)
+			get
 			{
-				case "Decls":
-				case "Extern":
-					foreach (var child in element.Elements())
-						Build(child);
-					break;
-
-				case "Typedef":
-					BuildTypedef(element);
-					break;
-
-				case "Variable":
-					BuildVariable(element);
-					break;
+				return new ReadOnlyCollection<InterfaceElement>(interfaceElements);
 			}
 		}
 
-		void BuildTypedef(XElement element)
+		/// <summary>
+		/// Gets the structures in the model.
+		/// </summary>
+		public ReadOnlyCollection<StructureElement> Structures
 		{
-			var type = element.Element("Type");
-			var typeBase = type.Element("Base");
-			var scalar = type.Element("Scalar");
-
-			string name = null;
-			if (typeBase != null)
+			get
 			{
-				name = (string)typeBase.Attribute("Name");
-				var enumElement = typeBase.Element("Enum");
-				if (enumElement != null)
-					enums.Add(new EnumElement(this, name, enumElement));
-
-				var structElement = typeBase.Element("Struct");
-				if (structElement != null)
-					structs.Add(new StructElement(this, name, structElement));
-			}
-			else if (scalar != null)
-				name = scalar.Element("Token").Value;
-			else
-				name = (string)type.Attribute("Name");
-
-			var typedef = element.Element("Var");
-			if (typedef != null && name != null)
-			{
-				// don't add typedef if it's just redeclaring the type
-				var newName = (string)typedef.Attribute("Name");
-				if (newName != name)
-					typedefs.Add(new TypedefElement(this, name, newName));
+				return new ReadOnlyCollection<StructureElement>(structureElements);
 			}
 		}
 
-		void BuildVariable(XElement element)
+		/// <summary>
+		/// Gets the enumerations in the model.
+		/// </summary>
+		public ReadOnlyCollection<EnumerationElement> Enumerations
 		{
-			var type = element.Element("Type");
-			var typeBase = type.Element("Base");
-			if (typeBase == null)
-				return;
+			get
+			{
+				return new ReadOnlyCollection<EnumerationElement>(enumerationElements);
+			}
+		}
 
-			var name = (string)typeBase.Attribute("Name");
-			var structElement = typeBase.Element("Struct");
-			var inheritance = typeBase.Element("Inheritance");
-			var declspec = typeBase.Element("DeclspecOrEmpty");
-			if (structElement != null)
-				interfaces.Add(new InterfaceElement(this, name, structElement, inheritance, declspec));
+		/// <summary>
+		/// Adds a type element to the source model.
+		/// </summary>
+		/// <param name="element">The type element.</param>
+		public void AddType(TypeElement element)
+		{
+			if (typesByName.ContainsKey(element.NativeName))
+				throw new InvalidOperationException(string.Format("An element for the native type '{0}' already exists in the model.", element.NativeName));
+			typesByName[element.NativeName] = element;
+
+			if (element is InterfaceElement)
+				interfaceElements.Add((InterfaceElement)element);
+			else if (element is StructureElement)
+				structureElements.Add((StructureElement)element);
+			else if (element is EnumerationElement)
+				enumerationElements.Add((EnumerationElement)element);
+		}
+
+		/// <summary>
+		/// Looks up a type element by its native name.
+		/// </summary>
+		/// <param name="nativeName">The native name of the target type.</param>
+		/// <returns>The type element, or null if no element exists with the specified native name.</returns>
+		public TypeElement FindTypeByName(string nativeName)
+		{
+			if (string.IsNullOrEmpty(nativeName))
+				throw new ArgumentException("Value may not be null or empty.", "nativeName");
+
+			TypeElement result;
+			if (typesByName.TryGetValue(nativeName, out result))
+				return result;
+			return null;
+		}
+
+		Dictionary<string, TypeElement> typesByName = new Dictionary<string, TypeElement>();
+		List<EnumerationElement> enumerationElements = new List<EnumerationElement>();
+		List<StructureElement> structureElements = new List<StructureElement>();
+		List<InterfaceElement> interfaceElements = new List<InterfaceElement>();
+
+		/// <summary>
+		/// Builds the source model from the specified XML.
+		/// </summary>
+		/// <param name="root">The XML describing the source model.</param>
+		/// <param name="nameService">The name service.</param>
+		void Build(XElement root, NameRules nameService)
+		{
+			// The build occurs in two phases; the first phase populates the model with all 
+			// the basic type declarations, and the second phase adds content to those types.
+			// The cache is used for direct access to type XML during the second phase.
+			Dictionary<string, XElement> cache = new Dictionary<string, XElement>();
+			List<XElement> items = new List<XElement>(root.Descendants("Variable"));
+			items.AddRange(root.Descendants("Typedef"));
+			foreach (var itemData in items)
+			{
+				var typeData = itemData.Element("Type");
+				if (typeData == null)
+					continue;
+
+				var baseData = typeData.Element("Base");
+				if (baseData == null)
+					continue;
+
+				var structureData = baseData.Element("Struct");
+				if (structureData == null)
+					continue;
+
+				TypeElement typeElement = null;
+				var typeName = baseData.Attribute("Name").Value;
+				var declarationData = baseData.Element("DeclspecOrEmpty");
+				if (declarationData != null)
+				{
+					var guidData = declarationData.Element("DeclspecDef").Element("Declspec");
+					var guidValue = guidData.Attribute("Value").Value.Trim('"');
+					var inheritanceData = baseData.Element("Inheritance");
+					var parentTypeName = inheritanceData.Attribute("Name").Value;
+					var parentType = FindTypeByName(parentTypeName);
+
+					typeElement = new InterfaceElement(typeName, nameService.Apply(typeName, NameCasingStyle.Pascal), parentType, new Guid(guidValue));
+				}
+				else
+				{
+					typeElement = new StructureElement(typeName, nameService.Apply(typeName, NameCasingStyle.Pascal));
+				}
+
+				AddType(typeElement);
+				cache[typeElement.NativeName] = baseData;
+			}
+
+			foreach (var interfaceElement in interfaceElements)
+				BuildInterface(interfaceElement, cache[interfaceElement.NativeName]);
+			foreach (var structureElement in structureElements)
+				BuildStructure(structureElement, cache[structureElement.NativeName]);
+		}
+
+		/// <summary>
+		/// Builds an interface definition from its declaration and XML data.
+		/// </summary>
+		/// <param name="element">The declaration element to transform to a definition.</param>
+		/// <param name="data">The XML data for the interface.</param>
+		void BuildInterface(InterfaceElement element, XElement data)
+		{
+			foreach (var functionData in data.Descendants("Function"))
+			{
+				// Extracting the return type is not straightforward; simple scalar
+				// types such as "void" are not named via attribute, but rather in
+				// nested elements.
+				var returnTypeData = functionData.Element("Type");
+				var returnTypeNameAttribute = returnTypeData.Attribute("Name");
+				var returnTypeName = string.Empty;
+				if (returnTypeNameAttribute != null)
+				{
+					returnTypeName = returnTypeNameAttribute.Value;
+				}
+				else
+				{
+					var scalarData = returnTypeData.Element("Scalar");
+					var tokenData = scalarData.Element("Token");
+					returnTypeName = scalarData.Value;
+				}
+
+				var returnType = FindTypeByName(returnTypeName);
+				List<VariableElement> parameterElements = new List<VariableElement>();
+				var signatureData = functionData.Element("Signature");
+				foreach (var parameterData in signatureData.Elements("Param"))
+				{
+					var parameterTypeName = parameterData.Element("Type").Attribute("Name").Value;
+					var parameterName = parameterData.Element("Var").Attribute("Name").Value;
+					var parameterType = FindTypeByName(parameterTypeName);
+
+					parameterElements.Add(new VariableElement(parameterName, parameterType));
+				}
+
+				element.AddFunction(new FunctionElement(functionData.Attribute("Name").Value, returnType, parameterElements.ToArray()));
+			}
+		}
+
+		void BuildStructure(StructureElement element, XElement data)
+		{
 		}
 	}
 }

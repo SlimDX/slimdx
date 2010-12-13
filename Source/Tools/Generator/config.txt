@@ -31,7 +31,9 @@ _WIN32_WINNT=0x501
 _UNICODE
 
 [TypeMap]
+void System.Void
 UINT System.UInt32
+UINT64 System.UInt64
 SIZE_T System.Int32
 DWORD System.Int32
 INT System.Int32
@@ -48,4 +50,6 @@ HWND System.IntPtr
 HMODULE System.IntPtr
 HANDLE System.IntPtr
 GUID System.Guid
-DXGI_RGB SlimDX.Color3, SlimDX
+IID System.Guid
+RECT System.Drawing.Rectangle, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+DXGI_USAGE System.Int32

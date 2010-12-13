@@ -21,23 +21,23 @@
 
 namespace SlimDX.Generator.ObjectModel
 {
-	class TypedefElement : BaseElement
-	{
-		public string OriginalName
-		{
-			get;
-			private set;
-		}
+	//class TypedefElement : BaseElement
+	//{
+	//    public string OriginalName
+	//    {
+	//        get;
+	//        private set;
+	//    }
 
-		public TypedefElement(SourceModel model, string originalName, string newName)
-			: base(model, newName)
-		{
-			OriginalName = originalName;
-		}
+	//    public TypedefElement(SourceModel model, string originalName, string newName)
+	//        : base(model, newName)
+	//    {
+	//        OriginalName = originalName;
+	//    }
 
-		public override string ToString()
-		{
-			return OriginalName + " " + NativeName;
-		}
-	}
+	//    public override string ToString()
+	//    {
+	//        return OriginalName + " " + NativeName;
+	//    }
+	//}
 }

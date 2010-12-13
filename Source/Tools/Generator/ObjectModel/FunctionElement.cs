@@ -18,33 +18,52 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Xml.Linq;
 
 namespace SlimDX.Generator.ObjectModel
 {
+	/// <summary>
+	/// Represents a function within a source code model.
+	/// </summary>
 	class FunctionElement : BaseElement
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FunctionElement"/> class.
+		/// </summary>
+		/// <param name="nativeName">The function's native name.</param>
+		/// <param name="returnType">The function's return type.</param>
+		/// <param name="parameters">The function's parameters.</param>
+		public FunctionElement(string nativeName, TypeElement returnType, params VariableElement[] parameters)
+			: base(nativeName)
+		{
+			if (returnType == null)
+				throw new ArgumentNullException("returnType");
+
+			ReturnType = returnType;
+			if (parameters != null)
+				Parameters = new ReadOnlyCollection<VariableElement>(new List<VariableElement>(parameters));
+			else
+				Parameters = new ReadOnlyCollection<VariableElement>(new List<VariableElement>());
+		}
+
+		/// <summary>
+		/// Gets the return type of the function.
+		/// </summary>
 		public TypeElement ReturnType
 		{
 			get;
 			private set;
 		}
 
+		/// <summary>
+		/// Gets the parameters to the function.
+		/// </summary>
 		public ReadOnlyCollection<VariableElement> Parameters
 		{
 			get;
 			private set;
-		}
-
-		public FunctionElement(SourceModel model, XElement element)
-			: base(model, (string)element.Attribute("Name"))
-		{
-			ReturnType = new TypeElement(model, element.Element("Type"));
-
-			var signature = element.Element("Signature");
-			Parameters = new ReadOnlyCollection<VariableElement>(signature.Descendants("Param").Select(d => new VariableElement(model, d)).ToList());
 		}
 	}
 }

@@ -1,1 +1,1 @@
-﻿{NiceName}{Modifiers}
+﻿{ManagedName}

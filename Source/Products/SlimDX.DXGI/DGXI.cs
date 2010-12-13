@@ -90,7 +90,7 @@ namespace SlimDX.DXGI
 		public Adapter EnumerateAdapters(int adapter)
 		{
 			IntPtr result = IntPtr.Zero;
-			Call.Result(7 * IntPtr.Size, nativePointer, adapter, ref result);
+			//Call.Result(7 * IntPtr.Size, nativePointer, adapter, ref result);
 			return new AdapterImplementation(result);
 		}
 	}

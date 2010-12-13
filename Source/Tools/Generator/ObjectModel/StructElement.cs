@@ -19,25 +19,38 @@
 // THE SOFTWARE.
 
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
+using System.Collections.ObjectModel;
 
 namespace SlimDX.Generator.ObjectModel
 {
-	class StructElement : BaseElement
+	/// <summary>
+	/// Represents a structure within a source code model.
+	/// </summary>
+	class StructureElement : TypeElement
 	{
-		public IEnumerable<VariableElement> Variables
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StructureElement"/> class.
+		/// </summary>
+		/// <param name="nativeName">The structure's native name.</param>
+		/// <param name="managedName">The structure's managed name.</param>
+		public StructureElement(string nativeName, string managedName)
+			: base(nativeName, managedName)
 		{
-			get;
-			private set;
+			IntermediateType = typeof(System.IntPtr);
 		}
 
-		public StructElement(SourceModel model, string name, XElement element)
-			: base(model, name)
+		/// <summary>
+		/// Gets the structure's members.
+		/// </summary>
+		/// <value>The variables.</value>
+		public ReadOnlyCollection<VariableElement> Members
 		{
-			Variables = element.Descendants("Variable").Select(d => new VariableElement(model, d)).ToList();
-
-			RegisterType();
+			get
+			{
+				return new ReadOnlyCollection<VariableElement>(variableElements);
+			}
 		}
+
+		List<VariableElement> variableElements = new List<VariableElement>();
 	}
 }

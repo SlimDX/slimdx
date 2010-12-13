@@ -18,26 +18,48 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
+using System.Collections.ObjectModel;
 
 namespace SlimDX.Generator.ObjectModel
 {
-	class EnumElement : BaseElement
+	/// <summary>
+	/// Represents an enumeration within a source code model.
+	/// </summary>
+	class EnumerationElement : TypeElement
 	{
-		public IEnumerable<EnumItem> Items
+		/// <summary>
+		/// Initializes a new instance of the <see cref="EnumerationElement"/> class.
+		/// </summary>
+		/// <param name="nativeName">The enumeration's native name.</param>
+		public EnumerationElement(string nativeName)
+			: base(nativeName, nativeName)
 		{
-			get;
-			private set;
 		}
 
-		public EnumElement(SourceModel model, string name, XElement element)
-			: base(model, name)
+		/// <summary>
+		/// Gets the enumeration's items.
+		/// </summary>
+		public ReadOnlyCollection<EnumerationItemElement> Items
 		{
-			Items = element.Descendants("EnumVal").Select(i => new EnumItem(model, this, (string)i.Attribute("Name"), (string)i.Attribute("Value"))).ToList();
-
-			RegisterType();
+			get
+			{
+				return new ReadOnlyCollection<EnumerationItemElement>(itemElements);
+			}
 		}
+
+		/// <summary>
+		/// Adds an item to the enumeration.
+		/// </summary>
+		/// <param name="itemElement">The item.</param>
+		public void AddItem(EnumerationItemElement itemElement)
+		{
+			if (itemElement == null)
+				throw new ArgumentNullException("itemElement");
+			itemElements.Add(itemElement);
+		}
+
+		List<EnumerationItemElement> itemElements = new List<EnumerationItemElement>();
 	}
 }

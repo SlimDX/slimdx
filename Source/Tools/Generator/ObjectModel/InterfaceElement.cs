@@ -20,42 +20,70 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
+using System.Collections.ObjectModel;
 
 namespace SlimDX.Generator.ObjectModel
 {
-	class InterfaceElement : StructElement
+	/// <summary>
+	/// Represents an interface within a source code model.
+	/// </summary>
+	class InterfaceElement : StructureElement
 	{
-		public string Guid
+		/// <summary>
+		/// Initializes a new instance of the <see cref="InterfaceElement"/> class.
+		/// </summary>
+		/// <param name="nativeName">The interface's native name.</param>
+		/// /// <param name="nativeName">The interface's managed name.</param>
+		/// <param name="baseType">The interface's base type.</param>
+		/// <param name="guid">The interface's GUID.</param>
+		public InterfaceElement(string nativeName, string managedName, TypeElement baseType, Guid guid)
+			: base(nativeName, managedName)
+		{
+			if (baseType == null)
+				throw new ArgumentNullException("baseType");
+
+			Guid = guid;
+			BaseType = baseType;
+		}
+
+		/// <summary>
+		/// Gets the interface's GUID.
+		/// </summary>
+		public Guid Guid
 		{
 			get;
 			private set;
 		}
 
+		/// <summary>
+		/// Gets the interface's base type.
+		/// </summary>
 		public TypeElement BaseType
 		{
 			get;
 			private set;
 		}
 
-		public IEnumerable<FunctionElement> Functions
+		/// <summary>
+		/// Gets the functions supported by the interface.
+		/// </summary>
+		public ReadOnlyCollection<FunctionElement> Functions
 		{
-			get;
-			private set;
+			get
+			{
+				return new ReadOnlyCollection<FunctionElement>(functionElements);
+			}
 		}
 
-		public InterfaceElement(SourceModel model, string name, XElement structElement, XElement inheritance, XElement declspec)
-			: base(model, name, structElement)
+		/// <summary>
+		/// Adds a function to the interface.
+		/// </summary>
+		/// <param name="functionElement">The function.</param>
+		public void AddFunction(FunctionElement functionElement)
 		{
-			if (inheritance != null)
-				BaseType = new TypeElement(model, (string)inheritance.Attribute("Name"));
-
-			if (declspec != null)
-				Guid = declspec.Descendants("Declspec").FirstOrDefault(d => (string)d.Element("Token") == "uuid").Attribute("Value").Value.Trim('"');
-
-			Functions = structElement.Descendants("Function").Select(d => new FunctionElement(model, d)).ToList();
+			functionElements.Add(functionElement);
 		}
+
+		List<FunctionElement> functionElements = new List<FunctionElement>();
 	}
 }

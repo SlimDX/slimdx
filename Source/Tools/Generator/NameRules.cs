@@ -5,6 +5,12 @@ using System.Text;
 
 namespace SlimDX.Generator
 {
+	public enum NameCasingStyle
+	{
+		Pascal,
+		Camel
+	}
+
 	/// <summary>
 	/// Contains various helper methods to transform C++ names into proper .NET names.
 	/// </summary>
@@ -17,9 +23,18 @@ namespace SlimDX.Generator
 			rules = new ConfigFile(ruleFile);
 		}
 
-		public string Apply(string name)
+		public string Apply(string name, NameCasingStyle style)
 		{
-			return ExpandAbbreviations(RemovePrefixes(name));
+			var result = ExpandAbbreviations(RemovePrefixes(name));
+			switch (style)
+			{
+				case NameCasingStyle.Pascal:
+					return result.PascalCase();
+				case NameCasingStyle.Camel:
+					return result.CamelCase();
+				default:
+					throw new NotSupportedException(string.Format("Casing style '{0}' is not supported."));
+			}
 		}
 
 		public string RemovePrefixes(string name)

@@ -19,20 +19,37 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SlimDX.Generator.ObjectModel
 {
+	/// <summary>
+	/// Represents an element within a source code model.
+	/// </summary>
 	abstract class BaseElement
 	{
-		string name;
-
-		public SourceModel Model
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BaseElement"/> class.
+		/// </summary>
+		/// <param name="nativeName">The element's native name.</param>
+		protected BaseElement(string nativeName)
+			: this(nativeName, nativeName)
 		{
-			get;
-			private set;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BaseElement"/> class.
+		/// </summary>
+		/// <param name="nativeName">The element's native name.</param>
+		/// <param name="managedName">The element's managed name.</param>
+		protected BaseElement(string nativeName, string managedName)
+		{
+			if (string.IsNullOrEmpty(nativeName))
+				throw new ArgumentException("Value may not be null or empty.", "nativeName");
+			if (string.IsNullOrEmpty(managedName))
+				throw new ArgumentException("Value may not be null or empty.", "managedName");
+
+			NativeName = nativeName;
+			ManagedName = managedName;
 		}
 
 		/// <summary>
@@ -40,18 +57,8 @@ namespace SlimDX.Generator.ObjectModel
 		/// </summary>
 		public string NativeName
 		{
-			get
-			{
-				return name;
-			}
-			protected set
-			{
-				if (name != value)
-				{
-					name = value;
-					RebuildName();
-				}
-			}
+			get;
+			protected set;
 		}
 
 		/// <summary>
@@ -60,47 +67,18 @@ namespace SlimDX.Generator.ObjectModel
 		public string ManagedName
 		{
 			get;
-			private set;
+			protected set;
 		}
 
-		protected BaseElement(SourceModel model)
-		{
-			Model = model;
-		}
-
-		protected BaseElement(SourceModel model, string name)
-			: this(model)
-		{
-			NativeName = name;
-		}
-
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents this instance.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/> that represents this instance.
+		/// </returns>
 		public override string ToString()
 		{
 			return NativeName;
-		}
-
-		protected virtual string BuildManagedName(string name)
-		{
-			if (string.IsNullOrEmpty(name))
-				return "";
-
-			if (name.Contains("_"))
-				name = name.PascalCaseFromUnderscores();
-
-			return Model.NameRules.Apply(name);
-		}
-
-		protected void RebuildName()
-		{
-			ManagedName = BuildManagedName(NativeName);
-		}
-
-		protected void RegisterType()
-		{
-			//TODO: Not sure what to do here in light of TypeMap now being <string,Type>. Commenting
-			//      this out for now doesn't seem to have any adverse impact.
-			//if (!Model.TypeMap.ContainsKey(Name))
-			//	Model.TypeMap.Add(Name, NiceName);
 		}
 	}
 }
