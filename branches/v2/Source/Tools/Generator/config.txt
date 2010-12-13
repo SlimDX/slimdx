@@ -34,6 +34,7 @@ _UNICODE
 void System.Void
 UINT System.UInt32
 UINT64 System.UInt64
+ULONG System.UInt32
 SIZE_T System.Int32
 DWORD System.Int32
 INT System.Int32
@@ -52,5 +53,6 @@ HDC System.IntPtr
 HANDLE System.IntPtr
 GUID System.Guid
 IID System.Guid
+REFIID System.Guid
 RECT System.Drawing.Rectangle, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
 DXGI_USAGE System.Int32

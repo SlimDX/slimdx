@@ -162,6 +162,16 @@ namespace SlimDX.Generator.ObjectModel
 					var parentType = FindTypeByName(parentTypeName);
 
 					typeElement = new InterfaceElement(typeName, nameService.Apply(typeName, NameCasingStyle.Pascal), parentType, new Guid(guidValue));
+
+					if (parentTypeName == "IUnknown")
+					{
+						// As a special case, IUnknown is directly implemented. IUnknown's managed analog (the C# interface SlimDX.ComObject)
+						// lives in the core SlimDX assembly, which cannot contain generated code or reference the trampoline assembly.
+						// Installing the appropriate function elements here also allows for simplified virtual table index management.
+						InterfaceElement interfaceElement = (InterfaceElement)typeElement;
+						foreach (var functionElement in BuildIUnknownFunctions())
+							interfaceElement.AddFunction(functionElement);
+					}
 				}
 				else if (structureData != null)
 				{
@@ -209,6 +219,27 @@ namespace SlimDX.Generator.ObjectModel
 
 		void BuildStructure(StructureElement element, XElement data)
 		{
+		}
+
+		/// <summary>
+		/// Builds function elements for the methods of IUnknown.
+		/// </summary>
+		/// <returns>An array containing function elements for IUnknown's methods.</returns>
+		FunctionElement[] BuildIUnknownFunctions()
+		{
+			var results = new FunctionElement[3];
+			var resultType = FindTypeByName("HRESULT");
+			var guidType = FindTypeByName("REFIID");
+			var unknownType = FindTypeByName("IUnknown");
+			var longType = FindTypeByName("ULONG");
+			var guidParameter = new VariableElement("riid", resultType, 0);
+			var unknownParameter = new VariableElement("ppvObject", unknownType, 2);
+
+			results[0] = new FunctionElement("QueryInterface", resultType, guidParameter, unknownParameter);
+			results[1] = new FunctionElement("AddRef", longType);
+			results[2] = new FunctionElement("Release", longType);
+
+			return results;
 		}
 
 		/// <summary>
