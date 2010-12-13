@@ -203,6 +203,17 @@ namespace SlimDX.Generator.ObjectModel
 		/// <param name="data">The XML data for the interface.</param>
 		void BuildInterface(InterfaceElement element, XElement data)
 		{
+			// Counting base functions in this fashion assumes that base types will be fully
+			// defined before child types, which should be true (because the source language
+			// is C) and that base types are processed by BuildInterface() in definition order.
+			var index = 0;
+			var baseType = element.BaseType as InterfaceElement;
+			while (baseType != null)
+			{
+				index += baseType.Functions.Count;
+				baseType = baseType.BaseType as InterfaceElement;
+			}
+
 			foreach (var functionData in data.Descendants("Function"))
 			{
 				var returnTypeName = ExtractTypeName(functionData.Element("Type"));
@@ -213,7 +224,7 @@ namespace SlimDX.Generator.ObjectModel
 				foreach (var parameterData in signatureData.Descendants("Param"))
 					parameterElements.Add(ExtractParameter(parameterData));
 
-				element.AddFunction(new FunctionElement(functionData.Attribute("Name").Value, returnType, parameterElements.ToArray()));
+				element.AddFunction(new FunctionElement(functionData.Attribute("Name").Value, index++, returnType, parameterElements.ToArray()));
 			}
 		}
 
@@ -235,9 +246,9 @@ namespace SlimDX.Generator.ObjectModel
 			var guidParameter = new VariableElement("riid", resultType, 0);
 			var unknownParameter = new VariableElement("ppvObject", unknownType, 2);
 
-			results[0] = new FunctionElement("QueryInterface", resultType, guidParameter, unknownParameter);
-			results[1] = new FunctionElement("AddRef", longType);
-			results[2] = new FunctionElement("Release", longType);
+			results[0] = new FunctionElement("QueryInterface", 0, resultType, guidParameter, unknownParameter);
+			results[1] = new FunctionElement("AddRef", 1, longType);
+			results[2] = new FunctionElement("Release", 2, longType);
 
 			return results;
 		}

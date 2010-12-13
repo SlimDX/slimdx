@@ -138,7 +138,6 @@ namespace SlimDX.Generator
 		{
 			var function = (FunctionElement)source;
 			var builder = new StringBuilder();
-			var ordinal = 0;
 
 			builder.AppendLine();
 
@@ -153,7 +152,7 @@ namespace SlimDX.Generator
 				}
 			}
 
-			builder.AppendFormat("{0} _result = SlimDX.Trampoline.Call.{0}({1} * System.IntPtr.Size, nativePointer, ", function.ReturnType.ManagedName, ordinal);
+			builder.AppendFormat("{0} _result = SlimDX.Trampoline.Call.{0}({1} * System.IntPtr.Size, nativePointer, ", function.ReturnType.ManagedName, function.Index);
 			for (int index = 0; index < function.Parameters.Count; ++index)
 			{
 				var parameter = function.Parameters[index];
