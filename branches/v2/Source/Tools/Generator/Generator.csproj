@@ -65,12 +65,12 @@
     <Compile Include="ConfigFile.cs" />
     <Compile Include="NameRules.cs" />
     <Compile Include="ObjectModel\BaseElement.cs" />
-    <Compile Include="ObjectModel\EnumElement.cs" />
-    <Compile Include="ObjectModel\EnumItem.cs" />
+    <Compile Include="ObjectModel\EnumerationElement.cs" />
+    <Compile Include="ObjectModel\EnumerationItemElement.cs" />
     <Compile Include="ObjectModel\FunctionElement.cs" />
     <Compile Include="ObjectModel\InterfaceElement.cs" />
     <Compile Include="ObjectModel\SourceModel.cs" />
-    <Compile Include="ObjectModel\StructElement.cs" />
+    <Compile Include="ObjectModel\StructureElement.cs" />
     <Compile Include="ObjectModel\TypedefElement.cs" />
     <Compile Include="ObjectModel\TypeElement.cs" />
     <Compile Include="ObjectModel\VariableElement.cs" />
