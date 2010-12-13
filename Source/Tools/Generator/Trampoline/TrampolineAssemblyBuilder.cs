@@ -21,7 +21,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -74,6 +73,9 @@ namespace SlimDX.Generator
 		static TypeAttributes dispatchClassAttributes = TypeAttributes.Public | TypeAttributes.Class;
 		static MethodAttributes trampolineMethodAttributes = MethodAttributes.Public | MethodAttributes.Static | MethodAttributes.HideBySig;
 
+		const string offsetParameterName = "offsetInBytes";
+		const string thisParameterName = "self";
+
 		/// <summary>
 		/// Builds an implementation method for the specified trampoline.
 		/// </summary>
@@ -85,6 +87,8 @@ namespace SlimDX.Generator
 			var methodBuilder = typeBuilder.DefineMethod(methodName, trampolineMethodAttributes);
 			var il = methodBuilder.GetILGenerator();
 			methodBuilder.SetSignature(trampoline.ReturnType, null, null, ExtractTypes(trampoline.ManagedParameterTypes), null, null);
+			methodBuilder.DefineParameter(1, ParameterAttributes.None, offsetParameterName);
+			methodBuilder.DefineParameter(2, ParameterAttributes.None, thisParameterName);
 
 			// Push the arguments to the native method on the stack.
 			for (int parameterIndex = 0; parameterIndex < trampoline.NativeParameterTypes.Count; ++parameterIndex)
