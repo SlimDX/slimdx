@@ -1,4 +1,9 @@
-﻿// Copyright (c) 2007-2010 SlimDX Group
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
+// General Information about an assembly is controlled through the following 
+// Copyright (c) 2007-2010 SlimDX Group
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,26 +23,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System.Reflection;
+using System.Runtime.InteropServices;
 
-namespace SlimDX.Generator.ObjectModel
-{
-	class TypedefElement : BaseElement
-	{
-		public string OriginalName
-		{
-			get;
-			private set;
-		}
-
-		public TypedefElement(SourceModel model, string originalName, string newName)
-			: base(model, newName)
-		{
-			OriginalName = originalName;
-		}
-
-		public override string ToString()
-		{
-			return OriginalName + " " + NativeName;
-		}
-	}
-}
+[assembly: AssemblyTitle("SlimDX MiniTri11 Sample")]
+[assembly: Guid("4cf8e09d-86ec-434d-8fbb-7157303872d9")]

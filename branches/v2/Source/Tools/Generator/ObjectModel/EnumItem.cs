@@ -47,17 +47,17 @@ namespace SlimDX.Generator.ObjectModel
 		public override string ToString()
 		{
 			if (string.IsNullOrEmpty(Value))
-				return Name;
+				return NativeName;
 
-			return Name + " = " + Value;
+			return NativeName + " = " + Value;
 		}
 
-		protected override string BuildNiceName(string name)
+		protected override string BuildManagedName(string name)
 		{
 			if (parent == null)
 				return "";
 
-			return Model.NameRules.RemovePrefix(base.BuildNiceName(name), parent.NiceName);
+			return Model.NameRules.RemovePrefix(base.BuildManagedName(name), parent.ManagedName);
 		}
 	}
 }

@@ -42,7 +42,7 @@ namespace SlimDX.Generator.ObjectModel
 
 		public string ArrayName
 		{
-			get { return Name + string.Concat(Arrays.Select(i => "[]")); }
+			get { return NativeName + string.Concat(Arrays.Select(i => "[]")); }
 		}
 
 		public string ModifiedName
@@ -60,11 +60,11 @@ namespace SlimDX.Generator.ObjectModel
 			: base(model)
 		{
 			Arrays = arrays ?? Enumerable.Empty<int>();
-			Name = (string)element.Attribute("Name");
+			NativeName = (string)element.Attribute("Name");
 
 			var scalar = element.Element("Scalar");
 			if (scalar != null)
-				Name = scalar.Element("Token").Value;
+				NativeName = scalar.Element("Token").Value;
 
 			var modifiers = new List<string>();
 			var mod = element.Element("Mod");
@@ -86,7 +86,7 @@ namespace SlimDX.Generator.ObjectModel
 			RebuildName();
 		}
 
-		protected override string BuildNiceName(string name)
+		protected override string BuildManagedName(string name)
 		{
 			if (string.IsNullOrEmpty(name) || Arrays == null)
 				return "";
@@ -94,7 +94,7 @@ namespace SlimDX.Generator.ObjectModel
 			Type type;
 			if (!Model.TypeMap.TryGetValue(ArrayName, out type))
 			{
-				if (Model.TypeMap.TryGetValue(Name, out type))
+				if (Model.TypeMap.TryGetValue(NativeName, out type))
 					name += string.Concat(Arrays.Select(i => "[]"));
 				else
 					name = ArrayName;
@@ -113,7 +113,7 @@ namespace SlimDX.Generator.ObjectModel
 
 		public override string ToString()
 		{
-			return NiceName;
+			return ManagedName;
 		}
 	}
 }
