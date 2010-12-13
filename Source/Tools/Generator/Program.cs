@@ -140,22 +140,51 @@ namespace SlimDX.Generator
 			var builder = new StringBuilder();
 			var ordinal = 0;
 
-			builder.AppendFormat("return SlimDX.Trampoline.Call.{0}({1} * System.IntPtr.Size, nativePointer, ", function.ReturnType.ManagedName, ordinal);
+			builder.AppendLine();
+
+			// The intermidate objects for output parameters must be declared first.
+			foreach (var parameter in function.Parameters)
+			{
+				var effectiveIndirectionLevel = GetEffectiveIndirectionLevel(parameter);
+				if (effectiveIndirectionLevel > 0)
+				{
+					builder.AppendFormat("{0} _{1} = default({0});", parameter.Type.IntermediateType.FullName, parameter.ManagedName);
+					builder.AppendLine();
+				}
+			}
+
+			builder.AppendFormat("{0} _result = SlimDX.Trampoline.Call.{0}({1} * System.IntPtr.Size, nativePointer, ", function.ReturnType.ManagedName, ordinal);
 			for (int index = 0; index < function.Parameters.Count; ++index)
 			{
 				var parameter = function.Parameters[index];
 				var effectiveIndirectionLevel = GetEffectiveIndirectionLevel(parameter);
 				if (effectiveIndirectionLevel > 0)
-					builder.Append("ref ");
-				builder.Append(parameter.ManagedName);
+					builder.AppendFormat("ref _{0}", parameter.ManagedName);
+				else
+					builder.Append(parameter.ManagedName);
+
 				if (index < function.Parameters.Count - 1)
 					builder.Append(", ");
 			}
 
-			builder.Append(");");
+			builder.AppendLine(");");
+
+			// Once the call has been made, intermediate objects must be transformed to the proper managed types.
+			foreach (var parameter in function.Parameters)
+			{
+				var effectiveIndirectionLevel = GetEffectiveIndirectionLevel(parameter);
+				if (effectiveIndirectionLevel > 0)
+				{
+					builder.AppendFormat("{0} = new {1}(_{0});", parameter.ManagedName, parameter.Type.ManagedName);
+					builder.AppendLine();
+				}
+			}
+
+			builder.AppendLine("return _result;");
 			return builder.ToString();
 		}
 
+		//TODO: Maybe IndirectionLevel itself should just do this...?
 		static int GetEffectiveIndirectionLevel(VariableElement parameter)
 		{
 			var effectiveIndirectionLevel = parameter.IndirectionLevel;
