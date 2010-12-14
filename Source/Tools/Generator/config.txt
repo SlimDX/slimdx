@@ -30,6 +30,19 @@ _M_IX86
 _WIN32_WINNT=0x501
 _UNICODE
 
+# Forcibly ignore some preprocessor definitions so that they show up
+# in the output and can be parsed by our parser
+[IgnoreSymbols]
+__in
+__out
+__inout
+__in_bcount
+__out_bcount
+__in_opt
+__out_ecount_part_opt
+__in_ecount
+__out_ecount
+
 [TypeMap]
 void System.Void
 UINT System.UInt32

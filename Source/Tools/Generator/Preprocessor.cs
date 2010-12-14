@@ -25,6 +25,9 @@ using System.Text;
 
 namespace SlimDX.Generator
 {
+	/// <summary>
+	/// Provides access to the boost::wave C++ preprocessor tool.
+	/// </summary>
 	class Preprocessor
 	{
 		string primarySource;
@@ -49,6 +52,7 @@ namespace SlimDX.Generator
 			// --variadics enables macros with empty argument lists (necessary for some win32 header)
 			// -S adds an include path (specified in our config file)
 			// -D adds a predefined macro (several are necessary to compile the win32 headers)
+			// -r forcibly ignores a given definition
 			// final argument is the primary header file to run against
 			var builder = new StringBuilder("-E -m macros.txt --variadics ");
 
@@ -57,6 +61,9 @@ namespace SlimDX.Generator
 
 			foreach (var symbol in options.GetOptions("Symbols"))
 				builder.Append("-D ").Append(symbol).Append(" ");
+
+			foreach (var symbol in options.GetOptions("IgnoreSymbols"))
+				builder.Append("-r ").Append(symbol).Append(" ");
 
 			Source = Path.GetFileName(primarySource);
 			builder.AppendFormat("\"{0}\"", Source);
