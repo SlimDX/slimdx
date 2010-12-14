@@ -1,4 +1,4 @@
-﻿public {ReturnType:Type.txt} {ManagedName}({Parameters:Parameter.txt ,\s})
+﻿public {ReturnType:Type} {ManagedName}({Parameters:Parameter ,\s})
 		{
 			{@GenerateFunctionBody}
 		}

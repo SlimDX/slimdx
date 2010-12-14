@@ -2,7 +2,6 @@
 PrimarySource=C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include\dxgi.h
 Grammar=header_grammar.cgt
 Wave=..\..\..\..\..\External\Wave\wave.exe
-Templates=..\..\Templates
 NamingRules=naming_rules.txt
 OutputPath=Output\
 Namespace=DXGI

@@ -63,6 +63,12 @@ namespace SlimDX.Generator
 		{
 			var options = new ConfigFile(configFile);
 
+			var defaultTemplateDirectory = Path.GetFullPath("Templates");
+
+			var templateEngine = new TemplateEngine(options.GetOption("Options", "Namespace"), new[] { defaultTemplateDirectory });
+			templateEngine.RegisterCallback("GenerateManagedParameterType", GenerateManagedParameterType);
+			templateEngine.RegisterCallback("GenerateFunctionBody", GenerateFunctionBody);
+
 			// run boost::wave on the primary source file to get a preprocessed file and a list of macros
 			var preprocessor = new Preprocessor(options);
 			Console.WriteLine(preprocessor.Run());
@@ -82,11 +88,10 @@ namespace SlimDX.Generator
 			var root = parser.Parse(source).ToXml();
 			var nameService = new NameRules(options.GetOption("Options", "NamingRules"));
 			var model = new SourceModel(root, nameService, options.GetOptions("TypeMap"));
-			var templateEngine = new TemplateEngine(options.GetOption("Options", "Templates"), options.GetOption("Options", "Namespace"));
+
 			var outputPath = options.GetOption("Options", "OutputPath");
 
-			templateEngine.RegisterCallback("GenerateManagedParameterType", GenerateManagedParameterType);
-			templateEngine.RegisterCallback("GenerateFunctionBody", GenerateFunctionBody);
+
 
 			root.Save("test.xml");
 
@@ -117,12 +122,12 @@ namespace SlimDX.Generator
 			trampolineBuilder.CreateAssembly("SlimDX.Trampoline");
 
 			// write output files
-			File.WriteAllText(Path.Combine(outputPath, "Enums.cs"), templateEngine.Apply("EnumFile.txt", model));
+			File.WriteAllText(Path.Combine(outputPath, "Enums.cs"), templateEngine.Apply("EnumFile", model));
 			foreach (var item in model.Structures)
-				File.WriteAllText(Path.Combine(outputPath, item.ManagedName + ".cs"), templateEngine.Apply("Struct.txt", item));
+				File.WriteAllText(Path.Combine(outputPath, item.ManagedName + ".cs"), templateEngine.Apply("Struct", item));
 
 			foreach (var item in model.Interfaces)
-				File.WriteAllText(Path.Combine(outputPath, item.ManagedName + ".cs"), templateEngine.Apply("Interface.txt", item));
+				File.WriteAllText(Path.Combine(outputPath, item.ManagedName + ".cs"), templateEngine.Apply("Interface", item));
 		}
 
 		static string GenerateManagedParameterType(object source)
