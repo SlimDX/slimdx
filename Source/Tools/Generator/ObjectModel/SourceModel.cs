@@ -244,7 +244,7 @@ namespace SlimDX.Generator.ObjectModel
 			var unknownType = FindTypeByName("IUnknown");
 			var longType = FindTypeByName("ULONG");
 			var guidParameter = new VariableElement("riid", resultType, 0);
-			var unknownParameter = new VariableElement("ppvObject", unknownType, 2);
+			var unknownParameter = new VariableElement("ppvObject", unknownType, 2, UsageQualifiers.Out);
 
 			results[0] = new FunctionElement("QueryInterface", 0, resultType, guidParameter, unknownParameter);
 			results[1] = new FunctionElement("AddRef", 1, longType);
@@ -264,8 +264,10 @@ namespace SlimDX.Generator.ObjectModel
 			var parameterTypeName = ExtractTypeName(parameterTypeData);
 			var parameterType = FindTypeByName(parameterTypeName);
 			var indirectionLevel = parameterTypeData.Descendants("Pointers").Count();
+			var usageData = parameterData.Element("ParamQualifier");
+			var usage = ExtractUsage(usageData);
 
-			return new VariableElement(parameterData.Element("Var").Attribute("Name").Value, parameterType, indirectionLevel);
+			return new VariableElement(parameterData.Element("Var").Attribute("Name").Value, parameterType, indirectionLevel, usage);
 		}
 
 		/// <summary>
@@ -284,6 +286,34 @@ namespace SlimDX.Generator.ObjectModel
 			var scalarData = typeData.Element("Scalar");
 			var tokenData = scalarData.Element("Token");
 			return tokenData.Value;
+		}
+
+		/// <summary>
+		/// Extracts the usage information from usage XML.
+		/// </summary>
+		/// <param name="usageData">The XML element.</param>
+		/// <returns>The usage information.</returns>
+		UsageQualifiers ExtractUsage(XElement usageData)
+		{
+			if (usageData == null)
+				return UsageQualifiers.None;
+
+			var name = usageData.Element("Token").Value;
+			var usage = UsageQualifiers.None;
+			if (name.Contains("in"))
+				usage |= UsageQualifiers.In;
+			if (name.Contains("out"))
+				usage |= UsageQualifiers.Out;
+			if (name.Contains("opt"))
+				usage |= UsageQualifiers.IsOptional;
+			if (name.Contains("bcount"))
+				usage |= UsageQualifiers.HasBinarySizeRelation;
+			if (name.Contains("ecount"))
+				usage |= UsageQualifiers.HasElementCountRelation;
+			if (name.Contains("part"))
+				usage |= UsageQualifiers.IsPartial;
+
+			return usage;
 		}
 	}
 }
