@@ -34,12 +34,6 @@ namespace SlimDX.Generator
 		// \} and \{ are escaped
 		Regex regex = new Regex(@"{(\\}|.)*?}");
 
-		public string Directory
-		{
-			get;
-			private set;
-		}
-
 		public string Namespace
 		{
 			get;
@@ -49,13 +43,17 @@ namespace SlimDX.Generator
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TemplateEngine"/> class.
 		/// </summary>
-		/// <param name="directory">The directory containing text templates.</param>
 		/// <param name="rootNamespace">The root namespace.</param>
-		public TemplateEngine(string directory, string rootNamespace)
+		public TemplateEngine(string rootNamespace, IEnumerable<string> templateSearchPaths)
 		{
-			Directory = directory;
-			Namespace = rootNamespace;
+			if (templateSearchPaths == null)
+				throw new ArgumentNullException("templateSearchPaths");
 
+			searchPaths.AddRange(templateSearchPaths);
+			if (searchPaths.Count == 0)
+				throw new ArgumentException("At least one template search path must be specified.", "templateSearchPaths");
+
+			Namespace = rootNamespace;
 			keywords["Namespace"] = GetNamespaceKeywordValue;
 		}
 
@@ -67,12 +65,12 @@ namespace SlimDX.Generator
 		/// <returns>The generated string.</returns>
 		public string Apply(string template, object source)
 		{
-			template = Path.Combine(Directory, template);
-			if (!File.Exists(template))
-				throw new FileNotFoundException("Could not find template file.", template);
+			var templateFile = FindTemplate(template);
+			if (templateFile == null)
+				throw new FileNotFoundException(string.Format("No template named '{0}' exists.", template));
 
-			template = File.ReadAllText(template);
-			return regex.Replace(template.Replace("\\{", "`"), m => Evaluate(source, m)).Replace("`", "{").Replace("\\}", "}");
+			var templateText = File.ReadAllText(templateFile);
+			return regex.Replace(templateText.Replace("\\{", "`"), m => Evaluate(source, m)).Replace("`", "{").Replace("\\}", "}");
 		}
 
 		/// <summary>
@@ -94,8 +92,28 @@ namespace SlimDX.Generator
 		const string callbackGlyph = "@";
 		const string recursionGlyph = ":";
 
+		List<string> searchPaths = new List<string>();
+
 		Dictionary<string, Func<object, string>> keywords = new Dictionary<string, Func<object, string>>();
 		Dictionary<string, Func<object, string>> callbacks = new Dictionary<string, Func<object, string>>();
+
+		/// <summary>
+		/// Searches for a template with the specified name.
+		/// </summary>
+		/// <param name="templateName">The name of the desired template.</param>
+		/// <returns>The full path to the matching template file, or null if no template was found.</returns>
+		string FindTemplate(string templateName)
+		{
+			var fileName = string.Format("{0}.txt", templateName);
+			foreach (var path in searchPaths)
+			{
+				var file = Path.Combine(path, fileName);
+				if (File.Exists(file))
+					return file;
+			}
+
+			return null;
+		}
 
 		string Evaluate(object source, Match match)
 		{

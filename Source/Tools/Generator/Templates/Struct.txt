@@ -29,6 +29,6 @@ namespace SlimDX.{#Namespace}
 	[StructLayout(LayoutKind.Sequential)]
 	public struct {ManagedName}
 	{
-		{Members:Variable.txt \r\n\t\t}
+		{Members:Variable \r\n\t\t}
 	}
 }

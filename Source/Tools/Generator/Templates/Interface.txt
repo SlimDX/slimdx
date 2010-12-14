@@ -29,6 +29,6 @@ namespace SlimDX.{#Namespace}
 	[Guid("{Guid}")]
 	public class {ManagedName} : {BaseType}
 	{
-		{Functions:Function.txt \r\n\r\n\t\t}
+		{Functions:Function \r\n\r\n\t\t}
 	}
 }
