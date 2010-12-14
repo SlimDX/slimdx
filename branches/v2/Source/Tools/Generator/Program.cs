@@ -32,19 +32,19 @@ namespace SlimDX.Generator
 	{
 		static void Main(string[] args)
 		{
-			string configFile = "config.txt";
+			string configurationFile = @"config.txt";
 			if (args != null & args.Length > 0 && !string.IsNullOrWhiteSpace(args[0]))
-				configFile = args[0].Trim();
+				configurationFile = args[0].Trim();
 
-			if (!File.Exists(configFile))
-				Console.WriteLine("Could not open config file \"{0}\".", configFile);
+			if (!File.Exists(configurationFile))
+				Console.WriteLine("Could not open config file \"{0}\".", configurationFile);
 			else
 			{
 #if !DEBUG
 				try
 				{
 #endif
-				Run(configFile);
+				Run(configurationFile);
 #if !DEBUG
 				}
 				catch (Exception e)
@@ -56,21 +56,21 @@ namespace SlimDX.Generator
 		}
 
 		/// <summary>
-		/// Runs the generator using options specified in the given config file.
+		/// Runs the generator using options specified in the given configuration file.
 		/// </summary>
-		/// <param name="configFile">The config file.</param>
-		static void Run(string configFile)
+		/// <param name="configurationFile">The configuration file.</param>
+		static void Run(string configurationFile)
 		{
-			var options = new ConfigFile(configFile);
-
+			var configuration = new ConfigFile(configurationFile);
+			var configurationDirectory = Path.GetDirectoryName(Path.GetFullPath(configurationFile));
 			var defaultTemplateDirectory = Path.GetFullPath("Templates");
 
-			var templateEngine = new TemplateEngine(options.GetOption("Options", "Namespace"), new[] { defaultTemplateDirectory });
+			var templateEngine = new TemplateEngine(configuration.GetOption("Options", "Namespace"), new[] { defaultTemplateDirectory });
 			templateEngine.RegisterCallback("GenerateManagedParameterType", GenerateManagedParameterType);
 			templateEngine.RegisterCallback("GenerateFunctionBody", GenerateFunctionBody);
 
 			// run boost::wave on the primary source file to get a preprocessed file and a list of macros
-			var preprocessor = new Preprocessor(options);
+			var preprocessor = new Preprocessor(configuration);
 			Console.WriteLine(preprocessor.Run());
 
 			// before parsing, run some transformations on the preprocessed file to
@@ -79,17 +79,21 @@ namespace SlimDX.Generator
 			// this includes dropping any source that is not from the given primary or ancillary
 			// sources, which is indicated in the preprocessed file by #line directives
 			var source = preprocessor.Source;
-			var relevantSources = options.GetOptions("AncillarySources").Concat(new[] { Path.Combine(Directory.GetCurrentDirectory(), source) });
+			var relevantSources = configuration.GetOptions("AncillarySources").Concat(new[] { Path.Combine(Directory.GetCurrentDirectory(), source) });
 			source = Path.ChangeExtension(source, ".i");
 			PreTransform(source, new HashSet<string>(relevantSources));
 
-			// run the parser on the preprocessed file to generate a model of the file in memory
-			var parser = new HeaderParser(options.GetOption("Options", "Grammar"));
-			var root = parser.Parse(source).ToXml();
-			var nameService = new NameRules(options.GetOption("Options", "NamingRules"));
-			var model = new SourceModel(root, nameService, options.GetOptions("TypeMap"));
+			var nameServiceFile = Path.Combine(configurationDirectory, configuration.GetOption("Options", "NamingRules"));
+			var nameService = new NameRules(nameServiceFile);
 
-			var outputPath = options.GetOption("Options", "OutputPath");
+			// run the parser on the preprocessed file to generate a model of the file in memory
+			var grammarFile = Path.Combine(configurationDirectory, configuration.GetOption("Options", "Grammar"));
+			var parser = new HeaderParser(grammarFile);
+			var root = parser.Parse(source).ToXml();
+
+			var model = new SourceModel(root, nameService, configuration.GetOptions("TypeMap"));
+
+			var outputPath = Path.Combine(configurationDirectory, configuration.GetOption("Options", "OutputPath"));
 
 
 

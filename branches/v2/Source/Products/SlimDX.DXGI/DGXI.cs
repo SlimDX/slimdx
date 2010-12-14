@@ -39,7 +39,7 @@ namespace SlimDX.DXGI
 		{
 			IntPtr nativePointer = IntPtr.Zero;
 			CreateDXGIFactory(ref factoryGuid, out nativePointer);
-			return new FactoryImplementation(nativePointer);
+			return new Factory(nativePointer);
 		}
 
 		#endregion
@@ -51,72 +51,5 @@ namespace SlimDX.DXGI
 		private extern static int CreateDXGIFactory(ref Guid interfaceID, out IntPtr result);
 
 		#endregion
-	}
-
-	//TODO: Temporary code below.
-	public partial interface Factory : ComObject
-	{
-		Adapter EnumerateAdapters(int adapter);
-	}
-
-	public partial interface Adapter : ComObject
-	{
-	}
-
-	class FactoryImplementation : Factory
-	{
-		public FactoryImplementation(IntPtr nativePointer)
-		{
-			this.nativePointer = nativePointer;
-		}
-
-		IntPtr nativePointer;
-
-		public T QueryInterface<T>() where T : class, ComObject
-		{
-			return null;// index 0 in vtable
-		}
-
-		public void AddReference()
-		{
-			//TODO: Call.Int32( IntPtr.Size * 1, nativePointer );
-		}
-
-		public void Release()
-		{
-			//TODO: Call.Int32(IntPtr.Size * 2, nativePointer);
-		}
-
-		public Adapter EnumerateAdapters(int adapter)
-		{
-			IntPtr result = IntPtr.Zero;
-			//Call.Result(7 * IntPtr.Size, nativePointer, adapter, ref result);
-			return new AdapterImplementation(result);
-		}
-	}
-
-	class AdapterImplementation : Adapter
-	{
-		public AdapterImplementation(IntPtr nativePointer)
-		{
-			this.nativePointer = nativePointer;
-		}
-
-		IntPtr nativePointer;
-
-		public T QueryInterface<T>() where T : class, ComObject
-		{
-			return null;// index 0 in vtable
-		}
-
-		public void AddReference()
-		{
-			//TODO: Call.Int32( IntPtr.Size * 1, nativePointer );
-		}
-
-		public void Release()
-		{
-			//TODO: Call.Int32(IntPtr.Size * 2, nativePointer);
-		}
 	}
 }
