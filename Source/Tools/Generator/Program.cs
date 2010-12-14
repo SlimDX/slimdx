@@ -71,7 +71,7 @@ namespace SlimDX.Generator
 			templateEngine.RegisterCallback("GenerateFunctionBody", GenerateFunctionBody);
 
 			// run boost::wave on the primary source file to get a preprocessed file and a list of macros
-			var preprocessor = new Preprocessor(configuration);
+			var preprocessor = new Preprocessor(configuration, configurationDirectory);
 			Console.WriteLine(preprocessor.Run());
 
 			// before parsing, run some transformations on the preprocessed file to
