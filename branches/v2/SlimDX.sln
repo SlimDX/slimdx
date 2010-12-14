@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator", "Source\Tools\Generator\Generator.csproj", "{9523BE04-7228-413E-993D-7D741A685B4F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimDX.DXGI", "Source\Products\SlimDX.DXGI\SlimDX.DXGI.csproj", "{E3444A70-DF09-4610-9393-B5D7467DF705}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9523BE04-7228-413E-993D-7D741A685B4F} = {9523BE04-7228-413E-993D-7D741A685B4F}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimDX", "Source\Products\SlimDX\SlimDX.csproj", "{A774A428-009F-4E4D-ABF2-F7E181DAA2E3}"
 EndProject
