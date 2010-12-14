@@ -92,6 +92,20 @@ Comment Line  = '//'
           | '...'
           | <FunctionPtr>
           | <Type> '(' '&' <ID> ')' <Array>
+          | <ParamQualifier> <Type> <Var>
+          | <ParamQualifier> <Type>
+
+<ParamQualifier> ::= __in
+                   | __out
+                   | __inout
+                   | __in_opt
+                   | __in_bcount '(' <QualifierID> ')'
+                   | __out_bcount '(' <QualifierID> ')'
+                   | __out_ecount_part_opt '(' <QualifierID> ',' <QualifierID> ')'
+                   | __in_ecount '(' <QualifierID> ')'
+                   | __out_ecount '(' <QualifierID> ')'
+
+<QualifierID> ::= <Pointers> <ID>
 
 <Block> ::= '{' <BlockList> '}'
           | <Anything>
