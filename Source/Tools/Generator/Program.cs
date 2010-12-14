@@ -25,6 +25,7 @@ using System.Text;
 using System.Linq;
 using SlimDX.Generator.Parsing;
 using SlimDX.Generator.ObjectModel;
+using System.Reflection;
 
 namespace SlimDX.Generator
 {
@@ -63,7 +64,7 @@ namespace SlimDX.Generator
 		{
 			var configuration = new ConfigFile(configurationFile);
 			var configurationDirectory = Path.GetDirectoryName(Path.GetFullPath(configurationFile));
-			var defaultTemplateDirectory = Path.GetFullPath("Templates");
+			var defaultTemplateDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Templates");
 
 			var templateEngine = new TemplateEngine(configuration.GetOption("Options", "Namespace"), new[] { defaultTemplateDirectory });
 			templateEngine.RegisterCallback("GenerateManagedParameterType", GenerateManagedParameterType);
