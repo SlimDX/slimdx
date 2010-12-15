@@ -1,1 +1,1 @@
-﻿{@GenerateManagedParameterType} {ManagedName}
+﻿{@GenerateManagedParameterType} {NativeName}
