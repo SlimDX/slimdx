@@ -32,8 +32,16 @@ namespace SlimDX.Generator.ObjectModel
 	/// </summary>
 	class SourceModel
 	{
+		Dictionary<string, TypeElement> typesByName = new Dictionary<string, TypeElement>();
+		List<EnumerationElement> enumerationElements = new List<EnumerationElement>();
+		List<StructureElement> structureElements = new List<StructureElement>();
+		List<InterfaceElement> interfaceElements = new List<InterfaceElement>();
+		NameRules nameService;
+
 		public SourceModel(XElement root, NameRules nameService, IEnumerable<string> initialTypeMap)
 		{
+			this.nameService = nameService;
+
 			foreach (var item in initialTypeMap)
 			{
 				int index = item.IndexOf(' ');
@@ -49,7 +57,7 @@ namespace SlimDX.Generator.ObjectModel
 				AddType(new TypeElement(nativeName, managedType));
 			}
 
-			Build(root, nameService);
+			Build(root);
 		}
 
 		/// <summary>
@@ -119,17 +127,11 @@ namespace SlimDX.Generator.ObjectModel
 			return null;
 		}
 
-		Dictionary<string, TypeElement> typesByName = new Dictionary<string, TypeElement>();
-		List<EnumerationElement> enumerationElements = new List<EnumerationElement>();
-		List<StructureElement> structureElements = new List<StructureElement>();
-		List<InterfaceElement> interfaceElements = new List<InterfaceElement>();
-
 		/// <summary>
 		/// Builds the source model from the specified XML.
 		/// </summary>
 		/// <param name="root">The XML describing the source model.</param>
-		/// <param name="nameService">The name service.</param>
-		void Build(XElement root, NameRules nameService)
+		void Build(XElement root)
 		{
 			// The build occurs in two phases; the first phase populates the model with all 
 			// the basic type declarations, and the second phase adds content to those types.
@@ -161,7 +163,7 @@ namespace SlimDX.Generator.ObjectModel
 					var parentTypeName = inheritanceData.Attribute("Name").Value;
 					var parentType = FindTypeByName(parentTypeName);
 
-					typeElement = new InterfaceElement(typeName, nameService.Apply(typeName, NameCasingStyle.Pascal), parentType, new Guid(guidValue));
+					typeElement = new InterfaceElement(typeName, nameService.Apply(typeName, NameCasingStyle.Preserve), parentType, new Guid(guidValue));
 
 					if (parentTypeName == "IUnknown")
 					{
@@ -266,8 +268,9 @@ namespace SlimDX.Generator.ObjectModel
 			var indirectionLevel = parameterTypeData.Descendants("Pointers").Count();
 			var usageData = parameterData.Element("ParamQualifier");
 			var usage = ExtractUsage(usageData);
+			var name = parameterData.Element("Var").Attribute("Name").Value;
 
-			return new VariableElement(parameterData.Element("Var").Attribute("Name").Value, parameterType, indirectionLevel, usage);
+			return new VariableElement(name, nameService.Apply(name, NameCasingStyle.Camel), parameterType, indirectionLevel, usage);
 		}
 
 		/// <summary>
