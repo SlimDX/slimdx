@@ -27,7 +27,7 @@ using System.Runtime.InteropServices;
 namespace SlimDX.{#Namespace}
 {
 	[Guid("{Guid}")]
-	public class {ManagedName} : {BaseType}
+	public class {ManagedName} : {BaseType.ManagedName}
 	{
 		{Functions:Function \r\n\r\n\t\t}
 	}

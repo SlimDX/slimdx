@@ -93,7 +93,20 @@ namespace SlimDX.Generator.ObjectModel
 		/// <param name="indirectionLevel">The indirection level of the variable.</param>
 		/// <param name="usage">The usage qualifiers for an indirect parameter variable.</param>
 		public VariableElement(string nativeName, TypeElement type, int indirectionLevel, UsageQualifiers usage)
-			: base(nativeName)
+			: this(nativeName, nativeName, type, indirectionLevel, usage)
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="VariableElement"/> class.
+		/// </summary>
+		/// <param name="nativeName">The variable's native name.</param>
+		/// <param name="managedName">The variable's managed name.</param>
+		/// <param name="type">The variable's type.</param>
+		/// <param name="indirectionLevel">The indirection level of the variable.</param>
+		/// <param name="usage">The usage qualifiers for an indirect parameter variable.</param>
+		public VariableElement(string nativeName, string managedName, TypeElement type, int indirectionLevel, UsageQualifiers usage)
+			: base(nativeName, managedName)
 		{
 			if (type == null)
 				throw new ArgumentNullException("type");

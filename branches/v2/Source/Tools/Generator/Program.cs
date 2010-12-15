@@ -93,10 +93,7 @@ namespace SlimDX.Generator
 			var root = parser.Parse(source).ToXml();
 
 			var model = new SourceModel(root, nameService, configuration.GetOptions("TypeMap"));
-
 			var outputPath = Path.Combine(configurationDirectory, configuration.GetOption("Options", "OutputPath"));
-
-
 
 			root.Save("test.xml");
 
@@ -146,10 +143,10 @@ namespace SlimDX.Generator
 
 		static string GenerateFunctionBody(object source)
 		{
+			const int indentLevel = 3;
+
 			var function = (FunctionElement)source;
 			var builder = new StringBuilder();
-
-			builder.AppendLine();
 
 			// The intermidate objects for output parameters must be declared first.
 			foreach (var parameter in function.Parameters)
@@ -157,12 +154,12 @@ namespace SlimDX.Generator
 				var effectiveIndirectionLevel = GetEffectiveIndirectionLevel(parameter);
 				if (effectiveIndirectionLevel > 0)
 				{
-					builder.AppendFormat("{0} _{1} = default({0});", parameter.Type.IntermediateType.FullName, parameter.ManagedName);
+					builder.Indent(indentLevel).AppendFormat("{0} _{1} = default({0});", parameter.Type.IntermediateType.FullName, parameter.ManagedName);
 					builder.AppendLine();
 				}
 			}
 
-			builder.AppendFormat("{0} _result = SlimDX.Trampoline.Call.{0}({1} * System.IntPtr.Size, nativePointer, ", function.ReturnType.ManagedName, function.Index);
+			builder.Indent(indentLevel).AppendFormat("{0} _result = SlimDX.Trampoline.Call.{0}({1} * System.IntPtr.Size, nativePointer, ", function.ReturnType.ManagedName, function.Index);
 			for (int index = 0; index < function.Parameters.Count; ++index)
 			{
 				var parameter = function.Parameters[index];
@@ -184,12 +181,12 @@ namespace SlimDX.Generator
 				var effectiveIndirectionLevel = GetEffectiveIndirectionLevel(parameter);
 				if (effectiveIndirectionLevel > 0)
 				{
-					builder.AppendFormat("{0} = new {1}(_{0});", parameter.ManagedName, parameter.Type.ManagedName);
+					builder.Indent(indentLevel).AppendFormat("{0} = new {1}(_{0});", parameter.ManagedName, parameter.Type.ManagedName);
 					builder.AppendLine();
 				}
 			}
 
-			builder.AppendLine("return _result;");
+			builder.Indent(indentLevel).Append("return _result;");
 			return builder.ToString();
 		}
 

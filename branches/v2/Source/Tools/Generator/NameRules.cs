@@ -5,9 +5,24 @@ using System.Text;
 
 namespace SlimDX.Generator
 {
+	/// <summary>
+	/// Specifies possible name casing styles.
+	/// </summary>
 	public enum NameCasingStyle
 	{
+		/// <summary>
+		/// Indicates that the input casing should be preserved as-is.
+		/// </summary>
+		Preserve,
+
+		/// <summary>
+		/// Indicates PascalCasing.
+		/// </summary>
 		Pascal,
+
+		/// <summary>
+		/// Indicates camelCasing.
+		/// </summary>
 		Camel
 	}
 
@@ -32,6 +47,8 @@ namespace SlimDX.Generator
 					return result.PascalCase();
 				case NameCasingStyle.Camel:
 					return result.CamelCase();
+				case NameCasingStyle.Preserve:
+					return result;
 				default:
 					throw new NotSupportedException(string.Format("Casing style '{0}' is not supported."));
 			}
