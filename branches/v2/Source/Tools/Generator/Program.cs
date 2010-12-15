@@ -159,18 +159,18 @@ namespace SlimDX.Generator
 				}
 			}
 
-			builder.Indent(indentLevel).AppendFormat("{0} _result = SlimDX.Trampoline.{0}({1} * System.IntPtr.Size, nativePointer, ", function.ReturnType.ManagedName, function.Index);
-			for (int index = 0; index < function.Parameters.Count; ++index)
+			var resultVariable = string.Empty;
+			if (function.ReturnType.IntermediateType != typeof(void))
+				resultVariable = string.Format("{0} _result = ", function.ReturnType.ManagedName);
+			builder.Indent(indentLevel).AppendFormat("{0}SlimDX.Trampoline.{1}({2} * System.IntPtr.Size, nativePointer", resultVariable, function.ReturnType.ManagedName, function.Index);
+
+			foreach (var parameter in function.Parameters)
 			{
-				var parameter = function.Parameters[index];
 				var effectiveIndirectionLevel = GetEffectiveIndirectionLevel(parameter);
 				if (effectiveIndirectionLevel > 0)
-					builder.AppendFormat("ref _{0}", parameter.NativeName);
+					builder.AppendFormat(", ref _{0}", parameter.NativeName);
 				else
-					builder.Append(parameter.NativeName);
-
-				if (index < function.Parameters.Count - 1)
-					builder.Append(", ");
+					builder.AppendFormat(", {0}", parameter.NativeName);
 			}
 
 			builder.AppendLine(");");
@@ -181,12 +181,16 @@ namespace SlimDX.Generator
 				var effectiveIndirectionLevel = GetEffectiveIndirectionLevel(parameter);
 				if (effectiveIndirectionLevel > 0)
 				{
-					builder.Indent(indentLevel).AppendFormat("{0} = new {1}(_{0});", parameter.NativeName, parameter.Type.ManagedName);
+					if (parameter.Type.IntermediateType.IsValueType)
+						builder.Indent(indentLevel).AppendFormat("{0} =_{0};", parameter.NativeName);
+					else
+						builder.Indent(indentLevel).AppendFormat("{0} = new {1}(_{0});", parameter.NativeName, parameter.Type.ManagedName);
 					builder.AppendLine();
 				}
 			}
 
-			builder.Indent(indentLevel).Append("return _result;");
+			if (function.ReturnType.IntermediateType != typeof(void))
+				builder.Indent(indentLevel).Append("return _result;");
 			return builder.ToString();
 		}
 
