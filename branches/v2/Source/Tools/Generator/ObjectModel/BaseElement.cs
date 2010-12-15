@@ -31,8 +31,9 @@ namespace SlimDX.Generator.ObjectModel
 		/// Initializes a new instance of the <see cref="BaseElement"/> class.
 		/// </summary>
 		/// <param name="nativeName">The element's native name.</param>
-		protected BaseElement(string nativeName)
-			: this(nativeName, nativeName)
+		/// <param name="metadata">The element's metadata.</param>
+		protected BaseElement(string nativeName, Metadata metadata)
+			: this(nativeName, nativeName, metadata)
 		{
 		}
 
@@ -41,15 +42,18 @@ namespace SlimDX.Generator.ObjectModel
 		/// </summary>
 		/// <param name="nativeName">The element's native name.</param>
 		/// <param name="managedName">The element's managed name.</param>
-		protected BaseElement(string nativeName, string managedName)
+		/// <param name="metadata">The element's metadata.</param>
+		protected BaseElement(string nativeName, string managedName, Metadata metadata)
 		{
 			if (string.IsNullOrEmpty(nativeName))
 				throw new ArgumentException("Value may not be null or empty.", "nativeName");
 			if (string.IsNullOrEmpty(managedName))
 				throw new ArgumentException("Value may not be null or empty.", "managedName");
+			if (metadata == null)
+				throw new ArgumentNullException("metadata");
 
 			NativeName = nativeName;
-			ManagedName = managedName;
+			ManagedName = metadata["OverrideName"] ?? managedName;
 		}
 
 		/// <summary>

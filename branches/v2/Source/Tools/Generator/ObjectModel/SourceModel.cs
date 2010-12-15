@@ -32,15 +32,19 @@ namespace SlimDX.Generator.ObjectModel
 	/// </summary>
 	class SourceModel
 	{
-		Dictionary<string, TypeElement> typesByName = new Dictionary<string, TypeElement>();
-		List<EnumerationElement> enumerationElements = new List<EnumerationElement>();
-		List<StructureElement> structureElements = new List<StructureElement>();
-		List<InterfaceElement> interfaceElements = new List<InterfaceElement>();
-		NameRules nameService;
+		#region Interface
 
-		public SourceModel(XElement root, NameRules nameService, IEnumerable<string> initialTypeMap)
+		public SourceModel(XElement model, NameRules nameService, MetadataService metadataService, IEnumerable<string> initialTypeMap)
 		{
+			if (model == null)
+				throw new ArgumentNullException("root");
+			if (nameService == null)
+				throw new ArgumentNullException("nameService");
+			if (metadataService == null)
+				throw new ArgumentNullException("metadataService");
+
 			this.nameService = nameService;
+			this.metadataService = metadataService;
 
 			foreach (var item in initialTypeMap)
 			{
@@ -54,10 +58,10 @@ namespace SlimDX.Generator.ObjectModel
 				if (managedType == null)
 					throw new InvalidDataException(string.Format("One of the initial type mappings is invalid: \"{0}\"", item));
 
-				AddType(new TypeElement(nativeName, managedType));
+				AddType(new TypeElement(nativeName, managedType, metadataService.FindTypeMetadata(nativeName)));
 			}
 
-			Build(root);
+			Build(model);
 		}
 
 		/// <summary>
@@ -127,6 +131,16 @@ namespace SlimDX.Generator.ObjectModel
 			return null;
 		}
 
+		#endregion Interface
+		#region Implementation
+
+		Dictionary<string, TypeElement> typesByName = new Dictionary<string, TypeElement>();
+		List<EnumerationElement> enumerationElements = new List<EnumerationElement>();
+		List<StructureElement> structureElements = new List<StructureElement>();
+		List<InterfaceElement> interfaceElements = new List<InterfaceElement>();
+		NameRules nameService;
+		MetadataService metadataService;
+
 		/// <summary>
 		/// Builds the source model from the specified XML.
 		/// </summary>
@@ -151,42 +165,15 @@ namespace SlimDX.Generator.ObjectModel
 
 				TypeElement typeElement = null;
 				var typeName = baseData.Attribute("Name").Value;
-				var declarationData = baseData.Element("DeclspecOrEmpty");
-				var structureData = baseData.Element("Struct");
-				var enumerationData = baseData.Element("Enum");
-
-				if (declarationData != null)
-				{
-					var guidData = declarationData.Element("DeclspecDef").Element("Declspec");
-					var guidValue = guidData.Attribute("Value").Value.Trim('"');
-					var inheritanceData = baseData.Element("Inheritance");
-					var parentTypeName = inheritanceData.Attribute("Name").Value;
-					var parentType = FindTypeByName(parentTypeName);
-
-					typeElement = new InterfaceElement(typeName, nameService.Apply(typeName, NameCasingStyle.Preserve), parentType, new Guid(guidValue));
-
-					if (parentTypeName == "IUnknown")
-					{
-						// As a special case, IUnknown is directly implemented. IUnknown's managed analog (the C# interface SlimDX.ComObject)
-						// lives in the core SlimDX assembly, which cannot contain generated code or reference the trampoline assembly.
-						// Installing the appropriate function elements here also allows for simplified virtual table index management.
-						InterfaceElement interfaceElement = (InterfaceElement)typeElement;
-						foreach (var functionElement in BuildIUnknownFunctions())
-							interfaceElement.AddFunction(functionElement);
-					}
-				}
-				else if (structureData != null)
-				{
-					typeElement = new StructureElement(typeName, nameService.Apply(typeName, NameCasingStyle.Pascal));
-				}
-				else if (enumerationData != null)
-				{
-					typeElement = new EnumerationElement(typeName, nameService.Apply(typeName, NameCasingStyle.Pascal));
-				}
+				var interfaceData = baseData.Element("DeclspecOrEmpty");
+				if (interfaceData != null)
+					typeElement = CreateInterface(typeName, baseData, interfaceData);
+				else if (baseData.Element("Struct") != null)
+					typeElement = CreateStructure(typeName);
+				else if (baseData.Element("Enum") != null)
+					typeElement = CreateEnumeration(typeName);
 				else
-				{
 					continue;
-				}
 
 				AddType(typeElement);
 				cache[typeElement.NativeName] = baseData;
@@ -196,6 +183,57 @@ namespace SlimDX.Generator.ObjectModel
 				BuildInterface(interfaceElement, cache[interfaceElement.NativeName]);
 			foreach (var structureElement in structureElements)
 				BuildStructure(structureElement, cache[structureElement.NativeName]);
+		}
+
+		/// <summary>
+		/// Creates an interface element as a declaration.
+		/// </summary>
+		/// <param name="name">The element name.</param>
+		/// <param name="baseData">The base element data.</param>
+		/// <param name="interfaceData">The interface declaration data.</param>
+		/// <returns>The declared interface element.</returns>
+		TypeElement CreateInterface(string name, XElement baseData, XElement interfaceData)
+		{
+			var guidData = interfaceData.Element("DeclspecDef").Element("Declspec");
+			var guidValue = guidData.Attribute("Value").Value.Trim('"');
+			var inheritanceData = baseData.Element("Inheritance");
+			var parentTypeName = inheritanceData.Attribute("Name").Value;
+			var parentType = FindTypeByName(parentTypeName);
+			var metadata = metadataService.FindTypeMetadata(name);
+
+			var result = new InterfaceElement(name, nameService.Apply(name, NameCasingStyle.Preserve), metadata, parentType, new Guid(guidValue));
+			if (parentTypeName == "IUnknown")
+			{
+				// As a special case, IUnknown is directly implemented. IUnknown's managed analog (the C# interface SlimDX.ComObject)
+				// lives in the core SlimDX assembly, which cannot contain generated code or reference the trampoline assembly.
+				// Installing the appropriate function elements here also allows for simplified virtual table index management.
+				foreach (var functionElement in BuildIUnknownFunctions())
+					result.AddFunction(functionElement);
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Creates a structure element as a declaration.
+		/// </summary>
+		/// <param name="name">The element name.</param>
+		/// <returns>The declared structure element.</returns>
+		TypeElement CreateStructure(string name)
+		{
+			var metadata = metadataService.FindTypeMetadata(name);
+			return new StructureElement(name, nameService.Apply(name, NameCasingStyle.Pascal), metadata);
+		}
+
+		/// <summary>
+		/// Creates an enumeration element as a declaration.
+		/// </summary>
+		/// <param name="name">The element name.</param>
+		/// <returns>The declared enumeration element.</returns>
+		TypeElement CreateEnumeration(string name)
+		{
+			var metadata = metadataService.FindTypeMetadata(name);
+			return new EnumerationElement(name, nameService.Apply(name, NameCasingStyle.Pascal), metadata);
 		}
 
 		/// <summary>
@@ -226,7 +264,10 @@ namespace SlimDX.Generator.ObjectModel
 				foreach (var parameterData in signatureData.Descendants("Param"))
 					parameterElements.Add(ExtractParameter(parameterData));
 
-				element.AddFunction(new FunctionElement(functionData.Attribute("Name").Value, index++, returnType, parameterElements.ToArray()));
+				var name = functionData.Attribute("Name").Value;
+				var qualifiedName = string.Format("{0}.{1}", element.NativeName, name);
+				var metadata = metadataService.FindFunctionMetadata(qualifiedName);
+				element.AddFunction(new FunctionElement(name, metadata, index++, returnType, parameterElements.ToArray()));
 			}
 		}
 
@@ -245,12 +286,12 @@ namespace SlimDX.Generator.ObjectModel
 			var guidType = FindTypeByName("REFIID");
 			var unknownType = FindTypeByName("IUnknown");
 			var longType = FindTypeByName("ULONG");
-			var guidParameter = new VariableElement("riid", resultType, 0);
-			var unknownParameter = new VariableElement("ppvObject", unknownType, 2, UsageQualifiers.Out);
+			var guidParameter = new VariableElement("riid", new Metadata(), resultType, 0);
+			var unknownParameter = new VariableElement("ppvObject", new Metadata(), unknownType, 2, UsageQualifiers.Out);
 
-			results[0] = new FunctionElement("QueryInterface", 0, resultType, guidParameter, unknownParameter);
-			results[1] = new FunctionElement("AddRef", 1, longType);
-			results[2] = new FunctionElement("Release", 2, longType);
+			results[0] = new FunctionElement("QueryInterface", metadataService.FindFunctionMetadata("IUnknown.QueryInterface"), 0, resultType, guidParameter, unknownParameter);
+			results[1] = new FunctionElement("AddRef", metadataService.FindFunctionMetadata("IUnknown.AddRef"), 1, longType);
+			results[2] = new FunctionElement("Release", metadataService.FindFunctionMetadata("IUnknown.Release"), 2, longType);
 
 			return results;
 		}
@@ -274,7 +315,7 @@ namespace SlimDX.Generator.ObjectModel
 			if (parameterType.ManagedName == "void")
 				parameterType = FindTypeByName("void*");
 
-			return new VariableElement(name, nameService.Apply(name, NameCasingStyle.Camel), parameterType, indirectionLevel, usage);
+			return new VariableElement(name, nameService.Apply(name, NameCasingStyle.Camel), new Metadata(), parameterType, indirectionLevel, usage);
 		}
 
 		/// <summary>
@@ -322,5 +363,7 @@ namespace SlimDX.Generator.ObjectModel
 
 			return usage;
 		}
+
+		#endregion
 	}
 }

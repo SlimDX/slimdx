@@ -18,28 +18,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 
 namespace SlimDX.Generator
 {
 	class TemplateEngine
 	{
-		// regex to grab all {foo} elements in the template
-		// \} and \{ are escaped
-		Regex regex = new Regex(@"{(\\}|.)*?}");
-
-		public string Namespace
-		{
-			get;
-			private set;
-		}
-
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TemplateEngine"/> class.
 		/// </summary>
@@ -57,6 +46,16 @@ namespace SlimDX.Generator
 			keywords["Namespace"] = GetNamespaceKeywordValue;
 		}
 
+
+
+		public string Namespace
+		{
+			get;
+			private set;
+		}
+
+
+
 		/// <summary>
 		/// Applies the specified template to the given source object.
 		/// </summary>
@@ -70,7 +69,7 @@ namespace SlimDX.Generator
 				throw new FileNotFoundException(string.Format("No template named '{0}' exists.", template));
 
 			var templateText = File.ReadAllText(templateFile);
-			return regex.Replace(templateText.Replace("\\{", "`"), m => Evaluate(source, m)).Replace("`", "{").Replace("\\}", "}");
+			return tokenRegex.Replace(templateText.Replace("\\{", "`"), m => Evaluate(source, m)).Replace("`", "{").Replace("\\}", "}");
 		}
 
 		/// <summary>
@@ -96,6 +95,8 @@ namespace SlimDX.Generator
 
 		Dictionary<string, Func<object, string>> keywords = new Dictionary<string, Func<object, string>>();
 		Dictionary<string, Func<object, string>> callbacks = new Dictionary<string, Func<object, string>>();
+
+		Regex tokenRegex = new Regex(@"{(\\}|.)*?}", RegexOptions.Compiled);
 
 		/// <summary>
 		/// Searches for a template with the specified name.

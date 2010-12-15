@@ -33,11 +33,12 @@ namespace SlimDX.Generator.ObjectModel
 		/// Initializes a new instance of the <see cref="FunctionElement"/> class.
 		/// </summary>
 		/// <param name="nativeName">The function's native name.</param>
+		/// <param name="metadata">The function's metadata.</param>
 		/// <param name="index">The function's virtual dispatch table index.</param>
 		/// <param name="returnType">The function's return type.</param>
 		/// <param name="parameters">The function's parameters.</param>
-		public FunctionElement(string nativeName, int index, TypeElement returnType, params VariableElement[] parameters)
-			: base(nativeName)
+		public FunctionElement(string nativeName, Metadata metadata, int index, TypeElement returnType, params VariableElement[] parameters)
+			: base(nativeName, metadata)
 		{
 			if (returnType == null)
 				throw new ArgumentNullException("returnType");

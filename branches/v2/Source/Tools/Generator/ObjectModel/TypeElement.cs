@@ -40,13 +40,11 @@ namespace SlimDX.Generator.ObjectModel
 		/// Initializes a new instance of the <see cref="TypeElement"/> class.
 		/// </summary>
 		/// <param name="nativeName">The type's native name.</param>
-		/// /// <param name="managedName">The type's managed name.</param>
-		protected TypeElement(string nativeName, string managedName)
-			: base(nativeName, managedName)
+		/// <param name="managedName">The type's managed name.</param>
+		/// <param name="metadata">The type's metadata.</param>
+		protected TypeElement(string nativeName, string managedName, Metadata metadata)
+			: base(nativeName, managedName, metadata)
 		{
-			// special handling for System.Void: need to use keyword form
-			if (ManagedName == "Void")
-				ManagedName = "void";
 		}
 
 		/// <summary>
@@ -54,8 +52,9 @@ namespace SlimDX.Generator.ObjectModel
 		/// </summary>
 		/// <param name="nativeName">The type's native name.</param>
 		/// <param name="managedType">The type's managed name.</param>
-		public TypeElement(string nativeName, Type managedType)
-			: this(nativeName, managedType.Name)
+		/// <param name="metadata">The type's metadata.</param>
+		public TypeElement(string nativeName, Type managedType, Metadata metadata)
+			: this(nativeName, managedType.Name, metadata)
 		{
 			// When the managed type already exists, it can be directly used 
 			// as the intermediate type.

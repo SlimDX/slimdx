@@ -33,8 +33,9 @@ namespace SlimDX.Generator.ObjectModel
 		/// </summary>
 		/// <param name="nativeName">The structure's native name.</param>
 		/// <param name="managedName">The structure's managed name.</param>
-		public StructureElement(string nativeName, string managedName)
-			: base(nativeName, managedName)
+		/// <param name="metadata">The structure's metadata.</param>
+		public StructureElement(string nativeName, string managedName, Metadata metadata)
+			: base(nativeName, managedName, metadata)
 		{
 			IntermediateType = typeof(System.IntPtr);
 		}

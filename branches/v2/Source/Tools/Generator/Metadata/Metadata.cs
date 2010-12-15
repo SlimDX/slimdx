@@ -18,37 +18,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
+using System.Collections.Generic;
 
-namespace SlimDX.Generator.ObjectModel
+namespace SlimDX.Generator
 {
 	/// <summary>
-	/// Represents an enumeration value within a source code model.
+	/// Metadata which describes how to fine-tune the properties or
+	/// behavior of elements within a source code model.
 	/// </summary>
-	class EnumerationItemElement : BaseElement
+	class Metadata
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="EnumerationItemElement"/> class.
-		/// </summary>
-		/// <param name="nativeName">The item's native name.</param>
-		/// <param name="value">The item's value.</param>
-		/// <param name="metadata">The item's metadata.</param>
-		public EnumerationItemElement(string nativeName, string value, Metadata metadata)
-			: base(nativeName, metadata)
-		{
-			if (string.IsNullOrEmpty(value))
-				throw new ArgumentException("Value may not be null or empty.", "value");
+		#region Interface
 
-			Value = value;
+		public string this[string name]
+		{
+			get
+			{
+				var result = string.Empty;
+				if (metadata.TryGetValue(name, out result))
+					return result;
+				return null;
+			}
+			set
+			{
+				metadata[name] = value;
+			}
 		}
 
-		/// <summary>
-		/// Gets the item's value.
-		/// </summary>
-		public string Value
-		{
-			get;
-			private set;
-		}
+		#endregion
+		#region Implementation
+
+		Dictionary<string, string> metadata = new Dictionary<string, string>();
+
+		#endregion
 	}
 }
