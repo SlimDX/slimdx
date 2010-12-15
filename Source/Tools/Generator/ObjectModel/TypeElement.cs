@@ -44,6 +44,9 @@ namespace SlimDX.Generator.ObjectModel
 		protected TypeElement(string nativeName, string managedName)
 			: base(nativeName, managedName)
 		{
+			// special handling for System.Void: need to use keyword form
+			if (ManagedName == "Void")
+				ManagedName = "void";
 		}
 
 		/// <summary>
@@ -52,7 +55,7 @@ namespace SlimDX.Generator.ObjectModel
 		/// <param name="nativeName">The type's native name.</param>
 		/// <param name="managedType">The type's managed name.</param>
 		public TypeElement(string nativeName, Type managedType)
-			: base(nativeName, managedType.Name)
+			: this(nativeName, managedType.Name)
 		{
 			// When the managed type already exists, it can be directly used 
 			// as the intermediate type.

@@ -45,6 +45,7 @@ __out_ecount
 
 [TypeMap]
 void System.Void
+void* System.IntPtr
 UINT System.UInt32
 UINT64 System.UInt64
 ULONG System.UInt32

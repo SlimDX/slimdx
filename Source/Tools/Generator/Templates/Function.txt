@@ -1,4 +1,4 @@
-﻿public {ReturnType:Type} {ManagedName}({Parameters:Parameter ,\s})
+﻿public {ReturnType.ManagedName} {ManagedName}({Parameters:Parameter ,\s})
 		{
 {@GenerateFunctionBody}
 		}
