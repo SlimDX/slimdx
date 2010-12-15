@@ -154,7 +154,7 @@ namespace SlimDX.Generator
 				var effectiveIndirectionLevel = GetEffectiveIndirectionLevel(parameter);
 				if (effectiveIndirectionLevel > 0)
 				{
-					builder.Indent(indentLevel).AppendFormat("{0} _{1} = default({0});", parameter.Type.IntermediateType.FullName, parameter.ManagedName);
+					builder.Indent(indentLevel).AppendFormat("{0} _{1} = default({0});", parameter.Type.IntermediateType.FullName, parameter.NativeName);
 					builder.AppendLine();
 				}
 			}
@@ -165,9 +165,9 @@ namespace SlimDX.Generator
 				var parameter = function.Parameters[index];
 				var effectiveIndirectionLevel = GetEffectiveIndirectionLevel(parameter);
 				if (effectiveIndirectionLevel > 0)
-					builder.AppendFormat("ref _{0}", parameter.ManagedName);
+					builder.AppendFormat("ref _{0}", parameter.NativeName);
 				else
-					builder.Append(parameter.ManagedName);
+					builder.Append(parameter.NativeName);
 
 				if (index < function.Parameters.Count - 1)
 					builder.Append(", ");
@@ -181,7 +181,7 @@ namespace SlimDX.Generator
 				var effectiveIndirectionLevel = GetEffectiveIndirectionLevel(parameter);
 				if (effectiveIndirectionLevel > 0)
 				{
-					builder.Indent(indentLevel).AppendFormat("{0} = new {1}(_{0});", parameter.ManagedName, parameter.Type.ManagedName);
+					builder.Indent(indentLevel).AppendFormat("{0} = new {1}(_{0});", parameter.NativeName, parameter.Type.ManagedName);
 					builder.AppendLine();
 				}
 			}
