@@ -64,7 +64,9 @@ namespace SlimDX.Generator
 		{
 			var configuration = new ConfigFile(configurationFile);
 			var configurationDirectory = Path.GetDirectoryName(Path.GetFullPath(configurationFile));
-			var defaultTemplateDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Templates");
+			var generatorDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			var defaultMetadataDirectory = Path.Combine(generatorDirectory, @"Resources\Metadata");
+			var defaultTemplateDirectory = Path.Combine(generatorDirectory, @"Templates");
 
 			var templateEngine = new TemplateEngine(configuration.GetOption("Options", "Namespace"), new[] { defaultTemplateDirectory });
 			templateEngine.RegisterCallback("GenerateManagedParameterType", GenerateManagedParameterType);
@@ -87,13 +89,14 @@ namespace SlimDX.Generator
 
 			var nameServiceFile = Path.Combine(configurationDirectory, configuration.GetOption("Options", "NamingRules"));
 			var nameService = new NameRules(nameServiceFile);
+			var metadataService = new MetadataService(new[] { defaultMetadataDirectory });
 
 			// run the parser on the preprocessed file to generate a model of the file in memory
 			var grammarFile = Path.Combine(configurationDirectory, configuration.GetOption("Options", "Grammar"));
 			var parser = new HeaderParser(grammarFile);
 			var root = parser.Parse(source).ToXml();
 
-			var model = new SourceModel(root, nameService, configuration.GetOptions("TypeMap"));
+			var model = new SourceModel(root, nameService, metadataService, configuration.GetOptions("TypeMap"));
 			var outputPath = Path.Combine(configurationDirectory, configuration.GetOption("Options", "OutputPath"));
 
 			root.Save("test.xml");

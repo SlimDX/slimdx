@@ -33,11 +33,13 @@ namespace SlimDX.Generator.ObjectModel
 		/// Initializes a new instance of the <see cref="InterfaceElement"/> class.
 		/// </summary>
 		/// <param name="nativeName">The interface's native name.</param>
-		/// /// <param name="nativeName">The interface's managed name.</param>
+		/// <param name="managedName">The interface's managed name.</param>
+		/// <param name="metadata">The interface's metadata.</param>
 		/// <param name="baseType">The interface's base type.</param>
 		/// <param name="guid">The interface's GUID.</param>
-		public InterfaceElement(string nativeName, string managedName, TypeElement baseType, Guid guid)
-			: base(nativeName, managedName)
+		/// ///
+		public InterfaceElement(string nativeName, string managedName, Metadata metadata, TypeElement baseType, Guid guid)
+			: base(nativeName, managedName, metadata)
 		{
 			if (baseType == null)
 				throw new ArgumentNullException("baseType");

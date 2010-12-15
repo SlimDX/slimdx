@@ -78,10 +78,11 @@ namespace SlimDX.Generator.ObjectModel
 		/// Initializes a new instance of the <see cref="VariableElement"/> class.
 		/// </summary>
 		/// <param name="nativeName">The variable's native name.</param>
+		/// <param name="metadata">The variable's metadata.</param>
 		/// <param name="type">The variable's type.</param>
 		/// <param name="indirectionLevel">The indirection level of the variable.</param>
-		public VariableElement(string nativeName, TypeElement type, int indirectionLevel)
-			: this(nativeName, type, indirectionLevel, UsageQualifiers.None)
+		public VariableElement(string nativeName, Metadata metadata, TypeElement type, int indirectionLevel)
+			: this(nativeName, metadata, type, indirectionLevel, UsageQualifiers.None)
 		{
 		}
 
@@ -89,11 +90,12 @@ namespace SlimDX.Generator.ObjectModel
 		/// Initializes a new instance of the <see cref="VariableElement"/> class.
 		/// </summary>
 		/// <param name="nativeName">The variable's native name.</param>
+		/// <param name="metadata">The variable's metadata.</param>
 		/// <param name="type">The variable's type.</param>
 		/// <param name="indirectionLevel">The indirection level of the variable.</param>
 		/// <param name="usage">The usage qualifiers for an indirect parameter variable.</param>
-		public VariableElement(string nativeName, TypeElement type, int indirectionLevel, UsageQualifiers usage)
-			: this(nativeName, nativeName, type, indirectionLevel, usage)
+		public VariableElement(string nativeName, Metadata metadata, TypeElement type, int indirectionLevel, UsageQualifiers usage)
+			: this(nativeName, nativeName, metadata, type, indirectionLevel, usage)
 		{
 		}
 
@@ -102,11 +104,12 @@ namespace SlimDX.Generator.ObjectModel
 		/// </summary>
 		/// <param name="nativeName">The variable's native name.</param>
 		/// <param name="managedName">The variable's managed name.</param>
+		/// <param name="metadata">The variable's metadata.</param>
 		/// <param name="type">The variable's type.</param>
 		/// <param name="indirectionLevel">The indirection level of the variable.</param>
 		/// <param name="usage">The usage qualifiers for an indirect parameter variable.</param>
-		public VariableElement(string nativeName, string managedName, TypeElement type, int indirectionLevel, UsageQualifiers usage)
-			: base(nativeName, managedName)
+		public VariableElement(string nativeName, string managedName, Metadata metadata, TypeElement type, int indirectionLevel, UsageQualifiers usage)
+			: base(nativeName, managedName, metadata)
 		{
 			if (type == null)
 				throw new ArgumentNullException("type");

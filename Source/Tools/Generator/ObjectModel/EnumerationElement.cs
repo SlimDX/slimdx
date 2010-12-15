@@ -34,8 +34,9 @@ namespace SlimDX.Generator.ObjectModel
 		/// </summary>
 		/// <param name="nativeName">The enumeration's native name.</param>
 		/// <param name="managedName">The enumeration's managed name.</param>
-		public EnumerationElement(string nativeName, string managedName)
-			: base(nativeName, managedName)
+		/// <param name="metadata">The enumeration's metadata.</param>
+		public EnumerationElement(string nativeName, string managedName, Metadata metadata)
+			: base(nativeName, managedName, metadata)
 		{
 			IntermediateType = typeof(int);
 		}

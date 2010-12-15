@@ -64,6 +64,8 @@
     </Compile>
     <Compile Include="ConfigFile.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Metadata\Metadata.cs" />
+    <Compile Include="Metadata\MetadataService.cs" />
     <Compile Include="NameRules.cs" />
     <Compile Include="ObjectModel\BaseElement.cs" />
     <Compile Include="ObjectModel\EnumerationElement.cs" />
@@ -130,6 +132,17 @@
       <Project>{A774A428-009F-4E4D-ABF2-F7E181DAA2E3}</Project>
       <Name>SlimDX</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Metadata\AddRef.fmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\Metadata\QueryInterface.fmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="Resources\Metadata\void.tmd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
