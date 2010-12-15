@@ -30,10 +30,7 @@ namespace SlimDX.{#Namespace}
 	[Guid("{Guid}")]
 	public class {ManagedName} : {BaseType.ManagedName}
 	{
-		public {ManagedName}(IntPtr nativePointer)
-		{
-			this.nativePointer = nativePointer;
-		}
+{@GenerateConstructors}
 
 		{Functions:Function \r\n\r\n\t\t}
 	

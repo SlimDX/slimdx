@@ -68,6 +68,7 @@ namespace SlimDX.Generator
 
 			var templateEngine = new TemplateEngine(configuration.GetOption("Options", "Namespace"), new[] { defaultTemplateDirectory });
 			templateEngine.RegisterCallback("GenerateManagedParameterType", GenerateManagedParameterType);
+			templateEngine.RegisterCallback("GenerateConstructors", GenerateConstructors);
 			templateEngine.RegisterCallback("GenerateFunctionBody", GenerateFunctionBody);
 
 			// run boost::wave on the primary source file to get a preprocessed file and a list of macros
@@ -139,6 +140,26 @@ namespace SlimDX.Generator
 			if (effectiveIndirectionLevel > 0)
 				return string.Format("out {0}", parameter.Type.ManagedName);
 			return parameter.Type.ManagedName;
+		}
+
+		static string GenerateConstructors(object source)
+		{
+			const int indentLevel = 2;
+
+			var type = (InterfaceElement)source;
+			var builder = new StringBuilder();
+
+			builder.Indent(indentLevel).AppendFormat("internal {0}(System.IntPtr nativePointer)", type.ManagedName);
+			builder.Indent(indentLevel).AppendLine();
+
+			if (type.BaseType.NativeName != "IUnknown")
+				builder.Indent(indentLevel + 1).AppendFormat(": base(nativePointer)");
+
+			builder.Indent(indentLevel).AppendLine("{");
+			builder.Indent(indentLevel + 1).AppendLine("this.nativePointer = nativePointer;");
+			builder.Indent(indentLevel).AppendLine("}");
+
+			return builder.ToString();
 		}
 
 		static string GenerateFunctionBody(object source)
