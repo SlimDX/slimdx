@@ -56,7 +56,7 @@ namespace SlimDX.Generator
 			var assemblyName = new AssemblyName(name);
 			var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Save);
 			var moduleBuilder = assemblyBuilder.DefineDynamicModule(fileName);
-			var typeBuilder = moduleBuilder.DefineType("Call", dispatchClassAttributes);
+			var typeBuilder = moduleBuilder.DefineType("SlimDX.Trampoline", trampolineClassAttributes);
 
 			foreach (var trampoline in trampolines)
 				BuildTrampolineMethod(trampoline, typeBuilder);
@@ -70,7 +70,7 @@ namespace SlimDX.Generator
 
 		HashSet<Trampoline> trampolines = new HashSet<Trampoline>();
 
-		static TypeAttributes dispatchClassAttributes = TypeAttributes.Public | TypeAttributes.Class;
+		static TypeAttributes trampolineClassAttributes = TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.Abstract | TypeAttributes.Sealed;
 		static MethodAttributes trampolineMethodAttributes = MethodAttributes.Public | MethodAttributes.Static | MethodAttributes.HideBySig;
 
 		const string offsetParameterName = "offsetInBytes";

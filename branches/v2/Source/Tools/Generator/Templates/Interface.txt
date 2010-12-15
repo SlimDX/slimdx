@@ -23,12 +23,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Runtime.InteropServices;
+using System.Drawing;
 
 namespace SlimDX.{#Namespace}
 {
 	[Guid("{Guid}")]
 	public class {ManagedName} : {BaseType.ManagedName}
 	{
+		public {ManagedName}(IntPtr nativePointer)
+		{
+			this.nativePointer = nativePointer;
+		}
+
 		{Functions:Function \r\n\r\n\t\t}
+	
+		IntPtr nativePointer;
 	}
 }

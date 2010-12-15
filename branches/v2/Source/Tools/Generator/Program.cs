@@ -159,7 +159,7 @@ namespace SlimDX.Generator
 				}
 			}
 
-			builder.Indent(indentLevel).AppendFormat("{0} _result = SlimDX.Trampoline.Call.{0}({1} * System.IntPtr.Size, nativePointer, ", function.ReturnType.ManagedName, function.Index);
+			builder.Indent(indentLevel).AppendFormat("{0} _result = SlimDX.Trampoline.{0}({1} * System.IntPtr.Size, nativePointer, ", function.ReturnType.ManagedName, function.Index);
 			for (int index = 0; index < function.Parameters.Count; ++index)
 			{
 				var parameter = function.Parameters[index];

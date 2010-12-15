@@ -31,8 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SlimDX.Trampoline">
-      <HintPath>..\..\Tools\Generator\bin\Debug\SlimDX.Trampoline.dll</HintPath>
+    <Reference Include="SlimDX.Trampoline, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\SlimDX.Trampoline.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,36 +45,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="DGXI.cs" />
-    <Compile Include="Generated\Adapter.cs" />
-    <Compile Include="Generated\Adapter1.cs" />
-    <Compile Include="Generated\Adapter_description.cs" />
-    <Compile Include="Generated\Adapter_description1.cs" />
-    <Compile Include="Generated\Device.cs" />
-    <Compile Include="Generated\Device1.cs" />
-    <Compile Include="Generated\Devicesubobject.cs" />
-    <Compile Include="Generated\Display_color_space.cs" />
-    <Compile Include="Generated\Enums.cs" />
-    <Compile Include="Generated\Factory.cs" />
-    <Compile Include="Generated\Factory1.cs" />
-    <Compile Include="Generated\Frame_statistics.cs" />
-    <Compile Include="Generated\Gamma_control.cs" />
-    <Compile Include="Generated\Gamma_control_capabilities.cs" />
-    <Compile Include="Generated\Keyedmutex.cs" />
-    <Compile Include="Generated\Mapped_rect.cs" />
-    <Compile Include="Generated\Mode_description.cs" />
-    <Compile Include="Generated\Object.cs" />
-    <Compile Include="Generated\Output.cs" />
-    <Compile Include="Generated\Output_description.cs" />
-    <Compile Include="Generated\Rational.cs" />
-    <Compile Include="Generated\Resource.cs" />
-    <Compile Include="Generated\Rgb.cs" />
-    <Compile Include="Generated\Sample_description.cs" />
-    <Compile Include="Generated\Shared_resource.cs" />
-    <Compile Include="Generated\Surface.cs" />
-    <Compile Include="Generated\Surface1.cs" />
-    <Compile Include="Generated\Surface_description.cs" />
-    <Compile Include="Generated\Swapchain.cs" />
-    <Compile Include="Generated\Swap_chain_description.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -83,7 +54,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generated\*.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="DXGI.Generator.cfg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Generated\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

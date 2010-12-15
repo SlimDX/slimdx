@@ -30,16 +30,16 @@ namespace SlimDX
 		/// </summary>
 		/// <typeparam name="T">The interface to retrieve.</typeparam>
 		/// <returns>A reference to an interface, if the requested interface is supported by the object. Otherwise null.</returns>
-		T QueryInterface<T>() where T : class, ComObject;
+		Result QueryInterface(Result riid, out ComObject ppvObject);
 
 		/// <summary>
 		/// Increments the reference count for an object. 
 		/// </summary>
-		void AddReference();
+		uint AddRef();
 
 		/// <summary>
 		/// Decrements the reference count for an object.
 		/// </summary>
-		void Release();
+		uint Release();
 	}
 }
