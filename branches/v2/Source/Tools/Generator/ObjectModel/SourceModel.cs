@@ -270,6 +270,10 @@ namespace SlimDX.Generator.ObjectModel
 			var usage = ExtractUsage(usageData);
 			var name = parameterData.Element("Var").Attribute("Name").Value;
 
+			// void* parameters should be passed as IntPtr
+			if (parameterType.ManagedName == "void")
+				parameterType = FindTypeByName("void*");
+
 			return new VariableElement(name, nameService.Apply(name, NameCasingStyle.Camel), parameterType, indirectionLevel, usage);
 		}
 
