@@ -69,9 +69,7 @@ namespace SlimDX.Generator
 			var defaultTemplateDirectory = Path.Combine(generatorDirectory, @"Templates");
 
 			var templateEngine = new TemplateEngine(configuration.GetOption("Options", "Namespace"), new[] { defaultTemplateDirectory });
-			templateEngine.RegisterCallback("GenerateManagedParameterType", TemplateCallbacks.GenerateManagedParameterType);
-			templateEngine.RegisterCallback("GenerateConstructors", TemplateCallbacks.GenerateConstructors);
-			templateEngine.RegisterCallback("GenerateFunctionBody", TemplateCallbacks.GenerateFunctionBody);
+			templateEngine.RegisterCallbacks(typeof(TemplateCallbacks));
 
 			// run boost::wave on the primary source file to get a preprocessed file and a list of macros
 			var preprocessor = new Preprocessor(configuration, configurationDirectory);

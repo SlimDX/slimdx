@@ -53,7 +53,7 @@ namespace SlimDX.Generator
 
 			builder.Indent(indentLevel).AppendLine("{");
 			builder.Indent(indentLevel + 1).AppendLine("this.nativePointer = nativePointer;");
-			builder.Indent(indentLevel).AppendLine("}");
+			builder.Indent(indentLevel).Append("}");
 
 			return builder.ToString();
 		}

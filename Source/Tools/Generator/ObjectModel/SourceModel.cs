@@ -293,9 +293,11 @@ namespace SlimDX.Generator.ObjectModel
 		{
 			foreach (var itemData in data.Descendants("EnumVal"))
 			{
-				var name = itemData.Attribute("Name").Value;
+				var nativeName = itemData.Attribute("Name").Value;
+				var managedName = nameService.Apply(nativeName, NameCasingStyle.Pascal).RemovePrefix(element.ManagedName);
 				var value = itemData.Attribute("Value").Value;
-				element.AddItem(new EnumerationItemElement(name, value, metadataService.FindTypeMetadata(element.NativeName)));
+				
+				element.AddItem(new EnumerationItemElement(nativeName, managedName, value, metadataService.FindTypeMetadata(element.NativeName)));
 			}
 		}
 
