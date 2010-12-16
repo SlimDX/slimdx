@@ -18,6 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -28,6 +29,8 @@ namespace SlimDX.Generator.ObjectModel
 	/// </summary>
 	class StructureElement : TypeElement
 	{
+		#region Interface
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="StructureElement"/> class.
 		/// </summary>
@@ -41,17 +44,32 @@ namespace SlimDX.Generator.ObjectModel
 		}
 
 		/// <summary>
-		/// Gets the structure's members.
+		/// Gets the structure's fields.
 		/// </summary>
-		/// <value>The variables.</value>
-		public ReadOnlyCollection<VariableElement> Members
+		public ReadOnlyCollection<VariableElement> Fields
 		{
 			get
 			{
-				return new ReadOnlyCollection<VariableElement>(variableElements);
+				return new ReadOnlyCollection<VariableElement>(fieldElements);
 			}
 		}
 
-		List<VariableElement> variableElements = new List<VariableElement>();
+		/// <summary>
+		/// Adds a field to the structure.
+		/// </summary>
+		/// <param name="fieldElement">The field.</param>
+		public void AddField(VariableElement fieldElement)
+		{
+			if (fieldElement == null)
+				throw new ArgumentNullException("fieldElement");
+			fieldElements.Add(fieldElement);
+		}
+
+		#endregion
+		#region Implementation
+
+		List<VariableElement> fieldElements = new List<VariableElement>();
+
+		#endregion
 	}
 }
