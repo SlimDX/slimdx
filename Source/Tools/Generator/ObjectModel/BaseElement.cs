@@ -52,8 +52,9 @@ namespace SlimDX.Generator.ObjectModel
 			if (metadata == null)
 				throw new ArgumentNullException("metadata");
 
+			Metadata = metadata;
 			NativeName = nativeName;
-			ManagedName = metadata["OverrideName"] ?? managedName;
+			ManagedName = Metadata["OverrideName"] ?? managedName;
 		}
 
 		/// <summary>
@@ -72,6 +73,15 @@ namespace SlimDX.Generator.ObjectModel
 		{
 			get;
 			protected set;
+		}
+
+		/// <summary>
+		/// Gets the element's metadata.
+		/// </summary>
+		public Metadata Metadata
+		{
+			get;
+			private set;
 		}
 
 		/// <summary>
