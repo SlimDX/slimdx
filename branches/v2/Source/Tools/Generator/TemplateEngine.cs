@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using SlimDX.Generator.ObjectModel;
 
 namespace SlimDX.Generator
 {
@@ -64,6 +65,16 @@ namespace SlimDX.Generator
 		/// <returns>The generated string.</returns>
 		public string Apply(string template, object source)
 		{
+			if (string.IsNullOrEmpty(template))
+				throw new ArgumentException("Value may not be null or empty.", "tempalte");
+			if (source == null)
+				throw new ArgumentNullException("source");
+
+			// Object model instances have metadata that can redirect the applied template.
+			var element = source as BaseElement;
+			if (element != null)
+				template = element.Metadata["OverrideTemplate"] ?? template;
+
 			var templateFile = FindTemplate(template);
 			if (templateFile == null)
 				throw new FileNotFoundException(string.Format("No template named '{0}' exists.", template));
