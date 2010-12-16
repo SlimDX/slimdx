@@ -69,9 +69,9 @@ namespace SlimDX.Generator
 			var defaultTemplateDirectory = Path.Combine(generatorDirectory, @"Templates");
 
 			var templateEngine = new TemplateEngine(configuration.GetOption("Options", "Namespace"), new[] { defaultTemplateDirectory });
-			templateEngine.RegisterCallback("GenerateManagedParameterType", GenerateManagedParameterType);
-			templateEngine.RegisterCallback("GenerateConstructors", GenerateConstructors);
-			templateEngine.RegisterCallback("GenerateFunctionBody", GenerateFunctionBody);
+			templateEngine.RegisterCallback("GenerateManagedParameterType", TemplateCallbacks.GenerateManagedParameterType);
+			templateEngine.RegisterCallback("GenerateConstructors", TemplateCallbacks.GenerateConstructors);
+			templateEngine.RegisterCallback("GenerateFunctionBody", TemplateCallbacks.GenerateFunctionBody);
 
 			// run boost::wave on the primary source file to get a preprocessed file and a list of macros
 			var preprocessor = new Preprocessor(configuration, configurationDirectory);
@@ -117,8 +117,10 @@ namespace SlimDX.Generator
 					var parameterTypes = new List<TrampolineParameter>();
 					foreach (var parameter in function.Parameters)
 					{
-						var effectiveIndirectionLevel = GetEffectiveIndirectionLevel(parameter);
-						var parameterFlags = effectiveIndirectionLevel > 0 ? TrampolineParameterFlags.Reference : TrampolineParameterFlags.Default;
+						var parameterFlags = TrampolineParameterFlags.Default;
+						if ((parameter.Usage & UsageQualifiers.Out) != 0)
+							parameterFlags = TrampolineParameterFlags.Reference;
+
 						parameterTypes.Add(new TrampolineParameter(parameter.Type.IntermediateType, parameterFlags));
 					}
 					trampolineBuilder.Add(new Trampoline(function.ReturnType.IntermediateType, parameterTypes.ToArray()));
@@ -134,100 +136,6 @@ namespace SlimDX.Generator
 
 			foreach (var item in model.Interfaces)
 				File.WriteAllText(Path.Combine(outputPath, item.ManagedName + ".cs"), templateEngine.Apply("Interface", item));
-		}
-
-		static string GenerateManagedParameterType(object source)
-		{
-			var parameter = (VariableElement)source;
-			var effectiveIndirectionLevel = GetEffectiveIndirectionLevel(parameter);
-			if (effectiveIndirectionLevel > 0)
-				return string.Format("out {0}", parameter.Type.ManagedName);
-			return parameter.Type.ManagedName;
-		}
-
-		static string GenerateConstructors(object source)
-		{
-			const int indentLevel = 2;
-
-			var type = (InterfaceElement)source;
-			var builder = new StringBuilder();
-
-			builder.Indent(indentLevel).AppendFormat("internal {0}(System.IntPtr nativePointer)", type.ManagedName);
-			builder.Indent(indentLevel).AppendLine();
-
-			if (type.BaseType.NativeName != "IUnknown")
-				builder.Indent(indentLevel + 1).AppendFormat(": base(nativePointer)");
-
-			builder.Indent(indentLevel).AppendLine("{");
-			builder.Indent(indentLevel + 1).AppendLine("this.nativePointer = nativePointer;");
-			builder.Indent(indentLevel).AppendLine("}");
-
-			return builder.ToString();
-		}
-
-		static string GenerateFunctionBody(object source)
-		{
-			const int indentLevel = 3;
-
-			var function = (FunctionElement)source;
-			var builder = new StringBuilder();
-
-			// The intermidate objects for output parameters must be declared first.
-			foreach (var parameter in function.Parameters)
-			{
-				var effectiveIndirectionLevel = GetEffectiveIndirectionLevel(parameter);
-				if (effectiveIndirectionLevel > 0)
-				{
-					builder.Indent(indentLevel).AppendFormat("{0} _{1} = default({0});", parameter.Type.IntermediateType.FullName, parameter.NativeName);
-					builder.AppendLine();
-				}
-			}
-
-			var resultVariable = string.Empty;
-			if (function.ReturnType.IntermediateType != typeof(void))
-				resultVariable = string.Format("{0} _result = ", function.ReturnType.ManagedName);
-			builder.Indent(indentLevel).AppendFormat("{0}SlimDX.Trampoline.{1}({2} * System.IntPtr.Size, nativePointer", resultVariable, function.ReturnType.ManagedName, function.Index);
-
-			foreach (var parameter in function.Parameters)
-			{
-				var effectiveIndirectionLevel = GetEffectiveIndirectionLevel(parameter);
-				if (effectiveIndirectionLevel > 0)
-					builder.AppendFormat(", ref _{0}", parameter.NativeName);
-				else
-					builder.AppendFormat(", {0}", parameter.NativeName);
-			}
-
-			builder.AppendLine(");");
-
-			// Once the call has been made, intermediate objects must be transformed to the proper managed types.
-			foreach (var parameter in function.Parameters)
-			{
-				var effectiveIndirectionLevel = GetEffectiveIndirectionLevel(parameter);
-				if (effectiveIndirectionLevel > 0)
-				{
-					if (parameter.Type.IntermediateType.IsValueType)
-						builder.Indent(indentLevel).AppendFormat("{0} =_{0};", parameter.NativeName);
-					else
-						builder.Indent(indentLevel).AppendFormat("{0} = new {1}(_{0});", parameter.NativeName, parameter.Type.ManagedName);
-					builder.AppendLine();
-				}
-			}
-
-			if (function.ReturnType.IntermediateType != typeof(void))
-				builder.Indent(indentLevel).Append("return _result;");
-			return builder.ToString();
-		}
-
-		//TODO: Maybe IndirectionLevel itself should just do this...?
-		static int GetEffectiveIndirectionLevel(VariableElement parameter)
-		{
-			var effectiveIndirectionLevel = parameter.IndirectionLevel;
-
-			// The IntPtr type has a level of indirection built in.
-			if (parameter.Type.IntermediateType == typeof(IntPtr))
-				--effectiveIndirectionLevel;
-
-			return effectiveIndirectionLevel;
 		}
 
 		/// <summary>

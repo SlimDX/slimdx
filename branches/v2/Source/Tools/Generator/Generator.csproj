@@ -84,6 +84,7 @@
     <Compile Include="Preprocessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TemplateCallbacks.cs" />
     <Compile Include="TemplateEngine.cs" />
     <Compile Include="Trampoline\Trampoline.cs" />
     <Compile Include="Trampoline\TrampolineParameter.cs" />
