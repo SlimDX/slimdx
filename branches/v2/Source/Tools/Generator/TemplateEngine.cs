@@ -66,7 +66,7 @@ namespace SlimDX.Generator
 		public string Apply(string template, object source)
 		{
 			if (string.IsNullOrEmpty(template))
-				throw new ArgumentException("Value may not be null or empty.", "tempalte");
+				throw new ArgumentException("Value may not be null or empty.", "template");
 			if (source == null)
 				throw new ArgumentNullException("source");
 

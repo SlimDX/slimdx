@@ -1,1 +1,1 @@
-﻿public {DataType.ManagedName} {ManagedName};
+﻿public {Type.ManagedName} {ManagedName};

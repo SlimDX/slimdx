@@ -183,6 +183,8 @@ namespace SlimDX.Generator.ObjectModel
 				BuildInterface(interfaceElement, cache[interfaceElement.NativeName]);
 			foreach (var structureElement in structureElements)
 				BuildStructure(structureElement, cache[structureElement.NativeName]);
+			foreach (var enumerationElement in enumerationElements)
+				BuildEnumeration(enumerationElement, cache[enumerationElement.NativeName]);
 		}
 
 		/// <summary>
@@ -262,7 +264,7 @@ namespace SlimDX.Generator.ObjectModel
 				List<VariableElement> parameterElements = new List<VariableElement>();
 				var signatureData = functionData.Element("Signature");
 				foreach (var parameterData in signatureData.Descendants("Param"))
-					parameterElements.Add(ExtractParameter(parameterData));
+					parameterElements.Add(ExtractVariable(parameterData));
 
 				var name = functionData.Attribute("Name").Value;
 				var qualifiedName = string.Format("{0}.{1}", element.NativeName, name);
@@ -271,8 +273,30 @@ namespace SlimDX.Generator.ObjectModel
 			}
 		}
 
+		/// <summary>
+		/// Builds a structure definition from its declaration and XML data.
+		/// </summary>
+		/// <param name="element">The declaration element to transform to a definition.</param>
+		/// <param name="data">The XML data for the structure.</param>
 		void BuildStructure(StructureElement element, XElement data)
 		{
+			foreach (var fieldData in data.Descendants("Variable"))
+				element.AddField(ExtractVariable(fieldData));
+		}
+
+		/// <summary>
+		/// Builds an enumeration definition from its declaration and XML data.
+		/// </summary>
+		/// <param name="element">The declaration element to transform to a definition.</param>
+		/// <param name="data">The XML data for the enumeration.</param>
+		void BuildEnumeration(EnumerationElement element, XElement data)
+		{
+			foreach (var itemData in data.Descendants("EnumVal"))
+			{
+				var name = itemData.Attribute("Name").Value;
+				var value = itemData.Attribute("Value").Value;
+				element.AddItem(new EnumerationItemElement(name, value, metadataService.FindTypeMetadata(element.NativeName)));
+			}
 		}
 
 		/// <summary>
@@ -301,8 +325,9 @@ namespace SlimDX.Generator.ObjectModel
 		/// </summary>
 		/// <param name="typeData">The XML element.</param>
 		/// <returns>The type name.</returns>
-		VariableElement ExtractParameter(XElement parameterData)
+		VariableElement ExtractVariable(XElement parameterData)
 		{
+			try {
 			var parameterTypeData = parameterData.Element("Type");
 			var parameterTypeName = ExtractTypeName(parameterTypeData);
 			var parameterType = FindTypeByName(parameterTypeName);
@@ -316,6 +341,11 @@ namespace SlimDX.Generator.ObjectModel
 				parameterType = FindTypeByName("void*");
 
 			return new VariableElement(name, nameService.Apply(name, NameCasingStyle.Camel), new Metadata(), parameterType, indirectionLevel, usage);
+			}
+			catch {
+				Console.Write(parameterData.ToString());
+				throw;
+			}
 		}
 
 		/// <summary>
