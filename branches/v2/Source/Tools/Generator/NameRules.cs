@@ -44,7 +44,7 @@ namespace SlimDX.Generator
 			switch (style)
 			{
 				case NameCasingStyle.Pascal:
-					return result.PascalCase();
+					return result.PascalCaseFromUnderscores();
 				case NameCasingStyle.Camel:
 					return result.CamelCase();
 				case NameCasingStyle.Preserve:
