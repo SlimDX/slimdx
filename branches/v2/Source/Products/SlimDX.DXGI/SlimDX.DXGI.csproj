@@ -92,6 +92,7 @@
   <ItemGroup>
     <None Include="DXGI.Generator.cfg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>"$(SolutionDir)\Source\Tools\Generator\bin\$(ConfigurationName)\SlimDX.Generator.exe" "$(ProjectDir)\DXGI.Generator.cfg"</PreBuildEvent>

@@ -65,11 +65,6 @@ namespace SlimDX.Generator
 			return name;
 		}
 
-		public string RemovePrefix(string name, string prefix)
-		{
-			return name.StartsWith(prefix) ? name.Substring(prefix.Length) : name;
-		}
-
 		public string ExpandAbbreviations(string name)
 		{
 			foreach (var entry in rules.GetOptions("Abbreviations").Select(e => e.Split(' ')))
@@ -101,6 +96,11 @@ namespace SlimDX.Generator
 		public static string CamelCase(this string name)
 		{
 			return char.ToLower(name[0]) + name.Substring(1);
+		}
+
+		public static string RemovePrefix(this string name, string prefix)
+		{
+			return name.StartsWith(prefix) ? name.Substring(prefix.Length) : name;
 		}
 	}
 }

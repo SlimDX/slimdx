@@ -33,8 +33,8 @@ namespace SlimDX.Generator.ObjectModel
 		/// <param name="nativeName">The item's native name.</param>
 		/// <param name="value">The item's value.</param>
 		/// <param name="metadata">The item's metadata.</param>
-		public EnumerationItemElement(string nativeName, string value, Metadata metadata)
-			: base(nativeName, metadata)
+		public EnumerationItemElement(string nativeName, string managedName, string value, Metadata metadata)
+			: base(nativeName, managedName, metadata)
 		{
 			if (string.IsNullOrEmpty(value))
 				throw new ArgumentException("Value may not be null or empty.", "value");

@@ -25,6 +25,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using SlimDX.Generator.ObjectModel;
+using System.Reflection;
 
 namespace SlimDX.Generator
 {
@@ -39,7 +40,12 @@ namespace SlimDX.Generator
 			if (templateSearchPaths == null)
 				throw new ArgumentNullException("templateSearchPaths");
 
-			searchPaths.AddRange(templateSearchPaths);
+			foreach (var path in templateSearchPaths)
+			{
+				searchPaths.Add(path);
+				searchPaths.UnionWith(Directory.EnumerateDirectories(path, "*", SearchOption.AllDirectories));
+			}
+
 			if (searchPaths.Count == 0)
 				throw new ArgumentException("At least one template search path must be specified.", "templateSearchPaths");
 
@@ -47,15 +53,11 @@ namespace SlimDX.Generator
 			keywords["Namespace"] = GetNamespaceKeywordValue;
 		}
 
-
-
 		public string Namespace
 		{
 			get;
 			private set;
 		}
-
-
 
 		/// <summary>
 		/// Applies the specified template to the given source object.
@@ -98,11 +100,21 @@ namespace SlimDX.Generator
 			callbacks[token] = callback;
 		}
 
+		/// <summary>
+		/// Registers all of the methods defined on a type as callbacks to be invoked when evaluating a callback token.
+		/// </summary>
+		/// <param name="type">The type containing the methods to register.</param>
+		public void RegisterCallbacks(Type type)
+		{
+			foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly))
+				RegisterCallback(method.Name, (Func<object, string>)Delegate.CreateDelegate(typeof(Func<object, string>), method));
+		}
+
 		const string keywordGlyph = "#";
 		const string callbackGlyph = "@";
 		const string recursionGlyph = ":";
 
-		List<string> searchPaths = new List<string>();
+		HashSet<string> searchPaths = new HashSet<string>();
 
 		Dictionary<string, Func<object, string>> keywords = new Dictionary<string, Func<object, string>>();
 		Dictionary<string, Func<object, string>> callbacks = new Dictionary<string, Func<object, string>>();
