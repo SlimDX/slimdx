@@ -120,6 +120,8 @@ namespace SlimDX.Generator
 		const string keywordGlyph = "#";
 		const string callbackGlyph = "@";
 		const string recursionGlyph = ":";
+		const string accessorGlyph = ".";
+		const string separatorGlyph = " ";
 
 		static readonly Type[] callbackSignature = new[] { typeof(TemplateEngine), typeof(object) };
 		static readonly Type callbackReturn = typeof(string);
@@ -166,7 +168,7 @@ namespace SlimDX.Generator
 				var callbackName = capture.Substring(callbackGlyph.Length);
 				
 				// a space indicates that the user is overriding the default source object with a property
-				int space = callbackName.IndexOf(' ');
+				int space = callbackName.IndexOf(separatorGlyph);
 				if (space > 0)
 				{
 					var propertyName = callbackName.Substring(space + 1);
@@ -181,7 +183,7 @@ namespace SlimDX.Generator
 				string propertyName = capture;
 
 				// if the name has a colon, it indicates that the type has another template applied to it
-				int colon = capture.IndexOf(':');
+				int colon = capture.IndexOf(recursionGlyph);
 				if (colon >= 0)
 					propertyName = capture.Substring(0, colon);
 
@@ -193,7 +195,7 @@ namespace SlimDX.Generator
 					var template = capture.Substring(colon + 1);
 					var suffix = string.Empty;
 
-					int space = template.IndexOf(' ');
+					int space = template.IndexOf(separatorGlyph);
 					if (space >= 0)
 					{
 						// the suffix is a list of characters to apply after each element
@@ -249,7 +251,7 @@ namespace SlimDX.Generator
 		static object GetPropertyValue(string name, object source)
 		{
 			// if the name has a period, it indicates a sub-property of the element
-			int period = name.IndexOf('.');
+			int period = name.IndexOf(accessorGlyph);
 			string subName = null;
 			if (period >= 0)
 			{
@@ -301,7 +303,7 @@ namespace SlimDX.Generator
 
 		static string Escape(string input)
 		{
-			return input.Replace("\\t", "\t").Replace("\\n", "\n").Replace("\\s", " ").Replace("\\r", "\r");
+			return input.Replace("\\t", "\t").Replace("\\n", Environment.NewLine).Replace("\\s", " ");
 		}
 
 		/// <summary>
