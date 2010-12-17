@@ -1,0 +1,4 @@
+﻿		internal {Name}(System.IntPtr nativePointer)
+		{Base}{
+			this.nativePointer = nativePointer;
+		}

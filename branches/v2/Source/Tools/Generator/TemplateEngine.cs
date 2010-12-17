@@ -90,7 +90,7 @@ namespace SlimDX.Generator
 		/// </summary>
 		/// <param name="token">The token name.</param>
 		/// <param name="callback">The callback to invoke.</param>
-		public void RegisterCallback(string token, Func<object, string> callback)
+		public void RegisterCallback(string token, Func<TemplateEngine, object, string> callback)
 		{
 			if (string.IsNullOrEmpty(token))
 				throw new ArgumentException("Value may not be null or empty.", "token");
@@ -107,17 +107,27 @@ namespace SlimDX.Generator
 		public void RegisterCallbacks(Type type)
 		{
 			foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly))
-				RegisterCallback(method.Name, (Func<object, string>)Delegate.CreateDelegate(typeof(Func<object, string>), method));
+			{
+				if (method.ReturnType != callbackReturn)
+					continue;
+				if (!method.GetParameters().Select(p => p.ParameterType).SequenceEqual(callbackSignature))
+					continue;
+
+				RegisterCallback(method.Name, (Func<TemplateEngine, object, string>)Delegate.CreateDelegate(typeof(Func<TemplateEngine, object, string>), method));
+			}
 		}
 
 		const string keywordGlyph = "#";
 		const string callbackGlyph = "@";
 		const string recursionGlyph = ":";
 
+		static readonly Type[] callbackSignature = new[] { typeof(TemplateEngine), typeof(object) };
+		static readonly Type callbackReturn = typeof(string);
+
 		HashSet<string> searchPaths = new HashSet<string>();
 
 		Dictionary<string, Func<object, string>> keywords = new Dictionary<string, Func<object, string>>();
-		Dictionary<string, Func<object, string>> callbacks = new Dictionary<string, Func<object, string>>();
+		Dictionary<string, Func<TemplateEngine, object, string>> callbacks = new Dictionary<string, Func<TemplateEngine, object, string>>();
 
 		Regex tokenRegex = new Regex(@"{(\\}|.)*?}", RegexOptions.Compiled);
 
@@ -154,6 +164,16 @@ namespace SlimDX.Generator
 			else if (capture.StartsWith(callbackGlyph))
 			{
 				var callbackName = capture.Substring(callbackGlyph.Length);
+				
+				// a space indicates that the user is overriding the default source object with a property
+				int space = callbackName.IndexOf(' ');
+				if (space > 0)
+				{
+					var propertyName = callbackName.Substring(space + 1);
+					callbackName = callbackName.Substring(0, space);
+					source = GetPropertyValue(propertyName, source);
+				}
+
 				return EvaluateCallback(callbackName, source);
 			}
 			else
@@ -165,20 +185,7 @@ namespace SlimDX.Generator
 				if (colon >= 0)
 					propertyName = capture.Substring(0, colon);
 
-				// if the name has a period, it indicates a sub-property of the element
-				int period = propertyName.IndexOf('.');
-				string subName = null;
-				if (period >= 0)
-				{
-					subName = propertyName.Substring(period + 1);
-					propertyName = propertyName.Substring(0, period);
-				}
-
-				// get the value of the property from the source object
-				var value = source.GetType().GetProperty(propertyName).GetValue(source, null);
-				if (subName != null)
-					value = value.GetType().GetProperty(subName).GetValue(value, null);
-
+				var value = GetPropertyValue(propertyName, source);
 				if (colon >= 0)
 				{
 					// extract the new template name
@@ -227,10 +234,34 @@ namespace SlimDX.Generator
 		/// <param name="source">The object used as a data source during evaluation.</param>
 		string EvaluateCallback(string callbackName, object source)
 		{
-			Func<object, string> callback = null;
+			Func<TemplateEngine, object, string> callback = null;
 			if (!callbacks.TryGetValue(callbackName, out callback))
-				throw new InvalidOperationException(string.Format("No callback registered for '{0}.'", callbackName));
-			return callback(source);
+				throw new InvalidOperationException(string.Format("No callback registered for '{0}'.", callbackName));
+			return callback(this, source);
+		}
+
+		/// <summary>
+		/// Gets the value of the indicated property from the source object.
+		/// </summary>
+		/// <param name="name">The name of the property to get.</param>
+		/// <param name="source">The source object.</param>
+		/// <returns>The value of the specified property.</returns>
+		static object GetPropertyValue(string name, object source)
+		{
+			// if the name has a period, it indicates a sub-property of the element
+			int period = name.IndexOf('.');
+			string subName = null;
+			if (period >= 0)
+			{
+				subName = name.Substring(period + 1);
+				name = name.Substring(0, period);
+			}
+
+			var value = source.GetType().GetProperty(name).GetValue(source, null);
+			if (subName != null)
+				value = GetPropertyValue(subName, value);
+
+			return value;
 		}
 
 		static string Format(object source)
