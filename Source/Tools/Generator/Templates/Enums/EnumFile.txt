@@ -25,5 +25,5 @@ using System.Text;
 
 namespace SlimDX.{#Namespace}
 {
-	{Enumerations:Enum \r\n\r\n\t}
+	{Enumerations:Enum \n\n\t}
 }
