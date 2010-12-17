@@ -1,0 +1,4 @@
+﻿			{Initializers:OutInitializer \r\n\t\t\t}
+			{Result}SlimDX.Trampoline.{ReturnType}({Index} * System.IntPtr.Size, nativePointer{@GenerateTrampolineParameters Source});
+			{@ConstructResults Source}
+			{Return}
