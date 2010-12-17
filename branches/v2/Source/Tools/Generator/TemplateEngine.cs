@@ -86,6 +86,23 @@ namespace SlimDX.Generator
 		}
 
 		/// <summary>
+		/// Applies the specified template to the given source object, using the template source instead
+		/// of looking up the template file.
+		/// </summary>
+		/// <param name="templateText">The template text.</param>
+		/// <param name="source">The object used as a data source during evaluation.</param>
+		/// <returns>The generated string.</returns>
+		public string ApplyDirect(string templateText, object source)
+		{
+			if (string.IsNullOrEmpty(templateText))
+				throw new ArgumentException("Value may not be null or empty.", "template");
+			if (source == null)
+				throw new ArgumentNullException("source");
+
+			return tokenRegex.Replace(templateText.Replace("\\{", "`"), m => Evaluate(source, m)).Replace("`", "{").Replace("\\}", "}");
+		}
+
+		/// <summary>
 		/// Registers a callback to be invoked when evaluating a callback token.
 		/// </summary>
 		/// <param name="token">The token name.</param>
@@ -166,7 +183,7 @@ namespace SlimDX.Generator
 			else if (capture.StartsWith(callbackGlyph))
 			{
 				var callbackName = capture.Substring(callbackGlyph.Length);
-				
+
 				// a space indicates that the user is overriding the default source object with a property
 				int space = callbackName.IndexOf(separatorGlyph);
 				if (space > 0)
