@@ -47,8 +47,7 @@ namespace SlimDX.Generator
 			if (type.BaseType.NativeName != "IUnknown")
 				builder.Indent(1).AppendFormat(": base(nativePointer)").AppendLine().Indent(indentLevel);
 
-			return engine.Apply("Constructor", new
-			{
+			return engine.Apply("Constructor", new {
 				Name = type.ManagedName,
 				Base = builder.ToString()
 			});
@@ -61,6 +60,10 @@ namespace SlimDX.Generator
 									.Where(p => p.Usage.HasFlag(UsageQualifiers.Out) && !p.Usage.HasFlag(UsageQualifiers.In))
 									.Select(p => new { TypeName = p.Type.IntermediateType.FullName, Name = p.NativeName });
 
+			var initializerText = engine.ApplyDirect(@"{initializers:OutInitializer \n\t\t\t}", new { initializers });
+			if(!string.IsNullOrEmpty(initializerText))
+				initializerText = string.Format("{0}{1}\t\t\t", initializerText, Environment.NewLine);
+
 			var resultVariable = string.Empty;
 			var returnStatement = string.Empty;
 			if (function.ReturnType.IntermediateType != typeof(void))
@@ -69,46 +72,52 @@ namespace SlimDX.Generator
 				returnStatement = "return _result;";
 			}
 
-			return engine.Apply("FunctionBody", new
-			{
-				Initializers = initializers,
+			var result = engine.Apply("FunctionBody", new {
+				Initializers = initializerText,
 				Result = resultVariable,
 				ReturnType = function.ReturnType.ManagedName,
 				Index = function.Index,
 				Return = returnStatement,
 				Source = function
 			});
+
+			return result.TrimEnd();
 		}
 
 		public static string GenerateTrampolineParameters(TemplateEngine engine, object source)
 		{
-			//foreach (var parameter in function.Parameters)
-			//{
-			//    if ((parameter.Usage & UsageQualifiers.Out) != 0 && (parameter.Usage & UsageQualifiers.In) == 0)
-			//        builder.AppendFormat(", ref _{0}", parameter.NativeName);
-			//    else
-			//        builder.AppendFormat(", {0}", parameter.NativeName);
-			//}
+			var builder = new StringBuilder();
+			var function = (FunctionElement)source;
+			foreach (var parameter in function.Parameters)
+			{
+				if(parameter.Usage.HasFlag(UsageQualifiers.Out) && !parameter.Usage.HasFlag(UsageQualifiers.In))
+					builder.AppendFormat(", ref _{0}", parameter.NativeName);
+				else
+					builder.AppendFormat(", {0}", parameter.NativeName);
+			}
 
-			return "";
+			return builder.ToString();
 		}
 
 		public static string ConstructResults(TemplateEngine engine, object source)
 		{
-			// Once the call has been made, intermediate objects must be transformed to the proper managed types.
-			//foreach (var parameter in function.Parameters)
-			//{
-			//    if ((parameter.Usage & UsageQualifiers.Out) != 0 && (parameter.Usage & UsageQualifiers.In) == 0)
-			//    {
-			//        if (parameter.Type.IntermediateType.IsValueType && parameter.Type.IntermediateType != typeof(IntPtr))
-			//            builder.Indent(indentLevel).AppendFormat("{0} =_{0};", parameter.NativeName);
-			//        else
-			//            builder.Indent(indentLevel).AppendFormat("{0} = new {1}(_{0});", parameter.NativeName, parameter.Type.ManagedName);
-			//        builder.AppendLine();
-			//    }
-			//}
+			const int indentLevel = 3;
 
-			return "";
+			var builder = new StringBuilder();
+			var function = (FunctionElement)source;
+			foreach (var parameter in function.Parameters)
+			{
+				if (parameter.Usage.HasFlag(UsageQualifiers.Out) && !parameter.Usage.HasFlag(UsageQualifiers.In))
+				{
+					if (parameter.Type.IntermediateType.IsValueType && parameter.Type.IntermediateType != typeof(IntPtr))
+						builder.Indent(indentLevel).AppendFormat("{0} =_{0};", parameter.NativeName);
+					else
+						builder.Indent(indentLevel).AppendFormat("{0} = new {1}(_{0});", parameter.NativeName, parameter.Type.ManagedName);
+					builder.AppendLine();
+				}
+			}
+
+			return builder.ToString();
 		}
 	}
 }
