@@ -150,9 +150,6 @@
     <Content Include="Resources\Metadata\AddRef.fmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Metadata\IDXGIAdapter.EnumOutputs.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Resources\Metadata\IDXGIObject.GetPrivateData.fmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -165,16 +162,10 @@
     <Content Include="Resources\Metadata\IDXGIDevice.CreateSurface.fmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Metadata\IDXGIFactory.EnumAdapters.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Resources\Metadata\IDXGIFactory.CreateSwapChain.fmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Metadata\IDXGIFactory.CreateSoftwareAdapter.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGIFactory1.EnumAdapters1.fmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Metadata\GetDesc.fmd">

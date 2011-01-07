@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using SlimDX.DXGI;
+using SlimDX;
 
 namespace MiniTri11
 {
@@ -31,7 +32,8 @@ namespace MiniTri11
 		static void Main()
 		{
 			Factory factory = DGXI.CreateFactory();
-			Adapter adapter = factory.EnumerateAdapters(0);
+			Adapter adapter = null;
+			Result result = factory.EnumAdapters(0, out adapter);
 			adapter.Release();
 			factory.Release();
 		}
