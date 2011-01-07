@@ -77,7 +77,7 @@ namespace SlimDX.Generator
 			{
 				Initializers = initializerText,
 				Result = resultVariable,
-				ReturnType = function.ReturnType.ManagedName,
+				ReturnType = function.ReturnType.NativeName == "void" ? string.Empty : function.ReturnType.ManagedName,
 				Index = function.Index,
 				Return = returnStatement,
 				Source = function
