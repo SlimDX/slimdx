@@ -83,7 +83,7 @@ namespace SlimDX.Generator
 		/// <param name="typeBuilder">The type builder for the type that will contain the method.</param>
 		static void BuildTrampolineMethod(Trampoline trampoline, TypeBuilder typeBuilder)
 		{
-			var methodName = trampoline.ReturnType.Name;
+			var methodName = string.Format("Call{0}", trampoline.ReturnType == typeof(void) ? string.Empty : trampoline.ReturnType.Name);
 			var methodBuilder = typeBuilder.DefineMethod(methodName, trampolineMethodAttributes);
 			var il = methodBuilder.GetILGenerator();
 			methodBuilder.SetSignature(trampoline.ReturnType, null, null, ExtractTypes(trampoline.ManagedParameterTypes), null, null);
