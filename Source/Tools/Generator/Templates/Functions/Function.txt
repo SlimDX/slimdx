@@ -1,4 +1,4 @@
-﻿public {ReturnType.ManagedName} {ManagedName}({Parameters:Parameter ,\s})
+﻿public unsafe {ReturnType.ManagedName} {ManagedName}({Parameters:Parameter ,\s})
 		{
 {@GenerateFunctionBody}
 		}

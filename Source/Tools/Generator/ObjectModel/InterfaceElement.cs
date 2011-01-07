@@ -27,7 +27,7 @@ namespace SlimDX.Generator.ObjectModel
 	/// <summary>
 	/// Represents an interface within a source code model.
 	/// </summary>
-	class InterfaceElement : StructureElement
+	class InterfaceElement : TypeElement
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="InterfaceElement"/> class.
@@ -46,6 +46,7 @@ namespace SlimDX.Generator.ObjectModel
 
 			Guid = guid;
 			BaseType = baseType;
+			IntermediateType = typeof(IntPtr);
 		}
 
 		/// <summary>
@@ -60,7 +61,7 @@ namespace SlimDX.Generator.ObjectModel
 		/// <summary>
 		/// Gets the interface's base type.
 		/// </summary>
-		public TypeElement BaseType
+		public TypeElement BaseType//TODO: This should be part of TypeElement itself.
 		{
 			get;
 			private set;
