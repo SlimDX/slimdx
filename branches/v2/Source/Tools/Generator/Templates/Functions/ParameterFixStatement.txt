@@ -1,0 +1,1 @@
+﻿fixed(void* _{NativeName} = &{NativeName})

@@ -1,3 +1,8 @@
-﻿			{Initializers}{Result}SlimDX.Trampoline.Call{ReturnType}({Index} * System.IntPtr.Size, nativePointer{@GenerateTrampolineParameters Source});
+﻿			{Initializers}
+			{FixedStatements}
+			{FixedOpeningBracket}
+			{Result}SlimDX.Trampoline.Call{ReturnType}({Index} * System.IntPtr.Size, nativePointer{@GenerateTrampolineParameters Source});
+			
 {@ConstructResults Source}
 			{Return}
+			{FixedClosingBracket}

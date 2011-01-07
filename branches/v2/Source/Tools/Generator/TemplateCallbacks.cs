@@ -54,14 +54,26 @@ namespace SlimDX.Generator
 			});
 		}
 
+		public static bool IsParameterFixable(VariableElement parameterElement)
+		{
+			return parameterElement.Type is StructureElement;
+		}
+
+		public static bool IsParameterInitializable(VariableElement parameterElement)
+		{
+			var isOutput = parameterElement.Usage.HasFlag(UsageQualifiers.Out) && !parameterElement.Usage.HasFlag(UsageQualifiers.In);
+			return !IsParameterFixable(parameterElement) && isOutput;
+		}
+
 		public static string GenerateFunctionBody(TemplateEngine engine, object source)
 		{
 			var function = (FunctionElement)source;
-			var initializers = function.Parameters
-									.Where(p => p.Usage.HasFlag(UsageQualifiers.Out) && !p.Usage.HasFlag(UsageQualifiers.In))
+			var parametersToFix = function.Parameters.Where(x => IsParameterFixable(x)).ToList();
+			var parametersToInitialize = function.Parameters
+									.Where(p => IsParameterInitializable(p))
 									.Select(p => new { TypeName = p.Type.IntermediateType.FullName, Name = p.NativeName });
 
-			var initializerText = engine.ApplyDirect(@"{initializers:OutInitializer \n\t\t\t}", new { initializers });
+			var initializerText = engine.ApplyDirect(@"{initializers:OutInitializer \n\t\t\t}", new { initializers = parametersToInitialize });
 			if (!string.IsNullOrEmpty(initializerText))
 				initializerText = string.Format("{0}{1}\t\t\t", initializerText, Environment.NewLine);
 
@@ -73,6 +85,8 @@ namespace SlimDX.Generator
 				returnStatement = "return _result;";
 			}
 
+			var fixedStatements = engine.ApplyDirect(@"{Parameters:ParameterFixStatement \n\t\t\t}", new { Parameters = parametersToFix } );
+
 			var result = engine.Apply("FunctionBody", new
 			{
 				Initializers = initializerText,
@@ -80,7 +94,11 @@ namespace SlimDX.Generator
 				ReturnType = function.ReturnType.NativeName == "void" ? string.Empty : function.ReturnType.ManagedName,
 				Index = function.Index,
 				Return = returnStatement,
-				Source = function
+				Source = function,
+
+				FixedStatements = fixedStatements,
+				FixedOpeningBracket = (parametersToFix.Count > 0 ? "{" : string.Empty) + Environment.NewLine,
+				FixedClosingBracket = (parametersToFix.Count > 0 ? "}" : string.Empty) + Environment.NewLine,
 			});
 
 			return result.TrimEnd();
@@ -92,7 +110,9 @@ namespace SlimDX.Generator
 			var function = (FunctionElement)source;
 			foreach (var parameter in function.Parameters)
 			{
-				if (parameter.Usage.HasFlag(UsageQualifiers.Out) && !parameter.Usage.HasFlag(UsageQualifiers.In))
+				if( parameter.Type is StructureElement )
+					builder.AppendFormat(", _{0}", parameter.NativeName);
+				else if (parameter.Usage.HasFlag(UsageQualifiers.Out) && !parameter.Usage.HasFlag(UsageQualifiers.In))
 					builder.AppendFormat(", ref _{0}", parameter.NativeName);
 				else
 					builder.AppendFormat(", {0}", parameter.NativeName);
@@ -109,6 +129,8 @@ namespace SlimDX.Generator
 			var function = (FunctionElement)source;
 			foreach (var parameter in function.Parameters)
 			{
+				if( parameter.Type is StructureElement )
+					continue;
 				if (parameter.Usage.HasFlag(UsageQualifiers.Out) && !parameter.Usage.HasFlag(UsageQualifiers.In))
 				{
 					if (parameter.Type is EnumerationElement)
