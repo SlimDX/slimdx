@@ -40,7 +40,7 @@ namespace SlimDX.Generator.ObjectModel
 		public StructureElement(string nativeName, string managedName, Metadata metadata)
 			: base(nativeName, managedName, metadata)
 		{
-			IntermediateType = typeof(System.IntPtr);
+			IntermediateType = typeof(void*);
 		}
 
 		/// <summary>
