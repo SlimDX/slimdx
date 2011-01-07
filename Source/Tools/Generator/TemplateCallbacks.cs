@@ -47,7 +47,8 @@ namespace SlimDX.Generator
 			if (type.BaseType.NativeName != "IUnknown")
 				builder.Indent(1).AppendFormat(": base(nativePointer)").AppendLine().Indent(indentLevel);
 
-			return engine.Apply("Constructor", new {
+			return engine.Apply("Constructor", new
+			{
 				Name = type.ManagedName,
 				Base = builder.ToString()
 			});
@@ -56,12 +57,27 @@ namespace SlimDX.Generator
 		public static string GenerateFunctionBody(TemplateEngine engine, object source)
 		{
 			var function = (FunctionElement)source;
+			
+			if (function.Parameters.Any(p => p.Usage.HasFlag(UsageQualifiers.Out)))
+			{
+				// Currently unsupported, so use a trivial body.
+				var builder = new StringBuilder();
+				var outputs = function.Parameters
+									.Where(p => p.Usage.HasFlag(UsageQualifiers.Out) && !p.Usage.HasFlag(UsageQualifiers.In))
+									.Select(p => string.Format("{0} = default({1});", p.NativeName, p.Type.ManagedName));
+				foreach (var output in outputs)
+					builder.AppendLine(output);
+				builder.AppendFormat("return default({0});", function.ReturnType.ManagedName);
+				builder.AppendLine();
+				return builder.ToString();
+			}
+
 			var initializers = function.Parameters
 									.Where(p => p.Usage.HasFlag(UsageQualifiers.Out) && !p.Usage.HasFlag(UsageQualifiers.In))
 									.Select(p => new { TypeName = p.Type.IntermediateType.FullName, Name = p.NativeName });
 
 			var initializerText = engine.ApplyDirect(@"{initializers:OutInitializer \n\t\t\t}", new { initializers });
-			if(!string.IsNullOrEmpty(initializerText))
+			if (!string.IsNullOrEmpty(initializerText))
 				initializerText = string.Format("{0}{1}\t\t\t", initializerText, Environment.NewLine);
 
 			var resultVariable = string.Empty;
@@ -72,7 +88,8 @@ namespace SlimDX.Generator
 				returnStatement = "return _result;";
 			}
 
-			var result = engine.Apply("FunctionBody", new {
+			var result = engine.Apply("FunctionBody", new
+			{
 				Initializers = initializerText,
 				Result = resultVariable,
 				ReturnType = function.ReturnType.ManagedName,
@@ -90,7 +107,7 @@ namespace SlimDX.Generator
 			var function = (FunctionElement)source;
 			foreach (var parameter in function.Parameters)
 			{
-				if(parameter.Usage.HasFlag(UsageQualifiers.Out) && !parameter.Usage.HasFlag(UsageQualifiers.In))
+				if (parameter.Usage.HasFlag(UsageQualifiers.Out) && !parameter.Usage.HasFlag(UsageQualifiers.In))
 					builder.AppendFormat(", ref _{0}", parameter.NativeName);
 				else
 					builder.AppendFormat(", {0}", parameter.NativeName);
