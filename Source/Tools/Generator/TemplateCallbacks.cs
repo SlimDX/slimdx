@@ -111,7 +111,9 @@ namespace SlimDX.Generator
 			{
 				if (parameter.Usage.HasFlag(UsageQualifiers.Out) && !parameter.Usage.HasFlag(UsageQualifiers.In))
 				{
-					if (parameter.Type.IntermediateType.IsValueType)
+					if (parameter.Type is EnumerationElement)
+						builder.Indent(indentLevel).AppendFormat("{0} =({1})_{0};", parameter.NativeName, parameter.Type.ManagedName);
+					else if (parameter.Type.IntermediateType.IsValueType)
 						builder.Indent(indentLevel).AppendFormat("{0} =_{0};", parameter.NativeName);
 					else
 						builder.Indent(indentLevel).AppendFormat("{0} = new {1}(_{0});", parameter.NativeName, parameter.Type.ManagedName);
