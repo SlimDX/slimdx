@@ -74,8 +74,12 @@ namespace SlimDX.Generator
 
 			// Object model instances have metadata that can redirect the applied template.
 			var element = source as BaseElement;
-			if (element != null)
+			if (element != null) {
+				if (element.Metadata["Omit"] != null)
+					return string.Empty;
+				
 				template = element.Metadata["OverrideTemplate"] ?? template;
+			}
 
 			var templateFile = FindTemplate(template);
 			if (templateFile == null)

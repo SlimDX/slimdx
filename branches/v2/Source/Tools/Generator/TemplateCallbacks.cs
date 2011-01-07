@@ -57,21 +57,6 @@ namespace SlimDX.Generator
 		public static string GenerateFunctionBody(TemplateEngine engine, object source)
 		{
 			var function = (FunctionElement)source;
-			
-			if (function.Parameters.Any(p => p.Usage.HasFlag(UsageQualifiers.Out)))
-			{
-				// Currently unsupported, so use a trivial body.
-				var builder = new StringBuilder();
-				var outputs = function.Parameters
-									.Where(p => p.Usage.HasFlag(UsageQualifiers.Out) && !p.Usage.HasFlag(UsageQualifiers.In))
-									.Select(p => string.Format("{0} = default({1});", p.NativeName, p.Type.ManagedName));
-				foreach (var output in outputs)
-					builder.AppendLine(output);
-				builder.AppendFormat("return default({0});", function.ReturnType.ManagedName);
-				builder.AppendLine();
-				return builder.ToString();
-			}
-
 			var initializers = function.Parameters
 									.Where(p => p.Usage.HasFlag(UsageQualifiers.Out) && !p.Usage.HasFlag(UsageQualifiers.In))
 									.Select(p => new { TypeName = p.Type.IntermediateType.FullName, Name = p.NativeName });
@@ -126,7 +111,7 @@ namespace SlimDX.Generator
 			{
 				if (parameter.Usage.HasFlag(UsageQualifiers.Out) && !parameter.Usage.HasFlag(UsageQualifiers.In))
 				{
-					if (parameter.Type.IntermediateType.IsValueType && parameter.Type.IntermediateType != typeof(IntPtr))
+					if (parameter.Type.IntermediateType.IsValueType)
 						builder.Indent(indentLevel).AppendFormat("{0} =_{0};", parameter.NativeName);
 					else
 						builder.Indent(indentLevel).AppendFormat("{0} = new {1}(_{0});", parameter.NativeName, parameter.Type.ManagedName);
