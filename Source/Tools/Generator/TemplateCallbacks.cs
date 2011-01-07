@@ -113,10 +113,11 @@ namespace SlimDX.Generator
 				{
 					if (parameter.Type is EnumerationElement)
 						builder.Indent(indentLevel).AppendFormat("{0} =({1})_{0};", parameter.NativeName, parameter.Type.ManagedName);
-					else if (parameter.Type.IntermediateType.IsValueType)
-						builder.Indent(indentLevel).AppendFormat("{0} =_{0};", parameter.NativeName);
-					else
+					else if (parameter.Type is InterfaceElement)
 						builder.Indent(indentLevel).AppendFormat("{0} = new {1}(_{0});", parameter.NativeName, parameter.Type.ManagedName);
+					else
+						builder.Indent(indentLevel).AppendFormat("{0} =_{0};", parameter.NativeName);
+
 					builder.AppendLine();
 				}
 			}
