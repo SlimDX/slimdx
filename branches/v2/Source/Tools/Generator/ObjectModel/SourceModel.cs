@@ -296,8 +296,11 @@ namespace SlimDX.Generator.ObjectModel
 				var nativeName = itemData.Attribute("Name").Value;
 				var managedName = nameService.Apply(nativeName, NameCasingStyle.Pascal).RemovePrefix(element.ManagedName);
 				var value = itemData.Attribute("Value").Value;
-				
-				element.AddItem(new EnumerationItemElement(nativeName, managedName, value, metadataService.FindTypeMetadata(element.NativeName)));
+
+				// The 0xFFFFFFFF values are used to force the native enumeration to be a particular bit width;
+				// they should not appear in the managed layer.
+				if (value != "0xffffffff")
+					element.AddItem(new EnumerationItemElement(nativeName, managedName, value, metadataService.FindTypeMetadata(element.NativeName)));
 			}
 		}
 
@@ -329,22 +332,24 @@ namespace SlimDX.Generator.ObjectModel
 		/// <returns>The type name.</returns>
 		VariableElement ExtractVariable(XElement parameterData)
 		{
-			try {
-			var parameterTypeData = parameterData.Element("Type");
-			var parameterTypeName = ExtractTypeName(parameterTypeData);
-			var parameterType = FindTypeByName(parameterTypeName);
-			var indirectionLevel = parameterTypeData.Descendants("Pointers").Count();
-			var usageData = parameterData.Element("ParamQualifier");
-			var usage = ExtractUsage(usageData);
-			var name = parameterData.Element("Var").Attribute("Name").Value;
+			try
+			{
+				var parameterTypeData = parameterData.Element("Type");
+				var parameterTypeName = ExtractTypeName(parameterTypeData);
+				var parameterType = FindTypeByName(parameterTypeName);
+				var indirectionLevel = parameterTypeData.Descendants("Pointers").Count();
+				var usageData = parameterData.Element("ParamQualifier");
+				var usage = ExtractUsage(usageData);
+				var name = parameterData.Element("Var").Attribute("Name").Value;
 
-			// void* parameters should be passed as IntPtr
-			if (parameterType.ManagedName == "void")
-				parameterType = FindTypeByName("void*");
+				// void* parameters should be passed as IntPtr
+				if (parameterType.ManagedName == "void")
+					parameterType = FindTypeByName("void*");
 
-			return new VariableElement(name, nameService.Apply(name, NameCasingStyle.Camel), new Metadata(), parameterType, indirectionLevel, usage);
+				return new VariableElement(name, nameService.Apply(name, NameCasingStyle.Camel), new Metadata(), parameterType, indirectionLevel, usage);
 			}
-			catch {
+			catch
+			{
 				Console.Write(parameterData.ToString());
 				throw;
 			}
