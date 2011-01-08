@@ -28,6 +28,29 @@ namespace SlimDX.Generator
 {
 	static class TemplateCallbacks
 	{
+		public static string GenerateStructureField(TemplateEngine engine, object source)
+		{
+			var variable = (VariableElement)source;
+			var builder = new StringBuilder("public ");
+
+			if (variable.Type.IntermediateType == typeof(void*))
+			{
+				//TODO: This is neccessary to work around the fixed Rgb buffer in GammaControl; need
+				// a better way to handle it.
+				builder.AppendFormat("{0} {1};", variable.Type.ManagedName, variable.ManagedName);
+			}
+			else
+			{
+				if (variable.Dimension > 0)
+					builder.Append("fixed ");
+				builder.AppendFormat("{0} {1}", variable.Type.ManagedName, variable.ManagedName);
+				if (variable.Dimension > 0)
+					builder.AppendFormat("[{0}]", variable.Dimension);
+				builder.Append(";");
+			}
+			return builder.ToString();
+		}
+
 		public static string GenerateManagedParameterType(TemplateEngine engine, object source)
 		{
 			var format = "{0}";
@@ -85,7 +108,7 @@ namespace SlimDX.Generator
 				returnStatement = "return _result;";
 			}
 
-			var fixedStatements = engine.ApplyDirect(@"{Parameters:ParameterFixStatement \n\t\t\t}", new { Parameters = parametersToFix } );
+			var fixedStatements = engine.ApplyDirect(@"{Parameters:ParameterFixStatement \n\t\t\t}", new { Parameters = parametersToFix });
 
 			var result = engine.Apply("FunctionBody", new
 			{
@@ -110,7 +133,7 @@ namespace SlimDX.Generator
 			var function = (FunctionElement)source;
 			foreach (var parameter in function.Parameters)
 			{
-				if( parameter.Type is StructureElement )
+				if (parameter.Type is StructureElement)
 					builder.AppendFormat(", _{0}", parameter.NativeName);
 				else if (parameter.Usage.HasFlag(UsageQualifiers.Out) && !parameter.Usage.HasFlag(UsageQualifiers.In))
 					builder.AppendFormat(", ref _{0}", parameter.NativeName);
@@ -129,7 +152,7 @@ namespace SlimDX.Generator
 			var function = (FunctionElement)source;
 			foreach (var parameter in function.Parameters)
 			{
-				if( parameter.Type is StructureElement )
+				if (parameter.Type is StructureElement)
 					continue;
 				if (parameter.Usage.HasFlag(UsageQualifiers.Out) && !parameter.Usage.HasFlag(UsageQualifiers.In))
 				{

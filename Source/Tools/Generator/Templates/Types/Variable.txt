@@ -1,1 +1,1 @@
-﻿public {Type.ManagedName} {ManagedName};
+﻿{@GenerateStructureField}
