@@ -23,14 +23,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using SlimDX.Generator.ObjectModel;
-using System.Reflection;
 
 namespace SlimDX.Generator
 {
 	class TemplateEngine
 	{
+		#region Interface
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TemplateEngine"/> class.
 		/// </summary>
@@ -74,10 +76,11 @@ namespace SlimDX.Generator
 
 			// Object model instances have metadata that can redirect the applied template.
 			var element = source as BaseElement;
-			if (element != null) {
+			if (element != null)
+			{
 				if (element.Metadata["Omit"] != null)
 					return string.Empty;
-				
+
 				template = element.Metadata["OverrideTemplate"] ?? template;
 			}
 
@@ -137,6 +140,9 @@ namespace SlimDX.Generator
 				RegisterCallback(method.Name, (Func<TemplateEngine, object, string>)Delegate.CreateDelegate(typeof(Func<TemplateEngine, object, string>), method));
 			}
 		}
+
+		#endregion
+		#region Implementation
 
 		const string keywordGlyph = "#";
 		const string callbackGlyph = "@";
@@ -201,39 +207,38 @@ namespace SlimDX.Generator
 			}
 			else
 			{
-				string propertyName = capture;
-
-				// if the name has a colon, it indicates that the type has another template applied to it
-				int colon = capture.IndexOf(recursionGlyph);
-				if (colon >= 0)
-					propertyName = capture.Substring(0, colon);
+				var propertyName = capture;
+				var colonIndex = capture.IndexOf(recursionGlyph);
+				if (colonIndex >= 0)
+					propertyName = capture.Substring(0, colonIndex);
 
 				var value = GetPropertyValue(propertyName, source);
-				if (colon >= 0)
+				if (colonIndex >= 0)
 				{
-					// extract the new template name
-					// {Foo:lol.txt} -> lol.txt
-					var template = capture.Substring(colon + 1);
+					// Recursive directive application; extract the directive token.
+					var template = capture.Substring(colonIndex + 1);
 					var suffix = string.Empty;
-
-					int space = template.IndexOf(separatorGlyph);
-					if (space >= 0)
+					var spaceIndex = template.IndexOf(separatorGlyph);
+					if (spaceIndex >= 0)
 					{
-						// the suffix is a list of characters to apply after each element
-						// in the enumeration
-						suffix = Escape(template.Substring(space + 1));
-						template = template.Substring(0, space);
+						// The suffix is a list of characters to apply after each element
+						// in the enumeration.
+						suffix = Escape(template.Substring(spaceIndex + 1));
+						template = template.Substring(0, spaceIndex);
 					}
 
+					// Apply the template directive to each value of an enumerable source value,
+					// if applicable.
 					var enumerable = GetEnumerable(value);
 					if (enumerable != null)
 						return string.Join(suffix, enumerable.Cast<object>().Select(o => Apply(template, o)));
 
-					// the element is not enumerable, so just apply the new template to the value
 					return Apply(template, value);
 				}
 				else
+				{
 					return Format(value);
+				}
 			}
 		}
 
@@ -336,5 +341,7 @@ namespace SlimDX.Generator
 		{
 			return Namespace;
 		}
+
+		#endregion
 	}
 }

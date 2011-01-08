@@ -28,12 +28,54 @@ namespace SlimDX.Generator
 {
 	static class TemplateCallbacks
 	{
+		public static string GenerateStructureFromMarshallerBody(TemplateEngine engine, object source)
+		{
+			var structure = (StructureElement)source;
+			var builder = new StringBuilder();
+
+			foreach (var field in structure.Fields)
+			{
+				builder.Append("\t\t\t");
+				if (field.Dimension > 0 && field.Type.NativeName == "WCHAR")
+					builder.AppendFormat("result.{0} = new string(marshaller.{0});", field.ManagedName);
+				else if (field.Dimension > 0)
+					builder.AppendFormat("/* skipped {0} - not supported */", field.ManagedName);
+				else if (field.Type is StructureElement || field.Type is EnumerationElement)
+					builder.AppendFormat("/* skipped {0} - not supported */", field.ManagedName);
+				else
+					builder.AppendFormat("result.{0} = marshaller.{0};", field.ManagedName);
+				builder.AppendLine();
+			}
+
+			return builder.ToString();
+		}
+
 		public static string GenerateStructureField(TemplateEngine engine, object source)
 		{
 			var variable = (VariableElement)source;
 			var builder = new StringBuilder("public ");
 
-			if (variable.Type.IntermediateType == typeof(void*))
+			if (variable.Dimension > 0 && variable.Type.NativeName == "WCHAR")
+				builder.AppendFormat("string {0};", variable.ManagedName);
+			else if( variable.Type is StructureElement )
+				builder.AppendFormat("{0}Marshaller {1};", variable.Type.ManagedName, variable.ManagedName);
+			else if (variable.Type is EnumerationElement)
+				builder.AppendFormat("int {0};", variable.ManagedName);
+			else
+				builder.AppendFormat("{0} {1};", variable.Type.ManagedName, variable.ManagedName);
+			return builder.ToString();
+		}
+
+		public static string GenerateStructureMarshallerField(TemplateEngine engine, object source)
+		{
+			var variable = (VariableElement)source;
+			var builder = new StringBuilder("public ");
+
+			if( variable.Type is StructureElement )
+				builder.AppendFormat("{0}Marshaller {1};", variable.Type.ManagedName, variable.ManagedName);
+			else if (variable.Type is EnumerationElement)
+				builder.AppendFormat("int {0};", variable.ManagedName);
+			else if (variable.Type.IntermediateType == typeof(void*))
 			{
 				//TODO: This is neccessary to work around the fixed Rgb buffer in GammaControl; need
 				// a better way to handle it.
@@ -77,7 +119,7 @@ namespace SlimDX.Generator
 			});
 		}
 
-		public static bool IsParameterFixable(VariableElement parameterElement)
+		public static bool IsParameterStructure(VariableElement parameterElement)
 		{
 			return parameterElement.Type is StructureElement;
 		}
@@ -85,13 +127,13 @@ namespace SlimDX.Generator
 		public static bool IsParameterInitializable(VariableElement parameterElement)
 		{
 			var isOutput = parameterElement.Usage.HasFlag(UsageQualifiers.Out) && !parameterElement.Usage.HasFlag(UsageQualifiers.In);
-			return !IsParameterFixable(parameterElement) && isOutput;
+			return !IsParameterStructure(parameterElement) && isOutput;
 		}
 
 		public static string GenerateFunctionBody(TemplateEngine engine, object source)
 		{
 			var function = (FunctionElement)source;
-			var parametersToFix = function.Parameters.Where(x => IsParameterFixable(x)).ToList();
+			var parametersToMarshal = function.Parameters.Where(x => IsParameterStructure(x)).ToList();
 			var parametersToInitialize = function.Parameters
 									.Where(p => IsParameterInitializable(p))
 									.Select(p => new { TypeName = p.Type.IntermediateType.FullName, Name = p.NativeName });
@@ -108,7 +150,11 @@ namespace SlimDX.Generator
 				returnStatement = "return _result;";
 			}
 
-			var fixedStatements = engine.ApplyDirect(@"{Parameters:ParameterFixStatement \n\t\t\t}", new { Parameters = parametersToFix });
+			var marshalStatements = engine.ApplyDirect(@"{Parameters:ParameterFixStatement \n\t\t\t}", new { Parameters = parametersToMarshal });
+			var marshalAssignments = engine.ApplyDirect(
+				@"{Parameters:ParameterMarshalledAssignment \n\t\t\t}",
+				new { Parameters = parametersToMarshal }
+			);
 
 			var result = engine.Apply("FunctionBody", new
 			{
@@ -119,9 +165,8 @@ namespace SlimDX.Generator
 				Return = returnStatement,
 				Source = function,
 
-				FixedStatements = fixedStatements,
-				FixedOpeningBracket = (parametersToFix.Count > 0 ? "{" : string.Empty) + Environment.NewLine,
-				FixedClosingBracket = (parametersToFix.Count > 0 ? "}" : string.Empty) + Environment.NewLine,
+				FixedStatements = marshalStatements,
+				MarshalledAssignments = marshalAssignments
 			});
 
 			return result.TrimEnd();
@@ -134,7 +179,7 @@ namespace SlimDX.Generator
 			foreach (var parameter in function.Parameters)
 			{
 				if (parameter.Type is StructureElement)
-					builder.AppendFormat(", _{0}", parameter.NativeName);
+					builder.AppendFormat(", &{0}Marshaller", parameter.NativeName);
 				else if (parameter.Usage.HasFlag(UsageQualifiers.Out) && !parameter.Usage.HasFlag(UsageQualifiers.In))
 					builder.AppendFormat(", ref _{0}", parameter.NativeName);
 				else

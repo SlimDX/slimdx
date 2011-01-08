@@ -29,22 +29,27 @@ namespace SlimDX.{#Namespace}
 {
 	public class {ManagedName}
 	{
-		internal static {ManagedName} FromMarshaller({ManagedName}Marshaller marshaller)
+		internal unsafe static {ManagedName} FromMarshaller({ManagedName}Marshaller marshaller)
 		{
-			return default({ManagedName});
+			{ManagedName} result = new {ManagedName}();
+{@GenerateStructureFromMarshallerBody}
+			return result;
 		}
 
-		internal static {ManagedName}Marshaller ToMarshaller({ManagedName} managed)
+		internal unsafe static {ManagedName}Marshaller ToMarshaller({ManagedName} managed)
 		{
 			return default({ManagedName}Marshaller);
 		}
 
-		{Fields:Variable \n\t\t}
+		{Fields:StructureField \n\t\t}
+
+		private {ManagedName}() {
+		}
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	unsafe struct {ManagedName}Marshaller
+	public unsafe struct {ManagedName}Marshaller
 	{
-		{Fields:Variable \n\t\t}
+		{Fields:StructureMarshallerField \n\t\t}
 	}
 }
