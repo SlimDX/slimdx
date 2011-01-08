@@ -103,7 +103,7 @@ namespace SlimDX.Generator
 				else if (parameterIndex == 2)
 					il.Emit(OpCodes.Ldarg_3);
 				else
-					il.Emit(OpCodes.Ldarg_S, parameterIndex + 2);
+					il.Emit(OpCodes.Ldarg_S, parameterIndex + 1);
 			}
 
 			// Load the instance pointer, and dereference it to leave the base address of
