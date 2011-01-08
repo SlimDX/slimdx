@@ -1,1 +1,1 @@
-﻿fixed(void* _{NativeName} = &{NativeName})
+﻿{Type.ManagedName}Marshaller {NativeName}Marshaller = default({Type.ManagedName}Marshaller);
