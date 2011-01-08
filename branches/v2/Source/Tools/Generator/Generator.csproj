@@ -131,7 +131,7 @@
     <Content Include="Templates\Overrides\QueryInterface.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Templates\Types\Struct.txt">
+    <Content Include="Templates\Types\Structure.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\Types\Variable.txt">

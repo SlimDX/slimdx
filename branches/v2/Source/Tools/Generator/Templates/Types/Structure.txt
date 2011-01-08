@@ -27,8 +27,23 @@ using System.Runtime.InteropServices;
 
 namespace SlimDX.{#Namespace}
 {
+	public class {ManagedName}
+	{
+		internal static {ManagedName} FromMarshaller({ManagedName}Marshaller marshaller)
+		{
+			return default({ManagedName});
+		}
+
+		internal static {ManagedName}Marshaller ToMarshaller({ManagedName} managed)
+		{
+			return default({ManagedName}Marshaller);
+		}
+
+		{Fields:Variable \n\t\t}
+	}
+
 	[StructLayout(LayoutKind.Sequential)]
-	public unsafe struct {ManagedName}
+	unsafe struct {ManagedName}Marshaller
 	{
 		{Fields:Variable \n\t\t}
 	}

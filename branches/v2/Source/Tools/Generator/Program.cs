@@ -130,7 +130,7 @@ namespace SlimDX.Generator
 			// write output files
 			File.WriteAllText(Path.Combine(outputPath, "Enums.cs"), templateEngine.Apply("EnumFile", model));
 			foreach (var item in model.Structures)
-				File.WriteAllText(Path.Combine(outputPath, item.ManagedName + ".cs"), templateEngine.Apply("Struct", item));
+				File.WriteAllText(Path.Combine(outputPath, item.ManagedName + ".cs"), templateEngine.Apply("Structure", item));
 
 			foreach (var item in model.Interfaces)
 				File.WriteAllText(Path.Combine(outputPath, item.ManagedName + ".cs"), templateEngine.Apply("Interface", item));
