@@ -27,7 +27,7 @@ namespace SlimDX.DXGI
 	/// <summary>
 	/// The access point for the DXGI API.
 	/// </summary>
-	public static class DGXI
+	public static class DXGI
 	{
 		#region Interface
 
