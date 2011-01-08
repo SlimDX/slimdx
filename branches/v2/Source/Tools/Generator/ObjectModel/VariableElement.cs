@@ -74,6 +74,8 @@ namespace SlimDX.Generator.ObjectModel
 	/// </summary>
 	class VariableElement : BaseElement
 	{
+		#region Interface
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="VariableElement"/> class.
 		/// </summary>
@@ -115,6 +117,17 @@ namespace SlimDX.Generator.ObjectModel
 			Usage = usage;
 		}
 
+		public VariableElement(string nativeName, string managedName, Metadata metadata, TypeElement type, UsageQualifiers usage, int dimension)
+			: base(nativeName, managedName, metadata)
+		{
+			if (type == null)
+				throw new ArgumentNullException("type");
+
+			Type = type;
+			Usage = usage;
+			Dimension = dimension;
+		}
+
 		/// <summary>
 		/// Gets the type of the variable.
 		/// </summary>
@@ -133,5 +146,13 @@ namespace SlimDX.Generator.ObjectModel
 			get;
 			private set;
 		}
+
+		public int Dimension
+		{
+			get;
+			private set;
+		}
+
+		#endregion
 	}
 }

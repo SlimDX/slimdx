@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 namespace SlimDX.{#Namespace}
 {
 	[StructLayout(LayoutKind.Sequential)]
-	public struct {ManagedName}
+	public unsafe struct {ManagedName}
 	{
 		{Fields:Variable \n\t\t}
 	}

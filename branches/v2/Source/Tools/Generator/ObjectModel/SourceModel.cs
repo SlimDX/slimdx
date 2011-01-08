@@ -337,17 +337,22 @@ namespace SlimDX.Generator.ObjectModel
 			try
 			{
 				var parameterTypeData = parameterData.Element("Type");
+				var parameterInfoData = parameterData.Element("Var");
+				var parameterArrayData = parameterInfoData.Element("Array");
 				var parameterTypeName = ExtractTypeName(parameterTypeData);
 				var parameterType = FindTypeByName(parameterTypeName);
 				var usageData = parameterData.Element("ParamQualifier");
 				var usage = ExtractUsage(usageData);
-				var name = parameterData.Element("Var").Attribute("Name").Value;
+				var name = parameterInfoData.Attribute("Name").Value;
+				var dimension = 0;
 
-				// void* parameters should be passed as IntPtr
+				if (parameterArrayData != null)
+					dimension = int.Parse(parameterArrayData.Attribute("Value").Value);
+
 				if (parameterType.ManagedName == "void")
 					parameterType = FindTypeByName("void*");
 
-				return new VariableElement(name, nameService.Apply(name, NameCasingStyle.Camel), new Metadata(), parameterType, usage);
+				return new VariableElement(name, nameService.Apply(name, NameCasingStyle.Camel), new Metadata(), parameterType, usage, dimension);
 			}
 			catch
 			{
