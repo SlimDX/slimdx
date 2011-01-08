@@ -248,7 +248,9 @@ namespace SlimDX.Generator.ObjectModel
 			// Counting base functions in this fashion assumes that base types will be fully
 			// defined before child types, which should be true (because the source language
 			// is C) and that base types are processed by BuildInterface() in definition order.
-			var index = 0;
+			// Note also that elements directly deriving from IUnknown will already have some
+			// functions defined.
+			var index = element.Functions.Count;
 			var baseType = element.BaseType as InterfaceElement;
 			while (baseType != null)
 			{
