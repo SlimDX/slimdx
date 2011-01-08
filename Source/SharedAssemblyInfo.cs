@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 #if DEBUG
 [assembly:AssemblyConfiguration("Debug")]
 #else
-[assembly: AssemblyConfiguration("Release")]
+[assembly:AssemblyConfiguration("Release")]
 #endif
 
 [assembly: ComVisible(false)]
