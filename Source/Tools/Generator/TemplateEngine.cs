@@ -36,8 +36,8 @@ namespace SlimDX.Generator
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TemplateEngine"/> class.
 		/// </summary>
-		/// <param name="rootNamespace">The root namespace.</param>
-		public TemplateEngine(string rootNamespace, IEnumerable<string> templateSearchPaths)
+		/// <param name="templateSearchPaths">The template search paths.</param>
+		public TemplateEngine(IEnumerable<string> templateSearchPaths)
 		{
 			if (templateSearchPaths == null)
 				throw new ArgumentNullException("templateSearchPaths");
@@ -50,15 +50,6 @@ namespace SlimDX.Generator
 
 			if (searchPaths.Count == 0)
 				throw new ArgumentException("At least one template search path must be specified.", "templateSearchPaths");
-
-			Namespace = rootNamespace;
-			keywords["Namespace"] = GetNamespaceKeywordValue;
-		}
-
-		public string Namespace
-		{
-			get;
-			private set;
 		}
 
 		/// <summary>
@@ -144,7 +135,6 @@ namespace SlimDX.Generator
 		#endregion
 		#region Implementation
 
-		const string keywordGlyph = "#";
 		const string callbackGlyph = "@";
 		const string recursionGlyph = ":";
 		const string accessorGlyph = ".";
@@ -155,7 +145,6 @@ namespace SlimDX.Generator
 
 		HashSet<string> searchPaths = new HashSet<string>();
 
-		Dictionary<string, Func<object, string>> keywords = new Dictionary<string, Func<object, string>>();
 		Dictionary<string, Func<TemplateEngine, object, string>> callbacks = new Dictionary<string, Func<TemplateEngine, object, string>>();
 
 		Regex tokenRegex = new Regex(@"{(\\}|.)*?}", RegexOptions.Compiled);
@@ -185,12 +174,7 @@ namespace SlimDX.Generator
 
 			// Brackets are stripped from the token for easier processing.
 			var capture = match.Captures[0].Value.Trim('{', '}');
-			if (capture.StartsWith(keywordGlyph))
-			{
-				var keywordName = capture.Substring(keywordGlyph.Length);
-				return EvaluateKeyword(keywordName, source);
-			}
-			else if (capture.StartsWith(callbackGlyph))
+			if (capture.StartsWith(callbackGlyph))
 			{
 				var callbackName = capture.Substring(callbackGlyph.Length);
 
@@ -240,19 +224,6 @@ namespace SlimDX.Generator
 					return Format(value);
 				}
 			}
-		}
-
-		/// <summary>
-		/// Processes a keyword token within a template during evalution.
-		/// </summary>
-		/// <param name="keywordName">The name of the keyword.</param>
-		/// <param name="source">The object used as a data source during evaluation.</param>
-		string EvaluateKeyword(string keywordName, object source)
-		{
-			Func<object, string> callback = null;
-			if (!keywords.TryGetValue(keywordName, out callback))
-				throw new InvalidOperationException(string.Format("No keyword '{0}.'", keywordName));
-			return callback(source);
 		}
 
 		/// <summary>
@@ -330,16 +301,6 @@ namespace SlimDX.Generator
 		static string Escape(string input)
 		{
 			return input.Replace("\\t", "\t").Replace("\\n", Environment.NewLine).Replace("\\s", " ");
-		}
-
-		/// <summary>
-		/// Gets the value for the {#Namespace} token.
-		/// </summary>
-		/// <param name="source">The object used as a data source during evaluation.</param>
-		/// <returns>The value for the {#Namespace} token.</returns>
-		string GetNamespaceKeywordValue(object source)
-		{
-			return Namespace;
 		}
 
 		#endregion
