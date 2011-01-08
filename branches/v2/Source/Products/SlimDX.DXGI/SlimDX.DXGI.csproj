@@ -52,7 +52,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="DGXI.cs" />
+    <Compile Include="DXGI.cs" />
     <Compile Include="Generated\Adapter.cs" />
     <Compile Include="Generated\Adapter1.cs" />
     <Compile Include="Generated\AdapterDescription.cs" />
