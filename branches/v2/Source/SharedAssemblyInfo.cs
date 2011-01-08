@@ -23,7 +23,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyCompany("SlimDX Group")]
 [assembly: AssemblyProduct("SlimDX")]
-[assembly: AssemblyCopyright("Copyright © 2007-2010 SlimDX Group")]
+[assembly: AssemblyCopyright("Copyright © 2007-2011 SlimDX Group")]
 
 [assembly: AssemblyVersion("2.0.0.0")]
 [assembly: AssemblyFileVersion("2.0.0.0")]
