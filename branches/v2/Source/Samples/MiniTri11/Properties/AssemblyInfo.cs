@@ -21,5 +21,5 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("SlimDX MiniTri11 Sample")]
-[assembly: Guid("4cf8e09d-86ec-434d-8fbb-7157303872d9")]
+[assembly: AssemblyTitle("SlimDX Sample - MiniTri11")]
+[assembly: Guid("d04ec970-6fc3-457b-a3b7-d9e274311e3b")]

@@ -31,11 +31,6 @@ namespace MiniTri11
 	{
 		static void Main()
 		{
-			Factory factory = DGXI.CreateFactory();
-			Adapter adapter = null;
-			Result result = factory.EnumAdapters(0, out adapter);
-			adapter.Release();
-			factory.Release();
 		}
 	}
 }
