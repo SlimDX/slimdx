@@ -318,7 +318,7 @@ namespace SlimDX.Generator.ObjectModel
 			var unknownType = FindTypeByName("IUnknown");
 			var longType = FindTypeByName("ULONG");
 			var guidParameter = new VariableElement("riid", new Metadata(), resultType, 0);
-			var unknownParameter = new VariableElement("ppvObject", new Metadata(), unknownType, 2, UsageQualifiers.Out);
+			var unknownParameter = new VariableElement("ppvObject", new Metadata(), unknownType, UsageQualifiers.Out);
 
 			results[0] = new FunctionElement("QueryInterface", metadataService.FindFunctionMetadata("IUnknown.QueryInterface"), 0, resultType, guidParameter, unknownParameter);
 			results[1] = new FunctionElement("AddRef", metadataService.FindFunctionMetadata("IUnknown.AddRef"), 1, longType);
@@ -339,7 +339,6 @@ namespace SlimDX.Generator.ObjectModel
 				var parameterTypeData = parameterData.Element("Type");
 				var parameterTypeName = ExtractTypeName(parameterTypeData);
 				var parameterType = FindTypeByName(parameterTypeName);
-				var indirectionLevel = parameterTypeData.Descendants("Pointers").Count();
 				var usageData = parameterData.Element("ParamQualifier");
 				var usage = ExtractUsage(usageData);
 				var name = parameterData.Element("Var").Attribute("Name").Value;
@@ -348,7 +347,7 @@ namespace SlimDX.Generator.ObjectModel
 				if (parameterType.ManagedName == "void")
 					parameterType = FindTypeByName("void*");
 
-				return new VariableElement(name, nameService.Apply(name, NameCasingStyle.Camel), new Metadata(), parameterType, indirectionLevel, usage);
+				return new VariableElement(name, nameService.Apply(name, NameCasingStyle.Camel), new Metadata(), parameterType, usage);
 			}
 			catch
 			{
