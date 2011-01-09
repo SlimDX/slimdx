@@ -112,7 +112,7 @@ namespace SlimDX.Generator
 			if (type.BaseType.NativeName != "IUnknown")
 				builder.Indent(1).AppendFormat(": base(nativePointer)").AppendLine().Indent(indentLevel);
 
-			return engine.Apply("Constructor", new
+			return engine.ApplyByName("Constructor", new
 			{
 				Name = type.ManagedName,
 				Base = builder.ToString()
@@ -138,7 +138,7 @@ namespace SlimDX.Generator
 									.Where(p => IsParameterInitializable(p))
 									.Select(p => new { TypeName = p.Type.IntermediateType.FullName, Name = p.NativeName });
 
-			var initializerText = engine.ApplyDirect(@"{initializers:OutInitializer \n\t\t\t}", new { initializers = parametersToInitialize });
+			var initializerText = engine.Apply(@"{initializers:OutInitializer \n\t\t\t}", new { initializers = parametersToInitialize });
 			if (!string.IsNullOrEmpty(initializerText))
 				initializerText = string.Format("{0}{1}\t\t\t", initializerText, Environment.NewLine);
 
@@ -150,13 +150,13 @@ namespace SlimDX.Generator
 				returnStatement = "return _result;";
 			}
 
-			var marshalStatements = engine.ApplyDirect(@"{Parameters:ParameterFixStatement \n\t\t\t}", new { Parameters = parametersToMarshal });
-			var marshalAssignments = engine.ApplyDirect(
+			var marshalStatements = engine.Apply(@"{Parameters:ParameterFixStatement \n\t\t\t}", new { Parameters = parametersToMarshal });
+			var marshalAssignments = engine.Apply(
 				@"{Parameters:ParameterMarshalledAssignment \n\t\t\t}",
 				new { Parameters = parametersToMarshal }
 			);
 
-			var result = engine.Apply("FunctionBody", new
+			var result = engine.ApplyByName("FunctionBody", new
 			{
 				Initializers = initializerText,
 				Result = resultVariable,

@@ -129,12 +129,12 @@ namespace SlimDX.Generator
 			trampolineBuilder.CreateAssembly("SlimDX.Trampoline");
 
 			// write output files
-			File.WriteAllText(Path.Combine(outputPath, "Enums.cs"), templateEngine.Apply("EnumFile", model));
+			File.WriteAllText(Path.Combine(outputPath, "Enums.cs"), templateEngine.ApplyByName("EnumFile", model));
 			foreach (var item in model.Structures)
-				File.WriteAllText(Path.Combine(outputPath, item.ManagedName + ".cs"), templateEngine.Apply("Structure", item));
+				File.WriteAllText(Path.Combine(outputPath, item.ManagedName + ".cs"), templateEngine.ApplyByName("Structure", item));
 
 			foreach (var item in model.Interfaces)
-				File.WriteAllText(Path.Combine(outputPath, item.ManagedName + ".cs"), templateEngine.Apply("Interface", item));
+				File.WriteAllText(Path.Combine(outputPath, item.ManagedName + ".cs"), templateEngine.ApplyByName("Interface", item));
 		}
 
 		/// <summary>
