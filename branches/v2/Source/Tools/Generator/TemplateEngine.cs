@@ -53,14 +53,31 @@ namespace SlimDX.Generator
 		}
 
 		/// <summary>
-		/// Applies the specified template to the given source object.
+		/// Applies the specified template to the given source object, using the template source instead
+		/// of looking up the template file.
 		/// </summary>
-		/// <param name="template">The text template.</param>
+		/// <param name="templateText">The template text.</param>
 		/// <param name="source">The object used as a data source during evaluation.</param>
 		/// <returns>The generated string.</returns>
-		public string Apply(string template, object source)
+		public string Apply(string templateText, object source)
 		{
-			if (string.IsNullOrEmpty(template))
+			if (string.IsNullOrEmpty(templateText))
+				throw new ArgumentException("Value may not be null or empty.", "template");
+			if (source == null)
+				throw new ArgumentNullException("source");
+
+			return tokenRegex.Replace(templateText.Replace("\\{", "`"), m => Evaluate(source, m)).Replace("`", "{").Replace("\\}", "}");
+		}
+
+		/// <summary>
+		/// Applies the specified template to the given source object.
+		/// </summary>
+		/// <param name="templateName">The text template.</param>
+		/// <param name="source">The object used as a data source during evaluation.</param>
+		/// <returns>The generated string.</returns>
+		public string ApplyByName(string templateName, object source)
+		{
+			if (string.IsNullOrEmpty(templateName))
 				throw new ArgumentException("Value may not be null or empty.", "template");
 			if (source == null)
 				throw new ArgumentNullException("source");
@@ -72,32 +89,14 @@ namespace SlimDX.Generator
 				if (element.Metadata["Omit"] != null)
 					return string.Empty;
 
-				template = element.Metadata["OverrideTemplate"] ?? template;
+				templateName = element.Metadata["OverrideTemplate"] ?? templateName;
 			}
 
-			var templateFile = FindTemplate(template);
+			var templateFile = FindTemplate(templateName);
 			if (templateFile == null)
-				throw new FileNotFoundException(string.Format("No template named '{0}' exists.", template));
+				throw new FileNotFoundException(string.Format("No template named '{0}' exists.", templateName));
 
-			var templateText = File.ReadAllText(templateFile);
-			return tokenRegex.Replace(templateText.Replace("\\{", "`"), m => Evaluate(source, m)).Replace("`", "{").Replace("\\}", "}");
-		}
-
-		/// <summary>
-		/// Applies the specified template to the given source object, using the template source instead
-		/// of looking up the template file.
-		/// </summary>
-		/// <param name="templateText">The template text.</param>
-		/// <param name="source">The object used as a data source during evaluation.</param>
-		/// <returns>The generated string.</returns>
-		public string ApplyDirect(string templateText, object source)
-		{
-			if (string.IsNullOrEmpty(templateText))
-				throw new ArgumentException("Value may not be null or empty.", "template");
-			if (source == null)
-				throw new ArgumentNullException("source");
-
-			return tokenRegex.Replace(templateText.Replace("\\{", "`"), m => Evaluate(source, m)).Replace("`", "{").Replace("\\}", "}");
+			return Apply(File.ReadAllText(templateFile), source);
 		}
 
 		/// <summary>
@@ -215,9 +214,9 @@ namespace SlimDX.Generator
 					// if applicable.
 					var enumerable = GetEnumerable(value);
 					if (enumerable != null)
-						return string.Join(suffix, enumerable.Cast<object>().Select(o => Apply(template, o)));
+						return string.Join(suffix, enumerable.Cast<object>().Select(o => ApplyByName(template, o)));
 
-					return Apply(template, value);
+					return ApplyByName(template, value);
 				}
 				else
 				{
