@@ -13,7 +13,7 @@
 			<p>The SlimDX library binaries, as well as all of its source code, are available to anybody free of charge, under the terms of the <a href="http://www.opensource.org/licenses/mit-license.html">MIT license</a>.
 			The full terms of the license are as follows:</p><br />
 			<p><pre>
-Copyright (c) 2007-2010 SlimDX Group
+Copyright (c) 2007-2011 SlimDX Group
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
