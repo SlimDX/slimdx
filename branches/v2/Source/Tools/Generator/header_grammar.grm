@@ -21,7 +21,7 @@
 
 DecLiteral       = [123456789]{digit}*
 OctLiteral       = 0{Oct Digit}*
-HexLiteral       = 0x{Hex Digit}+
+HexLiteral       = 0x{Hex Digit}+[lL]?
 
 StringLiteral    = '"'( {String Ch} | '\'{Printable} )* '"'
 
@@ -66,11 +66,13 @@ Comment Line  = '//'
              | <FuncModifierList> <Type> operator <Symbol> '(' <Signature>
              | <Type> <FuncModifierList> operator <Symbol> '(' <Signature>
              | <Type> operator <Symbol> '(' <Signature>
+             | operator <Type> '(' ')' const <Body>
 
 <Function> ::= <FuncModifierList> <Type> <FuncModifierList> <ID> '(' <Signature>
              | <FuncModifierList> <Type> <ID> '(' <Signature>
              | <Type> <FuncModifierList> <ID> '(' <Signature>
              | <Type> <ID> '(' <Signature>
+             | <ID> '(' <Signature>
 
 <Signature> ::= <Params> ')' <Throw> <Pure> <Body>
 
@@ -172,6 +174,7 @@ Comment Line  = '//'
              | novtable
              | nothrow
              | restrict
+             | selectany
              | dllimport
              | dllexport
              | deprecated
@@ -196,7 +199,14 @@ Comment Line  = '//'
 <StructMember> ::= <Variable>
                  | <Function>
                  | <Template>
+                 | <Constructor>
+                 | <Destructor>
+                 | <Operator>
                  | <Accessibility> ':'
+
+<Constructor> ::= explicit <ID> '(' <Params> ')' <Body>
+
+<Destructor> ::= '~' <ID> '(' ')' <Body>
 
 <FunctionPtr> ::= <Type> '(' <CallingConvention> <Pointers> <ID> ')' '(' <Params> ')'
                 | <Type> '(' <CallingConvention> <Pointers> ')' '(' <Params> ')'
@@ -264,6 +274,7 @@ Comment Line  = '//'
 
 <Type> ::= <W64> <Base> <Pointers> 
          | <ModList> <W64> <Base> <Pointers>
+         | <ModList> <DeclspecDef> <Base> <Pointers>
          | <DeclspecDef> <ModList> <W64> <Base> <Pointers>
          | <DeclspecDef> <Base> <Pointers>
             
