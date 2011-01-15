@@ -1,4 +1,4 @@
-﻿public enum {ManagedName}
-	{
-		{Items:EnumItem ,\n\t\t}
-	}
+﻿public enum $(ManagedName)
+{
+	$(Items:EnumItem)
+}

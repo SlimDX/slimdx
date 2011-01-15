@@ -1,8 +1,8 @@
-﻿			{Initializers}
-			{FixedStatements}
+﻿$(Initializers)
+$(FixedStatements)
 
-			{Result}SlimDX.Trampoline.Call{ReturnType}({Index} * System.IntPtr.Size, nativePointer{@GenerateTrampolineParameters Source});
-			
-{@ConstructResults Source}
-			{MarshalledAssignments}
-			{Return}
+$(@FunctionTrampolineCall)
+		
+$(@ConstructResults)
+$(MarshalledAssignments)
+$(Return)

@@ -26,6 +26,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using SlimDX.Generator.ObjectModel;
+using System.Text;
 
 namespace SlimDX.Generator
 {
@@ -52,6 +53,9 @@ namespace SlimDX.Generator
 				throw new ArgumentException("At least one template search path must be specified.", "templateSearchPaths");
 		}
 
+		Regex directiveRegex = new Regex(@"\$\((.*?)\)", RegexOptions.Compiled);
+
+
 		/// <summary>
 		/// Applies the specified template to the given source object, using the template source instead
 		/// of looking up the template file.
@@ -66,7 +70,22 @@ namespace SlimDX.Generator
 			if (source == null)
 				throw new ArgumentNullException("source");
 
-			return tokenRegex.Replace(templateText.Replace("\\{", "`"), m => Evaluate(source, m)).Replace("`", "{").Replace("\\}", "}");
+			var builder = new StringBuilder();
+			foreach (var line in templateText.Split(new[] { Environment.NewLine }, StringSplitOptions.None))
+			{
+				// Iteratively replacing matches in this fashion ensures that the line sent to
+				// EvaluateDirective always contains fully evaluated text before the matched
+				// directive. This allows for correct handling of multiple directives per line.
+				var result = line;
+				var collection = directiveRegex.Matches(line);
+				for (int matchIndex = 0; matchIndex < collection.Count; ++matchIndex)
+					result = directiveRegex.Replace(result, m => EvaluateDirective(m, result, source), 1);
+
+				// Restore the original newline that was stripped away by the split.
+				builder.AppendLine(result);
+			}
+
+			return builder.ToString();
 		}
 
 		/// <summary>
@@ -88,7 +107,6 @@ namespace SlimDX.Generator
 			{
 				if (element.Metadata["Omit"] != null)
 					return string.Empty;
-
 				templateName = element.Metadata["OverrideTemplate"] ?? templateName;
 			}
 
@@ -135,9 +153,7 @@ namespace SlimDX.Generator
 		#region Implementation
 
 		const string callbackGlyph = "@";
-		const string recursionGlyph = ":";
-		const string accessorGlyph = ".";
-		const string separatorGlyph = " ";
+		const string separatorGlyph = ".";
 
 		static readonly Type[] callbackSignature = new[] { typeof(TemplateEngine), typeof(object) };
 		static readonly Type callbackReturn = typeof(string);
@@ -146,7 +162,9 @@ namespace SlimDX.Generator
 
 		Dictionary<string, Func<TemplateEngine, object, string>> callbacks = new Dictionary<string, Func<TemplateEngine, object, string>>();
 
-		Regex tokenRegex = new Regex(@"{(\\}|.)*?}", RegexOptions.Compiled);
+		Regex valueRegex = new Regex(@"[^:]*", RegexOptions.Compiled);
+		Regex handlerRegex = new Regex(@"\:(.*)", RegexOptions.Compiled);
+		Regex suffixRegex = new Regex(@" (.*)", RegexOptions.Compiled);
 
 		/// <summary>
 		/// Searches for a template with the specified name.
@@ -166,76 +184,74 @@ namespace SlimDX.Generator
 			return null;
 		}
 
-		string Evaluate(object source, Match match)
-		{
-			if (match.Captures.Count <= 0)
-				throw new InvalidOperationException("No captures in match.");
 
-			// Brackets are stripped from the token for easier processing.
-			var capture = match.Captures[0].Value.Trim('{', '}');
-			if (capture.StartsWith(callbackGlyph))
-			{
-				var callbackName = capture.Substring(callbackGlyph.Length);
-
-				// a space indicates that the user is overriding the default source object with a property
-				int space = callbackName.IndexOf(separatorGlyph);
-				if (space > 0)
-				{
-					var propertyName = callbackName.Substring(space + 1);
-					callbackName = callbackName.Substring(0, space);
-					source = GetPropertyValue(propertyName, source);
-				}
-
-				return EvaluateCallback(callbackName, source);
-			}
-			else
-			{
-				var propertyName = capture;
-				var colonIndex = capture.IndexOf(recursionGlyph);
-				if (colonIndex >= 0)
-					propertyName = capture.Substring(0, colonIndex);
-
-				var value = GetPropertyValue(propertyName, source);
-				if (colonIndex >= 0)
-				{
-					// Recursive directive application; extract the directive token.
-					var template = capture.Substring(colonIndex + 1);
-					var suffix = string.Empty;
-					var spaceIndex = template.IndexOf(separatorGlyph);
-					if (spaceIndex >= 0)
-					{
-						// The suffix is a list of characters to apply after each element
-						// in the enumeration.
-						suffix = Escape(template.Substring(spaceIndex + 1));
-						template = template.Substring(0, spaceIndex);
-					}
-
-					// Apply the template directive to each value of an enumerable source value,
-					// if applicable.
-					var enumerable = GetEnumerable(value);
-					if (enumerable != null)
-						return string.Join(suffix, enumerable.Cast<object>().Select(o => ApplyByName(template, o)));
-
-					return ApplyByName(template, value);
-				}
-				else
-				{
-					return Format(value);
-				}
-			}
-		}
 
 		/// <summary>
-		/// Processes a callback token within a template during evalution.
+		/// Processes a regular expression match for a template directive during template application.
 		/// </summary>
-		/// <param name="callbackName">The name of the callback to invoke.</param>
-		/// <param name="source">The object used as a data source during evaluation.</param>
-		string EvaluateCallback(string callbackName, object source)
+		/// <param name="source">The data source used to fill out the template.</param>
+		/// <param name="match">The match object for the directive.</param>
+		/// <returns>The evaluated directive's value.</returns>
+		string EvaluateDirective(Match match, string line, object source)
+		{
+			// Group 0 is the entire match; group 1 is the first one defined by the expression.
+			var directive = match.Groups[1].Value;
+			var valueMatch = valueRegex.Match(directive);
+			var value = ResolveValue(valueMatch.Value, source);
+
+			// The handler delegate allows the various options for value printing
+			// (through a callback, a template, or directly via ToString()) to be
+			// invoke transparently in the final output stage.
+			Func<object, string> handler = x => x.ToString();
+			var handlerMatch = handlerRegex.Match(directive);
+			if (handlerMatch.Success)
+			{
+				var handlerName = handlerMatch.Groups[1].Value;
+				if (handlerName.StartsWith(callbackGlyph))
+					handler = x => ResolveCallback(handlerName, x).ToString();
+				else
+					handler = x => ApplyByName(handlerName, x);
+			}
+
+			var enumerable = QueryForIEnumerable(value);
+			if (enumerable == null)
+				return handler(value);
+
+			var builder = new StringBuilder();
+			foreach (var item in enumerable)
+				builder.AppendLine(handler(item));
+
+			// Once the values have been resolved, the prefix needs to be attached to each
+			// line of the final output.
+			var prefix = line.Substring(0, match.Index);
+			var lines = builder.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+			builder.Clear();
+			for (var lineIndex = 0; lineIndex < lines.Length; ++lineIndex)
+			{
+				// Skip prefix attachment for the first item; it's already in the source text.
+				if (lineIndex > 0)
+					builder.Append(prefix);
+				builder.AppendLine(lines[lineIndex]);
+			}
+
+			return builder.ToString();
+		}
+
+		object ResolveCallback(string callbackName, object source)
 		{
 			Func<TemplateEngine, object, string> callback = null;
+			callbackName = callbackName.Remove(0, callbackGlyph.Length);
 			if (!callbacks.TryGetValue(callbackName, out callback))
 				throw new InvalidOperationException(string.Format("No callback registered for '{0}'.", callbackName));
 			return callback(this, source);
+		}
+
+		object ResolveValue(string value, object source)
+		{
+			if (value.StartsWith(callbackGlyph))
+				return ResolveCallback(value, source);
+
+			return ResolveProperty(value, source);
 		}
 
 		/// <summary>
@@ -244,10 +260,10 @@ namespace SlimDX.Generator
 		/// <param name="name">The name of the property to get.</param>
 		/// <param name="source">The source object.</param>
 		/// <returns>The value of the specified property.</returns>
-		static object GetPropertyValue(string name, object source)
+		static object ResolveProperty(string name, object source)
 		{
 			// if the name has a period, it indicates a sub-property of the element
-			int period = name.IndexOf(accessorGlyph);
+			int period = name.IndexOf(separatorGlyph);
 			string subName = null;
 			if (period >= 0)
 			{
@@ -257,29 +273,19 @@ namespace SlimDX.Generator
 
 			var value = source.GetType().GetProperty(name).GetValue(source, null);
 			if (subName != null)
-				value = GetPropertyValue(subName, value);
+				value = ResolveProperty(subName, value);
 
 			return value;
 		}
 
-		static string Format(object source)
+
+		static IEnumerable QueryForIEnumerable(object source)
 		{
-			if (source == null)
+			// While technically enumerable, we don't want to treat strings as such.
+			if (source is string)
 				return null;
 
-			var str = source as string;
-			if (str != null)
-				return str;
 
-			var enumerable = GetEnumerable(source);
-			if (enumerable != null)
-				return string.Concat(enumerable.Cast<object>());
-
-			return source.ToString();
-		}
-
-		static IEnumerable GetEnumerable(object source)
-		{
 			var enumerable = source as IEnumerable;
 			if (enumerable == null)
 			{
@@ -295,11 +301,6 @@ namespace SlimDX.Generator
 		{
 			while (iterator.MoveNext())
 				yield return iterator.Current;
-		}
-
-		static string Escape(string input)
-		{
-			return input.Replace("\\t", "\t").Replace("\\n", Environment.NewLine).Replace("\\s", " ");
 		}
 
 		#endregion

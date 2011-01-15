@@ -1,4 +1,6 @@
-﻿public unsafe {ReturnType.ManagedName} {ManagedName}({Parameters:Parameter ,\s})
-		{
-{@GenerateFunctionBody}
-		}
+﻿public unsafe $(ReturnType.ManagedName) $(ManagedName)($(@FunctionParameters))
+{
+	$(@FunctionLocals)
+	$(@FunctionTrampolineCall)
+	$(@FunctionReturnStatement)
+}
