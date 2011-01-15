@@ -179,12 +179,12 @@ namespace SlimDX.Generator.ObjectModel
 				cache[typeElement.NativeName] = baseData;
 			}
 
-			foreach (var interfaceElement in interfaceElements)
-				BuildInterface(interfaceElement, cache[interfaceElement.NativeName]);
-			foreach (var structureElement in structureElements)
-				BuildStructure(structureElement, cache[structureElement.NativeName]);
 			foreach (var enumerationElement in enumerationElements)
 				BuildEnumeration(enumerationElement, cache[enumerationElement.NativeName]);
+			foreach (var structureElement in structureElements)
+				BuildStructure(structureElement, cache[structureElement.NativeName]);
+			foreach (var interfaceElement in interfaceElements)
+				BuildInterface(interfaceElement, cache[interfaceElement.NativeName]);
 		}
 
 		/// <summary>
@@ -334,31 +334,23 @@ namespace SlimDX.Generator.ObjectModel
 		/// <returns>The type name.</returns>
 		VariableElement ExtractVariable(XElement parameterData)
 		{
-			try
-			{
-				var parameterTypeData = parameterData.Element("Type");
-				var parameterInfoData = parameterData.Element("Var");
-				var parameterArrayData = parameterInfoData.Element("Array");
-				var parameterTypeName = ExtractTypeName(parameterTypeData);
-				var parameterType = FindTypeByName(parameterTypeName);
-				var usageData = parameterData.Element("ParamQualifier");
-				var usage = ExtractUsage(usageData);
-				var name = parameterInfoData.Attribute("Name").Value;
-				var dimension = 0;
+			var parameterTypeData = parameterData.Element("Type");
+			var parameterInfoData = parameterData.Element("Var");
+			var parameterArrayData = parameterInfoData.Element("Array");
+			var parameterTypeName = ExtractTypeName(parameterTypeData);
+			var parameterType = FindTypeByName(parameterTypeName);
+			var usageData = parameterData.Element("ParamQualifier");
+			var usage = ExtractUsage(usageData);
+			var name = parameterInfoData.Attribute("Name").Value;
+			var dimension = 0;
 
-				if (parameterArrayData != null)
-					dimension = int.Parse(parameterArrayData.Attribute("Value").Value);
+			if (parameterArrayData != null)
+				dimension = int.Parse(parameterArrayData.Attribute("Value").Value);
 
-				if (parameterType.ManagedName == "void")
-					parameterType = FindTypeByName("void*");
+			if (parameterType.ManagedName == "void")
+				parameterType = FindTypeByName("void*");
 
-				return new VariableElement(name, nameService.Apply(name, NameCasingStyle.Camel), new Metadata(), parameterType, usage, dimension);
-			}
-			catch
-			{
-				Console.Write(parameterData.ToString());
-				throw;
-			}
+			return new VariableElement(name, nameService.Apply(name, NameCasingStyle.Camel), new Metadata(), parameterType, usage, dimension);
 		}
 
 		/// <summary>
