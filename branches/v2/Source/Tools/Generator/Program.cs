@@ -33,7 +33,7 @@ namespace SlimDX.Generator
 	{
 		static void Main(string[] args)
 		{
-			string configurationFile = @"config.txt";
+			var configurationFile = @"config.txt";
 			if (args != null & args.Length > 0 && !string.IsNullOrWhiteSpace(args[0]))
 				configurationFile = args[0].Trim();
 
@@ -82,7 +82,11 @@ namespace SlimDX.Generator
 			// this includes dropping any source that is not from the given primary or ancillary
 			// sources, which is indicated in the preprocessed file by #line directives
 			var source = preprocessor.Source;
-			var relevantSources = configuration.GetOptions("AncillarySources").Concat(new[] { Path.Combine(Directory.GetCurrentDirectory(), source) });
+			var rawSources = configuration.GetOptions("AncillarySources").Concat(new[] { Path.Combine(Directory.GetCurrentDirectory(), source) });
+			var relevantSources = new List<string>();
+			foreach (string s in rawSources)
+				relevantSources.Add(Environment.ExpandEnvironmentVariables(s));
+			
 			source = Path.ChangeExtension(source, ".i");
 			PreTransform(source, new HashSet<string>(relevantSources));
 
