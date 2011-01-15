@@ -25,14 +25,17 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
 
-namespace SlimDX.{@Namespace}
+namespace SlimDX.$(@Namespace)
 {
-	[Guid("{Guid}")]
-	public class {ManagedName} : {BaseType.ManagedName}
+	[Guid("$(Guid)")]
+	public class $(ManagedName) : $(BaseType.ManagedName)
 	{
-{@GenerateConstructors}
+		internal $(ManagedName)(System.IntPtr nativePointer)
+		$(@InterfaceBaseInitialization){
+			this.nativePointer = nativePointer;
+		}
 
-		{Functions:Function \n\n\t\t}
+		$(Functions:Function)
 	
 		IntPtr nativePointer;
 	}

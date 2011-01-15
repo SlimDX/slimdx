@@ -57,7 +57,7 @@ namespace SlimDX.Generator
 
 			if (variable.Dimension > 0 && variable.Type.NativeName == "WCHAR")
 				builder.AppendFormat("string {0};", variable.ManagedName);
-			else if( variable.Type is StructureElement )
+			else if (variable.Type is StructureElement)
 				builder.AppendFormat("{0}Marshaller {1};", variable.Type.ManagedName, variable.ManagedName);
 			else if (variable.Type is EnumerationElement)
 				builder.AppendFormat("int {0};", variable.ManagedName);
@@ -71,7 +71,7 @@ namespace SlimDX.Generator
 			var variable = (VariableElement)source;
 			var builder = new StringBuilder("public ");
 
-			if( variable.Type is StructureElement )
+			if (variable.Type is StructureElement)
 				builder.AppendFormat("{0}Marshaller {1};", variable.Type.ManagedName, variable.ManagedName);
 			else if (variable.Type is EnumerationElement)
 				builder.AppendFormat("int {0};", variable.ManagedName);
@@ -103,20 +103,13 @@ namespace SlimDX.Generator
 			return string.Format(format, parameter.Type.ManagedName);
 		}
 
-		public static string GenerateConstructors(TemplateEngine engine, object source)
+		public static string InterfaceBaseInitialization(TemplateEngine engine, object source)
 		{
-			const int indentLevel = 2;
-
 			var type = (InterfaceElement)source;
 			var builder = new StringBuilder();
 			if (type.BaseType.NativeName != "IUnknown")
-				builder.Indent(1).AppendFormat(": base(nativePointer)").AppendLine().Indent(indentLevel);
-
-			return engine.ApplyByName("Constructor", new
-			{
-				Name = type.ManagedName,
-				Base = builder.ToString()
-			});
+				return ": base(nativePointer) ";
+			return string.Empty;
 		}
 
 		public static bool IsParameterStructure(VariableElement parameterElement)
@@ -130,7 +123,13 @@ namespace SlimDX.Generator
 			return !IsParameterStructure(parameterElement) && isOutput;
 		}
 
-		public static string GenerateFunctionBody(TemplateEngine engine, object source)
+		public static string FunctionParameters(TemplateEngine engine, object source)
+		{
+			var function = (FunctionElement)source;
+			return string.Join(", ", function.Parameters.Select(p => string.Format("{0} {1}", p.Type.ManagedName, p.NativeName)));
+		}
+
+		public static string FunctionBody(TemplateEngine engine, object source)
 		{
 			var function = (FunctionElement)source;
 			var parametersToMarshal = function.Parameters.Where(x => IsParameterStructure(x)).ToList();
@@ -170,6 +169,54 @@ namespace SlimDX.Generator
 			});
 
 			return result.TrimEnd();
+		}
+
+		public static string FunctionLocals(TemplateEngine engine, object source)
+		{
+			var function = (FunctionElement)source;
+			var builder = new StringBuilder();
+
+			foreach (var parameter in function.Parameters)
+			{
+				if (IsParameterInitializable(parameter))
+					builder.AppendFormat("{0} _{1} = default({0});", parameter.Type.IntermediateType.Name, parameter.NativeName);
+				else if (IsParameterStructure(parameter))
+					builder.AppendLine(engine.ApplyByName("ParameterFixStatement", parameter));
+			}
+
+			return builder.ToString();
+		}
+
+		public static string FunctionTrampolineCall(TemplateEngine engine, object source)
+		{
+			var function = (FunctionElement)source;
+			var builder = new StringBuilder();
+
+			if (function.ReturnType.IntermediateType != typeof(void))
+				builder.AppendFormat("{0} _result = ", function.ReturnType.ManagedName);
+
+			var callSuffix = function.ReturnType.NativeName == "void" ? string.Empty : function.ReturnType.ManagedName;
+			builder.AppendFormat("SlimDX.Trampoline.Call{0}({1} * System.IntPtr.Size, nativePointer", callSuffix, function.Index);
+			foreach (var parameter in function.Parameters)
+			{
+				if (parameter.Type is StructureElement)
+					builder.AppendFormat(", &{0}Marshaller", parameter.NativeName);
+				else if (parameter.Usage.HasFlag(UsageQualifiers.Out) && !parameter.Usage.HasFlag(UsageQualifiers.In))
+					builder.AppendFormat(", ref _{0}", parameter.NativeName);
+				else
+					builder.AppendFormat(", {0}", parameter.NativeName);
+			}
+			builder.Append(");");
+
+			return builder.ToString();
+		}
+
+		public static string FunctionReturnStatement(TemplateEngine engine, object source)
+		{
+			var function = (FunctionElement)source;
+			if (function.ReturnType.IntermediateType != typeof(void))
+				return "return _result;";
+			return string.Empty;
 		}
 
 		public static string GenerateTrampolineParameters(TemplateEngine engine, object source)

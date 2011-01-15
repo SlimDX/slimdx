@@ -25,31 +25,31 @@ using System.IO;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace SlimDX.{@Namespace}
+namespace SlimDX.$(@Namespace)
 {
-	public class {ManagedName}
+	public class $(ManagedName)
 	{
-		internal unsafe static {ManagedName} FromMarshaller({ManagedName}Marshaller marshaller)
+		internal unsafe static $(ManagedName) FromMarshaller($(ManagedName)Marshaller marshaller)
 		{
-			{ManagedName} result = new {ManagedName}();
-{@GenerateStructureFromMarshallerBody}
+			$(ManagedName) result = new $(ManagedName)();
+			$(@GenerateStructureFromMarshallerBody)
 			return result;
 		}
 
-		internal unsafe static {ManagedName}Marshaller ToMarshaller({ManagedName} managed)
+		internal unsafe static $(ManagedName)Marshaller ToMarshaller($(ManagedName) managed)
 		{
-			return default({ManagedName}Marshaller);
+			return default($(ManagedName)Marshaller);
 		}
 
-		{Fields:StructureField \n\t\t}
+		$(Fields:StructureField)
 
-		private {ManagedName}() {
+		private $(ManagedName)() {
 		}
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	public unsafe struct {ManagedName}Marshaller
+	public unsafe struct $(ManagedName)Marshaller
 	{
-		{Fields:StructureMarshallerField \n\t\t}
+		$(Fields:StructureMarshallerField)
 	}
 }
