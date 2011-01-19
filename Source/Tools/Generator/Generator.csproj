@@ -66,17 +66,17 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Metadata\Metadata.cs" />
     <Compile Include="Metadata\MetadataService.cs" />
+    <Compile Include="Model\BaseElement.cs" />
+    <Compile Include="Model\EnumerationElement.cs" />
+    <Compile Include="Model\EnumerationItemElement.cs" />
+    <Compile Include="Model\FunctionElement.cs" />
+    <Compile Include="Model\InterfaceElement.cs" />
+    <Compile Include="Model\SourceModel.cs" />
+    <Compile Include="Model\StructureElement.cs" />
+    <Compile Include="Model\TypedefElement.cs" />
+    <Compile Include="Model\TypeElement.cs" />
+    <Compile Include="Model\VariableElement.cs" />
     <Compile Include="NameRules.cs" />
-    <Compile Include="ObjectModel\BaseElement.cs" />
-    <Compile Include="ObjectModel\EnumerationElement.cs" />
-    <Compile Include="ObjectModel\EnumerationItemElement.cs" />
-    <Compile Include="ObjectModel\FunctionElement.cs" />
-    <Compile Include="ObjectModel\InterfaceElement.cs" />
-    <Compile Include="ObjectModel\SourceModel.cs" />
-    <Compile Include="ObjectModel\StructureElement.cs" />
-    <Compile Include="ObjectModel\TypedefElement.cs" />
-    <Compile Include="ObjectModel\TypeElement.cs" />
-    <Compile Include="ObjectModel\VariableElement.cs" />
     <Compile Include="Parsing\HeaderParser.cs" />
     <Compile Include="Parsing\IParseNode.cs" />
     <Compile Include="Parsing\NonTerminal.cs" />
@@ -219,9 +219,6 @@
     <Content Include="Resources\Metadata\IDXGISwapChain.ResizeBuffers.fmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\Metadata\QueryInterface.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Content Include="Resources\Metadata\void.tmd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
