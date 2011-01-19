@@ -26,6 +26,7 @@ using System.Linq;
 using SlimDX.Generator.Parsing;
 using SlimDX.Generator.ObjectModel;
 using System.Reflection;
+using System.Xml.Linq;
 
 namespace SlimDX.Generator
 {
@@ -33,6 +34,9 @@ namespace SlimDX.Generator
 	{
 		static void Main(string[] args)
 		{
+			var xml = XDocument.Load("DXGI.xml");
+			var api = ModelXml.Parse(xml.Root);
+
 			var configurationFile = @"config.txt";
 			if (args != null & args.Length > 0 && !string.IsNullOrWhiteSpace(args[0]))
 				configurationFile = args[0].Trim();
@@ -86,7 +90,7 @@ namespace SlimDX.Generator
 			var relevantSources = new List<string>();
 			foreach (string s in rawSources)
 				relevantSources.Add(Environment.ExpandEnvironmentVariables(s));
-			
+
 			source = Path.ChangeExtension(source, ".i");
 			PreTransform(source, new HashSet<string>(relevantSources));
 
