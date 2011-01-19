@@ -67,9 +67,9 @@ namespace SlimDX.Generator
 
 			foreach (var type in typeMap.Select(x => x.Value).Where(x => x.Kind == TypeModelKind.Interface))
 				result.AddInterface(type);
-			foreach (var type in typeMap.Select(x => x.Value).Where(x => x.Kind == TypeModelKind.Interface))
+			foreach (var type in typeMap.Select(x => x.Value).Where(x => x.Kind == TypeModelKind.Structure))
 				result.AddStructure(type);
-			foreach (var type in typeMap.Select(x => x.Value).Where(x => x.Kind == TypeModelKind.Interface))
+			foreach (var type in typeMap.Select(x => x.Value).Where(x => x.Kind == TypeModelKind.Enumeration))
 				result.AddEnumeration(type);
 			return result;
 		}
