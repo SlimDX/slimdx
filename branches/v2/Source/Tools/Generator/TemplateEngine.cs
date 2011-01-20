@@ -234,7 +234,7 @@ namespace SlimDX.Generator
 				builder.AppendLine(lines[lineIndex]);
 			}
 
-			return builder.ToString();
+			return builder.ToString().TrimEnd();
 		}
 
 		object ResolveCallback(string callbackName, object source)
