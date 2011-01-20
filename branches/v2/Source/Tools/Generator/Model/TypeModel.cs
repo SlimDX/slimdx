@@ -26,13 +26,20 @@ namespace SlimDX.Generator
 {
 	class TypeModel
 	{
-		public TypeModel(ModelName name, TypeModelKind kind)
+		public TypeModel(ModelName name, Guid guid, TypeModelKind kind)
 		{
 			Name = name;
+			Guid = guid;
 			Kind = kind;
 		}
 
 		public ModelName Name
+		{
+			get;
+			private set;
+		}
+
+		public Guid Guid
 		{
 			get;
 			private set;

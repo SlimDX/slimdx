@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
+using System;
 
 namespace SlimDX.Generator
 {
@@ -35,11 +36,12 @@ namespace SlimDX.Generator
 			var typeMap = new Dictionary<string, TypeModel>();
 			var typeXml = new Dictionary<TypeModel, XElement>();
 
-			foreach (var modelElement in root.XPathSelectElements("external|interface"))
+			foreach (var modelElement in root.XPathSelectElements("external|interface|structure|enumeration"))
 			{
 				var modelName = ReadName(modelElement);
+				var modelGuid = ReadGuid(modelElement);
 				var modelKind = ReadKind(modelElement);
-				var model = new TypeModel(modelName, modelKind);
+				var model = new TypeModel(modelName, modelGuid, modelKind);
 				typeMap.Add(modelName.Native, model);
 				typeXml.Add(model, modelElement);
 			}
@@ -80,6 +82,10 @@ namespace SlimDX.Generator
 			{
 				case "interface":
 					return TypeModelKind.Interface;
+				case "structure":
+					return TypeModelKind.Structure;
+				case "enumeration":
+					return TypeModelKind.Enumeration;
 				default:
 					return TypeModelKind.External;
 			}
@@ -91,6 +97,14 @@ namespace SlimDX.Generator
 			var managedName = ReadAttribute("managedName", element);
 
 			return new ModelName(nativeName, managedName);
+		}
+
+		static Guid ReadGuid(XElement element)
+		{
+			var guid = ReadAttribute("guid", element);
+			if (string.IsNullOrEmpty(guid))
+				return Guid.Empty;
+			return new Guid(guid);
 		}
 
 		static string ReadNativeType(XElement element)
