@@ -20,7 +20,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Xml.Linq;
+using System.Collections.ObjectModel;
 
 namespace SlimDX.Generator
 {
@@ -49,6 +49,14 @@ namespace SlimDX.Generator
 		{
 			get;
 			private set;
+		}
+
+		public ReadOnlyCollection<MethodModel> Methods
+		{
+			get
+			{
+				return methods.AsReadOnly();
+			}
 		}
 
 		public void AddMethod(MethodModel method)
