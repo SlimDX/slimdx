@@ -29,7 +29,7 @@ namespace SlimDX.Generator
 		public ModelName(string native, string managed)
 		{
 			Native = native;
-			Managed = managed;
+			Managed = managed ?? Native;
 		}
 
 		public string Native
