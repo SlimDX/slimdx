@@ -26,6 +26,11 @@ namespace SlimDX.Generator
 {
 	class TypeModel
 	{
+		static TypeModel()
+		{
+			VoidModel = new TypeModel(new ModelName("void", "System.Void"), Guid.Empty, TypeModelKind.External);
+		}
+
 		public TypeModel(ModelName name, Guid guid, TypeModelKind kind)
 		{
 			Name = name;
@@ -57,6 +62,12 @@ namespace SlimDX.Generator
 			{
 				return methods.AsReadOnly();
 			}
+		}
+
+		public static TypeModel VoidModel
+		{
+			get;
+			private set;
 		}
 
 		public void AddMethod(MethodModel method)
