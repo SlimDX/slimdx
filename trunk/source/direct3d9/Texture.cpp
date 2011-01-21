@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2011 SlimDX Group
 * 
@@ -20,9 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <vcclr.h>
+#include "stdafx.h"
 
 #include "../DataStream.h"
 #include "../ComObject.h"
@@ -32,6 +29,7 @@
 #include "../math/Color4.h"
 
 #include "Device.h"
+#include "DeviceEx.h"
 #include "D3DX.h"
 #include "Texture.h"
 
@@ -187,7 +185,7 @@ namespace Direct3D9
 
 	Texture^ Texture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory )
 	{
-		return Texture::FromMemory( device, memory, Usage::None, Pool::Managed );
+		return Texture::FromMemory( device, memory, Usage::None, dynamic_cast<DeviceEx^>(device) != nullptr ? Pool::Default : Pool::Managed );
 	}
 
 	Texture^ Texture::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, int sizeBytes, int width, int height, int numLevels,
@@ -270,7 +268,7 @@ namespace Direct3D9
 
 	Texture^ Texture::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream )
 	{
-		return Texture::FromStream( device, stream, Usage::None, Pool::Managed );
+		return Texture::FromStream( device, stream, Usage::None, dynamic_cast<DeviceEx^>(device) != nullptr ? Pool::Default : Pool::Managed );
 	}
 
 	Texture^ Texture::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName, int width, int height, int numLevels,
@@ -348,7 +346,7 @@ namespace Direct3D9
 
 	Texture^ Texture::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName )
 	{
-		return Texture::FromFile( device, fileName, Usage::None, Pool::Managed );
+		return Texture::FromFile( device, fileName, Usage::None, dynamic_cast<DeviceEx^>(device) != nullptr ? Pool::Default : Pool::Managed );
 	}
 
 	Result Texture::ComputeNormalMap( Texture^ texture, Texture^ sourceTexture, array<PaletteEntry>^ palette, NormalMapFlags flags, Channel channel, float amplitude )

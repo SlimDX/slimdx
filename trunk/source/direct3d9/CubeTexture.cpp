@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2011 SlimDX Group
 * 
@@ -20,9 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <vcclr.h>
+#include "stdafx.h"
 
 #include "../DataStream.h"
 #include "../ComObject.h"
@@ -31,6 +28,7 @@
 #include "../math/Vector2.h"
 
 #include "Device.h"
+#include "DeviceEx.h"
 #include "D3DX.h"
 #include "CubeTexture.h"
 
@@ -165,7 +163,7 @@ namespace Direct3D9
 
 	CubeTexture^ CubeTexture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory )
 	{
-		return CubeTexture::FromMemory( device, memory, Usage::None, Pool::Managed );
+		return CubeTexture::FromMemory( device, memory, Usage::None, dynamic_cast<DeviceEx^>(device) != nullptr ? Pool::Default : Pool::Managed );
 	}
 
 	CubeTexture^ CubeTexture::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, int sizeBytes, int size, int numLevels,
@@ -248,7 +246,7 @@ namespace Direct3D9
 
 	CubeTexture^ CubeTexture::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream )
 	{
-		return CubeTexture::FromStream( device, stream, Usage::None, Pool::Managed );
+		return CubeTexture::FromStream( device, stream, Usage::None, dynamic_cast<DeviceEx^>(device) != nullptr ? Pool::Default : Pool::Managed );
 	}
 
 	CubeTexture^ CubeTexture::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName, int size, int numLevels,
@@ -326,7 +324,7 @@ namespace Direct3D9
 
 	CubeTexture^ CubeTexture::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName )
 	{
-		return CubeTexture::FromFile( device, fileName, Usage::None, Pool::Managed );
+		return CubeTexture::FromFile( device, fileName, Usage::None, dynamic_cast<DeviceEx^>(device) != nullptr ? Pool::Default : Pool::Managed );
 	}
 
 	DataRectangle^ CubeTexture::LockRectangle( CubeMapFace face, int level, System::Drawing::Rectangle rect, LockFlags flags )
