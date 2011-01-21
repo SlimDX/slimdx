@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2011 SlimDX Group
 * 
@@ -20,9 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <vcclr.h>
+#include "stdafx.h"
 
 #include "../DataStream.h"
 #include "../ComObject.h"
@@ -31,6 +28,7 @@
 #include "../math/Vector2.h"
 
 #include "Device.h"
+#include "DeviceEx.h"
 #include "D3DX.h"
 #include "VolumeTexture.h"
 
@@ -173,7 +171,7 @@ namespace Direct3D9
 
 	VolumeTexture^ VolumeTexture::FromMemory( SlimDX::Direct3D9::Device^ device, array<Byte>^ memory )
 	{
-		return VolumeTexture::FromMemory( device, memory, Usage::None, Pool::Managed );
+		return VolumeTexture::FromMemory( device, memory, Usage::None, dynamic_cast<DeviceEx^>(device) != nullptr ? Pool::Default : Pool::Managed );
 	}
 
 	VolumeTexture^ VolumeTexture::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream, int sizeBytes, int width, int height, int depth,
@@ -258,7 +256,7 @@ namespace Direct3D9
 
 	VolumeTexture^ VolumeTexture::FromStream( SlimDX::Direct3D9::Device^ device, Stream^ stream )
 	{
-		return VolumeTexture::FromStream( device, stream, Usage::None, Pool::Managed );
+		return VolumeTexture::FromStream( device, stream, Usage::None, dynamic_cast<DeviceEx^>(device) != nullptr ? Pool::Default : Pool::Managed );
 	}
 
 	VolumeTexture^ VolumeTexture::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName, int width, int height, int depth,
@@ -338,7 +336,7 @@ namespace Direct3D9
 
 	VolumeTexture^ VolumeTexture::FromFile( SlimDX::Direct3D9::Device^ device, String^ fileName )
 	{
-		return VolumeTexture::FromFile( device, fileName, Usage::None, Pool::Managed );
+		return VolumeTexture::FromFile( device, fileName, Usage::None, dynamic_cast<DeviceEx^>(device) != nullptr ? Pool::Default : Pool::Managed );
 	}
 
 	DataBox^ VolumeTexture::LockBox( int level, Box box, LockFlags flags )
