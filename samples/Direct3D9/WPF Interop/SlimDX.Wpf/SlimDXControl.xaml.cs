@@ -489,7 +489,7 @@ namespace SlimDX.Wpf
 							throw new Direct3D9Exception("Device.TestCooperativeLevel() failed");
 						}
 
-						Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, new Color4(System.Drawing.Color.Black), 0, 0);
+						Device.Clear(ClearFlags.Target | ClearFlags.ZBuffer, new Color4(System.Drawing.Color.Black), 1, 0);
 						Device.BeginScene();
 
 						try
