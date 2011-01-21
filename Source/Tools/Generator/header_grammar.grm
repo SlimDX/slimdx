@@ -76,15 +76,13 @@ Comment Line = '//'
                    | '~' <class-name>
                    | <template-id>
 
-<qualified-id> ::= <nested-name-specifier> <template-opt> <unqualified-id>
+<qualified-id> ::= <nested-name-specifier> template <unqualified-id>
+                 | <nested-name-specifier> <unqualified-id>
 
-<nested-name-specifier> ::= <class-or-namespace-name> '::' <nested-name-specifier-opt>
+<nested-name-specifier> ::= <class-name> '::' <nested-name-specifier-opt>
 
 <nested-name-specifier-opt> ::= <nested-name-specifier>
                               |
-
-<class-or-namespace-name> ::= <class-name>
-                            | <namespace-name>
 
 <postfix-expression> ::= <primary-expression>
                        | <postfix-expression> '[' <expression> ']'
@@ -92,12 +90,12 @@ Comment Line = '//'
                        | <postfix-expression> '(' ')'
                        | <simple-type-specifier> '(' <expression-list> ')'
                        | <simple-type-specifier> '(' ')'
-                       | <postfix-expression> '.' <template-opt> '::' <id-expression>
-                       | <postfix-expression> '->' <template-opt> '::' <id-expression>
+                  !    | <postfix-expression> '.' <template-opt> '::' <id-expression>
+                  !    | <postfix-expression> '->' <template-opt> '::' <id-expression>
                        | <postfix-expression> '.' <template-opt> <id-expression>
                        | <postfix-expression> '->' <template-opt> <id-expression>
-                       | <postfix-expression> '.' <pseudo-destructor-name>
-                       | <postfix-expression> '->' <pseudo-destructor-name>
+                  !    | <postfix-expression> '.' <pseudo-destructor-name>
+                  !    | <postfix-expression> '->' <pseudo-destructor-name>
                        | <postfix-expression> '++'
                        | <postfix-expression> '--'
                        | dynamic_cast '<' <type-id> '>' '(' <expression> ')'
@@ -110,10 +108,10 @@ Comment Line = '//'
 <expression-list> ::= <assignment-expression>
                     | <expression-list> ',' <assignment-expression>
 
-<pseudo-destructor-name> ::= '::' <nested-name-specifier-opt> <type-name> '::' '~' <type-name>
-                           | '::' <nested-name-specifier-opt> '~' <type-name>
-                           | <nested-name-specifier-opt> <type-name> '::' '~' <type-name>
-                           | <nested-name-specifier-opt> '~' <type-name>
+!<pseudo-destructor-name> ::= '::' <nested-name-specifier-opt> <type-name> '::' '~' <type-name>
+!                           | '::' <nested-name-specifier-opt> '~' <type-name>
+!                           | <nested-name-specifier-opt> <type-name> '::' '~' <type-name>
+!                           | <nested-name-specifier-opt> '~' <type-name>
 
 <unary-expression> ::= <postfix-expression>
                      | '++' <cast-expression>
@@ -279,7 +277,6 @@ Comment Line = '//'
 <declaration> ::= <block-declaration>
                 | <function-definition>
                 | <template-declaration>
-                | <explicit-instantiation>
                 | <explicit-specialization>
                 | <linkage-specification>
                 | <namespace-definition>
@@ -291,9 +288,6 @@ Comment Line = '//'
                       | <using-directive>
 
 <simple-declaration> ::= <decl-specifier-list> <init-declarator-list> ';'
-                       | <init-declarator-list> ';'
-                       | <decl-specifier-list> ';'
-                       | ';'
 
 <decl-specifier> ::= <storage-class-specifier>
                    | <type-specifier>
@@ -317,17 +311,15 @@ Comment Line = '//'
                        | virtual
                        | explicit
 
-<typedef-name> ::= <identifier>
-
 <type-specifier> ::= <simple-type-specifier>
                    | <class-specifier>
                    | <enum-specifier>
                    | <elaborated-type-specifier>
                    | <cv-qualifier>
 
-<simple-type-specifier> ::= '::' <nested-name-specifier-opt> <type-name>
-                          | <nested-name-specifier-opt> <type-name>
-                          | char
+<simple-type-specifier> ::= char !'::' <nested-name-specifier-opt> <type-name>
+                          !| <nested-name-specifier-opt> <type-name>
+                          !| char
                           | wchar_t
                           | bool
                           | short
@@ -340,8 +332,6 @@ Comment Line = '//'
                           | void
 
 <type-name> ::= <class-name>
-              | <enum-name>
-              | <typedef-name>
 
 <elaborated-type-specifier> ::= <class-key> '::' <nested-name-specifier-opt> <identifier>
                               | <class-key> <nested-name-specifier-opt> <identifier>
@@ -352,52 +342,32 @@ Comment Line = '//'
                               | typename '::' <nested-name-specifier> <identifier> '<' <template-argument-list> '>'
                               | typename <nested-name-specifier> <identifier> '<' <template-argument-list> '>'
 
-<enum-name> ::= <identifier>
-
 <enum-specifier> ::= enum <identifier-opt> '{' <enumerator-list> '}'
                    | enum <identifier-opt> '{' '}'
 
 <enumerator-list> ::= <enumerator-definition>
                     | <enumerator-list> ',' <enumerator-definition>
 
-<enumerator-definition> ::= <enumerator>
-                          | <enumerator> '=' <constant-expression>
+<enumerator-definition> ::= <identifier>
+                          | <identifier> '=' <constant-expression>
 
-<enumerator> ::= <identifier>
-
-<namespace-name> ::= <original-namespace-name>
-                   | <namespace-alias>
-
-<original-namespace-name> ::= <identifier>
-
-<namespace-definition> ::= <named-namespace-definition>
-                         | <unnamed-namespace-definition>
-
-<named-namespace-definition> ::= <original-namespace-definition>
-                               | <extension-namespace-definition>
-
-<original-namespace-definition> ::= namespace <identifier> '{' <namespace-body> '}'
-
-<extension-namespace-definition> ::= namespace <original-namespace-name> '{' <namespace-body> '}'
-
-<unnamed-namespace-definition> ::= namespace '{' <namespace-body> '}'
+<namespace-definition> ::= namespace <identifier> '{' <namespace-body> '}'
+                         | namespace '{' <namespace-body> '}'
 
 <namespace-body> ::= <declaration-list>
                    |
 
-<namespace-alias> ::= <identifier>
-
 <namespace-alias-definition> ::= namespace <identifier> '=' <qualified-namespace-specifier> ';'
 
-<qualified-namespace-specifier> ::= '::' <nested-name-specifier-opt> <namespace-name>
-                                  | <nested-name-specifier-opt> <namespace-name>
+<qualified-namespace-specifier> ::= '::' <nested-name-specifier-opt> <identifier>
+                                  | <nested-name-specifier-opt> <identifier>
 
 <using-declaration> ::= using <typename-opt> '::' <nested-name-specifier> <unqualified-id> ';'
                       | using <typename-opt> <nested-name-specifier> <unqualified-id> ';'
                       | using '::' <unqualified-id> ';'
 
-<using-directive> ::= using namespace '::' <nested-name-specifier-opt> <namespace-name> ';'
-                   | using namespace <nested-name-specifier-opt> <namespace-name> ';'
+<using-directive> ::= using namespace '::' <nested-name-specifier-opt> <identifier> ';'
+                   | using namespace <nested-name-specifier-opt> <identifier> ';'
 
 <asm-definition> ::= asm '(' StringLiteral ')' ';'
 
@@ -555,8 +525,8 @@ Comment Line = '//'
 
 <base-specifier> ::= '::' <nested-name-specifier-opt> <class-name>
                    | <nested-name-specifier-opt> <class-name>
-                   | virtual <access-specifier> '::' <nested-name-specifier-opt> <class-name>
-                   | virtual <access-specifier> <nested-name-specifier-opt> <class-name>
+                   | virtual <access-specifier-opt> '::' <nested-name-specifier-opt> <class-name>
+                   | virtual <access-specifier-opt> <nested-name-specifier-opt> <class-name>
                    | <access-specifier> <virtual-opt> '::' <nested-name-specifier-opt> <class-name>
                    | <access-specifier> <virtual-opt> <nested-name-specifier-opt> <class-name>
 
@@ -566,7 +536,9 @@ Comment Line = '//'
 <access-specifier> ::= private
                      | protected
                      | public
-                     |
+
+<access-specifier-opt> ::= <access-specifier>
+                         |
 
 ! ===================================================================
 ! Member Functions
@@ -629,20 +601,16 @@ Comment Line = '//'
                    | typename <identifier-opt>
                    | typename <identifier-opt> '=' <type-id>
                    | template '<' <template-parameter-list> '>' class <identifier-opt>
-                   | template '<' <template-parameter-list> '>' class <identifier-opt> '=' <template-name>
+                   | template '<' <template-parameter-list> '>' class <identifier-opt> '=' <identifier>
 
-<template-id> ::= <template-name> '<' <template-argument-list> '>'
-
-<template-name> ::= <identifier>
+<template-id> ::= <identifier> '<' <template-argument-list> '>'
 
 <template-argument-list> ::= <template-argument>
                            | <template-argument-list> ',' <template-argument>
 
 <template-argument> ::= <assignment-expression>
                       | <type-id>
-                      | <template-name>
-
-<explicit-instantiation> ::= <template-declaration>
+                      | <identifier>
 
 <explicit-specialization> ::= template '<' '>' <declaration>
 
