@@ -6,6 +6,8 @@ Samples
 	* Fixed the MiniTri10 sample to not use the console subsystem.
 	* Changed the sample framework to check for fullscreen DXGI swap chain before disposing.
 	* Removed unused testing code from SimpleModel10.
+	* Fixed configuration issues in MiniTri11.
+	* Fixed Device.Clear depth value in WPF control.
 
 Math
 	* Added an overload of Ray.Intersects that returns the barycentric hit coordinates.
@@ -22,6 +24,8 @@ Direct3D 9
 	* Fixed memory issue in Include interface.
 	* Changed AnimationOutput to be a reference type, and pinned the memory to receive animation updates.
 	* Added an overload to AnimationController.RegisterAnimationOutput to take a Frame instead.
+	* Fixed overload defaults for texture creation functions when using D3D9Ex.
+	* Changed BaseMesh index buffer and vertex buffer to be ancillary objects. They no longer require explicit cleanup.
 	
 Direct3D 10
 	* Added missing creation method overloads to Effect.
