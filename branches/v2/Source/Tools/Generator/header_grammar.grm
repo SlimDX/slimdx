@@ -5,7 +5,7 @@
 "Name"    = 'C++ Header Grammar' 
 "Version" = '2'
 "Author"  = 'SlimDX Group' 
-"About"   = 'Implements a subset of the C++ language for parsing simple header files.'
+"About"   = 'Implements a subset of the C++ language for parsing header files.'
 
 "Case Sensitive" = True
 "Start Symbol" = <translation-unit>
@@ -19,7 +19,7 @@
 {String Ch} = {Printable} - ["]
 {Char Ch} = {Printable} - ['']
 
-DecLiteral = [123456789]{digit}*
+DecLiteral = [123456789]{Digit}*
 OctLiteral = 0{Oct Digit}*
 HexLiteral = 0x{Hex Digit}+[lL]?
 
@@ -41,12 +41,10 @@ Comment Line = '//'
 
 <identifier> ::= Id
 
-<identifier-opt> ::= <identifier>
-                   |
-
 <literal> ::= DecLiteral
             | HexLiteral
             | OctLiteral
+            | 0
 
 ! ===================================================================
 ! Root
@@ -61,28 +59,7 @@ Comment Line = '//'
 
 <primary-expression> ::= <literal>
                        | this
-                       | '::' <identifier>
-                       | '::' <operator-function-id>
-                       | '::' <qualified-id>
                        | '(' <expression> ')'
-                       | <id-expression>
-
-<id-expression> ::= <unqualified-id>
-                  | <qualified-id>
-
-<unqualified-id> ::= <identifier>
-                   | <operator-function-id>
-                   | <conversion-function-id>
-                   | '~' <class-name>
-                   | <template-id>
-
-<qualified-id> ::= <nested-name-specifier> template <unqualified-id>
-                 | <nested-name-specifier> <unqualified-id>
-
-<nested-name-specifier> ::= <class-name> '::' <nested-name-specifier-opt>
-
-<nested-name-specifier-opt> ::= <nested-name-specifier>
-                              |
 
 <postfix-expression> ::= <primary-expression>
                        | <postfix-expression> '[' <expression> ']'
@@ -90,12 +67,8 @@ Comment Line = '//'
                        | <postfix-expression> '(' ')'
                        | <simple-type-specifier> '(' <expression-list> ')'
                        | <simple-type-specifier> '(' ')'
-                  !    | <postfix-expression> '.' <template-opt> '::' <id-expression>
-                  !    | <postfix-expression> '->' <template-opt> '::' <id-expression>
-                       | <postfix-expression> '.' <template-opt> <id-expression>
-                       | <postfix-expression> '->' <template-opt> <id-expression>
-                  !    | <postfix-expression> '.' <pseudo-destructor-name>
-                  !    | <postfix-expression> '->' <pseudo-destructor-name>
+                       | <postfix-expression> '.' <identifier>
+                       | <postfix-expression> '->' <identifier>
                        | <postfix-expression> '++'
                        | <postfix-expression> '--'
                        | dynamic_cast '<' <type-id> '>' '(' <expression> ')'
@@ -108,51 +81,17 @@ Comment Line = '//'
 <expression-list> ::= <assignment-expression>
                     | <expression-list> ',' <assignment-expression>
 
-!<pseudo-destructor-name> ::= '::' <nested-name-specifier-opt> <type-name> '::' '~' <type-name>
-!                           | '::' <nested-name-specifier-opt> '~' <type-name>
-!                           | <nested-name-specifier-opt> <type-name> '::' '~' <type-name>
-!                           | <nested-name-specifier-opt> '~' <type-name>
-
 <unary-expression> ::= <postfix-expression>
                      | '++' <cast-expression>
                      | '--' <cast-expression>
                      | <unary-operator> <cast-expression>
                      | sizeof <unary-expression>
                      | sizeof '(' <type-id> ')'
-                     | <new-expression>
                      | <delete-expression>
 
 <unary-operator> ::= '*' | '&' | '+' | '-' | '!' | '~'
 
-<new-expression> ::= '::' new <new-placement-opt> <new-type-id> <new-initializer-opt>
-                   | '::' new <new-placement-opt> '(' <type-id> ')' <new-initializer-opt>
-                   | new <new-placement-opt> <new-type-id> <new-initializer-opt>
-                   | new <new-placement-opt> '(' <type-id> ')' <new-initializer-opt>
-
-<new-placement> ::= '(' <expression-list> ')'
-
-<new-placement-opt> ::= <new-placement>
-                      |
-
-<new-type-id> ::= <type-specifier-list> <new-declarator>
-                | <type-specifier-list>
-
-<new-declarator> ::= <ptr-operator> <new-declarator>
-                   | <ptr-operator>
-                   | <direct-new-declarator>
-
-<direct-new-declarator> ::= '[' <expression> ']'
-                          | <direct-new-declarator> '[' <constant-expression> ']'
-
-<new-initializer> ::= '(' <expression-list> ')'
-                    | '(' ')'
-
-<new-initializer-opt> ::= <new-initializer>
-                        |
-
-<delete-expression> ::= '::' delete <cast-expression>
-                      | '::' delete '[' ']' <cast-expression>
-                      | delete <cast-expression>
+<delete-expression> ::= delete <cast-expression>
                       | delete '[' ']' <cast-expression>
 
 <cast-expression> ::= <unary-expression>
@@ -212,9 +151,6 @@ Comment Line = '//'
 <expression> ::= <assignment-expression>
                | <expression> ',' <assignment-expression>
 
-<expression-opt> ::= <expression>
-                   |
-
 <constant-expression> ::= <conditional-expression>
 
 ! ===================================================================
@@ -250,19 +186,14 @@ Comment Line = '//'
 <condition> ::= <expression>
               | <type-specifier-list> <declarator> '=' <assignment-expression>
 
-<condition-opt> ::= <condition>
-                  |
-
 <iteration-statement> ::= while '(' <condition> ')' <statement>
                         | do <statement> while '(' <expression> ')' ';'
-                        | for '(' <for-init-statement> <condition-opt> ';' <expression-opt> ')' <statement>
-
-<for-init-statement> ::= <expression-statement>
-                       | <simple-declaration>
+                        | for '(' <simple-declaration> <condition> ';' <expression> ')' <statement>
 
 <jump-statement> ::= break ';'
                    | continue ';'
-                   | return <expression-opt> ';'
+                   | return <expression> ';'
+                   | return ';'
                    | goto <identifier> ';'
 
 <declaration-statement> ::= <block-declaration>
@@ -282,44 +213,54 @@ Comment Line = '//'
                 | <namespace-definition>
 
 <block-declaration> ::= <simple-declaration>
-                      | <asm-definition>
                       | <namespace-alias-definition>
                       | <using-declaration>
                       | <using-directive>
 
-<simple-declaration> ::= <decl-specifier-list> <init-declarator-list> ';'
+<simple-declaration> ::= <type-specifier> <init-declarator-list> ';'
 
-<decl-specifier> ::= <storage-class-specifier>
-                   | <type-specifier>
-                   | <function-specifier>
-                   | friend
-                   | typedef
+<storage-class> ::= auto
+                  | register
+                  | static
+                  | extern
+                  | mutable
+                  | inline
+                  | virtual
+                  | explicit
+                  | friend
+                  | typedef
 
-<decl-specifier-list> ::= <decl-specifier-list> <decl-specifier>
-                        | <decl-specifier>
+<storage-class-list> ::= <storage-class-list> <storage-class>
+                       | <storage-class>
 
-<decl-specifier-list-opt> ::= <decl-specifier-list>
-                            |
+<using-declaration> ::= using <identifier> ';'
 
-<storage-class-specifier> ::= auto
-                            | register
-                            | static
-                            | extern
-                            | mutable
+<using-directive> ::= using namespace <identifier> ';'
 
-<function-specifier> ::= inline
-                       | virtual
-                       | explicit
+<linkage-specification> ::= extern StringLiteral '{' <declaration-list> '}'
+                          | extern StringLiteral '{' '}'
+                          | extern StringLiteral <declaration>
+
+<namespace-definition> ::= namespace <identifier> '{' <namespace-body> '}'
+                         | namespace '{' <namespace-body> '}'
+
+<namespace-body> ::= <declaration-list>
+                   |
+
+<namespace-alias-definition> ::= namespace <identifier> '=' <identifier> ';'
+
+! ===================================================================
+! Type Specifiers
+! ===================================================================
 
 <type-specifier> ::= <simple-type-specifier>
                    | <class-specifier>
                    | <enum-specifier>
                    | <elaborated-type-specifier>
                    | <cv-qualifier>
+                   | <identifier>
 
-<simple-type-specifier> ::= char !'::' <nested-name-specifier-opt> <type-name>
-                          !| <nested-name-specifier-opt> <type-name>
-                          !| char
+<simple-type-specifier> ::= char
                           | wchar_t
                           | bool
                           | short
@@ -331,19 +272,13 @@ Comment Line = '//'
                           | double
                           | void
 
-<type-name> ::= <class-name>
+<elaborated-type-specifier> ::= <class-key> <identifier>
+                              | enum <identifier>
+                              | typename <identifier>
+                              | typename <identifier> '<' <template-argument-list> '>'
 
-<elaborated-type-specifier> ::= <class-key> '::' <nested-name-specifier-opt> <identifier>
-                              | <class-key> <nested-name-specifier-opt> <identifier>
-                              | enum '::' <nested-name-specifier-opt> <identifier>
-                              | enum <nested-name-specifier-opt> <identifier>
-                              | typename '::' <nested-name-specifier> <identifier>
-                              | typename <nested-name-specifier> <identifier>
-                              | typename '::' <nested-name-specifier> <identifier> '<' <template-argument-list> '>'
-                              | typename <nested-name-specifier> <identifier> '<' <template-argument-list> '>'
-
-<enum-specifier> ::= enum <identifier-opt> '{' <enumerator-list> '}'
-                   | enum <identifier-opt> '{' '}'
+<enum-specifier> ::= enum <identifier> '{' <enumerator-list> '}'
+                   | enum <identifier> '{' '}'
 
 <enumerator-list> ::= <enumerator-definition>
                     | <enumerator-list> ',' <enumerator-definition>
@@ -351,32 +286,17 @@ Comment Line = '//'
 <enumerator-definition> ::= <identifier>
                           | <identifier> '=' <constant-expression>
 
-<namespace-definition> ::= namespace <identifier> '{' <namespace-body> '}'
-                         | namespace '{' <namespace-body> '}'
+<class-name> ::= <identifier>
+               | <template-id>
 
-<namespace-body> ::= <declaration-list>
-                   |
+<class-specifier> ::= <class-head> '{' <member-specification-opt> '}'
 
-<namespace-alias-definition> ::= namespace <identifier> '=' <qualified-namespace-specifier> ';'
+<class-head> ::= <class-key> <identifier> <base-clause>
+               | <class-key> <identifier>
 
-<qualified-namespace-specifier> ::= '::' <nested-name-specifier-opt> <identifier>
-                                  | <nested-name-specifier-opt> <identifier>
-
-<using-declaration> ::= using <typename-opt> '::' <nested-name-specifier> <unqualified-id> ';'
-                      | using <typename-opt> <nested-name-specifier> <unqualified-id> ';'
-                      | using '::' <unqualified-id> ';'
-
-<using-directive> ::= using namespace '::' <nested-name-specifier-opt> <identifier> ';'
-                   | using namespace <nested-name-specifier-opt> <identifier> ';'
-
-<asm-definition> ::= asm '(' StringLiteral ')' ';'
-
-<linkage-specification> ::= extern StringLiteral '{' <declaration-list> '}'
-                          | extern StringLiteral '{' '}'
-                          | extern StringLiteral <declaration>
-
-<typename-opt> ::= typename
-                 |
+<class-key> ::= class
+              | struct
+              | union
 
 ! ===================================================================
 ! Declarators
@@ -388,20 +308,29 @@ Comment Line = '//'
 <init-declarator> ::= <declarator> <initializer>
                     | <declarator>
 
+<initializer> ::= '=' <initializer-clause>
+                | '(' <expression-list> ')'
+
+<initializer-clause> ::= <assignment-expression>
+                       | '{' <initializer-list> ',' '}'
+                       | '{' <initializer-list> '}'
+                       | '{' '}'
+
+<initializer-list> ::= <initializer-clause>
+                     | <initializer-list> ',' <initializer-clause>
+
 <declarator> ::= <direct-declarator>
                | <ptr-operator> <declarator>
 
-<direct-declarator> ::= <declarator-id>
+<direct-declarator> ::= <identifier>
                       | <direct-declarator> '(' <parameter-declaration-clause> ')' <cv-qualifier-list-opt> <exception-specification>
                       | <direct-declarator> '(' <parameter-declaration-clause> ')' <cv-qualifier-list-opt>
                       | <direct-declarator> '[' <constant-expression> ']'
                       | <direct-declarator> '[' ']'
-                      | '(' <declarator> ')'
 
 <ptr-operator> ::= '*' <cv-qualifier-list-opt>
                  | '&'
-                 | '::' <nested-name-specifier> '*' <cv-qualifier-list-opt>
-                 | <nested-name-specifier> '*' <cv-qualifier-list-opt>
+                 | <identifier> '*' <cv-qualifier-list-opt>
 
 <cv-qualifier-list> ::= <cv-qualifier> <cv-qualifier-list>
                       | <cv-qualifier>
@@ -411,11 +340,6 @@ Comment Line = '//'
 
 <cv-qualifier> ::= const
                  | volatile
-
-<declarator-id> ::= '::' <id-expression>
-                  | '::' <nested-name-specifier-opt> <type-name>
-                  | <id-expression>
-                  | <nested-name-specifier-opt> <type-name>
 
 <type-id> ::= <type-specifier-list> <abstract-declarator>
             | <type-specifier-list>
@@ -439,6 +363,10 @@ Comment Line = '//'
 <direct-abstract-declarator-opt> ::= <direct-abstract-declarator>
                                    |
 
+! ===================================================================
+! Functions
+! ===================================================================
+
 <parameter-declaration-clause> ::= <parameter-declaration-list-opt> '...'
                                  | <parameter-declaration-list-opt>
                                  | <parameter-declaration-list> ',' '...'
@@ -449,44 +377,19 @@ Comment Line = '//'
 <parameter-declaration-list-opt> ::= <parameter-declaration-list>
                                    |
 
-<parameter-declaration> ::= <decl-specifier-list> <declarator>
-                          | <decl-specifier-list> <declarator> '=' <assignment-expression>
-                          | <decl-specifier-list> <abstract-declarator-opt>
-                          | <decl-specifier-list> <abstract-declarator-opt> '=' <assignment-expression>
+<parameter-declaration> ::= <storage-class-list> <declarator>
+                          | <storage-class-list> <declarator> '=' <assignment-expression>
+                          | <storage-class-list> <abstract-declarator-opt>
+                          | <storage-class-list> <abstract-declarator-opt> '=' <assignment-expression>
 
-<function-definition> ::= <decl-specifier-list-opt> <declarator> <ctor-initializer-opt> <function-body>
-                        | <decl-specifier-list-opt> <declarator> <function-try-block>
+<function-definition> ::= <storage-class-list> <declarator> <ctor-initializer-opt> <function-body>
+                        | <storage-class-list> <declarator> <function-try-block>
 
 <function-body> ::= <compound-statement>
 
-<initializer> ::= '=' <initializer-clause>
-                | '(' <expression-list> ')'
-
-<initializer-clause> ::= <assignment-expression>
-                       | '{' <initializer-list> ',' '}'
-                       | '{' <initializer-list> '}'
-                       | '{' '}'
-
-<initializer-list> ::= <initializer-clause>
-                     | <initializer-list> ',' <initializer-clause>
-
 ! ===================================================================
-! Classes
+! Class/Struct/Union Members
 ! ===================================================================
-
-<class-name> ::= <identifier>
-               | <template-id>
-
-<class-specifier> ::= <class-head> '{' <member-specification-opt> '}'
-
-<class-head> ::= <class-key> <identifier-opt> <base-clause>
-               | <class-key> <identifier-opt>
-               | <class-key> <nested-name-specifier> <identifier> <base-clause>
-               | <class-key> <nested-name-specifier> <identifier>
-
-<class-key> ::= class
-              | struct
-              | union
 
 <member-specification> ::= <member-declaration> <member-specification-opt>
                          | <access-specifier> ':' <member-specification-opt>
@@ -494,63 +397,35 @@ Comment Line = '//'
 <member-specification-opt> ::= <member-specification>
                              |
 
-<member-declaration> ::= <decl-specifier-list-opt> <member-declarator-list> ';'
-                       | <decl-specifier-list-opt> ';'
+<member-declaration> ::= <storage-class-list> <type-specifier> <member-declarator-list> ';'
+                       | <type-specifier> <member-declarator-list> ';'
                        | <function-definition> ';'
                        | <function-definition>
-                       | <qualified-id> ';'
                        | <using-declaration>
                        | <template-declaration>
 
 <member-declarator-list> ::= <member-declarator>
                            | <member-declarator-list> ',' <member-declarator>
 
-<member-declarator> ::= <declarator> <pure-specifier>
-                      | <declarator>
+<member-declarator> ::= <declarator>
                       | <declarator> <constant-initializer>
-                      | <identifier-opt> ':' <constant-expression>
-
-<pure-specifier> ::= '=' '0'
 
 <constant-initializer> ::= '=' <constant-expression>
-
-! ===================================================================
-! Derived classes
-! ===================================================================
 
 <base-clause> ::= ':' <base-specifier-list>
 
 <base-specifier-list> ::= <base-specifier>
                         | <base-specifier-list> ',' <base-specifier>
 
-<base-specifier> ::= '::' <nested-name-specifier-opt> <class-name>
-                   | <nested-name-specifier-opt> <class-name>
-                   | virtual <access-specifier-opt> '::' <nested-name-specifier-opt> <class-name>
-                   | virtual <access-specifier-opt> <nested-name-specifier-opt> <class-name>
-                   | <access-specifier> <virtual-opt> '::' <nested-name-specifier-opt> <class-name>
-                   | <access-specifier> <virtual-opt> <nested-name-specifier-opt> <class-name>
-
-<virtual-opt> ::= virtual
-                |
+<base-specifier> ::= <class-name>
+                   | virtual <access-specifier> <class-name>
+                   | virtual <class-name>
+                   | <access-specifier> virtual <class-name>
+                   | <access-specifier> <class-name>
 
 <access-specifier> ::= private
                      | protected
                      | public
-
-<access-specifier-opt> ::= <access-specifier>
-                         |
-
-! ===================================================================
-! Member Functions
-! ===================================================================
-
-<conversion-function-id> ::= operator <conversion-type-id>
-
-<conversion-type-id> ::= <type-specifier-list> <conversion-declarator>
-                       | <type-specifier-list>
-
-<conversion-declarator> ::= <ptr-operator> <conversion-declarator>
-                          | <ptr-operator>
 
 <ctor-initializer> ::= ':' <mem-initializer-list>
 
@@ -560,35 +435,14 @@ Comment Line = '//'
 <mem-initializer-list> ::= <mem-initializer>
                          | <mem-initializer> ',' <mem-initializer-list>
 
-<mem-initializer> ::= <mem-initializer-id> '(' <expression-list> ')'
-                    | <mem-initializer-id> '(' ')'
-
-<mem-initializer-id> ::= '::' <nested-name-specifier-opt> <class-name>
-                       | <nested-name-specifier-opt> <class-name>
-                       | <identifier>
-
-! ===================================================================
-! Overloading
-! ===================================================================
-
-<operator-function-id> ::= operator <operator>
-
-<operator> ::= new | delete | new '[]' | delete '[]'
-             | '+' | '-' | '*' | '/' | '%' | '^' | '&' | '|' | '~'
-             | '!' | '=' | '<' | '>' | '+=' | '-=' | '*=' | '/=' | '%='
-             | '^=' | '&=' | '|=' | '<<' | '>>' | '>>=' | '<<=' | '==' | '!='
-             | '<=' | '>=' | '&&' | '||' | '++' | '--' | ',' | '->*' | '->'
-             | '()' | '[]'
+<mem-initializer> ::= <identifier> '(' <expression-list> ')'
+                    | <identifier> '(' ')'
 
 ! ===================================================================
 ! Templates
 ! ===================================================================
 
-<template-opt> ::= template
-                 |
-
-<template-declaration> ::= export template '<' <template-parameter-list> '>' <declaration>
-                         | template '<' <template-parameter-list> '>' <declaration>
+<template-declaration> ::= template '<' <template-parameter-list> '>' <declaration>
 
 <template-parameter-list> ::= <template-parameter>
                             | <template-parameter-list> ',' <template-parameter>
@@ -596,21 +450,19 @@ Comment Line = '//'
 <template-parameter> ::= <type-parameter>
                        | <parameter-declaration>
 
-<type-parameter> ::= class <identifier-opt>
-                   | class <identifier-opt> '=' <type-id>
-                   | typename <identifier-opt>
-                   | typename <identifier-opt> '=' <type-id>
-                   | template '<' <template-parameter-list> '>' class <identifier-opt>
-                   | template '<' <template-parameter-list> '>' class <identifier-opt> '=' <identifier>
+<type-parameter> ::= class <identifier>
+                   | class <identifier> '=' <type-id>
+                   | typename <identifier>
+                   | typename <identifier> '=' <type-id>
+                   | template '<' <template-parameter-list> '>' class <identifier>
+                   | template '<' <template-parameter-list> '>' class <identifier> '=' <identifier>
 
 <template-id> ::= <identifier> '<' <template-argument-list> '>'
 
 <template-argument-list> ::= <template-argument>
                            | <template-argument-list> ',' <template-argument>
 
-<template-argument> ::= <assignment-expression>
-                      | <type-id>
-                      | <identifier>
+<template-argument> ::= <identifier>
 
 <explicit-specialization> ::= template '<' '>' <declaration>
 
@@ -640,3 +492,4 @@ Comment Line = '//'
 
 <type-id-list> ::= <type-id>
                  | <type-id-list> ',' <type-id>
+
