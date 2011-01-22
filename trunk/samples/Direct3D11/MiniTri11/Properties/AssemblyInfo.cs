@@ -7,7 +7,7 @@ using System.Resources;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("MiniTri")]
-[assembly: AssemblyDescription("A sample that shows a minimal Direct3D10 program in SlimDX.")]
+[assembly: AssemblyDescription("A sample that shows a minimal Direct3D11 program in SlimDX.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SlimDX Group")]
 [assembly: AssemblyProduct("MiniTri")]
