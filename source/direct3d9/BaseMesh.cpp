@@ -99,7 +99,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return SlimDX::Direct3D9::IndexBuffer::FromPointer( ib );
+		return SlimDX::Direct3D9::IndexBuffer::FromPointer( ib, this );
 	}
 
 	VertexBuffer^ BaseMesh::VertexBuffer::get()
@@ -110,7 +110,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return nullptr;
 
-		return SlimDX::Direct3D9::VertexBuffer::FromPointer( vb );
+		return SlimDX::Direct3D9::VertexBuffer::FromPointer( vb, this );
 	}
 
 	array<VertexElement>^ BaseMesh::GetDeclaration()
