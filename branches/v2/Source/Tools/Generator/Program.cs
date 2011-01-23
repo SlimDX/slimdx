@@ -103,10 +103,10 @@ namespace SlimDX.Generator
 			var parser = new HeaderParser(grammarFile);
 			var root = parser.Parse(source).ToXml();
 
+			root.Save("test.xml");
+
 			var model = new SourceModel(root, nameService, metadataService, configuration.GetOptions("TypeMap"));
 			var outputPath = Path.Combine(configurationDirectory, configuration.GetOption("Options", "OutputPath"));
-
-			root.Save("test.xml");
 
 			if (!Directory.Exists(outputPath))
 				Directory.CreateDirectory(outputPath);
@@ -165,11 +165,7 @@ namespace SlimDX.Generator
 					keepSource = relevantSources.Contains(file);
 				}
 				else if (!line.StartsWith("#pragma") && keepSource)
-				{
-					// static was annoying me when trying to write a grammar without ambiguities,
-					// so I'm just going to remove it here for now
-					output.AppendLine(line.Replace("static", ""));
-				}
+					output.AppendLine(line);
 			}
 
 			File.WriteAllText(preprocessedFile, output.ToString());

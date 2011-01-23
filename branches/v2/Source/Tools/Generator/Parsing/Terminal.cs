@@ -48,10 +48,11 @@ namespace SlimDX.Generator.Parsing
 
 		public object ToXml()
 		{
-			if (Symbol.Name == "Id")
-				return new XAttribute("Name", Text);
-			else if (Symbol.Name.Contains("Literal"))
-				return new XAttribute("Value", Text);
+			if (Symbol.Name == "Id" || Symbol.Name.Contains("Literal"))
+				return Text;
+
+			if (Text == ";")
+				return null;
 
 			return new XElement("Token", Text);
 		}
