@@ -41,10 +41,13 @@ Comment Line = '//'
 
 <identifier> ::= Id
 
-<literal> ::= DecLiteral
-            | HexLiteral
-            | OctLiteral
-            | 0
+<numeric-literal> ::= DecLiteral
+                    | HexLiteral
+                    | OctLiteral
+                    | 0
+
+<string-literal> ::= StringLiteral <string-literal>
+                   | StringLiteral
 
 ! ===================================================================
 ! Root
@@ -57,7 +60,7 @@ Comment Line = '//'
 ! Expressions
 ! ===================================================================
 
-<primary-expression> ::= <literal>
+<primary-expression> ::= <numeric-literal>
                        | this
                        | '(' <expression> ')'
 
@@ -163,7 +166,7 @@ Comment Line = '//'
               | <selection-statement>
               | <iteration-statement>
               | <jump-statement>
-              | <declaration-statement>
+           !  | <declaration-statement>
               | <try-block>
 
 <labeled-statement> ::= <identifier> ':' <statement>
@@ -173,8 +176,8 @@ Comment Line = '//'
 <expression-statement> ::= <expression> ';'
                          | ';'
 
-<compound-statement> ::= '(' <statement-list> ')'
-                       | '(' ')'
+<compound-statement> ::= '{' <statement-list> '}'
+                       | '{' '}'
 
 <statement-list> ::= <statement>
                    | <statement-list> <statement>
@@ -196,7 +199,7 @@ Comment Line = '//'
                    | return ';'
                    | goto <identifier> ';'
 
-<declaration-statement> ::= <block-declaration>
+!<declaration-statement> ::= <block-declaration>
 
 ! ===================================================================
 ! Declarations
@@ -206,7 +209,7 @@ Comment Line = '//'
                      | <declaration-list> <declaration>
 
 <declaration> ::= <block-declaration>
-                | <function-definition>
+                | <function-definition> ';'
                 | <template-declaration>
                 | <explicit-specialization>
                 | <linkage-specification>
@@ -217,7 +220,9 @@ Comment Line = '//'
                       | <using-declaration>
                       | <using-directive>
 
-<simple-declaration> ::= <type-specifier> <init-declarator-list> ';'
+<simple-declaration> ::= <storage-class-list> <type-specifier> <init-declarator-list> ';'
+                       | <type-specifier> <init-declarator-list> ';'
+                       | <type-specifier> ';'
 
 <storage-class> ::= auto
                   | register
@@ -233,13 +238,16 @@ Comment Line = '//'
 <storage-class-list> ::= <storage-class-list> <storage-class>
                        | <storage-class>
 
+<storage-class-list-opt> ::= <storage-class-list>
+                           |
+
 <using-declaration> ::= using <identifier> ';'
 
 <using-directive> ::= using namespace <identifier> ';'
 
-<linkage-specification> ::= extern StringLiteral '{' <declaration-list> '}'
-                          | extern StringLiteral '{' '}'
-                          | extern StringLiteral <declaration>
+<linkage-specification> ::= extern <string-literal> '{' <declaration-list> '}'
+                          | extern <string-literal> '{' '}'
+                          | extern <string-literal> <declaration>
 
 <namespace-definition> ::= namespace <identifier> '{' <namespace-body> '}'
                          | namespace '{' <namespace-body> '}'
@@ -257,7 +265,7 @@ Comment Line = '//'
                    | <class-specifier>
                    | <enum-specifier>
                    | <elaborated-type-specifier>
-                   | <cv-qualifier>
+                   | <cv-qualifier> <type-specifier>
                    | <identifier>
 
 <simple-type-specifier> ::= char
@@ -274,7 +282,7 @@ Comment Line = '//'
 
 <elaborated-type-specifier> ::= <class-key> <identifier>
                               | enum <identifier>
-                              | typename <identifier>
+                          !   | typename <identifier>
                               | typename <identifier> '<' <template-argument-list> '>'
 
 <enum-specifier> ::= enum <identifier> '{' <enumerator-list> '}'
@@ -293,6 +301,8 @@ Comment Line = '//'
 
 <class-head> ::= <class-key> <identifier> <base-clause>
                | <class-key> <identifier>
+               | <class-key> <declspec-list> <identifier>
+               | <class-key> <declspec-list> <identifier> <base-clause>
 
 <class-key> ::= class
               | struct
@@ -307,6 +317,7 @@ Comment Line = '//'
 
 <init-declarator> ::= <declarator> <initializer>
                     | <declarator>
+                    | <declspec-definition> <declarator>
 
 <initializer> ::= '=' <initializer-clause>
                 | '(' <expression-list> ')'
@@ -367,25 +378,69 @@ Comment Line = '//'
 ! Functions
 ! ===================================================================
 
-<parameter-declaration-clause> ::= <parameter-declaration-list-opt> '...'
-                                 | <parameter-declaration-list-opt>
-                                 | <parameter-declaration-list> ',' '...'
+<parameter-declaration-clause> ::= <parameter-declaration-list>
+                                 |
 
 <parameter-declaration-list> ::= <parameter-declaration>
                                | <parameter-declaration-list> ',' <parameter-declaration>
 
-<parameter-declaration-list-opt> ::= <parameter-declaration-list>
-                                   |
+<parameter-declaration> ::= <type-specifier> <declarator>
+                          | <type-specifier> <declarator> '=' <assignment-expression>
+                          | <type-specifier> <abstract-declarator-opt>
+                          | <type-specifier> <abstract-declarator-opt> '=' <assignment-expression>
+                          | <storage-class-list> <type-specifier> <declarator>
+                          | <storage-class-list> <type-specifier> <declarator> '=' <assignment-expression>
+                          | <storage-class-list> <type-specifier> <abstract-declarator-opt>
+                          | <storage-class-list> <type-specifier> <abstract-declarator-opt> '=' <assignment-expression>
+                          | <qualifier> <storage-class-list-opt> <type-specifier> <declarator>
+                          | <qualifier> <storage-class-list-opt> <type-specifier> <declarator> '=' <assignment-expression>
+                          | <qualifier> <storage-class-list-opt> <type-specifier> <abstract-declarator-opt>
+                          | <qualifier> <storage-class-list-opt> <type-specifier> <abstract-declarator-opt> '=' <assignment-expression>
 
-<parameter-declaration> ::= <storage-class-list> <declarator>
-                          | <storage-class-list> <declarator> '=' <assignment-expression>
-                          | <storage-class-list> <abstract-declarator-opt>
-                          | <storage-class-list> <abstract-declarator-opt> '=' <assignment-expression>
-
-<function-definition> ::= <storage-class-list> <declarator> <ctor-initializer-opt> <function-body>
-                        | <storage-class-list> <declarator> <function-try-block>
+<function-definition> ::= <storage-class-list> <type-specifier> <init-declarator> <ctor-initializer-opt> <function-body>
+                        | <storage-class-list> <calling-convention> <type-specifier> <init-declarator> <ctor-initializer-opt> <function-body>
+                        | <storage-class-list> <type-specifier> <calling-convention> <init-declarator> <ctor-initializer-opt> <function-body>
+                        | <storage-class-list> <calling-convention> <type-specifier> <init-declarator>
+                        | <storage-class-list> <type-specifier> <calling-convention> <init-declarator>
+                        | <type-specifier> <calling-convention> <init-declarator>
 
 <function-body> ::= <compound-statement>
+
+<calling-convention> ::= '__cdecl'
+                       | '__stdcall'
+                       | '__fastcall'
+
+! ===================================================================
+! Extensions
+! ===================================================================
+
+<declspec-definition> ::= '__declspec' '(' <declspec> ')'
+
+<declspec> ::= noreturn
+             | noalias
+             | novtable
+             | nothrow
+             | restrict
+             | selectany
+             | dllimport
+             | dllexport
+             | deprecated
+             | deprecated '(' <string-literal> ')'
+             | uuid '(' <string-literal> ')'
+             | align '(' <numeric-literal> ')'
+
+<declspec-list> ::= <declspec-definition> <declspec-list>
+                  | <declspec-definition>
+
+<qualifier> ::= __in
+              | __out
+              | __inout
+              | __in_opt
+              | __in_bcount '(' <declarator> ')'
+              | __out_bcount '(' <declarator> ')'
+              | __out_ecount_part_opt '(' <init-declarator-list> ')'
+              | __in_ecount '(' <declarator> ')'
+              | __out_ecount '(' <declarator> ')'
 
 ! ===================================================================
 ! Class/Struct/Union Members
@@ -471,8 +526,6 @@ Comment Line = '//'
 ! ===================================================================
 
 <try-block> ::= try <compound-statement> <handler-list>
-
-<function-try-block> ::= try <ctor-initializer-opt> <function-body> <handler-list>
 
 <handler-list> ::= <handler> <handler-list>
                  | <handler>
