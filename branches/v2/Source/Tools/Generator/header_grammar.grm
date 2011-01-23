@@ -72,6 +72,8 @@ Comment Line = '//'
                        | <simple-type-specifier> '(' ')'
                        | <postfix-expression> '.' <identifier>
                        | <postfix-expression> '->' <identifier>
+                       | <identifier> '.' <identifier>
+                       | <identifier> '->' <identifier>
                        | <postfix-expression> '++'
                        | <postfix-expression> '--'
                        | dynamic_cast '<' <type-id> '>' '(' <expression> ')'
@@ -187,7 +189,7 @@ Comment Line = '//'
                         | switch '(' <condition> ')' <statement>
 
 <condition> ::= <expression>
-              | <type-specifier-list> <declarator> '=' <assignment-expression>
+            !  | <type-specifier-list> <declarator> '=' <assignment-expression>
 
 <iteration-statement> ::= while '(' <condition> ')' <statement>
                         | do <statement> while '(' <expression> ')' ';'
@@ -210,6 +212,7 @@ Comment Line = '//'
 
 <declaration> ::= <block-declaration>
                 | <function-definition> ';'
+                | <function-definition>
                 | <template-declaration>
                 | <explicit-specialization>
                 | <linkage-specification>
@@ -265,6 +268,7 @@ Comment Line = '//'
                    | <class-specifier>
                    | <enum-specifier>
                    | <elaborated-type-specifier>
+                   | <cv-qualifier> <declspec-definition> <type-specifier>
                    | <cv-qualifier> <type-specifier>
                    | <identifier>
 
@@ -334,6 +338,7 @@ Comment Line = '//'
                | <ptr-operator> <declarator>
 
 <direct-declarator> ::= <identifier>
+                      | <operator-function-id>
                       | <direct-declarator> '(' <parameter-declaration-clause> ')' <cv-qualifier-list-opt> <exception-specification>
                       | <direct-declarator> '(' <parameter-declaration-clause> ')' <cv-qualifier-list-opt>
                       | <direct-declarator> '[' <constant-expression> ']'
@@ -409,6 +414,19 @@ Comment Line = '//'
 <calling-convention> ::= '__cdecl'
                        | '__stdcall'
                        | '__fastcall'
+
+! ===================================================================
+! Operators
+! ===================================================================
+
+<operator-function-id> ::= operator <operator>
+
+<operator> ::= new | delete | new '[]' | delete '[]'
+             | '+' | '-' | '*' | '/' | '%' | '^' | '&' | '|' | '~'
+             | '!' | '=' | '<' | '>' | '+=' | '-=' | '*=' | '/=' | '%='
+             | '^=' | '&=' | '|=' | '<<' | '>>' | '>>=' | '<<=' | '==' | '!='
+             | '<=' | '>=' | '&&' | '||' | '++' | '--' | ',' | '->*' | '->'
+             | '()' | '[]'
 
 ! ===================================================================
 ! Extensions
