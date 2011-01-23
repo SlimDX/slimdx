@@ -454,11 +454,17 @@ Comment Line = '//'
               | __out
               | __inout
               | __in_opt
+              | __out_opt
+              | __inout_opt
               | __in_bcount '(' <declarator> ')'
+              | __in_bcount_opt '(' <declarator> ')'
               | __out_bcount '(' <declarator> ')'
+              | __out_bcount_opt '(' <declarator> ')'
               | __out_ecount_part_opt '(' <init-declarator-list> ')'
               | __in_ecount '(' <declarator> ')'
               | __out_ecount '(' <declarator> ')'
+              | __in_ecount_opt '(' <declarator> ')'
+              | __out_ecount_opt '(' <declarator> ')'
 
 ! ===================================================================
 ! Class/Struct/Union Members
