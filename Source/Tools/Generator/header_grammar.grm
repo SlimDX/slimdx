@@ -23,6 +23,7 @@ DecLiteral = [123456789]{Digit}*
 OctLiteral = 0{Oct Digit}*
 HexLiteral = 0x{Hex Digit}+[lL]?
 
+CharLiteral = ''{Char Ch}''
 StringLiteral = '"'( {String Ch} | '\'{Printable} )* '"'
 
 Id = {Id Head}{Id Tail}*
@@ -44,6 +45,7 @@ Comment Line = '//'
 <numeric-literal> ::= DecLiteral
                     | HexLiteral
                     | OctLiteral
+                    | CharLiteral
                     | 0
 
 <string-literal> ::= StringLiteral <string-literal>
@@ -114,6 +116,7 @@ Comment Line = '//'
 <additive-expression> ::= <multiplicative-expression>
                         | <additive-expression> '+' <multiplicative-expression>
                         | <additive-expression> '-' <multiplicative-expression>
+                        | <identifier> '+' <multiplicative-expression>
 
 <shift-expression> ::= <additive-expression>
                      | <shift-expression> '<<' <additive-expression>
@@ -127,6 +130,7 @@ Comment Line = '//'
 
 <equality-expression> ::= <relational-expression>
                         | <equality-expression> '==' <relational-expression>
+                        | <identifier> '==' <identifier>
                         | <equality-expression> '!=' <relational-expression>
 
 <and-expression> ::= <equality-expression>
@@ -150,6 +154,8 @@ Comment Line = '//'
 <assignment-expression> ::= <conditional-expression>
                           | <logical-or-expression> <assignment-operator> <assignment-expression>
                           | <throw-expression>
+                          | <identifier> <assignment-operator> <identifier>
+                          | <identifier> <assignment-operator> <assignment-expression>
 
 <assignment-operator> ::= '=' | '*=' | '/=' | '%=' | '+=' | '-=' | '>>=' | '<<=' | '&=' | '^=' | '|='
 
@@ -215,6 +221,7 @@ Comment Line = '//'
                 | <function-definition>
                 | <template-declaration>
                 | <explicit-specialization>
+                | <linkage-specification> ';'
                 | <linkage-specification>
                 | <namespace-definition>
 
@@ -268,9 +275,9 @@ Comment Line = '//'
                    | <class-specifier>
                    | <enum-specifier>
                    | <elaborated-type-specifier>
-                   | <cv-qualifier> <declspec-definition> <type-specifier>
                    | <cv-qualifier> <type-specifier>
                    | <identifier>
+                   | <declspec-definition> <type-specifier>
 
 <simple-type-specifier> ::= char
                           | wchar_t
@@ -284,7 +291,8 @@ Comment Line = '//'
                           | double
                           | void
 
-<elaborated-type-specifier> ::= <class-key> <identifier>
+<elaborated-type-specifier> ::= <class-key> <declspec-list> <identifier>
+                              | <class-key> <identifier>
                               | enum <identifier>
                           !   | typename <identifier>
                               | typename <identifier> '<' <template-argument-list> '>'
@@ -294,6 +302,7 @@ Comment Line = '//'
 
 <enumerator-list> ::= <enumerator-definition>
                     | <enumerator-list> ',' <enumerator-definition>
+                    | <enumerator-list> ','
 
 <enumerator-definition> ::= <identifier>
                           | <identifier> '=' <constant-expression>
@@ -307,6 +316,7 @@ Comment Line = '//'
                | <class-key> <identifier>
                | <class-key> <declspec-list> <identifier>
                | <class-key> <declspec-list> <identifier> <base-clause>
+               | <class-key>
 
 <class-key> ::= class
               | struct
@@ -408,6 +418,16 @@ Comment Line = '//'
                         | <storage-class-list> <calling-convention> <type-specifier> <init-declarator>
                         | <storage-class-list> <type-specifier> <calling-convention> <init-declarator>
                         | <type-specifier> <calling-convention> <init-declarator>
+                        | <type-specifier> <ptr-operator> <calling-convention> <init-declarator>
+                        | <operator-function-id> '(' <parameter-declaration-clause> ')' <cv-qualifier-list-opt>
+                        | operator <type-specifier> <ptr-operator> '(' <parameter-declaration-clause> ')' <cv-qualifier-list-opt> <function-body>
+                        | <constructor>
+                        | '~' <constructor>
+
+<constructor> ::= <identifier> '(' <parameter-declaration-clause> ')'
+                | <identifier> '(' <parameter-declaration-clause> ')' <ctor-initializer-opt> <function-body>
+                | <storage-class-list> <identifier> '(' <parameter-declaration-clause> ')'
+                | <storage-class-list> <identifier> '(' <parameter-declaration-clause> ')' <ctor-initializer-opt> <function-body>
 
 <function-body> ::= <compound-statement>
 
@@ -421,12 +441,12 @@ Comment Line = '//'
 
 <operator-function-id> ::= operator <operator>
 
-<operator> ::= new | delete | new '[]' | delete '[]'
+<operator> ::= new | delete | new '[' ']' | delete '[' ']'
              | '+' | '-' | '*' | '/' | '%' | '^' | '&' | '|' | '~'
              | '!' | '=' | '<' | '>' | '+=' | '-=' | '*=' | '/=' | '%='
              | '^=' | '&=' | '|=' | '<<' | '>>' | '>>=' | '<<=' | '==' | '!='
              | '<=' | '>=' | '&&' | '||' | '++' | '--' | ',' | '->*' | '->'
-             | '()' | '[]'
+             | '(' ')' | '[' ']'
 
 ! ===================================================================
 ! Extensions
@@ -478,6 +498,7 @@ Comment Line = '//'
 
 <member-declaration> ::= <storage-class-list> <type-specifier> <member-declarator-list> ';'
                        | <type-specifier> <member-declarator-list> ';'
+                       | <type-specifier> ';'
                        | <function-definition> ';'
                        | <function-definition>
                        | <using-declaration>
@@ -488,6 +509,7 @@ Comment Line = '//'
 
 <member-declarator> ::= <declarator>
                       | <declarator> <constant-initializer>
+                      | <declarator> ':' <constant-expression>
 
 <constant-initializer> ::= '=' <constant-expression>
 
@@ -516,6 +538,7 @@ Comment Line = '//'
 
 <mem-initializer> ::= <identifier> '(' <expression-list> ')'
                     | <identifier> '(' ')'
+                    | <identifier> '(' <identifier> ')'
 
 ! ===================================================================
 ! Templates
