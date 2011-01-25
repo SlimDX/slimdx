@@ -23,6 +23,8 @@ DecLiteral = [123456789]{Digit}*
 OctLiteral = 0{Oct Digit}*
 HexLiteral = 0x{Hex Digit}+[lL]?
 
+FloatLiteral = {Digit}*'.'{Digit}+([eE][+-]{Digit}+)?[fF]?
+
 CharLiteral = ''{Char Ch}''
 StringLiteral = '"'( {String Ch} | '\'{Printable} )* '"'
 
@@ -46,6 +48,7 @@ Comment Line = '//'
                     | HexLiteral
                     | OctLiteral
                     | CharLiteral
+                    | FloatLiteral
                     | 0
 
 <string-literal> ::= StringLiteral <string-literal>
@@ -70,8 +73,9 @@ Comment Line = '//'
                        | <postfix-expression> '[' <expression> ']'
                        | <postfix-expression> '(' <expression-list> ')'
                        | <postfix-expression> '(' ')'
-                       | <simple-type-specifier> '(' <expression-list> ')'
-                       | <simple-type-specifier> '(' ')'
+                  !     | <simple-type-specifier> '(' <expression-list> ')'
+                       | <identifier> '(' <expression-list> ')'
+                  !     | <simple-type-specifier> '(' ')'
                        | <postfix-expression> '.' <identifier>
                        | <postfix-expression> '->' <identifier>
                        | <identifier> '.' <identifier>
@@ -91,7 +95,9 @@ Comment Line = '//'
 <unary-expression> ::= <postfix-expression>
                      | '++' <cast-expression>
                      | '--' <cast-expression>
+                     | '++' <identifier>
                      | <unary-operator> <cast-expression>
+                     | <unary-operator> <identifier>
                      | sizeof <unary-expression>
                      | sizeof '(' <type-id> ')'
                      | <delete-expression>
@@ -109,29 +115,37 @@ Comment Line = '//'
                   | <pm-expression> '->*' <cast-expression>
 
 <multiplicative-expression> ::= <pm-expression>
-                              | <multiplicative-expression> '*' <pm-expression>
-                              | <multiplicative-expression> '/' <pm-expression>
-                              | <multiplicative-expression> '%' <pm-expression>
+                              | <multiplicative-expression> <multiplicative-operator> <pm-expression>
+                              | <identifier> <multiplicative-operator> <identifier>
+
+<multiplicative-operator> ::= '*' | '/' | '%'
 
 <additive-expression> ::= <multiplicative-expression>
-                        | <additive-expression> '+' <multiplicative-expression>
-                        | <additive-expression> '-' <multiplicative-expression>
-                        | <identifier> '+' <multiplicative-expression>
+                        | <additive-expression> <additive-operator> <multiplicative-expression>
+                        | <additive-expression> <additive-operator> <identifier>
+                        | <identifier> <additive-operator> <multiplicative-expression>
+                        | <identifier> <additive-operator> <identifier>
+
+<additive-operator> ::= '-' | '+'
 
 <shift-expression> ::= <additive-expression>
-                     | <shift-expression> '<<' <additive-expression>
-                     | <shift-expression> '>>' <additive-expression>
+                     | <shift-expression> <shift-operator> <additive-expression>
+                     | <shift-expression> <shift-operator> <identifier>
+
+<shift-operator> ::= '<<' | '>>'
 
 <relational-expression> ::= <shift-expression>
-                          | <relational-expression> '<' <shift-expression>
-                          | <relational-expression> '>' <shift-expression>
-                          | <relational-expression> '<=' <shift-expression>
-                          | <relational-expression> '>=' <shift-expression>
+                          | <relational-expression> <relational-operator> <shift-expression>
+                          | <identifier> <relational-operator> <shift-expression>
+
+<relational-operator> ::= '<' | '>' | '<=' | '>='
 
 <equality-expression> ::= <relational-expression>
-                        | <equality-expression> '==' <relational-expression>
-                        | <identifier> '==' <identifier>
-                        | <equality-expression> '!=' <relational-expression>
+                        | <equality-expression> <equality-operator> <relational-expression>
+                        | <equality-expression> <equality-operator> <identifier>
+                        | <identifier> <equality-operator> <identifier>
+
+<equality-operator> ::= '==' | '!='
 
 <and-expression> ::= <equality-expression>
                    | <and-expression> '&' <equality-expression>
@@ -141,6 +155,9 @@ Comment Line = '//'
 
 <inclusive-or-expression> ::= <exclusive-or-expression>
                             | <inclusive-or-expression> '|' <exclusive-or-expression>
+                            | <inclusive-or-expression> '|' <identifier>
+                            | <identifier> '|' <identifier>
+                            | <identifier> '|' <exclusive-or-expression>
 
 <logical-and-expression> ::= <inclusive-or-expression>
                            | <logical-and-expression> '&&' <inclusive-or-expression>
@@ -150,12 +167,17 @@ Comment Line = '//'
 
 <conditional-expression> ::= <logical-or-expression>
                            | <logical-or-expression> '?' <expression> ':' <assignment-expression>
+                           | <identifier> '?' <identifier> ':' <assignment-expression>
 
 <assignment-expression> ::= <conditional-expression>
                           | <logical-or-expression> <assignment-operator> <assignment-expression>
                           | <throw-expression>
                           | <identifier> <assignment-operator> <identifier>
                           | <identifier> <assignment-operator> <assignment-expression>
+                          | <identifier> '[' <identifier> ']' <assignment-operator> <identifier>
+                          | <identifier> '[' <expression> ']' <assignment-operator> <assignment-expression>
+                          | <identifier> '[' <expression> ']' <assignment-operator> <identifier> '[' <expression> ']'
+                          | <logical-or-expression> <assignment-operator> <identifier>
 
 <assignment-operator> ::= '=' | '*=' | '/=' | '%=' | '+=' | '-=' | '>>=' | '<<=' | '&=' | '^=' | '|='
 
@@ -174,11 +196,12 @@ Comment Line = '//'
               | <selection-statement>
               | <iteration-statement>
               | <jump-statement>
-           !  | <declaration-statement>
+              | <declaration-statement>
               | <try-block>
 
 <labeled-statement> ::= <identifier> ':' <statement>
                       | case <constant-expression> ':' <statement>
+                      | case <identifier> ':' <statement>
                       | default ':' <statement>
 
 <expression-statement> ::= <expression> ';'
@@ -195,6 +218,7 @@ Comment Line = '//'
                         | switch '(' <condition> ')' <statement>
 
 <condition> ::= <expression>
+              | <identifier>
             !  | <type-specifier-list> <declarator> '=' <assignment-expression>
 
 <iteration-statement> ::= while '(' <condition> ')' <statement>
@@ -207,7 +231,7 @@ Comment Line = '//'
                    | return ';'
                    | goto <identifier> ';'
 
-!<declaration-statement> ::= <block-declaration>
+<declaration-statement> ::= <block-declaration>
 
 ! ===================================================================
 ! Declarations
@@ -241,7 +265,6 @@ Comment Line = '//'
                   | mutable
                   | inline
                   | virtual
-                  | explicit
                   | friend
                   | typedef
 
@@ -337,6 +360,7 @@ Comment Line = '//'
                 | '(' <expression-list> ')'
 
 <initializer-clause> ::= <assignment-expression>
+                       | <identifier>
                        | '{' <initializer-list> ',' '}'
                        | '{' <initializer-list> '}'
                        | '{' '}'
@@ -384,7 +408,7 @@ Comment Line = '//'
                                | <direct-abstract-declarator-opt> '(' <parameter-declaration-clause> ')' <cv-qualifier-list-opt>
                                | <direct-abstract-declarator-opt> '[' <constant-expression> ']'
                                | <direct-abstract-declarator-opt> '[' ']'
-                               | '(' <abstract-declarator> ')'
+                           !   | '(' <abstract-declarator> ')'
 
 <direct-abstract-declarator-opt> ::= <direct-abstract-declarator>
                                    |
@@ -400,17 +424,17 @@ Comment Line = '//'
                                | <parameter-declaration-list> ',' <parameter-declaration>
 
 <parameter-declaration> ::= <type-specifier> <declarator>
-                          | <type-specifier> <declarator> '=' <assignment-expression>
+                          | <type-specifier> <declarator> '=' <initializer-clause>
                           | <type-specifier> <abstract-declarator-opt>
-                          | <type-specifier> <abstract-declarator-opt> '=' <assignment-expression>
+                          | <type-specifier> <abstract-declarator-opt> '=' <initializer-clause>
                           | <storage-class-list> <type-specifier> <declarator>
-                          | <storage-class-list> <type-specifier> <declarator> '=' <assignment-expression>
+                          | <storage-class-list> <type-specifier> <declarator> '=' <initializer-clause>
                           | <storage-class-list> <type-specifier> <abstract-declarator-opt>
-                          | <storage-class-list> <type-specifier> <abstract-declarator-opt> '=' <assignment-expression>
+                          | <storage-class-list> <type-specifier> <abstract-declarator-opt> '=' <initializer-clause>
                           | <qualifier> <storage-class-list-opt> <type-specifier> <declarator>
-                          | <qualifier> <storage-class-list-opt> <type-specifier> <declarator> '=' <assignment-expression>
+                          | <qualifier> <storage-class-list-opt> <type-specifier> <declarator> '=' <initializer-clause>
                           | <qualifier> <storage-class-list-opt> <type-specifier> <abstract-declarator-opt>
-                          | <qualifier> <storage-class-list-opt> <type-specifier> <abstract-declarator-opt> '=' <assignment-expression>
+                          | <qualifier> <storage-class-list-opt> <type-specifier> <abstract-declarator-opt> '=' <initializer-clause>
 
 <function-definition> ::= <storage-class-list> <type-specifier> <init-declarator> <ctor-initializer-opt> <function-body>
                         | <storage-class-list> <calling-convention> <type-specifier> <init-declarator> <ctor-initializer-opt> <function-body>
@@ -423,11 +447,14 @@ Comment Line = '//'
                         | operator <type-specifier> <ptr-operator> '(' <parameter-declaration-clause> ')' <cv-qualifier-list-opt> <function-body>
                         | <constructor>
                         | '~' <constructor>
+                        | <function-pointer>
+
+<function-pointer> ::= <storage-class-list> <type-specifier> '(' <calling-convention> '*' <identifier> ')' '(' <parameter-declaration-clause> ')' <cv-qualifier-list-opt>
 
 <constructor> ::= <identifier> '(' <parameter-declaration-clause> ')'
                 | <identifier> '(' <parameter-declaration-clause> ')' <ctor-initializer-opt> <function-body>
-                | <storage-class-list> <identifier> '(' <parameter-declaration-clause> ')'
-                | <storage-class-list> <identifier> '(' <parameter-declaration-clause> ')' <ctor-initializer-opt> <function-body>
+                | explicit <identifier> '(' <parameter-declaration-clause> ')'
+                | explicit <identifier> '(' <parameter-declaration-clause> ')' <ctor-initializer-opt> <function-body>
 
 <function-body> ::= <compound-statement>
 
