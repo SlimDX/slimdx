@@ -18,106 +18,62 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
-using System;
 
 namespace SlimDX.Generator
 {
 	static class ModelXml
 	{
-		public static ApiModel Parse(XElement root)
+		public static ApiModel Parse(XElement root, params TypeModel[] dependencies)//TODO: Should be taking ApiModel's as dependencies?
 		{
-			var result = new ApiModel(ReadName(root));
-
-			// First establish the existence of all types.
+			var result = new ApiModel();
 			var typeMap = new Dictionary<string, TypeModel>();
 			var typeXml = new Dictionary<TypeModel, XElement>();
 
-			foreach (var modelElement in root.XPathSelectElements("external|interface|structure|enumeration"))
+			typeMap.Add("void", TypeModel.VoidModel);
+			foreach (var dependency in dependencies)
+				typeMap.Add(dependency.Name, dependency);
+
+			// First establish the existence of all types.
+			foreach (var element in root.XPathSelectElements("//class-specifier"))
 			{
-				var modelName = ReadName(modelElement);
-				var modelGuid = ReadGuid(modelElement);
-				var modelKind = ReadKind(modelElement);
-				var model = new TypeModel(modelName, modelGuid, modelKind);
-				typeMap.Add(modelName.Native, model);
-				typeXml.Add(model, modelElement);
+				var name = element.XPathSelectElement("class-head/identifier");
+				var model = new TypeModel(name.Value);
+				typeMap.Add(model.Name, model);
+				typeXml.Add(model, element);
 			}
 
-			// Then complete the definition of all types.
+			// Once models have been declared, they can be filled out.
 			foreach (var item in typeXml)
 			{
-				var typeModel = item.Key;
-				var typeElement = item.Value;
-				foreach (var methodElement in typeElement.Elements("method"))
-				{
-					var methodName = ReadName(methodElement);
-					var returnType = ReadNativeType(methodElement);
-					var methodModel = new MethodModel(methodName, typeMap[returnType]);
-					foreach (var parameterElement in methodElement.Elements("parameter"))
-					{
-						var parameterName = ReadName(parameterElement);
-						var parameterType = ReadNativeType(parameterElement);
-						methodModel.AddParameter(new VariableModel(parameterName, typeMap[parameterType]));
-					}
-
-					typeModel.AddMethod(methodModel);
-				}
+				var model = item.Key;
+				var definition = item.Value;
+				foreach (var element in definition.XPathSelectElements(".//function-definition"))
+					model.AddMethod(ParseMethodDeclaration(element, typeMap));
 			}
 
-			foreach (var type in typeMap.Select(x => x.Value).Where(x => x.Kind == TypeModelKind.Interface))
-				result.AddInterface(type);
-			foreach (var type in typeMap.Select(x => x.Value).Where(x => x.Kind == TypeModelKind.Structure))
-				result.AddStructure(type);
-			foreach (var type in typeMap.Select(x => x.Value).Where(x => x.Kind == TypeModelKind.Enumeration))
-				result.AddEnumeration(type);
 			return result;
 		}
 
-		static TypeModelKind ReadKind(XElement element)
+		static MethodModel ParseMethodDeclaration(XElement root, Dictionary<string, TypeModel> types)
 		{
-			switch (element.Name.LocalName)
-			{
-				case "interface":
-					return TypeModelKind.Interface;
-				case "structure":
-					return TypeModelKind.Structure;
-				case "enumeration":
-					return TypeModelKind.Enumeration;
-				default:
-					return TypeModelKind.External;
-			}
+			var type = root.XPathSelectElement("simple-type-specifier") ?? root.XPathSelectElement("identifier");
+			var name = root.XPathSelectElement("init-declarator/direct-declarator/identifier");
+			var model = new MethodModel(name.Value, types[type.Value]);
+
+			foreach (var element in root.XPathSelectElements(".//parameter-declaration"))
+				model.AddParameter(ParseParameterDeclaration(element, types));
+
+			return model;
 		}
 
-		static ModelName ReadName(XElement element)
+		static VariableModel ParseParameterDeclaration(XElement root, Dictionary<string, TypeModel> types)
 		{
-			var nativeName = ReadAttribute("nativeName", element);
-			var managedName = ReadAttribute("managedName", element);
-
-			return new ModelName(nativeName, managedName);
-		}
-
-		static Guid ReadGuid(XElement element)
-		{
-			var guid = ReadAttribute("guid", element);
-			if (string.IsNullOrEmpty(guid))
-				return Guid.Empty;
-			return new Guid(guid);
-		}
-
-		static string ReadNativeType(XElement element)
-		{
-			return ReadAttribute("nativeType", element);
-		}
-
-		static string ReadAttribute(string name, XElement element)
-		{
-			var attribute = element.Attribute(name);
-			if (attribute == null)
-				return null;
-			return attribute.Value;
+			return null;
 		}
 	}
 }

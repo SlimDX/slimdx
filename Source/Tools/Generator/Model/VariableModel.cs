@@ -24,13 +24,13 @@ namespace SlimDX.Generator
 {
 	class VariableModel
 	{
-		public VariableModel(ModelName name, TypeModel type)
+		public VariableModel(string name, TypeModel type)
 		{
 			Name = name;
 			Type = type;
 		}
 
-		public ModelName Name
+		public string Name
 		{
 			get;
 			private set;
@@ -44,7 +44,7 @@ namespace SlimDX.Generator
 
 		public override string ToString()
 		{
-			return Name.ToString();
+			return Name;
 		}
 	}
 }
