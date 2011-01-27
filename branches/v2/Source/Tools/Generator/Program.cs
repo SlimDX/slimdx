@@ -21,12 +21,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Linq;
-using SlimDX.Generator.Parsing;
-using SlimDX.Generator.ObjectModel;
 using System.Reflection;
+using System.Text;
 using System.Xml.Linq;
+using SlimDX.Generator.ObjectModel;
+using SlimDX.Generator.Parsing;
 
 namespace SlimDX.Generator
 {
@@ -104,6 +104,12 @@ namespace SlimDX.Generator
 			var root = parser.Parse(source).ToXml();
 
 			root.Save("test.xml");
+
+			//TODO: Should be read from a JSON model file? Or maybe XML since it's just externals and they are not hard to define in XML.
+			var apiResult = new TypeModel("HRESULT");
+			var apiBoolean = new TypeModel("BOOL");
+
+			var api = ModelXml.Parse(root, apiResult, apiBoolean);
 
 			var model = new SourceModel(root, nameService, metadataService, configuration.GetOptions("TypeMap"));
 			var outputPath = Path.Combine(configurationDirectory, configuration.GetOption("Options", "OutputPath"));

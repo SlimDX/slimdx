@@ -31,14 +31,18 @@ namespace SlimDX.Generator
 			VoidModel = new TypeModel(new ModelName("void", "System.Void"), Guid.Empty, TypeModelKind.External);
 		}
 
-		public TypeModel(ModelName name, Guid guid, TypeModelKind kind)
+		public TypeModel(string name)
 		{
 			Name = name;
+		}
+
+		public TypeModel(ModelName name, Guid guid, TypeModelKind kind)
+		{
 			Guid = guid;
 			Kind = kind;
 		}
 
-		public ModelName Name
+		public string Name
 		{
 			get;
 			private set;

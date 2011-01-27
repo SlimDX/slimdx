@@ -18,22 +18,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Reflection;
 
 namespace SlimDX.Generator
 {
 	class MethodModel
 	{
-		public MethodModel(ModelName name, TypeModel returnType)
+		public MethodModel(string name, TypeModel returnType)
 		{
 			Name = name;
 			Type = returnType;
 		}
 
-		public ModelName Name
+		public string Name
 		{
 			get;
 			private set;

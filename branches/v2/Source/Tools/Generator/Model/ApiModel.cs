@@ -25,17 +25,6 @@ namespace SlimDX.Generator
 {
 	class ApiModel
 	{
-		public ApiModel(ModelName name)
-		{
-			Name = name;
-		}
-
-		public ModelName Name
-		{
-			get;
-			private set;
-		}
-
 		public ReadOnlyCollection<TypeModel> Interfaces
 		{
 			get
@@ -73,11 +62,6 @@ namespace SlimDX.Generator
 		public void AddEnumeration(TypeModel model)
 		{
 			enumerations.Add(model);
-		}
-
-		public override string ToString()
-		{
-			return Name.ToString();
 		}
 
 		List<TypeModel> interfaces = new List<TypeModel>();
