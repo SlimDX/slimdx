@@ -32,16 +32,27 @@ namespace SlimDX.Generator
 			var api = new JsonObject(JsonType.Object);
 
 			var interfaces = new JsonObject(JsonType.Array);
-			api.Add("interfaces", interfaces);
+			var structures = new JsonObject(JsonType.Array);
+
 			foreach (var element in root.XPathSelectElements("//class-specifier"))
 			{
-				var name = element.XPathSelectElement("class-head/identifier");
+				var nameElement = element.XPathSelectElement("class-head/identifier");
+				var guidElement = element.XPathSelectElement("class-head/declspec-list/declspec-definition/declspec/string-literal");
+
 				var item = new JsonObject(JsonType.Object);
 
-				item["name"] = new JsonObject(name.Value);
-				interfaces.Add(item);
+				item["name"] = new JsonObject(nameElement.Value);
+				if (guidElement != null)
+					item["guid"] = new JsonObject(guidElement.Value.Trim('"'));
+
+				if (guidElement != null)
+					interfaces.Add(item);
+				else
+					structures.Add(item);
 			}
 
+			api.Add("interfaces", interfaces);
+			api.Add("structures", structures);
 			return api;
 		}
 	}
