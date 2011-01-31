@@ -28,21 +28,25 @@ namespace SlimDX.Generator
 	{
 		static TypeModel()
 		{
-			VoidModel = new TypeModel(new ModelName("void", "System.Void"), Guid.Empty, TypeModelKind.External);
+			VoidModel = CreateReferenceModel("void", typeof(void));
 		}
 
-		public TypeModel(string name)
+		public TypeModel(string name, TypeModelKind kind, Guid guid, TypeModel baseType, Type managedType)
 		{
 			Name = name;
-		}
-
-		public TypeModel(ModelName name, Guid guid, TypeModelKind kind)
-		{
-			Guid = guid;
 			Kind = kind;
+			Guid = guid;
+			BaseType = baseType;
+			ManagedType = managedType;
 		}
 
 		public string Name
+		{
+			get;
+			private set;
+		}
+
+		public TypeModelKind Kind
 		{
 			get;
 			private set;
@@ -54,7 +58,13 @@ namespace SlimDX.Generator
 			private set;
 		}
 
-		public TypeModelKind Kind
+		public TypeModel BaseType
+		{
+			get;
+			private set;
+		}
+
+		public Type ManagedType
 		{
 			get;
 			private set;
@@ -82,6 +92,16 @@ namespace SlimDX.Generator
 		public override string ToString()
 		{
 			return Name.ToString();
+		}
+
+		public static TypeModel CreateInterfaceModel(string name, Guid guid, TypeModel baseType)
+		{
+			return new TypeModel(name, TypeModelKind.Interface, guid, baseType, null);
+		}
+
+		public static TypeModel CreateReferenceModel(string name, Type managedType)
+		{
+			return new TypeModel(name, TypeModelKind.Reference, Guid.Empty, null, managedType);
 		}
 
 		List<MethodModel> methods = new List<MethodModel>();

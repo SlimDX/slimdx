@@ -18,6 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -29,43 +31,17 @@ namespace SlimDX.Generator
 		{
 			get
 			{
-				return interfaces.AsReadOnly();
+				return types.Where(t => t.Kind == TypeModelKind.Interface).ToList().AsReadOnly();
 			}
 		}
 
-		public ReadOnlyCollection<TypeModel> Structures
+		public void AddType(TypeModel model)
 		{
-			get
-			{
-				return structures.AsReadOnly();
-			}
+			if (model == null)
+				throw new ArgumentNullException("model");
+			types.Add(model);
 		}
 
-		public ReadOnlyCollection<TypeModel> Enumerations
-		{
-			get
-			{
-				return enumerations.AsReadOnly();
-			}
-		}
-
-		public void AddInterface(TypeModel model)
-		{
-			interfaces.Add(model);
-		}
-
-		public void AddStructure(TypeModel model)
-		{
-			structures.Add(model);
-		}
-
-		public void AddEnumeration(TypeModel model)
-		{
-			enumerations.Add(model);
-		}
-
-		List<TypeModel> interfaces = new List<TypeModel>();
-		List<TypeModel> structures = new List<TypeModel>();
-		List<TypeModel> enumerations = new List<TypeModel>();
+		List<TypeModel> types = new List<TypeModel>();
 	}
 }

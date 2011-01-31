@@ -18,25 +18,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Runtime.InteropServices;
-using System.Drawing;
-
 namespace SlimDX.$(@Namespace)
 {
-	[Guid("$(Guid)")]
-	public class $(ManagedName) : $(BaseType.ManagedName)
+	[System.Guid("$(Guid)")]
+	public class $(Name) : $(BaseType.Name)
 	{
-		internal $(ManagedName)(System.IntPtr nativePointer)
-		$(@InterfaceBaseInitialization){
+		internal $(Name)(System.IntPtr nativePointer)
+		{
 			this.nativePointer = nativePointer;
 		}
 
-		$(Functions:Function)
-	
-		IntPtr nativePointer;
+		System.IntPtr nativePointer;
 	}
 }
