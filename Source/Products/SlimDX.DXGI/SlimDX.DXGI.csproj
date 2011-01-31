@@ -53,36 +53,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="DXGI.cs" />
-    <Compile Include="Generated\Adapter.cs" />
-    <Compile Include="Generated\Adapter1.cs" />
-    <Compile Include="Generated\AdapterDescription.cs" />
-    <Compile Include="Generated\AdapterDescription1.cs" />
-    <Compile Include="Generated\Device.cs" />
-    <Compile Include="Generated\Device1.cs" />
-    <Compile Include="Generated\DeviceSubObject.cs" />
-    <Compile Include="Generated\DisplayColorSpace.cs" />
-    <Compile Include="Generated\Enums.cs" />
-    <Compile Include="Generated\Factory.cs" />
-    <Compile Include="Generated\Factory1.cs" />
-    <Compile Include="Generated\FrameStatistics.cs" />
-    <Compile Include="Generated\GammaControl.cs" />
-    <Compile Include="Generated\GammaControlCapabilities.cs" />
-    <Compile Include="Generated\KeyedMutex.cs" />
-    <Compile Include="Generated\MappedRect.cs" />
-    <Compile Include="Generated\ModeDescription.cs" />
-    <Compile Include="Generated\Object.cs" />
-    <Compile Include="Generated\Output.cs" />
-    <Compile Include="Generated\OutputDescription.cs" />
-    <Compile Include="Generated\Rational.cs" />
-    <Compile Include="Generated\Resource.cs" />
-    <Compile Include="Generated\Rgb.cs" />
-    <Compile Include="Generated\SampleDescription.cs" />
-    <Compile Include="Generated\SharedResource.cs" />
-    <Compile Include="Generated\Surface.cs" />
-    <Compile Include="Generated\Surface1.cs" />
-    <Compile Include="Generated\SurfaceDescription.cs" />
-    <Compile Include="Generated\SwapChain.cs" />
-    <Compile Include="Generated\SwapChainDescription.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -94,7 +64,9 @@
   <ItemGroup>
     <None Include="DXGI.Generator.cfg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Generated\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>"$(SolutionDir)\Source\Tools\Generator\bin\$(ConfigurationName)\SlimDX.Generator.exe" "$(ProjectDir)\DXGI.Generator.cfg"</PreBuildEvent>

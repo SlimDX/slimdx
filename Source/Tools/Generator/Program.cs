@@ -21,60 +21,44 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Json;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Xml.Linq;
-using SlimDX.Generator.ObjectModel;
 using SlimDX.Generator.Parsing;
 
 namespace SlimDX.Generator
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static void Main(string[] arguments)
 		{
-			var xml = XDocument.Load("DXGI.xml");
-			var api = ModelXml.Parse(xml.Root);
-
-			var configurationFile = @"config.txt";
-			if (args != null & args.Length > 0 && !string.IsNullOrWhiteSpace(args[0]))
-				configurationFile = args[0].Trim();
-
-			if (!File.Exists(configurationFile))
-				Console.WriteLine("Could not open config file \"{0}\".", configurationFile);
-			else
+			var options = new Queue<string>(arguments);
+			while (options.Count > 0)
 			{
-#if !DEBUG
-				try
+				var option = options.Dequeue();
+				switch (option)
 				{
-#endif
-				Run(configurationFile);
-#if !DEBUG
+					case "-parse":
+						if (options.Count == 0)
+							throw new InvalidOperationException("-parse requires one argument");
+						var configurationFile = options.Dequeue();
+						RunParser(configurationFile);
+						break;
+					case "-generate":
+						if (options.Count == 0)
+							throw new InvalidOperationException("-generate requires one argument");
+						var modelFile = options.Dequeue();
+						RunGenerator(modelFile);
+						break;
 				}
-				catch (Exception e)
-				{
-					Console.WriteLine("Exception occurred: " + e.ToString());
-				}
-#endif
 			}
 		}
 
-		/// <summary>
-		/// Runs the generator using options specified in the given configuration file.
-		/// </summary>
-		/// <param name="configurationFile">The configuration file.</param>
-		static void Run(string configurationFile)
+		static void RunParser(string configurationFile)
 		{
 			var configuration = new ConfigFile(configurationFile);
 			var configurationDirectory = Path.GetDirectoryName(Path.GetFullPath(configurationFile));
-			var generatorDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			var defaultMetadataDirectory = Path.Combine(generatorDirectory, @"Resources\Metadata");
-			var defaultTemplateDirectory = Path.Combine(generatorDirectory, @"Templates");
-
-			var templateEngine = new TemplateEngine(new[] { defaultTemplateDirectory });
-			templateEngine.RegisterCallback("Namespace", (e, s) => configuration.GetOption("Options", "Namespace"));
-			templateEngine.RegisterCallbacks(typeof(TemplateCallbacks));
 
 			// run boost::wave on the primary source file to get a preprocessed file and a list of macros
 			var preprocessor = new Preprocessor(configuration, configurationDirectory);
@@ -94,10 +78,6 @@ namespace SlimDX.Generator
 			source = Path.ChangeExtension(source, ".i");
 			PreTransform(source, new HashSet<string>(relevantSources));
 
-			var nameServiceFile = Path.Combine(configurationDirectory, configuration.GetOption("Options", "NamingRules"));
-			var nameService = new NameRules(nameServiceFile);
-			var metadataService = new MetadataService(new[] { defaultMetadataDirectory });
-
 			// run the parser on the preprocessed file to generate a model of the file in memory
 			var grammarFile = Path.Combine(configurationDirectory, configuration.GetOption("Options", "Grammar"));
 			var parser = new HeaderParser(grammarFile);
@@ -105,50 +85,35 @@ namespace SlimDX.Generator
 
 			root.Save("test.xml");
 
-			//TODO: Should be read from a JSON model file? Or maybe XML since it's just externals and they are not hard to define in XML.
-			var apiResult = new TypeModel("HRESULT");
-			var apiBoolean = new TypeModel("BOOL");
+			// Transform XML to JSON.
+			JsonObject json = ModelXml.Transform(root);
+			File.WriteAllText("test.json", json.ToJson());
+		}
 
-			var api = ModelXml.Parse(root, apiResult, apiBoolean);
+		static void RunGenerator(string modelFile)
+		{
+			var outputDirectory = Path.GetDirectoryName(Path.GetFullPath(modelFile));
 
-			var model = new SourceModel(root, nameService, metadataService, configuration.GetOptions("TypeMap"));
-			var outputPath = Path.Combine(configurationDirectory, configuration.GetOption("Options", "OutputPath"));
+			var json = File.ReadAllText(modelFile);
+			var api = ModelJson.Parse(JsonObject.FromJson(json));
 
-			if (!Directory.Exists(outputPath))
-				Directory.CreateDirectory(outputPath);
-			else
+			var generatorDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			var defaultMetadataDirectory = Path.Combine(generatorDirectory, @"Resources\Metadata");
+			var defaultTemplateDirectory = Path.Combine(generatorDirectory, @"Templates");
+			var templateEngine = new TemplateEngine(new[] { defaultTemplateDirectory });
+			templateEngine.RegisterCallback("Namespace", (e, s) => "SlimDX.DXGI");
+			templateEngine.RegisterCallbacks(typeof(TemplateCallbacks));
+
+			if (!Directory.Exists(outputDirectory))
+				Directory.CreateDirectory(outputDirectory);
+
+			foreach (var item in api.Interfaces)
 			{
-				foreach (var file in Directory.EnumerateFiles(outputPath, "*.*"))
-					File.Delete(file);
+				var outputPath = Path.Combine(outputDirectory, item.Name + ".cs");
+				if (File.Exists(outputPath))
+					File.Delete(outputPath);
+				File.WriteAllText(outputPath, templateEngine.ApplyByName("Interface", item));
 			}
-
-			var trampolineBuilder = new TrampolineAssemblyBuilder();
-			foreach (var item in model.Interfaces)
-			{
-				foreach (var function in item.Functions)
-				{
-					var parameterTypes = new List<TrampolineParameter>();
-					foreach (var parameter in function.Parameters)
-					{
-						var parameterFlags = TrampolineParameterFlags.Default;
-						if ((parameter.Usage & UsageQualifiers.Out) != 0)
-							parameterFlags = TrampolineParameterFlags.Reference;
-
-						parameterTypes.Add(new TrampolineParameter(parameter.Type.IntermediateType, parameterFlags));
-					}
-					trampolineBuilder.Add(new Trampoline(function.ReturnType.IntermediateType, parameterTypes.ToArray()));
-				}
-			}
-
-			trampolineBuilder.CreateAssembly("SlimDX.Trampoline");
-
-			// write output files
-			File.WriteAllText(Path.Combine(outputPath, "Enums.cs"), templateEngine.ApplyByName("EnumFile", model));
-			foreach (var item in model.Structures)
-				File.WriteAllText(Path.Combine(outputPath, item.ManagedName + ".cs"), templateEngine.ApplyByName("Structure", item));
-
-			foreach (var item in model.Interfaces)
-				File.WriteAllText(Path.Combine(outputPath, item.ManagedName + ".cs"), templateEngine.ApplyByName("Interface", item));
 		}
 
 		/// <summary>

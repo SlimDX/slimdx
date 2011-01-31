@@ -22,7 +22,7 @@ namespace SlimDX.Generator
 {
 	enum TypeModelKind
 	{
-		External,
+		Reference,
 		Interface,
 		Structure,
 		Enumeration

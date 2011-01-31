@@ -18,9 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Json;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
@@ -28,52 +27,22 @@ namespace SlimDX.Generator
 {
 	static class ModelXml
 	{
-		public static ApiModel Parse(XElement root, params TypeModel[] dependencies)//TODO: Should be taking ApiModel's as dependencies?
+		public static JsonObject Transform(XElement root)
 		{
-			var result = new ApiModel();
-			var typeMap = new Dictionary<string, TypeModel>();
-			var typeXml = new Dictionary<TypeModel, XElement>();
+			var api = new JsonObject(JsonType.Object);
 
-			typeMap.Add("void", TypeModel.VoidModel);
-			foreach (var dependency in dependencies)
-				typeMap.Add(dependency.Name, dependency);
-
-			// First establish the existence of all types.
+			var interfaces = new JsonObject(JsonType.Array);
+			api.Add("interfaces", interfaces);
 			foreach (var element in root.XPathSelectElements("//class-specifier"))
 			{
 				var name = element.XPathSelectElement("class-head/identifier");
-				var model = new TypeModel(name.Value);
-				typeMap.Add(model.Name, model);
-				typeXml.Add(model, element);
+				var item = new JsonObject(JsonType.Object);
+
+				item["name"] = new JsonObject(name.Value);
+				interfaces.Add(item);
 			}
 
-			// Once models have been declared, they can be filled out.
-			foreach (var item in typeXml)
-			{
-				var model = item.Key;
-				var definition = item.Value;
-				foreach (var element in definition.XPathSelectElements(".//function-definition"))
-					model.AddMethod(ParseMethodDeclaration(element, typeMap));
-			}
-
-			return result;
-		}
-
-		static MethodModel ParseMethodDeclaration(XElement root, Dictionary<string, TypeModel> types)
-		{
-			var type = root.XPathSelectElement("simple-type-specifier") ?? root.XPathSelectElement("identifier");
-			var name = root.XPathSelectElement("init-declarator/direct-declarator/identifier");
-			var model = new MethodModel(name.Value, types[type.Value]);
-
-			foreach (var element in root.XPathSelectElements(".//parameter-declaration"))
-				model.AddParameter(ParseParameterDeclaration(element, types));
-
-			return model;
-		}
-
-		static VariableModel ParseParameterDeclaration(XElement root, Dictionary<string, TypeModel> types)
-		{
-			return null;
+			return api;
 		}
 	}
 }
