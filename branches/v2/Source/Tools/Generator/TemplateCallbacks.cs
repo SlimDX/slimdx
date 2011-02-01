@@ -28,6 +28,26 @@ namespace SlimDX.Generator
 {
 	static class TemplateCallbacks
 	{
+		public static string MethodParameters(TemplateEngine engine, object source)
+		{
+			var method = (MethodModel)source;
+			var builder = new StringBuilder();
+
+			for (int parameterIndex = 0; parameterIndex < method.Parameters.Count; ++parameterIndex)
+			{
+				var parameter = method.Parameters[parameterIndex];
+				if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
+					builder.Append("out ");
+
+				builder.AppendFormat("{0} {1}", parameter.Type.Name, parameter.Name);
+
+				if (parameterIndex < method.Parameters.Count - 1)
+					builder.Append(", ");
+			}
+
+			return builder.ToString();
+		}
+
 		public static string GenerateStructureFromMarshallerBody(TemplateEngine engine, object source)
 		{
 			var structure = (StructureElement)source;

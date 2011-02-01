@@ -18,18 +18,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace $(@Namespace)
+using System;
+
+namespace SlimDX.Generator
 {
-	[System.Guid("$(Guid)")]
-	public class $(Name) : $(Parent.Name)
+	class ParameterModel
 	{
-		internal $(Name)(System.IntPtr nativePointer)
+		public ParameterModel(string name, TypeModel type, ParameterModelFlags flags)
 		{
-			this.nativePointer = nativePointer;
+			Name = name;
+			Type = type;
+			Flags = flags;
 		}
 
-		$(Methods:InterfaceMethod)
+		public string Name
+		{
+			get;
+			private set;
+		}
 
-		System.IntPtr nativePointer;
+		public TypeModel Type
+		{
+			get;
+			private set;
+		}
+
+		public ParameterModelFlags Flags
+		{
+			get;
+			private set;
+		}
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }

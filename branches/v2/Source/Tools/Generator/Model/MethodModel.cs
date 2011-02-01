@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace SlimDX.Generator
 {
@@ -42,11 +43,19 @@ namespace SlimDX.Generator
 			private set;
 		}
 
-		public void AddParameter(VariableModel parameter)
+		public ReadOnlyCollection<ParameterModel> Parameters
+		{
+			get
+			{
+				return parameters.AsReadOnly();
+			}
+		}
+
+		public void AddParameter(ParameterModel parameter)
 		{
 			parameters.Add(parameter);
 		}
 
-		List<VariableModel> parameters = new List<VariableModel>();
+		List<ParameterModel> parameters = new List<ParameterModel>();
 	}
 }

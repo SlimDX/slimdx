@@ -79,6 +79,8 @@
     <Compile Include="Model\MethodModel.cs" />
     <Compile Include="Model\ModelJson.cs" />
     <Compile Include="Model\ModelXml.cs" />
+    <Compile Include="Model\ParameterModel.cs" />
+    <Compile Include="Model\ParameterModelFlags.cs" />
     <Compile Include="Model\ReferenceModel.cs" />
     <Compile Include="Model\SourceModel.cs" />
     <Compile Include="Model\StructureElement.cs" />
