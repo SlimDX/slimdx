@@ -19,29 +19,27 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace SlimDX.Generator
 {
-	class ApiModel
+	class ReferenceModel : TypeModel
 	{
-		public ReadOnlyCollection<TypeModel> Interfaces
+		public ReferenceModel(string key, Type target)
+			: base(key, TypeModelKind.Reference)
+		{
+			if (target == null)
+				throw new ArgumentNullException("target");
+			this.target = target;
+		}
+
+		public override string Name
 		{
 			get
 			{
-				return types.Where(t => t.Kind == TypeModelKind.Interface).ToList().AsReadOnly();
+				return target.FullName;
 			}
 		}
 
-		public void AddType(TypeModel model)
-		{
-			if (model == null)
-				throw new ArgumentNullException("model");
-			types.Add(model);
-		}
-
-		List<TypeModel> types = new List<TypeModel>();
+		Type target;
 	}
 }

@@ -56,8 +56,8 @@ namespace SlimDX.Generator
 				{
 					var name = (string)item["name"];
 					var type = Type.GetType((string)item["target"]);
-					var model = TypeModel.CreateReferenceModel(name, type);
-					types[model.Name] = model;
+					var model = new ReferenceModel(name, type);
+					types[model.Key] = model;
 				}
 			}
 
@@ -68,8 +68,17 @@ namespace SlimDX.Generator
 					var name = (string)item["name"];
 					var type = types[(string)item["type"]];
 					var guid = new Guid((string)item["guid"]);
-					var model = TypeModel.CreateInterfaceModel(name, guid, type);
-					types[model.Name] = model;
+					var model = new InterfaceModel(name, guid, type);
+					types[model.Key] = model;
+
+					foreach (var methodItem in item["methods"])
+					{
+						var methodName = (string)methodItem["name"];
+						var methodType = types[(string)methodItem["type"]];
+						var methodModel = new MethodModel(methodName, methodType);
+
+						model.AddMethod(methodModel);
+					}
 				}
 			}
 

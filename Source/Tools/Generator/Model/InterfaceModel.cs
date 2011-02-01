@@ -20,28 +20,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace SlimDX.Generator
 {
-	class ApiModel
+	class InterfaceModel : TypeModel
 	{
-		public ReadOnlyCollection<TypeModel> Interfaces
+		public InterfaceModel(string key, Guid guid, TypeModel parent)
+			: base(key, TypeModelKind.Interface)
 		{
-			get
-			{
-				return types.Where(t => t.Kind == TypeModelKind.Interface).ToList().AsReadOnly();
-			}
+			Guid = guid;
+			Parent = parent;
 		}
 
-		public void AddType(TypeModel model)
+		public Guid Guid
+		{
+			get;
+			private set;
+		}
+
+		public TypeModel Parent
+		{
+			get;
+			private set;
+		}
+
+		public void AddMethod(MethodModel model)
 		{
 			if (model == null)
 				throw new ArgumentNullException("model");
-			types.Add(model);
+			methods.Add(model);
 		}
 
-		List<TypeModel> types = new List<TypeModel>();
+		List<MethodModel> methods = new List<MethodModel>();
 	}
 }
