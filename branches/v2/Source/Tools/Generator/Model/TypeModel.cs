@@ -19,8 +19,6 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace SlimDX.Generator
 {
@@ -28,19 +26,19 @@ namespace SlimDX.Generator
 	{
 		static TypeModel()
 		{
-			VoidModel = CreateReferenceModel("void", typeof(void));
+			VoidModel = new ReferenceModel("void", typeof(void));
 		}
 
-		public TypeModel(string name, TypeModelKind kind, Guid guid, TypeModel baseType, Type managedType)
+		public TypeModel(string key, TypeModelKind kind)
 		{
-			Name = name;
+			if (string.IsNullOrEmpty(key))
+				throw new ArgumentException("Value may not be null or empty", "key");
+
+			Key = key;
 			Kind = kind;
-			Guid = guid;
-			BaseType = baseType;
-			ManagedType = managedType;
 		}
 
-		public string Name
+		public string Key
 		{
 			get;
 			private set;
@@ -52,29 +50,11 @@ namespace SlimDX.Generator
 			private set;
 		}
 
-		public Guid Guid
-		{
-			get;
-			private set;
-		}
-
-		public TypeModel BaseType
-		{
-			get;
-			private set;
-		}
-
-		public Type ManagedType
-		{
-			get;
-			private set;
-		}
-
-		public ReadOnlyCollection<MethodModel> Methods
+		public virtual string Name
 		{
 			get
 			{
-				return methods.AsReadOnly();
+				return Key;
 			}
 		}
 
@@ -84,26 +64,15 @@ namespace SlimDX.Generator
 			private set;
 		}
 
-		public void AddMethod(MethodModel method)
-		{
-			methods.Add(method);
-		}
-
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents this instance.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/> that represents this instance.
+		/// </returns>
 		public override string ToString()
 		{
-			return Name.ToString();
+			return Name;
 		}
-
-		public static TypeModel CreateInterfaceModel(string name, Guid guid, TypeModel baseType)
-		{
-			return new TypeModel(name, TypeModelKind.Interface, guid, baseType, null);
-		}
-
-		public static TypeModel CreateReferenceModel(string name, Type managedType)
-		{
-			return new TypeModel(name, TypeModelKind.Reference, Guid.Empty, null, managedType);
-		}
-
-		List<MethodModel> methods = new List<MethodModel>();
 	}
 }

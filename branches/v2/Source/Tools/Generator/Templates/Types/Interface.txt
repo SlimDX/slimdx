@@ -18,15 +18,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace SlimDX.$(@Namespace)
+namespace $(@Namespace)
 {
 	[System.Guid("$(Guid)")]
-	public class $(Name) : $(BaseType.Name)
+	public class $(Name) : $(Parent.Name)
 	{
 		internal $(Name)(System.IntPtr nativePointer)
 		{
 			this.nativePointer = nativePointer;
 		}
+
+		
 
 		System.IntPtr nativePointer;
 	}

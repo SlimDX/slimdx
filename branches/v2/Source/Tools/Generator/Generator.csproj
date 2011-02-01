@@ -75,9 +75,11 @@
     <Compile Include="Model\EnumerationItemElement.cs" />
     <Compile Include="Model\FunctionElement.cs" />
     <Compile Include="Model\InterfaceElement.cs" />
+    <Compile Include="Model\InterfaceModel.cs" />
     <Compile Include="Model\MethodModel.cs" />
     <Compile Include="Model\ModelJson.cs" />
     <Compile Include="Model\ModelXml.cs" />
+    <Compile Include="Model\ReferenceModel.cs" />
     <Compile Include="Model\SourceModel.cs" />
     <Compile Include="Model\StructureElement.cs" />
     <Compile Include="Model\TypedefElement.cs" />
@@ -109,6 +111,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\Functions\FunctionBody.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Functions\InterfaceMethod.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\Functions\OutInitializer.txt">

@@ -8,7 +8,7 @@
 			"guid": "7b7166ec-21c7-44ae-b21a-c9ae321ae369",
 			"methods": [
 				{
-					"name": "EnumerateAdapters",
+					"name": "EnumAdapters",
 					"type": "HRESULT",
 					"index": "7", 
 					"parameters": [
