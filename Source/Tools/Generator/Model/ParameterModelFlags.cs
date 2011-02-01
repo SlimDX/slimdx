@@ -18,18 +18,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace $(@Namespace)
+using System;
+
+namespace SlimDX.Generator
 {
-	[System.Guid("$(Guid)")]
-	public class $(Name) : $(Parent.Name)
+	[Flags]
+	enum ParameterModelFlags
 	{
-		internal $(Name)(System.IntPtr nativePointer)
-		{
-			this.nativePointer = nativePointer;
-		}
-
-		$(Methods:InterfaceMethod)
-
-		System.IntPtr nativePointer;
+		None = 0,
+		IsOutput = (1 << 0),
 	}
 }

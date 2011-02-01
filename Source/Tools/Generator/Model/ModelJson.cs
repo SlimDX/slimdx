@@ -71,18 +71,76 @@ namespace SlimDX.Generator
 					var model = new InterfaceModel(name, guid, type);
 					types[model.Key] = model;
 
-					foreach (var methodItem in item["methods"])
-					{
-						var methodName = (string)methodItem["name"];
-						var methodType = types[(string)methodItem["type"]];
-						var methodModel = new MethodModel(methodName, methodType);
-
-						model.AddMethod(methodModel);
-					}
+					foreach (var method in ParseMethods(item, types))
+						model.AddMethod(method);
 				}
 			}
 
 			return types;
+		}
+
+		static IEnumerable<MethodModel> ParseMethods(JsonObject root, Dictionary<string, TypeModel> types)
+		{
+			var results = new List<MethodModel>();
+
+			JsonObject methods;
+			if (root.TryGetValue("methods", out methods))
+			{
+				foreach (var method in methods)
+				{
+					var name = (string)method["name"];
+					var type = types[(string)method["type"]];
+					var model = new MethodModel(name, type);
+					foreach (var parameter in ParseParameters(method, types))
+						model.AddParameter(parameter);
+
+					results.Add(model);
+				}
+			}
+
+			return results;
+		}
+
+		static IEnumerable<ParameterModel> ParseParameters(JsonObject root, Dictionary<string, TypeModel> types)
+		{
+			var results = new List<ParameterModel>();
+
+			JsonObject parameters;
+			if (root.TryGetValue("parameters", out parameters))
+			{
+				foreach (var parameter in parameters)
+				{
+					var name = (string)parameter["name"];
+					var type = types[(string)parameter["type"]];
+					var flags = ParseParameterFlags(parameter);
+					var model = new ParameterModel(name, type, flags);
+
+					results.Add(model);
+				}
+			}
+
+			return results;
+		}
+
+		static ParameterModelFlags ParseParameterFlags(JsonObject root)
+		{
+			var results = ParameterModelFlags.None;
+
+			JsonObject flags;
+			if (root.TryGetValue("flags", out flags))
+			{
+				foreach (var flag in flags)
+				{
+					switch ((string)flag)
+					{
+						case "out":
+							results |= ParameterModelFlags.IsOutput;
+							break;
+					}
+				}
+			}
+
+			return results;
 		}
 	}
 }

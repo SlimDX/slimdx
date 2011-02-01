@@ -3,6 +3,11 @@
 
 	"interfaces": [
 		{
+			"name": "IDXGIAdapter",
+			"type": "IUnknown",
+			"guid": "2411e7e1-12ac-4ccf-bd14-9798e8534dc0"
+		},
+		{
 			"name": "IDXGIFactory",
 			"type": "IUnknown",
 			"guid": "7b7166ec-21c7-44ae-b21a-c9ae321ae369",
@@ -12,7 +17,8 @@
 					"type": "HRESULT",
 					"index": "7", 
 					"parameters": [
-						{ "name": "priority", "type": "int" }
+						{ "name": "priority", "type": "int" },
+						{ "name": "adapter", "type": "IDXGIAdapter", "flags": [ "out" ] }
 					]
 				}
 			]
