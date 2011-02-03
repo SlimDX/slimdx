@@ -1,3 +1,4 @@
 ﻿public unsafe $(Type.Name) $(Name)($(@MethodParameters))
 {
+	$(@MethodTrampoline)
 }

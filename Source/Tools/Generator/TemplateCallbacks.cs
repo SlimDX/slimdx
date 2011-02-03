@@ -33,7 +33,7 @@ namespace SlimDX.Generator
 			var method = (MethodModel)source;
 			var builder = new StringBuilder();
 
-			for (int parameterIndex = 0; parameterIndex < method.Parameters.Count; ++parameterIndex)
+			for (var parameterIndex = 0; parameterIndex < method.Parameters.Count; ++parameterIndex)
 			{
 				var parameter = method.Parameters[parameterIndex];
 				if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
@@ -45,6 +45,32 @@ namespace SlimDX.Generator
 					builder.Append(", ");
 			}
 
+			return builder.ToString();
+		}
+
+		public static string MethodTrampoline(TemplateEngine engine, object source)
+		{
+			var method = (MethodModel)source;
+			var builder = new StringBuilder();
+
+			if (method.Type != TypeModel.VoidModel)
+				builder.AppendFormat("{0} _result = SlimDX.Trampoline.Call{0}(", method.Type.Name);
+			else
+				builder.Append("SlimDX.Trampoline.Call(");
+
+			for (var parameterIndex = 0; parameterIndex < method.Parameters.Count; ++parameterIndex)
+			{
+				var parameter = method.Parameters[parameterIndex];
+				if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
+					builder.AppendFormat("out _{0}", parameter.Name);
+				else
+					builder.AppendFormat(parameter.Name);
+
+				if (parameterIndex < method.Parameters.Count - 1)
+					builder.Append(", ");
+			}
+
+			builder.Append(");");
 			return builder.ToString();
 		}
 
