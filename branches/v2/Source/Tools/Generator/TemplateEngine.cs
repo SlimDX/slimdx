@@ -213,13 +213,17 @@ namespace SlimDX.Generator
 					handler = x => ApplyByName(handlerName, x);
 			}
 
+			var builder = new StringBuilder();
 			var enumerable = QueryForIEnumerable(value);
 			if (enumerable == null)
-				return handler(value);
-
-			var builder = new StringBuilder();
-			foreach (var item in enumerable)
-				builder.AppendLine(handler(item));
+			{
+				builder.Append(handler(value));
+			}
+			else
+			{
+				foreach (var item in enumerable)
+					builder.AppendLine(handler(item));
+			}
 
 			// Once the values have been resolved, the prefix needs to be attached to each
 			// line of the final output.
