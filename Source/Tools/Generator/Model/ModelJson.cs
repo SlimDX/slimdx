@@ -56,7 +56,7 @@ namespace SlimDX.Generator
 				{
 					var name = (string)item["name"];
 					var type = Type.GetType((string)item["target"]);
-					var model = new ReferenceModel(name, type);
+					var model = new TypeModel(name, type);
 					types[model.Key] = model;
 				}
 			}

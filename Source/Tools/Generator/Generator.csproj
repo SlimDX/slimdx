@@ -81,7 +81,6 @@
     <Compile Include="Model\ModelXml.cs" />
     <Compile Include="Model\ParameterModel.cs" />
     <Compile Include="Model\ParameterModelFlags.cs" />
-    <Compile Include="Model\ReferenceModel.cs" />
     <Compile Include="Model\SourceModel.cs" />
     <Compile Include="Model\StructureElement.cs" />
     <Compile Include="Model\TypedefElement.cs" />
