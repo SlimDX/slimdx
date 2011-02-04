@@ -74,6 +74,26 @@ namespace SlimDX.Generator
 			return builder.ToString();
 		}
 
+		public static string MethodEpilogue(TemplateEngine engine, object source)
+		{
+			var method = (MethodModel)source;
+			var builder = new StringBuilder();
+
+			foreach (var parameter in method.Parameters)
+			{
+				if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
+				{
+					builder.AppendFormat("{0} = _{0};", parameter.Name);
+					builder.AppendLine();
+				}
+			}
+
+			if (method.Type != TypeModel.VoidModel)
+				builder.Append("return _result;");
+
+			return builder.ToString();
+		}
+
 		public static string GenerateStructureFromMarshallerBody(TemplateEngine engine, object source)
 		{
 			var structure = (StructureElement)source;
