@@ -26,7 +26,13 @@ namespace SlimDX.Generator
 	{
 		static TypeModel()
 		{
-			VoidModel = new ReferenceModel("void", typeof(void));
+			VoidModel = new TypeModel("void", typeof(void));
+		}
+
+		public TypeModel(string key, Type marshalType)
+		{
+			Key = key;
+			MarshallingType = marshalType;
 		}
 
 		public TypeModel(string key, TypeModelKind kind)
@@ -56,6 +62,12 @@ namespace SlimDX.Generator
 			{
 				return Key;
 			}
+		}
+
+		public Type MarshallingType
+		{
+			get;
+			private set;
 		}
 
 		public static TypeModel VoidModel

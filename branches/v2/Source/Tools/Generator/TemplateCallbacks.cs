@@ -54,7 +54,7 @@ namespace SlimDX.Generator
 			var builder = new StringBuilder();
 
 			if (method.Type != TypeModel.VoidModel)
-				builder.AppendFormat("{0} _result = SlimDX.Trampoline.Call{0}(", method.Type.Name);
+				builder.AppendFormat("{0} _result = SlimDX.Trampoline.Call{1}(", method.Type.MarshallingType.FullName, method.Type.MarshallingType.Name);
 			else
 				builder.Append("SlimDX.Trampoline.Call(");
 
