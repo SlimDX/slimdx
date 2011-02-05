@@ -86,7 +86,6 @@
     <Compile Include="Model\TypedefElement.cs" />
     <Compile Include="Model\TypeElement.cs" />
     <Compile Include="Model\TypeModel.cs" />
-    <Compile Include="Model\TypeModelKind.cs" />
     <Compile Include="Model\VariableElement.cs" />
     <Compile Include="Model\VariableModel.cs" />
     <Compile Include="NameRules.cs" />
