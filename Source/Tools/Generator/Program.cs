@@ -114,6 +114,24 @@ namespace SlimDX.Generator
 					File.Delete(outputPath);
 				File.WriteAllText(outputPath, templateEngine.ApplyByName("Interface", item));
 			}
+
+			TrampolineAssemblyBuilder trampolineBuilder = new TrampolineAssemblyBuilder();
+			foreach (var interfaceModel in api.Interfaces)
+			{
+				foreach (var methodModel in interfaceModel.Methods)
+				{
+					List<TrampolineParameter> parameters = new List<TrampolineParameter>();
+					foreach (var parameterModel in methodModel.Parameters)
+					{
+						TrampolineParameterFlags flags = TrampolineParameterFlags.Default;
+						parameters.Add(new TrampolineParameter(parameterModel.Type.MarshallingType, flags));
+					}
+
+					trampolineBuilder.Add(new Trampoline(methodModel.Type.MarshallingType, parameters.ToArray()));
+				}
+			}
+
+			trampolineBuilder.CreateAssembly(string.Format("{0}.Trampoline", "SlimDX.DXGI"));
 		}
 
 		/// <summary>

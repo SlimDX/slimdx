@@ -27,7 +27,7 @@ namespace SlimDX.Generator
 	class InterfaceModel : TypeModel
 	{
 		public InterfaceModel(string key, Guid guid, TypeModel parent)
-			: base(key, TypeModelKind.Interface)
+			: base(key, typeof(IntPtr))
 		{
 			Guid = guid;
 			Parent = parent;

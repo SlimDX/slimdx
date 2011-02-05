@@ -27,11 +27,11 @@ namespace SlimDX.Generator
 {
 	class ApiModel
 	{
-		public ReadOnlyCollection<TypeModel> Interfaces
+		public ReadOnlyCollection<InterfaceModel> Interfaces
 		{
 			get
 			{
-				return types.Where(t => t.Kind == TypeModelKind.Interface).ToList().AsReadOnly();
+				return types.Where(t => t is InterfaceModel).Cast<InterfaceModel>().ToList().AsReadOnly();
 			}
 		}
 
