@@ -1,5 +1,6 @@
 ﻿public unsafe $(Type.Name) $(Name)($(@MethodParameters))
 {
+	$(@MethodPrologue)
 	$(@MethodTrampoline)
 	$(@MethodEpilogue)
 }
