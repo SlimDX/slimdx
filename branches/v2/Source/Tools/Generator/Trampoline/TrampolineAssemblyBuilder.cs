@@ -25,6 +25,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace SlimDX.Generator
 {
@@ -48,13 +49,14 @@ namespace SlimDX.Generator
 		/// Creates a trampoline implementation assembly based on the current state of the builder.
 		/// </summary>
 		/// <param name="name">The name of the trampoline assembly.</param>
-		public void CreateAssembly(string name)
+		public void CreateAssembly(string directory, string name)
 		{
-			Contract.Assert(!string.IsNullOrEmpty(name));
+			if (string.IsNullOrEmpty(name))
+				throw new ArgumentException("Value may not be null or empty.", "name");
 
 			var fileName = string.Format("{0}.dll", name);
 			var assemblyName = new AssemblyName(name);
-			var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Save);
+			var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Save, directory);
 			var moduleBuilder = assemblyBuilder.DefineDynamicModule(fileName);
 			var typeBuilder = moduleBuilder.DefineType("SlimDX.Trampoline", trampolineClassAttributes);
 

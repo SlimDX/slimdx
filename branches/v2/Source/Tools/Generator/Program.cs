@@ -131,7 +131,7 @@ namespace SlimDX.Generator
 				}
 			}
 
-			trampolineBuilder.CreateAssembly(string.Format("{0}.Trampoline", "SlimDX.DXGI"));
+			trampolineBuilder.CreateAssembly(outputDirectory, string.Format("{0}.Trampoline", "SlimDX.DXGI"));
 		}
 
 		/// <summary>
