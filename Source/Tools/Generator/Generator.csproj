@@ -73,6 +73,8 @@
     <Compile Include="Model\BaseElement.cs" />
     <Compile Include="Model\EnumerationElement.cs" />
     <Compile Include="Model\EnumerationItemElement.cs" />
+    <Compile Include="Model\EnumerationModel.cs" />
+    <Compile Include="Model\EnumerationValueModel.cs" />
     <Compile Include="Model\FunctionElement.cs" />
     <Compile Include="Model\InterfaceElement.cs" />
     <Compile Include="Model\InterfaceModel.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="Model\ParameterModelFlags.cs" />
     <Compile Include="Model\SourceModel.cs" />
     <Compile Include="Model\StructureElement.cs" />
+    <Compile Include="Model\StructureModel.cs" />
     <Compile Include="Model\TypedefElement.cs" />
     <Compile Include="Model\TypeElement.cs" />
     <Compile Include="Model\TypeModel.cs" />
@@ -138,6 +141,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\Functions\Function.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Types\Enumeration.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Types\EnumerationValue.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\Types\Interface.txt">

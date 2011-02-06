@@ -31,7 +31,16 @@ namespace SlimDX.Generator
 		{
 			var result = new ApiModel();
 			foreach (var type in ParseTypes(root))
-				result.AddType(type.Value);
+			{
+				if (type.Value is EnumerationModel)
+					result.AddEnumeration((EnumerationModel)type.Value);
+				if (type.Value is StructureModel)
+					result.AddStructure((StructureModel)type.Value);
+				else if (type.Value is InterfaceModel)
+					result.AddInterface((InterfaceModel)type.Value);
+
+			}
+
 			return result;
 		}
 
@@ -58,6 +67,32 @@ namespace SlimDX.Generator
 					var type = Type.GetType((string)item["target"]);
 					var model = new TypeModel(name, type);
 					types[model.Key] = model;
+				}
+			}
+
+			if (root.TryGetValue("enumerations", out items))
+			{
+				foreach (var item in items)
+				{
+					var name = (string)item["name"];
+					var model = new EnumerationModel(name);
+					types[model.Key] = model;
+
+					foreach (var value in ParseValues(item))
+						model.AddValue(value);
+				}
+			}
+
+			if (root.TryGetValue("structures", out items))
+			{
+				foreach (var item in items)
+				{
+					var name = (string)item["name"];
+					var model = new StructureModel(name);
+					types[model.Key] = model;
+
+					//foreach (var method in ParseMethods(item, types))
+					//	model.AddMethod(method);
 				}
 			}
 
@@ -138,6 +173,20 @@ namespace SlimDX.Generator
 							break;
 					}
 				}
+			}
+
+			return results;
+		}
+
+		static IEnumerable<EnumerationValueModel> ParseValues(JsonObject root)
+		{
+			var results = new List<EnumerationValueModel>();
+
+			JsonObject values;
+			if (root.TryGetValue("values", out values))
+			{
+				foreach (var value in values)
+					results.Add(new EnumerationValueModel((string)value["name"], (string)value["value"]));
 			}
 
 			return results;
