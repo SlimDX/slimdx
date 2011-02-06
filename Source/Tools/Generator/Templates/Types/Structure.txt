@@ -37,7 +37,7 @@ namespace $(@Namespace)
 		}
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
+	[System.Runtime.InteropServices.StructLayout(LayoutKind.Sequential)]
 	public unsafe struct $(Name)Marshaller
 	{
 	}
