@@ -32,14 +32,11 @@ namespace MiniTri11
 		static void Main()
 		{
 			IDXGIFactory factory = DXGI.CreateFactory();
-			/*Adapter adapter = null;
-			AdapterDescription description = default(AdapterDescription);
-
+			IDXGIAdapter adapter = null;
 			factory.EnumAdapters(0, out adapter);
-			adapter.GetDesc(out description);
 
-			adapter.Release();
-			factory.Release();*/
+			adapter.ReleaseReference();
+			factory.ReleaseReference();
 		}
 	}
 }

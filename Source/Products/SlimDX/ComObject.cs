@@ -53,7 +53,7 @@ namespace SlimDX
 		/// <summary>
 		/// Increments the reference count for an object. 
 		/// </summary>
-		int AddReference()
+		public int AddReference()
 		{
 			return Marshal.AddRef(NativePointer);
 		}
@@ -61,7 +61,7 @@ namespace SlimDX
 		/// <summary>
 		/// Decrements the reference count for an object.
 		/// </summary>
-		int ReleaseReference()
+		public int ReleaseReference()
 		{
 			return Marshal.Release(NativePointer);
 		}
