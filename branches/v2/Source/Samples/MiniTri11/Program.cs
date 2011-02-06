@@ -31,15 +31,15 @@ namespace MiniTri11
 	{
 		static void Main()
 		{
-			Factory factory = DXGI.CreateFactory();
-			Adapter adapter = null;
+			IDXGIFactory factory = DXGI.CreateFactory();
+			/*Adapter adapter = null;
 			AdapterDescription description = default(AdapterDescription);
 
 			factory.EnumAdapters(0, out adapter);
 			adapter.GetDesc(out description);
 
 			adapter.Release();
-			factory.Release();
+			factory.Release();*/
 		}
 	}
 }

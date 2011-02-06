@@ -18,13 +18,29 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
+using System.Runtime.InteropServices;
+
 namespace SlimDX
 {
 	/// <summary>
 	/// A COM object.
 	/// </summary>
-	public interface ComObject
+	public abstract class ComObject
 	{
+		#region Interface
+
+		protected ComObject(IntPtr nativePointer)
+		{
+			NativePointer = nativePointer;
+		}
+
+		public IntPtr NativePointer
+		{
+			get;
+			private set;
+		}
+
 		/// <summary>
 		/// Attempts to retrieve a reference to an interface of an object.
 		/// </summary>
@@ -37,11 +53,19 @@ namespace SlimDX
 		/// <summary>
 		/// Increments the reference count for an object. 
 		/// </summary>
-		//uint AddReference();
+		int AddReference()
+		{
+			return Marshal.AddRef(NativePointer);
+		}
 
 		/// <summary>
 		/// Decrements the reference count for an object.
 		/// </summary>
-		//uint Release();
+		int ReleaseReference()
+		{
+			return Marshal.Release(NativePointer);
+		}
+
+		#endregion
 	}
 }

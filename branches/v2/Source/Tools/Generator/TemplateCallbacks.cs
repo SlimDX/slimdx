@@ -75,7 +75,7 @@ namespace SlimDX.Generator
 			else
 				builder.Append("SlimDX.Trampoline.Call(");
 
-			builder.AppendFormat("System.IntPtr.Size * {0}, nativePointer", method.Index);
+			builder.AppendFormat("System.IntPtr.Size * {0}, NativePointer", method.Index);
 			foreach (var parameter in method.Parameters)
 			{
 				builder.Append(", ");
