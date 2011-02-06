@@ -26,17 +26,20 @@ namespace SlimDX.Generator
 	{
 		static TypeModel()
 		{
-			VoidModel = new TypeModel("void", typeof(void));
+			VoidModel = new TypeModel("void", "void", typeof(void));
 		}
 
-		public TypeModel(string key, Type marshallingType)
+		public TypeModel(string key, string name, Type marshallingType)
 		{
 			if (string.IsNullOrEmpty(key))
+				throw new ArgumentException("Value may not be null or empty", "key");
+			if (string.IsNullOrEmpty(name))
 				throw new ArgumentException("Value may not be null or empty", "key");
 			if (marshallingType == null)
 				throw new ArgumentNullException("marshallingType");
 
 			Key = key;
+			Name = name;
 			MarshallingType = marshallingType;
 		}
 
@@ -46,12 +49,10 @@ namespace SlimDX.Generator
 			private set;
 		}
 
-		public virtual string Name
+		public string Name
 		{
-			get
-			{
-				return Key;
-			}
+			get;
+			private set;
 		}
 
 		public Type MarshallingType

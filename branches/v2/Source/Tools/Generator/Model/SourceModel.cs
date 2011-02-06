@@ -164,7 +164,7 @@ namespace SlimDX.Generator.ObjectModel
 					continue;
 
 				TypeElement typeElement = null;
-				var typeName = baseData.Attribute("Name").Value;
+				var typeName = baseData.Attribute("key").Value;
 				var interfaceData = baseData.Element("DeclspecOrEmpty");
 				if (interfaceData != null)
 					typeElement = CreateInterface(typeName, baseData, interfaceData);
@@ -190,7 +190,7 @@ namespace SlimDX.Generator.ObjectModel
 		/// <summary>
 		/// Creates an interface element as a declaration.
 		/// </summary>
-		/// <param name="name">The element name.</param>
+		/// <param name="key">The element name.</param>
 		/// <param name="baseData">The base element data.</param>
 		/// <param name="interfaceData">The interface declaration data.</param>
 		/// <returns>The declared interface element.</returns>
@@ -199,7 +199,7 @@ namespace SlimDX.Generator.ObjectModel
 			var guidData = interfaceData.Element("DeclspecDef").Element("Declspec");
 			var guidValue = guidData.Attribute("Value").Value.Trim('"');
 			var inheritanceData = baseData.Element("Inheritance");
-			var parentTypeName = inheritanceData.Attribute("Name").Value;
+			var parentTypeName = inheritanceData.Attribute("key").Value;
 			var parentType = FindTypeByName(parentTypeName);
 			var metadata = metadataService.FindTypeMetadata(name);
 
@@ -219,7 +219,7 @@ namespace SlimDX.Generator.ObjectModel
 		/// <summary>
 		/// Creates a structure element as a declaration.
 		/// </summary>
-		/// <param name="name">The element name.</param>
+		/// <param name="key">The element name.</param>
 		/// <returns>The declared structure element.</returns>
 		TypeElement CreateStructure(string name)
 		{
@@ -230,7 +230,7 @@ namespace SlimDX.Generator.ObjectModel
 		/// <summary>
 		/// Creates an enumeration element as a declaration.
 		/// </summary>
-		/// <param name="name">The element name.</param>
+		/// <param name="key">The element name.</param>
 		/// <returns>The declared enumeration element.</returns>
 		TypeElement CreateEnumeration(string name)
 		{
@@ -268,7 +268,7 @@ namespace SlimDX.Generator.ObjectModel
 				foreach (var parameterData in signatureData.Descendants("Param"))
 					parameterElements.Add(ExtractVariable(parameterData));
 
-				var name = functionData.Attribute("Name").Value;
+				var name = functionData.Attribute("key").Value;
 				var qualifiedName = string.Format("{0}.{1}", element.NativeName, name);
 				var metadata = metadataService.FindFunctionMetadata(qualifiedName);
 				element.AddFunction(new FunctionElement(name, metadata, index++, returnType, parameterElements.ToArray()));
@@ -295,7 +295,7 @@ namespace SlimDX.Generator.ObjectModel
 		{
 			foreach (var itemData in data.Descendants("EnumVal"))
 			{
-				var nativeName = itemData.Attribute("Name").Value;
+				var nativeName = itemData.Attribute("key").Value;
 				var managedName = nameService.Apply(nativeName, NameCasingStyle.Pascal).RemovePrefix(element.ManagedName);
 				var value = itemData.Attribute("Value").Value;
 
@@ -341,7 +341,7 @@ namespace SlimDX.Generator.ObjectModel
 			var parameterType = FindTypeByName(parameterTypeName);
 			var usageData = parameterData.Element("ParamQualifier");
 			var usage = ExtractUsage(usageData);
-			var name = parameterInfoData.Attribute("Name").Value;
+			var name = parameterInfoData.Attribute("key").Value;
 			var dimension = 0;
 
 			if (parameterArrayData != null)
@@ -360,7 +360,7 @@ namespace SlimDX.Generator.ObjectModel
 		/// <returns>The type name.</returns>
 		string ExtractTypeName(XElement typeData)
 		{
-			var attribute = typeData.Attribute("Name");
+			var attribute = typeData.Attribute("key");
 			if (attribute != null)
 				return attribute.Value;
 

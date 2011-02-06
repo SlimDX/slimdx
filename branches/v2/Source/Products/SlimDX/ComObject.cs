@@ -23,7 +23,7 @@ namespace SlimDX
 	/// <summary>
 	/// A COM object.
 	/// </summary>
-	public interface IUnknown
+	public interface ComObject
 	{
 		/// <summary>
 		/// Attempts to retrieve a reference to an interface of an object.

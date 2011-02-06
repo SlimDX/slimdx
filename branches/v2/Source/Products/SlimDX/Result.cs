@@ -20,7 +20,7 @@
 
 namespace SlimDX
 {
-	public class HRESULT
+	public class Result
 	{
 	}
 }

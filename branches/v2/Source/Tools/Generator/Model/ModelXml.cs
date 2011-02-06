@@ -41,7 +41,7 @@ namespace SlimDX.Generator
 
 				var item = new JsonObject(JsonType.Object);
 
-				item["name"] = new JsonObject(nameElement.Value);
+				item["key"] = new JsonObject(nameElement.Value);
 				if (guidElement != null)
 					item["guid"] = new JsonObject(guidElement.Value.Trim('"'));
 

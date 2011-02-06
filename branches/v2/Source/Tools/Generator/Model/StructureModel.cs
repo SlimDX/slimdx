@@ -27,7 +27,7 @@ namespace SlimDX.Generator
 	class StructureModel : TypeModel
 	{
 		public StructureModel(string key)
-			: base(key, typeof(IntPtr))
+			: base(key, key, typeof(IntPtr))
 		{
 		}
 	}
