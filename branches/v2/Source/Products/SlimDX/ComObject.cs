@@ -23,7 +23,7 @@ namespace SlimDX
 	/// <summary>
 	/// A COM object.
 	/// </summary>
-	public interface ComObject
+	public interface IUnknown
 	{
 		/// <summary>
 		/// Attempts to retrieve a reference to an interface of an object.
@@ -32,16 +32,16 @@ namespace SlimDX
 		/// <returns>
 		/// A reference to an interface, if the requested interface is supported by the object. Otherwise null.
 		/// </returns>
-		T QueryInterface<T>() where T : class, ComObject;
+		//T QueryInterface<T>() where T : class, IUnknown;
 
 		/// <summary>
 		/// Increments the reference count for an object. 
 		/// </summary>
-		uint AddReference();
+		//uint AddReference();
 
 		/// <summary>
 		/// Decrements the reference count for an object.
 		/// </summary>
-		uint Release();
+		//uint Release();
 	}
 }

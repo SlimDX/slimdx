@@ -57,13 +57,10 @@ namespace SlimDX.Generator
 			{
 				if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
 				{
-					builder.AppendFormat("{0} = _{0};", parameter.Name);
+					builder.AppendFormat("{0} _{1} = default({0});", parameter.Type.MarshallingType.FullName, parameter.Name);
 					builder.AppendLine();
 				}
 			}
-
-			if (method.Type != TypeModel.VoidModel)
-				builder.Append("return _result;");
 
 			return builder.ToString();
 		}

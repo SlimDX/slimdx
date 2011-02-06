@@ -35,11 +35,11 @@ namespace SlimDX.DXGI
 		/// Creates a new <see cref="Factory"/> object.
 		/// </summary>
 		/// <returns>A new <see cref="Factory"/> object.</returns>
-		public static Factory CreateFactory()
+		public static IDXGIFactory CreateFactory()
 		{
 			IntPtr nativePointer = IntPtr.Zero;
 			CreateDXGIFactory(ref factoryGuid, out nativePointer);
-			return new Factory(nativePointer);
+			return new IDXGIFactory(nativePointer);
 		}
 
 		#endregion

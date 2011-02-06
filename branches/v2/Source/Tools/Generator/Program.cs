@@ -48,9 +48,13 @@ namespace SlimDX.Generator
 						break;
 					case "-generate":
 						if (options.Count == 0)
-							throw new InvalidOperationException("-generate requires one argument");
+							throw new InvalidOperationException("-generate requires at least one argument");
 						var modelFile = options.Dequeue();
-						RunGenerator(modelFile);
+						var outputDirectory = string.Empty;
+						if (options.Count > 0)
+							outputDirectory = options.Dequeue();
+
+						RunGenerator(modelFile, outputDirectory);
 						break;
 				}
 			}
@@ -91,12 +95,10 @@ namespace SlimDX.Generator
 			File.WriteAllText("test.json", json.ToJson());
 		}
 
-		static void RunGenerator(string modelFile)
+		static void RunGenerator(string modelFile, string outputDirectory)
 		{
-			var outputDirectory = Path.GetDirectoryName(Path.GetFullPath(modelFile));
-
 			var json = File.ReadAllText(modelFile);
-			var api = ModelJson.Parse(JsonObject.FromJson(json));
+			var api = ModelJson.Parse(JsonObject.FromJson(json), new[] { Path.GetDirectoryName(Path.GetFullPath(modelFile)) });
 
 			var generatorDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			var defaultMetadataDirectory = Path.Combine(generatorDirectory, @"Resources\Metadata");
