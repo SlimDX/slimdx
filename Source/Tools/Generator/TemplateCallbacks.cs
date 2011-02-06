@@ -99,7 +99,10 @@ namespace SlimDX.Generator
 			{
 				if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
 				{
-					builder.AppendFormat("{0} = _{0};", parameter.Name);
+					if (parameter.Type is InterfaceModel)
+						builder.AppendFormat("{0} = new {1}(_{0});", parameter.Name, parameter.Type.Name);
+					else
+						builder.AppendFormat("{0} = _{0};", parameter.Name);
 					builder.AppendLine();
 				}
 			}
