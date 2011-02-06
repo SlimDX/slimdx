@@ -18,29 +18,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace $(@Namespace)
+using System;
+
+namespace SlimDX.Generator
 {
-	public class $(Name)
+	class StructureMemberModel
 	{
-		internal unsafe static $(Name) FromMarshaller($(Name)Marshaller marshaller)
+		public StructureMemberModel(string name, TypeModel type)
 		{
-			$(Name) result = new $(Name)();
-			return result;
+			if (string.IsNullOrEmpty(name))
+				throw new ArgumentException("Value may not be null or empty.", "key");
+			if (type == null)
+				throw new ArgumentNullException("type");
+
+			Name = name;
+			Type = type;
 		}
 
-		internal unsafe static $(Name)Marshaller ToMarshaller($(Name) managed)
+		public string Name
 		{
-			return default($(Name)Marshaller);
+			get;
+			private set;
 		}
 
-		private $(Name)() {
+		public TypeModel Type
+		{
+			get;
+			private set;
 		}
-
-		$(Members:StructureMember)
-	}
-
-	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
-	unsafe struct $(Name)Marshaller
-	{
 	}
 }

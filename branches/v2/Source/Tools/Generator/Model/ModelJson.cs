@@ -73,7 +73,7 @@ namespace SlimDX.Generator
 				{
 					var key = (string)item["key"];
 					var type = Type.GetType((string)item["target"]);
-					var name = item.ContainsKey("name") ? (string)item["name"] : key;
+					var name = item.ContainsKey("name") ? (string)item["name"] : type.FullName;
 					var model = new TypeModel(key, name, type);
 					types[model.Key] = model;
 				}
@@ -100,8 +100,8 @@ namespace SlimDX.Generator
 					var model = new StructureModel(name);
 					types[model.Key] = model;
 
-					//foreach (var method in ParseMethods(item, types))
-					//	model.AddMethod(method);
+					foreach (var value in ParseFields(item, types))
+						model.AddMember(value);
 				}
 			}
 
@@ -182,6 +182,26 @@ namespace SlimDX.Generator
 							results |= ParameterModelFlags.IsOutput;
 							break;
 					}
+				}
+			}
+
+			return results;
+		}
+
+		static IEnumerable<StructureMemberModel> ParseFields(JsonObject root, Dictionary<string, TypeModel> types)
+		{
+			var results = new List<StructureMemberModel>();
+
+			JsonObject parameters;
+			if (root.TryGetValue("members", out parameters))
+			{
+				foreach (var parameter in parameters)
+				{
+					var name = (string)parameter["key"];
+					var type = types[(string)parameter["type"]];
+					var model = new StructureMemberModel(name, type);
+
+					results.Add(model);
 				}
 			}
 

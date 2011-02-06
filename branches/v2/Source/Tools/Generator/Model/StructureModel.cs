@@ -30,5 +30,20 @@ namespace SlimDX.Generator
 			: base(key, key, typeof(IntPtr))
 		{
 		}
+
+		public ReadOnlyCollection<StructureMemberModel> Members
+		{
+			get
+			{
+				return members.AsReadOnly();
+			}
+		}
+
+		public void AddMember(StructureMemberModel parameter)
+		{
+			members.Add(parameter);
+		}
+
+		List<StructureMemberModel> members = new List<StructureMemberModel>();
 	}
 }
