@@ -134,7 +134,8 @@ namespace SlimDX.Generator
 				{
 					var name = (string)method["key"];
 					var type = types[(string)method["type"]];
-					var model = new MethodModel(name, type);
+					var index = (int)method["index"];
+					var model = new MethodModel(name, type, index);
 					foreach (var parameter in ParseParameters(method, types))
 						model.AddParameter(parameter);
 
