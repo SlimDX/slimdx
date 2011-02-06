@@ -19,60 +19,32 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace SlimDX.Generator
 {
-	class ApiModel
+	class EnumerationValueModel
 	{
-		public ReadOnlyCollection<EnumerationModel> Enumerations
+		public EnumerationValueModel(string name, string value)
 		{
-			get
-			{
-				return enumerations.AsReadOnly();
-			}
+			if (string.IsNullOrEmpty(name))
+				throw new ArgumentException("Value may not be null or empty.", "name");
+			if (string.IsNullOrEmpty(value))
+				throw new ArgumentException("Value may not be null or empty.", "value");
+
+			Name = name;
+			Value = value;
 		}
 
-		public ReadOnlyCollection<StructureModel> Structures
+		public string Name
 		{
-			get
-			{
-				return structures.AsReadOnly();
-			}
+			get;
+			private set;
 		}
 
-		public ReadOnlyCollection<InterfaceModel> Interfaces
+		public string Value
 		{
-			get
-			{
-				return interfaces.AsReadOnly();
-			}
+			get;
+			private set;
 		}
-
-		public void AddEnumeration(EnumerationModel model)
-		{
-			if (model == null)
-				throw new ArgumentNullException("model");
-			enumerations.Add(model);
-		}
-
-		public void AddStructure(StructureModel model)
-		{
-			if (model == null)
-				throw new ArgumentNullException("model");
-			structures.Add(model);
-		}
-
-		public void AddInterface(InterfaceModel model)
-		{
-			if (model == null)
-				throw new ArgumentNullException("model");
-			interfaces.Add(model);
-		}
-
-		List<EnumerationModel> enumerations = new List<EnumerationModel>();
-		List<StructureModel> structures = new List<StructureModel>();
-		List<InterfaceModel> interfaces = new List<InterfaceModel>();
 	}
 }

@@ -26,6 +26,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using SlimDX.Generator.Parsing;
+using System.Collections;
 
 namespace SlimDX.Generator
 {
@@ -107,13 +108,9 @@ namespace SlimDX.Generator
 			if (!Directory.Exists(outputDirectory))
 				Directory.CreateDirectory(outputDirectory);
 
-			foreach (var item in api.Interfaces)
-			{
-				var outputPath = Path.Combine(outputDirectory, item.Name + ".cs");
-				if (File.Exists(outputPath))
-					File.Delete(outputPath);
-				File.WriteAllText(outputPath, templateEngine.ApplyByName("Interface", item));
-			}
+			ApplyTemplate(api.Enumerations, outputDirectory, templateEngine, "Enumeration");
+			ApplyTemplate(api.Structures, outputDirectory, templateEngine, "Structure");
+			ApplyTemplate(api.Interfaces, outputDirectory, templateEngine, "Interface");
 
 			TrampolineAssemblyBuilder trampolineBuilder = new TrampolineAssemblyBuilder();
 			foreach (var interfaceModel in api.Interfaces)
@@ -158,6 +155,17 @@ namespace SlimDX.Generator
 			}
 
 			File.WriteAllText(preprocessedFile, output.ToString());
+		}
+
+		static void ApplyTemplate(IEnumerable<TypeModel> items, string outputDirectory, TemplateEngine templateEngine, string templateName)
+		{
+			foreach (var item in items)
+			{
+				var outputPath = Path.Combine(outputDirectory, item.Name + ".cs");
+				if (File.Exists(outputPath))
+					File.Delete(outputPath);
+				File.WriteAllText(outputPath, templateEngine.ApplyByName(templateName, item));
+			}
 		}
 	}
 }

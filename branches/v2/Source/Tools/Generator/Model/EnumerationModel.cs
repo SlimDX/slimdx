@@ -24,55 +24,28 @@ using System.Collections.ObjectModel;
 
 namespace SlimDX.Generator
 {
-	class ApiModel
+	class EnumerationModel : TypeModel
 	{
-		public ReadOnlyCollection<EnumerationModel> Enumerations
+		public EnumerationModel(string key)
+			: base(key, typeof(int))
+		{
+		}
+
+		public ReadOnlyCollection<EnumerationValueModel> Values
 		{
 			get
 			{
-				return enumerations.AsReadOnly();
+				return values.AsReadOnly();
 			}
 		}
 
-		public ReadOnlyCollection<StructureModel> Structures
-		{
-			get
-			{
-				return structures.AsReadOnly();
-			}
-		}
-
-		public ReadOnlyCollection<InterfaceModel> Interfaces
-		{
-			get
-			{
-				return interfaces.AsReadOnly();
-			}
-		}
-
-		public void AddEnumeration(EnumerationModel model)
+		public void AddValue(EnumerationValueModel model)
 		{
 			if (model == null)
 				throw new ArgumentNullException("model");
-			enumerations.Add(model);
+			values.Add(model);
 		}
 
-		public void AddStructure(StructureModel model)
-		{
-			if (model == null)
-				throw new ArgumentNullException("model");
-			structures.Add(model);
-		}
-
-		public void AddInterface(InterfaceModel model)
-		{
-			if (model == null)
-				throw new ArgumentNullException("model");
-			interfaces.Add(model);
-		}
-
-		List<EnumerationModel> enumerations = new List<EnumerationModel>();
-		List<StructureModel> structures = new List<StructureModel>();
-		List<InterfaceModel> interfaces = new List<InterfaceModel>();
+		List<EnumerationValueModel> values = new List<EnumerationValueModel>();
 	}
 }

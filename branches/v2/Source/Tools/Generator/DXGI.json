@@ -1,6 +1,191 @@
 ﻿{
 	"dependencies": [ "Common.json" ],
 
+	"enumerations": [
+			{
+			"name": "DXGI_FORMAT",
+			"values": [
+				{ "name": "DXGI_FORMAT_UNKNOWN", "value": "0" },
+				{ "name": "DXGI_FORMAT_R32G32B32A32_TYPELESS", "value": "1" },
+				{ "name": "DXGI_FORMAT_R32G32B32A32_FLOAT", "value": "2" },
+				{ "name": "DXGI_FORMAT_R32G32B32A32_UINT", "value": "3" },
+				{ "name": "DXGI_FORMAT_R32G32B32A32_SINT", "value": "4" },
+				{ "name": "DXGI_FORMAT_R32G32B32_TYPELESS", "value": "5" },
+				{ "name": "DXGI_FORMAT_R32G32B32_FLOAT", "value": "6" },
+				{ "name": "DXGI_FORMAT_R32G32B32_UINT", "value": "7" },
+				{ "name": "DXGI_FORMAT_R32G32B32_SINT", "value": "8" },
+				{ "name": "DXGI_FORMAT_R16G16B16A16_TYPELESS", "value": "9" },
+				{ "name": "DXGI_FORMAT_R16G16B16A16_FLOAT", "value": "10" },
+				{ "name": "DXGI_FORMAT_R16G16B16A16_UNORM", "value": "11" },
+				{ "name": "DXGI_FORMAT_R16G16B16A16_UINT", "value": "12" },
+				{ "name": "DXGI_FORMAT_R16G16B16A16_SNORM", "value": "13" },
+				{ "name": "DXGI_FORMAT_R16G16B16A16_SINT", "value": "14" },
+				{ "name": "DXGI_FORMAT_R32G32_TYPELESS", "value": "15" },
+				{ "name": "DXGI_FORMAT_R32G32_FLOAT", "value": "16" },
+				{ "name": "DXGI_FORMAT_R32G32_UINT", "value": "17" },
+				{ "name": "DXGI_FORMAT_R32G32_SINT", "value": "18" },
+				{ "name": "DXGI_FORMAT_R32G8X24_TYPELESS", "value": "19" },
+				{ "name": "DXGI_FORMAT_D32_FLOAT_S8X24_UINT", "value": "20" },
+				{ "name": "DXGI_FORMAT_R32_FLOAT_X8X24_TYPELESS", "value": "21" },
+				{ "name": "DXGI_FORMAT_X32_TYPELESS_G8X24_UINT", "value": "22" },
+				{ "name": "DXGI_FORMAT_R10G10B10A2_TYPELESS", "value": "23" },
+				{ "name": "DXGI_FORMAT_R10G10B10A2_UNORM", "value": "24" },
+				{ "name": "DXGI_FORMAT_R10G10B10A2_UINT", "value": "25" },
+				{ "name": "DXGI_FORMAT_R11G11B10_FLOAT", "value": "26" },
+				{ "name": "DXGI_FORMAT_R8G8B8A8_TYPELESS", "value": "27" },
+				{ "name": "DXGI_FORMAT_R8G8B8A8_UNORM", "value": "28" },
+				{ "name": "DXGI_FORMAT_R8G8B8A8_UNORM_SRGB", "value": "29" },
+				{ "name": "DXGI_FORMAT_R8G8B8A8_UINT", "value": "30" },
+				{ "name": "DXGI_FORMAT_R8G8B8A8_SNORM", "value": "31" },
+				{ "name": "DXGI_FORMAT_R8G8B8A8_SINT", "value": "32" },
+				{ "name": "DXGI_FORMAT_R16G16_TYPELESS", "value": "33" },
+				{ "name": "DXGI_FORMAT_R16G16_FLOAT", "value": "34" },
+				{ "name": "DXGI_FORMAT_R16G16_UNORM", "value": "35" },
+				{ "name": "DXGI_FORMAT_R16G16_UINT", "value": "36" },
+				{ "name": "DXGI_FORMAT_R16G16_SNORM", "value": "37" },
+				{ "name": "DXGI_FORMAT_R16G16_SINT", "value": "38" },
+				{ "name": "DXGI_FORMAT_R32_TYPELESS", "value": "39" },
+				{ "name": "DXGI_FORMAT_D32_FLOAT", "value": "40" },
+				{ "name": "DXGI_FORMAT_R32_FLOAT", "value": "41" },
+				{ "name": "DXGI_FORMAT_R32_UINT", "value": "42" },
+				{ "name": "DXGI_FORMAT_R32_SINT", "value": "43" },
+				{ "name": "DXGI_FORMAT_R24G8_TYPELESS", "value": "44" },
+				{ "name": "DXGI_FORMAT_D24_UNORM_S8_UINT", "value": "45" },
+				{ "name": "DXGI_FORMAT_R24_UNORM_X8_TYPELESS", "value": "46" },
+				{ "name": "DXGI_FORMAT_X24_TYPELESS_G8_UINT", "value": "47" },
+				{ "name": "DXGI_FORMAT_R8G8_TYPELESS", "value": "48" },
+				{ "name": "DXGI_FORMAT_R8G8_UNORM", "value": "49" },
+				{ "name": "DXGI_FORMAT_R8G8_UINT", "value": "50" },
+				{ "name": "DXGI_FORMAT_R8G8_SNORM", "value": "51" },
+				{ "name": "DXGI_FORMAT_R8G8_SINT", "value": "52" },
+				{ "name": "DXGI_FORMAT_R16_TYPELESS", "value": "53" },
+				{ "name": "DXGI_FORMAT_R16_FLOAT", "value": "54" },
+				{ "name": "DXGI_FORMAT_D16_UNORM", "value": "55" },
+				{ "name": "DXGI_FORMAT_R16_UNORM", "value": "56" },
+				{ "name": "DXGI_FORMAT_R16_UINT", "value": "57" },
+				{ "name": "DXGI_FORMAT_R16_SNORM", "value": "58" },
+				{ "name": "DXGI_FORMAT_R16_SINT", "value": "59" },
+				{ "name": "DXGI_FORMAT_R8_TYPELESS", "value": "60" },
+				{ "name": "DXGI_FORMAT_R8_UNORM", "value": "61" },
+				{ "name": "DXGI_FORMAT_R8_UINT", "value": "62" },
+				{ "name": "DXGI_FORMAT_R8_SNORM", "value": "63" },
+				{ "name": "DXGI_FORMAT_R8_SINT", "value": "64" },
+				{ "name": "DXGI_FORMAT_A8_UNORM", "value": "65" },
+				{ "name": "DXGI_FORMAT_R1_UNORM", "value": "66" },
+				{ "name": "DXGI_FORMAT_R9G9B9E5_SHAREDEXP", "value": "67" },
+				{ "name": "DXGI_FORMAT_R8G8_B8G8_UNORM", "value": "68" },
+				{ "name": "DXGI_FORMAT_G8R8_G8B8_UNORM", "value": "69" },
+				{ "name": "DXGI_FORMAT_BC1_TYPELESS", "value": "70" },
+				{ "name": "DXGI_FORMAT_BC1_UNORM", "value": "71" },
+				{ "name": "DXGI_FORMAT_BC1_UNORM_SRGB", "value": "72" },
+				{ "name": "DXGI_FORMAT_BC2_TYPELESS", "value": "73" },
+				{ "name": "DXGI_FORMAT_BC2_UNORM", "value": "74" },
+				{ "name": "DXGI_FORMAT_BC2_UNORM_SRGB", "value": "75" },
+				{ "name": "DXGI_FORMAT_BC3_TYPELESS", "value": "76" },
+				{ "name": "DXGI_FORMAT_BC3_UNORM", "value": "77" },
+				{ "name": "DXGI_FORMAT_BC3_UNORM_SRGB", "value": "78" },
+				{ "name": "DXGI_FORMAT_BC4_TYPELESS", "value": "79" },
+				{ "name": "DXGI_FORMAT_BC4_UNORM", "value": "80" },
+				{ "name": "DXGI_FORMAT_BC4_SNORM", "value": "81" },
+				{ "name": "DXGI_FORMAT_BC5_TYPELESS", "value": "82" },
+				{ "name": "DXGI_FORMAT_BC5_UNORM", "value": "83" },
+				{ "name": "DXGI_FORMAT_BC5_SNORM", "value": "84" },
+				{ "name": "DXGI_FORMAT_B5G6R5_UNORM", "value": "85" },
+				{ "name": "DXGI_FORMAT_B5G5R5A1_UNORM", "value": "86" },
+				{ "name": "DXGI_FORMAT_B8G8R8A8_UNORM", "value": "87" },
+				{ "name": "DXGI_FORMAT_B8G8R8X8_UNORM", "value": "88" },
+				{ "name": "DXGI_FORMAT_R10G10B10_XR_BIAS_A2_UNORM", "value": "89" },
+				{ "name": "DXGI_FORMAT_B8G8R8A8_TYPELESS", "value": "90" },
+				{ "name": "DXGI_FORMAT_B8G8R8A8_UNORM_SRGB", "value": "91" },
+				{ "name": "DXGI_FORMAT_B8G8R8X8_TYPELESS", "value": "92" },
+				{ "name": "DXGI_FORMAT_B8G8R8X8_UNORM_SRGB", "value": "93" },
+				{ "name": "DXGI_FORMAT_BC6H_TYPELESS", "value": "94" },
+				{ "name": "DXGI_FORMAT_BC6H_UF16", "value": "95" },
+				{ "name": "DXGI_FORMAT_BC6H_SF16", "value": "96" },
+				{ "name": "DXGI_FORMAT_BC7_TYPELESS", "value": "97" },
+				{ "name": "DXGI_FORMAT_BC7_UNORM", "value": "98" },
+				{ "name": "DXGI_FORMAT_BC7_UNORM_SRGB", "value": "99" }
+			]
+		},
+		{
+			"name": "DXGI_MODE_SCALING",
+			"values": [
+				{ "name": "DXGI_MODE_SCALING_UNSPECIFIED", "value": "0" },
+				{ "name": "DXGI_MODE_SCALING_CENTERED", "value": "1" },
+				{ "name": "DXGI_MODE_SCALING_STRETCHED", "value": "2" }
+			]
+		},
+		{
+			"name": "DXGI_MODE_SCANLINE_ORDER",
+			"values": [
+				{ "name": "DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED", "value": "0" },
+				{ "name": "DXGI_MODE_SCANLINE_ORDER_PROGRESSIVE", "value": "1" },
+				{ "name": "DXGI_MODE_SCANLINE_ORDER_UPPER_FIELD_FIRST", "value": "2" },
+				{ "name": "DXGI_MODE_SCANLINE_ORDER_LOWER_FIELD_FIRST", "value": "3" }
+			]
+		},
+		{
+			"name": "DXGI_SWAP_EFFECT",
+			"values": [
+				{ "name": "DXGI_SWAP_EFFECT_DISCARD", "value": "0" },
+				{ "name": "DXGI_SWAP_EFFECT_SEQUENTIAL", "value": "1" }
+			]
+		},
+		{
+			"name": "DXGI_USAGE",
+			"values": [
+				{ "name": "DXGI_USAGE_BACK_BUFFER", "value": "( 1L << (2 + 4) )" },
+				{ "name": "DXGI_USAGE_DISCARD_ON_PRESENT", "value": "( 1L << (5 + 4) )" },
+				{ "name": "DXGI_USAGE_READ_ONLY", "value": "( 1L << (4 + 4) )" },
+				{ "name": "DXGI_USAGE_RENDER_TARGET_OUTPUT", "value": "( 1L << (1 + 4) )" },
+				{ "name": "DXGI_USAGE_SHADER_INPUT", "value": "( 1L << (0 + 4) )" },
+				{ "name": "DXGI_USAGE_SHARED", "value": "( 1L << (3 + 4) )" },
+				{ "name": "DXGI_USAGE_UNORDERED_ACCESS", "value": "( 1L << (6 + 4) )" }
+			]
+		}
+	],
+
+	"structures": [
+		{
+			"name": "DXGI_SAMPLE_DESC",
+			"members": [
+				{ "name": "Count", "type": "UINT" },
+				{ "name": "Quality", "type": "UINT" }
+			]
+		},
+		{
+			"name": "DXGI_RATIONAL",
+			"members": [
+				{ "name": "Numerator", "type": "UINT" },
+				{ "name": "Denominator", "type": "UINT" }
+			]
+		},
+		{
+			"name": "DXGI_MODE_DESC",
+			"members": [
+				{ "name": "Width", "type": "UINT" },
+				{ "name": "Height", "type": "UINT" },
+				{ "name": "RefreshRate", "type": "UINT" },
+				{ "name": "Format", "type": "UINT" },
+				{ "name": "ScanlineOrdering", "type": "UINT" },
+				{ "name": "Scaling", "type": "UINT" }
+			]
+		},
+		{
+			"name": "DXGI_SWAP_CHAIN_DESC",
+			"members": [
+				{ "name": "BufferDesc", "type": "DXGI_MODE_DESC" },
+				{ "name": "SampleDesc", "type": "DXGI_SAMPLE_DESC" },
+				{ "name": "BufferUsage", "type": "DXGI_USAGE" },
+				{ "name": "BufferCount", "type": "UINT" },
+				{ "name": "OutputWindow", "type": "HWND" },
+				{ "name": "Windowed", "type": "BOOL" },
+				{ "name": "SwapEffect", "type": "DXGI_SWAP_EFFECT" },
+				{ "name": "Flags", "type": "UINT" }
+			]
+		}
+	],
+
 	"interfaces": [
 		{
 			"name": "IDXGIAdapter",

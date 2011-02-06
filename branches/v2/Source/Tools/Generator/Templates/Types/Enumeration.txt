@@ -20,25 +20,8 @@
 
 namespace $(@Namespace)
 {
-	public class $(Name)
+	public enum $(Name)
 	{
-		internal unsafe static $(Name) FromMarshaller($(Name)Marshaller marshaller)
-		{
-			$(Name) result = new $(Name)();
-			return result;
-		}
-
-		internal unsafe static $(Name)Marshaller ToMarshaller($(Name) managed)
-		{
-			return default($(Name)Marshaller);
-		}
-
-		private $(Name)() {
-		}
-	}
-
-	[StructLayout(LayoutKind.Sequential)]
-	public unsafe struct $(Name)Marshaller
-	{
+		$(Values:EnumerationValue)
 	}
 }
