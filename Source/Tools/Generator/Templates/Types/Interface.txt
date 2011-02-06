@@ -20,7 +20,7 @@
 
 namespace $(@Namespace)
 {
-	[System.Guid("$(Guid)")]
+	[System.Runtime.InteropServices.Guid("$(Guid)")]
 	public class $(Name) : $(Parent.Name)
 	{
 		internal $(Name)(System.IntPtr nativePointer)
