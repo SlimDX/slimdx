@@ -80,7 +80,7 @@ namespace SlimDX.Generator
 			{
 				builder.Append(", ");
 				if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
-					builder.AppendFormat("out _{0}", parameter.Name);
+					builder.AppendFormat("ref _{0}", parameter.Name);
 				else
 					builder.AppendFormat(parameter.Name);
 
