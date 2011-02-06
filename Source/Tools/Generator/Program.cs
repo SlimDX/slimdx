@@ -123,6 +123,8 @@ namespace SlimDX.Generator
 					foreach (var parameterModel in methodModel.Parameters)
 					{
 						TrampolineParameterFlags flags = TrampolineParameterFlags.Default;
+						if (parameterModel.Flags.HasFlag(ParameterModelFlags.IsOutput))
+							flags |= TrampolineParameterFlags.Reference;
 						parameters.Add(new TrampolineParameter(parameterModel.Type.MarshallingType, flags));
 					}
 
