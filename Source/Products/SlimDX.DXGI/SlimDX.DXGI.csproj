@@ -39,9 +39,8 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SlimDX.Trampoline, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\SlimDX.Trampoline.dll</HintPath>
+    <Reference Include="SlimDX.DXGI.Trampoline">
+      <HintPath>Generated\SlimDX.DXGI.Trampoline.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,6 +52,17 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="DXGI.cs" />
+    <Compile Include="Generated\DXGI_FORMAT.cs" />
+    <Compile Include="Generated\DXGI_MODE_DESC.cs" />
+    <Compile Include="Generated\DXGI_MODE_SCALING.cs" />
+    <Compile Include="Generated\DXGI_MODE_SCANLINE_ORDER.cs" />
+    <Compile Include="Generated\DXGI_RATIONAL.cs" />
+    <Compile Include="Generated\DXGI_SAMPLE_DESC.cs" />
+    <Compile Include="Generated\DXGI_SWAP_CHAIN_DESC.cs" />
+    <Compile Include="Generated\DXGI_SWAP_EFFECT.cs" />
+    <Compile Include="Generated\DXGI_USAGE.cs" />
+    <Compile Include="Generated\IDXGIAdapter.cs" />
+    <Compile Include="Generated\IDXGIFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -63,13 +73,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DXGI.Generator.cfg" />
+    <None Include="DXGI.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Common.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Generated\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>"$(SolutionDir)\Source\Tools\Generator\bin\$(ConfigurationName)\SlimDX.Generator.exe" "$(ProjectDir)\DXGI.Generator.cfg"</PreBuildEvent>
+    <PreBuildEvent>"$(SolutionDir)\Source\Tools\Generator\bin\$(ConfigurationName)\SlimDX.Generator.exe" -generate "$(ProjectDir)\DXGI.json" "$(ProjectDir)\Generated"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -20,17 +20,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Json;
 using System.IO;
+using System.Json;
 
 namespace SlimDX.Generator
 {
 	static class ModelJson
 	{
-		public static ApiModel Parse(JsonObject root)
+		public static ApiModel Parse(JsonObject root, IEnumerable<string> searchPaths)
 		{
 			var result = new ApiModel();
-			foreach (var type in ParseTypes(root))
+			foreach (var type in ParseTypes(root, searchPaths))
 			{
 				if (type.Value is EnumerationModel)
 					result.AddEnumeration((EnumerationModel)type.Value);
@@ -38,13 +38,12 @@ namespace SlimDX.Generator
 					result.AddStructure((StructureModel)type.Value);
 				else if (type.Value is InterfaceModel)
 					result.AddInterface((InterfaceModel)type.Value);
-
 			}
 
 			return result;
 		}
 
-		static Dictionary<string, TypeModel> ParseTypes(JsonObject root)
+		static Dictionary<string, TypeModel> ParseTypes(JsonObject root, IEnumerable<string> searchPaths)
 		{
 			var types = new Dictionary<string, TypeModel>();
 
@@ -53,9 +52,18 @@ namespace SlimDX.Generator
 			{
 				foreach (var item in items)
 				{
-					var dependency = JsonObject.FromJson(File.ReadAllText((string)item));
-					foreach (var type in ParseTypes(dependency))
-						types[type.Key] = type.Value;
+					var dependencyFile = (string)item;
+					foreach (var searchPath in searchPaths)
+					{
+						var dependencyPath = Path.Combine(searchPath, dependencyFile);
+						if (File.Exists(dependencyPath))
+						{
+							var dependency = JsonObject.FromJson(File.ReadAllText(dependencyPath));
+							foreach (var type in ParseTypes(dependency, searchPaths))
+								types[type.Key] = type.Value;
+							break;
+						}
+					}
 				}
 			}
 
