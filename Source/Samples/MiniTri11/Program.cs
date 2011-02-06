@@ -31,9 +31,39 @@ namespace MiniTri11
 	{
 		static void Main()
 		{
+			Form form = new Form();
+
 			IDXGIFactory factory = DXGI.CreateFactory();
 			IDXGIAdapter adapter = null;
 			factory.EnumAdapters(0, out adapter);
+
+			DXGI_SWAP_CHAIN_DESC swapChainDescription = new DXGI_SWAP_CHAIN_DESC
+			{
+				BufferCount = 1,
+				BufferDesc = new DXGI_MODE_DESC
+				{
+					Format = DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM,
+					Height = 100,
+					RefreshRate = new DXGI_RATIONAL
+					{
+						Denominator = 1,
+						Numerator = 60
+					},
+					Scaling = DXGI_MODE_SCALING.DXGI_MODE_SCALING_UNSPECIFIED,
+					ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER.DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED,
+					Width = 100
+				},
+				BufferUsage = DXGI_USAGE.DXGI_USAGE_BACK_BUFFER,
+				Flags = 0,
+				OutputWindow = form.Handle,
+				SampleDesc = new DXGI_SAMPLE_DESC
+				{
+					Count = 1,
+					Quality = 0
+				},
+				SwapEffect = DXGI_SWAP_EFFECT.DXGI_SWAP_EFFECT_DISCARD,
+				Windowed = true
+			};
 
 			adapter.ReleaseReference();
 			factory.ReleaseReference();

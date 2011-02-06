@@ -165,10 +165,10 @@
 			"members": [
 				{ "key": "Width", "type": "UINT" },
 				{ "key": "Height", "type": "UINT" },
-				{ "key": "RefreshRate", "type": "UINT" },
-				{ "key": "Format", "type": "UINT" },
-				{ "key": "ScanlineOrdering", "type": "UINT" },
-				{ "key": "Scaling", "type": "UINT" }
+				{ "key": "RefreshRate", "type": "DXGI_RATIONAL" },
+				{ "key": "Format", "type": "DXGI_FORMAT" },
+				{ "key": "ScanlineOrdering", "type": "DXGI_MODE_SCANLINE_ORDER" },
+				{ "key": "Scaling", "type": "DXGI_MODE_SCALING" }
 			]
 		},
 		{
