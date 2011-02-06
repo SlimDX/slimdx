@@ -25,10 +25,11 @@ namespace SlimDX.Generator
 {
 	class MethodModel
 	{
-		public MethodModel(string name, TypeModel returnType)
+		public MethodModel(string name, TypeModel returnType, int index)
 		{
 			Name = name;
 			Type = returnType;
+			Index = index;
 		}
 
 		public string Name
@@ -38,6 +39,12 @@ namespace SlimDX.Generator
 		}
 
 		public TypeModel Type
+		{
+			get;
+			private set;
+		}
+
+		public int Index
 		{
 			get;
 			private set;

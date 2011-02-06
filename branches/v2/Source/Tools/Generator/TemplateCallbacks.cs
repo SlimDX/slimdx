@@ -75,16 +75,15 @@ namespace SlimDX.Generator
 			else
 				builder.Append("SlimDX.Trampoline.Call(");
 
-			for (var parameterIndex = 0; parameterIndex < method.Parameters.Count; ++parameterIndex)
+			builder.AppendFormat("System.IntPtr.Size * {0}, nativePointer", method.Index);
+			foreach (var parameter in method.Parameters)
 			{
-				var parameter = method.Parameters[parameterIndex];
+				builder.Append(", ");
 				if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
 					builder.AppendFormat("out _{0}", parameter.Name);
 				else
 					builder.AppendFormat(parameter.Name);
 
-				if (parameterIndex < method.Parameters.Count - 1)
-					builder.Append(", ");
 			}
 
 			builder.Append(");");
