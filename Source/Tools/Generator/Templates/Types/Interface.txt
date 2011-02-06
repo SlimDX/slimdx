@@ -24,12 +24,10 @@ namespace $(@Namespace)
 	public class $(Name) : $(Parent.Name)
 	{
 		internal $(Name)(System.IntPtr nativePointer)
+			: base(nativePointer)
 		{
-			this.nativePointer = nativePointer;
 		}
 
 		$(Methods:InterfaceMethod)
-
-		System.IntPtr nativePointer;
 	}
 }
