@@ -26,7 +26,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using SlimDX.Generator.Parsing;
-using System.Collections;
 
 namespace SlimDX.Generator
 {

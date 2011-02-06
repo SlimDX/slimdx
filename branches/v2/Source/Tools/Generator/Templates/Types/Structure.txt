@@ -33,7 +33,7 @@ namespace $(@Namespace)
 			return default($(Name)Marshaller);
 		}
 
-		private $(Name)() {
+		public $(Name)() {
 		}
 
 		$(Members:StructureMember)
