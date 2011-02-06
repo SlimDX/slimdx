@@ -71,9 +71,10 @@ namespace SlimDX.Generator
 			{
 				foreach (var item in items)
 				{
-					var name = (string)item["key"];
+					var key = (string)item["key"];
 					var type = Type.GetType((string)item["target"]);
-					var model = new TypeModel(name, name, type);
+					var name = item.ContainsKey("name") ? (string)item["name"] : key;
+					var model = new TypeModel(key, name, type);
 					types[model.Key] = model;
 				}
 			}

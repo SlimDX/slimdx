@@ -52,6 +52,17 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="DXGI.cs" />
+    <Compile Include="Generated\DXGI_FORMAT.cs" />
+    <Compile Include="Generated\DXGI_MODE_DESC.cs" />
+    <Compile Include="Generated\DXGI_MODE_SCALING.cs" />
+    <Compile Include="Generated\DXGI_MODE_SCANLINE_ORDER.cs" />
+    <Compile Include="Generated\DXGI_RATIONAL.cs" />
+    <Compile Include="Generated\DXGI_SAMPLE_DESC.cs" />
+    <Compile Include="Generated\DXGI_SWAP_CHAIN_DESC.cs" />
+    <Compile Include="Generated\DXGI_SWAP_EFFECT.cs" />
+    <Compile Include="Generated\DXGI_USAGE.cs" />
+    <Compile Include="Generated\IDXGIAdapter.cs" />
+    <Compile Include="Generated\IDXGIFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,9 +80,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Generated\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>"$(SolutionDir)\Source\Tools\Generator\bin\$(ConfigurationName)\SlimDX.Generator.exe" -generate "$(ProjectDir)\DXGI.json" "$(ProjectDir)\Generated"</PreBuildEvent>
