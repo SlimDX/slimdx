@@ -261,7 +261,7 @@ namespace SlimDX.Generator
 		/// <summary>
 		/// Gets the value of the indicated property from the source object.
 		/// </summary>
-		/// <param name="name">The name of the property to get.</param>
+		/// <param name="key">The name of the property to get.</param>
 		/// <param name="source">The source object.</param>
 		/// <returns>The value of the specified property.</returns>
 		static object ResolveProperty(string name, object source)

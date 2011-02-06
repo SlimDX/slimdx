@@ -27,7 +27,7 @@ namespace SlimDX.Generator
 		public EnumerationValueModel(string name, string value)
 		{
 			if (string.IsNullOrEmpty(name))
-				throw new ArgumentException("Value may not be null or empty.", "name");
+				throw new ArgumentException("Value may not be null or empty.", "key");
 			if (string.IsNullOrEmpty(value))
 				throw new ArgumentException("Value may not be null or empty.", "value");
 

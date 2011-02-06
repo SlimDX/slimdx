@@ -71,9 +71,9 @@ namespace SlimDX.Generator
 			{
 				foreach (var item in items)
 				{
-					var name = (string)item["name"];
+					var name = (string)item["key"];
 					var type = Type.GetType((string)item["target"]);
-					var model = new TypeModel(name, type);
+					var model = new TypeModel(name, name, type);
 					types[model.Key] = model;
 				}
 			}
@@ -82,7 +82,7 @@ namespace SlimDX.Generator
 			{
 				foreach (var item in items)
 				{
-					var name = (string)item["name"];
+					var name = (string)item["key"];
 					var model = new EnumerationModel(name);
 					types[model.Key] = model;
 
@@ -95,7 +95,7 @@ namespace SlimDX.Generator
 			{
 				foreach (var item in items)
 				{
-					var name = (string)item["name"];
+					var name = (string)item["key"];
 					var model = new StructureModel(name);
 					types[model.Key] = model;
 
@@ -108,7 +108,7 @@ namespace SlimDX.Generator
 			{
 				foreach (var item in items)
 				{
-					var name = (string)item["name"];
+					var name = (string)item["key"];
 					var type = types[(string)item["type"]];
 					var guid = new Guid((string)item["guid"]);
 					var model = new InterfaceModel(name, guid, type);
@@ -131,7 +131,7 @@ namespace SlimDX.Generator
 			{
 				foreach (var method in methods)
 				{
-					var name = (string)method["name"];
+					var name = (string)method["key"];
 					var type = types[(string)method["type"]];
 					var model = new MethodModel(name, type);
 					foreach (var parameter in ParseParameters(method, types))
@@ -153,7 +153,7 @@ namespace SlimDX.Generator
 			{
 				foreach (var parameter in parameters)
 				{
-					var name = (string)parameter["name"];
+					var name = (string)parameter["key"];
 					var type = types[(string)parameter["type"]];
 					var flags = ParseParameterFlags(parameter);
 					var model = new ParameterModel(name, type, flags);
@@ -194,7 +194,7 @@ namespace SlimDX.Generator
 			if (root.TryGetValue("values", out values))
 			{
 				foreach (var value in values)
-					results.Add(new EnumerationValueModel((string)value["name"], (string)value["value"]));
+					results.Add(new EnumerationValueModel((string)value["key"], (string)value["value"]));
 			}
 
 			return results;

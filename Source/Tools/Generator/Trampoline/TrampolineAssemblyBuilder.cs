@@ -48,11 +48,11 @@ namespace SlimDX.Generator
 		/// <summary>
 		/// Creates a trampoline implementation assembly based on the current state of the builder.
 		/// </summary>
-		/// <param name="name">The name of the trampoline assembly.</param>
+		/// <param name="key">The name of the trampoline assembly.</param>
 		public void CreateAssembly(string directory, string name)
 		{
 			if (string.IsNullOrEmpty(name))
-				throw new ArgumentException("Value may not be null or empty.", "name");
+				throw new ArgumentException("Value may not be null or empty.", "key");
 
 			var fileName = string.Format("{0}.dll", name);
 			var assemblyName = new AssemblyName(name);
