@@ -1,0 +1,10 @@
+﻿{
+	"references": [
+		{ "key": "int", "target": "System.Int32" },
+		{ "key": "WCHAR", "target": "System.Char" },
+		{ "key": "BOOL", "target": "System.Boolean" },
+		
+		{ "key": "HRESULT", "name": "Result", "target": "SlimDX.Result, SlimDX" },
+		{ "key": "IUnknown", "name": "ComObject", "target": "SlimDX.ComObject, SlimDX" }
+	]
+}
