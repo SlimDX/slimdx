@@ -1,0 +1,11 @@
+﻿{
+	"dependencies": [ "../SlimDX/SlimDX.json" ],
+
+	"interfaces": [
+		{
+			"key": "ID3D11Device",
+			"type": "IUnknown",
+			"guid": "db6f6ddb-ac77-4e88-8253-819df9bbf140"
+		}
+	]
+}

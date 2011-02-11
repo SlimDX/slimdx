@@ -1,5 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- The IDE will cache the project's source files when a build begins if using the in-process compiler. -->
+  <!-- This means that changes to those files during the build (for example, via code generation) will not -->
+  <!-- be seen by the compiler. Thus, the in-process compiler is disabled. -->
+  <PropertyGroup>
+    <UseHostCompilerIfAvailable>false</UseHostCompilerIfAvailable>
+  </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -42,17 +48,26 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Direct3D11.cs" />
+    <Compile Include="Generated\ID3D11Device.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Direct3D11.Generator.cfg" />
+    <None Include="Direct3D11.json" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Generated\" />
+    <ProjectReference Include="..\SlimDX.DXGI\SlimDX.DXGI.csproj">
+      <Project>{E3444A70-DF09-4610-9393-B5D7467DF705}</Project>
+      <Name>SlimDX.DXGI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SlimDX\SlimDX.csproj">
+      <Project>{A774A428-009F-4E4D-ABF2-F7E181DAA2E3}</Project>
+      <Name>SlimDX</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>"$(SolutionDir)\Source\Tools\Generator\bin\$(ConfigurationName)\SlimDX.Generator.exe" "$(ProjectDir)\Direct3D11.Generator.cfg"</PreBuildEvent>
+    <PreBuildEvent>"$(SolutionDir)\Source\Tools\Generator\bin\$(ConfigurationName)\SlimDX.Generator.exe" -generate "$(ProjectDir)\Direct3D11.json" "$(ProjectDir)\Generated"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

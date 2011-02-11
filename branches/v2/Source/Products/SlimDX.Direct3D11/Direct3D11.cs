@@ -22,7 +22,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 
-namespace SlimDX.Direct3D11
+namespace SlimDX.DXGI
 {
 	/// <summary>
 	/// The access point for the Direct3D 11 API.
@@ -31,8 +31,34 @@ namespace SlimDX.Direct3D11
 	{
 		#region Interface
 
+		public static ID3D11Device CreateDevice()
+		{
+			IntPtr devicePointer = IntPtr.Zero;
+			IntPtr contextPointer = IntPtr.Zero;
+			IntPtr featureLevel = IntPtr.Zero;
+			int result = CreateD3D11Device(
+				IntPtr.Zero,
+				1, /* hardware */
+				IntPtr.Zero,
+				2,
+				IntPtr.Zero,
+				0,
+				sdkVersion,
+				out devicePointer,
+				out featureLevel,
+				out contextPointer
+			);
+
+			return new ID3D11Device(devicePointer);
+		}
+
 		#endregion
 		#region Implementation
+
+		const int sdkVersion = 7;
+
+		[DllImport("d3d11.dll", EntryPoint = "D3D11CreateDevice", CallingConvention = CallingConvention.StdCall, PreserveSig = true), SuppressUnmanagedCodeSecurity]
+		private extern static int CreateD3D11Device(IntPtr adapter, int driverType, IntPtr softwareRasterizer, int flags, IntPtr featureLevels, int featureLevelCount, int sdkVersion, out IntPtr device, out IntPtr featureLevel, out IntPtr immediateContext);
 
 		#endregion
 	}

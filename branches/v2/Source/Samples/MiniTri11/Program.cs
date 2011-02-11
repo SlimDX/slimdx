@@ -66,6 +66,9 @@ namespace MiniTri11
 				Windowed = true
 			};
 
+			ID3D11Device device = Direct3D11.CreateDevice();
+
+			device.ReleaseReference();
 			adapter.ReleaseReference();
 			factory.ReleaseReference();
 		}
