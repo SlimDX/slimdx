@@ -20,12 +20,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
-using System.IO;
 
 namespace SlimDX.Generator
 {
@@ -116,7 +114,6 @@ namespace SlimDX.Generator
 			// Load the byte offset from the start of the table and add them to yeild
 			// the pointer to the slot containing the desired method's address.
 			il.Emit(OpCodes.Ldarg_0);
-			//il.Emit(OpCodes.Conv_I);
 			il.Emit(OpCodes.Add);
 
 			// Read the table slot, leaving the address of the target method on the stack.
