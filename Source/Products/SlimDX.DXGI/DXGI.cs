@@ -31,10 +31,6 @@ namespace SlimDX.DXGI
 	{
 		#region Interface
 
-		/// <summary>
-		/// Creates a new <see cref="Factory"/> object.
-		/// </summary>
-		/// <returns>A new <see cref="Factory"/> object.</returns>
 		public static IDXGIFactory CreateFactory()
 		{
 			IntPtr nativePointer = IntPtr.Zero;

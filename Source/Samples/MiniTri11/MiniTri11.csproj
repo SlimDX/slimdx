@@ -36,14 +36,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SharedAssemblyInfo.cs">
@@ -53,6 +49,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Products\SlimDX.Direct3D11\SlimDX.Direct3D11.csproj">
+      <Project>{7D81E4D9-3C71-42A5-B4D4-2F80CEFF3187}</Project>
+      <Name>SlimDX.Direct3D11</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Products\SlimDX.DXGI\SlimDX.DXGI.csproj">
       <Project>{E3444A70-DF09-4610-9393-B5D7467DF705}</Project>
       <Name>SlimDX.DXGI</Name>
