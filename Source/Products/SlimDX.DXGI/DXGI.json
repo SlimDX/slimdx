@@ -1,5 +1,5 @@
 ﻿{
-	"dependencies": [ "Common.json" ],
+	"dependencies": [ "../SlimDX/SlimDX.json" ],
 
 	"enumerations": [
 			{
