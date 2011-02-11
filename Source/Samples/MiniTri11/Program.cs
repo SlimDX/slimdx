@@ -49,6 +49,7 @@ namespace MiniTri11
 						Denominator = 1,
 						Numerator = 60
 					},
+
 					Scaling = DXGI_MODE_SCALING.DXGI_MODE_SCALING_UNSPECIFIED,
 					ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER.DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED,
 					Width = 100
