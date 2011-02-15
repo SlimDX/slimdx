@@ -89,7 +89,7 @@ namespace SlimDX.Generator
 
 			// Transform XML to JSON.
 			JsonObject json = ModelXml.Transform(root);
-			File.WriteAllText("test.json", json.ToJson());
+			File.WriteAllText("test.json", json.ToNiceJson());
 		}
 
 		static void RunGenerator(string modelFile, string outputDirectory)
