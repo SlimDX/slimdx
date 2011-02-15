@@ -66,7 +66,6 @@ namespace SlimDX.Generator.Parsing
 				return null;
 
 			var name = Rule.Name.Trim('<', '>').Replace(' ', '_');
-
 			if (childXml.Length == 1)
 			{
 				var token = childXml[0] as XElement;
