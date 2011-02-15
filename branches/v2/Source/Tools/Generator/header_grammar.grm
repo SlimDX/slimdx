@@ -73,9 +73,7 @@ Comment Line = '//'
                        | <postfix-expression> '[' <expression> ']'
                        | <postfix-expression> '(' <expression-list> ')'
                        | <postfix-expression> '(' ')'
-                  !     | <simple-type-specifier> '(' <expression-list> ')'
                        | <identifier> '(' <expression-list> ')'
-                  !     | <simple-type-specifier> '(' ')'
                        | <postfix-expression> '.' <identifier>
                        | <postfix-expression> '->' <identifier>
                        | <identifier> '.' <identifier>
@@ -219,7 +217,6 @@ Comment Line = '//'
 
 <condition> ::= <expression>
               | <identifier>
-            !  | <type-specifier-list> <declarator> '=' <assignment-expression>
 
 <iteration-statement> ::= while '(' <condition> ')' <statement>
                         | do <statement> while '(' <expression> ')' ';'
@@ -317,7 +314,6 @@ Comment Line = '//'
 <elaborated-type-specifier> ::= <class-key> <declspec-list> <identifier>
                               | <class-key> <identifier>
                               | enum <identifier>
-                          !   | typename <identifier>
                               | typename <identifier> '<' <template-argument-list> '>'
 
 <enum-specifier> ::= enum <identifier> '{' <enumerator-list> '}'
@@ -408,7 +404,6 @@ Comment Line = '//'
                                | <direct-abstract-declarator-opt> '(' <parameter-declaration-clause> ')' <cv-qualifier-list-opt>
                                | <direct-abstract-declarator-opt> '[' <constant-expression> ']'
                                | <direct-abstract-declarator-opt> '[' ']'
-                           !   | '(' <abstract-declarator> ')'
 
 <direct-abstract-declarator-opt> ::= <direct-abstract-declarator>
                                    |

@@ -68,9 +68,7 @@ namespace SlimDX.Generator
 			var preprocessor = new Preprocessor(configuration, configurationDirectory);
 			Console.WriteLine(preprocessor.Run());
 
-			// before parsing, run some transformations on the preprocessed file to
-			// both cut down on the size needed to be examined as well as to get rid of
-			// junk I was too lazy to add to the parser grammar.
+			// before parsing, run some transformations on the preprocessed file to cut down on the size needed to be examined
 			// this includes dropping any source that is not from the given primary or ancillary
 			// sources, which is indicated in the preprocessed file by #line directives
 			var source = preprocessor.Source;

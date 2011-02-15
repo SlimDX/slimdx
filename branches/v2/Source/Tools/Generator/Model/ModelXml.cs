@@ -30,21 +30,42 @@ namespace SlimDX.Generator
 		public static JsonObject Transform(XElement root)
 		{
 			var api = new JsonObject(JsonType.Object);
-
 			var interfaces = new JsonObject(JsonType.Array);
 			var structures = new JsonObject(JsonType.Array);
+			var enums = new JsonObject(JsonType.Array);
 
+			// find enums
+			foreach (var element in root.XPathSelectElements("//enum-specifier"))
+			{
+				var item = new JsonObject(JsonType.Object);
+				item["key"] = new JsonObject(element.Element("identifier").Value);
+
+				var definitions = new JsonObject(JsonType.Array);
+				foreach (var definition in element.XPathSelectElements("//enumerator-definition"))
+				{
+					var definitionItem = new JsonObject(JsonType.Object);
+					definitionItem["key"] = new JsonObject(definition.Element("identifier").Value);
+					definitionItem["value"] = new JsonObject(definition.Element("numeric-literal").Value);
+
+					definitions.Add(definitionItem);
+				}
+
+				item.Add("values", definitions);
+				enums.Add(item);
+			}
+
+			// find structs and interfaces
 			foreach (var element in root.XPathSelectElements("//class-specifier"))
 			{
 				var nameElement = element.XPathSelectElement("class-head/identifier");
 				var guidElement = element.XPathSelectElement("class-head/declspec-list/declspec-definition/declspec/string-literal");
 
 				var item = new JsonObject(JsonType.Object);
-
 				item["key"] = new JsonObject(nameElement.Value);
 				if (guidElement != null)
 					item["guid"] = new JsonObject(guidElement.Value.Trim('"'));
 
+				// elements with a GUID are assumed to be COM interfaces
 				if (guidElement != null)
 					interfaces.Add(item);
 				else
@@ -53,6 +74,7 @@ namespace SlimDX.Generator
 
 			api.Add("interfaces", interfaces);
 			api.Add("structures", structures);
+			api.Add("enumerations", enums);
 			return api;
 		}
 	}
