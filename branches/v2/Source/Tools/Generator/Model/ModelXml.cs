@@ -26,6 +26,9 @@ using System.Linq;
 
 namespace SlimDX.Generator
 {
+	/// <summary>
+	/// Responsible for transforming XML output from the parser into a Json hierarchy.
+	/// </summary>
 	static class ModelXml
 	{
 		public static JsonObject Transform(XElement root)
@@ -84,6 +87,9 @@ namespace SlimDX.Generator
 
 						foreach (var parameterElement in child.Descendants("parameter-declaration"))
 						{
+							var parameter = TransformParameter(parameterElement);
+							if (parameter != null)
+								method["parameters"].Add(parameter);
 						}
 
 						item["methods"].Add(method);
@@ -118,6 +124,56 @@ namespace SlimDX.Generator
 			}
 
 			return api;
+		}
+
+		static JsonObject TransformParameter(XElement element)
+		{
+			var nameElement = element.XPathSelectElement("declarator//identifier") ??
+				element.XPathSelectElement("identifier[2]");
+
+			var typeElement = element.XPathSelectElement("type-specifier/identifier") ??
+				element.XPathSelectElement("type-specifier/simple-type-specifier") ??
+				element.XPathSelectElement("simple-type-specifier") ??
+				element.Element("identifier");
+
+			if (nameElement == null && typeElement.Value == "void")
+				return null;
+
+			var item = new JsonObject();
+			item["key"] = nameElement.Value;
+			item["type"] = typeElement.Value;
+
+			var flags = TransformFlags(element.Element("qualifier"));
+			if (flags.Any())
+			{
+				item["flags"] = new JsonObject(flags);
+
+				var size = element.XPathSelectElement("qualifier/identifier");
+				if (size != null)
+					item["size"] = size.Value;
+			}
+
+			return item;
+		}
+
+		static IEnumerable<JsonObject> TransformFlags(XElement element)
+		{
+			if (element == null)
+				yield break;
+
+			string value = (string)element.Element("Token") ?? element.Value;
+			if (value.Contains("in"))
+				yield return "in";
+			if (value.Contains("out"))
+				yield return "out";
+			if (value.Contains("opt"))
+				yield return "optional";
+			if (value.Contains("part"))
+				yield return "partial";
+			if (value.Contains("bcount"))
+				yield return "binary_size";
+			if (value.Contains("ecount"))
+				yield return "element_count";
 		}
 	}
 }

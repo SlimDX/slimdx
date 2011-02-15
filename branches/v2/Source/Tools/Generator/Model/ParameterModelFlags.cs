@@ -27,5 +27,10 @@ namespace SlimDX.Generator
 	{
 		None = 0,
 		IsOutput = (1 << 0),
+		IsInput = (1 << 1),
+		IsOptional = (1 << 2),
+		HasElementCount = (1 << 3),
+		HasBinarySize = (1 << 4),
+		IsPartial = (1 << 5)
 	}
 }
