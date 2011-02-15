@@ -139,6 +139,7 @@ namespace SlimDX.Generator
 			if (nameElement == null && typeElement.Value == "void")
 				return null;
 
+			// TODO: handle const / array / pointer / reference types here
 			var item = new JsonObject();
 			item["key"] = nameElement.Value;
 			item["type"] = typeElement.Value;
