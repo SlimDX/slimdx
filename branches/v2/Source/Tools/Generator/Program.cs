@@ -61,11 +61,9 @@ namespace SlimDX.Generator
 
 		static void RunParser(string configurationFile)
 		{
-			var configuration = new ConfigFile(configurationFile);
-			var configurationDirectory = Path.GetDirectoryName(Path.GetFullPath(configurationFile));
-
 			// run boost::wave on the primary source file to get a preprocessed file and a list of macros
-			var preprocessor = new Preprocessor(configuration, configurationDirectory);
+			var configuration = new ConfigFile(configurationFile);
+			var preprocessor = new Preprocessor(configuration);
 			Console.WriteLine(preprocessor.Run());
 
 			// before parsing, run some transformations on the preprocessed file to cut down on the size needed to be examined
@@ -78,17 +76,16 @@ namespace SlimDX.Generator
 				relevantSources.Add(Environment.ExpandEnvironmentVariables(s));
 
 			source = Path.ChangeExtension(source, ".i");
-			PreTransform(source, new HashSet<string>(relevantSources));
+			PreTransform(source, relevantSources.ToSet());
 
 			// run the parser on the preprocessed file to generate a model of the file in memory
-			var grammarFile = Path.Combine(configurationDirectory, configuration.GetOption("Options", "Grammar"));
+			var grammarFile = configuration.GetOption("Options", "Grammar").RootPath(configuration.ConfigurationDirectory);
 			var parser = new HeaderParser(grammarFile);
 			var root = parser.Parse(source).ToXml();
+			var json = ModelXml.Transform(root);
 
+			// TODO: for testing only
 			root.Save("test.xml");
-
-			// Transform XML to JSON.
-			JsonObject json = ModelXml.Transform(root);
 			File.WriteAllText("test.json", json.ToNiceJson());
 		}
 
@@ -138,7 +135,7 @@ namespace SlimDX.Generator
 		/// <param name="preprocessedFile">The preprocessed file.</param>
 		/// <param name="relevantSources">The relevant sources. 
 		/// Any code that did not originate in one of these sources is removed before parsing.</param>
-		static void PreTransform(string preprocessedFile, HashSet<string> relevantSources)
+		static void PreTransform(string preprocessedFile, ISet<string> relevantSources)
 		{
 			var output = new StringBuilder();
 			bool keepSource = false;
