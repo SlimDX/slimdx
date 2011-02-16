@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Reflection;
 
 namespace SlimDX.Generator
 {
@@ -30,32 +31,24 @@ namespace SlimDX.Generator
 	{
 		Dictionary<string, List<string>> options = new Dictionary<string, List<string>>();
 
+		public string ConfigurationDirectory
+		{
+			get;
+			private set;
+		}
+
+		public string GeneratorDirectory
+		{
+			get;
+			private set;
+		}
+
 		public ConfigFile(string fileName)
 		{
-			int lineNumber = 0;
-			string section = null;
+			ConfigurationDirectory = Path.GetDirectoryName(Path.GetFullPath(fileName));
+			GeneratorDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\";
 
-			foreach (var line in File.ReadLines(fileName))
-			{
-				lineNumber++;
-
-				var option = line.Trim();
-				if (string.IsNullOrWhiteSpace(option) || option.StartsWith("#"))
-					continue;
-
-				// options file is .ini-style with [Section] markers
-				if (option.StartsWith("[") && option.EndsWith("]"))
-				{
-					section = option.Trim('[', ']');
-					options.Add(section, new List<string>());
-				}
-				else
-				{
-					if (string.IsNullOrWhiteSpace(section))
-						throw new InvalidDataException(string.Format("No section defined for option on line {0}.", lineNumber));
-					options[section].Add(option);
-				}
-			}
+			ProcessFile(fileName);
 		}
 
 		public string GetOption(string section, string name)
@@ -64,7 +57,8 @@ namespace SlimDX.Generator
 			if (!options.TryGetValue(section, out optionGroup) || optionGroup.Count == 0)
 				throw new InvalidDataException("Could not find " + section + " section in config file.");
 
-			foreach (var option in optionGroup)
+			// reverse the order here to let derived config file options take precedence over included parent ones
+			foreach (var option in optionGroup.Reverse<string>())
 			{
 				int index = option.IndexOf('=');
 				if (index >= 0 && option.Substring(0, index).Trim() == name)
@@ -81,6 +75,47 @@ namespace SlimDX.Generator
 				return Enumerable.Empty<string>();
 
 			return optionGroup;
+		}
+
+		void ProcessFile(string fileName)
+		{
+			int lineNumber = 0;
+			string section = null;
+
+			foreach (var line in File.ReadLines(fileName))
+			{
+				lineNumber++;
+
+				var option = line.Trim();
+				if (string.IsNullOrWhiteSpace(option) || option.StartsWith("#"))
+					continue;
+
+				// automatically expand environment variables on everything, just to simply the rest of the code
+				// this includes the pseudo-environment variable for the running directory of the generator
+				option = option.Replace("$(GenDir)", GeneratorDirectory);
+
+				// options file is .ini-style with [Section] markers
+				if (option.StartsWith("[") && option.EndsWith("]"))
+				{
+					section = option.Trim('[', ']');
+
+					if (!options.ContainsKey(section))
+						options.Add(section, new List<string>());
+				}
+				else
+				{
+					if (string.IsNullOrWhiteSpace(section))
+					{
+						// handle "includes" of parent config files
+						if (option.StartsWith("$inherit"))
+							ProcessFile(option.Substring(option.IndexOf(' ') + 1).RootPath(ConfigurationDirectory));
+						else
+							throw new InvalidDataException(string.Format("No section defined for option on line {0}.", lineNumber));
+					}
+					else
+						options[section].Add(option);
+				}
+			}
 		}
 	}
 }

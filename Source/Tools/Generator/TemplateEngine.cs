@@ -55,7 +55,6 @@ namespace SlimDX.Generator
 
 		Regex directiveRegex = new Regex(@"\$\((.*?)\)", RegexOptions.Compiled);
 
-
 		/// <summary>
 		/// Applies the specified template to the given source object, using the template source instead
 		/// of looking up the template file.
@@ -150,6 +149,7 @@ namespace SlimDX.Generator
 		}
 
 		#endregion
+
 		#region Implementation
 
 		const string callbackGlyph = "@";
@@ -183,8 +183,6 @@ namespace SlimDX.Generator
 
 			return null;
 		}
-
-
 
 		/// <summary>
 		/// Processes a regular expression match for a template directive during template application.
@@ -282,13 +280,11 @@ namespace SlimDX.Generator
 			return value;
 		}
 
-
 		static IEnumerable QueryForIEnumerable(object source)
 		{
 			// While technically enumerable, we don't want to treat strings as such.
 			if (source is string)
 				return null;
-
 
 			var enumerable = source as IEnumerable;
 			if (enumerable == null)

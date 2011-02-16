@@ -108,9 +108,9 @@
     <Compile Include="Trampoline\TrampolineAssemblyBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="config.txt">
+    <None Include="Base.cfg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="naming_rules.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
