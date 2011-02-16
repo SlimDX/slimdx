@@ -25,7 +25,6 @@ using System.Json;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using SlimDX.Generator.Parsing;
 
 namespace SlimDX.Generator
 {
@@ -33,36 +32,42 @@ namespace SlimDX.Generator
 	{
 		static void Main(string[] arguments)
 		{
-			var options = new Queue<string>(arguments);
-			while (options.Count > 0)
-			{
-				var option = options.Dequeue();
-				switch (option)
-				{
-					case "-parse":
-						if (options.Count == 0)
-							throw new InvalidOperationException("-parse requires one argument");
-						var configurationFile = options.Dequeue();
-						RunParser(configurationFile);
-						break;
-					case "-generate":
-						if (options.Count == 0)
-							throw new InvalidOperationException("-generate requires at least one argument");
-						var modelFile = options.Dequeue();
-						var outputDirectory = string.Empty;
-						if (options.Count > 0)
-							outputDirectory = options.Dequeue();
+			if (arguments.Length == 0)
+				throw new InvalidOperationException("Missing configuration file path.");
 
-						RunGenerator(modelFile, outputDirectory);
-						break;
+			var configuration = new ConfigFile(arguments[0]);
+
+			// build up the Json model by running it through various layers
+			JsonObject json = null;
+			var searchPaths = new HashSet<string>();
+			foreach (var layer in configuration.GetOptions("JsonLayers"))
+			{
+				// $ParseHeaders runs the parser to build the Json
+				// other options are simple filenames, relative to the config file
+				JsonObject current;
+				if (layer == "$ParseHeaders")
+					current = RunParser(configuration);
+				else
+				{
+					var path = layer.RootPath(configuration.ConfigurationDirectory);
+					current = JsonObject.FromJson(File.ReadAllText(path));
+					searchPaths.Add(Path.GetDirectoryName(Path.GetFullPath(path)));
 				}
+
+				// combine the current layer with the base
+				if (json == null)
+					json = current;
+				else
+					CompositingEngine.Compose(json, current);
 			}
+
+			// run the generator on the composed Json model
+			RunGenerator(json, configuration, searchPaths);
 		}
 
-		static void RunParser(string configurationFile)
+		static JsonObject RunParser(ConfigFile configuration)
 		{
 			// run boost::wave on the primary source file to get a preprocessed file and a list of macros
-			var configuration = new ConfigFile(configurationFile);
 			var preprocessor = new Preprocessor(configuration);
 			Console.WriteLine(preprocessor.Run());
 
@@ -76,7 +81,7 @@ namespace SlimDX.Generator
 				relevantSources.Add(Environment.ExpandEnvironmentVariables(s));
 
 			source = Path.ChangeExtension(source, ".i");
-			PreTransform(source, relevantSources.ToSet());
+			Preprocessor.PostTransform(source, relevantSources.ToSet());
 
 			// run the parser on the preprocessed file to generate a model of the file in memory
 			var grammarFile = configuration.GetOption("Options", "Grammar").RootPath(configuration.ConfigurationDirectory);
@@ -84,23 +89,29 @@ namespace SlimDX.Generator
 			var root = parser.Parse(source).ToXml();
 			var json = ModelXml.Transform(root);
 
+			// add a dependency to the base SlimDX.json file
+			json.Add("dependencies", new JsonObject(new JsonObject[] { "../SlimDX/SlimDX.json" }));
+
 			// TODO: for testing only
 			root.Save("test.xml");
 			File.WriteAllText("test.json", json.ToNiceJson());
+
+			return json;
 		}
 
-		static void RunGenerator(string modelFile, string outputDirectory)
+		static void RunGenerator(JsonObject json, ConfigFile configuration, IEnumerable<string> searchPaths)
 		{
-			var json = File.ReadAllText(modelFile);
-			var api = ModelJson.Parse(JsonObject.FromJson(json), new[] { Path.GetDirectoryName(Path.GetFullPath(modelFile)) });
+			var api = ModelJson.Parse(json, searchPaths);
 
-			var generatorDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			var defaultMetadataDirectory = Path.Combine(generatorDirectory, @"Resources\Metadata");
-			var defaultTemplateDirectory = Path.Combine(generatorDirectory, @"Templates");
+			var defaultMetadataDirectory = Path.Combine(configuration.GeneratorDirectory, @"Resources\Metadata");
+			var defaultTemplateDirectory = Path.Combine(configuration.GeneratorDirectory, @"Templates");
 			var templateEngine = new TemplateEngine(new[] { defaultTemplateDirectory });
-			templateEngine.RegisterCallback("Namespace", (e, s) => "SlimDX.DXGI");
+
+			var namespaceName = configuration.GetOption("Options", "Namespace");
+			templateEngine.RegisterCallback("Namespace", (e, s) => namespaceName);
 			templateEngine.RegisterCallbacks(typeof(TemplateCallbacks));
 
+			var outputDirectory = configuration.GetOption("Options", "OutputPath").RootPath(configuration.ConfigurationDirectory);
 			if (!Directory.Exists(outputDirectory))
 				Directory.CreateDirectory(outputDirectory);
 
@@ -113,7 +124,7 @@ namespace SlimDX.Generator
 			{
 				foreach (var methodModel in interfaceModel.Methods)
 				{
-					List<TrampolineParameter> parameters = new List<TrampolineParameter>();
+					var parameters = new List<TrampolineParameter>();
 					foreach (var parameterModel in methodModel.Parameters)
 					{
 						TrampolineParameterFlags flags = TrampolineParameterFlags.Default;
@@ -126,33 +137,7 @@ namespace SlimDX.Generator
 				}
 			}
 
-			trampolineBuilder.CreateAssembly(outputDirectory, string.Format("{0}.Trampoline", "SlimDX.DXGI"));
-		}
-
-		/// <summary>
-		/// Performs transformations on a preprocessed file to prepare it for parsing.
-		/// </summary>
-		/// <param name="preprocessedFile">The preprocessed file.</param>
-		/// <param name="relevantSources">The relevant sources. 
-		/// Any code that did not originate in one of these sources is removed before parsing.</param>
-		static void PreTransform(string preprocessedFile, ISet<string> relevantSources)
-		{
-			var output = new StringBuilder();
-			bool keepSource = false;
-			foreach (var line in File.ReadLines(preprocessedFile))
-			{
-				if (line.StartsWith("#line"))
-				{
-					int start = line.IndexOf('"') + 1;
-					var file = line.Substring(start, line.LastIndexOf('"') - start).Replace(@"\\", "\\");
-
-					keepSource = relevantSources.Contains(file);
-				}
-				else if (!line.StartsWith("#pragma") && keepSource)
-					output.AppendLine(line);
-			}
-
-			File.WriteAllText(preprocessedFile, output.ToString());
+			trampolineBuilder.CreateAssembly(outputDirectory, string.Format("{0}.Trampoline", namespaceName));
 		}
 
 		static void ApplyTemplate(IEnumerable<TypeModel> items, string outputDirectory, TemplateEngine templateEngine, string templateName)

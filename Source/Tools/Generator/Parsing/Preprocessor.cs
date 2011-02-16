@@ -22,6 +22,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Collections.Generic;
 
 namespace SlimDX.Generator
 {
@@ -95,6 +96,32 @@ namespace SlimDX.Generator
 				File.Delete(Source);
 				return info;
 			}
+		}
+
+		/// <summary>
+		/// Performs transformations on a preprocessed file to prepare it for parsing.
+		/// </summary>
+		/// <param name="preprocessedFile">The preprocessed file.</param>
+		/// <param name="relevantSources">The relevant sources. 
+		/// Any code that did not originate in one of these sources is removed before parsing.</param>
+		public static void PostTransform(string preprocessedFile, ISet<string> relevantSources)
+		{
+			var output = new StringBuilder();
+			bool keepSource = false;
+			foreach (var line in File.ReadLines(preprocessedFile))
+			{
+				if (line.StartsWith("#line"))
+				{
+					int start = line.IndexOf('"') + 1;
+					var file = line.Substring(start, line.LastIndexOf('"') - start).Replace(@"\\", "\\");
+
+					keepSource = relevantSources.Contains(file);
+				}
+				else if (!line.StartsWith("#pragma") && keepSource)
+					output.AppendLine(line);
+			}
+
+			File.WriteAllText(preprocessedFile, output.ToString());
 		}
 	}
 }
