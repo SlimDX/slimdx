@@ -19,53 +19,79 @@
 // THE SOFTWARE.
 
 using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace SlimDX
 {
-	/// <summary>
-	/// A COM object.
-	/// </summary>
-	public abstract class ComObject
-	{
-		#region Interface
+    /// <summary>
+    /// A COM object.
+    /// </summary>
+    public abstract class ComObject
+    {
+        #region Interface
 
-		protected ComObject(IntPtr nativePointer)
-		{
-			NativePointer = nativePointer;
-		}
+        protected ComObject(IntPtr nativePointer)
+        {
+            NativePointer = nativePointer;
 
-		public IntPtr NativePointer
-		{
-			get;
-			private set;
-		}
+            if (ReferenceTracker.TrackReferences)
+                ReferenceTracker.Constructed(NativePointer, GetType());
+        }
 
-		/// <summary>
-		/// Attempts to retrieve a reference to an interface of an object.
-		/// </summary>
-		/// <typeparam name="T">The interface to retrieve.</typeparam>
-		/// <returns>
-		/// A reference to an interface, if the requested interface is supported by the object. Otherwise null.
-		/// </returns>
-		//T QueryInterface<T>() where T : class, IUnknown;
+        public IntPtr NativePointer
+        {
+            get;
+            private set;
+        }
 
-		/// <summary>
-		/// Increments the reference count for an object. 
-		/// </summary>
-		public int AddReference()
-		{
-			return Marshal.AddRef(NativePointer);
-		}
+        /// <summary>
+        /// Attempts to retrieve a reference to an interface of an object.
+        /// </summary>
+        /// <typeparam name="T">The interface to retrieve.</typeparam>
+        /// <returns>
+        /// A reference to an interface, if the requested interface is supported by the object. Otherwise null.
+        /// </returns>
+        public T QueryInterface<T>() where T : ComObject
+        {
+            IntPtr resultingNativeInterface;
+            var guid = typeof(T).GUID;
 
-		/// <summary>
-		/// Decrements the reference count for an object.
-		/// </summary>
-		public int ReleaseReference()
-		{
-			return Marshal.Release(NativePointer);
-		}
+            var resultCode = Marshal.QueryInterface(NativePointer, ref guid, out resultingNativeInterface);
+            if (resultCode != 0)
+                return null;
 
-		#endregion
-	}
+            var constructor = typeof(T).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public, null, new[] { typeof(IntPtr) }, null);
+            if (constructor == null)
+            {
+                return null;
+            }
+
+            return (T)constructor.Invoke(new object[] { resultingNativeInterface });
+        }
+
+        /// <summary>
+        /// Increments the reference count for an object. 
+        /// </summary>
+        public int AddReference()
+        {
+            if (ReferenceTracker.TrackReferences)
+                ReferenceTracker.ReferenceIncremented(NativePointer, GetType());
+
+            return Marshal.AddRef(NativePointer);
+        }
+
+        /// <summary>
+        /// Decrements the reference count for an object.
+        /// </summary>
+        public int ReleaseReference()
+        {
+            if (ReferenceTracker.TrackReferences)
+                ReferenceTracker.ReferenceDecremented(NativePointer, GetType());
+
+            return Marshal.Release(NativePointer);
+        }
+
+        #endregion
+    }
 }
