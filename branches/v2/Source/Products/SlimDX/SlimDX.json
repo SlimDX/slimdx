@@ -1,10 +1,19 @@
 ﻿{
 	"references": [
 		{ "key": "int", "target": "System.Int32" },
+		{ "key": "INT", "target": "System.Int32" },
 		{ "key": "UINT", "target": "System.Int32" },
+		{ "key": "DWORD", "target": "System.Int32" },
+		{ "key": "SIZE_T", "target": "System.Int32" },
+		{ "key": "UINT64", "target": "System.UInt64" },
 		{ "key": "WCHAR", "target": "System.Char" },
 		{ "key": "BOOL", "target": "System.Boolean" },
+		{ "key": "BYTE", "target": "System.Byte" },
 		{ "key": "HWND", "target": "System.IntPtr" },
+		{ "key": "float", "target": "System.Single" },
+		{ "key": "FLOAT", "target": "System.Single" },
+		{ "key": "LARGE_INTEGER", "target": "System.Int64" },
+		{ "key": "LUID", "target": "System.Int64" },
 		
 		{ "key": "HRESULT", "name": "Result", "target": "SlimDX.Result, SlimDX" },
 		{ "key": "IUnknown", "name": "ComObject", "target": "SlimDX.ComObject, SlimDX" }

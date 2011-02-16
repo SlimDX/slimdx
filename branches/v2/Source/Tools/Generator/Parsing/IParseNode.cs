@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 
-namespace SlimDX.Generator.Parsing
+namespace SlimDX.Generator
 {
 	interface IParseNode
 	{

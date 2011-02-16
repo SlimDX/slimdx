@@ -22,7 +22,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 
-namespace SlimDX.DXGI
+namespace SlimDX.Direct3D11
 {
 	/// <summary>
 	/// The access point for the Direct3D 11 API.

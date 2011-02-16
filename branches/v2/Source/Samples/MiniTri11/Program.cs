@@ -24,6 +24,7 @@ using System.Linq;
 using System.Windows.Forms;
 using SlimDX.DXGI;
 using SlimDX;
+using SlimDX.Direct3D11;
 
 namespace MiniTri11
 {

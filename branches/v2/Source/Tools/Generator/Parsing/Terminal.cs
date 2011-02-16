@@ -21,7 +21,7 @@
 using System.Xml.Linq;
 using GoldParser;
 
-namespace SlimDX.Generator.Parsing
+namespace SlimDX.Generator
 {
 	/// <summary>
 	/// Represents a terminal parse node, such as a keyword, identifier, or literal value.
