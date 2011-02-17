@@ -62,15 +62,18 @@ namespace SlimDX.Generator
 			{
 				var nameElement = element.XPathSelectElement("class-head/identifier");
 				var guidElement = element.XPathSelectElement("class-head/declspec-list/declspec-definition/declspec/string-literal");
+				var parentElement = element.XPathSelectElement("class-head/base-clause/base-specifier/identifier");
 
 				var item = new JsonObject();
 				item["key"] = nameElement.Value;
+				if (parentElement != null)
+					item["type"] = parentElement.Value;
 
 				// elements with a GUID are assumed to be COM interfaces
 				if (guidElement != null)
 				{
-					item["guid"] = guidElement.Value.Trim('"');
 					api["interfaces"].Add(item);
+					item["guid"] = guidElement.Value.Trim('"');
 					item["methods"] = new JsonObject(JsonType.Array);
 
 					int index = 0;
