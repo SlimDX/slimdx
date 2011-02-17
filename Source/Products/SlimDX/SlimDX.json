@@ -1,5 +1,6 @@
 ﻿{
 	"references": [
+		{ "key": "void", "target": "System.Void" },
 		{ "key": "int", "target": "System.Int32" },
 		{ "key": "INT", "target": "System.Int32" },
 		{ "key": "UINT", "target": "System.Int32" },
@@ -10,12 +11,20 @@
 		{ "key": "BOOL", "target": "System.Boolean" },
 		{ "key": "BYTE", "target": "System.Byte" },
 		{ "key": "HWND", "target": "System.IntPtr" },
+		{ "key": "HMODULE", "target": "System.IntPtr" },
+		{ "key": "HMONITOR", "target": "System.IntPtr" },
+		{ "key": "HDC", "target": "System.IntPtr" },
+		{ "key": "HANDLE", "target": "System.IntPtr" },
 		{ "key": "float", "target": "System.Single" },
 		{ "key": "FLOAT", "target": "System.Single" },
 		{ "key": "LARGE_INTEGER", "target": "System.Int64" },
 		{ "key": "LUID", "target": "System.Int64" },
+		{ "key": "GUID", "target": "System.Guid" },
+		{ "key": "IID", "target": "System.Guid" },
+		{ "key": "REFIID", "target": "System.Guid" },
 		
 		{ "key": "HRESULT", "name": "Result", "target": "SlimDX.Result, SlimDX" },
-		{ "key": "IUnknown", "name": "ComObject", "target": "SlimDX.ComObject, SlimDX" }
+		{ "key": "IUnknown", "name": "ComObject", "target": "SlimDX.ComObject, SlimDX" },
+		{ "key": "RECT", "name": "Rectangle", "target": "System.Drawing.Rectangle, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" }
 	]
 }
