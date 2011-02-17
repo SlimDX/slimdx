@@ -26,11 +26,10 @@ namespace SlimDX.Generator
 {
 	class InterfaceModel : TypeModel
 	{
-		public InterfaceModel(string key, Guid guid, TypeModel parent)
+		public InterfaceModel(string key, Guid guid)
 			: base(key, key, typeof(IntPtr))
 		{
 			Guid = guid;
-			Parent = parent;
 		}
 
 		public Guid Guid
@@ -42,7 +41,7 @@ namespace SlimDX.Generator
 		public TypeModel Parent
 		{
 			get;
-			private set;
+			set;
 		}
 
 		public ReadOnlyCollection<MethodModel> Methods

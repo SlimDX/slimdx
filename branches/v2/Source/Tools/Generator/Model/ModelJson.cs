@@ -92,6 +92,8 @@ namespace SlimDX.Generator
 				}
 			}
 
+			// do an initial parse of the structures and interfaces so that we can get them
+			// all into the type map before we start doing members and methods
 			if (root.TryGetValue("structures", out items))
 			{
 				foreach (var item in items)
@@ -99,6 +101,27 @@ namespace SlimDX.Generator
 					var name = (string)item["key"];
 					var model = new StructureModel(name);
 					types[model.Key] = model;
+				}
+			}
+
+			if (root.TryGetValue("interfaces", out items))
+			{
+				foreach (var item in items)
+				{
+					var name = (string)item["key"];
+					var guid = new Guid((string)item["guid"]);
+					var model = new InterfaceModel(name, guid);
+					types[model.Key] = model;
+				}
+			}
+
+			// now add the members and methods for the structures and interfaces
+			if (root.TryGetValue("structures", out items))
+			{
+				foreach (var item in items)
+				{
+					var name = (string)item["key"];
+					var model = (StructureModel)types[name];
 
 					foreach (var value in ParseFields(item, types))
 						model.AddMember(value);
@@ -110,11 +133,9 @@ namespace SlimDX.Generator
 				foreach (var item in items)
 				{
 					var name = (string)item["key"];
-					var type = types[(string)item["type"]];
-					var guid = new Guid((string)item["guid"]);
-					var model = new InterfaceModel(name, guid, type);
-					types[model.Key] = model;
+					var model = (InterfaceModel)types[name];
 
+					model.Parent = types[(string)item["type"]];
 					foreach (var method in ParseMethods(item, types))
 						model.AddMethod(method);
 				}
