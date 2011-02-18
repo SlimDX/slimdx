@@ -135,7 +135,7 @@ namespace SlimDX.Generator
 					var name = (string)item["key"];
 					var model = (InterfaceModel)types[name];
 
-					model.Parent = types[(string)item["type"]];
+                    model.Parent = types[(string)item["type"]].Key == "IUnknown" ? types["SlimDX.ComObject"] : types[(string)item["type"]];
 					foreach (var method in ParseMethods(item, types))
 						model.AddMethod(method);
 				}

@@ -20,7 +20,7 @@
 
 namespace $(@Namespace)
 {
-	public class $(Name)
+	public struct $(Name)
 	{
 		internal unsafe static $(Name) FromMarshaller($(Name)Marshaller marshaller)
 		{
@@ -33,8 +33,8 @@ namespace $(@Namespace)
 			return default($(Name)Marshaller);
 		}
 
-		public $(Name)() {
-		}
+		//public $(Name)() {
+		//}
 
 		$(Members:StructureMember)
 	}
@@ -42,5 +42,6 @@ namespace $(@Namespace)
 	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
 	unsafe struct $(Name)Marshaller
 	{
+		$(Members:StructureMarshallerMember)
 	}
 }
