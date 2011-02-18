@@ -1,6 +1,0 @@
-﻿public unsafe $(ReturnType.ManagedName) $(ManagedName)($(@FunctionParameters))
-{
-	$(@FunctionLocals)
-	$(@FunctionTrampolineCall)
-	$(@FunctionReturnStatement)
-}

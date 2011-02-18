@@ -1,4 +1,0 @@
-﻿public $(Type.Name) $(Name) {
-	get;
-	set;
-}

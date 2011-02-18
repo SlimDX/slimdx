@@ -1,4 +1,0 @@
-﻿public T QueryInterface<T>() where T : class, ComObject
-{
-	return null;
-}

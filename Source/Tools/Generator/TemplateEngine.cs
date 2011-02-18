@@ -25,7 +25,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using SlimDX.Generator.ObjectModel;
 using System.Text;
 
 namespace SlimDX.Generator
@@ -99,15 +98,6 @@ namespace SlimDX.Generator
 				throw new ArgumentException("Value may not be null or empty.", "template");
 			if (source == null)
 				throw new ArgumentNullException("source");
-
-			// Object model instances have metadata that can redirect the applied template.
-			var element = source as BaseElement;
-			if (element != null)
-			{
-				if (element.Metadata["Omit"] != null)
-					return string.Empty;
-				templateName = element.Metadata["OverrideTemplate"] ?? templateName;
-			}
 
 			var templateFile = FindTemplate(templateName);
 			if (templateFile == null)

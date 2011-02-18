@@ -1,1 +1,0 @@
-﻿{TypeName} _{Name} = default({TypeName});
