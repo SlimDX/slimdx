@@ -52,6 +52,8 @@ namespace SlimDX.Generator
 			}
 		}
 
+        public int MethodOffset { get; set; }
+
 		public void AddMethod(MethodModel model)
 		{
 			if (model == null)

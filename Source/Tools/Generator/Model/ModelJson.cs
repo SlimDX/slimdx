@@ -141,8 +141,39 @@ namespace SlimDX.Generator
 				}
 			}
 
+            if (root.TryGetValue("interfaces", out items))
+            {
+                foreach (var item in items)
+                {
+                    var name = (string)item["key"];
+                    var model = (InterfaceModel)types[name];
+                    var offset = FixupMethodOffset(model, types);
+
+                    foreach(var method in model.Methods)
+                    {
+                        method.Index += offset;
+                    }
+                }
+            }
 			return types;
 		}
+
+        static int FixupMethodOffset(InterfaceModel model, Dictionary<string, TypeModel> types)
+        {
+            if (model.MethodOffset != 0)
+                return model.MethodOffset;
+
+            if(model.Parent == types["SlimDX.ComObject"])
+            {
+                model.MethodOffset = 3;
+                return 3;
+            }
+
+            var parent = model.Parent as InterfaceModel;
+            model.MethodOffset = parent.Methods.Count + FixupMethodOffset(parent, types);
+
+            return model.MethodOffset;
+        }
 
 		static IEnumerable<MethodModel> ParseMethods(JsonObject root, Dictionary<string, TypeModel> types)
 		{
