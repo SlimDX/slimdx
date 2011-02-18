@@ -38,7 +38,10 @@ namespace SlimDX.Generator
 				if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
 					builder.Append("out ");
 
-				builder.AppendFormat("{0} {1}", parameter.Type.Name, parameter.Name);
+                if (parameter.Type == TypeModel.VoidModel)
+                    builder.AppendFormat("System.IntPtr {0}", parameter.Name);
+                else
+				    builder.AppendFormat("{0} {1}", parameter.Type.Name, parameter.Name);
 
 				if (parameterIndex < method.Parameters.Count - 1)
 					builder.Append(", ");
@@ -98,11 +101,17 @@ namespace SlimDX.Generator
 			{
 				if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
 				{
-					if (parameter.Type is InterfaceModel)
-						builder.AppendFormat("{0} = new {1}(_{0});", parameter.Name, parameter.Type.Name);
-					else
-						builder.AppendFormat("{0} = _{0};", parameter.Name);
-					builder.AppendLine();
+                    if (parameter.Type is InterfaceModel)
+                        builder.AppendFormat("{0} = new {1}(_{0});", parameter.Name, parameter.Type.Name);
+                    else
+                    {
+                        if (parameter.Type == TypeModel.VoidModel)
+                            builder.AppendFormat("System.IntPtr ");
+                        else
+                            builder.AppendFormat("{0}", parameter.Name);
+                        builder.AppendFormat(" = _{0};", parameter.Name);
+                    }
+				    builder.AppendLine();
 				}
 			}
 
