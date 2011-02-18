@@ -68,30 +68,18 @@
     <Compile Include="CompositingEngine.cs" />
     <Compile Include="ConfigFile.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Metadata\Metadata.cs" />
-    <Compile Include="Metadata\MetadataService.cs" />
     <Compile Include="Model\ApiModel.cs" />
-    <Compile Include="Model\BaseElement.cs" />
-    <Compile Include="Model\EnumerationElement.cs" />
-    <Compile Include="Model\EnumerationItemElement.cs" />
     <Compile Include="Model\EnumerationModel.cs" />
     <Compile Include="Model\EnumerationValueModel.cs" />
-    <Compile Include="Model\FunctionElement.cs" />
-    <Compile Include="Model\InterfaceElement.cs" />
     <Compile Include="Model\InterfaceModel.cs" />
     <Compile Include="Model\MethodModel.cs" />
     <Compile Include="Model\ModelJson.cs" />
     <Compile Include="Model\ModelXml.cs" />
     <Compile Include="Model\ParameterModel.cs" />
     <Compile Include="Model\ParameterModelFlags.cs" />
-    <Compile Include="Model\SourceModel.cs" />
-    <Compile Include="Model\StructureElement.cs" />
     <Compile Include="Model\StructureMemberModel.cs" />
     <Compile Include="Model\StructureModel.cs" />
-    <Compile Include="Model\TypedefElement.cs" />
-    <Compile Include="Model\TypeElement.cs" />
     <Compile Include="Model\TypeModel.cs" />
-    <Compile Include="Model\VariableElement.cs" />
     <Compile Include="Model\VariableModel.cs" />
     <Compile Include="NameRules.cs" />
     <Compile Include="Parsing\HeaderParser.cs" />
@@ -115,34 +103,7 @@
     <Content Include="naming_rules.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Templates\Functions\FunctionBody.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Templates\Functions\InterfaceMethod.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Templates\Functions\OutInitializer.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Templates\Functions\ParameterFixStatement.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Templates\Functions\ParameterMarshalledAssignment.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Templates\Types\Constructor.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Templates\Enums\Enum.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Templates\Enums\EnumFile.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Templates\Enums\EnumItem.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Templates\Functions\Function.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\Types\Enumeration.txt">
@@ -154,25 +115,10 @@
     <Content Include="Templates\Types\Interface.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Templates\Functions\Parameter.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Templates\Overrides\QueryInterface.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Templates\Types\Structure.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Templates\Types\StructureField.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Templates\Types\StructureMarshallerField.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Templates\Types\StructureMember.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Templates\Types\Variable.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -186,71 +132,6 @@
       <Project>{A774A428-009F-4E4D-ABF2-F7E181DAA2E3}</Project>
       <Name>SlimDX</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\Metadata\AddRef.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGIObject.GetPrivateData.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGIDevice.GetAdapter.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGIDevice.CreateSurface.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGIFactory.CreateSwapChain.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGIFactory.CreateSoftwareAdapter.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGIOutput.GetDisplayModeList.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGIOutput.FindClosestMatchingMode.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGIOutput.GetGammaControlCapabilities.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGIOutput.GetGammaControl.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGIOutput.SetGammaControl.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\GetFrameStatistics.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGIOutput.GetDisplaySurfaceData.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGIOutput.SetDisplaySurface.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGISurface.Map.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGISwapChain.SetFullscreenState.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGISwapChain.GetFullscreenState.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGISwapChain.GetContainingOutput.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGISwapChain.ResizeTarget.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\IDXGISwapChain.ResizeBuffers.fmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Metadata\void.tmd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

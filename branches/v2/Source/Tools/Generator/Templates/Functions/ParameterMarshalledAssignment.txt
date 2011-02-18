@@ -1,1 +1,0 @@
-﻿{NativeName} = {Type.ManagedName}.FromMarshaller({NativeName}Marshaller);

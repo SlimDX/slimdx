@@ -1,8 +1,0 @@
-﻿$(Initializers)
-$(FixedStatements)
-
-$(@FunctionTrampolineCall)
-		
-$(@ConstructResults)
-$(MarshalledAssignments)
-$(Return)
