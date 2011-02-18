@@ -131,7 +131,7 @@ namespace SlimDX.Generator
 		/// <returns>An array of types.</returns>
 		static Type[] ExtractTypes(IEnumerable<TrampolineParameter> parameters)
 		{
-			return parameters.Select(p => p.Type).ToArray();
+			return parameters.Select(p => p.Type == typeof(void) ? typeof(IntPtr) : p.Type).ToArray();
 		}
 
 		#endregion
