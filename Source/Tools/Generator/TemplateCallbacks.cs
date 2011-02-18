@@ -63,13 +63,20 @@ namespace SlimDX.Generator
                         builder.AppendFormat("System.IntPtr _{0} = System.IntPtr.Zero;", parameter.Name);
                     else
                     {
-                        builder.AppendFormat("{0} _{1} = default({0});", (parameter.Type is InterfaceModel) ? parameter.Type.MarshallingType.FullName : parameter.Type.Name, parameter.Name);
-                        if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof(IntPtr))
+                        if (parameter.Type is EnumerationModel)
                         {
-                            builder.AppendLine();
-                            builder.AppendFormat("System.IntPtr __{0} = new System.IntPtr(&_{0});", parameter.Name);
+                            builder.AppendFormat("int _{0} = default(int);", parameter.Name);
                         }
-                        
+                        else
+                        {
+                            builder.AppendFormat("{0} _{1} = default({0});", (parameter.Type is InterfaceModel) ? parameter.Type.MarshallingType.FullName : parameter.Type.Name, parameter.Name);
+                            if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof (IntPtr))
+                            {
+                                builder.AppendLine();
+                                builder.AppendFormat("System.IntPtr __{0} = new System.IntPtr(&_{0});", parameter.Name);
+                            }
+                        }
+
                     }
 				    builder.AppendLine();
 				}
@@ -92,16 +99,25 @@ namespace SlimDX.Generator
 			foreach (var parameter in method.Parameters)
 			{
 			    builder.Append(", ");
-                if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof(IntPtr) && parameter.Type.Name != "System.IntPtr")
+                if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof(IntPtr) && parameter.Type.Name != "System.IntPtr" && parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
                 {
-                    builder.AppendFormat("__{0}", parameter.Name);
+                    builder.AppendFormat("ref __{0}", parameter.Name);
                 }
                 else
                 {
                     if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
                         builder.AppendFormat("ref _{0}", parameter.Name);
                     else
-                        builder.AppendFormat(parameter.Name);
+                    {
+                        if (parameter.Type is EnumerationModel)
+                            builder.AppendFormat("(int){0}", parameter.Name);
+                        else if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof(IntPtr) && parameter.Type.Name != "System.IntPtr")
+                            builder.AppendFormat("new System.IntPtr(&{0})", parameter.Name);
+                        else if(parameter.Type is InterfaceModel)
+                            builder.AppendFormat("{0}.NativePointer", parameter.Name);
+                        else
+                            builder.AppendFormat(parameter.Name);
+                    }
                 }
 
 			}
@@ -123,7 +139,14 @@ namespace SlimDX.Generator
                         builder.AppendFormat("{0} = new {1}(_{0});", parameter.Name, parameter.Type.Name);
                     else
                     {
-                        builder.AppendFormat("{0} = _{0};", parameter.Name);
+                        if (parameter.Type is EnumerationModel)
+                        {
+                            builder.AppendFormat("{0} = ({1})_{0};", parameter.Name, parameter.Type.Name);
+                        }
+                        else
+                        {
+                            builder.AppendFormat("{0} = _{0};", parameter.Name);
+                        }
                     }
 				    builder.AppendLine();
 				}
