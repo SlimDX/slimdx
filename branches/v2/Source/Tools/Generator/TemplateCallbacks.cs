@@ -59,7 +59,10 @@ namespace SlimDX.Generator
 			{
 				if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
 				{
-					builder.AppendFormat("{0} _{1} = default({0});", parameter.Type.MarshallingType.FullName, parameter.Name);
+                    if (parameter.Type == TypeModel.VoidModel)
+                        builder.AppendFormat("System.IntPtr _{0} = System.IntPtr.Zero;", parameter.Name);
+                    else
+                        builder.AppendFormat("{0} _{1} = default({0});", parameter.Type.MarshallingType.FullName, parameter.Name);
 					builder.AppendLine();
 				}
 			}
@@ -105,11 +108,7 @@ namespace SlimDX.Generator
                         builder.AppendFormat("{0} = new {1}(_{0});", parameter.Name, parameter.Type.Name);
                     else
                     {
-                        if (parameter.Type == TypeModel.VoidModel)
-                            builder.AppendFormat("System.IntPtr ");
-                        else
-                            builder.AppendFormat("{0}", parameter.Name);
-                        builder.AppendFormat(" = _{0};", parameter.Name);
+                        builder.AppendFormat("{0} = _{0};", parameter.Name);
                     }
 				    builder.AppendLine();
 				}
