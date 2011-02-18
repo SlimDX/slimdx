@@ -108,6 +108,7 @@ namespace SlimDX.Generator
 			var templateEngine = new TemplateEngine(new[] { defaultTemplateDirectory });
 
 			var namespaceName = configuration.GetOption("Options", "Namespace");
+            templateEngine.RegisterCallback("EnumItem", (e, s) => ((dynamic)s).Name.EndsWith("FORCE_DWORD") ? string.Empty : ((dynamic)s).Name + " = " + ((dynamic)s).Value + ",");
 			templateEngine.RegisterCallback("Namespace", (e, s) => namespaceName);
 			templateEngine.RegisterCallbacks(typeof(TemplateCallbacks));
 
