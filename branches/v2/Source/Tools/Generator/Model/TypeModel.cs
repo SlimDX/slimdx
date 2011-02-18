@@ -26,7 +26,7 @@ namespace SlimDX.Generator
 	{
 		static TypeModel()
 		{
-			VoidModel = new TypeModel("void", "void", typeof(void));
+			VoidModel = new TypeModel("void", "System.Void", typeof(void));
 		}
 
 		public TypeModel(string key, string name, Type marshallingType)
@@ -66,6 +66,35 @@ namespace SlimDX.Generator
 			get;
 			private set;
 		}
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || obj.GetType() != GetType())
+                return false;
+
+            return Key == ((TypeModel)obj).Key;
+        }
+
+        public override int GetHashCode()
+        {
+            return Key.GetHashCode() ^ Name.GetHashCode();
+        }
+
+        public static bool operator ==(TypeModel lhs, TypeModel rhs)
+        {
+            if (object.ReferenceEquals(lhs, rhs))
+                return true;
+
+            if (((object)lhs == null) || ((object)rhs == null))
+                return false;
+
+            return lhs.Key == rhs.Key;
+        }
+
+        public static bool operator !=(TypeModel lhs, TypeModel rhs)
+        {
+            return !(lhs == rhs);
+        }
 
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.

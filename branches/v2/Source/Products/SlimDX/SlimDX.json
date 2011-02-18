@@ -25,6 +25,6 @@
 		
 		{ "key": "HRESULT", "name": "Result", "target": "SlimDX.Result, SlimDX" },
 		{ "key": "IUnknown", "name": "ComObject", "target": "SlimDX.ComObject, SlimDX" },
-		{ "key": "RECT", "name": "Rectangle", "target": "System.Drawing.Rectangle, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" }
+		{ "key": "RECT", "name": "System.Drawing.Rectangle", "target": "System.Drawing.Rectangle, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" }
 	]
 }
