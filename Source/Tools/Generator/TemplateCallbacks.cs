@@ -62,8 +62,16 @@ namespace SlimDX.Generator
                     if (parameter.Type == TypeModel.VoidModel)
                         builder.AppendFormat("System.IntPtr _{0} = System.IntPtr.Zero;", parameter.Name);
                     else
-                        builder.AppendFormat("{0} _{1} = default({0});", parameter.Type.MarshallingType.FullName, parameter.Name);
-					builder.AppendLine();
+                    {
+                        builder.AppendFormat("{0} _{1} = default({0});", (parameter.Type is InterfaceModel) ? parameter.Type.MarshallingType.FullName : parameter.Type.Name, parameter.Name);
+                        if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof(IntPtr))
+                        {
+                            builder.AppendLine();
+                            builder.AppendFormat("System.IntPtr __{0} = new System.IntPtr(&_{0});", parameter.Name);
+                        }
+                        
+                    }
+				    builder.AppendLine();
 				}
 			}
 
@@ -83,11 +91,18 @@ namespace SlimDX.Generator
 			builder.AppendFormat("System.IntPtr.Size * {0}, NativePointer", method.Index);
 			foreach (var parameter in method.Parameters)
 			{
-				builder.Append(", ");
-				if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
-					builder.AppendFormat("ref _{0}", parameter.Name);
-				else
-					builder.AppendFormat(parameter.Name);
+			    builder.Append(", ");
+                if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof(IntPtr) && parameter.Type.Name != "System.IntPtr")
+                {
+                    builder.AppendFormat("__{0}", parameter.Name);
+                }
+                else
+                {
+                    if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
+                        builder.AppendFormat("ref _{0}", parameter.Name);
+                    else
+                        builder.AppendFormat(parameter.Name);
+                }
 
 			}
 
