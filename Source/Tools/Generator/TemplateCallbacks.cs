@@ -57,29 +57,9 @@ namespace SlimDX.Generator
 
 			foreach (var parameter in method.Parameters)
 			{
-				if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
-				{
-					if (parameter.Type == TypeModel.VoidModel)
-						builder.AppendFormat("System.IntPtr _{0} = System.IntPtr.Zero;", parameter.Name);
-					else
-					{
-						if (parameter.Type is EnumerationModel)
-						{
-							builder.AppendFormat("int _{0} = default(int);", parameter.Name);
-						}
-						else
-						{
-							builder.AppendFormat("{0} _{1} = default({0});", (parameter.Type is InterfaceModel) ? parameter.Type.MarshallingType.FullName : parameter.Type.Name, parameter.Name);
-							if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof(IntPtr))
-							{
-								builder.AppendLine();
-								builder.AppendFormat("System.IntPtr __{0} = new System.IntPtr(&_{0});", parameter.Name);
-							}
-						}
-
-					}
-					builder.AppendLine();
-				}
+				var declaration = GetParameterDeclarationString(parameter);
+				if (!string.IsNullOrEmpty(declaration))
+					builder.AppendLine(declaration);
 			}
 
 			return builder.ToString();
@@ -97,30 +77,7 @@ namespace SlimDX.Generator
 
 			builder.AppendFormat("System.IntPtr.Size * {0}, NativePointer", method.Index);
 			foreach (var parameter in method.Parameters)
-			{
-				builder.Append(", ");
-				if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof(IntPtr) && parameter.Type.Name != "System.IntPtr" && parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
-				{
-					builder.AppendFormat("ref __{0}", parameter.Name);
-				}
-				else
-				{
-					if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
-						builder.AppendFormat("ref _{0}", parameter.Name);
-					else
-					{
-						if (parameter.Type is EnumerationModel)
-							builder.AppendFormat("(int){0}", parameter.Name);
-						else if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof(IntPtr) && parameter.Type.Name != "System.IntPtr")
-							builder.AppendFormat("new System.IntPtr(&{0})", parameter.Name);
-						else if (parameter.Type is InterfaceModel)
-							builder.AppendFormat("{0}.NativePointer", parameter.Name);
-						else
-							builder.AppendFormat(parameter.Name);
-					}
-				}
-
-			}
+				builder.AppendFormat(", {0}", GetParamterTrampolineString(parameter));
 
 			builder.Append(");");
 			return builder.ToString();
@@ -176,6 +133,66 @@ namespace SlimDX.Generator
 			builder.AppendFormat("result.{0} = source.{0};", member.Name);
 
 			return builder.ToString();
+		}
+
+		static string GetParameterDeclarationString(ParameterModel parameter)
+		{
+			if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
+			{
+				if (parameter.Type == TypeModel.VoidModel)
+					return string.Format("System.IntPtr _{0} = System.IntPtr.Zero;", parameter.Name);
+				else
+				{
+					if (parameter.Type is EnumerationModel)
+					{
+						return string.Format("int _{0} = default(int);", parameter.Name);
+					}
+					else
+					{
+						var builder = new StringBuilder();
+						builder.AppendFormat("{0} _{1} = default({0});", (parameter.Type is InterfaceModel) ? parameter.Type.MarshallingType.FullName : parameter.Type.Name, parameter.Name);
+						if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof(IntPtr))
+						{
+							builder.AppendLine();
+							builder.AppendFormat("System.IntPtr __{0} = new System.IntPtr(&_{0});", parameter.Name);
+						}
+
+						return builder.ToString();
+					}
+				}
+			}
+			else if (parameter.Type is StructureModel)
+			{
+				return string.Format("{0}Marshaller _{1} = {0}.ToMarshaller({1});", parameter.Type, parameter.Name);
+			}
+
+			return null;
+		}
+
+		static string GetParamterTrampolineString(ParameterModel parameter)
+		{
+			if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof(IntPtr) && parameter.Type.Name != "System.IntPtr" && parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
+			{
+				return string.Format("ref __{0}", parameter.Name);
+			}
+			else
+			{
+				if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
+					return string.Format("ref _{0}", parameter.Name);
+				else
+				{
+					if (parameter.Type is EnumerationModel)
+						return string.Format("(int){0}", parameter.Name);
+					else if (parameter.Type is StructureModel)
+						return string.Format("new System.IntPtr(&_{0})", parameter.Name);
+					else if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof(IntPtr) && parameter.Type.Name != "System.IntPtr")
+						return string.Format("new System.IntPtr(&{0})", parameter.Name);
+					else if (parameter.Type is InterfaceModel)
+						return string.Format("{0}.NativePointer", parameter.Name);
+					else
+						return string.Format(parameter.Name);
+				}
+			}
 		}
 	}
 }
