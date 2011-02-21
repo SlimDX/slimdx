@@ -42,6 +42,6 @@ namespace $(@Namespace)
 	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
 	unsafe struct $(Name)Marshaller
 	{
-		$(Members:StructureMarshallerMember)
+		$(Members:@StructureMemberMarshallerDeclaration)
 	}
 }

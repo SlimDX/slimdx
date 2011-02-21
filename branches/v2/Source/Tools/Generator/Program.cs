@@ -108,7 +108,7 @@ namespace SlimDX.Generator
 			var templateEngine = new TemplateEngine(new[] { defaultTemplateDirectory });
 
 			var namespaceName = configuration.GetOption("Options", "Namespace");
-            templateEngine.RegisterCallback("EnumItem", (e, s) => ((dynamic)s).Name.EndsWith("FORCE_DWORD") ? string.Empty : ((dynamic)s).Name + " = " + ((dynamic)s).Value + ",");
+			templateEngine.RegisterCallback("EnumItem", (e, s) => ((dynamic)s).Name.EndsWith("FORCE_DWORD") ? string.Empty : ((dynamic)s).Name + " = " + ((dynamic)s).Value + ",");
 			templateEngine.RegisterCallback("Namespace", (e, s) => namespaceName);
 			templateEngine.RegisterCallbacks(typeof(TemplateCallbacks));
 
@@ -131,7 +131,7 @@ namespace SlimDX.Generator
 						TrampolineParameterFlags flags = TrampolineParameterFlags.Default;
 						if (parameterModel.Flags.HasFlag(ParameterModelFlags.IsOutput))
 							flags |= TrampolineParameterFlags.Reference;
-					    parameters.Add(parameterModel.Type == TypeModel.VoidModel ? new TrampolineParameter(typeof (IntPtr), flags) : new TrampolineParameter(parameterModel.Type.MarshallingType, flags));
+						parameters.Add(parameterModel.Type == TypeModel.VoidModel ? new TrampolineParameter(typeof(IntPtr), flags) : new TrampolineParameter(parameterModel.Type.MarshallingType, flags));
 					}
 
 					trampolineBuilder.Add(new Trampoline(methodModel.Type.MarshallingType, parameters.ToArray()));
