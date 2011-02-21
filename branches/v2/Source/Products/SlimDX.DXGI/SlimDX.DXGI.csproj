@@ -52,43 +52,17 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="DXGI.cs" />
-    <Compile Include="Generated\DXGI_ADAPTER_DESC.cs" />
-    <Compile Include="Generated\DXGI_ADAPTER_DESC1.cs" />
-    <Compile Include="Generated\DXGI_ADAPTER_FLAG.cs" />
-    <Compile Include="Generated\DXGI_DISPLAY_COLOR_SPACE.cs" />
     <Compile Include="Generated\DXGI_FORMAT.cs" />
-    <Compile Include="Generated\DXGI_FRAME_STATISTICS.cs" />
-    <Compile Include="Generated\DXGI_GAMMA_CONTROL.cs" />
-    <Compile Include="Generated\DXGI_GAMMA_CONTROL_CAPABILITIES.cs" />
-    <Compile Include="Generated\DXGI_MAPPED_RECT.cs" />
     <Compile Include="Generated\DXGI_MODE_DESC.cs" />
-    <Compile Include="Generated\DXGI_MODE_ROTATION.cs" />
     <Compile Include="Generated\DXGI_MODE_SCALING.cs" />
     <Compile Include="Generated\DXGI_MODE_SCANLINE_ORDER.cs" />
-    <Compile Include="Generated\DXGI_OUTPUT_DESC.cs" />
     <Compile Include="Generated\DXGI_RATIONAL.cs" />
-    <Compile Include="Generated\DXGI_RESIDENCY.cs" />
-    <Compile Include="Generated\DXGI_RGB.cs" />
     <Compile Include="Generated\DXGI_SAMPLE_DESC.cs" />
-    <Compile Include="Generated\DXGI_SHARED_RESOURCE.cs" />
-    <Compile Include="Generated\DXGI_SURFACE_DESC.cs" />
     <Compile Include="Generated\DXGI_SWAP_CHAIN_DESC.cs" />
-    <Compile Include="Generated\DXGI_SWAP_CHAIN_FLAG.cs" />
     <Compile Include="Generated\DXGI_SWAP_EFFECT.cs" />
     <Compile Include="Generated\DXGI_USAGE.cs" />
     <Compile Include="Generated\IDXGIAdapter.cs" />
-    <Compile Include="Generated\IDXGIAdapter1.cs" />
-    <Compile Include="Generated\IDXGIDevice.cs" />
-    <Compile Include="Generated\IDXGIDevice1.cs" />
-    <Compile Include="Generated\IDXGIDeviceSubObject.cs" />
     <Compile Include="Generated\IDXGIFactory.cs" />
-    <Compile Include="Generated\IDXGIFactory1.cs" />
-    <Compile Include="Generated\IDXGIKeyedMutex.cs" />
-    <Compile Include="Generated\IDXGIObject.cs" />
-    <Compile Include="Generated\IDXGIOutput.cs" />
-    <Compile Include="Generated\IDXGIResource.cs" />
-    <Compile Include="Generated\IDXGISurface.cs" />
-    <Compile Include="Generated\IDXGISurface1.cs" />
     <Compile Include="Generated\IDXGISwapChain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

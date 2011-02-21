@@ -193,6 +193,11 @@
 			"guid": "2411e7e1-12ac-4ccf-bd14-9798e8534dc0"
 		},
 		{
+			"key": "IDXGISwapChain",
+			"type": "IUnknown",
+			"guid": "310d36a0-d2e7-4c0a-aa04-6a9d23b8886a"
+		},
+		{
 			"key": "IDXGIFactory",
 			"type": "IUnknown",
 			"guid": "7b7166ec-21c7-44ae-b21a-c9ae321ae369",
@@ -204,6 +209,16 @@
 					"parameters": [
 						{ "key": "priority", "type": "int" },
 						{ "key": "adapter", "type": "IDXGIAdapter", "flags": [ "out" ] }
+					]
+				},
+				{
+					"key": "CreateSwapChain",
+					"type": "HRESULT",
+					"index": "10", 
+					"parameters": [
+						{ "key": "device", "type": "IUnknown" },
+						{ "key": "description", "type": "DXGI_SWAP_CHAIN_DESC" },
+						{ "key": "swapChain", "type": "IDXGISwapChain", "flags": [ "out" ] }
 					]
 				}
 			]
