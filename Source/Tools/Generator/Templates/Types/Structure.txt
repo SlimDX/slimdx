@@ -22,19 +22,19 @@ namespace $(@Namespace)
 {
 	public struct $(Name)
 	{
-		internal unsafe static $(Name) FromMarshaller($(Name)Marshaller marshaller)
+		internal unsafe static $(Name) FromMarshaller($(Name)Marshaller source)
 		{
 			$(Name) result = new $(Name)();
+			$(Members:@MemberFromMarshallerAssignment)
 			return result;
 		}
 
-		internal unsafe static $(Name)Marshaller ToMarshaller($(Name) managed)
+		internal unsafe static $(Name)Marshaller ToMarshaller($(Name) source)
 		{
-			return default($(Name)Marshaller);
+			$(Name)Marshaller result = new $(Name)Marshaller();
+			$(Members:@MemberToMarshallerAssignment)
+			return result;
 		}
-
-		//public $(Name)() {
-		//}
 
 		$(Members:StructureMember)
 	}
