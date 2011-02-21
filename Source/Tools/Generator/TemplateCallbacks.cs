@@ -77,7 +77,7 @@ namespace SlimDX.Generator
 
 			builder.AppendFormat("System.IntPtr.Size * {0}, NativePointer", method.Index);
 			foreach (var parameter in method.Parameters)
-				builder.AppendFormat(", {0}", GetParamterTrampolineString(parameter));
+				builder.AppendFormat(", {0}", GetParameterTrampolineString(parameter));
 
 			builder.Append(");");
 			return builder.ToString();
@@ -115,12 +115,28 @@ namespace SlimDX.Generator
 			return builder.ToString();
 		}
 
+		public static string StructureMemberMarshallerDeclaration(TemplateEngine engine, object source)
+		{
+			StructureMemberModel member = (StructureMemberModel)source;
+			var builder = new StringBuilder();
+
+			if (member.Type is StructureModel)
+				builder.AppendFormat("public {0}Marshaller {1};", member.Type.Name, member.Name);
+			else
+				builder.AppendFormat("public {0} {1};", member.Type.Name, member.Name);
+
+			return builder.ToString();
+		}
+
 		public static string MemberFromMarshallerAssignment(TemplateEngine engine, object source)
 		{
 			StructureMemberModel member = (StructureMemberModel)source;
 			var builder = new StringBuilder();
 
-			builder.AppendFormat("result.{0} = source.{0};", member.Name);
+			if (member.Type is StructureModel)
+				builder.AppendFormat("result.{0} = {1}.FromMarshaller(source.{0});", member.Name, member.Type.Name);
+			else
+				builder.AppendFormat("result.{0} = source.{0};", member.Name);
 
 			return builder.ToString();
 		}
@@ -130,7 +146,10 @@ namespace SlimDX.Generator
 			StructureMemberModel member = (StructureMemberModel)source;
 			var builder = new StringBuilder();
 
-			builder.AppendFormat("result.{0} = source.{0};", member.Name);
+			if (member.Type is StructureModel)
+				builder.AppendFormat("result.{0} = {1}.ToMarshaller(source.{0});", member.Name, member.Type.Name);
+			else
+				builder.AppendFormat("result.{0} = source.{0};", member.Name);
 
 			return builder.ToString();
 		}
@@ -169,7 +188,7 @@ namespace SlimDX.Generator
 			return null;
 		}
 
-		static string GetParamterTrampolineString(ParameterModel parameter)
+		static string GetParameterTrampolineString(ParameterModel parameter)
 		{
 			if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof(IntPtr) && parameter.Type.Name != "System.IntPtr" && parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
 			{
@@ -184,7 +203,7 @@ namespace SlimDX.Generator
 					if (parameter.Type is EnumerationModel)
 						return string.Format("(int){0}", parameter.Name);
 					else if (parameter.Type is StructureModel)
-						return string.Format("new System.IntPtr(&_{0})", parameter.Name);
+						return string.Format("&_{0}", parameter.Name);
 					else if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof(IntPtr) && parameter.Type.Name != "System.IntPtr")
 						return string.Format("new System.IntPtr(&{0})", parameter.Name);
 					else if (parameter.Type is InterfaceModel)

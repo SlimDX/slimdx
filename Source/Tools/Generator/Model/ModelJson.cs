@@ -135,45 +135,30 @@ namespace SlimDX.Generator
 					var name = (string)item["key"];
 					var model = (InterfaceModel)types[name];
 
-                    model.Parent = types[(string)item["type"]].Key == "IUnknown" ? types["SlimDX.ComObject"] : types[(string)item["type"]];
+					model.Parent = types[(string)item["type"]].Key == "IUnknown" ? types["SlimDX.ComObject"] : types[(string)item["type"]];
 					foreach (var method in ParseMethods(item, types))
 						model.AddMethod(method);
 				}
 			}
-
-            if (root.TryGetValue("interfaces", out items))
-            {
-                foreach (var item in items)
-                {
-                    var name = (string)item["key"];
-                    var model = (InterfaceModel)types[name];
-                    var offset = FixupMethodOffset(model, types);
-
-                    foreach(var method in model.Methods)
-                    {
-                        method.Index += offset;
-                    }
-                }
-            }
 			return types;
 		}
 
-        static int FixupMethodOffset(InterfaceModel model, Dictionary<string, TypeModel> types)
-        {
-            if (model.MethodOffset != 0)
-                return model.MethodOffset;
+		static int FixupMethodOffset(InterfaceModel model, Dictionary<string, TypeModel> types)
+		{
+			if (model.MethodOffset != 0)
+				return model.MethodOffset;
 
-            if(model.Parent == types["SlimDX.ComObject"])
-            {
-                model.MethodOffset = 3;
-                return 3;
-            }
+			if (model.Parent == types["SlimDX.ComObject"])
+			{
+				model.MethodOffset = 3;
+				return 3;
+			}
 
-            var parent = model.Parent as InterfaceModel;
-            model.MethodOffset = parent.Methods.Count + FixupMethodOffset(parent, types);
+			var parent = model.Parent as InterfaceModel;
+			model.MethodOffset = parent.Methods.Count + FixupMethodOffset(parent, types);
 
-            return model.MethodOffset;
-        }
+			return model.MethodOffset;
+		}
 
 		static IEnumerable<MethodModel> ParseMethods(JsonObject root, Dictionary<string, TypeModel> types)
 		{

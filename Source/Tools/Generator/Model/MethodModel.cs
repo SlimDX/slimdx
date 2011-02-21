@@ -47,7 +47,7 @@ namespace SlimDX.Generator
 		public int Index
 		{
 			get;
-			set;
+			private set;
 		}
 
 		public ReadOnlyCollection<ParameterModel> Parameters
