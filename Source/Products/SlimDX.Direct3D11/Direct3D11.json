@@ -1,11 +1,54 @@
 ﻿{
 	"dependencies": [ "../SlimDX/SlimDX.json" ],
 
+	"enumerations": [
+		{
+			"key": "D3D11_USAGE",
+			"values": [
+				{ "key": "D3D11_USAGE_DEFAULT", "value": "0" },
+				{ "key": "D3D11_USAGE_IMMUTABLE", "value": "1" },
+				{ "key": "D3D11_USAGE_DYNAMIC", "value": "2" },
+				{ "key": "D3D11_USAGE_STAGING", "value": "3" }
+			]
+		}
+	],
+
+	"structures": [
+		{
+			"key": "D3D11_BUFFER_DESC",
+			"members": [
+				{ "key": "ByteWidth", "type": "UINT" },
+				{ "key": "Usage", "type": "D3D11_USAGE" },
+				{ "key": "BindFlags", "type": "UINT" },
+				{ "key": "CPUAccessFlags", "type": "UINT" },
+				{ "key": "MiscFlags", "type": "UINT" },
+				{ "key": "StructureByteStride", "type": "UINT" }
+			]
+		}
+	],
+
 	"interfaces": [
+		{
+			"key": "ID3D11Buffer",
+			"type": "IUnknown",
+			"guid": "48570b85-d1ee-4fcd-a250-eb350722b037"
+		},
 		{
 			"key": "ID3D11Device",
 			"type": "IUnknown",
-			"guid": "db6f6ddb-ac77-4e88-8253-819df9bbf140"
+			"guid": "db6f6ddb-ac77-4e88-8253-819df9bbf140",
+			"methods": [
+				{
+					"key": "CreateBuffer",
+					"type": "HRESULT",
+					"index": "3", 
+					"parameters": [
+						{ "key": "description", "type": "D3D11_BUFFER_DESC" },
+						{ "key": "data", "type": "IUnknown" },
+						{ "key": "buffer", "type": "ID3D11Buffer", "flags": [ "out" ] }
+					]
+				}
+			]
 		}
 	]
 }

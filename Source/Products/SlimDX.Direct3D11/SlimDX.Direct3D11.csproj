@@ -39,6 +39,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SlimDX.Direct3D11.Trampoline">
+      <HintPath>Generated\SlimDX.Direct3D11.Trampoline.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +51,9 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Direct3D11.cs" />
+    <Compile Include="Generated\D3D11_BUFFER_DESC.cs" />
+    <Compile Include="Generated\D3D11_USAGE.cs" />
+    <Compile Include="Generated\ID3D11Buffer.cs" />
     <Compile Include="Generated\ID3D11Device.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

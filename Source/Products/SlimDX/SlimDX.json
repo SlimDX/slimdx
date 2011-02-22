@@ -23,7 +23,7 @@
 		{ "key": "IID", "target": "System.Guid" },
 		{ "key": "REFIID", "target": "System.Guid" },
 		
-		{ "key": "HRESULT", "name": "Result", "target": "SlimDX.Result, SlimDX" },
+		{ "key": "HRESULT", "name": "System.Int32", "target": "System.Int32" },
 		{ "key": "IUnknown", "name": "System.IntPtr", "target": "System.IntPtr" },
 		{ "key": "SlimDX.ComObject", "name": "SlimDX.ComObject", "target": "SlimDX.ComObject, SlimDX" },
 		{ "key": "RECT", "name": "System.Drawing.Rectangle", "target": "System.Drawing.Rectangle, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" }

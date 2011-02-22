@@ -22,5 +22,7 @@ namespace SlimDX
 {
 	public class Result
 	{
+		public Result(int result) {
+		}
 	}
 }
