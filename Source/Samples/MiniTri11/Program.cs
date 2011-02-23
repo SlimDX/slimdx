@@ -72,8 +72,9 @@ namespace MiniTri11
 			IDXGISwapChain swapChain = null;
 			factory.CreateSwapChain(device.NativePointer, swapChainDescription, out swapChain);
 
+			ID3D11Texture2D backbuffer = swapChain.GetBuffer<ID3D11Texture2D>(0);
 
-
+			backbuffer.ReleaseReference();
 			swapChain.ReleaseReference();
 			device.ReleaseReference();
 			adapter.ReleaseReference();
