@@ -68,21 +68,9 @@ namespace MiniTri11
 				Windowed = true
 			};
 
-			ID3D11Device device = Direct3D11.CreateDevice();
-			ID3D11Buffer buffer = null;
-			D3D11_BUFFER_DESC bufferDescription = new D3D11_BUFFER_DESC {
-				BindFlags = 0, //D3D11_BIND_VERTEX_BUFFER -- change to 0 to get a failing call
-				CPUAccessFlags = 0x10000, //D3D11_CPU_ACCESS_WRITE
-				MiscFlags = 0,
-				ByteWidth = 3 * 32,
-				StructureByteStride = 0,
-				Usage = D3D11_USAGE.D3D11_USAGE_DYNAMIC
-			};
-			Int32 test = device.CreateBuffer( bufferDescription, IntPtr.Zero, out buffer );
-			
-			
-			//IDXGISwapChain swapChain = null;
-			//factory.CreateSwapChain(device.NativePointer, swapChainDescription, out swapChain);
+			ID3D11Device device = Direct3D11.CreateDevice(adapter);
+			IDXGISwapChain swapChain = null;
+			factory.CreateSwapChain(device.NativePointer, swapChainDescription, out swapChain);
 
 			foreach (var reference in ReferenceTracker.GetCurrentReferences())
 			{

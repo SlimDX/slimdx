@@ -21,6 +21,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
+using SlimDX.DXGI;
 
 namespace SlimDX.Direct3D11
 {
@@ -31,14 +32,15 @@ namespace SlimDX.Direct3D11
 	{
 		#region Interface
 
-		public static ID3D11Device CreateDevice()
+		public static ID3D11Device CreateDevice(IDXGIAdapter adapter)
 		{
+			IntPtr adapterPointer = adapter != null ? adapter.NativePointer : IntPtr.Zero;
 			IntPtr devicePointer = IntPtr.Zero;
 			IntPtr contextPointer = IntPtr.Zero;
 			IntPtr featureLevel = IntPtr.Zero;
 			int result = CreateD3D11Device(
-				IntPtr.Zero,
-				1, /* hardware */
+				adapterPointer,
+				adapter != null ? 0 : 1,
 				IntPtr.Zero,
 				2,
 				IntPtr.Zero,
