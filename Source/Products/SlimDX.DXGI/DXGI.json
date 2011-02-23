@@ -195,7 +195,19 @@
 		{
 			"key": "IDXGISwapChain",
 			"type": "IUnknown",
-			"guid": "310d36a0-d2e7-4c0a-aa04-6a9d23b8886a"
+			"guid": "310d36a0-d2e7-4c0a-aa04-6a9d23b8886a",
+			"methods": [
+				{
+					"key": "GetBuffer",
+					"type": "HRESULT",
+					"index": "9", 
+					"parameters": [
+						{ "key": "buffer", "type": "UINT" },
+						{ "key": "riid", "type": "IUnknown" },
+						{ "key": "surface", "type": "IUnknown", "flags": [ "out" ] }
+					]
+				}
+			]
 		},
 		{
 			"key": "IDXGIFactory",
