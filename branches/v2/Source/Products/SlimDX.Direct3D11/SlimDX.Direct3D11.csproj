@@ -55,6 +55,7 @@
     <Compile Include="Generated\D3D11_USAGE.cs" />
     <Compile Include="Generated\ID3D11Buffer.cs" />
     <Compile Include="Generated\ID3D11Device.cs" />
+    <Compile Include="Generated\ID3D11Texture2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
