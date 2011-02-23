@@ -43,6 +43,7 @@
     </Compile>
     <Compile Include="Color3.cs" />
     <Compile Include="ComObject.cs" />
+    <Compile Include="ComObjectFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReferenceTracker.cs" />
     <Compile Include="Result.cs" />
