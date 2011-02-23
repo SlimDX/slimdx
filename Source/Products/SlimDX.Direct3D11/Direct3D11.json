@@ -34,6 +34,11 @@
 			"guid": "48570b85-d1ee-4fcd-a250-eb350722b037"
 		},
 		{
+			"key": "ID3D11Texture2D",
+			"type": "IUnknown",
+			"guid": "6f15aaf2-d208-4e89-9ab4-489535d34f9c"
+		},
+		{
 			"key": "ID3D11Device",
 			"type": "IUnknown",
 			"guid": "db6f6ddb-ac77-4e88-8253-819df9bbf140",

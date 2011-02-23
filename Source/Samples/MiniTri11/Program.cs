@@ -72,37 +72,12 @@ namespace MiniTri11
 			IDXGISwapChain swapChain = null;
 			factory.CreateSwapChain(device.NativePointer, swapChainDescription, out swapChain);
 
-			foreach (var reference in ReferenceTracker.GetCurrentReferences())
-			{
-				Console.WriteLine(reference);
-			}
 
-			var adapter2 = adapter.QueryInterface<IDXGIAdapter>();
 
-			Console.WriteLine("After QI:");
-
-			foreach (var reference in ReferenceTracker.GetCurrentReferences())
-			{
-				Console.WriteLine(reference);
-			}
-
+			swapChain.ReleaseReference();
 			device.ReleaseReference();
 			adapter.ReleaseReference();
 			factory.ReleaseReference();
-
-			Console.WriteLine("References not cleaned up: ");
-			foreach (var reference in ReferenceTracker.GetCurrentReferences())
-			{
-				Console.WriteLine(reference);
-			}
-
-			adapter2.ReleaseReference();
-
-			Console.WriteLine("After final cleanup: ");
-			foreach (var reference in ReferenceTracker.GetCurrentReferences())
-			{
-				Console.WriteLine(reference);
-			}
 		}
 	}
 }
