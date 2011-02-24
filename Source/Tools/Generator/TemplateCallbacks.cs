@@ -184,6 +184,10 @@ namespace SlimDX.Generator
 			{
 				return string.Format("{0}Marshaller _{1} = {0}.ToMarshaller({1});", parameter.Type, parameter.Name);
 			}
+			else if (parameter.Type.MarshallingType == typeof(Guid))
+			{
+				return string.Format("System.IntPtr _{0} = new System.IntPtr(&{0});", parameter.Name);
+			}
 
 			return null;
 		}
@@ -193,6 +197,10 @@ namespace SlimDX.Generator
 			if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof(IntPtr) && parameter.Type.Name != "System.IntPtr" && parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
 			{
 				return string.Format("ref __{0}", parameter.Name);
+			}
+			else if (parameter.Type.MarshallingType == typeof(Guid))
+			{
+				return string.Format("_{0}", parameter.Name);
 			}
 			else
 			{
