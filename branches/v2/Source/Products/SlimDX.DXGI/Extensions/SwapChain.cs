@@ -27,8 +27,7 @@ namespace SlimDX.DXGI
 		public unsafe T GetBuffer<T>(int index) where T : ComObject
 		{
 			var result = IntPtr.Zero;
-			var guid = typeof(T).GUID;
-			int hr = GetBuffer(index, new IntPtr(&guid), out result);
+			int hr = GetBuffer(index, typeof(T).GUID, out result);
 
 			return ObjectFactory.Create<T>(result);
 		}

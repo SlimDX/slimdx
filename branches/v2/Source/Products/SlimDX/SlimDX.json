@@ -1,6 +1,6 @@
 ﻿{
 	"references": [
-		{ "key": "void", "target": "System.Void", "name": "void" },
+		{ "key": "void", "name": "void", "target": "System.Void" },
 		{ "key": "int", "target": "System.Int32" },
 		{ "key": "INT", "target": "System.Int32" },
 		{ "key": "UINT", "target": "System.Int32" },

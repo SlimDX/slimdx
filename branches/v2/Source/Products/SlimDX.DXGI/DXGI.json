@@ -203,7 +203,7 @@
 					"index": "9", 
 					"parameters": [
 						{ "key": "buffer", "type": "UINT" },
-						{ "key": "riid", "type": "IUnknown" },
+						{ "key": "riid", "type": "REFIID" },
 						{ "key": "surface", "type": "IUnknown", "flags": [ "out" ] }
 					]
 				}
