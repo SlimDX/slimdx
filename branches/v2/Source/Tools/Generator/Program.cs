@@ -136,9 +136,15 @@ namespace SlimDX.Generator
 						TrampolineParameterFlags flags = TrampolineParameterFlags.Default;
 						if (parameterModel.Flags.HasFlag(ParameterModelFlags.IsOutput))
 							flags |= TrampolineParameterFlags.Reference;
+
 						var trampolineType = parameterModel.Type.MarshallingType;
-						if (trampolineType == typeof(Guid))
-							trampolineType = typeof(void*);
+						switch (parameterModel.MarshalBehavior)
+						{
+							case MarshalBehavior.Indirect:
+								trampolineType = typeof(void*);
+								break;
+						}
+
 						parameters.Add(parameterModel.Type == TypeModel.VoidModel ? new TrampolineParameter(typeof(IntPtr), flags) : new TrampolineParameter(trampolineType, flags));
 					}
 
