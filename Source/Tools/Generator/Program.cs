@@ -120,6 +120,11 @@ namespace SlimDX.Generator
 			ApplyTemplate(api.Structures, outputDirectory, templateEngine, "Structure");
 			ApplyTemplate(api.Interfaces, outputDirectory, templateEngine, "Interface");
 
+			BuildTrampolineAssembly(api, outputDirectory, string.Format("{0}.Trampoline", namespaceName));
+		}
+
+		static void BuildTrampolineAssembly(ApiModel api, string outputDirectory, string outputFile)
+		{
 			TrampolineAssemblyBuilder trampolineBuilder = new TrampolineAssemblyBuilder();
 			foreach (var interfaceModel in api.Interfaces)
 			{
@@ -132,8 +137,8 @@ namespace SlimDX.Generator
 						if (parameterModel.Flags.HasFlag(ParameterModelFlags.IsOutput))
 							flags |= TrampolineParameterFlags.Reference;
 						var trampolineType = parameterModel.Type.MarshallingType;
-						if( trampolineType == typeof(Guid))
-							trampolineType = typeof(IntPtr);
+						if (trampolineType == typeof(Guid))
+							trampolineType = typeof(void*);
 						parameters.Add(parameterModel.Type == TypeModel.VoidModel ? new TrampolineParameter(typeof(IntPtr), flags) : new TrampolineParameter(trampolineType, flags));
 					}
 
@@ -141,7 +146,7 @@ namespace SlimDX.Generator
 				}
 			}
 
-			trampolineBuilder.CreateAssembly(outputDirectory, string.Format("{0}.Trampoline", namespaceName));
+			trampolineBuilder.CreateAssembly(outputDirectory, outputFile);
 		}
 
 		static void ApplyTemplate(IEnumerable<TypeModel> items, string outputDirectory, TemplateEngine templateEngine, string templateName)

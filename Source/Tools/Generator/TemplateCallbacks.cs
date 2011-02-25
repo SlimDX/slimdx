@@ -25,6 +25,14 @@ using System.Text;
 
 namespace SlimDX.Generator
 {
+	enum MarshalBehavior
+	{
+		Direct,
+		Indirect,
+		Marshal,
+		Output
+	}
+
 	static class TemplateCallbacks
 	{
 		public static string MethodParameters(TemplateEngine engine, object source)
@@ -156,69 +164,29 @@ namespace SlimDX.Generator
 
 		static string GetParameterDeclarationString(ParameterModel parameter)
 		{
-			if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
+			switch (parameter.MarshalBehavior)
 			{
-				if (parameter.Type == TypeModel.VoidModel)
-					return string.Format("System.IntPtr _{0} = System.IntPtr.Zero;", parameter.Name);
-				else
-				{
-					if (parameter.Type is EnumerationModel)
-					{
-						return string.Format("int _{0} = default(int);", parameter.Name);
-					}
-					else
-					{
-						var builder = new StringBuilder();
-						builder.AppendFormat("{0} _{1} = default({0});", (parameter.Type is InterfaceModel) ? parameter.Type.MarshallingType.FullName : parameter.Type.Name, parameter.Name);
-						if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof(IntPtr))
-						{
-							builder.AppendLine();
-							builder.AppendFormat("System.IntPtr __{0} = new System.IntPtr(&_{0});", parameter.Name);
-						}
-
-						return builder.ToString();
-					}
-				}
+				case MarshalBehavior.Output:
+					return string.Format("System.IntPtr _{0} = default(System.IntPtr);", parameter.Name);
+				case MarshalBehavior.Marshal:
+					return string.Format("{0}Marshaller _{1} = {0}.ToMarshaller({1});", parameter.Type.Name, parameter.Name);
+				default:
+					return null;
 			}
-			else if (parameter.Type is StructureModel)
-			{
-				return string.Format("{0}Marshaller _{1} = {0}.ToMarshaller({1});", parameter.Type, parameter.Name);
-			}
-			else if (parameter.Type.MarshallingType == typeof(Guid))
-			{
-				return string.Format("System.IntPtr _{0} = new System.IntPtr(&{0});", parameter.Name);
-			}
-
-			return null;
 		}
 
 		static string GetParameterTrampolineString(ParameterModel parameter)
 		{
-			if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof(IntPtr) && parameter.Type.Name != "System.IntPtr" && parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
+			switch (parameter.MarshalBehavior)
 			{
-				return string.Format("ref __{0}", parameter.Name);
-			}
-			else if (parameter.Type.MarshallingType == typeof(Guid))
-			{
-				return string.Format("_{0}", parameter.Name);
-			}
-			else
-			{
-				if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
+				case MarshalBehavior.Indirect:
+					return string.Format("&{0}", parameter.Name);
+				case MarshalBehavior.Output:
 					return string.Format("ref _{0}", parameter.Name);
-				else
-				{
-					if (parameter.Type is EnumerationModel)
-						return string.Format("(int){0}", parameter.Name);
-					else if (parameter.Type is StructureModel)
-						return string.Format("&_{0}", parameter.Name);
-					else if (!(parameter.Type is InterfaceModel) && parameter.Type.MarshallingType == typeof(IntPtr) && parameter.Type.Name != "System.IntPtr")
-						return string.Format("new System.IntPtr(&{0})", parameter.Name);
-					else if (parameter.Type is InterfaceModel)
-						return string.Format("{0}.NativePointer", parameter.Name);
-					else
-						return string.Format(parameter.Name);
-				}
+				case MarshalBehavior.Marshal:
+					return string.Format("&_{0}", parameter.Name);
+				default:
+					return parameter.Name;
 			}
 		}
 	}
