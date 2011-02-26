@@ -44,6 +44,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Color3.cs" />
+    <Compile Include="Color4.cs" />
     <Compile Include="ComObject.cs" />
     <Compile Include="ComObjectFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

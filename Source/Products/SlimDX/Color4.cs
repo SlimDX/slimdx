@@ -18,56 +18,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
+using System.Runtime.InteropServices;
 
-namespace SlimDX.Generator
+namespace SlimDX
 {
-	class ParameterModel
+	[StructLayout(LayoutKind.Sequential)]
+	public struct Color4
 	{
-		public ParameterModel(string name, TypeModel type, ParameterModelFlags flags)
-		{
-			Name = name;
-			Type = type;
-			Flags = flags;
-
-			if (type is StructureModel)
-				MarshalBehavior = MarshalBehavior.Marshal;
-			else if (type.MarshallingType == typeof(Guid) || type.MarshallingType == typeof(SlimDX.Color4))//TODO: This isnt' scalable.
-				MarshalBehavior = MarshalBehavior.Indirect;
-			else
-				MarshalBehavior = MarshalBehavior.Direct;
-
-			if (flags.HasFlag(ParameterModelFlags.IsOutput))
-				MarshalBehavior = MarshalBehavior.Output;
-		}
-
-		public string Name
-		{
-			get;
-			private set;
-		}
-
-		public TypeModel Type
-		{
-			get;
-			private set;
-		}
-
-		public MarshalBehavior MarshalBehavior
-		{
-			get;
-			private set;
-		}
-
-		public ParameterModelFlags Flags
-		{
-			get;
-			private set;
-		}
-
-		public override string ToString()
-		{
-			return Name;
-		}
+		public float R;
+		public float G;
+		public float B;
+		public float A;
 	}
 }
