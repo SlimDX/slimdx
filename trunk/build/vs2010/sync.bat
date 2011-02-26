@@ -1,1 +1,0 @@
-ProjectSync ../SlimDX.vcproj SlimDX.vcxproj ..\
