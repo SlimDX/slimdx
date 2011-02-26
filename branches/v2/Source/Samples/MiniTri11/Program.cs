@@ -74,6 +74,9 @@ namespace MiniTri11
 
 			ID3D11Texture2D backbuffer = swapChain.GetBuffer<ID3D11Texture2D>(0);
 
+			RenderLoop loop = new RenderLoop();
+			loop.Run(form, () => { });
+
 			backbuffer.ReleaseReference();
 			swapChain.ReleaseReference();
 			device.ReleaseReference();
