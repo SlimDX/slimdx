@@ -29,14 +29,34 @@
 
 	"interfaces": [
 		{
-			"key": "ID3D11Buffer",
+			"key": "ID3D11DeviceChild",
 			"type": "IUnknown",
+			"guid": "1841e5c8-16b0-489b-bcc8-44cfb0d5deae"
+		},
+		{
+			"key": "ID3D11Resource",
+			"type": "ID3D11DeviceChild",
+			"guid": "dc8e63f3-d12b-4952-b47b-5e45026a862d"
+		},
+		{
+			"key": "ID3D11Buffer",
+			"type": "ID3D11Resource",
 			"guid": "48570b85-d1ee-4fcd-a250-eb350722b037"
 		},
 		{
 			"key": "ID3D11Texture2D",
-			"type": "IUnknown",
+			"type": "ID3D11Resource",
 			"guid": "6f15aaf2-d208-4e89-9ab4-489535d34f9c"
+		},
+		{
+			"key": "ID3D11RenderTargetView",
+			"type": "IUnknown",
+			"guid": "dfdba067-0b8d-4865-875b-d7b4516cc164"
+		},
+		{
+			"key": "ID3D11DeviceContext",
+			"type": "IUnknown",
+			"guid": "c0bfa96c-e089-44fb-8eaf-26f8796190da"
 		},
 		{
 			"key": "ID3D11Device",
@@ -51,6 +71,24 @@
 						{ "key": "description", "type": "D3D11_BUFFER_DESC" },
 						{ "key": "data", "type": "IUnknown" },
 						{ "key": "buffer", "type": "ID3D11Buffer", "flags": [ "out" ] }
+					]
+				},
+				{
+					"key": "CreateRenderTargetView",
+					"type": "HRESULT",
+					"index": "9", 
+					"parameters": [
+						{ "key": "resource", "type": "ID3D11Resource" },
+						{ "key": "description", "type": "IUnknown" },
+						{ "key": "view", "type": "ID3D11RenderTargetView", "flags": [ "out" ] }
+					]
+				},
+				{
+					"key": "GetImmediateContext",
+					"type": "void",
+					"index": "40", 
+					"parameters": [
+						{ "key": "context", "type": "ID3D11DeviceContext", "flags": [ "out" ] }
 					]
 				}
 			]
