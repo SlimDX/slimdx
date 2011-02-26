@@ -56,7 +56,18 @@
 		{
 			"key": "ID3D11DeviceContext",
 			"type": "IUnknown",
-			"guid": "c0bfa96c-e089-44fb-8eaf-26f8796190da"
+			"guid": "c0bfa96c-e089-44fb-8eaf-26f8796190da",
+			"methods": [
+				{
+					"key": "ClearRenderTargetView",
+					"type": "void",
+					"index": "50", 
+					"parameters": [
+						{ "key": "view", "type": "ID3D11RenderTargetView" },
+						{ "key": "color", "type": "Color4" }
+					]
+				}
+			]
 		},
 		{
 			"key": "ID3D11Device",
