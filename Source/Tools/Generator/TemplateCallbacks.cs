@@ -186,7 +186,10 @@ namespace SlimDX.Generator
 				case MarshalBehavior.Marshal:
 					return string.Format("&_{0}", parameter.Name);
 				default:
-					return parameter.Name;
+					if (parameter.Type is InterfaceModel)//TODO: Should this be an entirely distinct marshalling behavior?
+						return string.Format("{0}.NativePointer", parameter.Name);
+					else
+						return parameter.Name;
 			}
 		}
 	}
