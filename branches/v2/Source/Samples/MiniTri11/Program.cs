@@ -56,7 +56,7 @@ namespace MiniTri11
 					ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER.DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED,
 					Width = 100
 				},
-				BufferUsage = DXGI_USAGE.DXGI_USAGE_BACK_BUFFER,
+				BufferUsage = DXGI_USAGE.DXGI_USAGE_RENDER_TARGET_OUTPUT,
 				Flags = 0,
 				OutputWindow = form.Handle,
 				SampleDesc = new DXGI_SAMPLE_DESC
@@ -73,10 +73,19 @@ namespace MiniTri11
 			factory.CreateSwapChain(device.NativePointer, swapChainDescription, out swapChain);
 
 			ID3D11Texture2D backbuffer = swapChain.GetBuffer<ID3D11Texture2D>(0);
+			ID3D11RenderTargetView view = null;
+			device.CreateRenderTargetView(backbuffer, IntPtr.Zero, out view);
 
 			RenderLoop loop = new RenderLoop();
-			loop.Run(form, () => { });
+			ID3D11DeviceContext context = null;
+			device.GetImmediateContext(out context);
+			loop.Run(form, () =>
+			{
+				Color4 clearColor = new Color4 { R = 1.0f, G = 0.0f, B = 0.0f, A = 1.0f };
+				context.ClearRenderTargetView(view, clearColor);
+			});
 
+			view.ReleaseReference();
 			backbuffer.ReleaseReference();
 			swapChain.ReleaseReference();
 			device.ReleaseReference();
