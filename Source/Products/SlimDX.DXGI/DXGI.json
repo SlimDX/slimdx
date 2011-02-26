@@ -188,6 +188,16 @@
 
 	"interfaces": [
 		{
+			"key": "IDXGIObject",
+			"type": "IUnknown",
+			"guid": "aec22fb8-76f3-4639-9be0-28eb43a67a2e"
+		},
+		{
+			"key": "IDXGIDeviceSubObject",
+			"type": "IDXGIObject",
+			"guid": "3d3e0379-f9de-4d58-bb6c-18d62992f1a6"
+		},
+		{
 			"key": "IDXGIAdapter",
 			"type": "IUnknown",
 			"guid": "2411e7e1-12ac-4ccf-bd14-9798e8534dc0"
@@ -197,6 +207,15 @@
 			"type": "IUnknown",
 			"guid": "310d36a0-d2e7-4c0a-aa04-6a9d23b8886a",
 			"methods": [
+				{
+					"key": "Present",
+					"type": "HRESULT",
+					"index": "8", 
+					"parameters": [
+						{ "key": "interval", "type": "UINT" },
+						{ "key": "flags", "type": "UINT" }
+					]
+				},
 				{
 					"key": "GetBuffer",
 					"type": "HRESULT",

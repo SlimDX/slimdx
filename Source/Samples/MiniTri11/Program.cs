@@ -81,8 +81,9 @@ namespace MiniTri11
 			device.GetImmediateContext(out context);
 			loop.Run(form, () =>
 			{
-				Color4 clearColor = new Color4 { R = 1.0f, G = 0.0f, B = 0.0f, A = 1.0f };
+				Color4 clearColor = new Color4 { R = 0.0f, G = 0.0f, B = 1.0f, A = 1.0f };
 				context.ClearRenderTargetView(view, clearColor);
+				swapChain.Present(0, 0);
 			});
 
 			view.ReleaseReference();
