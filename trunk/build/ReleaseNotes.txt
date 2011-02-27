@@ -51,6 +51,7 @@ DXGI
 	
 D3DCompiler
 	* Fixed memory issue in Include interface.
+	* Added overloads to ShaderBytecode.Compile to take source name for error reporting purposes.
 	
 DirectWrite
 	* Changed TextLayout to inherit from TextFormat.
