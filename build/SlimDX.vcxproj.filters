@@ -826,6 +826,9 @@
     <Filter Include="D3DCompiler\Reflection\Variable">
       <UniqueIdentifier>{b76da25f-8c84-407a-a903-5407c4b15216}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Multimedia\XWMAStream">
+      <UniqueIdentifier>{5ed75b4b-f0c2-4523-a6ff-a91f29199bff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\direct3d10\Direct3D10Exception.cpp">
@@ -2761,6 +2764,9 @@
       <Filter>D3DCompiler\Reflection\Variable</Filter>
     </ClCompile>
     <ClCompile Include="..\source\AssemblyInfo.cpp" />
+    <ClCompile Include="..\source\multimedia\XWMAStream.cpp">
+      <Filter>Multimedia\XWMAStream</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\direct3d10\Direct3D10Exception.h">
@@ -4891,6 +4897,9 @@
       <Filter>D3DCompiler\Reflection\Variable</Filter>
     </ClInclude>
     <ClInclude Include="..\source\stdafx.h" />
+    <ClInclude Include="..\source\multimedia\XWMAStream.h">
+      <Filter>Multimedia\XWMAStream</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
