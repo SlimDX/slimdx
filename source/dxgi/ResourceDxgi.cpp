@@ -41,7 +41,8 @@ namespace DXGI
 		if( RECORD_DXGI( ptr->QueryInterface( IID_IDXGIResource, reinterpret_cast<void**>( &result ) ) ).IsFailure )
 			throw gcnew DXGIException( Result::Last );
 
-		Construct( result );
+		ComObject^ other = ObjectTable::Find(IntPtr(result));
+		Construct(result, other, other == nullptr);
 	}
 
 	ResourcePriority Resource::EvictionPriority::get()

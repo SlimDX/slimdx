@@ -35,6 +35,7 @@
 	public protected: \
 		managedType( nativeType* pointer, ComObject^ owner ) { Construct( pointer, owner ); } \
 		managedType( System::IntPtr pointer ) { Construct( pointer, NativeInterface ); } \
+		managedType( nativeType* pointer, ComObject^ owner, bool addToTable ) { Construct( pointer, owner, addToTable ); } \
 	internal: \
 		static managedType^ FromPointerReflectionThunk( System::IntPtr pointer ) { return FromPointer( static_cast<nativeType*>( pointer.ToPointer() ) ); } \
 		static managedType^ FromPointerReflectionThunk( System::IntPtr pointer, ComObject^ owner ) { return FromPointer( static_cast<nativeType*>( pointer.ToPointer()), owner ); } \

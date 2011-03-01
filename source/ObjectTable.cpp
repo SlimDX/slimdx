@@ -88,6 +88,18 @@ namespace SlimDX
 		}
 	}
 
+	void ObjectTable::RegisterParent( ComObject^ object, ComObject^ owner )
+	{
+		if( owner != nullptr ) 
+		{
+			if( !m_Ancillary->ContainsKey( owner->ComPointer ) )
+			{
+				m_Ancillary->Add( owner->ComPointer, gcnew List<ComObject^>() );
+			}
+			m_Ancillary[owner->ComPointer]->Add( object );
+		}
+	}
+
 	void ObjectTable::Add( ComObject^ object, ComObject^ owner )
 	{
 		if( object == nullptr )
@@ -103,15 +115,7 @@ namespace SlimDX
 		try
 		{
 			m_Table->Add( object->ComPointer, object );
-			
-			if( owner != nullptr ) 
-			{
-				if( !m_Ancillary->ContainsKey( owner->ComPointer ) )
-				{
-					m_Ancillary->Add( owner->ComPointer, gcnew List<ComObject^>() );
-				}
-				m_Ancillary[owner->ComPointer]->Add( object );
-			}
+			RegisterParent( object, owner );
 			
 			ObjectAdded( nullptr, gcnew ObjectTableEventArgs( object ) );
 		}

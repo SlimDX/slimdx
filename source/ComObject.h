@@ -68,9 +68,10 @@ namespace SlimDX
 
 	private protected:
 		ComObject();
-		
+
 		void Construct( IUnknown* pointer );
 		void Construct( IUnknown* pointer, ComObject^ owner );
+		void Construct( IUnknown* pointer, ComObject^ owner, bool addToTable );
 		void Construct( System::IntPtr pointer, System::Guid guid );
 		void Destruct();
 		

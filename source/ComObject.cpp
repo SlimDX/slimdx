@@ -100,6 +100,19 @@ namespace SlimDX
 	{
 		return m_CreationTime;
 	}
+
+	void ComObject::Construct( IUnknown* pointer, ComObject^ owner, bool addToTable )
+	{
+		if( pointer == 0 )
+			throw gcnew ArgumentNullException( "pointer" );
+
+		m_Unknown = pointer;
+
+		if (addToTable)
+			ObjectTable::Add( this, owner );
+		else
+			ObjectTable::RegisterParent( this, owner );
+	}
 	
 	void ComObject::Construct( IUnknown* pointer )
 	{

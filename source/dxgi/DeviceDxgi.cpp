@@ -49,7 +49,9 @@ namespace DXGI
 		IUnknown *ptr = reinterpret_cast<IUnknown*>(device->ComPointer.ToPointer());
 		if( RECORD_DXGI( ptr->QueryInterface( IID_IDXGIDevice, reinterpret_cast<void**>( &result ) ) ).IsFailure )
 			throw gcnew DXGIException( Result::Last );
-		Construct( result );
+
+		ComObject^ other = ObjectTable::Find(IntPtr(result));
+		Construct(result, other, other == nullptr);
 	}
 
 	int Device::GpuThreadPriority::get()
