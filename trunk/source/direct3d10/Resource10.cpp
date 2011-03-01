@@ -53,9 +53,8 @@ namespace Direct3D10
 		if(RECORD_D3D10(hr).IsFailure)
 			return nullptr;
 
-		SlimDX::DXGI::Surface^ result = gcnew SlimDX::DXGI::Surface(unknown, nullptr);
-
-		return result;
+		ComObject^ other = ObjectTable::Find(IntPtr(unknown));
+		return gcnew SlimDX::DXGI::Surface(unknown, other, other == nullptr);
 	}
 
 	generic< class T > where T : Resource, ref class

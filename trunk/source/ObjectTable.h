@@ -64,6 +64,8 @@ namespace SlimDX
 		static ComObject^ Find( System::IntPtr nativeObject );
 		static bool Contains( ComObject^ object );
 
+		static void RegisterParent(ComObject^ comObject, ComObject^ owner);
+
 	public:
 		/// <summary>
 		/// Gets a list of all the <see cref="ComObject">COM objects</see> tracked by SlimDX.

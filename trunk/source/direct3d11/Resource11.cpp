@@ -24,6 +24,7 @@
 #include <d3d11.h>
 #include <d3dx11.h>
 
+#include "../ObjectTable.h"
 #include "../DataStream.h"
 
 #include "Direct3D11Exception.h"
@@ -52,9 +53,8 @@ namespace Direct3D11
 		if(RECORD_D3D11(hr).IsFailure)
 			return nullptr;
 
-		SlimDX::DXGI::Surface^ result = gcnew SlimDX::DXGI::Surface(unknown, nullptr);
-
-		return result;
+		ComObject^ other = ObjectTable::Find(IntPtr(unknown));
+		return gcnew SlimDX::DXGI::Surface(unknown, other, other == nullptr);
 	}
 
 	generic< class T > where T : Resource, ref class
