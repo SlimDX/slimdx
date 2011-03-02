@@ -34,7 +34,7 @@
 			see <a href="support.php">the Support page</a> for more information about our services.
 			</p><br /><br />
 
-			<p><a href="download.php"><img src="images/latest.jpg" alt="latest release" /></a></p>
+			<p><a href="download.php"><img src="images/install.png" alt="latest release" /></a></p>
       </div>
         
       <div id="left_column">
