@@ -40,6 +40,11 @@ namespace SlimDX
 {
 namespace Direct3D9
 {
+	SwapChain::SwapChain()
+	{
+		// this is called by SwapChainEx
+	}
+
 	SwapChain::SwapChain( SlimDX::Direct3D9::Device^ device, SlimDX::Direct3D9::PresentParameters^ presentParameters )
 	{
 		if( device == nullptr )
