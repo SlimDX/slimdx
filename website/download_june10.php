@@ -34,7 +34,7 @@
 				However, developers should install the SDK below, not this package.
 				See the documentation for more information.
 				</p><br />
-				<a href="http://slimdx.googlecode.com/files/SlimDX%20Runtime%20Net20%20%28June%202010%29.msi"><img src="images/latest.jpg" alt="Latest User Runtime" /></a>
+				<a href="http://slimdx.googlecode.com/files/SlimDX%20Runtime%20Net20%20%28June%202010%29.msi"><img src="images/install_runtime.png" alt="Latest User Runtime" /></a>
 			</div>
 			
 			<div class="paragraph">
@@ -51,7 +51,7 @@
 				Please help us by filling out <a href="http://www.surveymonkey.com/s/6LW9QXG">a very short, simple survey</a>.
 				Answers are anonymous, and it's just a few simple questions. Thank you!
 				</p><br />
-				<a href="http://slimdx.googlecode.com/files/SlimDX%20SDK%20%28June%202010%29.exe"><img src="images/latest.jpg" alt="Latest Developer SDK" /></a>
+				<a href="http://slimdx.googlecode.com/files/SlimDX%20SDK%20%28June%202010%29.exe"><img src="images/install_sdk.png" alt="Latest Developer SDK" /></a>
 			</div>
 			
 			<div class="paragraph">
