@@ -29,12 +29,16 @@ namespace SlimDX
 	{
 		ref class PresentParameters;
 		ref class Surface;
+		ref class Device;
 
 		/// <summary>Applications use the methods of the SwapChain9 class to manipulate a swap chain.</summary>
 		/// <unmanaged>IDirect3DSwapChain9</unmanaged>
 		public ref class SwapChain : public ComObject
 		{
 			COMOBJECT(IDirect3DSwapChain9, SwapChain);
+
+		private protected:
+			SwapChain();
 
 		public:
 			SwapChain( SlimDX::Direct3D9::Device^ device, PresentParameters^ presentParameters );
