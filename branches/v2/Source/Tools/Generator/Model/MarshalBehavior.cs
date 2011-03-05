@@ -30,12 +30,7 @@ namespace SlimDX.Generator
 		/// <summary>
 		/// The model can be marshalled without any special handling.
 		/// </summary>
-		Direct,
-
-		/// <summary>
-		/// The model must be marshalled via a pointer to the instance.
-		/// </summary>
-		Indirect,
+		Default,
 
 		/// <summary>
 		/// The model must be marshalled via a custom marshaller object.
