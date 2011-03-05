@@ -27,7 +27,7 @@ namespace SlimDX.Generator
 	class EnumerationModel : TypeModel
 	{
 		public EnumerationModel(string key)
-			: base(key, key, typeof(int))
+			: base(key, key)
 		{
 		}
 

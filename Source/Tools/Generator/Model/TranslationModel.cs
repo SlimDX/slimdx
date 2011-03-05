@@ -25,7 +25,7 @@ namespace SlimDX.Generator
 	class TranslationModel : TypeModel
 	{
 		public TranslationModel(string key, string name, string target)
-			: base(key, name ?? Type.GetType(target).FullName, Type.GetType(target))
+			: base(key, name ?? Type.GetType(target).FullName)
 		{
 			TargetType = target;
 		}

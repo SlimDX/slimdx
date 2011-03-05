@@ -27,7 +27,7 @@ namespace SlimDX.Generator
 	class InterfaceModel : TypeModel
 	{
 		public InterfaceModel(string key, Guid guid)
-			: base(key, key, typeof(IntPtr))
+			: base(key, key)
 		{
 			Guid = guid;
 			MarshalBehavior = MarshalBehavior.Wrapped;

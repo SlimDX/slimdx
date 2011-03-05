@@ -29,19 +29,16 @@ namespace SlimDX.Generator
 			VoidModel = new TranslationModel("void", "void", "System.Void");
 		}
 
-		public TypeModel(string key, string name, Type marshallingType)
+		public TypeModel(string key, string name)
 		{
 			if (string.IsNullOrEmpty(key))
 				throw new ArgumentException("Value may not be null or empty", "key");
 			if (string.IsNullOrEmpty(name))
 				throw new ArgumentException("Value may not be null or empty", "key");
-			if (marshallingType == null)
-				throw new ArgumentNullException("marshallingType");
 
 			Key = key;
 			Name = name;
-			MarshalBehavior = MarshalBehavior.Direct;
-			MarshallingType = marshallingType;
+			MarshalBehavior = MarshalBehavior.Default;
 		}
 
 		public string Key
@@ -60,12 +57,6 @@ namespace SlimDX.Generator
 		{
 			get;
 			protected set;
-		}
-
-		public Type MarshallingType
-		{
-			get;
-			private set;
 		}
 
 		public static TypeModel VoidModel

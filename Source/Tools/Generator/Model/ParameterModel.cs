@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace SlimDX.Generator
 {
@@ -32,8 +33,6 @@ namespace SlimDX.Generator
 
 			if (type is StructureModel)
 				MarshalBehavior = MarshalBehavior.Marshal;
-			else if (type.MarshallingType == typeof(Guid) || type.MarshallingType == typeof(SlimDX.Color4))//TODO: This isnt' scalable.
-				MarshalBehavior = MarshalBehavior.Indirect;
 			else
 				MarshalBehavior = type.MarshalBehavior;
 

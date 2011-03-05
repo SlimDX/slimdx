@@ -27,7 +27,7 @@ namespace SlimDX.Generator
 	class StructureModel : TypeModel
 	{
 		public StructureModel(string key)
-			: base(key, key, typeof(void*))
+			: base(key, key)
 		{
 			MarshalBehavior = MarshalBehavior.Marshal;
 		}

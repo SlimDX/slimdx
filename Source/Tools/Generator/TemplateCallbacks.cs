@@ -20,6 +20,7 @@
 
 using System.Text;
 using System;
+using System.Runtime.InteropServices;
 
 namespace SlimDX.Generator
 {
@@ -179,8 +180,6 @@ namespace SlimDX.Generator
 		{
 			switch (parameter.MarshalBehavior)
 			{
-				case MarshalBehavior.Indirect:
-					return string.Format("&{0}", parameter.Name);
 				case MarshalBehavior.Output:
 					return string.Format("ref _{0}", parameter.Name);
 				case MarshalBehavior.Marshal:
@@ -188,8 +187,19 @@ namespace SlimDX.Generator
 				case MarshalBehavior.Wrapped:
 					return string.Format("{0}.NativePointer", parameter.Name);
 				default:
-					return parameter.Name;
+					return IsLargeType(parameter.Type) ? string.Format("new System.IntPtr(&{0})", parameter.Name) : parameter.Name;
 			}
+		}
+
+		public static bool IsLargeType(TypeModel model)
+		{
+			TranslationModel translationModel = model as TranslationModel;
+			if (translationModel != null)
+			{
+				var type = Type.GetType(translationModel.TargetType);
+				return Marshal.SizeOf(type) > sizeof(long);
+			}
+			return false;
 		}
 	}
 }
