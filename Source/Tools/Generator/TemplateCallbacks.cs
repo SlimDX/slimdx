@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 using System.Text;
+using System;
 
 namespace SlimDX.Generator
 {
@@ -67,12 +68,22 @@ namespace SlimDX.Generator
 			var method = (MethodModel)source;
 			var builder = new StringBuilder();
 
+			string trampolineSuffix = string.Empty;
 			if (method.Type != TypeModel.VoidModel)
-				builder.AppendFormat("{0} _result = SlimDX.Trampoline.Call{1}(", method.Type.MarshallingType.FullName, method.Type.MarshallingType.Name);
-			else
-				builder.Append("SlimDX.Trampoline.Call(");
+			{
+				var methodTypeName = method.Type.Name;
+				var translationModel = method.Type as TranslationModel;
+				if (translationModel != null)
+				{
+					var type = Type.GetType(translationModel.TargetType);
+					methodTypeName = type.FullName;
+					trampolineSuffix = type.Name;
+				}
 
-			builder.AppendFormat("System.IntPtr.Size * {0}, NativePointer", method.Index);
+				builder.AppendFormat("{0} _result = ", methodTypeName);
+			}
+
+			builder.AppendFormat("SlimDX.Trampoline.Call{0}(System.IntPtr.Size * {1}, NativePointer", trampolineSuffix, method.Index);
 			foreach (var parameter in method.Parameters)
 				builder.AppendFormat(", {0}", GetParameterTrampolineString(parameter));
 
