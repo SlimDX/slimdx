@@ -26,7 +26,7 @@ namespace SlimDX.Generator
 	{
 		static TypeModel()
 		{
-			VoidModel = new TypeModel("void", "System.Void", typeof(void));
+			VoidModel = new TranslationModel("void", "void", "System.Void");
 		}
 
 		public TypeModel(string key, string name, Type marshallingType)
@@ -40,6 +40,7 @@ namespace SlimDX.Generator
 
 			Key = key;
 			Name = name;
+			MarshalBehavior = MarshalBehavior.Direct;
 			MarshallingType = marshallingType;
 		}
 
@@ -55,6 +56,12 @@ namespace SlimDX.Generator
 			private set;
 		}
 
+		public MarshalBehavior MarshalBehavior
+		{
+			get;
+			protected set;
+		}
+
 		public Type MarshallingType
 		{
 			get;
@@ -67,34 +74,34 @@ namespace SlimDX.Generator
 			private set;
 		}
 
-        public override bool Equals(object obj)
-        {
-            if (obj == null || obj.GetType() != GetType())
-                return false;
+		public override bool Equals(object obj)
+		{
+			if (obj == null || obj.GetType() != GetType())
+				return false;
 
-            return Key == ((TypeModel)obj).Key;
-        }
+			return Key == ((TypeModel)obj).Key;
+		}
 
-        public override int GetHashCode()
-        {
-            return Key.GetHashCode() ^ Name.GetHashCode();
-        }
+		public override int GetHashCode()
+		{
+			return Key.GetHashCode() ^ Name.GetHashCode();
+		}
 
-        public static bool operator ==(TypeModel lhs, TypeModel rhs)
-        {
-            if (object.ReferenceEquals(lhs, rhs))
-                return true;
+		public static bool operator ==(TypeModel lhs, TypeModel rhs)
+		{
+			if (object.ReferenceEquals(lhs, rhs))
+				return true;
 
-            if (((object)lhs == null) || ((object)rhs == null))
-                return false;
+			if (((object)lhs == null) || ((object)rhs == null))
+				return false;
 
-            return lhs.Key == rhs.Key;
-        }
+			return lhs.Key == rhs.Key;
+		}
 
-        public static bool operator !=(TypeModel lhs, TypeModel rhs)
-        {
-            return !(lhs == rhs);
-        }
+		public static bool operator !=(TypeModel lhs, TypeModel rhs)
+		{
+			return !(lhs == rhs);
+		}
 
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.

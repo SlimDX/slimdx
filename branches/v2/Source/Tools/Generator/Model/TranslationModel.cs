@@ -22,34 +22,18 @@ using System;
 
 namespace SlimDX.Generator
 {
-	/// <summary>
-	/// Constants that describe the marshalling behavior of a model.
-	/// </summary>
-	enum MarshalBehavior
+	class TranslationModel : TypeModel
 	{
-		/// <summary>
-		/// The model can be marshalled without any special handling.
-		/// </summary>
-		Direct,
+		public TranslationModel(string key, string name, string target)
+			: base(key, name ?? Type.GetType(target).FullName, Type.GetType(target))
+		{
+			TargetType = target;
+		}
 
-		/// <summary>
-		/// The model must be marshalled via a pointer to the instance.
-		/// </summary>
-		Indirect,
-
-		/// <summary>
-		/// The model must be marshalled via a custom marshaller object.
-		/// </summary>
-		Marshal,
-
-		/// <summary>
-		/// The model must be marshalled as a wrapped instance to a native object.
-		/// </summary>
-		Wrapped,
-
-		/// <summary>
-		/// The model must be marshalled as an output parameter of the managed function.
-		/// </summary>
-		Output
+		public string TargetType
+		{
+			get;
+			private set;
+		}
 	}
 }

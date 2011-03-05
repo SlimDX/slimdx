@@ -46,6 +46,7 @@ namespace SlimDX.Generator
 		static Dictionary<string, TypeModel> ParseTypes(JsonObject root, IEnumerable<string> searchPaths)
 		{
 			var types = new Dictionary<string, TypeModel>();
+			types[TypeModel.VoidModel.Key] = TypeModel.VoidModel;
 
 			JsonObject items;
 			if (root.TryGetValue("dependencies", out items))
@@ -67,14 +68,13 @@ namespace SlimDX.Generator
 				}
 			}
 
-			if (root.TryGetValue("references", out items))
+			if (root.TryGetValue("translations", out items))
 			{
 				foreach (var item in items)
 				{
 					var key = (string)item["key"];
-					var type = Type.GetType((string)item["target"]);
-					var name = item.ContainsKey("name") ? (string)item["name"] : type.FullName;
-					var model = new TypeModel(key, name, type);
+					var target = (string)item["target"];
+					var model = new TranslationModel(key, null, target);
 					types[model.Key] = model;
 				}
 			}
