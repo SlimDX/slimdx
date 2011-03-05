@@ -1,6 +1,5 @@
 ﻿{
-	"references": [
-		{ "key": "void", "name": "void", "target": "System.Void" },
+	"translations": [
 		{ "key": "int", "target": "System.Int32" },
 		{ "key": "INT", "target": "System.Int32" },
 		{ "key": "UINT", "target": "System.Int32" },

@@ -26,6 +26,14 @@ namespace SlimDX.Generator
 {
 	class ApiModel
 	{
+		public ReadOnlyCollection<TranslationModel> Translations
+		{
+			get
+			{
+				return translations.AsReadOnly();
+			}
+		}
+
 		public ReadOnlyCollection<EnumerationModel> Enumerations
 		{
 			get
@@ -50,6 +58,13 @@ namespace SlimDX.Generator
 			}
 		}
 
+		public void AddTranslation(TranslationModel model)
+		{
+			if (model == null)
+				throw new ArgumentNullException("model");
+			translations.Add(model);
+		}
+
 		public void AddEnumeration(EnumerationModel model)
 		{
 			if (model == null)
@@ -71,6 +86,7 @@ namespace SlimDX.Generator
 			interfaces.Add(model);
 		}
 
+		List<TranslationModel> translations = new List<TranslationModel>();
 		List<EnumerationModel> enumerations = new List<EnumerationModel>();
 		List<StructureModel> structures = new List<StructureModel>();
 		List<InterfaceModel> interfaces = new List<InterfaceModel>();

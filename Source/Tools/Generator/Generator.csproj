@@ -80,6 +80,7 @@
     <Compile Include="Model\ParameterModelFlags.cs" />
     <Compile Include="Model\StructureMemberModel.cs" />
     <Compile Include="Model\StructureModel.cs" />
+    <Compile Include="Model\TranslationModel.cs" />
     <Compile Include="Model\TypeModel.cs" />
     <Compile Include="Model\VariableModel.cs" />
     <Compile Include="NameRules.cs" />

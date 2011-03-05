@@ -35,7 +35,7 @@ namespace SlimDX.Generator
 			else if (type.MarshallingType == typeof(Guid) || type.MarshallingType == typeof(SlimDX.Color4))//TODO: This isnt' scalable.
 				MarshalBehavior = MarshalBehavior.Indirect;
 			else
-				MarshalBehavior = MarshalBehavior.Direct;
+				MarshalBehavior = type.MarshalBehavior;
 
 			if (flags.HasFlag(ParameterModelFlags.IsOutput))
 				MarshalBehavior = MarshalBehavior.Output;

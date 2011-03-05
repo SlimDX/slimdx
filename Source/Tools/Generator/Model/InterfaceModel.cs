@@ -30,6 +30,7 @@ namespace SlimDX.Generator
 			: base(key, key, typeof(IntPtr))
 		{
 			Guid = guid;
+			MarshalBehavior = MarshalBehavior.Wrapped;
 		}
 
 		public Guid Guid

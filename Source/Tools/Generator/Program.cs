@@ -130,29 +130,53 @@ namespace SlimDX.Generator
 			{
 				foreach (var methodModel in interfaceModel.Methods)
 				{
+					var methodType = ResolveType(methodModel.Type);
+					if (methodType == null)
+						throw new InvalidOperationException(string.Format("Could not resolve return type for method '{0}.'", methodModel.Name));
+
 					var parameters = new List<TrampolineParameter>();
 					foreach (var parameterModel in methodModel.Parameters)
 					{
+						var parameterType = ResolveType(parameterModel.Type);
+						if (parameterType == null)
+							throw new InvalidOperationException(string.Format("Could not resolve type for parameter '{0}.'", parameterModel.Name));
+
 						TrampolineParameterFlags flags = TrampolineParameterFlags.Default;
 						if (parameterModel.Flags.HasFlag(ParameterModelFlags.IsOutput))
 							flags |= TrampolineParameterFlags.Reference;
 
-						var trampolineType = parameterModel.Type.MarshallingType;
 						switch (parameterModel.MarshalBehavior)
 						{
 							case MarshalBehavior.Indirect:
-								trampolineType = typeof(void*);
+								parameterType = typeof(void*);
 								break;
 						}
 
-						parameters.Add(parameterModel.Type == TypeModel.VoidModel ? new TrampolineParameter(typeof(IntPtr), flags) : new TrampolineParameter(trampolineType, flags));
+						parameters.Add(parameterModel.Type == TypeModel.VoidModel ? new TrampolineParameter(typeof(IntPtr), flags) : new TrampolineParameter(parameterType, flags));
 					}
 
-					trampolineBuilder.Add(new Trampoline(methodModel.Type.MarshallingType, parameters.ToArray()));
+					trampolineBuilder.Add(new Trampoline(methodType, parameters.ToArray()));
 				}
 			}
 
 			trampolineBuilder.CreateAssembly(outputDirectory, outputFile);
+		}
+
+		static Type ResolveType(TypeModel model)
+		{
+			if (model == null)
+				return null;
+
+			if (model.MarshalBehavior == MarshalBehavior.Direct)
+			{
+				var translationModel = model as TranslationModel;
+				if (translationModel == null)
+					return null;
+
+				return Type.GetType(translationModel.TargetType);
+			}
+
+			return typeof(IntPtr);
 		}
 
 		static void ApplyTemplate(IEnumerable<TypeModel> items, string outputDirectory, TemplateEngine templateEngine, string templateName)

@@ -20,7 +20,7 @@ namespace SlimDX.Generator
 		{
 			// dependencies and references just do a simple add
 			ComposeArrays(baseLayer, newLayer, "dependencies");
-			ComposeArrays(baseLayer, newLayer, "references");
+			ComposeArrays(baseLayer, newLayer, "translations");
 
 			ComposeEnumerations(baseLayer, newLayer);
 		}
