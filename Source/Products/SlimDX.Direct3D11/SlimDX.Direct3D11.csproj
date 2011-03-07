@@ -57,6 +57,7 @@
     <Compile Include="Generated\ID3D11Device.cs" />
     <Compile Include="Generated\ID3D11DeviceChild.cs" />
     <Compile Include="Generated\ID3D11DeviceContext.cs" />
+    <Compile Include="Generated\ID3D11InputLayout.cs" />
     <Compile Include="Generated\ID3D11RenderTargetView.cs" />
     <Compile Include="Generated\ID3D11Resource.cs" />
     <Compile Include="Generated\ID3D11Texture2D.cs" />
