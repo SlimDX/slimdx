@@ -19,12 +19,12 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
-using SlimDX.DXGI;
+using SlimBuffer;
 using SlimDX;
 using SlimDX.Direct3D11;
+using SlimDX.DXGI;
+using SlimMath;
 
 namespace MiniTri11
 {
@@ -76,12 +76,20 @@ namespace MiniTri11
 			ID3D11RenderTargetView view = null;
 			device.CreateRenderTargetView(backbuffer, IntPtr.Zero, out view);
 
+			ByteBuffer vertexData = new ByteBuffer(3 * 32);
+			vertexData.Write(0 * Vector4.SizeInBytes, new Vector4(0.0f, 0.5f, 0.5f, 1.0f));
+			vertexData.Write(1 * Vector4.SizeInBytes, new Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+			vertexData.Write(2 * Vector4.SizeInBytes, new Vector4(0.5f, -0.5f, 0.5f, 1.0f));
+			vertexData.Write(3 * Vector4.SizeInBytes, new Vector4(0.0f, 1.0f, 0.0f, 1.0f));
+			vertexData.Write(4 * Vector4.SizeInBytes, new Vector4(-0.5f, -0.5f, 0.5f, 1.0f));
+			vertexData.Write(5 * Vector4.SizeInBytes, new Vector4(0.0f, 0.0f, 1.0f, 1.0f));
+
 			RenderLoop loop = new RenderLoop();
 			ID3D11DeviceContext context = null;
 			device.GetImmediateContext(out context);
 			loop.Run(form, () =>
 			{
-				Color4 clearColor = new Color4 { R = 0.0f, G = 0.0f, B = 1.0f, A = 1.0f };
+				var clearColor = new SlimDX.Color4 { R = 0.0f, G = 0.0f, B = 1.0f, A = 1.0f };
 				context.ClearRenderTargetView(view, clearColor);
 				swapChain.Present(0, 0);
 			});
