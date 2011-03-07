@@ -54,10 +54,23 @@
 			"guid": "dfdba067-0b8d-4865-875b-d7b4516cc164"
 		},
 		{
+			"key": "ID3D11InputLayout",
+			"type": "ID3D11DeviceChild",
+			"guid": "e4819ddc-4cf0-4025-bd26-5de82a3e07b7"
+		},
+		{
 			"key": "ID3D11DeviceContext",
 			"type": "IUnknown",
 			"guid": "c0bfa96c-e089-44fb-8eaf-26f8796190da",
 			"methods": [
+				{
+					"key": "IASetInputLayout",
+					"type": "void",
+					"index": "17", 
+					"parameters": [
+						{ "key": "inputLayout", "type": "ID3D11InputLayout" }
+					]
+				},
 				{
 					"key": "ClearRenderTargetView",
 					"type": "void",
