@@ -363,7 +363,7 @@ namespace D3DCompiler
 		return Utilities::BlobToString(output);
 	}
 
-	String^ ShaderBytecode::Strip(StripFlags flags)
+	ShaderBytecode^ ShaderBytecode::Strip(StripFlags flags)
 	{
 		ID3D10Blob *output = NULL;
 
@@ -371,7 +371,7 @@ namespace D3DCompiler
 		if (RECORD_D3DC(hr).IsFailure)
 			return nullptr;
 
-		return Utilities::BlobToString(output);
+		return ShaderBytecode::FromPointer(output);
 	}
 
 	DataStream^ ShaderBytecode::Data::get()

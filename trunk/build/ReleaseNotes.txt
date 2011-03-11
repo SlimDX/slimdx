@@ -26,7 +26,8 @@ Direct3D 9
 	* Added an overload to AnimationController.RegisterAnimationOutput to take a Frame instead.
 	* Fixed overload defaults for texture creation functions when using D3D9Ex.
 	* Changed BaseMesh index buffer and vertex buffer to be ancillary objects. They no longer require explicit cleanup.
-	
+	* Added SwapChainEx class.	
+
 Direct3D 10
 	* Added missing creation method overloads to Effect.
 	* Added missing Get/SetRawValue methods to EffectVariable.
@@ -37,6 +38,7 @@ Direct3D 10
 	* Added ResourceOptionFlags.GdiCompatible and ResourceOptionFlags.KeyedMutex.
 	* Added Resource.SaveTextureToFile, which allows for saving a texture without knowing its concrete type.
 	* Fixed a COM reference leak in Device.OpenSharedResource.
+	* Fixed a typo in the StateBlock constructor that prevented it from being used.
 
 Direct3D 11
 	* Fixed a COM reference leak in Device.OpenSharedResource.
@@ -53,6 +55,7 @@ DXGI
 D3DCompiler
 	* Fixed memory issue in Include interface.
 	* Added overloads to ShaderBytecode.Compile to take source name for error reporting purposes.
+	* Fixed the Strip function to return the stripped bytecode.
 	
 DirectWrite
 	* Changed TextLayout to inherit from TextFormat.
