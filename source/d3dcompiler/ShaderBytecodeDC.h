@@ -460,8 +460,8 @@ namespace SlimDX
 			/// Strips extraneous information from a compiled shader or effect.
 			/// </summary>
 			/// <param name="flags">Options specifying what to remove from the shader.</param>
-			/// <returns>A string containing any errors that may have occurred.</returns>
-			System::String^ Strip(StripFlags flags);
+			/// <returns>The stripped shader bytecode.</returns>
+			ShaderBytecode^ Strip(StripFlags flags);
 
 			/// <summary>
 			/// Returns the hash code for this instance.
