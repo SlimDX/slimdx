@@ -1,4 +1,5 @@
 ﻿{
+	"name": "SlimDX.Direct3D11",
 	"dependencies": [ "../SlimDX/SlimDX.json" ],
 
 	"enumerations": [

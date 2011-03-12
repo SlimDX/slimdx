@@ -26,6 +26,29 @@ namespace SlimDX.Generator
 {
 	class ApiModel
 	{
+		#region Interface
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ApiModel"/> class.
+		/// </summary>
+		/// <param name="name">The name of the API.</param>
+		public ApiModel(string name)
+		{
+			if (string.IsNullOrEmpty(name))
+				throw new ArgumentException("Value may not be null or empty.", "name");
+
+			Name = name;
+		}
+
+		/// <summary>
+		/// Gets the name of the API.
+		/// </summary>
+		public string Name
+		{
+			get;
+			private set;
+		}
+
 		public ReadOnlyCollection<TranslationModel> Translations
 		{
 			get
@@ -86,9 +109,25 @@ namespace SlimDX.Generator
 			interfaces.Add(model);
 		}
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents this instance.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/> that represents this instance.
+		/// </returns>
+		public override string ToString()
+		{
+			return Name;
+		}
+
+		#endregion
+		#region Implementation
+
 		List<TranslationModel> translations = new List<TranslationModel>();
 		List<EnumerationModel> enumerations = new List<EnumerationModel>();
 		List<StructureModel> structures = new List<StructureModel>();
 		List<InterfaceModel> interfaces = new List<InterfaceModel>();
+
+		#endregion
 	}
 }

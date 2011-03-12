@@ -107,9 +107,8 @@ namespace SlimDX.Generator
 			var defaultTemplateDirectory = Path.Combine(configuration.GeneratorDirectory, @"Templates");
 			var templateEngine = new TemplateEngine(new[] { defaultTemplateDirectory });
 
-			var namespaceName = configuration.GetOption("Options", "Namespace");
 			templateEngine.RegisterCallback("EnumItem", (e, s) => ((dynamic)s).Name.EndsWith("FORCE_DWORD") ? string.Empty : ((dynamic)s).Name + " = " + ((dynamic)s).Value + ",");
-			templateEngine.RegisterCallback("Namespace", (e, s) => namespaceName);
+			templateEngine.RegisterCallback("Namespace", (e, s) => api.Name);
 			templateEngine.RegisterCallbacks(typeof(TemplateCallbacks));
 
 			var outputDirectory = configuration.GetOption("Options", "OutputPath").RootPath(configuration.ConfigurationDirectory);
@@ -120,7 +119,7 @@ namespace SlimDX.Generator
 			ApplyTemplate(api.Structures, outputDirectory, templateEngine, "Structure");
 			ApplyTemplate(api.Interfaces, outputDirectory, templateEngine, "Interface");
 
-			BuildTrampolineAssembly(api, outputDirectory, string.Format("{0}.Trampoline", namespaceName));
+			BuildTrampolineAssembly(api, outputDirectory, string.Format("{0}.Trampoline", api.Name));
 		}
 
 		static void BuildTrampolineAssembly(ApiModel api, string outputDirectory, string outputFile)
