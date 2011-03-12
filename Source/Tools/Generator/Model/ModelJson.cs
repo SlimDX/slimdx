@@ -29,7 +29,8 @@ namespace SlimDX.Generator
 	{
 		public static ApiModel Parse(JsonObject root, IEnumerable<string> searchPaths)
 		{
-			var result = new ApiModel();
+			var name = (string)root["name"];
+			var result = new ApiModel(name);
 			foreach (var type in ParseTypes(root, searchPaths))
 			{
 				if (type.Value is EnumerationModel)
