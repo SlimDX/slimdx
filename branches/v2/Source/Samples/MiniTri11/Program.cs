@@ -70,11 +70,11 @@ namespace MiniTri11
 
 			ID3D11Device device = Direct3D11.CreateDevice(adapter);
 			IDXGISwapChain swapChain = null;
-			factory.CreateSwapChain(device.NativePointer, swapChainDescription, out swapChain);
+			factory.CreateSwapChain(device, swapChainDescription, out swapChain);
 
 			ID3D11Texture2D backbuffer = swapChain.GetBuffer<ID3D11Texture2D>(0);
 			ID3D11RenderTargetView view = null;
-			device.CreateRenderTargetView(backbuffer, IntPtr.Zero, out view);
+			device.CreateRenderTargetView(backbuffer, null, out view);
 
 			ByteBuffer vertexData = new ByteBuffer(3 * 32);
 			vertexData.Write(0 * Vector4.SizeInBytes, new Vector4(0.0f, 0.5f, 0.5f, 1.0f));

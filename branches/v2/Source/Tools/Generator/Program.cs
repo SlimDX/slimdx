@@ -144,7 +144,7 @@ namespace SlimDX.Generator
 						if (parameterModel.Flags.HasFlag(ParameterModelFlags.IsOutput))
 							flags |= TrampolineParameterFlags.Reference;
 
-						parameters.Add(parameterModel.Type == TypeModel.VoidModel ? new TrampolineParameter(typeof(IntPtr), flags) : new TrampolineParameter(parameterType, flags));
+						parameters.Add(parameterModel.Type == ApiModel.VoidModel ? new TrampolineParameter(typeof(IntPtr), flags) : new TrampolineParameter(parameterType, flags));
 					}
 
 					trampolineBuilder.Add(new Trampoline(methodType, parameters.ToArray()));
@@ -159,7 +159,8 @@ namespace SlimDX.Generator
 			if (model == null)
 				return null;
 
-			if (model.MarshalBehavior == MarshalBehavior.Default && !TemplateCallbacks.IsLargeType(model))
+			var behavior = TemplateCallbacks.GetBehavior(model);
+			if (behavior == MarshalBehavior.Default && !TemplateCallbacks.IsLargeType(model))
 			{
 				var translationModel = model as TranslationModel;
 				if (translationModel == null)

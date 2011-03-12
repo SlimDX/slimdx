@@ -21,15 +21,18 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace SlimDX
 {
 	//TODO: This should be replaced by a Reflection.Emit based fast factory
-	//      This method should be used to constructo SlimDX objects from a native pointer
-	//      obtained through something other than SlimDX and SHOULD NOT MODIFY THE REFERENCE COUNT OF THE NATIVE POINTER.
+	//      This method should be used by end-users to construct SlimDX objects from a native pointer
+	//      obtained through something other than SlimDX and SHOULD NOT MODIFY THE REFERENCE COUNT OF THE NATIVE POINTER. (it can also be used internally)
 	//      Should the count need to be adjusted, the calling code should AddReference().
 	public static class ObjectFactory
 	{
+		#region Interface
+
 		static public T Create<T>(IntPtr nativePointer) where T : ComObject
 		{
 			if (nativePointer == IntPtr.Zero)
@@ -41,5 +44,51 @@ namespace SlimDX
 
 			return (T)constructor.Invoke(new object[] { nativePointer });
 		}
+
+		static public ComObject Create(IntPtr nativePointer, Guid interfaceGuid)
+		{
+			if (nativePointer == IntPtr.Zero)
+				throw new ArgumentNullException("nativePointer");
+
+			//TODO: this is likely too slow in practice. should restrict this search to assemblies
+			//      known to have slimdx types in them. or do some other optimization. do not forget to
+			//      account for manual delay- load of the slimdx assemblies (i.e., we can't use a static
+			//      ctor in this type since the d3d11 assembly may not be loaded the first time we call this function).
+			Type targetType;
+			if (!interfaceGuids.TryGetValue(interfaceGuid, out targetType))
+			{
+				foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+				{
+					foreach (var type in assembly.GetTypes())
+					{
+						if (type.IsSubclassOf(typeof(ComObject)))
+						{
+							foreach (var attribute in type.GetCustomAttributes(false))
+							{
+								var guid = attribute as GuidAttribute;
+								if (guid != null)
+								{
+									targetType = type;
+									interfaceGuids[new Guid(guid.Value)] = type;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			var constructor = targetType.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public, null, new[] { typeof(IntPtr) }, null);
+			if (constructor == null)
+				return null;
+
+			return (ComObject)constructor.Invoke(new object[] { nativePointer });
+		}
+
+		#endregion
+		#region Implementation
+
+		static Dictionary<Guid, Type> interfaceGuids = new Dictionary<Guid, Type>();
+
+		#endregion
 	}
 }

@@ -26,11 +26,11 @@ namespace SlimDX.Generator
 {
 	class InterfaceModel : TypeModel
 	{
-		public InterfaceModel(string key, Guid guid)
+		public InterfaceModel(string key, Guid guid, TypeModel parent)
 			: base(key, key)
 		{
 			Guid = guid;
-			MarshalBehavior = MarshalBehavior.Wrapped;
+			Parent = parent;
 		}
 
 		public Guid Guid
@@ -42,7 +42,7 @@ namespace SlimDX.Generator
 		public TypeModel Parent
 		{
 			get;
-			set;
+			private set;
 		}
 
 		public ReadOnlyCollection<MethodModel> Methods
@@ -53,7 +53,7 @@ namespace SlimDX.Generator
 			}
 		}
 
-        public int MethodOffset { get; set; }
+		public int MethodOffset { get; set; }
 
 		public void AddMethod(MethodModel model)
 		{
