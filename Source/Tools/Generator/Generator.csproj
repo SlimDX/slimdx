@@ -68,11 +68,11 @@
     <Compile Include="CompositingEngine.cs" />
     <Compile Include="ConfigFile.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="MarshalBehavior.cs" />
     <Compile Include="Model\ApiModel.cs" />
     <Compile Include="Model\EnumerationModel.cs" />
     <Compile Include="Model\EnumerationValueModel.cs" />
     <Compile Include="Model\InterfaceModel.cs" />
-    <Compile Include="Model\MarshalBehavior.cs" />
     <Compile Include="Model\MethodModel.cs" />
     <Compile Include="Model\ModelJson.cs" />
     <Compile Include="Model\ModelXml.cs" />

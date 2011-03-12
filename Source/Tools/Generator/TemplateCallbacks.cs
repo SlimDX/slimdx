@@ -37,7 +37,7 @@ namespace SlimDX.Generator
 				if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
 					builder.Append("out ");
 
-				if (parameter.Type == TypeModel.VoidModel)
+				if (parameter.Type == ApiModel.VoidModel)
 					builder.AppendFormat("System.IntPtr {0}", parameter.Name);
 				else
 					builder.AppendFormat("{0} {1}", parameter.Type.Name, parameter.Name);
@@ -70,7 +70,7 @@ namespace SlimDX.Generator
 			var builder = new StringBuilder();
 
 			string trampolineSuffix = string.Empty;
-			if (method.Type != TypeModel.VoidModel)
+			if (method.Type != ApiModel.VoidModel)
 			{
 				var methodTypeName = method.Type.Name;
 				var translationModel = method.Type as TranslationModel;
@@ -109,6 +109,11 @@ namespace SlimDX.Generator
 						{
 							builder.AppendFormat("{0} = ({1})_{0};", parameter.Name, parameter.Type.Name);
 						}
+						else if (parameter.Type.Key == "IUnknown")
+						{
+							// hacky, mostly to work around GetBuffer issues.
+							builder.AppendFormat("{0} = SlimDX.ObjectFactory.Create(_{0}, riid);", parameter.Name);
+						}
 						else
 						{
 							builder.AppendFormat("{0} = _{0};", parameter.Name);
@@ -118,7 +123,7 @@ namespace SlimDX.Generator
 				}
 			}
 
-			if (method.Type != TypeModel.VoidModel)
+			if (method.Type != ApiModel.VoidModel)
 				builder.Append("return _result;");
 
 			return builder.ToString();
@@ -165,7 +170,7 @@ namespace SlimDX.Generator
 
 		static string GetParameterDeclarationString(ParameterModel parameter)
 		{
-			switch (parameter.MarshalBehavior)
+			switch (GetBehavior(parameter))
 			{
 				case MarshalBehavior.Output:
 					return string.Format("System.IntPtr _{0} = default(System.IntPtr);", parameter.Name);
@@ -178,14 +183,14 @@ namespace SlimDX.Generator
 
 		static string GetParameterTrampolineString(ParameterModel parameter)
 		{
-			switch (parameter.MarshalBehavior)
+			switch (GetBehavior(parameter))
 			{
 				case MarshalBehavior.Output:
 					return string.Format("ref _{0}", parameter.Name);
 				case MarshalBehavior.Marshal:
 					return string.Format("new System.IntPtr(&_{0})", parameter.Name);
 				case MarshalBehavior.Wrapped:
-					return string.Format("{0}.NativePointer", parameter.Name);
+					return string.Format("{0} != null ? {0}.NativePointer : System.IntPtr.Zero", parameter.Name);
 				default:
 					return IsLargeType(parameter.Type) ? string.Format("new System.IntPtr(&{0})", parameter.Name) : parameter.Name;
 			}
@@ -199,7 +204,24 @@ namespace SlimDX.Generator
 				var type = Type.GetType(translationModel.TargetType);
 				return Marshal.SizeOf(type) > sizeof(long);
 			}
+
 			return false;
+		}
+
+		public static MarshalBehavior GetBehavior(TypeModel model)
+		{
+			if (model is StructureModel)
+				return MarshalBehavior.Marshal;
+			if (model is InterfaceModel || model.Key == "IUnknown")
+				return MarshalBehavior.Wrapped;
+			return MarshalBehavior.Default;
+		}
+
+		public static MarshalBehavior GetBehavior(ParameterModel model)
+		{
+			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
+				return MarshalBehavior.Output;
+			return GetBehavior(model.Type);
 		}
 	}
 }

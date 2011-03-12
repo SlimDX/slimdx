@@ -26,10 +26,10 @@ namespace SlimDX.DXGI
 	{
 		public unsafe T GetBuffer<T>(int index) where T : ComObject
 		{
-			var result = IntPtr.Zero;
+			ComObject result;
 			int hr = GetBuffer(index, typeof(T).GUID, out result);
 
-			return ObjectFactory.Create<T>(result);
+			return (T)result;
 		}
 	}
 }

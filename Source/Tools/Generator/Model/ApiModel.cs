@@ -33,11 +33,25 @@ namespace SlimDX.Generator
 		/// </summary>
 		/// <param name="name">The name of the API.</param>
 		public ApiModel(string name)
+			: this(name, null)
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ApiModel"/> class.
+		/// </summary>
+		/// <param name="name">The name of the API.</param>
+		/// <param name="dependencies">The dependencies of the API. May be null, indicating no dependencies.</param>
+		public ApiModel(string name, IEnumerable<ApiModel> dependencies)
 		{
 			if (string.IsNullOrEmpty(name))
 				throw new ArgumentException("Value may not be null or empty.", "name");
 
 			Name = name;
+			if (dependencies != null)
+				this.dependencies.AddRange(dependencies);
+
+			AddTranslation(VoidModel);
 		}
 
 		/// <summary>
@@ -47,6 +61,25 @@ namespace SlimDX.Generator
 		{
 			get;
 			private set;
+		}
+
+		/// <summary>
+		/// Gets the model that represents the 'void' incomplete type.
+		/// </summary>
+		public static TranslationModel VoidModel {
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Gets the collection of APIs that the API depends on.
+		/// </summary>
+		public ReadOnlyCollection<ApiModel> Dependencies
+		{
+			get
+			{
+				return dependencies.AsReadOnly();
+			}
 		}
 
 		public ReadOnlyCollection<TranslationModel> Translations
@@ -86,6 +119,7 @@ namespace SlimDX.Generator
 			if (model == null)
 				throw new ArgumentNullException("model");
 			translations.Add(model);
+			index.Add(model.Key, model);
 		}
 
 		public void AddEnumeration(EnumerationModel model)
@@ -93,6 +127,7 @@ namespace SlimDX.Generator
 			if (model == null)
 				throw new ArgumentNullException("model");
 			enumerations.Add(model);
+			index.Add(model.Key, model);
 		}
 
 		public void AddStructure(StructureModel model)
@@ -100,6 +135,7 @@ namespace SlimDX.Generator
 			if (model == null)
 				throw new ArgumentNullException("model");
 			structures.Add(model);
+			index.Add(model.Key, model);
 		}
 
 		public void AddInterface(InterfaceModel model)
@@ -107,6 +143,31 @@ namespace SlimDX.Generator
 			if (model == null)
 				throw new ArgumentNullException("model");
 			interfaces.Add(model);
+			index.Add(model.Key, model);
+		}
+
+		/// <summary>
+		/// Finds a type in the API or any dependencies.
+		/// </summary>
+		/// <param name="key">The key of the desired type.</param>
+		/// <returns>The type, or null if no type was found with the specified key.</returns>
+		public TypeModel FindType(string key)
+		{
+			if (key == null)
+				throw new ArgumentException("Value may not be null or empty.", "key");
+
+			TypeModel result;
+			if (!index.TryGetValue(key, out result))
+			{
+				foreach (var dependency in dependencies)
+				{
+					result = dependency.FindType(key);
+					if (result != null)
+						break;
+				}
+			}
+
+			return result;
 		}
 
 		/// <summary>
@@ -123,10 +184,20 @@ namespace SlimDX.Generator
 		#endregion
 		#region Implementation
 
+		/// <summary>
+		/// Initializes the <see cref="ApiModel"/> class.
+		/// </summary>
+		static ApiModel() {
+			VoidModel = new TranslationModel("void", "void", "System.Void");
+		}
+
+		List<ApiModel> dependencies = new List<ApiModel>();
 		List<TranslationModel> translations = new List<TranslationModel>();
 		List<EnumerationModel> enumerations = new List<EnumerationModel>();
 		List<StructureModel> structures = new List<StructureModel>();
 		List<InterfaceModel> interfaces = new List<InterfaceModel>();
+
+		Dictionary<string, TypeModel> index = new Dictionary<string, TypeModel>();
 
 		#endregion
 	}

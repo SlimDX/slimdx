@@ -29,7 +29,6 @@ namespace SlimDX.Generator
 		public StructureModel(string key)
 			: base(key, key)
 		{
-			MarshalBehavior = MarshalBehavior.Marshal;
 		}
 
 		public ReadOnlyCollection<StructureMemberModel> Members

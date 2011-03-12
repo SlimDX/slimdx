@@ -24,11 +24,6 @@ namespace SlimDX.Generator
 {
 	class TypeModel
 	{
-		static TypeModel()
-		{
-			VoidModel = new TranslationModel("void", "void", "System.Void");
-		}
-
 		public TypeModel(string key, string name)
 		{
 			if (string.IsNullOrEmpty(key))
@@ -38,7 +33,6 @@ namespace SlimDX.Generator
 
 			Key = key;
 			Name = name;
-			MarshalBehavior = MarshalBehavior.Default;
 		}
 
 		public string Key
@@ -48,18 +42,6 @@ namespace SlimDX.Generator
 		}
 
 		public string Name
-		{
-			get;
-			private set;
-		}
-
-		public MarshalBehavior MarshalBehavior
-		{
-			get;
-			protected set;
-		}
-
-		public static TypeModel VoidModel
 		{
 			get;
 			private set;

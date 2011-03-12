@@ -27,154 +27,180 @@ namespace SlimDX.Generator
 {
 	static class ModelJson
 	{
+		#region Interface
+
 		public static ApiModel Parse(JsonObject root, IEnumerable<string> searchPaths)
 		{
 			var name = (string)root["name"];
-			var result = new ApiModel(name);
-			foreach (var type in ParseTypes(root, searchPaths))
-			{
-				if (type.Value is EnumerationModel)
-					result.AddEnumeration((EnumerationModel)type.Value);
-				if (type.Value is StructureModel)
-					result.AddStructure((StructureModel)type.Value);
-				else if (type.Value is InterfaceModel)
-					result.AddInterface((InterfaceModel)type.Value);
-			}
+			var api = new ApiModel(name, ParseDependencies(root, searchPaths));
 
-			return result;
+			// Translations and enumerations only need a single processing phase.
+			foreach (var type in ParseTranslations(root, api))
+				api.AddTranslation(type);
+			foreach (var type in ParseEnumerations(root, api))
+				api.AddEnumeration(type);
+
+			// Structure and interface models must be declared first, and
+			// then defined in a second pass to prevent definition order problems.
+			DeclareStructures(root, api);
+			DeclareInterfaces(root, api);
+			DefineStructures(root, api);
+			DefineInterfaces(root, api);
+
+			return api;
 		}
 
-		static Dictionary<string, TypeModel> ParseTypes(JsonObject root, IEnumerable<string> searchPaths)
-		{
-			var types = new Dictionary<string, TypeModel>();
-			types[TypeModel.VoidModel.Key] = TypeModel.VoidModel;
+		#endregion
+		#region Implementation
 
-			JsonObject items;
-			if (root.TryGetValue("dependencies", out items))
+		/// <summary>
+		/// Parses API dependencies within a JSON tree.
+		/// </summary>
+		/// <param name="root">The root of the API JSON tree.</param>
+		/// <param name="searchPaths">The set of directories to search when resolving relative file references.</param>
+		/// <returns>A list of API models representing dependencies.</returns>
+		static List<ApiModel> ParseDependencies(JsonObject root, IEnumerable<string> searchPaths)
+		{
+			var results = new List<ApiModel>();
+			var processed = new HashSet<string>();
+			JsonObject dependencies;
+			if (root.TryGetValue("dependencies", out dependencies))
 			{
-				foreach (var item in items)
+				foreach (var dependency in dependencies)
 				{
-					var dependencyFile = (string)item;
+					var file = (string)dependency;
+					if (processed.Contains(file))
+						continue;
+
 					foreach (var searchPath in searchPaths)
 					{
-						var dependencyPath = Path.Combine(searchPath, dependencyFile);
-						if (File.Exists(dependencyPath))
+						var path = Path.Combine(searchPath, file);
+						if (File.Exists(path))
 						{
-							var dependency = JsonObject.FromJson(File.ReadAllText(dependencyPath));
-							foreach (var type in ParseTypes(dependency, searchPaths))
-								types[type.Key] = type.Value;
+							var json = JsonObject.FromJson(File.ReadAllText(path));
+							results.Add(ModelJson.Parse(json, searchPaths));
 							break;
 						}
 					}
 				}
 			}
 
+			return results;
+		}
+
+		/// <summary>
+		/// Parses translation model definitions within a JSON tree.
+		/// </summary>
+		/// <param name="root">The root of the API JSON tree.</param>
+		/// <param name="api">The API model being constructed.</param>
+		/// <returns>A list of translation models.</returns>
+		static List<TranslationModel> ParseTranslations(JsonObject root, ApiModel api)
+		{
+			var results = new List<TranslationModel>();
+			JsonObject items;
 			if (root.TryGetValue("translations", out items))
 			{
 				foreach (var item in items)
 				{
 					var key = (string)item["key"];
 					var target = (string)item["target"];
-					var model = new TranslationModel(key, null, target);
-					types[model.Key] = model;
+					results.Add(new TranslationModel(key, null, target));
 				}
 			}
 
+			return results;
+		}
+
+		/// <summary>
+		/// Parses enumeration model definitions within a JSON tree.
+		/// </summary>
+		/// <param name="root">The root of the API JSON tree.</param>
+		/// <param name="api">The API model being constructed.</param>
+		/// <returns>A list of enumeration models.</returns>
+		static List<EnumerationModel> ParseEnumerations(JsonObject root, ApiModel apit)
+		{
+			var results = new List<EnumerationModel>();
+			JsonObject items;
 			if (root.TryGetValue("enumerations", out items))
 			{
 				foreach (var item in items)
 				{
-					var name = (string)item["key"];
-					var model = new EnumerationModel(name);
-					types[model.Key] = model;
-
-					foreach (var value in ParseValues(item))
+					var key = (string)item["key"];
+					var model = new EnumerationModel(key);
+					foreach (var value in ParseEnumerationValues(item))
 						model.AddValue(value);
+
+					results.Add(model);
 				}
 			}
 
-			// do an initial parse of the structures and interfaces so that we can get them
-			// all into the type map before we start doing members and methods
-			if (root.TryGetValue("structures", out items))
-			{
-				foreach (var item in items)
-				{
-					var name = (string)item["key"];
-					var model = new StructureModel(name);
-					types[model.Key] = model;
-				}
-			}
-
-			if (root.TryGetValue("interfaces", out items))
-			{
-				foreach (var item in items)
-				{
-					var name = (string)item["key"];
-					var guid = new Guid((string)item["guid"]);
-					var model = new InterfaceModel(name, guid);
-					types[model.Key] = model;
-				}
-			}
-
-			// now add the members and methods for the structures and interfaces
-			if (root.TryGetValue("structures", out items))
-			{
-				foreach (var item in items)
-				{
-					var name = (string)item["key"];
-					var model = (StructureModel)types[name];
-
-					foreach (var value in ParseFields(item, types))
-						model.AddMember(value);
-				}
-			}
-
-			if (root.TryGetValue("interfaces", out items))
-			{
-				foreach (var item in items)
-				{
-					var name = (string)item["key"];
-					var model = (InterfaceModel)types[name];
-
-					model.Parent = types[(string)item["type"]].Key == "IUnknown" ? types["SlimDX.ComObject"] : types[(string)item["type"]];
-					foreach (var method in ParseMethods(item, types))
-						model.AddMethod(method);
-				}
-			}
-			return types;
+			return results;
 		}
 
-		static int FixupMethodOffset(InterfaceModel model, Dictionary<string, TypeModel> types)
+
+		/// <summary>
+		/// Parses enumeration value model definitions within a JSON tree.
+		/// </summary>
+		/// <param name="root">The root of the JSON tree for the enumeration.</param>
+		/// <param name="api">The API model being constructed.</param>
+		/// <returns>A list of enumeration value models.</returns>
+		static IEnumerable<EnumerationValueModel> ParseEnumerationValues(JsonObject root)
 		{
-			if (model.MethodOffset != 0)
-				return model.MethodOffset;
+			var results = new List<EnumerationValueModel>();
 
-			if (model.Parent == types["SlimDX.ComObject"])
+			JsonObject items;
+			if (root.TryGetValue("values", out items))
 			{
-				model.MethodOffset = 3;
-				return 3;
+				foreach (var item in items)
+					results.Add(new EnumerationValueModel((string)item["key"], (string)item["value"]));
 			}
 
-			var parent = model.Parent as InterfaceModel;
-			model.MethodOffset = parent.Methods.Count + FixupMethodOffset(parent, types);
-
-			return model.MethodOffset;
+			return results;
 		}
 
-		static IEnumerable<MethodModel> ParseMethods(JsonObject root, Dictionary<string, TypeModel> types)
+		/// <summary>
+		/// Parses structure member model definitions within a JSON tree.
+		/// </summary>
+		/// <param name="root">The root of the JSON tree for the structure.</param>
+		/// <param name="api">The API model being constructed.</param>
+		/// <returns>A list of structure member models.</returns>
+		static List<StructureMemberModel> ParseStructureMembers(JsonObject root, ApiModel api)
+		{
+			var results = new List<StructureMemberModel>();
+			JsonObject items;
+			if (root.TryGetValue("members", out items))
+			{
+				foreach (var item in items)
+				{
+					var key = (string)item["key"];
+					var type = api.FindType((string)item["type"]);
+					results.Add(new StructureMemberModel(key, type));
+				}
+			}
+
+			return results;
+		}
+
+		/// <summary>
+		/// Parses interface method model definitions within a JSON tree.
+		/// </summary>
+		/// <param name="root">The root of the JSON tree for the interface.</param>
+		/// <param name="api">The API model being constructed.</param>
+		/// <returns>A list of interface method models.</returns>
+		static List<MethodModel> ParseInterfaceMethods(JsonObject root, ApiModel api)
 		{
 			var results = new List<MethodModel>();
 
-			JsonObject methods;
-			if (root.TryGetValue("methods", out methods))
+			JsonObject items;
+			if (root.TryGetValue("methods", out items))
 			{
-				foreach (var method in methods)
+				foreach (var item in items)
 				{
-					var name = (string)method["key"];
-					var type = types[(string)method["type"]];
-					var index = (int)method["index"];
-					var model = new MethodModel(name, type, index);
-					foreach (var parameter in ParseParameters(method, types))
+					var key = (string)item["key"];
+					var type = api.FindType((string)item["type"]);
+					var index = (int)item["index"];
+					var model = new MethodModel(key, type, index);
+					foreach (var parameter in ParseInterfaceMethodParameters(item, api))
 						model.AddParameter(parameter);
 
 					results.Add(model);
@@ -184,28 +210,38 @@ namespace SlimDX.Generator
 			return results;
 		}
 
-		static IEnumerable<ParameterModel> ParseParameters(JsonObject root, Dictionary<string, TypeModel> types)
+		/// <summary>
+		/// Parses method parameter model definitions within a JSON tree.
+		/// </summary>
+		/// <param name="root">The root of the JSON tree for the method.</param>
+		/// <param name="api">The API model being constructed.</param>
+		/// <returns>A list of method parameter models.</returns>
+		static IEnumerable<ParameterModel> ParseInterfaceMethodParameters(JsonObject root, ApiModel api)
 		{
 			var results = new List<ParameterModel>();
 
-			JsonObject parameters;
-			if (root.TryGetValue("parameters", out parameters))
+			JsonObject items;
+			if (root.TryGetValue("parameters", out items))
 			{
-				foreach (var parameter in parameters)
+				foreach (var item in items)
 				{
-					var name = (string)parameter["key"];
-					var type = types[(string)parameter["type"]];
-					var flags = ParseParameterFlags(parameter);
-					var model = new ParameterModel(name, type, flags);
+					var key = (string)item["key"];
+					var type = api.FindType((string)item["type"]);
+					var flags = ParseInterfaceMethodParameterFlags(item);
 
-					results.Add(model);
+					results.Add(new ParameterModel(key, type, flags));
 				}
 			}
 
 			return results;
 		}
 
-		static ParameterModelFlags ParseParameterFlags(JsonObject root)
+		/// <summary>
+		/// Parses parameter model flags within a JSON tree.
+		/// </summary>
+		/// <param name="root">The root of the JSON tree for the parameter.</param>
+		/// <returns>The parameter flags.</returns>
+		static ParameterModelFlags ParseInterfaceMethodParameterFlags(JsonObject root)
 		{
 			var results = ParameterModelFlags.None;
 
@@ -226,38 +262,86 @@ namespace SlimDX.Generator
 			return results;
 		}
 
-		static IEnumerable<StructureMemberModel> ParseFields(JsonObject root, Dictionary<string, TypeModel> types)
+		/// <summary>
+		/// Declares structures in an API model based on the contents of a JSON tree.
+		/// </summary>
+		/// <param name="root">The root of the API JSON tree.</param>
+		/// <param name="api">The API model being constructed.</param>
+		static void DeclareStructures(JsonObject root, ApiModel api)
 		{
-			var results = new List<StructureMemberModel>();
-
-			JsonObject parameters;
-			if (root.TryGetValue("members", out parameters))
+			JsonObject items;
+			if (root.TryGetValue("structures", out items))
 			{
-				foreach (var parameter in parameters)
-				{
-					var name = (string)parameter["key"];
-					var type = types[(string)parameter["type"]];
-					var model = new StructureMemberModel(name, type);
+				foreach (var item in items)
+					api.AddStructure(new StructureModel((string)item["key"]));
+			}
+		}
 
-					results.Add(model);
+		/// <summary>
+		/// Defines structures in an API model based on the contents of a JSON tree.
+		/// </summary>
+		/// <param name="root">The root of the JSON tree for the API.</param>
+		/// <param name="api">The API model being constructed.</param>
+		static void DefineStructures(JsonObject root, ApiModel api)
+		{
+			JsonObject items;
+			if (root.TryGetValue("structures", out items))
+			{
+				foreach (var item in items)
+				{
+					var key = (string)item["key"];
+					var model = (StructureModel)api.FindType(key);
+					foreach (var value in ParseStructureMembers(item, api))
+						model.AddMember(value);
 				}
 			}
-
-			return results;
 		}
 
-		static IEnumerable<EnumerationValueModel> ParseValues(JsonObject root)
+		/// <summary>
+		/// Declares interfaces in an API model based on the contents of a JSON tree.
+		/// </summary>
+		/// <param name="root">The root of the API JSON tree.</param>
+		/// <param name="api">The API model being constructed.</param>
+		static void DeclareInterfaces(JsonObject root, ApiModel api)
 		{
-			var results = new List<EnumerationValueModel>();
-
-			JsonObject values;
-			if (root.TryGetValue("values", out values))
+			JsonObject items;
+			if (root.TryGetValue("interfaces", out items))
 			{
-				foreach (var value in values)
-					results.Add(new EnumerationValueModel((string)value["key"], (string)value["value"]));
-			}
+				foreach (var item in items)
+				{
+					var key = (string)item["key"];
+					var guid = new Guid((string)item["guid"]);
 
-			return results;
+					JsonObject parent = null;
+					if (item.TryGetValue("type", out parent))
+						api.AddInterface(new InterfaceModel(key, guid, api.FindType((string)parent)));
+					else
+						api.AddInterface(new InterfaceModel(key, guid, null));
+				}
+			}
 		}
+
+		/// <summary>
+		/// Defines interfaces in an API model based on the contents of a JSON tree.
+		/// </summary>
+		/// <param name="root">The root of the JSON tree for the API.</param>
+		/// <param name="api">The API model being constructed.</param>
+		static void DefineInterfaces(JsonObject root, ApiModel api)
+		{
+			JsonObject items;
+			if (root.TryGetValue("interfaces", out items))
+			{
+				foreach (var item in items)
+				{
+					var key = (string)item["key"];
+					var model = (InterfaceModel)api.FindType(key);
+
+					foreach (var method in ParseInterfaceMethods(item, api))
+						model.AddMethod(method);
+				}
+			}
+		}
+
+		#endregion
 	}
 }

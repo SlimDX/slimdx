@@ -31,7 +31,7 @@ namespace SlimDX
     {
         #region Interface
 
-        protected ComObject(IntPtr nativePointer)
+		protected ComObject(IntPtr nativePointer)
         {
             NativePointer = nativePointer;
 

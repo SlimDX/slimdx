@@ -30,14 +30,6 @@ namespace SlimDX.Generator
 			Name = name;
 			Type = type;
 			Flags = flags;
-
-			if (type is StructureModel)
-				MarshalBehavior = MarshalBehavior.Marshal;
-			else
-				MarshalBehavior = type.MarshalBehavior;
-
-			if (flags.HasFlag(ParameterModelFlags.IsOutput))
-				MarshalBehavior = MarshalBehavior.Output;
 		}
 
 		public string Name
@@ -47,12 +39,6 @@ namespace SlimDX.Generator
 		}
 
 		public TypeModel Type
-		{
-			get;
-			private set;
-		}
-
-		public MarshalBehavior MarshalBehavior
 		{
 			get;
 			private set;
