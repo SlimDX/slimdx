@@ -26,8 +26,8 @@ namespace SlimDX.Generator
 {
 	class StructureModel : TypeModel
 	{
-		public StructureModel(string key)
-			: base(key, key)
+		internal StructureModel(ApiModel api, string key)
+			: base(api, key, key)
 		{
 		}
 
