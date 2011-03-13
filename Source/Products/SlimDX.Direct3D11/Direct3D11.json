@@ -1,6 +1,6 @@
 ﻿{
 	"name": "SlimDX.Direct3D11",
-	"dependencies": [ "../SlimDX/SlimDX.json" ],
+	"dependencies": [ "../SlimDX/SlimDX.json", "../SlimDX.DXGI/DXGI.json" ],
 
 	"enumerations": [
 		{
@@ -10,6 +10,13 @@
 				{ "key": "D3D11_USAGE_IMMUTABLE", "value": "1" },
 				{ "key": "D3D11_USAGE_DYNAMIC", "value": "2" },
 				{ "key": "D3D11_USAGE_STAGING", "value": "3" }
+			]
+		},
+		{
+			"key": "D3D11_INPUT_CLASSIFICATION",
+			"values": [
+				{ "key": "D3D11_INPUT_PER_VERTEX_DATA", "value": 0 },
+				{ "key": "D3D11_INPUT_PER_INSTANCE_DATA", "value": 1 }
 			]
 		}
 	],
@@ -24,6 +31,18 @@
 				{ "key": "CPUAccessFlags", "type": "UINT" },
 				{ "key": "MiscFlags", "type": "UINT" },
 				{ "key": "StructureByteStride", "type": "UINT" }
+			]
+		},
+		{
+			"key": "D3D11_INPUT_ELEMENT_DESC",
+			"members": [
+				{ "key": "SemanticName", "type": "LPCSTR" },
+				{ "key": "SemanticIndex", "type": "UINT" },
+				{ "key": "Format", "type": "DXGI_FORMAT" },
+				{ "key": "InputSlot", "type": "UINT" },
+				{ "key": "AlignedByteOffset", "type": "UINT" },
+				{ "key": "InputSlotClass", "type": "D3D11_INPUT_CLASSIFICATION" },
+				{ "key": "InstanceDataStepRate", "type": "UINT" }
 			]
 		}
 	],
