@@ -23,6 +23,8 @@
 		{ "key": "GUID", "target": "System.Guid" },
 		{ "key": "IID", "target": "System.Guid" },
 		{ "key": "REFIID", "target": "System.Guid" },
+
+		{ "key": "LPCSTR", "target": "System.String" },
 		
 		{ "key": "HRESULT", "name": "System.Int32", "target": "System.Int32" },
 		{ "key": "IUnknown", "name": "SlimDX.ComObject", "target": "SlimDX.ComObject, SlimDX", "marshal": ["wrapped"] },
