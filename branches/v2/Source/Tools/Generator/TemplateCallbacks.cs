@@ -42,13 +42,18 @@ namespace SlimDX.Generator
 			for (var parameterIndex = 0; parameterIndex < method.Parameters.Count; ++parameterIndex)
 			{
 				var parameter = method.Parameters[parameterIndex];
-				if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
-					builder.Append("out ");
-
-				if (parameter.Type == ApiModel.VoidModel)
-					builder.AppendFormat("System.IntPtr {0}", parameter.Name);
-				else
-					builder.AppendFormat("{0} {1}", parameter.Type.Name, parameter.Name);
+				switch (GetBehavior(parameter))
+				{
+					case MarshalBehavior.Array:
+						builder.AppendFormat("{0}[] {1}", parameter.Type.Name, parameter.Name);
+						break;
+					case MarshalBehavior.Output:
+						builder.AppendFormat("out {0} {1}", parameter.Type.Name, parameter.Name);
+						break;
+					default:
+						builder.AppendFormat("{0} {1}", parameter.Type.Name, parameter.Name);
+						break;
+				}
 
 				if (parameterIndex < method.Parameters.Count - 1)
 					builder.Append(", ");
@@ -233,6 +238,14 @@ namespace SlimDX.Generator
 		{
 			switch (GetBehavior(parameter))
 			{
+				case MarshalBehavior.Array:
+					{
+						var builder = new StringBuilder();
+						builder.AppendLine(string.Format("{0}Marshaller* _{1} = stackalloc {0}Marshaller[{1}.Length];", parameter.Type.Name, parameter.Name));
+						builder.AppendLine(string.Format("for(int i = 0; i < {0}.Length; ++i)", parameter.Name));
+						builder.AppendLine(string.Format("\t_{0}[i] = {1}.ToMarshaller({0}[i]);", parameter.Name, parameter.Type.Name));
+						return builder.ToString();
+					}
 				case MarshalBehavior.Output:
 					return string.Format("System.IntPtr _{0} = default(System.IntPtr);", parameter.Name);
 				case MarshalBehavior.Marshal:
@@ -246,6 +259,8 @@ namespace SlimDX.Generator
 		{
 			switch (GetBehavior(parameter))
 			{
+				case MarshalBehavior.Array:
+					return string.Format("new System.IntPtr(_{0})", parameter.Name);
 				case MarshalBehavior.Output:
 					return string.Format("ref _{0}", parameter.Name);
 				case MarshalBehavior.Marshal:
@@ -288,6 +303,8 @@ namespace SlimDX.Generator
 
 		public static MarshalBehavior GetBehavior(ParameterModel model)
 		{
+			if (model.LengthParameter != null)
+				return MarshalBehavior.Array;
 			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
 				return MarshalBehavior.Output;
 			return GetBehavior(model.Type);
