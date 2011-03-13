@@ -107,27 +107,36 @@ namespace SlimDX.Generator
 
 			foreach (var parameter in method.Parameters)
 			{
-				if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
+				switch (GetBehavior(parameter))
 				{
-					if (parameter.Type is InterfaceModel)
-						builder.AppendFormat("{0} = new {1}(_{0});", parameter.Name, parameter.Type.Name);
-					else
-					{
-						if (parameter.Type is EnumerationModel)
+					case MarshalBehavior.Marshal:
+						builder.AppendFormat("_{0}.Release();", parameter.Name);
+						builder.AppendLine();
+						break;
+					default:
+						if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
 						{
-							builder.AppendFormat("{0} = ({1})_{0};", parameter.Name, parameter.Type.Name);
+							if (parameter.Type is InterfaceModel)
+								builder.AppendFormat("{0} = new {1}(_{0});", parameter.Name, parameter.Type.Name);
+							else
+							{
+								if (parameter.Type is EnumerationModel)
+								{
+									builder.AppendFormat("{0} = ({1})_{0};", parameter.Name, parameter.Type.Name);
+								}
+								else if (parameter.Type.Key == "IUnknown")
+								{
+									// hacky, mostly to work around GetBuffer issues.
+									builder.AppendFormat("{0} = SlimDX.ObjectFactory.Create(_{0}, riid);", parameter.Name);
+								}
+								else
+								{
+									builder.AppendFormat("{0} = _{0};", parameter.Name);
+								}
+							}
+							builder.AppendLine();
 						}
-						else if (parameter.Type.Key == "IUnknown")
-						{
-							// hacky, mostly to work around GetBuffer issues.
-							builder.AppendFormat("{0} = SlimDX.ObjectFactory.Create(_{0}, riid);", parameter.Name);
-						}
-						else
-						{
-							builder.AppendFormat("{0} = _{0};", parameter.Name);
-						}
-					}
-					builder.AppendLine();
+						break;
 				}
 			}
 
@@ -142,10 +151,38 @@ namespace SlimDX.Generator
 			StructureMemberModel member = (StructureMemberModel)source;
 			var builder = new StringBuilder();
 
-			if (member.Type is StructureModel)
-				builder.AppendFormat("public {0}Marshaller {1};", member.Type.Name, member.Name);
-			else
-				builder.AppendFormat("public {0} {1};", GetQualifiedName(engine, member.Type), member.Name);
+			switch (GetBehavior(member))
+			{
+				case MarshalBehavior.String:
+					builder.AppendFormat("public System.IntPtr {0};", member.Name);
+					break;
+				case MarshalBehavior.Marshal:
+					builder.AppendFormat("public {0}Marshaller {1};", GetQualifiedName(engine, member.Type), member.Name);
+					break;
+				default:
+					builder.AppendFormat("public {0} {1};", GetQualifiedName(engine, member.Type), member.Name);
+					break;
+			}
+
+			return builder.ToString();
+		}
+
+		public static string StructureMemberMarshallerReleaseStatement(TemplateEngine engine, object source)
+		{
+			StructureMemberModel member = (StructureMemberModel)source;
+			var builder = new StringBuilder();
+
+			switch (GetBehavior(member))
+			{
+				case MarshalBehavior.String:
+					builder.AppendFormat("System.Runtime.InteropServices.Marshal.FreeHGlobal({0});", member.Name);
+					break;
+				case MarshalBehavior.Marshal:
+					builder.AppendFormat("{0}.Release();", member.Name);
+					break;
+				default:
+					break;
+			}
 
 			return builder.ToString();
 		}
@@ -155,10 +192,18 @@ namespace SlimDX.Generator
 			StructureMemberModel member = (StructureMemberModel)source;
 			var builder = new StringBuilder();
 
-			if (member.Type is StructureModel)
-				builder.AppendFormat("result.{0} = {1}.FromMarshaller(source.{0});", member.Name, member.Type.Name);
-			else
-				builder.AppendFormat("result.{0} = source.{0};", member.Name);
+			switch (GetBehavior(member))
+			{
+				case MarshalBehavior.String:
+					builder.AppendFormat("result.{0} = new string((sbyte*)source.{0});", member.Name);
+					break;
+				case MarshalBehavior.Marshal:
+					builder.AppendFormat("result.{0} = {1}.FromMarshaller(source.{0});", member.Name, GetQualifiedName(engine, member.Type));
+					break;
+				default:
+					builder.AppendFormat("result.{0} = source.{0};", member.Name);
+					break;
+			}
 
 			return builder.ToString();
 		}
@@ -168,10 +213,18 @@ namespace SlimDX.Generator
 			StructureMemberModel member = (StructureMemberModel)source;
 			var builder = new StringBuilder();
 
-			if (member.Type is StructureModel)
-				builder.AppendFormat("result.{0} = {1}.ToMarshaller(source.{0});", member.Name, member.Type.Name);
-			else
-				builder.AppendFormat("result.{0} = source.{0};", member.Name);
+			switch (GetBehavior(member))
+			{
+				case MarshalBehavior.String:
+					builder.AppendFormat("result.{0} = source.{0} != null ? System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(source.{0}) : System.IntPtr.Zero;", member.Name);
+					break;
+				case MarshalBehavior.Marshal:
+					builder.AppendFormat("result.{0} = {1}.ToMarshaller(source.{0});", member.Name, GetQualifiedName(engine, member.Type));
+					break;
+				default:
+					builder.AppendFormat("result.{0} = source.{0};", member.Name);
+					break;
+			}
 
 			return builder.ToString();
 		}
@@ -218,6 +271,14 @@ namespace SlimDX.Generator
 
 		public static MarshalBehavior GetBehavior(TypeModel model)
 		{
+			TranslationModel translationModel = model as TranslationModel;
+			if (translationModel != null)
+			{
+				var type = Type.GetType(translationModel.TargetType);
+				if (type == typeof(string))
+					return MarshalBehavior.String;
+			}
+
 			if (model is StructureModel)
 				return MarshalBehavior.Marshal;
 			if (model is InterfaceModel || model.Key == "IUnknown")
@@ -229,6 +290,11 @@ namespace SlimDX.Generator
 		{
 			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
 				return MarshalBehavior.Output;
+			return GetBehavior(model.Type);
+		}
+
+		public static MarshalBehavior GetBehavior(StructureMemberModel model)
+		{
 			return GetBehavior(model.Type);
 		}
 	}

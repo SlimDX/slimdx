@@ -27,6 +27,8 @@ namespace SlimDX.Generator
 		/// </summary>
 		Default,
 
+		String,
+
 		/// <summary>
 		/// The model must be marshalled via a custom marshaller object.
 		/// </summary>
