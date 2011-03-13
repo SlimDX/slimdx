@@ -118,6 +118,18 @@
 					]
 				},
 				{
+					"key": "CreateInputLayout",
+					"type": "HRESULT",
+					"index": "11", 
+					"parameters": [
+						{ "key": "pInputElementDescs", "type": "D3D11_INPUT_ELEMENT_DESC", "length": "NumElements" },
+						{ "key": "NumElements", "type": "UINT" },
+						{ "key": "pShaderBytecodeWithInputSignature", "type": "HWND" },
+						{ "key": "BytecodeLength", "type": "SIZE_T" },
+						{ "key": "ppInputLayout", "type": "ID3D11InputLayout", "flags": [ "out" ] }
+					]
+				},
+				{
 					"key": "CreateRenderTargetView",
 					"type": "HRESULT",
 					"index": "9", 
