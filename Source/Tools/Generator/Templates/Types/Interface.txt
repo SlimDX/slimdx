@@ -21,7 +21,7 @@
 namespace $(@Namespace)
 {
 	[System.Runtime.InteropServices.Guid("$(Guid)")]
-	public partial class $(Name) : $(Parent.Name)
+	public partial class $(Name) : $(Parent.@GetQualifiedName)
 	{
 		internal $(Name)(System.IntPtr nativePointer)
 			: base(nativePointer)
