@@ -26,8 +26,8 @@ namespace SlimDX.Generator
 {
 	class EnumerationModel : TypeModel
 	{
-		public EnumerationModel(string key)
-			: base(key, key)
+		internal EnumerationModel(ApiModel api, string key)
+			: base(api, key, key)
 		{
 		}
 

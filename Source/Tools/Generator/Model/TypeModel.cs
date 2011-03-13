@@ -22,17 +22,19 @@ using System;
 
 namespace SlimDX.Generator
 {
-	class TypeModel
+	abstract class TypeModel
 	{
-		public TypeModel(string key, string name)
+		protected TypeModel(ApiModel api, string key, string name)
 		{
-			if (string.IsNullOrEmpty(key))
-				throw new ArgumentException("Value may not be null or empty", "key");
-			if (string.IsNullOrEmpty(name))
-				throw new ArgumentException("Value may not be null or empty", "key");
-
+			Api = api;
 			Key = key;
 			Name = name;
+		}
+
+		public ApiModel Api
+		{
+			get;
+			private set;
 		}
 
 		public string Key

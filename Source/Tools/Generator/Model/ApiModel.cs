@@ -51,7 +51,9 @@ namespace SlimDX.Generator
 			if (dependencies != null)
 				this.dependencies.AddRange(dependencies);
 
-			AddTranslation(VoidModel);
+			// The 'void' model is special and common to all APIs.
+			translations.Add(VoidModel);
+			index.Add(VoidModel.Key, VoidModel);
 		}
 
 		/// <summary>
@@ -66,7 +68,8 @@ namespace SlimDX.Generator
 		/// <summary>
 		/// Gets the model that represents the 'void' incomplete type.
 		/// </summary>
-		public static TranslationModel VoidModel {
+		public static TranslationModel VoidModel
+		{
 			get;
 			private set;
 		}
@@ -114,36 +117,55 @@ namespace SlimDX.Generator
 			}
 		}
 
-		public void AddTranslation(TranslationModel model)
+		/// <returns></returns>
+		public TranslationModel AddTranslation(string key, string name, string target)
 		{
-			if (model == null)
-				throw new ArgumentNullException("model");
+			if (string.IsNullOrEmpty(key))
+				throw new ArgumentException("Value may not be null or empty", "key");
+			if (string.IsNullOrEmpty(target))
+				throw new ArgumentException("Value may not be null or empty", "target");
+
+			var model = new TranslationModel(key, name, target);
 			translations.Add(model);
 			index.Add(model.Key, model);
+
+			return model;
 		}
 
-		public void AddEnumeration(EnumerationModel model)
+		public EnumerationModel AddEnumeration(string key)
 		{
-			if (model == null)
-				throw new ArgumentNullException("model");
+			if (string.IsNullOrEmpty(key))
+				throw new ArgumentException("Value may not be null or empty", "key");
+
+			var model = new EnumerationModel(this, key);
 			enumerations.Add(model);
 			index.Add(model.Key, model);
+
+			return model;
 		}
 
-		public void AddStructure(StructureModel model)
+		public StructureModel AddStructure(string key)
 		{
-			if (model == null)
-				throw new ArgumentNullException("model");
+			if (string.IsNullOrEmpty(key))
+				throw new ArgumentException("Value may not be null or empty", "key");
+
+			var model = new StructureModel(this, key);
 			structures.Add(model);
 			index.Add(model.Key, model);
+
+			return model;
 		}
 
-		public void AddInterface(InterfaceModel model)
+		public InterfaceModel AddInterface(string key, Guid guid, TypeModel parent)
 		{
-			if (model == null)
-				throw new ArgumentNullException("model");
+			if (string.IsNullOrEmpty(key))
+				throw new ArgumentException("Value may not be null or empty", "key");
+
+			var model = new InterfaceModel(this, key, guid, parent);
 			interfaces.Add(model);
 			index.Add(model.Key, model);
+
+			return model;
 		}
 
 		/// <summary>
@@ -187,7 +209,8 @@ namespace SlimDX.Generator
 		/// <summary>
 		/// Initializes the <see cref="ApiModel"/> class.
 		/// </summary>
-		static ApiModel() {
+		static ApiModel()
+		{
 			VoidModel = new TranslationModel("void", "void", "System.Void");
 		}
 

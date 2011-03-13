@@ -35,10 +35,8 @@ namespace SlimDX.Generator
 			var api = new ApiModel(name, ParseDependencies(root, searchPaths));
 
 			// Translations and enumerations only need a single processing phase.
-			foreach (var type in ParseTranslations(root, api))
-				api.AddTranslation(type);
-			foreach (var type in ParseEnumerations(root, api))
-				api.AddEnumeration(type);
+			ParseTranslations(root, api);
+			ParseEnumerations(root, api);
 
 			// Structure and interface models must be declared first, and
 			// then defined in a second pass to prevent definition order problems.
@@ -93,8 +91,7 @@ namespace SlimDX.Generator
 		/// </summary>
 		/// <param name="root">The root of the API JSON tree.</param>
 		/// <param name="api">The API model being constructed.</param>
-		/// <returns>A list of translation models.</returns>
-		static List<TranslationModel> ParseTranslations(JsonObject root, ApiModel api)
+		static void ParseTranslations(JsonObject root, ApiModel api)
 		{
 			var results = new List<TranslationModel>();
 			JsonObject items;
@@ -104,11 +101,9 @@ namespace SlimDX.Generator
 				{
 					var key = (string)item["key"];
 					var target = (string)item["target"];
-					results.Add(new TranslationModel(key, null, target));
+					api.AddTranslation(key, null, target);
 				}
 			}
-
-			return results;
 		}
 
 		/// <summary>
@@ -116,25 +111,19 @@ namespace SlimDX.Generator
 		/// </summary>
 		/// <param name="root">The root of the API JSON tree.</param>
 		/// <param name="api">The API model being constructed.</param>
-		/// <returns>A list of enumeration models.</returns>
-		static List<EnumerationModel> ParseEnumerations(JsonObject root, ApiModel apit)
+		static void ParseEnumerations(JsonObject root, ApiModel api)
 		{
-			var results = new List<EnumerationModel>();
 			JsonObject items;
 			if (root.TryGetValue("enumerations", out items))
 			{
 				foreach (var item in items)
 				{
 					var key = (string)item["key"];
-					var model = new EnumerationModel(key);
+					var model = api.AddEnumeration(key);
 					foreach (var value in ParseEnumerationValues(item))
 						model.AddValue(value);
-
-					results.Add(model);
 				}
 			}
-
-			return results;
 		}
 
 
@@ -273,7 +262,7 @@ namespace SlimDX.Generator
 			if (root.TryGetValue("structures", out items))
 			{
 				foreach (var item in items)
-					api.AddStructure(new StructureModel((string)item["key"]));
+					api.AddStructure((string)item["key"]);
 			}
 		}
 
@@ -314,9 +303,9 @@ namespace SlimDX.Generator
 
 					JsonObject parent = null;
 					if (item.TryGetValue("type", out parent))
-						api.AddInterface(new InterfaceModel(key, guid, api.FindType((string)parent)));
+						api.AddInterface(key, guid, api.FindType((string)parent));
 					else
-						api.AddInterface(new InterfaceModel(key, guid, null));
+						api.AddInterface(key, guid, null);
 				}
 			}
 		}
