@@ -252,7 +252,7 @@ namespace SlimDX.Generator
 		/// <param name="key">The name of the property to get.</param>
 		/// <param name="source">The source object.</param>
 		/// <returns>The value of the specified property.</returns>
-		static object ResolveProperty(string name, object source)
+		object ResolveProperty(string name, object source)
 		{
 			// if the name has a period, it indicates a sub-property of the element
 			int period = name.IndexOf(separatorGlyph);
@@ -264,10 +264,12 @@ namespace SlimDX.Generator
 			}
 
 			var value = source.GetType().GetProperty(name).GetValue(source, null);
-			if (subName != null)
-				value = ResolveProperty(subName, value);
-
-			return value;
+			if (subName == null)
+				return value;
+			else if (subName.StartsWith(callbackGlyph))
+				return ResolveCallback(subName, value);
+			else
+				return ResolveProperty(subName, value);
 		}
 
 		static IEnumerable QueryForIEnumerable(object source)
