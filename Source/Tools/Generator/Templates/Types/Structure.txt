@@ -43,5 +43,9 @@ namespace $(@Namespace)
 	unsafe struct $(Name)Marshaller
 	{
 		$(Members:@StructureMemberMarshallerDeclaration)
+
+		internal void Release() {
+			$(Members:@StructureMemberMarshallerReleaseStatement)
+		}
 	}
 }
