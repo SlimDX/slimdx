@@ -25,11 +25,12 @@ namespace SlimDX.Generator
 {
 	class ParameterModel
 	{
-		public ParameterModel(string name, TypeModel type, ParameterModelFlags flags)
+		public ParameterModel(string name, TypeModel type, ParameterModelFlags flags, string length)
 		{
 			Name = name;
 			Type = type;
 			Flags = flags;
+			LengthParameter = length;
 		}
 
 		public string Name
@@ -45,6 +46,12 @@ namespace SlimDX.Generator
 		}
 
 		public ParameterModelFlags Flags
+		{
+			get;
+			private set;
+		}
+
+		public string LengthParameter
 		{
 			get;
 			private set;

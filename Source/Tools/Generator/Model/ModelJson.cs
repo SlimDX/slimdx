@@ -218,7 +218,10 @@ namespace SlimDX.Generator
 					var type = api.FindType((string)item["type"]);
 					var flags = ParseInterfaceMethodParameterFlags(item);
 
-					results.Add(new ParameterModel(key, type, flags));
+					JsonObject length;
+					item.TryGetValue("length", out length);
+
+					results.Add(new ParameterModel(key, type, flags, length != null ? (string)length : null));
 				}
 			}
 
