@@ -1,4 +1,4 @@
-﻿public $(Type.Name) $(Name) {
+﻿public $(Type.@GetQualifiedName) $(Name) {
 	get;
 	set;
 }

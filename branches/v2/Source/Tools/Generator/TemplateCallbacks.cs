@@ -26,6 +26,14 @@ namespace SlimDX.Generator
 {
 	static class TemplateCallbacks
 	{
+		public static string GetQualifiedName(TemplateEngine engine, object source)
+		{
+			var type = (TypeModel)source;
+			if (type.Api != null)
+				return string.Format("{0}.{1}", type.Api.Name, type.Name);
+			return type.Name;
+		}
+
 		public static string MethodParameters(TemplateEngine engine, object source)
 		{
 			var method = (MethodModel)source;
@@ -137,7 +145,7 @@ namespace SlimDX.Generator
 			if (member.Type is StructureModel)
 				builder.AppendFormat("public {0}Marshaller {1};", member.Type.Name, member.Name);
 			else
-				builder.AppendFormat("public {0} {1};", member.Type.Name, member.Name);
+				builder.AppendFormat("public {0} {1};", GetQualifiedName(engine, member.Type), member.Name);
 
 			return builder.ToString();
 		}
