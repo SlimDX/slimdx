@@ -629,7 +629,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties DefaultApplyToAll="True" DoNotAskIncludeOutputInProject="True" Sandcastle_UseFriendlyHtmlFileNames="True" Sandcastle_DocumentationSetName="SlimDX" ExternalSources="..\..\build\x86\Release\SlimDX.dll|..\..\build\x86\Release\SlimDX.xml" Sandcastle_ProduceHelp1x="True" Sandcastle_PresentationName="Sandcastle Prototype" Sandcastle_Version="2.4.10520.1" BuildEngineProviderName="Sandcastle" DocProjectVersion="1.11.0.0" ProcessComponentTypeName="DocSite.BuildProcess" IsDocProject="true" />
+      <UserProperties IsDocProject="true" ProcessComponentTypeName="DocSite.BuildProcess" DocProjectVersion="1.11.0.0" BuildEngineProviderName="Sandcastle" Sandcastle_Version="2.4.10520.1" Sandcastle_PresentationName="Sandcastle Prototype" Sandcastle_ProduceHelp1x="True" ExternalSources="..\..\build\x86\Release\SlimDX.dll|..\..\build\x86\Release\SlimDX.xml" Sandcastle_DocumentationSetName="SlimDX" Sandcastle_UseFriendlyHtmlFileNames="True" DoNotAskIncludeOutputInProject="True" DefaultApplyToAll="True" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
