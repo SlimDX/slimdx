@@ -8,6 +8,7 @@ Samples
 	* Removed unused testing code from SimpleModel10.
 	* Fixed configuration issues in MiniTri11.
 	* Fixed Device.Clear depth value in WPF control.
+	* Added BasicComputeShader sample for D3D11.
 
 Math
 	* Added an overload of Ray.Intersects that returns the barycentric hit coordinates.
@@ -74,5 +75,3 @@ XAPO
 Windows
 	* Added functionality to the RenderForm class to add sizing and monitor change events.
 
-Samples
-	* Added BasicComputeShader sample for D3D11.
