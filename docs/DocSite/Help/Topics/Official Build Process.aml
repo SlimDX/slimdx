@@ -24,44 +24,8 @@
         <para>
           In the past, SlimDX was built against a common baseline runtime that did not need to be explicitly configured.
           Although rather convenient, this approach has turned out to be quite unstable when combined with the new Windows 7 APIs.
-          As a result, the SlimDX DLL is now redirected to use the non-service pack Visual C++ 2008 runtime.
-          This is generally not the runtime that a build will link to, so it is necessary to change the manifest to select a new one.
-        </para>
-      </content>
-    </section>
-
-    <section>
-      <title>C++ Runtime Configuration</title>
-
-      <content>
-        <para>
-          If left to its own devices, Visual Studio SP1 will create a SlimDX binary that depends on the 2008 SP1 version of the C++ runtimes, possibly with extra hotfixes.
-          This behavior is undesirable, because it means that the target system requires Visual C++ 2008 SP1 and other hotfixes to be installed.
-          That requirement applies to Windows Vista and 7 systems as well.
-          It is thus necessary to redirect the built file to use the original, pre-service pack version of the 2008 runtime.
-          That redirection is supported in the form of application manifests.
-        </para>
-        <para>
-          Manifests are part of the Windows side-by-side (WinSxS) assembly mechanism.
-          A thorough discussion of WinSxS is beyond the scope of this document.
-          Suffice it to say that modern applications now used a manifest file embedded in the built binary to control their DLL search (amongst other things).
-          This provides more powerful control over what version of a dependency DLL is used than the old search path system.
-          The manifest is simply a specially formatted XML file that signals to the operating system how to select a DLL to load when that dependency is requested.
-          WinSxS also supports policy files, which are able to redirect all applications attempting to use a certain DLL to use a different version instead.
-        </para>
-        <para>
-          Visual Studio 2008 automatically generates and embeds a manifest in its default configuration.
-          This manifest requests the SP1 version of the C++ runtime, so it's not appropriate for us.
-          The SlimDX Public configuration instructs the compiler not to generate a manifest.
-          Instead, the build folder in the source repository contains custom manifests that are used instead to instruct WinSxS to use the original C++ 2008 runtime.
-          One of these manifests is embedded into the SlimDX DLL, and thanks to the SP1 policy file, we will always use the latest version of the 2008 runtime.
-          This works with all current releases of .NET starting with 2.0, and will always work on Windows Vista.
-          Windows 7 has not been tested at the time of writing.
-        </para>
-        <para>
-          The SlimDX assembly cannot be digitally signed until the manifest has been embedded, but signatures cannot be added after the assembly has been built, either.
-          To get around this, the Public configuration delay signs the assembly, and the signing process is completed after the manifest has been embedded.
-          You should not attempt to test or use the delay signed assembly; it is a strictly an intermediate file.
+          As of the March 2011 release, SlimDX now relies on the Visual C++ 2010 runtimes, and the custom configuration
+          work used in earlier versions is no longer used.
         </para>
       </content>
     </section>
@@ -75,7 +39,7 @@
           <list class="bullet">
             <listItem>
               <para>
-                Open the project in Visual Studio 2008 SP1, and do a Public build of the desired platform.
+                Open the project in Visual Studio 2010, and do a Public build of the desired framework and platform.
               </para>
             </listItem>
             <listItem>

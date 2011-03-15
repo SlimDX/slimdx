@@ -41,6 +41,12 @@
               - This section covers how to correctly configure a SlimDX application to run properly on both 32 bit and 64 bit systems.
             </para>
           </listItem>
+          <listItem>
+            <para>
+              <link xlink:href="443ed878-a18a-4ddc-ac88-c0f124ff0495">Managed Message Loop</link>
+              - Explains the rationale behind the canonical message loop in SlimDX projects.
+            </para>
+          </listItem>
         </list>
       </content>
     </section>
