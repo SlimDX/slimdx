@@ -30,17 +30,12 @@
           </listItem>
           <listItem>
             <para>
-              <database>Visual C++ Redist</database> - Contains all of the Microsoft Visual C++ redistributable files that are relevant to this release of SlimDX.
-            </para>
-          </listItem>
-          <listItem>
-            <para>
               <database>Documentation</database> - Contains a Compiled Help (CHM) file with all of the SlimDX documentation available at the time of that release.
             </para>
           </listItem>
           <listItem>
             <para>
-              <database>Samples</database> - Contains all of the source code and binaries for the SlimDX samples, including the Sample Framework.
+              <database>Samples</database> - Contains a self-extracting installer for all of the SlimDX sample source code and binaries, including the Sample Framework.
             </para>
           </listItem>
         </list>

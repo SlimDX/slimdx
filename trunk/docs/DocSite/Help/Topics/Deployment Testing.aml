@@ -22,7 +22,7 @@
           </externalLink>.
           These images are mainly intended for testing websites against various versions of Internet Explorer, and they're time bombed so you will need to re-download them periodically.
           They represent essentially blank installations of the operating systems, and make excellent test beds for installers.
-          A number of significant bugs were uncovered during the development of the SlimDX November 2008 runtime installer by using these images.
+          A number of significant bugs were uncovered during the development of the initial SlimDX runtime installer by using these images.
           It's strongly recommended that you perform this type of testing before unleashing an installer in the wild; this will avoid many headaches later where installation fails inexplicably on users' systems.
           Virtual PC is also
           <externalLink>
