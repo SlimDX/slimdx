@@ -21,6 +21,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimDX.Direct3D11", "Source\Products\SlimDX.Direct3D11\SlimDX.Direct3D11.csproj", "{7D81E4D9-3C71-42A5-B4D4-2F80CEFF3187}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimDX.ShaderCompiler", "Source\Products\SlimDX.ShaderCompiler\SlimDX.ShaderCompiler.csproj", "{823E594A-F381-4EB3-8318-77BC2656EDD3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9523BE04-7228-413E-993D-7D741A685B4F} = {9523BE04-7228-413E-993D-7D741A685B4F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
