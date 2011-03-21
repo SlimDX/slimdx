@@ -18,9 +18,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
+using System.Runtime.InteropServices;
+
 namespace SlimDX.ShaderCompiler
 {
 	public static partial class ShaderCompiler
 	{
+		#region Interface
+
+		public static void CompileFromString(string code, string sourceName, string entryPoint, string target)
+		{
+			System.IntPtr codeBytes = Marshal.StringToHGlobalAnsi(code);
+
+			ID3DBlob codeBlob;
+			ID3DBlob errorBlob;
+			int hr = D3DCompile(codeBytes, code.Length, sourceName, IntPtr.Zero, IntPtr.Zero, entryPoint, target, 0, 0, out codeBlob, out errorBlob);
+
+			Marshal.FreeHGlobal(codeBytes);
+		}
+
+		#endregion
 	}
 }

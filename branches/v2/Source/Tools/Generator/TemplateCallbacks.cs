@@ -124,6 +124,10 @@ namespace SlimDX.Generator
 						builder.AppendFormat("_{0}.Release();", parameter.Name);
 						builder.AppendLine();
 						break;
+					case MarshalBehavior.String:
+						builder.AppendFormat("System.Runtime.InteropServices.Marshal.FreeHGlobal(_{0});", parameter.Name);
+						builder.AppendLine();
+						break;
 					default:
 						if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
 						{
@@ -252,6 +256,8 @@ namespace SlimDX.Generator
 						builder.AppendLine(string.Format("\t_{0}[i] = {1}.ToMarshaller({0}[i]);", parameter.Name, parameter.Type.Name));
 						return builder.ToString();
 					}
+				case MarshalBehavior.String:
+					return string.Format("System.IntPtr _{0} = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi({0});", parameter.Name);
 				case MarshalBehavior.Output:
 					return string.Format("System.IntPtr _{0} = default(System.IntPtr);", parameter.Name);
 				case MarshalBehavior.Marshal:
@@ -267,6 +273,8 @@ namespace SlimDX.Generator
 			{
 				case MarshalBehavior.Array:
 					return string.Format("new System.IntPtr(_{0})", parameter.Name);
+				case MarshalBehavior.String:
+					return string.Format("_{0}", parameter.Name);
 				case MarshalBehavior.Output:
 					return string.Format("ref _{0}", parameter.Name);
 				case MarshalBehavior.Marshal:

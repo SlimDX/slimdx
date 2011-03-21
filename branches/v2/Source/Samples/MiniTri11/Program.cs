@@ -18,12 +18,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
+using System.IO;
 using System.Windows.Forms;
 using SlimBuffer;
 using SlimDX;
 using SlimDX.Direct3D11;
 using SlimDX.DXGI;
+using SlimDX.ShaderCompiler;
 using SlimMath;
 
 namespace MiniTri11
@@ -32,17 +33,15 @@ namespace MiniTri11
 	{
 		static void Main()
 		{
-			
-
 			ReferenceTracker.TrackReferences = true;
 			Form form = new Form();
 
-			IDXGIFactory factory;
-			int result = SlimDX.DXGI.DXGI.CreateDXGIFactory(new Guid("7b7166ec-21c7-44ae-b21a-c9ae321ae369"), out factory);
-
-
+			IDXGIFactory factory = DXGI.CreateFactory();
 			IDXGIAdapter adapter = null;
 			factory.EnumAdapters(0, out adapter);
+
+			var code = File.ReadAllText("MiniTri11.fx");
+			ShaderCompiler.CompileFromString(code,"MiniTri11.fx","Render","fx_4_0");
 
 			DXGI_SWAP_CHAIN_DESC swapChainDescription = new DXGI_SWAP_CHAIN_DESC
 			{

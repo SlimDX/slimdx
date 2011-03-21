@@ -88,10 +88,19 @@
       <Project>{E3444A70-DF09-4610-9393-B5D7467DF705}</Project>
       <Name>SlimDX.DXGI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Products\SlimDX.ShaderCompiler\SlimDX.ShaderCompiler.csproj">
+      <Project>{823E594A-F381-4EB3-8318-77BC2656EDD3}</Project>
+      <Name>SlimDX.ShaderCompiler</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Products\SlimDX\SlimDX.csproj">
       <Project>{A774A428-009F-4E4D-ABF2-F7E181DAA2E3}</Project>
       <Name>SlimDX</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MiniTri11.fx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

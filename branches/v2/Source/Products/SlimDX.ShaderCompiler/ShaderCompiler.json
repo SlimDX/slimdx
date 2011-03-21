@@ -30,6 +30,23 @@
 				{ "key": "Size", "type": "SIZE_T" },
 				{ "key": "ppBlob", "type": "ID3DBlob", "flags": ["out"] }
 			]
+		},
+		{
+			"key": "D3DCompile",
+			"type": "HRESULT",
+			"parameters": [
+				{ "key": "pSrcData", "type": "LPCVOID" },
+				{ "key": "SrcDataSize", "type": "SIZE_T" },
+				{ "key": "pSourceName", "type": "LPCSTR" },
+				{ "key": "pDefines", "type": "LPVOID" },
+				{ "key": "pInclude", "type": "LPVOID" },
+				{ "key": "pEntrypoint", "type": "LPCSTR" },
+				{ "key": "pTarget", "type": "LPCSTR" },
+				{ "key": "Flags1", "type": "UINT" },
+				{ "key": "Flags2", "type": "UINT" },
+				{ "key": "ppCode", "type": "ID3DBlob", "flags": ["out"] },
+				{ "key": "ppErrorMsgs", "type": "ID3DBlob", "flags": ["out"] }
+			]
 		}
 	]
 }
