@@ -1,0 +1,35 @@
+﻿{
+	"name": "SlimDX.ShaderCompiler",
+	"dependencies": [ "../SlimDX/SlimDX.json" ],
+
+	"interfaces": [
+		{
+			"key": "ID3DBlob",
+			"type": "IUnknown",
+			"guid": "8ba5fb08-5195-40e2-ac58-0d989c3a0102",
+			"methods": [
+				{
+					"key": "GetBufferPointer",
+					"type": "LPVOID",
+					"index": "3"
+				},
+				{
+					"key": "GetBufferSize",
+					"type": "SIZE_T",
+					"index": "4"
+				}
+			]
+		}
+	],
+
+	"functions": [
+		{
+			"key": "D3DCreateBlob",
+			"type": "HRESULT",
+			"parameters": [
+				{ "key": "Size", "type": "SIZE_T" },
+				{ "key": "ppBlob", "type": "ID3DBlob", "flags": ["out"] }
+			]
+		}
+	]
+}

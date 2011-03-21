@@ -334,6 +334,8 @@ namespace SlimDX.Generator
 					return "dxgi.dll";
 				case "SlimDX.Direct3D11":
 					return "d3d11.dll";
+				case "SlimDX.ShaderCompiler":
+					return "d3dcompiler_43.dll";
 				default:
 					return string.Empty;
 			}
