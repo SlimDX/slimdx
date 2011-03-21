@@ -45,6 +45,10 @@ namespace SlimDX.Generator
 			DefineStructures(root, api);
 			DefineInterfaces(root, api);
 
+			// Functions may reference any of the above, but cannot be referenced themselves,
+			// and so can be parsed in one pass at the end.
+			ParseFunctions(root, api);
+
 			return api;
 		}
 
@@ -126,6 +130,26 @@ namespace SlimDX.Generator
 			}
 		}
 
+		/// <summary>
+		/// Parses function model definitions within a JSON tree.
+		/// </summary>
+		/// <param name="root">The root of the API JSON tree.</param>
+		/// <param name="api">The API model being constructed.</param>
+		static void ParseFunctions(JsonObject root, ApiModel api)
+		{
+			JsonObject items;
+			if (root.TryGetValue("functions", out items))
+			{
+				foreach (var item in items)
+				{
+					var key = (string)item["key"];
+					var type = api.FindType((string)item["type"]);
+					var model = api.AddFunction(key, type);
+					foreach (var parameter in ParseFunctionParameters(item, api))
+						model.AddParameter(parameter);
+				}
+			}
+		}
 
 		/// <summary>
 		/// Parses enumeration value model definitions within a JSON tree.
@@ -188,8 +212,8 @@ namespace SlimDX.Generator
 					var key = (string)item["key"];
 					var type = api.FindType((string)item["type"]);
 					var index = (int)item["index"];
-					var model = new MethodModel(key, type, index);
-					foreach (var parameter in ParseInterfaceMethodParameters(item, api))
+					var model = new MethodModel(api, key, type, index);
+					foreach (var parameter in ParseFunctionParameters(item, api))
 						model.AddParameter(parameter);
 
 					results.Add(model);
@@ -205,7 +229,7 @@ namespace SlimDX.Generator
 		/// <param name="root">The root of the JSON tree for the method.</param>
 		/// <param name="api">The API model being constructed.</param>
 		/// <returns>A list of method parameter models.</returns>
-		static IEnumerable<ParameterModel> ParseInterfaceMethodParameters(JsonObject root, ApiModel api)
+		static IEnumerable<ParameterModel> ParseFunctionParameters(JsonObject root, ApiModel api)
 		{
 			var results = new List<ParameterModel>();
 

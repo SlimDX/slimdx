@@ -117,6 +117,14 @@ namespace SlimDX.Generator
 			}
 		}
 
+		public ReadOnlyCollection<FunctionModel> Functions
+		{
+			get
+			{
+				return functions.AsReadOnly();
+			}
+		}
+
 		/// <returns></returns>
 		public TranslationModel AddTranslation(string key, string name, string target)
 		{
@@ -164,6 +172,17 @@ namespace SlimDX.Generator
 			var model = new InterfaceModel(this, key, guid, parent);
 			interfaces.Add(model);
 			index.Add(model.Key, model);
+
+			return model;
+		}
+
+		public FunctionModel AddFunction(string key, TypeModel type)
+		{
+			if (string.IsNullOrEmpty(key))
+				throw new ArgumentException("Value may not be null or empty", "key");
+
+			var model = new FunctionModel(this, key, type);
+			functions.Add(model);
 
 			return model;
 		}
@@ -219,6 +238,7 @@ namespace SlimDX.Generator
 		List<EnumerationModel> enumerations = new List<EnumerationModel>();
 		List<StructureModel> structures = new List<StructureModel>();
 		List<InterfaceModel> interfaces = new List<InterfaceModel>();
+		List<FunctionModel> functions = new List<FunctionModel>();
 
 		Dictionary<string, TypeModel> index = new Dictionary<string, TypeModel>();
 

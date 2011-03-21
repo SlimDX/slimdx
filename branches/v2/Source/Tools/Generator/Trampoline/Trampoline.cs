@@ -46,12 +46,25 @@ namespace SlimDX.Generator
 		/// </summary>
 		/// <param name="returnType">The return type of the target method.</param>
 		/// <param name="parameterTypes">Parameters .</param>
-		public Trampoline(Type returnType, params TrampolineParameter[] parameterTypes)
+		public Trampoline(bool isInstance, Type returnType, params TrampolineParameter[] parameterTypes)
 		{
+			IsInstanceCall = isInstance;
 			ReturnType = returnType ?? typeof(void);
 
-			var nativeParameterTypes = new List<TrampolineParameter> { new TrampolineParameter(typeof(IntPtr)) };
-			var managedParameterTypes = new List<TrampolineParameter> { new TrampolineParameter(typeof(int)), new TrampolineParameter(typeof(IntPtr)) };
+			var nativeParameterTypes = new List<TrampolineParameter>();
+			var managedParameterTypes = new List<TrampolineParameter>();
+			if (IsInstanceCall)
+			{
+				nativeParameterTypes.Add(new TrampolineParameter(typeof(IntPtr)));
+				managedParameterTypes.Add(new TrampolineParameter(typeof(int)));
+				managedParameterTypes.Add(new TrampolineParameter(typeof(IntPtr)));
+			}
+			else
+			{
+				// (entry point only)
+				managedParameterTypes.Add(new TrampolineParameter(typeof(IntPtr)));
+			}
+
 			if (parameterTypes != null)
 			{
 				nativeParameterTypes.AddRange(parameterTypes);
@@ -60,6 +73,12 @@ namespace SlimDX.Generator
 
 			NativeParameterTypes = new ReadOnlyCollection<TrampolineParameter>(nativeParameterTypes);
 			ManagedParameterTypes = new ReadOnlyCollection<TrampolineParameter>(managedParameterTypes);
+		}
+
+		public bool IsInstanceCall
+		{
+			get;
+			private set;
 		}
 
 		/// <summary>

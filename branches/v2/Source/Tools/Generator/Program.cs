@@ -108,13 +108,16 @@ namespace SlimDX.Generator
 			var templateEngine = new TemplateEngine(new[] { defaultTemplateDirectory });
 
 			templateEngine.RegisterCallback("EnumItem", (e, s) => ((dynamic)s).Name.EndsWith("FORCE_DWORD") ? string.Empty : ((dynamic)s).Name + " = " + ((dynamic)s).Value + ",");
-			templateEngine.RegisterCallback("Namespace", (e, s) => api.Name);
+			templateEngine.RegisterCallback("ApiNamespace", (e, s) => api.Name);
+			templateEngine.RegisterCallback("ApiName", (e, s) => TemplateCallbacks.GetApiClassName(api));
+			templateEngine.RegisterCallback("ApiDll", (e, s) => TemplateCallbacks.GetApiDllName(api));
 			templateEngine.RegisterCallbacks(typeof(TemplateCallbacks));
 
 			var outputDirectory = configuration.GetOption("Options", "OutputPath").RootPath(configuration.ConfigurationDirectory);
 			if (!Directory.Exists(outputDirectory))
 				Directory.CreateDirectory(outputDirectory);
 
+			ApplyTemplate(api, outputDirectory, templateEngine, "Api");
 			ApplyTemplate(api.Enumerations, outputDirectory, templateEngine, "Enumeration");
 			ApplyTemplate(api.Structures, outputDirectory, templateEngine, "Structure");
 			ApplyTemplate(api.Interfaces, outputDirectory, templateEngine, "Interface");
@@ -147,8 +150,31 @@ namespace SlimDX.Generator
 						parameters.Add(parameterModel.Type == ApiModel.VoidModel ? new TrampolineParameter(typeof(IntPtr), flags) : new TrampolineParameter(parameterType, flags));
 					}
 
-					trampolineBuilder.Add(new Trampoline(methodType, parameters.ToArray()));
+					trampolineBuilder.Add(new Trampoline(true, methodType, parameters.ToArray()));
 				}
+			}
+
+			foreach (var functionModel in api.Functions)
+			{
+				var methodType = ResolveType(functionModel.Type);
+				if (methodType == null)
+					throw new InvalidOperationException(string.Format("Could not resolve return type for method '{0}.'", functionModel.Name));
+
+				var parameters = new List<TrampolineParameter>();
+				foreach (var parameterModel in functionModel.Parameters)
+				{
+					var parameterType = ResolveType(parameterModel.Type);
+					if (parameterType == null)
+						throw new InvalidOperationException(string.Format("Could not resolve type for parameter '{0}.'", parameterModel.Name));
+
+					TrampolineParameterFlags flags = TrampolineParameterFlags.Default;
+					if (parameterModel.Flags.HasFlag(ParameterModelFlags.IsOutput))
+						flags |= TrampolineParameterFlags.Reference;
+
+					parameters.Add(parameterModel.Type == ApiModel.VoidModel ? new TrampolineParameter(typeof(IntPtr), flags) : new TrampolineParameter(parameterType, flags));
+				}
+
+				trampolineBuilder.Add(new Trampoline(false, methodType, parameters.ToArray()));
 			}
 
 			trampolineBuilder.CreateAssembly(outputDirectory, outputFile);
@@ -170,6 +196,14 @@ namespace SlimDX.Generator
 			}
 
 			return typeof(IntPtr);
+		}
+
+		static void ApplyTemplate(ApiModel item, string outputDirectory, TemplateEngine templateEngine, string templateName)
+		{
+			var outputPath = Path.Combine(outputDirectory, TemplateCallbacks.GetApiClassName(item) + ".cs");
+			if (File.Exists(outputPath))
+				File.Delete(outputPath);
+			File.WriteAllText(outputPath, templateEngine.ApplyByName(templateName, item));
 		}
 
 		static void ApplyTemplate(IEnumerable<TypeModel> items, string outputDirectory, TemplateEngine templateEngine, string templateName)

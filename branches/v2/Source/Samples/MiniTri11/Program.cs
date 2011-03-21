@@ -32,10 +32,15 @@ namespace MiniTri11
 	{
 		static void Main()
 		{
+			
+
 			ReferenceTracker.TrackReferences = true;
 			Form form = new Form();
 
-			IDXGIFactory factory = DXGI.CreateFactory();
+			IDXGIFactory factory;
+			int result = SlimDX.DXGI.DXGI.CreateDXGIFactory(new Guid("7b7166ec-21c7-44ae-b21a-c9ae321ae369"), out factory);
+
+
 			IDXGIAdapter adapter = null;
 			factory.EnumAdapters(0, out adapter);
 
@@ -68,7 +73,7 @@ namespace MiniTri11
 				Windowed = true
 			};
 
-			ID3D11Device device = Direct3D11.CreateDevice(adapter);
+			ID3D11Device device = SlimDX.Direct3D11.Direct3D11.CreateDevice(adapter);
 			IDXGISwapChain swapChain = null;
 			factory.CreateSwapChain(device, swapChainDescription, out swapChain);
 

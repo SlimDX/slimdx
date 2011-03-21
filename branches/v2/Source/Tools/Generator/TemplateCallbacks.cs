@@ -18,9 +18,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Text;
 using System;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SlimDX.Generator
 {
@@ -34,14 +35,14 @@ namespace SlimDX.Generator
 			return type.Name;
 		}
 
-		public static string MethodParameters(TemplateEngine engine, object source)
+		public static string FunctionParameters(TemplateEngine engine, object source)
 		{
-			var method = (MethodModel)source;
+			var function = (FunctionModel)source;
 			var builder = new StringBuilder();
 
-			for (var parameterIndex = 0; parameterIndex < method.Parameters.Count; ++parameterIndex)
+			for (var parameterIndex = 0; parameterIndex < function.Parameters.Count; ++parameterIndex)
 			{
-				var parameter = method.Parameters[parameterIndex];
+				var parameter = function.Parameters[parameterIndex];
 				switch (GetBehavior(parameter))
 				{
 					case MarshalBehavior.Array:
@@ -55,16 +56,16 @@ namespace SlimDX.Generator
 						break;
 				}
 
-				if (parameterIndex < method.Parameters.Count - 1)
+				if (parameterIndex < function.Parameters.Count - 1)
 					builder.Append(", ");
 			}
 
 			return builder.ToString();
 		}
 
-		public static string MethodPrologue(TemplateEngine engine, object source)
+		public static string FunctionPrologue(TemplateEngine engine, object source)
 		{
-			var method = (MethodModel)source;
+			var method = (FunctionModel)source;
 			var builder = new StringBuilder();
 
 			foreach (var parameter in method.Parameters)
@@ -77,16 +78,16 @@ namespace SlimDX.Generator
 			return builder.ToString();
 		}
 
-		public static string MethodTrampoline(TemplateEngine engine, object source)
+		public static string FunctionTrampoline(TemplateEngine engine, object source)
 		{
-			var method = (MethodModel)source;
+			var function = (FunctionModel)source;
 			var builder = new StringBuilder();
 
 			string trampolineSuffix = string.Empty;
-			if (method.Type != ApiModel.VoidModel)
+			if (function.Type != ApiModel.VoidModel)
 			{
-				var methodTypeName = method.Type.Name;
-				var translationModel = method.Type as TranslationModel;
+				var methodTypeName = function.Type.Name;
+				var translationModel = function.Type as TranslationModel;
 				if (translationModel != null)
 				{
 					var type = Type.GetType(translationModel.TargetType);
@@ -97,17 +98,22 @@ namespace SlimDX.Generator
 				builder.AppendFormat("{0} _result = ", methodTypeName);
 			}
 
-			builder.AppendFormat("SlimDX.Trampoline.Call{0}(System.IntPtr.Size * {1}, NativePointer", trampolineSuffix, method.Index);
-			foreach (var parameter in method.Parameters)
+			var method = function as MethodModel;
+			if (method != null)
+				builder.AppendFormat("SlimDX.Trampoline.CallInstance{0}(System.IntPtr.Size * {1}, NativePointer", trampolineSuffix, method.Index);
+			else
+				builder.AppendFormat("SlimDX.Trampoline.CallFree{0}(functions[{1}]", trampolineSuffix, function.Api.Functions.IndexOf(function));
+
+			foreach (var parameter in function.Parameters)
 				builder.AppendFormat(", {0}", GetParameterTrampolineString(parameter));
 
 			builder.Append(");");
 			return builder.ToString();
 		}
 
-		public static string MethodEpilogue(TemplateEngine engine, object source)
+		public static string FunctionEpilogue(TemplateEngine engine, object source)
 		{
-			var method = (MethodModel)source;
+			var method = (FunctionModel)source;
 			var builder = new StringBuilder();
 
 			foreach (var parameter in method.Parameters)
@@ -313,6 +319,24 @@ namespace SlimDX.Generator
 		public static MarshalBehavior GetBehavior(StructureMemberModel model)
 		{
 			return GetBehavior(model.Type);
+		}
+
+		public static string GetApiClassName(ApiModel api)
+		{
+			return api.Name.Split('.').Last();
+		}
+
+		public static string GetApiDllName(ApiModel api)
+		{
+			switch (api.Name)
+			{
+				case "SlimDX.DXGI":
+					return "dxgi.dll";
+				case "SlimDX.Direct3D11":
+					return "d3d11.dll";
+				default:
+					return string.Empty;
+			}
 		}
 	}
 }
