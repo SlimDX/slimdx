@@ -1,4 +1,4 @@
-﻿public unsafe $(Type.Name) $(Name)($(@FunctionParameters))
+﻿public unsafe static $(Type.Name) $(Name)($(@FunctionParameters))
 {
 	$(@FunctionPrologue)
 	$(@FunctionTrampoline)

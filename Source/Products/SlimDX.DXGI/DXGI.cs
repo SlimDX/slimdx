@@ -27,24 +27,16 @@ namespace SlimDX.DXGI
 	/// <summary>
 	/// The access point for the DXGI API.
 	/// </summary>
-	public static class DXGI
+	public static partial class DXGI
 	{
 		#region Interface
 
 		public static IDXGIFactory CreateFactory()
 		{
-			IntPtr nativePointer = IntPtr.Zero;
-			CreateDXGIFactory(ref factoryGuid, out nativePointer);
-			return new IDXGIFactory(nativePointer);
+			IDXGIFactory result;
+			CreateDXGIFactory(typeof(IDXGIFactory).GUID, out result);
+			return result;
 		}
-
-		#endregion
-		#region Implementation
-
-		static Guid factoryGuid = new Guid("7b7166ec-21c7-44ae-b21a-c9ae321ae369");
-
-		[DllImport("dxgi.dll", EntryPoint = "CreateDXGIFactory", CallingConvention = CallingConvention.StdCall, PreserveSig = true), SuppressUnmanagedCodeSecurity]
-		private extern static int CreateDXGIFactory(ref Guid interfaceID, out IntPtr result);
 
 		#endregion
 	}

@@ -18,24 +18,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-namespace SlimDX.Generator
+namespace $(@ApiNamespace)
 {
-	class MethodModel : FunctionModel
+	public static partial class $(@ApiName)
 	{
-		#region Interface
-
-		public MethodModel(ApiModel api, string name, TypeModel returnType, int index) :
-			base(api, name, returnType)
-		{
-			Index = index;
+		static $(@ApiName)() {
+			System.IntPtr nativeModule = LoadLibrary("$(@ApiDll)");
+			$(Functions:FunctionBind)
 		}
 
-		public int Index
-		{
-			get;
-			private set;
-		}
+		$(Functions:Function)
 
-		#endregion
+		[System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true)]
+		static extern System.IntPtr LoadLibrary(System.String fileName);
+		
+		[System.Runtime.InteropServices.DllImport("kernel32.dll", CharSet = System.Runtime.InteropServices.CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
+		static extern System.IntPtr GetProcAddress(System.IntPtr module, System.String procedureName);
+
+		static System.Collections.Generic.List<System.IntPtr> functions = new System.Collections.Generic.List<System.IntPtr>();
 	}
 }

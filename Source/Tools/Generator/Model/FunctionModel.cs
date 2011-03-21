@@ -18,23 +18,57 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
 namespace SlimDX.Generator
 {
-	class MethodModel : FunctionModel
+	class FunctionModel
 	{
 		#region Interface
 
-		public MethodModel(ApiModel api, string name, TypeModel returnType, int index) :
-			base(api, name, returnType)
+		public FunctionModel(ApiModel api, string name, TypeModel returnType)
 		{
-			Index = index;
+			Api = api;
+			Name = name;
+			Type = returnType;
 		}
 
-		public int Index
+		public ApiModel Api
 		{
 			get;
 			private set;
 		}
+
+		public string Name
+		{
+			get;
+			private set;
+		}
+
+		public TypeModel Type
+		{
+			get;
+			private set;
+		}
+
+		public ReadOnlyCollection<ParameterModel> Parameters
+		{
+			get
+			{
+				return parameters.AsReadOnly();
+			}
+		}
+
+		public void AddParameter(ParameterModel parameter)
+		{
+			parameters.Add(parameter);
+		}
+
+		#endregion
+		#region Implementation
+
+		List<ParameterModel> parameters = new List<ParameterModel>();
 
 		#endregion
 	}

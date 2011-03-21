@@ -255,5 +255,16 @@
 				}
 			]
 		}
+	],
+
+	"functions": [
+		{
+			"key": "CreateDXGIFactory",
+			"type": "HRESULT",
+			"parameters": [
+				{ "key": "riid", "type": "REFIID" },
+				{ "key": "ppFactory", "type": "IDXGIFactory", "flags": ["out"] }
+			]
+		}
 	]
 }

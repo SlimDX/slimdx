@@ -53,6 +53,7 @@
     </Compile>
     <Compile Include="DXGI.cs" />
     <Compile Include="Extensions\SwapChain.cs" />
+    <Compile Include="Generated\DXGI.cs" />
     <Compile Include="Generated\DXGI_FORMAT.cs" />
     <Compile Include="Generated\DXGI_MODE_DESC.cs" />
     <Compile Include="Generated\DXGI_MODE_SCALING.cs" />

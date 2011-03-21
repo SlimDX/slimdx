@@ -72,6 +72,7 @@
     <Compile Include="Model\ApiModel.cs" />
     <Compile Include="Model\EnumerationModel.cs" />
     <Compile Include="Model\EnumerationValueModel.cs" />
+    <Compile Include="Model\FunctionModel.cs" />
     <Compile Include="Model\InterfaceModel.cs" />
     <Compile Include="Model\MethodModel.cs" />
     <Compile Include="Model\ModelJson.cs" />
@@ -93,6 +94,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TemplateCallbacks.cs" />
     <Compile Include="TemplateEngine.cs" />
+    <Content Include="Templates\Functions\FunctionBind.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="Trampoline\Trampoline.cs" />
     <Compile Include="Trampoline\TrampolineParameter.cs" />
     <Compile Include="Trampoline\TrampolineParameterOptions.cs" />
@@ -105,7 +109,13 @@
     <Content Include="naming_rules.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Templates\Functions\Function.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Templates\Functions\InterfaceMethod.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Templates\Types\Api.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\Types\Enumeration.txt">

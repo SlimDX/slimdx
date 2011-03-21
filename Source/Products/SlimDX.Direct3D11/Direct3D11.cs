@@ -28,7 +28,7 @@ namespace SlimDX.Direct3D11
 	/// <summary>
 	/// The access point for the Direct3D 11 API.
 	/// </summary>
-	public static class Direct3D11
+	public static partial class Direct3D11
 	{
 		#region Interface
 
@@ -52,6 +52,11 @@ namespace SlimDX.Direct3D11
 			);
 
 			return new ID3D11Device(devicePointer);
+		}
+
+		public static int ComputeSubresourceIndex(int mipSlice, int arraySlice, int mipLevels)
+		{
+			return mipSlice + arraySlice * mipLevels;
 		}
 
 		#endregion
