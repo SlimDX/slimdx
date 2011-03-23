@@ -5,7 +5,7 @@
   </PackageFiles>
   <Strings>
     <String Name="Culture">en</String>
-    <String Name="DisplayName">SlimDX Runtime (February 2010)</String>
+    <String Name="DisplayName">SlimDX Runtime for .NET 2.0 (March 2011)</String>
     <String Name="AdminRequired">The SlimDX Runtime requires administrative privileges in order to install correctly.</String>
     <String Name="IncorrectOS">The SlimDX Runtime requires Windows XP SP2 or higher.</String>
     <String Name="CancelledInstall">The user has cancelled the installation. The SlimDX Runtime has not been installed.</String>

@@ -6,9 +6,9 @@
     <ProductVersion>3.0</ProductVersion>
     <ProjectGuid>{8d77f897-0d99-4261-a76b-b079afe414fe}</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>SlimDX SDK %28June 2010%29</OutputName>
+    <OutputName>SlimDX SDK %28March 2011%29</OutputName>
     <OutputType>Package</OutputType>
-    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.5\Wix2010.targets</WixTargetsPath>
+    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
     <Name>SlimDXSDK</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
