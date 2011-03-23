@@ -43,7 +43,7 @@
 	WriteMenuItem("Documentation", "http://slimdx.org/latestdocs/");
 	WriteMenuItem("Tutorials", "tutorials.php");
 	WriteMenuItem("Licensing", "license.php");
-	WriteMenuItem("Support", "support.php");
+	WriteMenuItem("Consulting", "consulting.php");
 ?>            
         </ul>
     </div>
