@@ -38,7 +38,7 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyConfigurationAttribute("")];
 [assembly:AssemblyCompanyAttribute("SlimDX Group")];
 [assembly:AssemblyProductAttribute("SlimDX")];
-[assembly:AssemblyCopyrightAttribute("Copyright © 2007-2010 SlimDX Group")];
+[assembly:AssemblyCopyrightAttribute("Copyright © 2007-2011 SlimDX Group")];
 [assembly:AssemblyTrademarkAttribute("")];
 [assembly:AssemblyCultureAttribute("")];
 
@@ -54,9 +54,9 @@ using namespace System::Security::Permissions;
 // by using the '*' as shown below:
 
 #if _MSC_VER < 1600
-[assembly:AssemblyVersionAttribute("2.0.10.43")];
+[assembly:AssemblyVersionAttribute("2.0.11.43")];
 #else
-[assembly:AssemblyVersionAttribute("4.0.10.43")];
+[assembly:AssemblyVersionAttribute("4.0.11.43")];
 #endif
 
 [assembly:ComVisible(false)];
