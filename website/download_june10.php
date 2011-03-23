@@ -46,11 +46,6 @@
 				It also includes all of the files necessary to build custom installation packages if desired.
 				The SDK supports both 32 bit and 64 bit systems.
 				</p><br />
-				<p>
-				<b>Attention:</b> We are trying to learn more about our users and their needs.
-				Please help us by filling out <a href="http://www.surveymonkey.com/s/6LW9QXG">a very short, simple survey</a>.
-				Answers are anonymous, and it's just a few simple questions. Thank you!
-				</p><br />
 				<a href="http://slimdx.googlecode.com/files/SlimDX%20SDK%20%28June%202010%29.exe"><img src="images/install_sdk.png" alt="Latest Developer SDK" /></a>
 			</div>
 			

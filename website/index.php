@@ -13,10 +13,6 @@
       It is designed to be an efficient, simple, and lean wrapper that fully encompasses all of Microsoft's gaming and multimedia technologies and exposes them to managed code.
       All of the code is under the MIT/X11 license, and all content is under the Creative Commons Attribution-Share Alike license.
       Our latest release is June 2010, and can be found for users and developers on the <a href="download.php">Download page</a>.
-			<br /><br />
-      Originally, the managed game development niche was filled by Microsoft's Managed DirectX, which is now deprecated and no longer recommended for new development. In its wake, SlimDX has stepped up to provide support in a 
-      way that is very similar to the original MDX libraries. While similar, however, they are not intended to be the same APIs. SlimDX exposes a broader range of technologies, has a core design that improves upon that provided 
-      by MDX, and is more in-tune with managed methodologies since the advent of .NET 2.0. SlimDX is already widely used and can be found in several major multimedia and gaming applications.
       <br /><br />  
       All development is based in our <a href="http://code.google.com/p/slimdx/">Google Code homepage</a>.
 			You can use that site to report bugs (using our issues page), as well as download a complete copy of the source code.
@@ -26,15 +22,16 @@
 			If it isn't, feel free to include or exclude the prefix as you like.
 			You can also try and get a hold of us on IRC, in the #graphicsdev channel on <a href="http://www.afternet.org/">AfterNET</a>.			
 			<br /><br />
-			<h2>Consulting Highlight</h2>
-			SlimDX Consulting is now up and running to serve your custom software needs.
-			Our expertise in DirectX, SlimDX, and managed/unmanaged interop of all kinds means getting things done in a fraction of the time and cost.
-			That leaves you to focus on your application, instead of fighting with unfamiliar libraries.
-			<br />Our current Featured Customer is <a href="http://www.starcounter.com/">Starcounter AB</a>;
-			see <a href="support.php">the Support page</a> for more information about our services.
+			<h2>Consulting Services</h2>
+			SlimDX Consulting is now up and running to help you get the most of your applications.
+			Our expertise in DirectX, SlimDX, and both managed and native code means getting things done in a fraction of the time and cost of an in house solution.
+			That leaves you to focus on your application, instead of fighting with unfamiliar libraries and obscure bugs.
+			SlimDX already powers a wide range of multimedia, from big budget games to large scale weather services to television.
+			You deserve the same level of polish for your own projects.
+			Visit our <a href="consulting.php">Consulting</a> page for more information what we can do for you.
 			</p><br /><br />
 
-			<p><a href="download.php"><img src="images/install.png" alt="latest release" /></a></p>
+			<p><a href="download.php"><img src="images/latest.jpg" alt="latest release" /></a></p>
       </div>
         
       <div id="left_column">
