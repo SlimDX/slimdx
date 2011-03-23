@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<?define Version="2.0.10.43" ?>
-<?define ReleaseName="June 2010" ?>
-<?define ShortName="Jun2010" ?>
+<?define Version="2.0.11.43" ?>
+<?define ReleaseName="March 2011" ?>
+<?define ShortName="Mar2011" ?>
+<?define DXShortName="Jun2010" ?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
   <Product Id="*" Language="1033" Manufacturer="SlimDX Group" Name="SlimDX SDK ($(var.ReleaseName))" Version="$(var.Version)">
@@ -17,7 +18,7 @@
     <WixVariable Id="WixUILicenseRtf" Value="..\ExtraFiles\License.rtf" />
     <WixVariable Id="WixUIDialogBmp" Value="..\ExtraFiles\SdxSideLogo.jpg" />
     <WixVariable Id="WixUIBannerBmp" Value="..\ExtraFiles\SdxLogo.jpg" />
-    <WixVariable Id="WixUICostingPopupOptOut" Value="1" Overridable="yes" />
+    <!--<WixVariable Id="WixUICostingPopupOptOut" Value="1" Overridable="yes" />-->
 
     <Media Id="1" Cabinet="SlimDX_$(var.ShortName).cab" EmbedCab="yes" />
 
@@ -40,8 +41,6 @@
 
     <UI>
       <ProgressText Action="InstallDirectX">Installing DirectX runtime components ($(var.ReleaseName))</ProgressText>
-      <ProgressText Action="InstallVC10Runtime_x86">Installing Visual C++ 2010 runtime (x86)</ProgressText>
-      <ProgressText Action="InstallVC10Runtime_x64">Installing Visual C++ 2010 runtime (x64)</ProgressText>
     </UI>
 
     <UI Id="FeatureTreePlus">
@@ -218,24 +217,24 @@
             </Component>
             <!-- x86 components -->
             <Component Id="DXRedist_x86" Guid="21E764E6-B901-44db-B24C-2CFC012C6EA9">
-              <File Id="D3DCompiler_43_x86" Name="$(var.ShortName)_D3DCompiler_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_D3DCompiler_43_x86.cab" />
-              <File Id="d3dcsx_43_x86" Name="$(var.ShortName)_d3dcsx_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dcsx_43_x86.cab" />
-              <File Id="d3dx9_43_x86.cab" Name="$(var.ShortName)_d3dx9_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dx9_43_x86.cab" />
-              <File Id="d3dx10_43_x86.cab" Name="$(var.ShortName)_d3dx10_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dx10_43_x86.cab" />
-              <File Id="d3dx11_43_x86.cab" Name="$(var.ShortName)_d3dx11_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_d3dx11_43_x86.cab" />
+              <File Id="D3DCompiler_43_x86" Name="$(var.DXShortName)_D3DCompiler_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.DXShortName)_D3DCompiler_43_x86.cab" />
+              <File Id="d3dcsx_43_x86" Name="$(var.DXShortName)_d3dcsx_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.DXShortName)_d3dcsx_43_x86.cab" />
+              <File Id="d3dx9_43_x86.cab" Name="$(var.DXShortName)_d3dx9_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.DXShortName)_d3dx9_43_x86.cab" />
+              <File Id="d3dx10_43_x86.cab" Name="$(var.DXShortName)_d3dx10_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.DXShortName)_d3dx10_43_x86.cab" />
+              <File Id="d3dx11_43_x86.cab" Name="$(var.DXShortName)_d3dx11_43_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.DXShortName)_d3dx11_43_x86.cab" />
               <File Id="X3DAudio_x86.cab" Name="Feb2010_X3DAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\Feb2010_X3DAudio_x86.cab" />
-              <File Id="XAudio_x86.cab" Name="$(var.ShortName)_XAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.ShortName)_XAudio_x86.cab" />
+              <File Id="XAudio_x86.cab" Name="$(var.DXShortName)_XAudio_x86.cab" Source="..\ExtraFiles\DXRedist\x86\$(var.DXShortName)_XAudio_x86.cab" />
               <File Id="xinput_x86.cab" Name="APR2007_xinput_x86.cab" Source="..\ExtraFiles\DXRedist\x86\APR2007_xinput_x86.cab" />
             </Component>
             <!-- x64 components -->
             <Component Id="DXRedist_x64" Guid="93812D6F-4DE3-409c-95C0-FB4CA8E26741">
-              <File Id="D3DCompiler_43_x64" Name="$(var.ShortName)_D3DCompiler_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_D3DCompiler_43_x64.cab" />
-              <File Id="d3dcsx_43_x64" Name="$(var.ShortName)_d3dcsx_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dcsx_43_x64.cab" />
-              <File Id="d3dx9_43_x64.cab" Name="$(var.ShortName)_d3dx9_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dx9_43_x64.cab" />
-              <File Id="d3dx10_43_x64.cab" Name="$(var.ShortName)_d3dx10_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dx10_43_x64.cab" />
-              <File Id="d3dx11_43_x64.cab" Name="$(var.ShortName)_d3dx11_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_d3dx11_43_x64.cab" />
+              <File Id="D3DCompiler_43_x64" Name="$(var.DXShortName)_D3DCompiler_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.DXShortName)_D3DCompiler_43_x64.cab" />
+              <File Id="d3dcsx_43_x64" Name="$(var.DXShortName)_d3dcsx_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.DXShortName)_d3dcsx_43_x64.cab" />
+              <File Id="d3dx9_43_x64.cab" Name="$(var.DXShortName)_d3dx9_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.DXShortName)_d3dx9_43_x64.cab" />
+              <File Id="d3dx10_43_x64.cab" Name="$(var.DXShortName)_d3dx10_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.DXShortName)_d3dx10_43_x64.cab" />
+              <File Id="d3dx11_43_x64.cab" Name="$(var.DXShortName)_d3dx11_43_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.DXShortName)_d3dx11_43_x64.cab" />
               <File Id="X3DAudio_x64.cab" Name="Feb2010_X3DAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\Feb2010_X3DAudio_x64.cab" />
-              <File Id="XAudio_x64.cab" Name="$(var.ShortName)_XAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.ShortName)_XAudio_x64.cab" />
+              <File Id="XAudio_x64.cab" Name="$(var.DXShortName)_XAudio_x64.cab" Source="..\ExtraFiles\DXRedist\x64\$(var.DXShortName)_XAudio_x64.cab" />
               <File Id="xinput_x64.cab" Name="APR2007_xinput_x64.cab" Source="..\ExtraFiles\DXRedist\x64\APR2007_xinput_x64.cab" />
             </Component>
           </Directory>
@@ -244,14 +243,16 @@
           <Directory Id="VCRedist" Name="Visual C++ Redist">
             <Merge Id="VC09Runtime_x86" DiskId="1" Language="1033" SourceFile="..\ExtraFiles\VCRedist\Microsoft_VC90_CRT_x86.msm" />
             <Merge Id="VC09Runtime_x64" DiskId="1" Language="1033" SourceFile="..\ExtraFiles\VCRedist\Microsoft_VC90_CRT_x86_x64.msm" />
-            <!--<Component Id="VC10Runtime_x86" Guid="DBE789EE-2FDA-4411-8E35-A8771802EB95">
-              <File Id="vc10redist_x86.exe" Name="vc10redist_x86.exe" Source="..\ExtraFiles\VCRedist\vc10redist_x86.exe" />
-            </Component>
-            <Component Id="VC10Runtime_x64" Guid="285B780B-0BF0-4F73-A655-D0EAC83B6194">
-              <File Id="vc10redist_x64.exe" Name="vc10redist_x64.exe" Source="..\ExtraFiles\VCRedist\vc10redist_x64.exe" />
-            </Component>-->
           </Directory>
 
+          <!-- SlimDX redist installers -->
+          <Directory Id="Runtimes" Name="Runtime">
+            <Component Id="Runtimes" DiskId="1" Guid="97938607-F716-47df-B02C-AA492E2536DD">
+              <File Id="Redist_Net20" Name="SlimDX Runtime for .NET 2.0 ($(var.ReleaseName)).msi" Source="..\SlimDX Runtime for .NET 2.0 ($(var.ReleaseName)).msi" />
+              <File Id="Redist_Net40" Name="SlimDX Runtime for .NET 4.0 ($(var.ReleaseName)).exe" Source="..\SlimDX Runtime for .NET 4.0 ($(var.ReleaseName)).exe" />
+            </Component>
+          </Directory>
+          
           <!-- SlimDX documentation -->
           <Directory Id="Documentation" Name="Documentation">
             <Component Id="Documentation" DiskId="1" Guid="7E3EBF58-8F53-4101-814F-A4B6A18DC05F">
@@ -298,7 +299,7 @@
           <Directory Id="SlimDXClickOnce08" Name="SlimDX$(var.ShortName)_VS08">
             <Component Id="ClickOnceProduct08" DiskId="1" Guid="0B851093-0BA6-4f2f-9781-AD4A2CF15191">
               <File Id="ProductXml08" Name="Product.xml" Source="..\ExtraFiles\ClickOnce\product.xml" />
-              <File Id="Redist08" Name="SlimDX Runtime Net20 ($(var.ReleaseName)).msi" Source="..\SlimDX Runtime Net20 ($(var.ReleaseName)).msi" />
+              <File Id="Redist08" Name="SlimDX Runtime for .NET 2.0 ($(var.ReleaseName)).msi" Source="..\SlimDX Runtime for .NET 2.0 ($(var.ReleaseName)).msi" />
             </Component>
 
             <Directory Id="ClickOnceEn08" Name="en">
@@ -312,23 +313,42 @@
       </Directory>
 
       <!-- ClickOnce support for VS 2010 (.NET 2.0) -->
-      <Directory Id="CLICKONCE_VS10">
-        <Directory Id="PackagesVS10" Name="Packages">
-          <Directory Id="SlimDXClickOnce10" Name="SlimDX$(var.ShortName)_VS10">
-            <Component Id="ClickOnceProduct10" DiskId="1" Guid="C05AD47A-CAF9-4c76-A67C-4ABA0F65C70F">
-              <File Id="ProductXml10" Name="Product.xml" Source="..\ExtraFiles\ClickOnce\product.xml" />
-              <File Id="Redist10" Name="SlimDX Runtime Net20 ($(var.ReleaseName)).msi" Source="..\SlimDX Runtime Net20 ($(var.ReleaseName)).msi" />
+      <Directory Id="CLICKONCE_VS10_Net20">
+        <Directory Id="PackagesVS10_Net20" Name="Packages">
+          <Directory Id="SlimDXClickOnce10_Net20" Name="SlimDX$(var.ShortName)_VS10_Net20">
+            <Component Id="ClickOnceProduct10_Net20" DiskId="1" Guid="C05AD47A-CAF9-4c76-A67C-4ABA0F65C70F">
+              <File Id="ProductXml10_Net20" Name="Product.xml" Source="..\ExtraFiles\ClickOnce\product.xml" />
+              <File Id="Redist10_Net20" Name="SlimDX Runtime for .NET 2.0 ($(var.ReleaseName)).msi" Source="..\SlimDX Runtime for .NET 2.0 ($(var.ReleaseName)).msi" />
             </Component>
 
-            <Directory Id="ClickOnceEn10" Name="en">
-              <Component Id="ClickOnceEn10" DiskId="1" Guid="107F6F7C-556B-45d5-B372-1720BF9F9374">
-                <File Id="PackageXml10" Name="package.xml" Source="..\ExtraFiles\ClickOnce\en\package.xml" />
-                <File Id="License10" Name="License.rtf" Source="..\ExtraFiles\License.rtf" />
+            <Directory Id="ClickOnceEn10_Net20" Name="en">
+              <Component Id="ClickOnceEn10_Net20" DiskId="1" Guid="107F6F7C-556B-45d5-B372-1720BF9F9374">
+                <File Id="PackageXml10_Net20" Name="package.xml" Source="..\ExtraFiles\ClickOnce\en\package.xml" />
+                <File Id="License10_Net20" Name="License.rtf" Source="..\ExtraFiles\License.rtf" />
               </Component>
             </Directory>
           </Directory>
         </Directory>
       </Directory>
+      
+      <!-- ClickOnce support for VS 2010 (.NET 4.0) -->
+      <!--<Directory Id="CLICKONCE_VS10_Net40">
+        <Directory Id="PackagesVS10_Net40" Name="Packages">
+          <Directory Id="SlimDXClickOnce10_Net40" Name="SlimDX$(var.ShortName)_VS10_Net40">
+            <Component Id="ClickOnceProduct10_Net40" DiskId="1" Guid="1111F77E-B335-4e81-8559-CD2E6507A491">
+              <File Id="ProductXml10_Net40" Name="Product.xml" Source="..\ExtraFiles\ClickOnce_Net40\product.xml" />
+              <File Id="Redist10_Net40" Name="SlimDX Runtime for .NET 4.0 ($(var.ReleaseName)).msi" Source="..\SlimDX Runtime for .NET 4.0 ($(var.ReleaseName)).msi" />
+            </Component>
+
+            <Directory Id="ClickOnceEn10_Net40" Name="en">
+              <Component Id="ClickOnceEn10_Net40" DiskId="1" Guid="816E48EA-84AC-41c3-A80B-FABD860EDD1A">
+                <File Id="PackageXml10_Net40" Name="package.xml" Source="..\ExtraFiles\ClickOnce_Net40\en\package.xml" />
+                <File Id="License10_Net40" Name="License.rtf" Source="..\ExtraFiles\License.rtf" />
+              </Component>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>-->
     </Directory>
 
     <!-- Registry keys for VS -->
@@ -409,13 +429,12 @@
           <![CDATA[VersionNT64]]>
         </Condition>
       </Feature>
-      <!--<Feature Id="VC10Runtime" Level="1" AllowAdvertise="no" Absent="disallow"
-               Title="Visual C++ 2010 runtime" Description="Visual C++ 2010 runtime components.">
-        <ComponentRef Id="VC10Runtime_x86" />
-        <ComponentRef Id="VC10Runtime_x64" />
-      </Feature>-->
     </Feature>
 
+    <Feature Id="Runtimes" Level="1" AllowAdvertise="no" Title="Runtimes" Description="SlimDX end user runtime installers.">
+      <ComponentRef Id="Runtimes" />
+    </Feature>
+    
     <Feature Id="Documentation" Level="1" AllowAdvertise="no"
              Title="Documentation" Description="SlimDX documentation in CHM format.">
       <ComponentRef Id="Documentation" />
@@ -441,8 +460,10 @@
         <Condition Level="1">
           <![CDATA[Installed OR CLICKONCE_VS10]]>
         </Condition>
-        <ComponentRef Id="ClickOnceProduct10" />
-        <ComponentRef Id="ClickOnceEn10" />
+        <ComponentRef Id="ClickOnceProduct10_Net20" />
+        <ComponentRef Id="ClickOnceEn10_Net20" />
+        <!--<ComponentRef Id="ClickOnceProduct10_Net40" />
+        <ComponentRef Id="ClickOnceEn10_Net40" />-->
       </Feature>
     </Feature>
 

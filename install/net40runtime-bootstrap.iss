@@ -1,13 +1,13 @@
 [Setup]
-OutputBaseFileName=SlimDX SDK (March 2011)
-AppName=SlimDX SDK Prerequisites (March 2011)
-AppVerName=SlimDX SDK Prerequisites (March 2011)
+OutputBaseFileName=SlimDX Runtime for .NET 4.0 (March 2011)
+AppName=SlimDX Runtime for .NET 4.0 Prerequisites (March 2011)
+AppVerName=SlimDX Runtime for .NET 4.0 Prerequisites (March 2011)
 AppPublisher=SlimDX Group
 AppPublisherURL=http://slimdx.org
 AppVersion=11.43
 AppCopyright=Copyright (C) 2007-2011 SlimDX Group
-VersionInfoProductName=SlimDX SDK (March 2011)
-VersionInfoDescription=SlimDX SDK (March 2011)
+VersionInfoProductName=SlimDX Runtime for .NET 4.0 (March 2011)
+VersionInfoDescription=SlimDX Runtime for .NET 4.0 (March 2011)
 VersionInfoVersion=11.43
 Compression=lzma2
 SolidCompression=yes
@@ -29,12 +29,12 @@ WizardSmallImageFile=ExtraFiles\logo-black-55.bmp
 [Files]
 Source: "ExtraFiles\VCRedist\vc10redist_x86.exe"; DestDir: {tmp}
 Source: "ExtraFiles\VCRedist\vc10redist_x64.exe"; DestDir: {tmp}; Check: IsWin64
-Source: "SlimDX SDK (March 2011).msi"; DestDir: "{tmp}"
+Source: "SlimDX Runtime Net40 (March 2011).msi"; DestDir: "{tmp}"
 
 [Run]
 Filename: "{tmp}\vc10redist_x86.exe"; Parameters: "/passive"
 Filename: "{tmp}\vc10redist_x64.exe"; Parameters: "/passive"; Check: IsWin64
-Filename: "msiexec"; Parameters: "/i ""SlimDX SDK (March 2011).msi"" "; WorkingDir: "{tmp}"
+Filename: "msiexec"; Parameters: "/i ""SlimDX Runtime Net40 (March 2011).msi"" "; WorkingDir: "{tmp}"
 
 [Code]
 //http://www.kynosarges.de/DotNetVersion.html
@@ -75,13 +75,11 @@ end;
 
 function InitializeSetup(): Boolean;
 begin
-    if not IsDotNetDetected('v2.0.50727', 0)
-    and not IsDotNetDetected('v3.5', 0)
-    and not IsDotNetDetected('v4\Client', 0)
+    if not IsDotNetDetected('v4\Client', 0)
     and not IsDotNetDetected('v4\Full', 0)
     then begin
-        MsgBox('SlimDX requires Microsoft .NET Framework 2.0 or later.'#13#13
-            'Please use Windows Update to install it,'#13
+        MsgBox('This version of SlimDX requires Microsoft .NET Framework 4.0.'#13#13
+            'Please use install it from the Microsoft website,'#13
             'and then re-run the setup program.', mbInformation, MB_OK);
         result := false;
     end else
