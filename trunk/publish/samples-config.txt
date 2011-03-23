@@ -1,6 +1,6 @@
 ;!@Install@!UTF-8!
-Title="SlimDX Samples Package (June 2010)"
-BeginPrompt="This archive contains SlimDX samples for June 2010."
+Title="SlimDX Samples Package (March 2011)"
+BeginPrompt="This archive contains SlimDX samples for March 2011."
 ExtractDialogText="Unpacking..."
 ExtractPathText="Select a directory to unpack the samples package to:"
 ExtractTitle="Extracting..."
