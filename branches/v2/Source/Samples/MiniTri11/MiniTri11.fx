@@ -46,13 +46,3 @@ float4 PS( PS_IN input ) : SV_Target
 {
 	return input.col;
 }
-
-technique10 Render
-{
-	pass P0
-	{
-		SetGeometryShader( 0 );
-		SetVertexShader( CompileShader( vs_4_0, VS() ) );
-		SetPixelShader( CompileShader( ps_4_0, PS() ) );
-	}
-}
