@@ -54,7 +54,9 @@
     <Compile Include="Generated\D3D11_BUFFER_DESC.cs" />
     <Compile Include="Generated\D3D11_INPUT_CLASSIFICATION.cs" />
     <Compile Include="Generated\D3D11_INPUT_ELEMENT_DESC.cs" />
+    <Compile Include="Generated\D3D11_SUBRESOURCE_DATA.cs" />
     <Compile Include="Generated\D3D11_USAGE.cs" />
+    <Compile Include="Generated\D3D11_VIEWPORT.cs" />
     <Compile Include="Generated\Direct3D11.cs" />
     <Compile Include="Generated\ID3D11Buffer.cs" />
     <Compile Include="Generated\ID3D11ClassInstance.cs" />
