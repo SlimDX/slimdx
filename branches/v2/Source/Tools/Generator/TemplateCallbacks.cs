@@ -132,7 +132,7 @@ namespace SlimDX.Generator
 						if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
 						{
 							if (parameter.Type is InterfaceModel)
-								builder.AppendFormat("{0} = new {1}(_{0});", parameter.Name, parameter.Type.Name);
+								builder.AppendFormat("{0} = _{0} != System.IntPtr.Zero ? new {1}(_{0}) : null;", parameter.Name, parameter.Type.Name);
 							else
 							{
 								if (parameter.Type is EnumerationModel)
