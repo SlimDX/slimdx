@@ -20,7 +20,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using SlimBuffer;
 
 namespace SlimDX.ShaderCompiler
 {
@@ -31,7 +30,7 @@ namespace SlimDX.ShaderCompiler
 		public static ID3DBlob CompileFromString(string code, string sourceName, string entryPoint, string target)
 		{
 			System.IntPtr codeBytes = Marshal.StringToHGlobalAnsi(code);
-
+			 
 			ID3DBlob codeBlob;
 			ID3DBlob errorBlob;
 			int hr = D3DCompile(codeBytes, code.Length, sourceName, IntPtr.Zero, IntPtr.Zero, entryPoint, target, 0, 0, out codeBlob, out errorBlob);
