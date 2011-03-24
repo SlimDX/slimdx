@@ -57,14 +57,17 @@
     <Compile Include="Generated\D3D11_USAGE.cs" />
     <Compile Include="Generated\Direct3D11.cs" />
     <Compile Include="Generated\ID3D11Buffer.cs" />
+    <Compile Include="Generated\ID3D11ClassInstance.cs" />
     <Compile Include="Generated\ID3D11ClassLinkage.cs" />
     <Compile Include="Generated\ID3D11Device.cs" />
     <Compile Include="Generated\ID3D11DeviceChild.cs" />
     <Compile Include="Generated\ID3D11DeviceContext.cs" />
     <Compile Include="Generated\ID3D11InputLayout.cs" />
+    <Compile Include="Generated\ID3D11PixelShader.cs" />
     <Compile Include="Generated\ID3D11RenderTargetView.cs" />
     <Compile Include="Generated\ID3D11Resource.cs" />
     <Compile Include="Generated\ID3D11Texture2D.cs" />
+    <Compile Include="Generated\ID3D11VertexShader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
