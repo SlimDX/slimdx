@@ -54,6 +54,11 @@
 			"guid": "1841e5c8-16b0-489b-bcc8-44cfb0d5deae"
 		},
 		{
+			"key": "ID3D11ClassLinkage",
+			"type": "ID3D11DeviceChild",
+			"guid": "a6cd7faa-b0b7-4a2f-9436-8662a65797cb"
+		},
+		{
 			"key": "ID3D11Resource",
 			"type": "ID3D11DeviceChild",
 			"guid": "dc8e63f3-d12b-4952-b47b-5e45026a862d"
