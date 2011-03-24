@@ -32,6 +32,15 @@
 			]
 		},
 		{
+			"key": "D3DGetInputSignatureBlob",
+			"type": "HRESULT",
+			"parameters": [
+				{ "key": "pSrcData", "type": "LPCVOID" },
+				{ "key": "SrcDataSize", "type": "SIZE_T" },
+				{ "key": "ppBlob", "type": "ID3DBlob", "flags": ["out"] }
+			]
+		},
+		{
 			"key": "D3DCompile",
 			"type": "HRESULT",
 			"parameters": [
