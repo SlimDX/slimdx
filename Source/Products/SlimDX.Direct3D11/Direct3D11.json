@@ -23,6 +23,14 @@
 
 	"structures": [
 		{
+			"key": "D3D11_SUBRESOURCE_DATA",
+			"members": [
+				{ "key": "pSysMem", "type": "LPVOID" },
+				{ "key": "SysMemPitch", "type": "UINT" },
+				{ "key": "SysMemSlicePitch", "type": "UINT" }
+			]
+		},
+		{
 			"key": "D3D11_BUFFER_DESC",
 			"members": [
 				{ "key": "ByteWidth", "type": "UINT" },
@@ -43,6 +51,17 @@
 				{ "key": "AlignedByteOffset", "type": "UINT" },
 				{ "key": "InputSlotClass", "type": "D3D11_INPUT_CLASSIFICATION" },
 				{ "key": "InstanceDataStepRate", "type": "UINT" }
+			]
+		},
+		{
+			"key": "D3D11_VIEWPORT",
+			"members": [
+				{ "key": "TopLeftX", "type": "FLOAT" },
+				{ "key": "TopLeftY", "type": "FLOAT" },
+				{ "key": "Width", "type": "FLOAT" },
+				{ "key": "Height", "type": "FLOAT" },
+				{ "key": "MinDepth", "type": "FLOAT" },
+				{ "key": "MaxDepth", "type": "FLOAT" }
 			]
 		}
 	],
@@ -104,11 +123,79 @@
 			"guid": "c0bfa96c-e089-44fb-8eaf-26f8796190da",
 			"methods": [
 				{
+					"key": "PSSetShader",
+					"type": "void",
+					"index": "9", 
+					"parameters": [
+						{ "key": "pPixelShader", "type": "ID3D11PixelShader" },
+						{ "key": "ppClassInstances", "type": "ID3D11ClassInstance" },
+						{ "key": "NumClassInstances", "type": "UINT" }
+					]
+				},
+				{
+					"key": "VSSetShader",
+					"type": "void",
+					"index": "11", 
+					"parameters": [
+						{ "key": "pVertexShader", "type": "ID3D11VertexShader" },
+						{ "key": "ppClassInstances", "type": "ID3D11ClassInstance" },
+						{ "key": "NumClassInstances", "type": "UINT" }
+					]
+				},
+				{
+					"key": "Draw",
+					"type": "void",
+					"index": "13", 
+					"parameters": [
+						{ "key": "VertexCount", "type": "UINT" },
+						{ "key": "StartVertexLocation", "type": "UINT" }
+					]
+				},
+				{
 					"key": "IASetInputLayout",
 					"type": "void",
 					"index": "17", 
 					"parameters": [
 						{ "key": "inputLayout", "type": "ID3D11InputLayout" }
+					]
+				},
+				{
+					"key": "IASetVertexBuffers",
+					"type": "void",
+					"index": "18", 
+					"parameters": [
+						{ "key": "StartSlot", "type": "UINT" },
+						{ "key": "NumBuffers", "type": "UINT" },
+						{ "key": "ppVertexBuffers", "type": "ID3D11Buffer", "length": "NumBuffers" },
+						{ "key": "pStrides", "type": "UINT", "length": "NumBuffers" },
+						{ "key": "pOffsets", "type": "UINT", "length": "NumBuffers" }
+					]
+				},
+				{
+					"key": "IASetPrimitiveTopology",
+					"type": "void",
+					"index": "24", 
+					"parameters": [
+						{ "key": "Topology", "type": "UINT" }
+					]
+				},
+				{
+					"key": "OMSetRenderTargets",
+					"type": "void",
+					"index": "33", 
+					"parameters": [
+						{ "key": "NumViews", "type": "UINT" },
+						{ "key": "ppRenderTargetViews", "type": "ID3D11RenderTargetView", "length":"NumViews" },
+						{ "key": "pDepthStencilView", "type": "LPVOID" }
+					]
+				},
+				{
+					"key": "RSSetViewports",
+					"type": "void",
+					"index": "44", 
+					"parameters": [
+						{ "key": "NumViewports", "type": "UINT" },
+						{ "key": "pViewports", "type": "D3D11_VIEWPORT", "length":"NumViewports" }
 					]
 				},
 				{
@@ -132,9 +219,9 @@
 					"type": "HRESULT",
 					"index": "3", 
 					"parameters": [
-						{ "key": "description", "type": "D3D11_BUFFER_DESC" },
-						{ "key": "data", "type": "IUnknown" },
-						{ "key": "buffer", "type": "ID3D11Buffer", "flags": [ "out" ] }
+						{ "key": "pDesc", "type": "D3D11_BUFFER_DESC" },
+						{ "key": "pInitialData", "type": "D3D11_SUBRESOURCE_DATA" },
+						{ "key": "ppBuffer", "type": "ID3D11Buffer", "flags": [ "out" ] }
 					]
 				},
 				{
