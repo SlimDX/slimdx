@@ -250,10 +250,27 @@ namespace SlimDX.Generator
 			{
 				case MarshalBehavior.Array:
 					{
+						//TODO: Needs cleanup.
 						var builder = new StringBuilder();
-						builder.AppendLine(string.Format("{0}Marshaller* _{1} = stackalloc {0}Marshaller[{1}.Length];", parameter.Type.Name, parameter.Name));
-						builder.AppendLine(string.Format("for(int i = 0; i < {0}.Length; ++i)", parameter.Name));
-						builder.AppendLine(string.Format("\t_{0}[i] = {1}.ToMarshaller({0}[i]);", parameter.Name, parameter.Type.Name));
+						var baseBehavior = GetBehavior(parameter.Type);
+						if (baseBehavior == MarshalBehavior.Marshal)
+						{
+							builder.AppendLine(string.Format("{0}Marshaller* _{1} = stackalloc {0}Marshaller[{1}.Length];", parameter.Type.Name, parameter.Name));
+							builder.AppendLine(string.Format("for(int i = 0; i < {0}.Length; ++i)", parameter.Name));
+							builder.AppendLine(string.Format("\t_{0}[i] = {1}.ToMarshaller({0}[i]);", parameter.Name, parameter.Type.Name));
+						}
+						else if (baseBehavior == MarshalBehavior.Wrapped)
+						{
+							builder.AppendLine(string.Format("System.IntPtr* _{1} = stackalloc System.IntPtr[{1}.Length];", parameter.Type.Name, parameter.Name));
+							builder.AppendLine(string.Format("for(int i = 0; i < {0}.Length; ++i)", parameter.Name));
+							builder.AppendLine(string.Format("\t_{0}[i] = {0}[i].NativePointer;", parameter.Name, parameter.Type.Name));
+						}
+						else
+						{
+							builder.AppendLine(string.Format("{0}* _{1} = stackalloc {0}[{1}.Length];", parameter.Type.Name, parameter.Name));
+							builder.AppendLine(string.Format("for(int i = 0; i < {0}.Length; ++i)", parameter.Name));
+							builder.AppendLine(string.Format("\t_{0}[i] = {0}[i];", parameter.Name, parameter.Type.Name));
+						}
 						return builder.ToString();
 					}
 				case MarshalBehavior.String:

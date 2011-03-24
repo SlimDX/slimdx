@@ -139,7 +139,7 @@ namespace SlimDX.Generator
 					var parameters = new List<TrampolineParameter>();
 					foreach (var parameterModel in methodModel.Parameters)
 					{
-						var parameterType = ResolveType(parameterModel.Type);
+						var parameterType = ResolveType(parameterModel);
 						if (parameterType == null)
 							throw new InvalidOperationException(string.Format("Could not resolve type for parameter '{0}.'", parameterModel.Name));
 
@@ -163,7 +163,7 @@ namespace SlimDX.Generator
 				var parameters = new List<TrampolineParameter>();
 				foreach (var parameterModel in functionModel.Parameters)
 				{
-					var parameterType = ResolveType(parameterModel.Type);
+					var parameterType = ResolveType(parameterModel);
 					if (parameterType == null)
 						throw new InvalidOperationException(string.Format("Could not resolve type for parameter '{0}.'", parameterModel.Name));
 
@@ -196,6 +196,17 @@ namespace SlimDX.Generator
 			}
 
 			return typeof(IntPtr);
+		}
+
+		static Type ResolveType(ParameterModel model)
+		{
+			if (model == null)
+				return null;
+			
+			var behavior = TemplateCallbacks.GetBehavior(model);
+			if( behavior == MarshalBehavior.Array )
+				return typeof(IntPtr);
+			return ResolveType(model.Type);
 		}
 
 		static void ApplyTemplate(ApiModel item, string outputDirectory, TemplateEngine templateEngine, string templateName)
