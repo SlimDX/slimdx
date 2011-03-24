@@ -68,8 +68,11 @@ namespace SlimDX
 								var guid = attribute as GuidAttribute;
 								if (guid != null)
 								{
-									targetType = type;
-									interfaceGuids[new Guid(guid.Value)] = type;
+									var guidAttributeValue = new Guid(guid.Value);
+									if (guidAttributeValue == interfaceGuid)
+										targetType = type;
+
+									interfaceGuids[guidAttributeValue] = type;
 								}
 							}
 						}
