@@ -24,11 +24,11 @@
     <linearGradient
        id="linearGradient3755">
       <stop
-         style="stop-color:#ff6600;stop-opacity:1"
+         style="stop-color:#f56413;stop-opacity:1;"
          offset="0"
          id="stop3757" />
       <stop
-         style="stop-color:#aa4400;stop-opacity:1"
+         style="stop-color:#bb4400;stop-opacity:1;"
          offset="1"
          id="stop3759" />
     </linearGradient>
@@ -141,6 +141,72 @@
            in="SourceGraphic" />
       </feMerge>
     </filter>
+    <filter
+       id="filter3896"
+       inkscape:label="Drop shadow"
+       width="1.5"
+       height="1.5"
+       x="-.25"
+       y="-.25">
+      <feGaussianBlur
+         id="feGaussianBlur3898"
+         in="SourceAlpha"
+         stdDeviation="0.2"
+         result="blur" />
+      <feColorMatrix
+         id="feColorMatrix3900"
+         result="bluralpha"
+         type="matrix"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.5 0 " />
+      <feOffset
+         id="feOffset3902"
+         in="bluralpha"
+         dx="0.5"
+         dy="1"
+         result="offsetBlur" />
+      <feMerge
+         id="feMerge3904">
+        <feMergeNode
+           id="feMergeNode3906"
+           in="offsetBlur" />
+        <feMergeNode
+           id="feMergeNode3908"
+           in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter
+       id="filter3924"
+       inkscape:label="Drop shadow"
+       width="1.5"
+       height="1.5"
+       x="-.25"
+       y="-.25">
+      <feGaussianBlur
+         id="feGaussianBlur3926"
+         in="SourceAlpha"
+         stdDeviation="1"
+         result="blur" />
+      <feColorMatrix
+         id="feColorMatrix3928"
+         result="bluralpha"
+         type="matrix"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.5 0 " />
+      <feOffset
+         id="feOffset3930"
+         in="bluralpha"
+         dx="0.5"
+         dy="1"
+         result="offsetBlur" />
+      <feMerge
+         id="feMerge3932">
+        <feMergeNode
+           id="feMergeNode3934"
+           in="offsetBlur" />
+        <feMergeNode
+           id="feMergeNode3936"
+           in="SourceGraphic" />
+      </feMerge>
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -150,16 +216,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="236.02455"
-     inkscape:cy="657.03921"
+     inkscape:cx="833.17819"
+     inkscape:cy="424.7438"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1003"
-     inkscape:window-height="726"
-     inkscape:window-x="765"
-     inkscape:window-y="324"
-     inkscape:window-maximized="0" />
+     inkscape:window-width="1920"
+     inkscape:window-height="1138"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -168,7 +234,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -177,7 +243,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:url(#linearGradient3761);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.71999997px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:url(#linearGradient3761);fill-opacity:1;fill-rule:evenodd;stroke:#505050;stroke-width:0.71999997000000004px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        id="rect2985"
        width="172.8"
        height="28.799999"
@@ -185,22 +251,6 @@
        y="237.96219"
        rx="1.8"
        ry="1.8" />
-    <rect
-       ry="2.0127194"
-       rx="2.4129772"
-       y="253.5408"
-       x="219.40503"
-       height="7.1184878"
-       width="23.118488"
-       id="rect3767"
-       style="fill:#ffffff;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.88151193px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter3143)"
-       transform="matrix(0.72,0,0,0.72,91.199998,70.661411)" />
-    <path
-       style="fill:#ffffff;stroke:#ffffff;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter3157)"
-       d="m 237.5625,241.875 c -7.08246,0.21669 -9.32198,5.44718 -9.8125,6.9375 l -4.8125,-0.0312 7.5,8.65625 7.34375,-8.5625 -5.03125,-0.0312 c 2.64755,-5.20552 11.21875,-4.46875 11.21875,-4.46875 l -3.625,-2.34375 c -1.00029,-0.13613 -1.92743,-0.18237 -2.78125,-0.15625 z"
-       id="path3775"
-       inkscape:connector-curvature="0"
-       transform="matrix(0.72,0,0,0.72,91.199998,70.661411)" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot2990"
@@ -220,11 +270,16 @@
        y="258.36218"
        id="text2998"
        sodipodi:linespacing="125%"
-       transform="matrix(0.72,0,0,0.72,92.399998,70.661411)"><tspan
+       transform="matrix(0.72,0,0,0.72,86.399998,70.661411)"><tspan
          sodipodi:role="line"
          id="tspan3000"
          x="263"
          y="258.36218"
-         style="font-size:19.44444465999999800px;font-weight:bold;-inkscape-font-specification:Verdana Bold">Get SlimDX</tspan></text>
+         style="font-size:19.44444466px;font-weight:bold;-inkscape-font-specification:Verdana Bold">Get SlimDX</tspan></text>
+    <path
+       style="fill:#ffffff;stroke:#aa4400;stroke-width:0.80000001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 248.44375,248.13118 18.6,0 -9.8,9.8 -9.85,-9.85 z"
+       id="path3940"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>

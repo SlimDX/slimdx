@@ -12,7 +12,7 @@
 			<p>SlimDX is a free open source framework that enables developers to easily build DirectX applications using .NET technologies such as C#, VB.NET, and IronPython. 
       It is designed to be an efficient, simple, and lean wrapper that fully encompasses all of Microsoft's gaming and multimedia technologies and exposes them to managed code.
       All of the code is under the MIT/X11 license, and all content is under the Creative Commons Attribution-Share Alike license.
-      Our latest release is June 2010, and can be found for users and developers on the <a href="download.php">Download page</a>.
+      Our latest release is March 2011, and can be found for users and developers on the <a href="download.php">Download page</a>.
       <br /><br />  
       All development is based in our <a href="http://code.google.com/p/slimdx/">Google Code homepage</a>.
 			You can use that site to report bugs (using our issues page), as well as download a complete copy of the source code.
