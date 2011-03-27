@@ -27,6 +27,15 @@ namespace SlimDX.Generator
 {
 	static class TemplateCallbacks
 	{
+        public static string EnumItem(TemplateEngine engine, object source)
+        {
+            dynamic s = source;
+            if(s.Name.EndsWith("FORCE_DWORD") || s.Name.EndsWith("FORCE_UINT"))
+                return string.Empty;
+
+            return s.Name + " = " + s.Value + ",";
+        }
+
 		public static string GetQualifiedName(TemplateEngine engine, object source)
 		{
 			var type = (TypeModel)source;
