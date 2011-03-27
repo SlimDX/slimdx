@@ -6,23 +6,22 @@ using System.Json;
 
 namespace SlimDX.Generator
 {
-	enum CompositingFlags
-	{
-		None,
-		Add,
-		Remove,
-		Replace
-	}
-
 	static class CompositingEngine
 	{
-		public static void Compose(JsonObject baseLayer, JsonObject newLayer)
+		public static void Compose(JsonObject baseLayer, JsonObject nextLayer)
 		{
-			// dependencies and references just do a simple add
-			ComposeArrays(baseLayer, newLayer, "dependencies");
-			ComposeArrays(baseLayer, newLayer, "translations");
+			// Top-level scalar properties are always replaced.
+			foreach (var key in nextLayer.Keys)
+			{
+				JsonObject value = nextLayer[key];
+				if (value.JsonType != JsonType.Array)
+					baseLayer[key] = value;
+			}
 
-			ComposeEnumerations(baseLayer, newLayer);
+			ComposeArrays(baseLayer, nextLayer, "dependencies");
+			ComposeArrays(baseLayer, nextLayer, "translations");
+
+			ComposeEnumerations(baseLayer, nextLayer);
 		}
 
 		static void ComposeEnumerations(JsonObject baseLayer, JsonObject newLayer)
@@ -34,10 +33,10 @@ namespace SlimDX.Generator
 			{
 				var flags = GetFlags(item);
 				var oldItem = FindObjectByKey(baseLayer, (string)item["key"]);
-				if ((flags == CompositingFlags.Replace || flags == CompositingFlags.Remove) && oldItem != null)
+				if ((flags == CompositionFlags.Replace || flags == CompositionFlags.Remove) && oldItem != null)
 					baseLayer.Remove(oldItem);
 
-				if (flags == CompositingFlags.Add || flags == CompositingFlags.None || flags == CompositingFlags.Replace)
+				if (flags == CompositionFlags.Add || flags == CompositionFlags.None || flags == CompositionFlags.Replace)
 					baseLayer.Add(item);
 			}
 		}
@@ -74,22 +73,22 @@ namespace SlimDX.Generator
 			return true;
 		}
 
-		static CompositingFlags GetFlags(JsonObject item)
+		static CompositionFlags GetFlags(JsonObject item)
 		{
 			if (item.ContainsKey("compositing"))
 			{
-				switch((string)item["compositing"])
+				switch ((string)item["compositing"])
 				{
 					case "add":
-						return CompositingFlags.Add;
+						return CompositionFlags.Add;
 					case "remove":
-						return CompositingFlags.Remove;
+						return CompositionFlags.Remove;
 					case "replace":
-						return CompositingFlags.Replace;
+						return CompositionFlags.Replace;
 				}
 			}
 
-			return CompositingFlags.None;
+			return CompositionFlags.None;
 		}
 
 		static JsonObject FindObjectByKey(JsonObject array, string key)
