@@ -184,6 +184,8 @@ namespace SlimDX.Generator
 		{
 			if (model == null)
 				return null;
+			if(model is EnumerationModel)
+				return typeof(int);
 
 			var behavior = TemplateCallbacks.GetBehavior(model);
 			if (behavior == MarshalBehavior.Default && !TemplateCallbacks.IsLargeType(model))
