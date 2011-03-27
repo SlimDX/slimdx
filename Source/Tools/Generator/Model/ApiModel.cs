@@ -164,12 +164,12 @@ namespace SlimDX.Generator
 			return model;
 		}
 
-		public InterfaceModel AddInterface(string key, Guid guid, TypeModel parent)
+		public InterfaceModel AddInterface(string key, Guid guid)
 		{
 			if (string.IsNullOrEmpty(key))
 				throw new ArgumentException("Value may not be null or empty", "key");
 
-			var model = new InterfaceModel(this, key, guid, parent);
+			var model = new InterfaceModel(this, key, guid);
 			interfaces.Add(model);
 			index.Add(model.Key, model);
 
