@@ -323,6 +323,9 @@ namespace SlimDX.Generator
 				case MarshalBehavior.Wrapped:
 					return string.Format("{0} != null ? {0}.NativePointer : System.IntPtr.Zero", parameter.Name);
 				default:
+					//TODO: Somewhat hackish.
+					if (parameter.Type is EnumerationModel)
+						return string.Format("(int){0}", parameter.Name);
 					return IsLargeType(parameter.Type) ? string.Format("new System.IntPtr(&{0})", parameter.Name) : parameter.Name;
 			}
 		}
