@@ -25,11 +25,12 @@ namespace SlimDX.Generator
 {
 	class ParameterModel
 	{
-		public ParameterModel(string name, TypeModel type, ParameterModelFlags flags, string length)
+		public ParameterModel(string name, TypeModel type, int indirectionLevel, ParameterModelFlags flags, string length)
 		{
 			Name = name;
 			Type = type;
 			Flags = flags;
+			IndirectionLevel = indirectionLevel;
 			LengthParameter = length;
 		}
 
@@ -46,6 +47,12 @@ namespace SlimDX.Generator
 		}
 
 		public ParameterModelFlags Flags
+		{
+			get;
+			private set;
+		}
+
+		public int IndirectionLevel
 		{
 			get;
 			private set;

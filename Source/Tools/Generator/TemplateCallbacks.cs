@@ -27,14 +27,14 @@ namespace SlimDX.Generator
 {
 	static class TemplateCallbacks
 	{
-        public static string EnumItem(TemplateEngine engine, object source)
-        {
-            dynamic s = source;
-            if(s.Name.EndsWith("FORCE_DWORD") || s.Name.EndsWith("FORCE_UINT"))
-                return string.Empty;
+		public static string EnumItem(TemplateEngine engine, object source)
+		{
+			dynamic s = source;
+			if (s.Name.EndsWith("FORCE_DWORD") || s.Name.EndsWith("FORCE_UINT"))
+				return string.Empty;
 
-            return s.Name + " = " + s.Value + ",";
-        }
+			return s.Name + " = " + s.Value + ",";
+		}
 
 		public static string GetQualifiedName(TemplateEngine engine, object source)
 		{
@@ -54,6 +54,12 @@ namespace SlimDX.Generator
 				var parameter = function.Parameters[parameterIndex];
 				switch (GetBehavior(parameter))
 				{
+					case MarshalBehavior.Indirect:
+						if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
+							builder.AppendFormat("out System.IntPtr {0}", parameter.Name);
+						else
+							builder.AppendFormat("System.IntPtr {0}", parameter.Name);
+						break;
 					case MarshalBehavior.Array:
 						builder.AppendFormat("{0}[] {1}", parameter.Type.Name, parameter.Name);
 						break;
@@ -136,6 +142,8 @@ namespace SlimDX.Generator
 					case MarshalBehavior.String:
 						builder.AppendFormat("System.Runtime.InteropServices.Marshal.FreeHGlobal(_{0});", parameter.Name);
 						builder.AppendLine();
+						break;
+					case MarshalBehavior.Indirect:
 						break;
 					default:
 						if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
@@ -257,6 +265,8 @@ namespace SlimDX.Generator
 		{
 			switch (GetBehavior(parameter))
 			{
+				case MarshalBehavior.Indirect:
+					return string.Format("{0} = default(System.IntPtr);", parameter.Name);
 				case MarshalBehavior.Array:
 					{
 						//TODO: Needs cleanup.
@@ -297,6 +307,11 @@ namespace SlimDX.Generator
 		{
 			switch (GetBehavior(parameter))
 			{
+				case MarshalBehavior.Indirect:
+					if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
+						return string.Format("ref {0}", parameter.Name);
+					else
+						return string.Format("{0}", parameter.Name);
 				case MarshalBehavior.Array:
 					return string.Format("new System.IntPtr(_{0})", parameter.Name);
 				case MarshalBehavior.String:
@@ -343,6 +358,8 @@ namespace SlimDX.Generator
 
 		public static MarshalBehavior GetBehavior(ParameterModel model)
 		{
+			if (model.IndirectionLevel > 0)
+				return MarshalBehavior.Indirect;
 			if (model.LengthParameter != null)
 				return MarshalBehavior.Array;
 			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))

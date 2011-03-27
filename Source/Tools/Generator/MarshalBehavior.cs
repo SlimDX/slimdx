@@ -27,6 +27,8 @@ namespace SlimDX.Generator
 		/// </summary>
 		Default,
 
+		Indirect,
+
 		String,
 
 		Array, 
