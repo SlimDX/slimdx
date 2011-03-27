@@ -26,158 +26,187 @@ using System.Linq;
 
 namespace SlimDX.Generator
 {
-	/// <summary>
-	/// Responsible for transforming XML output from the parser into a Json hierarchy.
-	/// </summary>
-	static class ModelXml
-	{
-		public static JsonObject Transform(XElement root)
-		{
-			var api = new JsonObject();
-			api["interfaces"] = new JsonObject(JsonType.Array);
-			api["structures"] = new JsonObject(JsonType.Array);
-			api["enumerations"] = new JsonObject(JsonType.Array);
+    /// <summary>
+    /// Responsible for transforming XML output from the parser into a Json hierarchy.
+    /// </summary>
+    static class ModelXml
+    {
+        public static JsonObject Transform(XElement root)
+        {
+            var api = new JsonObject();
+            api["interfaces"] = new JsonObject(JsonType.Array);
+            api["structures"] = new JsonObject(JsonType.Array);
+            api["enumerations"] = new JsonObject(JsonType.Array);
 
-			// find enums
-			foreach (var element in root.XPathSelectElements("//enum-specifier"))
-			{
-				var item = new JsonObject();
-				item["key"] = element.Element("identifier").Value;
-				item["values"] = new JsonObject(JsonType.Array);
+            // find enums
+            foreach (var element in root.XPathSelectElements("//enum-specifier"))
+            {
+                var item = new JsonObject();
+                item["key"] = element.Element("identifier").Value;
+                item["values"] = new JsonObject(JsonType.Array);
 
-				foreach (var child in element.Descendants("enumerator-definition"))
-				{
-					var definition = new JsonObject();
-					definition["key"] = child.Element("identifier").Value;
-					definition["value"] = child.Element("numeric-literal").Value;
+                foreach (var child in element.Descendants("enumerator-definition"))
+                {
+                    var definition = new JsonObject();
+                    definition["key"] = child.Element("identifier").Value;
+                    definition["value"] = child.Element("numeric-literal").Value;
 
-					item["values"].Add(definition);
-				}
+                    item["values"].Add(definition);
+                }
 
-				api["enumerations"].Add(item);
-			}
+                api["enumerations"].Add(item);
+            }
 
-			// find structs and interfaces
-			foreach (var element in root.XPathSelectElements("//class-specifier"))
-			{
-				var nameElement = element.XPathSelectElement("class-head/identifier");
-				var guidElement = element.XPathSelectElement("class-head/declspec-list/declspec-definition/declspec/string-literal");
-				var parentElement = element.XPathSelectElement("class-head/base-clause/base-specifier/identifier");
+            // find structs and interfaces
+            foreach (var element in root.XPathSelectElements("//class-specifier"))
+            {
+                var nameElement = element.XPathSelectElement("class-head/identifier");
+                var guidElement = element.XPathSelectElement("class-head/declspec-list/declspec-definition/declspec/string-literal");
+                var parentElement = element.XPathSelectElement("class-head/base-clause/base-specifier/identifier");
 
-				var item = new JsonObject();
-				item["key"] = nameElement.Value;
-				if (parentElement != null)
-					item["type"] = parentElement.Value;
+                var item = new JsonObject();
+                item["key"] = nameElement.Value;
+                if (parentElement != null)
+                    item["type"] = parentElement.Value;
 
-				// elements with a GUID are assumed to be COM interfaces
-				if (guidElement != null)
-				{
-					api["interfaces"].Add(item);
-					item["guid"] = guidElement.Value.Trim('"');
-					item["methods"] = new JsonObject(JsonType.Array);
+                // elements with a GUID are assumed to be COM interfaces
+                if (guidElement != null)
+                {
+                    api["interfaces"].Add(item);
+                    item["guid"] = guidElement.Value.Trim('"');
+                    item["methods"] = new JsonObject(JsonType.Array);
 
-					int index = 0;
-					foreach (var child in element.Descendants("function-definition"))
-					{
-						var returnType = child.Element("identifier") ?? child.Element("simple-type-specifier");
-						nameElement = child.XPathSelectElement("init-declarator/direct-declarator/identifier");
+                    int index = 0;
+                    foreach (var child in element.Descendants("function-definition"))
+                    {
+                        var returnType = child.Element("identifier") ?? child.Element("simple-type-specifier");
+                        nameElement = child.XPathSelectElement("init-declarator/direct-declarator/identifier");
 
-						var method = new JsonObject();
-						method["key"] = nameElement.Value;
-						method["type"] = returnType.Value;
-						method["index"] = index++;
-						method["parameters"] = new JsonObject(JsonType.Array);
+                        var method = new JsonObject();
+                        method["key"] = nameElement.Value;
+                        method["type"] = returnType.Value;
+                        method["index"] = index++;
+                        method["parameters"] = new JsonObject(JsonType.Array);
 
-						foreach (var parameterElement in child.Descendants("parameter-declaration"))
-						{
-							var parameter = TransformParameter(parameterElement);
-							if (parameter != null)
-								method["parameters"].Add(parameter);
-						}
+                        foreach (var parameterElement in child.Descendants("parameter-declaration"))
+                        {
+                            var parameter = TransformParameter(parameterElement);
+                            if (parameter != null)
+                                method["parameters"].Add(parameter);
+                        }
 
-						item["methods"].Add(method);
-					}
-				}
-				else
-				{
-					api["structures"].Add(item);
-					item["members"] = new JsonObject(JsonType.Array);
+                        item["methods"].Add(method);
+                    }
+                }
+                else
+                {
+                    api["structures"].Add(item);
+                    item["members"] = new JsonObject(JsonType.Array);
 
-					foreach (var child in element.Descendants("member-declaration"))
-					{
-						nameElement = child.Element("identifier");
-						var typeElement = child.Element("simple-type-specifier");
-						if (typeElement == null)
-						{
-							typeElement = child.Element("identifier");
-							nameElement = typeElement.ElementsAfterSelf("identifier").FirstOrDefault();
-						}
+                    foreach (var child in element.Descendants("member-declaration"))
+                    {
+                        nameElement = child.Element("identifier");
+                        var typeElement = child.Element("simple-type-specifier");
+                        if (typeElement == null)
+                        {
+                            typeElement = child.Element("identifier");
+                            nameElement = typeElement.ElementsAfterSelf("identifier").FirstOrDefault();
+                        }
 
-						// TODO: handle pointers, arrays, and reference types here
-						if (nameElement == null)
-							nameElement = child.XPathSelectElement("direct-declarator//identifier") ?? child.XPathSelectElement("declarator//identifier");
+                        // TODO: handle pointers, arrays, and reference types here
+                        if (nameElement == null)
+                            nameElement = child.XPathSelectElement("direct-declarator//identifier") ?? child.XPathSelectElement("declarator//identifier");
 
-						var member = new JsonObject();
-						member["key"] = nameElement.Value;
-						member["type"] = typeElement.Value;
+                        var member = new JsonObject();
+                        member["key"] = nameElement.Value;
+                        member["type"] = typeElement.Value;
 
-						item["members"].Add(member);
-					}
-				}
-			}
+                        item["members"].Add(member);
+                    }
+                }
+            }
 
-			return api;
-		}
+            var indices = new Dictionary<string, int>();
+            indices.Add("IUnknown", 3);
 
-		static JsonObject TransformParameter(XElement element)
-		{
-			var nameElement = element.XPathSelectElement("declarator//identifier") ??
-				element.XPathSelectElement("identifier[2]");
+            foreach (var item in api["interfaces"])
+                CalculateIndices(item, api["interfaces"], indices);
 
-			var typeElement = element.XPathSelectElement("type-specifier/identifier") ??
-				element.XPathSelectElement("type-specifier/simple-type-specifier") ??
-				element.XPathSelectElement("simple-type-specifier") ??
-				element.Element("identifier");
+            return api;
+        }
 
-			if (nameElement == null && typeElement.Value == "void")
-				return null;
+        static void CalculateIndices(JsonObject item, IEnumerable<JsonObject> interfaces, Dictionary<string, int> indices)
+        {
+            var key = (string)item["key"];
+            if(indices.ContainsKey((string)item["key"]))
+                return;
 
-			var item = new JsonObject();
-			item["key"] = nameElement.Value;
-			item["type"] = typeElement.Value;
+            var parent = (string)item["type"];
+            if (!indices.ContainsKey(parent))
+                CalculateIndices(interfaces.First(i => (string)i["key"] == parent), interfaces, indices);
+
+            int offset = indices[parent];
+            int count = 0;
+
+            foreach (var method in item["methods"])
+            {
+                int index = (int)method["index"];
+                method["index"] = index + offset;
+                count++;
+            }
+
+            indices.Add(key, count + offset);
+        }
+
+        static JsonObject TransformParameter(XElement element)
+        {
+            var nameElement = element.XPathSelectElement("declarator//identifier") ??
+                element.XPathSelectElement("identifier[2]");
+
+            var typeElement = element.XPathSelectElement("type-specifier/identifier") ??
+                element.XPathSelectElement("type-specifier/simple-type-specifier") ??
+                element.XPathSelectElement("simple-type-specifier") ??
+                element.Element("identifier");
+
+            if (nameElement == null && typeElement.Value == "void")
+                return null;
+
+            var item = new JsonObject();
+            item["key"] = nameElement.Value;
+            item["type"] = typeElement.Value;
             item["indirection"] = element.Descendants("ptr-operator").Count();
 
-			var flags = TransformFlags(element.Element("qualifier"));
-			if (flags.Any())
-			{
-				item["flags"] = new JsonObject(flags);
+            var flags = TransformFlags(element.Element("qualifier"));
+            if (flags.Any())
+            {
+                item["flags"] = new JsonObject(flags);
 
-				var size = element.XPathSelectElement("qualifier/identifier");
-				if (size != null)
-					item["size"] = size.Value;
-			}
+                var size = element.XPathSelectElement("qualifier/identifier");
+                if (size != null)
+                    item["size"] = size.Value;
+            }
 
-			return item;
-		}
+            return item;
+        }
 
-		static IEnumerable<JsonObject> TransformFlags(XElement element)
-		{
-			if (element == null)
-				yield break;
+        static IEnumerable<JsonObject> TransformFlags(XElement element)
+        {
+            if (element == null)
+                yield break;
 
-			string value = (string)element.Element("Token") ?? element.Value;
-			if (value.Contains("in"))
-				yield return "in";
-			if (value.Contains("out"))
-				yield return "out";
-			if (value.Contains("opt"))
-				yield return "optional";
-			if (value.Contains("part"))
-				yield return "partial";
-			if (value.Contains("bcount"))
-				yield return "binary_size";
-			if (value.Contains("ecount"))
-				yield return "element_count";
-		}
-	}
+            string value = (string)element.Element("Token") ?? element.Value;
+            if (value.Contains("in"))
+                yield return "in";
+            if (value.Contains("out"))
+                yield return "out";
+            if (value.Contains("opt"))
+                yield return "optional";
+            if (value.Contains("part"))
+                yield return "partial";
+            if (value.Contains("bcount"))
+                yield return "binary_size";
+            if (value.Contains("ecount"))
+                yield return "element_count";
+        }
+    }
 }
