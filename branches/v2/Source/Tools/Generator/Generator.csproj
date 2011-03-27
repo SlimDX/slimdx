@@ -65,7 +65,7 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="CompositingEngine.cs" />
+    <Compile Include="Composition\CompositingEngine.cs" />
     <Compile Include="Composition\CompositionFlags.cs" />
     <Compile Include="ConfigFile.cs" />
     <Compile Include="Extensions.cs" />

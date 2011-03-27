@@ -328,11 +328,7 @@ namespace SlimDX.Generator
 					var key = (string)item["key"];
 					var guid = new Guid((string)item["guid"]);
 
-					JsonObject parent = null;
-					if (item.TryGetValue("type", out parent))
-						api.AddInterface(key, guid, api.FindType((string)parent));
-					else
-						api.AddInterface(key, guid, null);
+                    api.AddInterface(key, guid);
 				}
 			}
 		}
@@ -351,6 +347,10 @@ namespace SlimDX.Generator
 				{
 					var key = (string)item["key"];
 					var model = (InterfaceModel)api.FindType(key);
+
+                    JsonObject parent = null;
+                    if (item.TryGetValue("type", out parent))
+                        model.Parent = api.FindType((string)parent);
 
 					foreach (var method in ParseInterfaceMethods(item, api))
 						model.AddMethod(method);
