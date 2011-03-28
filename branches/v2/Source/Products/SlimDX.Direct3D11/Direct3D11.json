@@ -1,6 +1,6 @@
 ﻿{
 	"name": "SlimDX.Direct3D11",
-	"dependencies": [ "../SlimDX/SlimDX.json", "../SlimDX.DXGI/DXGI.json" ],
+	"dependencies": [ "../SlimDX/SlimDX.json", "../SlimDX.DXGI/Generated/DXGI.json" ],
 
 	"enumerations": [
 		{

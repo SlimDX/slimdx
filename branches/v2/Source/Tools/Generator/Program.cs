@@ -23,13 +23,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Json;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 
 namespace SlimDX.Generator
 {
 	class Program
 	{
+		#region Implementation
+
+		/// <summary>
+		/// The application's entry point.
+		/// </summary>
+		/// <param name="arguments">The command line arguments.</param>
 		static void Main(string[] arguments)
 		{
 			if (arguments.Length == 0)
@@ -37,22 +41,14 @@ namespace SlimDX.Generator
 
 			var configuration = new ConfigFile(arguments[0]);
 
-			// build up the Json model by running it through various layers
-			JsonObject json = null;
 			var searchPaths = new HashSet<string>();
+			var json = RunParser(configuration);
 			foreach (var layer in configuration.GetOptions("JsonLayers"))
 			{
-				// $ParseHeaders runs the parser to build the Json
-				// other options are simple filenames, relative to the config file
-				JsonObject current;
-				if (layer == "$ParseHeaders")
-					current = RunParser(configuration);
-				else
-				{
-					var path = layer.RootPath(configuration.ConfigurationDirectory);
-					current = JsonObject.FromJson(File.ReadAllText(path));
-					searchPaths.Add(Path.GetDirectoryName(Path.GetFullPath(path)));
-				}
+				JsonObject current = null;
+				var path = layer.RootPath(configuration.ConfigurationDirectory);
+				current = JsonObject.FromJson(File.ReadAllText(path));
+				searchPaths.Add(Path.GetDirectoryName(Path.GetFullPath(path)));
 
 				// combine the current layer with the base
 				if (json == null)
@@ -61,12 +57,19 @@ namespace SlimDX.Generator
 					CompositingEngine.Compose(json, current);
 			}
 
+			var generatedModelFile = configuration.GetOption("Options", "GeneratedModelPath").RootPath(configuration.ConfigurationDirectory);
+			File.WriteAllText(generatedModelFile, json.ToNiceJson());
+
 			// run the generator on the composed Json model
 			RunGenerator(json, configuration, searchPaths);
 		}
 
+
 		static JsonObject RunParser(ConfigFile configuration)
 		{
+			if (configuration.GetOption("Options", "SkipParse") == "yes")
+				return null;
+
 			// run boost::wave on the primary source file to get a preprocessed file and a list of macros
 			var preprocessor = new Preprocessor(configuration);
 			Console.WriteLine(preprocessor.Run());
@@ -91,10 +94,6 @@ namespace SlimDX.Generator
 
 			// add a dependency to the base SlimDX.json file
 			json.Add("dependencies", new JsonObject(new JsonObject[] { "../SlimDX/SlimDX.json" }));
-
-			// TODO: for testing only
-			root.Save("test.xml");
-			File.WriteAllText("test.json", json.ToNiceJson());
 
 			return json;
 		}
@@ -228,5 +227,7 @@ namespace SlimDX.Generator
 				File.WriteAllText(outputPath, templateEngine.ApplyByName(templateName, item));
 			}
 		}
+
+		#endregion
 	}
 }
