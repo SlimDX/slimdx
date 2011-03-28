@@ -25,8 +25,15 @@ namespace SlimDX.Generator
 {
 	class ParameterModel
 	{
+		#region Interface
+
 		public ParameterModel(string name, TypeModel type, int indirectionLevel, ParameterModelFlags flags, string length)
 		{
+			if (string.IsNullOrEmpty(name))
+				throw new ArgumentException("Value may not be null or empty.", "name");
+			if (type == null)
+				throw new ArgumentNullException("type");
+
 			Name = name;
 			Type = type;
 			Flags = flags;
@@ -64,9 +71,17 @@ namespace SlimDX.Generator
 			private set;
 		}
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents this instance.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/> that represents this instance.
+		/// </returns>
 		public override string ToString()
 		{
 			return Name;
 		}
+
+		#endregion
 	}
 }
