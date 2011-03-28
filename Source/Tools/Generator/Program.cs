@@ -186,7 +186,7 @@ namespace SlimDX.Generator
 				return typeof(int);
 
 			var behavior = TemplateCallbacks.GetBehavior(model);
-			if (behavior == MarshalBehavior.Default && !TemplateCallbacks.IsLargeType(model))
+			if (behavior == MarshalBehavior.Direct && !TemplateCallbacks.IsLargeType(model))
 			{
 				var translationModel = model as TranslationModel;
 				if (translationModel == null)

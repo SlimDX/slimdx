@@ -22,11 +22,32 @@ using System;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Collections.Generic;
 
 namespace SlimDX.Generator
 {
 	static class TemplateCallbacks
 	{
+		#region Implementation
+
+		static Dictionary<MarshalBehavior, Formatter> formatters = new Dictionary<MarshalBehavior, Formatter>();
+
+		/// <summary>
+		/// Initializes the <see cref="TemplateCallbacks"/> class.
+		/// </summary>
+		static TemplateCallbacks()
+		{
+			formatters[MarshalBehavior.Output] = new DirectFormatter();
+			formatters[MarshalBehavior.Direct] = new DirectFormatter();
+			formatters[MarshalBehavior.Indirect] = new IndirectFormatter();
+			formatters[MarshalBehavior.String] = new StringFormatter();
+			formatters[MarshalBehavior.Array] = new ArrayFormatter();
+			formatters[MarshalBehavior.Structure] = new StructureFormatter();
+			formatters[MarshalBehavior.Interface] = new InterfaceFormatter();
+		}
+
+		#endregion
+
 		public static string EnumItem(TemplateEngine engine, object source)
 		{
 			dynamic s = source;
@@ -52,24 +73,8 @@ namespace SlimDX.Generator
 			for (var parameterIndex = 0; parameterIndex < function.Parameters.Count; ++parameterIndex)
 			{
 				var parameter = function.Parameters[parameterIndex];
-				switch (GetBehavior(parameter))
-				{
-					case MarshalBehavior.Indirect:
-						if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
-							builder.AppendFormat("out System.IntPtr {0}", parameter.Name);
-						else
-							builder.AppendFormat("System.IntPtr {0}", parameter.Name);
-						break;
-					case MarshalBehavior.Array:
-						builder.AppendFormat("{0}[] {1}", parameter.Type.Name, parameter.Name);
-						break;
-					case MarshalBehavior.Output:
-						builder.AppendFormat("out {0} {1}", parameter.Type.Name, parameter.Name);
-						break;
-					default:
-						builder.AppendFormat("{0} {1}", parameter.Type.Name, parameter.Name);
-						break;
-				}
+				var formatter = formatters[GetBehavior(parameter)];
+				builder.Append(formatter.FormatAsFormalParameter(parameter));
 
 				if (parameterIndex < function.Parameters.Count - 1)
 					builder.Append(", ");
@@ -135,7 +140,7 @@ namespace SlimDX.Generator
 			{
 				switch (GetBehavior(parameter))
 				{
-					case MarshalBehavior.Marshal:
+					case MarshalBehavior.Structure:
 						builder.AppendFormat("_{0}.Release();", parameter.Name);
 						builder.AppendLine();
 						break;
@@ -188,7 +193,7 @@ namespace SlimDX.Generator
 				case MarshalBehavior.String:
 					builder.AppendFormat("public System.IntPtr {0};", member.Name);
 					break;
-				case MarshalBehavior.Marshal:
+				case MarshalBehavior.Structure:
 					builder.AppendFormat("public {0}Marshaller {1};", GetQualifiedName(engine, member.Type), member.Name);
 					break;
 				default:
@@ -209,7 +214,7 @@ namespace SlimDX.Generator
 				case MarshalBehavior.String:
 					builder.AppendFormat("System.Runtime.InteropServices.Marshal.FreeHGlobal({0});", member.Name);
 					break;
-				case MarshalBehavior.Marshal:
+				case MarshalBehavior.Structure:
 					builder.AppendFormat("{0}.Release();", member.Name);
 					break;
 				default:
@@ -229,7 +234,7 @@ namespace SlimDX.Generator
 				case MarshalBehavior.String:
 					builder.AppendFormat("result.{0} = new string((sbyte*)source.{0});", member.Name);
 					break;
-				case MarshalBehavior.Marshal:
+				case MarshalBehavior.Structure:
 					builder.AppendFormat("result.{0} = {1}.FromMarshaller(source.{0});", member.Name, GetQualifiedName(engine, member.Type));
 					break;
 				default:
@@ -250,7 +255,7 @@ namespace SlimDX.Generator
 				case MarshalBehavior.String:
 					builder.AppendFormat("result.{0} = source.{0} != null ? System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(source.{0}) : System.IntPtr.Zero;", member.Name);
 					break;
-				case MarshalBehavior.Marshal:
+				case MarshalBehavior.Structure:
 					builder.AppendFormat("result.{0} = {1}.ToMarshaller(source.{0});", member.Name, GetQualifiedName(engine, member.Type));
 					break;
 				default:
@@ -272,13 +277,13 @@ namespace SlimDX.Generator
 						//TODO: Needs cleanup.
 						var builder = new StringBuilder();
 						var baseBehavior = GetBehavior(parameter.Type);
-						if (baseBehavior == MarshalBehavior.Marshal)
+						if (baseBehavior == MarshalBehavior.Structure)
 						{
 							builder.AppendLine(string.Format("{0}Marshaller* _{1} = stackalloc {0}Marshaller[{1}.Length];", parameter.Type.Name, parameter.Name));
 							builder.AppendLine(string.Format("for(int i = 0; i < {0}.Length; ++i)", parameter.Name));
 							builder.AppendLine(string.Format("\t_{0}[i] = {1}.ToMarshaller({0}[i]);", parameter.Name, parameter.Type.Name));
 						}
-						else if (baseBehavior == MarshalBehavior.Wrapped)
+						else if (baseBehavior == MarshalBehavior.Interface)
 						{
 							builder.AppendLine(string.Format("System.IntPtr* _{1} = stackalloc System.IntPtr[{1}.Length];", parameter.Type.Name, parameter.Name));
 							builder.AppendLine(string.Format("for(int i = 0; i < {0}.Length; ++i)", parameter.Name));
@@ -296,7 +301,7 @@ namespace SlimDX.Generator
 					return string.Format("System.IntPtr _{0} = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi({0});", parameter.Name);
 				case MarshalBehavior.Output:
 					return string.Format("System.IntPtr _{0} = default(System.IntPtr);", parameter.Name);
-				case MarshalBehavior.Marshal:
+				case MarshalBehavior.Structure:
 					return string.Format("{0}Marshaller _{1} = {0}.ToMarshaller({1});", parameter.Type.Name, parameter.Name);
 				default:
 					return null;
@@ -318,9 +323,9 @@ namespace SlimDX.Generator
 					return string.Format("_{0}", parameter.Name);
 				case MarshalBehavior.Output:
 					return string.Format("ref _{0}", parameter.Name);
-				case MarshalBehavior.Marshal:
+				case MarshalBehavior.Structure:
 					return string.Format("new System.IntPtr(&_{0})", parameter.Name);
-				case MarshalBehavior.Wrapped:
+				case MarshalBehavior.Interface:
 					return string.Format("{0} != null ? {0}.NativePointer : System.IntPtr.Zero", parameter.Name);
 				default:
 					//TODO: Somewhat hackish.
@@ -353,10 +358,10 @@ namespace SlimDX.Generator
 			}
 
 			if (model is StructureModel)
-				return MarshalBehavior.Marshal;
+				return MarshalBehavior.Structure;
 			if (model is InterfaceModel || model.Key == "IUnknown")
-				return MarshalBehavior.Wrapped;
-			return MarshalBehavior.Default;
+				return MarshalBehavior.Interface;
+			return MarshalBehavior.Direct;
 		}
 
 		public static MarshalBehavior GetBehavior(ParameterModel model)
