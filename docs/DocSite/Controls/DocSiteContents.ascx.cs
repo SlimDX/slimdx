@@ -58,7 +58,7 @@ namespace DocSite.Controls
             set
             {
                 if (contentsTreeView.Nodes.Count == 0)
-                    contentsTreeView.DataBind();
+                    contentsTreeView.DataBind(;)
 
                 TreeNode node = FindTopicNode(value);
 
