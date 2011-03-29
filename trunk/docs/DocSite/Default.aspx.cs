@@ -10,6 +10,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Reflection;
 using DaveSexton.DocProject.DocSites;
+using System.Diagnostics;
 
 namespace DocSite
 {
@@ -27,6 +28,9 @@ namespace DocSite
         /// </summary>
         public Default()
         {
+			//Console.WriteLine("BP");
+			ContentFrame = new HtmlGenericControl();
+			ContentUrl = new HiddenField();
         }
         #endregion
 
@@ -135,9 +139,14 @@ function ContentFrame_onload(eventObj)
             }
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException("value");
+				if(value == null)
+					throw new ArgumentNullException("value");
 
+				if(ContentFrame == null)
+					throw new InvalidConstraintException();
+				if(ContentFrame.Attributes == null)
+					throw new InvalidOperationException();
+				
                 ContentFrame.Attributes["src"] = value;
             }
         }
