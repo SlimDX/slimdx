@@ -28,7 +28,11 @@ namespace SlimDX.Generator
 
 		public string FormatAsFormalParameter(ParameterModel model)
 		{
-			return string.Format("{0} {1}", model.Type.Name, model.Name);
+			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
+				return string.Format("out {0} {1}", model.Type.Name, model.Name);
+			else
+				return string.Format("{0} {1}", model.Type.Name, model.Name);
+			
 		}
 
 		#endregion

@@ -42,12 +42,5 @@ namespace SlimDX.Generator
 		/// The model must be marshalled as a wrapped instance to a native object.
 		/// </summary>
 		Interface,
-
-
-		//TODO: Deprecate and remove.
-		/// <summary>
-		/// The model must be marshalled as an output parameter of the managed function.
-		/// </summary>
-		Output
 	}
 }
