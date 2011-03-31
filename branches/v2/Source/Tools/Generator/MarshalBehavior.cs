@@ -29,6 +29,8 @@ namespace SlimDX.Generator
 
 		Indirect,
 
+		Enumeration,
+
 		String,
 
 		Array, 

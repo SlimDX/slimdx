@@ -71,6 +71,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Formatter\ArrayFormatter.cs" />
     <Compile Include="Formatter\DirectFormatter.cs" />
+    <Compile Include="Formatter\EnumerationFormatter.cs" />
     <Compile Include="Formatter\Formatter.cs" />
     <Compile Include="Formatter\IndirectFormatter.cs" />
     <Compile Include="Formatter\InterfaceFormatter.cs" />
