@@ -21,9 +21,9 @@
 			Please prefix your thread subject with [SlimDX] if the question is reasonably specific to SlimDX.
 			If it isn't, feel free to include or exclude the prefix as you like.
 			You can also try and get a hold of us on IRC, in the #graphicsdev channel on <a href="http://www.afternet.org/">AfterNET</a>.			
-			<br /><br />
+			</p><br /><br />
 			<h2>Consulting Services</h2>
-			SlimDX Consulting is now up and running to help you get the most of your applications.
+			<p>SlimDX Consulting is now up and running to help you get the most of your applications.
 			Our expertise in DirectX, SlimDX, and both managed and native code means getting things done in a fraction of the time and cost of an in house solution.
 			That leaves you to focus on your application, instead of fighting with unfamiliar libraries and obscure bugs.
 			SlimDX already powers a wide range of multimedia, from big budget games to large scale weather services to television.
@@ -59,9 +59,8 @@
         
         <div id="right_column">
 			<h2>Current Status</h2>
-			<p>
-        SlimDX is currently rock solid, covers just about every multimedia API provided by Microsoft, and is stable enough to be used
-        by commercial projects and companies, including several AAA game studios. Several companies and products using SlimDX:<br/>
+			<p>SlimDX is currently rock solid, covers just about every multimedia API provided by Microsoft, and is stable enough to be used
+        by commercial projects and companies, including several AAA game studios. Several companies and products using SlimDX:</p><br/>
         <ul style="margin-left: 1em">
           <li>
             <a href="http://seizecontrol.marvel.com/">Spiderman: Web of Shadows</a>
@@ -76,7 +75,6 @@
             <a href="http://www.lucasarts.com/games/theforceunleashed/">Star Wars: The Force Unleashed</a>
           </li>
         </ul>
-      </p>
 			</div>
 			<div id="clear"></div>
     </div>
