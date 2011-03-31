@@ -74,7 +74,7 @@ namespace SlimDX.Generator
 			{
 				var parameter = function.Parameters[parameterIndex];
 				var formatter = formatters[GetBehavior(parameter)];
-				builder.Append(formatter.FormatAsFormalParameter(parameter));
+				builder.Append(formatter.GetFormalParameterCode(parameter));
 
 				if (parameterIndex < function.Parameters.Count - 1)
 					builder.Append(", ");
@@ -127,7 +127,7 @@ namespace SlimDX.Generator
 			foreach (var parameter in function.Parameters)
 			{
 				var formatter = formatters[GetBehavior(parameter)];
-				builder.AppendFormat(", {0}", formatter.FormatAsTrampolineParameter(parameter));
+				builder.AppendFormat(", {0}", formatter.GetTrampolineParameterCode(parameter));
 			}
 
 			builder.Append(");");
@@ -141,43 +141,8 @@ namespace SlimDX.Generator
 
 			foreach (var parameter in method.Parameters)
 			{
-				switch (GetBehavior(parameter))
-				{
-					case MarshalBehavior.Structure:
-						builder.AppendFormat("_{0}.Release();", parameter.Name);
-						builder.AppendLine();
-						break;
-					case MarshalBehavior.String:
-						builder.AppendFormat("System.Runtime.InteropServices.Marshal.FreeHGlobal(_{0});", parameter.Name);
-						builder.AppendLine();
-						break;
-					case MarshalBehavior.Indirect:
-						break;
-					default:
-						if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
-						{
-							if (parameter.Type is InterfaceModel)
-								builder.AppendFormat("{0} = _{0} != System.IntPtr.Zero ? new {1}(_{0}) : null;", parameter.Name, parameter.Type.Name);
-							else
-							{
-								if (parameter.Type is EnumerationModel)
-								{
-									builder.AppendFormat("{0} = ({1})_{0};", parameter.Name, parameter.Type.Name);
-								}
-								else if (parameter.Type.Key == "IUnknown")
-								{
-									// hacky, mostly to work around GetBuffer issues.
-									builder.AppendFormat("{0} = SlimDX.ObjectFactory.Create(_{0}, riid);", parameter.Name);
-								}
-								else
-								{
-									builder.AppendFormat("{0} = _{0};", parameter.Name);
-								}
-							}
-							builder.AppendLine();
-						}
-						break;
-				}
+				var formatter = formatters[GetBehavior(parameter)];
+				builder.AppendLine(formatter.GetLocalVariableCleanupCode(parameter));
 			}
 
 			if (method.Type != ApiModel.VoidModel)
@@ -339,7 +304,7 @@ namespace SlimDX.Generator
 					return MarshalBehavior.String;
 			}
 
-			if(model is EnumerationModel)
+			if (model is EnumerationModel)
 				return MarshalBehavior.Enumeration;
 			if (model is StructureModel)
 				return MarshalBehavior.Structure;

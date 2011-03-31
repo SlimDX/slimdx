@@ -27,11 +27,11 @@ namespace SlimDX.Generator
 		#region Interface
 
 		/// <summary>
-		/// Formats the specified model as a formal parameter declaration for a managed method.
+		/// Gets the code for declaring the specified model as a parameter to a managed method.
 		/// </summary>
 		/// <param name="model">The model.</param>
-		/// <returns>The formatted model.</returns>
-		public string FormatAsFormalParameter(ParameterModel model)
+		/// <returns>The code.</returns>
+		public string GetFormalParameterCode(ParameterModel model)
 		{
 			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
 				return string.Format("out System.IntPtr {0}", model.Name);
@@ -40,16 +40,26 @@ namespace SlimDX.Generator
 		}
 
 		/// <summary>
-		/// Formats the specified model as a local parameter for a trampoline method.
+		/// Gets the code for passing the specified model as parameter to a trampoline method.
 		/// </summary>
 		/// <param name="model">The model.</param>
-		/// <returns>The formatted model.</returns>
-		public string FormatAsTrampolineParameter(ParameterModel model)
+		/// <returns>The code.</returns>
+		public string GetTrampolineParameterCode(ParameterModel model)
 		{
 			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
 				return string.Format("ref {0}", model.Name);
 			else
 				return string.Format("{0}", model.Name);
+		}
+
+		/// <summary>
+		/// Gets the code for cleanup of local variables related to the specified parameter.
+		/// </summary>
+		/// <param name="model">The model.</param>
+		/// <returns>The code.</returns>
+		public string GetLocalVariableCleanupCode(ParameterModel model)
+		{
+			return string.Empty;
 		}
 
 		#endregion
