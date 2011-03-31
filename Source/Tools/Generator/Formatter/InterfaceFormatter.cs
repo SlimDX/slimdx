@@ -27,11 +27,11 @@ namespace SlimDX.Generator
 		#region Interface
 
 		/// <summary>
-		/// Formats the specified model as a formal parameter declaration for a managed method.
+		/// Gets the code for declaring the specified model as a parameter to a managed method.
 		/// </summary>
 		/// <param name="model">The model.</param>
-		/// <returns>The formatted model.</returns>
-		public string FormatAsFormalParameter(ParameterModel model)
+		/// <returns>The code.</returns>
+		public string GetFormalParameterCode(ParameterModel model)
 		{
 			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
 				return string.Format("out {0} {1}", model.Type.Name, model.Name);
@@ -41,15 +41,37 @@ namespace SlimDX.Generator
 		}
 
 		/// <summary>
-		/// Formats the specified model as a local parameter for a trampoline method.
+		/// Gets the code for passing the specified model as parameter to a trampoline method.
 		/// </summary>
 		/// <param name="model">The model.</param>
-		/// <returns>The formatted model.</returns>
-		public string FormatAsTrampolineParameter(ParameterModel model)
+		/// <returns>The code.</returns>
+		public string GetTrampolineParameterCode(ParameterModel model)
 		{
 			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
 				return string.Format("ref _{0}", model.Name);
 			return string.Format("{0} != null ? {0}.NativePointer : System.IntPtr.Zero", model.Name);
+		}
+
+		/// <summary>
+		/// Gets the code for cleanup of local variables related to the specified parameter.
+		/// </summary>
+		/// <param name="model">The model.</param>
+		/// <returns>The code.</returns>
+		public string GetLocalVariableCleanupCode(ParameterModel model)
+		{
+			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput)) 
+			{
+				//TODO: This check against IUnknown is a hack for DXGISwapChain::GetBuffer. To remove the
+				//      hack, it must be made possible to mark a function for removal -- GetBuffer must be
+				//      hand-written in terms of the trampoline that would be generated for it, because it
+				//      does not make sense for the model layer to understand the relationship between the
+				//      output parameter in question, the IID parameter ("riid"), and the object factory.
+				if( model.Type.Key == "IUnknown")
+					return string.Format("{0} = SlimDX.ObjectFactory.Create(_{0}, riid);", model.Name);
+				return string.Format("{0} = _{0} != System.IntPtr.Zero ? new {1}(_{0}) : null;", model.Name, model.Type.Name);
+			}
+
+			return string.Empty;
 		}
 
 		#endregion
