@@ -37,7 +37,6 @@ namespace SlimDX.Generator
 		/// </summary>
 		static TemplateCallbacks()
 		{
-			formatters[MarshalBehavior.Output] = new DirectFormatter();
 			formatters[MarshalBehavior.Direct] = new DirectFormatter();
 			formatters[MarshalBehavior.Indirect] = new IndirectFormatter();
 			formatters[MarshalBehavior.String] = new StringFormatter();
@@ -270,6 +269,10 @@ namespace SlimDX.Generator
 		{
 			switch (GetBehavior(parameter))
 			{
+				case MarshalBehavior.Direct:
+					if(parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
+						return string.Format("System.IntPtr _{0} = default(System.IntPtr);", parameter.Name);
+					return null;
 				case MarshalBehavior.Indirect:
 					return string.Format("{0} = default(System.IntPtr);", parameter.Name);
 				case MarshalBehavior.Array:
@@ -299,10 +302,12 @@ namespace SlimDX.Generator
 					}
 				case MarshalBehavior.String:
 					return string.Format("System.IntPtr _{0} = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi({0});", parameter.Name);
-				case MarshalBehavior.Output:
-					return string.Format("System.IntPtr _{0} = default(System.IntPtr);", parameter.Name);
 				case MarshalBehavior.Structure:
 					return string.Format("{0}Marshaller _{1} = {0}.ToMarshaller({1});", parameter.Type.Name, parameter.Name);
+				case MarshalBehavior.Interface:
+					if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
+						return string.Format("System.IntPtr _{0} = default(System.IntPtr);", parameter.Name);
+					return null;
 				default:
 					return null;
 			}
@@ -321,13 +326,15 @@ namespace SlimDX.Generator
 					return string.Format("new System.IntPtr(_{0})", parameter.Name);
 				case MarshalBehavior.String:
 					return string.Format("_{0}", parameter.Name);
-				case MarshalBehavior.Output:
-					return string.Format("ref _{0}", parameter.Name);
 				case MarshalBehavior.Structure:
 					return string.Format("new System.IntPtr(&_{0})", parameter.Name);
 				case MarshalBehavior.Interface:
+					if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
+						return string.Format("ref _{0}", parameter.Name);
 					return string.Format("{0} != null ? {0}.NativePointer : System.IntPtr.Zero", parameter.Name);
 				default:
+					if(parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
+						return string.Format("ref _{0}", parameter.Name);
 					//TODO: Somewhat hackish.
 					if (parameter.Type is EnumerationModel)
 						return string.Format("(int){0}", parameter.Name);
@@ -370,8 +377,6 @@ namespace SlimDX.Generator
 				return MarshalBehavior.Indirect;
 			if (model.LengthParameter != null)
 				return MarshalBehavior.Array;
-			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
-				return MarshalBehavior.Output;
 			return GetBehavior(model.Type);
 		}
 
