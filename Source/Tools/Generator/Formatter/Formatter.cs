@@ -26,7 +26,19 @@ namespace SlimDX.Generator
 	{
 		#region Interface
 
+		/// <summary>
+		/// Formats the specified model as a formal parameter declaration for a managed method.
+		/// </summary>
+		/// <param name="model">The model.</param>
+		/// <returns>The formatted model.</returns>
 		string FormatAsFormalParameter(ParameterModel model);
+
+		/// <summary>
+		/// Formats the specified model as a local parameter for a trampoline method.
+		/// </summary>
+		/// <param name="model">The model.</param>
+		/// <returns>The formatted model.</returns>
+		string FormatAsTrampolineParameter(ParameterModel model);
 
 		#endregion
 	}

@@ -26,12 +26,32 @@ namespace SlimDX.Generator
 	{
 		#region Interface
 
+		/// <summary>
+		/// Formats the specified model as a formal parameter declaration for a managed method.
+		/// </summary>
+		/// <param name="model">The model.</param>
+		/// <returns>The formatted model.</returns>
 		public string FormatAsFormalParameter(ParameterModel model)
 		{
 			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
 				return string.Format("out {0} {1}", model.Type.Name, model.Name);
 			else
 				return string.Format("{0} {1}", model.Type.Name, model.Name);
+		}
+
+		/// <summary>
+		/// Formats the specified model as a local parameter for a trampoline method.
+		/// </summary>
+		/// <param name="model">The model.</param>
+		/// <returns>The formatted model.</returns>
+		public string FormatAsTrampolineParameter(ParameterModel model)
+		{
+			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
+				return string.Format("ref _{0}", model.Name);
+			//TODO: Somewhat hackish.
+			if (model.Type is EnumerationModel)
+				return string.Format("(int){0}", model.Name);
+			return TemplateCallbacks.IsLargeType(model.Type) ? string.Format("new System.IntPtr(&{0})", model.Name) : model.Name;
 		}
 
 		#endregion
