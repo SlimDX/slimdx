@@ -1,5 +1,5 @@
 html {
-     overflow: -moz-scrollbars-vertical;
+     height: 100%;
 	 }
 	 
 body {
@@ -10,6 +10,7 @@ body {
 	letter-spacing: normal;
 	line-height: 1.6em;
 	color: #4e4e4e;
+	height: 100%;
 	}
 
 a { text-decoration: none; color: #f56413; font-size: 12px; }
@@ -85,7 +86,7 @@ li { margin-bottom: 4px }
 /*---------------CONTENT AREA----------------*/
 
 #content {
-	background: #fff url(../images/bg_1.jpg) repeat-x top;
+	background: #fff url(/images/bg_1.jpg) repeat-x top;
 	padding-top: 40px;
 	}
 

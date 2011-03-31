@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" 
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
 
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" href="css/reset.css" type="text/css" />
-	<link rel="stylesheet" href="css/default.css" type="text/css" />
-
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" href="/css/reset.css" type="text/css">
+	<link rel="stylesheet" href="/css/default.css" type="text/css">
+	<link rel="stylesheet" href="/css/docs.css" type="text/css">
 <?php
 	if(empty($g_pageTitle))
 		$g_pageTitle = "SlimDX";
@@ -20,7 +20,7 @@
 <div id="top1">
 	<div class="wrapper">
     	<div id="logo">
-        <a href="http://slimdx.org/"><img src="images/logoblackbg.jpg" alt="SlimDX" /></a>
+        <a href="http://slimdx.org/"><img src="/images/logoblackbg.jpg" alt="SlimDX" /></a>
         </div>
         
         <ul class="menu">
@@ -37,13 +37,13 @@
 		echo "<a href=\"$url\">$itemName</a></li>\n";
 	}
 	
-	WriteMenuItem("Home", "index.php");
-	WriteMenuItem("Features", "features.php");
-	WriteMenuItem("Download", "download.php");
-	WriteMenuItem("Documentation", "http://slimdx.org/latestdocs/");
-	WriteMenuItem("Tutorials", "tutorials.php");
-	WriteMenuItem("Licensing", "license.php");
-	WriteMenuItem("Consulting", "consulting.php");
+	WriteMenuItem("Home", "/index.php");
+	WriteMenuItem("Features", "/features.php");
+	WriteMenuItem("Download", "/download.php");
+	WriteMenuItem("Documentation", "/latestdocs/");
+	WriteMenuItem("Tutorials", "/tutorials.php");
+	WriteMenuItem("Licensing", "/license.php");
+	WriteMenuItem("Consulting", "/consulting.php");
 ?>            
         </ul>
     </div>
