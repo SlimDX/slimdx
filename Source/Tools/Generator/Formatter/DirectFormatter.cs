@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace SlimDX.Generator
 {
@@ -48,10 +49,16 @@ namespace SlimDX.Generator
 		{
 			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
 				return string.Format("ref _{0}", model.Name);
-			//TODO: Somewhat hackish.
-			if (model.Type is EnumerationModel)
-				return string.Format("(int){0}", model.Name);
-			return TemplateCallbacks.IsLargeType(model.Type) ? string.Format("new System.IntPtr(&{0})", model.Name) : model.Name;
+			
+			TranslationModel translationModel = model.Type as TranslationModel;
+			if (translationModel != null)
+			{
+				var type = Type.GetType(translationModel.TargetType);
+				if(Marshal.SizeOf(type) > sizeof(long))
+					return string.Format("new System.IntPtr(&{0})", model.Name);
+			}
+
+			return model.Name;
 		}
 
 		#endregion

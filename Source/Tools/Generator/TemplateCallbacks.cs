@@ -19,10 +19,10 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Collections.Generic;
 
 namespace SlimDX.Generator
 {
@@ -39,6 +39,7 @@ namespace SlimDX.Generator
 		{
 			formatters[MarshalBehavior.Direct] = new DirectFormatter();
 			formatters[MarshalBehavior.Indirect] = new IndirectFormatter();
+			formatters[MarshalBehavior.Enumeration] = new EnumerationFormatter();
 			formatters[MarshalBehavior.String] = new StringFormatter();
 			formatters[MarshalBehavior.Array] = new ArrayFormatter();
 			formatters[MarshalBehavior.Structure] = new StructureFormatter();
@@ -338,6 +339,8 @@ namespace SlimDX.Generator
 					return MarshalBehavior.String;
 			}
 
+			if(model is EnumerationModel)
+				return MarshalBehavior.Enumeration;
 			if (model is StructureModel)
 				return MarshalBehavior.Structure;
 			if (model is InterfaceModel || model.Key == "IUnknown")
