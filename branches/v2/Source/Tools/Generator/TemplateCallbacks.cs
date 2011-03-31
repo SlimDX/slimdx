@@ -124,7 +124,10 @@ namespace SlimDX.Generator
 				builder.AppendFormat("SlimDX.Trampoline.CallFree{0}(functions[{1}]", trampolineSuffix, function.Api.Functions.IndexOf(function));
 
 			foreach (var parameter in function.Parameters)
-				builder.AppendFormat(", {0}", GetParameterTrampolineString(parameter));
+			{
+				var formatter = formatters[GetBehavior(parameter)];
+				builder.AppendFormat(", {0}", formatter.FormatAsTrampolineParameter(parameter));
+			}
 
 			builder.Append(");");
 			return builder.ToString();
@@ -270,7 +273,7 @@ namespace SlimDX.Generator
 			switch (GetBehavior(parameter))
 			{
 				case MarshalBehavior.Direct:
-					if(parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
+					if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
 						return string.Format("System.IntPtr _{0} = default(System.IntPtr);", parameter.Name);
 					return null;
 				case MarshalBehavior.Indirect:
@@ -310,35 +313,6 @@ namespace SlimDX.Generator
 					return null;
 				default:
 					return null;
-			}
-		}
-
-		static string GetParameterTrampolineString(ParameterModel parameter)
-		{
-			switch (GetBehavior(parameter))
-			{
-				case MarshalBehavior.Indirect:
-					if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
-						return string.Format("ref {0}", parameter.Name);
-					else
-						return string.Format("{0}", parameter.Name);
-				case MarshalBehavior.Array:
-					return string.Format("new System.IntPtr(_{0})", parameter.Name);
-				case MarshalBehavior.String:
-					return string.Format("_{0}", parameter.Name);
-				case MarshalBehavior.Structure:
-					return string.Format("new System.IntPtr(&_{0})", parameter.Name);
-				case MarshalBehavior.Interface:
-					if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
-						return string.Format("ref _{0}", parameter.Name);
-					return string.Format("{0} != null ? {0}.NativePointer : System.IntPtr.Zero", parameter.Name);
-				default:
-					if(parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
-						return string.Format("ref _{0}", parameter.Name);
-					//TODO: Somewhat hackish.
-					if (parameter.Type is EnumerationModel)
-						return string.Format("(int){0}", parameter.Name);
-					return IsLargeType(parameter.Type) ? string.Format("new System.IntPtr(&{0})", parameter.Name) : parameter.Name;
 			}
 		}
 
