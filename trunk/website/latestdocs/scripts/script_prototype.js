@@ -2,7 +2,6 @@ window.onload = LoadPage;
 
 var sd;
 var lfc;
-var store;
 var tf;
 var mf;
 var lc;
@@ -23,9 +22,8 @@ ListController.prototype.registerTabbedArea = function(tabCollection, listCollec
 }
 
 function LoadPage() {
-    store = new CookieDataStore('docs');
     registerEventHandler(window, 'load', 
-        function() { var ss = new SplitScreen('control','main'); selectLanguage(store.get('lang')); });
+        function() { var ss = new SplitScreen('control','main'); });
     sd = getStyleDictionary(); 
     lfc = new LanguageFilterController();
     lc = new ListController();
@@ -184,6 +182,4 @@ function toggleCheckState(visibility, value) {
 
 function switchLanguage(names, value) {
     if (lfc != null) lfc.switchLanguage(names[0]); 
-    store.set('lang',value); 
-    store.save();
 }
