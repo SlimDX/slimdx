@@ -22,8 +22,8 @@ ListController.prototype.registerTabbedArea = function(tabCollection, listCollec
 }
 
 function LoadPage() {
-    registerEventHandler(window, 'load', 
-        function() { var ss = new SplitScreen('control','main'); });
+    registerEventHandler(window, 'load',
+        function () { });
     sd = getStyleDictionary(); 
     lfc = new LanguageFilterController();
     lc = new ListController();
