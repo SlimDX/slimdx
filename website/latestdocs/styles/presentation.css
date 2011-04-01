@@ -67,13 +67,10 @@ div#main
 	clear: both;
 	margin: 0;
 	padding: 1em;
-	width: 100%;
-	height: 100%;
 	z-index: 1;
 	overflow: auto;
-	position:absolute;
+	position: absolute;
 	top:60px;
-	bottom:0;
 }
 
 /* sections */
