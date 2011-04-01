@@ -1,3 +1,10 @@
+<?php
+	$g_pageTitle = "SlimDX Documentation";
+	$g_pageName = "Documentation";
+	
+	require_once("../header.php");
+?>
+
 <!--
 Copyright (c) 2007-2011 SlimDX Group
  
@@ -19,13 +26,6 @@ Copyright (c) 2007-2011 SlimDX Group
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 -->
-
-<?php
-	$g_pageTitle = "SlimDX Documentation";
-	$g_pageName = "Documentation";
-	
-	require_once("../header.php");
-?>
 
 <script type="text/javascript" src="lib/jquery.js"></script>
 <script type="text/javascript" src="jquery.jstree.js"></script>
