@@ -31,6 +31,8 @@ Copyright (c) 2007-2011 SlimDX Group
 <script type="text/javascript" src="jquery.jstree.js"></script>
 
 <script type="text/javascript">
+var shouldSearch = true;
+
 //Returns the location currently displayed by the iframe
 function getCurrentLocation()
 {
@@ -48,11 +50,12 @@ function getCurrentTopic()
 	return topic;
 }
 
-//Change the window location hash, triggering the hash changed event
+//Code wants to navigate the url, currently this is always the tree view
 function navigateToUrl(url)
 {
-	var target = "#" + url;
-	window.location.hash = target;
+	//we should not trigger a search, since the user got here via the tree
+	shouldSearch = false;
+	navigateFrame(url);
 }
 
 //Navigate the frame directly, without touching other state (triggers iframeLoaded)
@@ -65,12 +68,16 @@ function navigateFrame(url)
 	document.getElementById("content_frame").src = target;
 }
 
-//Respond to a change in the hash by navigating if needed, can be done by user or code
+//Respond to a change in the hash by navigating if needed, only user can CHANGE the topic this way
 function locationHashChanged() {
 	var topic = window.location.hash.substring(1);
 	var current = getCurrentTopic();
 	if(current != topic)
+	{
+		//new topic means triggered by user
 		navigateFrame(topic);
+		$("#tree").jstree("search", window.location.hash);
+	}
 }
 
 //scroll the tree to a target node (after a search for that node triggered by iframe navigate)
@@ -114,9 +121,6 @@ function iframeLoaded() {
 	//ignore the initial blank load
 	if(loc.host != document.location.host)
 		return;
-	//ignore the front page load (hash is "" or "#")
-	if(window.location.hash.length < 2)
-		return;
 
 	//strip off the html/ and path name from the location, then add the hash
 	var target = "#" + getCurrentTopic();
@@ -124,8 +128,18 @@ function iframeLoaded() {
 	if(target != window.location.hash)
 	{
 		window.location.hash = target;
-		$("#tree").jstree("search", target);
+		if(shouldSearch)
+			$("#tree").jstree("search", target);
+		shouldSearch = true;
 	}
+}
+
+function iframeFirstLoad()
+{
+	//nothing happens on the first real page load, subsequent loads go through the update logic above
+	var content_frame = document.getElementById("content_frame");
+	if(content_frame.src != null && content_frame.src.length > 0)
+		content_frame.onload = iframeLoaded;
 }
 
 </script>
@@ -137,23 +151,29 @@ function iframeLoaded() {
 
 	<div id="content_container">
 		<div id="frame_container">
-			<iframe id="content_frame" frameborder="0" onload="iframeLoaded();"></iframe>
+			<iframe id="content_frame" frameborder="0" onload="iframeFirstLoad();"></iframe>
 		</div>
 	</div>
 </div>
 
 <script type="text/javascript">
+var syncToc = false;
 $(function () {
 	//debugger;
 	
+	syncToc = false;
 	//if a target was provided as part of the link, navigate to it
 	if(window.location.hash.length > 1)
-		navigateFrame(window.location.hash);	
+	{
+		syncToc = window.location.hash;
+		navigateFrame(window.location.hash);
+	}
+	
 	//hook up hash change detection
 	window.onhashchange = locationHashChanged;
 	
 	$("#tree").jstree({
-		"core" : { "animation": 100 },
+		"core" : { "animation": 00 },
 		"plugins" : [ "themes", "json_data", "ui", "search" ],
 		"themes" : { "theme" : "classic", "icons" : false },
 		"ui" : {
@@ -188,7 +208,7 @@ $(function () {
 					//if nothing is in the iframe, use this to fill it
 					var loc = getCurrentLocation(); 
 					if(loc.host != document.location.host && window.location.hash.length < 2)
-						navigateFrame(data[0].attr.topic);					
+						navigateFrame(data[0].attr.topic);
 					
 					return data;
 				}
@@ -198,8 +218,7 @@ $(function () {
 			"ajax" : {
 				"url": "search.php",
 				"data": function(n) {
-					var queryString = {};
-					queryString.url = getCurrentTopic();
+					var queryString = { "url": n.substring(1) };
 					return queryString;
 				},
 				"success": function(data) {
@@ -208,11 +227,15 @@ $(function () {
 
 					//build an id list from the path sent back
 					var path = data[0].ParentPath;
-					var nodes = path.split("/");
-					nodes.shift();
-					for(i = 0; i < nodes.length; ++i)
+					var nodes = [];
+					if(path != null)
 					{
-						nodes[i] = "#node_" + nodes[i];
+						nodes = path.split("/");
+						nodes.shift();
+						for(i = 0; i < nodes.length; ++i)
+						{
+							nodes[i] = "#node_" + nodes[i];
+						}
 					}
 
 					//mark the node as the scroll target
@@ -228,6 +251,12 @@ $(function () {
 	.bind("load_node.jstree", function(e, data) {
 		if(data[0] == -1)
 			return;
+	
+		if(syncToc)
+		{
+			$("#tree").jstree("search", syncToc);
+			syncToc = false;
+		}
 
 		//if this load was triggered by a search, we'll want to scroll
 		scrollTree();
