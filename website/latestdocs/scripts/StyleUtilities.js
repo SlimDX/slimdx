@@ -9,7 +9,7 @@
 			var sheet = sheets[i];
 
             // ignore sheets at ms-help Urls
-            if (sheet.href.substr(0,8) == 'ms-help:') continue;
+            if (sheet.href != null && sheet.href.substr(0,8) == 'ms-help:') continue;
 
 			// get sheet rules
 			var rules = sheet.cssRules;
