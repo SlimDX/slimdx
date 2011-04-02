@@ -276,6 +276,12 @@ namespace SlimDX.Generator
 				{
 					switch ((string)flag)
 					{
+						case "binary_size":
+							results |= ParameterModelFlags.HasBinarySize;
+							break;
+						case "element_count":
+							results |= ParameterModelFlags.HasElementCount;
+							break;
 						case "out":
 							results |= ParameterModelFlags.IsOutput;
 							break;
