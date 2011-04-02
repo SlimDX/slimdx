@@ -180,7 +180,7 @@ namespace SlimDX.Generator
 			switch (marshaller.ResolveBehavior(member))
 			{
 				case MarshalBehavior.String:
-					builder.AppendFormat("System.Runtime.Interopmarshaller.Marshal.FreeHGlobal({0});", member.Name);
+					builder.AppendFormat("System.Runtime.InteropServices.Marshal.FreeHGlobal({0});", member.Name);
 					break;
 				case MarshalBehavior.Structure:
 					builder.AppendFormat("{0}.Release();", member.Name);
@@ -221,7 +221,7 @@ namespace SlimDX.Generator
 			switch (marshaller.ResolveBehavior(member))
 			{
 				case MarshalBehavior.String:
-					builder.AppendFormat("result.{0} = source.{0} != null ? System.Runtime.Interopmarshaller.Marshal.StringToHGlobalAnsi(source.{0}) : System.IntPtr.Zero;", member.Name);
+					builder.AppendFormat("result.{0} = source.{0} != null ? System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(source.{0}) : System.IntPtr.Zero;", member.Name);
 					break;
 				case MarshalBehavior.Structure:
 					builder.AppendFormat("result.{0} = {1}.ToMarshaller(source.{0});", member.Name, GetQualifiedName(engine, member.Type));
