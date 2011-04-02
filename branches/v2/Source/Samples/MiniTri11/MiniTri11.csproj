@@ -57,13 +57,11 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SlimBuffer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\External\SlimBuffer\SlimBuffer.dll</HintPath>
+    <Reference Include="SlimBuffer">
+      <HintPath>..\..\..\Dependencies\SlimBuffer\SlimBuffer.dll</HintPath>
     </Reference>
-    <Reference Include="SlimMath, Version=1.0.0.0, Culture=neutral, PublicKeyToken=eb5b190254be1642, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\External\SlimMath\SlimMath.dll</HintPath>
+    <Reference Include="SlimMath">
+      <HintPath>..\..\..\Dependencies\SlimMath\SlimMath.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
