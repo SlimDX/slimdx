@@ -91,9 +91,8 @@ namespace SlimDX.Generator
 
 			foreach (var parameter in method.Parameters)
 			{
-				var declaration = GetParameterDeclarationString(parameter);
-				if (!string.IsNullOrEmpty(declaration))
-					builder.AppendLine(declaration);
+				var formatter = formatters[marshaller.ResolveBehavior(parameter)];
+				builder.AppendLine(formatter.GetLocalVariableSetupCode(marshaller, parameter));
 			}
 
 			return builder.ToString();
@@ -233,54 +232,6 @@ namespace SlimDX.Generator
 			}
 
 			return builder.ToString();
-		}
-
-		static string GetParameterDeclarationString(ParameterModel parameter)
-		{
-			switch (marshaller.ResolveBehavior(parameter))
-			{
-				case MarshalBehavior.Direct:
-					if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
-						return string.Format("System.IntPtr _{0} = default(System.IntPtr);", parameter.Name);
-					return null;
-				case MarshalBehavior.Indirect:
-					return string.Format("{0} = default(System.IntPtr);", parameter.Name);
-				case MarshalBehavior.Array:
-					{
-						//TODO: Needs cleanup.
-						var builder = new StringBuilder();
-						var baseBehavior = marshaller.ResolveBehavior(parameter.Type);
-						if (baseBehavior == MarshalBehavior.Structure)
-						{
-							builder.AppendLine(string.Format("{0}Marshaller* _{1} = stackalloc {0}Marshaller[{1}.Length];", parameter.Type.Name, parameter.Name));
-							builder.AppendLine(string.Format("for(int i = 0; i < {0}.Length; ++i)", parameter.Name));
-							builder.AppendLine(string.Format("\t_{0}[i] = {1}.ToMarshaller({0}[i]);", parameter.Name, parameter.Type.Name));
-						}
-						else if (baseBehavior == MarshalBehavior.Interface)
-						{
-							builder.AppendLine(string.Format("System.IntPtr* _{1} = stackalloc System.IntPtr[{1}.Length];", parameter.Type.Name, parameter.Name));
-							builder.AppendLine(string.Format("for(int i = 0; i < {0}.Length; ++i)", parameter.Name));
-							builder.AppendLine(string.Format("\t_{0}[i] = {0}[i].NativePointer;", parameter.Name, parameter.Type.Name));
-						}
-						else
-						{
-							builder.AppendLine(string.Format("{0}* _{1} = stackalloc {0}[{1}.Length];", parameter.Type.Name, parameter.Name));
-							builder.AppendLine(string.Format("for(int i = 0; i < {0}.Length; ++i)", parameter.Name));
-							builder.AppendLine(string.Format("\t_{0}[i] = {0}[i];", parameter.Name, parameter.Type.Name));
-						}
-						return builder.ToString();
-					}
-				case MarshalBehavior.String:
-					return string.Format("System.IntPtr _{0} = System.Runtime.Interopmarshaller.Marshal.StringToHGlobalAnsi({0});", parameter.Name);
-				case MarshalBehavior.Structure:
-					return string.Format("{0}Marshaller _{1} = {0}.ToMarshaller({1});", parameter.Type.Name, parameter.Name);
-				case MarshalBehavior.Interface:
-					if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
-						return string.Format("System.IntPtr _{0} = default(System.IntPtr);", parameter.Name);
-					return null;
-				default:
-					return null;
-			}
 		}
 
 		public static string GetApiClassName(ApiModel api)

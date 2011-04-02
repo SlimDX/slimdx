@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Text;
 
 namespace SlimDX.Generator
 {
@@ -44,6 +45,37 @@ namespace SlimDX.Generator
 		public string GetTrampolineParameterCode(ParameterModel model)
 		{
 			return string.Format("new System.IntPtr(_{0})", model.Name);
+		}
+
+		/// <summary>
+		/// Gets the code for setup of local variables related to the specified parameter.
+		/// </summary>
+		/// <param name="marshaller">The marshalling service interface.</param>
+		/// <param name="model">The model.</param>
+		/// <returns>The code.</returns>
+		public string GetLocalVariableSetupCode(MarshallingService marshaller, ParameterModel model)
+		{
+			var builder = new StringBuilder();
+			switch (marshaller.ResolveBehavior(model.Type))
+			{
+				case MarshalBehavior.Structure:
+					builder.AppendLine(string.Format("{0}Marshaller* _{1} = stackalloc {0}Marshaller[{1}.Length];", model.Type.Name, model.Name));
+					builder.AppendLine(string.Format("for(int i = 0; i < {0}.Length; ++i)", model.Name));
+					builder.AppendLine(string.Format("\t_{0}[i] = {1}.ToMarshaller({0}[i]);", model.Name, model.Type.Name));
+					break;
+				case MarshalBehavior.Interface:
+					builder.AppendLine(string.Format("System.IntPtr* _{1} = stackalloc System.IntPtr[{1}.Length];", model.Type.Name, model.Name));
+					builder.AppendLine(string.Format("for(int i = 0; i < {0}.Length; ++i)", model.Name));
+					builder.AppendLine(string.Format("\t_{0}[i] = {0}[i].NativePointer;", model.Name, model.Type.Name));
+					break;
+				default:
+					builder.AppendLine(string.Format("{0}* _{1} = stackalloc {0}[{1}.Length];", model.Type.Name, model.Name));
+					builder.AppendLine(string.Format("for(int i = 0; i < {0}.Length; ++i)", model.Name));
+					builder.AppendLine(string.Format("\t_{0}[i] = {0}[i];", model.Name, model.Type.Name));
+					break;
+			}
+
+			return builder.ToString();
 		}
 
 		/// <summary>

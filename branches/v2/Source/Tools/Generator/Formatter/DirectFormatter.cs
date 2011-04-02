@@ -49,16 +49,29 @@ namespace SlimDX.Generator
 		{
 			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
 				return string.Format("ref _{0}", model.Name);
-			
+
 			TranslationModel translationModel = model.Type as TranslationModel;
 			if (translationModel != null)
 			{
 				var type = Type.GetType(translationModel.TargetType);
-				if(Marshal.SizeOf(type) > sizeof(long))
+				if (Marshal.SizeOf(type) > sizeof(long))
 					return string.Format("new System.IntPtr(&{0})", model.Name);
 			}
 
 			return model.Name;
+		}
+
+		/// <summary>
+		/// Gets the code for setup of local variables related to the specified parameter.
+		/// </summary>
+		/// <param name="marshaller">The marshalling service interface.</param>
+		/// <param name="model">The model.</param>
+		/// <returns>The code.</returns>
+		public string GetLocalVariableSetupCode(MarshallingService marshaller, ParameterModel model)
+		{
+			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
+				return string.Format("System.IntPtr _{0} = default(System.IntPtr);", model.Name);
+			return string.Empty;
 		}
 
 		/// <summary>

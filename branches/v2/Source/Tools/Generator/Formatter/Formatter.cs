@@ -41,6 +41,14 @@ namespace SlimDX.Generator
 		string GetTrampolineParameterCode(ParameterModel model);
 
 		/// <summary>
+		/// Gets the code for setup of local variables related to the specified parameter.
+		/// </summary>
+		/// <param name="marshaller">The marshalling service interface.</param>
+		/// <param name="model">The model.</param>
+		/// <returns>The code.</returns>
+		string GetLocalVariableSetupCode(MarshallingService marshaller, ParameterModel model);
+
+		/// <summary>
 		/// Gets the code for cleanup of local variables related to the specified parameter.
 		/// </summary>
 		/// <param name="model">The model.</param>

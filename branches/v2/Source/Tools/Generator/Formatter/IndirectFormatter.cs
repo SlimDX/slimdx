@@ -53,6 +53,17 @@ namespace SlimDX.Generator
 		}
 
 		/// <summary>
+		/// Gets the code for setup of local variables related to the specified parameter.
+		/// </summary>
+		/// <param name="marshaller">The marshalling service interface.</param>
+		/// <param name="model">The model.</param>
+		/// <returns>The code.</returns>
+		public string GetLocalVariableSetupCode(MarshallingService marshaller, ParameterModel model)
+		{
+			return string.Format("{0} = default(System.IntPtr);", model.Name);
+		}
+
+		/// <summary>
 		/// Gets the code for cleanup of local variables related to the specified parameter.
 		/// </summary>
 		/// <param name="model">The model.</param>
