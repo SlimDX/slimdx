@@ -143,7 +143,7 @@ namespace SlimDX.Generator
 							throw new InvalidOperationException(string.Format("Could not resolve type for parameter '{0}.'", parameterModel.Name));
 
 						TrampolineParameterFlags flags = TrampolineParameterFlags.Default;
-						if (parameterModel.Flags.HasFlag(ParameterModelFlags.IsOutput))
+						if (parameterModel.Flags.HasFlag(ParameterModelFlags.IsOutput) && marshaller.ResolveBehavior(parameterModel) != MarshalBehavior.Structure && marshaller.ResolveBehavior(parameterModel) != MarshalBehavior.Enumeration && marshaller.ResolveBehavior(parameterModel) != MarshalBehavior.Array)
 							flags |= TrampolineParameterFlags.Reference;
 
 						parameters.Add(parameterModel.Type == ApiModel.VoidModel ? new TrampolineParameter(typeof(IntPtr), flags) : new TrampolineParameter(parameterType, flags));
