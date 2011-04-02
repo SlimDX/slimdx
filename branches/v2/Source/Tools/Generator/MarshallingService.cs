@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace SlimDX.Generator
 {
@@ -35,7 +36,11 @@ namespace SlimDX.Generator
 
 			var translation = model as TranslationModel;
 			if (translation != null)
-				return Type.GetType(translation.TargetType);
+			{
+				var type = Type.GetType(translation.TargetType);
+				if (type.IsValueType && Marshal.SizeOf(type) <= sizeof(long))
+					return type;
+			}
 
 			return typeof(IntPtr);
 		}
