@@ -33,6 +33,8 @@ namespace SlimDX.Generator
 		/// <returns>The code.</returns>
 		public string GetFormalParameterCode(ParameterModel model)
 		{
+			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
+				return string.Format("out {0} {1}", model.Type.Name, model.Name);
 			return string.Format("{0} {1}", model.Type.Name, model.Name);
 		}
 
@@ -54,6 +56,8 @@ namespace SlimDX.Generator
 		/// <returns>The code.</returns>
 		public string GetLocalVariableSetupCode(MarshallingService marshaller, ParameterModel model)
 		{
+			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
+				return string.Format("{0}Marshaller _{1} = default({0}Marshaller);", model.Type.Name, model.Name);
 			return string.Format("{0}Marshaller _{1} = {0}.ToMarshaller({1});", model.Type.Name, model.Name);
 		}
 
@@ -64,6 +68,8 @@ namespace SlimDX.Generator
 		/// <returns>The code.</returns>
 		public string GetLocalVariableCleanupCode(ParameterModel model)
 		{
+			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
+				return string.Format("{0} = {1}.FromMarshaller(_{0});", model.Name, model.Type.Name);
 			return string.Format("_{0}.Release();", model.Name);
 		}
 
