@@ -125,19 +125,20 @@ namespace SlimDX.Generator
 
 		static void BuildTrampolineAssembly(ApiModel api, string outputDirectory, string outputFile)
 		{
+			MarshallingService marshaller = new MarshallingService();
 			TrampolineAssemblyBuilder trampolineBuilder = new TrampolineAssemblyBuilder();
 			foreach (var interfaceModel in api.Interfaces)
 			{
 				foreach (var methodModel in interfaceModel.Methods)
 				{
-					var methodType = ResolveType(methodModel.Type);
+					var methodType = marshaller.ResolveType(methodModel.Type);
 					if (methodType == null)
 						throw new InvalidOperationException(string.Format("Could not resolve return type for method '{0}.'", methodModel.Name));
 
 					var parameters = new List<TrampolineParameter>();
 					foreach (var parameterModel in methodModel.Parameters)
 					{
-						var parameterType = ResolveType(parameterModel);
+						var parameterType = marshaller.ResolveType(parameterModel);
 						if (parameterType == null)
 							throw new InvalidOperationException(string.Format("Could not resolve type for parameter '{0}.'", parameterModel.Name));
 
@@ -154,14 +155,14 @@ namespace SlimDX.Generator
 
 			foreach (var functionModel in api.Functions)
 			{
-				var methodType = ResolveType(functionModel.Type);
+				var methodType = marshaller.ResolveType(functionModel.Type);
 				if (methodType == null)
 					throw new InvalidOperationException(string.Format("Could not resolve return type for method '{0}.'", functionModel.Name));
 
 				var parameters = new List<TrampolineParameter>();
 				foreach (var parameterModel in functionModel.Parameters)
 				{
-					var parameterType = ResolveType(parameterModel);
+					var parameterType = marshaller.ResolveType(parameterModel);
 					if (parameterType == null)
 						throw new InvalidOperationException(string.Format("Could not resolve type for parameter '{0}.'", parameterModel.Name));
 
@@ -178,36 +179,9 @@ namespace SlimDX.Generator
 			trampolineBuilder.CreateAssembly(outputDirectory, outputFile);
 		}
 
-		static Type ResolveType(TypeModel model)
-		{
-			if (model == null)
-				return null;
-			if (model is EnumerationModel)
-				return typeof(int);
 
-			var behavior = TemplateCallbacks.GetBehavior(model);
-			if (behavior == MarshalBehavior.Direct && !TemplateCallbacks.IsLargeType(model))
-			{
-				var translationModel = model as TranslationModel;
-				if (translationModel == null)
-					return null;
 
-				return Type.GetType(translationModel.TargetType);
-			}
 
-			return typeof(IntPtr);
-		}
-
-		static Type ResolveType(ParameterModel model)
-		{
-			if (model == null)
-				return null;
-
-			var behavior = TemplateCallbacks.GetBehavior(model);
-			if (behavior == MarshalBehavior.Array || behavior == MarshalBehavior.Indirect)
-				return typeof(IntPtr);
-			return ResolveType(model.Type);
-		}
 
 		static void ApplyTemplate(ApiModel item, string outputDirectory, TemplateEngine templateEngine, string templateName)
 		{
