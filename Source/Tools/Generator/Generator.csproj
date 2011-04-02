@@ -50,13 +50,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GoldParser">
-      <HintPath>..\..\..\External\GOLD\GoldParser.dll</HintPath>
+      <HintPath>..\..\..\Dependencies\GOLD\GoldParser.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Json">
-      <HintPath>..\..\..\External\System.Json\System.Json.dll</HintPath>
+      <HintPath>..\..\..\Dependencies\System.Json\System.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
