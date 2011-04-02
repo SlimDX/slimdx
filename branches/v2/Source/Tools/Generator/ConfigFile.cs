@@ -27,6 +27,7 @@ namespace SlimDX.Generator
 {
 	class Configuration
 	{
+		
 	}
 
 

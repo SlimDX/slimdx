@@ -46,7 +46,7 @@ namespace SlimDX.Generator
 			// primary source file is the one that wave is run against 
 			// to produce a single preprocessed monolithic header
 			primarySource = Environment.ExpandEnvironmentVariables(options.GetOption("Options", "PrimarySource"));
-			wavePath = options.GetOption("Options", "Wave").RootPath(options.ConfigurationDirectory);
+			wavePath = "wave.exe";
 
 			// -E indicates default naming scheme for output file (e.g. input.i)
 			// -m macros.txt creates a separate file containing a list of all found macros
