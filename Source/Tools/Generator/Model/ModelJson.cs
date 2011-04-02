@@ -245,7 +245,7 @@ namespace SlimDX.Generator
 					item.TryGetValue("indirection", out indirection);
 
 					JsonObject length;
-					item.TryGetValue("length", out length);
+					item.TryGetValue("size", out length);
 
 					results.Add(new ParameterModel(
 						key,

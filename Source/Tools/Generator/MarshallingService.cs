@@ -79,7 +79,7 @@ namespace SlimDX.Generator
 		{
 			if (model.IndirectionLevel > 0)
 				return MarshalBehavior.Indirect;
-			if (model.LengthParameter != null)
+			if (model.SizeParameter != null)
 				return MarshalBehavior.Array;
 			return ResolveBehavior(model.Type);
 		}

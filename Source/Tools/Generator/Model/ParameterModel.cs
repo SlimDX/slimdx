@@ -38,7 +38,7 @@ namespace SlimDX.Generator
 			Type = type;
 			Flags = flags;
 			IndirectionLevel = indirectionLevel;
-			LengthParameter = length;
+			SizeParameter = length;
 		}
 
 		public string Name
@@ -65,7 +65,7 @@ namespace SlimDX.Generator
 			private set;
 		}
 
-		public string LengthParameter
+		public string SizeParameter
 		{
 			get;
 			private set;
