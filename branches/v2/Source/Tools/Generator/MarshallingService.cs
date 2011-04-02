@@ -77,11 +77,18 @@ namespace SlimDX.Generator
 
 		public MarshalBehavior ResolveBehavior(ParameterModel model)
 		{
-			if (model.IndirectionLevel > 0)
-				return MarshalBehavior.Indirect;
 			if (model.SizeParameter != null)
-				return MarshalBehavior.Array;
-			return ResolveBehavior(model.Type);
+			{
+				if (model.Flags.HasFlag(ParameterModelFlags.HasElementCount))
+					return MarshalBehavior.Array;
+				else
+					return MarshalBehavior.Indirect;
+			}
+
+			var fallback = ResolveBehavior(model.Type);
+			if (fallback == MarshalBehavior.Direct && model.IndirectionLevel > 0)
+				return MarshalBehavior.Indirect;
+			return fallback;
 		}
 
 		public MarshalBehavior ResolveBehavior(StructureMemberModel model)
