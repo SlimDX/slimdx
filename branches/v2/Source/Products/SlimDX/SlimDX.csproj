@@ -34,10 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SlimBuffer">
-      <HintPath>..\..\..\External\SlimBuffer\SlimBuffer.dll</HintPath>
+      <HintPath>..\..\..\Dependencies\SlimBuffer\SlimBuffer.dll</HintPath>
     </Reference>
     <Reference Include="SlimMath">
-      <HintPath>..\..\..\External\SlimMath\SlimMath.dll</HintPath>
+      <HintPath>..\..\..\Dependencies\SlimMath\SlimMath.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
