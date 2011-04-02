@@ -166,9 +166,9 @@
 					"parameters": [
 						{ "key": "StartSlot", "type": "UINT" },
 						{ "key": "NumBuffers", "type": "UINT" },
-						{ "key": "ppVertexBuffers", "type": "ID3D11Buffer", "length": "NumBuffers" },
-						{ "key": "pStrides", "type": "UINT", "length": "NumBuffers" },
-						{ "key": "pOffsets", "type": "UINT", "length": "NumBuffers" }
+						{ "key": "ppVertexBuffers", "type": "ID3D11Buffer", "size": "NumBuffers" },
+						{ "key": "pStrides", "type": "UINT", "size": "NumBuffers" },
+						{ "key": "pOffsets", "type": "UINT", "size": "NumBuffers" }
 					]
 				},
 				{
@@ -185,7 +185,7 @@
 					"index": "33", 
 					"parameters": [
 						{ "key": "NumViews", "type": "UINT" },
-						{ "key": "ppRenderTargetViews", "type": "ID3D11RenderTargetView", "length":"NumViews" },
+						{ "key": "ppRenderTargetViews", "type": "ID3D11RenderTargetView", "size":"NumViews" },
 						{ "key": "pDepthStencilView", "type": "LPVOID" }
 					]
 				},
@@ -195,7 +195,7 @@
 					"index": "44", 
 					"parameters": [
 						{ "key": "NumViewports", "type": "UINT" },
-						{ "key": "pViewports", "type": "D3D11_VIEWPORT", "length":"NumViewports" }
+						{ "key": "pViewports", "type": "D3D11_VIEWPORT", "size":"NumViewports" }
 					]
 				},
 				{
@@ -261,7 +261,7 @@
 					"type": "HRESULT",
 					"index": "11", 
 					"parameters": [
-						{ "key": "pInputElementDescs", "type": "D3D11_INPUT_ELEMENT_DESC", "length": "NumElements" },
+						{ "key": "pInputElementDescs", "type": "D3D11_INPUT_ELEMENT_DESC", "size": "NumElements" },
 						{ "key": "NumElements", "type": "UINT" },
 						{ "key": "pShaderBytecodeWithInputSignature", "type": "HWND" },
 						{ "key": "BytecodeLength", "type": "SIZE_T" },
