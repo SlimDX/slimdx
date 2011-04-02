@@ -78,6 +78,7 @@
     <Compile Include="Formatter\StringFormatter.cs" />
     <Compile Include="Formatter\StructureFormatter.cs" />
     <Compile Include="MarshalBehavior.cs" />
+    <Compile Include="MarshallingService.cs" />
     <Compile Include="Model\ApiModel.cs" />
     <Compile Include="Model\EnumerationModel.cs" />
     <Compile Include="Model\EnumerationValueModel.cs" />

@@ -30,6 +30,7 @@ namespace SlimDX.Generator
 	{
 		#region Implementation
 
+		static MarshallingService marshaller = new MarshallingService();
 		static Dictionary<MarshalBehavior, Formatter> formatters = new Dictionary<MarshalBehavior, Formatter>();
 
 		/// <summary>
@@ -73,7 +74,7 @@ namespace SlimDX.Generator
 			for (var parameterIndex = 0; parameterIndex < function.Parameters.Count; ++parameterIndex)
 			{
 				var parameter = function.Parameters[parameterIndex];
-				var formatter = formatters[GetBehavior(parameter)];
+				var formatter = formatters[marshaller.ResolveBehavior(parameter)];
 				builder.Append(formatter.GetFormalParameterCode(parameter));
 
 				if (parameterIndex < function.Parameters.Count - 1)
@@ -126,7 +127,7 @@ namespace SlimDX.Generator
 
 			foreach (var parameter in function.Parameters)
 			{
-				var formatter = formatters[GetBehavior(parameter)];
+				var formatter = formatters[marshaller.ResolveBehavior(parameter)];
 				builder.AppendFormat(", {0}", formatter.GetTrampolineParameterCode(parameter));
 			}
 
@@ -141,7 +142,7 @@ namespace SlimDX.Generator
 
 			foreach (var parameter in method.Parameters)
 			{
-				var formatter = formatters[GetBehavior(parameter)];
+				var formatter = formatters[marshaller.ResolveBehavior(parameter)];
 				builder.AppendLine(formatter.GetLocalVariableCleanupCode(parameter));
 			}
 
@@ -156,7 +157,7 @@ namespace SlimDX.Generator
 			StructureMemberModel member = (StructureMemberModel)source;
 			var builder = new StringBuilder();
 
-			switch (GetBehavior(member))
+			switch (marshaller.ResolveBehavior(member))
 			{
 				case MarshalBehavior.String:
 					builder.AppendFormat("public System.IntPtr {0};", member.Name);
@@ -177,10 +178,10 @@ namespace SlimDX.Generator
 			StructureMemberModel member = (StructureMemberModel)source;
 			var builder = new StringBuilder();
 
-			switch (GetBehavior(member))
+			switch (marshaller.ResolveBehavior(member))
 			{
 				case MarshalBehavior.String:
-					builder.AppendFormat("System.Runtime.InteropServices.Marshal.FreeHGlobal({0});", member.Name);
+					builder.AppendFormat("System.Runtime.Interopmarshaller.Marshal.FreeHGlobal({0});", member.Name);
 					break;
 				case MarshalBehavior.Structure:
 					builder.AppendFormat("{0}.Release();", member.Name);
@@ -197,7 +198,7 @@ namespace SlimDX.Generator
 			StructureMemberModel member = (StructureMemberModel)source;
 			var builder = new StringBuilder();
 
-			switch (GetBehavior(member))
+			switch (marshaller.ResolveBehavior(member))
 			{
 				case MarshalBehavior.String:
 					builder.AppendFormat("result.{0} = new string((sbyte*)source.{0});", member.Name);
@@ -218,10 +219,10 @@ namespace SlimDX.Generator
 			StructureMemberModel member = (StructureMemberModel)source;
 			var builder = new StringBuilder();
 
-			switch (GetBehavior(member))
+			switch (marshaller.ResolveBehavior(member))
 			{
 				case MarshalBehavior.String:
-					builder.AppendFormat("result.{0} = source.{0} != null ? System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi(source.{0}) : System.IntPtr.Zero;", member.Name);
+					builder.AppendFormat("result.{0} = source.{0} != null ? System.Runtime.Interopmarshaller.Marshal.StringToHGlobalAnsi(source.{0}) : System.IntPtr.Zero;", member.Name);
 					break;
 				case MarshalBehavior.Structure:
 					builder.AppendFormat("result.{0} = {1}.ToMarshaller(source.{0});", member.Name, GetQualifiedName(engine, member.Type));
@@ -236,7 +237,7 @@ namespace SlimDX.Generator
 
 		static string GetParameterDeclarationString(ParameterModel parameter)
 		{
-			switch (GetBehavior(parameter))
+			switch (marshaller.ResolveBehavior(parameter))
 			{
 				case MarshalBehavior.Direct:
 					if (parameter.Flags.HasFlag(ParameterModelFlags.IsOutput))
@@ -248,7 +249,7 @@ namespace SlimDX.Generator
 					{
 						//TODO: Needs cleanup.
 						var builder = new StringBuilder();
-						var baseBehavior = GetBehavior(parameter.Type);
+						var baseBehavior = marshaller.ResolveBehavior(parameter.Type);
 						if (baseBehavior == MarshalBehavior.Structure)
 						{
 							builder.AppendLine(string.Format("{0}Marshaller* _{1} = stackalloc {0}Marshaller[{1}.Length];", parameter.Type.Name, parameter.Name));
@@ -270,7 +271,7 @@ namespace SlimDX.Generator
 						return builder.ToString();
 					}
 				case MarshalBehavior.String:
-					return string.Format("System.IntPtr _{0} = System.Runtime.InteropServices.Marshal.StringToHGlobalAnsi({0});", parameter.Name);
+					return string.Format("System.IntPtr _{0} = System.Runtime.Interopmarshaller.Marshal.StringToHGlobalAnsi({0});", parameter.Name);
 				case MarshalBehavior.Structure:
 					return string.Format("{0}Marshaller _{1} = {0}.ToMarshaller({1});", parameter.Type.Name, parameter.Name);
 				case MarshalBehavior.Interface:
@@ -280,51 +281,6 @@ namespace SlimDX.Generator
 				default:
 					return null;
 			}
-		}
-
-		public static bool IsLargeType(TypeModel model)
-		{
-			TranslationModel translationModel = model as TranslationModel;
-			if (translationModel != null)
-			{
-				var type = Type.GetType(translationModel.TargetType);
-				return Marshal.SizeOf(type) > sizeof(long);
-			}
-
-			return false;
-		}
-
-		public static MarshalBehavior GetBehavior(TypeModel model)
-		{
-			TranslationModel translationModel = model as TranslationModel;
-			if (translationModel != null)
-			{
-				var type = Type.GetType(translationModel.TargetType);
-				if (type == typeof(string))
-					return MarshalBehavior.String;
-			}
-
-			if (model is EnumerationModel)
-				return MarshalBehavior.Enumeration;
-			if (model is StructureModel)
-				return MarshalBehavior.Structure;
-			if (model is InterfaceModel || model.Key == "IUnknown")
-				return MarshalBehavior.Interface;
-			return MarshalBehavior.Direct;
-		}
-
-		public static MarshalBehavior GetBehavior(ParameterModel model)
-		{
-			if (model.IndirectionLevel > 0)
-				return MarshalBehavior.Indirect;
-			if (model.LengthParameter != null)
-				return MarshalBehavior.Array;
-			return GetBehavior(model.Type);
-		}
-
-		public static MarshalBehavior GetBehavior(StructureMemberModel model)
-		{
-			return GetBehavior(model.Type);
 		}
 
 		public static string GetApiClassName(ApiModel api)
