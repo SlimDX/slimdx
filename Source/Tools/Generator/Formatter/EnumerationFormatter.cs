@@ -46,6 +46,8 @@ namespace SlimDX.Generator
 		/// <returns>The code.</returns>
 		public string GetTrampolineParameterCode(ParameterModel model)
 		{
+			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
+				return string.Format("new System.IntPtr(&_{0})", model.Name);
 			return string.Format("(int){0}", model.Name);
 		}
 
@@ -58,7 +60,7 @@ namespace SlimDX.Generator
 		public string GetLocalVariableSetupCode(MarshallingService marshaller, ParameterModel model)
 		{
 			if (model.Flags.HasFlag(ParameterModelFlags.IsOutput))
-				return string.Format("System.IntPtr _{0} = default(System.IntPtr);", model.Name);
+				return string.Format("int _{0} = default(int);", model.Name);
 			return string.Empty;
 		}
 
