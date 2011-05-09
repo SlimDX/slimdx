@@ -111,7 +111,7 @@ namespace SlimDX.Generator
 						var typeElement = child.Element("simple-type-specifier");
 						if (typeElement == null)
 						{
-							typeElement = child.Element("identifier");
+							typeElement = child.Element("identifier") ?? child.XPathSelectElement("type-specifier/simple-type-specifier");
 							nameElement = typeElement.ElementsAfterSelf("identifier").FirstOrDefault();
 						}
 
