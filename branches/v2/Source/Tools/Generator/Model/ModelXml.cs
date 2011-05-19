@@ -51,7 +51,7 @@ namespace SlimDX.Generator
 					definition["key"] = child.Element("identifier").Value;
 
 					var value = child.Element("numeric-literal") ?? child.Element("primary-expression");
-					definition["value"] = string.Join(" ", value.Nodes().Where(x => x is XText));
+					definition["value"] = string.Join(" ", value.DescendantNodes().Where(x => x is XText));
 
 					item["values"].Add(definition);
 				}
