@@ -62,6 +62,11 @@ namespace SlimDX.Generator
 			// find structs and interfaces
 			foreach (var element in root.XPathSelectElements("//class-specifier"))
 			{
+				// Skip unions, they're not first-class types.
+				var key = element.Element("class-key");
+				if (key != null && key.Value == "union")
+					continue;
+
 				var nameElement = element.XPathSelectElement("class-head/identifier");
 				var guidElement = element.XPathSelectElement("class-head/declspec-list/declspec-definition/declspec/string-literal");
 				var parentElement = element.XPathSelectElement("class-head/base-clause/base-specifier/identifier");
@@ -107,12 +112,26 @@ namespace SlimDX.Generator
 
 					foreach (var child in element.Descendants("member-declaration"))
 					{
-						nameElement = child.Element("identifier");
-						var typeElement = child.Element("simple-type-specifier");
-						if (typeElement == null)
+						XElement classKey = child.XPathSelectElement("class-specifier/class-key");
+						XElement typeElement;
+
+						if (classKey != null && classKey.Value == "union")
 						{
-							typeElement = child.Element("identifier") ?? child.XPathSelectElement("type-specifier/simple-type-specifier");
-							nameElement = typeElement.ElementsAfterSelf("identifier").FirstOrDefault();
+							//TODO: Currently processing only the first field; really we need to mark them all
+							//      with field offsets somehow so we can use [FieldOffset] in the managed code.
+							var identifiers = child.XPathSelectElements("class-specifier/member-specification/member-declaration/identifier");
+							typeElement = identifiers.First();
+							nameElement = identifiers.Skip(1).First();
+						}
+						else
+						{
+							nameElement = child.Element("identifier");
+							typeElement = child.Element("simple-type-specifier");
+							if (typeElement == null)
+							{
+								typeElement = child.Element("identifier") ?? child.XPathSelectElement("type-specifier/simple-type-specifier");
+								nameElement = typeElement.ElementsAfterSelf("identifier").FirstOrDefault();
+							}
 						}
 
 						// TODO: handle pointers, arrays, and reference types here
@@ -163,8 +182,9 @@ namespace SlimDX.Generator
 		static JsonObject TransformParameter(XElement element)
 		{
 			var nameElement = element.XPathSelectElement("declarator//identifier") ??
-				element.XPathSelectElement("identifier[2]");
-
+				element.XPathSelectElement("identifier[2]") ??
+				element.XPathSelectElement("direct-declarator/identifier");
+			
 			var typeElement = element.XPathSelectElement("type-specifier/identifier") ??
 				element.XPathSelectElement("type-specifier/simple-type-specifier") ??
 				element.XPathSelectElement("simple-type-specifier") ??
