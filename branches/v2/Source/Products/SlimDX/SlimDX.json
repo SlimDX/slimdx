@@ -5,6 +5,7 @@
 		{ "key": "int", "target": "System.Int32" },
 		{ "key": "INT", "target": "System.Int32" },
 		{ "key": "UINT", "target": "System.Int32" },
+		{ "key": "UINT8", "target": "System.Byte" },
 		{ "key": "DWORD", "target": "System.Int32" },
 		{ "key": "SIZE_T", "target": "System.Int32" },
 		{ "key": "UINT64", "target": "System.UInt64" },
