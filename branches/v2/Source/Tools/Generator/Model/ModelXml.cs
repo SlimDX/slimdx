@@ -38,11 +38,31 @@ namespace SlimDX.Generator
 			api["structures"] = new JsonObject(JsonType.Array);
 			api["enumerations"] = new JsonObject(JsonType.Array);
 
+			// Type definitions are mapped to the original types, effectively ensuring all
+			// type references are to unaliases type names.
+			Dictionary<string, string> typeDefinitions = new Dictionary<string, string>();
+			foreach (var element in root.XPathSelectElements("//storage-class"))
+			{
+				var parent = element.Parent;
+				var identifiers = parent.Elements("identifier");
+				if (identifiers.Count() == 2)
+				{
+					var type = identifiers.First();
+					var alias = identifiers.Skip(1).First();
+					typeDefinitions[alias.Value] = type.Value;
+				}
+			}
+
 			// find enums
 			foreach (var element in root.XPathSelectElements("//enum-specifier"))
 			{
 				var item = new JsonObject();
-				item["key"] = element.Element("identifier").Value;
+				var initialKey = element.Element("identifier").Value;
+				var finalKey = string.Empty;
+				if (!typeDefinitions.TryGetValue(initialKey, out finalKey))
+					finalKey = initialKey;
+
+				item["key"] = finalKey;
 				item["values"] = new JsonObject(JsonType.Array);
 
 				foreach (var child in element.Descendants("enumerator-definition"))
@@ -50,7 +70,7 @@ namespace SlimDX.Generator
 					var definition = new JsonObject();
 					definition["key"] = child.Element("identifier").Value;
 
-					var value = child.Element("numeric-literal") ?? child.Element("primary-expression");
+					var value = child.Element("numeric-literal") ?? child.Element("primary-expression") ?? child.Element("identifier");
 					definition["value"] = string.Join(" ", value.DescendantNodes().Where(x => x is XText));
 
 					item["values"].Add(definition);
@@ -139,8 +159,14 @@ namespace SlimDX.Generator
 							nameElement = child.XPathSelectElement("direct-declarator//identifier") ?? child.XPathSelectElement("declarator//identifier");
 
 						var member = new JsonObject();
+
+						var initialType = typeElement.Value;
+						var finalType = string.Empty;
+						if( !typeDefinitions.TryGetValue(initialType, out finalType))
+							finalType = initialType;
+
 						member["key"] = nameElement.Value;
-						member["type"] = typeElement.Value;
+						member["type"] = finalType;
 
 						item["members"].Add(member);
 					}
@@ -184,7 +210,7 @@ namespace SlimDX.Generator
 			var nameElement = element.XPathSelectElement("declarator//identifier") ??
 				element.XPathSelectElement("identifier[2]") ??
 				element.XPathSelectElement("direct-declarator/identifier");
-			
+
 			var typeElement = element.XPathSelectElement("type-specifier/identifier") ??
 				element.XPathSelectElement("type-specifier/simple-type-specifier") ??
 				element.XPathSelectElement("simple-type-specifier") ??
