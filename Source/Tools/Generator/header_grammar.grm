@@ -324,6 +324,7 @@ Comment Line = '//'
                     | <enumerator-list> ','
 
 <enumerator-definition> ::= <identifier>
+                          | <identifier> '=' <identifier>
                           | <identifier> '=' <constant-expression>
 
 <class-name> ::= <identifier>
