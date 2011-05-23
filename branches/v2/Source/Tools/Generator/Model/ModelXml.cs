@@ -132,6 +132,11 @@ namespace SlimDX.Generator
 
 					foreach (var child in element.Descendants("member-declaration"))
 					{
+						//TODO: Should not skip member functions probably, but they aren't required until we
+						//      need to support interface implementation shims.
+						if(child.Element("function-definition") != null) 
+							continue;
+
 						XElement classKey = child.XPathSelectElement("class-specifier/class-key");
 						XElement typeElement;
 
