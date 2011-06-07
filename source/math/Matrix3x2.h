@@ -79,7 +79,7 @@ namespace SlimDX
 		static void Translation( float x, float y, [Out] Matrix3x2% result );
 
 		static System::Drawing::PointF TransformPoint( Matrix3x2 mat, System::Drawing::PointF point);
-		static void TransformPoint( Matrix3x2% mat, System::Drawing::PointF% point, System::Drawing::PointF% result);
+		static void TransformPoint( Matrix3x2% mat, System::Drawing::PointF% point, [Out] System::Drawing::PointF% result);
 
 		float Determinant();
 		bool Invert();

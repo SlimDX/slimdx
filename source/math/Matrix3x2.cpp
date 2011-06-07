@@ -322,17 +322,17 @@ namespace SlimDX
 		System::Drawing::PointF r;
 
 		r.X = (point.X * mat.M11) + (point.Y * mat.M21) + mat.M31;
-		r.Y = (point.Y * mat.M12) + (point.Y * mat.M22) + mat.M32;
+		r.Y = (point.X * mat.M12) + (point.Y * mat.M22) + mat.M32;
 
 		return r;
 	}
 
-	void Matrix3x2::TransformPoint( Matrix3x2% mat, System::Drawing::PointF% point, System::Drawing::PointF% result)
+	void Matrix3x2::TransformPoint( Matrix3x2% mat, System::Drawing::PointF% point, [Out] System::Drawing::PointF% result)
 	{
 		System::Drawing::PointF r;
 
 		r.X = (point.X * mat.M11) + (point.Y * mat.M21) + mat.M31;
-		r.Y = (point.Y * mat.M12) + (point.Y * mat.M22) + mat.M32;
+		r.Y = (point.X * mat.M12) + (point.Y * mat.M22) + mat.M32;
 
 		result = r;
 	}
