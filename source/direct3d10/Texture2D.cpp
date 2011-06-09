@@ -96,10 +96,15 @@ namespace Direct3D10
 		InternalPointer->GetDesc( &nativeDescription );
 		return Texture2DDescription( nativeDescription );
 	}
-	
+
 	SlimDX::DataRectangle^ Texture2D::Map( int mipSlice, MapMode mode, MapFlags flags )
 	{
-		int subresource = D3D10CalcSubresource( mipSlice, 0, Description.MipLevels );
+		return Map(mipSlice, 0, mode, flags);
+	}
+	
+	SlimDX::DataRectangle^ Texture2D::Map( int mipSlice, int arraySlice, MapMode mode, MapFlags flags )
+	{
+		int subresource = D3D10CalcSubresource( mipSlice, arraySlice, Description.MipLevels );
 		int mipHeight = GetMipSize( mipSlice, Description.Height );
 		
 		D3D10_MAPPED_TEXTURE2D mappedRect;
