@@ -91,10 +91,15 @@ namespace Direct3D10
 		InternalPointer->GetDesc( &nativeDescription );
 		return Texture1DDescription( nativeDescription );
 	}
-	
+
 	SlimDX::DataStream^ Texture1D::Map( int mipSlice, MapMode mode, MapFlags flags )
 	{
-		int subresource = D3D10CalcSubresource( mipSlice, 0, Description.MipLevels );
+		return Map(mipSlice, 0, mode, flags);
+	}
+	
+	SlimDX::DataStream^ Texture1D::Map( int mipSlice, int arraySlice, MapMode mode, MapFlags flags )
+	{
+		int subresource = D3D10CalcSubresource( mipSlice, arraySlice, Description.MipLevels );
 		int mipWidth = GetMipSize( mipSlice, Description.Width );
 		int bufferSize = mipWidth * Utilities::SizeOfFormatElement( static_cast<DXGI_FORMAT>( Description.Format ) );
 		
