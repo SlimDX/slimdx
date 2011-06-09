@@ -132,6 +132,21 @@ namespace DirectInput
 		return EffectInfo( info );
 	}
 
+	int Device::GetDeviceData(array<RawBufferedData>^ data, bool peek)
+	{
+		DWORD length = data->Length;
+		stack_array<DIDEVICEOBJECTDATA> native = stackalloc(DIDEVICEOBJECTDATA, length);
+
+		HRESULT hr = InternalPointer->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), &native[0], &length, peek ? DIGDD_PEEK : 0);
+		if (RECORD_DINPUT(hr).IsFailure)
+			return -1;
+
+		for (DWORD i = 0; i < length; i++)
+			data[i] = RawBufferedData::FromUnmanaged(native[i]);
+
+		return length;
+	}
+
 	Result Device::SendData( array<ObjectData>^ data, bool overlay )
 	{
 		DWORD count = data->Length;
@@ -145,6 +160,18 @@ namespace DirectInput
 
 		HRESULT hr = InternalPointer->SendDeviceData( sizeof( DIDEVICEOBJECTDATA ), &input[0], &count, overlay ? DISDD_CONTINUE : 0 );
 		return RECORD_DINPUT( hr );
+	}
+
+	DeviceObjectInstance Device::GetObjectInfoByOffset( int offset )
+	{
+		DIDEVICEOBJECTINSTANCE di;
+		di.dwSize = sizeof( DIDEVICEOBJECTINSTANCE );
+
+		HRESULT hr = InternalPointer->GetObjectInfo( &di, offset, DIPH_BYOFFSET );
+		if( RECORD_DINPUT( hr ).IsFailure )
+			return DeviceObjectInstance();
+
+		return DeviceObjectInstance( di );
 	}
 
 	DeviceObjectInstance Device::GetObjectInfoByUsage( int usageCode )
