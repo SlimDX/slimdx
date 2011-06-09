@@ -32,6 +32,7 @@
 #include "DeviceImageHeader.h"
 #include "EffectFile.h"
 #include "ObjectData.h"
+#include "RawBufferedData.h"
 
 namespace SlimDX
 {
@@ -106,10 +107,13 @@ namespace SlimDX
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Poll();
 
+			int GetDeviceData(array<RawBufferedData>^ data, bool peek);
+
 			DeviceImageHeader GetDeviceImages();
 			EffectInfo GetEffectInfo( System::Guid guid );
 			Result SendData( array<ObjectData>^ data, bool overlay );
 
+			DeviceObjectInstance GetObjectInfoByOffset(int offset);
 			DeviceObjectInstance GetObjectInfoByUsage( int usageCode );
 			DeviceObjectInstance GetObjectInfoById( int objectId );
 

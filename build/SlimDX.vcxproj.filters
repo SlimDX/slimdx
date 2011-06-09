@@ -2773,6 +2773,9 @@
     <ClCompile Include="..\source\direct3d9\PresentStatistics.cpp">
       <Filter>Direct3D9\SwapChain</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\directinput\RawBufferedData.cpp">
+      <Filter>DirectInput\DeviceInfo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\direct3d10\Direct3D10Exception.h">
@@ -4911,6 +4914,9 @@
     </ClInclude>
     <ClInclude Include="..\source\direct3d9\PresentStatistics.h">
       <Filter>Direct3D9\SwapChain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\directinput\RawBufferedData.h">
+      <Filter>DirectInput\DeviceInfo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
