@@ -36,7 +36,7 @@ namespace DirectInput
 		instanceGuid = Utilities::ConvertNativeGuid( deviceInstance.guidInstance );
 		productGuid = Utilities::ConvertNativeGuid( deviceInstance.guidProduct );
 		ffDriverGuid = Utilities::ConvertNativeGuid( deviceInstance.guidFFDriver );
-		type = static_cast<DeviceType>( deviceInstance.dwDevType );
+		type = static_cast<DeviceType>( deviceInstance.dwDevType & 0xFF );
 		subType = deviceInstance.dwDevType >> 8;
 		usage = static_cast<SlimDX::Multimedia::UsageId>( deviceInstance.wUsage );
 		usagePage = static_cast<SlimDX::Multimedia::UsagePage>( deviceInstance.wUsagePage );
