@@ -59,6 +59,14 @@ namespace SlimDX
 			literal int MultisampleCountMaximum = D3D11_MAX_MULTISAMPLE_SAMPLE_COUNT;
 
 			/// <summary>
+			/// Gets the parent factory associated with the device.
+			/// </summary>
+			property SlimDX::DXGI::Factory^ Factory
+			{
+				SlimDX::DXGI::Factory^ get();
+			}
+
+			/// <summary>
 			/// Gets the flags used to create the device.
 			/// </summary>
 			property DeviceCreationFlags CreationFlags

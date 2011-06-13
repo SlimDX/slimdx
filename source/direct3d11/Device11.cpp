@@ -23,6 +23,8 @@
 
 #include "../stack_array.h"
 
+#include "../dxgi/Factory1.h"
+
 #include "Direct3D11Exception.h"
 
 #include "DeviceContext11.h"
@@ -93,6 +95,40 @@ namespace Direct3D11
 
 		context->Release();
 		Construct( device );
+	}
+
+	SlimDX::DXGI::Factory^ Device::Factory::get()
+	{
+		IDXGIDevice *device = 0;
+		if (RECORD_D3D11(InternalPointer->QueryInterface(IID_IDXGIDevice, reinterpret_cast<void**>(&device))).IsFailure)
+			return nullptr;
+
+		IDXGIAdapter *adapter = 0;
+		HRESULT hr = device->GetAdapter(&adapter);
+		if (FAILED(hr))
+			device->Release();
+
+		if (RECORD_D3D11(hr).IsFailure)
+			return nullptr;
+
+		SlimDX::DXGI::Factory^ result = nullptr;
+
+		IDXGIFactory1 *factory1;
+		hr = adapter->GetParent(IID_IDXGIFactory1, reinterpret_cast<void**>(&factory1));
+		if (SUCCEEDED(hr))
+			result = SlimDX::DXGI::Factory1::FromPointer(factory1, this);
+		else
+		{
+			IDXGIFactory *factory;
+			hr = adapter->GetParent(IID_IDXGIFactory, reinterpret_cast<void**>(&factory));
+			if (SUCCEEDED(hr))
+				result = SlimDX::DXGI::Factory::FromPointer(factory, this);
+		}
+
+		adapter->Release();
+		device->Release();
+
+		return result;
 	}
 
 	DeviceCreationFlags Device::CreationFlags::get()

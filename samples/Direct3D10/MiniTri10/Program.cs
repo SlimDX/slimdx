@@ -52,8 +52,7 @@ namespace MiniTri
             Device.CreateWithSwapChain(null, DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
 
             //Stops Alt+enter from causing fullscreen skrewiness.
-            Factory factory = swapChain.GetParent<Factory>();
-            factory.SetWindowAssociation(form.Handle, WindowAssociationFlags.IgnoreAll);
+            device.Factory.SetWindowAssociation(form.Handle, WindowAssociationFlags.IgnoreAll);
 
             Texture2D backBuffer = Texture2D.FromSwapChain<Texture2D>(swapChain, 0);
             var renderView = new RenderTargetView(device, backBuffer);
