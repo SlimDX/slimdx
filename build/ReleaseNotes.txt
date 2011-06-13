@@ -1,77 +1,15 @@
-General
-	* Added DebugName properties to appropriate D3D9, 10, 11, and DXGI objects. This property allows a friendly name to be attached to the object, 
-		which can be used in debug messages and in the PIX object table.
-
 Samples
-	* Fixed the MiniTri10 sample to not use the console subsystem.
-	* Changed the sample framework to check for fullscreen DXGI swap chain before disposing.
-	* Removed unused testing code from SimpleModel10.
-	* Fixed configuration issues in MiniTri11.
-	* Fixed Device.Clear depth value in WPF control.
-	* Added BasicComputeShader sample for D3D11.
+	* Added Conway's Game of Life sample using compute shaders.
 
 Math
-	* Added an overload of Ray.Intersects that returns the barycentric hit coordinates.
-	* Moved the Direct2D Matrix3x2 type into the main math library.
-	* Added several helper methods to the Matrix3x2 type.
-	* Fixed a bug in the Matrix.Billboard methods.
-
-Direct2D
-	* Added constructors for Bitmap that allow construction via DXGI shared surfaces.
-
-Direct3D 9
-	* Fixed a memory in Utilities.ReadRange that affected many BaseMesh methods.
-	* Fixed a typo in the caps structure that filled VolumeTextureFilterCaps with the wrong value.
-	* Fixed memory issue in Include interface.
-	* Changed AnimationOutput to be a reference type, and pinned the memory to receive animation updates.
-	* Added an overload to AnimationController.RegisterAnimationOutput to take a Frame instead.
-	* Fixed overload defaults for texture creation functions when using D3D9Ex.
-	* Changed BaseMesh index buffer and vertex buffer to be ancillary objects. They no longer require explicit cleanup.
-	* Added SwapChainEx class.	
-
-Direct3D 10
-	* Added missing creation method overloads to Effect.
-	* Added missing Get/SetRawValue methods to EffectVariable.
-	* Added GetInputLayout to the InputAssember device stage.
-	* Added GetPrimitiveTopology to the InputAssember device stage.
-	* Added GetIndexBuffer to the InputAssember device stage.
-	* Added GetVertexBuffers to the InputAssember device stage.
-	* Added ResourceOptionFlags.GdiCompatible and ResourceOptionFlags.KeyedMutex.
-	* Added Resource.SaveTextureToFile, which allows for saving a texture without knowing its concrete type.
-	* Fixed a COM reference leak in Device.OpenSharedResource.
-	* Fixed a typo in the StateBlock constructor that prevented it from being used.
-
-Direct3D 11
-	* Fixed a COM reference leak in Device.OpenSharedResource.
-	* Added IsDataAvailable to the DeviceContext interface.
-	* Added Resource.SaveTextureToFile, which allows for saving a texture without knowing its concrete type.
+	* Fixed a bug in Matrix3x2.TransformPoint.
 
 DXGI
-	* Changed SwapChain.Dispose to throw if the adapter is in fullscreen mode. This prevents a crash inside DXGI.
-	* Added IsFullScreen property to SwapChain as a convenient alternative to GetFullScreenState.
-	* Fixed a null reference check in Output.GetClosestMatchingMode.
-	* Added Surface1 support.
-	* Fixed DXGI constructors that acted like QueryInterface to handle creating objects that already exist in the object table.
-	
-D3DCompiler
-	* Fixed memory issue in Include interface.
-	* Added overloads to ShaderBytecode.Compile to take source name for error reporting purposes.
-	* Fixed the Strip function to return the stripped bytecode.
-	
-DirectWrite
-	* Changed TextLayout to inherit from TextFormat.
-	
+	* Fixed a bug that caused certain types like Factory1 to be unable to be a target of GetParent<T>.
+
+Direct3D 10
+	* Added an overload to Texture.Map to take an array slice index.
+
 DirectInput
-	* Fixed a typo in Device.GetObjectInfoById that caused it to return info by usage instead.
-	* Changed ObjectProperties.LogicalRange and ObjectProperties.PhysicalRange to return actual ranges instead of integers.
-
-Multimedia
-	* Added XWMAStream class for loading xWMA files.
-	
-XAPO
-	* Fixed the flow of calls to the XAPO interfaces and their implementations.
-	* Fixed a memory bug in the XAPO base class constructors.
-
-Windows
-	* Added functionality to the RenderForm class to add sizing and monitor change events.
-
+	* Changed DirectInput DeviceInstance to properly mask out the DeviceType flag.
+	* Added missing DirectInput buffered data functionality.
