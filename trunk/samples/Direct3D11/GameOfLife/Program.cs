@@ -51,8 +51,7 @@ namespace MiniTri
             SwapChain swapChain;
             Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.Debug, desc, out device, out swapChain);
 
-            Factory factory = swapChain.GetParent<Factory>();
-            factory.SetWindowAssociation(form.Handle, WindowAssociationFlags.IgnoreAll);
+            device.Factory.SetWindowAssociation(form.Handle, WindowAssociationFlags.IgnoreAll);
 
             Texture2D backBuffer = Texture2D.FromSwapChain<Texture2D>(swapChain, 0);
             var renderView = new RenderTargetView(device, backBuffer);

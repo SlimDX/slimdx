@@ -87,6 +87,14 @@ namespace SlimDX
 			/// The maximum number of multisample quality levels supported.
 			/// </summary>
 			literal int MultisampleCountMaximum = D3D10_MAX_MULTISAMPLE_SAMPLE_COUNT;
+
+			/// <summary>
+			/// Gets the parent factory associated with the device.
+			/// </summary>
+			property SlimDX::DXGI::Factory^ Factory
+			{
+				SlimDX::DXGI::Factory^ get();
+			}
 			
 			/// <summary>
 			/// Gets the device's input assembler interface.
