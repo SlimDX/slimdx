@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2011 SlimDX Group
 * 
@@ -20,15 +19,14 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <windows.h>
-#include <vcclr.h>
+#include "stdafx.h"
 
 #include "../InternalHelpers.h"
 #include "../Utilities.h"
 #include "../DataStream.h"
 
 #include "WaveStream.h"
+#include "AdpcmWaveFormat.h"
 
 using namespace System;
 using namespace System::IO;
@@ -120,28 +118,59 @@ namespace Multimedia
 		if( mmioRead( handle, reinterpret_cast<HPSTR>( &pcmFormat ), sizeof( pcmFormat ) ) != sizeof( pcmFormat ) )
 			throw gcnew InvalidDataException( "Invalid wave file." );
 
-		if( pcmFormat.wf.wFormatTag == WAVE_FORMAT_PCM )
+		switch (pcmFormat.wf.wFormatTag)
 		{
-			auto_array<WAVEFORMATEX> tempFormat( reinterpret_cast<WAVEFORMATEX*>( new BYTE[sizeof( WAVEFORMATEX )] ) );
-			memcpy( tempFormat.get(), &pcmFormat, sizeof( pcmFormat ) );
-			tempFormat->cbSize = 0;
+		case WAVE_FORMAT_PCM:
+		case WAVE_FORMAT_IEEE_FLOAT:
+			{
+				auto_array<WAVEFORMATEX> tempFormat( reinterpret_cast<WAVEFORMATEX*>( new BYTE[sizeof( WAVEFORMATEX )] ) );
+				memcpy( tempFormat.get(), &pcmFormat, sizeof( pcmFormat ) );
+				tempFormat->cbSize = 0;
 
-			format = WaveFormat::FromUnmanaged( *tempFormat.get() );
-		}
-		else
-		{
-			WORD extraBytes = 0;
-			if( mmioRead( handle, reinterpret_cast<CHAR*>( &extraBytes ), sizeof( WORD ) ) != sizeof( WORD ) )
-				throw gcnew InvalidDataException( "Invalid wave file." );
+				format = WaveFormat::FromUnmanaged( *tempFormat.get() );
+				break;
+			}
 
-			auto_array<WAVEFORMATEX> tempFormat( reinterpret_cast<WAVEFORMATEX*>( new BYTE[sizeof( WAVEFORMATEX ) + extraBytes] ) );
-			memcpy( tempFormat.get(), &pcmFormat, sizeof( pcmFormat ) );
-			tempFormat->cbSize = extraBytes;
+		case WAVE_FORMAT_EXTENSIBLE:
+			{
+				WORD extraBytes = 0;
+				if( mmioRead( handle, reinterpret_cast<CHAR*>( &extraBytes ), sizeof( WORD ) ) != sizeof( WORD ) )
+					throw gcnew InvalidDataException( "Invalid wave file." );
 
-			if( mmioRead( handle, reinterpret_cast<CHAR*>( reinterpret_cast<BYTE*>( &tempFormat->cbSize ) + sizeof( WORD ) ), extraBytes ) != extraBytes )
-				throw gcnew InvalidDataException( "Invalid wave file." );
+				auto_array<WAVEFORMATEX> tempFormat( reinterpret_cast<WAVEFORMATEX*>( new BYTE[sizeof( WAVEFORMATEX ) + extraBytes] ) );
+				memcpy( tempFormat.get(), &pcmFormat, sizeof( pcmFormat ) );
+				tempFormat->cbSize = extraBytes;
 
-			format = WaveFormatExtensible::FromBase( tempFormat.get() );
+				if( mmioRead( handle, reinterpret_cast<CHAR*>( reinterpret_cast<BYTE*>( &tempFormat->cbSize ) + sizeof( WORD ) ), extraBytes ) != extraBytes )
+					throw gcnew InvalidDataException( "Invalid wave file." );
+
+				format = WaveFormatExtensible::FromBase( tempFormat.get() );
+				break;
+			}
+
+		case WAVE_FORMAT_ADPCM:
+			{
+				WORD extraBytes = 0;
+				if( mmioRead( handle, reinterpret_cast<CHAR*>( &extraBytes ), sizeof( WORD ) ) != sizeof( WORD ) )
+					throw gcnew InvalidDataException( "Invalid wave file." );
+
+				auto_array<WAVEFORMATEX> tempFormat( reinterpret_cast<WAVEFORMATEX*>( new BYTE[sizeof( WAVEFORMATEX ) + extraBytes] ) );
+				memcpy( tempFormat.get(), &pcmFormat, sizeof( pcmFormat ) );
+				tempFormat->cbSize = extraBytes;
+
+				if( mmioRead( handle, reinterpret_cast<CHAR*>( reinterpret_cast<BYTE*>( &tempFormat->cbSize ) + sizeof( WORD ) ), extraBytes ) != extraBytes )
+					throw gcnew InvalidDataException( "Invalid wave file." );
+
+				format = AdpcmWaveFormat::FromBase( tempFormat.get() );
+				break;
+			}
+
+		case WAVE_FORMAT_WMAUDIO2:
+		case WAVE_FORMAT_WMAUDIO3:
+			throw gcnew InvalidDataException("WaveStream does not support xWMA streams. Use the XWMAStream instead for this format.");
+
+		default:
+			throw gcnew InvalidDataException("Unknown or unsupported wave format.");
 		}
 
 		if( mmioAscend( handle, &chunk, 0 ) != 0 )

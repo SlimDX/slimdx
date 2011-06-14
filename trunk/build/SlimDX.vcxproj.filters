@@ -2776,6 +2776,9 @@
     <ClCompile Include="..\source\directinput\RawBufferedData.cpp">
       <Filter>DirectInput\DeviceInfo</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\multimedia\AdpcmWaveFormat.cpp">
+      <Filter>Multimedia\WaveFormat</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\direct3d10\Direct3D10Exception.h">
@@ -4917,6 +4920,9 @@
     </ClInclude>
     <ClInclude Include="..\source\directinput\RawBufferedData.h">
       <Filter>DirectInput\DeviceInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\multimedia\AdpcmWaveFormat.h">
+      <Filter>Multimedia\WaveFormat</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

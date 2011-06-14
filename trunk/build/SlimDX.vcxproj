@@ -761,6 +761,7 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClCompile Include="..\source\direct3d9\PresentStatistics.cpp" />
     <ClCompile Include="..\source\direct3d9\SwapChainEx.cpp" />
     <ClCompile Include="..\source\directinput\RawBufferedData.cpp" />
+    <ClCompile Include="..\source\multimedia\AdpcmWaveFormat.cpp" />
     <ClCompile Include="..\source\multimedia\XWMAStream.cpp" />
     <ClCompile Include="..\source\ObjectTable.cpp" />
     <ClCompile Include="..\source\Result.cpp" />
@@ -1444,6 +1445,7 @@ sn -R $(TargetPath) D:\slimdxKey.snk
     <ClInclude Include="..\source\directinput\RawBufferedData.h" />
     <ClInclude Include="..\source\Enums.h" />
     <ClInclude Include="..\source\InternalHelpers.h" />
+    <ClInclude Include="..\source\multimedia\AdpcmWaveFormat.h" />
     <ClInclude Include="..\source\multimedia\XWMAStream.h" />
     <ClInclude Include="..\source\ObjectTable.h" />
     <ClInclude Include="..\source\Result.h" />
