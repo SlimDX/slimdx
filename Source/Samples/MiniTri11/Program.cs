@@ -58,7 +58,7 @@ namespace MiniTri11
 					ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER.DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED,
 					Width = form.ClientSize.Width
 				},
-				BufferUsage = DXGI_USAGE.DXGI_USAGE_RENDER_TARGET_OUTPUT,
+				BufferUsage = (int)DXGI_USAGE.DXGI_USAGE_RENDER_TARGET_OUTPUT,
 				Flags = 0,
 				OutputWindow = form.Handle,
 				SampleDesc = new DXGI_SAMPLE_DESC
