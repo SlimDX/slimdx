@@ -49,6 +49,11 @@ namespace RawInput
 
 	void Device::RegisterDevice( SlimDX::Multimedia::UsagePage usagePage, SlimDX::Multimedia::UsageId usageId, DeviceFlags flags, IntPtr target )
 	{
+		RegisterDevice(usagePage, usageId, flags, target, true);
+	}
+
+	void Device::RegisterDevice( SlimDX::Multimedia::UsagePage usagePage, SlimDX::Multimedia::UsageId usageId, DeviceFlags flags, IntPtr target, bool addThreadFilter )
+	{
 		RAWINPUTDEVICE device;
 		device.usUsagePage = static_cast<USHORT>( usagePage );
 		device.usUsage = static_cast<USHORT>( usageId );
@@ -58,11 +63,16 @@ namespace RawInput
 		if( RegisterRawInputDevices( &device, 1, sizeof(RAWINPUTDEVICE) ) <= 0 )
 			throw gcnew Win32Exception();
 
-		if( filter == nullptr )
+		if( filter == nullptr && addThreadFilter )
 		{
 			filter = gcnew InputMessageFilter();
 			Application::AddMessageFilter( filter );
 		}
+	}
+
+	void Device::HandleMessage( IntPtr message )
+	{
+		OnWmInput(reinterpret_cast<HRAWINPUT>(message.ToPointer()));
 	}
 
 	void Device::OnWmInput( HRAWINPUT handle )
