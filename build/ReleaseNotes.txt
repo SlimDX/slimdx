@@ -14,6 +14,12 @@ Direct3D 10
 Direct3D 11
 	* Added a Factory property to the Device to make it easy to get the associated factory.
 
+Multimedia
+	* Extended the WaveStream class to support ADPCM formats.
+
 DirectInput
 	* Changed DirectInput DeviceInstance to properly mask out the DeviceType flag.
 	* Added missing DirectInput buffered data functionality.
+
+RawInput
+	* Added support for custom message handling. Allows the use of WPF and other non-Winforms frameworks.
