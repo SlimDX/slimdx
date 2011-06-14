@@ -183,14 +183,17 @@ namespace Windows
 						OnResumeRendering(EventArgs::Empty);
 
 					minimized = false;
-					maximized = false;
 
-					if (!sizeMove && Size != cachedSize)
+					if (!sizeMove && (Size != cachedSize || maximized))
 					{
+						maximized = false;
+
 						OnUserResized(EventArgs::Empty);
 						UpdateScreen();
 						cachedSize = Size;
 					}
+
+					maximized = false;
 				}
 			}
 		}
