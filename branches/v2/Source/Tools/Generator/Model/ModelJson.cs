@@ -21,7 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Json;
+using Newtonsoft.Json.Linq;
 
 namespace SlimDX.Generator
 {
@@ -29,7 +29,7 @@ namespace SlimDX.Generator
 	{
 		#region Interface
 
-		public static ApiModel Parse(JsonObject root, IEnumerable<string> searchPaths)
+		public static ApiModel Parse(JObject root, IEnumerable<string> searchPaths)
 		{
 			var name = (string)root["name"];
 			var api = new ApiModel(name, ParseDependencies(root, searchPaths));
@@ -61,11 +61,11 @@ namespace SlimDX.Generator
 		/// <param name="root">The root of the API JSON tree.</param>
 		/// <param name="searchPaths">The set of directories to search when resolving relative file references.</param>
 		/// <returns>A list of API models representing dependencies.</returns>
-		static List<ApiModel> ParseDependencies(JsonObject root, IEnumerable<string> searchPaths)
+		static List<ApiModel> ParseDependencies(JObject root, IEnumerable<string> searchPaths)
 		{
 			var results = new List<ApiModel>();
 			var processed = new HashSet<string>();
-			JsonObject dependencies;
+			JToken dependencies;
 			if (root.TryGetValue("dependencies", out dependencies))
 			{
 				foreach (var dependency in dependencies)
@@ -79,7 +79,7 @@ namespace SlimDX.Generator
 						var path = Path.Combine(searchPath, file);
 						if (File.Exists(path))
 						{
-							var json = JsonObject.FromJson(File.ReadAllText(path));
+							var json = JObject.Parse(File.ReadAllText(path));
 							results.Add(ModelJson.Parse(json, searchPaths));
 							break;
 						}
@@ -95,10 +95,10 @@ namespace SlimDX.Generator
 		/// </summary>
 		/// <param name="root">The root of the API JSON tree.</param>
 		/// <param name="api">The API model being constructed.</param>
-		static void ParseTranslations(JsonObject root, ApiModel api)
+		static void ParseTranslations(JObject root, ApiModel api)
 		{
 			var results = new List<TranslationModel>();
-			JsonObject items;
+			JToken items;
 			if (root.TryGetValue("translations", out items))
 			{
 				foreach (var item in items)
@@ -115,16 +115,16 @@ namespace SlimDX.Generator
 		/// </summary>
 		/// <param name="root">The root of the API JSON tree.</param>
 		/// <param name="api">The API model being constructed.</param>
-		static void ParseEnumerations(JsonObject root, ApiModel api)
+		static void ParseEnumerations(JObject root, ApiModel api)
 		{
-			JsonObject items;
+            JToken items;
 			if (root.TryGetValue("enumerations", out items))
 			{
 				foreach (var item in items)
 				{
 					var key = (string)item["key"];
 					var model = api.AddEnumeration(key);
-					foreach (var value in ParseEnumerationValues(item))
+					foreach (var value in ParseEnumerationValues(item as JObject))
 						model.AddValue(value);
 				}
 			}
@@ -135,9 +135,9 @@ namespace SlimDX.Generator
 		/// </summary>
 		/// <param name="root">The root of the API JSON tree.</param>
 		/// <param name="api">The API model being constructed.</param>
-		static void ParseFunctions(JsonObject root, ApiModel api)
+		static void ParseFunctions(JObject root, ApiModel api)
 		{
-			JsonObject items;
+            JToken items;
 			if (root.TryGetValue("functions", out items))
 			{
 				foreach (var item in items)
@@ -145,7 +145,7 @@ namespace SlimDX.Generator
 					var key = (string)item["key"];
 					var type = api.FindType((string)item["type"]);
 					var model = api.AddFunction(key, type);
-					foreach (var parameter in ParseFunctionParameters(item, api))
+					foreach (var parameter in ParseFunctionParameters(item as JObject, api))
 						model.AddParameter(parameter);
 				}
 			}
@@ -157,11 +157,11 @@ namespace SlimDX.Generator
 		/// <param name="root">The root of the JSON tree for the enumeration.</param>
 		/// <param name="api">The API model being constructed.</param>
 		/// <returns>A list of enumeration value models.</returns>
-		static IEnumerable<EnumerationValueModel> ParseEnumerationValues(JsonObject root)
+		static IEnumerable<EnumerationValueModel> ParseEnumerationValues(JObject root)
 		{
 			var results = new List<EnumerationValueModel>();
 
-			JsonObject items;
+            JToken items;
 			if (root.TryGetValue("values", out items))
 			{
 				foreach (var item in items)
@@ -177,10 +177,11 @@ namespace SlimDX.Generator
 		/// <param name="root">The root of the JSON tree for the structure.</param>
 		/// <param name="api">The API model being constructed.</param>
 		/// <returns>A list of structure member models.</returns>
-		static List<StructureMemberModel> ParseStructureMembers(JsonObject root, ApiModel api)
+		static List<StructureMemberModel> ParseStructureMembers(JObject root, ApiModel api)
 		{
 			var results = new List<StructureMemberModel>();
-			JsonObject items;
+
+            JToken items;
 			if (root.TryGetValue("members", out items))
 			{
 				foreach (var item in items)
@@ -200,20 +201,20 @@ namespace SlimDX.Generator
 		/// <param name="root">The root of the JSON tree for the interface.</param>
 		/// <param name="api">The API model being constructed.</param>
 		/// <returns>A list of interface method models.</returns>
-		static List<MethodModel> ParseInterfaceMethods(JsonObject root, ApiModel api)
+		static List<MethodModel> ParseInterfaceMethods(JObject root, ApiModel api)
 		{
 			var results = new List<MethodModel>();
 
-			JsonObject items;
+            JToken items;
 			if (root.TryGetValue("methods", out items))
 			{
 				foreach (var item in items)
 				{
 					var key = (string)item["key"];
 					var type = api.FindType((string)item["type"]);
-					var index = (int)item["index"];
+					var index = int.Parse(item["index"].Value<string>());
 					var model = new MethodModel(api, key, type, index);
-					foreach (var parameter in ParseFunctionParameters(item, api))
+                    foreach (var parameter in ParseFunctionParameters(item as JObject, api))
 						model.AddParameter(parameter);
 
 					results.Add(model);
@@ -229,23 +230,23 @@ namespace SlimDX.Generator
 		/// <param name="root">The root of the JSON tree for the method.</param>
 		/// <param name="api">The API model being constructed.</param>
 		/// <returns>A list of method parameter models.</returns>
-		static IEnumerable<ParameterModel> ParseFunctionParameters(JsonObject root, ApiModel api)
+		static IEnumerable<ParameterModel> ParseFunctionParameters(JObject root, ApiModel api)
 		{
 			var results = new List<ParameterModel>();
 
-			JsonObject items;
+            JToken items;
 			if (root.TryGetValue("parameters", out items))
 			{
 				foreach (var item in items)
 				{
 					var key = (string)item["key"];
 					var type = api.FindType((string)item["type"]);
-					var flags = ParseInterfaceMethodParameterFlags(item);
-					JsonObject indirection;
-					item.TryGetValue("indirection", out indirection);
+                    var flags = ParseInterfaceMethodParameterFlags(item as JObject);
+                    JToken indirection;
+                    (item as JObject).TryGetValue("indirection", out indirection);
 
-					JsonObject length;
-					item.TryGetValue("size", out length);
+                    JToken length;
+                    (item as JObject).TryGetValue("size", out length);
 
 					results.Add(new ParameterModel(
 						key,
@@ -265,11 +266,11 @@ namespace SlimDX.Generator
 		/// </summary>
 		/// <param name="root">The root of the JSON tree for the parameter.</param>
 		/// <returns>The parameter flags.</returns>
-		static ParameterModelFlags ParseInterfaceMethodParameterFlags(JsonObject root)
+		static ParameterModelFlags ParseInterfaceMethodParameterFlags(JObject root)
 		{
 			var results = ParameterModelFlags.None;
 
-			JsonObject flags;
+            JToken flags;
 			if (root.TryGetValue("flags", out flags))
 			{
 				foreach (var flag in flags)
@@ -297,9 +298,9 @@ namespace SlimDX.Generator
 		/// </summary>
 		/// <param name="root">The root of the API JSON tree.</param>
 		/// <param name="api">The API model being constructed.</param>
-		static void DeclareStructures(JsonObject root, ApiModel api)
+		static void DeclareStructures(JObject root, ApiModel api)
 		{
-			JsonObject items;
+            JToken items;
 			if (root.TryGetValue("structures", out items))
 			{
 				foreach (var item in items)
@@ -312,16 +313,16 @@ namespace SlimDX.Generator
 		/// </summary>
 		/// <param name="root">The root of the JSON tree for the API.</param>
 		/// <param name="api">The API model being constructed.</param>
-		static void DefineStructures(JsonObject root, ApiModel api)
+		static void DefineStructures(JObject root, ApiModel api)
 		{
-			JsonObject items;
+            JToken items;
 			if (root.TryGetValue("structures", out items))
 			{
 				foreach (var item in items)
 				{
 					var key = (string)item["key"];
 					var model = (StructureModel)api.FindType(key);
-					foreach (var value in ParseStructureMembers(item, api))
+					foreach (var value in ParseStructureMembers(item as JObject, api))
 						model.AddMember(value);
 				}
 			}
@@ -332,9 +333,9 @@ namespace SlimDX.Generator
 		/// </summary>
 		/// <param name="root">The root of the API JSON tree.</param>
 		/// <param name="api">The API model being constructed.</param>
-		static void DeclareInterfaces(JsonObject root, ApiModel api)
+		static void DeclareInterfaces(JObject root, ApiModel api)
 		{
-			JsonObject items;
+            JToken items;
 			if (root.TryGetValue("interfaces", out items))
 			{
 				foreach (var item in items)
@@ -352,9 +353,9 @@ namespace SlimDX.Generator
 		/// </summary>
 		/// <param name="root">The root of the JSON tree for the API.</param>
 		/// <param name="api">The API model being constructed.</param>
-		static void DefineInterfaces(JsonObject root, ApiModel api)
+		static void DefineInterfaces(JObject root, ApiModel api)
 		{
-			JsonObject items;
+            JToken items;
 			if (root.TryGetValue("interfaces", out items))
 			{
 				foreach (var item in items)
@@ -362,11 +363,11 @@ namespace SlimDX.Generator
 					var key = (string)item["key"];
 					var model = (InterfaceModel)api.FindType(key);
 
-					JsonObject parent = null;
-					if (item.TryGetValue("type", out parent))
+					JToken parent = null;
+					if ((item as JObject).TryGetValue("type", out parent))
 						model.Parent = api.FindType((string)parent);
 
-					foreach (var method in ParseInterfaceMethods(item, api))
+					foreach (var method in ParseInterfaceMethods(item as JObject, api))
 						model.AddMethod(method);
 				}
 			}

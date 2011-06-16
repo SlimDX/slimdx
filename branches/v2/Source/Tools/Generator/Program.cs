@@ -21,8 +21,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Json;
 using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace SlimDX.Generator
 {
@@ -45,9 +45,9 @@ namespace SlimDX.Generator
 			var json = RunParser(configuration);
 			foreach (var layer in configuration.GetOptions("JsonLayers"))
 			{
-				JsonObject current = null;
+				JObject current = null;
 				var path = layer.RootPath(configuration.ConfigurationDirectory);
-				current = JsonObject.FromJson(File.ReadAllText(path));
+                current = JObject.Parse(File.ReadAllText(path));
 				searchPaths.Add(Path.GetDirectoryName(Path.GetFullPath(path)));
 
 				// combine the current layer with the base
@@ -56,16 +56,16 @@ namespace SlimDX.Generator
 				else
 					CompositingEngine.Compose(json, current);
 			}
-
+            
 			var generatedModelFile = configuration.GetOption("Options", "GeneratedModelPath").RootPath(configuration.ConfigurationDirectory);
-			File.WriteAllText(generatedModelFile, json.ToNiceJson());
+			File.WriteAllText(generatedModelFile, json.ToString());
 
 			// run the generator on the composed Json model
 			RunGenerator(json, configuration, searchPaths);
 		}
 
 
-		static JsonObject RunParser(ConfigFile configuration)
+		static JObject RunParser(ConfigFile configuration)
 		{
 			if (configuration.GetOption("Options", "SkipParse") == "yes")
 				return null;
@@ -93,12 +93,12 @@ namespace SlimDX.Generator
 			var json = ModelXml.Transform(root);
 
 			// add a dependency to the base SlimDX.json file
-			json.Add("dependencies", new JsonObject(new JsonObject[] { "../SlimDX/SlimDX.json" }));
+            json.Add(new JProperty("dependencies", new JArray(new JValue("../SlimDX/SlimDX.json"))));
 
 			return json;
 		}
 
-		static void RunGenerator(JsonObject json, ConfigFile configuration, IEnumerable<string> searchPaths)
+		static void RunGenerator(JObject json, ConfigFile configuration, IEnumerable<string> searchPaths)
 		{
 			var api = ModelJson.Parse(json, searchPaths);
 

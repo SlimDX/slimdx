@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Json;
+﻿using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace SlimDX.Generator
 {
 	static class CompositingEngine
 	{
-		public static void Compose(JsonObject baseLayer, JsonObject nextLayer)
+        public static void Compose(JObject baseLayer, JObject nextLayer)
 		{
 			// Top-level scalar properties are always replaced.
-			foreach (var key in nextLayer.Keys)
+			foreach (var pair in nextLayer)
 			{
-				JsonObject value = nextLayer[key];
-				if (value.JsonType != JsonType.Array)
-					baseLayer[key] = value;
+                if (pair.Value.Type != JTokenType.Array)
+					baseLayer[pair.Key] = pair.Value;
 			}
 
 			ComposeArrays(baseLayer, nextLayer, "dependencies");
@@ -27,130 +23,145 @@ namespace SlimDX.Generator
             ComposeFunctions(baseLayer, nextLayer);
 		}
 
-		static void ComposeEnumerations(JsonObject baseLayer, JsonObject newLayer)
+		static void ComposeEnumerations(JObject baseLayer, JObject newLayer)
 		{
-			if (!GetItemArrays(ref baseLayer, ref newLayer, "enumerations"))
+            JArray baseArray;
+            JArray newArray;
+			if (!GetItemArrays("enumerations", baseLayer, newLayer, out baseArray, out newArray))
 				return;
 
-			foreach (var item in newLayer)
+            foreach (var item in newArray)
 			{
-				var flags = GetFlags(item);
-				var oldItem = FindObjectByKey(baseLayer, (string)item["key"]);
-				if ((flags == CompositionFlags.Replace || flags == CompositionFlags.Remove || flags == CompositionFlags.None) && oldItem != null)
-					baseLayer.Remove(oldItem);
+				var flags = GetFlags(item as JObject);
+                var oldItem = FindObjectByKey(baseArray, item.Value<string>("key"));
+                if ((flags == CompositionFlags.Replace || flags == CompositionFlags.Remove || flags == CompositionFlags.None) && oldItem != null)
+                    oldItem.Remove();
 
 				if (flags == CompositionFlags.Add || flags == CompositionFlags.None || flags == CompositionFlags.Replace)
-					baseLayer.Add(item);
+                    baseArray.Add(item);
 			}
 		}
 
-        static void ComposeStructures(JsonObject baseLayer, JsonObject newLayer)
+        static void ComposeStructures(JObject baseLayer, JObject newLayer)
         {
-            if (!GetItemArrays(ref baseLayer, ref newLayer, "structures"))
+            JArray baseArray;
+            JArray newArray;
+            if (!GetItemArrays("structures", baseLayer, newLayer, out baseArray, out newArray))
                 return;
 
-            foreach (var item in newLayer)
+            foreach (var item in newArray)
             {
-                var flags = GetFlags(item);
-                var oldItem = FindObjectByKey(baseLayer, (string)item["key"]);
+                var flags = GetFlags(item as JObject);
+                var oldItem = FindObjectByKey(baseArray, item.Value<string>("key"));
                 if ((flags == CompositionFlags.Replace || flags == CompositionFlags.Remove || flags == CompositionFlags.None) && oldItem != null)
-                    baseLayer.Remove(oldItem);
+                    oldItem.Remove();
 
                 if (flags == CompositionFlags.Add || flags == CompositionFlags.None || flags == CompositionFlags.Replace)
-                    baseLayer.Add(item);
+                    baseArray.Add(item);
             }
         }
 
-        static void ComposeInterfaces(JsonObject baseLayer, JsonObject newLayer)
+        static void ComposeInterfaces(JObject baseLayer, JObject newLayer)
         {
-            if (!GetItemArrays(ref baseLayer, ref newLayer, "interfaces"))
+            JArray baseArray;
+            JArray newArray;
+            if (!GetItemArrays("interfaces", baseLayer, newLayer, out baseArray, out newArray))
                 return;
 
-            foreach (var item in newLayer)
+            foreach (var item in newArray)
             {
-                var flags = GetFlags(item);
-                var oldItem = FindObjectByKey(baseLayer, (string)item["key"]);
+                var flags = GetFlags(item as JObject);
+                var oldItem = FindObjectByKey(baseArray, item.Value<string>("key"));
                 if ((flags == CompositionFlags.Replace || flags == CompositionFlags.Remove || flags == CompositionFlags.None) && oldItem != null)
-                    baseLayer.Remove(oldItem);
+                    oldItem.Remove();
 
                 if (flags == CompositionFlags.Add || flags == CompositionFlags.None || flags == CompositionFlags.Replace)
-                    baseLayer.Add(item);
+                    baseArray.Add(item);
             }
         }
 
-        static void ComposeFunctions(JsonObject baseLayer, JsonObject newLayer)
+        static void ComposeFunctions(JObject baseLayer, JObject newLayer)
         {
-            if (!GetItemArrays(ref baseLayer, ref newLayer, "functions"))
+            JArray baseArray;
+            JArray newArray;
+            if (!GetItemArrays("functions", baseLayer, newLayer, out baseArray, out newArray))
                 return;
 
-            foreach (var item in newLayer)
+            foreach (var item in newArray)
             {
-                var flags = GetFlags(item);
-                var oldItem = FindObjectByKey(baseLayer, (string)item["key"]);
+                var flags = GetFlags(item as JObject);
+                var oldItem = FindObjectByKey(baseArray, item.Value<string>("key"));
                 if ((flags == CompositionFlags.Replace || flags == CompositionFlags.Remove || flags == CompositionFlags.None) && oldItem != null)
-                    baseLayer.Remove(oldItem);
+                    oldItem.Remove();
 
                 if (flags == CompositionFlags.Add || flags == CompositionFlags.None || flags == CompositionFlags.Replace)
-                    baseLayer.Add(item);
+                    baseArray.Add(item);
             }
         }
 
-		static void ComposeArrays(JsonObject baseLayer, JsonObject newLayer, string name)
+		static void ComposeArrays(JObject baseLayer, JObject newLayer, string name)
 		{
-			if (!GetItemArrays(ref baseLayer, ref newLayer, name))
+            JArray baseArray;
+            JArray newArray;
+			if (!GetItemArrays(name, baseLayer, newLayer, out baseArray, out newArray))
 				return;
 
-			foreach (var item in newLayer)
+            foreach (var item in newArray)
 			{
-				if (!baseLayer.Contains(item))
-					baseLayer.Add(item);
+                if (!baseArray.Contains(item))
+                    baseArray.Add(item);
 			}
 		}
 
 		#region Helpers
 
-		static bool GetItemArrays(ref JsonObject baseLayer, ref JsonObject newLayer, string name)
+        static bool GetItemArrays(string name, JObject baseLayer, JObject newLayer, out JArray baseArray, out JArray newArray)
 		{
-			JsonObject newLayerItems;
+            baseArray = null;
+            newArray = null;
+
+			JToken newLayerItems;
 			if (!newLayer.TryGetValue(name, out newLayerItems))
 				return false;
 
-			JsonObject baseLayerItems;
+            JToken baseLayerItems;
 			if (!baseLayer.TryGetValue(name, out baseLayerItems))
 			{
-				baseLayerItems = new JsonObject(JsonType.Array);
+				baseLayerItems = new JArray();
 				baseLayer.Add(name, baseLayerItems);
 			}
 
-			baseLayer = baseLayerItems;
-			newLayer = newLayerItems;
+            baseArray = baseLayerItems as JArray;
+            newArray = newLayerItems as JArray;
 			return true;
 		}
 
-		static CompositionFlags GetFlags(JsonObject item)
+		static CompositionFlags GetFlags(JObject item)
 		{
-			if (item.ContainsKey("compositing"))
-			{
-				switch ((string)item["compositing"])
-				{
-					case "add":
-						return CompositionFlags.Add;
-					case "remove":
-						return CompositionFlags.Remove;
-					case "replace":
-						return CompositionFlags.Replace;
-				}
-			}
+            JToken compositing;
+            if (item.TryGetValue("compositing", out compositing))
+            {
+                switch (compositing.Value<string>())
+                {
+                    case "add":
+                        return CompositionFlags.Add;
+                    case "remove":
+                        return CompositionFlags.Remove;
+                    case "replace":
+                        return CompositionFlags.Replace;
+                }
+            }
 
 			return CompositionFlags.None;
 		}
 
-		static JsonObject FindObjectByKey(JsonObject array, string key)
+		static JObject FindObjectByKey(JArray array, string key)
 		{
 			foreach (var item in array)
 			{
-				if (item.ContainsKey("key") && (string)item["key"] == key)
-					return item;
+                JToken token;
+                if ((item as JObject).TryGetValue("key", out token) && token.Value<string>() == key)
+                    return item as JObject;
 			}
 
 			return null;
