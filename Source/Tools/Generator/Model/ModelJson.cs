@@ -165,7 +165,7 @@ namespace SlimDX.Generator
 			if (root.TryGetValue("values", out items))
 			{
 				foreach (var item in items)
-					results.Add(new EnumerationValueModel((string)item["key"], (string)item["value"]));
+					results.Add(new EnumerationValueModel((string)item["key"], item["value"].Value<string>()));
 			}
 
 			return results;
