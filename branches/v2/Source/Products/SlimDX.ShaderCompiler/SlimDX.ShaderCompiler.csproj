@@ -54,8 +54,11 @@
     <Compile Include="..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Generated\D3DCOMPILER_STRIP_FLAGS.cs" />
+    <Compile Include="Generated\D3D_BLOB_PART.cs" />
     <Compile Include="Generated\ID3DBlob.cs" />
     <Compile Include="Generated\ShaderCompiler.cs" />
+    <Compile Include="Generated\_D3D_SHADER_DATA.cs" />
     <Compile Include="ShaderCompiler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
