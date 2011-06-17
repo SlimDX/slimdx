@@ -18,25 +18,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Text;
-using System.Collections.Generic;
-using System.IO;
 using System;
+using System.IO;
 
 namespace SlimDX.Generator
 {
 	static class Extensions
 	{
-		public static StringBuilder Indent(this StringBuilder builder, int level)
-		{
-			return builder.Append('\t', level);
-		}
-
-		public static ISet<T> ToSet<T>(this IEnumerable<T> source)
-		{
-			return new HashSet<T>(source);
-		}
-
 		public static string RootPath(this string path, string root)
 		{
 			if (!Path.IsPathRooted(path))

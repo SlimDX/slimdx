@@ -81,7 +81,7 @@ namespace SlimDX.Generator
 				relevantSources.Add(Environment.ExpandEnvironmentVariables(s));
 
 			source = Path.ChangeExtension(source, ".i");
-			Preprocessor.PostTransform(source, relevantSources.ToSet());
+			Preprocessor.PostTransform(source, new HashSet<string>(relevantSources));
 
 			// run the parser on the preprocessed file to generate a model of the file in memory
 			var grammarFile = configuration.GetOption("Options", "Grammar").RootPath(configuration.ConfigurationDirectory);
