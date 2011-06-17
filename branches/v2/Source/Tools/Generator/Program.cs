@@ -67,9 +67,6 @@ namespace SlimDX.Generator
 
 		static JObject RunParser(ConfigFile configuration)
 		{
-			if (configuration.GetOption("Options", "SkipParse") == "yes")
-				return null;
-
 			// run boost::wave on the primary source file to get a preprocessed file and a list of macros
 			var preprocessor = new Preprocessor(configuration);
 			Console.WriteLine(preprocessor.Run());
