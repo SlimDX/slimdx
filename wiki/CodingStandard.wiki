@@ -8,9 +8,9 @@ In general, we use the code formatting options provided by Visual Studio 2010's 
 Additionally, we use the following rules:
   * Each statement should get its own line.
   * Braces should be omitted when possible.
-  * However, braces should only be omitted for complex control constructs (if/else, try/catch) if they can be omitted for all blocks in the construct.
+  * However, braces should only be omitted for complex control constructs (`if`/`else`, `try`/`catch`) if they can be omitted for all blocks in the construct.
   * Access modifiers should be omitted when possible.
-  * Although this should be used to judiciously, calls to functions with long or complex parameter lists should be indented using K&R style for the parentheses, and this technique should be nested as appropriate:
+  * Although this should be used judiciously, calls to functions with long or complex parameter lists should be indented using K&R style for the parentheses, and this technique should be nested as appropriate:
 {{{
 PerformComplexOperation(
   argument1,
@@ -26,7 +26,7 @@ PerformComplexOperation(
 
 == Style ==
   * Use the .NET guidelines unless they conflict with something on this page.
-  * Use var when possible.
+  * Use `var` when possible.
   * Do not created nested types.
 
 == Naming ==
@@ -34,14 +34,14 @@ PerformComplexOperation(
   # !PascalCase should be used for types, methods and properties. camelCase should be used for variables and fields.
   # All letters of an acronym should be capitalized, except with the acronym is the first word of a camelCase identifier, in which case all letters should be lowercase.
   # Boolean properties should begin with a word that suggests their boolean nature, such as "is."
-  # Do not decorate field names with prefixes (for example, with 'm').
-  # Do not decorate type names with prefixes (for example, with 'I').
+  # Do not decorate field names with prefixes (for example, with `m`).
+  # Do not decorate type names with prefixes (for example, with `I`).
   # In declarations, the access modifier (if applicable) should precede the static/virtual/et cetera designator. 
 
 == Commenting ==
 Comment intelligently; don't comment code that is otherwise readable and self-documenting. Instead, prefer to comment only where value would be added, such as by explaining why a particular implementation was made in favor of another that might be more obvious or standard. 
 
-  # Except for the licensing header on every source file, C-style comments should be avoided.
+  # C-style comments should be avoided.
   # There should be a single blank line between the last line of a file header copyright and the first line of code.
   # Comments should not be placed on the same line as code statements.
   # Insert a space between the comment delimiter and the first character of the comment.
