@@ -99,9 +99,8 @@ namespace SlimDX.Generator
 		{
 			var api = ModelJson.Parse(json, searchPaths);
 
-			var defaultMetadataDirectory = Path.Combine(configuration.GeneratorDirectory, @"Resources\Metadata");
-			var defaultTemplateDirectory = Path.Combine(configuration.GeneratorDirectory, @"Templates");
-			var templateEngine = new TemplateEngine(new[] { defaultTemplateDirectory });
+			var templateDirectory = Path.Combine(configuration.GeneratorDirectory, @"Templates");
+			var templateEngine = new TemplateEngine(new[] { templateDirectory });
 
 			templateEngine.RegisterCallback("ApiNamespace", (e, s) => api.Name);
 			templateEngine.RegisterCallback("ApiName", (e, s) => TemplateCallbacks.GetApiClassName(api));
@@ -175,10 +174,6 @@ namespace SlimDX.Generator
 
 			trampolineBuilder.CreateAssembly(outputDirectory, outputFile);
 		}
-
-
-
-
 
 		static void ApplyTemplate(ApiModel item, string outputDirectory, TemplateEngine templateEngine, string templateName)
 		{
