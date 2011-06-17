@@ -94,7 +94,6 @@
     <Compile Include="Model\TranslationModel.cs" />
     <Compile Include="Model\TypeModel.cs" />
     <Compile Include="Model\VariableModel.cs" />
-    <Compile Include="NameRules.cs" />
     <Compile Include="Parsing\HeaderParser.cs" />
     <Compile Include="Parsing\IParseNode.cs" />
     <Compile Include="Parsing\NonTerminal.cs" />
@@ -120,9 +119,6 @@
     <None Include="Base.cfg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="naming_rules.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Templates\Functions\Function.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
