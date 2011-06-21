@@ -1,4 +1,4 @@
 @echo off
 call "%VS100COMNTOOLS%/vsvars32.bat"
-msbuild Build.msbuild
+msbuild "%~dp0\Build.msbuild"
 pause
