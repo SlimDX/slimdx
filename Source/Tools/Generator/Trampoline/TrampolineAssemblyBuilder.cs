@@ -56,7 +56,7 @@ namespace SlimDX.Generator
 			var assemblyName = new AssemblyName(name);
 			var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Save, directory);
 			var moduleBuilder = assemblyBuilder.DefineDynamicModule(fileName);
-			var typeBuilder = moduleBuilder.DefineType("SlimDX.Trampoline", trampolineClassAttributes);
+			var typeBuilder = moduleBuilder.DefineType(name, trampolineClassAttributes);
 
 			foreach (var trampoline in trampolines)
 				BuildTrampolineMethod(trampoline, typeBuilder);
