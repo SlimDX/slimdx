@@ -21,18 +21,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 
 namespace SlimDX.Generator
 {
 	static class TemplateCallbacks
 	{
-		#region Implementation
-
-		static MarshallingService marshaller = new MarshallingService();
-		static Dictionary<MarshalBehavior, Formatter> formatters = new Dictionary<MarshalBehavior, Formatter>();
-
 		/// <summary>
 		/// Initializes the <see cref="TemplateCallbacks"/> class.
 		/// </summary>
@@ -46,8 +40,6 @@ namespace SlimDX.Generator
 			formatters[MarshalBehavior.Structure] = new StructureFormatter();
 			formatters[MarshalBehavior.Interface] = new InterfaceFormatter();
 		}
-
-		#endregion
 
 		public static string EnumItem(TemplateEngine engine, object source)
 		{
@@ -119,10 +111,11 @@ namespace SlimDX.Generator
 			}
 
 			var method = function as MethodModel;
+            var api = method.Api;
 			if (method != null)
-				builder.AppendFormat("SlimDX.Trampoline.CallInstance{0}(System.IntPtr.Size * {1}, NativePointer", trampolineSuffix, method.Index);
+				builder.AppendFormat("{0}.Trampoline.CallInstance{1}(System.IntPtr.Size * {2}, NativePointer", api.Name, trampolineSuffix, method.Index);
 			else
-				builder.AppendFormat("SlimDX.Trampoline.CallFree{0}(functions[{1}]", trampolineSuffix, function.Api.Functions.IndexOf(function));
+				builder.AppendFormat("{0}.Trampoline.CallFree{1}(functions[{2}]", api.Name, trampolineSuffix, api.Functions.IndexOf(function));
 
 			foreach (var parameter in function.Parameters)
 			{
@@ -253,5 +246,8 @@ namespace SlimDX.Generator
 					return string.Empty;
 			}
 		}
+
+        static MarshallingService marshaller = new MarshallingService();
+		static Dictionary<MarshalBehavior, Formatter> formatters = new Dictionary<MarshalBehavior, Formatter>();
 	}
 }
