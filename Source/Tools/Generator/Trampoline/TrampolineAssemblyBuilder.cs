@@ -133,7 +133,7 @@ namespace SlimDX.Generator
         static void BuildTrampolineStub(MethodInfo method, StringBuilder codeBuilder)
         {
             var returnTypeName = method.ReturnType == typeof(void) ? "void" : method.ReturnType.FullName;
-            codeBuilder.AppendFormat("\t\t{0} {1}(", returnTypeName, method.Name);
+            codeBuilder.AppendFormat("\t\tpublic static {0} {1}(", returnTypeName, method.Name);
 
             var parameters = method.GetParameters();
             for (int parameterIndex = 0; parameterIndex < parameters.Length; ++parameterIndex)
