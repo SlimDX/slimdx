@@ -20,10 +20,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace SlimDX.Generator
 {
@@ -32,8 +34,6 @@ namespace SlimDX.Generator
 	/// </summary>
 	class TrampolineAssemblyBuilder
 	{
-		#region Interface
-
 		/// <summary>
 		/// Adds a trampoline to the builder.
 		/// </summary>
@@ -52,29 +52,29 @@ namespace SlimDX.Generator
 			if (string.IsNullOrEmpty(name))
 				throw new ArgumentException("Value may not be null or empty.", "key");
 
-			var fileName = string.Format("{0}.dll", name);
+			var assemblyFileName = string.Format("{0}.dll", name);
 			var assemblyName = new AssemblyName(name);
 			var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Save, directory);
-			var moduleBuilder = assemblyBuilder.DefineDynamicModule(fileName);
+			var moduleBuilder = assemblyBuilder.DefineDynamicModule(assemblyFileName);
 			var typeBuilder = moduleBuilder.DefineType(name, trampolineClassAttributes);
 
 			foreach (var trampoline in trampolines)
 				BuildTrampolineMethod(trampoline, typeBuilder);
 
-			typeBuilder.CreateType();
-			assemblyBuilder.Save(fileName);
+			var result = typeBuilder.CreateType();
+			assemblyBuilder.Save(assemblyFileName);
+
+            var codeFileName = Path.Combine(directory, string.Format("{0}.cs", result.Name));
+            var codeBuilder = new StringBuilder();
+            codeBuilder.AppendLine(string.Format("namespace {0} {{", result.Namespace));
+            codeBuilder.AppendLine(string.Format("\tstatic class {0} {{", result.Name));
+            foreach (var method in result.GetMethods(BindingFlags.Static | BindingFlags.Public)) {
+                BuildTrampolineStub(method, codeBuilder);
+            }
+            codeBuilder.AppendLine("\t}");
+            codeBuilder.AppendLine("}");
+            File.WriteAllText(codeFileName, codeBuilder.ToString());
 		}
-
-		#endregion
-		#region Implementation
-
-		HashSet<Trampoline> trampolines = new HashSet<Trampoline>();
-
-		static TypeAttributes trampolineClassAttributes = TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.Abstract | TypeAttributes.Sealed;
-		static MethodAttributes trampolineMethodAttributes = MethodAttributes.Public | MethodAttributes.Static | MethodAttributes.HideBySig;
-
-		const string offsetParameterName = "offsetInBytes";
-		const string thisParameterName = "self";
 
 		/// <summary>
 		/// Builds an implementation method for the specified trampoline.
@@ -130,7 +130,44 @@ namespace SlimDX.Generator
 			il.Emit(OpCodes.Ret);
 		}
 
-		static void BuildFreeCall(Trampoline trampoline, TypeBuilder typeBuilder)
+        static void BuildTrampolineStub(MethodInfo method, StringBuilder codeBuilder)
+        {
+            var returnTypeName = method.ReturnType == typeof(void) ? "void" : method.ReturnType.FullName;
+            codeBuilder.AppendFormat("\t\t{0} {1}(", returnTypeName, method.Name);
+
+            var parameters = method.GetParameters();
+            for (int parameterIndex = 0; parameterIndex < parameters.Length; ++parameterIndex)
+            {
+                var parameter = parameters[parameterIndex];
+                var parameterName = parameter.Name;
+
+                // Some automatically-generated parameters don't have their own names; C# requires
+                // all parameters to be named, however.
+                //TODO: Give the trampoline parameters names so this isn't neccessary.
+                if(string.IsNullOrEmpty(parameterName))
+                    parameterName = string.Format("parameter{0}", parameterIndex - 2);
+                
+                var parameterType = parameter.ParameterType;
+                var decoration = string.Empty;
+                if(parameterType.IsByRef)
+                {
+                    decoration = "ref ";
+                    parameterType = parameterType.GetElementType();
+                }
+
+                codeBuilder.AppendFormat("{0}{1} {2}", decoration, parameterType.FullName, parameterName);
+                if (parameterIndex < parameters.Length - 1)
+                    codeBuilder.Append(", ");
+            }
+
+            codeBuilder.Append(") { ");
+            if (method.ReturnType != typeof(void)) {
+                codeBuilder.AppendFormat("return default({0}); ", returnTypeName);
+            }
+            codeBuilder.AppendLine("}");
+        }
+
+        static void BuildFreeCall(Trampoline trampoline, TypeBuilder typeBuilder)
 		{
 			var methodName = string.Format("CallFree{0}", trampoline.ReturnType == typeof(void) ? string.Empty : trampoline.ReturnType.Name);
 			var methodBuilder = typeBuilder.DefineMethod(methodName, trampolineMethodAttributes);
@@ -184,6 +221,13 @@ namespace SlimDX.Generator
 			return parameters.Select(p => p.Type == typeof(void) ? typeof(IntPtr) : p.Type).ToArray();
 		}
 
-		#endregion
+		HashSet<Trampoline> trampolines = new HashSet<Trampoline>();
+
+		static TypeAttributes trampolineClassAttributes = TypeAttributes.Public | TypeAttributes.Class | TypeAttributes.Abstract | TypeAttributes.Sealed;
+		static MethodAttributes trampolineMethodAttributes = MethodAttributes.Public | MethodAttributes.Static | MethodAttributes.HideBySig;
+
+		const string offsetParameterName = "offsetInBytes";
+		const string thisParameterName = "self";
+
 	}
 }
