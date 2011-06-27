@@ -111,7 +111,7 @@ namespace SlimDX.Generator
 			}
 
 			var method = function as MethodModel;
-            var api = method.Api;
+            var api = function.Api;
 			if (method != null)
 				builder.AppendFormat("{0}.Trampoline.CallInstance{1}(System.IntPtr.Size * {2}, NativePointer", api.Name, trampolineSuffix, method.Index);
 			else
