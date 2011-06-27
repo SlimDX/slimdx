@@ -39,9 +39,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SlimDX.Direct3D11.Trampoline">
-      <HintPath>Generated\SlimDX.Direct3D11.Trampoline.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,6 +67,7 @@
     <Compile Include="Generated\ID3D11Resource.cs" />
     <Compile Include="Generated\ID3D11Texture2D.cs" />
     <Compile Include="Generated\ID3D11VertexShader.cs" />
+    <Compile Include="Generated\Trampoline.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +87,9 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>"$(SolutionDir)\Source\Tools\Generator\bin\$(ConfigurationName)\SlimDX.Generator.exe" "$(ProjectDir)\Direct3D11.Generator.cfg"</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>"$(SolutionDir)\Source\Tools\Combiner\bin\$(ConfigurationName)\SlimDX.Combiner.exe" "$(ProjectDir)\Generated\$(TargetName).Trampoline.dll" "$(TargetPath)" $(TargetName).Trampoline</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
