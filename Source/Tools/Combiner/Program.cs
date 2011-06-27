@@ -32,8 +32,8 @@ namespace SlimDX.Combiner {
             var sourceDissassembly = Path.GetTempFileName();
             var targetDissassembly = Path.GetTempFileName();
 
-            Execute(@"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin\ildasm.exe", "/nobar", "/utf8", string.Format("/out={0}", Quote(sourceDissassembly)), Quote(sourceAssembly));
-            Execute(@"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin\ildasm.exe", "/nobar", "/utf8", string.Format("/out={0}", Quote(targetDissassembly)), Quote(targetAssembly));
+            Execute("ildasm.exe", "/nobar", "/utf8", string.Format("/out={0}", Quote(sourceDissassembly)), Quote(sourceAssembly));
+            Execute("ildasm.exe", "/nobar", "/utf8", string.Format("/out={0}", Quote(targetDissassembly)), Quote(targetAssembly));
 
             var sourceCode = File.ReadAllLines(sourceDissassembly);
             var targetCode = File.ReadAllLines(targetDissassembly);
@@ -62,7 +62,7 @@ namespace SlimDX.Combiner {
             var combinedFile = Path.GetTempFileName();
             File.WriteAllLines(combinedFile, buffer);
 
-            Execute(@"C:\Windows\Microsoft.NET\Framework\v4.0.30319\ilasm.exe", "/nolog", "/quiet", "/dll", string.Format("/out={0}", Quote(targetAssembly)), Quote(combinedFile));
+            Execute("ilasm.exe", "/nolog", "/quiet", "/dll", string.Format("/out={0}", Quote(targetAssembly)), Quote(combinedFile));
         }
 
         static Tuple<int, int> FindClass(string typeName, string[] lines) {
