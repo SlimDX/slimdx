@@ -18,85 +18,34 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
-using System.Diagnostics;
-using System.IO;
+using System.Linq;
+using Mono.Cecil;
 
-namespace SlimDX.Combiner {
-    class Program {
-        static void Main(string[] args) {
-            Replace(args[2], args[0], args[1]);
-        }
+namespace SlimDX.Combiner
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var typeName = args[2];
+            var sourceName = args[0];
+            var sourceAssembly = AssemblyDefinition.ReadAssembly(sourceName);
+            var sourceType = sourceAssembly.MainModule.GetType(typeName);
 
-        static void Replace(string typeName, string sourceAssembly, string targetAssembly) {
-            var sourceDissassembly = Path.GetTempFileName();
-            var targetDissassembly = Path.GetTempFileName();
+            var targetName = args[1];
+            var targetAssembly = AssemblyDefinition.ReadAssembly(targetName);
+            var targetType = targetAssembly.MainModule.GetType(typeName);
 
-            Execute("ildasm.exe", "/nobar", "/utf8", string.Format("/out={0}", Quote(sourceDissassembly)), Quote(sourceAssembly));
-            Execute("ildasm.exe", "/nobar", "/utf8", string.Format("/out={0}", Quote(targetDissassembly)), Quote(targetAssembly));
+            foreach (var targetMethod in targetType.Methods)
+            {
+                var sourceMethod = sourceType.Methods.SingleOrDefault(x => x.FullName == targetMethod.FullName);
+                if (sourceMethod == null)
+                    continue;
 
-            var sourceCode = File.ReadAllLines(sourceDissassembly);
-            var targetCode = File.ReadAllLines(targetDissassembly);
-            var sourceRange = FindClass(typeName, sourceCode);
-            var targetRange = FindClass(typeName, targetCode);
-
-            var sourceLines = sourceRange.Item2 - sourceRange.Item1 + 1;
-            var targetLines = targetRange.Item2 - targetRange.Item1 + 1;
-            var buffer = new string[targetCode.Length - targetLines + sourceLines];
-            var line = 0;
-            while (line < targetRange.Item1) {
-                buffer[line] = targetCode[line];
-                ++line;
+                targetMethod.Body = sourceMethod.Body;
             }
 
-            for (int i = sourceRange.Item1; i <= sourceRange.Item2; ++i) {
-                buffer[line] = sourceCode[i];
-                ++line;
-            }
-
-            for (int i = targetRange.Item2 + 1; i < targetCode.Length; ++i) {
-                buffer[line] = targetCode[i];
-                ++line;
-            }
-
-            var combinedFile = Path.GetTempFileName();
-            File.WriteAllLines(combinedFile, buffer);
-
-            Execute("ilasm.exe", "/nolog", "/quiet", "/dll", string.Format("/out={0}", Quote(targetAssembly)), Quote(combinedFile));
-        }
-
-        static Tuple<int, int> FindClass(string typeName, string[] lines) {
-            var startLine = -1;
-            var endLine = -1;
-            for (int line = 0; line < lines.Length; ++line) {
-                var text = lines[line];
-
-                if (startLine < 0 && text.StartsWith(".class") && text.Contains(typeName)) {
-                    startLine = line;
-                } if (endLine < 0 && text.Contains(string.Format("end of class {0}", typeName))) {
-                    endLine = line;
-                }
-            }
-
-            return new Tuple<int, int>(startLine, endLine);
-        }
-
-        static string Quote(string s) {
-            return string.Format("\"{0}\"", s);
-        }
-        static void Execute(string tool, params string[] arguments) {
-            var process = new Process {
-                StartInfo = {
-                    FileName = tool,
-                    Arguments = string.Join(" ", arguments),
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                    RedirectStandardOutput = true
-                }
-            };
-
-            process.Start();
-            process.WaitForExit();
+            targetAssembly.Write(targetName);
         }
     }
 }
