@@ -97,13 +97,13 @@ namespace Direct3D11
 		switch(type)
 		{
 		case D3D11_RESOURCE_DIMENSION_BUFFER:
-			return Buffer::FromPointer( pointer );
+			return Buffer::FromPointer( reinterpret_cast<ID3D11Buffer*>(pointer) );
 		case D3D11_RESOURCE_DIMENSION_TEXTURE1D:
-			return Texture1D::FromPointer( pointer );
+			return Texture1D::FromPointer( reinterpret_cast<ID3D11Texture1D*>(pointer) );
 		case D3D11_RESOURCE_DIMENSION_TEXTURE2D:
-			return Texture2D::FromPointer( pointer );
+			return Texture2D::FromPointer( reinterpret_cast<ID3D11Texture2D*>(pointer) );
 		case D3D11_RESOURCE_DIMENSION_TEXTURE3D:
-			return Texture3D::FromPointer( pointer );
+			return Texture3D::FromPointer( reinterpret_cast<ID3D11Texture3D*>(pointer) );
 
 		default:
 			throw gcnew InvalidCastException( "Unrecognized resource type." );

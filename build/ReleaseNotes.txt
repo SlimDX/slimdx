@@ -13,9 +13,11 @@ Direct3D 9
 Direct3D 10
 	* Added an overload to Texture.Map to take an array slice index.
 	* Added a Factory property to the Device to make it easy to get the associated factory.
+	* Fixed a stack overflow in Resource.FromPointer.
 
 Direct3D 11
 	* Added a Factory property to the Device to make it easy to get the associated factory.
+	* Fixed a stack overflow in Resource.FromPointer.
 
 Multimedia
 	* Extended the WaveStream class to support ADPCM formats.
