@@ -390,14 +390,11 @@ namespace SlimDX.SampleFramework {
 
             OnResourceUnload();
 
-            _configuration.WindowWidth = _form.ClientSize.Width;
-            _configuration.WindowHeight = _form.ClientSize.Height;
-
             if( Context9 != null ) {
                 userInterfaceRenderer.Dispose();
 
-                Context9.PresentParameters.BackBufferWidth = _configuration.WindowWidth;
-                Context9.PresentParameters.BackBufferHeight = _configuration.WindowHeight;
+                Context9.PresentParameters.BackBufferWidth = 0;
+                Context9.PresentParameters.BackBufferHeight = 0;
 
                 Context9.Device.Reset( Context9.PresentParameters );
 

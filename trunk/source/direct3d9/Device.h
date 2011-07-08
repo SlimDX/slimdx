@@ -119,7 +119,7 @@ namespace SlimDX
 			/// <param name="presentParameters">A set of new presentation parameters to apply to the device.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			/// <unmanaged>IDirect3DDevice9::Reset</unmanaged>
-			Result Reset( PresentParameters^ presentParameters );
+			Result Reset( ... array<PresentParameters^>^ presentParameters );
 
 			/// <summary>
 			/// Clears one or more surfaces such as a render target, a stencil buffer, and a depth buffer.

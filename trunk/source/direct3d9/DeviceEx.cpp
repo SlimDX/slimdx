@@ -244,18 +244,22 @@ namespace Direct3D9
 		return RECORD_D3D9( hr );
 	}
 	
-	Result DeviceEx::ResetEx( PresentParameters^ presentParameters )
+	Result DeviceEx::ResetEx( ... array<PresentParameters^>^ presentParameters )
 	{
-		D3DPRESENT_PARAMETERS d3dpp;
+		stack_array<D3DPRESENT_PARAMETERS> d3dpp = stackalloc( D3DPRESENT_PARAMETERS, presentParameters->Length );
+		for( int p = 0; p < presentParameters->Length; ++p )
+			d3dpp[p] = presentParameters[p]->ToUnmanaged();
 
-		d3dpp = presentParameters->ToUnmanaged();
-		HRESULT hr = InternalPointer->ResetEx( &d3dpp, NULL );
+		HRESULT hr = InternalPointer->ResetEx( &d3dpp[0], NULL );
 		RECORD_D3D9( hr );
 
-		presentParameters->BackBufferCount = d3dpp.BackBufferCount;
-		presentParameters->BackBufferFormat = static_cast<Format>( d3dpp.BackBufferFormat );
-		presentParameters->BackBufferWidth = d3dpp.BackBufferWidth;
-		presentParameters->BackBufferHeight = d3dpp.BackBufferHeight;
+		for( int p = 0; p < presentParameters->Length; ++p )
+		{
+			presentParameters[p]->BackBufferCount = d3dpp[p].BackBufferCount;
+			presentParameters[p]->BackBufferFormat = static_cast<Format>( d3dpp[p].BackBufferFormat );
+			presentParameters[p]->BackBufferWidth = d3dpp[p].BackBufferWidth;
+			presentParameters[p]->BackBufferHeight = d3dpp[p].BackBufferHeight;
+		}
 
 		return Result::Last;
 	}
@@ -271,6 +275,27 @@ namespace Direct3D9
 		presentParameters->BackBufferFormat = static_cast<Format>( d3dpp.BackBufferFormat );
 		presentParameters->BackBufferWidth = d3dpp.BackBufferWidth;
 		presentParameters->BackBufferHeight = d3dpp.BackBufferHeight;
+
+		return Result::Last;
+	}
+
+	Result DeviceEx::ResetEx( DisplayModeEx fullscreenDisplayMode, ... array<PresentParameters^>^ presentParameters )
+	{
+		stack_array<D3DPRESENT_PARAMETERS> d3dpp = stackalloc( D3DPRESENT_PARAMETERS, presentParameters->Length );
+		for( int p = 0; p < presentParameters->Length; ++p )
+			d3dpp[p] = presentParameters[p]->ToUnmanaged();
+
+		D3DDISPLAYMODEEX nativeDisplayMode = fullscreenDisplayMode.ToUnmanaged();
+		HRESULT hr = InternalPointer->ResetEx( &d3dpp[0], &nativeDisplayMode );
+		RECORD_D3D9( hr );
+
+		for( int p = 0; p < presentParameters->Length; ++p )
+		{
+			presentParameters[p]->BackBufferCount = d3dpp[p].BackBufferCount;
+			presentParameters[p]->BackBufferFormat = static_cast<Format>( d3dpp[p].BackBufferFormat );
+			presentParameters[p]->BackBufferWidth = d3dpp[p].BackBufferWidth;
+			presentParameters[p]->BackBufferHeight = d3dpp[p].BackBufferHeight;
+		}
 
 		return Result::Last;
 	}
