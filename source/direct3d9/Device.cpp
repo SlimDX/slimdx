@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2011 SlimDX Group
 * 
@@ -20,9 +19,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <windows.h>
-#include <d3d9.h>
-#include <d3dx9.h>
+#include "stdafx.h"
 
 #include "../stack_array.h"
 #include "../DataStream.h"
@@ -503,18 +500,22 @@ namespace Direct3D9
 		return Result( hr );
 	}
 
-	Result Device::Reset( PresentParameters^ presentParameters )
+	Result Device::Reset( ... array<PresentParameters^>^ presentParameters )
 	{
-		D3DPRESENT_PARAMETERS d3dpp;
+		stack_array<D3DPRESENT_PARAMETERS> d3dpp = stackalloc( D3DPRESENT_PARAMETERS, presentParameters->Length );
+		for( int p = 0; p < presentParameters->Length; ++p )
+			d3dpp[p] = presentParameters[p]->ToUnmanaged();
 
-		d3dpp = presentParameters->ToUnmanaged();
-		HRESULT hr = InternalPointer->Reset( &d3dpp );
+		HRESULT hr = InternalPointer->Reset( &d3dpp[0] );
 		RECORD_D3D9( hr );
 
-		presentParameters->BackBufferCount = d3dpp.BackBufferCount;
-		presentParameters->BackBufferFormat = static_cast<Format>( d3dpp.BackBufferFormat );
-		presentParameters->BackBufferWidth = d3dpp.BackBufferWidth;
-		presentParameters->BackBufferHeight = d3dpp.BackBufferHeight;
+		for( int p = 0; p < presentParameters->Length; ++p )
+		{
+			presentParameters[p]->BackBufferCount = d3dpp[p].BackBufferCount;
+			presentParameters[p]->BackBufferFormat = static_cast<Format>( d3dpp[p].BackBufferFormat );
+			presentParameters[p]->BackBufferWidth = d3dpp[p].BackBufferWidth;
+			presentParameters[p]->BackBufferHeight = d3dpp[p].BackBufferHeight;
+		}
 
 		return Result::Last;
 	}

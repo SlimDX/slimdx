@@ -7,6 +7,9 @@ Math
 DXGI
 	* Fixed a bug that caused certain types like Factory1 to be unable to be a target of GetParent<T>.
 
+Direct3D 9
+	* Changed Device.Reset and DeviceEx.ResetEx to take a params array of present parameters. 
+
 Direct3D 10
 	* Added an overload to Texture.Map to take an array slice index.
 	* Added a Factory property to the Device to make it easy to get the associated factory.
@@ -23,3 +26,6 @@ DirectInput
 
 RawInput
 	* Added support for custom message handling. Allows the use of WPF and other non-Winforms frameworks.
+
+Windows
+	* Fixed a bug in RenderForm that prevented UserResized messages from occuring.

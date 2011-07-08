@@ -190,7 +190,7 @@ namespace SlimDX
 			/// <param name="presentParameters">A set of new presentation parameters to apply to the device.</param>
 			/// <returns>A <see cref="SlimDX::Result"/>Object describing the result of the operation.</returns>
 			/// <unmanaged>IDirect3DDevice9Ex::ResetEx</unmanaged>
-			Result ResetEx( PresentParameters^ presentParameters );
+			Result ResetEx( ... array<PresentParameters^>^ presentParameters );
 
 			/// <summary>
 			/// Resets the device.
@@ -199,7 +199,17 @@ namespace SlimDX
 			/// <param name="fullScreenDisplayMode">The properties of the desired display mode, when running fullscreen.</param>
 			/// <returns>A <see cref="SlimDX::Result"/>Object describing the result of the operation.</returns>
 			/// <unmanaged>IDirect3DDevice9Ex::ResetEx</unmanaged>
+			[System::Obsolete("Use one of the overloads that take a params array of present parameters.")]
 			Result ResetEx( PresentParameters^ presentParameters, DisplayModeEx fullScreenDisplayMode );
+
+			/// <summary>
+			/// Resets the device.
+			/// </summary>
+			/// <param name="presentParameters">A set of new presentation parameters to apply to the device.</param>
+			/// <param name="fullScreenDisplayMode">The properties of the desired display mode, when running fullscreen.</param>
+			/// <returns>A <see cref="SlimDX::Result"/>Object describing the result of the operation.</returns>
+			/// <unmanaged>IDirect3DDevice9Ex::ResetEx</unmanaged>
+			Result ResetEx( DisplayModeEx fullScreenDisplayMode, ... array<PresentParameters^>^ presentParameters );
 
 			/// <summary>
 			/// Suspend execution of the calling thread until the next vertical blank signal.
