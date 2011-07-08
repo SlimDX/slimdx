@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2011 SlimDX Group
 * 
@@ -20,7 +19,9 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#include <d3d11.h>
+#include "stdafx.h"
+
+#include "../Utilities.h"
 
 #include "Enums11.h"
 #include "BlendStateDescription11.h"
@@ -68,6 +69,59 @@ namespace Direct3D11
 	{
 		ConstructLazyProperties();
 		return m_RenderTargets;
+	}
+
+	bool BlendStateDescription::operator == ( BlendStateDescription left, BlendStateDescription right )
+	{
+		return BlendStateDescription::Equals( left, right );
+	}
+
+	bool BlendStateDescription::operator != ( BlendStateDescription left, BlendStateDescription right )
+	{
+		return !BlendStateDescription::Equals( left, right );
+	}
+
+	int BlendStateDescription::GetHashCode()
+	{
+		ConstructLazyProperties();
+		return (
+			AlphaToCoverageEnable.GetHashCode() +
+			IndependentBlendEnable.GetHashCode() +
+			Utilities::GetElementHashCode( m_RenderTargets )
+		);
+	}
+
+	bool BlendStateDescription::Equals( Object^ value )
+	{
+		if( value == nullptr )
+			return false;
+
+		if( value->GetType() != GetType() )
+			return false;
+
+		return Equals( safe_cast<BlendStateDescription>( value ) );
+	}
+
+	bool BlendStateDescription::Equals( BlendStateDescription value )
+	{
+		ConstructLazyProperties();
+		value.ConstructLazyProperties();
+		return (
+			AlphaToCoverageEnable == value.AlphaToCoverageEnable &&
+			IndependentBlendEnable == value.IndependentBlendEnable &&
+			Utilities::CheckElementEquality( m_RenderTargets, value.m_RenderTargets )
+		);
+	}
+
+	bool BlendStateDescription::Equals( BlendStateDescription% value1, BlendStateDescription% value2 )
+	{
+		value1.ConstructLazyProperties();
+		value2.ConstructLazyProperties();
+		return (
+			value1.AlphaToCoverageEnable == value2.AlphaToCoverageEnable &&
+			value1.IndependentBlendEnable == value2.IndependentBlendEnable &&
+			Utilities::CheckElementEquality( value1.m_RenderTargets, value2.m_RenderTargets )
+		);
 	}
 }
 }

@@ -29,7 +29,7 @@ namespace SlimDX
 		/// Provides a description for render target blending.
 		/// </summary>
 		/// <unmanaged>D3D11_RENDER_TARGET_BLEND_DESC</unmanaged>
-		public value class RenderTargetBlendDescription
+		public value class RenderTargetBlendDescription : System::IEquatable<RenderTargetBlendDescription>
 		{
 		internal:
 			RenderTargetBlendDescription( const D3D11_RENDER_TARGET_BLEND_DESC& native );
