@@ -31,7 +31,7 @@ namespace SlimDX
 		/// Provides a description for blending state objects.
 		/// </summary>
 		/// <unmanaged>D3D11_BLEND_DESC</unmanaged>
-		public value class BlendStateDescription
+		public value class BlendStateDescription : System::IEquatable<BlendStateDescription>
 		{
 		private:
 			array<RenderTargetBlendDescription>^ m_RenderTargets;
@@ -61,6 +61,14 @@ namespace SlimDX
 			{
 				array<RenderTargetBlendDescription>^ get();
 			}
+
+			static bool operator == ( BlendStateDescription left, BlendStateDescription right );
+			static bool operator != ( BlendStateDescription left, BlendStateDescription right );
+
+			virtual int GetHashCode() override;
+			virtual bool Equals( System::Object^ obj ) override;
+			virtual bool Equals( BlendStateDescription other );
+			static bool Equals( BlendStateDescription% value1, BlendStateDescription% value2 );
 		};
 	}
 }
