@@ -20,6 +20,9 @@ Direct3D 11
 	* Fixed a stack overflow in Resource.FromPointer.
 	* Changed BlendStateDescription to implement IEquatable<T> and GetHashCode()
 
+Direct2D
+	* Fixed a bug that incorrectly created RectangleGeometry from a RectangleF.
+
 Multimedia
 	* Extended the WaveStream class to support ADPCM formats.
 
