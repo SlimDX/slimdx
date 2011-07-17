@@ -41,7 +41,7 @@ namespace Direct2D
 	{
 		ID2D1RectangleGeometry *geometry = NULL;
 
-		D2D1_RECT_F rect = RectF(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom);
+		D2D1_RECT_F rect = D2D1::RectF(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom);
 		HRESULT hr = factory->InternalPointer->CreateRectangleGeometry( &rect, &geometry );
 		if( RECORD_D2D( hr ).IsFailure )
 			throw gcnew Direct2DException( Result::Last );

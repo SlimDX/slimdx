@@ -52,7 +52,7 @@ namespace BasicComputeShader
                 Usage = D3D.ResourceUsage.Dynamic,
             };
             D3D.Buffer inputBuffer = new D3D.Buffer(device, inputBufferDescription);
-            DataBox input = device.ImmediateContext.MapSubresource(inputBuffer, 0, bufferSizeInBytes, D3D.MapMode.WriteDiscard, D3D.MapFlags.None);
+            DataBox input = device.ImmediateContext.MapSubresource(inputBuffer, D3D.MapMode.WriteDiscard, D3D.MapFlags.None);
             for (int value = 1; value <= elementCount; ++value)
                 input.Data.Write((float)value);
             device.ImmediateContext.UnmapSubresource(inputBuffer, 0);
@@ -105,7 +105,7 @@ namespace BasicComputeShader
             device.ImmediateContext.Dispatch(1, 1, 1);
 
             device.ImmediateContext.CopyResource(outputBuffer, stagingBuffer);
-            DataBox output = device.ImmediateContext.MapSubresource(stagingBuffer, 0, sizeof(float) * elementCount, D3D.MapMode.Read, D3D.MapFlags.None);
+            DataBox output = device.ImmediateContext.MapSubresource(stagingBuffer, D3D.MapMode.Read, D3D.MapFlags.None);
 
             Console.Write("Results:");
             for (int index = 0; index < elementCount; ++index)

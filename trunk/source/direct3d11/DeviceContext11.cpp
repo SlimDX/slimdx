@@ -26,6 +26,7 @@
 #include "Direct3D11Exception.h"
 
 #include "Buffer11.h"
+#include "BufferDescription11.h"
 #include "CommandList11.h"
 #include "Asynchronous11.h"
 #include "DeviceContext11.h"
@@ -46,6 +47,12 @@
 #include "Resource11.h"
 #include "ResourceRegion11.h"
 #include "Predicate11.h"
+#include "Texture1D11.h"
+#include "Texture1DDescription11.h"
+#include "Texture2D11.h"
+#include "Texture2DDescription11.h"
+#include "Texture3D11.h"
+#include "Texture3DDescription11.h"
 #include "Device11.h"
 
 using namespace System;
@@ -324,15 +331,95 @@ namespace Direct3D11
 		InternalPointer->SetPredication( predicate->InternalPointer, predicateValue );
 	}
 
-	DataBox^ DeviceContext::MapSubresource( Resource^ resource, int subresource, int sizeInBytes, MapMode mode, MapFlags flags )
+	DataBox^ DeviceContext::MapSubresource(Texture1D^ resource, int mipSlice, int arraySlice, MapMode mode, MapFlags flags)
 	{
+		Texture1DDescription desc = resource->Description;
+		int sizeInBytes = Resource::GetMipSize(mipSlice, desc.Width) * Utilities::SizeOfFormatElement(static_cast<DXGI_FORMAT>(desc.Format));
+		int subresource = D3D11CalcSubresource(mipSlice, arraySlice, desc.MipLevels);
+
 		D3D11_MAPPED_SUBRESOURCE mapped;
-		HRESULT hr = InternalPointer->Map( resource->InternalPointer, subresource, static_cast<D3D11_MAP>( mode ), static_cast<UINT>( flags ), &mapped );
-		if( RECORD_D3D11( hr ).IsFailure )
+		HRESULT hr = InternalPointer->Map(resource->InternalPointer, subresource, static_cast<D3D11_MAP>(mode), static_cast<UINT>(flags), &mapped);
+		if (RECORD_D3D11(hr).IsFailure)
 			return nullptr;
 
-		DataBox^ box = gcnew DataBox( mapped.RowPitch, mapped.DepthPitch, gcnew DataStream( mapped.pData, sizeInBytes, true, true, false ) );
-		return box;
+		return gcnew DataBox(mapped.RowPitch, mapped.DepthPitch, gcnew DataStream(mapped.pData, sizeInBytes, true, true, false));
+	}
+
+	DataBox^ DeviceContext::MapSubresource(Texture2D^ resource, int mipSlice, int arraySlice, MapMode mode, MapFlags flags)
+	{
+		Texture2DDescription desc = resource->Description;
+		int mipHeight = Resource::GetMipSize(mipSlice, desc.Height);
+		int subresource = D3D11CalcSubresource(mipSlice, arraySlice, desc.MipLevels);
+
+		D3D11_MAPPED_SUBRESOURCE mapped;
+		HRESULT hr = InternalPointer->Map(resource->InternalPointer, subresource, static_cast<D3D11_MAP>(mode), static_cast<UINT>(flags), &mapped);
+		if (RECORD_D3D11(hr).IsFailure)
+			return nullptr;
+
+		return gcnew DataBox(mapped.RowPitch, mapped.DepthPitch, gcnew DataStream(mapped.pData, mipHeight * mapped.RowPitch, true, true, false));
+	}
+
+	DataBox^ DeviceContext::MapSubresource(Texture3D^ resource, int mipSlice, int arraySlice, MapMode mode, MapFlags flags)
+	{
+		Texture3DDescription desc = resource->Description;
+		int mipDepth = Resource::GetMipSize(mipSlice, desc.Depth);
+		int subresource = D3D11CalcSubresource(mipSlice, arraySlice, desc.MipLevels);
+
+		D3D11_MAPPED_SUBRESOURCE mapped;
+		HRESULT hr = InternalPointer->Map(resource->InternalPointer, subresource, static_cast<D3D11_MAP>(mode), static_cast<UINT>(flags), &mapped);
+		if (RECORD_D3D11(hr).IsFailure)
+			return nullptr;
+
+		return gcnew DataBox(mapped.RowPitch, mapped.DepthPitch, gcnew DataStream(mapped.pData, mipDepth * mapped.DepthPitch, true, true, false));
+	}
+
+	DataBox^ DeviceContext::MapSubresource(Buffer^ resource, MapMode mode, MapFlags flags)
+	{
+		D3D11_MAPPED_SUBRESOURCE mapped;
+		HRESULT hr = InternalPointer->Map(resource->InternalPointer, 0, static_cast<D3D11_MAP>(mode), static_cast<UINT>(flags), &mapped);
+		if (RECORD_D3D11(hr).IsFailure)
+			return nullptr;
+
+		return gcnew DataBox(mapped.RowPitch, mapped.DepthPitch, gcnew DataStream(mapped.pData, resource->Description.SizeInBytes, true, true, false));
+	}
+
+	DataBox^ DeviceContext::MapSubresource( Resource^ resource, int subresource, MapMode mode, MapFlags flags )
+	{
+		switch (resource->Dimension)
+		{
+		case ResourceDimension::Buffer:
+			return MapSubresource(safe_cast<Buffer^>(resource), mode, flags);
+
+		case ResourceDimension::Texture1D:
+		{
+			Texture1D^ texture = safe_cast<Texture1D^>(resource);
+			int mipLevels = texture->Description.MipLevels;
+			int arraySlice = subresource / mipLevels;
+			int mipSlice = subresource % mipLevels;
+			return MapSubresource(texture, mipSlice, arraySlice, mode, flags);
+		}
+
+		case ResourceDimension::Texture2D:
+		{
+			Texture2D^ texture = safe_cast<Texture2D^>(resource);
+			int mipLevels = texture->Description.MipLevels;
+			int arraySlice = subresource / mipLevels;
+			int mipSlice = subresource % mipLevels;
+			return MapSubresource(texture, mipSlice, arraySlice, mode, flags);
+		}
+
+		case ResourceDimension::Texture3D:
+		{
+			Texture3D^ texture = safe_cast<Texture3D^>(resource);
+			int mipLevels = texture->Description.MipLevels;
+			int arraySlice = subresource / mipLevels;
+			int mipSlice = subresource % mipLevels;
+			return MapSubresource(texture, mipSlice, arraySlice, mode, flags);
+		}
+
+		default:
+			throw gcnew InvalidOperationException("Cannot Map unknown resource type");
+		}
 	}
 
 	void DeviceContext::UnmapSubresource( Resource^ resource, int subresource )
