@@ -46,6 +46,9 @@ namespace SlimDX
 		ref class UnorderedAccessView;
 		ref class Buffer;
 		ref class Predicate;
+		ref class Texture1D;
+		ref class Texture2D;
+		ref class Texture3D;
 		value class ResourceRegion;
 
 		ref class GeometryShaderWrapper;
@@ -353,12 +356,53 @@ namespace SlimDX
 			/// Maps a GPU resource into CPU-accessible memory.
 			/// </summary>
 			/// <param name="resource">The resource to map.</param>
-			/// <param name="subresource">Index of the subresource to map.</param>
-			/// <param name="sizeInBytes">Size, in bytes, of the data to retrieve.</param>
+			/// <param name="mipSlice">A zero-based index into an array of subtextures; 0 indicates the first, most detailed subtexture (or mipmap level).</param>
+			/// <param name="arraySlice">The zero-based index of the first texture to use (in an array of textures).</param>
 			/// <param name="mode">Specifies the CPU's read and write permissions for the resource. </param>
 			/// <param name="flags">Flags that specify what the CPU should do when the GPU is busy.</param>
 			/// <returns>The mapped resource data.</returns>
-			DataBox^ MapSubresource( Resource^ resource, int subresource, int sizeInBytes, MapMode mode, MapFlags flags );
+			DataBox^ MapSubresource( Texture1D^ resource, int mipSlice, int arraySlice, MapMode mode, MapFlags flags );
+
+			/// <summary>
+			/// Maps a GPU resource into CPU-accessible memory.
+			/// </summary>
+			/// <param name="resource">The resource to map.</param>
+			/// <param name="mipSlice">A zero-based index into an array of subtextures; 0 indicates the first, most detailed subtexture (or mipmap level).</param>
+			/// <param name="arraySlice">The zero-based index of the first texture to use (in an array of textures).</param>
+			/// <param name="mode">Specifies the CPU's read and write permissions for the resource. </param>
+			/// <param name="flags">Flags that specify what the CPU should do when the GPU is busy.</param>
+			/// <returns>The mapped resource data.</returns>
+			DataBox^ MapSubresource( Texture2D^ resource, int mipSlice, int arraySlice, MapMode mode, MapFlags flags );
+
+			/// <summary>
+			/// Maps a GPU resource into CPU-accessible memory.
+			/// </summary>
+			/// <param name="resource">The resource to map.</param>
+			/// <param name="mipSlice">A zero-based index into an array of subtextures; 0 indicates the first, most detailed subtexture (or mipmap level).</param>
+			/// <param name="arraySlice">The zero-based index of the first texture to use (in an array of textures).</param>
+			/// <param name="mode">Specifies the CPU's read and write permissions for the resource. </param>
+			/// <param name="flags">Flags that specify what the CPU should do when the GPU is busy.</param>
+			/// <returns>The mapped resource data.</returns>
+			DataBox^ MapSubresource( Texture3D^ resource, int mipSlice, int arraySlice, MapMode mode, MapFlags flags );
+
+			/// <summary>
+			/// Maps a GPU resource into CPU-accessible memory.
+			/// </summary>
+			/// <param name="resource">The resource to map.</param>
+			/// <param name="mode">Specifies the CPU's read and write permissions for the resource. </param>
+			/// <param name="flags">Flags that specify what the CPU should do when the GPU is busy.</param>
+			/// <returns>The mapped resource data.</returns>
+			DataBox^ MapSubresource( Buffer^ resource, MapMode mode, MapFlags flags );
+
+			/// <summary>
+			/// Maps a GPU resource into CPU-accessible memory.
+			/// </summary>
+			/// <param name="resource">The resource to map.</param>
+			/// <param name="subresource">Index of the subresource level to lock.</param>
+			/// <param name="mode">Specifies the CPU's read and write permissions for the resource. </param>
+			/// <param name="flags">Flags that specify what the CPU should do when the GPU is busy.</param>
+			/// <returns>The mapped resource data.</returns>
+			DataBox^ MapSubresource( Resource^ resource, int subresource, MapMode mode, MapFlags flags );
 
 			/// <summary>
 			/// Releases a previously mapped resource.

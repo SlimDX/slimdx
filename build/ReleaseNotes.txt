@@ -19,6 +19,7 @@ Direct3D 11
 	* Added a Factory property to the Device to make it easy to get the associated factory.
 	* Fixed a stack overflow in Resource.FromPointer.
 	* Changed BlendStateDescription to implement IEquatable<T> and GetHashCode()
+	* Fixed the DeviceContext.MapSubresource function to properly calculate the size of the returned data.
 
 Direct2D
 	* Fixed a bug that incorrectly created RectangleGeometry from a RectangleF.
