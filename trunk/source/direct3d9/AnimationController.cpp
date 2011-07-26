@@ -59,8 +59,12 @@ namespace Direct3D9
 
 	AnimationController::~AnimationController()
 	{
-		for each (GCHandle handle in outputs)
-			handle.Free();
+		if (outputs != nullptr)
+		{
+			for each (GCHandle handle in outputs)
+				handle.Free();
+			outputs = nullptr;
+		}
 	}
 
 	Result AnimationController::AdvanceTime( double time, AnimationCallback^ handler )
