@@ -8,7 +8,9 @@ DXGI
 	* Fixed a bug that caused certain types like Factory1 to be unable to be a target of GetParent<T>.
 
 Direct3D 9
-	* Changed Device.Reset and DeviceEx.ResetEx to take a params array of present parameters. 
+	* Changed Device.Reset and DeviceEx.ResetEx to take a params array of present parameters.
+	* Fixed a bug in setting an EffectStateManager.
+	* Changed AnimationController.GetAnimationSet() to have a generic result to allow for custom interfaces to be returned.
 
 Direct3D 10
 	* Added an overload to Texture.Map to take an array slice index.
