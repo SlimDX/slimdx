@@ -11,6 +11,7 @@ Direct3D 9
 	* Changed Device.Reset and DeviceEx.ResetEx to take a params array of present parameters.
 	* Fixed a bug in setting an EffectStateManager.
 	* Changed AnimationController.GetAnimationSet() to have a generic result to allow for custom interfaces to be returned.
+	* Fixed a null reference exception in AnimationController.Dispose().
 
 Direct3D 10
 	* Added an overload to Texture.Map to take an array slice index.
