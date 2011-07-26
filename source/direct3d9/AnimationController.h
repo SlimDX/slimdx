@@ -53,8 +53,11 @@ namespace SlimDX
 			Result AdvanceTime( double time, AnimationCallback^ handler );
 			AnimationController^ Clone( int maxAnimationOutputs, int maxAnimationSets, int maxTracks, int maxEvents );
 			
-			AnimationSet^ GetAnimationSet( int index );
-			AnimationSet^ GetAnimationSet( System::String^ name );
+			generic<typename T> where T : AnimationSet
+			T GetAnimationSet( int index );
+
+			generic<typename T> where T : AnimationSet
+			T GetAnimationSet( System::String^ name );
 			int GetCurrentTrackEvent( int track, EventType eventType );
 
 			EventDescription GetEventDescription( int handle );

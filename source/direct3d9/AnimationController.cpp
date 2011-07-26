@@ -38,6 +38,7 @@
 using namespace System;
 using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
+using namespace System::Reflection;
 
 namespace SlimDX
 {
@@ -84,19 +85,24 @@ namespace Direct3D9
 		return gcnew AnimationController( pointer, nullptr );
 	}
 
-	AnimationSet^ AnimationController::GetAnimationSet( int index )
+	generic<typename T> where T : AnimationSet
+	T AnimationController::GetAnimationSet( int index )
 	{
 		LPD3DXANIMATIONSET set;
 
 		HRESULT hr = InternalPointer->GetAnimationSet( index, &set );
 
 		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
+			return T();
 
-		return InternalAnimationSet::FromPointer( set, this );
+		MethodInfo^ method = T::typeid->GetMethod( "FromPointer", BindingFlags::Public | BindingFlags::Static );
+		T result = safe_cast<T>( method->Invoke( nullptr, gcnew array<Object^> { IntPtr( set ) } ) );
+
+		return result;
 	}
 
-	AnimationSet^ AnimationController::GetAnimationSet( String^ name )
+	generic<typename T> where T : AnimationSet
+	T AnimationController::GetAnimationSet( String^ name )
 	{
 		LPD3DXANIMATIONSET set;
 		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
@@ -105,9 +111,12 @@ namespace Direct3D9
 		HRESULT hr = InternalPointer->GetAnimationSetByName( reinterpret_cast<LPCSTR>( pinnedName ), &set );
 		
 		if( RECORD_D3D9( hr ).IsFailure )
-			return nullptr;
+			return T();
 
-		return InternalAnimationSet::FromPointer( set, this );
+		MethodInfo^ method = T::typeid->GetMethod( "FromPointer", BindingFlags::Public | BindingFlags::Static );
+		T result = safe_cast<T>( method->Invoke( nullptr, gcnew array<Object^> { IntPtr( set ) } ) );
+
+		return result;
 	}
 
 	int AnimationController::GetCurrentTrackEvent( int track, EventType eventType )
