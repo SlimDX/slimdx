@@ -581,11 +581,14 @@ namespace Direct3D9
 	void Effect::StateManager::set( IEffectStateManager^ manager )
 	{
 		if( shim != NULL )
-			delete shim;
+			shim->Release();
 
 		// Manual Allocation: Handled properly
 		// the class needs to keep this pointer around
-		shim = new IEffectStateManagerShim( manager, this );
+		if (manager == nullptr)
+			shim = 0;
+		else
+			shim = new IEffectStateManagerShim(manager, this);
 
 		HRESULT hr = InternalPointer->SetStateManager( shim );
 		RECORD_D3D9( hr );
