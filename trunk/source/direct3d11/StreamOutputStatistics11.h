@@ -40,12 +40,12 @@ namespace SlimDX
 			/// <summary>
 			/// Number of primitives (that is, points, lines, and triangles) written to the stream-output buffers.
 			/// </summary>
-			property long PrimitivesWritten;
+			property System::Int64 PrimitivesWritten;
 
 			/// <summary>
 			/// Number of primitives that would have been written to the stream-output buffers if there had been enough space for them all.
 			/// </summary>
-			property long StorageNeeded;
+			property System::Int64 StorageNeeded;
 		
 			/// <summary>
 			/// Tests for equality between two StreamOutputStatisticss.

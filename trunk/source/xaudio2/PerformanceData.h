@@ -40,8 +40,8 @@ namespace SlimDX
 		public:
 			PerformanceData() { }
 
-			property long AudioCyclesSinceLastQuery;
-			property long TotalCyclesSinceLastQuery;
+			property System::Int64 AudioCyclesSinceLastQuery;
+			property System::Int64 TotalCyclesSinceLastQuery;
 			property int MinimumCyclesPerQuantum;
 			property int MaximumCyclesPerQuantum;
 			property int MemoryUsageInBytes;

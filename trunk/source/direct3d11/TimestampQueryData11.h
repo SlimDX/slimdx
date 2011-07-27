@@ -40,7 +40,7 @@ namespace SlimDX
 			/// <summary>
 			/// How frequently the GPU counter increments in Hz.
 			/// </summary>
-			property long Frequency;
+			property System::Int64 Frequency;
 
 			/// <summary>
 			/// If this is <c>true</c>, something occurred in between the query's Begin and End calls that caused the 
