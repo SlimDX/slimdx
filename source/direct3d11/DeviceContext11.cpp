@@ -267,14 +267,14 @@ namespace Direct3D11
 		InternalPointer->SetResourceMinLOD( resource->InternalPointer, minimumLod );
 	}
 	
-	Result DeviceContext::IsDataAvailable( Asynchronous^ data )
+	bool DeviceContext::IsDataAvailable( Asynchronous^ data )
 	{
 		return IsDataAvailable( data, AsynchronousFlags::None );
 	}
 	
-	Result DeviceContext::IsDataAvailable( Asynchronous^ data, AsynchronousFlags flags )
+	bool DeviceContext::IsDataAvailable( Asynchronous^ data, AsynchronousFlags flags )
 	{
-		return RECORD_D3D11( InternalPointer->GetData( data->InternalPointer, 0, 0, static_cast<UINT>( flags ) ) );
+		return InternalPointer->GetData( data->InternalPointer, 0, 0, static_cast<UINT>( flags ) ) == S_OK;
 	}
 
 	DataStream^ DeviceContext::GetData( Asynchronous^ data )

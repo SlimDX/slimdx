@@ -302,16 +302,16 @@ namespace SlimDX
 			/// Determines if data is available for an asynchronous object.
 			/// </summary>
 			/// <param name="data">The asynchronous data provider.</param>
-			/// <returns>A result code indicating whether data is available or nor, or if an error occurred.</returns>
-			Result IsDataAvailable( Asynchronous^ data );
+			/// <returns><c>true</c> if query data is available for retrieval; otherwise, <c>false</c>.</returns>
+			bool IsDataAvailable( Asynchronous^ data );
 
 			/// <summary>
 			/// Determines if data is available for an asynchronous object.
 			/// </summary>
 			/// <param name="data">The asynchronous data provider.</param>
 			/// <param name="flags">Flags specifying how the command should operate.</param>
-			/// <returns>A result code indicating whether data is available or nor, or if an error occurred.</returns>
-			Result IsDataAvailable( Asynchronous^ data, AsynchronousFlags flags );
+			/// <returns><c>true</c> if query data is available for retrieval; otherwise, <c>false</c>.</returns>
+			bool IsDataAvailable( Asynchronous^ data, AsynchronousFlags flags );
 
 			/// <summary>
 			/// Gets data from the GPU asynchronously.
