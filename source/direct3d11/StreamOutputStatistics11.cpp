@@ -31,8 +31,8 @@ namespace Direct3D11
 {
 	StreamOutputStatistics::StreamOutputStatistics( const D3D11_QUERY_DATA_SO_STATISTICS& native )
 	{
-		PrimitivesWritten = static_cast<long>( native.NumPrimitivesWritten );
-		StorageNeeded = static_cast<long>( native.PrimitivesStorageNeeded );
+		PrimitivesWritten = native.NumPrimitivesWritten;
+		StorageNeeded = native.PrimitivesStorageNeeded;
 	}
 	
 	D3D11_QUERY_DATA_SO_STATISTICS StreamOutputStatistics::CreateNativeVersion()

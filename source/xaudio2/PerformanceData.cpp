@@ -31,8 +31,8 @@ namespace XAudio2
 {
 	PerformanceData::PerformanceData( const XAUDIO2_PERFORMANCE_DATA &data )
 	{
-		AudioCyclesSinceLastQuery = static_cast<long>( data.AudioCyclesSinceLastQuery );
-		TotalCyclesSinceLastQuery = static_cast<long>( data.TotalCyclesSinceLastQuery );
+		AudioCyclesSinceLastQuery = data.AudioCyclesSinceLastQuery;
+		TotalCyclesSinceLastQuery = data.TotalCyclesSinceLastQuery;
 		MinimumCyclesPerQuantum = data.MinimumCyclesPerQuantum;
 		MaximumCyclesPerQuantum = data.MaximumCyclesPerQuantum;
 		MemoryUsageInBytes = data.MemoryUsageInBytes;

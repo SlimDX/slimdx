@@ -31,17 +31,17 @@ namespace Direct3D11
 {
 	PipelineStatistics::PipelineStatistics( const D3D11_QUERY_DATA_PIPELINE_STATISTICS& native )
 	{
-		InputAssemblerVertices = static_cast<long>( native.IAVertices );
-		InputAssemblerPrimitives = static_cast<long>( native.IAPrimitives );
-		VertexShaderInvocations = static_cast<long>( native.VSInvocations );
-		GeometryShaderInvocations = static_cast<long>( native.GSInvocations );
-		GeometryShaderPrimitives = static_cast<long>( native.GSPrimitives );
-		RasterizedPrimitives = static_cast<long>( native.CInvocations );
-		RenderedPrimitives = static_cast<long>( native.CPrimitives );
-		PixelShaderInvocations = static_cast<long>( native.PSInvocations );
-		HullShaderInvocations = static_cast<long>( native.HSInvocations );
-		DomainShaderInvocations = static_cast<long>( native.DSInvocations );
-		ComputeShaderInvocations = static_cast<long>( native.CSInvocations );
+		InputAssemblerVertices = native.IAVertices;
+		InputAssemblerPrimitives = native.IAPrimitives;
+		VertexShaderInvocations = native.VSInvocations;
+		GeometryShaderInvocations = native.GSInvocations;
+		GeometryShaderPrimitives = native.GSPrimitives;
+		RasterizedPrimitives = native.CInvocations;
+		RenderedPrimitives = native.CPrimitives;
+		PixelShaderInvocations = native.PSInvocations;
+		HullShaderInvocations = native.HSInvocations;
+		DomainShaderInvocations = native.DSInvocations;
+		ComputeShaderInvocations = native.CSInvocations;
 	}
 	
 	D3D11_QUERY_DATA_PIPELINE_STATISTICS PipelineStatistics::CreateNativeVersion()
