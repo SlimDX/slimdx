@@ -64,6 +64,7 @@
     <Folder Include="Topics\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Topics\SlimDX Software Development Kit\Previous Releases\March 2011.aml" />
     <None Include="Topics\Deployment Guide.aml" />
     <None Include="Topics\Custom Build Guide.aml" />
     <None Include="Topics\SlimDX Software Development Kit\Previous Releases\September 2008.aml" />

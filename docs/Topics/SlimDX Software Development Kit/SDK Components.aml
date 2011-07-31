@@ -35,6 +35,11 @@
           </listItem>
           <listItem>
             <para>
+              <database>Runtime</database> - Contains the SlimDX end user runtime installers for both .NET 2 and .NET 4.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
               <database>Samples</database> - Contains a self-extracting installer for all of the SlimDX sample source code and binaries, including the Sample Framework.
             </para>
           </listItem>
