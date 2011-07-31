@@ -4,20 +4,8 @@
     <title>Known Issues</title>
     <content>
       <para>
-        The following are known issues in the November 2008 SDK:
+        There are no known issues in the July 2011 release of the SlimDX SDK.
       </para>
-      <list class="bullet">
-        <listItem>
-          <para>
-            <legacyBold>.NET 4.0 Client Profile</legacyBold>
-          </para>
-          <para>
-            SlimDX will not install correctly on machines that have only the .NET 4.0 Client Profile installed.
-            Detection of the installed framework fails, prompting users to download .NET 4.0.
-            Please contact us directly if this is a showstopper issue for you.
-          </para>
-        </listItem>
-      </list>
       </content>
       <introduction>
       <para>
