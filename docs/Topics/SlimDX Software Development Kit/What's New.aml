@@ -3,7 +3,7 @@
   <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
     <introduction>
       <para>
-        The July 2011 release was a minor stability release. Once again this release does not reflect a corresponding release
+        The August 2011 release was a minor stability release. Once again this release does not reflect a corresponding release
         of the DirectX SDK. While several improvements were made, along with internal upgrades to the SlimDX website, server,
         and documentation system, the majority of development effort has been focused on the V2 branch, which was recently moved to GitHub.
       </para>
@@ -13,7 +13,7 @@
       <title>Full Release Notes</title>
       <content>
         <para>
-          The following is a list of changes that were made to SlimDX for the July 2011 release.
+          The following is a list of changes that were made to SlimDX for the August 2011 release.
         </para>
         <para>
           <list class="bullet">
