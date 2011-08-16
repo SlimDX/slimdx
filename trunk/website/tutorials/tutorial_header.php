@@ -26,6 +26,8 @@
         <a href="http://slimdx.org/"><img src="../images/logoblackbg.jpg" alt="SlimDX" /></a>
         </div>
         
+        <div style="padding-left:415px; height:60px;"></div>
+
         <ul class="menu">
 <?php
 	function WriteMenuItem($itemName, $url)
