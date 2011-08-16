@@ -139,7 +139,7 @@ namespace MsdnLinkGenerator
 				"http://search.yahoo.com/search?p={0}+site%3Amsdn.microsoft.com%2Fen-us&fr=yfp-t-120&toggle=1&cop=mss&ei=UTF-8"
 			};
 
-			ProcessXml(@"D:\Promit\Documents\Projects\SlimDX\Main\trunk\docs\SlimDX.xml");
+			ProcessXml(args[0]);
 		}
 	}
 }
