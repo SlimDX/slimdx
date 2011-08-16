@@ -16,11 +16,11 @@
           <br/><br/>
         </p>
 
-        <a href="tutorials/basicwindow.php">
+        <a href="tutorials/BasicWindow.php">
           <h2>Basic Window</h2>
         </a>
         <p>
-          <a href="tutorials/basicwindow.php">
+          <a href="tutorials/BasicWindow.php">
             <img src="images/basicwindow.png"/>
           </a>
           <br/>
@@ -33,11 +33,11 @@
           <br/>
         </p>
 
-        <a href="tutorials/devicecreation.php">
+        <a href="tutorials/DeviceCreation.php">
           <h2>Device Creation</h2>
         </a>
         <p>
-          <a href="tutorials/devicecreation.php">
+          <a href="tutorials/DeviceCreation.php">
             <img src="images/devicecreation.png"/>
           </a>
           <br/>
@@ -51,11 +51,11 @@
           <br/>
         </p>
 
-        <a href="tutorials/simpletriangle.php">
+        <a href="tutorials/SimpleTriangle.php">
           <h2>Simple Triangle</h2>
         </a>
         <p>
-          <a href="tutorials/simpletriangle.php">
+          <a href="tutorials/SimpleTriangle.php">
             <img src="images/simpletriangle.png"/>
           </a>
           <br/>
@@ -74,9 +74,9 @@
     <div id="right">
       <h3>Direct3D 11</h3>
       <ul class="sidemenu">
-        <li><a href="tutorials/basicwindow.php">Basic Window</a></li>
-        <li><a href="tutorials/devicecreation.php">Device Creation</a></li>
-        <li><a href="tutorials/simpletriangle.php">Simple Triangle</a></li>
+        <li><a href="tutorials/BasicWindow.php">Basic Window</a></li>
+        <li><a href="tutorials/DeviceCreation.php">Device Creation</a></li>
+        <li><a href="tutorials/SimpleTriangle.php">Simple Triangle</a></li>
       </ul>
     </div>
 
