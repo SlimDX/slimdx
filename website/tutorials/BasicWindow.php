@@ -188,7 +188,7 @@
                           style='font-size:10.0pt;line-height:115%;font-family:"Courier New";color:#2B91AF'>Form</a>
       object as your rendering surface (or any other type derived from <a href='http://msdn.microsoft.com/en-us/library/system.windows.forms.control.aspx' 
                                                                           style='font-size:10.0pt;line-height:115%;font-family:"Courier New";color:#2B91AF'>Control</a>),
-      SlimDX also provides a specialized <a href='http://slimdx.org/latestdocs/Default.aspx?topic=Class+Reference%2fSlimDX.Windows+Namespace%2fRenderForm+Class' 
+      SlimDX also provides a specialized <a href='http://slimdx.org/docs/#T_SlimDX_Windows_RenderForm' 
                                             style='font-size: 10.0pt;line-height:115%;font-family:"Courier New";color:#2B91AF'>RenderForm</a>
       class that overrides a few message handlers to reduce flickering and sets
       defaults for the size of the client area. Additionally, it automatically loads
@@ -345,9 +345,9 @@ void OnApplicationIdle(object sender, EventArgs e)
 
 <br/><br/><pre class="prettyprint">MessagePump.Run(form, RenderFrame);</pre><br/>
      
-      The <a href="http://slimdx.org/latestdocs/Default.aspx?topic=Class+Reference%2fSlimDX.Windows+Namespace%2fMessagePump+Class" 
+      The <a href="http://slimdx.org/docs/#T_SlimDX_Windows_MessagePump" 
              style='font-size:10.0pt;line-height:115%;font-family:"Courier New";color:#2B91AF'>MessagePump</a> class provides
-      three overloads of the <a href='http://slimdx.org/latestdocs/Default.aspx?topic=Class+Reference%2fSlimDX.Windows+Namespace%2fMessagePump+Class' 
+      three overloads of the <a href='http://slimdx.org/docs/#Overload_SlimDX_Windows_MessagePump_Run' 
                                 style='font-size:10.0pt;line-height:115%;font-family:"Courier New";color:black;'>Run</a> method, allowing you to completely hide
       the use of <span style='font-size:10.0pt;line-height:115%;font-family:"Courier New";color:#2B91AF'>Application</span><span style='font-size:10.0pt;line-height:
 115%;font-family:"Courier New";color:black;'>.Run</span>. If you wish to still hook the <span
