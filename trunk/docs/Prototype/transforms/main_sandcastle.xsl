@@ -113,6 +113,10 @@
               <xsl:value-of select="@href" />
               <xsl:text>.aspx</xsl:text>
             </xsl:attribute>
+
+            <xsl:attribute name="target">
+              <xsl:text>_blank</xsl:text>  
+            </xsl:attribute>
             
             <xsl:apply-templates />
           </a>
