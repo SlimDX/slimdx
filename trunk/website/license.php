@@ -63,7 +63,7 @@ restricts the author's moral rights.
 	
 		<div id="right">
 			<ul class="sidemenu">
-				<li><a href="http://slimdx.org/latestdocs/default.aspx">Documentation</a></li>
+				<li><a href="http://slimdx.org/docs">Documentation</a></li>
 				<li><a href="http://opensource.org/">Open Source Initiative</a></li>
 				<li><a href="http://creativecommons.org/">Creative Commons</a></li>
 			</ul>

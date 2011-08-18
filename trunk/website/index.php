@@ -54,7 +54,7 @@
       related by XNA, MDX, and DirectX tutorials on the web should translate easily to SlimDX. We recommend
       the DirectX SDK documentation as a particularly good source of explanatory material.
 			</p>
-			<a href="http://slimdx.org/latestdocs/Default.aspx?topic=Programming+Guide/Getting+Started" class="homea">Read More...</a>
+			<a href="http://slimdx.org/docs/#Getting_Started" class="homea">Read More...</a>
         </div>
         
         <div id="right_column">
