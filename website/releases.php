@@ -31,7 +31,7 @@
 			<ul class="sidemenu">
 				<li><a href="download.php">Latest Release</a></li>
 				<li><a href="license.php">Licensing Information</a></li>
-				<li><a href="http://slimdx.org/latestdocs/default.aspx">Documentation</a></li>
+				<li><a href="/docs">Documentation</a></li>
 			</ul>
 		</div>
 		
