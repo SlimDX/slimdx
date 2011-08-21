@@ -45,7 +45,7 @@
 	WriteMenuItem("Home", "../index.php");
 	WriteMenuItem("Features", "../features.php");
 	WriteMenuItem("Download", "../download.php");
-	WriteMenuItem("Documentation", "http://slimdx.org/latestdocs/");
+	WriteMenuItem("Documentation", "/docs");
 	WriteMenuItem("Tutorials", "../tutorials.php");
 	WriteMenuItem("Licensing", "../license.php");
 	WriteMenuItem("Support", "../support.php");
