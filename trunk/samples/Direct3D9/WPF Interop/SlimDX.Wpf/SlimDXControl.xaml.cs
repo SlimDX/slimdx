@@ -382,7 +382,7 @@ namespace SlimDX.Wpf
 				if(!_deviceEx.Disposed)
 				{
 					_deviceEx.Dispose();
-					_device = null;
+					_deviceEx = null;
 					OnDeviceDestroyed(EventArgs.Empty);
 				}
 			}
