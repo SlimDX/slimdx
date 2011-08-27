@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<?define Version="2.0.11.43" ?>
-<?define ReleaseName="March 2011" ?>
-<?define ShortName="Mar2011" ?>
+<?define Version="2.0.12.43" ?>
+<?define ReleaseName="August 2011" ?>
+<?define ShortName="Aug2011" ?>
 <?define DXShortName="Jun2010" ?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">

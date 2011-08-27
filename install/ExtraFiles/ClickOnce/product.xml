@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Product xmlns="http://schemas.microsoft.com/developer/2004/01/bootstrapper" ProductCode="SlimDX.2.0.11.43">
+<Product xmlns="http://schemas.microsoft.com/developer/2004/01/bootstrapper" ProductCode="SlimDX.2.0.12.43">
   
   <PackageFiles>
     <PackageFile Name="SlimDX Runtime for .NET 2.0 (March 2011).msi" />
