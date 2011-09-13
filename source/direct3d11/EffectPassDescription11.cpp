@@ -35,10 +35,12 @@ namespace Direct3D11
 	{
 		m_Name = gcnew String( native.Name );
 		m_Annotations = native.Annotations;
-		m_Signature = gcnew SlimDX::D3DCompiler::ShaderSignature( gcnew DataStream( native.pIAInputSignature, native.IAInputSignatureSize, true, false, false ) );
 		m_StencilRef = native.StencilRef;
 		m_SampleMask = native.SampleMask;
 		m_BlendFactor = Color4( native.BlendFactor[ 3 ], native.BlendFactor[ 0 ], native.BlendFactor[ 1 ], native.BlendFactor[ 2 ] );
+
+		if (native.pIAInputSignature && native.IAInputSignatureSize)
+			m_Signature = gcnew SlimDX::D3DCompiler::ShaderSignature(gcnew DataStream(native.pIAInputSignature, native.IAInputSignatureSize, true, false, false));
 	}
 	
 	String^ EffectPassDescription::Name::get()

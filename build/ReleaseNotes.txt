@@ -17,6 +17,7 @@ Direct3D 10
 	* Added an overload to Texture.Map to take an array slice index.
 	* Added a Factory property to the Device to make it easy to get the associated factory.
 	* Fixed a stack overflow in Resource.FromPointer.
+	* Fixed a bug that prevented accessing EffectPassDescription for shaders that do not have signatures.
 
 Direct3D 11
 	* Added a Factory property to the Device to make it easy to get the associated factory.
@@ -25,6 +26,7 @@ Direct3D 11
 	* Fixed the DeviceContext.MapSubresource function to properly calculate the size of the returned data.
 	* Fixed the datatypes of PipelineStatistics members to be Int64 instead of Int32.
 	* Changed DeviceContext.IsDataAvailable to return a boolean result.
+	* Fixed a bug that prevented accessing EffectPassDescription for shaders that do not have signatures.
 
 Direct2D
 	* Fixed a bug that incorrectly created RectangleGeometry from a RectangleF.
