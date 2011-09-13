@@ -18,6 +18,7 @@ Direct3D 10
 	* Added a Factory property to the Device to make it easy to get the associated factory.
 	* Fixed a stack overflow in Resource.FromPointer.
 	* Fixed a bug that prevented accessing EffectPassDescription for shaders that do not have signatures.
+	* Added missing SetResourceArray and GetResourceArray methods to EffectResourceVariable.
 
 Direct3D 11
 	* Added a Factory property to the Device to make it easy to get the associated factory.
