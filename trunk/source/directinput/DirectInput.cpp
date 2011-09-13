@@ -82,8 +82,6 @@ namespace DirectInput
 	bool DirectInput::IsDeviceAttached( Guid device )
 	{
 		HRESULT hr = InternalPointer->GetDeviceStatus( Utilities::ConvertManagedGuid( device ) );
-		RECORD_DINPUT( hr );
-
 		return hr == DI_OK;
 	}
 
