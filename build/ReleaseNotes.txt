@@ -38,6 +38,7 @@ Multimedia
 DirectInput
 	* Changed DirectInput DeviceInstance to properly mask out the DeviceType flag.
 	* Added missing DirectInput buffered data functionality.
+	* Changed IsDeviceAvailable to not throw when the result would be false.
 
 RawInput
 	* Added support for custom message handling. Allows the use of WPF and other non-Winforms frameworks.
