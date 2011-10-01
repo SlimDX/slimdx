@@ -27,7 +27,7 @@
           As a result, it is not critical to get this correct immediately, since you will see what you've missed after completing a build.
         </para>
         <para>
-          Note that although most of the SlimDX releases match the corresponding DirectX SDK release, the March and August 2011 releases
+          Note that although most of the SlimDX releases match the corresponding DirectX SDK release, the March and September 2011 releases
           of SlimDX break from this mold, and rely on the same DirectX SDK version (June 2010) as the previous release.
         </para>
       </content>
@@ -56,7 +56,7 @@
           </tableHeader>
           
           <row>
-            <entry>August 2011</entry>
+            <entry>September 2011</entry>
             <entry>43</entry>
             <entry>2.7</entry>
             <entry>1.7</entry>

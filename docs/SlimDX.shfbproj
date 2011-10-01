@@ -32,6 +32,9 @@
     <HelpTitle>SlimDX Documentation</HelpTitle>
     <MissingTags>AutoDocumentCtors, AutoDocumentDispose</MissingTags>
     <CopyrightText>Copyright %28c%29 2011 SlimDX Group</CopyrightText>
+    <SyntaxFilters>CSharp</SyntaxFilters>
+    <CopyrightHref>http://slimdx.org</CopyrightHref>
+    <IndentHtml>True</IndentHtml>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in
        order for Visual Studio to perform the build.  The others are optional

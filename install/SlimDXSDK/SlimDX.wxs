@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <?define Version="2.0.12.43" ?>
-<?define ReleaseName="August 2011" ?>
-<?define ShortName="Aug2011" ?>
+<?define ReleaseName="September 2011" ?>
+<?define ShortName="Sep2011" ?>
 <?define DXShortName="Jun2010" ?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
@@ -246,12 +246,13 @@
           </Directory>
 
           <!-- SlimDX redist installers -->
-          <Directory Id="Runtimes" Name="Runtime">
+          <!--<Directory Id="Runtimes" Name="Runtime">
             <Component Id="Runtimes" DiskId="1" Guid="97938607-F716-47df-B02C-AA492E2536DD">
               <File Id="Redist_Net20" Name="SlimDX Runtime for .NET 2.0 ($(var.ReleaseName)).msi" Source="..\SlimDX Runtime for .NET 2.0 ($(var.ReleaseName)).msi" />
-              <File Id="Redist_Net40" Name="SlimDX Runtime for .NET 4.0 ($(var.ReleaseName)).exe" Source="..\SlimDX Runtime for .NET 4.0 ($(var.ReleaseName)).exe" />
+              <File Id="Redist_Net40_x86" Name="SlimDX Runtime for .NET 4.0 ($(var.ReleaseName)).exe" Source="..\SlimDX Runtime for .NET 4.0 x86 ($(var.ReleaseName)).msi" />
+              <File Id="Redist_Net40_x64" Name="SlimDX Runtime for .NET 4.0 ($(var.ReleaseName)).exe" Source="..\SlimDX Runtime for .NET 4.0 x64 ($(var.ReleaseName)).msi" />
             </Component>
-          </Directory>
+          </Directory>-->
           
           <!-- SlimDX documentation -->
           <Directory Id="Documentation" Name="Documentation">
@@ -431,9 +432,9 @@
       </Feature>
     </Feature>
 
-    <Feature Id="Runtimes" Level="1" AllowAdvertise="no" Title="Runtimes" Description="SlimDX end user runtime installers.">
+    <!--<Feature Id="Runtimes" Level="1" AllowAdvertise="no" Title="Runtimes" Description="SlimDX end user runtime installers.">
       <ComponentRef Id="Runtimes" />
-    </Feature>
+    </Feature>-->
     
     <Feature Id="Documentation" Level="1" AllowAdvertise="no"
              Title="Documentation" Description="SlimDX documentation in CHM format.">
