@@ -37,7 +37,7 @@
               Most SlimDX based applications will also want to use at least some of DirectX.
               SlimDX is configured to <newTerm>delay load</newTerm> all of its DirectX DLL dependencies.
               This means that none of it is required until an application actually tries to use that component.
-              (Note that Direct3DX is forcibly loaded along with Direct3D in the August 2011 release; this may change in future versions.)
+              (Note that Direct3DX is forcibly loaded along with Direct3D in the September 2011 release; this may change in future versions.)
 
               SlimDX releases are usually matched with DirectX SDK release, although this is not the case
               for the September 2011 release. SlimDX September 2011 relies on the older June 2010 release of the DirectX SDK, which uses Direct3DX version 43.
