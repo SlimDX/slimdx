@@ -243,10 +243,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\build\SlimDX.vcxproj">
-      <Project>{8ECCE443-0440-40F4-A94C-F02E027282C3}</Project>
-      <Name>SlimDX</Name>
-    </ProjectReference>
+    <Reference Include="SlimDX, Version=2.0.12.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
