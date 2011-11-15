@@ -118,6 +118,11 @@ namespace DXGI
 		return Result( DXGI_ERROR_NONEXCLUSIVE );
 	}
 
+	Result ResultCode::NotCurrentlyAvailable::get()
+	{
+		return Result( DXGI_ERROR_NOT_CURRENTLY_AVAILABLE );
+	}
+
 	Result ResultCode::Success::get()
 	{
 		return Result( S_OK );
