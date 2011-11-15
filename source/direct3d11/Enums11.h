@@ -2055,7 +2055,12 @@ namespace SlimDX
 			/// <summary>
 			/// Allow data to be appended to the end of the buffer.
 			/// </summary>
-			AllowAppend = D3D11_BUFFER_UAV_FLAG_APPEND
+			AllowAppend = D3D11_BUFFER_UAV_FLAG_APPEND,
+
+			/// <summary>
+			/// Adds a counter to the unordered-access-view buffer.
+			/// </summary>
+			Counter = D3D11_BUFFER_UAV_FLAG_COUNTER
 		};
 
 		/// <summary>Identifies the type of the resource that will be viewed.</summary>
