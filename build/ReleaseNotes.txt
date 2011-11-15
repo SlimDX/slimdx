@@ -1,3 +1,6 @@
+Samples
+	* Fixed a UI rendering bug in the SampleFramework.
+
 DXGI
 	* Added missing result code.
 
