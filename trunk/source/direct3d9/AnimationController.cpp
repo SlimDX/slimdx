@@ -89,6 +89,20 @@ namespace Direct3D9
 		return gcnew AnimationController( pointer, nullptr );
 	}
 
+	// helper method to create a generic animation set
+	generic<typename T> where T : AnimationSet
+	T CreateAnimationSet(LPD3DXANIMATIONSET set)
+	{
+		Type^ type = T::typeid;
+		if (type == AnimationSet::typeid)
+			type = InternalAnimationSet::typeid;
+
+		MethodInfo^ method = type->GetMethod("FromPointer", BindingFlags::Public | BindingFlags::Static);
+		T result = safe_cast<T>(method->Invoke(nullptr, gcnew array<Object^> { IntPtr(set) }));
+
+		return result;
+	}
+
 	generic<typename T> where T : AnimationSet
 	T AnimationController::GetAnimationSet( int index )
 	{
@@ -99,10 +113,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return T();
 
-		MethodInfo^ method = T::typeid->GetMethod( "FromPointer", BindingFlags::Public | BindingFlags::Static );
-		T result = safe_cast<T>( method->Invoke( nullptr, gcnew array<Object^> { IntPtr( set ) } ) );
-
-		return result;
+		return CreateAnimationSet<T>(set);
 	}
 
 	generic<typename T> where T : AnimationSet
@@ -117,10 +128,7 @@ namespace Direct3D9
 		if( RECORD_D3D9( hr ).IsFailure )
 			return T();
 
-		MethodInfo^ method = T::typeid->GetMethod( "FromPointer", BindingFlags::Public | BindingFlags::Static );
-		T result = safe_cast<T>( method->Invoke( nullptr, gcnew array<Object^> { IntPtr( set ) } ) );
-
-		return result;
+		return CreateAnimationSet<T>(set);
 	}
 
 	int AnimationController::GetCurrentTrackEvent( int track, EventType eventType )
