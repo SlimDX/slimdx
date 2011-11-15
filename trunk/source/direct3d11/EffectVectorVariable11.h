@@ -75,6 +75,26 @@ namespace SlimDX
 			/// <summary>
 			/// Sets the value of the vector variable.
 			/// </summary>
+			/// <param name="x">The X-component of the vector.</param>
+			/// <param name="y">The Y-component of the vector.</param>
+			/// <param name="z">The Z-component of the vector.</param>
+			/// <param name="w">The W-component of the vector.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result Set( int x, int y, int z, int w );
+
+			/// <summary>
+			/// Sets the value of the vector variable.
+			/// </summary>
+			/// <param name="x">The X-component of the vector.</param>
+			/// <param name="y">The Y-component of the vector.</param>
+			/// <param name="z">The Z-component of the vector.</param>
+			/// <param name="w">The W-component of the vector.</param>
+			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
+			Result Set( bool x, bool y, bool z, bool w );
+
+			/// <summary>
+			/// Sets the value of the vector variable.
+			/// </summary>
 			/// <param name="value">The color value to set.</param>
 			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
 			Result Set( Color4 value );
