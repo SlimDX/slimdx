@@ -206,6 +206,16 @@ namespace SlimDX
 			}
 
 			/// <summary>
+			/// 
+			/// </summary>
+			/// <remarks>This is a failed result.</remarks>
+			/// <unmanaged>DXGI_ERROR_NOT_CURRENTLY_AVAILABLE</unmanaged>
+			property static Result NotCurrentlyAvailable
+			{
+				Result get();
+			}
+
+			/// <summary>
 			/// Represents the result of a successful operation.
 			/// </summary>
 			/// <remarks>This is a successful result.</remarks>
