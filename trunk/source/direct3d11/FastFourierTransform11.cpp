@@ -211,9 +211,9 @@ namespace Direct3D11
 		if (precomputeBuffers == nullptr)
 			throw gcnew ArgumentNullException("precomputeBuffers");
 
-		if (tempBuffers->Length == 0 || tempBuffers->Length > D3DX11_FFT_MAX_TEMP_BUFFERS)
+		if (tempBuffers->Length == 0)
 			throw gcnew ArgumentOutOfRangeException("temporaryBuffers");
-		if (precomputeBuffers->Length == 0 || precomputeBuffers->Length > D3DX11_FFT_MAX_PRECOMPUTE_BUFFERS)
+		if (precomputeBuffers->Length == 0)
 			throw gcnew ArgumentOutOfRangeException("precomputeBuffers");
 
 		stack_array<ID3D11UnorderedAccessView*> nativeTempBuffers = stackalloc(ID3D11UnorderedAccessView*, tempBuffers->Length);

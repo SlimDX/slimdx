@@ -6,3 +6,4 @@ Direct3D 9
 
 Direct3D 11
 	* Added missing UnorderedAccessViewBufferFlags flag.
+	* Removed invalid range checks from FFT AttachBuffersAndPrecompute
