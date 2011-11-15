@@ -1,47 +1,8 @@
-Samples
-	* Added Conway's Game of Life sample using compute shaders.
-
-Math
-	* Fixed a bug in Matrix3x2.TransformPoint.
-
 DXGI
-	* Fixed a bug that caused certain types like Factory1 to be unable to be a target of GetParent<T>.
+	* Added missing result code.
 
 Direct3D 9
-	* Changed Device.Reset and DeviceEx.ResetEx to take a params array of present parameters.
-	* Fixed a bug in setting an EffectStateManager.
-	* Changed AnimationController.GetAnimationSet() to have a generic result to allow for custom interfaces to be returned.
-	* Fixed a null reference exception in AnimationController.Dispose().
-
-Direct3D 10
-	* Added an overload to Texture.Map to take an array slice index.
-	* Added a Factory property to the Device to make it easy to get the associated factory.
-	* Fixed a stack overflow in Resource.FromPointer.
-	* Fixed a bug that prevented accessing EffectPassDescription for shaders that do not have signatures.
-	* Added missing SetResourceArray and GetResourceArray methods to EffectResourceVariable.
+	* Fixed pinning of UVAtlas callbacks.
 
 Direct3D 11
-	* Added a Factory property to the Device to make it easy to get the associated factory.
-	* Fixed a stack overflow in Resource.FromPointer.
-	* Changed BlendStateDescription to implement IEquatable<T> and GetHashCode()
-	* Fixed the DeviceContext.MapSubresource function to properly calculate the size of the returned data.
-	* Fixed the datatypes of PipelineStatistics members to be Int64 instead of Int32.
-	* Changed DeviceContext.IsDataAvailable to return a boolean result.
-	* Fixed a bug that prevented accessing EffectPassDescription for shaders that do not have signatures.
-
-Direct2D
-	* Fixed a bug that incorrectly created RectangleGeometry from a RectangleF.
-
-Multimedia
-	* Extended the WaveStream class to support ADPCM formats.
-
-DirectInput
-	* Changed DirectInput DeviceInstance to properly mask out the DeviceType flag.
-	* Added missing DirectInput buffered data functionality.
-	* Changed IsDeviceAvailable to not throw when the result would be false.
-
-RawInput
-	* Added support for custom message handling. Allows the use of WPF and other non-Winforms frameworks.
-
-Windows
-	* Fixed a bug in RenderForm that prevented UserResized messages from occuring.
+	* Added missing UnorderedAccessViewBufferFlags flag.
