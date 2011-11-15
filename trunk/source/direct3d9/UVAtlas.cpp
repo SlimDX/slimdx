@@ -103,14 +103,13 @@ namespace Direct3D9
 
 		if( callback != nullptr )
 		{
-			GCHandle handle = GCHandle::Alloc( callback, GCHandleType::Pinned );
+			GCHandle handle = GCHandle::Alloc(callback);
 
 			hr = D3DXUVAtlasCreate( mesh->InternalPointer, maxChartCount, maxStretch, width, height, gutter, textureIndex,
-				inputAdjacencyPtr, falseEdgesPtr, imtPtr, NativeAtlasCallback, callbackFrequency, safe_cast<IntPtr>( handle ).ToPointer(), 
+				inputAdjacencyPtr, falseEdgesPtr, imtPtr, NativeAtlasCallback, callbackFrequency, Marshal::GetFunctionPointerForDelegate(callback).ToPointer(), 
 				static_cast<DWORD>( quality ), &meshOut, &facePartitioning, &vertexRemap, &maxStretchOut, &numChartsOut );
 
-			if( handle.IsAllocated )
-				handle.Free();
+			handle.Free();
 		}
 		else
 		{
@@ -175,14 +174,13 @@ namespace Direct3D9
 
 		if( callback != nullptr )
 		{
-			GCHandle handle = GCHandle::Alloc( callback, GCHandleType::Pinned );
+			GCHandle handle = GCHandle::Alloc(callback);
 
 			hr = D3DXUVAtlasPartition( mesh->InternalPointer, maxChartCount, maxStretch, textureIndex,
-				inputAdjacencyPtr, falseEdgesPtr, imtPtr, NativeAtlasCallback, callbackFrequency, safe_cast<IntPtr>( handle ).ToPointer(), 
+				inputAdjacencyPtr, falseEdgesPtr, imtPtr, NativeAtlasCallback, callbackFrequency, Marshal::GetFunctionPointerForDelegate(callback).ToPointer(), 
 				static_cast<DWORD>( quality ), &meshOut, &facePartitioning, &vertexRemap, &partitionResult, &maxStretchOut, &numChartsOut );
 
-			if( handle.IsAllocated )
-				handle.Free();
+			handle.Free();
 		}
 		else
 		{
@@ -216,14 +214,13 @@ namespace Direct3D9
 
 		if( callback != nullptr )
 		{
-			GCHandle handle = GCHandle::Alloc( callback, GCHandleType::Pinned );
+			GCHandle handle = GCHandle::Alloc(callback);
 
 			hr = D3DXUVAtlasPack( mesh->InternalPointer, width, height, gutter, textureIndex,
-				reinterpret_cast<DWORD*>( pinnedAdj ), NativeAtlasCallback, callbackFrequency, safe_cast<IntPtr>( handle ).ToPointer(), 
+				reinterpret_cast<DWORD*>( pinnedAdj ), NativeAtlasCallback, callbackFrequency, Marshal::GetFunctionPointerForDelegate(callback).ToPointer(), 
 				static_cast<DWORD>( quality ), facePartitioning->GetD3DBuffer() );
 
-			if( handle.IsAllocated )
-				handle.Free();
+			handle.Free();
 		}
 		else
 		{
