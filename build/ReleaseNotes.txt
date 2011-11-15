@@ -6,6 +6,7 @@ DXGI
 
 Direct3D 9
 	* Fixed pinning of UVAtlas callbacks.
+	* Fixed a bug in AnimationController.GetAnimationSet that failed for base animation sets.
 
 Direct3D 11
 	* Added missing UnorderedAccessViewBufferFlags flag.
