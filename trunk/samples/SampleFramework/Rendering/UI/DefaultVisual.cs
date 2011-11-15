@@ -56,7 +56,7 @@ namespace SlimDX.SampleFramework {
         public virtual void Render(UserInterfaceRenderer renderer, Element element, int x, int y, int width, int height) {
             Color4 color = new Color4(1.0f, 1.0f, 1.0f);
             renderer.RenderRectangle(x, y, width, height, color);
-            renderer.RenderString(element.Label, 0, 0, new Color4(1.0f, 0.0f, 0.0f));
+            renderer.RenderString(element.Label, x, y, new Color4(1.0f, 0.0f, 0.0f));
         }
 
         #endregion
