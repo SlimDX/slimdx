@@ -92,12 +92,12 @@ namespace SlimDX
 		property bool IsIdentity { bool get(); }
 
 		/// <summary>
-		/// Gets the axis components of the quaternion.
+		/// Gets the axis components of the quaternion. The quaternion must be normalized.
 		/// </summary>
 		property Vector3 Axis { Vector3 get(); }
 
 		/// <summary>
-		/// Gets the angle of the quaternion.
+		/// Gets the angle of the quaternion. The quaternion must be normalized.
 		/// </summary>
 		property float Angle { float get(); }
 
