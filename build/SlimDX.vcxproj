@@ -523,10 +523,8 @@
       <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(ProjectDir)\..\docs\SlimDX.xml $(OutDir)
-mt -manifest SlimDX.dll.x86.manifest -outputresource:$(TargetPath)%3b2
-sn -R $(TargetPath) D:\slimdxKey.snk
-</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Public-4.0|Win32'">
@@ -559,10 +557,8 @@ sn -R $(TargetPath) D:\slimdxKey.snk
       <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(ProjectDir)\..\docs\SlimDX.xml $(OutDir)
-mt -manifest SlimDX.dll.x86.manifest -outputresource:$(TargetPath)%3b2
-sn -R $(TargetPath) D:\slimdxKey.snk
-</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Public|x64'">
@@ -598,9 +594,8 @@ sn -R $(TargetPath) D:\slimdxKey.snk
       <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
     </Link>
     <PostBuildEvent>
-      <Command>mt -manifest SlimDX.dll.x64.manifest -outputresource:$(TargetPath)%3b2
-sn -R $(TargetPath) D:\slimdxKey.snk
-</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Public-4.0|x64'">
