@@ -157,6 +157,18 @@ namespace SlimDX
 			/// <param name="y">The Y offset between the source region origin and the destination location.</param>
 			/// <param name="z">The Z offset between the source region origin and the destination location.</param>
 			void CopySubresourceRegion( Resource^ source, int sourceSubresource, ResourceRegion region, Resource^ destination, int destinationSubresource, int x, int y, int z );
+
+			/// <summary>
+			/// Copies an entire region of a resource's subresource data using the GPU.
+			/// </summary>
+			/// <param name="source">The source resource.</param>
+			/// <param name="sourceSubresource">The source subresource.</param>
+			/// <param name="destination">The destination resource.</param>
+			/// <param name="destinationSubresource">The destination subresource.</param>
+			/// <param name="x">The X offset between the source region origin and the destination location.</param>
+			/// <param name="y">The Y offset between the source region origin and the destination location.</param>
+			/// <param name="z">The Z offset between the source region origin and the destination location.</param>
+			void CopySubresourceRegion( Resource^ source, int sourceSubresource, Resource^ destination, int destinationSubresource, int x, int y, int z );
 			
 			/// <summary>
 			/// Copies a multisampled resource into a non-multisampled resource.
