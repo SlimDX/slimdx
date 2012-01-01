@@ -10,9 +10,11 @@ Direct3D 9
 
 Direct3D 10
 	* Fixed bug in Get/Set of bool arrays in EffectScalarVariable.
+	* EffectResourceVariable now allows clearing an array of resources.
 
 Direct3D 11
 	* Added missing UnorderedAccessViewBufferFlags flag.
 	* Removed invalid range checks from FFT AttachBuffersAndPrecompute
 	* Added overloads to EffectVectorVariable.Set for int and bool vectors.
 	* Fixed bug in Get/Set of bool arrays in EffectScalarVariable.
+	* EffectResourceVariable now allows clearing an array of resources.
