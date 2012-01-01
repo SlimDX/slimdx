@@ -94,7 +94,7 @@ namespace Direct3D10
 
 		stack_array<ID3D10ShaderResourceView*> nativeViews = stackalloc(ID3D10ShaderResourceView*, count);
 		for (int i = 0; i < count; i++)
-			nativeViews[i] = views[i + offset]->InternalPointer;
+			nativeViews[i] = views[i + offset] != nullptr ? views[i + offset]->InternalPointer : 0;
 
 		HRESULT hr = m_Pointer->SetResourceArray(&nativeViews[0], 0, count);
 		return RECORD_D3D10(hr);
