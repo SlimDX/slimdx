@@ -54,11 +54,9 @@ namespace Direct3D11
 	{
 		UINT offset = 0L;
 
-		array<BOOL>^ expandedArray = gcnew array<BOOL>( values->Length );
-		Array::Copy( values, expandedArray, values->Length );
-
-		pin_ptr<BOOL> pinned_values = &expandedArray[0];
-		return RECORD_D3D11( m_Pointer->SetBoolArray( pinned_values, offset, values->Length ) );
+		array<BOOL>^ boolData = Array::ConvertAll<bool, int>(values, gcnew Converter<bool, int>(Convert::ToInt32));
+		pin_ptr<BOOL> pinned_values = &boolData[0];
+		return RECORD_D3D11( m_Pointer->SetBoolArray(pinned_values, offset, values->Length));
 	}
 
 	Result EffectScalarVariable::Set( float value )
@@ -103,10 +101,8 @@ namespace Direct3D11
 		if( RECORD_D3D11( hr ).IsFailure )
 			return nullptr;
 
-        //now we go from BOOL to bool
-        array<bool>^ boolValues = gcnew array<bool>( count );
-        Array::Copy( values, boolValues, count );
-        return boolValues;
+        // now we go from BOOL to bool
+        return Array::ConvertAll<int, bool>(values, gcnew Converter<int, bool>(Convert::ToBoolean));
 	}
 
 	int EffectScalarVariable::GetInt()
