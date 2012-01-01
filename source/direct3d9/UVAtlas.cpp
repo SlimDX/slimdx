@@ -106,7 +106,7 @@ namespace Direct3D9
 			GCHandle handle = GCHandle::Alloc(callback);
 
 			hr = D3DXUVAtlasCreate( mesh->InternalPointer, maxChartCount, maxStretch, width, height, gutter, textureIndex,
-				inputAdjacencyPtr, falseEdgesPtr, imtPtr, NativeAtlasCallback, callbackFrequency, Marshal::GetFunctionPointerForDelegate(callback).ToPointer(), 
+				inputAdjacencyPtr, falseEdgesPtr, imtPtr, NativeAtlasCallback, callbackFrequency, GCHandle::ToIntPtr(handle).ToPointer(), 
 				static_cast<DWORD>( quality ), &meshOut, &facePartitioning, &vertexRemap, &maxStretchOut, &numChartsOut );
 
 			handle.Free();
@@ -177,7 +177,7 @@ namespace Direct3D9
 			GCHandle handle = GCHandle::Alloc(callback);
 
 			hr = D3DXUVAtlasPartition( mesh->InternalPointer, maxChartCount, maxStretch, textureIndex,
-				inputAdjacencyPtr, falseEdgesPtr, imtPtr, NativeAtlasCallback, callbackFrequency, Marshal::GetFunctionPointerForDelegate(callback).ToPointer(), 
+				inputAdjacencyPtr, falseEdgesPtr, imtPtr, NativeAtlasCallback, callbackFrequency, GCHandle::ToIntPtr(handle).ToPointer(), 
 				static_cast<DWORD>( quality ), &meshOut, &facePartitioning, &vertexRemap, &partitionResult, &maxStretchOut, &numChartsOut );
 
 			handle.Free();
@@ -217,7 +217,7 @@ namespace Direct3D9
 			GCHandle handle = GCHandle::Alloc(callback);
 
 			hr = D3DXUVAtlasPack( mesh->InternalPointer, width, height, gutter, textureIndex,
-				reinterpret_cast<DWORD*>( pinnedAdj ), NativeAtlasCallback, callbackFrequency, Marshal::GetFunctionPointerForDelegate(callback).ToPointer(), 
+				reinterpret_cast<DWORD*>( pinnedAdj ), NativeAtlasCallback, callbackFrequency, GCHandle::ToIntPtr(handle).ToPointer(), 
 				static_cast<DWORD>( quality ), facePartitioning->GetD3DBuffer() );
 
 			handle.Free();
