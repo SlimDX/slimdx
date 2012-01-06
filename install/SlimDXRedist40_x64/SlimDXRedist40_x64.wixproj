@@ -4,9 +4,9 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>3.5</ProductVersion>
-    <ProjectGuid>{993b1c1b-cd0a-4bcf-8f71-1281b42c6ce1}</ProjectGuid>
+    <ProjectGuid>{49b2ab46-edfa-4f03-ab79-872c61417058}</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>SlimDXRedist40</OutputName>
+    <OutputName>SlimDXRedist40_x64</OutputName>
     <OutputType>Package</OutputType>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' AND '$(MSBuildExtensionsPath32)' != '' ">$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
     <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.targets</WixTargetsPath>
@@ -21,15 +21,15 @@
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Redist40.wxs" />
+    <Compile Include="Redist40_x64.wxs" />
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="WixUIExtension">
-      <HintPath>C:\Program Files (x86)\Windows Installer XML v3.5\bin\WixUIExtension.dll</HintPath>
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
       <Name>WixUIExtension</Name>
     </WixExtension>
     <WixExtension Include="WixNetFxExtension">
-      <HintPath>C:\Program Files (x86)\Windows Installer XML v3.5\bin\WixNetFxExtension.dll</HintPath>
+      <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
       <Name>WixNetFxExtension</Name>
     </WixExtension>
   </ItemGroup>

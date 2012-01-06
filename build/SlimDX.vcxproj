@@ -217,7 +217,6 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Public|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Public-4.0|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Public|x64'">true</GenerateManifest>
-    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Public-4.0|x64'">true</GenerateManifest>
     <LinkKeyFile Condition="'$(Configuration)|$(Platform)'=='Public|Win32'">D:\slimdxKey.snk</LinkKeyFile>
     <LinkKeyFile Condition="'$(Configuration)|$(Platform)'=='Public|x64'">D:\slimdxKey.snk</LinkKeyFile>
     <LinkKeyFile Condition="'$(Configuration)|$(Platform)'=='Public-4.0|Win32'">D:\slimdxKey.snk</LinkKeyFile>
