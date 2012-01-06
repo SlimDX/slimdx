@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WixFolderScanner", "..\tool
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "SlimDXRedist40", "SlimDXRedist40\SlimDXRedist40.wixproj", "{993B1C1B-CD0A-4BCF-8F71-1281B42C6CE1}"
 EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "SlimDXRedist40_x64", "SlimDXRedist40_x64\SlimDXRedist40_x64.wixproj", "{49B2AB46-EDFA-4F03-AB79-872C61417058}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -46,6 +48,14 @@ Global
 		{993B1C1B-CD0A-4BCF-8F71-1281B42C6CE1}.Release|Mixed Platforms.Build.0 = Release|x86
 		{993B1C1B-CD0A-4BCF-8F71-1281B42C6CE1}.Release|x86.ActiveCfg = Release|x86
 		{993B1C1B-CD0A-4BCF-8F71-1281B42C6CE1}.Release|x86.Build.0 = Release|x86
+		{49B2AB46-EDFA-4F03-AB79-872C61417058}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{49B2AB46-EDFA-4F03-AB79-872C61417058}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{49B2AB46-EDFA-4F03-AB79-872C61417058}.Debug|x86.ActiveCfg = Debug|x86
+		{49B2AB46-EDFA-4F03-AB79-872C61417058}.Debug|x86.Build.0 = Debug|x86
+		{49B2AB46-EDFA-4F03-AB79-872C61417058}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{49B2AB46-EDFA-4F03-AB79-872C61417058}.Release|Mixed Platforms.Build.0 = Release|x86
+		{49B2AB46-EDFA-4F03-AB79-872C61417058}.Release|x86.ActiveCfg = Release|x86
+		{49B2AB46-EDFA-4F03-AB79-872C61417058}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
