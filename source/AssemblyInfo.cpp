@@ -54,9 +54,9 @@ using namespace System::Security::Permissions;
 // by using the '*' as shown below:
 
 #if _MSC_VER < 1600
-[assembly:AssemblyVersionAttribute("2.0.12.43")];
+[assembly:AssemblyVersionAttribute("2.0.13.43")];
 #else
-[assembly:AssemblyVersionAttribute("4.0.12.43")];
+[assembly:AssemblyVersionAttribute("4.0.13.43")];
 #endif
 
 [assembly:ComVisible(false)];
