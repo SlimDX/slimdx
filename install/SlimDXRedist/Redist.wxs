@@ -1,12 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<?define Version="2.0.12.43" ?>
-<?define ReleaseName="September 2011" ?>
-<?define ShortName="Sep2011" ?>
+<?define Version="2.0.13.43" ?>
+<?define ReleaseName="January 2012" ?>
+<?define ShortName="Jan2012" ?>
+<?define DXName="June 2010" ?>
 <?define DXShortName="Jun2010" ?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
-  <Product Id="7C056FA6-E362-467b-8160-062E9474FEE5" Language="1033" Manufacturer="SlimDX Group" Name="SlimDX Redistributable for .NET 2.0 ($(var.ReleaseName))" Version="$(var.Version)">
+  <Product Id="014A2868-BE56-4888-A16C-693989B8F153" Language="1033" Manufacturer="SlimDX Group" Name="SlimDX Runtime .NET 2.0 ($(var.ReleaseName))" Version="$(var.Version)">
     <Package Id="*" InstallerVersion="300" Compressed="yes" />
 
     <PropertyRef Id="NETFRAMEWORK20" />
@@ -25,7 +26,7 @@
 
     <UIRef Id="WixUI_Minimal" />
     <UI>
-      <ProgressText Action="InstallDirectX">Installing DirectX runtime components ($(var.ReleaseName))</ProgressText>
+      <ProgressText Action="InstallDirectX">Installing DirectX runtime components ($(var.DXName))</ProgressText>
     </UI>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
@@ -93,7 +94,7 @@
       <ComponentRef Id="x64_GAC" />
     </Feature>
     <Feature Id="DirectX" Level="1" AllowAdvertise="no" Absent="disallow"
-             Title="DirectX runtime" Description="DirectX runtime components for $(var.ReleaseName). Does not include XACT or older releases. Strongly recommended.">
+             Title="DirectX runtime" Description="DirectX runtime components for $(var.DXName). Does not include XACT or older releases. Strongly recommended.">
       <ComponentRef Id="DXRedist" />
       <ComponentRef Id="DXRedist_x86" />
       <ComponentRef Id="DXRedist_x64" />
