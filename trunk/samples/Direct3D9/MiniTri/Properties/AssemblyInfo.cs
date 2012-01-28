@@ -11,7 +11,7 @@ using System.Resources;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SlimDX")]
 [assembly: AssemblyProduct("MiniTri")]
-[assembly: AssemblyCopyright("Copyright © 2007-2011 SlimDX Group")]
+[assembly: AssemblyCopyright("Copyright © 2007-2012 SlimDX Group")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
