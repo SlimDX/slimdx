@@ -19,12 +19,6 @@
           The solutions will open in Express, but with a lot of errors. If this is something you have to do often, it's recommended that you create an Express-specific solution locally and add just the SlimDX project to it.
           The samples will need their own solution if you wish to build them.
         </para>
-        <para>
-          The official documentation, however, cannot be built using Express.
-          They are dependent on DocProject, which is a Visual Studio add-in.
-          Although DocProject includes a standalone UI for Express users, this UI is not compatible with SlimDX.
-          If you wish to build new documentation and are using the Express Edition of VS, we recommend that you use a different tool to build custom documentation, such as Sandcastle Help File Builder.
-        </para>
       </content>
     </section>
   </developerConceptualDocument>

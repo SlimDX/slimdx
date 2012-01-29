@@ -31,7 +31,7 @@
     <PresentationStyle>Prototype</PresentationStyle>
     <HelpTitle>SlimDX Documentation</HelpTitle>
     <MissingTags>AutoDocumentCtors, AutoDocumentDispose</MissingTags>
-    <CopyrightText>Copyright %28c%29 2011 SlimDX Group</CopyrightText>
+    <CopyrightText>Copyright %28c%29 2012 SlimDX Group</CopyrightText>
     <SyntaxFilters>CSharp</SyntaxFilters>
     <CopyrightHref>http://slimdx.org</CopyrightHref>
     <IndentHtml>True</IndentHtml>
@@ -67,6 +67,7 @@
     <Folder Include="Topics\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Topics\SlimDX Software Development Kit\Previous Releases\September 2011.aml" />
     <None Include="Topics\SlimDX Software Development Kit\Previous Releases\March 2011.aml" />
     <None Include="Topics\Deployment Guide.aml" />
     <None Include="Topics\Custom Build Guide.aml" />
@@ -97,7 +98,6 @@
     <None Include="Topics\Deployment Guide\Installation.aml" />
     <None Include="Topics\Deployment Guide\Deployment Testing.aml" />
     <None Include="Topics\Deployment Guide\Deployment Guide.aml" />
-    <None Include="Topics\Deployment Guide\Customizing the Runtime.aml" />
     <None Include="Topics\Custom Build Guide\Visual Studio Versions.aml" />
     <None Include="Topics\Custom Build Guide\Official Build Process.aml" />
     <None Include="Topics\Custom Build Guide\DirectX Versions.aml" />

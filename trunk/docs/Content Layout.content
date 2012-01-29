@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Topics>
-  <Topic id="47692C15-A507-44e5-B1EB-9F130951948E" visible="True" isDefault="true">
-    <Topic id="223c2c27-0206-4229-9e63-ea128b55f250" visible="True" title="What's New In September 2011" />
-    <Topic id="67d71bac-b569-4a14-ada3-1005793b4264" visible="True" title="Previous Releases">
+  <Topic id="47692C15-A507-44e5-B1EB-9F130951948E" visible="True" isDefault="true" isExpanded="true">
+    <Topic id="223c2c27-0206-4229-9e63-ea128b55f250" visible="True" title="What's New In January 2012" />
+    <Topic id="67d71bac-b569-4a14-ada3-1005793b4264" visible="True" isExpanded="true" title="Previous Releases">
+      <Topic id="f002375b-548c-4229-b933-2c1b17ad972c" visible="True" title="September 2011" />
       <Topic id="11897ba1-308d-4143-9101-28bcadd55811" visible="True" title="March 2011" />
       <Topic id="7d6bb54b-16e8-4a05-b93c-f22573895d6c" visible="True" />
       <Topic id="1046ad0b-0abb-4b17-b362-8374dde686f5" visible="True" />
@@ -33,12 +34,11 @@
     <Topic id="8dae9bb0-ad12-4c93-a4cd-8715c4694e54" visible="True" />
     <Topic id="70ba8bb5-61d9-467d-ac5b-ae150a3d534e" visible="True" />
   </Topic>
-  <Topic id="50d38541-4add-4911-b088-d29a017ed068" visible="True">
+  <Topic id="50d38541-4add-4911-b088-d29a017ed068" visible="True" isExpanded="true" isSelected="true">
     <Topic id="2182dbe0-c28f-4efa-94a5-85e41db3947e" visible="True" />
     <Topic id="11a5d549-0aef-4262-9971-b92b8c16e4fc" visible="True" />
     <Topic id="ce2c6a61-a922-43bf-85f4-7888fb8971b9" visible="True" />
     <Topic id="a2beac1b-ae9d-4695-8520-5731221e8f60" visible="True" />
-    <Topic id="ce55d4f2-33c3-4677-8ad4-e2ac0a56fa2e" visible="True" />
   </Topic>
   <Topic id="3f421301-4a9f-446a-b9e6-87adf8d2f850" visible="True" apiParentMode="InsertAsChild" />
 </Topics>
