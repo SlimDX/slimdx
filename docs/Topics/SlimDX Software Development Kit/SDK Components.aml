@@ -35,7 +35,8 @@
           </listItem>
           <listItem>
             <para>
-              <database>Runtime</database> - Contains the SlimDX end user runtime installers for both .NET 2 and .NET 4.
+              <database>Tools</database> - Contains various tools for assisting in the development of SlimDX applications. Currently contains
+              only the PIXPlug tool for allowing 64-bit applications to run in PIX.
             </para>
           </listItem>
           <listItem>

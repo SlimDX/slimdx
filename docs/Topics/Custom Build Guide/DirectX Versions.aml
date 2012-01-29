@@ -27,8 +27,8 @@
           As a result, it is not critical to get this correct immediately, since you will see what you've missed after completing a build.
         </para>
         <para>
-          Note that although most of the SlimDX releases match the corresponding DirectX SDK release, the March and September 2011 releases
-          of SlimDX break from this mold, and rely on the same DirectX SDK version (June 2010) as the previous release.
+          Note that SlimDX releases no longer match DirectX releases. Microsoft is moving the DirectX components
+          into the Windows SDK and will be focusing on a longer release cycle.
         </para>
       </content>
     </section>
@@ -54,6 +54,22 @@
               <entry>Delay Load List</entry>
             </row>
           </tableHeader>
+          
+          <row>
+            <entry>January 2012</entry>
+            <entry>43</entry>
+            <entry>2.7</entry>
+            <entry>1.7</entry>
+            <entry>3.7</entry>
+            <entry>
+              <para>d3dx9_43.dll</para>
+              <para>d3dx10_43.dll</para>
+              <para>d3dx11_43.dll</para>
+              <para>d3dcsx_43.dll</para>
+              <para>d3dcompiler_43.dll</para>
+              <para>x3daudio1_7.dll</para>
+            </entry>
+          </row>
           
           <row>
             <entry>September 2011</entry>
