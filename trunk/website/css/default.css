@@ -46,7 +46,6 @@ li { margin-bottom: 4px }
 	
 	.menu {
 		float: right;
-		padding-top: 60px;
 		list-style: none outside none;
 		}
 	
@@ -170,6 +169,9 @@ tr.hidden { display: none; }
 {
     margin-left:13px;
 }
+
+.simple_table { text-align:left; font-size:12px; margin:10px 0 20px 0; padding:0; }
+.simple_table td { background-color:#ffffff; border:solid 1px #d4d4d4; padding:7px 7px 7px 7px;  text-align:center;}
 
 /*---------MULTICOLUMN LIST------------*/
 
