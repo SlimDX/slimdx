@@ -1,3 +1,4 @@
 DirectWrite
 	* Changed TextRenderer into ITextRenderer to allow user implementation.
 	* Added Strikethrough and Underline classes
+	* Removed extraneous MeasuringMethod enum.
