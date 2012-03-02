@@ -40,7 +40,7 @@ namespace SlimDX
 		value class OverhangMetrics;
 		value class TextMetrics;
 		ref class InlineObject;
-		ref class TextRenderer;
+		interface struct ITextRenderer;
 		interface struct IClientDrawingEffect;
 
 		public ref class TextLayout : public TextFormat
@@ -54,7 +54,7 @@ namespace SlimDX
 			TextLayout( Factory^ factory, String^ text, TextFormat^ format, float maxWidth, float maxHeight );
 
 			float DetermineMinWidth();
-			Result Draw(IntPtr clientDrawingContext, TextRenderer ^renderer, float originX, float originY);
+			Result Draw(IntPtr clientDrawingContext, ITextRenderer ^renderer, float originX, float originY);
 			HitTestMetrics HitTestPoint( float pointX, float pointY, [Out] bool% isTrailingHit, [Out] bool% isInside );
 			HitTestMetrics HitTestTextPosition( int textPosition, bool isTrailingHit, [Out] float% pointX, [Out] float% pointY );
 			array< HitTestMetrics >^ HitTestTextRange( int textPosition, int textLength, float originX, float originY );

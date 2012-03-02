@@ -32,7 +32,7 @@ namespace SlimDX
 {
 	namespace DirectWrite
 	{
-		ref class TextRenderer;
+		interface struct ITextRenderer;
 		interface struct IClientDrawingEffect;
 
 		public ref class InlineObject : public ComObject
@@ -40,7 +40,7 @@ namespace SlimDX
 			COMOBJECT(IDWriteInlineObject, InlineObject);
 
 		public:
-			Result Draw(System::IntPtr clientDrawingContext, TextRenderer ^renderer,
+			Result Draw(System::IntPtr clientDrawingContext, ITextRenderer ^renderer,
 				float originX, float originY, bool isSideways, bool isRightToLeft,
 				IClientDrawingEffect ^clientDrawingEffect);
 			Result GetBreakConditions([Out] BreakCondition %before, [Out] BreakCondition %after);

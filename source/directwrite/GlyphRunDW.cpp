@@ -31,6 +31,27 @@ namespace SlimDX
 {
 namespace DirectWrite
 {
+	GlyphRun::GlyphRun(const DWRITE_GLYPH_RUN &run)
+	{
+		FontFace = DirectWrite::FontFace::FromPointer(run.fontFace);
+		FontSize = run.fontEmSize;
+		GlyphCount = run.glyphCount;
+		IsSideways = run.isSideways != 0;
+		BidiLevel = run.bidiLevel;
+
+		GlyphIndices = gcnew array<short>(GlyphCount);
+		GlyphAdvances = gcnew array<float>(GlyphCount);
+		GlyphOffsets = gcnew array<GlyphOffset>(GlyphCount);
+
+		for (int i = 0; i < GlyphCount; i++)
+		{
+			GlyphIndices[i] = run.glyphIndices[i];
+			GlyphAdvances[i] = run.glyphAdvances[i];
+			GlyphOffsets[i].AdvanceOffset = run.glyphOffsets[i].advanceOffset;
+			GlyphOffsets[i].AscenderOffset = run.glyphOffsets[i].ascenderOffset;
+		}
+	}
+
 	DWRITE_GLYPH_RUN GlyphRun::ToUnmanaged(stack_array<UINT16> &indices, stack_array<FLOAT> &advances, stack_array<DWRITE_GLYPH_OFFSET> &offsets)
 	{
 		DWRITE_GLYPH_RUN result;
