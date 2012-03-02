@@ -1,20 +1,3 @@
-Samples
-	* Fixed a UI rendering bug in the SampleFramework.
-
-DXGI
-	* Added missing result code.
-
-Direct3D 9
-	* Fixed pinning of UVAtlas callbacks.
-	* Fixed a bug in AnimationController.GetAnimationSet that failed for base animation sets.
-
-Direct3D 10
-	* Fixed bug in Get/Set of bool arrays in EffectScalarVariable.
-	* EffectResourceVariable now allows clearing an array of resources.
-
-Direct3D 11
-	* Added missing UnorderedAccessViewBufferFlags flag.
-	* Removed invalid range checks from FFT AttachBuffersAndPrecompute
-	* Added overloads to EffectVectorVariable.Set for int and bool vectors.
-	* Fixed bug in Get/Set of bool arrays in EffectScalarVariable.
-	* EffectResourceVariable now allows clearing an array of resources.
+DirectWrite
+	* Changed TextRenderer into ITextRenderer to allow user implementation.
+	* Added Strikethrough and Underline classes

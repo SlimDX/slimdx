@@ -29,7 +29,7 @@
 #include "OverhangMetrics.h"
 #include "TextLayout.h"
 #include "TextMetrics.h"
-#include "TextRenderer.h"
+#include "ITextRenderer.h"
 
 const IID IID_IDWriteTextLayout = __uuidof(IDWriteTextLayout);
 
@@ -68,9 +68,14 @@ namespace DirectWrite
 		return minWidth;
 	}
 
-	Result TextLayout::Draw(IntPtr clientDrawingContext, TextRenderer ^renderer, float originX, float originY)
+	Result TextLayout::Draw(IntPtr clientDrawingContext, ITextRenderer ^renderer, float originX, float originY)
 	{
-		return RECORD_DW(InternalPointer->Draw(static_cast<void *>(clientDrawingContext), renderer->InternalPointer, originX, originY));
+		ITextRendererShim *shim = ITextRendererShim::CreateInstance(renderer);
+
+		HRESULT hr = InternalPointer->Draw(static_cast<void *>(clientDrawingContext), shim, originX, originY);
+		shim->Release();
+
+		return RECORD_DW(hr);
 	}
 
 	HitTestMetrics TextLayout::HitTestPoint( float pointX, float pointY, [Out] bool% isTrailingHit, [Out] bool% isInside )

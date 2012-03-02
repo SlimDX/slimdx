@@ -2280,9 +2280,6 @@
     <ClCompile Include="..\source\directwrite\TextRange.cpp">
       <Filter>DirectWrite\Text</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\directwrite\TextRenderer.cpp">
-      <Filter>DirectWrite\Text</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\directwrite\TextFormat.cpp">
       <Filter>DirectWrite\Text\TextFormat</Filter>
     </ClCompile>
@@ -2778,6 +2775,18 @@
     </ClCompile>
     <ClCompile Include="..\source\multimedia\AdpcmWaveFormat.cpp">
       <Filter>Multimedia\WaveFormat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\directwrite\ITextRenderer.cpp">
+      <Filter>DirectWrite\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\directwrite\GlyphRunDescription.cpp">
+      <Filter>DirectWrite\Glyphs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\directwrite\Strikethrough.cpp">
+      <Filter>DirectWrite</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\directwrite\Underline.cpp">
+      <Filter>DirectWrite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -4395,9 +4404,6 @@
     <ClInclude Include="..\source\directwrite\TextRange.h">
       <Filter>DirectWrite\Text</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\directwrite\TextRenderer.h">
-      <Filter>DirectWrite\Text</Filter>
-    </ClInclude>
     <ClInclude Include="..\source\directwrite\TextFormat.h">
       <Filter>DirectWrite\Text\TextFormat</Filter>
     </ClInclude>
@@ -4923,6 +4929,18 @@
     </ClInclude>
     <ClInclude Include="..\source\multimedia\AdpcmWaveFormat.h">
       <Filter>Multimedia\WaveFormat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\directwrite\ITextRenderer.h">
+      <Filter>DirectWrite\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\directwrite\GlyphRunDescription.h">
+      <Filter>DirectWrite\Glyphs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\directwrite\Strikethrough.h">
+      <Filter>DirectWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\directwrite\Underline.h">
+      <Filter>DirectWrite</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

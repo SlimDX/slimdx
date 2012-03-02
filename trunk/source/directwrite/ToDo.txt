@@ -11,8 +11,4 @@ IDWriteTextAnalyzer (TextAnalyzer)
 	IDWriteTextAnalysisSource (TextAnalysisSource)
 		The interface implemented by the text analyzer's client to provide text to
 		the analyzer.
-IDWriteTextRenderer (TextRenderer)
-	DWRITE_GLYPH_RUN_DESCRIPTION
-	DWRITE_STRIKETHROUGH
-	DWRITE_UNDERLINE
 DWRITE_ALPHA_MAX

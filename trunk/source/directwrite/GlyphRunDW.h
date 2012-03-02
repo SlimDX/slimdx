@@ -35,8 +35,11 @@ namespace SlimDX
 		{
 		internal:
 			DWRITE_GLYPH_RUN ToUnmanaged(stack_array<UINT16> &indices, stack_array<FLOAT> &advances, stack_array<DWRITE_GLYPH_OFFSET> &offsets);
+			GlyphRun(const DWRITE_GLYPH_RUN &run);
 
 		public:
+			GlyphRun() { }
+
 			property FontFace^ FontFace;
 			property float FontSize;
 			property int GlyphCount;
