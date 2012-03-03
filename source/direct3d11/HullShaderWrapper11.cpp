@@ -70,26 +70,20 @@ namespace Direct3D11
 
 	HullShader^ HullShaderWrapper::Get()
 	{
-		return Get( nullptr );
+		array<ClassInstance^>^ dummy;
+		return Get( 0, dummy );
 	}
 
-	HullShader^ HullShaderWrapper::Get( array<ClassInstance^>^ classInstances )
+	HullShader^ HullShaderWrapper::Get( int count, array<ClassInstance^>^ %classInstances )
 	{
 		ID3D11HullShader *shader = NULL;
-		ID3D11ClassInstance** instancePtr = NULL;
-		stack_array<ID3D11ClassInstance*> instances;
-		UINT count = 0;
+		stack_array<ID3D11ClassInstance*> instances = stackalloc(ID3D11ClassInstance*, count);
+		UINT uCount = count;
 
-		if( classInstances != nullptr && classInstances->Length > 0 )
-		{
-			instances = stack_array<ID3D11ClassInstance*>( classInstances->Length );
-			instancePtr = &instances[0];
-			count = classInstances->Length;
-		}
+		deviceContext->HSGetShader( &shader, &instances[0], &uCount );
 
-		deviceContext->HSGetShader( &shader, instancePtr, &count );
-
-		for( UINT i = 0; i < count; i++ )
+		classInstances = gcnew array<ClassInstance^>(uCount);
+		for( UINT i = 0; i < uCount; i++ )
 			classInstances[i] = ClassInstance::FromPointer( instances[i] );
 
 		return shader == NULL ? nullptr : HullShader::FromPointer( shader );

@@ -1,3 +1,6 @@
+Direct3D 11
+	* Fixed shader wrappers to allow getting class instances.
+
 DirectWrite
 	* Changed TextRenderer into ITextRenderer to allow user implementation.
 	* Added Strikethrough and Underline classes
