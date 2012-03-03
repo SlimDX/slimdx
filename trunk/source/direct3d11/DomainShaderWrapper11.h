@@ -21,6 +21,8 @@
 */
 #pragma once
 
+using System::Runtime::InteropServices::OutAttribute;
+
 namespace SlimDX
 {
 	namespace Direct3D11
@@ -65,9 +67,10 @@ namespace SlimDX
 			/// <summary>
 			/// Gets the domain shader currently assigned to the device.
 			/// </summary>
+			/// <param name="count">The number of class instances to retrieve.</param>
 			/// <param name="classInstances">An array that will be used to contain any class instances currently active.</param>
 			/// <returns>The domain shader (null if no shader is assigned).</returns>
-			DomainShader^ Get( array<ClassInstance^>^ classInstances );
+			DomainShader^ Get( int count, [Out] array<ClassInstance^>^ %classInstances );
 
 			/// <summary>
 			/// Gets the constant buffers used by the domain shader stage.

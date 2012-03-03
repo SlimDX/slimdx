@@ -70,26 +70,20 @@ namespace Direct3D11
 
 	DomainShader^ DomainShaderWrapper::Get()
 	{
-		return Get( nullptr );
+		array<ClassInstance^>^ dummy;
+		return Get( 0, dummy );
 	}
 
-	DomainShader^ DomainShaderWrapper::Get( array<ClassInstance^>^ classInstances )
+	DomainShader^ DomainShaderWrapper::Get( int count, array<ClassInstance^>^ %classInstances )
 	{
 		ID3D11DomainShader *shader = NULL;
-		ID3D11ClassInstance** instancePtr = NULL;
-		stack_array<ID3D11ClassInstance*> instances;
-		UINT count = 0;
+		stack_array<ID3D11ClassInstance*> instances = stackalloc(ID3D11ClassInstance*, count);
+		UINT uCount = count;
 
-		if( classInstances != nullptr && classInstances->Length > 0 )
-		{
-			instances = stack_array<ID3D11ClassInstance*>( classInstances->Length );
-			instancePtr = &instances[0];
-			count = classInstances->Length;
-		}
+		deviceContext->DSGetShader( &shader, &instances[0], &uCount );
 
-		deviceContext->DSGetShader( &shader, instancePtr, &count );
-
-		for( UINT i = 0; i < count; i++ )
+		classInstances = gcnew array<ClassInstance^>(uCount);
+		for( UINT i = 0; i < uCount; i++ )
 			classInstances[i] = ClassInstance::FromPointer( instances[i] );
 
 		return shader == NULL ? nullptr : DomainShader::FromPointer( shader );
