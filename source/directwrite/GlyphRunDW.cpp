@@ -33,6 +33,7 @@ namespace DirectWrite
 {
 	GlyphRun::GlyphRun(const DWRITE_GLYPH_RUN &run)
 	{
+		run.fontFace->AddRef();
 		FontFace = DirectWrite::FontFace::FromPointer(run.fontFace);
 		FontSize = run.fontEmSize;
 		GlyphCount = run.glyphCount;
