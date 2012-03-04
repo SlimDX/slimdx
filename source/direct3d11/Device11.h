@@ -50,6 +50,7 @@ namespace SlimDX
 			COMOBJECT(ID3D11Device, Device);
 
 		private:
+			DeviceContext^ immediateContext;
 			void Initialize( DXGI::Adapter^ adapter, DriverType driverType, DeviceCreationFlags flags, const D3D_FEATURE_LEVEL *featureLevels, int count );
 
 		public:
