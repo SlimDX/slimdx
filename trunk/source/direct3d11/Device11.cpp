@@ -93,8 +93,9 @@ namespace Direct3D11
 		if( RECORD_D3D11( hr ).IsFailure )
 			throw gcnew Direct3D11Exception( Result::Last );
 
-		context->Release();
 		Construct( device );
+
+		immediateContext = DeviceContext::FromPointer( context, this );
 	}
 
 	SlimDX::DXGI::Factory^ Device::Factory::get()
@@ -148,10 +149,14 @@ namespace Direct3D11
 
 	DeviceContext^ Device::ImmediateContext::get()
 	{
-		ID3D11DeviceContext *context = NULL;
-		InternalPointer->GetImmediateContext( &context );
+		if (immediateContext == nullptr)
+		{
+			ID3D11DeviceContext *context;
+			InternalPointer->GetImmediateContext(&context);
+			immediateContext = DeviceContext::FromPointer(context, this);
+		}
 
-		return DeviceContext::FromPointer( context, this );
+		return immediateContext;
 	}
 	
 	bool Device::IsReferenceDevice::get()
