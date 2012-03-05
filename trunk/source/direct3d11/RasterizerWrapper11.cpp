@@ -112,6 +112,15 @@ namespace Direct3D11
 		return viewports;
 	}
 
+	Viewport RasterizerWrapper::GetViewport()
+	{
+		D3D11_VIEWPORT vp;
+		UINT count = 1;
+		
+		deviceContext->RSGetViewports(&count, &vp);
+		return Viewport(vp.TopLeftX, vp.TopLeftY, vp.Width, vp.Height, vp.MinDepth, vp.MaxDepth);
+	}
+
 	void RasterizerWrapper::SetScissorRectangles( System::Drawing::Rectangle scissorRectangle )
 	{
 		D3D11_RECT rect = { scissorRectangle.Left, scissorRectangle.Top, scissorRectangle.Right, scissorRectangle.Bottom };
