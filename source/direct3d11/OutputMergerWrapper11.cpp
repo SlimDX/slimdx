@@ -172,6 +172,39 @@ namespace Direct3D11
 		
 		return oldMask;
 	}
+
+	void OutputMergerWrapper::GetDepthStencilState(SlimDX::Direct3D11::DepthStencilState^ %state, int %reference)
+	{
+		ID3D11DepthStencilState* result = 0;
+		UINT ref = 0;
+		deviceContext->OMGetDepthStencilState(&result, &ref);
+
+		reference = ref;
+		state = SlimDX::Direct3D11::DepthStencilState::FromPointer(result);
+	}
+
+	void OutputMergerWrapper::SetDepthStencilState(SlimDX::Direct3D11::DepthStencilState^ state, int reference )
+	{
+		deviceContext->OMSetDepthStencilState(state == nullptr ? 0 : state->InternalPointer, reference);
+	}
+
+	void OutputMergerWrapper::GetBlendState(SlimDX::Direct3D11::BlendState^ %state, Color4 %blendFactor, int %sampleMask)
+	{
+		ID3D11BlendState *outState;
+		float outFactor[4];
+		UINT outMask;
+
+		deviceContext->OMGetBlendState(&outState, outFactor, &outMask);
+		
+		state = SlimDX::Direct3D11::BlendState::FromPointer(outState);
+		blendFactor = Color4(outFactor[3], outFactor[0], outFactor[1], outFactor[2]);
+		sampleMask = outMask;
+	}
+
+	void OutputMergerWrapper::SetBlendState(SlimDX::Direct3D11::BlendState^ state, Color4 blendFactor, int sampleMask)
+	{
+		deviceContext->OMSetBlendState(state == nullptr ? 0 : state->InternalPointer, reinterpret_cast<float*>(&blendFactor), sampleMask);
+	}
 	
 	void OutputMergerWrapper::SetTargets( RenderTargetView^ renderTargetView )
 	{

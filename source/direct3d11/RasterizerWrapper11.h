@@ -75,6 +75,12 @@ namespace SlimDX
 			array<Viewport>^ GetViewports();
 
 			/// <summary>
+			/// Gets the first viewport currently bound to the rasterizer stage.
+			/// </summary>
+			/// <returns>The first bound viewport.</returns>
+			Viewport GetViewport();
+
+			/// <summary>
 			/// Binds a single scissor rectangle to the rasterizer stage.
 			/// </summary>
 			/// <param name="scissorRectangle">The scissor rectangle to bind.</param>

@@ -89,6 +89,36 @@ namespace SlimDX
 				void set( int value );
 				int get();
 			}
+
+			/// <summary>
+			/// Gets the depth-stencil state of the output-merger stage.
+			/// </summary>
+			/// <param name="state">Returns the currently set depth-stencil state.</param>
+			/// <param name="reference">Returns the current depth-stencil reference value.</param>
+			void GetDepthStencilState(SlimDX::Direct3D11::DepthStencilState^ %state, int %reference);
+
+			/// <summary>
+			/// Sets the depth-stencil state of the output-merger stage.
+			/// </summary>
+			/// <param name="state">The depth-stencil state to set.</param>
+			/// <param name="reference">The depth-stencil reference value to set.</param>
+			void SetDepthStencilState(SlimDX::Direct3D11::DepthStencilState^ state, int reference);
+
+			/// <summary>
+			/// Gets the blend state of the output-merger stage.
+			/// </summary>
+			/// <param name="state">Returns the currently set blend state.</param>
+			/// <param name="blendFactor">Returns the current blending factor.</param>
+			/// <param name="sampleMask">Returns the current sampling mask.</param>
+			void GetBlendState(SlimDX::Direct3D11::BlendState^ %state, Color4 %blendFactor, int %sampleMask);
+
+			/// <summary>
+			/// Sets the blend state of the output-merger stage.
+			/// </summary>
+			/// <param name="state">The blend state to set.</param>
+			/// <param name="blendFactor">The blending factor to set.</param>
+			/// <param name="sampleMask">The sampling mask to set.</param>
+			void SetBlendState(SlimDX::Direct3D11::BlendState^ state, Color4 blendFactor, int sampleMask);
 			
 			/// <summary>
 			/// Binds a single render target to the output-merger stage.
