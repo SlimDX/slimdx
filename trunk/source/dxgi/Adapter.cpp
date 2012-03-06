@@ -31,7 +31,18 @@ using namespace System;
 namespace SlimDX
 {
 namespace DXGI
-{ 	
+{
+	bool Adapter::OutputEnumerator::MoveNext()
+	{
+		IDXGIOutput* output = 0;
+		HRESULT hr = m_adapter->InternalPointer->EnumOutputs(m_index, &output);
+		if (FAILED(hr))
+			return false;
+
+		m_current = Output::FromPointer(output, m_adapter);
+		return true;
+	}
+
 	AdapterDescription Adapter::Description::get()
 	{
 		DXGI_ADAPTER_DESC nativeDescription;
@@ -39,6 +50,11 @@ namespace DXGI
 			return AdapterDescription();
 
 		return AdapterDescription( nativeDescription );
+	}
+
+	Adapter::OutputEnumerator Adapter::EnumerateOutputs()
+	{
+		return Adapter::OutputEnumerator(this);
 	}
 		
 	int Adapter::GetOutputCount()

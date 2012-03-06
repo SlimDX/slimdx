@@ -42,6 +42,32 @@ namespace SlimDX
 			Adapter() { }
 
 		public:
+			value class OutputEnumerator sealed : System::Collections::Generic::IEnumerable<Output^>, System::Collections::Generic::IEnumerator<Output^>
+			{
+			private:
+				Adapter^ m_adapter;
+				Output^ m_current;
+				int m_index;
+
+			internal:
+				OutputEnumerator(Adapter^ adapter) : m_adapter(adapter), m_index(0) { }
+
+			public:
+				OutputEnumerator GetEnumerator() { return *this; }
+				virtual System::Collections::Generic::IEnumerator<Output^>^ GetEnumerator2() = System::Collections::Generic::IEnumerable<Output^>::GetEnumerator { return *this; }
+				virtual System::Collections::IEnumerator^ GetEnumerater3() = System::Collections::IEnumerable::GetEnumerator { return *this; }
+
+				virtual bool MoveNext();
+				virtual void Reset() { m_index = 0; m_current = nullptr; }
+
+				property Output^ Current { virtual Output^ get() { return m_current; } }
+				property System::Object^ Current2 
+				{
+					virtual System::Object^ get() = System::Collections::IEnumerator::Current::get { return Current; }
+				}
+			};
+
+		public:
 			/// <summary>
 			/// Gets the adapter's description.
 			/// </summary>
@@ -49,6 +75,12 @@ namespace SlimDX
 			{
 				AdapterDescription get();
 			}
+
+			/// <summary>
+			/// Lazily enumerates the available outputs on the adapter.
+			/// </summary>
+			/// <returns>A enumerator that can be used to obtain the available outputs.</returns>
+			OutputEnumerator EnumerateOutputs();
 
 			/// <summary>
 			/// Gets the number of outputs on the adapter.

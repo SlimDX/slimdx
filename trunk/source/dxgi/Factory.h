@@ -43,10 +43,42 @@ namespace SlimDX
 			Factory( bool /*hack*/ ) { }
 
 		public:
+			value class AdapterEnumerator sealed : System::Collections::Generic::IEnumerable<Adapter^>, System::Collections::Generic::IEnumerator<Adapter^>
+			{
+			private:
+				Factory^ m_factory;
+				Adapter^ m_current;
+				int m_index;
+
+			internal:
+				AdapterEnumerator(Factory^ factory) : m_factory(factory), m_index(0) { }
+
+			public:
+				AdapterEnumerator GetEnumerator() { return *this; }
+				virtual System::Collections::Generic::IEnumerator<Adapter^>^ GetEnumerator2() = System::Collections::Generic::IEnumerable<Adapter^>::GetEnumerator { return *this; }
+				virtual System::Collections::IEnumerator^ GetEnumerater3() = System::Collections::IEnumerable::GetEnumerator { return *this; }
+
+				virtual bool MoveNext();
+				virtual void Reset() { m_index = 0; m_current = nullptr; }
+
+				property Adapter^ Current { virtual Adapter^ get() { return m_current; } }
+				property System::Object^ Current2 
+				{
+					virtual System::Object^ get() = System::Collections::IEnumerator::Current::get { return Current; }
+				}
+			};
+
+		public:
 			/// <summary>
 			/// Initializes a new instance of the <see cref="Factory"/> class.
 			/// </summary>
 			Factory();
+
+			/// <summary>
+			/// Lazily enumerates the available adapters.
+			/// </summary>
+			/// <returns>A enumerator that can be used to obtain the available adapters.</returns>
+			AdapterEnumerator EnumerateAdapters();
 			
 			/// <summary>
 			/// Gets the number of available adapters.
