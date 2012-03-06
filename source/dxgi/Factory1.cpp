@@ -32,6 +32,17 @@ namespace SlimDX
 {
 namespace DXGI
 {
+	bool Factory1::AdapterEnumerator1::MoveNext()
+	{
+		IDXGIAdapter1* adapter = 0;
+		HRESULT hr = m_factory->InternalPointer->EnumAdapters1(m_index, &adapter);
+		if (FAILED(hr))
+			return false;
+
+		m_current = Adapter1::FromPointer(adapter, m_factory);
+		return true;
+	}
+
 	Factory1::Factory1( IDXGIFactory1* pointer, ComObject^ owner )
 		: Factory( true )
 	{
@@ -63,6 +74,11 @@ namespace DXGI
 			throw gcnew DXGIException( Result::Last );
 
 		Construct( factory );
+	}
+
+	Factory1::AdapterEnumerator1 Factory1::EnumerateAdapters1()
+	{
+		return Factory1::AdapterEnumerator1(this);
 	}
 
 	int Factory1::GetAdapterCount1()

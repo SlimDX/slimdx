@@ -38,10 +38,42 @@ namespace SlimDX
 			COMOBJECT_CUSTOM(IDXGIFactory1, Factory1);
 
 		public:
+			value class AdapterEnumerator1 sealed : System::Collections::Generic::IEnumerable<Adapter1^>, System::Collections::Generic::IEnumerator<Adapter1^>
+			{
+			private:
+				Factory1^ m_factory;
+				Adapter1^ m_current;
+				int m_index;
+
+			internal:
+				AdapterEnumerator1(Factory1^ factory) : m_factory(factory), m_index(0) { }
+
+			public:
+				AdapterEnumerator1 GetEnumerator() { return *this; }
+				virtual System::Collections::Generic::IEnumerator<Adapter1^>^ GetEnumerator2() = System::Collections::Generic::IEnumerable<Adapter1^>::GetEnumerator { return *this; }
+				virtual System::Collections::IEnumerator^ GetEnumerater3() = System::Collections::IEnumerable::GetEnumerator { return *this; }
+
+				virtual bool MoveNext();
+				virtual void Reset() { m_index = 0; m_current = nullptr; }
+
+				property Adapter1^ Current { virtual Adapter1^ get() { return m_current; } }
+				property System::Object^ Current2 
+				{
+					virtual System::Object^ get() = System::Collections::IEnumerator::Current::get { return Current; }
+				}
+			};
+
+		public:
 			/// <summary>
 			/// Initializes a new instance of the <see cref="Factory1"/> class.
 			/// </summary>
 			Factory1();
+
+			/// <summary>
+			/// Lazily enumerates the available adapters, including remote adapters and those without visible outputs.
+			/// </summary>
+			/// <returns>A enumerator that can be used to obtain the available adapters.</returns>
+			AdapterEnumerator1 EnumerateAdapters1();
 
 			/// <summary>
 			/// Gets the number of available adapters, including remote adapters and those without visible outputs.
