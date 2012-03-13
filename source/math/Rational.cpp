@@ -32,6 +32,11 @@ namespace SlimDX
 	{
 	}
 
+	Rational::operator float( Rational value )
+	{
+		return (float)value.Numerator / (float)value.Denominator;
+	}
+
     String^ Rational::ToString() {
         return String::Format( CultureInfo::CurrentCulture, "{0}", ((double)Numerator / Denominator).ToString(CultureInfo::CurrentCulture));
     }

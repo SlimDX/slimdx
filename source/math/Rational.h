@@ -51,6 +51,13 @@ namespace SlimDX
 		/// <param name="denominator">The denominator of the rational pair.</param>
 		Rational( int numerator, int denominator );
 
+		/// <summary>
+		/// Performs an explicit conversion from <see cref="Rational"/> to <see cref="System::Single"/>.
+		/// </summary>
+		/// <param name="value">The value to be converted.</param>
+		/// <returns>The converted value.</returns>
+		static explicit operator float( Rational value );
+
         virtual System::String^ ToString() override;
 
 		/// <summary>
