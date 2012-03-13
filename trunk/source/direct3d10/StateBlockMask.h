@@ -66,6 +66,11 @@ namespace SlimDX
 			/// <summary>
 			/// Initializes a new instance of the <see cref="SlimDX::Direct3D10::StateBlockMask"/> class.
 			/// </summary>
+			StateBlockMask();
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="SlimDX::Direct3D10::StateBlockMask"/> class.
+			/// </summary>
 			/// <param name="other">The <see cref="SlimDX::Direct3D10::StateBlockMask"/> to copy initial values from.</param>
 			StateBlockMask( StateBlockMask^ other );
 			
