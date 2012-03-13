@@ -1,3 +1,6 @@
+General
+	* Changed leak reporter to save memory by using a StringBuilder.
+
 DXGI
 	* Added lazy enumeration of adapters to Factory and Factory1.
 	* Added lazy enumeration of outputs to Adapter.
