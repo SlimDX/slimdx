@@ -26,6 +26,7 @@
 #include "ComObject.h"
 
 using namespace System;
+using namespace System::Text;
 using namespace System::Threading;
 using namespace System::Globalization;
 using namespace System::Collections::ObjectModel;
@@ -166,14 +167,14 @@ namespace SlimDX
 
 	String^ ObjectTable::ReportLeaks()
 	{
-		String^ output = "";
+		StringBuilder^ output = gcnew StringBuilder();
 
 		Monitor::Enter( m_SyncObject );
 		try
 		{
 			for each( KeyValuePair<IntPtr, ComObject^> pair in m_Table )
 			{
-				output += String::Format( CultureInfo::InvariantCulture, "Object of type {0} was not disposed. Stack trace of object creation:\n", pair.Value->GetType() );
+				output->AppendFormat( CultureInfo::InvariantCulture, "Object of type {0} was not disposed. Stack trace of object creation:\n", pair.Value->GetType() );
 
 				if( pair.Value->CreationSource == nullptr )
 					continue;
@@ -188,7 +189,7 @@ namespace SlimDX
 						continue;
 					}
 
-					output += String::Format( CultureInfo::InvariantCulture, "\t{0}({1},{2}): {3}\n",
+					output->AppendFormat( CultureInfo::InvariantCulture, "\t{0}({1},{2}): {3}\n",
 						frame->GetFileName(),
 						frame->GetFileLineNumber(),
 						frame->GetFileColumnNumber(),
@@ -196,13 +197,13 @@ namespace SlimDX
 				}
 			}
 
-			output += String::Format( CultureInfo::InvariantCulture, "Total of {0} objects still alive.\n", m_Table->Count );
+			output->AppendFormat( CultureInfo::InvariantCulture, "Total of {0} objects still alive.\n", m_Table->Count );
 		}
 		finally
 		{
 			Monitor::Exit( m_SyncObject );
 		}
-		return output;
+		return output->ToString();
 	}
 
 	ReadOnlyCollection<ComObject^>^ ObjectTable::Objects::get()
