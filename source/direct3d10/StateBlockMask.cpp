@@ -34,7 +34,21 @@ using namespace System::Collections::ObjectModel;
 namespace SlimDX
 {
 namespace Direct3D10
-{ 
+{
+	StateBlockMask::StateBlockMask()
+	{
+		m_VSSamplers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT ) );
+		m_VSShaderResources = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT ) );
+		m_VSConstantBuffers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT ) );
+		m_GSSamplers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT ) );
+		m_GSShaderResources = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT ) );
+		m_GSConstantBuffers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT ) );
+		m_PSSamplers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT ) );
+		m_PSShaderResources = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT ) );
+		m_PSConstantBuffers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT ) );
+		m_IAVertexBuffers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT ) );
+	}
+
 	StateBlockMask::StateBlockMask( StateBlockMask^ other )
 	{
 		m_VS = other->m_VS;
