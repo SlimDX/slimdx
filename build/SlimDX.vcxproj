@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug-4.0|Win32">
-      <Configuration>Debug-4.0</Configuration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug-4.0|x64">
-      <Configuration>Debug-4.0</Configuration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release-4.0|Win32">
-      <Configuration>Release-4.0</Configuration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release-4.0|x64">
-      <Configuration>Release-4.0</Configuration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
@@ -24,24 +24,24 @@
     <Keyword>ManagedCProj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-4.0|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>true</CLRSupport>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-4.0|Win32'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>true</CLRSupport>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-4.0|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>true</CLRSupport>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-4.0|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>true</CLRSupport>
@@ -49,35 +49,35 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release-4.0|Win32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug-4.0|Win32'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release-4.0|x64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug-4.0|x64'" Label="PropertySheets">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug-4.0|Win32'">$(SolutionDir)x86\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug-4.0|Win32'">$(SolutionDir)x86\$(Configuration)\</IntDir>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug-4.0|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug-4.0|x64'">$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug-4.0|x64'">$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug-4.0|x64'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release-4.0|Win32'">$(SolutionDir)x86\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release-4.0|Win32'">$(SolutionDir)x86\$(Configuration)\</IntDir>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release-4.0|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release-4.0|x64'">$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release-4.0|x64'">$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release-4.0|x64'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)x86\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)x86\$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)x86\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)x86\$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-4.0|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(ProjectDir)..\external\;$(ProjectDir)..\external\Effects11\Inc;$(DXSDK_DIR)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -91,10 +91,10 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;dxgi.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;winmm.lib;d3dcompiler.lib;d3d11.lib;d3dx11.lib;dwrite.lib;d3dcsx.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;dxgi.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;winmm.lib;d3dcompiler.lib;d3d11.lib;dwrite.lib;advapi32.lib</AdditionalDependencies>
       <Version>0.0.0.0</Version>
       <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <DelayLoadDLLs>d3dx11_43.dll;d3dcompiler_43.dll;d3dcsx_43.dll;d3d11.dll;dwrite.dll;dxgi.dll;x3daudio1_7.dll;xinput1_3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>d3dcompiler_43.dll;d3d11.dll;dwrite.dll;dxgi.dll;x3daudio1_7.dll;xinput1_3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>true</AssemblyDebug>
       <LinkTimeCodeGeneration>
@@ -110,7 +110,7 @@
       <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-4.0|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
@@ -127,10 +127,10 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;dxgi.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;winmm.lib;d3dcompiler.lib;d3d11.lib;d3dx11.lib;dwrite.lib;d3dcsx.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;dxgi.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;winmm.lib;d3dcompiler.lib;d3d11.lib;dwrite.lib;advapi32.lib</AdditionalDependencies>
       <Version>0.0.0.0</Version>
       <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <DelayLoadDLLs>d3dx11_43.dll;d3dcompiler_43.dll;d3dcsx_43.dll;d3d11.dll;dwrite.dll;dxgi.dll;x3daudio1_7.dll;xinput1_3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>d3dcompiler_43.dll;d3d11.dll;dwrite.dll;dxgi.dll;x3daudio1_7.dll;xinput1_3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>true</AssemblyDebug>
       <LinkTimeCodeGeneration>
@@ -146,7 +146,7 @@
       <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-4.0|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -164,10 +164,10 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;dxgi.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;winmm.lib;d3dcompiler.lib;d3d11.lib;d3dx11.lib;dwrite.lib;d3dcsx.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;dxgi.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;winmm.lib;d3dcompiler.lib;d3d11.lib;dwrite.lib;advapi32.lib</AdditionalDependencies>
       <Version>0.0.0.0</Version>
       <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <DelayLoadDLLs>d3dx11_43.dll;d3dcompiler_43.dll;d3dcsx_43.dll;d3d11.dll;dwrite.dll;dxgi.dll;x3daudio1_7.dll;xinput1_3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>d3dcompiler_43.dll;d3d11.dll;dwrite.dll;dxgi.dll;x3daudio1_7.dll;xinput1_3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -178,7 +178,7 @@
       <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-4.0|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
       <TargetEnvironment>X64</TargetEnvironment>
     </Midl>
@@ -198,10 +198,10 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;dxgi.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;winmm.lib;d3dcompiler.lib;d3d11.lib;d3dx11.lib;dwrite.lib;d3dcsx.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;dxgi.lib;xinput.lib;dxerr.lib;ole32.lib;x3daudio.lib;winmm.lib;d3dcompiler.lib;d3d11.lib;dwrite.lib;advapi32.lib</AdditionalDependencies>
       <Version>0.0.0.0</Version>
       <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <DelayLoadDLLs>d3dx11_43.dll;d3dcompiler_43.dll;d3dcsx_43.dll;d3d11.dll;dwrite.dll;dxgi.dll;x3daudio1_7.dll;xinput1_3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>d3dcompiler_43.dll;d3d11.dll;dwrite.dll;dxgi.dll;x3daudio1_7.dll;xinput1_3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -384,7 +384,6 @@
     <ClCompile Include="..\source\direct3d11\InfoQueueFilterDescription11.cpp" />
     <ClCompile Include="..\source\direct3d11\Resource11.cpp" />
     <ClCompile Include="..\source\direct3d11\ResourceRegion11.cpp" />
-    <ClCompile Include="..\source\direct3d11\TextureLoadInformation11.cpp" />
     <ClCompile Include="..\source\direct3d11\ResourceView11.cpp" />
     <ClCompile Include="..\source\direct3d11\DepthStencilView11.cpp" />
     <ClCompile Include="..\source\direct3d11\DepthStencilViewDescription11.cpp" />
@@ -423,8 +422,6 @@
     <ClCompile Include="..\source\direct3d11\InputLayout11.cpp" />
     <ClCompile Include="..\source\direct3d11\StreamOutputBufferBinding11.cpp" />
     <ClCompile Include="..\source\direct3d11\StreamOutputElement11.cpp" />
-    <ClCompile Include="..\source\direct3d11\ImageInformation11.cpp" />
-    <ClCompile Include="..\source\direct3d11\ImageLoadInformation11.cpp" />
     <ClCompile Include="..\source\direct3d11\Texture1D11.cpp" />
     <ClCompile Include="..\source\direct3d11\Texture1DDescription11.cpp" />
     <ClCompile Include="..\source\direct3d11\Texture2D11.cpp" />
@@ -433,11 +430,6 @@
     <ClCompile Include="..\source\direct3d11\Texture3DDescription11.cpp" />
     <ClCompile Include="..\source\direct3d11\Asynchronous11.cpp" />
     <ClCompile Include="..\source\direct3d11\Viewport11.cpp" />
-    <ClCompile Include="..\source\direct3d11\FastFourierTransform11.cpp" />
-    <ClCompile Include="..\source\direct3d11\FastFourierTransformBufferRequirements11.cpp" />
-    <ClCompile Include="..\source\direct3d11\FastFourierTransformDescription11.cpp" />
-    <ClCompile Include="..\source\direct3d11\Scan11.cpp" />
-    <ClCompile Include="..\source\direct3d11\SegmentedScan11.cpp" />
     <ClCompile Include="..\source\d3dcompiler\D3DCompilerException.cpp" />
     <ClCompile Include="..\source\d3dcompiler\IncludeDC.cpp" />
     <ClCompile Include="..\source\d3dcompiler\ShaderMacroDC.cpp" />
@@ -454,14 +446,14 @@
     <ClCompile Include="..\source\d3dcompiler\ShaderReflectionVariableDC.cpp" />
     <ClCompile Include="..\source\d3dcompiler\ShaderVariableDescriptionDC.cpp" />
     <ClCompile Include="..\source\AssemblyInfo.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug-4.0|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug-4.0|Win32'">stdafx.h</PrecompiledHeaderFile>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug-4.0|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug-4.0|x64'">stdafx.h</PrecompiledHeaderFile>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release-4.0|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release-4.0|Win32'">stdafx.h</PrecompiledHeaderFile>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release-4.0|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release-4.0|x64'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -648,7 +640,6 @@
     <ClInclude Include="..\source\direct3d11\InfoQueueFilterDescription11.h" />
     <ClInclude Include="..\source\direct3d11\Resource11.h" />
     <ClInclude Include="..\source\direct3d11\ResourceRegion11.h" />
-    <ClInclude Include="..\source\direct3d11\TextureLoadInformation11.h" />
     <ClInclude Include="..\source\direct3d11\ResourceView11.h" />
     <ClInclude Include="..\source\direct3d11\DepthStencilView11.h" />
     <ClInclude Include="..\source\direct3d11\DepthStencilViewDescription11.h" />
@@ -687,8 +678,6 @@
     <ClInclude Include="..\source\direct3d11\InputLayout11.h" />
     <ClInclude Include="..\source\direct3d11\StreamOutputBufferBinding11.h" />
     <ClInclude Include="..\source\direct3d11\StreamOutputElement11.h" />
-    <ClInclude Include="..\source\direct3d11\ImageInformation11.h" />
-    <ClInclude Include="..\source\direct3d11\ImageLoadInformation11.h" />
     <ClInclude Include="..\source\direct3d11\Texture1D11.h" />
     <ClInclude Include="..\source\direct3d11\Texture1DDescription11.h" />
     <ClInclude Include="..\source\direct3d11\Texture2D11.h" />
@@ -697,11 +686,6 @@
     <ClInclude Include="..\source\direct3d11\Texture3DDescription11.h" />
     <ClInclude Include="..\source\direct3d11\Asynchronous11.h" />
     <ClInclude Include="..\source\direct3d11\Viewport11.h" />
-    <ClInclude Include="..\source\direct3d11\FastFourierTransform11.h" />
-    <ClInclude Include="..\source\direct3d11\FastFourierTransformBufferRequirements11.h" />
-    <ClInclude Include="..\source\direct3d11\FastFourierTransformDescription11.h" />
-    <ClInclude Include="..\source\direct3d11\Scan11.h" />
-    <ClInclude Include="..\source\direct3d11\SegmentedScan11.h" />
     <ClInclude Include="..\source\d3dcompiler\D3DCompilerException.h" />
     <ClInclude Include="..\source\d3dcompiler\EnumsDC.h" />
     <ClInclude Include="..\source\d3dcompiler\IncludeDC.h" />

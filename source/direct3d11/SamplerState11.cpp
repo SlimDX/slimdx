@@ -21,12 +21,6 @@
 */
 #include "stdafx.h"
 
-#include <d3d11.h>
-#include <d3dx11.h>
-#include <d3dx9.h>
-#include <vcclr.h>
-#include <cmath>
-
 #include "Direct3D11Exception.h"
 
 #include "Device11.h"

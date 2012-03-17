@@ -235,9 +235,6 @@
     <Filter Include="Direct3D11\Viewport">
       <UniqueIdentifier>{3e652314-afd6-4d7a-8bfc-24957d97d064}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Direct3D11\Compute">
-      <UniqueIdentifier>{e832a3c8-436b-4b7a-8405-19e851c5ae1e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="D3DCompiler">
       <UniqueIdentifier>{ee4d36c7-3168-4010-8dfe-c1d56d9ecf7b}</UniqueIdentifier>
     </Filter>
@@ -699,9 +696,6 @@
     <ClCompile Include="..\source\direct3d11\ResourceRegion11.cpp">
       <Filter>Direct3D11\Resource</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\direct3d11\TextureLoadInformation11.cpp">
-      <Filter>Direct3D11\Resource</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\direct3d11\ResourceView11.cpp">
       <Filter>Direct3D11\Resource Views</Filter>
     </ClCompile>
@@ -816,12 +810,6 @@
     <ClCompile Include="..\source\direct3d11\StreamOutputElement11.cpp">
       <Filter>Direct3D11\Stream Output</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\direct3d11\ImageInformation11.cpp">
-      <Filter>Direct3D11\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\ImageLoadInformation11.cpp">
-      <Filter>Direct3D11\Texture</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\direct3d11\Texture1D11.cpp">
       <Filter>Direct3D11\Texture\1D</Filter>
     </ClCompile>
@@ -845,21 +833,6 @@
     </ClCompile>
     <ClCompile Include="..\source\direct3d11\Viewport11.cpp">
       <Filter>Direct3D11\Viewport</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\FastFourierTransform11.cpp">
-      <Filter>Direct3D11\Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\FastFourierTransformBufferRequirements11.cpp">
-      <Filter>Direct3D11\Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\FastFourierTransformDescription11.cpp">
-      <Filter>Direct3D11\Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\Scan11.cpp">
-      <Filter>Direct3D11\Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\SegmentedScan11.cpp">
-      <Filter>Direct3D11\Compute</Filter>
     </ClCompile>
     <ClCompile Include="..\source\d3dcompiler\D3DCompilerException.cpp">
       <Filter>D3DCompiler</Filter>
@@ -1458,9 +1431,6 @@
     <ClInclude Include="..\source\direct3d11\ResourceRegion11.h">
       <Filter>Direct3D11\Resource</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\direct3d11\TextureLoadInformation11.h">
-      <Filter>Direct3D11\Resource</Filter>
-    </ClInclude>
     <ClInclude Include="..\source\direct3d11\ResourceView11.h">
       <Filter>Direct3D11\Resource Views</Filter>
     </ClInclude>
@@ -1575,12 +1545,6 @@
     <ClInclude Include="..\source\direct3d11\StreamOutputElement11.h">
       <Filter>Direct3D11\Stream Output</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\direct3d11\ImageInformation11.h">
-      <Filter>Direct3D11\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\ImageLoadInformation11.h">
-      <Filter>Direct3D11\Texture</Filter>
-    </ClInclude>
     <ClInclude Include="..\source\direct3d11\Texture1D11.h">
       <Filter>Direct3D11\Texture\1D</Filter>
     </ClInclude>
@@ -1604,21 +1568,6 @@
     </ClInclude>
     <ClInclude Include="..\source\direct3d11\Viewport11.h">
       <Filter>Direct3D11\Viewport</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\FastFourierTransform11.h">
-      <Filter>Direct3D11\Compute</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\FastFourierTransformBufferRequirements11.h">
-      <Filter>Direct3D11\Compute</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\FastFourierTransformDescription11.h">
-      <Filter>Direct3D11\Compute</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\Scan11.h">
-      <Filter>Direct3D11\Compute</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\SegmentedScan11.h">
-      <Filter>Direct3D11\Compute</Filter>
     </ClInclude>
     <ClInclude Include="..\source\d3dcompiler\D3DCompilerException.h">
       <Filter>D3DCompiler</Filter>
