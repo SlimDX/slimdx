@@ -1,0 +1,10 @@
+;!@Install@!UTF-8!
+Title="SlimDX Samples Package (March 2011)"
+BeginPrompt="This archive contains SlimDX samples for March 2011."
+ExtractDialogText="Unpacking..."
+ExtractPathText="Select a directory to unpack the samples package to:"
+ExtractTitle="Extracting..."
+GUIFlags="8+32+64+256+4096"
+GUIMode="1"
+InstallPath="%HomeDrive%%HomePath%"
+;!@InstallEnd@!
