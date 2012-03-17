@@ -21,7 +21,6 @@
 */
 #pragma once
 
-#include "../math/Vector3.h"
 #include "Cone.h"
 
 namespace SlimDX

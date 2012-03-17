@@ -21,7 +21,6 @@
 */
 #pragma once
 
-#include "../math/Color4.h"
 #include "../dxgi/Enums.h"
 
 #include "../DataBox.h"

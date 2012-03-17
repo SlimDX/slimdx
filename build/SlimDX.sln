@@ -3,14 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SlimDX", "SlimDX.vcxproj", "{8ECCE443-0440-40F4-A94C-F02E027282C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimMath", "..\SlimMath\SlimMath.csproj", "{820FE441-822F-4519-994B-04F1DE27FF15}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
 		Debug-4.0|x64 = Debug-4.0|x64
 		Debug-4.0|x86 = Debug-4.0|x86
-		Public|x64 = Public|x64
-		Public|x86 = Public|x86
 		Public-4.0|x64 = Public-4.0|x64
 		Public-4.0|x86 = Public-4.0|x86
 		Release|x64 = Release|x64
@@ -19,30 +19,35 @@ Global
 		Release-4.0|x86 = Release-4.0|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Debug|x64.ActiveCfg = Debug|x64
-		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Debug|x64.Build.0 = Debug|x64
-		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Debug|x86.ActiveCfg = Debug|Win32
-		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Debug|x86.Build.0 = Debug|Win32
+		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Debug|x64.ActiveCfg = Debug-4.0|x64
+		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Debug|x64.Build.0 = Debug-4.0|x64
+		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Debug|x86.ActiveCfg = Debug-4.0|x64
 		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Debug-4.0|x64.ActiveCfg = Debug-4.0|x64
 		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Debug-4.0|x64.Build.0 = Debug-4.0|x64
 		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Debug-4.0|x86.ActiveCfg = Debug-4.0|Win32
 		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Debug-4.0|x86.Build.0 = Debug-4.0|Win32
-		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Public|x64.ActiveCfg = Public|x64
-		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Public|x64.Build.0 = Public|x64
-		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Public|x86.ActiveCfg = Public|Win32
-		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Public|x86.Build.0 = Public|Win32
-		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Public-4.0|x64.ActiveCfg = Public-4.0|x64
-		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Public-4.0|x64.Build.0 = Public-4.0|x64
-		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Public-4.0|x86.ActiveCfg = Public-4.0|Win32
-		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Public-4.0|x86.Build.0 = Public-4.0|Win32
-		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Release|x64.ActiveCfg = Release|x64
-		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Release|x64.Build.0 = Release|x64
-		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Release|x86.ActiveCfg = Release|Win32
-		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Release|x86.Build.0 = Release|Win32
+		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Public-4.0|x64.ActiveCfg = Release-4.0|x64
+		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Public-4.0|x64.Build.0 = Release-4.0|x64
+		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Public-4.0|x86.ActiveCfg = Release-4.0|x64
+		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Release|x64.ActiveCfg = Release-4.0|x64
+		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Release|x64.Build.0 = Release-4.0|x64
+		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Release|x86.ActiveCfg = Release-4.0|x64
 		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Release-4.0|x64.ActiveCfg = Release-4.0|x64
 		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Release-4.0|x64.Build.0 = Release-4.0|x64
 		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Release-4.0|x86.ActiveCfg = Release-4.0|Win32
 		{8ECCE443-0440-40F4-A94C-F02E027282C3}.Release-4.0|x86.Build.0 = Release-4.0|Win32
+		{820FE441-822F-4519-994B-04F1DE27FF15}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{820FE441-822F-4519-994B-04F1DE27FF15}.Debug|x64.Build.0 = Debug|Any CPU
+		{820FE441-822F-4519-994B-04F1DE27FF15}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{820FE441-822F-4519-994B-04F1DE27FF15}.Debug-4.0|x64.ActiveCfg = Debug|Any CPU
+		{820FE441-822F-4519-994B-04F1DE27FF15}.Debug-4.0|x86.ActiveCfg = Debug|Any CPU
+		{820FE441-822F-4519-994B-04F1DE27FF15}.Public-4.0|x64.ActiveCfg = Release|Any CPU
+		{820FE441-822F-4519-994B-04F1DE27FF15}.Public-4.0|x86.ActiveCfg = Release|Any CPU
+		{820FE441-822F-4519-994B-04F1DE27FF15}.Release|x64.ActiveCfg = Release|Any CPU
+		{820FE441-822F-4519-994B-04F1DE27FF15}.Release|x86.ActiveCfg = Release|Any CPU
+		{820FE441-822F-4519-994B-04F1DE27FF15}.Release-4.0|x64.ActiveCfg = Release|Any CPU
+		{820FE441-822F-4519-994B-04F1DE27FF15}.Release-4.0|x64.Build.0 = Release|Any CPU
+		{820FE441-822F-4519-994B-04F1DE27FF15}.Release-4.0|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

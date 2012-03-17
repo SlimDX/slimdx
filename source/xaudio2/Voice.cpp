@@ -160,24 +160,6 @@ namespace XAudio2
 		return results;
 	}
 
-	Result Voice::SetEffectChain( array<EffectDescriptor>^ effects )
-	{
-		stack_array<XAUDIO2_EFFECT_DESCRIPTOR> descriptors = stackalloc(XAUDIO2_EFFECT_DESCRIPTOR, effects->Length);
-		for (int i = 0; i < effects->Length; i++)
-			descriptors[i] = effects[i].ToUnmanaged();
-
-		XAUDIO2_EFFECT_CHAIN chain;
-		chain.EffectCount = effects->Length;
-		chain.pEffectDescriptors = &descriptors[0];
-
-		HRESULT hr = InternalPointer->SetEffectChain( &chain );
-		
-		for (int i = 0; i < effects->Length; i++)
-			effects[i].Free();
-
-		return RECORD_XAUDIO2( hr );
-	}
-
 	Result Voice::SetOutputMatrix( int sourceChannels, int destinationChannels, array<float>^ matrix )
 	{
 		return SetOutputMatrix( nullptr, sourceChannels, destinationChannels, matrix );

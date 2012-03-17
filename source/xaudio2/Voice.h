@@ -26,7 +26,6 @@
 #include "FilterParameters.h"
 #include "VoiceDetails.h"
 #include "VoiceSendDescriptor.h"
-#include "EffectDescriptor.h"
 
 namespace SlimDX
 {
@@ -82,8 +81,6 @@ namespace SlimDX
 
 			Result SetOutputMatrix( Voice^ destinationVoice, int sourceChannels, int destinationChannels, array<float>^ matrix );
 			Result SetOutputMatrix( Voice^ destinationVoice, int sourceChannels, int destinationChannels, array<float>^ matrix, int operationSet );
-
-			Result SetEffectChain( array<EffectDescriptor>^ effects );
 			
 #if SLIMDX_XAUDIO2_VERSION < 24
 			Result SetOutputVoices( array<Voice^>^ outputVoices );

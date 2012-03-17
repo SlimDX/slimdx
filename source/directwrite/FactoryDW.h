@@ -31,7 +31,6 @@ namespace SlimDX
 {
 	namespace DirectWrite
 	{
-		using namespace SlimDX::Direct2D;
 		using namespace System;
 		using namespace System::Runtime::InteropServices;
 		interface struct IFontCollectionLoader;

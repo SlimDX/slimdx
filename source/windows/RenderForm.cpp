@@ -22,7 +22,6 @@
 #include "stdafx.h"
 
 #include "../InternalHelpers.h"
-#include "../Resources.h"
 
 #include "RenderForm.h"
 
@@ -53,8 +52,6 @@ namespace Windows
 
 		ResizeRedraw = true;
 		SetStyle( ControlStyles::AllPaintingInWmPaint | ControlStyles::UserPaint, true );
-
-		Icon = SlimDX::Resources::BlackIcon;
 	}
 
 	void RenderForm::OnResizeBegin( EventArgs^ e )

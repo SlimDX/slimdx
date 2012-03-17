@@ -23,7 +23,6 @@
 #include <vector>
 
 #include "DirectWriteException.h"
-#include "../math/Matrix3x2.h"
 #include "../stack_array.h"
 
 #include "FactoryDW.h"

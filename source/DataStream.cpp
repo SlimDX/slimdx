@@ -20,11 +20,6 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <stdexcept>
-
 #include "DataStream.h"
 #include "Utilities.h"
 #include "InternalHelpers.h"
@@ -35,20 +30,6 @@ using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	DataStream::DataStream( ID3DXBuffer* buffer )
-	{
-		if( buffer->GetBufferSize() < 1 )
-			throw gcnew ArgumentException( "Buffer size is less than 1." );
-
-		m_Buffer = static_cast<char*>( buffer->GetBufferPointer() );
-		m_Size = buffer->GetBufferSize();
-		
-		m_CanRead = true;
-		m_CanWrite = true;
-		
-		m_ID3DXBuffer = buffer;
-	}
-
 	DataStream::DataStream( const void* buffer, Int64 sizeInBytes, bool canRead, bool makeCopy )
 	{
 		if( sizeInBytes < 1 )
@@ -178,12 +159,6 @@ namespace SlimDX
 			m_OwnsBuffer = false;
 		}
 		
-		if( m_ID3DXBuffer != 0 )
-		{
-			m_ID3DXBuffer->Release();
-			m_ID3DXBuffer = 0;
-		}
-		
 		if( m_GCHandle.IsAllocated )
 		{
 			m_GCHandle.Free();
@@ -212,22 +187,6 @@ namespace SlimDX
 		char* pointer = PositionPointer;
 		Seek( 0, SeekOrigin::End );
 		return pointer;
-	}
-
-	ID3DXBuffer* DataStream::GetD3DBuffer()
-	{
-		if( m_ID3DXBuffer != 0 )
-			return m_ID3DXBuffer;
-
-		ID3DXBuffer *temp;
-		HRESULT hr = D3DXCreateBuffer( static_cast<DWORD>( m_Size ), &temp );
-		if( FAILED( hr ) )
-			throw gcnew OutOfMemoryException();
-
-		m_ID3DXBuffer = temp;
-
-		memcpy( m_ID3DXBuffer->GetBufferPointer(), m_Buffer, static_cast<size_t>( m_Size ) );
-		return m_ID3DXBuffer;
 	}
 
 	Int64 DataStream::Seek( Int64 offset, SeekOrigin origin )

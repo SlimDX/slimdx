@@ -24,7 +24,6 @@
 extern const IID IID_IDWritePixelSnapping;
 
 #include "../ComObject.h"
-#include "../math/Matrix3x2.h"
 
 namespace SlimDX
 {

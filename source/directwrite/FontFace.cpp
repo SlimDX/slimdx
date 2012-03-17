@@ -114,37 +114,6 @@ namespace DirectWrite
 		return results;
 	}
 
-	Result FontFace::GetGlyphRunOutline(float size, array<short>^ indices, array<float>^ advances, array<GlyphOffset>^ offsets, bool isSideways, bool isRightToLeft, SlimDX::Direct2D::SimplifiedGeometrySink^ geometrySink)
-	{
-		UINT16* indicesPtr = NULL;
-		FLOAT* advancesPtr = NULL;
-		DWRITE_GLYPH_OFFSET* offsetsPtr = NULL;
-		pin_ptr<short> pinnedIndices;
-		pin_ptr<float> pinnedAdvances;
-		pin_ptr<GlyphOffset> pinnedOffsets;
-
-		if (indices != nullptr)
-		{
-			pinnedIndices = &indices[0];
-			indicesPtr = reinterpret_cast<UINT16*>(pinnedIndices);
-		}
-
-		if (advances != nullptr)
-		{
-			pinnedAdvances = &advances[0];
-			advancesPtr = reinterpret_cast<FLOAT*>(pinnedAdvances);
-		}
-
-		if (offsets != nullptr)
-		{
-			pinnedOffsets = &offsets[0];
-			offsetsPtr = reinterpret_cast<DWRITE_GLYPH_OFFSET*>(pinnedOffsets);
-		}
-
-		HRESULT hr = InternalPointer->GetGlyphRunOutline(size, indicesPtr, advancesPtr, offsetsPtr, indices->Length, isSideways, isRightToLeft, geometrySink->InternalPointer);
-		return RECORD_DW(hr);
-	}
-
 	RenderingMode FontFace::GetRecommendedRenderingMode(float size, float pixelsPerDip, MeasuringMode measuringMode, RenderingParameters^ renderingParameters)
 	{
 		DWRITE_RENDERING_MODE mode;

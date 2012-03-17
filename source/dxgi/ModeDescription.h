@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#include "../math/Rational.h"
-
 #include "Enums.h"
 
 namespace SlimDX

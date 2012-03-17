@@ -24,7 +24,6 @@
 extern const IID IID_IDWriteTextRenderer;
 
 #include "../ComObject.h"
-#include "../math/Matrix3x2.h"
 
 #include "InlineObject.h"
 #include "Enums.h"
