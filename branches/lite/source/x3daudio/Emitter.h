@@ -21,7 +21,6 @@
 */
 #pragma once
 
-#include "../math/Vector3.h"
 #include "CurvePoint.h"
 #include "Cone.h"
 

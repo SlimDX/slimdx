@@ -27,7 +27,6 @@
 #include "../dxgi/Enums.h"
 #include "../dxgi/SwapChainDxgi.h"
 #include "../dxgi/SwapChainDescription.h"
-#include "../math/Color4.h"
 
 #include "Enums11.h"
 

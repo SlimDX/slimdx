@@ -36,7 +36,7 @@ namespace SlimDX
 		/// <unmanaged>ID3D10Blob</unmanaged>
 		public ref class ShaderBytecode : ComObject
 		{
-			COMOBJECT(ID3D10Blob, ShaderBytecode);
+			COMOBJECT(ID3DBlob, ShaderBytecode);
 		
 		internal:
 			ShaderBytecode( const BYTE* data, UINT length );

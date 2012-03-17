@@ -43,7 +43,6 @@ namespace SlimDX
 	private:
 		char* m_Buffer;
 		bool m_OwnsBuffer;
-		ID3DXBuffer *m_ID3DXBuffer;
 		
 		System::Int64 m_Size;
 		System::Int64 m_Position;
@@ -54,7 +53,6 @@ namespace SlimDX
 		System::Runtime::InteropServices::GCHandle m_GCHandle;
 
 	internal:
-		DataStream( ID3DXBuffer *buffer );
 		DataStream( void* buffer, System::Int64 sizeInBytes, bool canRead, bool canWrite, bool makeCopy );
 		DataStream( const void *buffer, System::Int64 sizeInBytes, bool canRead, bool makeCopy );
 
@@ -74,8 +72,6 @@ namespace SlimDX
 		}
 
 		char* SeekToEnd();
-
-		ID3DXBuffer* GetD3DBuffer();
 		void Destruct();
 
 	public:

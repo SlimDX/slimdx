@@ -71,7 +71,7 @@ namespace SlimDX
 			void Close();
 		};
 		
-		class IncludeShim : public ID3D10Include
+		class IncludeShim : public ID3DInclude
 		{
 		private:
 			gcroot<Include^> m_Wrapped;

@@ -39,26 +39,6 @@ namespace SlimDX
 	Utilities::Utilities()
 	{
 	}
-
-	generic<typename T> where T : value class
-	array<T>^ Utilities::ReadRange( ID3DXBuffer *buffer, int count )
-	{
-		if( count < 0 )
-			throw gcnew ArgumentOutOfRangeException( "count" );
-
-		if (buffer == NULL)
-			return nullptr;
-			
-		size_t elementSize = sizeof(T);
-		array<T>^ result = gcnew array<T>( count );
-
-		pin_ptr<T> pinnedBuffer = &result[0];
-		memcpy( pinnedBuffer, buffer->GetBufferPointer(), count * elementSize );
-
-		buffer->Release();
-
-		return result;
-	}
 	
 	//TODO: This needs review upon interface refactor.
 	GUID Utilities::GetNativeGuidForType( Type^ type )
@@ -372,22 +352,8 @@ namespace SlimDX
 		
 		return true;
 	}
-	
-	String^ Utilities::BufferToString( ID3DXBuffer *buffer )
-	{
-		if( buffer != NULL )
-		{
-			String^ string = gcnew String( reinterpret_cast<const char*>( buffer->GetBufferPointer() ) );
-			buffer->Release();
-			return string;
-		}
-		else
-		{
-			return String::Empty;
-		}
-	}
 
-	String^ Utilities::BlobToString( ID3D10Blob *blob )
+	String^ Utilities::BlobToString( ID3DBlob *blob )
 	{
 		if( blob != NULL )
 		{

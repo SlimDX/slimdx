@@ -24,8 +24,6 @@
 extern const IID IID_IDWriteBitmapRenderTarget;
 
 #include "../ComObject.h"
-#include "../math/Color4.h"
-#include "../math/Matrix3x2.h"
 
 #include "Enums.h"
 #include "GlyphRunDW.h"

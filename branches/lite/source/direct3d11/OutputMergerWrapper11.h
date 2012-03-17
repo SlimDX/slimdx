@@ -21,7 +21,6 @@
 */
 #pragma once
 
-#include "../math/Color4.h"
 
 namespace SlimDX
 {

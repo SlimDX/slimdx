@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#include "../math/color4.h"
-
 #include "Enums11.h"
 
 namespace SlimDX

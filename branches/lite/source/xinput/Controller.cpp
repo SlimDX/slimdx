@@ -1,4 +1,3 @@
-#include "stdafx.h"
 /*
 * Copyright (c) 2007-2012 SlimDX Group
 * 
@@ -20,12 +19,12 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include "stdafx.h"
+
+#include "../Utilities.h"
+
 #include "Controller.h"
-
-#include "../DirectInput/Guids.h"
-
 #include "XInputException.h"
-
 #include "ResultCodeXI.h"
 
 using namespace System;

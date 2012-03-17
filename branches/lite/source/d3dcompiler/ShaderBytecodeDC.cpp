@@ -39,9 +39,9 @@ namespace D3DCompiler
 {
 	ShaderBytecode::ShaderBytecode( const BYTE *data, UINT length )
 	{
-		ID3D10Blob *blob;
+		ID3DBlob *blob;
 
-		HRESULT hr = D3D10CreateBlob( length, &blob );
+		HRESULT hr = D3DCreateBlob( length, &blob );
 		if( RECORD_D3DC( hr ).IsFailure )
 			throw gcnew D3DCompilerException( Result::Last );
 
@@ -54,8 +54,8 @@ namespace D3DCompiler
 		if( data == nullptr )
 			throw gcnew ArgumentNullException( "data" );
 
-		ID3D10Blob *blob;
-		HRESULT hr = D3D10CreateBlob( static_cast<SIZE_T>(data->Length), &blob );
+		ID3DBlob *blob;
+		HRESULT hr = D3DCreateBlob( static_cast<SIZE_T>(data->Length), &blob );
 		if( RECORD_D3DC( hr ).IsFailure )
 			throw gcnew D3DCompilerException( Result::Last );
 
@@ -164,8 +164,8 @@ namespace D3DCompiler
 
 	ShaderBytecode^ ShaderBytecode::Compile( array<Byte>^ shaderSource, String^ entryPoint, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, String^ sourceName, [Out] String^ %compilationErrors )
 	{
-		ID3D10Blob *code;
-		ID3D10Blob *errors;
+		ID3DBlob *code;
+		ID3DBlob *errors;
 
 		if (shaderSource == nullptr)
 			throw gcnew ArgumentNullException("shaderSource");
@@ -183,7 +183,7 @@ namespace D3DCompiler
 		pin_ptr<Byte> pinnedName = sourceNameBytes == nullptr ? nullptr : &sourceNameBytes[0];
 
 		IncludeShim includeShim = IncludeShim( include );
-		ID3D10Include* includePtr = NULL;
+		ID3DInclude* includePtr = NULL;
 		if( include != nullptr )
 			includePtr = &includeShim;
 

@@ -7,45 +7,6 @@
     <Filter Include="Base\Data">
       <UniqueIdentifier>{78133695-f3cf-419d-9bc0-4b000b45207e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Base\Performance">
-      <UniqueIdentifier>{7e5dc475-bce4-49d7-9c18-9b406a8ef474}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Base\Resources">
-      <UniqueIdentifier>{5ac148c6-7a76-41a6-bdc4-98663794dd26}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Math">
-      <UniqueIdentifier>{fc3a3d51-cea4-4bd0-b47d-e13aebdfc533}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Math\Bounding Volumes">
-      <UniqueIdentifier>{d305efb8-f78f-4ec4-84f5-1e6e99930c42}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Math\Color">
-      <UniqueIdentifier>{714099fc-272b-4a15-9264-be97b3e4e7ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Math\Vector">
-      <UniqueIdentifier>{531e97d3-c568-48a8-8a2a-f4aa76984d92}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Math\Matrix">
-      <UniqueIdentifier>{87107ecb-8c8f-469f-ac6e-535db68d972a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Math\Quaternion">
-      <UniqueIdentifier>{ba46c6f8-f3df-4598-83d7-abd3dcb35644}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Math\Ray">
-      <UniqueIdentifier>{9f311b70-c1a3-4c9c-a7d1-557bd74d7fd6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Math\Plane">
-      <UniqueIdentifier>{749396b6-a343-414d-b1fc-87e3b209311e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Math\Rational">
-      <UniqueIdentifier>{6b2e83e1-da5a-466f-b8b7-c63c6dcdd968}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Math\Half">
-      <UniqueIdentifier>{a4224e67-c574-4b01-bdbc-44be4949cc8f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Math\Spherical Harmonics">
-      <UniqueIdentifier>{92f1ee08-2800-4a9e-8245-88e727f3e4e8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="XAudio2">
       <UniqueIdentifier>{55d5b5e1-f985-4487-a502-43afcc9a5582}</UniqueIdentifier>
     </Filter>
@@ -117,9 +78,6 @@
     </Filter>
     <Filter Include="DXGI\1.1">
       <UniqueIdentifier>{b25e75c4-304a-4000-83c0-327654718fa7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Design">
-      <UniqueIdentifier>{ee9a41ab-db70-42a6-bac5-9836b72157df}</UniqueIdentifier>
     </Filter>
     <Filter Include="X3DAudio">
       <UniqueIdentifier>{9213dd07-3f88-472f-a288-c9a134cdcb7d}</UniqueIdentifier>
@@ -277,72 +235,6 @@
     <Filter Include="Direct3D11\Viewport">
       <UniqueIdentifier>{3e652314-afd6-4d7a-8bfc-24957d97d064}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Direct3D11\Effects">
-      <UniqueIdentifier>{c97a0658-72b9-42a6-aaba-cbb339c4ec3f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Technique">
-      <UniqueIdentifier>{8eea4aad-bdf0-4d82-8732-144aa976834d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Variables">
-      <UniqueIdentifier>{b9ec063f-a023-4c94-a533-6c02575eb667}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Variables\Matrix">
-      <UniqueIdentifier>{7e3068c9-761b-48de-9a1c-887136ecbe34}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Variables\Resource">
-      <UniqueIdentifier>{04478de1-63e1-4da7-8dc2-722af127c2e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Variables\Scalar">
-      <UniqueIdentifier>{f5b5f408-fdf5-4d9c-8e27-90d688b6402e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Variables\Vector">
-      <UniqueIdentifier>{18795ae4-e21a-48cd-bbbc-e6888e1ef01d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Variables\String">
-      <UniqueIdentifier>{98764a4d-8ba3-409f-b532-58b15b048e63}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Variables\UnorderedAccessView">
-      <UniqueIdentifier>{21ad0426-4b1a-4542-a4aa-50062c1ede1c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Variables\Shader">
-      <UniqueIdentifier>{f495db2f-ea94-44a5-b469-65d08ba5a54b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Variables\Blend">
-      <UniqueIdentifier>{5691a090-78b2-4aeb-adf1-2ca845ad3bea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Variables\ClassInstance">
-      <UniqueIdentifier>{03db8bac-ec24-4fbe-a226-f0e555cea143}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Variables\DepthStencil">
-      <UniqueIdentifier>{ee410885-9adb-42ea-9748-267c2885fb56}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Variables\DepthStencilView">
-      <UniqueIdentifier>{a0d98003-e5bf-449b-b926-4ec8376c3a4e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Variables\Interface">
-      <UniqueIdentifier>{ecaef457-d8d5-4a4e-963a-0322537543f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Variables\Rasterizer">
-      <UniqueIdentifier>{b4327c61-1b3a-42d5-97ed-7977f4682fc6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Variables\RenderTargetView">
-      <UniqueIdentifier>{17b3ceac-4b69-444f-9503-35ef6cd09fdb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Variables\Sampler">
-      <UniqueIdentifier>{5d230d02-249f-4d8d-8845-e2b37ac893fb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Pass">
-      <UniqueIdentifier>{4dbb225c-8a7b-4ab3-8195-f545d928f4ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Type">
-      <UniqueIdentifier>{ea0eff94-a71d-421f-8277-295fab26e4d8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\Group">
-      <UniqueIdentifier>{8a0d4057-9af2-4665-b8b7-d39263a4643e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Direct3D11\Effects\ConstantBuffer">
-      <UniqueIdentifier>{a8f73888-ae6c-4e24-ab1c-2fda93c096bd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Direct3D11\Compute">
       <UniqueIdentifier>{e832a3c8-436b-4b7a-8405-19e851c5ae1e}</UniqueIdentifier>
     </Filter>
@@ -408,66 +300,6 @@
     <ClCompile Include="..\source\DataStream.cpp">
       <Filter>Base\Data</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\Performance.cpp">
-      <Filter>Base\Performance</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Resources.cpp">
-      <Filter>Base\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\math\BoundingBox.cpp">
-      <Filter>Math\Bounding Volumes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\math\BoundingSphere.cpp">
-      <Filter>Math\Bounding Volumes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\math\Color3.cpp">
-      <Filter>Math\Color</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\math\Color4.cpp">
-      <Filter>Math\Color</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\math\Vector2.cpp">
-      <Filter>Math\Vector</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\math\Vector3.cpp">
-      <Filter>Math\Vector</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\math\Vector4.cpp">
-      <Filter>Math\Vector</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\math\Matrix.cpp">
-      <Filter>Math\Matrix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\math\Matrix3x2.cpp">
-      <Filter>Math\Matrix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\math\Quaternion.cpp">
-      <Filter>Math\Quaternion</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\math\Ray.cpp">
-      <Filter>Math\Ray</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\math\Plane.cpp">
-      <Filter>Math\Plane</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\math\Rational.cpp">
-      <Filter>Math\Rational</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\math\Half.cpp">
-      <Filter>Math\Half</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\math\Half2.cpp">
-      <Filter>Math\Half</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\math\Half3.cpp">
-      <Filter>Math\Half</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\math\Half4.cpp">
-      <Filter>Math\Half</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\math\SHVector.cpp">
-      <Filter>Math\Spherical Harmonics</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\xaudio2\ResultCodeXA2.cpp">
       <Filter>XAudio2</Filter>
     </ClCompile>
@@ -491,9 +323,6 @@
     </ClCompile>
     <ClCompile Include="..\source\xaudio2\VoiceCallback.cpp">
       <Filter>XAudio2\Callbacks</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\xaudio2\EffectDescriptor.cpp">
-      <Filter>XAudio2\Voices</Filter>
     </ClCompile>
     <ClCompile Include="..\source\xaudio2\FilterParameters.cpp">
       <Filter>XAudio2\Voices</Filter>
@@ -626,57 +455,6 @@
     </ClCompile>
     <ClCompile Include="..\source\dxgi\Surface1.cpp">
       <Filter>DXGI\1.1</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\design\BoundingBoxConverter.cpp">
-      <Filter>Design</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\design\BoundingSphereConverter.cpp">
-      <Filter>Design</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\design\Color3Converter.cpp">
-      <Filter>Design</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\design\Color4Converter.cpp">
-      <Filter>Design</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\design\FieldPropertyDescriptor.cpp">
-      <Filter>Design</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\design\Half2Converter.cpp">
-      <Filter>Design</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\design\Half3Converter.cpp">
-      <Filter>Design</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\design\Half4Converter.cpp">
-      <Filter>Design</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\design\HalfConverter.cpp">
-      <Filter>Design</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\design\MatrixConverter.cpp">
-      <Filter>Design</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\design\PlaneConverter.cpp">
-      <Filter>Design</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\design\QuaternionConverter.cpp">
-      <Filter>Design</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\design\RationalConverter.cpp">
-      <Filter>Design</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\design\RayConverter.cpp">
-      <Filter>Design</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\design\Vector2Converter.cpp">
-      <Filter>Design</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\design\Vector3Converter.cpp">
-      <Filter>Design</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\design\Vector4Converter.cpp">
-      <Filter>Design</Filter>
     </ClCompile>
     <ClCompile Include="..\source\x3daudio\Cone.cpp">
       <Filter>X3DAudio</Filter>
@@ -978,9 +756,6 @@
     <ClCompile Include="..\source\direct3d11\ClassLinkage11.cpp">
       <Filter>Direct3D11\Shader\ClassLinkage</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\direct3d11\StateBlockMask11.cpp">
-      <Filter>Direct3D11\State</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\direct3d11\BlendState11.cpp">
       <Filter>Direct3D11\State\BlendState</Filter>
     </ClCompile>
@@ -1070,96 +845,6 @@
     </ClCompile>
     <ClCompile Include="..\source\direct3d11\Viewport11.cpp">
       <Filter>Direct3D11\Viewport</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\Effect11.cpp">
-      <Filter>Direct3D11\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectDescription11.cpp">
-      <Filter>Direct3D11\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectTechnique11.cpp">
-      <Filter>Direct3D11\Effects\Technique</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectTechniqueDescription11.cpp">
-      <Filter>Direct3D11\Effects\Technique</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectVariableDescription11.cpp">
-      <Filter>Direct3D11\Effects\Variables</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectMatrixVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables\Matrix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectResourceVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables\Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectScalarVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables\Scalar</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectVectorVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables\Vector</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectStringVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables\String</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectUnorderedAccessViewVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables\UnorderedAccessView</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectShaderDescription11.cpp">
-      <Filter>Direct3D11\Effects\Variables\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectShaderVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectBlendVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables\Blend</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectClassInstanceVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables\ClassInstance</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectDepthStencilVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables\DepthStencil</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectDepthStencilViewVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables\DepthStencilView</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectInterfaceVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectRasterizerVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables\Rasterizer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectRenderTargetViewVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables\RenderTargetView</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectSamplerVariable11.cpp">
-      <Filter>Direct3D11\Effects\Variables\Sampler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectPass11.cpp">
-      <Filter>Direct3D11\Effects\Pass</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectPassDescription11.cpp">
-      <Filter>Direct3D11\Effects\Pass</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectPassShaderDescription11.cpp">
-      <Filter>Direct3D11\Effects\Pass</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectType11.cpp">
-      <Filter>Direct3D11\Effects\Type</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectTypeDescription11.cpp">
-      <Filter>Direct3D11\Effects\Type</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectGroup11.cpp">
-      <Filter>Direct3D11\Effects\Group</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectGroupDescription11.cpp">
-      <Filter>Direct3D11\Effects\Group</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\direct3d11\EffectConstantBuffer11.cpp">
-      <Filter>Direct3D11\Effects\ConstantBuffer</Filter>
     </ClCompile>
     <ClCompile Include="..\source\direct3d11\FastFourierTransform11.cpp">
       <Filter>Direct3D11\Compute</Filter>
@@ -1293,69 +978,6 @@
     <ClInclude Include="..\source\DataStream.h">
       <Filter>Base\Data</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\Performance.h">
-      <Filter>Base\Performance</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\Resources.h">
-      <Filter>Base\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\Enums.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\BoundingBox.h">
-      <Filter>Math\Bounding Volumes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\BoundingSphere.h">
-      <Filter>Math\Bounding Volumes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\Color3.h">
-      <Filter>Math\Color</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\Color4.h">
-      <Filter>Math\Color</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\Vector2.h">
-      <Filter>Math\Vector</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\Vector3.h">
-      <Filter>Math\Vector</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\Vector4.h">
-      <Filter>Math\Vector</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\Matrix.h">
-      <Filter>Math\Matrix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\Matrix3x2.h">
-      <Filter>Math\Matrix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\Quaternion.h">
-      <Filter>Math\Quaternion</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\Ray.h">
-      <Filter>Math\Ray</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\Plane.h">
-      <Filter>Math\Plane</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\Rational.h">
-      <Filter>Math\Rational</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\Half.h">
-      <Filter>Math\Half</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\Half2.h">
-      <Filter>Math\Half</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\Half3.h">
-      <Filter>Math\Half</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\Half4.h">
-      <Filter>Math\Half</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\math\SHVector.h">
-      <Filter>Math\Spherical Harmonics</Filter>
-    </ClInclude>
     <ClInclude Include="..\source\xaudio2\Enums.h">
       <Filter>XAudio2</Filter>
     </ClInclude>
@@ -1391,9 +1013,6 @@
     </ClInclude>
     <ClInclude Include="..\source\xaudio2\VoiceCallback.h">
       <Filter>XAudio2\Callbacks</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\xaudio2\EffectDescriptor.h">
-      <Filter>XAudio2\Voices</Filter>
     </ClInclude>
     <ClInclude Include="..\source\xaudio2\FilterParameters.h">
       <Filter>XAudio2\Voices</Filter>
@@ -1532,57 +1151,6 @@
     </ClInclude>
     <ClInclude Include="..\source\dxgi\Surface1.h">
       <Filter>DXGI\1.1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\design\BoundingBoxConverter.h">
-      <Filter>Design</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\design\BoundingSphereConverter.h">
-      <Filter>Design</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\design\Color3Converter.h">
-      <Filter>Design</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\design\Color4Converter.h">
-      <Filter>Design</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\design\FieldPropertyDescriptor.h">
-      <Filter>Design</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\design\Half2Converter.h">
-      <Filter>Design</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\design\Half3Converter.h">
-      <Filter>Design</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\design\Half4Converter.h">
-      <Filter>Design</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\design\HalfConverter.h">
-      <Filter>Design</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\design\MatrixConverter.h">
-      <Filter>Design</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\design\PlaneConverter.h">
-      <Filter>Design</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\design\QuaternionConverter.h">
-      <Filter>Design</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\design\RationalConverter.h">
-      <Filter>Design</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\design\RayConverter.h">
-      <Filter>Design</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\design\Vector2Converter.h">
-      <Filter>Design</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\design\Vector3Converter.h">
-      <Filter>Design</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\design\Vector4Converter.h">
-      <Filter>Design</Filter>
     </ClInclude>
     <ClInclude Include="..\source\x3daudio\Cone.h">
       <Filter>X3DAudio</Filter>
@@ -1947,9 +1515,6 @@
     <ClInclude Include="..\source\direct3d11\ClassLinkage11.h">
       <Filter>Direct3D11\Shader\ClassLinkage</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\direct3d11\StateBlockMask11.h">
-      <Filter>Direct3D11\State</Filter>
-    </ClInclude>
     <ClInclude Include="..\source\direct3d11\BlendState11.h">
       <Filter>Direct3D11\State\BlendState</Filter>
     </ClInclude>
@@ -2040,96 +1605,6 @@
     <ClInclude Include="..\source\direct3d11\Viewport11.h">
       <Filter>Direct3D11\Viewport</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\direct3d11\Effect11.h">
-      <Filter>Direct3D11\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectDescription11.h">
-      <Filter>Direct3D11\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectTechnique11.h">
-      <Filter>Direct3D11\Effects\Technique</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectTechniqueDescription11.h">
-      <Filter>Direct3D11\Effects\Technique</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectVariable11.h">
-      <Filter>Direct3D11\Effects\Variables</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectVariableDescription11.h">
-      <Filter>Direct3D11\Effects\Variables</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectMatrixVariable11.h">
-      <Filter>Direct3D11\Effects\Variables\Matrix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectResourceVariable11.h">
-      <Filter>Direct3D11\Effects\Variables\Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectScalarVariable11.h">
-      <Filter>Direct3D11\Effects\Variables\Scalar</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectVectorVariable11.h">
-      <Filter>Direct3D11\Effects\Variables\Vector</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectStringVariable11.h">
-      <Filter>Direct3D11\Effects\Variables\String</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectUnorderedAccessViewVariable11.h">
-      <Filter>Direct3D11\Effects\Variables\UnorderedAccessView</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectShaderDescription11.h">
-      <Filter>Direct3D11\Effects\Variables\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectShaderVariable11.h">
-      <Filter>Direct3D11\Effects\Variables\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectBlendVariable11.h">
-      <Filter>Direct3D11\Effects\Variables\Blend</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectClassInstanceVariable11.h">
-      <Filter>Direct3D11\Effects\Variables\ClassInstance</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectDepthStencilVariable11.h">
-      <Filter>Direct3D11\Effects\Variables\DepthStencil</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectDepthStencilViewVariable11.h">
-      <Filter>Direct3D11\Effects\Variables\DepthStencilView</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectInterfaceVariable11.h">
-      <Filter>Direct3D11\Effects\Variables\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectRasterizerVariable11.h">
-      <Filter>Direct3D11\Effects\Variables\Rasterizer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectRenderTargetViewVariable11.h">
-      <Filter>Direct3D11\Effects\Variables\RenderTargetView</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectSamplerVariable11.h">
-      <Filter>Direct3D11\Effects\Variables\Sampler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectPass11.h">
-      <Filter>Direct3D11\Effects\Pass</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectPassDescription11.h">
-      <Filter>Direct3D11\Effects\Pass</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectPassShaderDescription11.h">
-      <Filter>Direct3D11\Effects\Pass</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectType11.h">
-      <Filter>Direct3D11\Effects\Type</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectTypeDescription11.h">
-      <Filter>Direct3D11\Effects\Type</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectGroup11.h">
-      <Filter>Direct3D11\Effects\Group</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectGroupDescription11.h">
-      <Filter>Direct3D11\Effects\Group</Filter>
-    </ClInclude>
-    <ClInclude Include="..\source\direct3d11\EffectConstantBuffer11.h">
-      <Filter>Direct3D11\Effects\ConstantBuffer</Filter>
-    </ClInclude>
     <ClInclude Include="..\source\direct3d11\FastFourierTransform11.h">
       <Filter>Direct3D11\Compute</Filter>
     </ClInclude>
@@ -2214,21 +1689,8 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources.resx">
-      <Filter>Base\Resources</Filter>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\media\sdx_icon_black.ico">
-      <Filter>Base\Resources</Filter>
-    </None>
-    <None Include="..\media\sdx_icon_white.ico">
-      <Filter>Base\Resources</Filter>
-    </None>
     <None Include="..\source\directwrite\ToDo.txt">
       <Filter>DirectWrite</Filter>
     </None>
-    <None Include="DocComments.txt" />
-    <None Include="ReleaseNotes.txt" />
   </ItemGroup>
 </Project>
