@@ -32,8 +32,6 @@
 #include <dxgi.h>
 #include <d3d11.h>
 #include <d3d11shader.h>
-#include <d3dx11.h>
-#include <d3dcsx.h>
 #include <dwrite.h>
 #include <xinput.h>
 #include <xaudio2.h>

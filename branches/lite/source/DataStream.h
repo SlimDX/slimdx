@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#include <d3dx9.h>
-
 #ifdef XMLDOCS
 using System::InvalidOperationException;
 using System::ArgumentException;

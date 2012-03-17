@@ -21,10 +21,6 @@
 */
 #pragma once
 
-#include <windows.h>
-#include <d3dx9.h>
-#include <dxgi.h>
-
 #include "Result.h"
 
 #ifdef XMLDOCS
