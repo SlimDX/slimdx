@@ -47,6 +47,8 @@
     <Compile Include="Sprites\SpriteShaders.cs" />
     <Compile Include="Utilities\SharedResourcePool.cs" />
     <Compile Include="Sprites\SpriteBatch.cs" />
+    <Compile Include="VertexTypes\InputElementFactory.cs" />
+    <Compile Include="VertexTypes\VertexElementAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\build\SlimDX.vcxproj">
@@ -58,9 +60,7 @@
       <Name>SlimMath</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="VertexTypes\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
