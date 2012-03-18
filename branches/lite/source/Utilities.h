@@ -55,6 +55,7 @@ namespace SlimDX
 
 		static System::String^ BlobToString( ID3DBlob *blob );
 
+		static char* ReadStream( System::IO::Stream^ stream, int% readLength, bool% cleanUp );
 		static array<System::Byte>^ ReadStream( System::IO::Stream^ stream, DataStream^* dataStream );
 		static array<System::Byte>^ ReadStream( System::IO::Stream^ stream, int% readLength, DataStream^* dataStream );
 

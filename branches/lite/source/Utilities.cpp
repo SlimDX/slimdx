@@ -287,6 +287,48 @@ namespace SlimDX
 
 		return buffer;
 	}
+
+	char* Utilities::ReadStream( Stream^ stream, int% readLength, bool% cleanUp )
+	{
+		if( stream == nullptr )
+			throw gcnew ArgumentNullException( "stream" );
+		if( !stream->CanRead )
+			throw gcnew NotSupportedException();
+
+		if( readLength > stream->Length - stream->Position )
+			throw gcnew ArgumentOutOfRangeException( "readLength" );
+		if( readLength == 0 )
+			readLength = static_cast<int>( stream->Length - stream->Position );
+		if( readLength < 0 )
+			throw gcnew ArgumentOutOfRangeException( "readLength" );
+		if( readLength == 0 )
+		{
+			cleanUp = true;
+			return new char[0];
+		}
+
+		// if we're reading a DataStream, don't return anything and send back the casted DataStream
+		DataStream^ ds = dynamic_cast<DataStream^>( stream );
+		if( ds != nullptr )
+		{
+			cleanUp = false;
+			return ds->RawPointer;
+		}
+
+		WaveStream^ ws = dynamic_cast<WaveStream^>( stream );
+		if( ws != nullptr && ws->InternalMemory != nullptr )
+		{
+			cleanUp = false;
+			return ws->InternalMemory->RawPointer;
+		}
+
+		cleanUp = true;
+		char *result = new char[readLength];
+		for (int i = 0; i < readLength; i++)
+			result[i] = stream->ReadByte();
+
+		return result;
+	}
 	
 	void Utilities::CheckArrayBounds( Array^ data, int offset, int% count )
 	{

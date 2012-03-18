@@ -43,5 +43,12 @@
 #include <memory>
 #include <stdexcept>
 #include <cmath>
+#include <cassert>
+
+#pragma warning(push)
+#pragma warning(disable : 4005)
+#include <cstdint>
+#include <wincodec.h>
+#pragma warning(pop)
 
 using namespace SlimMath;	// I'm lazy
