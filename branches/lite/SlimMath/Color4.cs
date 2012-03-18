@@ -1037,7 +1037,6 @@ namespace SlimMath
         }
 #endif
 
-#if WinFormsInterop
         /// <summary>
         /// Performs an explicit conversion from <see cref="SlimMath.Color4"/> to <see cref="System.Drawing.Color"/>.
         /// </summary>
@@ -1067,6 +1066,5 @@ namespace SlimMath
                 Blue = (float)value.B / 255f
             };
         }
-#endif
     }
 }

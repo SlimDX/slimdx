@@ -200,6 +200,43 @@ namespace Direct3D11
 		}
 	}
 
+	String^ Device::VertexShaderProfile::get()
+	{
+		Direct3D11::FeatureLevel fl = FeatureLevel;
+		if (fl >= Direct3D11::FeatureLevel::Level_11_0)
+			return "vs_5_0";
+		else if (fl >= Direct3D11::FeatureLevel::Level_10_0)
+			return "vs_4_0";
+		else if (fl >= Direct3D11::FeatureLevel::Level_9_3)
+			return "vs_4_0_level_9_3";
+		else
+			return "vs_4_0_level_9_1";
+	}
+
+	String^ Device::PixelShaderProfile::get()
+	{
+		Direct3D11::FeatureLevel fl = FeatureLevel;
+		if (fl >= Direct3D11::FeatureLevel::Level_11_0)
+			return "ps_5_0";
+		else if (fl >= Direct3D11::FeatureLevel::Level_10_0)
+			return "ps_4_0";
+		else if (fl >= Direct3D11::FeatureLevel::Level_9_3)
+			return "ps_4_0_level_9_3";
+		else
+			return "ps_4_0_level_9_1";
+	}
+
+	String^ Device::GeometryShaderProfile::get()
+	{
+		Direct3D11::FeatureLevel fl = FeatureLevel;
+		if (fl >= Direct3D11::FeatureLevel::Level_11_0)
+			return "gs_5_0";
+		else if (fl >= Direct3D11::FeatureLevel::Level_10_0)
+			return "gs_4_0";
+		else
+			return nullptr;
+	}
+
 	CounterCapabilities Device::GetCounterCapabilities()
 	{
 		D3D11_COUNTER_INFO info;
