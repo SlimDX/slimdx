@@ -7,7 +7,7 @@ using SlimDX.Direct3D11;
 using SlimDX.DXGI;
 using SlimMath;
 
-namespace SlimDX.Toolkit
+namespace SlimDX.Toolkit.VertexTypes
 {
     /// <summary>
     /// Defines a factory for creating input layout descriptions for various vertex types.

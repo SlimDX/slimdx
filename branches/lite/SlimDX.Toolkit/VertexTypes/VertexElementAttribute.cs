@@ -5,7 +5,7 @@ using System.Text;
 using SlimDX.DXGI;
 using SlimDX.Direct3D11;
 
-namespace SlimDX.Toolkit
+namespace SlimDX.Toolkit.VertexTypes
 {
     /// <summary>
     /// Describes the usage and format of an element in a vertex structure.
