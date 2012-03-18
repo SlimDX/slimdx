@@ -49,6 +49,13 @@
     <Compile Include="Sprites\SpriteBatch.cs" />
     <Compile Include="VertexTypes\InputElementFactory.cs" />
     <Compile Include="VertexTypes\VertexElementAttribute.cs" />
+    <Compile Include="VertexTypes\VertexPositionColor.cs" />
+    <Compile Include="VertexTypes\VertexPositionColorTexture.cs" />
+    <Compile Include="VertexTypes\VertexPositionNormal.cs" />
+    <Compile Include="VertexTypes\VertexPositionNormalColor.cs" />
+    <Compile Include="VertexTypes\VertexPositionNormalColorTexture.cs" />
+    <Compile Include="VertexTypes\VertexPositionNormalTexture.cs" />
+    <Compile Include="VertexTypes\VertexPositionTexture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\build\SlimDX.vcxproj">
