@@ -898,6 +898,12 @@
     <ClCompile Include="..\source\directwrite\Underline.cpp">
       <Filter>DirectWrite</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\direct3d11\TextureLoaderWIC.cpp">
+      <Filter>Direct3D11\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\direct3d11\TextureLoaderDDS.cpp">
+      <Filter>Direct3D11\Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\auto_array.h">
@@ -1635,6 +1641,9 @@
     </ClInclude>
     <ClInclude Include="..\source\directwrite\Underline.h">
       <Filter>DirectWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\direct3d11\TextureLoader.h">
+      <Filter>Direct3D11\Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

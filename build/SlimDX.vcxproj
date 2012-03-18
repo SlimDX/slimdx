@@ -238,6 +238,8 @@
     <ClCompile Include="..\source\ComObject.cpp" />
     <ClCompile Include="..\source\CompilationException.cpp" />
     <ClCompile Include="..\source\Configuration.cpp" />
+    <ClCompile Include="..\source\direct3d11\TextureLoaderDDS.cpp" />
+    <ClCompile Include="..\source\direct3d11\TextureLoaderWIC.cpp" />
     <ClCompile Include="..\source\directwrite\GlyphRunDescription.cpp" />
     <ClCompile Include="..\source\directwrite\ITextRenderer.cpp" />
     <ClCompile Include="..\source\directwrite\Strikethrough.cpp" />
@@ -463,6 +465,7 @@
     <ClInclude Include="..\source\ComObjectMacros.h" />
     <ClInclude Include="..\source\CompilationException.h" />
     <ClInclude Include="..\source\Configuration.h" />
+    <ClInclude Include="..\source\direct3d11\TextureLoader.h" />
     <ClInclude Include="..\source\directwrite\GlyphRunDescription.h" />
     <ClInclude Include="..\source\directwrite\ITextRenderer.h" />
     <ClInclude Include="..\source\directwrite\Strikethrough.h" />
