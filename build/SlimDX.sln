@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SlimDX", "SlimDX.vcxproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimMath", "..\SlimMath\SlimMath.csproj", "{820FE441-822F-4519-994B-04F1DE27FF15}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlimDX.Toolkit", "..\SlimDX.Toolkit\SlimDX.Toolkit.csproj", "{76AF8FE8-36E6-4C5A-8D06-B45F93747563}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -29,6 +31,14 @@ Global
 		{820FE441-822F-4519-994B-04F1DE27FF15}.Release|x64.Build.0 = Release|Any CPU
 		{820FE441-822F-4519-994B-04F1DE27FF15}.Release|x86.ActiveCfg = Release|Any CPU
 		{820FE441-822F-4519-994B-04F1DE27FF15}.Release|x86.Build.0 = Release|Any CPU
+		{76AF8FE8-36E6-4C5A-8D06-B45F93747563}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{76AF8FE8-36E6-4C5A-8D06-B45F93747563}.Debug|x64.Build.0 = Debug|Any CPU
+		{76AF8FE8-36E6-4C5A-8D06-B45F93747563}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{76AF8FE8-36E6-4C5A-8D06-B45F93747563}.Debug|x86.Build.0 = Debug|Any CPU
+		{76AF8FE8-36E6-4C5A-8D06-B45F93747563}.Release|x64.ActiveCfg = Release|Any CPU
+		{76AF8FE8-36E6-4C5A-8D06-B45F93747563}.Release|x64.Build.0 = Release|Any CPU
+		{76AF8FE8-36E6-4C5A-8D06-B45F93747563}.Release|x86.ActiveCfg = Release|Any CPU
+		{76AF8FE8-36E6-4C5A-8D06-B45F93747563}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

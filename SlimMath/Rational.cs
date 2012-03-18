@@ -13,6 +13,8 @@ namespace SlimMath
     [StructLayout(LayoutKind.Sequential)]
     public struct Rational : IEquatable<Rational>
     {
+        public static readonly Rational Empty = new Rational(0, 0);
+
         /// <summary>
         /// Gets or sets the numerator of the rational pair.
         /// </summary>
@@ -22,6 +24,27 @@ namespace SlimMath
         /// Gets or sets the denominator of the rational pair.
         /// </summary>
         public int Denominator;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Rational"/> structure.
+        /// </summary>
+        /// <param name="numerator">The numerator of the rational pair.</param>
+        /// <param name="denominator">The denominator of the rational pair.</param>
+        public Rational(int numerator, int denominator)
+        {
+            Numerator = numerator;
+            Denominator = denominator;
+        }
+
+        /// <summary>
+        /// Performs an explicit conversion from <see cref="Rational"/> to <see cref="Single" />.
+        /// </summary>
+        /// <param name="value">The value to be converted.</param>
+        /// <returns>The converted value.</returns> 
+        public static explicit operator float(Rational value)
+        {
+            return (float)value.Numerator / (float)value.Denominator;
+        }
 
         /// <summary>
         /// Tests for equality between two objects.

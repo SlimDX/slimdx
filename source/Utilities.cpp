@@ -325,7 +325,7 @@ namespace SlimDX
 		cleanUp = true;
 		char *result = new char[readLength];
 		for (int i = 0; i < readLength; i++)
-			result[i] = stream->ReadByte();
+			result[i] = (char)stream->ReadByte();
 
 		return result;
 	}

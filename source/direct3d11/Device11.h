@@ -117,6 +117,30 @@ namespace SlimDX
 			}
 
 			/// <summary>
+			/// Gets the highest supported vertex shader profile string.
+			/// </summary>
+			property System::String^ VertexShaderProfile
+			{
+				System::String^ get();
+			}
+
+			/// <summary>
+			/// Gets the highest supported pixel shader profile string.
+			/// </summary>
+			property System::String^ PixelShaderProfile
+			{
+				System::String^ get();
+			}
+
+			/// <summary>
+			/// Gets the highest supported geometry shader profile string.
+			/// </summary>
+			property System::String^ GeometryShaderProfile
+			{
+				System::String^ get();
+			}
+
+			/// <summary>
 			/// Initializes a new instance of the <see cref="Device"/> class using the highest supported feature level.
 			/// </summary>
 			/// <param name="adapter">The video adapter on which the device should be created.</param>
