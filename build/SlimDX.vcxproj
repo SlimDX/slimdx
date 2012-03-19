@@ -212,6 +212,8 @@
       <KeyFile>
       </KeyFile>
       <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

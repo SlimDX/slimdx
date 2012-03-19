@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,10 +31,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\SlimDX.Toolkit.XML</DocumentationFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,6 +48,8 @@
     <Compile Include="Sprites\SpriteContextResources.cs" />
     <Compile Include="Sprites\SpriteDeviceResources.cs" />
     <Compile Include="Sprites\SpriteShaders.cs" />
+    <Compile Include="Utilities\AlignedArray.cs" />
+    <Compile Include="Utilities\SafeHGlobal.cs" />
     <Compile Include="Utilities\SharedResourcePool.cs" />
     <Compile Include="Sprites\SpriteBatch.cs" />
     <Compile Include="VertexTypes\InputElementFactory.cs" />
