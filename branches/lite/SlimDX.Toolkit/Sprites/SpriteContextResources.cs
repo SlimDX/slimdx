@@ -11,21 +11,15 @@ namespace SlimDX.Toolkit
     {
         const int VerticesPerSprite = 4;
 
-        public Buffer VertexBuffer;
-        public Buffer ConstantBuffer;
         public bool InImmediateMode;
         public int VertexBufferPosition;
+        public Buffer VertexBuffer;
+        public ConstantBuffer<Matrix> ConstantBuffer;
 
         public SpriteContextResources(DeviceContext context, int maxBatchSize)
         {
             // create a dynamic write-only constant buffer for the sprite transform
-            ConstantBuffer = new Buffer(context.Device, new BufferDescription
-            {
-                SizeInBytes = Matrix.SizeInBytes,
-                Usage = ResourceUsage.Dynamic,
-                BindFlags = BindFlags.ConstantBuffer,
-                CpuAccessFlags = CpuAccessFlags.Write
-            });
+            ConstantBuffer = new ConstantBuffer<Matrix>(context.Device);
 
             // create a dynamic write-only vertex buffer for the sprite vertices, limited by maxBatchSize
             VertexBuffer = new Buffer(context.Device, new BufferDescription
