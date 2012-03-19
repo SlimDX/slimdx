@@ -84,8 +84,9 @@ namespace SlimDX.Toolkit
         static SharedResourcePool<Device, SpriteDeviceResources> sharedDeviceResources = new SharedResourcePool<Device, SpriteDeviceResources>();
         static SharedResourcePool<DeviceContext, SpriteContextResources> sharedContextResources = new SharedResourcePool<DeviceContext, SpriteContextResources>();
 
-        Device device;
         bool started;
+        Device device;
+        DeviceContext context;
         SpriteSortMode sortMode = SpriteSortMode.Deferred;
         ISharedResource<SpriteDeviceResources> deviceResources;
         ISharedResource<SpriteContextResources> contextResources;
@@ -158,6 +159,7 @@ namespace SlimDX.Toolkit
         {
             TransformMatrix = Matrix.Identity;
             device = context.Device;
+            this.context = context;
 
             deviceResources = sharedDeviceResources.DemandCreate(device, () => new SpriteDeviceResources(device, MaxBatchSize));
             contextResources = sharedContextResources.DemandCreate(context, () => new SpriteContextResources(context, MaxBatchSize));
@@ -332,6 +334,7 @@ namespace SlimDX.Toolkit
 
         void PrepareForRendering()
         {
+
         }
 
         void FlushBatch()
