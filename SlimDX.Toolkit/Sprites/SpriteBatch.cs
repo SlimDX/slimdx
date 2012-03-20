@@ -461,6 +461,8 @@ namespace SlimDX.Toolkit
             // set transform matrix
             var viewport = context.Rasterizer.GetViewport();
             var transform = TransformMatrix * Matrix.OrthoOffCenterLH(0.0f, viewport.Width, viewport.Height, 0.0f, 0.0f, 1.0f);
+            cr.ConstantBuffer.SetData(context, ref transform);
+            context.VertexShader.SetConstantBuffer(cr.ConstantBuffer.Buffer, 0);
 
             // if this is on a deferred device context, reset the position so that the first Map call can use Discard
             if (context.Type == DeviceContextType.Deferred)
@@ -601,14 +603,14 @@ namespace SlimDX.Toolkit
             if ((flags & SourceInTexels) != 0)
             {
                 Vector2.Modulate(ref sourcePos, ref inverseTextureSize, out sourcePos);
-                Vector2.Modulate(ref sourceSize, ref inverseTextureSize, out sourcePos);
+                Vector2.Modulate(ref sourceSize, ref inverseTextureSize, out sourceSize);
             }
             else
-                Vector2.Modulate(ref origin, ref inverseTextureSize, out sourcePos);
+                Vector2.Modulate(ref origin, ref inverseTextureSize, out origin);
 
             // if the destination size is relative to the source region, convert it to pixels
             if ((flags & DestSizeInPixels) == 0)
-                Vector2.Modulate(ref destSize, ref textureSize, out sourcePos);
+                Vector2.Modulate(ref destSize, ref textureSize, out destSize);
 
             // compute a 2x2 rotation matrix
             var rotationMatrix = rotation == 0 ? Matrix.Identity : Matrix.RotationZ(rotation);
