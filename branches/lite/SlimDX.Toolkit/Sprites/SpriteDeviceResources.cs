@@ -34,12 +34,12 @@ namespace SlimDX.Toolkit
             for (short i = 0; i < maxBatchSize * SpriteBatch.VerticesPerSprite; i += SpriteBatch.VerticesPerSprite)
             {
                 indices.Write(i);
-                indices.Write(i + 1);
-                indices.Write(i + 2);
+                indices.Write((short)(i + 1));
+                indices.Write((short)(i + 2));
 
-                indices.Write(i + 1);
-                indices.Write(i + 3);
-                indices.Write(i + 2);
+                indices.Write((short)(i + 1));
+                indices.Write((short)(i + 3));
+                indices.Write((short)(i + 2));
             }
 
             // create the index buffer
