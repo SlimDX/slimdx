@@ -231,6 +231,22 @@ namespace SlimMath
         }
 
         /// <summary>
+        /// Gets the X and Y components of the vector.
+        /// </summary>
+        public Vector2 XY
+        {
+            get { return new Vector2(X, Y); }
+        }
+
+        /// <summary>
+        /// Gets the Z and W components of the vector.
+        /// </summary>
+        public Vector2 ZW
+        {
+            get { return new Vector2(Z, W); }
+        }
+
+        /// <summary>
         /// Converts the vector into a unit vector.
         /// </summary>
         public void Normalize()

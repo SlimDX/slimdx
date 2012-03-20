@@ -9,13 +9,11 @@ namespace SlimDX.Toolkit
     // contains shared resources that are associated with a particular device
     class SpriteDeviceResources : IDisposable
     {
-        const int IndicesPerSprite = 6;
-        const int VerticesPerSprite = 4;
-
         public VertexShader VertexShader;
         public PixelShader PixelShader;
         public InputLayout InputLayout;
         public Buffer IndexBuffer;
+        public CommonStates States;
 
         public SpriteDeviceResources(Device device, int maxBatchSize)
         {
@@ -31,9 +29,9 @@ namespace SlimDX.Toolkit
                 PixelShader = new PixelShader(device, bytecode);
 
             // generate indices for simple quads
-            int size = maxBatchSize * IndicesPerSprite * sizeof(short);
+            int size = maxBatchSize * SpriteBatch.IndicesPerSprite * sizeof(short);
             var indices = new DataStream(size, true, true);
-            for (short i = 0; i < maxBatchSize * VerticesPerSprite; i += VerticesPerSprite)
+            for (short i = 0; i < maxBatchSize * SpriteBatch.VerticesPerSprite; i += SpriteBatch.VerticesPerSprite)
             {
                 indices.Write(i);
                 indices.Write(i + 1);
@@ -52,6 +50,8 @@ namespace SlimDX.Toolkit
                 BindFlags = BindFlags.IndexBuffer,
                 Usage = ResourceUsage.Default
             });
+
+            States = new CommonStates(device);
         }
 
         public void Dispose()
@@ -60,6 +60,7 @@ namespace SlimDX.Toolkit
             PixelShader.Dispose();
             InputLayout.Dispose();
             IndexBuffer.Dispose();
+            States.Dispose();
         }
     }
 }

@@ -49,6 +49,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sprites\SpriteContextResources.cs" />
     <Compile Include="Sprites\SpriteDeviceResources.cs" />
+    <Compile Include="Sprites\SpriteInfo.cs" />
     <Compile Include="Sprites\SpriteShaders.cs" />
     <Compile Include="Utilities\AlignedArray.cs" />
     <Compile Include="Utilities\SafeHGlobal.cs" />

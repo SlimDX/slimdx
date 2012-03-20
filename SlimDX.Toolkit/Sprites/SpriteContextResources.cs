@@ -9,8 +9,6 @@ namespace SlimDX.Toolkit
     // contains shared resources that are associated with a particular device context
     class SpriteContextResources : IDisposable
     {
-        const int VerticesPerSprite = 4;
-
         public bool InImmediateMode;
         public int VertexBufferPosition;
         public Buffer VertexBuffer;
@@ -24,7 +22,7 @@ namespace SlimDX.Toolkit
             // create a dynamic write-only vertex buffer for the sprite vertices, limited by maxBatchSize
             VertexBuffer = new Buffer(context.Device, new BufferDescription
             {
-                SizeInBytes = VertexPositionColorTexture.SizeInBytes * maxBatchSize * VerticesPerSprite,
+                SizeInBytes = VertexPositionColorTexture.SizeInBytes * maxBatchSize * SpriteBatch.VerticesPerSprite,
                 BindFlags = BindFlags.VertexBuffer,
                 Usage = ResourceUsage.Dynamic,
                 CpuAccessFlags = CpuAccessFlags.Write

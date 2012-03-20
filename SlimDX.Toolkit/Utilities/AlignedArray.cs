@@ -14,6 +14,7 @@ namespace SlimDX.Toolkit
     {
         SafeHGlobal memory;
         byte* ptr;
+        int elementSize;
 
         /// <summary>
         /// Gets a pointer to the aligned block of memory.
@@ -33,6 +34,14 @@ namespace SlimDX.Toolkit
         }
 
         /// <summary>
+        /// Gets a pointer to the element at the specified index.
+        /// </summary>
+        public byte* this[int index]
+        {
+            get { return Pointer + elementSize * index; }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AlignedArray&lt;T&gt;"/> class.
         /// </summary>
         /// <param name="count">The number of elements in the array.</param>
@@ -46,11 +55,37 @@ namespace SlimDX.Toolkit
                 throw new ArgumentOutOfRangeException("count", count, "Invalid size passed for length of the array.");
 
             Length = count;
-            memory = new SafeHGlobal(Marshal.SizeOf(typeof(T)) * count + 15);
+            elementSize = Marshal.SizeOf(typeof(T));
+            memory = new SafeHGlobal(elementSize * count + 15);
             void *mem = memory.DangerousGetHandle().ToPointer();
 
             // make sure we get a 16-byte aligned pointer
             ptr = (byte*)(((long)mem + 15) & ~0x0F);
+        }
+
+        /// <summary>
+        /// Reallocates the array with the new size and copies over the existing elements.
+        /// </summary>
+        /// <param name="newCount">The number of elements in the new array.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="newCount"/> is not a valid array length.</exception>
+        public void Realloc(int newCount)
+        {
+            if (newCount <= Length)
+                throw new ArgumentOutOfRangeException("newCount", newCount, "Invalid size passed for length of the array.");
+
+            var newMemory = new SafeHGlobal(elementSize * newCount + 15);
+            void* mem = newMemory.DangerousGetHandle().ToPointer();
+
+            // make sure we get a 16-byte aligned pointer
+            var newPtr = (byte*)(((long)mem + 15) & ~0x0F);
+
+            for (int i = 0; i < Length * elementSize; i++)
+                newPtr[i] = ptr[i];
+
+            memory.Close();
+            memory = newMemory;
+            ptr = newPtr;
+            Length = newCount;
         }
 
         /// <summary>
