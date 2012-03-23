@@ -46,7 +46,10 @@
   <ItemGroup>
     <Compile Include="Drawing\CommonStates.cs" />
     <Compile Include="Drawing\ConstantBuffer.cs" />
+    <Compile Include="Drawing\IRectanglePacker.cs" />
+    <Compile Include="Drawing\SimpleHeightPacker.cs" />
     <Compile Include="Drawing\StateSaver.cs" />
+    <Compile Include="Drawing\TextureAtlas.cs" />
     <Compile Include="Fonts\CreateOptions.cs" />
     <Compile Include="Fonts\Font.cs" />
     <Compile Include="Fonts\Geometry\GlyphVertex.cs" />
