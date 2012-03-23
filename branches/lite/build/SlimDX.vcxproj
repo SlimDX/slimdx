@@ -248,6 +248,7 @@
     <ClCompile Include="..\source\directwrite\ITextRenderer.cpp" />
     <ClCompile Include="..\source\directwrite\Strikethrough.cpp" />
     <ClCompile Include="..\source\directwrite\Underline.cpp" />
+    <ClCompile Include="..\source\dxgi\DXGIExtensionMethods.cpp" />
     <ClCompile Include="..\source\multimedia\AdpcmWaveFormat.cpp" />
     <ClCompile Include="..\source\multimedia\XWMAStream.cpp" />
     <ClCompile Include="..\source\ObjectTable.cpp" />
@@ -474,6 +475,7 @@
     <ClInclude Include="..\source\directwrite\ITextRenderer.h" />
     <ClInclude Include="..\source\directwrite\Strikethrough.h" />
     <ClInclude Include="..\source\directwrite\Underline.h" />
+    <ClInclude Include="..\source\dxgi\DXGIExtensionMethods.h" />
     <ClInclude Include="..\source\Enums.h" />
     <ClInclude Include="..\source\InternalHelpers.h" />
     <ClInclude Include="..\source\multimedia\AdpcmWaveFormat.h" />
