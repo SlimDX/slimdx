@@ -86,8 +86,8 @@ namespace SlimDX.Toolkit
         TextFormat defaultFormat;
         TextRenderer renderer;
         FeatureLevel featureLevel;
-        RenderData renderStates;
         VertexDrawer glyphDrawer;
+        bool anisotropic;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Font"/> class.
@@ -110,10 +110,11 @@ namespace SlimDX.Toolkit
         {
             this.factory = factory;
             featureLevel = device.FeatureLevel;
+            anisotropic = options.AnisotropicFiltering;
+
             glyphAtlas = new GlyphAtlas(device, options.GlyphSheetWidth, options.GlyphSheetHeight, options.MaxGlyphCountPerSheet, 4096);
             glyphProvider = new GlyphProvider(factory, glyphAtlas, options.MaxGlyphWidth, options.MaxGlyphHeight);
             glyphDrawer = new VertexDrawer(device, options.VertexBufferSize);
-            renderStates = new RenderData(device, options.AnisotropicFiltering);
             renderer = new TextRenderer(glyphProvider);
 
             if (!string.IsNullOrEmpty(options.DefaultFontParameters.FontFamily))
@@ -138,8 +139,6 @@ namespace SlimDX.Toolkit
                 glyphAtlas.Dispose();
             if (glyphProvider != null)
                 glyphProvider.Dispose();
-            if (renderStates != null)
-                renderStates.Dispose();
             if (glyphDrawer != null)
                 glyphDrawer.Dispose();
             if (defaultFormat != null)
@@ -147,7 +146,6 @@ namespace SlimDX.Toolkit
 
             glyphAtlas = null;
             glyphProvider = null;
-            renderStates = null;
             glyphDrawer = null;
             defaultFormat = null;
         }
@@ -312,16 +310,7 @@ namespace SlimDX.Toolkit
         unsafe void DrawGeometry(DeviceContext context, RectangleF* clipBounds, Matrix* transformMatrix, TextOptions flags)
         {
             using (new StateSaver(context, (flags & TextOptions.RestoreState) != 0))
-            {
-                // set states and shaders
-                if ((flags & TextOptions.StatePrepared) == 0)
-                    renderStates.SetStates(context, flags);
-                if ((flags & TextOptions.ConstantsPrepared) == 0)
-                    renderStates.UpdateShaderConstants(context, clipBounds, transformMatrix);
-
-                // draw glyphs
-                glyphDrawer.DrawVertices(context, glyphAtlas, renderer.SortVertices(), flags);
-            }
+                glyphDrawer.DrawVertices(context, glyphAtlas, renderer.SortVertices(), anisotropic, clipBounds, transformMatrix, flags);
         }
     }
 }
