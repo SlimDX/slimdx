@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace SlimDX.Toolkit.Fonts
+namespace SlimDX.Toolkit
 {
     static class NativeMethods
     {

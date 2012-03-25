@@ -6,12 +6,12 @@ using SlimDX.DirectWrite;
 using System.Drawing;
 using SlimMath;
 
-namespace SlimDX.Toolkit.Fonts
+namespace SlimDX.Toolkit
 {
     /// <summary>
-    /// Wrapper around the DWrite render target. Handles drawing of glyphs.
+    /// Handles drawing of glyphs as images. Shared between all fonts.
     /// </summary>
-    class RenderTargetWrapper : IDisposable
+    class GlyphImageRenderer : IDisposable
     {
         Dictionary<RenderingMode, RenderingParameters> parameterMap = new Dictionary<RenderingMode, RenderingParameters>();
         IntPtr blackBrush;
@@ -23,7 +23,7 @@ namespace SlimDX.Toolkit.Fonts
         int rowPitch;
         int stride;
 
-        public RenderTargetWrapper(Factory factory, int renderTargetWidth, int renderTargetHeight)
+        public GlyphImageRenderer(Factory factory, int renderTargetWidth, int renderTargetHeight)
         {
             if (renderTargetWidth > 0)
                 maxWidth = renderTargetWidth;

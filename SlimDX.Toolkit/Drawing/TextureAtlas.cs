@@ -87,7 +87,7 @@ namespace SlimDX.Toolkit
         /// <param name="bytesPerPixel">The number of bytes per pixel in the texture.</param>
         /// <returns>A handle that can be used to retrieve texture coordinates for the stored texture, or -1 if the texture cannot fit into the atlas.</returns>
         /// <exception cref="InvalidOperationException">Thrown if the atlas has been frozen.</exception>
-        public int AddTexture(int width, int height, DataStream pixelData, int rowPitch, int bytesPerPixel)
+        public int AddTexture(int width, int height, IntPtr pixelData, int rowPitch, int bytesPerPixel)
         {
             if (shouldFreeze || frozen)
                 throw new InvalidOperationException("Cannot add a texture to an atlas that has been frozen.");
@@ -113,7 +113,7 @@ namespace SlimDX.Toolkit
                 position.Y += gutterWidth;
                 for (int i = 0; i < height && i < sheetHeight - position.Y; i++)
                 {
-                    byte* src = (byte*)pixelData.DataPointer + (i * rowPitch);
+                    byte* src = (byte*)pixelData + (i * rowPitch);
                     byte* dest = (byte*)textureData.DataPointer + ((position.Y + i) * sheetWidth + position.X) * formatSize;
 
                     // copy each pixel into the texture, only copying the number of bytes that we have support for

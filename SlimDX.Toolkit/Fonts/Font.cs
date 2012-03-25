@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using SlimDX.DirectWrite;
 using SlimDX.Direct3D11;
-using SlimDX.Toolkit.Fonts;
 using System.Drawing;
 using SlimMath;
 
@@ -44,9 +43,6 @@ namespace SlimDX.Toolkit
 
         /// <summary>If a clip-rect is specified together with this flag, all text is clipped to inside the specified rectangle.</summary>
         ClipRect = 0x40,
-
-        /// <summary>No geometry shader is used when drawing glyphs. Indexed quads are constructed on the CPU instead of in the geometry shader.</summary>
-        NoGeometryShader = 0x80,
 
         /// <summary>The transform matrix and the clip-rect is not updated in the internal constant-buffer. Can be used as an optimization when a previous call has already set the correct data.</summary>
         ConstantsPrepared = 0x100,
@@ -89,7 +85,6 @@ namespace SlimDX.Toolkit
         GlyphAtlas glyphAtlas;
         TextFormat defaultFormat;
         TextRenderer renderer;
-        TextGeometry geometry;
         FeatureLevel featureLevel;
         RenderData renderStates;
         VertexDrawer glyphDrawer;
@@ -115,11 +110,10 @@ namespace SlimDX.Toolkit
         {
             this.factory = factory;
             featureLevel = device.FeatureLevel;
-            glyphAtlas = new GlyphAtlas(device, options.GlyphSheetWidth, options.GlyphSheetHeight, !options.DisableGeometryShader, true, options.MaxGlyphCountPerSheet, options.SheetMipLevels, 4096);
+            glyphAtlas = new GlyphAtlas(device, options.GlyphSheetWidth, options.GlyphSheetHeight, options.MaxGlyphCountPerSheet, 4096);
             glyphProvider = new GlyphProvider(factory, glyphAtlas, options.MaxGlyphWidth, options.MaxGlyphHeight);
             glyphDrawer = new VertexDrawer(device, options.VertexBufferSize);
-            renderStates = new RenderData(device, !options.DisableGeometryShader, options.AnisotropicFiltering);
-            geometry = new TextGeometry();
+            renderStates = new RenderData(device, options.AnisotropicFiltering);
             renderer = new TextRenderer(glyphProvider);
 
             if (!string.IsNullOrEmpty(options.DefaultFontParameters.FontFamily))
@@ -208,10 +202,8 @@ namespace SlimDX.Toolkit
         /// <param name="flags">Text rendering flags.</param>
         public void DrawText(DeviceContext context, string text, string fontFamily, float size, RectangleF layoutBounds, int color, RectangleF clipBounds, Matrix transformMatrix, TextOptions flags)
         {
-            var layout = CreateTextLayout(text, fontFamily, size, layoutBounds, flags);
-            DrawTextLayout(context, layout, layoutBounds.X, layoutBounds.Y, color, clipBounds, transformMatrix, flags);
-
-            layout.Dispose();
+            using (var layout = CreateTextLayout(text, fontFamily, size, layoutBounds, flags))
+                DrawTextLayout(context, layout, layoutBounds.X, layoutBounds.Y, color, clipBounds, transformMatrix, flags);
         }
 
         /// <summary>
@@ -225,13 +217,9 @@ namespace SlimDX.Toolkit
         /// <param name="flags">Text rendering flags.</param>
         public void DrawTextLayout(DeviceContext context, TextLayout textLayout, float originX, float originY, int color, TextOptions flags)
         {
-            bool needsGeometry = (flags & TextOptions.AnalyzeOnly) == 0 && (flags & TextOptions.CacheOnly) == 0;
-            if (needsGeometry)
-                geometry.Clear();
-
-            AnalyzeTextLayout(context, textLayout, originX, originY, color, flags, geometry);
-            if (needsGeometry)
-                unsafe { DrawGeometry(context, geometry, null, null, flags); }
+            AnalyzeTextLayout(context, textLayout, originX, originY, color, flags);
+            if ((flags & TextOptions.AnalyzeOnly) == 0 && (flags & TextOptions.CacheOnly) == 0)
+                unsafe { DrawGeometry(context, null, null, flags); }
         }
 
         /// <summary>
@@ -247,13 +235,9 @@ namespace SlimDX.Toolkit
         /// <param name="flags">Text rendering flags.</param>
         public void DrawTextLayout(DeviceContext context, TextLayout textLayout, float originX, float originY, int color, RectangleF clipBounds, Matrix transformMatrix, TextOptions flags)
         {
-            bool needsGeometry = (flags & TextOptions.AnalyzeOnly) == 0 && (flags & TextOptions.CacheOnly) == 0;
-            if (needsGeometry)
-                geometry.Clear();
-
-            AnalyzeTextLayout(context, textLayout, originX, originY, color, flags, geometry);
-            if (needsGeometry)
-                unsafe { DrawGeometry(context, geometry, &clipBounds, &transformMatrix, flags); }
+            AnalyzeTextLayout(context, textLayout, originX, originY, color, flags);
+            if ((flags & TextOptions.AnalyzeOnly) == 0 && (flags & TextOptions.CacheOnly) == 0)
+                unsafe { DrawGeometry(context, &clipBounds, &transformMatrix, flags); }
         }
 
         /// <summary>
@@ -316,35 +300,27 @@ namespace SlimDX.Toolkit
             return layout;
         }
 
-        void AnalyzeTextLayout(DeviceContext context, TextLayout layout, float originX, float originY, int color, TextOptions flags, TextGeometry geometry)
+        void AnalyzeTextLayout(DeviceContext context, TextLayout layout, float originX, float originY, int color, TextOptions flags)
         {
-            renderer.DrawTextLayout(layout, originX, originY, color, flags, geometry);
+            renderer.DrawTextLayout(layout, originX, originY, color, flags);
 
             // flush the glyph atlas in case any new glyphs were added
             if ((flags & TextOptions.NoFlush) == 0)
                 glyphAtlas.Flush(context);
         }
 
-        unsafe void DrawGeometry(DeviceContext context, TextGeometry geometry, RectangleF* clipBounds, Matrix* transformMatrix, TextOptions flags)
+        unsafe void DrawGeometry(DeviceContext context, RectangleF* clipBounds, Matrix* transformMatrix, TextOptions flags)
         {
-            var vertexData = geometry.GetGlyphVertices();
-            if (vertexData.Vertices.Length > 0 || (flags & TextOptions.RestoreState) == 0)
+            using (new StateSaver(context, (flags & TextOptions.RestoreState) != 0))
             {
-                // check if we can use geometry shaders
-                if (featureLevel < FeatureLevel.Level_10_0 || !renderStates.HasGeometryShader)
-                    flags |= TextOptions.NoGeometryShader;
+                // set states and shaders
+                if ((flags & TextOptions.StatePrepared) == 0)
+                    renderStates.SetStates(context, flags);
+                if ((flags & TextOptions.ConstantsPrepared) == 0)
+                    renderStates.UpdateShaderConstants(context, clipBounds, transformMatrix);
 
-                using (new StateSaver(context, (flags & TextOptions.RestoreState) != 0))
-                {
-                    // set states and shaders
-                    if ((flags & TextOptions.StatePrepared) == 0)
-                        renderStates.SetStates(context, flags);
-                    if ((flags & TextOptions.ConstantsPrepared) == 0)
-                        renderStates.UpdateShaderConstants(context, clipBounds, transformMatrix);
-
-                    // draw glyphs
-                    glyphDrawer.DrawVertices(context, glyphAtlas, vertexData, flags);
-                }
+                // draw glyphs
+                glyphDrawer.DrawVertices(context, glyphAtlas, renderer.SortVertices(), flags);
             }
         }
     }

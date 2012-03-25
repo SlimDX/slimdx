@@ -248,7 +248,11 @@ namespace SlimDX.Toolkit
         /// </summary>
         public void Dispose()
         {
-            resource.Dispose();
+            if (resource != null)
+            {
+                resource.Release();
+                resource = null;
+            }
         }
     }
 }

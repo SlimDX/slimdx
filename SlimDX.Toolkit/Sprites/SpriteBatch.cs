@@ -193,9 +193,9 @@ namespace SlimDX.Toolkit
         public void Dispose()
         {
             if (deviceResources != null)
-                deviceResources.Dispose();
+                deviceResources.Release();
             if (contextResources != null)
-                contextResources.Dispose();
+                contextResources.Release();
 
             deviceResources = null;
             contextResources = null;

@@ -12,12 +12,17 @@ namespace SlimDX.Toolkit
     /// the resource will be freed.
     /// </summary>
     /// <typeparam name="T">The type of the resource being shared.</typeparam>
-    public interface ISharedResource<T> : IDisposable where T : IDisposable
+    public interface ISharedResource<T> where T : IDisposable
     {
         /// <summary>
         /// The shared resource.
         /// </summary>
         T Resource { get; }
+
+        /// <summary>
+        /// Releases the reference to the resource, decrementing its ref count.
+        /// </summary>
+        void Release();
     }
 
     /// <summary>
@@ -54,7 +59,7 @@ namespace SlimDX.Toolkit
                 return Interlocked.Increment(ref RefCount);
             }
 
-            public void Dispose()
+            public void Release()
             {
                 lock (Pool.syncBlock)
                 {
