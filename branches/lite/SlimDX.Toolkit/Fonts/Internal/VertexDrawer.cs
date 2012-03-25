@@ -7,6 +7,7 @@ using Buffer = SlimDX.Direct3D11.Buffer;
 using Device = SlimDX.Direct3D11.Device;
 using MapFlags = SlimDX.Direct3D11.MapFlags;
 using System.Runtime.InteropServices;
+using System.Drawing;
 
 namespace SlimDX.Toolkit
 {
@@ -15,6 +16,8 @@ namespace SlimDX.Toolkit
     /// </summary>
     class VertexDrawer : IDisposable
     {
+        static SharedResourcePool<Device, RenderData> sharedRenderData = new SharedResourcePool<Device, RenderData>();
+
         [StructLayout(LayoutKind.Sequential)]
         struct QuadVertex
         {
@@ -25,6 +28,7 @@ namespace SlimDX.Toolkit
             public int Color;
         }
 
+        ISharedResource<RenderData> renderData;
         Buffer vertexBuffer;
         Buffer indexBuffer;
         int bufferSize = 4096 * 16;
@@ -71,22 +75,32 @@ namespace SlimDX.Toolkit
                     BindFlags = BindFlags.IndexBuffer
                 });
             }
+
+            renderData = sharedRenderData.DemandCreate(device, () => new RenderData(device));
         }
 
         public void Dispose()
         {
             if (vertexBuffer != null)
                 vertexBuffer.Dispose();
-
             if (indexBuffer != null)
                 indexBuffer.Dispose();
+            if (renderData != null)
+                renderData.Release();
 
             vertexBuffer = null;
             indexBuffer = null;
+            renderData = null;
         }
 
-        public void DrawVertices(DeviceContext context, GlyphAtlas glyphAtlas, IList<GlyphVertex> vertexData, TextOptions flags)
+        public unsafe void DrawVertices(DeviceContext context, GlyphAtlas glyphAtlas, IList<GlyphVertex> vertexData, bool anisotropic, RectangleF* clipBounds, Matrix* transformMatrix, TextOptions flags)
         {
+            // set states and shaders
+            if ((flags & TextOptions.StatePrepared) == 0)
+                renderData.Resource.SetStates(context, anisotropic, flags);
+            if ((flags & TextOptions.ConstantsPrepared) == 0)
+                renderData.Resource.UpdateShaderConstants(context, clipBounds, transformMatrix);
+
             if ((flags & TextOptions.BuffersPrepared) == 0)
             {
                 context.InputAssembler.SetIndexBuffer(indexBuffer, Format.R16_UInt, 0);

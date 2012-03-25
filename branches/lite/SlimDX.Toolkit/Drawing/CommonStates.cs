@@ -139,7 +139,7 @@ namespace SlimDX.Toolkit
                     AddressV = addressMode,
                     AddressW = addressMode,
                     MaximumLod = float.MaxValue,
-                    MaximumAnisotropy = 16,
+                    MaximumAnisotropy = filter == Filter.Anisotropic ? device.FeatureLevel >= FeatureLevel.Level_9_2 ? 5 : 2 : 0,
                     ComparisonFunction = Comparison.Never
                 });
             }
