@@ -12,7 +12,7 @@ namespace SlimDX.Toolkit
     /// However, the DrawText methods will silently fail if no default font is set up.<br/>
     /// If FontFamily is not <c>null</c>, the FontWeight, FontStyle and FontStretch members must be set to valid values according to the DirectWrite documentation.
     /// Zero is not a valid value for these.</remarks>
-    public class DWriteFontParameters
+    public class DefaultFontParameters
     {
         /// <summary>The name of the font-family. Valid values include <i>Arial</i>, <i>Courier New</i>, etc. as long as the specified font is installed.
         /// Unavailable fonts will automatically fall back to a different font.
@@ -32,10 +32,10 @@ namespace SlimDX.Toolkit
         public string Locale { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DWriteFontParameters"/> class.
+        /// Initializes a new instance of the <see cref="DefaultFontParameters"/> class.
         /// </summary>
         /// <param name="fontFamily">The font family.</param>
-        public DWriteFontParameters(string fontFamily)
+        public DefaultFontParameters(string fontFamily)
         {
             FontFamily = fontFamily;
             FontWeight = FontWeight.Normal;
@@ -57,9 +57,6 @@ namespace SlimDX.Toolkit
         /// <summary>The maximum number of glyphs per texture. A buffer of <i>MaxGlyphCountPerSheet * 32</i> bytes is preallocated for each sheet. 0 defaults to 2048.</summary>
         public int MaxGlyphCountPerSheet { get; set; }
 
-        /// <summary>The number of mip-levels for the glyph sheet textures. 0 defaults to 1.</summary>
-        public int SheetMipLevels { get; set; }
-
         /// <summary>If set to <c>true</c>, the sampler-state is created with anisotropic filtering.</summary>
         public bool AnisotropicFiltering { get; set; }
 
@@ -73,15 +70,12 @@ namespace SlimDX.Toolkit
         /// 0 defaults to 384.</summary>
         public int MaxGlyphHeight { get; set; }
 
-        /// <summary>If set to <c>true</c>, no geometry shader is used.</summary>
-        public bool DisableGeometryShader { get; set; }
-
         /// <summary>The size in bytes of the dynamic vertex buffer to upload glyph vertices to when drawing a string. 0 defaults to 4096 * 16.<br/>
-        /// Each glyph vertex is either 16 or 20 bytes in size, and each glyph requires either 1 or 4 vertices depending on if the geometry shader is used.</summary>
+        /// Each glyph vertex is either 16 or 20 bytes in size, and each glyph requires 4 vertices.</summary>
         public int VertexBufferSize { get; set; }
 
-        /// <summary>Description of the default font. See DWriteFontParameters.</summary>
-        public DWriteFontParameters DefaultFontParameters { get; set; }
+        /// <summary>Description of the default font. See DefaultFontParameters.</summary>
+        public DefaultFontParameters DefaultFontParameters { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateOptions"/> class.
@@ -89,11 +83,10 @@ namespace SlimDX.Toolkit
         /// <param name="fontFamily">The font family.</param>
         public CreateOptions(string fontFamily)
         {
-            DefaultFontParameters = new DWriteFontParameters(fontFamily);
+            DefaultFontParameters = new DefaultFontParameters(fontFamily);
             GlyphSheetWidth = 512;
             GlyphSheetHeight = 512;
             MaxGlyphCountPerSheet = 2048;
-            SheetMipLevels = 1;
             MaxGlyphWidth = 384;
             MaxGlyphHeight = 384;
         }

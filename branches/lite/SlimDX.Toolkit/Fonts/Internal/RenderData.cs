@@ -12,7 +12,7 @@ using SlimDX.D3DCompiler;
 using SlimDX.DXGI;
 using System.Runtime.InteropServices;
 
-namespace SlimDX.Toolkit.Fonts
+namespace SlimDX.Toolkit
 {
     class RenderData : IDisposable
     {
@@ -28,24 +28,18 @@ namespace SlimDX.Toolkit.Fonts
         HashSet<IDisposable> resources = new HashSet<IDisposable>();    // I'm lazy
         Device device;
         FeatureLevel featureLevel;
-        VertexShader emptyVertexShader;
         VertexShader simpleVertexShader;
         VertexShader clippingVertexShader;
         PixelShader simplePixelShader;
         PixelShader clippingPixelShader;
-        GeometryShader simpleGeometryShader;
-        GeometryShader clippingGeometryShader;
-        InputLayout quadInputLayout;
-        InputLayout pointInputLayout;
+        InputLayout inputLayout;
         ConstantBuffer<ShaderConstants> constantBuffer;
         BlendState blendState;
         SamplerState samplerState;
         DepthStencilState depthStencilState;
         RasterizerState rasterizerState;
 
-        public bool HasGeometryShader { get; private set; }
-
-        public RenderData(Device device, bool useGeometryShader, bool anisotropicFiltering)
+        public RenderData(Device device, bool anisotropicFiltering)
         {
             this.device = device;
             featureLevel = device.FeatureLevel;
@@ -54,8 +48,6 @@ namespace SlimDX.Toolkit.Fonts
             CreatePixelShaders();
             CreateConstantBuffer();
             CreateRenderStates(anisotropicFiltering);
-            if (useGeometryShader)
-                CreateGlyphShaders();
         }
 
         public void Dispose()
@@ -67,30 +59,17 @@ namespace SlimDX.Toolkit.Fonts
 
         public void SetStates(DeviceContext context, TextOptions flags)
         {
-            if (HasGeometryShader && (flags & TextOptions.NoGeometryShader) == 0)
-            {
-                // point vertices using a geometry shader
-                context.InputAssembler.PrimitiveTopology = PrimitiveTopology.PointList;
-                context.InputAssembler.InputLayout = pointInputLayout;
-                context.VertexShader.Set(emptyVertexShader);
-                context.GeometryShader.Set((flags & TextOptions.ClipRect) != 0 ? clippingGeometryShader : simpleGeometryShader);
-                context.PixelShader.Set(simplePixelShader);
-                context.GeometryShader.SetConstantBuffer(constantBuffer.Buffer, 0);
-            }
-            else
-            {
-                // quads constructed on the CPU
-                context.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleList;
-                context.InputAssembler.InputLayout = quadInputLayout;
-                context.VertexShader.Set((flags & TextOptions.ClipRect) != 0 ? clippingVertexShader : simpleVertexShader);
-                context.PixelShader.Set((flags & TextOptions.ClipRect) != 0 ? clippingPixelShader : simplePixelShader);
-                context.VertexShader.SetConstantBuffer(constantBuffer.Buffer, 0);
-
-                if (featureLevel >= FeatureLevel.Level_10_0)
-                    context.GeometryShader.Set(null);
-            }
+            // quads constructed on the CPU
+            context.InputAssembler.PrimitiveTopology = PrimitiveTopology.TriangleList;
+            context.InputAssembler.InputLayout = inputLayout;
+            context.VertexShader.Set((flags & TextOptions.ClipRect) != 0 ? clippingVertexShader : simpleVertexShader);
+            context.PixelShader.Set((flags & TextOptions.ClipRect) != 0 ? clippingPixelShader : simplePixelShader);
+            context.VertexShader.SetConstantBuffer(constantBuffer.Buffer, 0);
 
             // clear out unused shaders
+            if (featureLevel >= FeatureLevel.Level_10_0)
+                context.GeometryShader.Set(null);
+
             if (featureLevel >= FeatureLevel.Level_11_0)
             {
                 context.DomainShader.Set(null);
@@ -147,7 +126,7 @@ namespace SlimDX.Toolkit.Fonts
             using (var bytecode = ShaderBytecode.Compile(FontShaders.SimpleVertexShader, "VS", device.VertexShaderProfile, ShaderFlags.OptimizationLevel3, EffectFlags.None))
             {
                 simpleVertexShader = new VertexShader(device, bytecode);
-                quadInputLayout = new InputLayout(device, bytecode, new[] {
+                inputLayout = new InputLayout(device, bytecode, new[] {
                     new InputElement("POSITION", 0, Format.R32G32B32A32_Float, 0),
                     new InputElement("GLYPHCOLOR", 0, Format.R8G8B8A8_UNorm, 0)
                 });
@@ -157,7 +136,7 @@ namespace SlimDX.Toolkit.Fonts
                 clippingVertexShader = new VertexShader(device, bytecode);
 
             resources.Add(simpleVertexShader);
-            resources.Add(quadInputLayout);
+            resources.Add(inputLayout);
             resources.Add(clippingVertexShader);
         }
 
@@ -172,35 +151,6 @@ namespace SlimDX.Toolkit.Fonts
 
             resources.Add(simplePixelShader);
             resources.Add(clippingPixelShader);
-        }
-
-        void CreateGlyphShaders()
-        {
-            if (featureLevel < FeatureLevel.Level_10_0)
-                return;
-
-            // compile geometry shaders
-            using (var bytecode = ShaderBytecode.Compile(FontShaders.SimpleGeometryShader, "GS", device.GeometryShaderProfile, ShaderFlags.OptimizationLevel3, EffectFlags.None))
-                simpleGeometryShader = new GeometryShader(device, bytecode);
-
-            using (var bytecode = ShaderBytecode.Compile(FontShaders.ClippingGeometryShader, "GS", device.GeometryShaderProfile, ShaderFlags.OptimizationLevel3, EffectFlags.None))
-                clippingGeometryShader = new GeometryShader(device, bytecode);
-
-            // compile empty vertex shader
-            using (var bytecode = ShaderBytecode.Compile(FontShaders.EmptyVertexShader, "VS", device.VertexShaderProfile, ShaderFlags.OptimizationLevel3, EffectFlags.None))
-            {
-                emptyVertexShader = new VertexShader(device, bytecode);
-                pointInputLayout = new InputLayout(device, bytecode, new[] {
-                    new InputElement("POSITIONINDEX", 0, Format.R32G32B32_Float, 0),
-                    new InputElement("GLYPHCOLOR", 0, Format.B8G8R8A8_UNorm, 0)
-                });
-            }
-
-            HasGeometryShader = true;
-            resources.Add(simpleGeometryShader);
-            resources.Add(clippingGeometryShader);
-            resources.Add(emptyVertexShader);
-            resources.Add(pointInputLayout);
         }
 
         void CreateConstantBuffer()

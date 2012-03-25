@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using SlimMath;
 using System.Drawing;
 
-namespace SlimDX.Toolkit.Fonts
+namespace SlimDX.Toolkit
 {
     static class FontShaders
     {

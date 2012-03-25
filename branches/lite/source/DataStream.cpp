@@ -135,8 +135,6 @@ namespace SlimDX
 
 		m_CanRead = canRead;
 		m_CanWrite = canWrite;
-
-		GC::SuppressFinalize( this );
 	}
 
 	DataStream::~DataStream()
