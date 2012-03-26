@@ -93,7 +93,7 @@ namespace SlimDX.Toolkit
             renderData = null;
         }
 
-        public unsafe void DrawVertices(DeviceContext context, GlyphAtlas glyphAtlas, IList<GlyphVertex> vertexData, bool anisotropic, RectangleF* clipBounds, Matrix* transformMatrix, TextOptions flags)
+        public unsafe void DrawVertices(DeviceContext context, GlyphAtlas glyphAtlas, IList<Glyph> glyphs, bool anisotropic, RectangleF* clipBounds, Matrix* transformMatrix, TextOptions flags)
         {
             // set states and shaders
             if ((flags & TextOptions.StatePrepared) == 0)
@@ -114,9 +114,9 @@ namespace SlimDX.Toolkit
                 maxVertexCount -= (maxVertexCount % 4);
 
             int current = 0;
-            int total = vertexData.Count;
+            int total = glyphs.Count;
 
-            // draw every vertex as a 2-tri quad
+            // draw every glyph as a 2-tri quad
             while (current < total)
             {
                 var data = context.MapSubresource(vertexBuffer, MapMode.WriteDiscard, MapFlags.None).Data;
@@ -125,25 +125,23 @@ namespace SlimDX.Toolkit
                 int count = Math.Min(total - current, maxVertexCount / 4);
                 for (int i = 0; i < count; i++)
                 {
-                    var vertex = vertexData[current + i];
-                    var coords = glyphAtlas.GetGlyphCoords(vertex.GlyphIndex);
-
+                    var glyph = glyphs[current + i];
                     var output = new QuadVertex();
-                    output.Color = vertex.Color;
-                    output.Position = vertex.Position + new Vector2(coords.PositionLeft, coords.PositionTop);
-                    output.TexCoords = new Vector2(coords.TexCoordLeft, coords.TexCoordTop);
+                    output.Color = glyph.Color;
+                    output.Position = glyph.Position + new Vector2(glyph.PositionOffsets.Left, glyph.PositionOffsets.Top);
+                    output.TexCoords = new Vector2(glyph.TextureCoordinates.Left, glyph.TextureCoordinates.Top);
                     data.Write(output);
 
-                    output.Position.X = vertex.Position.X + coords.PositionRight;
-                    output.TexCoords.X = coords.TexCoordRight;
+                    output.Position.X = glyph.Position.X + glyph.PositionOffsets.Right;
+                    output.TexCoords.X = glyph.TextureCoordinates.Right;
                     data.Write(output);
 
-                    output.Position.Y = vertex.Position.Y + coords.PositionBottom;
-                    output.TexCoords.Y = coords.TexCoordBottom;
+                    output.Position.Y = glyph.Position.Y + glyph.PositionOffsets.Bottom;
+                    output.TexCoords.Y = glyph.TextureCoordinates.Bottom;
                     data.Write(output);
 
-                    output.Position.X = vertex.Position.X + coords.PositionLeft;
-                    output.TexCoords.X = coords.TexCoordLeft;
+                    output.Position.X = glyph.Position.X + glyph.PositionOffsets.Left;
+                    output.TexCoords.X = glyph.TextureCoordinates.Left;
                     data.Write(output);
                 }
 
@@ -156,7 +154,7 @@ namespace SlimDX.Toolkit
 
                 for (int i = 0; i < count; i++)
                 {
-                    int sheet = vertexData[current + i].GlyphIndex.SheetIndex;
+                    int sheet = glyphs[current + i].SheetIndex;
                     if (sheet != currentSheet)
                     {
                         if (sheetCount != 0)

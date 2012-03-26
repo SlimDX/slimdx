@@ -180,10 +180,8 @@ namespace SlimDX.Toolkit
         {
             flags |= TextOptions.NoWordWrap;
 
-            var layout = CreateTextLayout(text, fontFamily, size, new RectangleF(x, y, 0, 0), flags);
-            DrawTextLayout(context, layout, x, y, color, flags);
-
-            layout.Dispose();
+            using (var layout = CreateTextLayout(text, fontFamily, size, new RectangleF(x, y, 0, 0), flags))
+                DrawTextLayout(context, layout, x, y, color, flags);
         }
 
         /// <summary>
@@ -249,16 +247,17 @@ namespace SlimDX.Toolkit
         /// <returns>A rectangle denoting the extents of the measured text.</returns>
         public RectangleF MeasureText(string text, string fontFamily, float size, RectangleF layoutBounds, TextOptions flags)
         {
-            var result = new RectangleF(layoutBounds.Left, layoutBounds.Top, 0, 0);
-            var layout = CreateTextLayout(text, fontFamily, size, layoutBounds, flags);
-            var metrics = layout.OverhangMetrics;
+            using (var layout = CreateTextLayout(text, fontFamily, size, layoutBounds, flags))
+            {
+                var metrics = layout.OverhangMetrics;
+                var result = new RectangleF();
+                result.X = (float)Math.Floor(layoutBounds.Left - metrics.Left);
+                result.Y = (float)Math.Floor(layoutBounds.Top - metrics.Top);
+                result.Width = (float)Math.Ceiling(layoutBounds.Left + metrics.Right) - result.X;
+                result.Height = (float)Math.Ceiling(layoutBounds.Top + metrics.Bottom) - result.Y;
 
-            result.X = (float)Math.Floor(layoutBounds.Left - metrics.Left);
-            result.Y = (float)Math.Floor(layoutBounds.Top - metrics.Top);
-            result.Width = (float)Math.Ceiling(layoutBounds.Left + metrics.Right) - result.X;
-            result.Height = (float)Math.Ceiling(layoutBounds.Top + metrics.Bottom) - result.Y;
-
-            return result;
+                return result;
+            }
         }
 
         /// <summary>
@@ -310,7 +309,7 @@ namespace SlimDX.Toolkit
         unsafe void DrawGeometry(DeviceContext context, RectangleF* clipBounds, Matrix* transformMatrix, TextOptions flags)
         {
             using (new StateSaver(context, (flags & TextOptions.RestoreState) != 0))
-                glyphDrawer.DrawVertices(context, glyphAtlas, renderer.SortVertices(), anisotropic, clipBounds, transformMatrix, flags);
+                glyphDrawer.DrawVertices(context, glyphAtlas, renderer.GetGlyphs(), anisotropic, clipBounds, transformMatrix, flags);
         }
     }
 }

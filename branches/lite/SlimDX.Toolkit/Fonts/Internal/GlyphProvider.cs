@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SlimDX.DirectWrite;
+using System.Drawing;
+using System.Collections;
 
 namespace SlimDX.Toolkit
 {
-    using FontKey = Tuple<FontFace, TextOptions, float>;
     using ResourceKey = Tuple<Factory, int, int>;
 
     /// <summary>
@@ -14,12 +15,109 @@ namespace SlimDX.Toolkit
     /// </summary>
     class GlyphProvider : IDisposable
     {
+        #region FontKey
+
+        // mutable tuple type that we can use as a key without allocating for every glyph
+        class FontKey : IStructuralEquatable, IStructuralComparable, IComparable
+        {
+            public FontFace FontFace;
+            public TextOptions Flags;
+            public float FontSize;
+
+            public FontKey()
+            {
+            }
+
+            public void Set(FontFace fontFace, TextOptions flags, float fontSize)
+            {
+                FontFace = fontFace;
+                Flags = flags;
+                FontSize = fontSize;
+            }
+
+            public override bool Equals(object obj)
+            {
+                return ((IStructuralEquatable)this).Equals(obj, EqualityComparer<object>.Default);
+            }
+
+            public override int GetHashCode()
+            {
+                return ((IStructuralEquatable)this).GetHashCode(EqualityComparer<object>.Default);
+            }
+
+            int IStructuralComparable.CompareTo(object other, IComparer comparer)
+            {
+                if (other == null)
+                    return 1;
+
+                var key = other as FontKey;
+                if (key == null)
+                    throw new ArgumentException("gdiaf");
+
+                int num = 0;
+                num = comparer.Compare(FontFace, key.FontFace);
+                if (num != 0)
+                    return num;
+
+                num = comparer.Compare(Flags, key.Flags);
+                if (num != 0)
+                    return num;
+
+                return comparer.Compare(FontSize, key.FontSize);
+            }
+
+            bool IStructuralEquatable.Equals(object other, IEqualityComparer comparer)
+            {
+                if (other == null)
+                    return false;
+
+                var key = other as FontKey;
+                if (key == null)
+                    return false;
+
+                return ((comparer.Equals(FontFace, key.FontFace) && comparer.Equals(Flags, key.Flags)) && comparer.Equals(FontSize, key.FontSize));
+            }
+
+            int IStructuralEquatable.GetHashCode(IEqualityComparer comparer)
+            {
+                return CombineHashCodes(CombineHashCodes(comparer.GetHashCode(FontFace), comparer.GetHashCode(Flags)), comparer.GetHashCode(FontSize));
+            }
+
+            int IComparable.CompareTo(object obj)
+            {
+                return ((IStructuralComparable)this).CompareTo(obj, Comparer<object>.Default);
+            }
+
+            public override string ToString()
+            {
+                var sb = new StringBuilder();
+                sb.Append("(");
+                sb.Append(FontFace);
+                sb.Append(", ");
+                sb.Append(Flags);
+                sb.Append(", ");
+                sb.Append(FontSize);
+                sb.Append(")");
+                return sb.ToString();
+            }
+
+            static int CombineHashCodes(int h1, int h2)
+            {
+                return ((h1 << 5) + h1) ^ h2;
+            }
+        }
+
+        #endregion
+
+        #region GlyphMap
+
+        // keeps track of rendered glyphs for each font face
         class GlyphMap : IDisposable
         {
             public FontFace FontFace;
             public float FontSize;
             public TextOptions Flags;
-            public GlyphIndex[] Glyphs;
+            public Glyph[] Glyphs;
 
             public GlyphMap(FontFace fontFace, float fontSize, TextOptions flags)
             {
@@ -28,9 +126,9 @@ namespace SlimDX.Toolkit
                 Flags = flags;
 
                 int count = fontFace.GlyphCount;
-                Glyphs = new GlyphIndex[count];
+                Glyphs = new Glyph[count];
                 for (int i = 0; i < count; i++)
-                    Glyphs[i] = new GlyphIndex(-1);
+                    Glyphs[i] = new Glyph(-1);
             }
 
             public void Dispose()
@@ -39,13 +137,15 @@ namespace SlimDX.Toolkit
             }
         }
 
-        static SharedResourcePool<ResourceKey, GlyphImageRenderer> sharedRenderTargets = new SharedResourcePool<ResourceKey, GlyphImageRenderer>();
+        #endregion
+
+        static SharedResourcePool<ResourceKey, GlyphImageRenderer> sharedRenderers = new SharedResourcePool<ResourceKey, GlyphImageRenderer>();
         static SharedResourcePool<FontKey, GlyphMap> sharedFontMaps = new SharedResourcePool<FontKey, GlyphMap>();
 
         Dictionary<FontKey, ISharedResource<GlyphMap>> localFontMaps = new Dictionary<FontKey, ISharedResource<GlyphMap>>();
-        ISharedResource<GlyphImageRenderer> renderTargetResource;
-        GlyphImageRenderer renderTarget;
+        ISharedResource<GlyphImageRenderer> renderer;
         GlyphAtlas glyphAtlas;
+        FontKey key= new FontKey();
 
         public GlyphProvider(Factory factory, GlyphAtlas glyphAtlas, int maxGlyphWidth, int maxGlyphHeight)
         {
@@ -58,16 +158,15 @@ namespace SlimDX.Toolkit
             if (maxGlyphHeight > 0 && maxGlyphHeight <= 8192)
                 renderTargetHeight = maxGlyphHeight;
 
-            renderTargetResource = sharedRenderTargets.DemandCreate(new ResourceKey(factory, renderTargetWidth, renderTargetHeight), () => new GlyphImageRenderer(factory, renderTargetWidth, renderTargetHeight));
-            renderTarget = renderTargetResource.Resource;
+            renderer = sharedRenderers.DemandCreate(new ResourceKey(factory, renderTargetWidth, renderTargetHeight), () => new GlyphImageRenderer(factory, renderTargetWidth, renderTargetHeight));
         }
 
         public void Dispose()
         {
-            if (renderTargetResource != null)
+            if (renderer != null)
             {
-                renderTargetResource.Release();
-                renderTargetResource = null;
+                renderer.Release();
+                renderer = null;
             }
 
             foreach (var key in localFontMaps.Values)
@@ -78,7 +177,7 @@ namespace SlimDX.Toolkit
         GlyphMap GetGlyphMapFromFont(FontFace fontFace, float fontSize, TextOptions flags)
         {
             ISharedResource<GlyphMap> resource;
-            var key = new FontKey(fontFace, flags & TextOptions.Aliased, fontSize);
+            key.Set(fontFace, flags & TextOptions.Aliased, fontSize);
             if (localFontMaps.TryGetValue(key, out resource))
                 return resource.Resource;
 
@@ -86,29 +185,34 @@ namespace SlimDX.Toolkit
                 return null;
 
             // when creating a new map, insert the default glyph (glyph zero) to seed the map
-            resource = sharedFontMaps.DemandCreate(key, () => { var map = new GlyphMap(fontFace, fontSize, flags); InsertNewGlyph(map, 0, fontFace); return map; });
-            localFontMaps.Add(key, resource);
+            resource = sharedFontMaps.DemandCreate(key, () => 
+            { 
+                var map = new GlyphMap(fontFace, fontSize, flags);
+                InsertNewGlyph(map, 0, fontFace);
+                return map;
+            });
 
+            localFontMaps.Add(key, resource);
             return resource.Resource;
         }
 
-        public GlyphIndex RenderToAtlas(int index, FontFace fontFace, float fontSize, TextOptions flags)
+        public void GetGlyph(int index, FontFace fontFace, float fontSize, TextOptions flags, out Glyph glyph)
         {
             var map = GetGlyphMapFromFont(fontFace, fontSize, flags);
             if (map == null || index >= map.Glyphs.Length)
-                return new GlyphIndex(0);
+                glyph = map.Glyphs[0];
+            else
+            {
+                // try to look up the desired glyph in the map; if it's not there, create it
+                glyph = map.Glyphs[index];
+                if (glyph.SheetIndex == -1 && (flags & TextOptions.NoNewGlyphs) == 0)
+                    InsertNewGlyph(map, index, fontFace);
 
-            // try to look up the desired glyph in the map; if it's not there, create it
-            var atlasId = map.Glyphs[index];
-            if (!atlasId.IsValid && (flags & TextOptions.NoNewGlyphs) == 0)
-                InsertNewGlyph(map, index, fontFace);
-
-            // fallback to the default glyph on failure
-            atlasId = map.Glyphs[index];
-            if (!atlasId.IsValid)
-                atlasId = map.Glyphs[0];
-
-            return atlasId;
+                // fallback to the default glyph on failure
+                glyph = map.Glyphs[index];
+                if (glyph.SheetIndex == -1)
+                    glyph = map.Glyphs[0];
+            }
         }
 
         void InsertNewGlyph(GlyphMap glyphMap, int index, FontFace fontFace)
@@ -121,8 +225,11 @@ namespace SlimDX.Toolkit
                 measuringMode = MeasuringMode.GdiClassic;
             }
 
-            var data = renderTarget.DrawGlyph(fontFace, index, glyphMap.FontSize, renderingMode, measuringMode);
-            glyphMap.Glyphs[index] = glyphAtlas.InsertGlyph(data);
+            var data = renderer.Resource.DrawGlyph(fontFace, index, glyphMap.FontSize, renderingMode, measuringMode);
+            var glyph = new Glyph();
+            glyph.SheetIndex = glyphAtlas.InsertGlyph(data, out glyph.PositionOffsets, out glyph.TextureCoordinates);
+
+            glyphMap.Glyphs[index] = glyph;
         }
     }
 }
