@@ -5,21 +5,23 @@ using System.Text;
 using SlimDX.DirectWrite;
 using System.Runtime.InteropServices;
 using SlimMath;
+using System.Drawing;
 
 namespace SlimDX.Toolkit
 {
     // represents a glyph (index into an atlas) rendered at a specified position with a given color
-    struct GlyphVertex
+    struct Glyph
     {
         public Vector2 Position;
-        public GlyphIndex GlyphIndex;
+        public RectangleF PositionOffsets;
+        public RectangleF TextureCoordinates;
         public int Color;
+        public int SheetIndex;
 
-        public GlyphVertex(GlyphIndex index, float x, float y, int color)
+        public Glyph(int sheetIndex)
+            : this()
         {
-            Position = new Vector2(x, y);
-            GlyphIndex = index;
-            Color = color;
+            SheetIndex = sheetIndex;
         }
     }
 
@@ -29,7 +31,7 @@ namespace SlimDX.Toolkit
     class TextRenderer : ITextRenderer
     {
         GlyphProvider glyphProvider;
-        List<GlyphVertex> vertices = new List<GlyphVertex>();
+        List<Glyph> glyphs = new List<Glyph>(32);
         TextOptions currentFlags;
 
         public TextRenderer(GlyphProvider glyphProvider)
@@ -39,7 +41,7 @@ namespace SlimDX.Toolkit
 
         public void DrawTextLayout(TextLayout layout, float originX, float originY, int color, TextOptions flags)
         {
-            vertices.Clear();
+            glyphs.Clear();
 
             currentFlags = flags;
             layout.Draw(new IntPtr(color), this, originX, originY);
@@ -58,7 +60,8 @@ namespace SlimDX.Toolkit
             // go through each glyph in the run and render it into the atlas
             for (int i = 0; i < glyphRun.GlyphCount; i++)
             {
-                var index = glyphProvider.RenderToAtlas(glyphRun.GlyphIndices[i], glyphRun.FontFace, glyphRun.FontSize, currentFlags);
+                Glyph glyph;
+                glyphProvider.GetGlyph(glyphRun.GlyphIndices[i], glyphRun.FontFace, glyphRun.FontSize, currentFlags, out glyph);
 
                 // check if we should draw the vertex or if we just want to cache the glyphs
                 if ((currentFlags & TextOptions.CacheOnly) == 0)
@@ -66,7 +69,9 @@ namespace SlimDX.Toolkit
                     if ((glyphRun.BidiLevel & 0x1) != 0)
                         x -= glyphRun.GlyphAdvances[i];
 
-                    vertices.Add(new GlyphVertex(index, x, y, color));
+                    glyph.Position = new Vector2(x, y);
+                    glyph.Color = color;
+                    glyphs.Add(glyph);
 
                     if ((glyphRun.BidiLevel & 0x1) == 0)
                         x += glyphRun.GlyphAdvances[i];
@@ -76,11 +81,11 @@ namespace SlimDX.Toolkit
             return ResultCode.Success;
         }
 
-        public IList<GlyphVertex> SortVertices()
+        public IList<Glyph> GetGlyphs()
         {
             // group vertices by the sheet they're in
-            vertices.Sort((x, y) => x.GlyphIndex.SheetIndex.CompareTo(y.GlyphIndex.SheetIndex));
-            return vertices;
+            glyphs.Sort((x, y) => x.SheetIndex.CompareTo(y.SheetIndex));
+            return glyphs;
         }
 
         #region Default Interface Implementation

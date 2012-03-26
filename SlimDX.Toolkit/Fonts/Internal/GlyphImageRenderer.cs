@@ -101,7 +101,7 @@ namespace SlimDX.Toolkit
 
             // draw the glyph
             Rectangle rect;
-            renderTarget.DrawGlyphRun(2.0f - data.OffsetX, 2.0f - data.OffsetY, measuringMode, run, renderingParams, new Color4(1.0f, 1.0f, 1.0f), out rect);
+            renderTarget.DrawGlyphRun(2.0f - data.X, 2.0f - data.Y, measuringMode, run, renderingParams, new Color4(1.0f, 1.0f, 1.0f), out rect);
 
             // clip to valid render target to avoid buffer overruns in case the glyph was too large
             rect.X = Math.Max(rect.X, 0);
@@ -110,8 +110,8 @@ namespace SlimDX.Toolkit
             rect.Height = Math.Min(rect.Height, maxHeight);
 
             // return the glyph data
-            data.OffsetX += rect.Left - 2.0f;
-            data.OffsetY += rect.Top - 2.0f;
+            data.X += rect.Left - 2.0f;
+            data.Y += rect.Top - 2.0f;
             data.Width = rect.Width;
             data.Height = rect.Height;
 
@@ -139,8 +139,8 @@ namespace SlimDX.Toolkit
             float ah = glyphMetrics.AdvanceHeight * fscale;
 
             var result = new GlyphBounds();
-            result.OffsetX = (float)Math.Floor(l);
-            result.OffsetY = (float)(Math.Floor(t) - Math.Floor(v));
+            result.X = (float)Math.Floor(l);
+            result.Y = (float)(Math.Floor(t) - Math.Floor(v));
             result.Width = (int)(aw - r - l + 2.0f);
             result.Height = (int)(ah - b - t + 2.0f);
 

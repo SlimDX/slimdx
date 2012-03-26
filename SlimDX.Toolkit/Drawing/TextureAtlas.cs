@@ -156,6 +156,16 @@ namespace SlimDX.Toolkit
         }
 
         /// <summary>
+        /// Gets the texture coordinates for the given texture stored in the atlas.
+        /// </summary>
+        /// <param name="texture">The ID of the texture whose coordinates are to be retrieved.</param>
+        /// <param name="rect">When the method completes, contains a pointer to the normalized texture coordinates.</param>
+        public unsafe void GetCoordinates(int texture, out RectangleF *rect)
+        {
+            rect = (RectangleF*)coordinates[texture];
+        }
+
+        /// <summary>
         /// Freezes the texture atlas, preventing further additions and allowing the local copy
         /// of the texture memory to be released.
         /// </summary>
