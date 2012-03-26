@@ -49,6 +49,14 @@ namespace SlimDX
 			ShaderBytecode( DataStream^ data );
 
 			/// <summary>
+			/// Loads a precompiled shader from an embedded resource.
+			/// </summary>
+			/// <param name="assembly">The assembly containing the resource.</param>
+			/// <param name="resourceName">The name of the embedded resource as specified in the assembly manifest.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
+			static ShaderBytecode^ LoadResource(System::Reflection::Assembly^ assembly, System::String^ resourceName);
+
+			/// <summary>
 			/// Compiles the provided shader or effect source.
 			/// </summary>
 			/// <param name="shaderSource">A string containing the source of the shader or effect to compile.</param>

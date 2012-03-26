@@ -9,6 +9,8 @@ namespace SlimDX.Toolkit
     // contains shared resources that are associated with a particular device
     class SpriteDeviceResources : IDisposable
     {
+        const string ResourcePath = "SlimDX.Toolkit.Shaders.Compiled.";
+
         public VertexShader VertexShader;
         public PixelShader PixelShader;
         public InputLayout InputLayout;
@@ -18,14 +20,14 @@ namespace SlimDX.Toolkit
         public SpriteDeviceResources(Device device, int maxBatchSize)
         {
             // create the vertex shader and input layout
-            using (var bytecode = ShaderBytecode.Compile(SpriteShaders.VertexShader, "VS", device.VertexShaderProfile, ShaderFlags.OptimizationLevel3, EffectFlags.None))
+            using (var bytecode = ShaderBytecode.LoadResource(typeof(SpriteDeviceResources).Assembly, ResourcePath + "SpriteEffect_VS.fxo"))
             {
                 VertexShader = new VertexShader(device, bytecode);
                 InputLayout = new InputLayout(device, bytecode, InputElementFactory.DemandCreate(typeof(VertexPositionColorTexture)));
             }
 
             // create the pixel shader
-            using (var bytecode = ShaderBytecode.Compile(SpriteShaders.PixelShader, "PS", device.PixelShaderProfile, ShaderFlags.OptimizationLevel3, EffectFlags.None))
+            using (var bytecode = ShaderBytecode.LoadResource(typeof(SpriteDeviceResources).Assembly, ResourcePath + "SpriteEffect_PS.fxo"))
                 PixelShader = new PixelShader(device, bytecode);
 
             // generate indices for simple quads
