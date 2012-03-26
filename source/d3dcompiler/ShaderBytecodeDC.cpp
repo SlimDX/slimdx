@@ -23,6 +23,7 @@
 
 #include "../CompilationException.h"
 #include "../DataStream.h"
+#include "../Utilities.h"
 
 #include "D3DCompilerException.h"
 #include "ShaderBytecodeDC.h"
@@ -62,6 +63,20 @@ namespace D3DCompiler
 		memcpy( blob->GetBufferPointer(), data->RawPointer, static_cast<size_t>(data->Length) );
 
 		Construct( blob );
+	}
+
+	ShaderBytecode^ ShaderBytecode::LoadResource(System::Reflection::Assembly^ assembly, String^ resourceName)
+	{
+		Stream^ stream = assembly->GetManifestResourceStream(resourceName);
+
+		int size = 0;
+		bool cleanup = true;
+		std::unique_ptr<char> dataPtr;
+		char *data = Utilities::ReadStream(stream, size, cleanup);
+		if (cleanup)
+			dataPtr.reset(data);
+
+		return gcnew ShaderBytecode((BYTE*)data, (UINT)size);
 	}
 
 	ShaderBytecode^ ShaderBytecode::Compile( String^ shaderSource, String^ profile )

@@ -55,7 +55,6 @@
     <Compile Include="Fonts\Internal\TextRenderer.cs" />
     <Compile Include="Fonts\Internal\GlyphAtlas.cs" />
     <Compile Include="Fonts\Internal\GlyphProvider.cs" />
-    <Compile Include="Fonts\Internal\FontShaders.cs" />
     <Compile Include="Fonts\Internal\NativeMethods.cs" />
     <Compile Include="Fonts\Internal\RenderData.cs" />
     <Compile Include="Fonts\Internal\GlyphImageRenderer.cs" />
@@ -64,7 +63,6 @@
     <Compile Include="Sprites\SpriteContextResources.cs" />
     <Compile Include="Sprites\SpriteDeviceResources.cs" />
     <Compile Include="Sprites\SpriteInfo.cs" />
-    <Compile Include="Sprites\SpriteShaders.cs" />
     <Compile Include="Utilities\AlignedArray.cs" />
     <Compile Include="Utilities\SafeHGlobal.cs" />
     <Compile Include="Utilities\SharedResourcePool.cs" />
@@ -90,6 +88,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <None Include="Shaders\ClippingFontEffect.fx" />
+    <EmbeddedResource Include="Shaders\Compiled\ClippingFontEffect_PS.fxo" />
+    <EmbeddedResource Include="Shaders\Compiled\ClippingFontEffect_VS.fxo" />
+    <EmbeddedResource Include="Shaders\Compiled\SimpleFontEffect_PS.fxo" />
+    <EmbeddedResource Include="Shaders\Compiled\SimpleFontEffect_VS.fxo" />
+    <EmbeddedResource Include="Shaders\Compiled\SpriteEffect_PS.fxo" />
+    <EmbeddedResource Include="Shaders\Compiled\SpriteEffect_VS.fxo" />
+    <None Include="Shaders\CompileShaders.bat" />
+    <None Include="Shaders\SimpleFontEffect.fx" />
+    <None Include="Shaders\SpriteEffect.fx" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -19,6 +19,8 @@ namespace SlimDX.Toolkit
     /// </summary>
     class RenderData : IDisposable
     {
+        const string ResourcePath = "SlimDX.Toolkit.Shaders.Compiled.";
+
         [StructLayout(LayoutKind.Sequential)]
         struct ShaderConstants
         {
@@ -41,7 +43,7 @@ namespace SlimDX.Toolkit
             featureLevel = device.FeatureLevel;
 
             // compile vertex shaders
-            using (var bytecode = ShaderBytecode.Compile(FontShaders.SimpleVertexShader, "VS", device.VertexShaderProfile, ShaderFlags.OptimizationLevel3, EffectFlags.None))
+            using (var bytecode = ShaderBytecode.LoadResource(typeof(RenderData).Assembly, ResourcePath + "SimpleFontEffect_VS.fxo"))
             {
                 simpleVertexShader = new VertexShader(device, bytecode);
                 inputLayout = new InputLayout(device, bytecode, new[] {
@@ -50,14 +52,14 @@ namespace SlimDX.Toolkit
                 });
             }
 
-            using (var bytecode = ShaderBytecode.Compile(FontShaders.ClippingVertexShader, "VS", device.VertexShaderProfile, ShaderFlags.OptimizationLevel3, EffectFlags.None))
+            using (var bytecode = ShaderBytecode.LoadResource(typeof(RenderData).Assembly, ResourcePath + "ClippingFontEffect_VS.fxo"))
                 clippingVertexShader = new VertexShader(device, bytecode);
 
             // compile pixel shaders
-            using (var bytecode = ShaderBytecode.Compile(FontShaders.SimplePixelShader, "PS", device.PixelShaderProfile, ShaderFlags.OptimizationLevel3, EffectFlags.None))
+            using (var bytecode = ShaderBytecode.LoadResource(typeof(RenderData).Assembly, ResourcePath + "SimpleFontEffect_PS.fxo"))
                 simplePixelShader = new PixelShader(device, bytecode);
 
-            using (var bytecode = ShaderBytecode.Compile(FontShaders.ClippingPixelShader, "PS", device.PixelShaderProfile, ShaderFlags.OptimizationLevel3, EffectFlags.None))
+            using (var bytecode = ShaderBytecode.LoadResource(typeof(RenderData).Assembly, ResourcePath + "ClippingFontEffect_PS.fxo"))
                 clippingPixelShader = new PixelShader(device, bytecode);
 
             constantBuffer = new ConstantBuffer<ShaderConstants>(device);
