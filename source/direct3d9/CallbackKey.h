@@ -53,6 +53,7 @@ namespace SlimDX
 
 		///<summary>Describes a quaternion rotation key for use in key frame animation.</summary>
 		///<unmanaged>D3DXKEY_QUATERNION</unmanaged>
+		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class RotationKey : System::IEquatable<RotationKey>
 		{
 		internal:
@@ -73,6 +74,7 @@ namespace SlimDX
 
 		///<summary>Describes a vector scale key for use in key frame animation.</summary>
 		///<unmanaged>D3DXKEY_VECTOR3</unmanaged>
+		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class ScaleKey : System::IEquatable<ScaleKey>
 		{
 		internal:
@@ -93,6 +95,7 @@ namespace SlimDX
 
 		///<summary>Describes a vector translation key for use in key frame animation.</summary>
 		///<unmanaged>D3DXKEY_VECTOR3</unmanaged>
+		[System::Runtime::InteropServices::StructLayout(System::Runtime::InteropServices::LayoutKind::Sequential)]
 		public value class TranslationKey : System::IEquatable<TranslationKey>
 		{
 		internal:

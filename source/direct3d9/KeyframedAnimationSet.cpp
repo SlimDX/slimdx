@@ -285,22 +285,26 @@ namespace Direct3D9
 		array<RotationKey>^ rotationKeys, array<TranslationKey>^ translationKeys )
 	{
 		DWORD result;
-		int scaleCount = scaleKeys->Length;
-		int rotateCount = rotationKeys->Length;
-		int translateCount = translationKeys->Length;
 
-		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( name );
+		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes(name);
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
-		stack_array<D3DXKEY_VECTOR3> scales = stackalloc( D3DXKEY_VECTOR3, scaleCount );
-		stack_array<D3DXKEY_QUATERNION> rotations = stackalloc( D3DXKEY_QUATERNION, rotateCount );
-		stack_array<D3DXKEY_VECTOR3> translations = stackalloc( D3DXKEY_VECTOR3, translateCount );
+		pin_ptr<ScaleKey> scales = &scaleKeys[0];
+		pin_ptr<RotationKey> rotations = &rotationKeys[0];
+		pin_ptr<TranslationKey> translations = &translationKeys[0];
 
-		HRESULT hr = InternalPointer->RegisterAnimationSRTKeys( reinterpret_cast<LPCSTR>( pinnedName ), scaleCount, rotateCount,
-			translateCount, &scales[0], &rotations[0], &translations[0], &result );
-		RECORD_D3D9( hr );
+		HRESULT hr = InternalPointer->RegisterAnimationSRTKeys(
+			reinterpret_cast<LPCSTR>(pinnedName),
+			scaleKeys->Length,
+			rotationKeys->Length,
+			translationKeys->Length,
+			reinterpret_cast<D3DXKEY_VECTOR3*>(scales),
+			reinterpret_cast<D3DXKEY_QUATERNION*>(rotations),
+			reinterpret_cast<D3DXKEY_VECTOR3*>(translations),
+			&result
+		);
 
-		if( Result::Last.IsFailure )
+		if(RECORD_D3D9(hr).IsFailure)
 			return 0;
 
 		return result;
