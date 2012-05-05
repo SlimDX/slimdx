@@ -610,7 +610,7 @@ namespace SlimDX
 			/// <summary>
 			/// The shader resource is a typed read and write buffer..
 			/// </summary>
-			RWTyped = D3D_SIT_UAV_RWTPYED,
+			RWTyped = D3D_SIT_UAV_RWTYPED,
 
 			/// <summary>
 			/// The shader resource is a structure buffer.
