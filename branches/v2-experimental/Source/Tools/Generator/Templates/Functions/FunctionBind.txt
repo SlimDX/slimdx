@@ -1,0 +1,1 @@
+﻿functions.Add(GetProcAddress(nativeModule, "$(Name)"));

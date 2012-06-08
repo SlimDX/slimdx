@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<api name="SlimDX.ShaderCompiler">
+  <interface name="ID3DBlob" type-name="IUnknown" guid="8ba5fb08-5195-40e2-ac58-0d989c3a0102">
+    <function name="GetBufferPointer" type-name="LPVOID" index="3"/>
+    <function name="GetBufferSize" type-name="SIZE_T" index="4"/>
+  </interface>
+  <interface name="_D3D_SHADER_DATA">
+    <member name="pBytecode" type-name="LPVOID"/>
+    <member name="BytecodeLength" type-name="SIZE_T"/>
+  </interface>
+  <enumeration name="D3DCOMPILER_STRIP_FLAGS">
+    <member name="D3DCOMPILER_STRIP_REFLECTION_DATA" value="1"/>
+    <member name="D3DCOMPILER_STRIP_DEBUG_INFO" value="2"/>
+    <member name="D3DCOMPILER_STRIP_TEST_BLOBS" value="4"/>
+    <member name="D3DCOMPILER_STRIP_FORCE_DWORD" value="0x7fffffff"/>
+  </enumeration>
+  <enumeration name="D3D_BLOB_PART">
+    <member name="D3D_BLOB_TEST_ALTERNATE_SHADER" value ="0x8000"/>
+  </enumeration>
+  <function name="D3DCreateBlob" type-name="HRESULT">
+    <parameter name="Size" type-name="SIZE_T"/>
+    <parameter name="ppBlob" type-name="ID3DBlob" flags="out"/>
+  </function>
+  <function name="D3DGetInputSignatureBlob" type-name="HRESULT">
+    <parameter name="pSrcData" type-name="LPCVOID"/>
+    <parameter name="SrcDataSize" type-name="SIZE_T"/>
+    <parameter name="ppBlob" type-name="ID3DBlob" flags="out"/>
+  </function>
+  <function name="D3DCompile" type-name="HRESULT">
+    <parameter name="pSrcData" type-name="LPCVOID"/>
+    <parameter name="SrcDataSize" type-name="SIZE_T"/>
+    <parameter name="pSourceName" type-name="LPCSTR"/>
+    <parameter name="pDefines" type-name="LPVOID"/>
+    <parameter name="pInclude" type-name="LPVOID"/>
+    <parameter name="pEntrypoint" type-name="LPCSTR"/>
+    <parameter name="pTarget" type-name="LPCSTR"/>
+    <parameter name="Flags1" type-name="UINT"/>
+    <parameter name="Flags2" type-name="UINT"/>
+    <parameter name="ppCode" type-name="ID3DBlob" flags="out"/>
+    <parameter name="ppErrorMsgs" type-name="ID3DBlob" flags="out"/>
+  </function>
+</api>

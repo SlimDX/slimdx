@@ -1,0 +1,618 @@
+! ===================================================================
+! C++ Header Language
+! ===================================================================
+
+"Name"    = 'C++ Header Grammar' 
+"Version" = '2'
+"Author"  = 'SlimDX Group' 
+"About"   = 'Implements a subset of the C++ language for parsing header files.'
+
+"Case Sensitive" = True
+"Start Symbol" = <translation-unit>
+
+{Hex Digit} = {Digit} + [abcdefABCDEF]
+{Oct Digit} = [01234567]
+
+{Id Head} = {Letter} + [_]
+{Id Tail} = {Id Head} + {Digit}
+
+{String Ch} = {Printable} - ["]
+{Char Ch} = {Printable} - ['']
+
+DecLiteral = [123456789]{Digit}*
+OctLiteral = 0{Oct Digit}*
+HexLiteral = 0x{Hex Digit}+[lL]?
+
+FloatLiteral = {Digit}*'.'{Digit}+([eE][+-]{Digit}+)?[fF]?
+
+CharLiteral = ''{Char Ch}''
+StringLiteral = '"'( {String Ch} | '\'{Printable} )* '"'
+
+Id = {Id Head}{Id Tail}*
+
+! ===================================================================
+! Comments
+! ===================================================================
+
+Comment Start = '/*'
+Comment End = '*/'
+Comment Line = '//'
+
+! ===================================================================
+! Lexical Types
+! ===================================================================
+
+<identifier> ::= Id
+
+<numeric-literal> ::= DecLiteral
+                    | HexLiteral
+                    | OctLiteral
+                    | CharLiteral
+                    | FloatLiteral
+                    | 0
+
+<string-literal> ::= StringLiteral <string-literal>
+                   | StringLiteral
+
+! ===================================================================
+! Root
+! ===================================================================
+
+<translation-unit> ::= <declaration-list>
+                     |
+
+! ===================================================================
+! Expressions
+! ===================================================================
+
+<primary-expression> ::= <numeric-literal>
+                       | this
+                       | '(' <expression> ')'
+
+<postfix-expression> ::= <primary-expression>
+                       | <postfix-expression> '[' <expression> ']'
+                       | <postfix-expression> '(' <expression-list> ')'
+                       | <postfix-expression> '(' ')'
+                       | <identifier> '(' <expression-list> ')'
+                       | <postfix-expression> '.' <identifier>
+                       | <postfix-expression> '->' <identifier>
+                       | <identifier> '.' <identifier>
+                       | <identifier> '->' <identifier>
+                       | <postfix-expression> '++'
+                       | <postfix-expression> '--'
+                       | dynamic_cast '<' <type-id> '>' '(' <expression> ')'
+                       | static_cast '<' <type-id> '>' '(' <expression> ')'
+                       | reinterpret_cast '<' <type-id> '>' '(' <expression> ')'
+                       | const_cast '<' <type-id> '>' '(' <expression> ')'
+                       | typeid '(' <expression> ')'
+                       | typeid '(' <type-id> ')'
+
+<expression-list> ::= <assignment-expression>
+                    | <expression-list> ',' <assignment-expression>
+
+<unary-expression> ::= <postfix-expression>
+                     | '++' <cast-expression>
+                     | '--' <cast-expression>
+                     | '++' <identifier>
+                     | <unary-operator> <cast-expression>
+                     | <unary-operator> <identifier>
+                     | sizeof <unary-expression>
+                     | sizeof '(' <type-id> ')'
+                     | <delete-expression>
+
+<unary-operator> ::= '*' | '&' | '+' | '-' | '!' | '~'
+
+<delete-expression> ::= delete <cast-expression>
+                      | delete '[' ']' <cast-expression>
+
+<cast-expression> ::= <unary-expression>
+                    | '(' <type-id> ')' <cast-expression>
+
+<pm-expression> ::= <cast-expression>
+                  | <pm-expression> '.*' <cast-expression>
+                  | <pm-expression> '->*' <cast-expression>
+
+<multiplicative-expression> ::= <pm-expression>
+                              | <multiplicative-expression> <multiplicative-operator> <pm-expression>
+                              | <identifier> <multiplicative-operator> <identifier>
+
+<multiplicative-operator> ::= '*' | '/' | '%'
+
+<additive-expression> ::= <multiplicative-expression>
+                        | <additive-expression> <additive-operator> <multiplicative-expression>
+                        | <additive-expression> <additive-operator> <identifier>
+                        | <identifier> <additive-operator> <multiplicative-expression>
+                        | <identifier> <additive-operator> <identifier>
+
+<additive-operator> ::= '-' | '+'
+
+<shift-expression> ::= <additive-expression>
+                     | <shift-expression> <shift-operator> <additive-expression>
+                     | <shift-expression> <shift-operator> <identifier>
+
+<shift-operator> ::= '<<' | '>>'
+
+<relational-expression> ::= <shift-expression>
+                          | <relational-expression> <relational-operator> <shift-expression>
+                          | <identifier> <relational-operator> <shift-expression>
+
+<relational-operator> ::= '<' | '>' | '<=' | '>='
+
+<equality-expression> ::= <relational-expression>
+                        | <equality-expression> <equality-operator> <relational-expression>
+                        | <equality-expression> <equality-operator> <identifier>
+                        | <identifier> <equality-operator> <identifier>
+
+<equality-operator> ::= '==' | '!='
+
+<and-expression> ::= <equality-expression>
+                   | <and-expression> '&' <equality-expression>
+
+<exclusive-or-expression> ::= <and-expression>
+                            | <exclusive-or-expression> '^' <and-expression>
+
+<inclusive-or-expression> ::= <exclusive-or-expression>
+                            | <inclusive-or-expression> '|' <exclusive-or-expression>
+                            | <inclusive-or-expression> '|' <identifier>
+                            | <identifier> '|' <identifier>
+                            | <identifier> '|' <exclusive-or-expression>
+
+<logical-and-expression> ::= <inclusive-or-expression>
+                           | <logical-and-expression> '&&' <inclusive-or-expression>
+
+<logical-or-expression> ::= <logical-and-expression>
+                          | <logical-or-expression> '||' <logical-and-expression>
+
+<conditional-expression> ::= <logical-or-expression>
+                           | <logical-or-expression> '?' <expression> ':' <assignment-expression>
+                           | <identifier> '?' <identifier> ':' <assignment-expression>
+
+<assignment-expression> ::= <conditional-expression>
+                          | <logical-or-expression> <assignment-operator> <assignment-expression>
+                          | <throw-expression>
+                          | <identifier> <assignment-operator> <identifier>
+                          | <identifier> <assignment-operator> <assignment-expression>
+                          | <identifier> '[' <identifier> ']' <assignment-operator> <identifier>
+                          | <identifier> '[' <expression> ']' <assignment-operator> <assignment-expression>
+                          | <identifier> '[' <expression> ']' <assignment-operator> <identifier> '[' <expression> ']'
+                          | <logical-or-expression> <assignment-operator> <identifier>
+
+<assignment-operator> ::= '=' | '*=' | '/=' | '%=' | '+=' | '-=' | '>>=' | '<<=' | '&=' | '^=' | '|='
+
+<expression> ::= <assignment-expression>
+               | <expression> ',' <assignment-expression>
+
+<constant-expression> ::= <conditional-expression>
+
+! ===================================================================
+! Statements
+! ===================================================================
+
+<statement> ::= <labeled-statement>
+              | <expression-statement>
+              | <compound-statement>
+              | <selection-statement>
+              | <iteration-statement>
+              | <jump-statement>
+              | <declaration-statement>
+              | <try-block>
+
+<labeled-statement> ::= <identifier> ':' <statement>
+                      | case <constant-expression> ':' <statement>
+                      | case <identifier> ':' <statement>
+                      | default ':' <statement>
+
+<expression-statement> ::= <expression> ';'
+                         | ';'
+
+<compound-statement> ::= '{' <statement-list> '}'
+                       | '{' '}'
+
+<statement-list> ::= <statement>
+                   | <statement-list> <statement>
+
+<selection-statement> ::= if '(' <condition> ')' <statement>
+                        | if '(' <condition> ')' <statement> else <statement>
+                        | switch '(' <condition> ')' <statement>
+
+<condition> ::= <expression>
+              | <identifier>
+
+<iteration-statement> ::= while '(' <condition> ')' <statement>
+                        | do <statement> while '(' <expression> ')' ';'
+                        | for '(' <simple-declaration> <condition> ';' <expression> ')' <statement>
+
+<jump-statement> ::= break ';'
+                   | continue ';'
+                   | return <expression> ';'
+                   | return ';'
+                   | goto <identifier> ';'
+
+<declaration-statement> ::= <block-declaration>
+
+! ===================================================================
+! Declarations
+! ===================================================================
+
+<declaration-list> ::= <declaration>
+                     | <declaration-list> <declaration>
+
+<declaration> ::= <block-declaration>
+                | <function-definition> ';'
+                | <function-definition>
+                | <template-declaration>
+                | <explicit-specialization>
+                | <linkage-specification> ';'
+                | <linkage-specification>
+                | <namespace-definition>
+
+<block-declaration> ::= <simple-declaration>
+                      | <namespace-alias-definition>
+                      | <using-declaration>
+                      | <using-directive>
+
+<simple-declaration> ::= <storage-class-list> <type-specifier> <init-declarator-list> ';'
+                       | <type-specifier> <init-declarator-list> ';'
+                       | <type-specifier> ';'
+
+<storage-class> ::= auto
+                  | register
+                  | static
+                  | extern
+                  | mutable
+                  | inline
+                  | virtual
+                  | friend
+                  | typedef
+
+<storage-class-list> ::= <storage-class-list> <storage-class>
+                       | <storage-class>
+
+<storage-class-list-opt> ::= <storage-class-list>
+                           |
+
+<using-declaration> ::= using <identifier> ';'
+
+<using-directive> ::= using namespace <identifier> ';'
+
+<linkage-specification> ::= extern <string-literal> '{' <declaration-list> '}'
+                          | extern <string-literal> '{' '}'
+                          | extern <string-literal> <declaration>
+
+<namespace-definition> ::= namespace <identifier> '{' <namespace-body> '}'
+                         | namespace '{' <namespace-body> '}'
+
+<namespace-body> ::= <declaration-list>
+                   |
+
+<namespace-alias-definition> ::= namespace <identifier> '=' <identifier> ';'
+
+! ===================================================================
+! Type Specifiers
+! ===================================================================
+
+<type-specifier> ::= <simple-type-specifier>
+                   | <class-specifier>
+                   | <enum-specifier>
+                   | <elaborated-type-specifier>
+                   | <cv-qualifier> <type-specifier>
+                   | <identifier>
+                   | <declspec-definition> <type-specifier>
+
+<simple-type-specifier> ::= char
+                          | wchar_t
+                          | bool
+                          | short
+                          | int
+                          | long
+                          | signed
+                          | unsigned
+                          | float
+                          | double
+                          | void
+
+<elaborated-type-specifier> ::= <class-key> <declspec-list> <identifier>
+                              | <class-key> <identifier>
+                              | enum <identifier>
+                              | typename <identifier> '<' <template-argument-list> '>'
+
+<enum-specifier> ::= enum <identifier> '{' <enumerator-list> '}'
+                   | enum <identifier> '{' '}'
+
+<enumerator-list> ::= <enumerator-definition>
+                    | <enumerator-list> ',' <enumerator-definition>
+                    | <enumerator-list> ','
+
+<enumerator-definition> ::= <identifier>
+                          | <identifier> '=' <identifier>
+                          | <identifier> '=' <constant-expression>
+
+<class-name> ::= <identifier>
+               | <template-id>
+
+<class-specifier> ::= <class-head> '{' <member-specification-opt> '}'
+
+<class-head> ::= <class-key> <identifier> <base-clause>
+               | <class-key> <identifier>
+               | <class-key> <declspec-list> <identifier>
+               | <class-key> <declspec-list> <identifier> <base-clause>
+               | <class-key>
+
+<class-key> ::= class
+              | struct
+              | union
+
+! ===================================================================
+! Declarators
+! ===================================================================
+
+<init-declarator-list> ::= <init-declarator>
+                         | <init-declarator-list> ',' <init-declarator>
+
+<init-declarator> ::= <declarator> <initializer>
+                    | <declarator>
+                    | <declspec-definition> <declarator>
+
+<initializer> ::= '=' <initializer-clause>
+                | '(' <expression-list> ')'
+
+<initializer-clause> ::= <assignment-expression>
+                       | <identifier>
+                       | '{' <initializer-list> ',' '}'
+                       | '{' <initializer-list> '}'
+                       | '{' '}'
+
+<initializer-list> ::= <initializer-clause>
+                     | <initializer-list> ',' <initializer-clause>
+
+<declarator> ::= <direct-declarator>
+               | <ptr-operator> <declarator>
+
+<direct-declarator> ::= <identifier>
+                      | <operator-function-id>
+                      | <direct-declarator> '(' <parameter-declaration-clause> ')' <cv-qualifier-list-opt> <exception-specification>
+                      | <direct-declarator> '(' <parameter-declaration-clause> ')' <cv-qualifier-list-opt>
+                      | <direct-declarator> '[' <constant-expression> ']'
+                      | <direct-declarator> '[' ']'
+
+<ptr-operator> ::= '*' <cv-qualifier-list-opt>
+                 | '&'
+                 | <identifier> '*' <cv-qualifier-list-opt>
+
+<cv-qualifier-list> ::= <cv-qualifier> <cv-qualifier-list>
+                      | <cv-qualifier>
+
+<cv-qualifier-list-opt> ::= <cv-qualifier-list>
+                          |
+
+<cv-qualifier> ::= const
+                 | volatile
+
+<type-id> ::= <type-specifier-list> <abstract-declarator>
+            | <type-specifier-list>
+
+<type-specifier-list> ::= <type-specifier> <type-specifier-list>
+                        | <type-specifier>
+
+<abstract-declarator> ::= <ptr-operator> <abstract-declarator>
+                        | <ptr-operator>
+                        | <direct-abstract-declarator>
+
+<abstract-declarator-opt> ::= <abstract-declarator>
+                            |
+
+<direct-abstract-declarator> ::= <direct-abstract-declarator-opt> '(' <parameter-declaration-clause> ')' <cv-qualifier-list-opt> <exception-specification>
+                               | <direct-abstract-declarator-opt> '(' <parameter-declaration-clause> ')' <cv-qualifier-list-opt>
+                               | <direct-abstract-declarator-opt> '[' <constant-expression> ']'
+                               | <direct-abstract-declarator-opt> '[' ']'
+
+<direct-abstract-declarator-opt> ::= <direct-abstract-declarator>
+                                   |
+
+! ===================================================================
+! Functions
+! ===================================================================
+
+<parameter-declaration-clause> ::= <parameter-declaration-list>
+                                 |
+
+<parameter-declaration-list> ::= <parameter-declaration>
+                               | <parameter-declaration-list> ',' <parameter-declaration>
+
+<parameter-declaration> ::= <type-specifier> <declarator>
+                          | <type-specifier> <declarator> '=' <initializer-clause>
+                          | <type-specifier> <abstract-declarator-opt>
+                          | <type-specifier> <abstract-declarator-opt> '=' <initializer-clause>
+                          | <storage-class-list> <type-specifier> <declarator>
+                          | <storage-class-list> <type-specifier> <declarator> '=' <initializer-clause>
+                          | <storage-class-list> <type-specifier> <abstract-declarator-opt>
+                          | <storage-class-list> <type-specifier> <abstract-declarator-opt> '=' <initializer-clause>
+                          | <qualifier> <storage-class-list-opt> <type-specifier> <declarator>
+                          | <qualifier> <storage-class-list-opt> <type-specifier> <declarator> '=' <initializer-clause>
+                          | <qualifier> <storage-class-list-opt> <type-specifier> <abstract-declarator-opt>
+                          | <qualifier> <storage-class-list-opt> <type-specifier> <abstract-declarator-opt> '=' <initializer-clause>
+
+<function-definition> ::= <storage-class-list> <type-specifier> <init-declarator> <ctor-initializer-opt> <function-body>
+                        | <storage-class-list> <calling-convention> <type-specifier> <init-declarator> <ctor-initializer-opt> <function-body>
+                        | <storage-class-list> <type-specifier> <calling-convention> <init-declarator> <ctor-initializer-opt> <function-body>
+                        | <storage-class-list> <calling-convention> <type-specifier> <init-declarator>
+                        | <storage-class-list> <type-specifier> <calling-convention> <init-declarator>
+                        | <type-specifier> <calling-convention> <init-declarator>
+                        | <type-specifier> <ptr-operator> <calling-convention> <init-declarator>
+                        | <operator-function-id> '(' <parameter-declaration-clause> ')' <cv-qualifier-list-opt>
+                        | operator <type-specifier> <ptr-operator> '(' <parameter-declaration-clause> ')' <cv-qualifier-list-opt> <function-body>
+                        | <constructor>
+                        | '~' <constructor>
+                        | <function-pointer>
+
+<function-pointer> ::= <storage-class-list> <type-specifier> '(' <calling-convention> '*' <identifier> ')' '(' <parameter-declaration-clause> ')' <cv-qualifier-list-opt>
+
+<constructor> ::= <identifier> '(' <parameter-declaration-clause> ')'
+                | <identifier> '(' <parameter-declaration-clause> ')' <ctor-initializer-opt> <function-body>
+                | explicit <identifier> '(' <parameter-declaration-clause> ')'
+                | explicit <identifier> '(' <parameter-declaration-clause> ')' <ctor-initializer-opt> <function-body>
+
+<function-body> ::= <compound-statement>
+
+<calling-convention> ::= '__cdecl'
+                       | '__stdcall'
+                       | '__fastcall'
+
+! ===================================================================
+! Operators
+! ===================================================================
+
+<operator-function-id> ::= operator <operator>
+
+<operator> ::= new | delete | new '[' ']' | delete '[' ']'
+             | '+' | '-' | '*' | '/' | '%' | '^' | '&' | '|' | '~'
+             | '!' | '=' | '<' | '>' | '+=' | '-=' | '*=' | '/=' | '%='
+             | '^=' | '&=' | '|=' | '<<' | '>>' | '>>=' | '<<=' | '==' | '!='
+             | '<=' | '>=' | '&&' | '||' | '++' | '--' | ',' | '->*' | '->'
+             | '(' ')' | '[' ']'
+
+! ===================================================================
+! Extensions
+! ===================================================================
+
+<declspec-definition> ::= '__declspec' '(' <declspec> ')'
+
+<declspec> ::= noreturn
+             | noalias
+             | novtable
+             | nothrow
+             | restrict
+             | selectany
+             | dllimport
+             | dllexport
+             | deprecated
+             | deprecated '(' <string-literal> ')'
+             | uuid '(' <string-literal> ')'
+             | align '(' <numeric-literal> ')'
+
+<declspec-list> ::= <declspec-definition> <declspec-list>
+                  | <declspec-definition>
+
+<qualifier> ::= __in
+              | __out
+              | __inout
+              | __in_opt
+              | __out_opt
+              | __inout_opt
+              | __in_bcount '(' <declarator> ')'
+              | __in_bcount_opt '(' <declarator> ')'
+              | __out_bcount '(' <declarator> ')'
+              | __out_bcount_opt '(' <declarator> ')'
+              | __out_ecount_part_opt '(' <init-declarator-list> ')'
+              | __in_ecount '(' <declarator> ')'
+              | __out_ecount '(' <declarator> ')'
+              | __in_ecount_opt '(' <declarator> ')'
+              | __out_ecount_opt '(' <declarator> ')'
+
+! ===================================================================
+! Class/Struct/Union Members
+! ===================================================================
+
+<member-specification> ::= <member-declaration> <member-specification-opt>
+                         | <access-specifier> ':' <member-specification-opt>
+
+<member-specification-opt> ::= <member-specification>
+                             |
+
+<member-declaration> ::= <storage-class-list> <type-specifier> <member-declarator-list> ';'
+                       | <type-specifier> <member-declarator-list> ';'
+                       | <type-specifier> ';'
+                       | <function-definition> ';'
+                       | <function-definition>
+                       | <using-declaration>
+                       | <template-declaration>
+
+<member-declarator-list> ::= <member-declarator>
+                           | <member-declarator-list> ',' <member-declarator>
+
+<member-declarator> ::= <declarator>
+                      | <declarator> <constant-initializer>
+                      | <declarator> ':' <constant-expression>
+
+<constant-initializer> ::= '=' <constant-expression>
+
+<base-clause> ::= ':' <base-specifier-list>
+
+<base-specifier-list> ::= <base-specifier>
+                        | <base-specifier-list> ',' <base-specifier>
+
+<base-specifier> ::= <class-name>
+                   | virtual <access-specifier> <class-name>
+                   | virtual <class-name>
+                   | <access-specifier> virtual <class-name>
+                   | <access-specifier> <class-name>
+
+<access-specifier> ::= private
+                     | protected
+                     | public
+
+<ctor-initializer> ::= ':' <mem-initializer-list>
+
+<ctor-initializer-opt> ::= <ctor-initializer>
+                         |
+
+<mem-initializer-list> ::= <mem-initializer>
+                         | <mem-initializer> ',' <mem-initializer-list>
+
+<mem-initializer> ::= <identifier> '(' <expression-list> ')'
+                    | <identifier> '(' ')'
+                    | <identifier> '(' <identifier> ')'
+
+! ===================================================================
+! Templates
+! ===================================================================
+
+<template-declaration> ::= template '<' <template-parameter-list> '>' <declaration>
+
+<template-parameter-list> ::= <template-parameter>
+                            | <template-parameter-list> ',' <template-parameter>
+
+<template-parameter> ::= <type-parameter>
+                       | <parameter-declaration>
+
+<type-parameter> ::= class <identifier>
+                   | class <identifier> '=' <type-id>
+                   | typename <identifier>
+                   | typename <identifier> '=' <type-id>
+                   | template '<' <template-parameter-list> '>' class <identifier>
+                   | template '<' <template-parameter-list> '>' class <identifier> '=' <identifier>
+
+<template-id> ::= <identifier> '<' <template-argument-list> '>'
+
+<template-argument-list> ::= <template-argument>
+                           | <template-argument-list> ',' <template-argument>
+
+<template-argument> ::= <identifier>
+
+<explicit-specialization> ::= template '<' '>' <declaration>
+
+! ===================================================================
+! Exception Handling
+! ===================================================================
+
+<try-block> ::= try <compound-statement> <handler-list>
+
+<handler-list> ::= <handler> <handler-list>
+                 | <handler>
+
+<handler> ::= catch '(' <exception-declaration> ')' <compound-statement>
+
+<exception-declaration> ::= <type-specifier-list> <declarator>
+                          | <type-specifier-list> <abstract-declarator>
+                          | <type-specifier-list>
+                          | '...'
+
+<throw-expression> ::= throw <assignment-expression>
+                     | throw
+
+<exception-specification> ::= throw '(' <type-id-list> ')'
+                            | throw '(' ')'
+
+<type-id-list> ::= <type-id>
+                 | <type-id-list> ',' <type-id>
+

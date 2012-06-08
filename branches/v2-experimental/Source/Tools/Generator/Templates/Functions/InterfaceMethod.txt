@@ -1,0 +1,6 @@
+﻿public unsafe $(Type.Name) $(Name)($(@FunctionParameters))
+{
+	$(@FunctionPrologue)
+	$(@FunctionTrampoline)
+	$(@FunctionEpilogue)
+}

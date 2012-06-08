@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- The IDE will cache the project's source files when a build begins if using the in-process compiler. -->
+  <!-- This means that changes to those files during the build (for example, via code generation) will not -->
+  <!-- be seen by the compiler. Thus, the in-process compiler is disabled. -->
+  <PropertyGroup>
+    <UseHostCompilerIfAvailable>false</UseHostCompilerIfAvailable>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E3444A70-DF09-4610-9393-B5D7467DF705}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SlimDX.DXGI</RootNamespace>
+    <AssemblyName>SlimDX.DXGI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="DXGI.cs" />
+    <Compile Include="Extensions\SwapChain.cs" />
+    <Compile Include="Generated\DXGI.cs" />
+    <Compile Include="Generated\DXGI_ADAPTER_DESC.cs" />
+    <Compile Include="Generated\DXGI_ADAPTER_DESC1.cs" />
+    <Compile Include="Generated\DXGI_ADAPTER_FLAG.cs" />
+    <Compile Include="Generated\DXGI_DISPLAY_COLOR_SPACE.cs" />
+    <Compile Include="Generated\DXGI_FORMAT.cs" />
+    <Compile Include="Generated\DXGI_FRAME_STATISTICS.cs" />
+    <Compile Include="Generated\DXGI_GAMMA_CONTROL.cs" />
+    <Compile Include="Generated\DXGI_GAMMA_CONTROL_CAPABILITIES.cs" />
+    <Compile Include="Generated\DXGI_MAPPED_RECT.cs" />
+    <Compile Include="Generated\DXGI_MODE_DESC.cs" />
+    <Compile Include="Generated\DXGI_MODE_ROTATION.cs" />
+    <Compile Include="Generated\DXGI_MODE_SCALING.cs" />
+    <Compile Include="Generated\DXGI_MODE_SCANLINE_ORDER.cs" />
+    <Compile Include="Generated\DXGI_OUTPUT_DESC.cs" />
+    <Compile Include="Generated\DXGI_RATIONAL.cs" />
+    <Compile Include="Generated\DXGI_RESIDENCY.cs" />
+    <Compile Include="Generated\DXGI_RGB.cs" />
+    <Compile Include="Generated\DXGI_SAMPLE_DESC.cs" />
+    <Compile Include="Generated\DXGI_SHARED_RESOURCE.cs" />
+    <Compile Include="Generated\DXGI_SURFACE_DESC.cs" />
+    <Compile Include="Generated\DXGI_SWAP_CHAIN_DESC.cs" />
+    <Compile Include="Generated\DXGI_SWAP_CHAIN_FLAG.cs" />
+    <Compile Include="Generated\DXGI_SWAP_EFFECT.cs" />
+    <Compile Include="Generated\DXGI_USAGE.cs" />
+    <Compile Include="Generated\IDXGIAdapter.cs" />
+    <Compile Include="Generated\IDXGIAdapter1.cs" />
+    <Compile Include="Generated\IDXGIDevice.cs" />
+    <Compile Include="Generated\IDXGIDevice1.cs" />
+    <Compile Include="Generated\IDXGIDeviceSubObject.cs" />
+    <Compile Include="Generated\IDXGIFactory.cs" />
+    <Compile Include="Generated\IDXGIFactory1.cs" />
+    <Compile Include="Generated\IDXGIKeyedMutex.cs" />
+    <Compile Include="Generated\IDXGIObject.cs" />
+    <Compile Include="Generated\IDXGIOutput.cs" />
+    <Compile Include="Generated\IDXGIResource.cs" />
+    <Compile Include="Generated\IDXGISurface.cs" />
+    <Compile Include="Generated\IDXGISurface1.cs" />
+    <Compile Include="Generated\IDXGISwapChain.cs" />
+    <Compile Include="Generated\Trampoline.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SlimDX\SlimDX.csproj">
+      <Project>{A774A428-009F-4E4D-ABF2-F7E181DAA2E3}</Project>
+      <Name>SlimDX</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DXGI.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DXGI.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>"$(SolutionDir)\Source\Tools\Generator\bin\$(ConfigurationName)\SlimDX.Generator.exe" "$(ProjectDir)\DXGI.xml"</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>"$(SolutionDir)\Source\Tools\Combiner\bin\$(ConfigurationName)\SlimDX.Combiner.exe" "$(ProjectDir)\Generated\$(TargetName).Trampoline.dll" "$(TargetPath)" $(TargetName).Trampoline</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
