@@ -1,0 +1,61 @@
+﻿{
+	"name": "SlimDX.ShaderCompiler",
+	"dependencies": [ "../SlimDX/SlimDX.json" ],
+
+	"interfaces": [
+		{
+			"key": "ID3DBlob",
+			"type": "IUnknown",
+			"guid": "8ba5fb08-5195-40e2-ac58-0d989c3a0102",
+			"methods": [
+				{
+					"key": "GetBufferPointer",
+					"type": "LPVOID",
+					"index": "3"
+				},
+				{
+					"key": "GetBufferSize",
+					"type": "SIZE_T",
+					"index": "4"
+				}
+			]
+		}
+	],
+
+	"functions": [
+		{
+			"key": "D3DCreateBlob",
+			"type": "HRESULT",
+			"parameters": [
+				{ "key": "Size", "type": "SIZE_T" },
+				{ "key": "ppBlob", "type": "ID3DBlob", "flags": ["out"] }
+			]
+		},
+		{
+			"key": "D3DGetInputSignatureBlob",
+			"type": "HRESULT",
+			"parameters": [
+				{ "key": "pSrcData", "type": "LPCVOID" },
+				{ "key": "SrcDataSize", "type": "SIZE_T" },
+				{ "key": "ppBlob", "type": "ID3DBlob", "flags": ["out"] }
+			]
+		},
+		{
+			"key": "D3DCompile",
+			"type": "HRESULT",
+			"parameters": [
+				{ "key": "pSrcData", "type": "LPCVOID" },
+				{ "key": "SrcDataSize", "type": "SIZE_T" },
+				{ "key": "pSourceName", "type": "LPCSTR" },
+				{ "key": "pDefines", "type": "LPVOID" },
+				{ "key": "pInclude", "type": "LPVOID" },
+				{ "key": "pEntrypoint", "type": "LPCSTR" },
+				{ "key": "pTarget", "type": "LPCSTR" },
+				{ "key": "Flags1", "type": "UINT" },
+				{ "key": "Flags2", "type": "UINT" },
+				{ "key": "ppCode", "type": "ID3DBlob", "flags": ["out"] },
+				{ "key": "ppErrorMsgs", "type": "ID3DBlob", "flags": ["out"] }
+			]
+		}
+	]
+}

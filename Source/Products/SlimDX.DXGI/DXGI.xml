@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <parser-configuration primary-header="%DXSDK_DIR%Include\dxgi.h">
+    <additional-headers>
+      <path>%DXSDK_DIR%Include\dxgiformat.h</path>
+      <path>%DXSDK_DIR%Include\dxgitype.h</path>
+    </additional-headers>
+    <include-paths>
+      <path>%DXSDK_DIR%Include</path>
+      <path>C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Include</path>
+      <path>C:\Program Files (x86)\Microsoft Visual Studio 10.0\include</path>
+      <path>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include</path>
+    </include-paths>
+    <define-symbols>
+      <symbol>WIN32</symbol>
+      <symbol>WINVER=0x501</symbol>
+      <symbol>UNICODE</symbol>
+      <symbol>_MSC_VER=1600</symbol>
+      <symbol>_WIN32</symbol>
+      <symbol>_M_IX86</symbol>
+      <symbol>_WIN32_WINNT=0x501</symbol>
+      <symbol>_UNICODE</symbol>
+    </define-symbols>
+    <ignore-symbols>
+      <symbol>__in</symbol>
+      <symbol>__out</symbol>
+      <symbol>__inout</symbol>
+      <symbol>__in_bcount</symbol>
+      <symbol>__out_bcount</symbol>
+      <symbol>__in_opt</symbol>
+      <symbol>__out_ecount_part_opt</symbol>
+      <symbol>__in_ecount</symbol>
+      <symbol>__out_ecount</symbol>
+    </ignore-symbols>
+  </parser-configuration>
+  <generator-configuration api="SlimDX.DXGI" output-path="Generated\">
+    <dependencies>
+      <path>../SlimDX/SlimDX.json</path>
+    </dependencies>
+    <combine>
+      <path>DXGI.json</path>
+    </combine>
+  </generator-configuration>
+</configuration>

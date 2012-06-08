@@ -1,0 +1,282 @@
+﻿{
+	"name": "SlimDX.Direct3D11",
+	"dependencies": [ "../SlimDX/SlimDX.json", "../SlimDX.DXGI/Generated/SlimDX.DXGI.json" ],
+
+	"enumerations": [
+		{
+			"key": "D3D11_USAGE",
+			"values": [
+				{ "key": "D3D11_USAGE_DEFAULT", "value": "0" },
+				{ "key": "D3D11_USAGE_IMMUTABLE", "value": "1" },
+				{ "key": "D3D11_USAGE_DYNAMIC", "value": "2" },
+				{ "key": "D3D11_USAGE_STAGING", "value": "3" }
+			]
+		},
+		{
+			"key": "D3D11_INPUT_CLASSIFICATION",
+			"values": [
+				{ "key": "D3D11_INPUT_PER_VERTEX_DATA", "value": 0 },
+				{ "key": "D3D11_INPUT_PER_INSTANCE_DATA", "value": 1 }
+			]
+		}
+	],
+
+	"structures": [
+		{
+			"key": "D3D11_SUBRESOURCE_DATA",
+			"members": [
+				{ "key": "pSysMem", "type": "LPVOID" },
+				{ "key": "SysMemPitch", "type": "UINT" },
+				{ "key": "SysMemSlicePitch", "type": "UINT" }
+			]
+		},
+		{
+			"key": "D3D11_BUFFER_DESC",
+			"members": [
+				{ "key": "ByteWidth", "type": "UINT" },
+				{ "key": "Usage", "type": "D3D11_USAGE" },
+				{ "key": "BindFlags", "type": "UINT" },
+				{ "key": "CPUAccessFlags", "type": "UINT" },
+				{ "key": "MiscFlags", "type": "UINT" },
+				{ "key": "StructureByteStride", "type": "UINT" }
+			]
+		},
+		{
+			"key": "D3D11_INPUT_ELEMENT_DESC",
+			"members": [
+				{ "key": "SemanticName", "type": "LPCSTR" },
+				{ "key": "SemanticIndex", "type": "UINT" },
+				{ "key": "Format", "type": "DXGI_FORMAT" },
+				{ "key": "InputSlot", "type": "UINT" },
+				{ "key": "AlignedByteOffset", "type": "UINT" },
+				{ "key": "InputSlotClass", "type": "D3D11_INPUT_CLASSIFICATION" },
+				{ "key": "InstanceDataStepRate", "type": "UINT" }
+			]
+		},
+		{
+			"key": "D3D11_VIEWPORT",
+			"members": [
+				{ "key": "TopLeftX", "type": "FLOAT" },
+				{ "key": "TopLeftY", "type": "FLOAT" },
+				{ "key": "Width", "type": "FLOAT" },
+				{ "key": "Height", "type": "FLOAT" },
+				{ "key": "MinDepth", "type": "FLOAT" },
+				{ "key": "MaxDepth", "type": "FLOAT" }
+			]
+		}
+	],
+
+	"interfaces": [
+		{
+			"key": "ID3D11DeviceChild",
+			"type": "IUnknown",
+			"guid": "1841e5c8-16b0-489b-bcc8-44cfb0d5deae"
+		},
+		{
+			"key": "ID3D11ClassLinkage",
+			"type": "ID3D11DeviceChild",
+			"guid": "ddf57cba-9543-46e4-a12b-f207a0fe7fed"
+		},
+		{
+			"key": "ID3D11ClassInstance",
+			"type": "ID3D11DeviceChild",
+			"guid": "a6cd7faa-b0b7-4a2f-9436-8662a65797cb"
+		},
+		{
+			"key": "ID3D11VertexShader",
+			"type": "ID3D11DeviceChild",
+			"guid": "3b301d64-d678-4289-8897-22f8928b72f3"
+		},
+		{
+			"key": "ID3D11PixelShader",
+			"type": "ID3D11DeviceChild",
+			"guid": "ea82e40d-51dc-4f33-93d4-db7c9125ae8c"
+		},
+		{
+			"key": "ID3D11Resource",
+			"type": "ID3D11DeviceChild",
+			"guid": "dc8e63f3-d12b-4952-b47b-5e45026a862d"
+		},
+		{
+			"key": "ID3D11Buffer",
+			"type": "ID3D11Resource",
+			"guid": "48570b85-d1ee-4fcd-a250-eb350722b037"
+		},
+		{
+			"key": "ID3D11Texture2D",
+			"type": "ID3D11Resource",
+			"guid": "6f15aaf2-d208-4e89-9ab4-489535d34f9c"
+		},
+		{
+			"key": "ID3D11RenderTargetView",
+			"type": "IUnknown",
+			"guid": "dfdba067-0b8d-4865-875b-d7b4516cc164"
+		},
+		{
+			"key": "ID3D11InputLayout",
+			"type": "ID3D11DeviceChild",
+			"guid": "e4819ddc-4cf0-4025-bd26-5de82a3e07b7"
+		},
+		{
+			"key": "ID3D11DeviceContext",
+			"type": "IUnknown",
+			"guid": "c0bfa96c-e089-44fb-8eaf-26f8796190da",
+			"methods": [
+				{
+					"key": "PSSetShader",
+					"type": "void",
+					"index": "9", 
+					"parameters": [
+						{ "key": "pPixelShader", "type": "ID3D11PixelShader" },
+						{ "key": "ppClassInstances", "type": "ID3D11ClassInstance" },
+						{ "key": "NumClassInstances", "type": "UINT" }
+					]
+				},
+				{
+					"key": "VSSetShader",
+					"type": "void",
+					"index": "11", 
+					"parameters": [
+						{ "key": "pVertexShader", "type": "ID3D11VertexShader" },
+						{ "key": "ppClassInstances", "type": "ID3D11ClassInstance" },
+						{ "key": "NumClassInstances", "type": "UINT" }
+					]
+				},
+				{
+					"key": "Draw",
+					"type": "void",
+					"index": "13", 
+					"parameters": [
+						{ "key": "VertexCount", "type": "UINT" },
+						{ "key": "StartVertexLocation", "type": "UINT" }
+					]
+				},
+				{
+					"key": "IASetInputLayout",
+					"type": "void",
+					"index": "17", 
+					"parameters": [
+						{ "key": "inputLayout", "type": "ID3D11InputLayout" }
+					]
+				},
+				{
+					"key": "IASetVertexBuffers",
+					"type": "void",
+					"index": "18", 
+					"parameters": [
+						{ "key": "StartSlot", "type": "UINT" },
+						{ "key": "NumBuffers", "type": "UINT" },
+						{ "key": "ppVertexBuffers", "type": "ID3D11Buffer", "size": "NumBuffers", "flags": [ "element_count" ] },
+						{ "key": "pStrides", "type": "UINT", "size": "NumBuffers", "flags": [ "element_count" ] },
+						{ "key": "pOffsets", "type": "UINT", "size": "NumBuffers", "flags": [ "element_count" ] }
+					]
+				},
+				{
+					"key": "IASetPrimitiveTopology",
+					"type": "void",
+					"index": "24", 
+					"parameters": [
+						{ "key": "Topology", "type": "UINT" }
+					]
+				},
+				{
+					"key": "OMSetRenderTargets",
+					"type": "void",
+					"index": "33", 
+					"parameters": [
+						{ "key": "NumViews", "type": "UINT" },
+						{ "key": "ppRenderTargetViews", "type": "ID3D11RenderTargetView", "size":"NumViews", "flags": ["element_count"] },
+						{ "key": "pDepthStencilView", "type": "LPVOID" }
+					]
+				},
+				{
+					"key": "RSSetViewports",
+					"type": "void",
+					"index": "44", 
+					"parameters": [
+						{ "key": "NumViewports", "type": "UINT" },
+						{ "key": "pViewports", "type": "D3D11_VIEWPORT", "size":"NumViewports", "flags": ["element_count"] }
+					]
+				},
+				{
+					"key": "ClearRenderTargetView",
+					"type": "void",
+					"index": "50", 
+					"parameters": [
+						{ "key": "view", "type": "ID3D11RenderTargetView" },
+						{ "key": "color", "type": "Color4" }
+					]
+				}
+			]
+		},
+		{
+			"key": "ID3D11Device",
+			"type": "IUnknown",
+			"guid": "db6f6ddb-ac77-4e88-8253-819df9bbf140",
+			"methods": [
+				{
+					"key": "CreateBuffer",
+					"type": "HRESULT",
+					"index": "3", 
+					"parameters": [
+						{ "key": "pDesc", "type": "D3D11_BUFFER_DESC" },
+						{ "key": "pInitialData", "type": "D3D11_SUBRESOURCE_DATA" },
+						{ "key": "ppBuffer", "type": "ID3D11Buffer", "flags": [ "out" ] }
+					]
+				},
+				{
+					"key": "CreateRenderTargetView",
+					"type": "HRESULT",
+					"index": "9", 
+					"parameters": [
+						{ "key": "resource", "type": "ID3D11Resource" },
+						{ "key": "description", "type": "IUnknown" },
+						{ "key": "view", "type": "ID3D11RenderTargetView", "flags": [ "out" ] }
+					]
+				},
+				{
+					"key": "CreateVertexShader",
+					"type": "HRESULT",
+					"index": "12", 
+					"parameters": [
+						{ "key": "pShaderBytecode", "type": "LPVOID" },
+						{ "key": "BytecodeLength", "type": "SIZE_T" },
+						{ "key": "pClassLinkage", "type": "ID3D11ClassLinkage" },
+						{ "key": "ppVertexShader", "type": "ID3D11VertexShader", "flags": [ "out" ] }
+					]
+				},
+				{
+					"key": "CreatePixelShader",
+					"type": "HRESULT",
+					"index": "15", 
+					"parameters": [
+						{ "key": "pShaderBytecode", "type": "LPVOID" },
+						{ "key": "BytecodeLength", "type": "SIZE_T" },
+						{ "key": "pClassLinkage", "type": "ID3D11ClassLinkage" },
+						{ "key": "ppPixelShader", "type": "ID3D11PixelShader", "flags": [ "out" ] }
+					]
+				},
+				{
+					"key": "CreateInputLayout",
+					"type": "HRESULT",
+					"index": "11", 
+					"parameters": [
+						{ "key": "pInputElementDescs", "type": "D3D11_INPUT_ELEMENT_DESC", "size": "NumElements", "flags": ["element_count"] },
+						{ "key": "NumElements", "type": "UINT" },
+						{ "key": "pShaderBytecodeWithInputSignature", "type": "HWND" },
+						{ "key": "BytecodeLength", "type": "SIZE_T" },
+						{ "key": "ppInputLayout", "type": "ID3D11InputLayout", "flags": [ "out" ] }
+					]
+				},
+				{
+					"key": "GetImmediateContext",
+					"type": "void",
+					"index": "40", 
+					"parameters": [
+						{ "key": "context", "type": "ID3D11DeviceContext", "flags": [ "out" ] }
+					]
+				}
+			]
+		}
+	]
+}

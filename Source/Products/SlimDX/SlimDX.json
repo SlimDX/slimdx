@@ -1,0 +1,38 @@
+﻿{
+	"name": "SlimDX",
+
+	"translations": [
+		{ "key": "int", "target": "System.Int32" },
+		{ "key": "INT", "target": "System.Int32" },
+		{ "key": "UINT", "target": "System.Int32" },
+		{ "key": "UINT8", "target": "System.Byte" },
+		{ "key": "DWORD", "target": "System.Int32" },
+		{ "key": "SIZE_T", "target": "System.Int32" },
+		{ "key": "UINT64", "target": "System.UInt64" },
+		{ "key": "WCHAR", "target": "System.Char" },
+		{ "key": "BOOL", "target": "System.Boolean" },
+		{ "key": "BYTE", "target": "System.Byte" },
+		{ "key": "HWND", "target": "System.IntPtr" },
+		{ "key": "HMODULE", "target": "System.IntPtr" },
+		{ "key": "HMONITOR", "target": "System.IntPtr" },
+		{ "key": "HDC", "target": "System.IntPtr" },
+		{ "key": "HANDLE", "target": "System.IntPtr" },
+		{ "key": "float", "target": "System.Single" },
+		{ "key": "FLOAT", "target": "System.Single" },
+		{ "key": "LARGE_INTEGER", "target": "System.Int64" },
+		{ "key": "LUID", "target": "System.Int64" },
+		{ "key": "GUID", "target": "System.Guid" },
+		{ "key": "IID", "target": "System.Guid" },
+		{ "key": "REFIID", "target": "System.Guid" },
+
+		{ "key": "LPCSTR", "target": "System.String" },
+		{ "key": "LPVOID", "target": "System.IntPtr" },
+		{ "key": "LPCVOID", "target": "System.IntPtr" },
+		
+		{ "key": "HRESULT", "name": "System.Int32", "target": "System.Int32" },
+		{ "key": "IUnknown", "name": "SlimDX.ComObject", "target": "SlimDX.ComObject, SlimDX", "marshal": ["wrapped"] },
+		{ "key": "RECT", "name": "System.Drawing.Rectangle", "target": "System.Drawing.Rectangle, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" },
+		
+		{ "key": "Color4", "name": "SlimDX.Color4", "target": "SlimDX.Color4, SlimDX" }
+	]
+}
