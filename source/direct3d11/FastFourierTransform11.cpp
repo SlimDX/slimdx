@@ -206,27 +206,36 @@ namespace Direct3D11
 
 	Result FastFourierTransform::AttachBuffersAndPrecompute( array<UnorderedAccessView^>^ tempBuffers, array<UnorderedAccessView^>^ precomputeBuffers )
 	{
-		if (tempBuffers == nullptr)
-			throw gcnew ArgumentNullException("temporaryBuffers");
-		if (precomputeBuffers == nullptr)
-			throw gcnew ArgumentNullException("precomputeBuffers");
+		ID3D11UnorderedAccessView** tempPtr = 0;
+		ID3D11UnorderedAccessView** precomputePtr = 0;
+		int tempCount = 0;
+		int precomputeCount = 0;
 
-		if (tempBuffers->Length == 0)
-			throw gcnew ArgumentOutOfRangeException("temporaryBuffers");
-		if (precomputeBuffers->Length == 0)
-			throw gcnew ArgumentOutOfRangeException("precomputeBuffers");
+		stack_array<ID3D11UnorderedAccessView*> nativeTempBuffers;
+		stack_array<ID3D11UnorderedAccessView*> nativePrecomputeBuffers;
 
-		stack_array<ID3D11UnorderedAccessView*> nativeTempBuffers = stackalloc(ID3D11UnorderedAccessView*, tempBuffers->Length);
-		stack_array<ID3D11UnorderedAccessView*> nativePrecomputeBuffers = stackalloc(ID3D11UnorderedAccessView*, precomputeBuffers->Length);
+		if (tempBuffers != nullptr && tempBuffers->Length != 0)
+		{
+			nativeTempBuffers = stack_array<ID3D11UnorderedAccessView*>(tempBuffers->Length);
+			for (int i = 0; i < tempBuffers->Length; i++)
+				nativeTempBuffers[i] = tempBuffers[i] == nullptr ? 0 : tempBuffers[i]->InternalPointer;
 
-		for (int i = 0; i < tempBuffers->Length; i++)
-			nativeTempBuffers[i] = tempBuffers[i] == nullptr ? NULL : tempBuffers[i]->InternalPointer;
+			tempPtr = &nativeTempBuffers[0];
+			tempCount = tempBuffers->Length;
+		}
 
-		for (int i = 0; i < precomputeBuffers->Length; i++)
-			nativePrecomputeBuffers[i] = precomputeBuffers[i] == nullptr ? NULL : precomputeBuffers[i]->InternalPointer;
+		if (precomputeBuffers != nullptr && precomputeBuffers->Length != 0)
+		{
+			nativePrecomputeBuffers = stack_array<ID3D11UnorderedAccessView*>(precomputeBuffers->Length);
+			for (int i = 0; i < precomputeBuffers->Length; i++)
+				nativePrecomputeBuffers[i] = precomputeBuffers[i] == nullptr ? 0 : precomputeBuffers[i]->InternalPointer;
 
-		HRESULT hr = InternalPointer->AttachBuffersAndPrecompute( tempBuffers->Length, &nativeTempBuffers[0], precomputeBuffers->Length, &nativePrecomputeBuffers[0] );
-		return RECORD_D3D11( hr );
+			precomputePtr = &nativePrecomputeBuffers[0];
+			precomputeCount = precomputeBuffers->Length;
+		}
+
+		HRESULT hr = InternalPointer->AttachBuffersAndPrecompute(tempCount, tempPtr, precomputeCount, precomputePtr);
+		return RECORD_D3D11(hr);
 	}
 
 	Result FastFourierTransform::ForwardTransform( UnorderedAccessView^ input, UnorderedAccessView^ output )
