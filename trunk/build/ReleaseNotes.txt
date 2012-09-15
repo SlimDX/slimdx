@@ -21,6 +21,7 @@ Direct3D 10
 Direct3D 11
 	* Fixed shader wrappers to allow getting class instances.
 	* Added convenience methods to simplify getting groups of state from pipeline wrappers.
+	* Changed FFT.AttachBuffersAndPrecompute to allow null arguments.
 
 DirectWrite
 	* Changed TextRenderer into ITextRenderer to allow user implementation.
