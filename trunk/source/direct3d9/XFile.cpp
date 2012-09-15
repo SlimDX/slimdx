@@ -56,7 +56,7 @@ namespace Direct3D9
 	XFileEnumerationObject^ XFile::CreateEnumerationObject( String^ fileName, CharSet charSet )
 	{
 		ID3DXFileEnumObject *result;
-		array<unsigned char>^ nameBytes = System::Text::ASCIIEncoding::ASCII->GetBytes( fileName );
+		array<unsigned char>^ nameBytes = System::Text::Encoding::Unicode->GetBytes( fileName );
 		pin_ptr<unsigned char> pinnedName = &nameBytes[0];
 
 		DWORD flag;
