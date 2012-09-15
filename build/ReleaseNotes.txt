@@ -17,6 +17,7 @@ Direct3D 9
 
 Direct3D 10
 	* Added missing StateBlockMask constructor.
+	* Integrated a patch that fixes a lot of StateBlockMask issues.
 
 Direct3D 11
 	* Fixed shader wrappers to allow getting class instances.

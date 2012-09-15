@@ -23,6 +23,8 @@
 
 #include <d3d10.h>
 
+#include "Direct3D10Exception.h"
+
 #include "../Utilities.h"
 
 #include "StateBlockMask.h"
@@ -37,33 +39,36 @@ namespace Direct3D10
 {
 	StateBlockMask::StateBlockMask()
 	{
-		m_VSSamplers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT ) );
-		m_VSShaderResources = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT ) );
-		m_VSConstantBuffers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT ) );
-		m_GSSamplers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT ) );
-		m_GSShaderResources = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT ) );
-		m_GSConstantBuffers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT ) );
-		m_PSSamplers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT ) );
-		m_PSShaderResources = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT ) );
-		m_PSConstantBuffers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT ) );
-		m_IAVertexBuffers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT ) );
+		m_VSSamplers = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT ) );
+		m_VSShaderResources = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT ) );
+		m_VSConstantBuffers = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT ) );
+		m_GSSamplers = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT ) );
+		m_GSShaderResources = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT ) );
+		m_GSConstantBuffers = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT ) );
+		m_PSSamplers = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT ) );
+		m_PSShaderResources = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT ) );
+		m_PSConstantBuffers = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT ) );
+		m_IAVertexBuffers = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT ) );
 	}
 
 	StateBlockMask::StateBlockMask( StateBlockMask^ other )
 	{
+		if( other == nullptr )
+			throw gcnew ArgumentNullException( "other" );
+
 		m_VS = other->m_VS;
-		m_VSSamplers = gcnew List<bool>( m_VSSamplers );
-		m_VSShaderResources = gcnew List<bool>( other->m_VSShaderResources );
-		m_VSConstantBuffers = gcnew List<bool>( other->m_VSConstantBuffers );
+		m_VSSamplers = (array<bool>^)other->m_VSSamplers->Clone();
+		m_VSShaderResources = (array<bool>^)other->m_VSShaderResources->Clone();
+		m_VSConstantBuffers = (array<bool>^)other->m_VSConstantBuffers->Clone();
 		m_GS = other->m_GS;
-		m_GSSamplers = gcnew List<bool>( m_GSSamplers );
-		m_GSShaderResources = gcnew List<bool>( other->m_GSShaderResources );
-		m_GSConstantBuffers = gcnew List<bool>( other->m_GSConstantBuffers );
+		m_GSSamplers = (array<bool>^)other->m_GSSamplers->Clone();
+		m_GSShaderResources = (array<bool>^)other->m_GSShaderResources->Clone();
+		m_GSConstantBuffers = (array<bool>^)other->m_GSConstantBuffers->Clone();
 		m_PS = other->m_PS;
-		m_PSSamplers = gcnew List<bool>( other->m_PSSamplers );
-		m_PSShaderResources = gcnew List<bool>( other->m_PSShaderResources );
-		m_PSConstantBuffers = gcnew List<bool>( other->m_PSConstantBuffers );
-		m_IAVertexBuffers = gcnew List<bool>( other->m_IAVertexBuffers );
+		m_PSSamplers = (array<bool>^)other->m_PSSamplers->Clone();
+		m_PSShaderResources = (array<bool>^)other->m_PSShaderResources->Clone();
+		m_PSConstantBuffers = (array<bool>^)other->m_PSConstantBuffers->Clone();
+		m_IAVertexBuffers = (array<bool>^)other->m_IAVertexBuffers->Clone();
 		m_IAIndexBuffer = other->m_IAIndexBuffer;
 		m_IAInputLayout = other->m_IAInputLayout;
 		m_IAPrimitiveTopology = other->m_IAPrimitiveTopology;
@@ -94,62 +99,62 @@ namespace Direct3D10
 		m_SOBuffers = native.SOBuffers ? true : false;
 		m_Predication = native.Predication ? true : false;
 		
-		m_VSSamplers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT ) );
-		for( int index = 0; index < m_VSSamplers->Capacity; ++index )
+		m_VSSamplers = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT ) );
+		for( int index = 0; index < m_VSSamplers->Length; ++index )
 		{
 			m_VSSamplers[index] = native.VSSamplers[index] ? true : false;
 		}
 		
-		m_VSShaderResources = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT ) );
-		for( int index = 0; index < m_VSShaderResources->Capacity; ++index )
+		m_VSShaderResources = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT ) );
+		for( int index = 0; index < m_VSShaderResources->Length; ++index )
 		{
 			m_VSShaderResources[index] = native.VSShaderResources[index] ? true : false;
 		}
 		
-		m_VSConstantBuffers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT ) );
-		for( int index = 0; index < m_VSConstantBuffers->Capacity; ++index )
+		m_VSConstantBuffers = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT ) );
+		for( int index = 0; index < m_VSConstantBuffers->Length; ++index )
 		{
 			m_VSConstantBuffers[index] = native.VSConstantBuffers[index] ? true : false;
 		}
 		
-		m_GSSamplers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT ) );
-		for( int index = 0; index < m_GSSamplers->Capacity; ++index )
+		m_GSSamplers = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT ) );
+		for( int index = 0; index < m_GSSamplers->Length; ++index )
 		{
 			m_GSSamplers[index] = native.GSSamplers[index] ? true : false;
 		}
 		
-		m_GSShaderResources = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT ) );
-		for( int index = 0; index < m_GSShaderResources->Capacity; ++index )
+		m_GSShaderResources = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT ) );
+		for( int index = 0; index < m_GSShaderResources->Length; ++index )
 		{
 			m_GSShaderResources[index] = native.GSShaderResources[index] ? true : false;
 		}
 		
-		m_GSConstantBuffers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT ) );
-		for( int index = 0; index < m_GSConstantBuffers->Capacity; ++index )
+		m_GSConstantBuffers = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT ) );
+		for( int index = 0; index < m_GSConstantBuffers->Length; ++index )
 		{
 			m_GSConstantBuffers[index] = native.GSConstantBuffers[index] ? true : false;
 		}
 		
-		m_PSSamplers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT ) );
-		for( int index = 0; index < m_PSSamplers->Capacity; ++index )
+		m_PSSamplers = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_SAMPLER_SLOT_COUNT ) );
+		for( int index = 0; index < m_PSSamplers->Length; ++index )
 		{
 			m_PSSamplers[index] = native.PSSamplers[index] ? true : false;
 		}
 		
-		m_PSShaderResources = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT ) );
-		for( int index = 0; index < m_PSShaderResources->Capacity; ++index )
+		m_PSShaderResources = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT ) );
+		for( int index = 0; index < m_PSShaderResources->Length; ++index )
 		{
 			m_PSShaderResources[index] = native.PSShaderResources[index] ? true : false;
 		}
 		
-		m_PSConstantBuffers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT ) );
-		for( int index = 0; index < m_PSConstantBuffers->Capacity; ++index )
+		m_PSConstantBuffers = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT ) );
+		for( int index = 0; index < m_PSConstantBuffers->Length; ++index )
 		{
 			m_PSConstantBuffers[index] = native.PSConstantBuffers[index] ? true : false;
 		}
 		
-		m_IAVertexBuffers = gcnew List<bool>( D3D10_BYTES_FROM_BITS( D3D10_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT ) );
-		for( int index = 0; index < m_IAVertexBuffers->Capacity; ++index )
+		m_IAVertexBuffers = gcnew array<bool>( D3D10_BYTES_FROM_BITS( D3D10_IA_VERTEX_INPUT_RESOURCE_SLOT_COUNT ) );
+		for( int index = 0; index < m_IAVertexBuffers->Length; ++index )
 		{
 			m_IAVertexBuffers[index] = native.IAVertexBuffers[index] ? true : false;
 		}
@@ -174,52 +179,52 @@ namespace Direct3D10
 		native.SOBuffers = m_SOBuffers;
 		native.Predication = m_Predication;
 		
-		for( int index = 0; index < m_VSSamplers->Count; ++index )
+		for( int index = 0; index < m_VSSamplers->Length; ++index )
 		{
 			native.VSSamplers[index] = m_VSSamplers[index];
 		}
 		
-		for( int index = 0; index < m_VSShaderResources->Count; ++index )
+		for( int index = 0; index < m_VSShaderResources->Length; ++index )
 		{
 			native.VSShaderResources[index] = m_VSShaderResources[index];
 		}
 		
-		for( int index = 0; index < m_VSConstantBuffers->Count; ++index )
+		for( int index = 0; index < m_VSConstantBuffers->Length; ++index )
 		{
 			native.VSConstantBuffers[index] = m_VSConstantBuffers[index];
 		}
 		
-		for( int index = 0; index < m_GSSamplers->Count; ++index )
+		for( int index = 0; index < m_GSSamplers->Length; ++index )
 		{
 			native.GSSamplers[index] = m_GSSamplers[index];
 		}
 		
-		for( int index = 0; index < m_GSShaderResources->Count; ++index )
+		for( int index = 0; index < m_GSShaderResources->Length; ++index )
 		{
 			native.GSShaderResources[index] = m_GSShaderResources[index];
 		}
 		
-		for( int index = 0; index < m_GSConstantBuffers->Count; ++index )
+		for( int index = 0; index < m_GSConstantBuffers->Length; ++index )
 		{
 			native.GSConstantBuffers[index] = m_GSConstantBuffers[index];
 		}
 		
-		for( int index = 0; index < m_PSSamplers->Count; ++index )
+		for( int index = 0; index < m_PSSamplers->Length; ++index )
 		{
 			native.PSSamplers[index] = m_PSSamplers[index];
 		}
 		
-		for( int index = 0; index < m_PSShaderResources->Count; ++index )
+		for( int index = 0; index < m_PSShaderResources->Length; ++index )
 		{
 			native.PSShaderResources[index] = m_PSShaderResources[index];
 		}
 		
-		for( int index = 0; index < m_PSConstantBuffers->Count; ++index )
+		for( int index = 0; index < m_PSConstantBuffers->Length; ++index )
 		{
 			native.PSConstantBuffers[index] = m_PSConstantBuffers[index];
 		}
 		
-		for( int index = 0; index < m_IAVertexBuffers->Count; ++index )
+		for( int index = 0; index < m_IAVertexBuffers->Length; ++index )
 		{
 			native.IAVertexBuffers[index] = m_IAVertexBuffers[index];
 		}
@@ -242,19 +247,19 @@ namespace Direct3D10
 		m_VS = value;
 	}
 	
-	ReadOnlyCollection<bool>^ StateBlockMask::VertexShaderSamplers::get() 
+	array<bool>^ StateBlockMask::VertexShaderSamplers::get() 
 	{
-		return gcnew ReadOnlyCollection<bool>( m_VSSamplers );
+		return m_VSSamplers;
 	}
 	
-	ReadOnlyCollection<bool>^ StateBlockMask::VertexShaderResources::get() 
+	array<bool>^ StateBlockMask::VertexShaderResources::get() 
 	{
-		return gcnew ReadOnlyCollection<bool>( m_VSShaderResources );
+		return m_VSShaderResources;
 	}
 	
-	ReadOnlyCollection<bool>^ StateBlockMask::VertexShaderConstantBuffers::get() 
+	array<bool>^ StateBlockMask::VertexShaderConstantBuffers::get() 
 	{
-		return gcnew ReadOnlyCollection<bool>( m_VSConstantBuffers );
+		return m_VSConstantBuffers;
 	}
 	
 	bool StateBlockMask::GeometryShader::get()
@@ -267,19 +272,19 @@ namespace Direct3D10
 		m_GS = value;
 	}
 	
-	ReadOnlyCollection<bool>^ StateBlockMask::GeometryShaderSamplers::get() 
+	array<bool>^ StateBlockMask::GeometryShaderSamplers::get() 
 	{
-		return gcnew ReadOnlyCollection<bool>( m_GSSamplers );
+		return m_GSSamplers;
 	}
 	
-	ReadOnlyCollection<bool>^ StateBlockMask::GeometryShaderResources::get() 
+	array<bool>^ StateBlockMask::GeometryShaderResources::get() 
 	{
-		return gcnew ReadOnlyCollection<bool>( m_GSShaderResources );
+		return m_GSShaderResources;
 	}
 	
-	ReadOnlyCollection<bool>^ StateBlockMask::GeometryShaderConstantBuffers::get() 
+	array<bool>^ StateBlockMask::GeometryShaderConstantBuffers::get() 
 	{
-		return gcnew ReadOnlyCollection<bool>( m_GSConstantBuffers );
+		return m_GSConstantBuffers;
 	}
 	
 	bool StateBlockMask::PixelShader::get()
@@ -292,24 +297,24 @@ namespace Direct3D10
 		m_PS = value;
 	}
 	
-	ReadOnlyCollection<bool>^ StateBlockMask::PixelShaderSamplers::get() 
+	array<bool>^ StateBlockMask::PixelShaderSamplers::get() 
 	{
-		return gcnew ReadOnlyCollection<bool>( m_PSSamplers );
+		return m_PSSamplers;
 	}
 	
-	ReadOnlyCollection<bool>^ StateBlockMask::PixelShaderResources::get() 
+	array<bool>^ StateBlockMask::PixelShaderResources::get() 
 	{
-		return gcnew ReadOnlyCollection<bool>( m_PSShaderResources );
+		return m_PSShaderResources;
 	}
 	
-	ReadOnlyCollection<bool>^ StateBlockMask::PixelShaderConstantBuffers::get() 
+	array<bool>^ StateBlockMask::PixelShaderConstantBuffers::get() 
 	{
-		return gcnew ReadOnlyCollection<bool>( m_PSConstantBuffers );
+		return m_PSConstantBuffers;
 	}
 	
-	ReadOnlyCollection<bool>^ StateBlockMask::VertexBuffers::get() 
+	array<bool>^ StateBlockMask::VertexBuffers::get() 
 	{
-		return gcnew ReadOnlyCollection<bool>( m_IAVertexBuffers );
+		return m_IAVertexBuffers;
 	}
 	
 	bool StateBlockMask::IndexBuffer::get()
@@ -427,6 +432,71 @@ namespace Direct3D10
 		return gcnew StateBlockMask( this );
 	}
 	
+	StateBlockMask^ StateBlockMask::Difference(StateBlockMask^ other)
+	{
+		if( other == nullptr )
+			throw gcnew ArgumentNullException( "other" );
+
+		D3D10_STATE_BLOCK_MASK nA = this->CreateNativeVersion();
+		D3D10_STATE_BLOCK_MASK nB = other->CreateNativeVersion();
+		D3D10_STATE_BLOCK_MASK nResult;
+
+		if( RECORD_D3D10( D3D10StateBlockMaskDifference( &nA, &nB, &nResult ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+
+		return gcnew StateBlockMask( nResult );
+	}
+
+	StateBlockMask^ StateBlockMask::DisableAll()
+	{
+		D3D10_STATE_BLOCK_MASK native;
+
+		if( RECORD_D3D10( D3D10StateBlockMaskDisableAll( &native ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+
+		return gcnew StateBlockMask( native );
+	}
+
+	StateBlockMask^ StateBlockMask::EnableAll()
+	{
+		D3D10_STATE_BLOCK_MASK native;
+
+		if( RECORD_D3D10( D3D10StateBlockMaskEnableAll( &native ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+
+		return gcnew StateBlockMask(native);
+	}
+	
+	StateBlockMask^ StateBlockMask::Intersect(StateBlockMask^ other)
+	{
+		if( other == nullptr )
+			throw gcnew ArgumentNullException( "other" );
+
+		D3D10_STATE_BLOCK_MASK nA = this->CreateNativeVersion();
+		D3D10_STATE_BLOCK_MASK nB = other->CreateNativeVersion();
+		D3D10_STATE_BLOCK_MASK nResult;
+
+		if( RECORD_D3D10( D3D10StateBlockMaskIntersect( &nA, &nB, &nResult ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+
+		return gcnew StateBlockMask( nResult );
+	}
+
+	StateBlockMask^ StateBlockMask::Union(StateBlockMask^ other)
+	{
+		if( other == nullptr )
+			throw gcnew ArgumentNullException( "other" );
+
+		D3D10_STATE_BLOCK_MASK nA = this->CreateNativeVersion();
+		D3D10_STATE_BLOCK_MASK nB = other->CreateNativeVersion();
+		D3D10_STATE_BLOCK_MASK nResult;
+
+		if( RECORD_D3D10( D3D10StateBlockMaskUnion( &nA, &nB, &nResult ) ).IsFailure )
+			throw gcnew Direct3D10Exception( Result::Last );
+
+		return gcnew StateBlockMask( nResult );
+	}
+
 	bool StateBlockMask::operator == ( StateBlockMask^ left, StateBlockMask^ right )
 	{
 		return StateBlockMask::Equals( left, right );

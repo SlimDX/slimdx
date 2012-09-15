@@ -31,18 +31,18 @@ namespace SlimDX
 		{
 		private:
 			bool m_VS;
-			System::Collections::Generic::List<bool>^ m_VSSamplers;
-			System::Collections::Generic::List<bool>^ m_VSShaderResources;
-			System::Collections::Generic::List<bool>^ m_VSConstantBuffers;
+			initonly array<bool>^ m_VSSamplers;
+			initonly array<bool>^ m_VSShaderResources;
+			initonly array<bool>^ m_VSConstantBuffers;
 			bool m_GS;
-			System::Collections::Generic::List<bool>^ m_GSSamplers;       
-			System::Collections::Generic::List<bool>^ m_GSShaderResources;
-			System::Collections::Generic::List<bool>^ m_GSConstantBuffers;
+			initonly array<bool>^ m_GSSamplers;       
+			initonly array<bool>^ m_GSShaderResources;
+			initonly array<bool>^ m_GSConstantBuffers;
 			bool m_PS;
-			System::Collections::Generic::List<bool>^ m_PSSamplers;       
-			System::Collections::Generic::List<bool>^ m_PSShaderResources;
-			System::Collections::Generic::List<bool>^ m_PSConstantBuffers;
-			System::Collections::Generic::List<bool>^ m_IAVertexBuffers;  
+			initonly array<bool>^ m_PSSamplers;       
+			initonly array<bool>^ m_PSShaderResources;
+			initonly array<bool>^ m_PSConstantBuffers;
+			initonly array<bool>^ m_IAVertexBuffers;  
 			bool m_IAIndexBuffer;
 			bool m_IAInputLayout;
 			bool m_IAPrimitiveTopology;
@@ -86,25 +86,25 @@ namespace SlimDX
 			/// <summary>
 			/// Gets a collection of values indicating which vertex shader sampler state is enabled by the mask.
 			/// </summary>
-			property System::Collections::ObjectModel::ReadOnlyCollection<bool>^ VertexShaderSamplers
+			property array<bool>^ VertexShaderSamplers
 			{
-				System::Collections::ObjectModel::ReadOnlyCollection<bool>^ get();
+				array<bool>^ get();
 			}
 			
 			/// <summary>
 			/// Gets a collection of values indicating which vertex shader resource state is enabled by the mask.
 			/// </summary>
-			property System::Collections::ObjectModel::ReadOnlyCollection<bool>^ VertexShaderResources
+			property array<bool>^ VertexShaderResources
 			{
-				System::Collections::ObjectModel::ReadOnlyCollection<bool>^ get();
+				array<bool>^ get();
 			}
 			
 			/// <summary>
 			/// Gets a collection of values indicating which vertex shader sampler state is enabled by the mask.
 			/// </summary>
-			property System::Collections::ObjectModel::ReadOnlyCollection<bool>^ VertexShaderConstantBuffers
+			property array<bool>^ VertexShaderConstantBuffers
 			{
-				System::Collections::ObjectModel::ReadOnlyCollection<bool>^ get();
+				array<bool>^ get();
 			}
 			
 			/// <summary>
@@ -119,25 +119,25 @@ namespace SlimDX
 			/// <summary>
 			/// Gets a collection of values indicating which geometry shader sampler state is enabled by the mask.
 			/// </summary>
-			property System::Collections::ObjectModel::ReadOnlyCollection<bool>^ GeometryShaderSamplers
+			property array<bool>^ GeometryShaderSamplers
 			{
-				System::Collections::ObjectModel::ReadOnlyCollection<bool>^ get();
+				array<bool>^ get();
 			}
 			
 			/// <summary>
 			/// Gets a collection of values indicating which geometry shader resource state is enabled by the mask.
 			/// </summary>
-			property System::Collections::ObjectModel::ReadOnlyCollection<bool>^ GeometryShaderResources
+			property array<bool>^ GeometryShaderResources
 			{
-				System::Collections::ObjectModel::ReadOnlyCollection<bool>^ get();
+				array<bool>^ get();
 			}
 			
 			/// <summary>
 			/// Gets a collection of values indicating which geometry shader constant buffer state is enabled by the mask.
 			/// </summary>
-			property System::Collections::ObjectModel::ReadOnlyCollection<bool>^ GeometryShaderConstantBuffers
+			property array<bool>^ GeometryShaderConstantBuffers
 			{
-				System::Collections::ObjectModel::ReadOnlyCollection<bool>^ get();
+				array<bool>^ get();
 			}
 			
 			/// <summary>
@@ -152,33 +152,33 @@ namespace SlimDX
 			/// <summary>
 			/// Gets a collection of values indicating which pixel shader sampler state is enabled by the mask.
 			/// </summary>
-			property System::Collections::ObjectModel::ReadOnlyCollection<bool>^ PixelShaderSamplers
+			property array<bool>^ PixelShaderSamplers
 			{
-				System::Collections::ObjectModel::ReadOnlyCollection<bool>^ get();
+				array<bool>^ get();
 			}
 			
 			/// <summary>
 			/// Gets a collection of values indicating which pixel shader resource state is enabled by the mask.
 			/// </summary>
-			property System::Collections::ObjectModel::ReadOnlyCollection<bool>^ PixelShaderResources
+			property array<bool>^ PixelShaderResources
 			{
-				System::Collections::ObjectModel::ReadOnlyCollection<bool>^ get();
+				array<bool>^ get();
 			}
 			
 			/// <summary>
 			/// Gets a collection of values indicating which pixel shader constant buffer state is enabled by the mask.
 			/// </summary>
-			property System::Collections::ObjectModel::ReadOnlyCollection<bool>^ PixelShaderConstantBuffers
+			property array<bool>^ PixelShaderConstantBuffers
 			{
-				System::Collections::ObjectModel::ReadOnlyCollection<bool>^ get();
+				array<bool>^ get();
 			}
 			
 			/// <summary>
 			/// Gets a collection of values indicating which vertex buffer state is enabled by the mask.
 			/// </summary>
-			property System::Collections::ObjectModel::ReadOnlyCollection<bool>^ VertexBuffers
+			property array<bool>^ VertexBuffers
 			{
-				System::Collections::ObjectModel::ReadOnlyCollection<bool>^ get();
+				array<bool>^ get();
 			}
 			
 			/// <summary>
@@ -286,6 +286,12 @@ namespace SlimDX
 			/// <returns>A new <see cref="StateBlockMask"/> object containing the same values as the current instance.</returns>
 			StateBlockMask^ Clone();
 			
+			StateBlockMask^ Difference(StateBlockMask^ other);
+			static StateBlockMask^ DisableAll();
+			static StateBlockMask^ EnableAll();
+			StateBlockMask^ Intersect(StateBlockMask^ other);
+			StateBlockMask^ Union(StateBlockMask^ other);
+
 			/// <summary>
 			/// Tests for equality between two StateBlockMasks.
 			/// </summary>
