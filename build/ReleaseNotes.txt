@@ -3,6 +3,7 @@ General
 
 Math
 	* Added float conversion operator to Rational.
+	* Fixed a bug in Matrix3x2.TransformPoint.
 
 D3DCompiler
 	* Added missing ShaderInputType enum.
@@ -30,3 +31,6 @@ DirectWrite
 	* Added Strikethrough and Underline classes
 	* Removed extraneous MeasuringMethod enum.
 	* Fixed a crash bug in BitmapRenderTarget for drawing glyph runs.
+
+XInput
+	* Added an exception to Controller when created with UserIndex.Any, to make it clear that it is not allowed.
