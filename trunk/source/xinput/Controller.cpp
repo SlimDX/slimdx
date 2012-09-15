@@ -37,6 +37,9 @@ namespace XInput
 	Controller::Controller( UserIndex userIndex )
 	{
 		m_UserIndex = static_cast<System::UInt32>( userIndex );
+
+		if (m_UserIndex > 3)
+			throw gcnew XInputException("Controllers must specify a valid user index from 0 to 3.");
 	}
 	
 	bool Controller::IsConnected::get()
