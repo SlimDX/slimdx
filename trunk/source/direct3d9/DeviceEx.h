@@ -63,7 +63,7 @@ namespace SlimDX
 		/// <unmanaged>IDirect3DDevice9Ex</unmanaged>
 		public ref class DeviceEx : Device
 		{
-			COMOBJECT(IDirect3DDevice9Ex, DeviceEx);
+			COMOBJECT_CUSTOM(IDirect3DDevice9Ex, DeviceEx);
 
 		private:
 			void Internal_Constructor( Direct3DEx^ direct3D, int adapter, DeviceType deviceType, System::IntPtr controlHandle,
