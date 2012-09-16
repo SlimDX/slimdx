@@ -110,6 +110,12 @@ namespace SlimDX
 				System::String^ get();
 				void set(System::String^ value);
 			}
+
+			generic<typename T> where T : value class
+			Result SetPrivateData(System::Guid guid, T data);
+
+			generic<typename T> where T : value class
+			T GetPrivateData(System::Guid guid);
 		};
 	}
 }
