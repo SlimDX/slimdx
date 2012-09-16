@@ -24,6 +24,7 @@
 #include <d3dx9.h>
 
 #include "../ComObject.h"
+#include "../Utilities.h"
 
 #include "Direct3D9Exception.h"
 
@@ -130,6 +131,25 @@ namespace Direct3D9
 		{
 			InternalPointer->SetPrivateData(WKPDID_D3DDebugObjectName, 0, 0, 0);
 		}
+	}
+
+	generic<typename T> where T : value class
+	Result Resource::SetPrivateData(Guid guid, T data)
+	{
+		HRESULT hr = InternalPointer->SetPrivateData(Utilities::ConvertManagedGuid(guid), &data, sizeof(T), 0);
+		return RECORD_D3D9(hr);
+	}
+
+	generic<typename T> where T : value class
+	T Resource::GetPrivateData(Guid guid)
+	{
+		T result;
+		DWORD size = sizeof(T);
+
+		HRESULT hr = InternalPointer->GetPrivateData(Utilities::ConvertManagedGuid(guid), &result, &size);
+		RECORD_D3D9(hr);
+
+		return result;
 	}
 }
 }

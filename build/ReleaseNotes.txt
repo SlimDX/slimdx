@@ -16,6 +16,7 @@ Direct3D 9
 	* Fixed a bug in KeyframedAnimationSet.RegisterAnimationKeys that caused invalid values to be set.
 	* Fixed the DeviceEx.FromPointer method.
 	* Fixed text encoding issue in XFile parsing.
+	* Added Set/GetPrivateData to Resource class.
 
 Direct3D 10
 	* Added missing StateBlockMask constructor.
