@@ -53,6 +53,9 @@ namespace SlimDX
 		static GUID ConvertManagedGuid( System::Guid guid );
 		
 		static int SizeOfFormatElement( DXGI_FORMAT format );
+
+		static bool IsCompressed(D3DFORMAT format);
+		static bool IsCompressed(DXGI_FORMAT format);
 		
 		static System::Drawing::Rectangle ConvertRect(RECT rect);
 		static void ConvertRect(System::Drawing::Rectangle& source, RECT& dest);

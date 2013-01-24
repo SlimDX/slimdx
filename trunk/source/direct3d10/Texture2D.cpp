@@ -104,15 +104,21 @@ namespace Direct3D10
 	
 	SlimDX::DataRectangle^ Texture2D::Map( int mipSlice, int arraySlice, MapMode mode, MapFlags flags )
 	{
-		int subresource = D3D10CalcSubresource( mipSlice, arraySlice, Description.MipLevels );
-		int mipHeight = GetMipSize( mipSlice, Description.Height );
+		D3D10_TEXTURE2D_DESC desc;
+		InternalPointer->GetDesc(&desc);
+
+		int subresource = D3D10CalcSubresource( mipSlice, arraySlice, desc.MipLevels );
+		int mipHeight = GetMipSize( mipSlice, desc.Height );
 		
 		D3D10_MAPPED_TEXTURE2D mappedRect;
 		if( RECORD_D3D10( InternalPointer->Map( subresource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedRect ) ).IsFailure )
 			return nullptr;
 			
-		int lockedSize = mipHeight * mappedRect.RowPitch;
-		return gcnew SlimDX::DataRectangle( mappedRect.RowPitch, gcnew DataStream( mappedRect.pData, lockedSize, true, true, false ) );
+		int sizeInBytes = mipHeight * mappedRect.RowPitch;
+		if (Utilities::IsCompressed(desc.Format))
+			sizeInBytes /= 4;
+
+		return gcnew SlimDX::DataRectangle( mappedRect.RowPitch, gcnew DataStream( mappedRect.pData, sizeInBytes, true, true, false ) );
 	}
 
 	void Texture2D::Unmap( int subresource )
