@@ -18,15 +18,18 @@ Direct3D 9
 	* Fixed text encoding issue in XFile parsing.
 	* Added Set/GetPrivateData to Resource class.
 	* Changed surface creation sharedHandle parameters to be ref instead of out.
+	* Fixed texture Locking methods to return the correct size when the texture is using a compressed format.
 
 Direct3D 10
 	* Added missing StateBlockMask constructor.
 	* Integrated a patch that fixes a lot of StateBlockMask issues.
+	* Fixed MapSubresource methods to return the correct size when the texture is using a compressed format.
 
 Direct3D 11
 	* Fixed shader wrappers to allow getting class instances.
 	* Added convenience methods to simplify getting groups of state from pipeline wrappers.
 	* Changed FFT.AttachBuffersAndPrecompute to allow null arguments.
+	* Fixed MapSubresource methods to return the correct size when the texture is using a compressed format.
 
 DirectWrite
 	* Changed TextRenderer into ITextRenderer to allow user implementation.

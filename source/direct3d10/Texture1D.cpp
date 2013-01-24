@@ -101,7 +101,7 @@ namespace Direct3D10
 	{
 		int subresource = D3D10CalcSubresource( mipSlice, arraySlice, Description.MipLevels );
 		int mipWidth = GetMipSize( mipSlice, Description.Width );
-		int bufferSize = mipWidth * Utilities::SizeOfFormatElement( static_cast<DXGI_FORMAT>( Description.Format ) );
+		int bufferSize = mipWidth * Utilities::SizeOfFormatElement( static_cast<DXGI_FORMAT>( Description.Format ) ) / 8;
 		
 		void* mappedArray = 0;
 		if( RECORD_D3D10( InternalPointer->Map( subresource, static_cast<D3D10_MAP>( mode ), static_cast<UINT>( flags ), &mappedArray ) ).IsFailure )

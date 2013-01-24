@@ -430,7 +430,14 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 		
-		int lockedSize = lockedRect.Pitch * GetLevelDescription( level ).Height;
+		D3DSURFACE_DESC desc;
+		hr = InternalPointer->GetLevelDesc(level, &desc);
+		if (RECORD_D3D9(hr).IsFailure)
+			return nullptr;
+
+		int lockedSize = lockedRect.Pitch * desc.Height;
+		if (Utilities::IsCompressed(desc.Format))
+			lockedSize /= 4;	// all compression blocks are 4x4
 		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		DataRectangle^ outRect = gcnew DataRectangle( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );
@@ -446,7 +453,14 @@ namespace Direct3D9
 		if( RECORD_D3D9(hr).IsFailure )
 			return nullptr;
 		
-		int lockedSize = lockedRect.Pitch * GetLevelDescription( level ).Height;
+		D3DSURFACE_DESC desc;
+		hr = InternalPointer->GetLevelDesc(level, &desc);
+		if (RECORD_D3D9(hr).IsFailure)
+			return nullptr;
+
+		int lockedSize = lockedRect.Pitch * desc.Height;
+		if (Utilities::IsCompressed(desc.Format))
+			lockedSize /= 4;	// all compression blocks are 4x4
 		
 		bool readOnly = (flags & LockFlags::ReadOnly) == LockFlags::ReadOnly;
 		DataRectangle^ outRect = gcnew DataRectangle( lockedRect.Pitch, gcnew DataStream( lockedRect.pBits, lockedSize, true, !readOnly, false ) );

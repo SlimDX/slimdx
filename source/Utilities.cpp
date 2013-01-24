@@ -41,14 +41,14 @@ namespace SlimDX
 	}
 
 	generic<typename T> where T : value class
-	array<T>^ Utilities::ReadRange( ID3DXBuffer *buffer, int count )
+		array<T>^ Utilities::ReadRange( ID3DXBuffer *buffer, int count )
 	{
 		if( count < 0 )
 			throw gcnew ArgumentOutOfRangeException( "count" );
 
 		if (buffer == NULL)
 			return nullptr;
-			
+
 		size_t elementSize = sizeof(T);
 		array<T>^ result = gcnew array<T>( count );
 
@@ -59,17 +59,17 @@ namespace SlimDX
 
 		return result;
 	}
-	
+
 	//TODO: This needs review upon interface refactor.
 	GUID Utilities::GetNativeGuidForType( Type^ type )
 	{
 		if( type == nullptr )
 			throw gcnew ArgumentNullException( "type" );
-		
+
 		// This will only work for ComObjects.
 		if( !type->IsSubclassOf( ComObject::typeid ) )
 			return GUID_NULL;
-		
+
 		// This should never fail (i.e., should never return null) since we now know the type is a ComObject subclass.
 		//TODO: Old comobjects have this private, new ones public. blah blah. this needs to be moved to an attribute anyway
 		//      or it won't work with interfaces.
@@ -78,10 +78,10 @@ namespace SlimDX
 			nativeInterfaceProperty = type->GetProperty( "NativeInterface" );
 
 		Guid nativeInterface = static_cast<Guid>( nativeInterfaceProperty->GetValue( nullptr, nullptr ) );
-		
+
 		return ConvertManagedGuid( nativeInterface );
 	}
-	
+
 	Guid Utilities::ConvertNativeGuid( const GUID &guid )
 	{
 		if( guid == GUID_NULL )
@@ -116,129 +116,181 @@ namespace SlimDX
 
 		return result;
 	}
-	
+
+	bool Utilities::IsCompressed(D3DFORMAT format)
+	{
+		switch (format)
+		{
+		case D3DFMT_DXT1:
+		case D3DFMT_DXT2:
+		case D3DFMT_DXT3:
+		case D3DFMT_DXT4:
+		case D3DFMT_DXT5:
+			return true;
+		}
+
+		return false;
+	}
+
+	bool Utilities::IsCompressed(DXGI_FORMAT format)
+	{
+		switch (format)
+		{
+		case DXGI_FORMAT_BC1_TYPELESS:
+		case DXGI_FORMAT_BC1_UNORM:
+		case DXGI_FORMAT_BC1_UNORM_SRGB:
+		case DXGI_FORMAT_BC4_TYPELESS:
+		case DXGI_FORMAT_BC4_UNORM:
+		case DXGI_FORMAT_BC4_SNORM:
+		case DXGI_FORMAT_BC2_TYPELESS:
+		case DXGI_FORMAT_BC2_UNORM:
+		case DXGI_FORMAT_BC2_UNORM_SRGB:
+		case DXGI_FORMAT_BC3_TYPELESS:
+		case DXGI_FORMAT_BC3_UNORM:
+		case DXGI_FORMAT_BC3_UNORM_SRGB:
+		case DXGI_FORMAT_BC5_TYPELESS:
+		case DXGI_FORMAT_BC5_UNORM:
+		case DXGI_FORMAT_BC5_SNORM:
+		case DXGI_FORMAT_BC6H_UF16:
+		case DXGI_FORMAT_BC6H_SF16:
+		case DXGI_FORMAT_BC6H_TYPELESS:
+		case DXGI_FORMAT_BC7_UNORM:
+		case DXGI_FORMAT_BC7_UNORM_SRGB:
+		case DXGI_FORMAT_BC7_TYPELESS:
+			return true;
+		}
+
+		return false;
+	}
+
 	int Utilities::SizeOfFormatElement( DXGI_FORMAT format )
 	{
 		switch( format )
 		{
-			case DXGI_FORMAT_R32G32B32A32_TYPELESS:
-			case DXGI_FORMAT_R32G32B32A32_FLOAT:
-			case DXGI_FORMAT_R32G32B32A32_UINT:
-			case DXGI_FORMAT_R32G32B32A32_SINT:
-				return 128;
-				
-			case DXGI_FORMAT_R32G32B32_TYPELESS:
-			case DXGI_FORMAT_R32G32B32_FLOAT:
-			case DXGI_FORMAT_R32G32B32_UINT:
-			case DXGI_FORMAT_R32G32B32_SINT:
-				return 96;
-				
-			case DXGI_FORMAT_R16G16B16A16_TYPELESS:
-			case DXGI_FORMAT_R16G16B16A16_FLOAT:
-			case DXGI_FORMAT_R16G16B16A16_UNORM:
-			case DXGI_FORMAT_R16G16B16A16_UINT:
-			case DXGI_FORMAT_R16G16B16A16_SNORM:
-			case DXGI_FORMAT_R16G16B16A16_SINT:
-			case DXGI_FORMAT_R32G32_TYPELESS:
-			case DXGI_FORMAT_R32G32_FLOAT:
-			case DXGI_FORMAT_R32G32_UINT:
-			case DXGI_FORMAT_R32G32_SINT:
-			case DXGI_FORMAT_R32G8X24_TYPELESS:
-			case DXGI_FORMAT_D32_FLOAT_S8X24_UINT:
-			case DXGI_FORMAT_R32_FLOAT_X8X24_TYPELESS:
-			case DXGI_FORMAT_X32_TYPELESS_G8X24_UINT:
-				return 64;
-			
-			case DXGI_FORMAT_R10G10B10A2_TYPELESS:
-			case DXGI_FORMAT_R10G10B10A2_UNORM:
-			case DXGI_FORMAT_R10G10B10A2_UINT:
-			case DXGI_FORMAT_R11G11B10_FLOAT:
-			case DXGI_FORMAT_R8G8B8A8_TYPELESS:
-			case DXGI_FORMAT_R8G8B8A8_UNORM:
-			case DXGI_FORMAT_R8G8B8A8_UNORM_SRGB:
-			case DXGI_FORMAT_R8G8B8A8_UINT:
-			case DXGI_FORMAT_R8G8B8A8_SNORM:
-			case DXGI_FORMAT_R8G8B8A8_SINT:
-			case DXGI_FORMAT_R16G16_TYPELESS:
-			case DXGI_FORMAT_R16G16_FLOAT:
-			case DXGI_FORMAT_R16G16_UNORM:
-			case DXGI_FORMAT_R16G16_UINT:
-			case DXGI_FORMAT_R16G16_SNORM:
-			case DXGI_FORMAT_R16G16_SINT:
-			case DXGI_FORMAT_R32_TYPELESS:
-			case DXGI_FORMAT_D32_FLOAT:
-			case DXGI_FORMAT_R32_FLOAT:
-			case DXGI_FORMAT_R32_UINT:
-			case DXGI_FORMAT_R32_SINT:
-			case DXGI_FORMAT_R24G8_TYPELESS:
-			case DXGI_FORMAT_D24_UNORM_S8_UINT:
-			case DXGI_FORMAT_R24_UNORM_X8_TYPELESS:
-			case DXGI_FORMAT_X24_TYPELESS_G8_UINT:
-			case DXGI_FORMAT_B8G8R8A8_UNORM:
-			case DXGI_FORMAT_B8G8R8X8_UNORM:
-				return 32;
-				
-			case DXGI_FORMAT_R8G8_TYPELESS:
-			case DXGI_FORMAT_R8G8_UNORM:
-			case DXGI_FORMAT_R8G8_UINT:
-			case DXGI_FORMAT_R8G8_SNORM:
-			case DXGI_FORMAT_R8G8_SINT:
-			case DXGI_FORMAT_R16_TYPELESS:
-			case DXGI_FORMAT_R16_FLOAT:
-			case DXGI_FORMAT_D16_UNORM:
-			case DXGI_FORMAT_R16_UNORM:
-			case DXGI_FORMAT_R16_UINT:
-			case DXGI_FORMAT_R16_SNORM:
-			case DXGI_FORMAT_R16_SINT:
-			case DXGI_FORMAT_B5G6R5_UNORM:
-			case DXGI_FORMAT_B5G5R5A1_UNORM:
-				return 16;
-				
-			case DXGI_FORMAT_R8_TYPELESS:
-			case DXGI_FORMAT_R8_UNORM:
-			case DXGI_FORMAT_R8_UINT:
-			case DXGI_FORMAT_R8_SNORM:
-			case DXGI_FORMAT_R8_SINT:
-			case DXGI_FORMAT_A8_UNORM:
-				return 8;
-			
-			// Compressed format; http://msdn2.microsoft.com/en-us/library/bb694531(VS.85).aspx
-			case DXGI_FORMAT_BC2_TYPELESS:
-			case DXGI_FORMAT_BC2_UNORM:
-			case DXGI_FORMAT_BC2_UNORM_SRGB:
-			case DXGI_FORMAT_BC3_TYPELESS:
-			case DXGI_FORMAT_BC3_UNORM:
-			case DXGI_FORMAT_BC3_UNORM_SRGB:
-			case DXGI_FORMAT_BC5_TYPELESS:
-			case DXGI_FORMAT_BC5_UNORM:
-			case DXGI_FORMAT_BC5_SNORM:
-				return 128;
-				
-			// Compressed format; http://msdn2.microsoft.com/en-us/library/bb694531(VS.85).aspx
-			case DXGI_FORMAT_R1_UNORM:
-			case DXGI_FORMAT_BC1_TYPELESS:
-			case DXGI_FORMAT_BC1_UNORM:
-			case DXGI_FORMAT_BC1_UNORM_SRGB:
-			case DXGI_FORMAT_BC4_TYPELESS:
-			case DXGI_FORMAT_BC4_UNORM:
-			case DXGI_FORMAT_BC4_SNORM:
-				return 64;
-			
-			// Compressed format; http://msdn2.microsoft.com/en-us/library/bb694531(VS.85).aspx
-			case DXGI_FORMAT_R9G9B9E5_SHAREDEXP:
-				return 32;
-			
-			// These are compressed, but bit-size information is unclear.
-			case DXGI_FORMAT_R8G8_B8G8_UNORM:
-			case DXGI_FORMAT_G8R8_G8B8_UNORM:
-				return 32;
+		case DXGI_FORMAT_R32G32B32A32_TYPELESS:
+		case DXGI_FORMAT_R32G32B32A32_FLOAT:
+		case DXGI_FORMAT_R32G32B32A32_UINT:
+		case DXGI_FORMAT_R32G32B32A32_SINT:
+			return 128;
 
-			case DXGI_FORMAT_UNKNOWN:
-			default:
-				throw gcnew InvalidOperationException( "Cannot determine format element size; invalid format specified." );
+		case DXGI_FORMAT_R32G32B32_TYPELESS:
+		case DXGI_FORMAT_R32G32B32_FLOAT:
+		case DXGI_FORMAT_R32G32B32_UINT:
+		case DXGI_FORMAT_R32G32B32_SINT:
+			return 96;
+
+		case DXGI_FORMAT_R16G16B16A16_TYPELESS:
+		case DXGI_FORMAT_R16G16B16A16_FLOAT:
+		case DXGI_FORMAT_R16G16B16A16_UNORM:
+		case DXGI_FORMAT_R16G16B16A16_UINT:
+		case DXGI_FORMAT_R16G16B16A16_SNORM:
+		case DXGI_FORMAT_R16G16B16A16_SINT:
+		case DXGI_FORMAT_R32G32_TYPELESS:
+		case DXGI_FORMAT_R32G32_FLOAT:
+		case DXGI_FORMAT_R32G32_UINT:
+		case DXGI_FORMAT_R32G32_SINT:
+		case DXGI_FORMAT_R32G8X24_TYPELESS:
+		case DXGI_FORMAT_D32_FLOAT_S8X24_UINT:
+		case DXGI_FORMAT_R32_FLOAT_X8X24_TYPELESS:
+		case DXGI_FORMAT_X32_TYPELESS_G8X24_UINT:
+			return 64;
+
+		case DXGI_FORMAT_R10G10B10A2_TYPELESS:
+		case DXGI_FORMAT_R10G10B10A2_UNORM:
+		case DXGI_FORMAT_R10G10B10A2_UINT:
+		case DXGI_FORMAT_R11G11B10_FLOAT:
+		case DXGI_FORMAT_R8G8B8A8_TYPELESS:
+		case DXGI_FORMAT_R8G8B8A8_UNORM:
+		case DXGI_FORMAT_R8G8B8A8_UNORM_SRGB:
+		case DXGI_FORMAT_R8G8B8A8_UINT:
+		case DXGI_FORMAT_R8G8B8A8_SNORM:
+		case DXGI_FORMAT_R8G8B8A8_SINT:
+		case DXGI_FORMAT_R16G16_TYPELESS:
+		case DXGI_FORMAT_R16G16_FLOAT:
+		case DXGI_FORMAT_R16G16_UNORM:
+		case DXGI_FORMAT_R16G16_UINT:
+		case DXGI_FORMAT_R16G16_SNORM:
+		case DXGI_FORMAT_R16G16_SINT:
+		case DXGI_FORMAT_R32_TYPELESS:
+		case DXGI_FORMAT_D32_FLOAT:
+		case DXGI_FORMAT_R32_FLOAT:
+		case DXGI_FORMAT_R32_UINT:
+		case DXGI_FORMAT_R32_SINT:
+		case DXGI_FORMAT_R24G8_TYPELESS:
+		case DXGI_FORMAT_D24_UNORM_S8_UINT:
+		case DXGI_FORMAT_R24_UNORM_X8_TYPELESS:
+		case DXGI_FORMAT_X24_TYPELESS_G8_UINT:
+		case DXGI_FORMAT_B8G8R8A8_UNORM:
+		case DXGI_FORMAT_B8G8R8X8_UNORM:
+			return 32;
+
+		case DXGI_FORMAT_R8G8_TYPELESS:
+		case DXGI_FORMAT_R8G8_UNORM:
+		case DXGI_FORMAT_R8G8_UINT:
+		case DXGI_FORMAT_R8G8_SNORM:
+		case DXGI_FORMAT_R8G8_SINT:
+		case DXGI_FORMAT_R16_TYPELESS:
+		case DXGI_FORMAT_R16_FLOAT:
+		case DXGI_FORMAT_D16_UNORM:
+		case DXGI_FORMAT_R16_UNORM:
+		case DXGI_FORMAT_R16_UINT:
+		case DXGI_FORMAT_R16_SNORM:
+		case DXGI_FORMAT_R16_SINT:
+		case DXGI_FORMAT_B5G6R5_UNORM:
+		case DXGI_FORMAT_B5G5R5A1_UNORM:
+			return 16;
+
+		case DXGI_FORMAT_R8_TYPELESS:
+		case DXGI_FORMAT_R8_UNORM:
+		case DXGI_FORMAT_R8_UINT:
+		case DXGI_FORMAT_R8_SNORM:
+		case DXGI_FORMAT_R8_SINT:
+		case DXGI_FORMAT_A8_UNORM:
+			return 8;
+
+			// Compressed format; http://msdn2.microsoft.com/en-us/library/bb694531(VS.85).aspx
+		case DXGI_FORMAT_BC2_TYPELESS:
+		case DXGI_FORMAT_BC2_UNORM:
+		case DXGI_FORMAT_BC2_UNORM_SRGB:
+		case DXGI_FORMAT_BC3_TYPELESS:
+		case DXGI_FORMAT_BC3_UNORM:
+		case DXGI_FORMAT_BC3_UNORM_SRGB:
+		case DXGI_FORMAT_BC5_TYPELESS:
+		case DXGI_FORMAT_BC5_UNORM:
+		case DXGI_FORMAT_BC5_SNORM:
+		case DXGI_FORMAT_BC6H_UF16:
+		case DXGI_FORMAT_BC6H_SF16:
+		case DXGI_FORMAT_BC6H_TYPELESS:
+		case DXGI_FORMAT_BC7_UNORM:
+		case DXGI_FORMAT_BC7_UNORM_SRGB:
+		case DXGI_FORMAT_BC7_TYPELESS:
+			return 128;
+
+			// Compressed format; http://msdn2.microsoft.com/en-us/library/bb694531(VS.85).aspx
+		case DXGI_FORMAT_R1_UNORM:
+		case DXGI_FORMAT_BC1_TYPELESS:
+		case DXGI_FORMAT_BC1_UNORM:
+		case DXGI_FORMAT_BC1_UNORM_SRGB:
+		case DXGI_FORMAT_BC4_TYPELESS:
+		case DXGI_FORMAT_BC4_UNORM:
+		case DXGI_FORMAT_BC4_SNORM:
+			return 64;
+
+			// Compressed format; http://msdn2.microsoft.com/en-us/library/bb694531(VS.85).aspx
+		case DXGI_FORMAT_R9G9B9E5_SHAREDEXP:
+			return 32;
+
+			// These are compressed, but bit-size information is unclear.
+		case DXGI_FORMAT_R8G8_B8G8_UNORM:
+		case DXGI_FORMAT_G8R8_G8B8_UNORM:
+			return 32;
+
+		case DXGI_FORMAT_UNKNOWN:
+		default:
+			throw gcnew InvalidOperationException( "Cannot determine format element size; invalid format specified." );
 		}
 	}
-	
+
 	Drawing::Rectangle Utilities::ConvertRect(RECT rect)
 	{
 		return Drawing::Rectangle(rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top);
@@ -290,7 +342,7 @@ namespace SlimDX
 		MemoryStream^ ms = dynamic_cast<MemoryStream^>( stream );
 		if( ms != nullptr && stream->Position == 0 && readLength == stream->Length )
 		{
-			return ms->GetBuffer();
+		return ms->GetBuffer();
 		}*/
 
 		WaveStream^ ws = dynamic_cast<WaveStream^>( stream );
@@ -307,7 +359,7 @@ namespace SlimDX
 
 		return buffer;
 	}
-	
+
 	void Utilities::CheckArrayBounds( Array^ data, int offset, int% count )
 	{
 		if( data == nullptr )
@@ -315,7 +367,7 @@ namespace SlimDX
 
 		CheckBounds( 0, data->Length, offset, count );
 	}
-	
+
 	void Utilities::CheckBounds( int lowerBound, int size, int offset, int% count )
 	{
 		if( offset < lowerBound )
@@ -324,18 +376,18 @@ namespace SlimDX
 			throw gcnew ArgumentOutOfRangeException( "count" );
 		if( offset + count > size )
 			throw gcnew ArgumentException( "The sum of offset and count is greater than the buffer length." );
-			
+
 		if( count == 0 )
 			count = size - offset;
 	}
-	
+
 	generic<typename T>
 	int Utilities::GetElementHashCode( array<T>^ a )
 	{
 		int result = 0;
 		for( int index = 0; index < a->Length; ++index )
 			result += a[index]->GetHashCode();
-		
+
 		return result;
 	}
 
@@ -344,7 +396,7 @@ namespace SlimDX
 	{
 		if( left->Length != right->Length )
 			return false;
-		
+
 		for( int index = 0; index < left->Length; ++index )
 		{
 			if( !left[index]->Equals( right[index] ) ) 
@@ -352,16 +404,16 @@ namespace SlimDX
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	generic<typename T>
 	bool Utilities::CheckElementEquality( IList<T>^ left, IList<T>^ right )
 	{
 		if( left->Count != right->Count )
 			return false;
-		
+
 		for( int index = 0; index < left->Count; ++index )
 		{
 			if( !left[index]->Equals( right[index] ) ) 
@@ -369,10 +421,10 @@ namespace SlimDX
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	String^ Utilities::BufferToString( ID3DXBuffer *buffer )
 	{
 		if( buffer != NULL )
