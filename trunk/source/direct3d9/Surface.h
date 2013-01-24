@@ -96,7 +96,7 @@ namespace SlimDX
 			/// <param name="lockable">Specifies whether this surface should be lockable.</param>
 			/// <returns>A newly created render target surface.</returns>
 			/// <unmanaged>IDirect3DDevice9::CreateRenderTarget</unmanaged>
-			static Surface^ CreateRenderTarget( SlimDX::Direct3D9::Device^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool lockable, [Out] System::IntPtr% sharedHandle );
+			static Surface^ CreateRenderTarget( SlimDX::Direct3D9::Device^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool lockable, System::IntPtr% sharedHandle );
 			
 			/// <summary>Creates an offscreen surface that can optionally be shared.</summary>
 			/// <param name="device">The device to use when creating the surface.</param>
@@ -106,7 +106,7 @@ namespace SlimDX
 			/// <param name="pool">The memory pool to create the surface in.</param>
 			/// <returns>A newly created offscreen surface..</returns>
 			/// <unmanaged>IDirect3DDevice9::CreateOffscreenPlainSurface</unmanaged>
-			static Surface^ CreateOffscreenPlain( SlimDX::Direct3D9::Device^ device, int width, int height, Format format, Pool pool, [Out] System::IntPtr% sharedHandle );
+			static Surface^ CreateOffscreenPlain( SlimDX::Direct3D9::Device^ device, int width, int height, Format format, Pool pool, System::IntPtr% sharedHandle );
 			
 			/// <summary>Creates a depth stencil surface that can optionally be shared.</summary>
 			/// <param name="device">The device to use when creating the surface.</param>
@@ -118,14 +118,14 @@ namespace SlimDX
 			/// <param name="discard">Whether or not the contents of the surface should be discarded after use.</param>
 			/// <returns>A newly created depth-stencil surface.</returns>
 			/// <unmanaged>IDirect3DDevice9::CreateDepthStencilSurface</unmanaged>
-			static Surface^ CreateDepthStencil( SlimDX::Direct3D9::Device^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool discard, [Out] System::IntPtr% sharedHandle );
+			static Surface^ CreateDepthStencil( SlimDX::Direct3D9::Device^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool discard, System::IntPtr% sharedHandle );
 
 			static Surface^ CreateRenderTargetEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool lockable, Usage usage );
-			static Surface^ CreateRenderTargetEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool lockable, Usage usage, [Out] System::IntPtr% sharedHandle );
+			static Surface^ CreateRenderTargetEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool lockable, Usage usage, System::IntPtr% sharedHandle );
 			static Surface^ CreateOffscreenPlainEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, Pool pool, Usage usage );
-			static Surface^ CreateOffscreenPlainEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, Pool pool, Usage usage, [Out] System::IntPtr% sharedHandle );
+			static Surface^ CreateOffscreenPlainEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, Pool pool, Usage usage, System::IntPtr% sharedHandle );
 			static Surface^ CreateDepthStencilEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool discard, Usage usage );
-			static Surface^ CreateDepthStencilEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool discard, Usage usage, [Out] System::IntPtr% sharedHandle );
+			static Surface^ CreateDepthStencilEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format, MultisampleType multisampleType, int multisampleQuality, bool discard, Usage usage, System::IntPtr% sharedHandle );
 
 			/// <summary>Loads a surface from memory.</summary>
 			/// <param name="surface">The destination surface that will receive the image.</param>

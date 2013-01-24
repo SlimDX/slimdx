@@ -17,6 +17,7 @@ Direct3D 9
 	* Fixed the DeviceEx.FromPointer method.
 	* Fixed text encoding issue in XFile parsing.
 	* Added Set/GetPrivateData to Resource class.
+	* Changed surface creation sharedHandle parameters to be ref instead of out.
 
 Direct3D 10
 	* Added missing StateBlockMask constructor.

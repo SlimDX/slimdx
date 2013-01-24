@@ -106,10 +106,10 @@ namespace Direct3D9
 	}
 
 	Surface^ Surface::CreateRenderTarget( SlimDX::Direct3D9::Device^ device, int width, int height, Format format,
-		MultisampleType multiSampleType, int multiSampleQuality, bool lockable, [Out] IntPtr% sharedHandle )
+		MultisampleType multiSampleType, int multiSampleQuality, bool lockable, IntPtr% sharedHandle )
 	{
 		IDirect3DSurface9* surface = NULL;
-		HANDLE sharedHandleNative = NULL;
+		HANDLE sharedHandleNative = sharedHandle.ToPointer();
 
 		HRESULT hr = device->InternalPointer->CreateRenderTarget( width, height, static_cast<D3DFORMAT>( format ),
 			static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ), multiSampleQuality, lockable, &surface, &sharedHandleNative );
@@ -124,10 +124,10 @@ namespace Direct3D9
 	}
 
 	Surface^ Surface::CreateOffscreenPlain( SlimDX::Direct3D9::Device^ device, int width, int height, Format format,
-		Pool pool, [Out] IntPtr% sharedHandle )
+		Pool pool, IntPtr% sharedHandle )
 	{
 		IDirect3DSurface9* surface = NULL;
-		HANDLE sharedHandleNative = NULL;
+		HANDLE sharedHandleNative = sharedHandle.ToPointer();
 
 		HRESULT hr = device->InternalPointer->CreateOffscreenPlainSurface( width, height,
 			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &surface, &sharedHandleNative );
@@ -144,10 +144,10 @@ namespace Direct3D9
 	}
 
 	Surface^ Surface::CreateDepthStencil( SlimDX::Direct3D9::Device^ device, int width, int height, Format format,
-		MultisampleType multiSampleType, int multiSampleQuality, bool discard, [Out] IntPtr% sharedHandle )
+		MultisampleType multiSampleType, int multiSampleQuality, bool discard, IntPtr% sharedHandle )
 	{
 		IDirect3DSurface9* surface = NULL;
-		HANDLE sharedHandleNative = NULL;
+		HANDLE sharedHandleNative = sharedHandle.ToPointer();
 
 		HRESULT hr = device->InternalPointer->CreateDepthStencilSurface( width, height, static_cast<D3DFORMAT>( format ),
 			static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ), multiSampleQuality, discard, &surface, &sharedHandleNative );
@@ -179,11 +179,10 @@ namespace Direct3D9
 	}
 
 	Surface^ Surface::CreateRenderTargetEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format,
-		MultisampleType multiSampleType, int multiSampleQuality, bool lockable, Usage usage, [Out] IntPtr% sharedHandle )
+		MultisampleType multiSampleType, int multiSampleQuality, bool lockable, Usage usage, IntPtr% sharedHandle )
 	{
 		IDirect3DSurface9* surface = NULL;
-		HANDLE localHandle = NULL;
-		sharedHandle = IntPtr::Zero;
+		HANDLE localHandle = sharedHandle.ToPointer();
 
 		HRESULT hr = device->InternalPointer->CreateRenderTargetEx( width, height, static_cast<D3DFORMAT>( format ),
 			static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ), multiSampleQuality, lockable,
@@ -218,11 +217,10 @@ namespace Direct3D9
 	}
 
 	Surface^ Surface::CreateOffscreenPlainEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height,
-		Format format, Pool pool, Usage usage, [Out] IntPtr% sharedHandle )
+		Format format, Pool pool, Usage usage, IntPtr% sharedHandle )
 	{
 		IDirect3DSurface9* surface = NULL;
-		HANDLE localHandle = NULL;
-		sharedHandle = IntPtr::Zero;
+		HANDLE localHandle = sharedHandle.ToPointer();
 
 		HRESULT hr = device->InternalPointer->CreateOffscreenPlainSurfaceEx( width, height,
 			static_cast<D3DFORMAT>( format ), static_cast<D3DPOOL>( pool ), &surface,
@@ -257,11 +255,10 @@ namespace Direct3D9
 	}
 
 	Surface^ Surface::CreateDepthStencilEx( SlimDX::Direct3D9::DeviceEx^ device, int width, int height, Format format,
-		MultisampleType multiSampleType, int multiSampleQuality, bool discard, Usage usage, [Out] IntPtr% sharedHandle )
+		MultisampleType multiSampleType, int multiSampleQuality, bool discard, Usage usage, IntPtr% sharedHandle )
 	{
 		IDirect3DSurface9* surface = NULL;
-		HANDLE localHandle = NULL;
-		sharedHandle = IntPtr::Zero;
+		HANDLE localHandle = sharedHandle.ToPointer();
 
 		HRESULT hr = device->InternalPointer->CreateDepthStencilSurfaceEx( width, height, static_cast<D3DFORMAT>( format ),
 			static_cast<D3DMULTISAMPLE_TYPE>( multiSampleType ), multiSampleQuality, discard,
