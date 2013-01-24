@@ -307,8 +307,8 @@ namespace SlimDX.Wpf
 			_presentParameters.SwapEffect = SwapEffect.Copy;
 			_presentParameters.DeviceWindowHandle = hwnd.Handle;
 			_presentParameters.Windowed = true;
-			_presentParameters.BackBufferWidth = ((int) ActualWidth < 0) ? 1 : (int) ActualWidth;
-			_presentParameters.BackBufferHeight = ((int) ActualHeight < 0) ? 1 : (int) ActualHeight;
+			_presentParameters.BackBufferWidth = ((int) ActualWidth <= 0) ? 1 : (int) ActualWidth;
+			_presentParameters.BackBufferHeight = ((int) ActualHeight <= 0) ? 1 : (int) ActualHeight;
 			_presentParameters.BackBufferFormat = _backbufferFormat;
 			_presentParameters.AutoDepthStencilFormat = _depthStencilFormat;
 
