@@ -37,7 +37,7 @@ namespace DXGI
 	bool Factory::AdapterEnumerator::MoveNext()
 	{
 		IDXGIAdapter* adapter = 0;
-		HRESULT hr = m_factory->InternalPointer->EnumAdapters(m_index, &adapter);
+		HRESULT hr = m_factory->InternalPointer->EnumAdapters(m_index++, &adapter);
 		if (FAILED(hr))
 			return false;
 

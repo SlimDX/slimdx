@@ -35,7 +35,7 @@ namespace DXGI
 	bool Adapter::OutputEnumerator::MoveNext()
 	{
 		IDXGIOutput* output = 0;
-		HRESULT hr = m_adapter->InternalPointer->EnumOutputs(m_index, &output);
+		HRESULT hr = m_adapter->InternalPointer->EnumOutputs(m_index++, &output);
 		if (FAILED(hr))
 			return false;
 
