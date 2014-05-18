@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -88,9 +88,9 @@ namespace Direct3D11
 		InitializeSubclasses();
 	}
 	
-	DeviceContext^ DeviceContext::FromPointer( ID3D11DeviceContext* pointer, ComObject^ owner, ComObjectFlags flags )
+	DeviceContext^ DeviceContext::FromPointer( ID3D11DeviceContext* pointer, ComObject^ owner )
 	{
-		return ConstructFromPointer<DeviceContext,ID3D11DeviceContext>( pointer, owner, flags );
+		return ConstructFromPointer<DeviceContext,ID3D11DeviceContext>( pointer, owner );
 	}
 	
 	DeviceContext^ DeviceContext::FromPointer( IntPtr pointer )
@@ -339,7 +339,7 @@ namespace Direct3D11
 	DataBox^ DeviceContext::MapSubresource(Texture1D^ resource, int mipSlice, int arraySlice, MapMode mode, MapFlags flags)
 	{
 		Texture1DDescription desc = resource->Description;
-		int sizeInBytes = Resource::GetMipSize(mipSlice, desc.Width) * Utilities::SizeOfFormatElement(static_cast<DXGI_FORMAT>(desc.Format)) / 8;
+		int sizeInBytes = Resource::GetMipSize(mipSlice, desc.Width) * Utilities::SizeOfFormatElement(static_cast<DXGI_FORMAT>(desc.Format));
 		int subresource = D3D11CalcSubresource(mipSlice, arraySlice, desc.MipLevels);
 
 		D3D11_MAPPED_SUBRESOURCE mapped;
@@ -361,11 +361,7 @@ namespace Direct3D11
 		if (RECORD_D3D11(hr).IsFailure)
 			return nullptr;
 
-		int sizeInBytes = mipHeight * mapped.RowPitch;
-		if (Utilities::IsCompressed(static_cast<DXGI_FORMAT>(desc.Format)))
-			sizeInBytes /= 4;
-
-		return gcnew DataBox(mapped.RowPitch, mapped.DepthPitch, gcnew DataStream(mapped.pData, sizeInBytes, true, true, false));
+		return gcnew DataBox(mapped.RowPitch, mapped.DepthPitch, gcnew DataStream(mapped.pData, mipHeight * mapped.RowPitch, true, true, false));
 	}
 
 	DataBox^ DeviceContext::MapSubresource(Texture3D^ resource, int mipSlice, int arraySlice, MapMode mode, MapFlags flags)

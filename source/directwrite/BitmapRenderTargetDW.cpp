@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,6 @@ const IID IID_IDWriteBitmapRenderTarget = __uuidof(IDWriteBitmapRenderTarget);
 
 using namespace System;
 using namespace System::Drawing;
-using namespace SlimDX::Direct2D;
 
 namespace SlimDX
 {
@@ -65,11 +64,10 @@ namespace DirectWrite
 		stack_array<DWRITE_GLYPH_OFFSET> offsets = stackalloc(DWRITE_GLYPH_OFFSET, offsetCount);
 
 		DWRITE_GLYPH_RUN glyphs = glyphRun->ToUnmanaged(indices, advances, offsets);
-		Color c = color.ToColor();
 		RECT blackBoxRect;
 
 		HRESULT hr = InternalPointer->DrawGlyphRun(baselineOriginX, baselineOriginY, static_cast<DWRITE_MEASURING_MODE>(measuringMode), &glyphs,
-			renderingParameters->InternalPointer, RGB(c.R, c.G, c.B), &blackBoxRect);
+			renderingParameters->InternalPointer, RGB((BYTE)(color.Red * 255.0f), (BYTE)(color.Green * 255.0f), (BYTE)(color.Blue * 255.0f)), &blackBoxRect);
 		
 		blackBoxBounds = Utilities::ConvertRect(blackBoxRect);
 		return RECORD_DW(hr);

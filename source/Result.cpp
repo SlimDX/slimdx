@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,7 @@
 * THE SOFTWARE.
 */
 
-#include <windows.h>
-#include <dxerr.h>
+#include "external/dxerr.h"
 
 #include "Configuration.h"
 #include "Result.h"
@@ -68,7 +67,9 @@ namespace SlimDX
 
 		if( m_Info->Description == nullptr )
 		{
-			m_Info->Description = gcnew String( DXGetErrorDescription( m_Code ) );
+			WCHAR desc[1024];
+			DXGetErrorDescription( m_Code, desc, 1024 );
+			m_Info->Description = gcnew String( desc );
 		}
 		
 		return m_Info->Description;

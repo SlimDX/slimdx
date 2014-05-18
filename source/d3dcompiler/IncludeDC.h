@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -71,7 +71,7 @@ namespace SlimDX
 			void Close();
 		};
 		
-		class IncludeShim : public ID3D10Include
+		class IncludeShim : public ID3DInclude
 		{
 		private:
 			gcroot<Include^> m_Wrapped;

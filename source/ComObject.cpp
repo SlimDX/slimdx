@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -74,11 +74,6 @@ namespace SlimDX
 	IUnknown* ComObject::InternalPointer::get()
 	{
 		return m_Unknown;
-	}
-	
-	void ComObject::SetFlags( ComObjectFlags flags )
-	{
-		m_Flags = flags;
 	}
 	
 	void ComObject::SetSource( System::Diagnostics::StackTrace^ stack )
@@ -156,9 +151,7 @@ namespace SlimDX
 		}
 		else
 		{
-			if( static_cast<int>( m_Flags & ComObjectFlags::IsAncillary ) == 0 )
-				m_Unknown->Release();
-
+			m_Unknown->Release();
 			m_Unknown = 0;
 		}
 	}

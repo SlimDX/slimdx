@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@
 
 #include "../CompilationException.h"
 #include "../DataStream.h"
+#include "../Utilities.h"
 
 #include "D3DCompilerException.h"
 #include "ShaderBytecodeDC.h"
@@ -39,9 +40,9 @@ namespace D3DCompiler
 {
 	ShaderBytecode::ShaderBytecode( const BYTE *data, UINT length )
 	{
-		ID3D10Blob *blob;
+		ID3DBlob *blob;
 
-		HRESULT hr = D3D10CreateBlob( length, &blob );
+		HRESULT hr = D3DCreateBlob( length, &blob );
 		if( RECORD_D3DC( hr ).IsFailure )
 			throw gcnew D3DCompilerException( Result::Last );
 
@@ -54,14 +55,28 @@ namespace D3DCompiler
 		if( data == nullptr )
 			throw gcnew ArgumentNullException( "data" );
 
-		ID3D10Blob *blob;
-		HRESULT hr = D3D10CreateBlob( static_cast<SIZE_T>(data->Length), &blob );
+		ID3DBlob *blob;
+		HRESULT hr = D3DCreateBlob( static_cast<SIZE_T>(data->Length), &blob );
 		if( RECORD_D3DC( hr ).IsFailure )
 			throw gcnew D3DCompilerException( Result::Last );
 
 		memcpy( blob->GetBufferPointer(), data->RawPointer, static_cast<size_t>(data->Length) );
 
 		Construct( blob );
+	}
+
+	ShaderBytecode^ ShaderBytecode::LoadResource(System::Reflection::Assembly^ assembly, String^ resourceName)
+	{
+		Stream^ stream = assembly->GetManifestResourceStream(resourceName);
+
+		int size = 0;
+		bool cleanup = true;
+		std::unique_ptr<char> dataPtr;
+		char *data = Utilities::ReadStream(stream, size, cleanup);
+		if (cleanup)
+			dataPtr.reset(data);
+
+		return gcnew ShaderBytecode((BYTE*)data, (UINT)size);
 	}
 
 	ShaderBytecode^ ShaderBytecode::Compile( String^ shaderSource, String^ profile )
@@ -164,8 +179,8 @@ namespace D3DCompiler
 
 	ShaderBytecode^ ShaderBytecode::Compile( array<Byte>^ shaderSource, String^ entryPoint, String^ profile, ShaderFlags shaderFlags, EffectFlags effectFlags, array<ShaderMacro>^ defines, Include^ include, String^ sourceName, [Out] String^ %compilationErrors )
 	{
-		ID3D10Blob *code;
-		ID3D10Blob *errors;
+		ID3DBlob *code;
+		ID3DBlob *errors;
 
 		if (shaderSource == nullptr)
 			throw gcnew ArgumentNullException("shaderSource");
@@ -183,7 +198,7 @@ namespace D3DCompiler
 		pin_ptr<Byte> pinnedName = sourceNameBytes == nullptr ? nullptr : &sourceNameBytes[0];
 
 		IncludeShim includeShim = IncludeShim( include );
-		ID3D10Include* includePtr = NULL;
+		ID3DInclude* includePtr = NULL;
 		if( include != nullptr )
 			includePtr = &includeShim;
 

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -35,15 +35,7 @@ using System::Diagnostics::StackTrace;
 #include "ComObjectMacros.h"
 
 namespace SlimDX
-{	
-	[System::Flags]
-	enum class ComObjectFlags
-	{
-		None = 0,
-		IsAncillary = 1,
-		IsExternal = 2
-	};
-	
+{
 	public interface struct IComObject : System::IDisposable
 	{
 	public:
@@ -62,7 +54,6 @@ namespace SlimDX
 	private:
 		IUnknown* m_Unknown;
 		ComObject^ m_Owner;
-		ComObjectFlags m_Flags;
 		System::Diagnostics::StackTrace^ m_Source;
 		int m_CreationTime;
 
@@ -76,7 +67,7 @@ namespace SlimDX
 		void Destruct();
 		
 		template< typename M, typename N >
-		static M^ ConstructFromPointer( N* pointer, ComObject^ owner, ComObjectFlags flags ) 
+		static M^ ConstructFromPointer( N* pointer, ComObject^ owner ) 
 		{
 			// Since this method is called internally by SlimDX to essentially translate the results of native
 			// API calls to their managed counterparts via the object table, we expect that a null pointer
@@ -84,17 +75,23 @@ namespace SlimDX
 			if( pointer == 0 )
 				return nullptr;
 			
-			M^ tableEntry = safe_cast<M^>( SlimDX::ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
-			if( tableEntry != nullptr )
+			System::Threading::Monitor::Enter( ObjectTable::SyncObject );
+			try
 			{
-				if( static_cast<int>( flags & ComObjectFlags::IsAncillary ) == 0 ) 
+				M^ tableEntry = safe_cast<M^>( SlimDX::ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
+				if( tableEntry != nullptr )
+				{
 					pointer->Release();
-				return tableEntry;
-			}
+					return tableEntry;
+				}
 
-			M^ result = gcnew M( pointer, owner );
-			result->SetFlags( flags );
-			return result;
+				M^ result = gcnew M( pointer, owner );
+				return result;
+			}
+			finally
+			{
+				System::Threading::Monitor::Exit( ObjectTable::SyncObject );
+			}
 		}
 		
 		template< typename M >
@@ -108,12 +105,9 @@ namespace SlimDX
 
 			M^ tableEntry = safe_cast<M^>( SlimDX::ObjectTable::Find( static_cast<System::IntPtr>( pointer ) ) );
 			if( tableEntry != nullptr )
-			{
 				return tableEntry;
-			}
 
 			M^ result = gcnew M( pointer );
-			result->SetFlags( ComObjectFlags::IsExternal );
 			return result;
 		}
 		
@@ -134,7 +128,6 @@ namespace SlimDX
 			void set( ComObject^ value );
 		}
 		
-		void SetFlags( ComObjectFlags flags );
 		void SetSource( System::Diagnostics::StackTrace^ stack );
 		void SetCreationTime( int time );
 		
@@ -170,11 +163,6 @@ namespace SlimDX
 		{
 			int get();
 		}
-		
-		/// <summary>
-		/// Gets or sets a value indicating whether or not the object is in the default allocation pool.
-		/// </summary>
-		property bool IsDefaultPool;
 		
 		/// <summary>
 		/// Extra tag data stored along with the object. This member is intended for use by users of SlimDX

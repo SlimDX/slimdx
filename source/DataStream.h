@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,6 @@
 */
 #pragma once
 
-#include <d3dx9.h>
-
 #ifdef XMLDOCS
 using System::InvalidOperationException;
 using System::ArgumentException;
@@ -43,7 +41,6 @@ namespace SlimDX
 	private:
 		char* m_Buffer;
 		bool m_OwnsBuffer;
-		ID3DXBuffer *m_ID3DXBuffer;
 		
 		System::Int64 m_Size;
 		System::Int64 m_Position;
@@ -54,7 +51,6 @@ namespace SlimDX
 		System::Runtime::InteropServices::GCHandle m_GCHandle;
 
 	internal:
-		DataStream( ID3DXBuffer *buffer );
 		DataStream( void* buffer, System::Int64 sizeInBytes, bool canRead, bool canWrite, bool makeCopy );
 		DataStream( const void *buffer, System::Int64 sizeInBytes, bool canRead, bool makeCopy );
 
@@ -74,8 +70,6 @@ namespace SlimDX
 		}
 
 		char* SeekToEnd();
-
-		ID3DXBuffer* GetD3DBuffer();
 		void Destruct();
 
 	public:
@@ -182,6 +176,8 @@ namespace SlimDX
 		/// <exception cref="ArgumentNullException"><paramref name="source" /> is a zero pointer.</exception>
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="count" /> is negative.</exception>
 		void WriteRange( System::IntPtr source, System::Int64 count );
+
+		void Fill(System::Byte value);
 
 		/// <summary>
 		/// Reads a single value from the current stream and advances the current

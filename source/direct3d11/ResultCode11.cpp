@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,6 @@
 * THE SOFTWARE.
 */
 
-#include <d3d11.h>
-#include <d3dx11.h>
-
 #include "ResultCode11.h"
 
 namespace SlimDX
@@ -36,12 +33,12 @@ namespace Direct3D11
 
 	Result ResultCode::InvalidCall::get()
 	{
-		return Result( D3DERR_INVALIDCALL );
+		return Result( DXGI_ERROR_INVALID_CALL );
 	}
 
 	Result ResultCode::WasStillDrawing::get()
 	{
-		return Result( D3DERR_WASSTILLDRAWING );
+		return Result( DXGI_ERROR_WAS_STILL_DRAWING );
 	}
 
 	Result ResultCode::FileNotFound::get()
@@ -52,51 +49,6 @@ namespace Direct3D11
 	Result ResultCode::TooManyUniqueStateObjects::get()
 	{
 		return Result( D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS );
-	}
-	
-	Result ResultCode::CannotModifyIndexBuffer::get()
-	{
-		return Result( D3DX11_ERR_CANNOT_MODIFY_INDEX_BUFFER );
-	}
-	
-	Result ResultCode::InvalidMesh::get()
-	{
-		return Result( D3DX11_ERR_INVALID_MESH );
-	}
-	
-	Result ResultCode::CannotSortByAttribute::get()
-	{
-		return Result( D3DX11_ERR_CANNOT_ATTR_SORT );
-	}
-	
-	Result ResultCode::SkinningNotSupported::get()
-	{
-		return Result( D3DX11_ERR_SKINNING_NOT_SUPPORTED );
-	}
-	
-	Result ResultCode::TooManyInfluences::get()
-	{
-		return Result( D3DX11_ERR_TOO_MANY_INFLUENCES );
-	}
-	
-	Result ResultCode::InvalidData::get()
-	{
-		return Result( D3DX11_ERR_INVALID_DATA );
-	}
-	
-	Result ResultCode::LoadedMeshHasNoData::get()
-	{
-		return Result( D3DX11_ERR_LOADED_MESH_HAS_NO_DATA );
-	}
-	
-	Result ResultCode::DuplicateNamedFragment::get()
-	{
-		return Result( D3DX11_ERR_DUPLICATE_NAMED_FRAGMENT );
-	}
-	
-	Result ResultCode::CannotRemoveLastItem::get()
-	{
-		return Result( D3DX11_ERR_CANNOT_REMOVE_LAST_ITEM );
 	}
 
 	Result ResultCode::Success::get()

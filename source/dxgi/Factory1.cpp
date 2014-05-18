@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -55,9 +55,9 @@ namespace DXGI
 		Construct( pointer, NativeInterface );
 	}
 	
-	Factory1^ Factory1::FromPointer( IDXGIFactory1* pointer, ComObject^ owner, ComObjectFlags flags )
+	Factory1^ Factory1::FromPointer( IDXGIFactory1* pointer, ComObject^ owner )
 	{
-		return ComObject::ConstructFromPointer<Factory1, IDXGIFactory1>( pointer, owner, flags );
+		return ComObject::ConstructFromPointer<Factory1, IDXGIFactory1>( pointer, owner );
 	}
 	
 	Factory1^ Factory1::FromPointer( IntPtr pointer )

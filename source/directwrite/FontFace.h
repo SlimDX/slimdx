@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -24,8 +24,6 @@
 extern const IID IID_IDWriteFontFace;
 
 #include "../ComObject.h"
-#include "../math/Matrix3x2.h"
-#include "../direct2d/SimplifiedGeometrySink.h"
 
 #include "Enums.h"
 #include "FontMetrics.h"
@@ -53,7 +51,6 @@ namespace SlimDX
 			FontMetrics GetGdiCompatibleMetrics(float size, float pixelsPerDip);
 			FontMetrics GetGdiCompatibleMetrics(float size, float pixelsPerDip, Matrix3x2 transform);
 
-			Result GetGlyphRunOutline(float size, array<short>^ glyphIndices, array<float>^ glyphAdvances, array<GlyphOffset>^ glyphOffsets, bool isSideways, bool isRightToLeft, SlimDX::Direct2D::SimplifiedGeometrySink^ geometrySink);
 			RenderingMode GetRecommendedRenderingMode(float size, float pixelsPerDip, MeasuringMode measuringMode, RenderingParameters^ renderingParameters);
 
 			FontTable^ GetFontTable(int tableTag);

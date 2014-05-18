@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,6 @@
 * THE SOFTWARE.
 */
 #include "stdafx.h"
-
-#include <d3d11.h>
-#include <d3dx11.h>
-#include <d3dx9.h>
-#include <vcclr.h>
-#include <cmath>
 
 #include "Direct3D11Exception.h"
 
@@ -49,7 +43,7 @@ namespace Direct3D11
 		if( RECORD_D3D11( device->InternalPointer->CreateSamplerState( &nativeDescription, &sampler ) ).IsFailure )
 			return nullptr;
 
-		return FromPointer( sampler );
+		return FromPointer( sampler, device );
 	}
 
 	SamplerDescription SamplerState::Description::get()

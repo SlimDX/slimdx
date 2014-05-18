@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -96,123 +96,6 @@ namespace Direct3D11
 		D3D11_TEXTURE2D_DESC nativeDescription;
 		InternalPointer->GetDesc( &nativeDescription );
 		return Texture2DDescription( nativeDescription );
-	}
-	
-	Texture2D^ Texture2D::FromFile( SlimDX::Direct3D11::Device^ device, String^ fileName )
-	{
-		ID3D11Resource* resource = Resource::ConstructFromFile( device, fileName, 0 );
-		if( resource == 0 )
-			return nullptr;
-			
-		D3D11_RESOURCE_DIMENSION type;
-		resource->GetType( &type );
-		if( type != D3D11_RESOURCE_DIMENSION_TEXTURE2D )
-			throw gcnew InvalidOperationException( "Could not load file as 2D texture." );
-
-		return Texture2D::FromPointer( static_cast<ID3D11Texture2D*>( resource ) );
-	}
-	
-	Texture2D^ Texture2D::FromMemory( SlimDX::Direct3D11::Device^ device, array<Byte>^ memory )
-	{
-		ID3D11Resource* resource = Resource::ConstructFromMemory( device, memory, 0 );
-		if( resource == 0 )
-			return nullptr;
-			
-		D3D11_RESOURCE_DIMENSION type;
-		resource->GetType( &type );
-		if( type != D3D11_RESOURCE_DIMENSION_TEXTURE2D )
-			throw gcnew InvalidOperationException( "Could not load file as 2D texture." );
-
-		return Texture2D::FromPointer( static_cast<ID3D11Texture2D*>( resource ) );
-	}
-	
-	Texture2D^ Texture2D::FromStream( SlimDX::Direct3D11::Device^ device, Stream^ stream, int sizeInBytes )
-	{
-		ID3D11Resource* resource = Resource::ConstructFromStream( device, stream, sizeInBytes, 0 );
-		if( resource == 0 )
-			return nullptr;
-			
-		D3D11_RESOURCE_DIMENSION type;
-		resource->GetType( &type );
-		if( type != D3D11_RESOURCE_DIMENSION_TEXTURE2D )
-			throw gcnew InvalidOperationException( "Could not load file as 2D texture." );
-
-		return Texture2D::FromPointer( static_cast<ID3D11Texture2D*>( resource ) );
-	}
-	
-	Texture2D^ Texture2D::FromFile( SlimDX::Direct3D11::Device^ device, String^ fileName, ImageLoadInformation loadInfo )
-	{
-		D3DX11_IMAGE_LOAD_INFO info = loadInfo.CreateNativeVersion();
-		ID3D11Resource* resource = Resource::ConstructFromFile( device, fileName, &info );
-		if( resource == 0 )
-			return nullptr;
-
-		D3D11_RESOURCE_DIMENSION type;
-		resource->GetType( &type );
-		if( type != D3D11_RESOURCE_DIMENSION_TEXTURE2D )
-			throw gcnew InvalidOperationException( "Could not load file as 2D texture." );
-
-		return Texture2D::FromPointer( static_cast<ID3D11Texture2D*>( resource ) );
-	}
-
-	Texture2D^ Texture2D::FromMemory( SlimDX::Direct3D11::Device^ device, array<Byte>^ memory, ImageLoadInformation loadInfo )
-	{
-		D3DX11_IMAGE_LOAD_INFO info = loadInfo.CreateNativeVersion();
-		ID3D11Resource* resource = Resource::ConstructFromMemory( device, memory, &info );
-		if( resource == 0 )
-			return nullptr;
-
-		D3D11_RESOURCE_DIMENSION type;
-		resource->GetType( &type );
-		if( type != D3D11_RESOURCE_DIMENSION_TEXTURE2D )
-			throw gcnew InvalidOperationException( "Could not load file as 2D texture." );
-
-		return Texture2D::FromPointer( static_cast<ID3D11Texture2D*>( resource ) );
-	}
-
-	Texture2D^ Texture2D::FromStream( SlimDX::Direct3D11::Device^ device, Stream^ stream, int sizeInBytes, ImageLoadInformation loadInfo )
-	{
-		D3DX11_IMAGE_LOAD_INFO info = loadInfo.CreateNativeVersion();
-		ID3D11Resource* resource = Resource::ConstructFromStream( device, stream, sizeInBytes, &info );
-		if( resource == 0 )
-			return nullptr;
-
-		D3D11_RESOURCE_DIMENSION type;
-		resource->GetType( &type );
-		if( type != D3D11_RESOURCE_DIMENSION_TEXTURE2D )
-			throw gcnew InvalidOperationException( "Could not load file as 2D texture." );
-
-		return Texture2D::FromPointer( static_cast<ID3D11Texture2D*>( resource ) );
-	}
-
-	Result Texture2D::ToFile( DeviceContext^ context, Texture2D^ texture, ImageFileFormat format, String^ fileName )
-	{
-		pin_ptr<const wchar_t> pinnedName = PtrToStringChars( fileName );
-
-		HRESULT hr = D3DX11SaveTextureToFile( context->InternalPointer, texture->InternalPointer, static_cast<D3DX11_IMAGE_FILE_FORMAT>( format ), pinnedName );
-		return RECORD_D3D11( hr );
-	}
-
-	Result Texture2D::ToStream( DeviceContext^ context, Texture2D^ texture, ImageFileFormat format, Stream^ stream )
-	{
-		ID3D10Blob* blob = 0;
-		HRESULT hr = D3DX11SaveTextureToMemory( context->InternalPointer, texture->InternalPointer, static_cast<D3DX11_IMAGE_FILE_FORMAT>( format ), &blob, 0 );
-		if( RECORD_D3D11( hr ).IsFailure )
-			return Result::Last;
-		
-		// Write byte-by-byte to avoid allocating a managed byte[] that will wastefully persist.
-		unsigned char* bytes = reinterpret_cast<unsigned char*>( blob->GetBufferPointer() );
-		for(SIZE_T byteIndex = 0; byteIndex < blob->GetBufferSize(); ++byteIndex)
-			stream->WriteByte( bytes[byteIndex] );
-		
-		blob->Release();
-		return Result::Last;
-	}
-
-	Result Texture2D::ComputeNormalMap(DeviceContext^ context, Texture2D^ source, Texture2D^ destination, NormalMapFlags flags, Channel channel, float amplitude)
-	{
-		HRESULT hr = D3DX11ComputeNormalMap(context->InternalPointer, source->InternalPointer, static_cast<UINT>(flags), static_cast<UINT>(channel), amplitude, destination->InternalPointer);
-		return RECORD_D3D11(hr);
 	}
 }
 }

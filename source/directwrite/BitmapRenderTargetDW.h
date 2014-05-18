@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -24,8 +24,6 @@
 extern const IID IID_IDWriteBitmapRenderTarget;
 
 #include "../ComObject.h"
-#include "../math/Color4.h"
-#include "../math/Matrix3x2.h"
 
 #include "Enums.h"
 #include "GlyphRunDW.h"

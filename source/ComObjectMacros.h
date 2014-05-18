@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -39,9 +39,8 @@
 	internal: \
 		static managedType^ FromPointerReflectionThunk( System::IntPtr pointer ) { return FromPointer( static_cast<nativeType*>( pointer.ToPointer() ) ); } \
 		static managedType^ FromPointerReflectionThunk( System::IntPtr pointer, ComObject^ owner ) { return FromPointer( static_cast<nativeType*>( pointer.ToPointer()), owner ); } \
-		static managedType^ FromPointer( nativeType* pointer ) { return FromPointer( pointer, nullptr, ComObjectFlags::None ); } \
-		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner ) { return FromPointer( pointer, owner, ComObjectFlags::None ); } \
-		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner, ComObjectFlags flags ) { return ConstructFromPointer<managedType,nativeType>( pointer, owner, flags ); } \
+		static managedType^ FromPointer( nativeType* pointer ) { return FromPointer( pointer, nullptr ); } \
+		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner ) { return ConstructFromPointer<managedType,nativeType>( pointer, owner ); } \
 	public: \
 		static managedType^ FromPointer( System::IntPtr pointer ) { return ConstructFromUserPointer<managedType>( pointer ); } \
 	COMOBJECT_BASE(nativeType)
@@ -65,9 +64,8 @@
 	internal: \
 		static managedType^ FromPointerReflectionThunk( System::IntPtr pointer ) { return FromPointer( static_cast<nativeType*>( pointer.ToPointer() ) ); } \
 		static managedType^ FromPointerReflectionThunk( System::IntPtr pointer, ComObject^ owner ) { return FromPointer( static_cast<nativeType*>( pointer.ToPointer()), owner ); } \
-		static managedType^ FromPointer( nativeType* pointer ) { return FromPointer( pointer, nullptr, ComObjectFlags::None ); } \
-		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner ) { return FromPointer( pointer, owner, ComObjectFlags::None ); } \
-		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner, ComObjectFlags flags ); \
+		static managedType^ FromPointer( nativeType* pointer ) { return FromPointer( pointer, nullptr ); } \
+		static managedType^ FromPointer( nativeType* pointer, ComObject^ owner ); \
 	public: \
 		static managedType^ FromPointer( System::IntPtr pointer ); \
 	COMOBJECT_BASE(nativeType)

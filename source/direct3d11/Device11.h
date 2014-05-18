@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,6 @@
 #include "../dxgi/Enums.h"
 #include "../dxgi/SwapChainDxgi.h"
 #include "../dxgi/SwapChainDescription.h"
-#include "../math/Color4.h"
 
 #include "Enums11.h"
 
@@ -115,6 +114,30 @@ namespace SlimDX
 			{
 				System::String^ get();
 				void set(System::String^ value);
+			}
+
+			/// <summary>
+			/// Gets the highest supported vertex shader profile string.
+			/// </summary>
+			property System::String^ VertexShaderProfile
+			{
+				System::String^ get();
+			}
+
+			/// <summary>
+			/// Gets the highest supported pixel shader profile string.
+			/// </summary>
+			property System::String^ PixelShaderProfile
+			{
+				System::String^ get();
+			}
+
+			/// <summary>
+			/// Gets the highest supported geometry shader profile string.
+			/// </summary>
+			property System::String^ GeometryShaderProfile
+			{
+				System::String^ get();
 			}
 
 			/// <summary>

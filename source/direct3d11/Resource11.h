@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -27,8 +27,6 @@
 #include "../dxgi/SwapChainDxgi.h"
 #include "../dxgi/SurfaceDxgi.h"
 
-#include "TextureLoadInformation11.h"
-
 namespace SlimDX
 {
 	namespace Direct3D11
@@ -43,11 +41,6 @@ namespace SlimDX
 
 		internal:
 			static int GetMipSize( int mipSlice, int baseSliceSize );
-			
-			static ID3D11Resource* ConstructFromFile( SlimDX::Direct3D11::Device^ device, System::String^ fileName, D3DX11_IMAGE_LOAD_INFO* info );
-			static ID3D11Resource* ConstructFromMemory( SlimDX::Direct3D11::Device^ device, array<System::Byte>^ memory, D3DX11_IMAGE_LOAD_INFO* info );
-			static ID3D11Resource* ConstructFromStream( SlimDX::Direct3D11::Device^ device, System::IO::Stream^ stream, int sizeInBytes, D3DX11_IMAGE_LOAD_INFO* info );
-		
 			static Resource^ FromPointer( ID3D11Resource* pointer );
 
 		private protected:
@@ -103,28 +96,6 @@ namespace SlimDX
 			/// <param name="mipLevels">The total number of mip levels.</param>
 			/// <returns>The subresource index (equivalent to mipSlice + (arraySlice * mipLevels)).</returns>
 			static int CalculateSubresourceIndex( int mipSlice, int arraySlice, int mipLevels );
-
-			static Result SaveTextureToFile( DeviceContext^ context, Resource^ resource, ImageFileFormat destinationFormat, System::String^ desintationFile );
-
-			/// <summary>
-			/// Loads a texture from a texture.
-			/// </summary>
-			/// <param name="context">The device context used to load the texture.</param>
-			/// <param name="source">The source texture.</param>
-			/// <param name="destination">The destination texture.</param>
-			/// <param name="loadInformation">Texture loading parameters.</param>
-			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			static Result LoadTextureFromTexture(DeviceContext^ context, Resource^ source, Resource^ destination, TextureLoadInformation loadInformation);
-
-			/// <summary>
-			/// Generates a mipmap chain using a particular texture filter.
-			/// </summary>
-			/// <param name="context">The device context used to generate the mipmaps.</param>
-			/// <param name="texture">The texture to be filtered.</param>
-			/// <param name="sourceLevel">The mipmap level whose data is used to generate the rest of the mipmap chain.</param>
-			/// <param name="mipFilter">Flags controlling how each miplevel is filtered.</param>
-			/// <returns>A <see cref="SlimDX::Result"/> object describing the result of the operation.</returns>
-			static Result FilterTexture(DeviceContext^ context, Resource^ texture, int sourceLevel, FilterFlags mipFilter);
 		};
 	}
 };

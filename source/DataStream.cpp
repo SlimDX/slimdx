@@ -1,6 +1,6 @@
 #include "stdafx.h"
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -20,11 +20,6 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <stdexcept>
-
 #include "DataStream.h"
 #include "Utilities.h"
 #include "InternalHelpers.h"
@@ -35,20 +30,6 @@ using namespace System::Runtime::InteropServices;
 
 namespace SlimDX
 {
-	DataStream::DataStream( ID3DXBuffer* buffer )
-	{
-		if( buffer->GetBufferSize() < 1 )
-			throw gcnew ArgumentException( "Buffer size is less than 1." );
-
-		m_Buffer = static_cast<char*>( buffer->GetBufferPointer() );
-		m_Size = buffer->GetBufferSize();
-		
-		m_CanRead = true;
-		m_CanWrite = true;
-		
-		m_ID3DXBuffer = buffer;
-	}
-
 	DataStream::DataStream( const void* buffer, Int64 sizeInBytes, bool canRead, bool makeCopy )
 	{
 		if( sizeInBytes < 1 )
@@ -154,8 +135,6 @@ namespace SlimDX
 
 		m_CanRead = canRead;
 		m_CanWrite = canWrite;
-
-		GC::SuppressFinalize( this );
 	}
 
 	DataStream::~DataStream()
@@ -176,12 +155,6 @@ namespace SlimDX
 			delete[] m_Buffer;
 			GC::RemoveMemoryPressure( m_Size );
 			m_OwnsBuffer = false;
-		}
-		
-		if( m_ID3DXBuffer != 0 )
-		{
-			m_ID3DXBuffer->Release();
-			m_ID3DXBuffer = 0;
 		}
 		
 		if( m_GCHandle.IsAllocated )
@@ -212,22 +185,6 @@ namespace SlimDX
 		char* pointer = PositionPointer;
 		Seek( 0, SeekOrigin::End );
 		return pointer;
-	}
-
-	ID3DXBuffer* DataStream::GetD3DBuffer()
-	{
-		if( m_ID3DXBuffer != 0 )
-			return m_ID3DXBuffer;
-
-		ID3DXBuffer *temp;
-		HRESULT hr = D3DXCreateBuffer( static_cast<DWORD>( m_Size ), &temp );
-		if( FAILED( hr ) )
-			throw gcnew OutOfMemoryException();
-
-		m_ID3DXBuffer = temp;
-
-		memcpy( m_ID3DXBuffer->GetBufferPointer(), m_Buffer, static_cast<size_t>( m_Size ) );
-		return m_ID3DXBuffer;
 	}
 
 	Int64 DataStream::Seek( Int64 offset, SeekOrigin origin )
@@ -308,6 +265,14 @@ namespace SlimDX
 
 		memcpy( m_Buffer + m_Position, source.ToPointer(), static_cast<size_t>( count ) );
 		m_Position += count;
+	}
+
+	void DataStream::Fill(Byte value)
+	{
+		if( !m_CanWrite )
+			throw gcnew NotSupportedException();
+
+		memset(m_Buffer, value, static_cast<size_t>(m_Size));
 	}
 	
 	generic<typename T> where T : value class

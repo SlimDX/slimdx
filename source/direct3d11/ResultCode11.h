@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -71,96 +71,6 @@ namespace SlimDX
 			/// <remarks>This is a failed result.</remarks>
 			/// <unmanaged>D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS</unmanaged>
 			property static Result TooManyUniqueStateObjects
-			{
-				Result get();
-			}
-			
-			/// <summary>
-			/// The index buffer cannot be modified. 
-			/// </summary>
-			/// <remarks>This is a failed result.</remarks>
-			/// <unmanaged>D3DX11_ERR_CANNOT_MODIFY_INDEX_BUFFER</unmanaged>
-			property static Result CannotModifyIndexBuffer
-			{
-				Result get();
-			}
-			
-			/// <summary>
-			/// The mesh is invalid.
-			/// </summary>
-			/// <remarks>This is a failed result.</remarks>
-			/// <unmanaged>D3DX11_ERR_INVALID_MESH</unmanaged>
-			property static Result InvalidMesh
-			{
-				Result get();
-			}
-			
-			/// <summary>
-			/// Attribute sort is not supported as an optimization technique. 
-			/// </summary>
-			/// <remarks>This is a failed result.</remarks>
-			/// <unmanaged>D3DX11_ERR_CANNOT_ATTR_SORT</unmanaged>
-			property static Result CannotSortByAttribute
-			{
-				Result get();
-			}
-			
-			/// <summary>
-			/// Skinning is not supported. 
-			/// </summary>
-			/// <remarks>This is a failed result.</remarks>
-			/// <unmanaged>D3DX11_ERR_SKINNING_NOT_SUPPORTED</unmanaged>
-			property static Result SkinningNotSupported
-			{
-				Result get();
-			}
-			
-			/// <summary>
-			/// Too many influences specified. 
-			/// </summary>
-			/// <remarks>This is a failed result.</remarks>
-			/// <unmanaged>D3DX11_ERR_TOO_MANY_INFLUENCES</unmanaged>
-			property static Result TooManyInfluences
-			{
-				Result get();
-			}
-			
-			/// <summary>
-			/// The data is invalid.
-			/// </summary>
-			/// <remarks>This is a failed result.</remarks>
-			/// <unmanaged>D3DX11_ERR_INVALID_DATA</unmanaged>
-			property static Result InvalidData
-			{
-				Result get();
-			}
-			
-			/// <summary>
-			/// The mesh has no data. 
-			/// </summary>
-			/// <remarks>This is a failed result.</remarks>
-			/// <unmanaged>D3DX11_ERR_LOADED_MESH_HAS_NO_DATA</unmanaged>
-			property static Result LoadedMeshHasNoData
-			{
-				Result get();
-			}
-			
-			/// <summary>
-			/// A fragment with that name already exists. 
-			/// </summary>
-			/// <remarks>This is a failed result.</remarks>
-			/// <unmanaged>D3DX11_ERR_DUPLICATE_NAMED_FRAGMENT</unmanaged>
-			property static Result DuplicateNamedFragment
-			{
-				Result get();
-			}
-			
-			/// <summary>
-			/// The last item cannot be deleted. 
-			/// </summary>
-			/// <remarks>This is a failed result.</remarks>
-			/// <unmanaged>D3DX11_ERR_CANNOT_REMOVE_LAST_ITEM</unmanaged>
-			property static Result CannotRemoveLastItem
 			{
 				Result get();
 			}

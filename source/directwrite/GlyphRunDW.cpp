@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -48,8 +48,12 @@ namespace DirectWrite
 		{
 			GlyphIndices[i] = run.glyphIndices[i];
 			GlyphAdvances[i] = run.glyphAdvances[i];
-			GlyphOffsets[i].AdvanceOffset = run.glyphOffsets[i].advanceOffset;
-			GlyphOffsets[i].AscenderOffset = run.glyphOffsets[i].ascenderOffset;
+
+			if (run.glyphOffsets)
+			{
+				GlyphOffsets[i].AdvanceOffset = run.glyphOffsets[i].advanceOffset;
+				GlyphOffsets[i].AscenderOffset = run.glyphOffsets[i].ascenderOffset;
+			}
 		}
 	}
 

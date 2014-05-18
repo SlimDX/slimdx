@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -20,10 +20,6 @@
 * THE SOFTWARE.
 */
 #pragma once
-
-#include <windows.h>
-#include <d3dx9.h>
-#include <dxgi.h>
 
 #include "Result.h"
 
@@ -54,20 +50,16 @@ namespace SlimDX
 		
 		static int SizeOfFormatElement( DXGI_FORMAT format );
 
-		static bool IsCompressed(D3DFORMAT format);
 		static bool IsCompressed(DXGI_FORMAT format);
 		
 		static System::Drawing::Rectangle ConvertRect(RECT rect);
 		static void ConvertRect(System::Drawing::Rectangle& source, RECT& dest);
 
-		static System::String^ BlobToString( ID3D10Blob *blob );
-		static System::String^ BufferToString( ID3DXBuffer *buffer );
+		static System::String^ BlobToString( ID3DBlob *blob );
 
+		static char* ReadStream( System::IO::Stream^ stream, int% readLength, bool% cleanUp );
 		static array<System::Byte>^ ReadStream( System::IO::Stream^ stream, DataStream^* dataStream );
 		static array<System::Byte>^ ReadStream( System::IO::Stream^ stream, int% readLength, DataStream^* dataStream );
-
-		generic<typename T> where T : value class
-		static array<T>^ ReadRange( ID3DXBuffer *buffer, int count );
 
 		//These doc comments are mostly intended to copy to other places.
 

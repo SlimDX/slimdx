@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ namespace SlimDX
 		/// <unmanaged>ID3D10Blob</unmanaged>
 		public ref class ShaderBytecode : ComObject
 		{
-			COMOBJECT(ID3D10Blob, ShaderBytecode);
+			COMOBJECT(ID3DBlob, ShaderBytecode);
 		
 		internal:
 			ShaderBytecode( const BYTE* data, UINT length );
@@ -47,6 +47,14 @@ namespace SlimDX
 			/// </summary>
 			/// <param name="data">A <see cref="DataStream"/> containing the compiled bytecode.</param>
 			ShaderBytecode( DataStream^ data );
+
+			/// <summary>
+			/// Loads a precompiled shader from an embedded resource.
+			/// </summary>
+			/// <param name="assembly">The assembly containing the resource.</param>
+			/// <param name="resourceName">The name of the embedded resource as specified in the assembly manifest.</param>
+			/// <returns>The compiled shader bytecode, or <c>null</c> if the method fails.</returns>
+			static ShaderBytecode^ LoadResource(System::Reflection::Assembly^ assembly, System::String^ resourceName);
 
 			/// <summary>
 			/// Compiles the provided shader or effect source.

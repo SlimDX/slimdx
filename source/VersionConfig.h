@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2007-2012 SlimDX Group
+* Copyright (c) 2007-2014 SlimDX Group
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,4 @@
 */
 #pragma once
 
-#define STRINGIFY(x) #x
-#define TO_STRING(x) STRINGIFY(x)
-
-#define SLIMDX_VERSION_NAME "January 2012"
-
-#define SLIMDX_D3DX_VERSION 43
-#define SLIMDX_XAUDIO2_VERSION 27
-#define SLIMDX_X3DAUDIO_VERSION 17
+#define SLIMDX_VERSION_NAME "May 2014"
