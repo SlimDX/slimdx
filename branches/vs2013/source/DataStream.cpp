@@ -306,7 +306,7 @@ namespace SlimDX
 
 		//Truncate the count to the end of the stream
 		Int64 elementSize = static_cast<Int64>( sizeof(T) );
-		size_t actualCount = min( static_cast<size_t>((Length - m_Position) / elementSize), static_cast<size_t>( count ) );
+		size_t actualCount = std::min( static_cast<size_t>((Length - m_Position) / elementSize), static_cast<size_t>( count ) );
 
 		pin_ptr<T> pinnedBuffer = &buffer[offset];
 		memcpy( pinnedBuffer, m_Buffer + m_Position, static_cast<size_t>( actualCount * elementSize ) );
@@ -324,7 +324,7 @@ namespace SlimDX
 		
 		//Truncate the count to the end of the stream
 		Int64 elementSize = static_cast<Int64>( sizeof(T) );
-		size_t actualCount = min( static_cast<size_t>((Length - m_Position) / elementSize), static_cast<size_t>( count ) );
+		size_t actualCount = std::min( static_cast<size_t>((Length - m_Position) / elementSize), static_cast<size_t>( count ) );
 		array<T>^ result = gcnew array<T>( static_cast<int>( actualCount ) );
 
 		pin_ptr<T> pinnedBuffer = &result[0];

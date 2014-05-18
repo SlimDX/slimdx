@@ -339,7 +339,7 @@ namespace Direct3D11
 	DataBox^ DeviceContext::MapSubresource(Texture1D^ resource, int mipSlice, int arraySlice, MapMode mode, MapFlags flags)
 	{
 		Texture1DDescription desc = resource->Description;
-		int sizeInBytes = Resource::GetMipSize(mipSlice, desc.Width) * Utilities::SizeOfFormatElement(static_cast<DXGI_FORMAT>(desc.Format));
+		int sizeInBytes = Resource::GetMipSize(mipSlice, desc.Width) * Utilities::SizeOfFormatElement(static_cast<DXGI_FORMAT>(desc.Format)) / 8;
 		int subresource = D3D11CalcSubresource(mipSlice, arraySlice, desc.MipLevels);
 
 		D3D11_MAPPED_SUBRESOURCE mapped;
@@ -360,6 +360,9 @@ namespace Direct3D11
 		HRESULT hr = InternalPointer->Map(resource->InternalPointer, subresource, static_cast<D3D11_MAP>(mode), static_cast<UINT>(flags), &mapped);
 		if (RECORD_D3D11(hr).IsFailure)
 			return nullptr;
+
+		if (Utilities::IsCompressed(static_cast<DXGI_FORMAT>(desc.Format)))
+			mipHeight = std::max(1, mipHeight / 4);
 
 		return gcnew DataBox(mapped.RowPitch, mapped.DepthPitch, gcnew DataStream(mapped.pData, mipHeight * mapped.RowPitch, true, true, false));
 	}

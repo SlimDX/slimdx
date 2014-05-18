@@ -20,6 +20,8 @@
 * THE SOFTWARE.
 */
 
+#define NOMINMAX
+
 #include <InitGuid.h>		// include these two headers in this order or die a horrible firey GUID related death
 #include <CGuid.h>
 
@@ -37,6 +39,7 @@
 #include <stdexcept>
 #include <cmath>
 #include <cassert>
+#include <algorithm>
 
 #pragma warning(push)
 #pragma warning(disable : 4005)
