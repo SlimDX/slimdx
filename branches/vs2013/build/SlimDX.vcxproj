@@ -1,0 +1,667 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8ECCE443-0440-40F4-A94C-F02E027282C3}</ProjectGuid>
+    <RootNamespace>SlimDX</RootNamespace>
+    <Keyword>ManagedCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>true</CLRSupport>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>true</CLRSupport>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>true</CLRSupport>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>true</CLRSupport>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)x86\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)x86\$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)..\..\..\External\slimdx\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)x86\$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkKeyFile>
+    </LinkKeyFile>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;WINVER=0x600;_WIN32_WINNT=0x600;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;dxgi.lib;xinput9_1_0.lib;d3dcompiler.lib;d3d11.lib;dwrite.lib</AdditionalDependencies>
+      <Version>
+      </Version>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <DelayLoadDLLs>d3dcompiler_47.dll;d3d11.dll;dwrite.dll;dxgi.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AssemblyDebug>true</AssemblyDebug>
+      <LinkTimeCodeGeneration>
+      </LinkTimeCodeGeneration>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+      <KeyFile>
+      </KeyFile>
+      <KeyContainer>
+      </KeyContainer>
+      <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;WINVER=0x600;_WIN32_WINNT=0x600;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;dxgi.lib;xinput9_1_0.lib;d3dcompiler.lib;d3d11.lib;dwrite.lib</AdditionalDependencies>
+      <Version>
+      </Version>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <DelayLoadDLLs>d3dcompiler_47.dll;d3d11.dll;dwrite.dll;dxgi.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AssemblyDebug>true</AssemblyDebug>
+      <LinkTimeCodeGeneration>
+      </LinkTimeCodeGeneration>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX64</TargetMachine>
+      <KeyFile>
+      </KeyFile>
+      <KeyContainer>
+      </KeyContainer>
+      <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <PreprocessorDefinitions>WIN32;NDEBUG;WINVER=0x600;_WIN32_WINNT=0x600;XMLDOCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;dxgi.lib;xinput9_1_0.lib;d3dcompiler.lib;d3d11.lib;dwrite.lib</AdditionalDependencies>
+      <Version>
+      </Version>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <DelayLoadDLLs>d3dcompiler_47.dll;d3d11.dll;dwrite.dll;dxgi.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX86</TargetMachine>
+      <KeyFile>
+      </KeyFile>
+      <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
+      <KeyContainer>
+      </KeyContainer>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;WINVER=0x600;_WIN32_WINNT=0x600;XMLDOCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <WarningLevel>Level4</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>user32.lib;gdi32.lib;dxguid.lib;dxgi.lib;xinput9_1_0.lib;d3dcompiler.lib;d3d11.lib;dwrite.lib</AdditionalDependencies>
+      <Version>
+      </Version>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <DelayLoadDLLs>d3dcompiler_47.dll;d3d11.dll;dwrite.dll;dxgi.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <TargetMachine>MachineX64</TargetMachine>
+      <KeyFile>
+      </KeyFile>
+      <CLRUnmanagedCodeCheck>true</CLRUnmanagedCodeCheck>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
+      <KeyContainer>
+      </KeyContainer>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Data">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Xml">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\source\ComObject.cpp" />
+    <ClCompile Include="..\source\CompilationException.cpp" />
+    <ClCompile Include="..\source\Configuration.cpp" />
+    <ClCompile Include="..\source\direct3d11\PerfAnnotation.cpp" />
+    <ClCompile Include="..\source\direct3d11\TextureLoader.cpp" />
+    <ClCompile Include="..\source\directwrite\BitmapRenderTargetDW.cpp" />
+    <ClCompile Include="..\source\directwrite\DirectWriteException.cpp" />
+    <ClCompile Include="..\source\directwrite\FactoryDW.cpp" />
+    <ClCompile Include="..\source\directwrite\Font.cpp" />
+    <ClCompile Include="..\source\directwrite\FontCollection.cpp" />
+    <ClCompile Include="..\source\directwrite\FontCollectionLoader.cpp" />
+    <ClCompile Include="..\source\directwrite\FontFace.cpp" />
+    <ClCompile Include="..\source\directwrite\FontFamily.cpp" />
+    <ClCompile Include="..\source\directwrite\FontFeature.cpp" />
+    <ClCompile Include="..\source\directwrite\FontFile.cpp" />
+    <ClCompile Include="..\source\directwrite\FontFileAnalysis.cpp" />
+    <ClCompile Include="..\source\directwrite\FontFileEnumerator.cpp" />
+    <ClCompile Include="..\source\directwrite\FontFileLoader.cpp" />
+    <ClCompile Include="..\source\directwrite\FontFileStream.cpp" />
+    <ClCompile Include="..\source\directwrite\FontList.cpp" />
+    <ClCompile Include="..\source\directwrite\FontMetrics.cpp" />
+    <ClCompile Include="..\source\directwrite\FontTable.cpp" />
+    <ClCompile Include="..\source\directwrite\GdiInterop.cpp" />
+    <ClCompile Include="..\source\directwrite\GlyphMetrics.cpp" />
+    <ClCompile Include="..\source\directwrite\GlyphOffset.cpp" />
+    <ClCompile Include="..\source\directwrite\GlyphRunAnalysis.cpp" />
+    <ClCompile Include="..\source\directwrite\GlyphRunDescription.cpp" />
+    <ClCompile Include="..\source\directwrite\GlyphRunDW.cpp" />
+    <ClCompile Include="..\source\directwrite\IFontCollectionLoader.cpp" />
+    <ClCompile Include="..\source\directwrite\IFontFileLoader.cpp" />
+    <ClCompile Include="..\source\directwrite\InlineObject.cpp" />
+    <ClCompile Include="..\source\directwrite\ITextRenderer.cpp" />
+    <ClCompile Include="..\source\directwrite\LocalizedStrings.cpp" />
+    <ClCompile Include="..\source\directwrite\NumberSubstitution.cpp" />
+    <ClCompile Include="..\source\directwrite\PixelSnapping.cpp" />
+    <ClCompile Include="..\source\directwrite\RenderingParameters.cpp" />
+    <ClCompile Include="..\source\directwrite\ResultCodeDW.cpp" />
+    <ClCompile Include="..\source\directwrite\Strikethrough.cpp" />
+    <ClCompile Include="..\source\directwrite\TextAnalysisSink.cpp" />
+    <ClCompile Include="..\source\directwrite\TextAnalysisSource.cpp" />
+    <ClCompile Include="..\source\directwrite\TextAnalyzer.cpp" />
+    <ClCompile Include="..\source\directwrite\TextFormat.cpp" />
+    <ClCompile Include="..\source\directwrite\TextLayout.cpp" />
+    <ClCompile Include="..\source\directwrite\TextRange.cpp" />
+    <ClCompile Include="..\source\directwrite\Typography.cpp" />
+    <ClCompile Include="..\source\directwrite\Underline.cpp" />
+    <ClCompile Include="..\source\dxgi\DXGIExtensionMethods.cpp" />
+    <ClCompile Include="..\source\external\DDSTextureLoader.cpp" />
+    <ClCompile Include="..\source\external\dxerr.cpp" />
+    <ClCompile Include="..\source\ObjectTable.cpp" />
+    <ClCompile Include="..\source\Result.cpp" />
+    <ClCompile Include="..\source\SlimDXException.cpp" />
+    <ClCompile Include="..\source\Utilities.cpp" />
+    <ClCompile Include="..\source\DataBox.cpp" />
+    <ClCompile Include="..\source\DataRectangle.cpp" />
+    <ClCompile Include="..\source\DataStream.cpp" />
+    <ClCompile Include="..\source\xinput\ResultCodeXI.cpp" />
+    <ClCompile Include="..\source\xinput\XInputException.cpp" />
+    <ClCompile Include="..\source\xinput\Controller.cpp" />
+    <ClCompile Include="..\source\xinput\Gamepad.cpp" />
+    <ClCompile Include="..\source\xinput\State.cpp" />
+    <ClCompile Include="..\source\xinput\Vibration.cpp" />
+    <ClCompile Include="..\source\dxgi\DXGIException.cpp" />
+    <ClCompile Include="..\source\dxgi\ResultCodeDxgi.cpp" />
+    <ClCompile Include="..\source\dxgi\SwapChainDescription.cpp" />
+    <ClCompile Include="..\source\dxgi\SwapChainDxgi.cpp" />
+    <ClCompile Include="..\source\dxgi\Output.cpp" />
+    <ClCompile Include="..\source\dxgi\OutputDescription.cpp" />
+    <ClCompile Include="..\source\dxgi\Adapter.cpp" />
+    <ClCompile Include="..\source\dxgi\AdapterDescription.cpp" />
+    <ClCompile Include="..\source\dxgi\DeviceChildDxgi.cpp" />
+    <ClCompile Include="..\source\dxgi\DeviceDxgi.cpp" />
+    <ClCompile Include="..\source\dxgi\ResourceDxgi.cpp" />
+    <ClCompile Include="..\source\dxgi\Factory.cpp" />
+    <ClCompile Include="..\source\dxgi\GammaControl.cpp" />
+    <ClCompile Include="..\source\dxgi\GammaControlCapabilities.cpp" />
+    <ClCompile Include="..\source\dxgi\FrameStatistics.cpp" />
+    <ClCompile Include="..\source\dxgi\ModeDescription.cpp" />
+    <ClCompile Include="..\source\dxgi\SampleDescription.cpp" />
+    <ClCompile Include="..\source\dxgi\SurfaceDescription.cpp" />
+    <ClCompile Include="..\source\dxgi\SurfaceDxgi.cpp" />
+    <ClCompile Include="..\source\dxgi\ObjectDxgi.cpp" />
+    <ClCompile Include="..\source\dxgi\Adapter1.cpp" />
+    <ClCompile Include="..\source\dxgi\AdapterDescription1.cpp" />
+    <ClCompile Include="..\source\dxgi\Device1.cpp" />
+    <ClCompile Include="..\source\dxgi\Factory1.cpp" />
+    <ClCompile Include="..\source\dxgi\KeyedMutex.cpp" />
+    <ClCompile Include="..\source\dxgi\Surface1.cpp" />
+    <ClCompile Include="..\source\windows\NativeWindow.cpp" />
+    <ClCompile Include="..\source\windows\DisplayMonitor.cpp" />
+    <ClCompile Include="..\source\direct3d11\Direct3D11Exception.cpp" />
+    <ClCompile Include="..\source\direct3d11\ResultCode11.cpp" />
+    <ClCompile Include="..\source\direct3d11\Buffer11.cpp" />
+    <ClCompile Include="..\source\direct3d11\BufferDescription11.cpp" />
+    <ClCompile Include="..\source\direct3d11\VertexBufferBinding11.cpp" />
+    <ClCompile Include="..\source\direct3d11\CommandList11.cpp" />
+    <ClCompile Include="..\source\direct3d11\Device11.cpp" />
+    <ClCompile Include="..\source\direct3d11\DeviceChild11.cpp" />
+    <ClCompile Include="..\source\direct3d11\DeviceContext11.cpp" />
+    <ClCompile Include="..\source\direct3d11\ComputeShaderWrapper11.cpp" />
+    <ClCompile Include="..\source\direct3d11\DomainShaderWrapper11.cpp" />
+    <ClCompile Include="..\source\direct3d11\GeometryShaderWrapper11.cpp" />
+    <ClCompile Include="..\source\direct3d11\HullShaderWrapper11.cpp" />
+    <ClCompile Include="..\source\direct3d11\InputAssemblerWrapper11.cpp" />
+    <ClCompile Include="..\source\direct3d11\OutputMergerWrapper11.cpp" />
+    <ClCompile Include="..\source\direct3d11\PixelShaderWrapper11.cpp" />
+    <ClCompile Include="..\source\direct3d11\RasterizerWrapper11.cpp" />
+    <ClCompile Include="..\source\direct3d11\StreamOutputWrapper11.cpp" />
+    <ClCompile Include="..\source\direct3d11\VertexShaderWrapper11.cpp" />
+    <ClCompile Include="..\source\direct3d11\Counter11.cpp" />
+    <ClCompile Include="..\source\direct3d11\CounterCapabilities11.cpp" />
+    <ClCompile Include="..\source\direct3d11\CounterMetadata11.cpp" />
+    <ClCompile Include="..\source\direct3d11\Debug11.cpp" />
+    <ClCompile Include="..\source\direct3d11\DebugMessage11.cpp" />
+    <ClCompile Include="..\source\direct3d11\InfoQueue11.cpp" />
+    <ClCompile Include="..\source\direct3d11\InfoQueueFilter11.cpp" />
+    <ClCompile Include="..\source\direct3d11\InfoQueueFilterDescription11.cpp" />
+    <ClCompile Include="..\source\direct3d11\Resource11.cpp" />
+    <ClCompile Include="..\source\direct3d11\ResourceRegion11.cpp" />
+    <ClCompile Include="..\source\direct3d11\ResourceView11.cpp" />
+    <ClCompile Include="..\source\direct3d11\DepthStencilView11.cpp" />
+    <ClCompile Include="..\source\direct3d11\DepthStencilViewDescription11.cpp" />
+    <ClCompile Include="..\source\direct3d11\RenderTargetView11.cpp" />
+    <ClCompile Include="..\source\direct3d11\RenderTargetViewDescription11.cpp" />
+    <ClCompile Include="..\source\direct3d11\ShaderResourceView11.cpp" />
+    <ClCompile Include="..\source\direct3d11\ShaderResourceViewDescription11.cpp" />
+    <ClCompile Include="..\source\direct3d11\UnorderedAccessView11.cpp" />
+    <ClCompile Include="..\source\direct3d11\UnorderedAccessViewDescription11.cpp" />
+    <ClCompile Include="..\source\direct3d11\ComputeShader11.cpp" />
+    <ClCompile Include="..\source\direct3d11\DomainShader11.cpp" />
+    <ClCompile Include="..\source\direct3d11\GeometryShader11.cpp" />
+    <ClCompile Include="..\source\direct3d11\HullShader11.cpp" />
+    <ClCompile Include="..\source\direct3d11\PixelShader11.cpp" />
+    <ClCompile Include="..\source\direct3d11\VertexShader11.cpp" />
+    <ClCompile Include="..\source\direct3d11\ClassInstance11.cpp" />
+    <ClCompile Include="..\source\direct3d11\ClassInstanceDescription11.cpp" />
+    <ClCompile Include="..\source\direct3d11\ClassLinkage11.cpp" />
+    <ClCompile Include="..\source\direct3d11\BlendState11.cpp" />
+    <ClCompile Include="..\source\direct3d11\BlendStateDescription11.cpp" />
+    <ClCompile Include="..\source\direct3d11\RenderTargetBlendDescription11.cpp" />
+    <ClCompile Include="..\source\direct3d11\DepthStencilOperationDescription11.cpp" />
+    <ClCompile Include="..\source\direct3d11\DepthStencilState11.cpp" />
+    <ClCompile Include="..\source\direct3d11\DepthStencilStateDescription11.cpp" />
+    <ClCompile Include="..\source\direct3d11\RasterizerState11.cpp" />
+    <ClCompile Include="..\source\direct3d11\RasterizerStateDescription11.cpp" />
+    <ClCompile Include="..\source\direct3d11\SamplerDescription11.cpp" />
+    <ClCompile Include="..\source\direct3d11\SamplerState11.cpp" />
+    <ClCompile Include="..\source\direct3d11\Predicate11.cpp" />
+    <ClCompile Include="..\source\direct3d11\Query11.cpp" />
+    <ClCompile Include="..\source\direct3d11\QueryDescription11.cpp" />
+    <ClCompile Include="..\source\direct3d11\PipelineStatistics11.cpp" />
+    <ClCompile Include="..\source\direct3d11\StreamOutputStatistics11.cpp" />
+    <ClCompile Include="..\source\direct3d11\TimestampQueryData11.cpp" />
+    <ClCompile Include="..\source\direct3d11\InputElement11.cpp" />
+    <ClCompile Include="..\source\direct3d11\InputLayout11.cpp" />
+    <ClCompile Include="..\source\direct3d11\StreamOutputBufferBinding11.cpp" />
+    <ClCompile Include="..\source\direct3d11\StreamOutputElement11.cpp" />
+    <ClCompile Include="..\source\direct3d11\Texture1D11.cpp" />
+    <ClCompile Include="..\source\direct3d11\Texture1DDescription11.cpp" />
+    <ClCompile Include="..\source\direct3d11\Texture2D11.cpp" />
+    <ClCompile Include="..\source\direct3d11\Texture2DDescription11.cpp" />
+    <ClCompile Include="..\source\direct3d11\Texture3D11.cpp" />
+    <ClCompile Include="..\source\direct3d11\Texture3DDescription11.cpp" />
+    <ClCompile Include="..\source\direct3d11\Asynchronous11.cpp" />
+    <ClCompile Include="..\source\direct3d11\Viewport11.cpp" />
+    <ClCompile Include="..\source\d3dcompiler\D3DCompilerException.cpp" />
+    <ClCompile Include="..\source\d3dcompiler\IncludeDC.cpp" />
+    <ClCompile Include="..\source\d3dcompiler\ShaderMacroDC.cpp" />
+    <ClCompile Include="..\source\d3dcompiler\ShaderBytecodeDC.cpp" />
+    <ClCompile Include="..\source\d3dcompiler\ShaderSignatureDC.cpp" />
+    <ClCompile Include="..\source\d3dcompiler\InputBindingDescriptionDC.cpp" />
+    <ClCompile Include="..\source\d3dcompiler\ShaderDescriptionDC.cpp" />
+    <ClCompile Include="..\source\d3dcompiler\ShaderParameterDescriptionDC.cpp" />
+    <ClCompile Include="..\source\d3dcompiler\ShaderReflectionDC.cpp" />
+    <ClCompile Include="..\source\d3dcompiler\ConstantBufferDC.cpp" />
+    <ClCompile Include="..\source\d3dcompiler\ConstantBufferDescriptionDC.cpp" />
+    <ClCompile Include="..\source\d3dcompiler\ShaderReflectionTypeDC.cpp" />
+    <ClCompile Include="..\source\d3dcompiler\ShaderTypeDescriptionDC.cpp" />
+    <ClCompile Include="..\source\d3dcompiler\ShaderReflectionVariableDC.cpp" />
+    <ClCompile Include="..\source\d3dcompiler\ShaderVariableDescriptionDC.cpp" />
+    <ClCompile Include="..\source\AssemblyInfo.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\source\auto_array.h" />
+    <ClInclude Include="..\source\CollectionShim.h" />
+    <ClInclude Include="..\source\ComObject.h" />
+    <ClInclude Include="..\source\ComObjectMacros.h" />
+    <ClInclude Include="..\source\CompilationException.h" />
+    <ClInclude Include="..\source\Configuration.h" />
+    <ClInclude Include="..\source\direct3d11\PerfAnnotation.h" />
+    <ClInclude Include="..\source\direct3d11\TextureLoader.h" />
+    <ClInclude Include="..\source\directwrite\BitmapRenderTargetDW.h" />
+    <ClInclude Include="..\source\directwrite\ClusterMetrics.h" />
+    <ClInclude Include="..\source\directwrite\DirectWriteException.h" />
+    <ClInclude Include="..\source\directwrite\Enums.h" />
+    <ClInclude Include="..\source\directwrite\FactoryDW.h" />
+    <ClInclude Include="..\source\directwrite\Font.h" />
+    <ClInclude Include="..\source\directwrite\FontCollection.h" />
+    <ClInclude Include="..\source\directwrite\FontCollectionLoader.h" />
+    <ClInclude Include="..\source\directwrite\FontFace.h" />
+    <ClInclude Include="..\source\directwrite\FontFamily.h" />
+    <ClInclude Include="..\source\directwrite\FontFeature.h" />
+    <ClInclude Include="..\source\directwrite\FontFile.h" />
+    <ClInclude Include="..\source\directwrite\FontFileAnalysis.h" />
+    <ClInclude Include="..\source\directwrite\FontFileEnumerator.h" />
+    <ClInclude Include="..\source\directwrite\FontFileLoader.h" />
+    <ClInclude Include="..\source\directwrite\FontFileStream.h" />
+    <ClInclude Include="..\source\directwrite\FontList.h" />
+    <ClInclude Include="..\source\directwrite\FontMetrics.h" />
+    <ClInclude Include="..\source\directwrite\FontTable.h" />
+    <ClInclude Include="..\source\directwrite\GdiInterop.h" />
+    <ClInclude Include="..\source\directwrite\GlyphMetrics.h" />
+    <ClInclude Include="..\source\directwrite\GlyphOffset.h" />
+    <ClInclude Include="..\source\directwrite\GlyphRunAnalysis.h" />
+    <ClInclude Include="..\source\directwrite\GlyphRunDescription.h" />
+    <ClInclude Include="..\source\directwrite\GlyphRunDW.h" />
+    <ClInclude Include="..\source\directwrite\HitTestMetrics.h" />
+    <ClInclude Include="..\source\directwrite\IClientDrawingEffect.h" />
+    <ClInclude Include="..\source\directwrite\IFontCollectionLoader.h" />
+    <ClInclude Include="..\source\directwrite\IFontFileLoader.h" />
+    <ClInclude Include="..\source\directwrite\InlineObject.h" />
+    <ClInclude Include="..\source\directwrite\InlineObjectMetrics.h" />
+    <ClInclude Include="..\source\directwrite\ITextRenderer.h" />
+    <ClInclude Include="..\source\directwrite\LineMetrics.h" />
+    <ClInclude Include="..\source\directwrite\LocalizedStrings.h" />
+    <ClInclude Include="..\source\directwrite\NumberSubstitution.h" />
+    <ClInclude Include="..\source\directwrite\OverhangMetrics.h" />
+    <ClInclude Include="..\source\directwrite\PixelSnapping.h" />
+    <ClInclude Include="..\source\directwrite\RenderingParameters.h" />
+    <ClInclude Include="..\source\directwrite\ResultCodeDW.h" />
+    <ClInclude Include="..\source\directwrite\Strikethrough.h" />
+    <ClInclude Include="..\source\directwrite\TextAnalysisSink.h" />
+    <ClInclude Include="..\source\directwrite\TextAnalysisSource.h" />
+    <ClInclude Include="..\source\directwrite\TextAnalyzer.h" />
+    <ClInclude Include="..\source\directwrite\TextFormat.h" />
+    <ClInclude Include="..\source\directwrite\TextLayout.h" />
+    <ClInclude Include="..\source\directwrite\TextMetrics.h" />
+    <ClInclude Include="..\source\directwrite\TextRange.h" />
+    <ClInclude Include="..\source\directwrite\Trimming.h" />
+    <ClInclude Include="..\source\directwrite\Typography.h" />
+    <ClInclude Include="..\source\directwrite\Underline.h" />
+    <ClInclude Include="..\source\dxgi\DXGIExtensionMethods.h" />
+    <ClInclude Include="..\source\Enums.h" />
+    <ClInclude Include="..\source\external\DDSTextureLoader.h" />
+    <ClInclude Include="..\source\external\dxerr.h" />
+    <ClInclude Include="..\source\InternalHelpers.h" />
+    <ClInclude Include="..\source\ObjectTable.h" />
+    <ClInclude Include="..\source\Result.h" />
+    <ClInclude Include="..\source\SlimDXException.h" />
+    <ClInclude Include="..\source\stack_array.h" />
+    <ClInclude Include="..\source\Utilities.h" />
+    <ClInclude Include="..\source\VersionConfig.h" />
+    <ClInclude Include="..\source\DataBox.h" />
+    <ClInclude Include="..\source\DataRectangle.h" />
+    <ClInclude Include="..\source\DataStream.h" />
+    <ClInclude Include="..\source\xinput\Enums.h" />
+    <ClInclude Include="..\source\xinput\ResultCodeXI.h" />
+    <ClInclude Include="..\source\xinput\XInputException.h" />
+    <ClInclude Include="..\source\xinput\Controller.h" />
+    <ClInclude Include="..\source\xinput\Gamepad.h" />
+    <ClInclude Include="..\source\xinput\State.h" />
+    <ClInclude Include="..\source\xinput\Vibration.h" />
+    <ClInclude Include="..\source\dxgi\DXGIException.h" />
+    <ClInclude Include="..\source\dxgi\Enums.h" />
+    <ClInclude Include="..\source\dxgi\ResultCodeDxgi.h" />
+    <ClInclude Include="..\source\dxgi\SwapChainDescription.h" />
+    <ClInclude Include="..\source\dxgi\SwapChainDxgi.h" />
+    <ClInclude Include="..\source\dxgi\Output.h" />
+    <ClInclude Include="..\source\dxgi\OutputDescription.h" />
+    <ClInclude Include="..\source\dxgi\Adapter.h" />
+    <ClInclude Include="..\source\dxgi\AdapterDescription.h" />
+    <ClInclude Include="..\source\dxgi\DeviceChildDxgi.h" />
+    <ClInclude Include="..\source\dxgi\DeviceDxgi.h" />
+    <ClInclude Include="..\source\dxgi\ResourceDxgi.h" />
+    <ClInclude Include="..\source\dxgi\Factory.h" />
+    <ClInclude Include="..\source\dxgi\GammaControl.h" />
+    <ClInclude Include="..\source\dxgi\GammaControlCapabilities.h" />
+    <ClInclude Include="..\source\dxgi\FrameStatistics.h" />
+    <ClInclude Include="..\source\dxgi\ModeDescription.h" />
+    <ClInclude Include="..\source\dxgi\SampleDescription.h" />
+    <ClInclude Include="..\source\dxgi\SurfaceDescription.h" />
+    <ClInclude Include="..\source\dxgi\SurfaceDxgi.h" />
+    <ClInclude Include="..\source\dxgi\ObjectDxgi.h" />
+    <ClInclude Include="..\source\dxgi\Adapter1.h" />
+    <ClInclude Include="..\source\dxgi\AdapterDescription1.h" />
+    <ClInclude Include="..\source\dxgi\Device1.h" />
+    <ClInclude Include="..\source\dxgi\Factory1.h" />
+    <ClInclude Include="..\source\dxgi\KeyedMutex.h" />
+    <ClInclude Include="..\source\dxgi\Surface1.h" />
+    <ClInclude Include="..\source\windows\NativeWindow.h" />
+    <ClInclude Include="..\source\windows\DisplayMonitor.h" />
+    <ClInclude Include="..\source\direct3d11\Direct3D11Exception.h" />
+    <ClInclude Include="..\source\direct3d11\Enums11.h" />
+    <ClInclude Include="..\source\direct3d11\ResultCode11.h" />
+    <ClInclude Include="..\source\direct3d11\Buffer11.h" />
+    <ClInclude Include="..\source\direct3d11\BufferDescription11.h" />
+    <ClInclude Include="..\source\direct3d11\VertexBufferBinding11.h" />
+    <ClInclude Include="..\source\direct3d11\CommandList11.h" />
+    <ClInclude Include="..\source\direct3d11\Device11.h" />
+    <ClInclude Include="..\source\direct3d11\DeviceChild11.h" />
+    <ClInclude Include="..\source\direct3d11\DeviceContext11.h" />
+    <ClInclude Include="..\source\direct3d11\ComputeShaderWrapper11.h" />
+    <ClInclude Include="..\source\direct3d11\DomainShaderWrapper11.h" />
+    <ClInclude Include="..\source\direct3d11\GeometryShaderWrapper11.h" />
+    <ClInclude Include="..\source\direct3d11\HullShaderWrapper11.h" />
+    <ClInclude Include="..\source\direct3d11\InputAssemblerWrapper11.h" />
+    <ClInclude Include="..\source\direct3d11\OutputMergerWrapper11.h" />
+    <ClInclude Include="..\source\direct3d11\PixelShaderWrapper11.h" />
+    <ClInclude Include="..\source\direct3d11\RasterizerWrapper11.h" />
+    <ClInclude Include="..\source\direct3d11\StreamOutputWrapper11.h" />
+    <ClInclude Include="..\source\direct3d11\VertexShaderWrapper11.h" />
+    <ClInclude Include="..\source\direct3d11\Counter11.h" />
+    <ClInclude Include="..\source\direct3d11\CounterCapabilities11.h" />
+    <ClInclude Include="..\source\direct3d11\CounterMetadata11.h" />
+    <ClInclude Include="..\source\direct3d11\Debug11.h" />
+    <ClInclude Include="..\source\direct3d11\DebugMessage11.h" />
+    <ClInclude Include="..\source\direct3d11\DebugMessageId11.h" />
+    <ClInclude Include="..\source\direct3d11\InfoQueue11.h" />
+    <ClInclude Include="..\source\direct3d11\InfoQueueFilter11.h" />
+    <ClInclude Include="..\source\direct3d11\InfoQueueFilterDescription11.h" />
+    <ClInclude Include="..\source\direct3d11\Resource11.h" />
+    <ClInclude Include="..\source\direct3d11\ResourceRegion11.h" />
+    <ClInclude Include="..\source\direct3d11\ResourceView11.h" />
+    <ClInclude Include="..\source\direct3d11\DepthStencilView11.h" />
+    <ClInclude Include="..\source\direct3d11\DepthStencilViewDescription11.h" />
+    <ClInclude Include="..\source\direct3d11\RenderTargetView11.h" />
+    <ClInclude Include="..\source\direct3d11\RenderTargetViewDescription11.h" />
+    <ClInclude Include="..\source\direct3d11\ShaderResourceView11.h" />
+    <ClInclude Include="..\source\direct3d11\ShaderResourceViewDescription11.h" />
+    <ClInclude Include="..\source\direct3d11\UnorderedAccessView11.h" />
+    <ClInclude Include="..\source\direct3d11\UnorderedAccessViewDescription11.h" />
+    <ClInclude Include="..\source\direct3d11\ComputeShader11.h" />
+    <ClInclude Include="..\source\direct3d11\DomainShader11.h" />
+    <ClInclude Include="..\source\direct3d11\GeometryShader11.h" />
+    <ClInclude Include="..\source\direct3d11\HullShader11.h" />
+    <ClInclude Include="..\source\direct3d11\PixelShader11.h" />
+    <ClInclude Include="..\source\direct3d11\VertexShader11.h" />
+    <ClInclude Include="..\source\direct3d11\ClassInstance11.h" />
+    <ClInclude Include="..\source\direct3d11\ClassInstanceDescription11.h" />
+    <ClInclude Include="..\source\direct3d11\ClassLinkage11.h" />
+    <ClInclude Include="..\source\direct3d11\BlendState11.h" />
+    <ClInclude Include="..\source\direct3d11\BlendStateDescription11.h" />
+    <ClInclude Include="..\source\direct3d11\RenderTargetBlendDescription11.h" />
+    <ClInclude Include="..\source\direct3d11\DepthStencilOperationDescription11.h" />
+    <ClInclude Include="..\source\direct3d11\DepthStencilState11.h" />
+    <ClInclude Include="..\source\direct3d11\DepthStencilStateDescription11.h" />
+    <ClInclude Include="..\source\direct3d11\RasterizerState11.h" />
+    <ClInclude Include="..\source\direct3d11\RasterizerStateDescription11.h" />
+    <ClInclude Include="..\source\direct3d11\SamplerDescription11.h" />
+    <ClInclude Include="..\source\direct3d11\SamplerState11.h" />
+    <ClInclude Include="..\source\direct3d11\Predicate11.h" />
+    <ClInclude Include="..\source\direct3d11\Query11.h" />
+    <ClInclude Include="..\source\direct3d11\QueryDescription11.h" />
+    <ClInclude Include="..\source\direct3d11\PipelineStatistics11.h" />
+    <ClInclude Include="..\source\direct3d11\StreamOutputStatistics11.h" />
+    <ClInclude Include="..\source\direct3d11\TimestampQueryData11.h" />
+    <ClInclude Include="..\source\direct3d11\InputElement11.h" />
+    <ClInclude Include="..\source\direct3d11\InputLayout11.h" />
+    <ClInclude Include="..\source\direct3d11\StreamOutputBufferBinding11.h" />
+    <ClInclude Include="..\source\direct3d11\StreamOutputElement11.h" />
+    <ClInclude Include="..\source\direct3d11\Texture1D11.h" />
+    <ClInclude Include="..\source\direct3d11\Texture1DDescription11.h" />
+    <ClInclude Include="..\source\direct3d11\Texture2D11.h" />
+    <ClInclude Include="..\source\direct3d11\Texture2DDescription11.h" />
+    <ClInclude Include="..\source\direct3d11\Texture3D11.h" />
+    <ClInclude Include="..\source\direct3d11\Texture3DDescription11.h" />
+    <ClInclude Include="..\source\direct3d11\Asynchronous11.h" />
+    <ClInclude Include="..\source\direct3d11\Viewport11.h" />
+    <ClInclude Include="..\source\d3dcompiler\D3DCompilerException.h" />
+    <ClInclude Include="..\source\d3dcompiler\EnumsDC.h" />
+    <ClInclude Include="..\source\d3dcompiler\IncludeDC.h" />
+    <ClInclude Include="..\source\d3dcompiler\ShaderMacroDC.h" />
+    <ClInclude Include="..\source\d3dcompiler\ShaderBytecodeDC.h" />
+    <ClInclude Include="..\source\d3dcompiler\ShaderSignatureDC.h" />
+    <ClInclude Include="..\source\d3dcompiler\InputBindingDescriptionDC.h" />
+    <ClInclude Include="..\source\d3dcompiler\ShaderDescriptionDC.h" />
+    <ClInclude Include="..\source\d3dcompiler\ShaderParameterDescriptionDC.h" />
+    <ClInclude Include="..\source\d3dcompiler\ShaderReflectionDC.h" />
+    <ClInclude Include="..\source\d3dcompiler\ConstantBufferDC.h" />
+    <ClInclude Include="..\source\d3dcompiler\ConstantBufferDescriptionDC.h" />
+    <ClInclude Include="..\source\d3dcompiler\ShaderReflectionTypeDC.h" />
+    <ClInclude Include="..\source\d3dcompiler\ShaderTypeDescriptionDC.h" />
+    <ClInclude Include="..\source\d3dcompiler\ShaderReflectionVariableDC.h" />
+    <ClInclude Include="..\source\d3dcompiler\ShaderVariableDescriptionDC.h" />
+    <ClInclude Include="..\source\stdafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SlimMath\SlimMath.csproj">
+      <Project>{820fe441-822f-4519-994b-04f1de27ff15}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\source\directwrite\ToDo.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
