@@ -429,7 +429,11 @@ namespace SlimDX
 	{
 		if( buffer != NULL )
 		{
-			String^ string = gcnew String( reinterpret_cast<const char*>( buffer->GetBufferPointer() ) );
+			const char* bufPtr = reinterpret_cast<const char*>( buffer->GetBufferPointer() );
+			if(bufPtr == NULL)
+				return String::Empty;
+
+			String^ string = gcnew String( bufPtr );
 			buffer->Release();
 			return string;
 		}
