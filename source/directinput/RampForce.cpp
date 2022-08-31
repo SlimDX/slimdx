@@ -50,7 +50,7 @@ namespace DirectInput
 
 	int RampForce::Size::get()
 	{
-		return sizeof( DICONSTANTFORCE );
+		return sizeof( DIRAMPFORCE );
 	}
 
 	void *RampForce::ToUnmanaged()
